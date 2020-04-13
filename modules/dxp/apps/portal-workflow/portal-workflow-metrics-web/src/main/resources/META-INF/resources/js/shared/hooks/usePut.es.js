@@ -19,13 +19,11 @@ const usePut = ({body = {}, admin = false, url}) => {
 	const client = getClient(admin);
 	const queryBodyStr = JSON.stringify(body);
 
-	const putData = useCallback(
+	return useCallback(
 		() => client.put(url, body),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[queryBodyStr, url, admin]
+		[queryBodyStr, url, client]
 	);
-
-	return {putData};
 };
 
 export {usePut};

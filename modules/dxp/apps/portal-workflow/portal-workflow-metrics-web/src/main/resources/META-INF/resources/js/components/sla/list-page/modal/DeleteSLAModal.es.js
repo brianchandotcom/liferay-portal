@@ -19,7 +19,7 @@ import {SLAListPageContext} from '../SLAListPage.es';
 
 const DeleteSLAModal = () => {
 	const {itemToRemove, setVisible, visible} = useContext(SLAListPageContext);
-	const handleDelete = useDelete();
+	const deleteSLA = useDelete({url: `/slas/${itemToRemove}`});
 	const toaster = useToaster();
 
 	const {observer, onClose} = useModal({
@@ -29,7 +29,7 @@ const DeleteSLAModal = () => {
 	});
 
 	const removeItem = () => {
-		handleDelete(`/slas/${itemToRemove}`)
+		deleteSLA()
 			.then(() => {
 				onClose();
 				toaster.success(Liferay.Language.get('sla-was-deleted'));

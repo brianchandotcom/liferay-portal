@@ -13,12 +13,12 @@ import {useCallback, useContext} from 'react';
 
 import {AppContext} from '../../components/AppContext.es';
 
-const useDelete = ({admin} = {}) => {
+const useDelete = ({admin = false, url}) => {
 	const {getClient} = useContext(AppContext);
 
 	const client = getClient(admin);
 
-	return useCallback(url => client.delete(url), [client]);
+	return useCallback(() => client.delete(url), [client, url]);
 };
 
 export {useDelete};

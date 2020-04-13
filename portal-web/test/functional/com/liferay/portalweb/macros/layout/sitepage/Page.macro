@@ -568,7 +568,7 @@ definition {
 
 		if (isSet(checkThemeSettingList)) {
 			for (var themeSetting : list "${checkThemeSettingList}") {
-				AssertChecked(
+				AssertChecked.assertCheckedNotVisible(
 					key_toggleSwitchLabel = "${themeSetting}",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
@@ -576,8 +576,8 @@ definition {
 
 		if (isSet(uncheckThemeSettingList)) {
 			for (var themeSetting : list "${uncheckThemeSettingList}") {
-				AssertNotChecked(
-					key_contentName = "${themeSetting}",
+				AssertNotChecked.assertNotCheckedNotVisible(
+					key_toggleSwitchLabel = "${themeSetting}",
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}

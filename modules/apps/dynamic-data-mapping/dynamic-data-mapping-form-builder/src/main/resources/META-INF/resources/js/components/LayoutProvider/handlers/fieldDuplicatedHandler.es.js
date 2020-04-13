@@ -12,7 +12,11 @@
  * details.
  */
 
-import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {
+	FormSupport,
+	PagesVisitor,
+	generateInstanceId,
+} from 'dynamic-data-mapping-form-renderer';
 
 import {sub} from '../../../util/strings.es';
 import {getFieldLocalizedValue} from '../util/fields.es';
@@ -32,6 +36,8 @@ export const createDuplicatedField = (originalField, props) => {
 		'name',
 		newFieldName
 	);
+
+	duplicatedField.instanceId = generateInstanceId(8);
 
 	duplicatedField = updateField(props, duplicatedField, 'label', label);
 

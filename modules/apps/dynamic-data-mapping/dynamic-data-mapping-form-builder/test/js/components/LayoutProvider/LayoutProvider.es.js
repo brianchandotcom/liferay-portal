@@ -467,6 +467,11 @@ describe('LayoutProvider', () => {
 							return {
 								...field,
 								fieldName: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`,
+
+								// Overrides the instanceId because it is generated when a field is duplicated,
+								// toMatchSnapshot has problems with deep arrays so we override it here to
+								// avoid this.
+								instanceId: 'Any<String>',
 								name: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`,
 							};
 						}
@@ -565,7 +570,9 @@ describe('LayoutProvider', () => {
 
 				jest.runAllTimers();
 
-				expect(provider.state.focusedField).toMatchSnapshot();
+				expect(provider.state.focusedField).toMatchSnapshot({
+					instanceId: expect.any(String),
+				});
 			});
 		});
 

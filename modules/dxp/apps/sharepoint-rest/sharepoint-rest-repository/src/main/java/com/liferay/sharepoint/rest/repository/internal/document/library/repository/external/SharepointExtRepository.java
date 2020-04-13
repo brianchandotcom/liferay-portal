@@ -457,16 +457,17 @@ public class SharepointExtRepository implements ExtRepository {
 		String extRepositoryModelKey =
 			extRepositoryObject.getExtRepositoryModelKey();
 
-		String siteRepositoryModelKey = extRepositoryModelKey;
+		if (extRepositoryModelKey.equals(
+				_rootFolder.getExtRepositoryModelKey())) {
 
-		if (extRepositoryModelKey.contains(StringPool.SLASH)) {
-			siteRepositoryModelKey = extRepositoryModelKey.substring(
-				extRepositoryModelKey.lastIndexOf(StringPool.SLASH) + 1);
+			return null;
 		}
 
-		if (extRepositoryModelKey.equals(
-				_rootFolder.getExtRepositoryModelKey()) ||
-			siteRepositoryModelKey.equals(
+		String parentFolderExtRepositoryModelKey =
+			_getParentFolderExtRepositoryModelKey(extRepositoryModelKey);
+
+		if (Validator.isNull(parentFolderExtRepositoryModelKey) ||
+			parentFolderExtRepositoryModelKey.equals(
 				_rootFolder.getExtRepositoryModelKey())) {
 
 			return null;
@@ -780,6 +781,18 @@ public class SharepointExtRepository implements ExtRepository {
 		_handleHttpResponseError(httpResponse, url);
 
 		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
+	}
+
+	private String _getParentFolderExtRepositoryModelKey(
+		String extRepositoryModelKey) {
+
+		int pos = extRepositoryModelKey.lastIndexOf(StringPool.SLASH);
+
+		if (pos == -1) {
+			return null;
+		}
+
+		return extRepositoryModelKey.substring(pos + 1);
 	}
 
 	private void _handleHttpResponseError(

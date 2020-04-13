@@ -20,11 +20,9 @@ definition {
 		}
 	}
 
-	// Quarantined because blocking LPS-111501
-
 	@priority = "5"
 	test RemoveNoGuestInlineView {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

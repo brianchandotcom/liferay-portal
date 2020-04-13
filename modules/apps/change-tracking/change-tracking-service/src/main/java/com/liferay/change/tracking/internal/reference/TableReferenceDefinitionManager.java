@@ -46,12 +46,13 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = TableReferenceDefinitionManager.class)
 public class TableReferenceDefinitionManager {
 
-	public Long getClassNameId(Table<?> table) {
+	public long getClassNameId(Table<?> table) {
 		TableReferenceInfo<?> tableReferenceInfo = _tableReferenceInfos.get(
 			table);
 
 		if (tableReferenceInfo == null) {
-			return null;
+			throw new IllegalStateException(
+				"No table reference definition for " + table);
 		}
 
 		return _getClassNameId(tableReferenceInfo);
@@ -114,7 +115,7 @@ public class TableReferenceDefinitionManager {
 		return copy;
 	}
 
-	private Long _getClassNameId(TableReferenceInfo<?> tableReferenceInfo) {
+	private long _getClassNameId(TableReferenceInfo<?> tableReferenceInfo) {
 		TableReferenceDefinition<?> tableReferenceDefinition =
 			tableReferenceInfo.getTableReferenceDefinition();
 

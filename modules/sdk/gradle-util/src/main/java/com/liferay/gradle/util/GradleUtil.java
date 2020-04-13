@@ -432,6 +432,14 @@ public class GradleUtil {
 		return taskContainer.named(name);
 	}
 
+	public static <T extends Task> TaskProvider<T> getTaskProvider(
+		Project project, String name, Class<T> clazz) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		return taskContainer.named(name, clazz);
+	}
+
 	public static <T extends Task> TaskProvider<T> addTaskProvider(
 		Project project, String name, Class<T> clazz) {
 

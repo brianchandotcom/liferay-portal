@@ -678,6 +678,18 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValuesTextFieldTypeInvalidRegexp()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read(
+				"configuration_field_text_typeoptions_validation_regexp.json"),
+			JSONUtil.put("regexpField", StringUtil.randomString()));
+	}
+
+	@Test
 	public void testValidateConfigurationValuesTextFieldTypeValidEmail()
 		throws Exception {
 
@@ -704,6 +716,16 @@ public class FragmentEntryValidatorImplTest {
 			_read(
 				"configuration_field_text_typeoptions_validation_number.json"),
 			JSONUtil.put("numberField", 256));
+	}
+
+	@Test
+	public void testValidateConfigurationValuesTextFieldTypeValidRegexp()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read(
+				"configuration_field_text_typeoptions_validation_regexp.json"),
+			JSONUtil.put("regexpField", "test-256"));
 	}
 
 	@Rule

@@ -1,0 +1,18 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "regexpField",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"regexp": "test-\\d+",
+							"type": "pattern"
+						}
+					}
+				}
+			]
+		}
+	]
+}

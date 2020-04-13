@@ -12,14 +12,14 @@
 
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useContext, useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 
 import Panel from '../../../shared/components/Panel.es';
 import ContentView from '../../../shared/components/content-view/ContentView.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import {useFetch} from '../../../shared/hooks/useFetch.es';
-import {AppContext} from '../../AppContext.es';
+import {usePageTitle} from '../../../shared/hooks/usePageTitle.es';
 import PANELS from './Panels.es';
 import SummaryCard from './SummaryCard.es';
 
@@ -31,8 +31,6 @@ const ProcessItemsCard = ({
 	timeRange,
 	title,
 }) => {
-	const {setTitle} = useContext(AppContext);
-
 	const timeRangeParams = timeRange || {};
 
 	const {data, fetchData} = useFetch({
@@ -43,9 +41,7 @@ const ProcessItemsCard = ({
 		url: `/processes/${processId}`,
 	});
 
-	useEffect(() => {
-		setTitle(data.title);
-	}, [data.title]);
+	usePageTitle(data.title);
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);
 

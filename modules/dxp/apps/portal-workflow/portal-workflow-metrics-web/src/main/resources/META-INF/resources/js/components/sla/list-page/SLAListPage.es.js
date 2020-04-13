@@ -10,17 +10,11 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import React, {
-	createContext,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {createContext, useContext, useMemo, useState} from 'react';
 
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import {useFetch} from '../../../shared/hooks/useFetch.es';
-import {AppContext} from '../../AppContext.es';
+import {usePageTitle} from '../../../shared/hooks/usePageTitle.es';
 import {SLAContext} from '../SLAContainer.es';
 import BlockedSLAInfo from './BlockedSLAInfo.es';
 import {Body} from './SLAListPageBody.es';
@@ -28,7 +22,6 @@ import {Header} from './SLAListPageHeader.es';
 import DeleteSLAModal from './modal/DeleteSLAModal.es';
 
 const SLAListPage = ({page, pageSize, processId}) => {
-	const {setTitle} = useContext(AppContext);
 	const {SLAUpdated, setSLAUpdated} = useContext(SLAContext);
 
 	const [itemToRemove, setItemToRemove] = useState(null);
@@ -39,10 +32,7 @@ const SLAListPage = ({page, pageSize, processId}) => {
 		url: `/processes/${processId}/slas`,
 	});
 
-	useEffect(() => {
-		setTitle(Liferay.Language.get('slas'));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	usePageTitle(Liferay.Language.get('slas'));
 
 	const slaContextState = {
 		itemToRemove,

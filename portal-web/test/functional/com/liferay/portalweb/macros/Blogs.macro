@@ -172,7 +172,7 @@ definition {
 	macro addViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
 
-		BlogsEntry.addTitle(title = "${entryTitle}");
+		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
 
 		AlloyEditor.addContent(content = "${entryContent}");
 
@@ -200,7 +200,7 @@ definition {
 			assetType = "Blogs Entry",
 			siteScope = "${siteScope}");
 
-		BlogsEntry.addTitle(title = "${entryTitle}");
+		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
 
 		AlloyEditor.addContent(content = "${entryContent}");
 
@@ -302,7 +302,7 @@ definition {
 	macro addWithWorkflowViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
 
-		BlogsEntry.addTitle(title = "${entryTitle}");
+		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
 
 		AlloyEditor.addContent(content = "${entryContent}");
 

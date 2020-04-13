@@ -69,8 +69,8 @@ const Grid = ({
 	numberOfColumns,
 	numberOfItems,
 }) => {
-	const numberOfRows = Math.ceil(numberOfItems / numberOfColumns);
 	const maxNumberOfItems = Math.min(collectionLength, numberOfItems);
+	const numberOfRows = Math.ceil(maxNumberOfItems / numberOfColumns);
 
 	const createRows = () => {
 		const rows = [];

@@ -1862,12 +1862,13 @@ components:
                         - $ref: "#/components/schemas/RootDefinition"
                         - $ref: "#/components/schemas/RowDefinition"
                         - $ref: "#/components/schemas/SectionDefinition"
+                        - $ref: "#/components/schemas/WidgetInstanceDefinition"
                 pageElements:
                     items:
                         $ref: "#/components/schemas/PageElement"
                     type: array
                 type:
-                    enum: [Collection, CollectionItem, Column, DropZone, Fragment, Root, Row, Section]
+                    enum: [Collection, CollectionItem, Column, DropZone, Fragment, Root, Row, Section, Widget]
                     type: string
         PageTemplate:
             description:
@@ -2325,6 +2326,16 @@ components:
                         type: string
                     readOnly: true
                     type: object
+            type: object
+        Widget:
+            properties:
+                name:
+                    type: string
+            type: object
+        WidgetInstanceDefinition:
+            properties:
+                widget:
+                    $ref: "#/components/schemas/Widget"
             type: object
         WikiNode:
             # @review

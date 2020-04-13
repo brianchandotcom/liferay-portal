@@ -76,7 +76,8 @@ const useGetFieldValue = () => {
 
 	const getFromCollectionItem = useCallback(
 		({collectionFieldId}) =>
-			typeof context.collectionItem[collectionFieldId] === 'string'
+			context.collectionItem[collectionFieldId] !== null &&
+			context.collectionItem[collectionFieldId] !== undefined
 				? Promise.resolve(context.collectionItem[collectionFieldId])
 				: Promise.reject(),
 		[context.collectionItem]

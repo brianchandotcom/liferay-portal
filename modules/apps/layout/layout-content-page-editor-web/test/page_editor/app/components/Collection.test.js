@@ -39,6 +39,10 @@ jest.mock(
 
 function renderCollection(itemConfig = {}) {
 	const state = {
+		permissions: {
+			UPDATE: true,
+			UPDATE_LAYOUT_CONTENT: true,
+		},
 		segmentsExperienceId: 0,
 	};
 

@@ -72,7 +72,7 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(
 			depotName = "Test Depot Name",
-			webContentTitle = "WC WebContent Title");
+			webContentTitle = "WC WebContent Title 1");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",

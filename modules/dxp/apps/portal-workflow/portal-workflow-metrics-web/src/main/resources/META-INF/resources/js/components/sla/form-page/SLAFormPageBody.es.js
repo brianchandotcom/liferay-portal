@@ -133,11 +133,13 @@ const Body = ({history, id, processId, query}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id, processId, saveSLA, sla]);
 
-	const onChangeHandler = validateFunc => ({target: {name, value = ''}}) => {
+	const onChangeHandler = validateFunction => ({
+		target: {name, value = ''},
+	}) => {
 		changeValue(name, value);
 
-		if (typeof validateFunc === 'function') {
-			validateFunc(value);
+		if (typeof validateFunction === 'function') {
+			validateFunction(value);
 		}
 	};
 

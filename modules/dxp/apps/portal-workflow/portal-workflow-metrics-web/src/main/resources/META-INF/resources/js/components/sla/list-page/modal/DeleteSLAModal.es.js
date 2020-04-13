@@ -41,7 +41,7 @@ const DeleteSLAModal = () => {
 
 	return (
 		visible && (
-			<ClayModal data-testid="deleteModal" observer={observer} size="md">
+			<ClayModal data-testid="deleteModal" observer={observer} size="lg">
 				<ClayModal.Body>
 					<p>
 						{Liferay.Language.get(

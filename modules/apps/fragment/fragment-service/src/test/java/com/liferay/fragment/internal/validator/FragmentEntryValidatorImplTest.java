@@ -690,6 +690,17 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValuesTextFieldTypeInvalidURL()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read("configuration_field_text_typeoptions_validation_url.json"),
+			JSONUtil.put("urlField", StringUtil.randomString()));
+	}
+
+	@Test
 	public void testValidateConfigurationValuesTextFieldTypeValidEmail()
 		throws Exception {
 
@@ -726,6 +737,15 @@ public class FragmentEntryValidatorImplTest {
 			_read(
 				"configuration_field_text_typeoptions_validation_regexp.json"),
 			JSONUtil.put("regexpField", "test-256"));
+	}
+
+	@Test
+	public void testValidateConfigurationValuesTextFieldTypeValidURL()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read("configuration_field_text_typeoptions_validation_url.json"),
+			JSONUtil.put("urlField", "http://www.liferay.com"));
 	}
 
 	@Rule

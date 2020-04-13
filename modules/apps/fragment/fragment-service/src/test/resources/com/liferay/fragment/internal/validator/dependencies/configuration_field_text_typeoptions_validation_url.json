@@ -1,0 +1,17 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "urlField",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"type": "url"
+						}
+					}
+				}
+			]
+		}
+	]
+}

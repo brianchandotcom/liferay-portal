@@ -137,6 +137,6 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 
 	private JSONObject _collectionJSONObject;
 	private int _numberOfColumns = 1;
-	private int _numberOfItems = 3;
+	private int _numberOfItems = 5;
 
 }

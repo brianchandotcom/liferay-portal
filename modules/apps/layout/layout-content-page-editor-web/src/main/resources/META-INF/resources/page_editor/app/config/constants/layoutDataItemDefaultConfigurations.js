@@ -19,7 +19,7 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: {
 		collection: {},
 		numberOfColumns: 1,
-		numberOfItems: 3,
+		numberOfItems: 5,
 	},
 
 	[LAYOUT_DATA_ITEM_TYPES.column]: {

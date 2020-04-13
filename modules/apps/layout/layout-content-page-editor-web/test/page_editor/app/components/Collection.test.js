@@ -43,8 +43,8 @@ function renderCollection(itemConfig = {}) {
 	};
 
 	const defaultConfig = {
-		numberOfColumns: 3,
-		numberOfItems: 3,
+		numberOfColumns: 1,
+		numberOfItems: 5,
 	};
 
 	return render(

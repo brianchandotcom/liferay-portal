@@ -190,20 +190,20 @@ definition {
 
 			PageEditor.configureFragment(
 				borderRadius = "None",
-				bottomSpacing = "5",
 				boxShadow = "Large",
 				contentAlign = "Center",
-				imageSize = "Fit");
+				imageSize = "Fit",
+				marginBottom = "5");
 		}
 
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
 				borderRadius = "0",
-				bottomSpacing = "5",
 				boxShadow = "lg",
 				fragmentName = "card",
-				imageSize = "100");
+				imageSize = "100",
+				marginBottom = "5");
 		}
 
 		task ("Remove the fragment") {
@@ -300,16 +300,16 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Center",
-				bottomSpacing = "2",
-				imageSize = "Original Size");
+				imageSize = "Original Size",
+				marginBottom = "2");
 		}
 
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				bottomSpacing = "2",
 				fragmentName = "image",
-				imageSize = "0");
+				imageSize = "0",
+				marginBottom = "2");
 		}
 
 		task ("Remove the fragment") {
@@ -404,14 +404,14 @@ definition {
 
 			PageEditor.configureFragment(
 				borderColor = "lighter",
-				verticalSpace = "3");
+				bottomSpacing = "1");
 		}
 
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
 				borderColor = "lighter",
-				fragmentName = "separator",
-				verticalSpace = "3");
+				bottomSpacing = "1",
+				fragmentName = "separator");
 		}
 
 		task ("Remove the fragment") {

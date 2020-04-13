@@ -905,9 +905,6 @@ definition {
 
 	@priority = "4"
 	test SearchContentPagesSmoke {
-		property portal.suite.search.engine = "disabled";
-		property portal.upstream = "quarantine";
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");

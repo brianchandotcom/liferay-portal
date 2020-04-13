@@ -1,0 +1,7 @@
+.ddm-form-builder {
+	transition: padding ease 0.5s;
+
+	&--sidebar-open {
+		padding-right: $sidebarMainWidth + $sidebarMiniWidth;
+	}
+}

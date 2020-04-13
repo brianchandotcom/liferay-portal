@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import FormBuilderWithLayoutProvider from 'dynamic-data-mapping-form-builder';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import core from 'metal';
@@ -396,8 +397,15 @@ class DataLayoutBuilder extends React.Component {
 	}
 
 	render() {
+		const {sidebarOpen = false} = this.getState();
+
 		return (
-			<div className={'ddm-form-builder'} ref={this.containerRef}></div>
+			<div
+				className={classNames('ddm-form-builder', {
+					'ddm-form-builder--sidebar-open': sidebarOpen,
+				})}
+				ref={this.containerRef}
+			></div>
 		);
 	}
 

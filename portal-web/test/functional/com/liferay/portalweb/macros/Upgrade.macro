@@ -1290,6 +1290,10 @@ definition {
 
 		PageEditor.deleteComment(fragmentComment = "This is a fragment comment");
 
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
 		PageEditor.addComment(
 			content = "This is static text.",
 			fragmentClass = "static-text",

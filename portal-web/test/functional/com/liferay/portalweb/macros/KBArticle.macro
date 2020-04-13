@@ -134,7 +134,7 @@ definition {
 				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 				value1 = "${kbArticleContentSource}");
 		}
-		else if ("${kbArticleAddWithTemplate}" == "true") {
+		else if ("${kbArticleAddViaTemplate}" == "true") {
 			CKEditor.addContent(kbArticleContentEdit = "${kbArticleContent}");
 		}
 		else {

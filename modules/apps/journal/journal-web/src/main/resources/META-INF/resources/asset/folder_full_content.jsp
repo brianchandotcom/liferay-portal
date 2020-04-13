@@ -17,7 +17,7 @@
 <%@ include file="/asset/init.jsp" %>
 
 <%
-JournalDisplayContext journalDisplayContext = new JournalDisplayContext(request, liferayPortletRequest, liferayPortletResponse, null, null);
+JournalDisplayContext journalDisplayContext = JournalDisplayContext.create(request, liferayPortletRequest, liferayPortletResponse, null, null);
 
 JournalFolder folder = journalDisplayContext.getFolder();
 %>

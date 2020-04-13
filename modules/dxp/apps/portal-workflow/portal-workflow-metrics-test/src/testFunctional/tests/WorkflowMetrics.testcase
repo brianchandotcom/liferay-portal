@@ -24,8 +24,6 @@ definition {
 
 		BlogsEntry.tearDownCP();
 
-		WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
@@ -35,17 +33,17 @@ definition {
 			workflowDefinition = "No Workflow",
 			workflowResourceValue = "Blogs Entry");
 
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		WorkflowMetrics.tearDown();
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-		}
-		else {
-			ProductMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Control Panel",
-				portlet = "Metrics");
-
-			WorkflowMetrics.tearDown();
-
 		}
 	}
 

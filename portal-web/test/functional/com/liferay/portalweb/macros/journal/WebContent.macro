@@ -2109,7 +2109,17 @@ definition {
 	}
 
 	macro viewVersion {
+		var key_panel = "Basic Information";
+
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+
+		if ((IsElementPresent(locator1 = "Panel#PANEL_COLLAPSED")) && (IsVisible(locator1 = "Panel#PANEL_COLLAPSED"))) {
+			AssertClick(
+				locator1 = "Panel#PANEL_COLLAPSED",
+				value1 = "${key_panel}");
+		}
+
+		AssertElementPresent(locator1 = "Panel#PANEL_EXPANDED");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "WCEditWebContent#VERSION",

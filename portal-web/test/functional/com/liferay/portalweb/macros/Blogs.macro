@@ -172,7 +172,7 @@ definition {
 	macro addViaAP {
 		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
 
-		BlogsEntry.addTitle(title = "${entryTitle}");
+		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
 
 		AlloyEditor.addContent(content = "${entryContent}");
 

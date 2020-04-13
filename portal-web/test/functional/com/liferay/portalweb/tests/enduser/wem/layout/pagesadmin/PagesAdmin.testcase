@@ -24,6 +24,58 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-110108. Adding a fourth level child page and viewing it on Page admin."
+	@priority = "5"
+	test AddPageWithFourthLevelChildPagesToSite {
+		property testray.component.names = "Site Pages Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "First Level Child Page",
+			parentLayoutName = "Site Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Second Level Child Page",
+			parentLayoutName = "First Level Child Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Third Level Child Page",
+			parentLayoutName = "Second Level Child Page");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Fourth Level Child Page",
+			parentLayoutName = "Third Level Child Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		Page.view(
+			depth = "2",
+			pageName = "First Level Child Page",
+			privacy = "Public Pages");
+
+		Page.view(
+			depth = "3",
+			pageName = "Second Level Child Page",
+			privacy = "Public Pages");
+
+		Page.view(
+			depth = "4",
+			pageName = "Third Level Child Page",
+			privacy = "Public Pages");
+
+		Page.view(
+			depth = "5",
+			pageName = "Fourth Level Child Page",
+			privacy = "Public Pages");
+	}
+
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {

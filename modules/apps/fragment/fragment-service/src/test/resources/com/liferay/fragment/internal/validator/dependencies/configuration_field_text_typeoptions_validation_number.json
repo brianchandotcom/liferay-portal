@@ -1,0 +1,19 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "numberField",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"max": 500,
+							"min": 100,
+							"type": "number"
+						}
+					}
+				}
+			]
+		}
+	]
+}

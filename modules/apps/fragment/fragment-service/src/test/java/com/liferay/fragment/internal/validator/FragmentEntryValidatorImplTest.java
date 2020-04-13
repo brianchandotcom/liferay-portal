@@ -654,6 +654,30 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValuesTextFieldTypeInvalidNumberLimit()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read(
+				"configuration_field_text_typeoptions_validation_number.json"),
+			JSONUtil.put("numberField", 1000));
+	}
+
+	@Test
+	public void testValidateConfigurationValuesTextFieldTypeInvalidNumberNAN()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read(
+				"configuration_field_text_typeoptions_validation_number.json"),
+			JSONUtil.put("numberField", StringUtil.randomString()));
+	}
+
+	@Test
 	public void testValidateConfigurationValuesTextFieldTypeValidEmail()
 		throws Exception {
 
@@ -670,6 +694,16 @@ public class FragmentEntryValidatorImplTest {
 			_read(
 				"configuration_field_text_typeoptions_validation_length.json"),
 			JSONUtil.put("textField", StringUtil.randomString(9)));
+	}
+
+	@Test
+	public void testValidateConfigurationValuesTextFieldTypeValidNumber()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read(
+				"configuration_field_text_typeoptions_validation_number.json"),
+			JSONUtil.put("numberField", 256));
 	}
 
 	@Rule

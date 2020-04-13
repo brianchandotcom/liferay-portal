@@ -115,24 +115,25 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 	protected DynamicQuery getDynamicQuery(long userId) {
 		DynamicQuery dynamicQuery = ddmFormInstanceLocalService.dynamicQuery();
 
-		DynamicQuery dynamicSubquery =
+		DynamicQuery formInstanceIdDynamicQuery =
 			_ddmFormInstanceRecordLocalService.dynamicQuery();
 
-		dynamicSubquery.setProjection(
+		formInstanceIdDynamicQuery.setProjection(
 			ProjectionFactoryUtil.property("formInstanceId"));
 
 		Property userIdProperty = PropertyFactoryUtil.forName("userId");
 		Property versionUserIdProperty = PropertyFactoryUtil.forName(
 			"versionUserId");
 
-		dynamicSubquery.add(
+		formInstanceIdDynamicQuery.add(
 			RestrictionsFactoryUtil.or(
 				userIdProperty.eq(userId), versionUserIdProperty.eq(userId)));
 
 		Property formInstanceIdProperty = PropertyFactoryUtil.forName(
 			"formInstanceId");
 
-		return dynamicQuery.add(formInstanceIdProperty.in(dynamicSubquery));
+		return dynamicQuery.add(
+			formInstanceIdProperty.in(formInstanceIdDynamicQuery));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1,10 +1,29 @@
 @import 'atlas-variables';
 
+$controlMenuHeight: 48px;
+$desktopControlMenuHeight: 56px;
+$toolbarDesktopHeight: 64px;
+$toolbarHeight: 110px;
+
 .color-cell-editor-hidden {
 	display: none;
 }
 
 .portlet-journal {
+	body.has-control-menu & {
+		.multi-panel-sidebar {
+			top: $controlMenuHeight + $toolbarHeight;
+
+			@include media-breakpoint-up(sm) {
+				top: $desktopControlMenuHeight + $toolbarHeight;
+			}
+
+			@include media-breakpoint-up(lg) {
+				top: $desktopControlMenuHeight + $toolbarDesktopHeight;
+			}
+		}
+	}
+
 	.field-labels-inline {
 		clear: both;
 		display: block;

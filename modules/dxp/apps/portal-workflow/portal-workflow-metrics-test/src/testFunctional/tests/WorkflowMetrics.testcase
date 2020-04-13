@@ -55,7 +55,7 @@ definition {
 		property portal.acceptance = "true";
 
 		var key_testSLADefinitionDays = "1";
-		var key_testSLADefinitionHours = "0000";
+		var key_testSLADefinitionHours = "00:00";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
@@ -714,7 +714,7 @@ definition {
 		property test.name.skip.portal.instance = "WorkflowMetrics#SeeListOfReports";
 
 		var key_testSLADefinitionDays = "0";
-		var key_testSLADefinitionHours = "0002";
+		var key_testSLADefinitionHours = "00:02";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
@@ -945,8 +945,7 @@ definition {
 	test VerifyFilterTopStepPerformance {
 
 		var key_testSLADefinitionDays = "0";
-		var key_testSLADefinitionHours = "0001";
-		var key_testSLADefinitionHoursCheck = "00:01";
+		var key_testSLADefinitionHours = "00:01";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
@@ -1038,7 +1037,7 @@ definition {
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPendingItems";
 
 		var key_testSLADefinitionDays = "0";
-		var key_testSLADefinitionHours = "0002";
+		var key_testSLADefinitionHours = "00:02";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
@@ -1290,8 +1289,7 @@ definition {
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewSLABreachesOfTopSteps";
 
 		var key_testSLADefinitionDays = "0";
-		var key_testSLADefinitionHours = "0001";
-		var key_testSLADefinitionHoursCheck = "00:01";
+		var key_testSLADefinitionHours = "00:01";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";

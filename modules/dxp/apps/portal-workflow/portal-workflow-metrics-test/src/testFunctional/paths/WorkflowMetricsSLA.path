@@ -40,37 +40,37 @@
 </tr>
 <tr>
 	<td>SLA_DEFINITION_DAYS</td>
-	<td>//input[@id='sla_duration_days']</td>
+	<td>//input[@id='slaDurationDays']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DEFINITION_DESCRIPTION</td>
-	<td>//input[@id='sla_description']</td>
+	<td>//input[@id='slaDescription']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DEFINITION_HOURS</td>
-	<td>//input[@id='sla_duration_hours']</td>
+	<td>//input[@id='slaDurationHours']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DEFINITION_NAME</td>
-	<td>//input[@id='sla_name']</td>
+	<td>//input[@id='slaName']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DEFINITION_PAUSE</td>
-	<td>//label[@for="sla_time_pause"]/following-sibling::div//div[contains(@class, 'align-items-start')]</td>
+	<td>//label[@for="slaTimePause"]/following-sibling::div//div[contains(@class, 'align-items-start')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DEFINITION_START</td>
-	<td>//label[@for="sla_time_start"]/following-sibling::div//div[contains(@class, 'align-items-start')]</td>
+	<td>//label[@for="slaTimeStart"]/following-sibling::div//div[contains(@class, 'align-items-start')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_DEFINITION_STOP</td>
-	<td>//label[@for="sla_time_stop"]/following-sibling::div//div[contains(@class, 'align-items-start')]</td>
+	<td>//label[@for="slaTimeStop"]/following-sibling::div//div[contains(@class, 'align-items-start')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>SLA_REMOVE_CONFIRMATION_BUTTON</td>
-	<td>//button[@id='remove_sla_button']</td>
+	<td>//button[@id='removeSlaButton']</td>
 	<td></td>
 </tr>
 <tr>
@@ -100,12 +100,12 @@
 </tr>
 <tr>
 	<td>SLA_STEPS_START</td>
-	<td>//label[@for="sla_time_start"]/following-sibling::div//span[@class='label-item label-item-expand']</td>
+	<td>//label[@for="slaTimeStart"]/following-sibling::div//span[@class='label-item label-item-expand']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SLA_STEPS_STOP</td>
-	<td>//label[@for="sla_time_stop"]/following-sibling::div//span[@class='label-item label-item-expand']</td>
+	<td>//label[@for="slaTimeStop"]/following-sibling::div//span[@class='label-item label-item-expand']</td>
 	<td></td>
 </tr>
 <tr>

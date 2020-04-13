@@ -180,11 +180,6 @@
 	<td>//div[contains(@class,'component-${key_fragmentName}')]//a[contains(@class,'-${key_type}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_VERTICAL_SPACE</td>
-	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@class,'pb-${key_verticalSpace}')]</td>
-	<td></td>
-</tr>
 <!--FRAGMENT_HEADER-->
 <tr>
 	<td>FRAGMENT_HEADER</td>

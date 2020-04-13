@@ -1349,6 +1349,8 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryContentEdit = "Blogs Entry Content Edit");
 
+		PortletEntry.publish();
+
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content Edit",
 			entryTitle = "Blogs Entry Title Edit");

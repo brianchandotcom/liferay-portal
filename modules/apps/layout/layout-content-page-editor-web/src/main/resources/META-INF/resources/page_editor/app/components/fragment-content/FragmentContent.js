@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {updateFragmentEntryLinkContent} from '../../actions/index';
 import {DROP_ZONE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/dropZoneFragmentEntryProcessor';
@@ -62,11 +62,14 @@ const FragmentContent = React.forwardRef(
 			[editables]
 		);
 
-		const updateEditables = (parent = element) => {
-			if (isMounted()) {
-				setEditables(parent ? getAllEditables(parent) : []);
-			}
-		};
+		const updateEditables = useCallback(
+			parent => {
+				if (isMounted()) {
+					setEditables(parent ? getAllEditables(parent) : []);
+				}
+			},
+			[isMounted]
+		);
 
 		const languageId = useSelector(state => state.languageId);
 
@@ -164,33 +167,36 @@ const FragmentContent = React.forwardRef(
 			return dropZoneValues.dropZones || {};
 		});
 
-		const getPortals = element =>
-			Array.from(element.querySelectorAll('lfr-drop-zone')).map(
-				dropZoneElement => {
-					const mainItemId = (
-						dropZones.find(
-							dropZone =>
-								dropZone.id ===
-								dropZoneElement.getAttribute('id')
-						) || {}
-					).uuid;
+		const getPortals = useCallback(
+			element =>
+				Array.from(element.querySelectorAll('lfr-drop-zone')).map(
+					dropZoneElement => {
+						const mainItemId = (
+							dropZones.find(
+								dropZone =>
+									dropZone.id ===
+									dropZoneElement.getAttribute('id')
+							) || {}
+						).uuid;
 
-					const Component = () =>
-						mainItemId && (
-							<PageEditor
-								mainItemId={mainItemId}
-								withinMasterPage
-							/>
-						);
+						const Component = () =>
+							mainItemId && (
+								<PageEditor
+									mainItemId={mainItemId}
+									withinMasterPage
+								/>
+							);
 
-					Component.displayName = 'DropZoneComponent';
+						Component.displayName = 'DropZoneComponent';
 
-					return {
-						Component,
-						element: dropZoneElement,
-					};
-				}
-			);
+						return {
+							Component,
+							element: dropZoneElement,
+						};
+					}
+				),
+			[dropZones]
+		);
 
 		const onFloatingToolbarButtonClick = (buttonId, editableId) => {
 			if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {

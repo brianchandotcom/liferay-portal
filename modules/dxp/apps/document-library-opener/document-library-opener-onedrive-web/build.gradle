@@ -11,6 +11,7 @@ dependencies {
 	compileInclude group: "com.squareup.okio", name: "okio", version: "1.15.0"
 	compileInclude group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
 	compileInclude group: "org.apache.commons", name: "commons-collections4", version: "4.4"
+	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.19"
 	compileInclude group: "org.apache.poi", name: "poi", version: "4.1.2"
 	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "4.1.2"
 	compileInclude group: "org.apache.poi", name: "poi-ooxml-schemas", version: "4.1.2"

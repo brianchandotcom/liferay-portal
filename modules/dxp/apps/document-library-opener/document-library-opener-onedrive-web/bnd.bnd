@@ -6,6 +6,8 @@ Import-Package:\
 	\
 	!android.util,\
 	\
+	!com.github.luben.*,\
+	\
 	!com.google.common.util.concurrent.*,\
 	!com.google.errorprone.annotations.*,\
 	\
@@ -51,6 +53,10 @@ Import-Package:\
 	\
 	!org.openxmlformats.schemas.officeDocument.x2006.*,\
 	!org.openxmlformats.schemas.schemaLibrary.x2006.*,\
+	\
+	org.brotli.*;resolution:=optional,\
+	\
+	org.tukaani.*;resolution:=optional,\
 	\
 	*
 Web-ContextPath: /document-library-opener-one-drive-web

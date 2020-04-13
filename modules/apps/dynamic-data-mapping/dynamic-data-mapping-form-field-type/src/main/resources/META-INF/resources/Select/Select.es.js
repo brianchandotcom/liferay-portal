@@ -19,6 +19,7 @@ import {ClayCheckbox} from '@clayui/form';
 import React, {forwardRef, useMemo, useRef, useState} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import {useSyncValue} from '../Text/Text.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './SelectAdapter.soy';
@@ -83,28 +84,13 @@ function toArray(value = '') {
 	return newValue;
 }
 
-/**
- * Checks if the array is empty
- * @param arr argument to be checked if it's empty or not.
- * @returns {Boolean}
- */
-function isArrayEmpty(arr) {
-	if (!Array.isArray(arr) || arr.length === 0) {
-		return false;
-	}
-
-	return arr.some(value => value !== '') === false;
-}
-
 function normalizeValue({
 	multiple,
 	normalizedOptions,
 	predefinedValueArray,
 	valueArray,
 }) {
-	const assertValue = isArrayEmpty(valueArray)
-		? predefinedValueArray
-		: valueArray;
+	const assertValue = valueArray.length ? valueArray : predefinedValueArray;
 
 	const valueWithoutMultiple = assertValue.filter((_, index) => {
 		return multiple ? true : index === 0;
@@ -279,7 +265,7 @@ const Select = ({
 	const menuElementRef = useRef(null);
 	const triggerElementRef = useRef(null);
 
-	const [currentValue, setCurrentValue] = useState(value);
+	const [currentValue, setCurrentValue] = useSyncValue(value);
 	const [expand, setExpand] = useState(false);
 
 	const handleFocus = (event, direction) => {

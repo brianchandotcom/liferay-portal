@@ -16,7 +16,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import RatingsThumbs from '../../src/main/resources/META-INF/resources/js/components/RatingsThumbs.es';
+import RatingsThumbs from '../../src/main/resources/META-INF/resources/js/components/RatingsThumbs';
 import {formDataToObj} from '../utils';
 
 const baseProps = {

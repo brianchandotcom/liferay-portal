@@ -19,7 +19,7 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
-import Lang from '../utils/lang.es';
+import Lang from '../utils/lang';
 
 const RATING_TYPE = 'stars';
 

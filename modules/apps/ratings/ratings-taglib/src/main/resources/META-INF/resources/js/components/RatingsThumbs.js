@@ -18,7 +18,7 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useReducer} from 'react';
 
-import AnimatedCounter from './AnimatedCounter.es';
+import AnimatedCounter from './AnimatedCounter';
 
 const PRESSED_DOWN = 'DOWN';
 const PRESSED_UP = 'UP';

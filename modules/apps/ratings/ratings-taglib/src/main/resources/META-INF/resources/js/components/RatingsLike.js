@@ -18,7 +18,7 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import AnimatedCounter from './AnimatedCounter.es';
+import AnimatedCounter from './AnimatedCounter';
 
 const RATING_TYPE = 'like';
 const SCORE_LIKE = 1;

@@ -43,7 +43,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 
 			<react:component
 				data="<%= data %>"
-				module="js/components/RatingsLike.es"
+				module="js/components/RatingsLike"
 			/>
 		</div>
 	</c:when>
@@ -63,7 +63,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 
 			<react:component
 				data="<%= data %>"
-				module="js/components/RatingsThumbs.es"
+				module="js/components/RatingsThumbs"
 			/>
 		</div>
 	</c:when>
@@ -71,7 +71,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 		<div>
 			<react:component
 				data="<%= data %>"
-				module="js/components/RatingsStars.es"
+				module="js/components/RatingsStars"
 			/>
 		</div>
 	</c:when>

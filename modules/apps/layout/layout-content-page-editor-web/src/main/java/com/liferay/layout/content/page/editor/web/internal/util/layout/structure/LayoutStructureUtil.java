@@ -34,6 +34,7 @@ import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -150,7 +151,7 @@ public class LayoutStructureUtil {
 
 		JSONObject dataJSONObject = layoutStructure.toJSONObject();
 
-		LayoutPageTemplateStructureLocalServiceUtil.
+		LayoutPageTemplateStructureServiceUtil.
 			updateLayoutPageTemplateStructure(
 				groupId, PortalUtil.getClassNameId(Layout.class.getName()),
 				plid, segmentsExperienceId, dataJSONObject.toString());

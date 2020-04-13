@@ -152,7 +152,7 @@ const useSLAFormState = ({errors, id, processId, setErrors}) => {
 		url: `/processes/${processId}/slas`,
 	});
 
-	const {putData: updateSLA} = usePut({body, url: `/slas/${id}`});
+	const updateSLA = usePut({body, url: `/slas/${id}`});
 
 	const changeNodesKeys = (type, nodeKeys, callback) => selectedNodes => {
 		const selectedNodeKeys = getNodeKeys(selectedNodes);

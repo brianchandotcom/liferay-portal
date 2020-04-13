@@ -36,7 +36,6 @@ definition {
 	@priority = "4"
 	test AddInvalidConfiguration {
 		property portal.acceptance = "quarantine";
-		property test.name.skip.portal.instance = "FragmentsConfiguration#AddInvalidConfiguration";
 
 		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
@@ -72,8 +71,6 @@ definition {
 	@description = "This is a test for LPS-97184. Valid fragment configuration can be published."
 	@priority = "4"
 	test AddValidConfiguration {
-		property test.name.skip.portal.instance = "FragmentsConfiguration#AddValidConfiguration";
-
 		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
 		FragmentsEditor.gotoConfigurationTab();

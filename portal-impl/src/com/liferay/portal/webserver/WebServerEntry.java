@@ -15,9 +15,12 @@
 package com.liferay.portal.webserver;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+
+import java.text.Format;
 
 import java.util.Date;
 
@@ -36,13 +39,25 @@ public class WebServerEntry {
 
 		_path = getPath(path, name);
 		_name = name;
-		_createDate = createDate;
-		_modifiedDate = modifiedDate;
+
+		if ((createDate != null) || (modifiedDate != null)) {
+			Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				"d MMM yyyy HH:mm z");
+
+			if (createDate != null) {
+				_createDate = dateFormat.format(createDate);
+			}
+
+			if (modifiedDate != null) {
+				_modifiedDate = dateFormat.format(modifiedDate);
+			}
+		}
+
 		_description = GetterUtil.getString(description);
 		_size = size;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return _createDate;
 	}
 
@@ -50,7 +65,7 @@ public class WebServerEntry {
 		return _description;
 	}
 
-	public Date getModifiedDate() {
+	public String getModifiedDate() {
 		return _modifiedDate;
 	}
 
@@ -66,7 +81,7 @@ public class WebServerEntry {
 		return _size;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		_createDate = createDate;
 	}
 
@@ -74,7 +89,7 @@ public class WebServerEntry {
 		_description = description;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(String modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
@@ -107,9 +122,9 @@ public class WebServerEntry {
 		return path;
 	}
 
-	private Date _createDate;
+	private String _createDate;
 	private String _description;
-	private Date _modifiedDate;
+	private String _modifiedDate;
 	private String _name;
 	private String _path;
 	private long _size;

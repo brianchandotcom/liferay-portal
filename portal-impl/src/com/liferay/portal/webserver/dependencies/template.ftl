@@ -27,7 +27,7 @@
 		</td>
 		<td>
 			<#if entry.getModifiedDate()??>
-				${dateFormat.format(entry.modifiedDate)}
+				${entry.modifiedDate}
 			<#else>
 				-
 			</#if>

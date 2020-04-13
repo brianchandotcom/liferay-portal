@@ -21,7 +21,7 @@ import {createAutoCorrectedDatePipe} from 'text-mask-addons';
 import {createTextMaskInputElement} from 'text-mask-core';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import {useSyncValue} from '../Text/Text.es';
+import {useSyncValue} from '../hooks/useSyncValue';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './DatePickerAdapter.soy';

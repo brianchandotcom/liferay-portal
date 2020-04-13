@@ -18,7 +18,8 @@ import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 import React, {useRef} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import {Main as Text, useSyncValue} from '../Text/Text.es';
+import {Main as Text} from '../Text/Text.es';
+import {useSyncValue} from '../hooks/useSyncValue';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './KeyValueAdapter.soy';

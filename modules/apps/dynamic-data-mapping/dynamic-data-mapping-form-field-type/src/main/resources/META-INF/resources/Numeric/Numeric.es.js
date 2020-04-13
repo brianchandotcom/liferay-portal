@@ -20,7 +20,7 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import vanillaTextMask from 'vanilla-text-mask';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import {useSyncValue} from '../Text/Text.es';
+import {useSyncValue} from '../hooks/useSyncValue';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './NumericAdapter.soy';

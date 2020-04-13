@@ -35,6 +35,20 @@ public class GuestOrUserUtil {
 		return getGuestOrUser(user);
 	}
 
+	public static User getGuestOrUser(long companyId) throws PortalException {
+		try {
+			return getUser(getUserId());
+		}
+		catch (PrincipalException principalException) {
+			try {
+				return UserLocalServiceUtil.getDefaultUser(companyId);
+			}
+			catch (Exception exception) {
+				throw principalException;
+			}
+		}
+	}
+
 	public static User getGuestOrUser(User user) throws PortalException {
 		try {
 			return getUser(user.getUserId());

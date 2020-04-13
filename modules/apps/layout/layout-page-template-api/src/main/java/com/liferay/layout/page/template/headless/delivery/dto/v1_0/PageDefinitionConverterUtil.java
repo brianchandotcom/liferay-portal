@@ -16,8 +16,10 @@ package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.CollectionDefinition;
@@ -51,6 +53,8 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -554,19 +558,50 @@ public class PageDefinitionConverterUtil {
 			FragmentLayoutStructureItem fragmentLayoutStructureItem =
 				(FragmentLayoutStructureItem)layoutStructureItem;
 
+			FragmentEntryLink fragmentEntryLink =
+				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+					fragmentLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				return null;
+			}
+
+			JSONObject editableValuesJSONObject = null;
+
+			try {
+				editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+			}
+			catch (JSONException jsonException) {
+				return null;
+			}
+
+			String portletId = editableValuesJSONObject.getString("portletId");
+
+			if (Validator.isNull(portletId)) {
+				return new PageElement() {
+					{
+						definition =
+							FragmentInstanceDefinitionConverterUtil.
+								toFragmentInstanceDefinition(
+									fragmentCollectionContributorTracker,
+									fragmentEntryConfigurationParser,
+									fragmentLayoutStructureItem,
+									fragmentRendererTracker,
+									infoDisplayContributorTracker,
+									saveInlineContent, saveMappingConfiguration,
+									segmentsExperienceId);
+						type = PageElement.Type.FRAGMENT;
+					}
+				};
+			}
+
 			return new PageElement() {
 				{
 					definition =
-						FragmentInstanceDefinitionConverterUtil.
-							toFragmentInstanceDefinition(
-								fragmentCollectionContributorTracker,
-								fragmentEntryConfigurationParser,
-								fragmentLayoutStructureItem,
-								fragmentRendererTracker,
-								infoDisplayContributorTracker,
-								saveInlineContent, saveMappingConfiguration,
-								segmentsExperienceId);
-					type = PageElement.Type.FRAGMENT;
+						WidgetInstanceDefinitionConverterUtil.
+							toWidgetInstanceDefinition(portletId);
+					type = PageElement.Type.WIDGET;
 				}
 			};
 		}

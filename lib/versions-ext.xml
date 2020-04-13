@@ -2051,6 +2051,19 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/jdom2.jar</file-name>
+				<version>2.0.6</version>
+				<project-name>JDOM</project-name>
+				<project-url>http://www.jdom.org</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+						<copyright-notice>Copyright (c) 2000-2012 Jason Hunter &amp; Brett McLaughlin. All rights reserved.</copyright-notice>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/jempbox.jar</file-name>
 				<version>1.8.16</version>
 				<project-name>PDFBox</project-name>
@@ -2673,7 +2686,20 @@
 			</library>
 			<library>
 				<file-name>lib/portal/rometools.jar</file-name>
-				<version>1.5.1</version>
+				<version>1.12.2</version>
+				<project-name>Rome Tools</project-name>
+				<project-url>http://rometools.github.io/rome/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+						<copyright-notice>Copyright (c) 2004 Sun Microsystems, Inc.</copyright-notice>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/rometools-utils.jar</file-name>
+				<version>1.12.2</version>
 				<project-name>Rome Tools</project-name>
 				<project-url>http://rometools.github.io/rome/</project-url>
 				<licenses>

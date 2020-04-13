@@ -48,7 +48,7 @@ definition {
 
 	@priority = "5"
 	test BlacklistModuleBundleSymbolicName {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleJar";
 
 		ProductMenu.gotoPortlet(
@@ -91,7 +91,7 @@ definition {
 	@priority = "5"
 	test BlacklistModuleLPKG {
 		property osgi.app.includes = "gogo-shell";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleLPKG";
 
 		ProductMenu.gotoPortlet(

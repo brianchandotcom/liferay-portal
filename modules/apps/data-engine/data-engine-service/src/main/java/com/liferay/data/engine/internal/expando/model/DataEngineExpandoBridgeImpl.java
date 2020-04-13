@@ -73,14 +73,14 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 		).checkPermissions(
 			false
 		).user(
-			GuestOrUserUtil.getGuestOrUser()
+			GuestOrUserUtil.getGuestOrUser(_companyId)
 		).build();
 
 		_dataRecordResource = DataRecordResource.builder(
 		).checkPermissions(
 			false
 		).user(
-			GuestOrUserUtil.getGuestOrUser()
+			GuestOrUserUtil.getGuestOrUser(_companyId)
 		).build();
 
 		DataDefinition dataDefinition = null;

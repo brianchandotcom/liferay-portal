@@ -30,9 +30,15 @@ public class TableJoinHolder {
 		Column<?, Long> fromPKColumn, Column<?, Long> joinPKColumn,
 		Function<FromStep, JoinStep> joinFunction) {
 
-		_fromPKColumn = fromPKColumn;
-		_joinPKColumn = joinPKColumn;
-		_joinFunction = joinFunction;
+		this(fromPKColumn, joinPKColumn, joinFunction, false);
+	}
+
+	public Column<?, Long> getChildPKColumn() {
+		if (_reverse) {
+			return _fromPKColumn;
+		}
+
+		return _joinPKColumn;
 	}
 
 	public Column<?, Long> getFromPKColumn() {
@@ -47,15 +53,40 @@ public class TableJoinHolder {
 		return _joinPKColumn;
 	}
 
+	public Column<?, Long> getParentPKColumn() {
+		if (_reverse) {
+			return _joinPKColumn;
+		}
+
+		return _fromPKColumn;
+	}
+
+	public TableJoinHolder reverse() {
+		return new TableJoinHolder(
+			_fromPKColumn, _joinPKColumn, _joinFunction, !_reverse);
+	}
+
 	@Override
 	public String toString() {
 		return StringBundler.concat(
 			"{fromTablePrimaryKey=", _fromPKColumn, ", joinTablePrimaryKey=",
-			_joinPKColumn, ", joinFunction=", _joinFunction, "}");
+			_joinPKColumn, ", joinFunction=", _joinFunction, ", reverse=",
+			_reverse, "}");
+	}
+
+	private TableJoinHolder(
+		Column<?, Long> fromPKColumn, Column<?, Long> joinPKColumn,
+		Function<FromStep, JoinStep> joinFunction, boolean reverse) {
+
+		_fromPKColumn = fromPKColumn;
+		_joinPKColumn = joinPKColumn;
+		_joinFunction = joinFunction;
+		_reverse = reverse;
 	}
 
 	private final Column<?, Long> _fromPKColumn;
 	private final Function<FromStep, JoinStep> _joinFunction;
 	private final Column<?, Long> _joinPKColumn;
+	private final boolean _reverse;
 
 }

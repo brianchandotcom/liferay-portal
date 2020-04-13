@@ -153,8 +153,9 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		DSLQuery dslQuery = null;
 
 		for (TableJoinHolder parentJoinHolder : parentJoinHolders) {
-			Column<?, Long> parentPKColumn = parentJoinHolder.getFromPKColumn();
-			Column<?, Long> childPKColumn = parentJoinHolder.getJoinPKColumn();
+			Column<?, Long> parentPKColumn =
+				parentJoinHolder.getParentPKColumn();
+			Column<?, Long> childPKColumn = parentJoinHolder.getChildPKColumn();
 
 			FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
 				parentPKColumn, childPKColumn);

@@ -252,6 +252,8 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
+		Pause(locator1 = "3000");
+
 		Depot.connectSite(siteList = "Site Name");
 
 		Navigator.gotoSitePage(

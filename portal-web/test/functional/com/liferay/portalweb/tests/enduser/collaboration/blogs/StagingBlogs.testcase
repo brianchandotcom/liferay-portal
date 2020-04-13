@@ -595,7 +595,7 @@ definition {
 
 		Refresh();
 
-		BlogsEntry.viewEntryCP(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 	}

@@ -451,7 +451,7 @@ definition {
 
 		Notifications.navigateToContent(contentBody = "Blogs Entry Title");
 
-		BlogsEntry.viewEntryCP(
+		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 

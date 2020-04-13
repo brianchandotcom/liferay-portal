@@ -123,14 +123,11 @@ const RatingsStars = ({
 			return Liferay.Language.get('vote');
 		}
 		else if (score > 0) {
-			const title =
+			const title = Liferay.Language.get(
 				score === 1
-					? Liferay.Language.get(
-							'you-have-rated-this-x-star-out-of-x'
-					  )
-					: Liferay.Language.get(
-							'you-have-rated-this-x-stars-out-of-x'
-					  );
+					? 'you-have-rated-this-x-star-out-of-x'
+					: 'you-have-rated-this-x-stars-out-of-x'
+			);
 
 			return Lang.sub(title, [score, numberOfStars]);
 		}

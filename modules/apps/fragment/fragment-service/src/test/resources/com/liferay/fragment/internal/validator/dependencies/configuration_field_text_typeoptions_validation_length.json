@@ -1,0 +1,19 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"name": "textField",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"maxLength": 10,
+							"minLength": 5,
+							"type": "text"
+						}
+					}
+				}
+			]
+		}
+	]
+}

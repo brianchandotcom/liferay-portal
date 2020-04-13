@@ -19,6 +19,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.FileImpl;
 
 import org.hamcrest.core.StringStartsWith;
@@ -641,12 +642,34 @@ public class FragmentEntryValidatorImplTest {
 	}
 
 	@Test
+	public void testValidateConfigurationValuesTextFieldTypeInvalidLength()
+		throws Exception {
+
+		expectedException.expect(FragmentEntryConfigurationException.class);
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read(
+				"configuration_field_text_typeoptions_validation_length.json"),
+			JSONUtil.put("textField", StringUtil.randomString(11)));
+	}
+
+	@Test
 	public void testValidateConfigurationValuesTextFieldTypeValidEmail()
 		throws Exception {
 
 		_fragmentEntryValidatorImpl.validateConfigurationValues(
 			_read("configuration_field_text_typeoptions_validation_email.json"),
 			JSONUtil.put("emailField", "test@liferay.com"));
+	}
+
+	@Test
+	public void testValidateConfigurationValuesTextFieldTypeValidLength()
+		throws Exception {
+
+		_fragmentEntryValidatorImpl.validateConfigurationValues(
+			_read(
+				"configuration_field_text_typeoptions_validation_length.json"),
+			JSONUtil.put("textField", StringUtil.randomString(9)));
 	}
 
 	@Rule

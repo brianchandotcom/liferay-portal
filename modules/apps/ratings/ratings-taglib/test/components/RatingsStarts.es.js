@@ -148,11 +148,13 @@ describe('RatingsStars', () => {
 		describe('and the user vote 2/5 stars', () => {
 			let starsDropdownToggle;
 			let starsButtons;
+			let result;
 
 			beforeEach(async () => {
-				starsButtons = renderComponent({
+				result = renderComponent({
 					userScore: 0.6,
-				}).getAllByRole('button');
+				});
+				starsButtons = result.getAllByRole('button');
 				starsDropdownToggle = starsButtons[0];
 
 				await act(async () => {
@@ -167,6 +169,10 @@ describe('RatingsStars', () => {
 				expect(url).toBe(baseProps.url);
 				expect(objFormData.className).toBe(baseProps.className);
 				expect(objFormData.score).toBe('0.4');
+			});
+
+			it('updates the average score of 2 votes', () => {
+				expect(result.queryByText(`2.5 (2 votes)`)).toBeTruthy();
 			});
 
 			it('updates the user score with the one from the server', () => {

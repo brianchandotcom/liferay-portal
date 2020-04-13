@@ -122,6 +122,7 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
+			kbArticleAddWithTemplate = "true",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbTemplateTitle = "Knowledge Base Template Title");

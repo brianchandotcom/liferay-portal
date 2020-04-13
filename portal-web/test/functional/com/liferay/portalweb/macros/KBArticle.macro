@@ -134,6 +134,9 @@ definition {
 				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 				value1 = "${kbArticleContentSource}");
 		}
+		else if ("${kbArticleAddWithTemplate}" == "true") {
+			CKEditor.addContent(kbArticleContentEdit = "${kbArticleContent}");
+		}
 		else {
 			CKEditor.addContent(content = "${kbArticleContent}");
 		}

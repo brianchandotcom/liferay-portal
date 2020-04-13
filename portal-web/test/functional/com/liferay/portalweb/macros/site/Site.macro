@@ -26,6 +26,8 @@ definition {
 
 		SelectFrameTop();
 
+		Pause(locator1 = "3000");
+
 		AssertClick(
 			locator1 = "Button#DONE",
 			value1 = "Done");

@@ -80,20 +80,21 @@ public class DDMFormInstanceRecordUADAnonymizer
 						RestrictionsFactoryUtil.eq(userIdFieldName, userId));
 				}
 
-				DynamicQuery dynamicSubquery =
+				DynamicQuery formInstanceRecordIdDynamicQuery =
 					_ddmFormInstanceRecordVersionLocalService.dynamicQuery();
 
-				dynamicSubquery.setProjection(
+				formInstanceRecordIdDynamicQuery.setProjection(
 					ProjectionFactoryUtil.property("formInstanceRecordId"));
 
-				dynamicSubquery.add(
+				formInstanceRecordIdDynamicQuery.add(
 					RestrictionsFactoryUtil.eq("statusByUserId", userId));
 
 				Property formInstanceRecordIdProperty =
 					PropertyFactoryUtil.forName("formInstanceRecordId");
 
 				disjunction.add(
-					formInstanceRecordIdProperty.in(dynamicSubquery));
+					formInstanceRecordIdProperty.in(
+						formInstanceRecordIdDynamicQuery));
 
 				dynamicQuery.add(disjunction);
 			});

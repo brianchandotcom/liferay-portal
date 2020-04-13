@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_CONFIGURATION_MARGIN_BOTTOM</td>
+	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'mb-${key_marginBottom}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_CONFIGURATION_BOX_SHADOW</td>
 	<td>//*[contains(@class,'component-${key_fragmentName}')]//div[contains(@class,'shadow-${key_boxShadow}')]</td>
 	<td></td>

@@ -476,6 +476,22 @@
 							}
 						}
 					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "Widget"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/WidgetInstanceDefinition"
+							}
+						}
+					}
 				}
 			],
 			"properties": {
@@ -499,7 +515,8 @@
 						"Fragment",
 						"Root",
 						"Row",
-						"Section"
+						"Section",
+						"Widget"
 					],
 					"title": "The type Schema",
 					"type": "string"
@@ -604,6 +621,30 @@
 				}
 			},
 			"title": "The SectionDefinition Schema",
+			"type": "object"
+		},
+		"Widget": {
+			"additionalProperties": false,
+			"properties": {
+				"name": {
+					"title": "The name Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"name"
+			],
+			"title": "The widget Schema",
+			"type": "object"
+		},
+		"WidgetInstanceDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"widget": {
+					"$ref": "#/definitions/Widget"
+				}
+			},
+			"title": "The WidgetInstanceDefinition Schema",
 			"type": "object"
 		}
 	},

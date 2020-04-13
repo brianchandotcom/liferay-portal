@@ -92,7 +92,7 @@ const DurationSection = ({onChangeHandler}) => {
 			</h3>
 
 			<div className="sheet-text" data-testid="durationDescription">
-				{calendars.length
+				{calendars.length > 1
 					? Liferay.Language.get(
 							'define-the-sla-duration-and-calendar-format'
 					  )
@@ -145,7 +145,7 @@ const DurationSection = ({onChangeHandler}) => {
 					/>
 				</FormGroupWithStatus>
 
-				{calendars.length > 0 && (
+				{calendars.length > 1 && (
 					<FormGroupWithStatus
 						className="col col-sm-6 form-group"
 						htmlFor="slaCalendarKey"

@@ -2142,10 +2142,15 @@ definition {
 			value1 = "${webContentTitle}");
 
 		if (isSet(description)) {
+			SelectFrame.selectFrameNoLoading(
+				key_fieldLabel = "Summary",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
 			AssertTextEquals(
-				key_editor = "description",
-				locator1 = "AlloyEditor#EDITOR",
+				locator1 = "CKEditor#BODY",
 				value1 = "${description}");
+
+			SelectFrameTop(value1 = "relative=top");
 		}
 
 		if (isSet(webContentImage)) {

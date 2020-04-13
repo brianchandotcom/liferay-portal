@@ -27,6 +27,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {useGetFieldValue} from './CollectionItemContext';
+import {useSelectItem} from './Controls';
 import PageEditor from './PageEditor';
 import UnsafeHTML from './UnsafeHTML';
 import getAllEditables from './fragment-content/getAllEditables';
@@ -126,7 +127,7 @@ const FragmentContent = React.memo(function FragmentContent({
 	const ref = useRef(null);
 	const isMounted = useIsMounted();
 	const [content, setContent] = useState(defaultContent);
-
+	const selectItem = useSelectItem();
 	const getFieldValue = useGetFieldValue();
 
 	useEffect(() => {
@@ -142,6 +143,8 @@ const FragmentContent = React.memo(function FragmentContent({
 			if (closest(element, '[href]')) {
 				event.preventDefault();
 			}
+
+			selectItem(null);
 		};
 
 		element.addEventListener('click', handler);

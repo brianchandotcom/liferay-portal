@@ -20,6 +20,7 @@ import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import {useSelector} from '../store/index';
+import {useSelectItem} from './Controls';
 
 const DEFAULT_DISABLED_AREA_CLASS = 'page-editor__disabled-area';
 const DEFAULT_ORIGIN = 'layout-content';
@@ -48,6 +49,7 @@ const DisabledArea = () => {
 	const [show, setShow] = useState(false);
 	const [position, setPosition] = useState('bottom');
 	const sidebarOpen = useSelector(state => state.sidebar.open);
+	const selectItem = useSelectItem();
 
 	const isDisabled = element => {
 		const {height} = element.getBoundingClientRect();
@@ -104,6 +106,7 @@ const DisabledArea = () => {
 				)
 			) {
 				setCurrentElementClicked(event.target);
+				selectItem(null);
 				setShow(true);
 			}
 			else if (show) {

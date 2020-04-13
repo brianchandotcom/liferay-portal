@@ -18,7 +18,7 @@ import {Editor} from 'frontend-editor-ckeditor-web';
 import React from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import {useSyncValue} from '../hooks/useSyncValue';
+import {useSyncValue} from '../hooks/useSyncValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './RichTextAdapter.soy';

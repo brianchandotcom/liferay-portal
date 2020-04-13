@@ -19,7 +19,7 @@ import React, {useRef} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import {Main as Text} from '../Text/Text.es';
-import {useSyncValue} from '../hooks/useSyncValue';
+import {useSyncValue} from '../hooks/useSyncValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import templates from './KeyValueAdapter.soy';

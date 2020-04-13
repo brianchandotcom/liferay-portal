@@ -39,9 +39,8 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -417,12 +416,10 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		String actualEditableValues =
 			actualFragmentEntryLink.getEditableValues();
 
-		JSONFactory jsonFactory = new JSONFactoryImpl();
-
 		JSONObject expectedEditableValuesJSONObject =
-			jsonFactory.createJSONObject(expectedEditableValues);
+			JSONFactoryUtil.createJSONObject(expectedEditableValues);
 		JSONObject actualEditableValuesJSONObject =
-			jsonFactory.createJSONObject(actualEditableValues);
+			JSONFactoryUtil.createJSONObject(actualEditableValues);
 
 		JSONObject expectedBackgroundImageFragmentEntryProcessorJSONObject =
 			expectedEditableValuesJSONObject.getJSONObject(

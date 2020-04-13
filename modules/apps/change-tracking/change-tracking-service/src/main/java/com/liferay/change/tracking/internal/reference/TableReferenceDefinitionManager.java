@@ -245,7 +245,7 @@ public class TableReferenceDefinitionManager {
 			ServiceReference<TableReferenceDefinition> serviceReference,
 			TableReferenceInfo<?> tableReferenceInfo) {
 
-			synchronized (this) {
+			synchronized (TableReferenceDefinitionManager.this) {
 				TableReferenceDefinition<?> tableReferenceDefinition =
 					tableReferenceInfo.getTableReferenceDefinition();
 
@@ -291,7 +291,7 @@ public class TableReferenceDefinitionManager {
 				tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
 
 			if (tableReferenceInfo != null) {
-				synchronized (this) {
+				synchronized (TableReferenceDefinitionManager.this) {
 					_tableReferenceInfos.put(
 						tableReferenceDefinition.getTable(),
 						tableReferenceInfo);

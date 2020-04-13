@@ -44,7 +44,7 @@ const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
 	</div>
 );
 
-const KeyValueWithFieldBase = ({
+const Main = ({
 	dispatch,
 	generateKeyword: initialGenerateKeyword = true,
 	keyword,
@@ -118,12 +118,14 @@ const KeyValueWithFieldBase = ({
 	);
 };
 
+Main.displayName = 'KeyValue';
+
 const KeyValueProxy = connectStore(
 	({emit, keyword: initialKeyword, ...otherProps}) => {
 		const [keyword, setKeyword] = useSyncValue(initialKeyword);
 
 		return (
-			<KeyValueWithFieldBase
+			<Main
 				{...otherProps}
 				keyword={keyword}
 				onKeywordBlur={event =>
@@ -152,5 +154,5 @@ const ReactKeyValueAdapter = getConnectedReactComponentAdapter(
 	templates
 );
 
-export {ReactKeyValueAdapter, KeyValueWithFieldBase};
+export {ReactKeyValueAdapter, Main};
 export default ReactKeyValueAdapter;

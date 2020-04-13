@@ -16,8 +16,8 @@ package com.liferay.layout.type.controller.node.internal.layout.type.controller;
 
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.node.internal.constants.NodeLayoutTypeControllerConstants;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -71,6 +71,21 @@ public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	@Override
 	public boolean isWorkflowEnabled() {
 		return false;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #createServletResponse(HttpServletResponse, UnsyncStringWriter)}
+	 */
+	@Deprecated
+	@Override
+	protected ServletResponse createServletResponse(
+		HttpServletResponse httpServletResponse,
+		com.liferay.portal.kernel.io.unsync.UnsyncStringWriter
+			unsyncStringWriter) {
+
+		return new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
 	}
 
 	@Override

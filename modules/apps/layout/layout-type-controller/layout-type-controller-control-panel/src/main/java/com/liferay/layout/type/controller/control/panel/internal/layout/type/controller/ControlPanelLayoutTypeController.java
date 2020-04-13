@@ -18,7 +18,7 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -93,6 +93,21 @@ public class ControlPanelLayoutTypeController
 		httpServletRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
 			_panelCategoryRegistry);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #createServletResponse(HttpServletResponse, UnsyncStringWriter)}
+	 */
+	@Deprecated
+	@Override
+	protected ServletResponse createServletResponse(
+		HttpServletResponse httpServletResponse,
+		com.liferay.portal.kernel.io.unsync.UnsyncStringWriter
+			unsyncStringWriter) {
+
+		return new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
 	}
 
 	@Override

@@ -23,9 +23,9 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -242,6 +242,21 @@ public class DisplayPageLayoutTypeController
 			infoDisplayRequestAttributesContributor.addAttributes(
 				httpServletRequest);
 		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #createServletResponse(HttpServletResponse, UnsyncStringWriter)}
+	 */
+	@Deprecated
+	@Override
+	protected ServletResponse createServletResponse(
+		HttpServletResponse httpServletResponse,
+		com.liferay.portal.kernel.io.unsync.UnsyncStringWriter
+			unsyncStringWriter) {
+
+		return new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
 	}
 
 	@Override

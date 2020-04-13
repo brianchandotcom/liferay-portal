@@ -15,8 +15,8 @@
 package com.liferay.app.builder.web.internal.layout.type.controller;
 
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -86,6 +86,21 @@ public class AppPortletLayoutTypeController
 	@Override
 	public boolean isURLFriendliable() {
 		return true;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #createServletResponse(HttpServletResponse, UnsyncStringWriter)}
+	 */
+	@Deprecated
+	@Override
+	protected ServletResponse createServletResponse(
+		HttpServletResponse httpServletResponse,
+		com.liferay.portal.kernel.io.unsync.UnsyncStringWriter
+			unsyncStringWriter) {
+
+		return new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
 	}
 
 	@Override

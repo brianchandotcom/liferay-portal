@@ -16,7 +16,7 @@ definition {
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#DIALOG");
 
 		if (isSet(depotName)) {
-			var key_contentName = "${webContentTitle}";
+			var key_rowEntry = "${webContentTitle}";
 
 			AssertClick(
 				key_breadcrumbName = "Sites and Libraries",
@@ -30,7 +30,7 @@ definition {
 
 			LexiconCard.clickCard(card = "${depotName}");
 
-			Click(locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
+			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 
@@ -344,7 +344,7 @@ definition {
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#DIALOG");
 
 		if (isSet(depotName)) {
-			var key_contentName = "${webContentTitle}";
+			var key_rowEntry = "${webContentTitle}";
 
 			AssertClick(
 				key_breadcrumbName = "Sites and Libraries",
@@ -358,7 +358,7 @@ definition {
 
 			LexiconCard.clickCard(card = "${depotName}");
 
-			Click(locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
+			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 

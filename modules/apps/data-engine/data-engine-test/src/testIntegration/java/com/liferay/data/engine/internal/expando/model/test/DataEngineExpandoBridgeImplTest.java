@@ -58,11 +58,6 @@ public class DataEngineExpandoBridgeImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Group testGroup = GroupTestUtil.addGroup();
-
-		_testCompany = CompanyLocalServiceUtil.getCompany(
-			testGroup.getCompanyId());
-
 		Bundle bundle = FrameworkUtil.getBundle(
 			DataEngineExpandoBridgeImplTest.class);
 
@@ -78,6 +73,11 @@ public class DataEngineExpandoBridgeImplTest {
 		bundleContext.registerService(
 			DataEngineNativeObject.class, DataDefinition.class::getName,
 			new HashMapDictionary<>());
+
+		Group testGroup = GroupTestUtil.addGroup();
+
+		_testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
 
 		_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			_testCompany.getCompanyId(), DataDefinition.class.getName(),

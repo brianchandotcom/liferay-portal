@@ -319,6 +319,42 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testGetArticleDisplayFriendlyURLWithoutDisplayPage()
+		throws Exception {
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		String script = StringBundler.concat(
+			"${friendlyURLs[\"", defaultLanguageId, "\"]!\"no-friendly-url\"}");
+
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			_portal.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_FTL, script,
+			LocaleUtil.getSiteDefault());
+
+		article.setDDMTemplateKey(ddmTemplate.getTemplateKey());
+
+		_journalArticleLocalService.updateJournalArticle(article);
+
+		JournalArticleDisplay articleDisplay =
+			_journalArticleLocalService.getArticleDisplay(
+				_group.getGroupId(), article.getArticleId(), Constants.VIEW,
+				defaultLanguageId, _themeDisplay);
+
+		String content = articleDisplay.getContent();
+
+		Assert.assertEquals("no-friendly-url", content);
+	}
+
+	@Test
 	public void testGetNoAssetArticles() throws Exception {
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(),

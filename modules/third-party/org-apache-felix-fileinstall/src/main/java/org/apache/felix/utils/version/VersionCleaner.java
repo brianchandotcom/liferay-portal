@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.apache.felix.utils.version;
 
 import java.util.regex.Matcher;
@@ -23,135 +24,136 @@ import java.util.regex.Pattern;
 
 public final class VersionCleaner {
 
-    private VersionCleaner() { }
+	/**
+	 * Clean up version parameters. Other builders use more fuzzy definitions of
+	 * the version syntax. This method cleans up such a version to match an OSGi
+	 * version.
+	 *
+	 * @param version The version to clean
+	 * @return The cleaned version
+	 */
+	public static String clean(String version) {
+		if ((version == null) || (version.length() == 0)) {
+			return "0.0.0";
+		}
 
+		String clean = _fastSyntax(version);
 
-    private static final Pattern FUZZY_VERSION = Pattern.compile("(\\d+)(\\.(\\d+)(\\.(\\d+))?)?([^a-zA-Z0-9](.*))?", Pattern.DOTALL);
+		if (clean != null) {
+			return clean;
+		}
 
-    /**
-     * Clean up version parameters. Other builders use more fuzzy definitions of
-     * the version syntax. This method cleans up such a version to match an OSGi
-     * version.
-     *
-     * @param version The version to clean
-     * @return The cleaned version
-     */
-    public static String clean(String version)
-    {
-        if (version == null || version.length() == 0)
-        {
-            return "0.0.0";
-        }
-        String clean = fastSyntax(version);
-        if (clean != null)
-        {
-            return clean;
-        }
-        StringBuffer result = new StringBuffer();
-        Matcher m = FUZZY_VERSION.matcher(version);
-        if (m.matches())
-        {
-            String major = m.group(1);
-            String minor = m.group(3);
-            String micro = m.group(5);
-            String qualifier = m.group(7);
+		StringBuffer result = new StringBuffer();
 
-            if (major != null)
-            {
-                result.append(major);
-                if (minor != null)
-                {
-                    result.append(".");
-                    result.append(minor);
-                    if (micro != null)
-                    {
-                        result.append(".");
-                        result.append(micro);
-                        if (qualifier != null)
-                        {
-                            result.append(".");
-                            cleanupModifier(result, qualifier);
-                        }
-                    }
-                    else if (qualifier != null)
-                    {
-                        result.append(".0.");
-                        cleanupModifier(result, qualifier);
-                    }
-                    else
-                    {
-                        result.append(".0");
-                    }
-                }
-                else if (qualifier != null)
-                {
-                    result.append(".0.0.");
-                    cleanupModifier(result, qualifier);
-                }
-                else
-                {
-                    result.append(".0.0");
-                }
-            }
-        }
-        else
-        {
-            result.append("0.0.0.");
-            cleanupModifier(result, version);
-        }
-        return result.toString();
-    }
+		Matcher matcher = _fuzzyVersion.matcher(version);
 
-    private static void cleanupModifier(StringBuffer result, String modifier) {
-        for (int i = 0; i < modifier.length(); i++) {
-            char c = modifier.charAt(i);
-            if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
-                    || (c >= 'A' && c <= 'Z') || c == '_' || c == '-')
-                result.append(c);
-            else
-                result.append('_');
-        }
-    }
+		if (matcher.matches()) {
+			String major = matcher.group(1);
+			String minor = matcher.group(3);
+			String micro = matcher.group(5);
+			String qualifier = matcher.group(7);
 
-    private static String fastSyntax(String version) {
-        int state = 0;
-        for (int i = 0, l = version.length(); i < l; i++) {
-            char ch = version.charAt(i);
-            switch (state) {
-            case 0:
-            case 2:
-            case 4:
-                if (ch < '0' || ch > '9') {
-                    return null;
-                }
-                state++;
-                break;
-            case 1:
-            case 3:
-            case 5:
-                if (ch == '.') {
-                    state++;
-                } else if (ch < '0' || ch > '9') {
-                    return null;
-                }
-                break;
-            case 6:
-                if (ch == '.') {
-                    return null;
-                }
-                break;
-            }
-        }
-        switch (state) {
-        case 0:
-        case 1:
-            return version + ".0.0";
-        case 2:
-        case 3:
-            return version + ".0";
-        default:
-            return version;
-        }
-    }
+			if (major != null) {
+				result.append(major);
+
+				if (minor != null) {
+					result.append(".");
+					result.append(minor);
+
+					if (micro != null) {
+						result.append(".");
+						result.append(micro);
+
+						if (qualifier != null) {
+							result.append(".");
+
+							_cleanupModifier(result, qualifier);
+						}
+					}
+					else if (qualifier != null) {
+						result.append(".0.");
+
+						_cleanupModifier(result, qualifier);
+					}
+					else {
+						result.append(".0");
+					}
+				}
+				else if (qualifier != null) {
+					result.append(".0.0.");
+
+					_cleanupModifier(result, qualifier);
+				}
+				else {
+					result.append(".0.0");
+				}
+			}
+		}
+		else {
+			result.append("0.0.0.");
+
+			_cleanupModifier(result, version);
+		}
+
+		return result.toString();
+	}
+
+	private static void _cleanupModifier(StringBuffer result, String modifier) {
+		for (int i = 0; i < modifier.length(); i++) {
+			char c = modifier.charAt(i);
+
+			if (((c >= '0') && (c <= '9')) || ((c >= 'a') && (c <= 'z')) ||
+				((c >= 'A') && (c <= 'Z')) || (c == '_') || (c == '-')) {
+
+				result.append(c);
+			}
+			else {
+				result.append('_');
+			}
+		}
+	}
+
+	private static String _fastSyntax(String version) {
+		int state = 0;
+
+		for (int i = 0, l = version.length(); i < l; i++) {
+			char c = version.charAt(i);
+
+			if ((state == 0) || (state == 2) || (state == 4)) {
+				if ((c < '0') || (c > '9')) {
+					return null;
+				}
+
+				state++;
+			}
+			else if ((state == 1) || (state == 3) || (state == 5)) {
+				if (c == '.') {
+					state++;
+				}
+				else if ((c < '0') || (c > '9')) {
+					return null;
+				}
+			}
+			else if (state == 6) {
+				if (c == '.') {
+					return null;
+				}
+			}
+		}
+
+		if ((state == 0) || (state == 1)) {
+			return version + ".0.0";
+		}
+		else if ((state == 2) || (state == 3)) {
+			return version + ".0";
+		}
+		else {
+			return version;
+		}
+	}
+
+	private static final Pattern _fuzzyVersion = Pattern.compile(
+		"(\\d+)(\\.(\\d+)(\\.(\\d+))?)?([^a-zA-Z0-9](.*))?", Pattern.DOTALL);
 
 }
+/* @generated */

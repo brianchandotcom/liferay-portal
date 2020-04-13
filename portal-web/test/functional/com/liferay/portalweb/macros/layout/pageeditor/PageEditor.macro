@@ -426,6 +426,15 @@ definition {
 			Pause(locator1 = "2000");
 		}
 
+		if (isSet(marginBottom)) {
+			Select(
+				key_fieldLabel = "Margin Bottom",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${marginBottom}");
+
+			Pause(locator1 = "2000");
+		}
+
 		if (isSet(size)) {
 			Select(
 				key_fieldLabel = "Size",
@@ -1229,6 +1238,13 @@ definition {
 				key_fragmentName = "${fragmentName}",
 				key_imageSize = "${imageSize}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_IMAGE_SIZE");
+		}
+
+		if (isSet(marginBottom)) {
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_marginBottom = "${marginBottom}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM");
 		}
 
 		if (isSet(size)) {

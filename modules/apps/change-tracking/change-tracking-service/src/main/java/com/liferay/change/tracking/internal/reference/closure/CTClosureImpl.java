@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.function.Function;
 
 /**
  * @author Preston Crary
@@ -65,7 +64,7 @@ public class CTClosureImpl implements CTClosure {
 			}
 		}
 
-		return _getPrimaryKeysMap(nodes, node -> excludedNodes.contains(node));
+		return _getPrimaryKeysMap(nodes, excludedNodes);
 	}
 
 	@Override
@@ -76,16 +75,16 @@ public class CTClosureImpl implements CTClosure {
 	@Override
 	public Map<Long, List<Long>> getRoots() {
 		return _getPrimaryKeysMap(
-			_closureMap.get(Node.ROOT_NODE), node -> false);
+			_closureMap.get(Node.ROOT_NODE), Collections.emptySet());
 	}
 
 	private Map<Long, List<Long>> _getPrimaryKeysMap(
-		Collection<Node> nodes, Function<Node, Boolean> skipFunction) {
+		Collection<Node> nodes, Set<Node> excludedNodes) {
 
 		Map<Long, List<Long>> primaryKeysMap = new HashMap<>();
 
 		for (Node node : nodes) {
-			if (skipFunction.apply(node)) {
+			if (excludedNodes.contains(node)) {
 				continue;
 			}
 

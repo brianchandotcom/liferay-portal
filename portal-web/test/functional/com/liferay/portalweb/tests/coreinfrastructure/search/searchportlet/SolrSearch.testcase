@@ -916,6 +916,8 @@ definition {
 
 		for (var portletName : list "Search Bar,Search Results") {
 			PageEditor.addWidget(portletName = "${portletName}");
+
+			Refresh();
 		}
 
 		PageEditor.clickPublish();

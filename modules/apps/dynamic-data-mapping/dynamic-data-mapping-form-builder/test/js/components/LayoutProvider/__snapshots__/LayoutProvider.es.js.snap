@@ -322,6 +322,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0000",
+                "instanceId": "Any<String>",
                 "label": "Radio Field",
                 "localizedValue": Object {},
                 "name": "name0000",
@@ -404,6 +405,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0010",
+                "instanceId": "Any<String>",
                 "label": "copy-of-x",
                 "localizedValue": Object {},
                 "name": "name0010",
@@ -490,6 +492,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0020",
+                "instanceId": "Any<String>",
                 "label": "Text Field 1",
                 "localizedValue": Object {},
                 "name": "name0020",
@@ -505,6 +508,7 @@ Array [
               },
               Object {
                 "fieldName": "name1020",
+                "instanceId": "Any<String>",
                 "label": "Text Field 2",
                 "localizedValue": Object {},
                 "name": "name1020",
@@ -525,6 +529,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0120",
+                "instanceId": "Any<String>",
                 "label": "Select Field",
                 "localizedValue": Object {},
                 "name": "name0120",
@@ -562,6 +567,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0030",
+                "instanceId": "Any<String>",
                 "label": "Date Field",
                 "localizedValue": Object {},
                 "name": "name0030",
@@ -586,6 +592,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0040",
+                "instanceId": "Any<String>",
                 "label": "Numeric Field",
                 "localizedValue": Object {},
                 "name": "name0040",
@@ -1450,6 +1457,7 @@ Array [
 exports[`LayoutProvider Field events focusedFieldUpdated listens the focusedFieldEvaluationEnded event and change the state of the focusedField and pages for the data wich was received 1`] = `
 Object {
   "fieldName": "TextField",
+  "instanceId": Any<String>,
   "label": "Text Field",
   "name": "TextField",
   "required": true,

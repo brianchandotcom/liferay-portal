@@ -123,6 +123,7 @@ import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
@@ -174,19 +175,19 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final Configuration compileIncludeConfiguration =
 			_addConfigurationCompileInclude(project);
 
-		_addTaskAutoUpdateXml(project);
-		_addTaskDeployFast(project, liferayExtension);
-		_addTasksBuildWSDDJar(project, liferayExtension);
+		_addTaskProviderAutoUpdateXml(project);
+		_addTaskProviderDeployFast(project, liferayExtension);
+		_addTaskProvidersBuildWSDDJar(project, liferayExtension);
 
-		Copy deployDependenciesTask = _addTaskDeployDependencies(
-			project, liferayExtension);
+		TaskProvider<Copy> deployDependenciesTaskProvider =
+			_addTaskProviderDeployDependencies(project, liferayExtension);
 
 		_configureArchivesBaseName(project);
 		_configureDescription(project);
 		_configureLiferay(project, liferayExtension);
 		_configureSourceSetMain(project);
 		_configureTaskClean(project);
-		_configureTaskDeploy(project, deployDependenciesTask);
+		_configureTaskDeploy(project, deployDependenciesTaskProvider);
 		_configureTaskJar(project);
 		_configureTaskJavadoc(project);
 		_configureTaskTest(project);
@@ -327,9 +328,42 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_addDeployedFile(liferayExtension, abstractArchiveTask, lazy);
 	}
 
-	private DirectDeployTask _addTaskAutoUpdateXml(final Project project) {
-		final DirectDeployTask directDeployTask = GradleUtil.addTask(
-			project, AUTO_UPDATE_XML_TASK_NAME, DirectDeployTask.class);
+	private TaskProvider<DirectDeployTask> _addTaskProviderAutoUpdateXml(
+		final Project project) {
+
+		TaskProvider<DirectDeployTask> directDeployTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, AUTO_UPDATE_XML_TASK_NAME, DirectDeployTask.class);
+
+		directDeployTaskProvider.configure(
+			new Action<DirectDeployTask>() {
+
+				@Override
+				public void execute(DirectDeployTask directDeployTask) {
+					_configureTaskProviderAutoUpdateXml(
+						project, directDeployTask);
+				}
+
+			});
+
+		TaskProvider<Jar> jarTaskProvider = GradleUtil.getTaskProvider(
+			project, JavaPlugin.JAR_TASK_NAME, Jar.class);
+
+		jarTaskProvider.configure(
+			new Action<Jar>() {
+
+				@Override
+				public void execute(Jar jar) {
+					jar.finalizedBy(directDeployTaskProvider);
+				}
+
+			});
+
+		return directDeployTaskProvider;
+	}
+
+	private void _configureTaskProviderAutoUpdateXml(
+		final Project project, DirectDeployTask directDeployTask) {
 
 		directDeployTask.setAppServerDeployDir(
 			directDeployTask.getTemporaryDir());
@@ -494,27 +528,39 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}
 
 			});
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		jar.finalizedBy(directDeployTask);
-
-		return directDeployTask;
 	}
 
-	private Jar _addTaskBuildWSDDJar(
-		final BuildWSDDTask buildWSDDTask, LiferayExtension liferayExtension) {
+	private TaskProvider<Jar> _addTaskProviderBuildWSDDJar(
+		final BuildWSDDTask buildWSDDTask,
+		final LiferayExtension liferayExtension) {
 
-		Project project = buildWSDDTask.getProject();
+		TaskProvider<Jar> buildWSDDJarTaskProvider = GradleUtil.addTaskProvider(
+			buildWSDDTask.getProject(), buildWSDDTask.getName() + "Jar",
+			Jar.class);
 
-		Jar jar = GradleUtil.addTask(
-			project, buildWSDDTask.getName() + "Jar", Jar.class);
+		buildWSDDJarTaskProvider.configure(
+			new Action<Jar>() {
 
-		jar.setActions(Collections.emptyList());
+				@Override
+				public void execute(Jar buildWSDDJar) {
+					_configureTaskProviderBuildWSDDJar(
+						buildWSDDJar, buildWSDDTask, liferayExtension);
+				}
 
-		jar.dependsOn(buildWSDDTask);
+			});
 
-		jar.doLast(
+		return buildWSDDJarTaskProvider;
+	}
+
+	private void _configureTaskProviderBuildWSDDJar(
+		Jar buildWSDDJar, final BuildWSDDTask buildWSDDTask,
+		LiferayExtension liferayExtension) {
+
+		buildWSDDJar.setActions(Collections.emptyList());
+
+		buildWSDDJar.dependsOn(buildWSDDTask);
+
+		buildWSDDJar.doLast(
 			new Action<Task>() {
 
 				@Override
@@ -721,31 +767,72 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		String taskName = buildWSDDTask.getName();
 
 		if (taskName.equals(WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME)) {
-			jar.setAppendix("wsdd");
+			buildWSDDJar.setAppendix("wsdd");
 		}
 		else {
-			jar.setAppendix("wsdd-" + taskName);
+			buildWSDDJar.setAppendix("wsdd-" + taskName);
 		}
 
-		buildWSDDTask.finalizedBy(jar);
+		buildWSDDTask.finalizedBy(buildWSDDJar);
 
-		_addDeployedFile(liferayExtension, jar, true);
-
-		return jar;
+		_addDeployedFile(liferayExtension, buildWSDDJar, true);
 	}
 
-	private Copy _addTaskDeployDependencies(
+	private TaskProvider<Copy> _addTaskProviderDeployDependencies(
 		Project project, final LiferayExtension liferayExtension) {
 
-		final Copy copy = GradleUtil.addTask(
-			project, DEPLOY_DEPENDENCIES_TASK_NAME, Copy.class);
+		final TaskProvider<Copy> deployDependenciesTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, DEPLOY_DEPENDENCIES_TASK_NAME, Copy.class);
+
+		deployDependenciesTaskProvider.configure(
+			new Action<Copy>() {
+
+				@Override
+				public void execute(Copy deployDependenciesTask) {
+					_configureTaskProviderDeployDependencies(
+						deployDependenciesTask, liferayExtension);
+				}
+
+			});
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					deployDependenciesTaskProvider.configure(
+						new Action<Copy>() {
+
+							@Override
+							public void execute(Copy deployDependenciesTask) {
+								boolean keepVersions = Boolean.getBoolean(
+									"deploy.dependencies.keep.versions");
+
+								deployDependenciesTask.eachFile(
+									new RenameDependencyAction(keepVersions));
+							}
+
+						});
+				}
+
+			});
+
+		return deployDependenciesTaskProvider;
+	}
+
+	private void _configureTaskProviderDeployDependencies(
+		final Copy deployDependenciesTask,
+		final LiferayExtension liferayExtension) {
 
 		final boolean keepVersions = Boolean.getBoolean(
 			"deploy.dependencies.keep.versions");
 
 		GradleUtil.setProperty(
-			copy, LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME, false);
-		GradleUtil.setProperty(copy, "keepVersions", keepVersions);
+			deployDependenciesTask, LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME,
+			false);
+		GradleUtil.setProperty(
+			deployDependenciesTask, "keepVersions", keepVersions);
 
 		String renameSuffix = ".jar";
 
@@ -753,9 +840,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			renameSuffix = "-$1.jar";
 		}
 
-		GradleUtil.setProperty(copy, "renameSuffix", renameSuffix);
+		GradleUtil.setProperty(
+			deployDependenciesTask, "renameSuffix", renameSuffix);
 
-		copy.into(
+		deployDependenciesTask.into(
 			new Callable<File>() {
 
 				@Override
@@ -765,9 +853,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 			});
 
-		copy.setDescription("Deploys additional dependencies.");
+		deployDependenciesTask.setDescription(
+			"Deploys additional dependencies.");
 
-		TaskOutputs taskOutputs = copy.getOutputs();
+		TaskOutputs taskOutputs = deployDependenciesTask.getOutputs();
 
 		taskOutputs.upToDateWhen(
 			new Spec<Task>() {
@@ -778,26 +867,31 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
 
-		project.afterEvaluate(
-			new Action<Project>() {
+	@SuppressWarnings("serial")
+	private TaskProvider<Copy> _addTaskProviderDeployFast(
+		final Project project, final LiferayExtension liferayExtension) {
+
+		TaskProvider<Copy> deployFastTaskProvider = GradleUtil.addTaskProvider(
+			project, DEPLOY_FAST_TASK_NAME, Copy.class);
+
+		deployFastTaskProvider.configure(
+			new Action<Copy>() {
 
 				@Override
-				public void execute(Project project) {
-					copy.eachFile(new RenameDependencyAction(keepVersions));
+				public void execute(Copy deployFastTask) {
+					_configureTaskProviderDeployFast(
+						project, deployFastTask, liferayExtension);
 				}
 
 			});
 
-		return copy;
+		return deployFastTaskProvider;
 	}
 
-	@SuppressWarnings("serial")
-	private Copy _addTaskDeployFast(
-		Project project, LiferayExtension liferayExtension) {
-
-		Copy deployFastTask = GradleUtil.addTask(
-			project, DEPLOY_FAST_TASK_NAME, Copy.class);
+	private void _configureTaskProviderDeployFast(
+		Project project, Copy deployFastTask, LiferayExtension liferayExtension) {
 
 		deployFastTask.setDescription(
 			"Builds and deploys resources to the Liferay work directory.");
@@ -934,11 +1028,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}
 
 			});
-
-		return deployFastTask;
 	}
 
-	private void _addTasksBuildWSDDJar(
+	private void _addTaskProvidersBuildWSDDJar(
 		Project project, final LiferayExtension liferayExtension) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -949,7 +1041,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(BuildWSDDTask buildWSDDTask) {
-					_addTaskBuildWSDDJar(buildWSDDTask, liferayExtension);
+					_addTaskProviderBuildWSDDJar(
+						buildWSDDTask, liferayExtension);
 				}
 
 			});
@@ -1262,12 +1355,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskDeploy(
-		Project project, Copy deployDepenciesTask) {
+		Project project, final TaskProvider<Copy> deployDepenciesTaskProvider) {
 
 		Task deployTask = GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
-		deployTask.finalizedBy(deployDepenciesTask);
+		deployTask.finalizedBy(deployDepenciesTaskProvider);
 	}
 
 	private void _configureTaskJar(final Project project) {

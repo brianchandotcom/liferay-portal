@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_BOTTOM_SPACING</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'pb-${key_bottomSpacing}')]</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@class,'pb-${key_bottomSpacing}')]</td>
 	<td></td>
 </tr>
 <tr>

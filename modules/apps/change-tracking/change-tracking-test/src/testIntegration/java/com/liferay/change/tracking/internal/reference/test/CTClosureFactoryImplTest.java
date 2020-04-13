@@ -290,6 +290,18 @@ public class CTClosureFactoryImplTest {
 			ctModel, TestPropsValues.getUserId(), changeType);
 	}
 
+	private void _assertMapContent(
+		Map<Long, List<Long>> expectedMap, Map<Long, List<Long>> actualMap) {
+
+		for (Map.Entry<Long, List<Long>> entry : actualMap.entrySet()) {
+			List<Long> primaryKeys = entry.getValue();
+
+			primaryKeys.sort(null);
+		}
+
+		Assert.assertEquals(expectedMap, actualMap);
+	}
+
 	private void _testClosureCycles(int changeType, boolean addParents)
 		throws Exception {
 
@@ -374,9 +386,9 @@ public class CTClosureFactoryImplTest {
 			Child.class);
 
 		if (addParents) {
-			Assert.assertEquals(
+			_assertMapContent(
 				Collections.singletonMap(
-					grandParentClassNameId, Arrays.asList(3L, 2L)),
+					grandParentClassNameId, Arrays.asList(2L, 3L)),
 				ctClosure.getChildren(grandParentClassNameId, 1L));
 
 			long parentClassNameId = _classNameLocalService.getClassNameId(
@@ -510,9 +522,9 @@ public class CTClosureFactoryImplTest {
 			Child.class);
 
 		if (addParents) {
-			Assert.assertEquals(
+			_assertMapContent(
 				Collections.singletonMap(
-					grandParentClassNameId, Arrays.asList(3L, 2L)),
+					grandParentClassNameId, Arrays.asList(2L, 3L)),
 				ctClosure.getChildren(grandParentClassNameId, 1L));
 
 			long parentClassNameId = _classNameLocalService.getClassNameId(

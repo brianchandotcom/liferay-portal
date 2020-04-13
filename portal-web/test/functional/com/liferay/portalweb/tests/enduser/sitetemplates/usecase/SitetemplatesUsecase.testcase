@@ -455,7 +455,11 @@ definition {
 			siteName = "${siteName}",
 			siteTemplateName = "Site Template Name");
 
-		Portlet.addPG(portletName = "Message Boards");
+		ContentPages.clickPencil();
+
+		PageEditor.addWidget(portletName = "Message Boards");
+
+		PageEditor.clickPublish();
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

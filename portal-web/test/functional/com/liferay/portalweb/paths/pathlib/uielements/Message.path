@@ -259,6 +259,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MAIN_CONTENT</td>
+	<td>//*[@id="main-content"]//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOGIN_URL_SUCCESS</td>
 	<td>//tr[contains(.,'Login URL')]/td//span[contains(@class,'lfr-status-success')]</td>
 	<td></td>

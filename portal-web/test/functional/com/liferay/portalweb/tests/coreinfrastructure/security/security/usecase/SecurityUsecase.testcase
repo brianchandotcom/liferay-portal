@@ -301,13 +301,32 @@ out.println(PortalUtil.escapeRedirect("/"));
 	test ViewNoInvokedPortletViaURL {
 		property portal.acceptance = "true";
 
+		JSONLayout.addPublicLayout(
+			friendlyURL = "/test-widget-page",
+			groupName = "Guest",
+			layoutName = "Test Widget Page");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Test Widget Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Test Widget Page");
+
+		Portlet.addPG(portletName = "Hello World");
+
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/home/?p_p_id=asdf&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/test-widget-page/?p_p_id=asdf&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp");
 
 		AssertTextEquals(
-			locator1 = "Message#INFO",
+			locator1 = "Message#INFO_MAIN_CONTENT",
 			value1 = "This portlet could not be found. Please redeploy it or remove it from the page.");
+
+		JSONLayout.deletePublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Widget Page");
 	}
 
 }

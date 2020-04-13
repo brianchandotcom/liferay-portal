@@ -54,7 +54,8 @@ public class FragmentEntryLinkServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkPermission(groupId, _portal.getClassName(classNameId), classPK);
+		_checkPermission(
+			groupId, _portal.getClassName(classNameId), classPK, false);
 
 		return fragmentEntryLinkLocalService.addFragmentEntryLink(
 			getUserId(), groupId, originalFragmentEntryLinkId, fragmentEntryId,
@@ -71,7 +72,7 @@ public class FragmentEntryLinkServiceImpl
 
 		_checkPermission(
 			fragmentEntryLink.getGroupId(), fragmentEntryLink.getClassName(),
-			fragmentEntryLink.getClassPK());
+			fragmentEntryLink.getClassPK(), false);
 
 		return fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLinkId);
@@ -97,7 +98,7 @@ public class FragmentEntryLinkServiceImpl
 
 		_checkPermission(
 			fragmentEntryLink.getGroupId(), fragmentEntryLink.getClassName(),
-			fragmentEntryLink.getClassPK());
+			fragmentEntryLink.getClassPK(), true);
 
 		return fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
@@ -110,7 +111,8 @@ public class FragmentEntryLinkServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkPermission(groupId, _portal.getClassName(classNameId), classPK);
+		_checkPermission(
+			groupId, _portal.getClassName(classNameId), classPK, true);
 
 		fragmentEntryLinkLocalService.updateFragmentEntryLinks(
 			getUserId(), groupId, classNameId, classPK, fragmentEntryIds,
@@ -131,14 +133,16 @@ public class FragmentEntryLinkServiceImpl
 			_checkPermission(
 				fragmentEntryLink.getGroupId(),
 				fragmentEntryLink.getClassName(),
-				fragmentEntryLink.getClassPK());
+				fragmentEntryLink.getClassPK(), true);
 		}
 
 		fragmentEntryLinkLocalService.updateFragmentEntryLinks(
 			fragmentEntryLinksEditableValuesMap);
 	}
 
-	private void _checkPermission(long groupId, String className, long classPK)
+	private void _checkPermission(
+			long groupId, String className, long classPK,
+			boolean checkUpdatePageContentPermission)
 		throws PortalException {
 
 		Boolean containsPermission = Boolean.valueOf(
@@ -146,7 +150,9 @@ public class FragmentEntryLinkServiceImpl
 				getPermissionChecker(), groupId, className, classPK,
 				ActionKeys.UPDATE));
 
-		if (Objects.equals(className, Layout.class.getName())) {
+		if (checkUpdatePageContentPermission &&
+			Objects.equals(className, Layout.class.getName())) {
+
 			containsPermission =
 				containsPermission ||
 				LayoutPermissionUtil.contains(

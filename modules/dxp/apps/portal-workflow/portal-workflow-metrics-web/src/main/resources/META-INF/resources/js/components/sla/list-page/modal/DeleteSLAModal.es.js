@@ -61,6 +61,7 @@ const DeleteSLAModal = () => {
 							</ClayButton>
 							<ClayButton
 								data-testid="deleteButton"
+								id="removeSlaButton"
 								onClick={removeItem}
 							>
 								{Liferay.Language.get('ok')}

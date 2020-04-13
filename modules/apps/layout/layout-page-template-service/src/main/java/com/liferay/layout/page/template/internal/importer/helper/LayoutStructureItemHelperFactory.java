@@ -56,6 +56,10 @@ public class LayoutStructureItemHelperFactory {
 			return new FragmentLayoutStructureItemHelper();
 		}
 
+		if (pageElementType == PageElement.Type.WIDGET) {
+			return new WidgetLayoutStructureItemHelper();
+		}
+
 		return null;
 	}
 

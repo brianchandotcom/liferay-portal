@@ -66,7 +66,7 @@ const Item = ({
 
 	return (
 		<ClayTable.Row>
-			<ClayTable.Cell data-testid="SLAName">
+			<ClayTable.Cell data-testid="slaName">
 				<div className="table-list-title">
 					{blocked && (
 						<ClayIcon
@@ -80,22 +80,22 @@ const Item = ({
 				</div>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell data-testid="SLADescription">
+			<ClayTable.Cell data-testid="slaDescription">
 				{description}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell
 				className={blockedStatusClass}
-				data-testid="SLAStatus"
+				data-testid="slaStatus"
 			>
 				{statusText}
 			</ClayTable.Cell>
 
-			<ClayTable.Cell data-testid="SLADuration">
+			<ClayTable.Cell data-testid="slaDuration">
 				{durationString}
 			</ClayTable.Cell>
 
-			<ClayTable.Cell data-testid="SLADateModified">
+			<ClayTable.Cell data-testid="slaDateModified">
 				{moment
 					.utc(dateModified)
 					.format(Liferay.Language.get('mmm-dd'))}

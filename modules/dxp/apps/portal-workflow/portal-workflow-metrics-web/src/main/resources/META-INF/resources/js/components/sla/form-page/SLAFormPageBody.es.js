@@ -184,14 +184,14 @@ const Body = ({history, id, processId, query}) => {
 							className="col col-sm-5 form-group"
 							data-testid="nameField"
 							error={errors[NAME]}
-							htmlFor="sla_name"
+							htmlFor="slaName"
 							label={Liferay.Language.get('name')}
 							requiredLabel
 						>
 							<ClayInput
 								autoFocus
 								className="form-control"
-								id="sla_name"
+								id="slaName"
 								maxLength={75}
 								name="name"
 								onChange={onChangeHandler(onNameChanged)}
@@ -203,11 +203,11 @@ const Body = ({history, id, processId, query}) => {
 						<FormGroupWithStatus
 							className="col col-sm-7 form-group"
 							data-testid="descriptionField"
-							htmlFor="sla_description"
+							htmlFor="slaDescription"
 							label={Liferay.Language.get('description')}
 						>
 							<ClayInput
-								id="sla_description"
+								id="slaDescription"
 								name="description"
 								onChange={onChangeHandler()}
 								type="text"

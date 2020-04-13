@@ -104,12 +104,12 @@ const DurationSection = ({onChangeHandler}) => {
 					className="col col-sm-3 form-group"
 					data-testid="daysField"
 					error={errors[DURATION]}
-					htmlFor="sla_duration_days"
+					htmlFor="slaDurationDays"
 					label={Liferay.Language.get('days')}
 				>
 					<MaskedInput
 						className="form-control"
-						id="sla_duration_days"
+						id="slaDurationDays"
 						mask={daysMask}
 						maxLength={4}
 						name={DAYS}
@@ -130,12 +130,12 @@ const DurationSection = ({onChangeHandler}) => {
 					className="col col-sm-3 form-group"
 					data-testid="hoursField"
 					error={errors[DURATION] || errors[HOURS]}
-					htmlFor="sla_duration_hours"
+					htmlFor="slaDurationHours"
 					label={Liferay.Language.get('hours')}
 				>
 					<MaskedInput
 						className="form-control"
-						id="sla_duration_hours"
+						id="slaDurationHours"
 						mask={[/\d/, /\d/, ':', /\d/, /\d/]}
 						name={HOURS}
 						onBlur={onHoursBlurred}
@@ -148,12 +148,12 @@ const DurationSection = ({onChangeHandler}) => {
 				{calendars.length > 0 && (
 					<FormGroupWithStatus
 						className="col col-sm-6 form-group"
-						htmlFor="sla_calendar_key"
+						htmlFor="slaCalendarKey"
 						label={Liferay.Language.get('calendar')}
 					>
 						<select
 							className="form-control"
-							id="sla_calendar_key"
+							id="slaCalendarKey"
 							name={CALENDAR_KEY}
 							onChange={onChangeHandler()}
 							value={calendarKey}

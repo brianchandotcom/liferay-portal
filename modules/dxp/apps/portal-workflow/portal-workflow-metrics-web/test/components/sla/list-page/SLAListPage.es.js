@@ -112,40 +112,26 @@ describe('The SLAListPage component should', () => {
 		});
 
 		test('Show table columns', () => {
-			const description = getByTestId('description');
-			const duration = getByTestId('duration');
-			const lastModified = getByTestId('lastModified');
-			const slaName = getByTestId('slaName');
-			const status = getByTestId('status');
+			const slaDateModifiedHead = getByTestId('slaDateModifiedHead');
+			const slaDescriptionHead = getByTestId('slaDescriptionHead');
+			const slaDurationHead = getByTestId('slaDurationHead');
+			const slaNameHead = getByTestId('slaNameHead');
+			const slaStatusHead = getByTestId('slaStatusHead');
 
-			expect(slaName).toHaveTextContent('sla-name');
-			expect(description).toHaveTextContent('description');
-			expect(status).toHaveTextContent('status');
-			expect(duration).toHaveTextContent('duration');
-			expect(lastModified).toHaveTextContent('last-modified');
-		});
-
-		test('Show table columns', () => {
-			const description = getByTestId('description');
-			const duration = getByTestId('duration');
-			const lastModified = getByTestId('lastModified');
-			const slaName = getByTestId('slaName');
-			const status = getByTestId('status');
-
-			expect(slaName).toHaveTextContent('sla-name');
-			expect(description).toHaveTextContent('description');
-			expect(status).toHaveTextContent('status');
-			expect(duration).toHaveTextContent('duration');
-			expect(lastModified).toHaveTextContent('last-modified');
+			expect(slaDateModifiedHead).toHaveTextContent('last-modified');
+			expect(slaDescriptionHead).toHaveTextContent('description');
+			expect(slaDurationHead).toHaveTextContent('duration');
+			expect(slaNameHead).toHaveTextContent('sla-name');
+			expect(slaStatusHead).toHaveTextContent('status');
 		});
 
 		test('Show items info and kebab menu', () => {
 			const kebab = getByTestId('kebab');
-			const slaDateModified = getByTestId('SLADateModified');
-			const slaDescription = getByTestId('SLADescription');
-			const slaDuration = getByTestId('SLADuration');
-			const slaName = getByTestId('SLAName');
-			const slaStatus = getByTestId('SLAStatus');
+			const slaDateModified = getByTestId('slaDateModified');
+			const slaDescription = getByTestId('slaDescription');
+			const slaDuration = getByTestId('slaDuration');
+			const slaName = getByTestId('slaName');
+			const slaStatus = getByTestId('slaStatus');
 
 			expect(slaName).toHaveTextContent('SLA');
 			expect(slaDescription).toHaveTextContent('');
@@ -319,16 +305,16 @@ describe('The SLAListPage component should', () => {
 		});
 
 		test('Show dividers', () => {
-			const blockedDivider = getByTestId('blockedDivider');
-			const runningDivider = getByTestId('runningDivider');
+			const slaBlockedDivider = getByTestId('slaBlockedDivider');
+			const slaRunningDivider = getByTestId('slaRunningDivider');
 
-			expect(blockedDivider).toHaveTextContent('BLOCKED');
-			expect(runningDivider).toHaveTextContent('RUNNING');
+			expect(slaBlockedDivider).toHaveTextContent('BLOCKED');
+			expect(slaRunningDivider).toHaveTextContent('RUNNING');
 		});
 
 		test('Show blocked items info correctly', () => {
-			const slaNames = getAllByTestId('SLAName');
-			const slaStatus = getAllByTestId('SLAStatus');
+			const slaNames = getAllByTestId('slaName');
+			const slaStatus = getAllByTestId('slaStatus');
 
 			expect(slaNames[0].children[0].children.length).toBe(2);
 			expect(slaStatus[0]).toHaveTextContent('blocked');

@@ -163,25 +163,23 @@ describe('The SLAFormPage component should', () => {
 		test('Be rendered correctly', () => {
 			durationDaysField = getByTestId('daysField');
 			durationHoursField = getByTestId('hoursField');
-			durationHoursInput = container.querySelector('#sla_duration_hours');
+			durationHoursInput = container.querySelector('#slaDurationHours');
 			nameField = getByTestId('nameField');
-			nameInput = container.querySelector('#sla_name');
+			nameInput = container.querySelector('#slaName');
 			saveButton = getByTestId('saveButton');
 			startField = getByTestId('startField');
 			stopField = getByTestId('stopField');
 
 			const bodySheetTitle = getByTestId('sheetTitle');
-			const calendar = container.querySelector('#sla_calendar_key');
+			const calendar = container.querySelector('#slaCalendarKey');
 			const cancelButton = getByTestId('cancelButton');
 			const descriptionField = getByTestId('descriptionField');
-			const descriptionInput = container.querySelector(
-				'#sla_description'
-			);
+			const descriptionInput = container.querySelector('#slaDescription');
 			const durationDaysDescription = getByTestId(
 				'durationDaysDescription'
 			);
 			const durationDaysInput = container.querySelector(
-				'#sla_duration_days'
+				'#slaDurationDays'
 			);
 			const durationDescription = getByTestId('durationDescription');
 			const durationLabel = getByTestId('duration');
@@ -397,15 +395,15 @@ describe('The SLAFormPage component should', () => {
 		});
 
 		test('Render form in edit mode with correct data', () => {
-			const calendar = container.querySelector('#sla_calendar_key');
+			const calendar = container.querySelector('#slaCalendarKey');
 			const durationDaysField = getByTestId('daysField');
 			const durationHoursField = getByTestId('hoursField');
 			const durationHoursInput = container.querySelector(
-				'#sla_duration_hours'
+				'#slaDurationHours'
 			);
 			const multiSelectItems = getAllByTestId('multiSelectItem');
 			const nameField = getByTestId('nameField');
-			const nameInput = container.querySelector('#sla_name');
+			const nameInput = container.querySelector('#slaName');
 			const startField = getByTestId('startField');
 			const stopField = getByTestId('stopField');
 			const saveButton = getByTestId('saveButton');

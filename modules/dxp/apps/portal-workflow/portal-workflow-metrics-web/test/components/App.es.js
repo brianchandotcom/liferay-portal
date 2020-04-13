@@ -114,9 +114,9 @@ describe('The App component should', () => {
 	});
 
 	test('Navigate to new SLA page', () => {
-		const SLAInfoLink = getByTestId('SLAInfoLink');
+		const slaInfoLink = getByTestId('slaInfoLink');
 
-		fireEvent.click(SLAInfoLink);
+		fireEvent.click(slaInfoLink);
 
 		expect(window.location.hash).toContain('#/sla/1/new');
 	});

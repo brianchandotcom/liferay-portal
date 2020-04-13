@@ -39,15 +39,15 @@ describe('The SLAInfo component should', () => {
 		});
 
 		test('Show alert with correct data', () => {
-			const alert = getByTestId('SLAInfoAlert');
-			const addLink = getByTestId('SLAInfoLink');
+			const slaInfoAlert = getByTestId('slaInfoAlert');
+			const slaInfoLink = getByTestId('slaInfoLink');
 
-			expect(addLink.getAttribute('href')).toContain('/sla/1/new');
-			expect(alert).toHaveTextContent(
+			expect(slaInfoLink.getAttribute('href')).toContain('/sla/1/new');
+			expect(slaInfoAlert).toHaveTextContent(
 				'no-slas-are-defined-for-this-process add-a-new-sla'
 			);
 
-			fireEvent.click(alert.children[1]);
+			fireEvent.click(slaInfoAlert.children[1]);
 
 			expect(container.innerHTML).toBe('');
 
@@ -74,15 +74,17 @@ describe('The SLAInfo component should', () => {
 		});
 
 		test('Show alert with correct data', () => {
-			const alert = getByTestId('SLAInfoAlert');
-			const link = getByTestId('SLAInfoLink');
+			const slaInfoAlert = getByTestId('slaInfoAlert');
+			const slaInfoLink = getByTestId('slaInfoLink');
 
-			expect(link.getAttribute('href')).toContain('/sla/1/list/20/1');
-			expect(alert).toHaveTextContent(
+			expect(slaInfoLink.getAttribute('href')).toContain(
+				'/sla/1/list/20/1'
+			);
+			expect(slaInfoAlert).toHaveTextContent(
 				'x-sla-is-blocked fix-the-sla-configuration-to-resume-accurate-reporting set-up-slas'
 			);
 
-			fireEvent.click(alert.children[1]);
+			fireEvent.click(slaInfoAlert.children[1]);
 
 			expect(container.innerHTML).toBe('');
 		});
@@ -107,15 +109,17 @@ describe('The SLAInfo component should', () => {
 		});
 
 		test('Show alert with correct data', () => {
-			const alert = getByTestId('SLAInfoAlert');
-			const link = getByTestId('SLAInfoLink');
+			const slaInfoAlert = getByTestId('slaInfoAlert');
+			const slaInfoLink = getByTestId('slaInfoLink');
 
-			expect(link.getAttribute('href')).toContain('/sla/1/list/20/1');
-			expect(alert).toHaveTextContent(
+			expect(slaInfoLink.getAttribute('href')).toContain(
+				'/sla/1/list/20/1'
+			);
+			expect(slaInfoAlert).toHaveTextContent(
 				'x-slas-are-blocked fix-the-sla-configuration-to-resume-accurate-reporting set-up-slas'
 			);
 
-			fireEvent.click(alert.children[1]);
+			fireEvent.click(slaInfoAlert.children[1]);
 
 			expect(container.innerHTML).toBe('');
 		});

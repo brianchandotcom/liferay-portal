@@ -55,7 +55,7 @@ const TimeFrameSection = () => {
 			<h3 className="sheet-subtitle">
 				<FieldLabel
 					data-testid="timeFrame"
-					htmlFor="sla_time_start"
+					htmlFor="slaTimeStart"
 					text={Liferay.Language.get('time-frame').toUpperCase()}
 				/>
 			</h3>
@@ -71,7 +71,7 @@ const TimeFrameSection = () => {
 					className="col col-sm-12 form-group"
 					data-testid="startField"
 					error={errors[START_NODE_KEYS]}
-					htmlFor="sla_time_start"
+					htmlFor="slaTimeStart"
 					label={Liferay.Language.get('start')}
 					requiredLabel
 				>
@@ -99,7 +99,7 @@ const TimeFrameSection = () => {
 				<FormGroupWithStatus
 					className="col col-sm-12 form-group"
 					data-testid="pauseField"
-					htmlFor="sla_time_pause"
+					htmlFor="slaTimePause"
 					label={Liferay.Language.get('pause')}
 				>
 					<div className="form-text" data-testid="pauseDescription">
@@ -126,7 +126,7 @@ const TimeFrameSection = () => {
 					className="col col-sm-12 form-group"
 					data-testid="stopField"
 					error={errors[STOP_NODE_KEYS]}
-					htmlFor="sla_time_stop"
+					htmlFor="slaTimeStop"
 					label={Liferay.Language.get('stop')}
 					requiredLabel
 				>

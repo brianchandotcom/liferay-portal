@@ -33,7 +33,7 @@ const Table = ({items}) => {
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell
-						data-testid="slaName"
+						data-testid="slaNameHead"
 						headingCell
 						style={{width: '27%'}}
 					>
@@ -41,7 +41,7 @@ const Table = ({items}) => {
 					</ClayTable.Cell>
 
 					<ClayTable.Cell
-						data-testid="description"
+						data-testid="slaDescriptionHead"
 						headingCell
 						style={{width: '24%'}}
 					>
@@ -49,7 +49,7 @@ const Table = ({items}) => {
 					</ClayTable.Cell>
 
 					<ClayTable.Cell
-						data-testid="status"
+						data-testid="slaStatusHead"
 						headingCell
 						style={{width: '17%'}}
 					>
@@ -57,7 +57,7 @@ const Table = ({items}) => {
 					</ClayTable.Cell>
 
 					<ClayTable.Cell
-						data-testid="duration"
+						data-testid="slaDurationHead"
 						headingCell
 						style={{width: '17%'}}
 					>
@@ -65,7 +65,7 @@ const Table = ({items}) => {
 					</ClayTable.Cell>
 
 					<ClayTable.Cell
-						data-testid="lastModified"
+						data-testid="slaDateModifiedHead"
 						headingCell
 						style={{width: '25%'}}
 					>
@@ -81,7 +81,7 @@ const Table = ({items}) => {
 					<ClayTable.Row className="table-divider">
 						<ClayTable.Cell
 							colSpan="9"
-							data-testid="blockedDivider"
+							data-testid="slaBlockedDivider"
 						>
 							{Liferay.Language.get('blocked').toUpperCase()}
 						</ClayTable.Cell>
@@ -96,7 +96,7 @@ const Table = ({items}) => {
 					<ClayTable.Row className="table-divider">
 						<ClayTable.Cell
 							colSpan="9"
-							data-testid="runningDivider"
+							data-testid="slaRunningDivider"
 						>
 							{Liferay.Language.get('running').toUpperCase()}
 						</ClayTable.Cell>

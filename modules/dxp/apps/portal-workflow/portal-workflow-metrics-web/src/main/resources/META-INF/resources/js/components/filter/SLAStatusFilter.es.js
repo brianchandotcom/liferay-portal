@@ -50,7 +50,7 @@ const SLAStatusFilter = ({
 
 	return (
 		<Filter
-			data-testid="SLAStatusFilter"
+			data-testid="slaStatusFilter"
 			defaultItem={defaultItem}
 			elementClasses={className}
 			filterKey={filterKey}

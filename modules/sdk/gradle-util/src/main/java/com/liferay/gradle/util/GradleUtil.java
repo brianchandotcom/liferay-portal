@@ -148,6 +148,14 @@ public class GradleUtil {
 		return (T)project.task(args, name);
 	}
 
+	public static <T extends Task> TaskProvider<T> addTaskProvider(
+		Project project, String name, Class<T> clazz) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		return taskContainer.register(name, clazz);
+	}
+
 	public static <T extends Plugin<? extends Project>> void applyPlugin(
 		Project project, Class<T> clazz) {
 
@@ -438,14 +446,6 @@ public class GradleUtil {
 		TaskContainer taskContainer = project.getTasks();
 
 		return taskContainer.named(name, clazz);
-	}
-
-	public static <T extends Task> TaskProvider<T> addTaskProvider(
-		Project project, String name, Class<T> clazz) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		return taskContainer.register(name, clazz);
 	}
 
 	public static void removeDependencies(

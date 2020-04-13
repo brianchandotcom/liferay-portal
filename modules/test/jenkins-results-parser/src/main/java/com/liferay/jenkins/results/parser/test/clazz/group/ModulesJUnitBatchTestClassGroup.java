@@ -220,10 +220,11 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			File modifiedDirTestProperties = new File(
 				modifiedModuleDir, "test.properties");
 
-			Properties testProperties = JenkinsResultsParserUtil.getProperties(
-				modifiedDirTestProperties);
-
 			if (modifiedDirTestProperties.exists()) {
+				Properties testProperties =
+					JenkinsResultsParserUtil.getProperties(
+						modifiedDirTestProperties);
+
 				String firstMatchingPropertyName = getFirstMatchingPropertyName(
 					"modules.includes.required.test.batch.class.names.includes",
 					testProperties, testSuiteName);

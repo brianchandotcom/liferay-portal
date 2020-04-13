@@ -198,6 +198,13 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 		return SpiraTestCaseRun.getSpiraTestCaseRuns(getSpiraProject(), this);
 	}
 
+	public SpiraTestCaseType getSpiraTestCaseType() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return spiraProject.getSpiraTestCaseTypeByID(
+			jsonObject.getInt("TestCaseTypeId"));
+	}
+
 	public static enum Status {
 
 		APPROVED(4), DRAFT(1), OBSOLETE(9), READY_FOR_REVIEW(2),

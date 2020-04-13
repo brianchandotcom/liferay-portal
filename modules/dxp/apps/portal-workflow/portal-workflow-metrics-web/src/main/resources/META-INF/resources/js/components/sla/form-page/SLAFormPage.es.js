@@ -19,11 +19,11 @@ const SLAFormPage = props => {
 	const {setTitle} = useContext(AppContext);
 
 	useEffect(() => {
-		const title = props.id
-			? Liferay.Language.get('edit-sla')
-			: Liferay.Language.get('new-sla');
-
-		setTitle(title);
+		setTitle(
+			props.id
+				? Liferay.Language.get('edit-sla')
+				: Liferay.Language.get('new-sla')
+		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

@@ -17,22 +17,20 @@ const useSLANodes = processId => {
 	const [nodes, setNodes] = useState([]);
 
 	const parseNodes = ({items}) => {
-		const entersTaskString = Liferay.Language.get('enters-task');
-		const leavesTaskString = Liferay.Language.get('leaves-task');
 		const nodeBegins = [];
 		const nodeEnds = [];
 		const nodeEnters = [];
 		const nodeLeaves = [];
-		const processBeginsString = Liferay.Language.get('process-begins');
-		const processEndsString = Liferay.Language.get('process-ends');
 
 		items.forEach(node => {
 			if (node.type === 'STATE') {
 				const newNode = {
 					...node,
 					desc: node.initial
-						? processBeginsString
-						: `${processEndsString} ${node.label}`,
+						? Liferay.Language.get('process-begins')
+						: `${Liferay.Language.get('process-ends')} ${
+								node.label
+						  }`,
 					executionType: node.initial ? 'begin' : 'end',
 				};
 
@@ -46,13 +44,17 @@ const useSLANodes = processId => {
 			else if (node.type === 'TASK') {
 				nodeEnters.push({
 					...node,
-					desc: `${entersTaskString} ${node.label}`,
+					desc: `${Liferay.Language.get('enters-task')} ${
+						node.label
+					}`,
 					executionType: 'enter',
 				});
 
 				nodeLeaves.push({
 					...node,
-					desc: `${leavesTaskString} ${node.label}`,
+					desc: `${Liferay.Language.get('leaves-task')} ${
+						node.label
+					}`,
 					executionType: 'leave',
 				});
 			}

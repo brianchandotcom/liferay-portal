@@ -46,15 +46,13 @@ const SLAInfo = ({processId}) => {
 	const getSLABlockedCount = () => {
 		fetchSLABlocked().then(({totalCount}) => {
 			if (totalCount > 0) {
-				const blockedText =
-					totalCount > 1
-						? Liferay.Language.get('x-slas-are-blocked')
-						: Liferay.Language.get('x-sla-is-blocked');
-
 				setAlert({
-					content: `${sub(blockedText, [
-						totalCount,
-					])} ${Liferay.Language.get(
+					content: `${sub(
+						totalCount > 1
+							? Liferay.Language.get('x-slas-are-blocked')
+							: Liferay.Language.get('x-sla-is-blocked'),
+						[totalCount]
+					)} ${Liferay.Language.get(
 						'fix-the-sla-configuration-to-resume-accurate-reporting'
 					)}`,
 					link: `/sla/${processId}/list/${defaultDelta}/1`,

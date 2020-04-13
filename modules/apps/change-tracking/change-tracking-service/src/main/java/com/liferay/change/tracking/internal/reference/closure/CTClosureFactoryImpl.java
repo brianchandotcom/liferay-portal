@@ -34,7 +34,6 @@ import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.orm.ORMException;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.sql.Connection;
@@ -199,11 +198,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		TableReferenceDefinition<P> tableReferenceDefinition =
 			parentTableReferenceInfo.getTableReferenceDefinition();
 
-		PersistedModelLocalService persistedModelLocalService =
-			tableReferenceDefinition.getPersistedModelLocalService();
-
 		BasePersistence<?> basePersistence =
-			persistedModelLocalService.getBasePersistence();
+			tableReferenceDefinition.getBasePersistence();
 
 		DataSource dataSource = basePersistence.getDataSource();
 

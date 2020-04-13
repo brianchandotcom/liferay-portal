@@ -25,7 +25,7 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -724,7 +724,7 @@ public class TableReferenceDefinitionHelperImplTest {
 		}
 
 		@Override
-		public PersistedModelLocalService getPersistedModelLocalService() {
+		public BasePersistence<?> getBasePersistence() {
 			return null;
 		}
 

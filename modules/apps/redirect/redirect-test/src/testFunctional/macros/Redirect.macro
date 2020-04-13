@@ -99,7 +99,7 @@ definition {
 	}
 
 	macro ignoreEntry {
-		if ("${Unignore}" == "true") {
+		if ("${unignore}" == "true") {
 			AssertClick(
 				key_navItem = "404 URLs",
 				locator1 = "NavBar#NAV_ITEM_REDIRECTION",

@@ -389,7 +389,7 @@ definition {
 
 		Redirect.ignoreEntry(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			Unignore = "true");
+			unignore = "true");
 
 		Redirect.viewURLsDefaultNotFoundCP();
 

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ANY_LABELED</td>
-	<td>//*[contains(.,'${key_label}')]/following-sibling::div//textarea</td>
+	<td>//*[normalize-space(text())='${key_label}']/following-sibling::textarea</td>
 	<td></td>
 </tr>
 <tr>

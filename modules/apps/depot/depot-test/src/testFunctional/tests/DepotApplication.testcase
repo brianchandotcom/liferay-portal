@@ -28,7 +28,7 @@ definition {
 
 	@description = "This ensures that previous asset selections persist in collections after DM and WC applications are disabled."
 	@priority = "5"
-	test SelectDisabledAssetsFromContentSets {
+	test SelectDisabledAssetsFromCollections {
 		property portal.upstream = "quarantine";
 
 		JSONWebcontent.addWebContent(
@@ -140,7 +140,7 @@ definition {
 
 	@description = "This ensures that the Collections application can be viewed after reactivating in a depot."
 	@priority = "5"
-	test ViewContentSetsAfterReactivating {
+	test ViewCollectionsAfterReactivating {
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
 
 		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");

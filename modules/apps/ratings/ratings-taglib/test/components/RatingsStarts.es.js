@@ -101,7 +101,7 @@ describe('RatingsStars', () => {
 			});
 		});
 
-		describe('with 5/5 user user score', () => {
+		describe('when the user score is 5/5', () => {
 			let starsDropdownToggle;
 			let starsButtons;
 
@@ -112,7 +112,7 @@ describe('RatingsStars', () => {
 				starsDropdownToggle = starsButtons[0];
 			});
 
-			it('initial user score', () => {
+			it('shows the initial user score', () => {
 				expect(starsDropdownToggle.value).toBe('5');
 			});
 

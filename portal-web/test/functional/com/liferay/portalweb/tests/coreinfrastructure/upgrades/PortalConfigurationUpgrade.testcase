@@ -23,7 +23,6 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade625 {
 		property data.archive.type = "data-archive-portal-settings";
@@ -33,7 +32,6 @@ definition {
 		Upgrade.viewInstanceSettings();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade704 {
 		property data.archive.type = "data-archive-portal-settings";
@@ -45,7 +43,6 @@ definition {
 		Upgrade.viewSystemSettings();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade713 {
 		property data.archive.type = "data-archive-portal-settings";
@@ -57,7 +54,6 @@ definition {
 		Upgrade.viewSystemSettings();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal-settings";
@@ -68,7 +64,6 @@ definition {
 		Upgrade.viewSystemSettings();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade70106 {
 		property data.archive.type = "data-archive-portal-settings";
@@ -79,7 +74,6 @@ definition {
 		Upgrade.viewSystemSettings();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal-settings";
@@ -89,7 +83,6 @@ definition {
 		Upgrade.viewInstanceSettings();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade621021 {
 		property data.archive.type = "data-archive-portal-settings";

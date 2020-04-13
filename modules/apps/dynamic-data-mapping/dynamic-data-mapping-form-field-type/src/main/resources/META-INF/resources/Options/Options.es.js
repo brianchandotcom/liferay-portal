@@ -21,7 +21,7 @@ import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import {KeyValueWithFieldBase} from '../KeyValue/KeyValue.es';
+import {Main as KeyValue} from '../KeyValue/KeyValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import DnD from './DnD.es';
@@ -264,7 +264,7 @@ const OptionsProxy = connectStore(
 					value={value}
 				>
 					{({handleBlur, handleField, index, option}) => (
-						<KeyValueWithFieldBase
+						<KeyValue
 							dispatch={dispatch}
 							generateKeyword={option.generateKeyword}
 							keyword={option.value}

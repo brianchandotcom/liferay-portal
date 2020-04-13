@@ -73,7 +73,7 @@ public class DDMFormBuilderContextFactoryHelper {
 		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, JSONFactory jsonFactory,
-		Locale locale, boolean readOnly) {
+		Locale locale, String portletNamespace, boolean readOnly) {
 
 		_ddmStructureOptional = ddmStructureOptional;
 		_ddmStructureVersionOptional = ddmStructureVersionOptional;
@@ -83,6 +83,7 @@ public class DDMFormBuilderContextFactoryHelper {
 		_httpServletResponse = httpServletResponse;
 		_jsonFactory = jsonFactory;
 		_locale = locale;
+		_portletNamespace = portletNamespace;
 		_readOnly = readOnly;
 	}
 
@@ -129,7 +130,7 @@ public class DDMFormBuilderContextFactoryHelper {
 		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
 		ddmFormRenderingContext.setHttpServletResponse(_httpServletResponse);
 		ddmFormRenderingContext.setLocale(_locale);
-		ddmFormRenderingContext.setPortletNamespace(StringPool.BLANK);
+		ddmFormRenderingContext.setPortletNamespace(_portletNamespace);
 		ddmFormRenderingContext.setReadOnly(_readOnly);
 
 		Map<String, Object> ddmFormTemplateContext =
@@ -210,7 +211,7 @@ public class DDMFormBuilderContextFactoryHelper {
 		ddmFormRenderingContext.setHttpServletRequest(_httpServletRequest);
 		ddmFormRenderingContext.setHttpServletResponse(_httpServletResponse);
 		ddmFormRenderingContext.setLocale(_locale);
-		ddmFormRenderingContext.setPortletNamespace(StringPool.BLANK);
+		ddmFormRenderingContext.setPortletNamespace(_portletNamespace);
 
 		DDMFormValues ddmFormValues =
 			doCreateDDMFormFieldSettingContextDDMFormValues(
@@ -449,6 +450,7 @@ public class DDMFormBuilderContextFactoryHelper {
 	private final HttpServletResponse _httpServletResponse;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
+	private final String _portletNamespace;
 	private final boolean _readOnly;
 
 	private static class DDMFormBuilderContextFieldVisitor {

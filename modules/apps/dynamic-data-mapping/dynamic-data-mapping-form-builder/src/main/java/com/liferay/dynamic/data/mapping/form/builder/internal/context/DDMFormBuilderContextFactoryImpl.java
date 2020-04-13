@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFact
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Optional;
 
@@ -46,6 +47,9 @@ public class DDMFormBuilderContextFactoryImpl
 				ddmFormBuilderContextRequest.getProperty(
 					"ddmStructureVersion"));
 
+		String portletNamespace = GetterUtil.getString(
+			ddmFormBuilderContextRequest.getProperty("portletNamespace"));
+
 		DDMFormBuilderContextFactoryHelper ddmFormBuilderContextFactoryHelper =
 			new DDMFormBuilderContextFactoryHelper(
 				ddmStructureOptional, ddmStructureVersionOptional,
@@ -54,7 +58,7 @@ public class DDMFormBuilderContextFactoryImpl
 				ddmFormBuilderContextRequest.getHttpServletRequest(),
 				ddmFormBuilderContextRequest.getHttpServletResponse(),
 				_jsonFactory, ddmFormBuilderContextRequest.getLocale(),
-				ddmFormBuilderContextRequest.getReadOnly());
+				portletNamespace, ddmFormBuilderContextRequest.getReadOnly());
 
 		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
 			new DDMFormBuilderContextResponse();

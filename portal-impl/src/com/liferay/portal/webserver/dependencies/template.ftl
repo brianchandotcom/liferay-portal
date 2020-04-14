@@ -26,8 +26,8 @@
 			<a href="${entry.path}">${entry.name}</a>
 		</td>
 		<td>
-			<#if entry.getModifiedDate()??>
-				${entry.modifiedDate}
+			<#if entry.getModifiedDateString()??>
+				${entry.modifiedDateString}
 			<#else>
 				-
 			</#if>

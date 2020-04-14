@@ -39,17 +39,19 @@ public class WebServerEntry {
 
 		_path = getPath(path, name);
 		_name = name;
+		_createDate = createDate;
+		_modifiedDate = modifiedDate;
 
 		if ((createDate != null) || (modifiedDate != null)) {
 			Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 				"d MMM yyyy HH:mm z");
 
 			if (createDate != null) {
-				_createDate = dateFormat.format(createDate);
+				_createDateString = dateFormat.format(createDate);
 			}
 
 			if (modifiedDate != null) {
-				_modifiedDate = dateFormat.format(modifiedDate);
+				_modifiedDateString = dateFormat.format(modifiedDate);
 			}
 		}
 
@@ -57,16 +59,24 @@ public class WebServerEntry {
 		_size = size;
 	}
 
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return _createDate;
+	}
+
+	public String getCreateDateString() {
+		return _createDateString;
 	}
 
 	public String getDescription() {
 		return _description;
 	}
 
-	public String getModifiedDate() {
+	public Date getModifiedDate() {
 		return _modifiedDate;
+	}
+
+	public String getModifiedDateString() {
+		return _modifiedDateString;
 	}
 
 	public String getName() {
@@ -81,16 +91,24 @@ public class WebServerEntry {
 		return _size;
 	}
 
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+	}
+
+	public void setCreateDateString(String createDateString) {
+		_createDateString = createDateString;
 	}
 
 	public void setDescription(String description) {
 		_description = description;
 	}
 
-	public void setModifiedDate(String modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+	}
+
+	public void setModifiedDateString(String modifiedDateString) {
+		_modifiedDateString = modifiedDateString;
 	}
 
 	public void setName(String name) {
@@ -122,9 +140,11 @@ public class WebServerEntry {
 		return path;
 	}
 
-	private String _createDate;
+	private Date _createDate;
+	private String _createDateString;
 	private String _description;
-	private String _modifiedDate;
+	private Date _modifiedDate;
+	private String _modifiedDateString;
 	private String _name;
 	private String _path;
 	private long _size;

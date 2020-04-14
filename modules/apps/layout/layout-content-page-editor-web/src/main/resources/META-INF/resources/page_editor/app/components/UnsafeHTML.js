@@ -105,7 +105,7 @@ export default class UnsafeHTML extends React.PureComponent {
 			<>
 				<RawDOM
 					elementRef={this._updateRef}
-					tagName={this.props.tagName}
+					TagName={this.props.TagName}
 				/>
 
 				{this.state.portals.map(({Component, element}) =>
@@ -117,15 +117,16 @@ export default class UnsafeHTML extends React.PureComponent {
 }
 
 UnsafeHTML.defaultProps = {
+	TagName: 'div',
 	className: '',
 	contentRef: null,
 	getPortals: () => [],
 	markup: '',
 	onRender: () => {},
-	tagName: 'div',
 };
 
 UnsafeHTML.propTypes = {
+	TagName: PropTypes.string,
 	className: PropTypes.string,
 	contentRef: PropTypes.oneOfType([
 		PropTypes.func,
@@ -134,7 +135,6 @@ UnsafeHTML.propTypes = {
 	getPortals: PropTypes.func,
 	markup: PropTypes.string,
 	onRender: PropTypes.func,
-	tagName: PropTypes.string,
 };
 
 /**
@@ -147,17 +147,17 @@ class RawDOM extends React.Component {
 	}
 
 	render() {
-		const TagName = this.props.tagName;
+		const TagName = this.props.TagName;
 
 		return <TagName ref={this.props.elementRef} />;
 	}
 }
 
 RawDOM.defaultProps = {
-	tagName: 'div',
+	TagName: 'div',
 };
 
 RawDOM.propTypes = {
+	TagName: PropTypes.string,
 	elementRef: PropTypes.func.isRequired,
-	tagName: PropTypes.string,
 };

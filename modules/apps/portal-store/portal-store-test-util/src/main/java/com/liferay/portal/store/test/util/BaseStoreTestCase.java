@@ -37,14 +37,14 @@ import org.junit.Test;
 public abstract class BaseStoreTestCase {
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_companyId = RandomTestUtil.nextLong();
 		_repositoryId = RandomTestUtil.nextLong();
 		_store = getStore();
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		_store.deleteDirectory(_companyId, _repositoryId, StringPool.SLASH);
 	}
 
@@ -267,7 +267,7 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testGetFileNamesWithInvalidRepository() throws Exception {
+	public void testGetFileNamesWithInvalidRepository() {
 		String[] fileNames = _store.getFileNames(
 			_companyId, _repositoryId, StringPool.BLANK);
 

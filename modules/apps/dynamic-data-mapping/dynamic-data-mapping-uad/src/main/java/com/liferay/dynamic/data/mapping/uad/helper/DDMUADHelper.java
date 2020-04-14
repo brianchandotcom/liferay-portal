@@ -56,9 +56,7 @@ public class DDMUADHelper {
 		}
 	}
 
-	public String getFormattedName(
-		DDMFormInstance ddmFormInstance) {
-
+	public String getFormattedName(DDMFormInstance ddmFormInstance) {
 		Document document = _toDocument(ddmFormInstance.getName());
 
 		Node firstChildNode = document.getFirstChild();

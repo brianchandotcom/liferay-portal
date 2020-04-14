@@ -70,6 +70,9 @@ public class DDMFormInstanceRecordUADAnonymizer
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
+				Property formInstanceRecordIdProperty =
+					PropertyFactoryUtil.forName("formInstanceRecordId");
+
 				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
 				for (String userIdFieldName :
@@ -88,9 +91,6 @@ public class DDMFormInstanceRecordUADAnonymizer
 
 				formInstanceRecordIdDynamicQuery.add(
 					RestrictionsFactoryUtil.eq("statusByUserId", userId));
-
-				Property formInstanceRecordIdProperty =
-					PropertyFactoryUtil.forName("formInstanceRecordId");
 
 				disjunction.add(
 					formInstanceRecordIdProperty.in(

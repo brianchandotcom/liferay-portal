@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Rachael Koestartyo
  */
 @ProviderType
-public interface AnalyticsCSVDemoDataCreator {
+public interface AnalyticsDemoDataCreator {
 
 	public void create() throws Exception;
 

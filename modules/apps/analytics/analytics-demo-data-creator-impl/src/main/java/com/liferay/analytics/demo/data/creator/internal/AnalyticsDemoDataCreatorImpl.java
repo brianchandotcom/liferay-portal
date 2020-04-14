@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.demo.data.creator.internal;
 
-import com.liferay.analytics.demo.data.creator.AnalyticsCSVDemoDataCreator;
+import com.liferay.analytics.demo.data.creator.AnalyticsDemoDataCreator;
 import com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -72,10 +72,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	service = AnalyticsCSVDemoDataCreator.class
+	service = AnalyticsDemoDataCreator.class
 )
-public class AnalyticsCSVDemoDataCreatorImpl
-	implements AnalyticsCSVDemoDataCreator {
+public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 	public void create() throws Exception {
 		File file = new File(
@@ -355,7 +354,7 @@ public class AnalyticsCSVDemoDataCreatorImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsCSVDemoDataCreatorImpl.class);
+		AnalyticsDemoDataCreatorImpl.class);
 
 	private volatile AnalyticsDemoDataCreatorConfiguration
 		_analyticsDemoDataCreatorConfiguration;

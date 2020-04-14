@@ -86,11 +86,10 @@ public class DDMFormInstanceRecordUADAnonymizer
 				DynamicQuery formInstanceRecordIdDynamicQuery =
 					_ddmFormInstanceRecordVersionLocalService.dynamicQuery();
 
-				formInstanceRecordIdDynamicQuery.setProjection(
-					ProjectionFactoryUtil.property("formInstanceRecordId"));
-
 				formInstanceRecordIdDynamicQuery.add(
 					RestrictionsFactoryUtil.eq("statusByUserId", userId));
+				formInstanceRecordIdDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("formInstanceRecordId"));
 
 				disjunction.add(
 					formInstanceRecordIdProperty.in(

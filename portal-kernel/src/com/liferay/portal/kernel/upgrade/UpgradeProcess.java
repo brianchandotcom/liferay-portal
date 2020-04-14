@@ -379,14 +379,14 @@ public abstract class UpgradeProcess
 
 					runSQL(alterable.getSQL(tableName));
 
-					List<String> indexesSQL = getIndexesSQL(
+					List<String> indexSQLs = getIndexSQLs(
 						tableClass, tableName);
 
-					if (ListUtil.isEmpty(indexesSQL)) {
+					if (ListUtil.isEmpty(indexSQLs)) {
 						continue;
 					}
 
-					for (String indexSQL : indexesSQL) {
+					for (String indexSQL : indexSQLs) {
 						if (alterable.shouldAddIndex(
 								_getIndexColumnNames(indexSQL))) {
 
@@ -426,19 +426,8 @@ public abstract class UpgradeProcess
 
 	protected abstract void doUpgrade() throws Exception;
 
-	protected List<String> getIndexesSQL(Class<?> tableClass, String tableName)
-		throws Exception {
-
-		Field tableSQLAddIndexesField = tableClass.getField(
-			"TABLE_SQL_ADD_INDEXES");
-
-		String[] indexes = (String[])tableSQLAddIndexesField.get(null);
-
-		return ListUtil.fromArray(indexes);
-	}
-
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getIndexesSQL(Class, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getIndexSQLs(Class, String)}
 	 */
 	@Deprecated
 	protected List<ObjectValuePair<String, IndexMetadata>> getIndexesSQL(
@@ -521,6 +510,17 @@ public abstract class UpgradeProcess
 		}
 
 		return _portalIndexesSQL.get(tableName);
+	}
+
+	protected List<String> getIndexSQLs(Class<?> tableClass, String tableName)
+		throws Exception {
+
+		Field tableSQLAddIndexesField = tableClass.getField(
+			"TABLE_SQL_ADD_INDEXES");
+
+		String[] indexes = (String[])tableSQLAddIndexesField.get(null);
+
+		return ListUtil.fromArray(indexes);
 	}
 
 	protected Map<String, Integer> getTableColumnsMap(Class<?> tableClass)

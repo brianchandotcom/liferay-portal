@@ -81,12 +81,12 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 			(parentContainerId instanceof Long)) {
 
 			try {
-				DDMFormInstanceRecord ddmFormInstanceRecord =
-					(DDMFormInstanceRecord)childObject;
-
 				Long ddmFormInstanceParentId = (Long)parentContainerId;
 
 				if (ddmFormInstanceParentId.longValue() == 0) {
+					DDMFormInstanceRecord ddmFormInstanceRecord =
+						(DDMFormInstanceRecord)childObject;
+
 					return ddmFormInstanceRecord.getFormInstance();
 				}
 			}

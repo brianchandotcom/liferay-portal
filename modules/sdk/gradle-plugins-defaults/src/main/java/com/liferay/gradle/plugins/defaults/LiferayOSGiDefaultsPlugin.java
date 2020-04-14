@@ -2816,9 +2816,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			Gradle gradle = project.getGradle();
 
-			StartParameter startParameter = gradle.getStartParameter();
-
-			List<String> taskNames = startParameter.getTaskNames();
+			Set<String> taskNames = GradleUtil.getTaskNames(
+				project, gradle.getStartParameter());
 
 			Stream<String> taskNamesStream = taskNames.stream();
 

@@ -42,17 +42,11 @@ public class WebServerEntry {
 		_createDate = createDate;
 		_modifiedDate = modifiedDate;
 
-		if ((createDate != null) || (modifiedDate != null)) {
+		if (modifiedDate != null) {
 			Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 				"d MMM yyyy HH:mm z");
 
-			if (createDate != null) {
-				_createDateString = dateFormat.format(createDate);
-			}
-
-			if (modifiedDate != null) {
-				_modifiedDateString = dateFormat.format(modifiedDate);
-			}
+			_modifiedDateString = dateFormat.format(modifiedDate);
 		}
 
 		_description = GetterUtil.getString(description);
@@ -61,10 +55,6 @@ public class WebServerEntry {
 
 	public Date getCreateDate() {
 		return _createDate;
-	}
-
-	public String getCreateDateString() {
-		return _createDateString;
 	}
 
 	public String getDescription() {
@@ -93,10 +83,6 @@ public class WebServerEntry {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-	}
-
-	public void setCreateDateString(String createDateString) {
-		_createDateString = createDateString;
 	}
 
 	public void setDescription(String description) {
@@ -141,7 +127,6 @@ public class WebServerEntry {
 	}
 
 	private Date _createDate;
-	private String _createDateString;
 	private String _description;
 	private Date _modifiedDate;
 	private String _modifiedDateString;

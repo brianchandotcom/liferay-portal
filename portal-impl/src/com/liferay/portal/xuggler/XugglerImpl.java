@@ -30,6 +30,8 @@ import com.xuggle.xuggler.IContainer;
 
 import java.net.URL;
 
+import java.nio.file.Paths;
+
 /**
  * @author Alexander Chow
  */
@@ -40,7 +42,7 @@ public class XugglerImpl implements Xuggler {
 		try {
 			JarUtil.downloadAndInstallJar(
 				new URL(PropsValues.XUGGLER_JAR_URL + name),
-				PropsValues.LIFERAY_LIB_PORTAL_DIR, name);
+				Paths.get(PropsValues.LIFERAY_LIB_PORTAL_DIR, name));
 
 			_nativeLibraryCopied = true;
 		}

@@ -1584,14 +1584,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		for (String staticJarFileName :
 				PropsValues.MODULE_FRAMEWORK_STATIC_JARS) {
 
-			File staticJarFile = new File(
+			Path staticJarPath = Paths.get(
 				PropsValues.LIFERAY_LIB_PORTAL_DIR, staticJarFileName);
 
-			if (staticJarFile.exists()) {
-				jarPaths.add(staticJarFile.toPath());
+			if (Files.exists(staticJarPath)) {
+				jarPaths.add(staticJarPath);
 			}
 			else {
-				_log.error("Missing " + staticJarFile);
+				_log.error("Missing " + staticJarPath);
 			}
 		}
 

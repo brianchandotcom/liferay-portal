@@ -150,7 +150,7 @@ const RatingsStars = ({
 	};
 
 	return (
-		<div className="autofit-row autofit-row-center ratings ratings-stars">
+		<div className="autofit-padded-no-gutters autofit-row autofit-row-center ratings ratings-stars">
 			<div className="autofit-col">
 				<ClayDropDown
 					active={isDropdownOpen}
@@ -162,6 +162,7 @@ const RatingsStars = ({
 						<ClayButton
 							aria-pressed={!!score}
 							borderless
+							className="ratings-stars-dropdown-toggle"
 							disabled={!signedIn || !enabled}
 							displayType="secondary"
 							small
@@ -171,7 +172,9 @@ const RatingsStars = ({
 							<span className="inline-item inline-item-before">
 								<ClayIcon symbol={score ? 'star' : 'star-o'} />
 							</span>
-							<span className="inline-item">{score || '-'}</span>
+							<span className="inline-item ratings-stars-button-text">
+								{score || '-'}
+							</span>
 						</ClayButton>
 					}
 				>
@@ -208,22 +211,24 @@ const RatingsStars = ({
 				</ClayDropDown>
 			</div>
 			<div className="autofit-col">
-				<ClayIcon
-					className="ratings-stars-average-icon"
-					symbol="star"
-				/>
-			</div>
-			<div className="autofit-col">
-				<span className="ratings-stars-average-text">
-					{averageScore}
-					{!!totalEntries &&
-						` (${totalEntries} ${
-							totalEntries === 1
-								? Liferay.Language.get('vote')
-								: Liferay.Language.get('votes')
-						})`}
+				<span className="ratings-stars-average">
+					<span className="inline-item inline-item-before">
+						<ClayIcon
+							className="ratings-stars-average-icon"
+							symbol="star"
+						/>
+					</span>
+					<span className="inline-item ratings-stars-average-text">
+						{averageScore}
+						{!!totalEntries &&
+							` (${totalEntries} ${
+								totalEntries === 1
+									? Liferay.Language.get('vote')
+									: Liferay.Language.get('votes')
+							})`}
+					</span>
+					<span className="sr-only">{getSrAverageMessage()}</span>
 				</span>
-				<span className="sr-only">{getSrAverageMessage()}</span>
 			</div>
 		</div>
 	);

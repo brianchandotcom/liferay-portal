@@ -383,6 +383,8 @@ definition {
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
 
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
 		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -393,9 +395,7 @@ definition {
 
 		Redirect.viewURLsDefaultNotFoundCP();
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
-
-		MenuItem.click(menuItem = "Active URLs");
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
 
@@ -590,6 +590,8 @@ definition {
 			activeIgnoreURL = "true",
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
 

@@ -116,6 +116,15 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 		else {
+			AssertClick(
+				key_navItem = "404 URLs",
+				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
+				value1 = "404 URLs");
+
+			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+			MenuItem.click(menuItem = "Active URLs");
+
 			Redirect.gotoEntryMenuItem(
 				item = "Ignore",
 				sourceURL = "${ignoreURL}");

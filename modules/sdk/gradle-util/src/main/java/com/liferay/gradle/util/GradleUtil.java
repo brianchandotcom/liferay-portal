@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -55,6 +57,7 @@ import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
 import org.gradle.util.GUtil;
+import org.gradle.util.NameMatcher;
 
 /**
  * @author Andrea Di Giorgi
@@ -212,6 +215,12 @@ public class GradleUtil {
 				}
 
 			});
+	}
+
+	public static Task fetchTask(Project project, String name) {
+		TaskContainer taskContainer = project.getTasks();
+
+		return taskContainer.findByName(name);
 	}
 
 	public static Configuration getConfiguration(Project project, String name) {
@@ -420,6 +429,30 @@ public class GradleUtil {
 		return prefix + StringUtil.capitalize(fileName);
 	}
 
+	public static Set<String> getTaskNames(
+		Project project, StartParameter startParameter) {
+
+		Set<String> fullyQualifiedTaskNames = new HashSet<>();
+
+		TaskContainer taskContainer = project.getTasks();
+
+		for (String taskName : startParameter.getTaskNames()) {
+			int pos = taskName.lastIndexOf(':');
+
+			if (pos != -1) {
+				taskName = taskName.substring(pos + 1);
+			}
+
+			String s = _nameMatcher.find(taskName, taskContainer.getNames());
+
+			if (s != null) {
+				fullyQualifiedTaskNames.add(s);
+			}
+		}
+
+		return fullyQualifiedTaskNames;
+	}
+
 	public static String getTaskPrefixedProperty(Task task, String name) {
 		String suffix = "." + name;
 
@@ -591,5 +624,7 @@ public class GradleUtil {
 
 		return sb.toString();
 	}
+
+	private static final NameMatcher _nameMatcher = new NameMatcher();
 
 }

@@ -2751,6 +2751,22 @@ definition {
 		Button.clickSave();
 
 		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
+
+		FormViewBuilder.addFieldToObject(fieldName = "Text");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
+
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Text");
+
+		FormViewBuilder.fieldEllipsisAction(
+			fieldLabel = "Text",
+			selectAction = "Remove");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
 	}
 
 	@description = "Remove fields from the Form View through the 'Remove' option"

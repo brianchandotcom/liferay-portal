@@ -20,8 +20,8 @@ import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import HiddenSelectInput from './components/HiddenSelectInput.es';
-import VisibleSelectInput from './components/VisibleSelectInput.es';
+import HiddenSelectInput from './HiddenSelectInput.es';
+import VisibleSelectInput from './VisibleSelectInput.es';
 
 /**
  * Mapping to be used to match keyCodes

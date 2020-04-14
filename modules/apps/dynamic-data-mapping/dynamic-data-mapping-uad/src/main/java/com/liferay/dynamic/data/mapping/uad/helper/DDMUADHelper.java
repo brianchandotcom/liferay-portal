@@ -43,7 +43,7 @@ import org.xml.sax.SAXException;
  */
 public class DDMUADHelper {
 
-	public void formatCreateDateIfExist(Map<String, Object> fieldValues) {
+	public void formatCreateDate(Map<String, Object> fieldValues) {
 		Date createdDate = (Date)fieldValues.get("createDate");
 
 		if (createdDate != null) {

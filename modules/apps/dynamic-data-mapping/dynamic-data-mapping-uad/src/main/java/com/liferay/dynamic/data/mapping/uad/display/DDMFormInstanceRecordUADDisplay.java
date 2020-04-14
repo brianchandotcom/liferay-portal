@@ -119,7 +119,7 @@ public class DDMFormInstanceRecordUADDisplay
 		Map<String, Object> fieldValues = super.getFieldValues(
 			ddmFormInstanceRecord, fieldNames, locale);
 
-		_ddmUADHelper.formatCreateDateIfExist(fieldValues);
+		_ddmUADHelper.formatCreateDate(fieldValues);
 
 		return fieldValues;
 	}

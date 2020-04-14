@@ -53,7 +53,7 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 		Map<String, Object> fieldValues = super.getFieldValues(
 			ddmFormInstance, fieldNames, locale);
 
-		_ddmUADHelper.formatCreateDateIfExist(fieldValues);
+		_ddmUADHelper.formatCreateDate(fieldValues);
 
 		return fieldValues;
 	}

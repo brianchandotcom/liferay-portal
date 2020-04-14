@@ -200,14 +200,14 @@ public class DDMFormInstanceRecordUADDisplay
 			return ddmFormInstanceRecords;
 		}
 
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
 		Stream<DDMFormInstanceRecord> ddmFormInstanceRecordsStream =
 			ddmFormInstanceRecords.stream();
 
 		return ddmFormInstanceRecordsStream.filter(
 			ddmFormInstanceRecord -> {
-				String formattedName = getName(ddmFormInstanceRecord, locale);
+				String formattedName = getName(
+					ddmFormInstanceRecord,
+					LocaleThreadLocal.getThemeDisplayLocale());
 
 				return StringUtil.toLowerCase(
 					formattedName

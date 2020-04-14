@@ -220,31 +220,6 @@ components:
                     type: string
                     writeOnly: true
             type: object
-        CollectionDefinition:
-            description:
-                ""
-            properties:
-                collectionConfig:
-                    type: object
-                numberOfColumns:
-                    type: integer
-                numberOfItems:
-                    type: integer
-            type: object
-        CollectionItemDefinition:
-            description:
-                ""
-            properties:
-                collectionItemConfig:
-                    type: object
-            type: object
-        ColumnDefinition:
-            properties:
-                size:
-                    maximum: 12
-                    minimum: 1
-                    type: integer
-            type: object
         Comment:
             description:
                 Represents a comment. See [Comment](https://www.schema.org/Comment) for more details.
@@ -986,13 +961,6 @@ components:
             required:
                 - name
             type: object
-        DropZoneDefinition:
-            properties:
-                fragmentSettings:
-                    oneOf:
-                        - $ref: "#/components/schemas/FragmentSettingsAllowed"
-                        - $ref: "#/components/schemas/FragmentSettingsUnallowed"
-            type: object
         Fragment:
             properties:
                 collectionName:
@@ -1062,19 +1030,6 @@ components:
                     additionalProperties:
                         type: string
                     type: object
-            type: object
-        FragmentInstanceDefinition:
-            properties:
-                fragment:
-                    $ref: "#/components/schemas/Fragment"
-                fragmentConfig:
-                    additionalProperties:
-                        type: object
-                    type: object
-                fragmentFields:
-                    items:
-                        $ref: "#/components/schemas/FragmentField"
-                    type: array
             type: object
         FragmentLink:
             properties:
@@ -1833,6 +1788,31 @@ components:
                 url:
                     readOnly: true
                     type: string
+        PageCollectionDefinition:
+            description:
+                ""
+            properties:
+                collectionConfig:
+                    type: object
+                numberOfColumns:
+                    type: integer
+                numberOfItems:
+                    type: integer
+            type: object
+        PageCollectionItemDefinition:
+            description:
+                ""
+            properties:
+                collectionItemConfig:
+                    type: object
+            type: object
+        PageColumnDefinition:
+            properties:
+                size:
+                    maximum: 12
+                    minimum: 1
+                    type: integer
+            type: object
         PageDefinition:
             description:
                 ""
@@ -1855,19 +1835,26 @@ components:
                             type: object
                     type: object
             type: object
+        PageDropZoneDefinition:
+            properties:
+                fragmentSettings:
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentSettingsAllowed"
+                        - $ref: "#/components/schemas/FragmentSettingsUnallowed"
+            type: object
         PageElement:
             properties:
                 definition:
                     oneOf:
-                        - $ref: "#/components/schemas/CollectionDefinition"
-                        - $ref: "#/components/schemas/CollectionItemDefinition"
-                        - $ref: "#/components/schemas/ColumnDefinition"
-                        - $ref: "#/components/schemas/DropZoneDefinition"
-                        - $ref: "#/components/schemas/FragmentInstanceDefinition"
-                        - $ref: "#/components/schemas/RootDefinition"
-                        - $ref: "#/components/schemas/RowDefinition"
-                        - $ref: "#/components/schemas/SectionDefinition"
-                        - $ref: "#/components/schemas/WidgetInstanceDefinition"
+                        - $ref: "#/components/schemas/PageCollectionDefinition"
+                        - $ref: "#/components/schemas/PageCollectionItemDefinition"
+                        - $ref: "#/components/schemas/PageColumnDefinition"
+                        - $ref: "#/components/schemas/PageDropZoneDefinition"
+                        - $ref: "#/components/schemas/PageFragmentInstanceDefinition"
+                        - $ref: "#/components/schemas/PageRootDefinition"
+                        - $ref: "#/components/schemas/PageRowDefinition"
+                        - $ref: "#/components/schemas/PageSectionDefinition"
+                        - $ref: "#/components/schemas/PageWidgetInstanceDefinition"
                 pageElements:
                     items:
                         $ref: "#/components/schemas/PageElement"
@@ -1875,6 +1862,47 @@ components:
                 type:
                     enum: [Collection, CollectionItem, Column, DropZone, Fragment, Root, Row, Section, Widget]
                     type: string
+        PageFragmentInstanceDefinition:
+            properties:
+                fragment:
+                    $ref: "#/components/schemas/Fragment"
+                fragmentConfig:
+                    additionalProperties:
+                        type: object
+                    type: object
+                fragmentFields:
+                    items:
+                        $ref: "#/components/schemas/FragmentField"
+                    type: array
+            type: object
+        PageRootDefinition:
+            type: object
+        PageRowDefinition:
+            properties:
+                gutters:
+                    type: boolean
+                numberOfColumns:
+                    type: integer
+            type: object
+        PageSectionDefinition:
+            properties:
+                backgroundColor:
+                    type: string
+                backgroundImage:
+                    $ref: "#/components/schemas/FragmentImage"
+                layout:
+                    properties:
+                        containerType:
+                            enum: [Fixed, Fluid]
+                            type: string
+                        paddingBottom:
+                            type: integer
+                        paddingHorizontal:
+                            type: integer
+                        paddingTop:
+                            type: integer
+                    type: object
+            type: object
         PageTemplate:
             description:
                 ""
@@ -1956,6 +1984,11 @@ components:
                     readOnly: true
                     type: string
             type: object
+        PageWidgetInstanceDefinition:
+            properties:
+                widget:
+                    $ref: "#/components/schemas/Widget"
+            type: object
         Rating:
             description:
                 Represents a rating/score received by any kind of asset. Properties follow the
@@ -2031,34 +2064,6 @@ components:
                         The title of the content.
                     readOnly: true
                     type: string
-        RootDefinition:
-            type: object
-        RowDefinition:
-            properties:
-                gutters:
-                    type: boolean
-                numberOfColumns:
-                    type: integer
-            type: object
-        SectionDefinition:
-            properties:
-                backgroundColor:
-                    type: string
-                backgroundImage:
-                    $ref: "#/components/schemas/FragmentImage"
-                layout:
-                    properties:
-                        containerType:
-                            enum: [Fixed, Fluid]
-                            type: string
-                        paddingBottom:
-                            type: integer
-                        paddingHorizontal:
-                            type: integer
-                        paddingTop:
-                            type: integer
-                    type: object
-            type: object
         StructuredContent:
             description:
                 Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is
@@ -2336,11 +2341,6 @@ components:
             properties:
                 name:
                     type: string
-            type: object
-        WidgetInstanceDefinition:
-            properties:
-                widget:
-                    $ref: "#/components/schemas/Widget"
             type: object
         WikiNode:
             # @review

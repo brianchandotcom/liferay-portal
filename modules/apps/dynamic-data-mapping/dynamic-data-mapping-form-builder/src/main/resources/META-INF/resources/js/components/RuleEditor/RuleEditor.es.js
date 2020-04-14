@@ -400,6 +400,7 @@ class RuleEditor extends Component {
 			calculatorResultOptions: this._calculatorResultOptionsValueFn(),
 			conditions,
 			conditionsFieldOptions: this._conditionsFieldOptionsValueFn([
+				'fieldset',
 				'paragraph',
 			]),
 			deletedFields: this._getDeletedFields(visitor),
@@ -562,7 +563,7 @@ class RuleEditor extends Component {
 		const fields = [];
 		const visitor = new PagesVisitor(pages);
 
-		visitor.mapFields(field => {
+		visitor.visitFields(field => {
 			if (omittedFieldsList.indexOf(field.type) < 0) {
 				fields.push({
 					...field,

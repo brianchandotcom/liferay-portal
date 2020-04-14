@@ -73,12 +73,16 @@ public class DDMFormInstanceRecordUADDisplay
 
 		HttpServletRequest httpServletRequest =
 			liferayPortletRequest.getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		String portletNamespace = _portal.getPortletNamespace(
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
 
 		return _portal.getSiteAdminURL(
-			getThemeDisplay(httpServletRequest),
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			themeDisplay, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 			HashMapBuilder.put(
 				portletNamespace.concat("formInstanceId"),
 				new String[] {
@@ -219,20 +223,13 @@ public class DDMFormInstanceRecordUADDisplay
 		);
 	}
 
-	protected ThemeDisplay getThemeDisplay(
-		HttpServletRequest httpServletRequest) {
-
-		return (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
 	private List<DDMFormInstanceRecord> _getDDMFormInstanceRecords(
 		long formInstanceId, long userId) {
 
 		DDMFormInstanceRecordUADUserCache ddmFormInstanceRecordUADUserCache =
-			null;
+			_ddmFormInstanceRecordUADUserCacheMap.get(formInstanceId);
 
-		if (_ddmFormInstanceRecordUADUserCacheMap.get(formInstanceId) == null) {
+		if (ddmFormInstanceRecordUADUserCache == null) {
 			ddmFormInstanceRecordUADUserCache =
 				new DDMFormInstanceRecordUADUserCache(formInstanceId);
 
@@ -241,9 +238,6 @@ public class DDMFormInstanceRecordUADDisplay
 			_ddmFormInstanceRecordUADUserCacheMap.put(
 				formInstanceId, ddmFormInstanceRecordUADUserCache);
 		}
-
-		ddmFormInstanceRecordUADUserCache =
-			_ddmFormInstanceRecordUADUserCacheMap.get(formInstanceId);
 
 		return ddmFormInstanceRecordUADUserCache.getDDMFormInstanceRecords(
 			userId);

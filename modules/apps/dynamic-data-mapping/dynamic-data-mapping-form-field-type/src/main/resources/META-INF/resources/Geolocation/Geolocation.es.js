@@ -12,15 +12,12 @@
  * details.
  */
 
-import './GeolocationRegister.soy';
-
 import 'leaflet/dist/leaflet.css';
 import React from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './GeolocationAdapter.soy';
 import {MAP_PROVIDER, useGeolocation} from './useGeolocation.es';
 
 const geolocateTitle = Liferay.Language.get('geolocate');
@@ -116,7 +113,7 @@ const GeolocationProxy = connectStore(
 
 const ReactGeolocationAdapter = getConnectedReactComponentAdapter(
 	GeolocationProxy,
-	templates
+	'geolocation'
 );
 
 export {ReactGeolocationAdapter};

@@ -12,14 +12,11 @@
  * details.
  */
 
-import './SeparatorRegister.soy';
-
 import React, {useEffect, useRef} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './SeparatorAdapter.soy';
 
 const Separator = ({style}) => {
 	const elRef = useRef(null);
@@ -45,7 +42,7 @@ const SeparatorProxy = connectStore(({style, ...otherProps}) => (
 
 const ReactSeparatorAdapter = getConnectedReactComponentAdapter(
 	SeparatorProxy,
-	templates
+	'separator'
 );
 
 export {ReactSeparatorAdapter};

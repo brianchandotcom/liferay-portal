@@ -12,14 +12,11 @@
  * details.
  */
 
-import './PasswordRegister.soy';
-
 import React, {useState} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './PasswordAdapter.soy';
 
 const Password = ({
 	disabled,
@@ -83,7 +80,7 @@ const PasswordProxy = connectStore(
 
 const ReactPasswordAdapter = getConnectedReactComponentAdapter(
 	PasswordProxy,
-	templates
+	'password'
 );
 
 export {ReactPasswordAdapter};

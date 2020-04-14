@@ -12,8 +12,6 @@
  * details.
  */
 
-import './ImagePickerRegister.soy';
-
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -24,7 +22,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './ImagePickerAdapter.soy';
 
 const useDebounceCallback = (callback, milliseconds) => {
 	const callbackRef = useRef(debounce(callback, milliseconds));
@@ -289,7 +286,7 @@ const ImagePickerProxy = connectStore(
 
 const ReactImagePickerAdapter = getConnectedReactComponentAdapter(
 	ImagePickerProxy,
-	templates
+	'image'
 );
 
 export {ReactImagePickerAdapter};

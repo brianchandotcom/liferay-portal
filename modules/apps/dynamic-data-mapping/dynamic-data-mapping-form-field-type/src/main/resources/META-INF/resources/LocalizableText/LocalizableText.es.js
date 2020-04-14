@@ -12,8 +12,6 @@
  * details.
  */
 
-import './LocalizableTextRegister.soy';
-
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
@@ -26,7 +24,6 @@ import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import InputComponent from './InputComponent.es';
-import templates from './LocalizableTextAdapter.soy';
 import {
 	convertValueToJSON,
 	getEditingValue,
@@ -289,7 +286,7 @@ const LocalizableTextProxy = connectStore(({emit, ...otherProps}) => (
 
 const ReactLocalizableTextAdapter = getConnectedReactComponentAdapter(
 	LocalizableTextProxy,
-	templates
+	'localizable_text'
 );
 
 export {ReactLocalizableTextAdapter, Main};

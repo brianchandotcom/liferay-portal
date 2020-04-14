@@ -12,15 +12,12 @@
  * details.
  */
 
-import './ColorPickerRegister.soy';
-
 import ClayColorPicker from '@clayui/color-picker';
 import React, {useEffect, useState} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './ColorPickerAdapter.soy';
 
 const DEFAULT_COLORS = [
 	'000000',
@@ -121,7 +118,7 @@ const ColorPickerProxy = connectStore(
 
 const ReactColorPickerAdapter = getConnectedReactComponentAdapter(
 	ColorPickerProxy,
-	templates
+	'color'
 );
 
 export {ClayColorPickerWithState, ReactColorPickerAdapter};

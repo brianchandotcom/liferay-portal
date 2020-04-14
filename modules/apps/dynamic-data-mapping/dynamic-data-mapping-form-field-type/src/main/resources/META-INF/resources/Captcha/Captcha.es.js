@@ -12,15 +12,12 @@
  * details.
  */
 
-import './CaptchaRegister.soy';
-
 import {globalEval} from 'metal-dom';
 import React, {useEffect, useMemo, useRef} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './CaptchaAdapter.soy';
 
 const Captcha = ({html, name}) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,7 +76,7 @@ const CaptchaProxy = connectStore(({dispatch, html, name, ...otherProps}) => (
 
 const ReactCaptchaAdapter = getConnectedReactComponentAdapter(
 	CaptchaProxy,
-	templates
+	'captcha'
 );
 
 export {ReactCaptchaAdapter};

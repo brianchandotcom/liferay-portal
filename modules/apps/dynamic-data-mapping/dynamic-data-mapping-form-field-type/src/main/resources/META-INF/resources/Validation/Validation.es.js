@@ -12,8 +12,6 @@
  * details.
  */
 
-import './ValidationRegister.soy';
-
 import ClayForm from '@clayui/form';
 import React, {useState} from 'react';
 
@@ -24,7 +22,6 @@ import {Main as Text} from '../Text/Text.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import {subWords} from '../util/strings.es';
-import templates from './ValidationAdapter.soy';
 import {getSelectedValidation, transformData} from './transform.es';
 
 const Validation = ({
@@ -220,7 +217,7 @@ const ValidationProxy = connectStore(
 
 const ReactValidationAdapter = getConnectedReactComponentAdapter(
 	ValidationProxy,
-	templates
+	'validation'
 );
 
 export {ReactValidationAdapter};

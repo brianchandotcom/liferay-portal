@@ -12,8 +12,6 @@
  * details.
  */
 
-import './SelectRegister.soy';
-
 import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import React, {forwardRef, useMemo, useRef, useState} from 'react';
@@ -22,7 +20,6 @@ import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './SelectAdapter.soy';
 import HiddenSelectInput from './components/HiddenSelectInput.es';
 import VisibleSelectInput from './components/VisibleSelectInput.es';
 
@@ -497,7 +494,7 @@ const SelectProxy = connectStore(({emit, ...otherProps}) => (
 
 const ReactSelectAdapter = getConnectedReactComponentAdapter(
 	SelectProxy,
-	templates
+	'select'
 );
 
 export {ReactSelectAdapter, Main};

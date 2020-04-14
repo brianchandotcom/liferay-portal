@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -168,7 +169,8 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static List<FragmentField> _getBackgroundImageFragmentFields(
-		JSONObject jsonObject, long segmentsExperienceId) {
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		JSONObject jsonObject, boolean saveMapping, long segmentsExperienceId) {
 
 		List<FragmentField> fragmentFields = new ArrayList<>();
 
@@ -185,21 +187,9 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 				new FragmentField() {
 					{
 						id = backgroundImageId;
-						value = new FragmentFieldBackgroundImage() {
-							{
-								backgroundImage = new FragmentImage() {
-									{
-										title = _toTitleFragmentInlineValue(
-											imageJSONObject, localeMap);
-										url = new FragmentInlineValue() {
-											{
-												value_i18n = localeMap;
-											}
-										};
-									}
-								};
-							}
-						};
+						value = _toFragmentFieldBackgroundImage(
+							infoDisplayContributorTracker, imageJSONObject,
+							localeMap, saveMapping);
 					}
 				});
 		}
@@ -343,10 +333,11 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 
 		fragmentFields.addAll(
 			_getBackgroundImageFragmentFields(
+				infoDisplayContributorTracker,
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.background.image." +
 						"BackgroundImageFragmentEntryProcessor"),
-				segmentsExperienceId));
+				saveMapping, segmentsExperienceId));
 
 		Map<String, String> editableTypes =
 			EditableFragmentEntryProcessorUtil.getEditableTypes(
@@ -449,6 +440,10 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 			return true;
 		}
 
+		if (saveMapping && jsonObject.has("mappedField")) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -458,9 +453,29 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 
 		long classNameId = jsonObject.getLong("classNameId");
 
+		if (classNameId == 0) {
+			return null;
+		}
+
+		String className = null;
+
+		try {
+			className = PortalUtil.getClassName(classNameId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get class name for default mapping value",
+					exception);
+			}
+		}
+
+		if (Validator.isNull(className)) {
+			return null;
+		}
+
 		InfoDisplayContributor infoDisplayContributor =
-			infoDisplayContributorTracker.getInfoDisplayContributor(
-				PortalUtil.getClassName(classNameId));
+			infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
 		if (infoDisplayContributor == null) {
 			return null;
@@ -477,16 +492,22 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 					infoDisplayObjectProvider.getDisplayObject(),
 					LocaleUtil.getMostRelevantLocale());
 
+			Object fieldValue = fieldValues.get(
+				jsonObject.getString("fieldId"));
+
+			if (transformerFunction != null) {
+				fieldValue = transformerFunction.apply(fieldValue);
+			}
+
+			String valueString = GetterUtil.getString(fieldValue);
+
+			if (Validator.isNull(valueString)) {
+				return null;
+			}
+
 			return new FragmentInlineValue() {
 				{
-					Object fieldValue = fieldValues.get(
-						jsonObject.getString("fieldId"));
-
-					if (transformerFunction != null) {
-						fieldValue = transformerFunction.apply(fieldValue);
-					}
-
-					value = GetterUtil.getString(fieldValue);
+					value = valueString;
 				}
 			};
 		}
@@ -552,6 +573,43 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 							infoDisplayContributorTracker, textJSONObject,
 							saveMapping, segmentsExperienceId);
 					});
+			}
+		};
+	}
+
+	private static FragmentFieldBackgroundImage _toFragmentFieldBackgroundImage(
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		JSONObject jsonObject, Map<String, String> localeMap,
+		boolean saveMapping) {
+
+		return new FragmentFieldBackgroundImage() {
+			{
+				backgroundImage = new FragmentImage() {
+					{
+						title = _toTitleFragmentInlineValue(
+							jsonObject, localeMap);
+
+						setUrl(
+							() -> {
+								if (_isSaveFragmentMappedValue(
+										jsonObject, saveMapping)) {
+
+									return _toFragmentMappedValue(
+										_toDefaultMappingValue(
+											infoDisplayContributorTracker,
+											jsonObject,
+											_getImageURLTransformerFunction()),
+										jsonObject);
+								}
+
+								return new FragmentInlineValue() {
+									{
+										value_i18n = localeMap;
+									}
+								};
+							});
+					}
+				};
 			}
 		};
 	}
@@ -649,10 +707,16 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 								jsonObject);
 						}
 
+						Map<String, String> localeMap = _toLocaleMap(
+							jsonObject, segmentsExperienceId);
+
+						if (MapUtil.isEmpty(localeMap)) {
+							return null;
+						}
+
 						return new FragmentInlineValue() {
 							{
-								value_i18n = _toLocaleMap(
-									jsonObject, segmentsExperienceId);
+								value_i18n = localeMap;
 							}
 						};
 					});
@@ -717,10 +781,38 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 				mapping = new Mapping() {
 					{
 						defaultValue = fragmentInlineValue;
-						fieldKey = jsonObject.getString("fieldId");
-						itemKey = StringBundler.concat(
-							jsonObject.getString("classNameId"),
-							StringPool.POUND, jsonObject.getString("classPK"));
+
+						setFieldKey(
+							() -> {
+								String fieldId = jsonObject.getString(
+									"fieldId");
+
+								if (Validator.isNotNull(fieldId)) {
+									return fieldId;
+								}
+
+								return jsonObject.getString("mappedField");
+							});
+
+						setItemKey(
+							() -> {
+								String classNameId = jsonObject.getString(
+									"classNameId");
+
+								if (Validator.isNull(classNameId)) {
+									return null;
+								}
+
+								String classPK = jsonObject.getString(
+									"classPK");
+
+								if (Validator.isNull(classPK)) {
+									return null;
+								}
+
+								return StringBundler.concat(
+									classNameId, StringPool.POUND, classPK);
+							});
 					}
 				};
 			}

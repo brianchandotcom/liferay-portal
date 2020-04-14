@@ -44,7 +44,7 @@
 		headerNames.add("permissions");
 
 		if (role.getType() == RoleConstants.TYPE_REGULAR) {
-			headerNames.add("sites");
+			headerNames.add("sites-and-asset-libraries");
 		}
 
 		headerNames.add(StringPool.BLANK);

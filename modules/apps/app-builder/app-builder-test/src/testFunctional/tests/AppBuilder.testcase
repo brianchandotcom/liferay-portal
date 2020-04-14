@@ -1255,14 +1255,14 @@ definition {
 		App.selectFormView(formViewName = "My Form View");
 		App.selectTableView(tableViewName = "Table Full");
 		App.toggleDeploy(deployOption = "Product Menu");
-		Button.click(button = "Deploy");
+		App.clickDeploy();
 
 		AppBuilderAdmin.add();
 		AppBuilderAdmin.setName(title = "App Filtered");
 		App.selectFormView(formViewName = "My Form View");
 		App.selectTableView(tableViewName = "Table Filtered");
 		App.toggleDeploy(deployOption = "Product Menu");
-		Button.click(button = "Deploy");
+		App.clickDeploy();
 
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",

@@ -174,20 +174,6 @@ definition {
 			formViewName = "My Form View");
 	}
 
-	@description = "Add a Form View with a Grid field"
-	@ignore = "true"
-	@priority = "5"
-	test AddSimpleFormViewWithGridField {
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFormViewAndValidateFieldLabel(
-			fieldType = "Grid",
-			formViewName = "My Form View");
-	}
-
 	@description = "Add a Form View with a Multiple Selection field"
 	@priority = "5"
 	test AddSimpleFormViewWithMultipleSelectionField {

@@ -12,8 +12,6 @@
  * details.
  */
 
-import './TextRegister.soy';
-
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
@@ -24,7 +22,6 @@ import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './TextAdapter.soy';
 
 const Text = ({
 	disabled,
@@ -289,10 +286,7 @@ const TextProxy = connectStore(({emit, ...otherProps}) => (
 	/>
 ));
 
-const ReactTextAdapter = getConnectedReactComponentAdapter(
-	TextProxy,
-	templates
-);
+const ReactTextAdapter = getConnectedReactComponentAdapter(TextProxy, 'text');
 
 export {ReactTextAdapter, useSyncValue, Main};
 export default ReactTextAdapter;

@@ -12,8 +12,6 @@
  * details.
  */
 
-import './NumericRegister.soy';
-
 import {ClayInput} from '@clayui/form';
 import React, {useEffect, useRef} from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
@@ -23,7 +21,6 @@ import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './NumericAdapter.soy';
 
 const getMaskConfig = (dataType, symbols) => {
 	let config = {
@@ -156,7 +153,7 @@ const NumericProxy = connectStore(({emit, ...otherProps}) => (
 
 const ReactNumericAdapter = getConnectedReactComponentAdapter(
 	NumericProxy,
-	templates
+	'numeric'
 );
 
 export {Main};

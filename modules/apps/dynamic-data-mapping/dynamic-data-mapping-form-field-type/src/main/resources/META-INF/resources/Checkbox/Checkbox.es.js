@@ -12,8 +12,6 @@
  * details.
  */
 
-import './CheckboxRegister.soy';
-
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
@@ -21,7 +19,6 @@ import React, {useState} from 'react';
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './CheckboxAdapter.soy';
 
 const Switcher = ({
 	checked: initialChecked,
@@ -155,7 +152,7 @@ const CheckboxProxy = connectStore(({emit, ...otherProps}) => (
 
 const ReactCheckboxAdapter = getConnectedReactComponentAdapter(
 	CheckboxProxy,
-	templates
+	'checkbox'
 );
 
 export {ReactCheckboxAdapter, Main};

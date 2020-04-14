@@ -12,8 +12,6 @@
  * details.
  */
 
-import './CheckboxMultipleRegister.soy';
-
 import {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useState} from 'react';
@@ -22,7 +20,6 @@ import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import {setJSONArrayValue} from '../util/setters.es';
-import templates from './CheckboxMultipleAdapter.soy';
 
 const Switcher = ({
 	checked,
@@ -157,7 +154,7 @@ const CheckboxMultipleProxy = connectStore(
 
 const ReactCheckboxMultipleAdapter = getConnectedReactComponentAdapter(
 	CheckboxMultipleProxy,
-	templates
+	'checkbox_multiple'
 );
 
 export {ReactCheckboxMultipleAdapter};

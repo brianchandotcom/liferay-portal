@@ -12,8 +12,6 @@
  * details.
  */
 
-import './GridRegister.soy';
-
 import {ClayInput, ClayRadio} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React, {useState} from 'react';
@@ -21,7 +19,6 @@ import React, {useState} from 'react';
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './GridAdapter.soy';
 
 const TableHead = ({columns}) => (
 	<ClayTable.Head>
@@ -172,10 +169,7 @@ const GridProxy = connectStore(
 	}
 );
 
-const ReactGridAdapter = getConnectedReactComponentAdapter(
-	GridProxy,
-	templates
-);
+const ReactGridAdapter = getConnectedReactComponentAdapter(GridProxy, 'grid');
 
 export {ReactGridAdapter};
 

@@ -12,8 +12,6 @@
  * details.
  */
 
-import './KeyValueRegister.soy';
-
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 import React, {useRef} from 'react';
 
@@ -22,7 +20,6 @@ import {Main as Text} from '../Text/Text.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './KeyValueAdapter.soy';
 
 const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
 	<div className="active form-text key-value-editor">
@@ -151,7 +148,7 @@ const KeyValueProxy = connectStore(
 
 const ReactKeyValueAdapter = getConnectedReactComponentAdapter(
 	KeyValueProxy,
-	templates
+	'key_value'
 );
 
 export {ReactKeyValueAdapter, Main};

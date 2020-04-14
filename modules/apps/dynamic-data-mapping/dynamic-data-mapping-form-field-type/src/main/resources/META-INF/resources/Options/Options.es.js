@@ -12,8 +12,6 @@
  * details.
  */
 
-import './OptionsRegister.soy';
-
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useMemo, useState} from 'react';
@@ -26,7 +24,6 @@ import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es'
 import {connectStore} from '../util/connectStore.es';
 import DnD from './DnD.es';
 import DragPreview from './DragPreview.es';
-import templates from './OptionsAdapter.soy';
 import {
 	compose,
 	dedupValue,
@@ -298,7 +295,7 @@ const OptionsProxy = connectStore(
 
 const ReactOptionsAdapter = getConnectedReactComponentAdapter(
 	OptionsProxy,
-	templates
+	'options'
 );
 
 export {ReactOptionsAdapter};

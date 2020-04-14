@@ -12,8 +12,6 @@
  * details.
  */
 
-import './DatePickerRegister.soy';
-
 import ClayDatePicker from '@clayui/date-picker';
 import moment from 'moment';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
@@ -24,7 +22,6 @@ import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './DatePickerAdapter.soy';
 
 const getInputMask = (dateFormat, dateDelimiter) => {
 	const inputMaskArray = [];
@@ -205,7 +202,7 @@ const DatePickerProxy = connectStore(
 
 const ReactDatePickerAdapter = getConnectedReactComponentAdapter(
 	DatePickerProxy,
-	templates
+	'date'
 );
 
 export {ReactDatePickerAdapter};

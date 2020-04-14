@@ -12,10 +12,6 @@
  * details.
  */
 
-import '../FieldBase/FieldBase.es';
-
-import './DocumentLibraryRegister.soy';
-
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import {ClayInput} from '@clayui/form';
@@ -30,7 +26,6 @@ import React, {useMemo, useState} from 'react';
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './DocumentLibraryAdapter.soy';
 
 function getDocumentLibrarySelectorURL({
 	itemSelectorAuthToken,
@@ -290,7 +285,7 @@ const DocumentLibraryProxy = connectStore(
 
 const ReactDocumentLibraryAdapter = getConnectedReactComponentAdapter(
 	DocumentLibraryProxy,
-	templates
+	'document_library'
 );
 
 export {ReactDocumentLibraryAdapter};

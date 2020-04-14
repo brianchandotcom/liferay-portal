@@ -12,14 +12,11 @@
  * details.
  */
 
-import './ParagraphRegister.soy';
-
 import React from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import templates from './ParagraphAdapter.soy';
 
 const Paragraph = ({name, text}) => (
 	<div
@@ -43,7 +40,7 @@ const ParagraphProxy = connectStore(({name, text, ...otherProps}) => (
 
 const ReactParagraphAdapter = getConnectedReactComponentAdapter(
 	ParagraphProxy,
-	templates
+	'paragraph'
 );
 
 export {ReactParagraphAdapter};

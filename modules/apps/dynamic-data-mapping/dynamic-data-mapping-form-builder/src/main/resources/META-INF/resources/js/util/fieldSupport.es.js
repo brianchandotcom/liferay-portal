@@ -222,51 +222,55 @@ export const normalizeSettingsContextPages = (
 ) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.mapFields(field => {
-		const {fieldName} = field;
+	return visitor.mapFields(
+		field => {
+			const {fieldName} = field;
 
-		if (fieldName === 'name') {
-			field = {
-				...field,
-				value: generatedFieldName,
-			};
-		}
-		else if (fieldName === 'label') {
-			field = {
-				...field,
-				localizedValue: {
-					...field.localizedValue,
-					[editingLanguageId]: fieldType.label,
-				},
-				type: 'text',
-				value: fieldType.label,
-			};
-		}
-		else if (fieldName === 'type') {
-			field = {
-				...field,
-				value: fieldType.name,
-			};
-		}
-		else if (fieldName === 'validation') {
-			field = {
-				...field,
-				validation: {
-					...field.validation,
-					fieldName: generatedFieldName,
-				},
-			};
-		}
+			if (fieldName === 'name') {
+				field = {
+					...field,
+					value: generatedFieldName,
+				};
+			}
+			else if (fieldName === 'label') {
+				field = {
+					...field,
+					localizedValue: {
+						...field.localizedValue,
+						[editingLanguageId]: fieldType.label,
+					},
+					type: 'text',
+					value: fieldType.label,
+				};
+			}
+			else if (fieldName === 'type') {
+				field = {
+					...field,
+					value: fieldType.name,
+				};
+			}
+			else if (fieldName === 'validation') {
+				field = {
+					...field,
+					validation: {
+						...field.validation,
+						fieldName: generatedFieldName,
+					},
+				};
+			}
 
-		const newInstanceId = generateInstanceId(8);
+			const newInstanceId = generateInstanceId(8);
 
-		return {
-			...field,
-			instanceId: newInstanceId,
-			name: generateName(field.name, {
+			return {
+				...field,
 				instanceId: newInstanceId,
-				repeatedIndex: getRepeatedIndex(field.name),
-			}),
-		};
-	});
+				name: generateName(field.name, {
+					instanceId: newInstanceId,
+					repeatedIndex: getRepeatedIndex(field.name),
+				}),
+			};
+		},
+		false,
+		true
+	);
 };

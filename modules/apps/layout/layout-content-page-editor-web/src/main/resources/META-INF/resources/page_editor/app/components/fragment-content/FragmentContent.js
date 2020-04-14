@@ -130,6 +130,8 @@ const FragmentContent = React.forwardRef(
 							editableConfig
 						);
 
+						editable.element.classList.add('page-editor__editable');
+
 						updateContent();
 					});
 				});

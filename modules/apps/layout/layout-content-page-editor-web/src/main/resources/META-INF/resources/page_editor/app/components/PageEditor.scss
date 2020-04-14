@@ -119,6 +119,45 @@
 		height: 10em;
 	}
 
+	&__editable {
+		transition: box-shadow ease 0.3s;
+
+		$editablesBorderWidth: 1px;
+
+		&--hovered {
+			box-shadow: 0 0 0 $editablesBorderWidth $primary-l1;
+		}
+
+		&--mapped {
+			box-shadow: 0 0 0 $editablesBorderWidth fade_out($purple, 0.7);
+
+			&.page-editor__editable--hovered {
+				box-shadow: 0 0 0 $editablesBorderWidth fade_out($purple, 0.3);
+			}
+
+			&.page-editor__editable--active {
+				box-shadow: 0 0 0 $editablesBorderWidth $purple;
+			}
+		}
+
+		&--translated {
+			box-shadow: 0 0 0 $editablesBorderWidth fade_out($success-l1, 0.7);
+
+			&.page-editor__editable--hovered {
+				box-shadow: 0 0 0 $editablesBorderWidth
+					fade_out($success-l1, 0.3);
+			}
+
+			&.page-editor__editable--active {
+				box-shadow: 0 0 0 $editablesBorderWidth $success-l1;
+			}
+		}
+
+		&--active {
+			box-shadow: 0 0 0 $editablesBorderWidth $primary;
+		}
+	}
+
 	&__row.no-gutters > .page-editor__col:after {
 		left: 0;
 		width: 100%;

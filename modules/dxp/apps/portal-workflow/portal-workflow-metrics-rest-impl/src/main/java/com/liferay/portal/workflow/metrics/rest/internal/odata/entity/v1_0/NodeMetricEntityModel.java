@@ -28,9 +28,9 @@ import java.util.stream.Stream;
 /**
  * @author Inácio Nery
  */
-public class TaskEntityModel implements EntityModel {
+public class NodeMetricEntityModel implements EntityModel {
 
-	public TaskEntityModel() {
+	public NodeMetricEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new IntegerEntityField(
 				"breachedInstancePercentage",
@@ -54,7 +54,7 @@ public class TaskEntityModel implements EntityModel {
 	@Override
 	public String getName() {
 		return StringUtil.replace(
-			TaskEntityModel.class.getName(), CharPool.PERIOD,
+			NodeMetricEntityModel.class.getName(), CharPool.PERIOD,
 			CharPool.UNDERLINE);
 	}
 

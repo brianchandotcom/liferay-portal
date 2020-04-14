@@ -396,7 +396,7 @@ $product-menu-pages-administration-link-height: 72px;
 	width: 20px;
 
 	.pm {
-		border-left: 1px solid #fff;
+		border-left: 1px solid $gray-500;
 		border-radius: 1px;
 		height: 16px;
 		left: 0;
@@ -408,7 +408,7 @@ $product-menu-pages-administration-link-height: 72px;
 	}
 
 	.cn {
-		border: 1px solid #fff;
+		border: 1px solid $gray-500;
 		border-radius: 1px;
 		content: '';
 		height: 18px;
@@ -419,6 +419,17 @@ $product-menu-pages-administration-link-height: 72px;
 		width: 15px;
 
 		@include transition(all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1));
+	}
+}
+
+.product-menu-toggle:focus,
+.product-menu-toggle:hover {
+	.pm {
+		border-left: 1px solid $white;
+	}
+
+	.cn {
+		border: 1px solid $white;
 	}
 }
 

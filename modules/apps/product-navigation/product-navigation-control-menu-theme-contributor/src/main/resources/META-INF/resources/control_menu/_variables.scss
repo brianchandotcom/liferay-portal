@@ -8,9 +8,10 @@ $control-menu-css-transition: all 0.5s ease !default;
 $control-menu-level-1-active-border: $primary-l1 !default;
 $control-menu-level-1-active-border-width: 2px !default;
 $control-menu-level-1-bg: $dark-l1 !default;
-$control-menu-level-1-color: $secondary !default;
-$control-menu-level-1-link-color: $white !default;
-$control-menu-level-1-link-hover-color: $control-menu-level-1-link-color !default;
+$control-menu-level-1-color: $gray-500 !default;
+$control-menu-level-1-link-color: $gray-500 !default;
+$control-menu-level-1-link-hover-color: $white !default;
+$control-menu-level-1-link-background-color: fade_out($white, 0.97) !default;
 
 $control-menu-level-2-bg: $white !default;
 $control-menu-level-2-color: $dark !default;

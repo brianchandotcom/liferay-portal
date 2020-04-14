@@ -38,6 +38,7 @@ a.control-menu-icon,
 
 		&:focus,
 		&:hover {
+			background-color: $control-menu-level-1-link-background-color;
 			color: $control-menu-level-1-link-hover-color;
 			text-decoration: none;
 		}
@@ -62,15 +63,8 @@ a.control-menu-icon,
 	justify-content: space-between;
 
 	> li > .control-menu-nav > .control-menu-nav-item {
-		@include media-breakpoint-up(xs) {
-			margin-left: 4px;
-			margin-right: 4px;
-		}
-
-		@include media-breakpoint-up(sm) {
-			margin-left: 8px;
-			margin-right: 8px;
-		}
+		margin-left: 4px;
+		margin-right: 4px;
 	}
 
 	> .control-menu-nav-item {

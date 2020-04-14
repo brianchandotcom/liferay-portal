@@ -111,11 +111,11 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 	protected DynamicQuery getDynamicQuery(long userId) {
 		DynamicQuery dynamicQuery = ddmFormInstanceLocalService.dynamicQuery();
 
+		Property formInstanceIdProperty = PropertyFactoryUtil.forName(
+			"formInstanceId");
+
 		DynamicQuery formInstanceIdDynamicQuery =
 			_ddmFormInstanceRecordLocalService.dynamicQuery();
-
-		formInstanceIdDynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("formInstanceId"));
 
 		Property userIdProperty = PropertyFactoryUtil.forName("userId");
 		Property versionUserIdProperty = PropertyFactoryUtil.forName(
@@ -125,8 +125,8 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 			RestrictionsFactoryUtil.or(
 				userIdProperty.eq(userId), versionUserIdProperty.eq(userId)));
 
-		Property formInstanceIdProperty = PropertyFactoryUtil.forName(
-			"formInstanceId");
+		formInstanceIdDynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("formInstanceId"));
 
 		return dynamicQuery.add(
 			formInstanceIdProperty.in(formInstanceIdDynamicQuery));

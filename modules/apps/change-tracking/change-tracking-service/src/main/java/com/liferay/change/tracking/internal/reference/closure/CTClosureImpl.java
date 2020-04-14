@@ -40,7 +40,9 @@ public class CTClosureImpl implements CTClosure {
 	}
 
 	@Override
-	public Map<Long, List<Long>> getChildren(long classNameId, long classPK) {
+	public Map<Long, List<Long>> getChildPKsMap(
+		long classNameId, long classPK) {
+
 		Collection<Node> nodes = _closureMap.get(
 			new Node(classNameId, classPK));
 
@@ -73,7 +75,7 @@ public class CTClosureImpl implements CTClosure {
 	}
 
 	@Override
-	public Map<Long, List<Long>> getRoots() {
+	public Map<Long, List<Long>> getRootPKsMap() {
 		return _getPrimaryKeysMap(
 			_closureMap.get(Node.ROOT_NODE), Collections.emptySet());
 	}

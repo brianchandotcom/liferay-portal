@@ -22,10 +22,10 @@ import java.util.Map;
  */
 public interface CTClosure {
 
-	public Map<Long, List<Long>> getChildren(long classNameId, long classPK);
+	public Map<Long, List<Long>> getChildPKsMap(long classNameId, long classPK);
 
 	public long getCTCollectionId();
 
-	public Map<Long, List<Long>> getRoots();
+	public Map<Long, List<Long>> getRootPKsMap();
 
 }

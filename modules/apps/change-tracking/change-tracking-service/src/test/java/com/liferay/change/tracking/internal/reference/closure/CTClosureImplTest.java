@@ -80,37 +80,37 @@ public class CTClosureImplTest {
 			Collections.singletonList(node5.getPrimaryKey())
 		).build();
 
-		Assert.assertEquals(roots, ctClosure.getRoots());
+		Assert.assertEquals(roots, ctClosure.getRootPKsMap());
 
 		Assert.assertEquals(
 			Collections.singletonMap(
 				node2.getClassNameId(),
 				Collections.singletonList(node2.getPrimaryKey())),
-			ctClosure.getChildren(
+			ctClosure.getChildPKsMap(
 				node1.getClassNameId(), node1.getPrimaryKey()));
 
 		Assert.assertEquals(
 			Collections.singletonMap(
 				node3.getClassNameId(),
 				Collections.singletonList(node3.getPrimaryKey())),
-			ctClosure.getChildren(
+			ctClosure.getChildPKsMap(
 				node2.getClassNameId(), node2.getPrimaryKey()));
 
 		Assert.assertEquals(
 			Collections.singletonMap(
 				node4.getClassNameId(),
 				Collections.singletonList(node4.getPrimaryKey())),
-			ctClosure.getChildren(
+			ctClosure.getChildPKsMap(
 				node3.getClassNameId(), node3.getPrimaryKey()));
 
 		Assert.assertSame(
 			Collections.emptyMap(),
-			ctClosure.getChildren(
+			ctClosure.getChildPKsMap(
 				node4.getClassNameId(), node4.getPrimaryKey()));
 
 		Assert.assertSame(
 			Collections.emptyMap(),
-			ctClosure.getChildren(
+			ctClosure.getChildPKsMap(
 				node5.getClassNameId(), node5.getPrimaryKey()));
 	}
 

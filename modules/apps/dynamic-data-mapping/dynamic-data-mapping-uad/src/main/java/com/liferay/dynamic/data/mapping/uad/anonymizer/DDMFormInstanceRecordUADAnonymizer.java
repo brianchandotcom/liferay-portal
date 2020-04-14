@@ -53,58 +53,13 @@ public class DDMFormInstanceRecordUADAnonymizer
 
 		super.autoAnonymize(ddmFormInstanceRecord, userId, anonymousUser);
 
+		List<DDMContent> ddmContents = new ArrayList<>();
+
 		List<DDMFormInstanceRecordVersion> ddmFormInstanceRecordVersions =
 			_ddmFormInstanceRecordVersionLocalService.
 				getFormInstanceRecordVersions(
 					ddmFormInstanceRecord.getFormInstanceRecordId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		_anonymize(ddmFormInstanceRecordVersions, userId, anonymousUser);
-	}
-
-	@Override
-	protected ActionableDynamicQuery getActionableDynamicQuery(long userId) {
-		ActionableDynamicQuery actionableDynamicQuery =
-			doGetActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property formInstanceRecordIdProperty =
-					PropertyFactoryUtil.forName("formInstanceRecordId");
-
-				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
-
-				for (String userIdFieldName :
-						DDMUADConstants.
-							USER_ID_FIELD_NAMES_DDM_FORM_INSTANCE_RECORD) {
-
-					disjunction.add(
-						RestrictionsFactoryUtil.eq(userIdFieldName, userId));
-				}
-
-				DynamicQuery formInstanceRecordIdDynamicQuery =
-					_ddmFormInstanceRecordVersionLocalService.dynamicQuery();
-
-				formInstanceRecordIdDynamicQuery.add(
-					RestrictionsFactoryUtil.eq("statusByUserId", userId));
-				formInstanceRecordIdDynamicQuery.setProjection(
-					ProjectionFactoryUtil.property("formInstanceRecordId"));
-
-				disjunction.add(
-					formInstanceRecordIdProperty.in(
-						formInstanceRecordIdDynamicQuery));
-
-				dynamicQuery.add(disjunction);
-			});
-
-		return actionableDynamicQuery;
-	}
-
-	private void _anonymize(
-		List<DDMFormInstanceRecordVersion> ddmFormInstanceRecordVersions,
-		long userId, User anonymousUser) {
-
-		List<DDMContent> ddmContents = new ArrayList<>();
 
 		ddmFormInstanceRecordVersions.forEach(
 			ddmFormInstanceRecordVersion -> {
@@ -143,6 +98,44 @@ public class DDMFormInstanceRecordUADAnonymizer
 
 				_ddmContentLocalService.updateDDMContent(ddmContent);
 			});
+	}
+
+	@Override
+	protected ActionableDynamicQuery getActionableDynamicQuery(long userId) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			doGetActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property formInstanceRecordIdProperty =
+					PropertyFactoryUtil.forName("formInstanceRecordId");
+
+				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+				for (String userIdFieldName :
+						DDMUADConstants.
+							USER_ID_FIELD_NAMES_DDM_FORM_INSTANCE_RECORD) {
+
+					disjunction.add(
+						RestrictionsFactoryUtil.eq(userIdFieldName, userId));
+				}
+
+				DynamicQuery formInstanceRecordIdDynamicQuery =
+					_ddmFormInstanceRecordVersionLocalService.dynamicQuery();
+
+				formInstanceRecordIdDynamicQuery.add(
+					RestrictionsFactoryUtil.eq("statusByUserId", userId));
+				formInstanceRecordIdDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("formInstanceRecordId"));
+
+				disjunction.add(
+					formInstanceRecordIdProperty.in(
+						formInstanceRecordIdDynamicQuery));
+
+				dynamicQuery.add(disjunction);
+			});
+
+		return actionableDynamicQuery;
 	}
 
 	@Reference

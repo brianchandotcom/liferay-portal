@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.RowDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageCollectionItemDefinitionSerDes;
 
 import java.util.Objects;
 
@@ -26,53 +26,34 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class RowDefinition implements Cloneable {
+public class PageCollectionItemDefinition implements Cloneable {
 
-	public Boolean getGutters() {
-		return gutters;
+	public Object getCollectionItemConfig() {
+		return collectionItemConfig;
 	}
 
-	public void setGutters(Boolean gutters) {
-		this.gutters = gutters;
+	public void setCollectionItemConfig(Object collectionItemConfig) {
+		this.collectionItemConfig = collectionItemConfig;
 	}
 
-	public void setGutters(
-		UnsafeSupplier<Boolean, Exception> guttersUnsafeSupplier) {
+	public void setCollectionItemConfig(
+		UnsafeSupplier<Object, Exception> collectionItemConfigUnsafeSupplier) {
 
 		try {
-			gutters = guttersUnsafeSupplier.get();
+			collectionItemConfig = collectionItemConfigUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean gutters;
-
-	public Integer getNumberOfColumns() {
-		return numberOfColumns;
-	}
-
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
-	}
-
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
-
-		try {
-			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer numberOfColumns;
+	protected Object collectionItemConfig;
 
 	@Override
-	public RowDefinition clone() throws CloneNotSupportedException {
-		return (RowDefinition)super.clone();
+	public PageCollectionItemDefinition clone()
+		throws CloneNotSupportedException {
+
+		return (PageCollectionItemDefinition)super.clone();
 	}
 
 	@Override
@@ -81,13 +62,15 @@ public class RowDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof RowDefinition)) {
+		if (!(object instanceof PageCollectionItemDefinition)) {
 			return false;
 		}
 
-		RowDefinition rowDefinition = (RowDefinition)object;
+		PageCollectionItemDefinition pageCollectionItemDefinition =
+			(PageCollectionItemDefinition)object;
 
-		return Objects.equals(toString(), rowDefinition.toString());
+		return Objects.equals(
+			toString(), pageCollectionItemDefinition.toString());
 	}
 
 	@Override
@@ -98,7 +81,7 @@ public class RowDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return RowDefinitionSerDes.toJSON(this);
+		return PageCollectionItemDefinitionSerDes.toJSON(this);
 	}
 
 }

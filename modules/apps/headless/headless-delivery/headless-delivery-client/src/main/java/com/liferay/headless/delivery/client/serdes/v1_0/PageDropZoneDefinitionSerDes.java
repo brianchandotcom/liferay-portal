@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.CollectionDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.PageDropZoneDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CollectionDefinitionSerDes {
+public class PageDropZoneDefinitionSerDes {
 
-	public static CollectionDefinition toDTO(String json) {
-		CollectionDefinitionJSONParser collectionDefinitionJSONParser =
-			new CollectionDefinitionJSONParser();
+	public static PageDropZoneDefinition toDTO(String json) {
+		PageDropZoneDefinitionJSONParser pageDropZoneDefinitionJSONParser =
+			new PageDropZoneDefinitionJSONParser();
 
-		return collectionDefinitionJSONParser.parseToDTO(json);
+		return pageDropZoneDefinitionJSONParser.parseToDTO(json);
 	}
 
-	public static CollectionDefinition[] toDTOs(String json) {
-		CollectionDefinitionJSONParser collectionDefinitionJSONParser =
-			new CollectionDefinitionJSONParser();
+	public static PageDropZoneDefinition[] toDTOs(String json) {
+		PageDropZoneDefinitionJSONParser pageDropZoneDefinitionJSONParser =
+			new PageDropZoneDefinitionJSONParser();
 
-		return collectionDefinitionJSONParser.parseToDTOs(json);
+		return pageDropZoneDefinitionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(CollectionDefinition collectionDefinition) {
-		if (collectionDefinition == null) {
+	public static String toJSON(PageDropZoneDefinition pageDropZoneDefinition) {
+		if (pageDropZoneDefinition == null) {
 			return "null";
 		}
 
@@ -55,38 +55,18 @@ public class CollectionDefinitionSerDes {
 
 		sb.append("{");
 
-		if (collectionDefinition.getCollectionConfig() != null) {
+		if (pageDropZoneDefinition.getFragmentSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collectionConfig\": ");
+			sb.append("\"fragmentSettings\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(collectionDefinition.getCollectionConfig()));
+			sb.append(_escape(pageDropZoneDefinition.getFragmentSettings()));
 
 			sb.append("\"");
-		}
-
-		if (collectionDefinition.getNumberOfColumns() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"numberOfColumns\": ");
-
-			sb.append(collectionDefinition.getNumberOfColumns());
-		}
-
-		if (collectionDefinition.getNumberOfItems() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"numberOfItems\": ");
-
-			sb.append(collectionDefinition.getNumberOfItems());
 		}
 
 		sb.append("}");
@@ -95,85 +75,55 @@ public class CollectionDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		CollectionDefinitionJSONParser collectionDefinitionJSONParser =
-			new CollectionDefinitionJSONParser();
+		PageDropZoneDefinitionJSONParser pageDropZoneDefinitionJSONParser =
+			new PageDropZoneDefinitionJSONParser();
 
-		return collectionDefinitionJSONParser.parseToMap(json);
+		return pageDropZoneDefinitionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		CollectionDefinition collectionDefinition) {
+		PageDropZoneDefinition pageDropZoneDefinition) {
 
-		if (collectionDefinition == null) {
+		if (pageDropZoneDefinition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (collectionDefinition.getCollectionConfig() == null) {
-			map.put("collectionConfig", null);
+		if (pageDropZoneDefinition.getFragmentSettings() == null) {
+			map.put("fragmentSettings", null);
 		}
 		else {
 			map.put(
-				"collectionConfig",
-				String.valueOf(collectionDefinition.getCollectionConfig()));
-		}
-
-		if (collectionDefinition.getNumberOfColumns() == null) {
-			map.put("numberOfColumns", null);
-		}
-		else {
-			map.put(
-				"numberOfColumns",
-				String.valueOf(collectionDefinition.getNumberOfColumns()));
-		}
-
-		if (collectionDefinition.getNumberOfItems() == null) {
-			map.put("numberOfItems", null);
-		}
-		else {
-			map.put(
-				"numberOfItems",
-				String.valueOf(collectionDefinition.getNumberOfItems()));
+				"fragmentSettings",
+				String.valueOf(pageDropZoneDefinition.getFragmentSettings()));
 		}
 
 		return map;
 	}
 
-	public static class CollectionDefinitionJSONParser
-		extends BaseJSONParser<CollectionDefinition> {
+	public static class PageDropZoneDefinitionJSONParser
+		extends BaseJSONParser<PageDropZoneDefinition> {
 
 		@Override
-		protected CollectionDefinition createDTO() {
-			return new CollectionDefinition();
+		protected PageDropZoneDefinition createDTO() {
+			return new PageDropZoneDefinition();
 		}
 
 		@Override
-		protected CollectionDefinition[] createDTOArray(int size) {
-			return new CollectionDefinition[size];
+		protected PageDropZoneDefinition[] createDTOArray(int size) {
+			return new PageDropZoneDefinition[size];
 		}
 
 		@Override
 		protected void setField(
-			CollectionDefinition collectionDefinition,
+			PageDropZoneDefinition pageDropZoneDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "collectionConfig")) {
+			if (Objects.equals(jsonParserFieldName, "fragmentSettings")) {
 				if (jsonParserFieldValue != null) {
-					collectionDefinition.setCollectionConfig(
+					pageDropZoneDefinition.setFragmentSettings(
 						(Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "numberOfColumns")) {
-				if (jsonParserFieldValue != null) {
-					collectionDefinition.setNumberOfColumns(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "numberOfItems")) {
-				if (jsonParserFieldValue != null) {
-					collectionDefinition.setNumberOfItems(
-						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

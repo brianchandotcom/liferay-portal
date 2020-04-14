@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.SectionDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SectionDefinitionSerDes {
+public class PageColumnDefinitionSerDes {
 
-	public static SectionDefinition toDTO(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+	public static PageColumnDefinition toDTO(String json) {
+		PageColumnDefinitionJSONParser pageColumnDefinitionJSONParser =
+			new PageColumnDefinitionJSONParser();
 
-		return sectionDefinitionJSONParser.parseToDTO(json);
+		return pageColumnDefinitionJSONParser.parseToDTO(json);
 	}
 
-	public static SectionDefinition[] toDTOs(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+	public static PageColumnDefinition[] toDTOs(String json) {
+		PageColumnDefinitionJSONParser pageColumnDefinitionJSONParser =
+			new PageColumnDefinitionJSONParser();
 
-		return sectionDefinitionJSONParser.parseToDTOs(json);
+		return pageColumnDefinitionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(SectionDefinition sectionDefinition) {
-		if (sectionDefinition == null) {
+	public static String toJSON(PageColumnDefinition pageColumnDefinition) {
+		if (pageColumnDefinition == null) {
 			return "null";
 		}
 
@@ -55,38 +55,14 @@ public class SectionDefinitionSerDes {
 
 		sb.append("{");
 
-		if (sectionDefinition.getBackgroundColor() != null) {
+		if (pageColumnDefinition.getSize() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundColor\": ");
+			sb.append("\"size\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(sectionDefinition.getBackgroundColor()));
-
-			sb.append("\"");
-		}
-
-		if (sectionDefinition.getBackgroundImage() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"backgroundImage\": ");
-
-			sb.append(String.valueOf(sectionDefinition.getBackgroundImage()));
-		}
-
-		if (sectionDefinition.getLayout() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"layout\": ");
-
-			sb.append(String.valueOf(sectionDefinition.getLayout()));
+			sb.append(pageColumnDefinition.getSize());
 		}
 
 		sb.append("}");
@@ -95,84 +71,53 @@ public class SectionDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SectionDefinitionJSONParser sectionDefinitionJSONParser =
-			new SectionDefinitionJSONParser();
+		PageColumnDefinitionJSONParser pageColumnDefinitionJSONParser =
+			new PageColumnDefinitionJSONParser();
 
-		return sectionDefinitionJSONParser.parseToMap(json);
+		return pageColumnDefinitionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		SectionDefinition sectionDefinition) {
+		PageColumnDefinition pageColumnDefinition) {
 
-		if (sectionDefinition == null) {
+		if (pageColumnDefinition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sectionDefinition.getBackgroundColor() == null) {
-			map.put("backgroundColor", null);
+		if (pageColumnDefinition.getSize() == null) {
+			map.put("size", null);
 		}
 		else {
-			map.put(
-				"backgroundColor",
-				String.valueOf(sectionDefinition.getBackgroundColor()));
-		}
-
-		if (sectionDefinition.getBackgroundImage() == null) {
-			map.put("backgroundImage", null);
-		}
-		else {
-			map.put(
-				"backgroundImage",
-				String.valueOf(sectionDefinition.getBackgroundImage()));
-		}
-
-		if (sectionDefinition.getLayout() == null) {
-			map.put("layout", null);
-		}
-		else {
-			map.put("layout", String.valueOf(sectionDefinition.getLayout()));
+			map.put("size", String.valueOf(pageColumnDefinition.getSize()));
 		}
 
 		return map;
 	}
 
-	public static class SectionDefinitionJSONParser
-		extends BaseJSONParser<SectionDefinition> {
+	public static class PageColumnDefinitionJSONParser
+		extends BaseJSONParser<PageColumnDefinition> {
 
 		@Override
-		protected SectionDefinition createDTO() {
-			return new SectionDefinition();
+		protected PageColumnDefinition createDTO() {
+			return new PageColumnDefinition();
 		}
 
 		@Override
-		protected SectionDefinition[] createDTOArray(int size) {
-			return new SectionDefinition[size];
+		protected PageColumnDefinition[] createDTOArray(int size) {
+			return new PageColumnDefinition[size];
 		}
 
 		@Override
 		protected void setField(
-			SectionDefinition sectionDefinition, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			PageColumnDefinition pageColumnDefinition,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "backgroundColor")) {
+			if (Objects.equals(jsonParserFieldName, "size")) {
 				if (jsonParserFieldValue != null) {
-					sectionDefinition.setBackgroundColor(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
-				if (jsonParserFieldValue != null) {
-					sectionDefinition.setBackgroundImage(
-						FragmentImageSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "layout")) {
-				if (jsonParserFieldValue != null) {
-					sectionDefinition.setLayout(
-						LayoutSerDes.toDTO((String)jsonParserFieldValue));
+					pageColumnDefinition.setSize(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

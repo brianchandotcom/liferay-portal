@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.DropZoneDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.PageRowDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DropZoneDefinitionSerDes {
+public class PageRowDefinitionSerDes {
 
-	public static DropZoneDefinition toDTO(String json) {
-		DropZoneDefinitionJSONParser dropZoneDefinitionJSONParser =
-			new DropZoneDefinitionJSONParser();
+	public static PageRowDefinition toDTO(String json) {
+		PageRowDefinitionJSONParser pageRowDefinitionJSONParser =
+			new PageRowDefinitionJSONParser();
 
-		return dropZoneDefinitionJSONParser.parseToDTO(json);
+		return pageRowDefinitionJSONParser.parseToDTO(json);
 	}
 
-	public static DropZoneDefinition[] toDTOs(String json) {
-		DropZoneDefinitionJSONParser dropZoneDefinitionJSONParser =
-			new DropZoneDefinitionJSONParser();
+	public static PageRowDefinition[] toDTOs(String json) {
+		PageRowDefinitionJSONParser pageRowDefinitionJSONParser =
+			new PageRowDefinitionJSONParser();
 
-		return dropZoneDefinitionJSONParser.parseToDTOs(json);
+		return pageRowDefinitionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(DropZoneDefinition dropZoneDefinition) {
-		if (dropZoneDefinition == null) {
+	public static String toJSON(PageRowDefinition pageRowDefinition) {
+		if (pageRowDefinition == null) {
 			return "null";
 		}
 
@@ -55,18 +55,24 @@ public class DropZoneDefinitionSerDes {
 
 		sb.append("{");
 
-		if (dropZoneDefinition.getFragmentSettings() != null) {
+		if (pageRowDefinition.getGutters() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentSettings\": ");
+			sb.append("\"gutters\": ");
 
-			sb.append("\"");
+			sb.append(pageRowDefinition.getGutters());
+		}
 
-			sb.append(_escape(dropZoneDefinition.getFragmentSettings()));
+		if (pageRowDefinition.getNumberOfColumns() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-			sb.append("\"");
+			sb.append("\"numberOfColumns\": ");
+
+			sb.append(pageRowDefinition.getNumberOfColumns());
 		}
 
 		sb.append("}");
@@ -75,55 +81,67 @@ public class DropZoneDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		DropZoneDefinitionJSONParser dropZoneDefinitionJSONParser =
-			new DropZoneDefinitionJSONParser();
+		PageRowDefinitionJSONParser pageRowDefinitionJSONParser =
+			new PageRowDefinitionJSONParser();
 
-		return dropZoneDefinitionJSONParser.parseToMap(json);
+		return pageRowDefinitionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		DropZoneDefinition dropZoneDefinition) {
+		PageRowDefinition pageRowDefinition) {
 
-		if (dropZoneDefinition == null) {
+		if (pageRowDefinition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (dropZoneDefinition.getFragmentSettings() == null) {
-			map.put("fragmentSettings", null);
+		if (pageRowDefinition.getGutters() == null) {
+			map.put("gutters", null);
+		}
+		else {
+			map.put("gutters", String.valueOf(pageRowDefinition.getGutters()));
+		}
+
+		if (pageRowDefinition.getNumberOfColumns() == null) {
+			map.put("numberOfColumns", null);
 		}
 		else {
 			map.put(
-				"fragmentSettings",
-				String.valueOf(dropZoneDefinition.getFragmentSettings()));
+				"numberOfColumns",
+				String.valueOf(pageRowDefinition.getNumberOfColumns()));
 		}
 
 		return map;
 	}
 
-	public static class DropZoneDefinitionJSONParser
-		extends BaseJSONParser<DropZoneDefinition> {
+	public static class PageRowDefinitionJSONParser
+		extends BaseJSONParser<PageRowDefinition> {
 
 		@Override
-		protected DropZoneDefinition createDTO() {
-			return new DropZoneDefinition();
+		protected PageRowDefinition createDTO() {
+			return new PageRowDefinition();
 		}
 
 		@Override
-		protected DropZoneDefinition[] createDTOArray(int size) {
-			return new DropZoneDefinition[size];
+		protected PageRowDefinition[] createDTOArray(int size) {
+			return new PageRowDefinition[size];
 		}
 
 		@Override
 		protected void setField(
-			DropZoneDefinition dropZoneDefinition, String jsonParserFieldName,
+			PageRowDefinition pageRowDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragmentSettings")) {
+			if (Objects.equals(jsonParserFieldName, "gutters")) {
 				if (jsonParserFieldValue != null) {
-					dropZoneDefinition.setFragmentSettings(
-						(Object)jsonParserFieldValue);
+					pageRowDefinition.setGutters((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "numberOfColumns")) {
+				if (jsonParserFieldValue != null) {
+					pageRowDefinition.setNumberOfColumns(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

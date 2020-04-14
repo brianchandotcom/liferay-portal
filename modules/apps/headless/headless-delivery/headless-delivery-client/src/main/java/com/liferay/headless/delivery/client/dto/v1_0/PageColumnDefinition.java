@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.DropZoneDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageColumnDefinitionSerDes;
 
 import java.util.Objects;
 
@@ -26,32 +26,30 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DropZoneDefinition implements Cloneable {
+public class PageColumnDefinition implements Cloneable {
 
-	public Object getFragmentSettings() {
-		return fragmentSettings;
+	public Integer getSize() {
+		return size;
 	}
 
-	public void setFragmentSettings(Object fragmentSettings) {
-		this.fragmentSettings = fragmentSettings;
+	public void setSize(Integer size) {
+		this.size = size;
 	}
 
-	public void setFragmentSettings(
-		UnsafeSupplier<Object, Exception> fragmentSettingsUnsafeSupplier) {
-
+	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
 		try {
-			fragmentSettings = fragmentSettingsUnsafeSupplier.get();
+			size = sizeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object fragmentSettings;
+	protected Integer size;
 
 	@Override
-	public DropZoneDefinition clone() throws CloneNotSupportedException {
-		return (DropZoneDefinition)super.clone();
+	public PageColumnDefinition clone() throws CloneNotSupportedException {
+		return (PageColumnDefinition)super.clone();
 	}
 
 	@Override
@@ -60,13 +58,14 @@ public class DropZoneDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof DropZoneDefinition)) {
+		if (!(object instanceof PageColumnDefinition)) {
 			return false;
 		}
 
-		DropZoneDefinition dropZoneDefinition = (DropZoneDefinition)object;
+		PageColumnDefinition pageColumnDefinition =
+			(PageColumnDefinition)object;
 
-		return Objects.equals(toString(), dropZoneDefinition.toString());
+		return Objects.equals(toString(), pageColumnDefinition.toString());
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class DropZoneDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return DropZoneDefinitionSerDes.toJSON(this);
+		return PageColumnDefinitionSerDes.toJSON(this);
 	}
 
 }

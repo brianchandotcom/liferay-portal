@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.WidgetInstanceDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.PageCollectionItemDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,26 +30,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WidgetInstanceDefinitionSerDes {
+public class PageCollectionItemDefinitionSerDes {
 
-	public static WidgetInstanceDefinition toDTO(String json) {
-		WidgetInstanceDefinitionJSONParser widgetInstanceDefinitionJSONParser =
-			new WidgetInstanceDefinitionJSONParser();
+	public static PageCollectionItemDefinition toDTO(String json) {
+		PageCollectionItemDefinitionJSONParser
+			pageCollectionItemDefinitionJSONParser =
+				new PageCollectionItemDefinitionJSONParser();
 
-		return widgetInstanceDefinitionJSONParser.parseToDTO(json);
+		return pageCollectionItemDefinitionJSONParser.parseToDTO(json);
 	}
 
-	public static WidgetInstanceDefinition[] toDTOs(String json) {
-		WidgetInstanceDefinitionJSONParser widgetInstanceDefinitionJSONParser =
-			new WidgetInstanceDefinitionJSONParser();
+	public static PageCollectionItemDefinition[] toDTOs(String json) {
+		PageCollectionItemDefinitionJSONParser
+			pageCollectionItemDefinitionJSONParser =
+				new PageCollectionItemDefinitionJSONParser();
 
-		return widgetInstanceDefinitionJSONParser.parseToDTOs(json);
+		return pageCollectionItemDefinitionJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		WidgetInstanceDefinition widgetInstanceDefinition) {
+		PageCollectionItemDefinition pageCollectionItemDefinition) {
 
-		if (widgetInstanceDefinition == null) {
+		if (pageCollectionItemDefinition == null) {
 			return "null";
 		}
 
@@ -57,14 +59,20 @@ public class WidgetInstanceDefinitionSerDes {
 
 		sb.append("{");
 
-		if (widgetInstanceDefinition.getWidget() != null) {
+		if (pageCollectionItemDefinition.getCollectionItemConfig() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"widget\": ");
+			sb.append("\"collectionItemConfig\": ");
 
-			sb.append(String.valueOf(widgetInstanceDefinition.getWidget()));
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					pageCollectionItemDefinition.getCollectionItemConfig()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -73,54 +81,57 @@ public class WidgetInstanceDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		WidgetInstanceDefinitionJSONParser widgetInstanceDefinitionJSONParser =
-			new WidgetInstanceDefinitionJSONParser();
+		PageCollectionItemDefinitionJSONParser
+			pageCollectionItemDefinitionJSONParser =
+				new PageCollectionItemDefinitionJSONParser();
 
-		return widgetInstanceDefinitionJSONParser.parseToMap(json);
+		return pageCollectionItemDefinitionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		WidgetInstanceDefinition widgetInstanceDefinition) {
+		PageCollectionItemDefinition pageCollectionItemDefinition) {
 
-		if (widgetInstanceDefinition == null) {
+		if (pageCollectionItemDefinition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (widgetInstanceDefinition.getWidget() == null) {
-			map.put("widget", null);
+		if (pageCollectionItemDefinition.getCollectionItemConfig() == null) {
+			map.put("collectionItemConfig", null);
 		}
 		else {
 			map.put(
-				"widget", String.valueOf(widgetInstanceDefinition.getWidget()));
+				"collectionItemConfig",
+				String.valueOf(
+					pageCollectionItemDefinition.getCollectionItemConfig()));
 		}
 
 		return map;
 	}
 
-	public static class WidgetInstanceDefinitionJSONParser
-		extends BaseJSONParser<WidgetInstanceDefinition> {
+	public static class PageCollectionItemDefinitionJSONParser
+		extends BaseJSONParser<PageCollectionItemDefinition> {
 
 		@Override
-		protected WidgetInstanceDefinition createDTO() {
-			return new WidgetInstanceDefinition();
+		protected PageCollectionItemDefinition createDTO() {
+			return new PageCollectionItemDefinition();
 		}
 
 		@Override
-		protected WidgetInstanceDefinition[] createDTOArray(int size) {
-			return new WidgetInstanceDefinition[size];
+		protected PageCollectionItemDefinition[] createDTOArray(int size) {
+			return new PageCollectionItemDefinition[size];
 		}
 
 		@Override
 		protected void setField(
-			WidgetInstanceDefinition widgetInstanceDefinition,
+			PageCollectionItemDefinition pageCollectionItemDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "widget")) {
+			if (Objects.equals(jsonParserFieldName, "collectionItemConfig")) {
 				if (jsonParserFieldValue != null) {
-					widgetInstanceDefinition.setWidget(
-						WidgetSerDes.toDTO((String)jsonParserFieldValue));
+					pageCollectionItemDefinition.setCollectionItemConfig(
+						(Object)jsonParserFieldValue);
 				}
 			}
 			else {

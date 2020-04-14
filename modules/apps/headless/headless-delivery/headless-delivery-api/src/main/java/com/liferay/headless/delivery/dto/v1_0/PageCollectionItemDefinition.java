@@ -41,56 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SectionDefinition")
+@GraphQLName("PageCollectionItemDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SectionDefinition")
-public class SectionDefinition {
-
-	@Schema
-	public String getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	public void setBackgroundColor(String backgroundColor) {
-		this.backgroundColor = backgroundColor;
-	}
-
-	@JsonIgnore
-	public void setBackgroundColor(
-		UnsafeSupplier<String, Exception> backgroundColorUnsafeSupplier) {
-
-		try {
-			backgroundColor = backgroundColorUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String backgroundColor;
+@XmlRootElement(name = "PageCollectionItemDefinition")
+public class PageCollectionItemDefinition {
 
 	@Schema
 	@Valid
-	public FragmentImage getBackgroundImage() {
-		return backgroundImage;
+	public Object getCollectionItemConfig() {
+		return collectionItemConfig;
 	}
 
-	public void setBackgroundImage(FragmentImage backgroundImage) {
-		this.backgroundImage = backgroundImage;
+	public void setCollectionItemConfig(Object collectionItemConfig) {
+		this.collectionItemConfig = collectionItemConfig;
 	}
 
 	@JsonIgnore
-	public void setBackgroundImage(
-		UnsafeSupplier<FragmentImage, Exception>
-			backgroundImageUnsafeSupplier) {
+	public void setCollectionItemConfig(
+		UnsafeSupplier<Object, Exception> collectionItemConfigUnsafeSupplier) {
 
 		try {
-			backgroundImage = backgroundImageUnsafeSupplier.get();
+			collectionItemConfig = collectionItemConfigUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -102,36 +73,7 @@ public class SectionDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImage backgroundImage;
-
-	@Schema
-	@Valid
-	public Layout getLayout() {
-		return layout;
-	}
-
-	public void setLayout(Layout layout) {
-		this.layout = layout;
-	}
-
-	@JsonIgnore
-	public void setLayout(
-		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
-
-		try {
-			layout = layoutUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Layout layout;
+	protected Object collectionItemConfig;
 
 	@Override
 	public boolean equals(Object object) {
@@ -139,13 +81,15 @@ public class SectionDefinition {
 			return true;
 		}
 
-		if (!(object instanceof SectionDefinition)) {
+		if (!(object instanceof PageCollectionItemDefinition)) {
 			return false;
 		}
 
-		SectionDefinition sectionDefinition = (SectionDefinition)object;
+		PageCollectionItemDefinition pageCollectionItemDefinition =
+			(PageCollectionItemDefinition)object;
 
-		return Objects.equals(toString(), sectionDefinition.toString());
+		return Objects.equals(
+			toString(), pageCollectionItemDefinition.toString());
 	}
 
 	@Override
@@ -160,38 +104,14 @@ public class SectionDefinition {
 
 		sb.append("{");
 
-		if (backgroundColor != null) {
+		if (collectionItemConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundColor\": ");
+			sb.append("\"collectionItemConfig\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(backgroundColor));
-
-			sb.append("\"");
-		}
-
-		if (backgroundImage != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"backgroundImage\": ");
-
-			sb.append(String.valueOf(backgroundImage));
-		}
-
-		if (layout != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"layout\": ");
-
-			sb.append(String.valueOf(layout));
+			sb.append(String.valueOf(collectionItemConfig));
 		}
 
 		sb.append("}");
@@ -200,7 +120,7 @@ public class SectionDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.SectionDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageCollectionItemDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

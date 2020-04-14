@@ -41,27 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WidgetInstanceDefinition")
+@GraphQLName("PageDropZoneDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "WidgetInstanceDefinition")
-public class WidgetInstanceDefinition {
+@XmlRootElement(name = "PageDropZoneDefinition")
+public class PageDropZoneDefinition {
 
 	@Schema
 	@Valid
-	public Widget getWidget() {
-		return widget;
+	public Object getFragmentSettings() {
+		return fragmentSettings;
 	}
 
-	public void setWidget(Widget widget) {
-		this.widget = widget;
+	public void setFragmentSettings(Object fragmentSettings) {
+		this.fragmentSettings = fragmentSettings;
 	}
 
 	@JsonIgnore
-	public void setWidget(
-		UnsafeSupplier<Widget, Exception> widgetUnsafeSupplier) {
+	public void setFragmentSettings(
+		UnsafeSupplier<Object, Exception> fragmentSettingsUnsafeSupplier) {
 
 		try {
-			widget = widgetUnsafeSupplier.get();
+			fragmentSettings = fragmentSettingsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,7 +73,7 @@ public class WidgetInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Widget widget;
+	protected Object fragmentSettings;
 
 	@Override
 	public boolean equals(Object object) {
@@ -81,14 +81,14 @@ public class WidgetInstanceDefinition {
 			return true;
 		}
 
-		if (!(object instanceof WidgetInstanceDefinition)) {
+		if (!(object instanceof PageDropZoneDefinition)) {
 			return false;
 		}
 
-		WidgetInstanceDefinition widgetInstanceDefinition =
-			(WidgetInstanceDefinition)object;
+		PageDropZoneDefinition pageDropZoneDefinition =
+			(PageDropZoneDefinition)object;
 
-		return Objects.equals(toString(), widgetInstanceDefinition.toString());
+		return Objects.equals(toString(), pageDropZoneDefinition.toString());
 	}
 
 	@Override
@@ -103,14 +103,14 @@ public class WidgetInstanceDefinition {
 
 		sb.append("{");
 
-		if (widget != null) {
+		if (fragmentSettings != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"widget\": ");
+			sb.append("\"fragmentSettings\": ");
 
-			sb.append(String.valueOf(widget));
+			sb.append(String.valueOf(fragmentSettings));
 		}
 
 		sb.append("}");
@@ -119,7 +119,7 @@ public class WidgetInstanceDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.WidgetInstanceDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageDropZoneDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

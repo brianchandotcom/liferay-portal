@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.WidgetInstanceDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageRowDefinitionSerDes;
 
 import java.util.Objects;
 
@@ -26,32 +26,53 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WidgetInstanceDefinition implements Cloneable {
+public class PageRowDefinition implements Cloneable {
 
-	public Widget getWidget() {
-		return widget;
+	public Boolean getGutters() {
+		return gutters;
 	}
 
-	public void setWidget(Widget widget) {
-		this.widget = widget;
+	public void setGutters(Boolean gutters) {
+		this.gutters = gutters;
 	}
 
-	public void setWidget(
-		UnsafeSupplier<Widget, Exception> widgetUnsafeSupplier) {
+	public void setGutters(
+		UnsafeSupplier<Boolean, Exception> guttersUnsafeSupplier) {
 
 		try {
-			widget = widgetUnsafeSupplier.get();
+			gutters = guttersUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Widget widget;
+	protected Boolean gutters;
+
+	public Integer getNumberOfColumns() {
+		return numberOfColumns;
+	}
+
+	public void setNumberOfColumns(Integer numberOfColumns) {
+		this.numberOfColumns = numberOfColumns;
+	}
+
+	public void setNumberOfColumns(
+		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
+
+		try {
+			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfColumns;
 
 	@Override
-	public WidgetInstanceDefinition clone() throws CloneNotSupportedException {
-		return (WidgetInstanceDefinition)super.clone();
+	public PageRowDefinition clone() throws CloneNotSupportedException {
+		return (PageRowDefinition)super.clone();
 	}
 
 	@Override
@@ -60,14 +81,13 @@ public class WidgetInstanceDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof WidgetInstanceDefinition)) {
+		if (!(object instanceof PageRowDefinition)) {
 			return false;
 		}
 
-		WidgetInstanceDefinition widgetInstanceDefinition =
-			(WidgetInstanceDefinition)object;
+		PageRowDefinition pageRowDefinition = (PageRowDefinition)object;
 
-		return Objects.equals(toString(), widgetInstanceDefinition.toString());
+		return Objects.equals(toString(), pageRowDefinition.toString());
 	}
 
 	@Override
@@ -78,7 +98,7 @@ public class WidgetInstanceDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return WidgetInstanceDefinitionSerDes.toJSON(this);
+		return PageRowDefinitionSerDes.toJSON(this);
 	}
 
 }

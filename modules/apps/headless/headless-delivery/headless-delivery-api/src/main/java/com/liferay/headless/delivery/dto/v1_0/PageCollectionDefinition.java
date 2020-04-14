@@ -41,27 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FragmentInstanceDefinition")
+@GraphQLName("PageCollectionDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentInstanceDefinition")
-public class FragmentInstanceDefinition {
+@XmlRootElement(name = "PageCollectionDefinition")
+public class PageCollectionDefinition {
 
 	@Schema
 	@Valid
-	public Fragment getFragment() {
-		return fragment;
+	public Object getCollectionConfig() {
+		return collectionConfig;
 	}
 
-	public void setFragment(Fragment fragment) {
-		this.fragment = fragment;
+	public void setCollectionConfig(Object collectionConfig) {
+		this.collectionConfig = collectionConfig;
 	}
 
 	@JsonIgnore
-	public void setFragment(
-		UnsafeSupplier<Fragment, Exception> fragmentUnsafeSupplier) {
+	public void setCollectionConfig(
+		UnsafeSupplier<Object, Exception> collectionConfigUnsafeSupplier) {
 
 		try {
-			fragment = fragmentUnsafeSupplier.get();
+			collectionConfig = collectionConfigUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,25 +73,23 @@ public class FragmentInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Fragment fragment;
+	protected Object collectionConfig;
 
 	@Schema
-	@Valid
-	public Map<String, Object> getFragmentConfig() {
-		return fragmentConfig;
+	public Integer getNumberOfColumns() {
+		return numberOfColumns;
 	}
 
-	public void setFragmentConfig(Map<String, Object> fragmentConfig) {
-		this.fragmentConfig = fragmentConfig;
+	public void setNumberOfColumns(Integer numberOfColumns) {
+		this.numberOfColumns = numberOfColumns;
 	}
 
 	@JsonIgnore
-	public void setFragmentConfig(
-		UnsafeSupplier<Map<String, Object>, Exception>
-			fragmentConfigUnsafeSupplier) {
+	public void setNumberOfColumns(
+		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
 
 		try {
-			fragmentConfig = fragmentConfigUnsafeSupplier.get();
+			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -103,25 +101,23 @@ public class FragmentInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> fragmentConfig;
+	protected Integer numberOfColumns;
 
 	@Schema
-	@Valid
-	public FragmentField[] getFragmentFields() {
-		return fragmentFields;
+	public Integer getNumberOfItems() {
+		return numberOfItems;
 	}
 
-	public void setFragmentFields(FragmentField[] fragmentFields) {
-		this.fragmentFields = fragmentFields;
+	public void setNumberOfItems(Integer numberOfItems) {
+		this.numberOfItems = numberOfItems;
 	}
 
 	@JsonIgnore
-	public void setFragmentFields(
-		UnsafeSupplier<FragmentField[], Exception>
-			fragmentFieldsUnsafeSupplier) {
+	public void setNumberOfItems(
+		UnsafeSupplier<Integer, Exception> numberOfItemsUnsafeSupplier) {
 
 		try {
-			fragmentFields = fragmentFieldsUnsafeSupplier.get();
+			numberOfItems = numberOfItemsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -133,7 +129,7 @@ public class FragmentInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentField[] fragmentFields;
+	protected Integer numberOfItems;
 
 	@Override
 	public boolean equals(Object object) {
@@ -141,15 +137,14 @@ public class FragmentInstanceDefinition {
 			return true;
 		}
 
-		if (!(object instanceof FragmentInstanceDefinition)) {
+		if (!(object instanceof PageCollectionDefinition)) {
 			return false;
 		}
 
-		FragmentInstanceDefinition fragmentInstanceDefinition =
-			(FragmentInstanceDefinition)object;
+		PageCollectionDefinition pageCollectionDefinition =
+			(PageCollectionDefinition)object;
 
-		return Objects.equals(
-			toString(), fragmentInstanceDefinition.toString());
+		return Objects.equals(toString(), pageCollectionDefinition.toString());
 	}
 
 	@Override
@@ -164,44 +159,34 @@ public class FragmentInstanceDefinition {
 
 		sb.append("{");
 
-		if (fragment != null) {
+		if (collectionConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragment\": ");
+			sb.append("\"collectionConfig\": ");
 
-			sb.append(String.valueOf(fragment));
+			sb.append(String.valueOf(collectionConfig));
 		}
 
-		if (fragmentConfig != null) {
+		if (numberOfColumns != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentConfig\": ");
+			sb.append("\"numberOfColumns\": ");
 
-			sb.append(_toJSON(fragmentConfig));
+			sb.append(numberOfColumns);
 		}
 
-		if (fragmentFields != null) {
+		if (numberOfItems != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentFields\": ");
+			sb.append("\"numberOfItems\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < fragmentFields.length; i++) {
-				sb.append(String.valueOf(fragmentFields[i]));
-
-				if ((i + 1) < fragmentFields.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(numberOfItems);
 		}
 
 		sb.append("}");
@@ -210,7 +195,7 @@ public class FragmentInstanceDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageCollectionDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

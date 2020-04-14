@@ -32,7 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -41,27 +42,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CollectionItemDefinition")
+@GraphQLName("PageColumnDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "CollectionItemDefinition")
-public class CollectionItemDefinition {
+@XmlRootElement(name = "PageColumnDefinition")
+public class PageColumnDefinition {
 
+	@DecimalMax("12")
+	@DecimalMin("1")
 	@Schema
-	@Valid
-	public Object getCollectionItemConfig() {
-		return collectionItemConfig;
+	public Integer getSize() {
+		return size;
 	}
 
-	public void setCollectionItemConfig(Object collectionItemConfig) {
-		this.collectionItemConfig = collectionItemConfig;
+	public void setSize(Integer size) {
+		this.size = size;
 	}
 
 	@JsonIgnore
-	public void setCollectionItemConfig(
-		UnsafeSupplier<Object, Exception> collectionItemConfigUnsafeSupplier) {
-
+	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
 		try {
-			collectionItemConfig = collectionItemConfigUnsafeSupplier.get();
+			size = sizeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,7 +73,7 @@ public class CollectionItemDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object collectionItemConfig;
+	protected Integer size;
 
 	@Override
 	public boolean equals(Object object) {
@@ -81,14 +81,14 @@ public class CollectionItemDefinition {
 			return true;
 		}
 
-		if (!(object instanceof CollectionItemDefinition)) {
+		if (!(object instanceof PageColumnDefinition)) {
 			return false;
 		}
 
-		CollectionItemDefinition collectionItemDefinition =
-			(CollectionItemDefinition)object;
+		PageColumnDefinition pageColumnDefinition =
+			(PageColumnDefinition)object;
 
-		return Objects.equals(toString(), collectionItemDefinition.toString());
+		return Objects.equals(toString(), pageColumnDefinition.toString());
 	}
 
 	@Override
@@ -103,14 +103,14 @@ public class CollectionItemDefinition {
 
 		sb.append("{");
 
-		if (collectionItemConfig != null) {
+		if (size != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collectionItemConfig\": ");
+			sb.append("\"size\": ");
 
-			sb.append(String.valueOf(collectionItemConfig));
+			sb.append(size);
 		}
 
 		sb.append("}");
@@ -119,7 +119,7 @@ public class CollectionItemDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.CollectionItemDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageColumnDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

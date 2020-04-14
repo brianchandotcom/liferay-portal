@@ -41,27 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CollectionDefinition")
+@GraphQLName("PageFragmentInstanceDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "CollectionDefinition")
-public class CollectionDefinition {
+@XmlRootElement(name = "PageFragmentInstanceDefinition")
+public class PageFragmentInstanceDefinition {
 
 	@Schema
 	@Valid
-	public Object getCollectionConfig() {
-		return collectionConfig;
+	public Fragment getFragment() {
+		return fragment;
 	}
 
-	public void setCollectionConfig(Object collectionConfig) {
-		this.collectionConfig = collectionConfig;
+	public void setFragment(Fragment fragment) {
+		this.fragment = fragment;
 	}
 
 	@JsonIgnore
-	public void setCollectionConfig(
-		UnsafeSupplier<Object, Exception> collectionConfigUnsafeSupplier) {
+	public void setFragment(
+		UnsafeSupplier<Fragment, Exception> fragmentUnsafeSupplier) {
 
 		try {
-			collectionConfig = collectionConfigUnsafeSupplier.get();
+			fragment = fragmentUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,23 +73,25 @@ public class CollectionDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object collectionConfig;
+	protected Fragment fragment;
 
 	@Schema
-	public Integer getNumberOfColumns() {
-		return numberOfColumns;
+	@Valid
+	public Map<String, Object> getFragmentConfig() {
+		return fragmentConfig;
 	}
 
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
+	public void setFragmentConfig(Map<String, Object> fragmentConfig) {
+		this.fragmentConfig = fragmentConfig;
 	}
 
 	@JsonIgnore
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
+	public void setFragmentConfig(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			fragmentConfigUnsafeSupplier) {
 
 		try {
-			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
+			fragmentConfig = fragmentConfigUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -101,23 +103,25 @@ public class CollectionDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer numberOfColumns;
+	protected Map<String, Object> fragmentConfig;
 
 	@Schema
-	public Integer getNumberOfItems() {
-		return numberOfItems;
+	@Valid
+	public FragmentField[] getFragmentFields() {
+		return fragmentFields;
 	}
 
-	public void setNumberOfItems(Integer numberOfItems) {
-		this.numberOfItems = numberOfItems;
+	public void setFragmentFields(FragmentField[] fragmentFields) {
+		this.fragmentFields = fragmentFields;
 	}
 
 	@JsonIgnore
-	public void setNumberOfItems(
-		UnsafeSupplier<Integer, Exception> numberOfItemsUnsafeSupplier) {
+	public void setFragmentFields(
+		UnsafeSupplier<FragmentField[], Exception>
+			fragmentFieldsUnsafeSupplier) {
 
 		try {
-			numberOfItems = numberOfItemsUnsafeSupplier.get();
+			fragmentFields = fragmentFieldsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -129,7 +133,7 @@ public class CollectionDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer numberOfItems;
+	protected FragmentField[] fragmentFields;
 
 	@Override
 	public boolean equals(Object object) {
@@ -137,14 +141,15 @@ public class CollectionDefinition {
 			return true;
 		}
 
-		if (!(object instanceof CollectionDefinition)) {
+		if (!(object instanceof PageFragmentInstanceDefinition)) {
 			return false;
 		}
 
-		CollectionDefinition collectionDefinition =
-			(CollectionDefinition)object;
+		PageFragmentInstanceDefinition pageFragmentInstanceDefinition =
+			(PageFragmentInstanceDefinition)object;
 
-		return Objects.equals(toString(), collectionDefinition.toString());
+		return Objects.equals(
+			toString(), pageFragmentInstanceDefinition.toString());
 	}
 
 	@Override
@@ -159,34 +164,44 @@ public class CollectionDefinition {
 
 		sb.append("{");
 
-		if (collectionConfig != null) {
+		if (fragment != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collectionConfig\": ");
+			sb.append("\"fragment\": ");
 
-			sb.append(String.valueOf(collectionConfig));
+			sb.append(String.valueOf(fragment));
 		}
 
-		if (numberOfColumns != null) {
+		if (fragmentConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"numberOfColumns\": ");
+			sb.append("\"fragmentConfig\": ");
 
-			sb.append(numberOfColumns);
+			sb.append(_toJSON(fragmentConfig));
 		}
 
-		if (numberOfItems != null) {
+		if (fragmentFields != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"numberOfItems\": ");
+			sb.append("\"fragmentFields\": ");
 
-			sb.append(numberOfItems);
+			sb.append("[");
+
+			for (int i = 0; i < fragmentFields.length; i++) {
+				sb.append(String.valueOf(fragmentFields[i]));
+
+				if ((i + 1) < fragmentFields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -195,7 +210,7 @@ public class CollectionDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.CollectionDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

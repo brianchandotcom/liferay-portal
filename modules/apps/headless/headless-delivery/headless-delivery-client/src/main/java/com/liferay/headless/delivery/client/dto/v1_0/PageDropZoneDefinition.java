@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.ColumnDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageDropZoneDefinitionSerDes;
 
 import java.util.Objects;
 
@@ -26,30 +26,32 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ColumnDefinition implements Cloneable {
+public class PageDropZoneDefinition implements Cloneable {
 
-	public Integer getSize() {
-		return size;
+	public Object getFragmentSettings() {
+		return fragmentSettings;
 	}
 
-	public void setSize(Integer size) {
-		this.size = size;
+	public void setFragmentSettings(Object fragmentSettings) {
+		this.fragmentSettings = fragmentSettings;
 	}
 
-	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
+	public void setFragmentSettings(
+		UnsafeSupplier<Object, Exception> fragmentSettingsUnsafeSupplier) {
+
 		try {
-			size = sizeUnsafeSupplier.get();
+			fragmentSettings = fragmentSettingsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Integer size;
+	protected Object fragmentSettings;
 
 	@Override
-	public ColumnDefinition clone() throws CloneNotSupportedException {
-		return (ColumnDefinition)super.clone();
+	public PageDropZoneDefinition clone() throws CloneNotSupportedException {
+		return (PageDropZoneDefinition)super.clone();
 	}
 
 	@Override
@@ -58,13 +60,14 @@ public class ColumnDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof ColumnDefinition)) {
+		if (!(object instanceof PageDropZoneDefinition)) {
 			return false;
 		}
 
-		ColumnDefinition columnDefinition = (ColumnDefinition)object;
+		PageDropZoneDefinition pageDropZoneDefinition =
+			(PageDropZoneDefinition)object;
 
-		return Objects.equals(toString(), columnDefinition.toString());
+		return Objects.equals(toString(), pageDropZoneDefinition.toString());
 	}
 
 	@Override
@@ -75,7 +78,7 @@ public class ColumnDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return ColumnDefinitionSerDes.toJSON(this);
+		return PageDropZoneDefinitionSerDes.toJSON(this);
 	}
 
 }

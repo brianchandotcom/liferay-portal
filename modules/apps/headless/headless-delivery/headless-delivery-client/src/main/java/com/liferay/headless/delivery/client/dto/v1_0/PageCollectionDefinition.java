@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.CollectionDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageCollectionDefinitionSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CollectionDefinition implements Cloneable {
+public class PageCollectionDefinition implements Cloneable {
 
 	public Object getCollectionConfig() {
 		return collectionConfig;
@@ -92,8 +92,8 @@ public class CollectionDefinition implements Cloneable {
 	protected Integer numberOfItems;
 
 	@Override
-	public CollectionDefinition clone() throws CloneNotSupportedException {
-		return (CollectionDefinition)super.clone();
+	public PageCollectionDefinition clone() throws CloneNotSupportedException {
+		return (PageCollectionDefinition)super.clone();
 	}
 
 	@Override
@@ -102,14 +102,14 @@ public class CollectionDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof CollectionDefinition)) {
+		if (!(object instanceof PageCollectionDefinition)) {
 			return false;
 		}
 
-		CollectionDefinition collectionDefinition =
-			(CollectionDefinition)object;
+		PageCollectionDefinition pageCollectionDefinition =
+			(PageCollectionDefinition)object;
 
-		return Objects.equals(toString(), collectionDefinition.toString());
+		return Objects.equals(toString(), pageCollectionDefinition.toString());
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class CollectionDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return CollectionDefinitionSerDes.toJSON(this);
+		return PageCollectionDefinitionSerDes.toJSON(this);
 	}
 
 }

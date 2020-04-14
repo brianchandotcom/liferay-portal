@@ -32,9 +32,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,26 +39,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ColumnDefinition")
+@GraphQLName("PageRowDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ColumnDefinition")
-public class ColumnDefinition {
+@XmlRootElement(name = "PageRowDefinition")
+public class PageRowDefinition {
 
-	@DecimalMax("12")
-	@DecimalMin("1")
 	@Schema
-	public Integer getSize() {
-		return size;
+	public Boolean getGutters() {
+		return gutters;
 	}
 
-	public void setSize(Integer size) {
-		this.size = size;
+	public void setGutters(Boolean gutters) {
+		this.gutters = gutters;
 	}
 
 	@JsonIgnore
-	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
+	public void setGutters(
+		UnsafeSupplier<Boolean, Exception> guttersUnsafeSupplier) {
+
 		try {
-			size = sizeUnsafeSupplier.get();
+			gutters = guttersUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,7 +70,35 @@ public class ColumnDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer size;
+	protected Boolean gutters;
+
+	@Schema
+	public Integer getNumberOfColumns() {
+		return numberOfColumns;
+	}
+
+	public void setNumberOfColumns(Integer numberOfColumns) {
+		this.numberOfColumns = numberOfColumns;
+	}
+
+	@JsonIgnore
+	public void setNumberOfColumns(
+		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
+
+		try {
+			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer numberOfColumns;
 
 	@Override
 	public boolean equals(Object object) {
@@ -81,13 +106,13 @@ public class ColumnDefinition {
 			return true;
 		}
 
-		if (!(object instanceof ColumnDefinition)) {
+		if (!(object instanceof PageRowDefinition)) {
 			return false;
 		}
 
-		ColumnDefinition columnDefinition = (ColumnDefinition)object;
+		PageRowDefinition pageRowDefinition = (PageRowDefinition)object;
 
-		return Objects.equals(toString(), columnDefinition.toString());
+		return Objects.equals(toString(), pageRowDefinition.toString());
 	}
 
 	@Override
@@ -102,14 +127,24 @@ public class ColumnDefinition {
 
 		sb.append("{");
 
-		if (size != null) {
+		if (gutters != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"size\": ");
+			sb.append("\"gutters\": ");
 
-			sb.append(size);
+			sb.append(gutters);
+		}
+
+		if (numberOfColumns != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfColumns\": ");
+
+			sb.append(numberOfColumns);
 		}
 
 		sb.append("}");
@@ -118,7 +153,7 @@ public class ColumnDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ColumnDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageRowDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

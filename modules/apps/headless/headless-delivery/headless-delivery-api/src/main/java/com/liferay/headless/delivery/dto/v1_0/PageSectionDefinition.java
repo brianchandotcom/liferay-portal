@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,26 +41,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RowDefinition")
+@GraphQLName("PageSectionDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "RowDefinition")
-public class RowDefinition {
+@XmlRootElement(name = "PageSectionDefinition")
+public class PageSectionDefinition {
 
 	@Schema
-	public Boolean getGutters() {
-		return gutters;
+	public String getBackgroundColor() {
+		return backgroundColor;
 	}
 
-	public void setGutters(Boolean gutters) {
-		this.gutters = gutters;
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
 	}
 
 	@JsonIgnore
-	public void setGutters(
-		UnsafeSupplier<Boolean, Exception> guttersUnsafeSupplier) {
+	public void setBackgroundColor(
+		UnsafeSupplier<String, Exception> backgroundColorUnsafeSupplier) {
 
 		try {
-			gutters = guttersUnsafeSupplier.get();
+			backgroundColor = backgroundColorUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -70,23 +72,25 @@ public class RowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean gutters;
+	protected String backgroundColor;
 
 	@Schema
-	public Integer getNumberOfColumns() {
-		return numberOfColumns;
+	@Valid
+	public FragmentImage getBackgroundImage() {
+		return backgroundImage;
 	}
 
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
+	public void setBackgroundImage(FragmentImage backgroundImage) {
+		this.backgroundImage = backgroundImage;
 	}
 
 	@JsonIgnore
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
+	public void setBackgroundImage(
+		UnsafeSupplier<FragmentImage, Exception>
+			backgroundImageUnsafeSupplier) {
 
 		try {
-			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
+			backgroundImage = backgroundImageUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -98,7 +102,36 @@ public class RowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer numberOfColumns;
+	protected FragmentImage backgroundImage;
+
+	@Schema
+	@Valid
+	public Layout getLayout() {
+		return layout;
+	}
+
+	public void setLayout(Layout layout) {
+		this.layout = layout;
+	}
+
+	@JsonIgnore
+	public void setLayout(
+		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
+
+		try {
+			layout = layoutUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Layout layout;
 
 	@Override
 	public boolean equals(Object object) {
@@ -106,13 +139,14 @@ public class RowDefinition {
 			return true;
 		}
 
-		if (!(object instanceof RowDefinition)) {
+		if (!(object instanceof PageSectionDefinition)) {
 			return false;
 		}
 
-		RowDefinition rowDefinition = (RowDefinition)object;
+		PageSectionDefinition pageSectionDefinition =
+			(PageSectionDefinition)object;
 
-		return Objects.equals(toString(), rowDefinition.toString());
+		return Objects.equals(toString(), pageSectionDefinition.toString());
 	}
 
 	@Override
@@ -127,24 +161,38 @@ public class RowDefinition {
 
 		sb.append("{");
 
-		if (gutters != null) {
+		if (backgroundColor != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"gutters\": ");
+			sb.append("\"backgroundColor\": ");
 
-			sb.append(gutters);
+			sb.append("\"");
+
+			sb.append(_escape(backgroundColor));
+
+			sb.append("\"");
 		}
 
-		if (numberOfColumns != null) {
+		if (backgroundImage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"numberOfColumns\": ");
+			sb.append("\"backgroundImage\": ");
 
-			sb.append(numberOfColumns);
+			sb.append(String.valueOf(backgroundImage));
+		}
+
+		if (layout != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"layout\": ");
+
+			sb.append(String.valueOf(layout));
 		}
 
 		sb.append("}");
@@ -153,7 +201,7 @@ public class RowDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RowDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

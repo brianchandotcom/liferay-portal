@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.RowDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class RowDefinitionSerDes {
+public class PageWidgetInstanceDefinitionSerDes {
 
-	public static RowDefinition toDTO(String json) {
-		RowDefinitionJSONParser rowDefinitionJSONParser =
-			new RowDefinitionJSONParser();
+	public static PageWidgetInstanceDefinition toDTO(String json) {
+		PageWidgetInstanceDefinitionJSONParser
+			pageWidgetInstanceDefinitionJSONParser =
+				new PageWidgetInstanceDefinitionJSONParser();
 
-		return rowDefinitionJSONParser.parseToDTO(json);
+		return pageWidgetInstanceDefinitionJSONParser.parseToDTO(json);
 	}
 
-	public static RowDefinition[] toDTOs(String json) {
-		RowDefinitionJSONParser rowDefinitionJSONParser =
-			new RowDefinitionJSONParser();
+	public static PageWidgetInstanceDefinition[] toDTOs(String json) {
+		PageWidgetInstanceDefinitionJSONParser
+			pageWidgetInstanceDefinitionJSONParser =
+				new PageWidgetInstanceDefinitionJSONParser();
 
-		return rowDefinitionJSONParser.parseToDTOs(json);
+		return pageWidgetInstanceDefinitionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(RowDefinition rowDefinition) {
-		if (rowDefinition == null) {
+	public static String toJSON(
+		PageWidgetInstanceDefinition pageWidgetInstanceDefinition) {
+
+		if (pageWidgetInstanceDefinition == null) {
 			return "null";
 		}
 
@@ -55,24 +59,14 @@ public class RowDefinitionSerDes {
 
 		sb.append("{");
 
-		if (rowDefinition.getGutters() != null) {
+		if (pageWidgetInstanceDefinition.getWidget() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"gutters\": ");
+			sb.append("\"widget\": ");
 
-			sb.append(rowDefinition.getGutters());
-		}
-
-		if (rowDefinition.getNumberOfColumns() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"numberOfColumns\": ");
-
-			sb.append(rowDefinition.getNumberOfColumns());
+			sb.append(String.valueOf(pageWidgetInstanceDefinition.getWidget()));
 		}
 
 		sb.append("}");
@@ -81,65 +75,56 @@ public class RowDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		RowDefinitionJSONParser rowDefinitionJSONParser =
-			new RowDefinitionJSONParser();
+		PageWidgetInstanceDefinitionJSONParser
+			pageWidgetInstanceDefinitionJSONParser =
+				new PageWidgetInstanceDefinitionJSONParser();
 
-		return rowDefinitionJSONParser.parseToMap(json);
+		return pageWidgetInstanceDefinitionJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(RowDefinition rowDefinition) {
-		if (rowDefinition == null) {
+	public static Map<String, String> toMap(
+		PageWidgetInstanceDefinition pageWidgetInstanceDefinition) {
+
+		if (pageWidgetInstanceDefinition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (rowDefinition.getGutters() == null) {
-			map.put("gutters", null);
-		}
-		else {
-			map.put("gutters", String.valueOf(rowDefinition.getGutters()));
-		}
-
-		if (rowDefinition.getNumberOfColumns() == null) {
-			map.put("numberOfColumns", null);
+		if (pageWidgetInstanceDefinition.getWidget() == null) {
+			map.put("widget", null);
 		}
 		else {
 			map.put(
-				"numberOfColumns",
-				String.valueOf(rowDefinition.getNumberOfColumns()));
+				"widget",
+				String.valueOf(pageWidgetInstanceDefinition.getWidget()));
 		}
 
 		return map;
 	}
 
-	public static class RowDefinitionJSONParser
-		extends BaseJSONParser<RowDefinition> {
+	public static class PageWidgetInstanceDefinitionJSONParser
+		extends BaseJSONParser<PageWidgetInstanceDefinition> {
 
 		@Override
-		protected RowDefinition createDTO() {
-			return new RowDefinition();
+		protected PageWidgetInstanceDefinition createDTO() {
+			return new PageWidgetInstanceDefinition();
 		}
 
 		@Override
-		protected RowDefinition[] createDTOArray(int size) {
-			return new RowDefinition[size];
+		protected PageWidgetInstanceDefinition[] createDTOArray(int size) {
+			return new PageWidgetInstanceDefinition[size];
 		}
 
 		@Override
 		protected void setField(
-			RowDefinition rowDefinition, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			PageWidgetInstanceDefinition pageWidgetInstanceDefinition,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "gutters")) {
+			if (Objects.equals(jsonParserFieldName, "widget")) {
 				if (jsonParserFieldValue != null) {
-					rowDefinition.setGutters((Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "numberOfColumns")) {
-				if (jsonParserFieldValue != null) {
-					rowDefinition.setNumberOfColumns(
-						Integer.valueOf((String)jsonParserFieldValue));
+					pageWidgetInstanceDefinition.setWidget(
+						WidgetSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

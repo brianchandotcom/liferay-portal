@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.CollectionItemDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.PageSectionDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,26 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CollectionItemDefinitionSerDes {
+public class PageSectionDefinitionSerDes {
 
-	public static CollectionItemDefinition toDTO(String json) {
-		CollectionItemDefinitionJSONParser collectionItemDefinitionJSONParser =
-			new CollectionItemDefinitionJSONParser();
+	public static PageSectionDefinition toDTO(String json) {
+		PageSectionDefinitionJSONParser pageSectionDefinitionJSONParser =
+			new PageSectionDefinitionJSONParser();
 
-		return collectionItemDefinitionJSONParser.parseToDTO(json);
+		return pageSectionDefinitionJSONParser.parseToDTO(json);
 	}
 
-	public static CollectionItemDefinition[] toDTOs(String json) {
-		CollectionItemDefinitionJSONParser collectionItemDefinitionJSONParser =
-			new CollectionItemDefinitionJSONParser();
+	public static PageSectionDefinition[] toDTOs(String json) {
+		PageSectionDefinitionJSONParser pageSectionDefinitionJSONParser =
+			new PageSectionDefinitionJSONParser();
 
-		return collectionItemDefinitionJSONParser.parseToDTOs(json);
+		return pageSectionDefinitionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		CollectionItemDefinition collectionItemDefinition) {
-
-		if (collectionItemDefinition == null) {
+	public static String toJSON(PageSectionDefinition pageSectionDefinition) {
+		if (pageSectionDefinition == null) {
 			return "null";
 		}
 
@@ -57,19 +55,39 @@ public class CollectionItemDefinitionSerDes {
 
 		sb.append("{");
 
-		if (collectionItemDefinition.getCollectionItemConfig() != null) {
+		if (pageSectionDefinition.getBackgroundColor() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collectionItemConfig\": ");
+			sb.append("\"backgroundColor\": ");
 
 			sb.append("\"");
+
+			sb.append(_escape(pageSectionDefinition.getBackgroundColor()));
+
+			sb.append("\"");
+		}
+
+		if (pageSectionDefinition.getBackgroundImage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"backgroundImage\": ");
 
 			sb.append(
-				_escape(collectionItemDefinition.getCollectionItemConfig()));
+				String.valueOf(pageSectionDefinition.getBackgroundImage()));
+		}
 
-			sb.append("\"");
+		if (pageSectionDefinition.getLayout() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"layout\": ");
+
+			sb.append(String.valueOf(pageSectionDefinition.getLayout()));
 		}
 
 		sb.append("}");
@@ -78,56 +96,85 @@ public class CollectionItemDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		CollectionItemDefinitionJSONParser collectionItemDefinitionJSONParser =
-			new CollectionItemDefinitionJSONParser();
+		PageSectionDefinitionJSONParser pageSectionDefinitionJSONParser =
+			new PageSectionDefinitionJSONParser();
 
-		return collectionItemDefinitionJSONParser.parseToMap(json);
+		return pageSectionDefinitionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		CollectionItemDefinition collectionItemDefinition) {
+		PageSectionDefinition pageSectionDefinition) {
 
-		if (collectionItemDefinition == null) {
+		if (pageSectionDefinition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (collectionItemDefinition.getCollectionItemConfig() == null) {
-			map.put("collectionItemConfig", null);
+		if (pageSectionDefinition.getBackgroundColor() == null) {
+			map.put("backgroundColor", null);
 		}
 		else {
 			map.put(
-				"collectionItemConfig",
-				String.valueOf(
-					collectionItemDefinition.getCollectionItemConfig()));
+				"backgroundColor",
+				String.valueOf(pageSectionDefinition.getBackgroundColor()));
+		}
+
+		if (pageSectionDefinition.getBackgroundImage() == null) {
+			map.put("backgroundImage", null);
+		}
+		else {
+			map.put(
+				"backgroundImage",
+				String.valueOf(pageSectionDefinition.getBackgroundImage()));
+		}
+
+		if (pageSectionDefinition.getLayout() == null) {
+			map.put("layout", null);
+		}
+		else {
+			map.put(
+				"layout", String.valueOf(pageSectionDefinition.getLayout()));
 		}
 
 		return map;
 	}
 
-	public static class CollectionItemDefinitionJSONParser
-		extends BaseJSONParser<CollectionItemDefinition> {
+	public static class PageSectionDefinitionJSONParser
+		extends BaseJSONParser<PageSectionDefinition> {
 
 		@Override
-		protected CollectionItemDefinition createDTO() {
-			return new CollectionItemDefinition();
+		protected PageSectionDefinition createDTO() {
+			return new PageSectionDefinition();
 		}
 
 		@Override
-		protected CollectionItemDefinition[] createDTOArray(int size) {
-			return new CollectionItemDefinition[size];
+		protected PageSectionDefinition[] createDTOArray(int size) {
+			return new PageSectionDefinition[size];
 		}
 
 		@Override
 		protected void setField(
-			CollectionItemDefinition collectionItemDefinition,
+			PageSectionDefinition pageSectionDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "collectionItemConfig")) {
+			if (Objects.equals(jsonParserFieldName, "backgroundColor")) {
 				if (jsonParserFieldValue != null) {
-					collectionItemDefinition.setCollectionItemConfig(
-						(Object)jsonParserFieldValue);
+					pageSectionDefinition.setBackgroundColor(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "backgroundImage")) {
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setBackgroundImage(
+						FragmentImageSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "layout")) {
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setLayout(
+						LayoutSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.CollectionItemDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageWidgetInstanceDefinitionSerDes;
 
 import java.util.Objects;
 
@@ -26,32 +26,34 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class CollectionItemDefinition implements Cloneable {
+public class PageWidgetInstanceDefinition implements Cloneable {
 
-	public Object getCollectionItemConfig() {
-		return collectionItemConfig;
+	public Widget getWidget() {
+		return widget;
 	}
 
-	public void setCollectionItemConfig(Object collectionItemConfig) {
-		this.collectionItemConfig = collectionItemConfig;
+	public void setWidget(Widget widget) {
+		this.widget = widget;
 	}
 
-	public void setCollectionItemConfig(
-		UnsafeSupplier<Object, Exception> collectionItemConfigUnsafeSupplier) {
+	public void setWidget(
+		UnsafeSupplier<Widget, Exception> widgetUnsafeSupplier) {
 
 		try {
-			collectionItemConfig = collectionItemConfigUnsafeSupplier.get();
+			widget = widgetUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object collectionItemConfig;
+	protected Widget widget;
 
 	@Override
-	public CollectionItemDefinition clone() throws CloneNotSupportedException {
-		return (CollectionItemDefinition)super.clone();
+	public PageWidgetInstanceDefinition clone()
+		throws CloneNotSupportedException {
+
+		return (PageWidgetInstanceDefinition)super.clone();
 	}
 
 	@Override
@@ -60,14 +62,15 @@ public class CollectionItemDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof CollectionItemDefinition)) {
+		if (!(object instanceof PageWidgetInstanceDefinition)) {
 			return false;
 		}
 
-		CollectionItemDefinition collectionItemDefinition =
-			(CollectionItemDefinition)object;
+		PageWidgetInstanceDefinition pageWidgetInstanceDefinition =
+			(PageWidgetInstanceDefinition)object;
 
-		return Objects.equals(toString(), collectionItemDefinition.toString());
+		return Objects.equals(
+			toString(), pageWidgetInstanceDefinition.toString());
 	}
 
 	@Override
@@ -78,7 +81,7 @@ public class CollectionItemDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return CollectionItemDefinitionSerDes.toJSON(this);
+		return PageWidgetInstanceDefinitionSerDes.toJSON(this);
 	}
 
 }

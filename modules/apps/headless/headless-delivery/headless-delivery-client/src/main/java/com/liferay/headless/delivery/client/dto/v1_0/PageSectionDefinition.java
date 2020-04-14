@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.SectionDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageSectionDefinitionSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SectionDefinition implements Cloneable {
+public class PageSectionDefinition implements Cloneable {
 
 	public String getBackgroundColor() {
 		return backgroundColor;
@@ -93,8 +93,8 @@ public class SectionDefinition implements Cloneable {
 	protected Layout layout;
 
 	@Override
-	public SectionDefinition clone() throws CloneNotSupportedException {
-		return (SectionDefinition)super.clone();
+	public PageSectionDefinition clone() throws CloneNotSupportedException {
+		return (PageSectionDefinition)super.clone();
 	}
 
 	@Override
@@ -103,13 +103,14 @@ public class SectionDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof SectionDefinition)) {
+		if (!(object instanceof PageSectionDefinition)) {
 			return false;
 		}
 
-		SectionDefinition sectionDefinition = (SectionDefinition)object;
+		PageSectionDefinition pageSectionDefinition =
+			(PageSectionDefinition)object;
 
-		return Objects.equals(toString(), sectionDefinition.toString());
+		return Objects.equals(toString(), pageSectionDefinition.toString());
 	}
 
 	@Override
@@ -120,7 +121,7 @@ public class SectionDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return SectionDefinitionSerDes.toJSON(this);
+		return PageSectionDefinitionSerDes.toJSON(this);
 	}
 
 }

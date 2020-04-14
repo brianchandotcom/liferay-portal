@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.FragmentInstanceDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageFragmentInstanceDefinitionSerDes;
 
 import java.util.Map;
 import java.util.Objects;
@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FragmentInstanceDefinition implements Cloneable {
+public class PageFragmentInstanceDefinition implements Cloneable {
 
 	public Fragment getFragment() {
 		return fragment;
@@ -95,10 +95,10 @@ public class FragmentInstanceDefinition implements Cloneable {
 	protected FragmentField[] fragmentFields;
 
 	@Override
-	public FragmentInstanceDefinition clone()
+	public PageFragmentInstanceDefinition clone()
 		throws CloneNotSupportedException {
 
-		return (FragmentInstanceDefinition)super.clone();
+		return (PageFragmentInstanceDefinition)super.clone();
 	}
 
 	@Override
@@ -107,15 +107,15 @@ public class FragmentInstanceDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentInstanceDefinition)) {
+		if (!(object instanceof PageFragmentInstanceDefinition)) {
 			return false;
 		}
 
-		FragmentInstanceDefinition fragmentInstanceDefinition =
-			(FragmentInstanceDefinition)object;
+		PageFragmentInstanceDefinition pageFragmentInstanceDefinition =
+			(PageFragmentInstanceDefinition)object;
 
 		return Objects.equals(
-			toString(), fragmentInstanceDefinition.toString());
+			toString(), pageFragmentInstanceDefinition.toString());
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class FragmentInstanceDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return FragmentInstanceDefinitionSerDes.toJSON(this);
+		return PageFragmentInstanceDefinitionSerDes.toJSON(this);
 	}
 
 }

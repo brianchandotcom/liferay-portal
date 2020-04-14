@@ -135,7 +135,7 @@ public class DDMFormInstanceRecordUADDisplay
 				ddmFormInstanceRecord.getFormInstance();
 
 			String ddmFormInstanceName =
-				_ddmUADHelper.getDDMFormInstanceFormattedName(ddmFormInstance);
+				_ddmUADHelper.getFormattedName(ddmFormInstance);
 
 			sb.append(ddmFormInstanceName);
 

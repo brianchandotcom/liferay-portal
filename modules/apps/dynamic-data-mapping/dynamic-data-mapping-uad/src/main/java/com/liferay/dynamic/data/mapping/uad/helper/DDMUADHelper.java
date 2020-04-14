@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.uad.helper;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.dynamic.data.mapping.uad.constants.DDMFormInstanceUADConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
@@ -49,10 +48,7 @@ public class DDMUADHelper {
 		if (createdDate != null) {
 			fieldValues.put(
 				"createDate",
-				Time.getSimpleDate(
-					createdDate,
-					DDMFormInstanceUADConstants.
-						DEFAULT_DDM_FORM_INSTANCE_DATE_FORMAT));
+				Time.getSimpleDate(createdDate, "MMM dd yyyy 'at' HH:mm"));
 		}
 	}
 

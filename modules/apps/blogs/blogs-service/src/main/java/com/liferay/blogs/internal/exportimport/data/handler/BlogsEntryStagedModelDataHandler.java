@@ -255,7 +255,9 @@ public class BlogsEntryStagedModelDataHandler
 
 		BlogsEntry importedEntry = null;
 
-		if (existingEntry == null) {
+		if ((existingEntry == null) ||
+			!portletDataContext.isDataStrategyMirror()) {
+
 			importedEntry = _blogsEntryLocalService.addEntry(
 				userId, entry.getTitle(), entry.getSubtitle(),
 				entry.getDescription(), entry.getContent(),

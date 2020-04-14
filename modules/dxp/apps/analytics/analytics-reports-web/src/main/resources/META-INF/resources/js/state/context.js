@@ -12,12 +12,12 @@
 import PropTypes from 'prop-types';
 import {createContext} from 'react';
 
-const StateContext = createContext({
+const ConnectionContext = createContext({
 	validAnalyticsConnection: true,
 });
 
-StateContext.Provider.propTypes = {
+ConnectionContext.Provider.propTypes = {
 	validAnalyticsConnection: PropTypes.bool.isRequired,
 };
 
-export default StateContext;
+export default ConnectionContext;

@@ -25,7 +25,7 @@ import {
 	YAxis,
 } from 'recharts';
 
-import StateContext from '../state/context';
+import ConnectionContext from '../state/context';
 import {useChartState} from '../utils/chartState';
 import {numberFormat} from '../utils/numberFormat';
 import {ActiveDot as CustomActiveDot, Dot as CustomDot} from './CustomDots';
@@ -224,7 +224,7 @@ export default function Chart({
 	publishDate,
 	timeSpanOptions,
 }) {
-	const {validAnalyticsConnection} = useContext(StateContext);
+	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const {actions, state: chartState} = useChartState({
 		defaultTimeSpanOption,

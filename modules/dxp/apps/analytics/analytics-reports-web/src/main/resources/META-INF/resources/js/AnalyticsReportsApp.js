@@ -14,7 +14,7 @@ import React, {useContext, useState} from 'react';
 
 import Detail from './components/Detail';
 import Main from './components/Main';
-import StateContext from './state/context';
+import ConnectionContext from './state/context';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
 
@@ -44,7 +44,7 @@ export default function({context, props}) {
 	});
 
 	return (
-		<StateContext.Provider
+		<ConnectionContext.Provider
 			value={{
 				validAnalyticsConnection,
 			}}
@@ -59,7 +59,7 @@ export default function({context, props}) {
 				timeSpanOptions={timeSpans}
 				trafficSources={trafficSources}
 			/>
-		</StateContext.Provider>
+		</ConnectionContext.Provider>
 	);
 }
 
@@ -77,7 +77,7 @@ function Navigation({
 
 	const [trafficSourceName, setTrafficSourceName] = useState('');
 
-	const {validAnalyticsConnection} = useContext(StateContext);
+	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const {getHistoricalReads, getHistoricalViews} = api;
 

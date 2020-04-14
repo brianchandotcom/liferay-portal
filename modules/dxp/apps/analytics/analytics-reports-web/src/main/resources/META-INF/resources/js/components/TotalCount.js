@@ -13,7 +13,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import StateContext from '../state/context';
+import ConnectionContext from '../state/context';
 import Hint from './Hint';
 
 function TotalCount({
@@ -26,7 +26,7 @@ function TotalCount({
 	popoverMessage,
 	popoverPosition,
 }) {
-	const {validAnalyticsConnection} = useContext(StateContext);
+	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const [value, setValue] = useState('-');
 	const isMounted = useIsMounted();

@@ -15,7 +15,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import StateContext from '../state/context';
+import ConnectionContext from '../state/context';
 
 export default function TimeSpanSelector({
 	disabledNextTimeSpan,
@@ -26,7 +26,7 @@ export default function TimeSpanSelector({
 	timeSpanOption,
 	timeSpanOptions,
 }) {
-	const {validAnalyticsConnection} = useContext(StateContext);
+	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	return (
 		<div className="d-flex mb-3 mt-3">

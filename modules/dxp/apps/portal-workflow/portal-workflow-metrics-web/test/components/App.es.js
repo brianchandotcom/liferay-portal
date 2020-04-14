@@ -18,18 +18,22 @@ import '@testing-library/jest-dom/extend-expect';
 
 const processItems = [
 	{
-		id: 1,
 		instancesCount: 5,
-		title: 'Single Approver',
+		process: {
+			id: 1,
+			title: 'Single Approver',
+		},
 	},
 ];
 
 const pending = {
-	id: 1,
 	instanceCount: 0,
 	onTimeInstanceCount: 0,
 	overdueInstanceCount: 0,
-	title: 'Single Approver',
+	process: {
+		id: 1,
+		title: 'Single Approver',
+	},
 	untrackedInstanceCount: 0,
 };
 

@@ -21,8 +21,7 @@ const items = [
 		breachedInstanceCount: 4,
 		durationAvg: 10800000,
 		instanceCount: 4,
-		key: 'review',
-		name: 'Review',
+		node: {key: 'review', label: 'Review', name: 'Review'},
 		onTimeInstanceCount: 4,
 		overdueInstanceCount: 4,
 	},
@@ -30,8 +29,7 @@ const items = [
 		breachedInstanceCount: 2,
 		durationAvg: 475200000,
 		instanceCount: 2,
-		key: 'update',
-		name: 'Update',
+		node: {key: 'update', label: 'Update', name: 'Update'},
 		onTimeInstanceCount: 2,
 		overdueInstanceCount: 2,
 	},
@@ -54,8 +52,7 @@ describe('The performance by step page body should', () => {
 		const renderResult = render(
 			<PerformanceByStepPage.Body
 				{...{items, totalCount: items.length}}
-				page="1"
-				pageSize="5"
+				filtered={false}
 			/>,
 			{wrapper}
 		);

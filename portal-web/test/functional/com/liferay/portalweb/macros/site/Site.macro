@@ -363,6 +363,8 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
 		if (isSet(userMiddleName)) {
 			LexiconCard.checkCardCheckbox(card = "${userFirstName} ${userMiddleName} ${userLastName}");
 		}

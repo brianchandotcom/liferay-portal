@@ -71,9 +71,9 @@ public class CaptchaTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String url = themeDisplay.getPathMain() + "/portal/captcha/get_image";
-
 		String portletId = PortalUtil.getPortletId(httpServletRequest);
+
+		String url = themeDisplay.getPathMain() + "/portal/captcha/get_image";
 
 		if (Validator.isNotNull(portletId)) {
 			url += "?portletId=" + portletId;

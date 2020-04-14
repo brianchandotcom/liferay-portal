@@ -147,8 +147,7 @@ public class DDMFormInstanceRecordUADDisplay
 			sb.append(StringPool.SPACE);
 			sb.append(StringPool.POUND);
 
-			int ddmFormInstanceRecordIndex = _getDDMFormInstanceRecordIndex(
-				ddmFormInstanceRecord);
+			int ddmFormInstanceRecordIndex = _getIndex(ddmFormInstanceRecord);
 
 			sb.append(ddmFormInstanceRecordIndex + 1);
 
@@ -227,9 +226,7 @@ public class DDMFormInstanceRecordUADDisplay
 			WebKeys.THEME_DISPLAY);
 	}
 
-	private int _getDDMFormInstanceRecordIndex(
-		DDMFormInstanceRecord ddmFormInstanceRecord) {
-
+	private int _getIndex(DDMFormInstanceRecord ddmFormInstanceRecord) {
 		List<DDMFormInstanceRecord> ddmFormInstanceRecords =
 			_getDDMFormInstanceRecords(
 				ddmFormInstanceRecord.getFormInstanceId(),

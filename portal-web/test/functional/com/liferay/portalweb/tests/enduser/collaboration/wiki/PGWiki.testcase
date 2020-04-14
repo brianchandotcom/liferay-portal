@@ -73,11 +73,13 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "This page is empty. Edit it to add some text.");
 
-		WikiEntry.selectPageFormat(pageFormat = "HTML");
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		WikiEntry.confirmHTML();
+		Type(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = '''<!DOCTYPE html> <html lang="en"> <body> <h1>My First Heading</h1> <p>My first paragraph.</p> </body> </html>''');
 
-		CKEditor.addContent(content = '''<!DOCTYPE html> <html lang="en"> <body> <h1>My First Heading</h1> <p>My first paragraph.</p> </body> </html>''');
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 
@@ -110,7 +112,13 @@ definition {
 			locator1 = "Link#EDIT",
 			value1 = "Edit");
 
-		CKEditor.addContent(content = '''<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>''');
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+		Type(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = '''<!DOCTYPE html> <html lang="en"> <body> <h1>Edited My First Heading</h1> <p>Edited My first paragraph.</p> </body> </html>''');
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 
@@ -140,13 +148,15 @@ definition {
 			locator1 = "Link#ADD_CHILD_PAGE",
 			value1 = "Add Child Page");
 
-		WikiEntry.selectPageFormat(pageFormat = "HTML");
-
-		WikiEntry.confirmHTML();
-
 		WikiEntry.addPageTitle(wikiPageTitle = "Wiki FrontPage Child Page Title");
 
-		AlloyEditor.addSourceContent(content = "${welcomeToLiferay}");
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+		Type(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = "${welcomeToLiferay}");
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 
@@ -269,13 +279,15 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "This page is empty. Edit it to add some text.");
 
-		WikiEntry.selectPageFormat(pageFormat = "HTML");
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		WikiEntry.confirmHTML();
-
-		AlloyEditor.addSourceContent(content = '''
+		Type(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = '''
 				<p id="demo">PASS</p><script type="text/javascript">document.getElementById('demo').innerHTML="this code should not be read by the client";</script>
 			''');
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 
@@ -460,13 +472,15 @@ definition {
 
 		WikiNavigator.gotoAddPageViaPG();
 
-		WikiEntry.selectPageFormat(pageFormat = "HTML");
-
-		WikiEntry.confirmHTML();
-
 		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
 
-		AlloyEditor.addSourceContent(content = "${welcomeToLiferay}");
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+		Type(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+			value1 = "${welcomeToLiferay}");
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 

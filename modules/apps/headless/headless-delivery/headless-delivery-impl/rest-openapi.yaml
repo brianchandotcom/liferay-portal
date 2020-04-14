@@ -6684,10 +6684,11 @@ paths:
                         ""
             tags: ["NavigationMenu"]
     "/sites/{siteId}/page-definitions/preview":
+        # @review
         post:
             description:
                 Renders and retreives HTML for the page definition using the theme of specified site.
-            operationId: generatePageDefinitionPreview
+            operationId: postSitePageDefinitionPreview
             parameters:
                 - in: path
                   name: siteId

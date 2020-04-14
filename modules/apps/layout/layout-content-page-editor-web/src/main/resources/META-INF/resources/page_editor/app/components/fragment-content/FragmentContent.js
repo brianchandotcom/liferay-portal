@@ -33,19 +33,16 @@ import {
 	useEditableProcessorUniqueId,
 	useSetEditableProcessorUniqueId,
 } from './EditableProcessorContext';
-import FragmentContentDecoration from './FragmentContentDecoration';
 import FragmentContentFloatingToolbar from './FragmentContentFloatingToolbar';
 import FragmentContentInteractionsFilter from './FragmentContentInteractionsFilter';
 import FragmentContentProcessor from './FragmentContentProcessor';
 import getAllEditables from './getAllEditables';
-import getEditableElementId from './getEditableElementId';
 import getEditableUniqueId from './getEditableUniqueId';
 import resolveEditableValue from './resolveEditableValue';
 
 const FragmentContent = React.forwardRef(
 	({fragmentEntryLinkId, itemId}, ref) => {
 		const dispatch = useDispatch();
-		const element = ref.current;
 		const isMounted = useIsMounted();
 		const editableProcessorUniqueId = useEditableProcessorUniqueId();
 		const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
@@ -236,16 +233,6 @@ const FragmentContent = React.forwardRef(
 					editables={editables}
 					fragmentEntryLinkId={fragmentEntryLinkId}
 				/>
-
-				{editableElements.map(editableElement => (
-					<FragmentContentDecoration
-						editableElement={editableElement}
-						element={element}
-						fragmentEntryLinkId={fragmentEntryLinkId}
-						itemId={itemId}
-						key={getEditableElementId(editableElement)}
-					/>
-				))}
 			</>
 		);
 	}

@@ -20,7 +20,6 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 
 import {ControlsProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/Controls';
-import {EditableDecorationProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/EditableDecorationContext';
 import {EditableProcessorContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/EditableProcessorContext';
 import FragmentContent from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/FragmentContent';
 import resolveEditableValue from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/resolveEditableValue';
@@ -115,13 +114,11 @@ const renderFragmentContent = fragmentEntryLink => {
 		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
 			<EditableProcessorContextProvider>
 				<ControlsProvider>
-					<EditableDecorationProvider>
-						<FragmentContent
-							fragmentEntryLinkId={FRAGMENT_ENTRY_LINK_ID}
-							itemId={item.itemId}
-							ref={ref}
-						/>
-					</EditableDecorationProvider>
+					<FragmentContent
+						fragmentEntryLinkId={FRAGMENT_ENTRY_LINK_ID}
+						itemId={item.itemId}
+						ref={ref}
+					/>
 				</ControlsProvider>
 			</EditableProcessorContextProvider>
 		</StoreAPIContextProvider>

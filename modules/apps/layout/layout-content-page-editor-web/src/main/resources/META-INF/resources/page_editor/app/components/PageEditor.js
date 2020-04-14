@@ -42,7 +42,6 @@ import {
 	useSelectItem,
 } from './Controls';
 import DragPreview from './DragPreview';
-import {EditableDecorationProvider} from './fragment-content/EditableDecorationContext';
 import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
 import FragmentWithControls from './layout-data-items/FragmentWithControls';
 import {
@@ -228,15 +227,13 @@ export default function PageEditor({mainItemId, withinMasterPage = false}) {
 				<DragPreview />
 
 				<EditableProcessorContextProvider>
-					<EditableDecorationProvider>
-						<DragAndDropContextProvider>
-							<LayoutDataItem
-								fragmentEntryLinks={fragmentEntryLinks}
-								item={mainItem}
-								layoutData={layoutData}
-							/>
-						</DragAndDropContextProvider>
-					</EditableDecorationProvider>
+					<DragAndDropContextProvider>
+						<LayoutDataItem
+							fragmentEntryLinks={fragmentEntryLinks}
+							item={mainItem}
+							layoutData={layoutData}
+						/>
+					</DragAndDropContextProvider>
 				</EditableProcessorContextProvider>
 			</div>
 		</>

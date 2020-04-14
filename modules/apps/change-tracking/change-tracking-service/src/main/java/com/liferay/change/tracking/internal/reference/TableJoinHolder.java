@@ -41,16 +41,8 @@ public class TableJoinHolder {
 		return _joinPKColumn;
 	}
 
-	public Column<?, Long> getFromPKColumn() {
-		return _fromPKColumn;
-	}
-
 	public Function<FromStep, JoinStep> getJoinFunction() {
 		return _joinFunction;
-	}
-
-	public Column<?, Long> getJoinPKColumn() {
-		return _joinPKColumn;
 	}
 
 	public Column<?, Long> getParentPKColumn() {

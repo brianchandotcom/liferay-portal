@@ -52,41 +52,34 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 	public void portalInstanceRegistered(Company company) throws Exception {
 		User defaultUser = company.getDefaultUser();
 
-		if (!_exists(AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_USER)) {
+		if (!_exists(AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
 			AccountRole accountRole = _addAccountRole(
 				defaultUser.getUserId(),
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_USER);
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER);
 
 			_addResourcePermissions(
-				accountRole.getRoleId(), _accountUserResourceActionsMap);
-		}
-
-		if (!_exists(
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER)) {
-
-			AccountRole accountRole = _addAccountRole(
-				defaultUser.getUserId(),
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER);
-
-			_addResourcePermissions(
-				accountRole.getRoleId(), _accountUserResourceActionsMap);
-			_addResourcePermissions(
-				accountRole.getRoleId(), _accountPowerUserResourceActionsMap);
-		}
-
-		if (!_exists(AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_OWNER)) {
-			_addRole(
-				defaultUser.getUserId(),
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_OWNER);
+				accountRole.getRoleId(), _accountMemberResourceActionsMap);
 		}
 
 		if (!_exists(
 				AccountRoleConstants.
 					REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR)) {
 
-			_addRole(
+			AccountRole accountRole = _addAccountRole(
 				defaultUser.getUserId(),
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+
+			_addResourcePermissions(
+				accountRole.getRoleId(), _accountMemberResourceActionsMap);
+			_addResourcePermissions(
+				accountRole.getRoleId(),
+				_accountAdministratorResourceActionsMap);
+		}
+
+		if (!_exists(AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER)) {
+			_addRole(
+				defaultUser.getUserId(),
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
 		}
 	}
 
@@ -151,15 +144,15 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 	}
 
 	private static final Map<String, String[]>
-		_accountPowerUserResourceActionsMap = HashMapBuilder.put(
+		_accountAdministratorResourceActionsMap = HashMapBuilder.put(
 			AccountConstants.RESOURCE_NAME,
 			new String[] {AccountActionKeys.ADD_ACCOUNT_ENTRY}
 		).put(
 			AccountEntry.class.getName(),
 			new String[] {ActionKeys.UPDATE, ActionKeys.MANAGE_USERS}
 		).build();
-	private static final Map<String, String[]> _accountUserResourceActionsMap =
-		HashMapBuilder.put(
+	private static final Map<String, String[]>
+		_accountMemberResourceActionsMap = HashMapBuilder.put(
 			AccountEntry.class.getName(), new String[] {ActionKeys.VIEW}
 		).build();
 

@@ -16,11 +16,10 @@ import ListHeadItem from '../../shared/components/list/ListHeadItem.es';
 import ChildLink from '../../shared/components/router/ChildLink.es';
 
 const Item = ({
-	id,
 	instanceCount,
 	onTimeInstanceCount,
 	overdueInstanceCount,
-	title,
+	process: {id, title},
 }) => {
 	return (
 		<ClayTable.Row>

@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Histogram;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Metric;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.HistogramMetric;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -32,22 +32,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MetricSerDes {
+public class HistogramMetricSerDes {
 
-	public static Metric toDTO(String json) {
-		MetricJSONParser metricJSONParser = new MetricJSONParser();
+	public static HistogramMetric toDTO(String json) {
+		HistogramMetricJSONParser histogramMetricJSONParser =
+			new HistogramMetricJSONParser();
 
-		return metricJSONParser.parseToDTO(json);
+		return histogramMetricJSONParser.parseToDTO(json);
 	}
 
-	public static Metric[] toDTOs(String json) {
-		MetricJSONParser metricJSONParser = new MetricJSONParser();
+	public static HistogramMetric[] toDTOs(String json) {
+		HistogramMetricJSONParser histogramMetricJSONParser =
+			new HistogramMetricJSONParser();
 
-		return metricJSONParser.parseToDTOs(json);
+		return histogramMetricJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Metric metric) {
-		if (metric == null) {
+	public static String toJSON(HistogramMetric histogramMetric) {
+		if (histogramMetric == null) {
 			return "null";
 		}
 
@@ -55,7 +57,7 @@ public class MetricSerDes {
 
 		sb.append("{");
 
-		if (metric.getHistograms() != null) {
+		if (histogramMetric.getHistograms() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -64,10 +66,10 @@ public class MetricSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < metric.getHistograms().length; i++) {
-				sb.append(String.valueOf(metric.getHistograms()[i]));
+			for (int i = 0; i < histogramMetric.getHistograms().length; i++) {
+				sb.append(String.valueOf(histogramMetric.getHistograms()[i]));
 
-				if ((i + 1) < metric.getHistograms().length) {
+				if ((i + 1) < histogramMetric.getHistograms().length) {
 					sb.append(", ");
 				}
 			}
@@ -75,7 +77,7 @@ public class MetricSerDes {
 			sb.append("]");
 		}
 
-		if (metric.getUnit() != null) {
+		if (histogramMetric.getUnit() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -84,19 +86,19 @@ public class MetricSerDes {
 
 			sb.append("\"");
 
-			sb.append(metric.getUnit());
+			sb.append(histogramMetric.getUnit());
 
 			sb.append("\"");
 		}
 
-		if (metric.getValue() != null) {
+		if (histogramMetric.getValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"value\": ");
 
-			sb.append(metric.getValue());
+			sb.append(histogramMetric.getValue());
 		}
 
 		sb.append("}");
@@ -105,62 +107,65 @@ public class MetricSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		MetricJSONParser metricJSONParser = new MetricJSONParser();
+		HistogramMetricJSONParser histogramMetricJSONParser =
+			new HistogramMetricJSONParser();
 
-		return metricJSONParser.parseToMap(json);
+		return histogramMetricJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Metric metric) {
-		if (metric == null) {
+	public static Map<String, String> toMap(HistogramMetric histogramMetric) {
+		if (histogramMetric == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (metric.getHistograms() == null) {
+		if (histogramMetric.getHistograms() == null) {
 			map.put("histograms", null);
 		}
 		else {
-			map.put("histograms", String.valueOf(metric.getHistograms()));
+			map.put(
+				"histograms", String.valueOf(histogramMetric.getHistograms()));
 		}
 
-		if (metric.getUnit() == null) {
+		if (histogramMetric.getUnit() == null) {
 			map.put("unit", null);
 		}
 		else {
-			map.put("unit", String.valueOf(metric.getUnit()));
+			map.put("unit", String.valueOf(histogramMetric.getUnit()));
 		}
 
-		if (metric.getValue() == null) {
+		if (histogramMetric.getValue() == null) {
 			map.put("value", null);
 		}
 		else {
-			map.put("value", String.valueOf(metric.getValue()));
+			map.put("value", String.valueOf(histogramMetric.getValue()));
 		}
 
 		return map;
 	}
 
-	public static class MetricJSONParser extends BaseJSONParser<Metric> {
+	public static class HistogramMetricJSONParser
+		extends BaseJSONParser<HistogramMetric> {
 
 		@Override
-		protected Metric createDTO() {
-			return new Metric();
+		protected HistogramMetric createDTO() {
+			return new HistogramMetric();
 		}
 
 		@Override
-		protected Metric[] createDTOArray(int size) {
-			return new Metric[size];
+		protected HistogramMetric[] createDTOArray(int size) {
+			return new HistogramMetric[size];
 		}
 
 		@Override
 		protected void setField(
-			Metric metric, String jsonParserFieldName,
+			HistogramMetric histogramMetric, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "histograms")) {
 				if (jsonParserFieldValue != null) {
-					metric.setHistograms(
+					histogramMetric.setHistograms(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -172,13 +177,14 @@ public class MetricSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "unit")) {
 				if (jsonParserFieldValue != null) {
-					metric.setUnit(
-						Metric.Unit.create((String)jsonParserFieldValue));
+					histogramMetric.setUnit(
+						HistogramMetric.Unit.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "value")) {
 				if (jsonParserFieldValue != null) {
-					metric.setValue(
+					histogramMetric.setValue(
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}

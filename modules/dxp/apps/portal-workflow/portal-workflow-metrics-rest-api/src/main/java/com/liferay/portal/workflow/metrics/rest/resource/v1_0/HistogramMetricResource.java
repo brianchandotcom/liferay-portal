@@ -15,9 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.HistogramMetric;
 
 import java.util.Date;
 import java.util.Locale;
@@ -27,7 +25,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,37 +39,14 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface InstanceResource {
+public interface HistogramMetricResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Instance> getProcessInstancesPage(
-			Long processId, Long[] assigneeIds, Date dateEnd, Date dateStart,
-			String[] slaStatuses, String[] statuses, String[] taskKeys,
-			Pagination pagination)
-		throws Exception;
-
-	public Instance postProcessInstance(Long processId, Instance instance)
-		throws Exception;
-
-	public Response postProcessInstanceBatch(
-			Long processId, String callbackURL, Object object)
-		throws Exception;
-
-	public void deleteProcessInstance(Long processId, Long instanceId)
-		throws Exception;
-
-	public Instance getProcessInstance(Long processId, Long instanceId)
-		throws Exception;
-
-	public void patchProcessInstance(
-			Long processId, Long instanceId, Instance instance)
-		throws Exception;
-
-	public void patchProcessInstanceComplete(
-			Long processId, Long instanceId, Instance instance)
+	public HistogramMetric getProcessHistogramMetric(
+			Long processId, Date dateEnd, Date dateStart, String unit)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -105,7 +79,7 @@ public interface InstanceResource {
 	@ProviderType
 	public interface Builder {
 
-		public InstanceResource build();
+		public HistogramMetricResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

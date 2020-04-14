@@ -14,9 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Metric;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.ProcessMetric;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.problem.Problem;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.ProcessMetricSerDes;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,20 +37,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface MetricResource {
+public interface ProcessMetricResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Metric getProcessMetric(
-			Long processId, java.util.Date dateEnd, java.util.Date dateStart,
-			String unit)
+	public Page<ProcessMetric> getProcessMetricsPage(
+			String title, Pagination pagination, String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getProcessMetricsPageHttpResponse(
+			String title, Pagination pagination, String sortString)
+		throws Exception;
+
+	public ProcessMetric getProcessMetric(
+			Long processId, Boolean completed, java.util.Date dateEnd,
+			java.util.Date dateStart)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessMetricHttpResponse(
-			Long processId, java.util.Date dateEnd, java.util.Date dateStart,
-			String unit)
+			Long processId, Boolean completed, java.util.Date dateEnd,
+			java.util.Date dateStart)
 		throws Exception;
 
 	public static class Builder {
@@ -59,8 +70,8 @@ public interface MetricResource {
 			return this;
 		}
 
-		public MetricResource build() {
-			return new MetricResourceImpl(this);
+		public ProcessMetricResource build() {
+			return new ProcessMetricResourceImpl(this);
 		}
 
 		public Builder endpoint(String host, int port, String scheme) {
@@ -103,16 +114,16 @@ public interface MetricResource {
 
 	}
 
-	public static class MetricResourceImpl implements MetricResource {
+	public static class ProcessMetricResourceImpl
+		implements ProcessMetricResource {
 
-		public Metric getProcessMetric(
-				Long processId, java.util.Date dateEnd,
-				java.util.Date dateStart, String unit)
+		public Page<ProcessMetric> getProcessMetricsPage(
+				String title, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProcessMetricHttpResponse(
-					processId, dateEnd, dateStart, unit);
+				getProcessMetricsPageHttpResponse(
+					title, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -123,8 +134,87 @@ public interface MetricResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return com.liferay.portal.workflow.metrics.rest.client.serdes.
-					v1_0.MetricSerDes.toDTO(content);
+				return Page.of(content, ProcessMetricSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getProcessMetricsPageHttpResponse(
+				String title, Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (title != null) {
+				httpInvoker.parameter("title", String.valueOf(title));
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/portal-workflow-metrics/v1.0/processes/metrics");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ProcessMetric getProcessMetric(
+				Long processId, Boolean completed, java.util.Date dateEnd,
+				java.util.Date dateStart)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getProcessMetricHttpResponse(
+					processId, completed, dateEnd, dateStart);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProcessMetricSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -136,8 +226,8 @@ public interface MetricResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessMetricHttpResponse(
-				Long processId, java.util.Date dateEnd,
-				java.util.Date dateStart, String unit)
+				Long processId, Boolean completed, java.util.Date dateEnd,
+				java.util.Date dateStart)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -164,6 +254,10 @@ public interface MetricResource {
 			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+			if (completed != null) {
+				httpInvoker.parameter("completed", String.valueOf(completed));
+			}
+
 			if (dateEnd != null) {
 				httpInvoker.parameter(
 					"dateEnd", liferayToJSONDateFormat.format(dateEnd));
@@ -172,10 +266,6 @@ public interface MetricResource {
 			if (dateStart != null) {
 				httpInvoker.parameter(
 					"dateStart", liferayToJSONDateFormat.format(dateStart));
-			}
-
-			if (unit != null) {
-				httpInvoker.parameter("unit", String.valueOf(unit));
 			}
 
 			httpInvoker.path(
@@ -190,12 +280,12 @@ public interface MetricResource {
 			return httpInvoker.invoke();
 		}
 
-		private MetricResourceImpl(Builder builder) {
+		private ProcessMetricResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			MetricResource.class.getName());
+			ProcessMetricResource.class.getName());
 
 		private Builder _builder;
 

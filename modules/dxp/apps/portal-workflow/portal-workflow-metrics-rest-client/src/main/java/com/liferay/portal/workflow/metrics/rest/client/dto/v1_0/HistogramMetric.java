@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.client.dto.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
-import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.MetricSerDes;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.HistogramMetricSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Metric implements Cloneable {
+public class HistogramMetric implements Cloneable {
 
 	public static enum Unit {
 
@@ -130,8 +130,8 @@ public class Metric implements Cloneable {
 	protected Double value;
 
 	@Override
-	public Metric clone() throws CloneNotSupportedException {
-		return (Metric)super.clone();
+	public HistogramMetric clone() throws CloneNotSupportedException {
+		return (HistogramMetric)super.clone();
 	}
 
 	@Override
@@ -140,13 +140,13 @@ public class Metric implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof Metric)) {
+		if (!(object instanceof HistogramMetric)) {
 			return false;
 		}
 
-		Metric metric = (Metric)object;
+		HistogramMetric histogramMetric = (HistogramMetric)object;
 
-		return Objects.equals(toString(), metric.toString());
+		return Objects.equals(toString(), histogramMetric.toString());
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class Metric implements Cloneable {
 	}
 
 	public String toString() {
-		return MetricSerDes.toJSON(this);
+		return HistogramMetricSerDes.toJSON(this);
 	}
 
 }

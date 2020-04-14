@@ -26,10 +26,18 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetricBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
 
 import java.util.function.BiFunction;
 
@@ -66,12 +74,44 @@ public class Mutation {
 			assigneeMetricResourceComponentServiceObjects;
 	}
 
+	public static void setInstanceResourceComponentServiceObjects(
+		ComponentServiceObjects<InstanceResource>
+			instanceResourceComponentServiceObjects) {
+
+		_instanceResourceComponentServiceObjects =
+			instanceResourceComponentServiceObjects;
+	}
+
+	public static void setNodeResourceComponentServiceObjects(
+		ComponentServiceObjects<NodeResource>
+			nodeResourceComponentServiceObjects) {
+
+		_nodeResourceComponentServiceObjects =
+			nodeResourceComponentServiceObjects;
+	}
+
+	public static void setProcessResourceComponentServiceObjects(
+		ComponentServiceObjects<ProcessResource>
+			processResourceComponentServiceObjects) {
+
+		_processResourceComponentServiceObjects =
+			processResourceComponentServiceObjects;
+	}
+
 	public static void setSLAResourceComponentServiceObjects(
 		ComponentServiceObjects<SLAResource>
 			slaResourceComponentServiceObjects) {
 
 		_slaResourceComponentServiceObjects =
 			slaResourceComponentServiceObjects;
+	}
+
+	public static void setTaskResourceComponentServiceObjects(
+		ComponentServiceObjects<TaskResource>
+			taskResourceComponentServiceObjects) {
+
+		_taskResourceComponentServiceObjects =
+			taskResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -116,6 +156,195 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
+	}
+
+	@GraphQLField
+	public Instance createProcessInstance(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("instance") Instance instance)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_instanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			instanceResource -> instanceResource.postProcessInstance(
+				processId, instance));
+	}
+
+	@GraphQLField
+	public Response createProcessInstanceBatch(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_instanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			instanceResource -> instanceResource.postProcessInstanceBatch(
+				processId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteProcessInstance(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("instanceId") Long instanceId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_instanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			instanceResource -> instanceResource.deleteProcessInstance(
+				processId, instanceId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean patchProcessInstance(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("instanceId") Long instanceId,
+			@GraphQLName("instance") Instance instance)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_instanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			instanceResource -> instanceResource.patchProcessInstance(
+				processId, instanceId, instance));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean patchProcessInstanceComplete(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("instanceId") Long instanceId,
+			@GraphQLName("instance") Instance instance)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_instanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			instanceResource -> instanceResource.patchProcessInstanceComplete(
+				processId, instanceId, instance));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Node createProcessNode(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("node") Node node)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_nodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			nodeResource -> nodeResource.postProcessNode(processId, node));
+	}
+
+	@GraphQLField
+	public Response createProcessNodeBatch(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_nodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			nodeResource -> nodeResource.postProcessNodeBatch(
+				processId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteProcessNode(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("nodeId") Long nodeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_nodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			nodeResource -> nodeResource.deleteProcessNode(processId, nodeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Process createProcess(@GraphQLName("process") Process process)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> processResource.postProcess(process));
+	}
+
+	@GraphQLField
+	public Response createProcessBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> processResource.postProcessBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteProcess(@GraphQLName("processId") Long processId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> processResource.deleteProcess(processId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteProcessBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> processResource.deleteProcessBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean updateProcess(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("process") Process process)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> processResource.putProcess(processId, process));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response updateProcessBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_processResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			processResource -> processResource.putProcessBatch(
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -190,6 +419,76 @@ public class Mutation {
 				slaId, sla, callbackURL, object));
 	}
 
+	@GraphQLField
+	public Task createProcessTask(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("task") Task task)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taskResource -> taskResource.postProcessTask(processId, task));
+	}
+
+	@GraphQLField
+	public Response createProcessTaskBatch(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taskResource -> taskResource.postProcessTaskBatch(
+				processId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteProcessTask(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("taskId") Long taskId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_taskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taskResource -> taskResource.deleteProcessTask(processId, taskId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean patchProcessTask(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("taskId") Long taskId, @GraphQLName("task") Task task)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_taskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taskResource -> taskResource.patchProcessTask(
+				processId, taskId, task));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean patchProcessTaskComplete(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("taskId") Long taskId, @GraphQLName("task") Task task)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_taskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taskResource -> taskResource.patchProcessTaskComplete(
+				processId, taskId, task));
+
+		return true;
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -253,6 +552,39 @@ public class Mutation {
 		assigneeMetricResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(InstanceResource instanceResource)
+		throws Exception {
+
+		instanceResource.setContextAcceptLanguage(_acceptLanguage);
+		instanceResource.setContextCompany(_company);
+		instanceResource.setContextHttpServletRequest(_httpServletRequest);
+		instanceResource.setContextHttpServletResponse(_httpServletResponse);
+		instanceResource.setContextUriInfo(_uriInfo);
+		instanceResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(NodeResource nodeResource)
+		throws Exception {
+
+		nodeResource.setContextAcceptLanguage(_acceptLanguage);
+		nodeResource.setContextCompany(_company);
+		nodeResource.setContextHttpServletRequest(_httpServletRequest);
+		nodeResource.setContextHttpServletResponse(_httpServletResponse);
+		nodeResource.setContextUriInfo(_uriInfo);
+		nodeResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(ProcessResource processResource)
+		throws Exception {
+
+		processResource.setContextAcceptLanguage(_acceptLanguage);
+		processResource.setContextCompany(_company);
+		processResource.setContextHttpServletRequest(_httpServletRequest);
+		processResource.setContextHttpServletResponse(_httpServletResponse);
+		processResource.setContextUriInfo(_uriInfo);
+		processResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(SLAResource slaResource)
 		throws Exception {
 
@@ -264,12 +596,31 @@ public class Mutation {
 		slaResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(TaskResource taskResource)
+		throws Exception {
+
+		taskResource.setContextAcceptLanguage(_acceptLanguage);
+		taskResource.setContextCompany(_company);
+		taskResource.setContextHttpServletRequest(_httpServletRequest);
+		taskResource.setContextHttpServletResponse(_httpServletResponse);
+		taskResource.setContextUriInfo(_uriInfo);
+		taskResource.setContextUser(_user);
+	}
+
 	private static ComponentServiceObjects<AssigneeResource>
 		_assigneeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AssigneeMetricResource>
 		_assigneeMetricResourceComponentServiceObjects;
+	private static ComponentServiceObjects<InstanceResource>
+		_instanceResourceComponentServiceObjects;
+	private static ComponentServiceObjects<NodeResource>
+		_nodeResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ProcessResource>
+		_processResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>
 		_slaResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TaskResource>
+		_taskResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

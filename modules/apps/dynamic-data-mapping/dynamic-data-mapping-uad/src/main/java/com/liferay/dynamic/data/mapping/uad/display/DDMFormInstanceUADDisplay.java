@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.uad.display;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
-import com.liferay.dynamic.data.mapping.uad.helper.DDMUADHelper;
+import com.liferay.dynamic.data.mapping.uad.util.DDMUADUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -52,14 +52,14 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 		Map<String, Object> fieldValues = super.getFieldValues(
 			ddmFormInstance, fieldNames, locale);
 
-		_ddmUADHelper.formatCreateDate(fieldValues);
+		DDMUADUtil.formatCreateDate(fieldValues);
 
 		return fieldValues;
 	}
 
 	@Override
 	public String getName(DDMFormInstance ddmFormInstance, Locale locale) {
-		return _ddmUADHelper.getFormattedName(ddmFormInstance);
+		return DDMUADUtil.getFormattedName(ddmFormInstance);
 	}
 
 	@Override
@@ -138,7 +138,5 @@ public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 	@Reference
 	private DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
-
-	private final DDMUADHelper _ddmUADHelper = new DDMUADHelper();
 
 }

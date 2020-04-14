@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.uad.helper;
+package com.liferay.dynamic.data.mapping.uad.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.portal.kernel.log.Log;
@@ -40,9 +40,9 @@ import org.xml.sax.SAXException;
  * @author Gabriel Ibson
  * @author Marcos Martins
  */
-public class DDMUADHelper {
+public class DDMUADUtil {
 
-	public void formatCreateDate(Map<String, Object> fieldValues) {
+	public static void formatCreateDate(Map<String, Object> fieldValues) {
 		Date createdDate = (Date)fieldValues.get("createDate");
 
 		if (createdDate != null) {
@@ -52,7 +52,7 @@ public class DDMUADHelper {
 		}
 	}
 
-	public String getFormattedName(DDMFormInstance ddmFormInstance) {
+	public static String getFormattedName(DDMFormInstance ddmFormInstance) {
 		Document document = _toDocument(ddmFormInstance.getName());
 
 		Node firstChildNode = document.getFirstChild();
@@ -60,7 +60,7 @@ public class DDMUADHelper {
 		return firstChildNode.getTextContent();
 	}
 
-	private Document _toDocument(String xml) {
+	private static Document _toDocument(String xml) {
 		try {
 			DocumentBuilderFactory documentBuilderFactory =
 				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
@@ -80,6 +80,6 @@ public class DDMUADHelper {
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DDMUADHelper.class);
+	private static final Log _log = LogFactoryUtil.getLog(DDMUADUtil.class);
 
 }

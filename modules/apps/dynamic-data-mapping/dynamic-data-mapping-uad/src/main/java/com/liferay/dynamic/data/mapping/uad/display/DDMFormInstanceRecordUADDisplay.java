@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.dynamic.data.mapping.uad.helper.DDMUADHelper;
+import com.liferay.dynamic.data.mapping.uad.util.DDMUADUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -119,7 +119,7 @@ public class DDMFormInstanceRecordUADDisplay
 		Map<String, Object> fieldValues = super.getFieldValues(
 			ddmFormInstanceRecord, fieldNames, locale);
 
-		_ddmUADHelper.formatCreateDate(fieldValues);
+		DDMUADUtil.formatCreateDate(fieldValues);
 
 		return fieldValues;
 	}
@@ -134,7 +134,7 @@ public class DDMFormInstanceRecordUADDisplay
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceRecord.getFormInstance();
 
-			String ddmFormInstanceName = _ddmUADHelper.getFormattedName(
+			String ddmFormInstanceName = DDMUADUtil.getFormattedName(
 				ddmFormInstance);
 
 			sb.append(ddmFormInstanceName);
@@ -287,8 +287,6 @@ public class DDMFormInstanceRecordUADDisplay
 
 	@Reference
 	private DDMFormInstanceUADDisplay _ddmFormInstanceUADDisplay;
-
-	private final DDMUADHelper _ddmUADHelper = new DDMUADHelper();
 
 	@Reference
 	private Portal _portal;

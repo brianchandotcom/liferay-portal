@@ -258,16 +258,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		this.jsonObject = jsonObject;
 	}
 
-	protected boolean matches(SearchQuery.SearchParameter... searchParameters) {
-		for (SearchQuery.SearchParameter searchParameter : searchParameters) {
-			if (!searchParameter.matches(jsonObject)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	protected final JSONObject jsonObject;
 
 	private static void _cacheSpiraArtifactJSONObjects(

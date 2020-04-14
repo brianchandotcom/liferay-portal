@@ -48,10 +48,15 @@ public class JavaTernaryOperator extends BaseJavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
-		sb.append(prefix);
 
-		append(sb, _conditionJavaExpression, indent, "", " ? ", maxLineLength);
-		append(sb, _trueValueJavaExpression, indent, "", " : ", maxLineLength);
+		indent = "\t" + indent;
+
+		indent = append(
+			sb, _conditionJavaExpression, indent, prefix, " ? ", maxLineLength);
+
+		indent = append(
+			sb, _trueValueJavaExpression, indent, "", " : ", maxLineLength);
+
 		append(
 			sb, _falseValueJavaExpression, indent, "", suffix, maxLineLength);
 

@@ -80,15 +80,15 @@ public class DDMFormInstanceRecordUADDisplay
 			getThemeDisplay(httpServletRequest),
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 			HashMapBuilder.put(
+				portletNamespace.concat("formInstanceId"),
+				new String[] {
+					String.valueOf(ddmFormInstanceRecord.getFormInstanceId())
+				}
+			).put(
 				portletNamespace.concat("formInstanceRecordId"),
 				new String[] {
 					String.valueOf(
 						ddmFormInstanceRecord.getFormInstanceRecordId())
-				}
-			).put(
-				portletNamespace.concat("formInstanceId"),
-				new String[] {
-					String.valueOf(ddmFormInstanceRecord.getFormInstanceId())
 				}
 			).put(
 				portletNamespace.concat("mvcPath"),

@@ -3,7 +3,6 @@
 {template .render}
 	{@param name: string}
 	{@param? _handleAddRepeatedFieldButtonClicked: any}
-	{@param? _handleFieldClicked: any}
 	{@param? _handleRemoveRepeatedFieldButtonClicked: any}
 	{@param? _localizedValue: list<[
 		languageId: string,
@@ -38,7 +37,7 @@
 		{/if}
 	{/let}
 
-	<div class="{$fieldCssClassAttribute}" data-field-name="{$name}" data-onclick="{$_handleFieldClicked}">
+	<div class="{$fieldCssClassAttribute}" data-field-name="{$name}">
 		{if $repeatable}
 			<div class="lfr-ddm-form-field-repeatable-toolbar">
 				{if $showRepeatableRemoveButton}

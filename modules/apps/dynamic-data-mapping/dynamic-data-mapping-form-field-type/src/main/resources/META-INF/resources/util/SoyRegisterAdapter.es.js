@@ -20,11 +20,11 @@ import Soy from 'metal-soy';
  * Create a fake template to use Soy.register so that ComponentAdapter
  * is called instead.
  */
-const FakeSoyTemplate = ComponentAdapter => {
+const FakeSoyTemplate = (ComponentAdapter, variant) => {
 	let templates;
 	goog.loadModule(exports => {
 		goog.require('soy');
-		goog.module('Adapter.incrementaldom');
+		goog.module(`${variant}Adapter.incrementaldom`);
 		goog.require('soydata');
 		goog.require('soy.idom');
 
@@ -47,7 +47,7 @@ const FakeSoyTemplate = ComponentAdapter => {
  * it will be removed when we have an implementation in React.
  */
 export const SoyRegisterAdapter = (ComponentAdapter, variant) => {
-	FakeSoyTemplate(ComponentAdapter);
+	FakeSoyTemplate(ComponentAdapter, variant);
 	goog.loadModule(exports => {
 		const soy = goog.require('soy');
 
@@ -58,7 +58,7 @@ export const SoyRegisterAdapter = (ComponentAdapter, variant) => {
 		// We call the template created above so that Metal
 		// can take care of the rest.
 		const templateAlias = Soy.getTemplate(
-			'Adapter.incrementaldom',
+			`${variant}Adapter.incrementaldom`,
 			'render'
 		);
 

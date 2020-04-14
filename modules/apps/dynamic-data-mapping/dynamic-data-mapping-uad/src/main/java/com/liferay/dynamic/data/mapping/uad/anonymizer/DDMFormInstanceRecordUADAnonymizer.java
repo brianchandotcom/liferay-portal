@@ -59,40 +59,41 @@ public class DDMFormInstanceRecordUADAnonymizer
 					ddmFormInstanceRecord.getFormInstanceRecordId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		ddmFormInstanceRecordVersions.forEach(
-			ddmFormInstanceRecordVersion -> {
-				if (ddmFormInstanceRecordVersion.getUserId() == userId) {
-					ddmFormInstanceRecordVersion.setUserId(
-						anonymousUser.getUserId());
+		for (DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion :
+				ddmFormInstanceRecordVersions) {
 
-					ddmFormInstanceRecordVersion.setUserName(
-						anonymousUser.getFullName());
-				}
+			if (ddmFormInstanceRecordVersion.getUserId() == userId) {
+				ddmFormInstanceRecordVersion.setUserId(
+					anonymousUser.getUserId());
 
-				if (ddmFormInstanceRecordVersion.getStatusByUserId() ==
-						userId) {
+				ddmFormInstanceRecordVersion.setUserName(
+					anonymousUser.getFullName());
+			}
 
-					ddmFormInstanceRecordVersion.setStatusByUserId(
-						anonymousUser.getUserId());
-					ddmFormInstanceRecordVersion.setStatusByUserName(
-						anonymousUser.getFullName());
-				}
+			if (ddmFormInstanceRecordVersion.getStatusByUserId() ==
+					userId) {
 
-				_ddmFormInstanceRecordVersionLocalService.
-					updateDDMFormInstanceRecordVersion(
-						ddmFormInstanceRecordVersion);
+				ddmFormInstanceRecordVersion.setStatusByUserId(
+					anonymousUser.getUserId());
+				ddmFormInstanceRecordVersion.setStatusByUserName(
+					anonymousUser.getFullName());
+			}
 
-				DDMContent ddmContent =
-					_ddmContentLocalService.fetchDDMContent(
-						ddmFormInstanceRecordVersion.getStorageId()));
+			_ddmFormInstanceRecordVersionLocalService.
+				updateDDMFormInstanceRecordVersion(
+					ddmFormInstanceRecordVersion);
 
-				if (ddmContent.getUserId() == userId) {
-					ddmContent.setUserId(anonymousUser.getUserId());
-					ddmContent.setUserName(anonymousUser.getFullName());
-				}
+			DDMContent ddmContent =
+				_ddmContentLocalService.fetchDDMContent(
+					ddmFormInstanceRecordVersion.getStorageId());
 
-				_ddmContentLocalService.updateDDMContent(ddmContent);
-			});
+			if (ddmContent.getUserId() == userId) {
+				ddmContent.setUserId(anonymousUser.getUserId());
+				ddmContent.setUserName(anonymousUser.getFullName());
+			}
+
+			_ddmContentLocalService.updateDDMContent(ddmContent);
+		}
 	}
 
 	@Override

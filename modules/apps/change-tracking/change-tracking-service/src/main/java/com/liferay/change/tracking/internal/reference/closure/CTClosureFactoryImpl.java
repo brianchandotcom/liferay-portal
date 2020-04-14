@@ -114,11 +114,11 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 					"No table reference definition for " + childClassNameId);
 			}
 
-			Map<Table<?>, List<TableJoinHolder>> parentJoinHolders =
-				childTableReferenceInfo.getParentJoinHoldersMap();
+			Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
+				childTableReferenceInfo.getParentTableJoinHoldersMap();
 
 			for (Map.Entry<Table<?>, List<TableJoinHolder>> entry :
-					parentJoinHolders.entrySet()) {
+					parentTableJoinHoldersMap.entrySet()) {
 
 				long parentClassNameId =
 					_tableReferenceDefinitionManager.getClassNameId(

@@ -93,13 +93,14 @@ public class TableReferenceDefinitionHelperImplTest {
 			MainExampleTable.INSTANCE.mainExampleId,
 			tableReferenceInfo.getPrimaryKeyColumn());
 
-		Map<Table<?>, List<TableJoinHolder>> childJoinHoldersMap =
-			tableReferenceInfo.getChildJoinHoldersMap();
+		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap =
+			tableReferenceInfo.getChildTableJoinHoldersMap();
 
 		Assert.assertEquals(
-			childJoinHoldersMap.toString(), 1, childJoinHoldersMap.size());
+			childTableJoinHoldersMap.toString(), 1,
+			childTableJoinHoldersMap.size());
 
-		List<TableJoinHolder> childJoinHolders = childJoinHoldersMap.get(
+		List<TableJoinHolder> childJoinHolders = childTableJoinHoldersMap.get(
 			ReferenceExampleTable.INSTANCE);
 
 		Assert.assertEquals(
@@ -109,11 +110,12 @@ public class TableReferenceDefinitionHelperImplTest {
 
 		Assert.assertSame(childJoinFunction, childJoinHolder.getJoinFunction());
 
-		Map<Table<?>, List<TableJoinHolder>> parentJoinHoldersMap =
-			tableReferenceInfo.getParentJoinHoldersMap();
+		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
+			tableReferenceInfo.getParentTableJoinHoldersMap();
 
 		Assert.assertTrue(
-			parentJoinHoldersMap.toString(), parentJoinHoldersMap.isEmpty());
+			parentTableJoinHoldersMap.toString(),
+			parentTableJoinHoldersMap.isEmpty());
 	}
 
 	@Test
@@ -198,14 +200,15 @@ public class TableReferenceDefinitionHelperImplTest {
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
 			tableReferenceInfo.getPrimaryKeyColumn());
 
-		Map<Table<?>, List<TableJoinHolder>> childJoinHoldersMap =
-			tableReferenceInfo.getChildJoinHoldersMap();
+		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap =
+			tableReferenceInfo.getChildTableJoinHoldersMap();
 
 		Assert.assertEquals(
-			childJoinHoldersMap.toString(), 1, childJoinHoldersMap.size());
+			childTableJoinHoldersMap.toString(), 1,
+			childTableJoinHoldersMap.size());
 
-		List<TableJoinHolder> childTableJoinHolders = childJoinHoldersMap.get(
-			ReferenceExampleTable.INSTANCE);
+		List<TableJoinHolder> childTableJoinHolders =
+			childTableJoinHoldersMap.get(ReferenceExampleTable.INSTANCE);
 
 		Assert.assertEquals(
 			childTableJoinHolders.toString(), 2, childTableJoinHolders.size());
@@ -234,14 +237,15 @@ public class TableReferenceDefinitionHelperImplTest {
 			aliasReferenceExampleTable.referenceExampleId,
 			childJoinHolder.getChildPKColumn());
 
-		Map<Table<?>, List<TableJoinHolder>> parentJoinHoldersMap =
-			tableReferenceInfo.getParentJoinHoldersMap();
+		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
+			tableReferenceInfo.getParentTableJoinHoldersMap();
 
 		Assert.assertEquals(
-			parentJoinHoldersMap.toString(), 2, parentJoinHoldersMap.size());
+			parentTableJoinHoldersMap.toString(), 2,
+			parentTableJoinHoldersMap.size());
 
-		List<TableJoinHolder> parentTableJoinHolders = parentJoinHoldersMap.get(
-			MainExampleTable.INSTANCE);
+		List<TableJoinHolder> parentTableJoinHolders =
+			parentTableJoinHoldersMap.get(MainExampleTable.INSTANCE);
 
 		Assert.assertEquals(
 			parentTableJoinHolders.toString(), 1,
@@ -260,7 +264,7 @@ public class TableReferenceDefinitionHelperImplTest {
 			ReferenceExampleTable.INSTANCE.referenceExampleId,
 			parentJoinHolder.getChildPKColumn());
 
-		parentTableJoinHolders = parentJoinHoldersMap.get(
+		parentTableJoinHolders = parentTableJoinHoldersMap.get(
 			ReferenceExampleTable.INSTANCE);
 
 		Assert.assertEquals(
@@ -572,17 +576,19 @@ public class TableReferenceDefinitionHelperImplTest {
 			MainExampleTable.INSTANCE.mainExampleId,
 			tableReferenceInfo.getPrimaryKeyColumn());
 
-		Map<Table<?>, List<TableJoinHolder>> childJoinHolders =
-			tableReferenceInfo.getChildJoinHoldersMap();
+		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap =
+			tableReferenceInfo.getChildTableJoinHoldersMap();
 
 		Assert.assertTrue(
-			childJoinHolders.toString(), childJoinHolders.isEmpty());
+			childTableJoinHoldersMap.toString(),
+			childTableJoinHoldersMap.isEmpty());
 
-		Map<Table<?>, List<TableJoinHolder>> parentJoinHolders =
-			tableReferenceInfo.getParentJoinHoldersMap();
+		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
+			tableReferenceInfo.getParentTableJoinHoldersMap();
 
 		Assert.assertTrue(
-			parentJoinHolders.toString(), parentJoinHolders.isEmpty());
+			parentTableJoinHoldersMap.toString(),
+			parentTableJoinHoldersMap.isEmpty());
 	}
 
 	@Test

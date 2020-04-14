@@ -38,11 +38,11 @@ public class TableReferenceInfo<T extends Table<T>> {
 		_childJoinMap = childJoinMap;
 	}
 
-	public Map<Table<?>, List<TableJoinHolder>> getChildJoinHoldersMap() {
+	public Map<Table<?>, List<TableJoinHolder>> getChildTableJoinHoldersMap() {
 		return _childJoinMap;
 	}
 
-	public Map<Table<?>, List<TableJoinHolder>> getParentJoinHoldersMap() {
+	public Map<Table<?>, List<TableJoinHolder>> getParentTableJoinHoldersMap() {
 		return _parentJoinMap;
 	}
 

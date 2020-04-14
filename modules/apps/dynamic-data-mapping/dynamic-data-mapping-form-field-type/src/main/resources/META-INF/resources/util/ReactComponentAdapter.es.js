@@ -14,12 +14,12 @@
 
 import IncrementalDomRenderer from 'metal-incremental-dom';
 import JSXComponent from 'metal-jsx';
-import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import Observer from './Observer.es';
+import {SoyRegisterAdapter} from './SoyRegisterAdapter.es';
 
 const CONFIG_BLACKLIST = ['children', 'events', 'ref', 'visible'];
 const CONFIG_DEFAULT = ['displayErrors'];
@@ -62,7 +62,7 @@ const CONFIG_DEFAULT = ['displayErrors'];
  * @param {Soy} templates
  */
 
-function getConnectedReactComponentAdapter(ReactComponent, templates) {
+function getConnectedReactComponentAdapter(ReactComponent, variant) {
 	class ReactComponentAdapter extends JSXComponent {
 		/**
 		 * For Metal to track config changes, we need to declare the
@@ -163,7 +163,9 @@ function getConnectedReactComponentAdapter(ReactComponent, templates) {
 		}
 	}
 
-	Soy.register(ReactComponentAdapter, templates);
+	if (variant) {
+		SoyRegisterAdapter(ReactComponentAdapter, variant);
+	}
 
 	ReactComponentAdapter.RENDERER = IncrementalDomRenderer;
 

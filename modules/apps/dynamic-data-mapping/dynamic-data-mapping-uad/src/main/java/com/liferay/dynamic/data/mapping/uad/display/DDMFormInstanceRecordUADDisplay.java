@@ -80,9 +80,6 @@ public class DDMFormInstanceRecordUADDisplay
 			getThemeDisplay(httpServletRequest),
 			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 			HashMapBuilder.put(
-				portletNamespace.concat("mvcPath"),
-				new String[] {"/admin/edit_form_instance_record.jsp"}
-			).put(
 				portletNamespace.concat("formInstanceRecordId"),
 				new String[] {
 					String.valueOf(
@@ -93,6 +90,9 @@ public class DDMFormInstanceRecordUADDisplay
 				new String[] {
 					String.valueOf(ddmFormInstanceRecord.getFormInstanceId())
 				}
+			).put(
+				portletNamespace.concat("mvcPath"),
+				new String[] {"/admin/edit_form_instance_record.jsp"}
 			).put(
 				portletNamespace.concat("readOnly"),
 				new String[] {Boolean.FALSE.toString()}

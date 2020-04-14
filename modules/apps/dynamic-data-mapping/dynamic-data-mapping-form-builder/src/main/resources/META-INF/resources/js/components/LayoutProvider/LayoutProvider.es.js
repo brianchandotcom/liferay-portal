@@ -16,13 +16,19 @@ import {
 	FormSupport,
 	PagesVisitor,
 	RulesVisitor,
+	generateName,
+	getRepeatedIndex,
 } from 'dynamic-data-mapping-form-renderer';
 import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationItemClicked.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 import {pageStructure, ruleStructure} from '../../util/config.es';
-import {getFieldProperties, localizeField} from '../../util/fieldSupport.es';
+import {
+	generateInstanceId,
+	getFieldProperties,
+	localizeField,
+} from '../../util/fieldSupport.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 import handleColumnResized from './handlers/columnResizedHandler.es';
 import handleElementSetAdded from './handlers/elementSetAddedHandler.es';
@@ -164,6 +170,10 @@ class LayoutProvider extends Component {
 						defaultLanguageId,
 						editingLanguageId
 					),
+					name: generateName(field.name, {
+						instanceId: field.instanceId || generateInstanceId(),
+						repeatedIndex: getRepeatedIndex(field.name),
+					}),
 					options,
 					selected: focusedField.fieldName === field.fieldName,
 					settingsContext: {

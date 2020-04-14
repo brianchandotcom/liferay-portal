@@ -14,17 +14,8 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
@@ -54,7 +45,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ContextResolver;
+import javax.ws.rs.ext.Providers;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,12 +91,14 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 			deleteLayoutPageTemplateEntryFragmentEntryLinks(
 				siteId, _portal.getClassNameId(Layout.class), layout.getPlid());
 
-		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
+		ContextResolver<ObjectMapper> contextResolver =
+			_providers.getContextResolver(
+				ObjectMapper.class, MediaType.APPLICATION_JSON_TYPE);
 
-		FilterProvider filterProvider = simpleFilterProvider.addFilter(
-			"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
+		ObjectMapper objectMapper = contextResolver.getContext(
+			ObjectMapper.class);
 
-		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
+		ObjectWriter objectWriter = objectMapper.writer();
 
 		try {
 			_layoutPageTemplatesImporter.importPageElement(
@@ -174,19 +171,6 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageDefinitionResourceImpl.class);
 
-	private static final ObjectMapper _objectMapper = new ObjectMapper() {
-		{
-			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-			setDateFormat(new ISO8601DateFormat());
-			setSerializationInclusion(JsonInclude.Include.NON_NULL);
-			setVisibility(
-				PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-			setVisibility(
-				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
-		}
-	};
-
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
@@ -198,5 +182,8 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Context
+	private Providers _providers;
 
 }

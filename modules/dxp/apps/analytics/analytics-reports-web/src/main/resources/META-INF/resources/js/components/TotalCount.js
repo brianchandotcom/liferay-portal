@@ -45,11 +45,15 @@ function TotalCount({
 					}
 				});
 		}
-		else {
-			setValue('-');
-		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dataProvider, validAnalyticsConnection]);
+
+	let displayValue = '-';
+
+	if (validAnalyticsConnection) {
+		displayValue =
+			percentage && value !== '-' ? <span>{`${value}%`}</span> : value;
+	}
 
 	return (
 		<div className={className}>
@@ -62,13 +66,7 @@ function TotalCount({
 					title={popoverHeader}
 				/>
 			</span>
-			<span className="font-weight-bold">
-				{percentage && value !== '-' ? (
-					<span>{`${value}%`}</span>
-				) : (
-					value
-				)}
-			</span>
+			<span className="font-weight-bold">{displayValue}</span>
 		</div>
 	);
 }

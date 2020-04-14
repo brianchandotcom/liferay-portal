@@ -98,7 +98,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 					TaskResourceImpl.class))
 		).orElseThrow(
 			() -> new NoSuchTaskException(
-				"No Task exists with the id " + taskId)
+				"No Task exists with the taskId " + taskId)
 		);
 	}
 

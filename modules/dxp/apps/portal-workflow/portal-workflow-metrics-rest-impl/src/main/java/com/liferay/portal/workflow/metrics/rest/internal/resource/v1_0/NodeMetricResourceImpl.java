@@ -98,20 +98,20 @@ public class NodeMetricResourceImpl
 			GetterUtil.getBoolean(completed), key, processId,
 			latestProcessVersion);
 
-		Map<String, NodeMetric> tasksMap = _getNodeMetricsMap(
+		Map<String, NodeMetric> nodeMetrics = _getNodeMetrics(
 			key, processId, taskBuckets.keySet(), latestProcessVersion);
 
-		long count = tasksMap.size();
+		long count = nodeMetrics.size();
 
 		if (count > 0) {
 			if (pagination == null) {
-				return Page.of(tasksMap.values());
+				return Page.of(nodeMetrics.values());
 			}
 
 			return Page.of(
-				_getTasks(
+				_getNodeMetrics(
 					GetterUtil.getBoolean(completed), dateEnd, dateStart,
-					_toFieldSort(sorts), pagination, processId, tasksMap),
+					_toFieldSort(sorts), nodeMetrics, pagination, processId),
 				pagination, count);
 		}
 
@@ -337,7 +337,106 @@ public class NodeMetricResourceImpl
 			_queries.term("deleted", Boolean.FALSE));
 	}
 
-	private Map<String, NodeMetric> _getNodeMetricsMap(
+	private Collection<NodeMetric> _getNodeMetrics(
+		boolean completed, Date dateEnd, Date dateStart, FieldSort fieldSort,
+		Map<String, NodeMetric> nodeMetrics, Pagination pagination,
+		long processId) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		TermsAggregation termsAggregation = _aggregations.terms(
+			"taskName", null);
+
+		termsAggregation.setScript(
+			_scripts.script(
+				"doc.containsKey('name') ? doc.name.value : " +
+					"doc.taskName.value"));
+
+		FilterAggregation breachedFilterAggregation = _aggregations.filter(
+			"breached",
+			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
+
+		breachedFilterAggregation.addChildAggregation(
+			_resourceHelper.createBreachedScriptedMetricAggregation());
+
+		FilterAggregation countFilterAggregation = _aggregations.filter(
+			"countFilter",
+			_resourceHelper.createTasksBooleanQuery(
+				contextCompany.getCompanyId(), completed));
+
+		countFilterAggregation.addChildrenAggregations(
+			_aggregations.avg("durationAvg", "duration"),
+			_aggregations.valueCount("instanceCount", "instanceId"));
+
+		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
+			"onTime",
+			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
+
+		onTimeFilterAggregation.addChildAggregation(
+			_resourceHelper.createOnTimeScriptedMetricAggregation());
+
+		FilterAggregation overdueFilterAggregation = _aggregations.filter(
+			"overdue",
+			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
+
+		overdueFilterAggregation.addChildAggregation(
+			_resourceHelper.createOverdueScriptedMetricAggregation());
+
+		termsAggregation.addChildrenAggregations(
+			breachedFilterAggregation, countFilterAggregation,
+			onTimeFilterAggregation, overdueFilterAggregation);
+
+		termsAggregation.addPipelineAggregation(
+			_resourceHelper.createBucketScriptPipelineAggregation());
+
+		if (fieldSort != null) {
+			termsAggregation.addPipelineAggregation(
+				_resourceHelper.createBucketSortPipelineAggregation(
+					fieldSort, pagination));
+		}
+
+		termsAggregation.setSize(nodeMetrics.size());
+
+		searchSearchRequest.addAggregation(termsAggregation);
+
+		searchSearchRequest.setIndexNames(
+			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()),
+			_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
+				contextCompany.getCompanyId()));
+		searchSearchRequest.setQuery(
+			_createBooleanQuery(
+				completed, dateEnd, dateStart, processId,
+				nodeMetrics.keySet()));
+
+		return Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getAggregationResultsMap
+		).map(
+			aggregationResultsMap ->
+				(TermsAggregationResult)aggregationResultsMap.get("taskName")
+		).map(
+			TermsAggregationResult::getBuckets
+		).flatMap(
+			Collection::stream
+		).map(
+			bucket -> {
+				NodeMetric nodeMetric = nodeMetrics.remove(bucket.getKey());
+
+				_populateNodeMetricWithSLAMetrics(
+					bucket, completed, nodeMetric);
+				_setDurationAvg(bucket, nodeMetric);
+				_setInstanceCount(bucket, nodeMetric);
+
+				return nodeMetric;
+			}
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	private Map<String, NodeMetric> _getNodeMetrics(
 		String key, long processId, Set<String> taskNames, String version) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -424,103 +523,6 @@ public class NodeMetricResourceImpl
 			(map, bucket) -> map.put(bucket.getKey(), bucket), Map::putAll);
 	}
 
-	private Collection<NodeMetric> _getTasks(
-		boolean completed, Date dateEnd, Date dateStart, FieldSort fieldSort,
-		Pagination pagination, long processId,
-		Map<String, NodeMetric> tasksMap) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		TermsAggregation termsAggregation = _aggregations.terms(
-			"taskName", null);
-
-		termsAggregation.setScript(
-			_scripts.script(
-				"doc.containsKey('name') ? doc.name.value : " +
-					"doc.taskName.value"));
-
-		FilterAggregation breachedFilterAggregation = _aggregations.filter(
-			"breached",
-			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
-
-		breachedFilterAggregation.addChildAggregation(
-			_resourceHelper.createBreachedScriptedMetricAggregation());
-
-		FilterAggregation countFilterAggregation = _aggregations.filter(
-			"countFilter",
-			_resourceHelper.createTasksBooleanQuery(
-				contextCompany.getCompanyId(), completed));
-
-		countFilterAggregation.addChildrenAggregations(
-			_aggregations.avg("durationAvg", "duration"),
-			_aggregations.valueCount("instanceCount", "instanceId"));
-
-		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime",
-			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
-
-		onTimeFilterAggregation.addChildAggregation(
-			_resourceHelper.createOnTimeScriptedMetricAggregation());
-
-		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue",
-			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
-
-		overdueFilterAggregation.addChildAggregation(
-			_resourceHelper.createOverdueScriptedMetricAggregation());
-
-		termsAggregation.addChildrenAggregations(
-			breachedFilterAggregation, countFilterAggregation,
-			onTimeFilterAggregation, overdueFilterAggregation);
-
-		termsAggregation.addPipelineAggregation(
-			_resourceHelper.createBucketScriptPipelineAggregation());
-
-		if (fieldSort != null) {
-			termsAggregation.addPipelineAggregation(
-				_resourceHelper.createBucketSortPipelineAggregation(
-					fieldSort, pagination));
-		}
-
-		termsAggregation.setSize(tasksMap.size());
-
-		searchSearchRequest.addAggregation(termsAggregation);
-
-		searchSearchRequest.setIndexNames(
-			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
-				contextCompany.getCompanyId()),
-			_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
-				contextCompany.getCompanyId()));
-		searchSearchRequest.setQuery(
-			_createBooleanQuery(
-				completed, dateEnd, dateStart, processId, tasksMap.keySet()));
-
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getAggregationResultsMap
-		).map(
-			aggregationResultsMap ->
-				(TermsAggregationResult)aggregationResultsMap.get("taskName")
-		).map(
-			TermsAggregationResult::getBuckets
-		).flatMap(
-			Collection::stream
-		).map(
-			bucket -> {
-				NodeMetric nodeMetric = tasksMap.remove(bucket.getKey());
-
-				_populateTaskWithSLAMetrics(bucket, completed, nodeMetric);
-				_setDurationAvg(bucket, nodeMetric);
-				_setInstanceCount(bucket, nodeMetric);
-
-				return nodeMetric;
-			}
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	private boolean _isOrderByDurationAvg(String fieldName) {
 		if (StringUtil.equals(fieldName, "durationAvg") ||
 			StringUtil.equals(
@@ -575,7 +577,7 @@ public class NodeMetricResourceImpl
 		return false;
 	}
 
-	private void _populateTaskWithSLAMetrics(
+	private void _populateNodeMetricWithSLAMetrics(
 		Bucket bucket, boolean completed, NodeMetric nodeMetric) {
 
 		if (completed) {

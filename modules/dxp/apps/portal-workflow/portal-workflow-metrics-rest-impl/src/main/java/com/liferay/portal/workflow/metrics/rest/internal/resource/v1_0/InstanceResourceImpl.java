@@ -223,7 +223,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			}
 		).orElseThrow(
 			() -> new NoSuchInstanceException(
-				"No Instance exists with the id " + instanceId)
+				"No Instance exists with the instanceId " + instanceId)
 		);
 	}
 

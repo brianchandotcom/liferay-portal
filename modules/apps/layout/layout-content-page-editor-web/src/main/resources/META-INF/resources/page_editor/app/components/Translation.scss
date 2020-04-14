@@ -1,4 +1,4 @@
-@import './variables';
+@import 'atlas-variables';
 
 .page-editor__translation {
 	min-width: 35ch;
@@ -7,19 +7,19 @@
 		text-transform: uppercase;
 
 		&.default {
-			border-color: #5a70c2;
-			color: #5a70c2;
+			border-color: $info;
+			color: $info;
 		}
 
 		&.untranslated,
 		&.translating {
-			border-color: #fea500;
-			color: #fea500;
+			border-color: $warning;
+			color: $warning;
 		}
 
 		&.translated {
-			border-color: #33a766;
-			color: #33a766;
+			border-color: $success;
+			color: $success;
 		}
 	}
 }

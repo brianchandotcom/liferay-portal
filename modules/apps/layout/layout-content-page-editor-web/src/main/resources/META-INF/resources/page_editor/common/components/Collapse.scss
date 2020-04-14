@@ -1,6 +1,7 @@
+@import 'atlas-variables';
+
 @import '../../app/components/variables';
 
-$collapseLineColor: #dfdfe9;
 $collapseMarginBottom: $pageEditorSpacing * 2;
 
 .page-editor__collapse {
@@ -8,7 +9,7 @@ $collapseMarginBottom: $pageEditorSpacing * 2;
 
 	.collapse-icon {
 		background: none;
-		border-color: $collapseLineColor;
+		border-color: $secondary-l2;
 		font-size: 0.75rem;
 		margin-bottom: $collapseMarginBottom;
 		padding-left: 0;

@@ -210,25 +210,10 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			return new ArrayList<>();
 		}
 
-		if (searchQuery.hasSearchParameter("Path")) {
-			List<S> cachedSpiraArtifacts = _getCachedSpiraArtifacts(
-				spiraArtifactClass, spiraArtifactCreator);
-
-			for (S cachedSpiraArtifact : cachedSpiraArtifacts) {
-				if (!searchQuery.matches(cachedSpiraArtifact)) {
-					continue;
-				}
-
-				searchQuery.addSpiraArtifact(cachedSpiraArtifact);
-
-				SearchQuery.cacheSearchQuery(searchQuery);
-
-				return searchQuery.getSpiraArtifacts();
-			}
+		if (!searchQuery.hasSearchParameter("Path")) {
+			cacheSpiraArtifactJSONObjects(
+				spiraArtifactClass, spiraArtifactRequest.get());
 		}
-
-		cacheSpiraArtifactJSONObjects(
-			spiraArtifactClass, spiraArtifactRequest.get());
 
 		List<S> spiraArtifacts = _getCachedSpiraArtifacts(
 			spiraArtifactClass, spiraArtifactCreator);

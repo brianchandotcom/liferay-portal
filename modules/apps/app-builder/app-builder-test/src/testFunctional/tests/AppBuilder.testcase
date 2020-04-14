@@ -2056,7 +2056,6 @@ definition {
 	@description = "No results found screen is shown when the search doesn't retrieve any results"
 	@priority = "5"
 	test FormViewSearchNoResultsFound {
-		property portal.upstream = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",

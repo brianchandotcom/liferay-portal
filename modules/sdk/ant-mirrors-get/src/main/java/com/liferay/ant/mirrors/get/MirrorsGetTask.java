@@ -26,6 +26,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.Base64;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -448,6 +449,18 @@ public class MirrorsGetTask extends Task {
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)urlConnection;
+
+			String password = getPassword();
+			String username = getUsername();
+
+			if ((password != null) && (username != null)) {
+				String auth = username + ":" + password;
+				Base64.Encoder encoder = Base64.getEncoder();
+
+				httpURLConnection.setRequestProperty(
+					"Authorization",
+					"Basic " + encoder.encodeToString(auth.getBytes()));
+			}
 
 			int responseCode = httpURLConnection.getResponseCode();
 

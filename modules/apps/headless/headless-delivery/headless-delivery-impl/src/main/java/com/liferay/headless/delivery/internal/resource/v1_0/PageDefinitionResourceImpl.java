@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 
 	@Override
-	public Response generatePageDefinitionPreview(
+	public Response postSitePageDefinitionPreview(
 			Long siteId, PageDefinition pageDefinition)
 		throws Exception {
 

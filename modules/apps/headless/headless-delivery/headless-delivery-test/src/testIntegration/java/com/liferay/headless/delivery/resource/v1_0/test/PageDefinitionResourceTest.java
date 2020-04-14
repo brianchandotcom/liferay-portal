@@ -39,7 +39,7 @@ public class PageDefinitionResourceTest
 	@Test
 	public void testGenerateInvalidPageDefinitionPreview() throws Exception {
 		HttpInvoker.HttpResponse httpResponse =
-			pageDefinitionResource.generatePageDefinitionPreviewHttpResponse(
+			pageDefinitionResource.postSitePageDefinitionPreviewHttpResponse(
 				testGroup.getGroupId(), randomPageDefinition());
 
 		Assert.assertEquals(
@@ -48,9 +48,9 @@ public class PageDefinitionResourceTest
 	}
 
 	@Override
-	public void testGeneratePageDefinitionPreview() throws Exception {
+	public void testPostSitePageDefinitionPreview() throws Exception {
 		HttpInvoker.HttpResponse httpResponse =
-			pageDefinitionResource.generatePageDefinitionPreviewHttpResponse(
+			pageDefinitionResource.postSitePageDefinitionPreviewHttpResponse(
 				testGroup.getGroupId(), _getTestPageDefinition());
 
 		Assert.assertThat(

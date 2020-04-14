@@ -167,6 +167,30 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 		}
 	}
 
+	public List<SpiraTestCaseObject> getChildSpiraTestCases() {
+		if (_childSpiraTestCases != null) {
+			return _childSpiraTestCases;
+		}
+
+		_childSpiraTestCases = new ArrayList<>(
+			SpiraTestCaseObject.getSpiraTestCases(
+				getSpiraProject(),
+				new SearchQuery.SearchParameter("TestCaseFolderId", getID())));
+
+		final List<SpiraTestCaseFolder> spiraTestCaseFolders =
+			getSpiraTestCaseFolders(
+				getSpiraProject(),
+				new SearchQuery.SearchParameter(
+					"ParentTestCaseFolderId", getID()));
+
+		for (SpiraTestCaseFolder spiraTestCaseFolder : spiraTestCaseFolders) {
+			_childSpiraTestCases.addAll(
+				spiraTestCaseFolder.getChildSpiraTestCases());
+		}
+
+		return _childSpiraTestCases;
+	}
+
 	public SpiraTestCaseFolder getParentSpiraTestCaseFolder() {
 		if (_parentSpiraTestCaseFolder != null) {
 			return _parentSpiraTestCaseFolder;
@@ -260,6 +284,7 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 		super(jsonObject);
 	}
 
+	private List<SpiraTestCaseObject> _childSpiraTestCases;
 	private SpiraTestCaseFolder _parentSpiraTestCaseFolder;
 
 }

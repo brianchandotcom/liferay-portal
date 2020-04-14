@@ -44,13 +44,13 @@ import {
 import DragPreview from './DragPreview';
 import {EditableDecorationProvider} from './fragment-content/EditableDecorationContext';
 import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
+import FragmentWithControls from './layout-data-items/FragmentWithControls';
 import {
 	CollectionItemWithControls,
 	CollectionWithControls,
 	ColumnWithControls,
 	ContainerWithControls,
 	DropZoneWithControls,
-	FragmentWithControls,
 	Root,
 	RowWithControls,
 } from './layout-data-items/index';

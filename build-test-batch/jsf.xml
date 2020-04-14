@@ -17,10 +17,6 @@
 						</antcall>
 
 						<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties"><![CDATA[
-							admin.email.from.address=${admin.email.from.address}
-							admin.email.from.name=${admin.email.from.name}
-							browser.launcher.url=
-							setup.wizard.enabled=false
 							terms.of.use.required=false
 							users.reminder.queries.enabled=false
 							users.reminder.queries.custom.question.enabled=false]]></echo>

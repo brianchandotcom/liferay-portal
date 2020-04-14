@@ -25,8 +25,6 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
-import com.liferay.headless.delivery.dto.v1_0.DropZoneDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
@@ -35,12 +33,14 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
-import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
+import com.liferay.headless.delivery.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageDropZoneDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
-import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageRowDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -157,11 +157,12 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			PageElement.Type.DROP_ZONE, dropZonePageElement.getType());
 
-		DropZoneDefinition dropZoneDefinition =
-			(DropZoneDefinition)dropZonePageElement.getDefinition();
+		PageDropZoneDefinition pageDropZoneDefinition =
+			(PageDropZoneDefinition)dropZonePageElement.getDefinition();
 
 		Map<String, Fragment[]> fragmentSettingsMap =
-			(Map<String, Fragment[]>)dropZoneDefinition.getFragmentSettings();
+			(Map<String, Fragment[]>)
+				pageDropZoneDefinition.getFragmentSettings();
 
 		Fragment[] allowedFragments = fragmentSettingsMap.get(
 			"allowedFragments");
@@ -209,11 +210,12 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			PageElement.Type.DROP_ZONE, dropZonePageElement.getType());
 
-		DropZoneDefinition dropZoneDefinition =
-			(DropZoneDefinition)dropZonePageElement.getDefinition();
+		PageDropZoneDefinition pageDropZoneDefinition =
+			(PageDropZoneDefinition)dropZonePageElement.getDefinition();
 
 		Map<String, Fragment[]> fragmentSettingsMap =
-			(Map<String, Fragment[]>)dropZoneDefinition.getFragmentSettings();
+			(Map<String, Fragment[]>)
+				pageDropZoneDefinition.getFragmentSettings();
 
 		Fragment[] unallowedFragments = fragmentSettingsMap.get(
 			"unallowedFragments");
@@ -233,15 +235,15 @@ public class PageDefinitionConverterUtilTest {
 
 	@Test
 	public void testToPageDefinitionFragmentConfig() throws Exception {
-		FragmentInstanceDefinition fragmentInstanceDefinition =
-			_getFragmentInstanceDefinition(
+		PageFragmentInstanceDefinition pageFragmentInstanceDefinition =
+			_getPageFragmentInstanceDefinition(
 				_read("fragment_config.json"),
 				"editable_values_fragment_config.json", "my-fragment-entry-key",
 				RandomTestUtil.randomString(),
 				_read("html_fragment_config.ftl"));
 
 		Map<String, Object> fragmentConfigMap =
-			fragmentInstanceDefinition.getFragmentConfig();
+			pageFragmentInstanceDefinition.getFragmentConfig();
 
 		Assert.assertEquals(4, fragmentConfigMap.get("level"));
 		Assert.assertEquals("center", fragmentConfigMap.get("textAlign"));
@@ -409,13 +411,13 @@ public class PageDefinitionConverterUtilTest {
 
 		Assert.assertEquals(PageElement.Type.ROW, rowPageElement.getType());
 
-		RowDefinition rowDefinition =
-			(RowDefinition)rowPageElement.getDefinition();
+		PageRowDefinition pageRowDefinition =
+			(PageRowDefinition)rowPageElement.getDefinition();
 
-		Assert.assertFalse(rowDefinition.getGutters());
+		Assert.assertFalse(pageRowDefinition.getGutters());
 
 		Assert.assertEquals(
-			Integer.valueOf(2), rowDefinition.getNumberOfColumns());
+			Integer.valueOf(2), pageRowDefinition.getNumberOfColumns());
 
 		PageElement[] columnPageElements = rowPageElement.getPageElements();
 
@@ -430,13 +432,15 @@ public class PageDefinitionConverterUtilTest {
 			PageElement.Type.COLUMN, columnPageElements[1].getType());
 		Assert.assertNull(columnPageElements[1].getPageElements());
 
-		ColumnDefinition columnDefinition1 =
-			(ColumnDefinition)columnPageElements[0].getDefinition();
-		ColumnDefinition columnDefinition2 =
-			(ColumnDefinition)columnPageElements[1].getDefinition();
+		PageColumnDefinition pageColumnDefinition1 =
+			(PageColumnDefinition)columnPageElements[0].getDefinition();
+		PageColumnDefinition pageColumnDefinition2 =
+			(PageColumnDefinition)columnPageElements[1].getDefinition();
 
-		Assert.assertEquals(Integer.valueOf(5), columnDefinition1.getSize());
-		Assert.assertEquals(Integer.valueOf(7), columnDefinition2.getSize());
+		Assert.assertEquals(
+			Integer.valueOf(5), pageColumnDefinition1.getSize());
+		Assert.assertEquals(
+			Integer.valueOf(7), pageColumnDefinition2.getSize());
 	}
 
 	@Test
@@ -467,12 +471,14 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			PageElement.Type.SECTION, sectionPageElement1.getType());
 
-		SectionDefinition sectionDefinition1 =
-			(SectionDefinition)sectionPageElement1.getDefinition();
+		PageSectionDefinition pageSectionDefinition1 =
+			(PageSectionDefinition)sectionPageElement1.getDefinition();
 
-		Assert.assertEquals("primary", sectionDefinition1.getBackgroundColor());
+		Assert.assertEquals(
+			"primary", pageSectionDefinition1.getBackgroundColor());
 
-		FragmentImage fragmentImage1 = sectionDefinition1.getBackgroundImage();
+		FragmentImage fragmentImage1 =
+			pageSectionDefinition1.getBackgroundImage();
 
 		FragmentInlineValue titleFragmentInlineValue =
 			(FragmentInlineValue)fragmentImage1.getTitle();
@@ -489,7 +495,7 @@ public class PageDefinitionConverterUtilTest {
 			urlFragmentInlineValue1.getValue());
 
 		com.liferay.headless.delivery.dto.v1_0.Layout sectionLayout =
-			sectionDefinition1.getLayout();
+			pageSectionDefinition1.getLayout();
 
 		Assert.assertEquals("Fluid", sectionLayout.getContainerTypeAsString());
 		Assert.assertEquals(
@@ -503,10 +509,11 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			PageElement.Type.SECTION, sectionPageElement2.getType());
 
-		SectionDefinition sectionDefinition2 =
-			(SectionDefinition)sectionPageElement2.getDefinition();
+		PageSectionDefinition pageSectionDefinition2 =
+			(PageSectionDefinition)sectionPageElement2.getDefinition();
 
-		FragmentImage fragmentImage2 = sectionDefinition2.getBackgroundImage();
+		FragmentImage fragmentImage2 =
+			pageSectionDefinition2.getBackgroundImage();
 
 		Assert.assertNull(fragmentImage2.getTitle());
 
@@ -538,12 +545,12 @@ public class PageDefinitionConverterUtilTest {
 
 		String fragmentEntryKey = "my-fragment-entry-key";
 
-		FragmentInstanceDefinition fragmentInstanceDefinition =
-			_getFragmentInstanceDefinition(
+		PageFragmentInstanceDefinition pageFragmentInstanceDefinition =
+			_getPageFragmentInstanceDefinition(
 				StringPool.BLANK, editableValuesFileName, fragmentEntryKey,
 				fragmentName, html);
 
-		Fragment fragment = fragmentInstanceDefinition.getFragment();
+		Fragment fragment = pageFragmentInstanceDefinition.getFragment();
 
 		Assert.assertEquals(
 			_fragmentCollection.getName(), fragment.getCollectionName());
@@ -551,7 +558,7 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(fragmentName, fragment.getName());
 
 		FragmentField[] fragmentFields =
-			fragmentInstanceDefinition.getFragmentFields();
+			pageFragmentInstanceDefinition.getFragmentFields();
 
 		Assert.assertEquals(
 			Arrays.toString(fragmentFields), 1, fragmentFields.length);
@@ -563,7 +570,7 @@ public class PageDefinitionConverterUtilTest {
 		return fragmentField;
 	}
 
-	private FragmentInstanceDefinition _getFragmentInstanceDefinition(
+	private PageFragmentInstanceDefinition _getPageFragmentInstanceDefinition(
 			String configuration, String editableValuesFileName,
 			String fragmentEntryKey, String fragmentName, String html)
 		throws Exception {
@@ -616,7 +623,8 @@ public class PageDefinitionConverterUtilTest {
 		Assert.assertEquals(
 			PageElement.Type.FRAGMENT, fragmentPageElement.getType());
 
-		return (FragmentInstanceDefinition)fragmentPageElement.getDefinition();
+		return (PageFragmentInstanceDefinition)
+			fragmentPageElement.getDefinition();
 	}
 
 	private String _read(String fileName) throws Exception {

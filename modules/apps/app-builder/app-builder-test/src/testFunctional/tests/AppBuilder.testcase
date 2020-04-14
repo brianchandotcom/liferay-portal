@@ -4023,10 +4023,7 @@ definition {
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Table View");
 	}
 
-	// LRQA-57481 Ignore AppBuilder#ViewEntryDetails due to LPS-107920
-
 	@description = "View details of an entry in an App"
-	@ignore = "true"
 	@priority = "5"
 	test ViewEntryDetails {
 		property portal.upstream = "quarantine";

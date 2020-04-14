@@ -53,8 +53,6 @@ public class DDMFormInstanceRecordUADAnonymizer
 
 		super.autoAnonymize(ddmFormInstanceRecord, userId, anonymousUser);
 
-		List<DDMContent> ddmContents = new ArrayList<>();
-
 		List<DDMFormInstanceRecordVersion> ddmFormInstanceRecordVersions =
 			_ddmFormInstanceRecordVersionLocalService.
 				getFormInstanceRecordVersions(
@@ -80,17 +78,14 @@ public class DDMFormInstanceRecordUADAnonymizer
 						anonymousUser.getFullName());
 				}
 
-				ddmContents.add(
-					_ddmContentLocalService.fetchDDMContent(
-						ddmFormInstanceRecordVersion.getStorageId()));
-
 				_ddmFormInstanceRecordVersionLocalService.
 					updateDDMFormInstanceRecordVersion(
 						ddmFormInstanceRecordVersion);
-			});
 
-		ddmContents.forEach(
-			ddmContent -> {
+				DDMContent ddmContent =
+					_ddmContentLocalService.fetchDDMContent(
+						ddmFormInstanceRecordVersion.getStorageId()));
+
 				if (ddmContent.getUserId() == userId) {
 					ddmContent.setUserId(anonymousUser.getUserId());
 					ddmContent.setUserName(anonymousUser.getFullName());

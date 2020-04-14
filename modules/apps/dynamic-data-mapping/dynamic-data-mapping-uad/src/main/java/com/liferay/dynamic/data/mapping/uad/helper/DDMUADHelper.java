@@ -59,14 +59,14 @@ public class DDMUADHelper {
 	public String getDDMFormInstanceFormattedName(
 		DDMFormInstance ddmFormInstance) {
 
-		Document document = toXMLDocument(ddmFormInstance.getName());
+		Document document = _toDocument(ddmFormInstance.getName());
 
 		Node firstChildNode = document.getFirstChild();
 
 		return firstChildNode.getTextContent();
 	}
 
-	private Document toXMLDocument(String xml) {
+	private Document _toDocument(String xml) {
 		try {
 			DocumentBuilderFactory documentBuilderFactory =
 				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();

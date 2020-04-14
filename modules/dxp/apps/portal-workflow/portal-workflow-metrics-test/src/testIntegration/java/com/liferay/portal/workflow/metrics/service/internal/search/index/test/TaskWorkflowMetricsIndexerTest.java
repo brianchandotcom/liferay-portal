@@ -173,7 +173,7 @@ public class TaskWorkflowMetricsIndexerTest
 	}
 
 	@Inject(filter = "workflow.metrics.index.entity.name=task")
-	private static WorkflowMetricsIndexNameBuilder
+	private WorkflowMetricsIndexNameBuilder
 		_taskWorkflowMetricsIndexNameBuilder;
 
 }

@@ -32,8 +32,9 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeMetric;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeMetricBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.NodeMetric;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
-import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
@@ -93,27 +94,41 @@ public class AssigneeMetricResourceTest
 		Instance instance1 = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), false, _process.getId());
 
-		_addTask(
+		Long reviewNodeId = RandomTestUtil.nextLong();
+
+		_addNodeMetric(
 			assignee1.getId(), () -> instance1, _process.getId(),
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 1L;
 				}
 			});
 
-		_addTask(
+		Long updateNodeId = RandomTestUtil.nextLong();
+
+		_addNodeMetric(
 			assignee1.getId(), () -> instance1, _process.getId(),
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "update";
-					name = "update";
+					node = new Node() {
+						{
+							id = updateNodeId;
+							label = "update";
+							name = "update";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 1L;
 				}
@@ -122,14 +137,19 @@ public class AssigneeMetricResourceTest
 		Instance instance2 = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), false, _process.getId());
 
-		_addTask(
+		_addNodeMetric(
 			assignee1.getId(), () -> instance2, _process.getId(),
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "update";
-					name = "update";
+					node = new Node() {
+						{
+							id = updateNodeId;
+							label = "update";
+							name = "update";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 1L;
 				}
@@ -147,27 +167,39 @@ public class AssigneeMetricResourceTest
 		assigneeMetric2.setOverdueTaskCount(1L);
 		assigneeMetric2.setTaskCount(2L);
 
-		_addTask(
+		_addNodeMetric(
 			assignee2.getId(), () -> instance1, _process.getId(),
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
 			});
 
-		_addTask(
+		Long submitNodeId = RandomTestUtil.nextLong();
+
+		_addNodeMetric(
 			assignee2.getId(), () -> instance2, _process.getId(),
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "submit";
-					name = "submit";
+					node = new Node() {
+						{
+							id = submitNodeId;
+							label = "submit";
+							name = "submit";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 1L;
 				}
@@ -303,14 +335,19 @@ public class AssigneeMetricResourceTest
 		assigneeMetric3.setOverdueTaskCount(0L);
 		assigneeMetric3.setTaskCount(1L);
 
-		_addTask(
+		_addNodeMetric(
 			assignee3.getId(), () -> instance1, _process.getId(),
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 0L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 0L;
 					overdueInstanceCount = 0L;
 				}
@@ -333,47 +370,67 @@ public class AssigneeMetricResourceTest
 		Instance instance3 = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), true, _process.getId());
 
-		_addTask(
+		_addNodeMetric(
 			assignee1.getId(), () -> instance3, _process.getId(), "COMPLETED",
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 1000L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
 			},
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 2000L;
 					instanceCount = 1L;
-					key = "update";
-					name = "update";
+					node = new Node() {
+						{
+							id = updateNodeId;
+							label = "update";
+							name = "update";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
 			});
 
-		_addTask(
+		_addNodeMetric(
 			assignee2.getId(), () -> instance3, _process.getId(), "COMPLETED",
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 2000L;
 					instanceCount = 1L;
-					key = "review";
-					name = "review";
+					node = new Node() {
+						{
+							id = reviewNodeId;
+							label = "review";
+							name = "review";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
 			},
-			new Task() {
+			new NodeMetric() {
 				{
 					durationAvg = 4000L;
 					instanceCount = 1L;
-					key = "update";
-					name = "update";
+					node = new Node() {
+						{
+							id = updateNodeId;
+							label = "update";
+							name = "update";
+						}
+					};
 					onTimeInstanceCount = 1L;
 					overdueInstanceCount = 0L;
 				}
@@ -454,34 +511,35 @@ public class AssigneeMetricResourceTest
 		};
 	}
 
+	private void _addNodeMetric(
+			long assigneeId,
+			UnsafeSupplier<Instance, Exception> instanceSupplier,
+			long processId, NodeMetric... nodeMetrics)
+		throws Exception {
+
+		_addNodeMetric(
+			assigneeId, instanceSupplier, processId, "RUNNING", nodeMetrics);
+	}
+
+	private void _addNodeMetric(
+			long assigneeId,
+			UnsafeSupplier<Instance, Exception> instanceSupplier,
+			long processId, String status, NodeMetric... nodeMetrics)
+		throws Exception {
+
+		for (NodeMetric nodeMetric : nodeMetrics) {
+			_workflowMetricsRESTTestHelper.addNodeMetric(
+				assigneeId, testGroup.getCompanyId(), instanceSupplier,
+				processId, status, nodeMetric, "1.0");
+		}
+	}
+
 	private void _addRoleUser(Role role, long userId) throws Exception {
 		_userLocalService.addRoleUser(role.getRoleId(), userId);
 
 		_userGroupRoleLocalService.addUserGroupRoles(
 			new long[] {userId}, TestPropsValues.getGroupId(),
 			role.getRoleId());
-	}
-
-	private void _addTask(
-			long assigneeId,
-			UnsafeSupplier<Instance, Exception> instanceSupplier,
-			long processId, String status, Task... tasks)
-		throws Exception {
-
-		for (Task task : tasks) {
-			_workflowMetricsRESTTestHelper.addTask(
-				assigneeId, testGroup.getCompanyId(), instanceSupplier,
-				processId, status, task, "1.0");
-		}
-	}
-
-	private void _addTask(
-			long assigneeId,
-			UnsafeSupplier<Instance, Exception> instanceSupplier,
-			long processId, Task... tasks)
-		throws Exception {
-
-		_addTask(assigneeId, instanceSupplier, processId, "RUNNING", tasks);
 	}
 
 	private void _deleteSLATaskResults() throws Exception {

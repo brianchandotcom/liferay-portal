@@ -136,7 +136,6 @@ public class DDMFormInstanceRecordUADAnonymizer
 
 					ddmFormInstanceRecordVersion.setStatusByUserId(
 						anonymousUser.getUserId());
-
 					ddmFormInstanceRecordVersion.setStatusByUserName(
 						anonymousUser.getFullName());
 				}

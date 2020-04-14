@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -70,9 +69,7 @@ public class DDMFormInstanceRecordUADAnonymizer
 					anonymousUser.getFullName());
 			}
 
-			if (ddmFormInstanceRecordVersion.getStatusByUserId() ==
-					userId) {
-
+			if (ddmFormInstanceRecordVersion.getStatusByUserId() == userId) {
 				ddmFormInstanceRecordVersion.setStatusByUserId(
 					anonymousUser.getUserId());
 				ddmFormInstanceRecordVersion.setStatusByUserName(
@@ -83,9 +80,8 @@ public class DDMFormInstanceRecordUADAnonymizer
 				updateDDMFormInstanceRecordVersion(
 					ddmFormInstanceRecordVersion);
 
-			DDMContent ddmContent =
-				_ddmContentLocalService.fetchDDMContent(
-					ddmFormInstanceRecordVersion.getStorageId());
+			DDMContent ddmContent = _ddmContentLocalService.fetchDDMContent(
+				ddmFormInstanceRecordVersion.getStorageId());
 
 			if (ddmContent.getUserId() == userId) {
 				ddmContent.setUserId(anonymousUser.getUserId());

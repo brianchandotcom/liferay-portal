@@ -281,10 +281,18 @@ export const visitNestedFields = ({nestedFields}, fn) => {
 	}
 };
 
-export const findFieldByName = (pages, fieldName) => {
+export const findField = (pages, predicate) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.findField(field => field.fieldName === fieldName);
+	return visitor.findField(predicate);
+};
+
+export const findFieldByFieldName = (pages, fieldName) => {
+	return findField(pages, field => field.fieldName === fieldName);
+};
+
+export const findFieldByName = (pages, name) => {
+	return findField(pages, field => field.name === name);
 };
 
 export const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {

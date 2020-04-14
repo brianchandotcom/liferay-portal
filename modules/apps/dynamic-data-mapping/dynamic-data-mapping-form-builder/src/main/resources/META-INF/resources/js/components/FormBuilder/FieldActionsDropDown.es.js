@@ -76,7 +76,7 @@ class FieldActionsDropDown extends Component {
 	getLabel() {
 		const {fieldName} = this.state;
 		const {fieldTypes, pages} = this.props;
-		const field = FormSupport.findFieldByName(pages, fieldName);
+		const field = FormSupport.findFieldByFieldName(pages, fieldName);
 
 		return (
 			field &&

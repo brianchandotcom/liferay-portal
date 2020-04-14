@@ -116,7 +116,7 @@ const handleSectionAdded = (props, state, event) => {
 	const {pages} = state;
 
 	const newField = event.newField || createField(props, event);
-	const existingField = FormSupport.findFieldByName(pages, fieldName);
+	const existingField = FormSupport.findFieldByFieldName(pages, fieldName);
 	const fieldSetField = createFieldSet(props, event, [
 		existingField,
 		newField,
@@ -130,7 +130,7 @@ const handleSectionAdded = (props, state, event) => {
 		newPages = visitor.mapFields(
 			field => {
 				if (field.fieldName === parentFieldName) {
-					const updatedParentField = FormSupport.findFieldByName(
+					const updatedParentField = FormSupport.findFieldByFieldName(
 						handleFieldDeleted(props, state, {
 							fieldName,
 						}).pages,

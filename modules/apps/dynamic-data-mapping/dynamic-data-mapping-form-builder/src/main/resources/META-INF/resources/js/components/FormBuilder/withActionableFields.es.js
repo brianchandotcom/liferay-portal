@@ -149,7 +149,7 @@ const withActionableFields = ChildComponent => {
 
 			const hoveredFieldName = hoveredFieldActions.state.fieldName;
 
-			if (!FormSupport.findFieldByName(pages, hoveredFieldName)) {
+			if (!FormSupport.findFieldByFieldName(pages, hoveredFieldName)) {
 				this.hideActions(hoveredFieldActions);
 
 				const hoveredNode = this._getHoveredNode();

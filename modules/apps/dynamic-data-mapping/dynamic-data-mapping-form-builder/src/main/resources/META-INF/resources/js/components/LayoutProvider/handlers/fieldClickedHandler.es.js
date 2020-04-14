@@ -26,7 +26,7 @@ const handleFieldClicked = (props, state, event) => {
 		fieldName = parentFieldSet.fieldName;
 	}
 
-	const fieldProperties = FormSupport.findFieldByName(pages, fieldName);
+	const fieldProperties = FormSupport.findFieldByFieldName(pages, fieldName);
 	const {settingsContext} = fieldProperties;
 	const visitor = new PagesVisitor(settingsContext.pages);
 

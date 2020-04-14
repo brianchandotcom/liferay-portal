@@ -140,7 +140,7 @@ const handleFieldDuplicated = (props, state, event) => {
 	const {fieldName} = event;
 	const {pages} = state;
 
-	const originalField = FormSupport.findFieldByName(pages, fieldName);
+	const originalField = FormSupport.findFieldByFieldName(pages, fieldName);
 
 	const duplicatedField = createDuplicatedField(originalField, props);
 

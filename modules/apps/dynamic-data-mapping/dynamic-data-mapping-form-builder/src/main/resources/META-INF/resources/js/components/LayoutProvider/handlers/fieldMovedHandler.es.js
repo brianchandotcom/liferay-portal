@@ -28,7 +28,7 @@ export default (props, state, event) => {
 	const deletedState = handleFieldDeleted(props, state, {
 		fieldName: sourceFieldName,
 	});
-	const sourceField = FormSupport.findFieldByName(
+	const sourceField = FormSupport.findFieldByFieldName(
 		state.pages,
 		sourceFieldName
 	);

@@ -59,8 +59,7 @@ public class DDMFormInstanceRecordUADAnonymizer
 					ddmFormInstanceRecord.getFormInstanceRecordId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		_anonymizeDDMFormIntanceRecordVersions(
-			ddmFormInstanceRecordVersions, userId, anonymousUser);
+		_anonymize(ddmFormInstanceRecordVersions, userId, anonymousUser);
 	}
 
 	@Override
@@ -101,21 +100,7 @@ public class DDMFormInstanceRecordUADAnonymizer
 		return actionableDynamicQuery;
 	}
 
-	private void _anonymizeDDMContents(
-		List<DDMContent> ddmContents, long userId, User anonymousUser) {
-
-		ddmContents.forEach(
-			ddmContent -> {
-				if (ddmContent.getUserId() == userId) {
-					ddmContent.setUserId(anonymousUser.getUserId());
-					ddmContent.setUserName(anonymousUser.getFullName());
-				}
-
-				_ddmContentLocalService.updateDDMContent(ddmContent);
-			});
-	}
-
-	private void _anonymizeDDMFormIntanceRecordVersions(
+	private void _anonymize(
 		List<DDMFormInstanceRecordVersion> ddmFormInstanceRecordVersions,
 		long userId, User anonymousUser) {
 
@@ -149,7 +134,15 @@ public class DDMFormInstanceRecordUADAnonymizer
 						ddmFormInstanceRecordVersion);
 			});
 
-		_anonymizeDDMContents(ddmContents, userId, anonymousUser);
+		ddmContents.forEach(
+			ddmContent -> {
+				if (ddmContent.getUserId() == userId) {
+					ddmContent.setUserId(anonymousUser.getUserId());
+					ddmContent.setUserName(anonymousUser.getFullName());
+				}
+
+				_ddmContentLocalService.updateDDMContent(ddmContent);
+			});
 	}
 
 	@Reference

@@ -564,7 +564,7 @@ definition {
 	@description = "This is a use case for LRQA-57134."
 	test RefreshTokenTime {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-    	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property portal.upstream = "quarantine";
 

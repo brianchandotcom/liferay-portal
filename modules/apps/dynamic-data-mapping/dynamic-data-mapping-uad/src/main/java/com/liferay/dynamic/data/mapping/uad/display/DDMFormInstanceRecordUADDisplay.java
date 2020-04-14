@@ -71,11 +71,10 @@ public class DDMFormInstanceRecordUADDisplay
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		String portletNamespace = _portal.getPortletNamespace(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
-
 		HttpServletRequest httpServletRequest =
 			liferayPortletRequest.getHttpServletRequest();
+		String portletNamespace = _portal.getPortletNamespace(
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
 
 		return _portal.getSiteAdminURL(
 			getThemeDisplay(httpServletRequest),

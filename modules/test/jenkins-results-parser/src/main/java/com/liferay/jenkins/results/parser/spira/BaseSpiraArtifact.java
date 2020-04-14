@@ -122,21 +122,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		cacheSpiraArtifacts(spiraArtifactClass, spiraArtifacts);
 	}
 
-	protected static void cacheSpiraArtifactJSONObjects(
-		Class<? extends SpiraArtifact> spiraArtifactClass,
-		List<JSONObject> spiraArtifactJSONObjects) {
-
-		Map<Integer, JSONObject> cachedSpiraArtifactJSONObjects =
-			_getCachedSpiraArtifactJSONObjectMap(spiraArtifactClass);
-
-		String idKey = getIDKey(spiraArtifactClass);
-
-		for (JSONObject spiraArtifactJSONObject : spiraArtifactJSONObjects) {
-			cachedSpiraArtifactJSONObjects.put(
-				spiraArtifactJSONObject.getInt(idKey), spiraArtifactJSONObject);
-		}
-	}
-
 	protected static <S extends SpiraArtifact> void cacheSpiraArtifacts(
 		Class<S> spiraArtifactClass, List<S> spiraArtifacts) {
 
@@ -146,7 +131,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			spiraArtifactJSONObjects.add(spiraArtifact.toJSONObject());
 		}
 
-		cacheSpiraArtifactJSONObjects(
+		_cacheSpiraArtifactJSONObjects(
 			spiraArtifactClass, spiraArtifactJSONObjects);
 	}
 
@@ -190,15 +175,20 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			List<JSONObject> spiraArtifactJSONObjects =
 				spiraArtifactRequest.get();
 
-			cacheSpiraArtifactJSONObjects(
+			_cacheSpiraArtifactJSONObjects(
 				spiraArtifactClass, spiraArtifactJSONObjects);
 
-			for (JSONObject jsonObject : spiraArtifactJSONObjects) {
-				if (!searchQuery.matches(spiraArtifactClass, jsonObject)) {
+			for (JSONObject spiraArtifactJSONObject :
+					spiraArtifactJSONObjects) {
+
+				if (!searchQuery.matches(
+						spiraArtifactClass, spiraArtifactJSONObject)) {
+
 					continue;
 				}
 
-				S spiraArtifact = spiraArtifactCreator.apply(jsonObject);
+				S spiraArtifact = spiraArtifactCreator.apply(
+					spiraArtifactJSONObject);
 
 				searchQuery.addSpiraArtifact(spiraArtifact);
 
@@ -211,7 +201,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		}
 
 		if (!searchQuery.hasSearchParameter("Path")) {
-			cacheSpiraArtifactJSONObjects(
+			_cacheSpiraArtifactJSONObjects(
 				spiraArtifactClass, spiraArtifactRequest.get());
 		}
 
@@ -279,6 +269,21 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	}
 
 	protected final JSONObject jsonObject;
+
+	private static void _cacheSpiraArtifactJSONObjects(
+		Class<? extends SpiraArtifact> spiraArtifactClass,
+		List<JSONObject> spiraArtifactJSONObjects) {
+
+		Map<Integer, JSONObject> cachedSpiraArtifactJSONObjects =
+			_getCachedSpiraArtifactJSONObjectMap(spiraArtifactClass);
+
+		String idKey = getIDKey(spiraArtifactClass);
+
+		for (JSONObject spiraArtifactJSONObject : spiraArtifactJSONObjects) {
+			cachedSpiraArtifactJSONObjects.put(
+				spiraArtifactJSONObject.getInt(idKey), spiraArtifactJSONObject);
+		}
+	}
 
 	private static Map<Integer, JSONObject>
 		_getCachedSpiraArtifactJSONObjectMap(

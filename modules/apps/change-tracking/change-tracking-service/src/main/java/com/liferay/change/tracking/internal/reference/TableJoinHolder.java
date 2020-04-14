@@ -34,16 +34,16 @@ public class TableJoinHolder {
 	}
 
 	public TableJoinHolder(
-		Column<?, Long> fromPKColumn, Column<?, Long> joinPKColumn,
+		Column<?, Long> parentPKColumn, Column<?, Long> childPKColumn,
 		Function<FromStep, JoinStep> joinFunction) {
 
-		_fromPKColumn = fromPKColumn;
-		_joinPKColumn = joinPKColumn;
+		_parentPKColumn = parentPKColumn;
+		_childPKColumn = childPKColumn;
 		_joinFunction = joinFunction;
 	}
 
 	public Column<?, Long> getChildPKColumn() {
-		return _joinPKColumn;
+		return _childPKColumn;
 	}
 
 	public Function<FromStep, JoinStep> getJoinFunction() {
@@ -51,18 +51,19 @@ public class TableJoinHolder {
 	}
 
 	public Column<?, Long> getParentPKColumn() {
-		return _fromPKColumn;
+		return _parentPKColumn;
 	}
 
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{fromTablePrimaryKey=", _fromPKColumn, ", joinTablePrimaryKey=",
-			_joinPKColumn, ", joinFunction=", _joinFunction, "}");
+			"{parentTablePrimaryKey=", _parentPKColumn,
+			", childTablePrimaryKey=", _childPKColumn, ", joinFunction=",
+			_joinFunction, "}");
 	}
 
-	private final Column<?, Long> _fromPKColumn;
+	private final Column<?, Long> _childPKColumn;
 	private final Function<FromStep, JoinStep> _joinFunction;
-	private final Column<?, Long> _joinPKColumn;
+	private final Column<?, Long> _parentPKColumn;
 
 }

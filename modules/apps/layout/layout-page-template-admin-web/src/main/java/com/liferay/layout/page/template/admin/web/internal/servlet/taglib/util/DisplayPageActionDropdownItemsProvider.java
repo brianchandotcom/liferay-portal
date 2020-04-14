@@ -23,6 +23,7 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
+import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportDisplayPageConfigurationUtil;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -53,6 +54,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -102,6 +104,12 @@ public class DisplayPageActionDropdownItemsProvider {
 		).add(
 			() -> hasUpdatePermission,
 			_getRenameDisplayPageActionUnsafeConsumer()
+		).add(
+			() ->
+				(_layoutPageTemplateEntry.getLayoutPageTemplateEntryId() > 0) &&
+				ExportImportDisplayPageConfigurationUtil.enabled() &&
+				(_layoutPageTemplateEntry.getLayoutPrototypeId() == 0),
+			_getExportDisplayPageActionUnsafeConsumer()
 		).add(
 			() -> LayoutPageTemplateEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
@@ -223,6 +231,26 @@ public class DisplayPageActionDropdownItemsProvider {
 
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getExportDisplayPageActionUnsafeConsumer() {
+
+		ResourceURL exportDisplayPageURL = _renderResponse.createResourceURL();
+
+		exportDisplayPageURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		exportDisplayPageURL.setResourceID(
+			"/layout_page_template/export_display_page");
+
+		return dropdownItem -> {
+			dropdownItem.setDisabled(_layoutPageTemplateEntry.isDraft());
+			dropdownItem.setHref(exportDisplayPageURL);
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "export"));
 		};
 	}
 

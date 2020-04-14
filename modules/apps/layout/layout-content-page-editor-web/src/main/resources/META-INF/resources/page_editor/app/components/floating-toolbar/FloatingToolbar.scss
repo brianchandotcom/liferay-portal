@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 @import '../variables';
 
 @keyframes FloatingToolbarPanelFadeIn {
@@ -20,7 +22,7 @@
 			pointer-events: none;
 
 			.lexicon-icon {
-				fill: #af78ff;
+				fill: $purple;
 			}
 		}
 
@@ -28,11 +30,11 @@
 			&.btn.btn-sm.active,
 			&:focus,
 			&:hover {
-				background-color: fade_out(#0b5fff, 0.94);
+				background-color: fade_out($primary, 0.94);
 			}
 
 			.lexicon-icon {
-				fill: #0b5fff;
+				fill: $primary;
 			}
 		}
 
@@ -40,11 +42,11 @@
 			&.btn.btn-sm.active,
 			&:focus,
 			&:hover {
-				background-color: fade_out(#af78ff, 0.9);
+				background-color: fade_out($purple, 0.9);
 			}
 
 			.lexicon-icon {
-				fill: #af78ff;
+				fill: $purple;
 			}
 		}
 	}
@@ -94,7 +96,7 @@
 
 			&-selected,
 			&:hover {
-				border-color: #f1f2f5;
+				border-color: $light;
 			}
 
 			&-inner {
@@ -104,7 +106,7 @@
 				width: $paletteItemSize;
 
 				&.bg-white {
-					box-shadow: inset 0 0 0 1px #cdced9;
+					box-shadow: inset 0 0 0 1px $gray-400;
 				}
 			}
 		}

@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 @import 'variables';
 
 .page-editor__drag-preview {
@@ -13,7 +15,7 @@
 	&__content {
 		background-color: rgba(225, 235, 255, 1);
 		border-radius: 4px;
-		color: #0b5fff;
+		color: $primary;
 		cursor: grabbing;
 		display: block;
 		font-size: 12px;

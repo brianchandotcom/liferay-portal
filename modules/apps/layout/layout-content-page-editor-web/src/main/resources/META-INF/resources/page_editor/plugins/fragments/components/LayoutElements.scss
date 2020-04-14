@@ -1,27 +1,28 @@
+@import 'atlas-variables';
+
 @import '../../../app/components/variables';
-@import './variables';
 
 .page-editor__fragments__layout-element-card-preview {
-	box-shadow: 0 0 0 1px $fragmentsLightColor;
+	box-shadow: 0 0 0 1px $secondary-l2;
 	display: flex;
 	flex-direction: row;
 	margin-bottom: $pageEditorSpacing * 2;
 	width: calc(50% - #{$pageEditorSpacing});
 
 	.card-title {
-		color: $fragmentsGrayColor;
+		color: $secondary;
 		font-size: 12px;
 	}
 
 	.col {
-		border: solid 1px $fragmentsGrayColor;
+		border: solid 1px $secondary;
 		flex: 1;
 		margin: 2px;
 		padding: 0;
 	}
 
 	.row {
-		border: solid 2px $fragmentsGrayColor;
+		border: solid 2px $secondary;
 		border-radius: 2px;
 		height: 40px;
 		margin: 0;

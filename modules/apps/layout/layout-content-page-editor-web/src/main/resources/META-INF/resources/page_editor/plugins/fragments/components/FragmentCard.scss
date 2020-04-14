@@ -1,8 +1,9 @@
+@import 'atlas-variables';
+
 @import '../../../app/components/variables';
-@import './variables';
 
 .page-editor__fragments__fragment-card {
-	box-shadow: 0 0 0 1px $fragmentsLightColor;
+	box-shadow: 0 0 0 1px $secondary-l2;
 	margin-bottom: $pageEditorSpacing * 2;
 	width: calc(50% - #{$pageEditorSpacing});
 
@@ -11,8 +12,8 @@
 	}
 
 	&-no-preview {
-		background-color: $fragmentsLightColor;
-		color: #a7a9bc;
+		background-color: $secondary-l2;
+		color: $secondary-l1;
 		font-size: 24px;
 		line-height: 80px;
 		text-align: center;
@@ -23,7 +24,7 @@
 		text-align: center;
 
 		.card-title {
-			color: $fragmentsGrayColor;
+			color: $secondary;
 			font-size: 12px;
 		}
 

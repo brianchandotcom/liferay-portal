@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .page-editor__toolbar-experience {
 	// There could have been done with Bootstrap classes (eg. d-flex and
 	// align-items-center), but we're doing this in here so that we have an
@@ -23,8 +25,8 @@
 	}
 
 	li.dropdown-menu__experience {
-		background-color: #fff;
-		border: 1px solid #e7e7ed;
+		background-color: $white;
+		border: 1px solid $secondary-l2;
 		border-radius: 0;
 		cursor: pointer;
 
@@ -40,8 +42,8 @@
 
 		&.dropdown-menu__experience--active,
 		&:focus {
-			background-color: #f0f5ff;
-			border-color: #80acff;
+			background-color: $primary-l3;
+			border-color: $primary-l1;
 		}
 	}
 }

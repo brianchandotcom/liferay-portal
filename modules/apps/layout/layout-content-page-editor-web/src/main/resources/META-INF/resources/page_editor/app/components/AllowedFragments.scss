@@ -1,10 +1,12 @@
+@import 'atlas-variables';
+
 .page-editor__allowed-fragment__modal {
 	.modal-body {
 		padding: 0;
 	}
 
 	.page-editor__allowed-fragment__new-fragments-checkbox {
-		background: #f7f8f9;
+		background: $gray-100;
 		padding: 12px 24px;
 
 		.custom-control {
@@ -33,17 +35,17 @@
 		}
 
 		.lfr-treeview-node-list-item__button-icon {
-			background-color: #f1f2f5;
-			color: #6b6c7e;
+			background-color: $light;
+			color: $secondary;
 		}
 
 		& > .lfr-treeview-node-list {
 			margin-left: 8px;
 
-			border-left: 1px solid #e7e7ed;
+			border-left: 1px solid $secondary-l2;
 
 			.lfr-treeview-node-list {
-				border-left-color: #e7e7ed;
+				border-left-color: $secondary-l2;
 				border-left-style: solid;
 			}
 		}

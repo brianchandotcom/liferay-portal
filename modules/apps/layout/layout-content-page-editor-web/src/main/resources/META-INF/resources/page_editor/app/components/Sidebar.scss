@@ -18,7 +18,7 @@ $zIndexContent: 0;
 	z-index: $zIndexSidebar;
 
 	&__buttons {
-		background-color: $sidebarButtonBackgroundColor;
+		background-color: $secondary-d1;
 		flex-direction: column;
 		padding-top: 16px;
 		width: $sidebarButtonWidth;
@@ -27,7 +27,7 @@ $zIndexContent: 0;
 		a {
 			align-items: center;
 			border-radius: 0.25rem;
-			color: #a7a9bc;
+			color: $secondary-l1;
 			display: flex;
 			height: 2.5em;
 			justify-content: center;
@@ -36,36 +36,36 @@ $zIndexContent: 0;
 			&:active,
 			&:focus,
 			&:hover {
-				color: $sidebarButtonHoverColor;
+				color: $white;
 			}
 
 			&:focus {
-				box-shadow: 0 0 0 0.125rem #fff, 0 0 0 0.25rem #80acff,
+				box-shadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $primary-l1,
 					inset 0 0 rgba(0, 0, 0, 0);
 				outline: none;
 			}
 		}
 
 		button {
-			color: $sidebarButtonColor;
+			color: $secondary-l1;
 
 			&.active,
 			&:active,
 			&:focus,
 			&:hover {
-				color: $sidebarButtonHoverColor;
+				color: $white;
 			}
 		}
 
 		hr {
-			border-color: $sidebarButtonSeparatorColor;
+			border-color: $secondary;
 			margin: 12px 8px;
 		}
 	}
 
 	&__content {
-		background-color: $sidebarContentBackgroundColor;
-		border-left: 1px solid $sidebarBorderColor;
+		background-color: $white;
+		border-left: 1px solid $secondary-l2;
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		overflow-x: hidden;
 		position: fixed;

@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 @keyframes FragmentCommentDecrease {
 	from {
 		max-height: 100vh;
@@ -44,7 +46,7 @@
 	}
 
 	&--highlighted {
-		background-color: #f0f5ff;
+		background-color: $primary-l3;
 	}
 
 	&--reply {
@@ -54,11 +56,11 @@
 	}
 
 	& + &:not(&--reply) {
-		border-top: solid thin #e7e7ed;
+		border-top: solid thin $secondary-l2;
 	}
 
 	&--resolved {
-		background-color: #edf9f0;
+		background-color: $success-l2;
 	}
 
 	&--with-delete-mask {
@@ -70,9 +72,9 @@
 			align-items: center;
 			animation: FragmentCommentResolveMaskFadeIn ease 0.3s;
 			animation-fill-mode: forwards;
-			background: #edf9f0;
+			background: $success-l2;
 			bottom: 0;
-			color: #287d3c;
+			color: $success;
 			display: flex;
 			font-size: 48px;
 			justify-content: center;
@@ -89,12 +91,12 @@
 	}
 
 	&-replies {
-		border-left: solid 2px #e7e7ed;
+		border-left: solid 2px $secondary-l2;
 		margin-left: 0.35rem;
 	}
 
 	& + &:not(&--reply) {
-		border-top: solid thin #e7e7ed;
+		border-top: solid thin $secondary-l2;
 	}
 
 	.content {

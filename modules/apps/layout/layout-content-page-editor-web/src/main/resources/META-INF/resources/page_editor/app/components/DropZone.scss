@@ -1,8 +1,10 @@
+@import 'atlas-variables';
+
 .page-editor__drop-zone {
 	align-items: center;
-	background: #f7f8f9;
-	border: 1px solid #e7e7ed;
-	color: #6b6c7e;
+	background: $gray-100;
+	border: 1px solid $secondary-l2;
+	color: $secondary;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

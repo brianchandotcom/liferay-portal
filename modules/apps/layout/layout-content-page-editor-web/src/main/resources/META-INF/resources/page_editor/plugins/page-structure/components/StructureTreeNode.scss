@@ -1,7 +1,5 @@
 @import 'atlas-variables';
 
-@import './variables';
-
 .page-editor__page-structure__tree-node {
 	align-items: center;
 	display: flex;
@@ -29,7 +27,7 @@
 	}
 
 	&__remove-button {
-		color: $pageStructureGrayColor;
+		color: $secondary;
 		font-size: 12px;
 		opacity: 0;
 
@@ -55,7 +53,7 @@
 		}
 
 		&--disabled {
-			color: $pageStructureBlackColor;
+			color: $gray-900;
 			cursor: not-allowed;
 			opacity: 0.4;
 		}

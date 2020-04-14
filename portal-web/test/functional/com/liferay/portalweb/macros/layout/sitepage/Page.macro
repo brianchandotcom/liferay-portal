@@ -430,9 +430,9 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		while (IsElementPresent(locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS", key_index = "3")) {
+		while (IsElementPresent(locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS", key_index = "4")) {
 			Click.waitForMenuToggleJSClick(
-				key_index = "3",
+				key_index = "4",
 				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Delete");
@@ -441,7 +441,7 @@ definition {
 		}
 
 		AssertElementNotPresent(
-			key_index = "3",
+			key_index = "4",
 			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS");
 
 		while (IsElementPresent(locator1 = "SitePages#LIST_GROUP_ITEM_CHILD_INDICATOR", key_pageName = "Home")) {

@@ -13,5 +13,6 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-type-controller:layout-type-controller-api")
 	compileOnly project(":apps:segments:segments-api")
+	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 }

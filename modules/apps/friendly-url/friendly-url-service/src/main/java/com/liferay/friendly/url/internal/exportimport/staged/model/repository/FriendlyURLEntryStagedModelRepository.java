@@ -56,7 +56,9 @@ public class FriendlyURLEntryStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			friendlyURLEntry);
 
-		serviceContext.setUuid(friendlyURLEntry.getUuid());
+		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setUuid(friendlyURLEntry.getUuid());
+		}
 
 		return _friendlyURLEntryLocalService.addFriendlyURLEntry(
 			friendlyURLEntry.getGroupId(), friendlyURLEntry.getClassNameId(),

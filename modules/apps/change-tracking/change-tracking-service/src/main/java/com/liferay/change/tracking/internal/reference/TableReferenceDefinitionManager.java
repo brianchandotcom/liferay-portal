@@ -129,13 +129,13 @@ public class TableReferenceDefinitionManager {
 		_getCombinedTableReferenceInfo(
 			TableReferenceInfo<T> tableReferenceInfo) {
 
-		Map<Table<?>, List<TableJoinHolder>> combinedParentJoinHoldersMap =
+		Map<Table<?>, List<TableJoinHolder>> combinedParentTableJoinHoldersMap =
 			_copyTableJoinHoldersMap(
-				tableReferenceInfo.getParentJoinHoldersMap());
+				tableReferenceInfo.getParentTableJoinHoldersMap());
 
-		Map<Table<?>, List<TableJoinHolder>> combinedChildJoinHoldersMap =
+		Map<Table<?>, List<TableJoinHolder>> combinedChildTableJoinHoldersMap =
 			_copyTableJoinHoldersMap(
-				tableReferenceInfo.getChildJoinHoldersMap());
+				tableReferenceInfo.getChildTableJoinHoldersMap());
 
 		TableReferenceDefinition<T> tableReferenceDefinition =
 			tableReferenceInfo.getTableReferenceDefinition();
@@ -152,50 +152,53 @@ public class TableReferenceDefinitionManager {
 			TableReferenceDefinition<?> currentTableReferenceDefinition =
 				currentTableReferenceInfo.getTableReferenceDefinition();
 
-			Map<Table<?>, List<TableJoinHolder>> currentParentJoinHoldersMap =
-				currentTableReferenceInfo.getParentJoinHoldersMap();
+			Map<Table<?>, List<TableJoinHolder>>
+				currentParentTableJoinHoldersMap =
+					currentTableReferenceInfo.getParentTableJoinHoldersMap();
 
-			List<TableJoinHolder> currentParentJoinHolders =
-				currentParentJoinHoldersMap.get(table);
+			List<TableJoinHolder> currentParentTableJoinHolders =
+				currentParentTableJoinHoldersMap.get(table);
 
-			if (currentParentJoinHolders != null) {
-				List<TableJoinHolder> combinedChildJoinHolders =
-					combinedChildJoinHoldersMap.computeIfAbsent(
+			if (currentParentTableJoinHolders != null) {
+				List<TableJoinHolder> combinedChildTableJoinHolders =
+					combinedChildTableJoinHoldersMap.computeIfAbsent(
 						currentTableReferenceDefinition.getTable(),
 						key -> new ArrayList<>());
 
-				for (TableJoinHolder currentParentJoinHolder :
-						currentParentJoinHolders) {
+				for (TableJoinHolder currentParentTableJoinHolder :
+						currentParentTableJoinHolders) {
 
-					combinedChildJoinHolders.add(
-						TableJoinHolder.reverse(currentParentJoinHolder));
+					combinedChildTableJoinHolders.add(
+						TableJoinHolder.reverse(currentParentTableJoinHolder));
 				}
 			}
 
-			Map<Table<?>, List<TableJoinHolder>> currentChildJoinHoldersMap =
-				currentTableReferenceInfo.getChildJoinHoldersMap();
+			Map<Table<?>, List<TableJoinHolder>>
+				currentChildTableJoinHoldersMap =
+					currentTableReferenceInfo.getChildTableJoinHoldersMap();
 
-			List<TableJoinHolder> currentChildJoinHolders =
-				currentChildJoinHoldersMap.get(table);
+			List<TableJoinHolder> currentChildTableJoinHolders =
+				currentChildTableJoinHoldersMap.get(table);
 
-			if (currentChildJoinHolders != null) {
-				List<TableJoinHolder> combinedParentJoinHolders =
-					combinedParentJoinHoldersMap.computeIfAbsent(
+			if (currentChildTableJoinHolders != null) {
+				List<TableJoinHolder> combinedParentTableJoinHolders =
+					combinedParentTableJoinHoldersMap.computeIfAbsent(
 						currentTableReferenceDefinition.getTable(),
 						key -> new ArrayList<>());
 
-				for (TableJoinHolder currentChildJoinHolder :
-						currentChildJoinHolders) {
+				for (TableJoinHolder currentChildTableJoinHolder :
+						currentChildTableJoinHolders) {
 
-					combinedParentJoinHolders.add(
-						TableJoinHolder.reverse(currentChildJoinHolder));
+					combinedParentTableJoinHolders.add(
+						TableJoinHolder.reverse(currentChildTableJoinHolder));
 				}
 			}
 		}
 
 		return new TableReferenceInfo<>(
 			tableReferenceDefinition, tableReferenceInfo.getPrimaryKeyColumn(),
-			combinedParentJoinHoldersMap, combinedChildJoinHoldersMap);
+			combinedParentTableJoinHoldersMap,
+			combinedChildTableJoinHoldersMap);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

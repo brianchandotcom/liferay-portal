@@ -27,7 +27,7 @@ definition {
 			locator1 = "AssetCategorization#CATEGORIES_FIELD",
 			value1 = "${categoryName}");
 
-		Click(locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC");
+		Click.mouseDownMouseUp(locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC");
 
 		AssertTextEquals(
 			locator1 = "AssetCategorization#CATEGORY",

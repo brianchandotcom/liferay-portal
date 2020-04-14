@@ -15,26 +15,34 @@
 package com.liferay.depot.internal.security.permission.wrapper.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -42,7 +50,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.tika.mime.MimeTypes;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,6 +69,11 @@ public class DepotPermissionCheckerWrapperTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
 
 	@Test
 	public void testAssetLibraryAdminIsContentReviewer() throws Exception {
@@ -507,6 +523,96 @@ public class DepotPermissionCheckerWrapperTest {
 			permissionChecker.isGroupOwner(TestPropsValues.getGroupId()));
 	}
 
+	@Test
+	public void testNonconnectedSiteMemberDoesNotHaveDepotConnectedSiteMemberUpdatePermission()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
+
+		FileEntry fileEntry = _addFileEntry(depotEntry);
+
+		DepotTestUtil.withAssetLibraryPermissions(
+			depotEntry, DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+			DLFileEntry.class.getName(), ActionKeys.UPDATE,
+			() -> DepotTestUtil.withGroupPermissions(
+				_group, RoleConstants.SITE_MEMBER, DLFileEntry.class.getName(),
+				ActionKeys.UPDATE,
+				() -> DepotTestUtil.withSiteMember(
+					_group,
+					user -> {
+						PermissionChecker permissionChecker =
+							_permissionCheckerFactory.create(user);
+
+						Assert.assertFalse(
+							permissionChecker.hasPermission(
+								fileEntry.getGroupId(),
+								DLFileEntry.class.getName(),
+								fileEntry.getFileEntryId(), ActionKeys.UPDATE));
+					})));
+	}
+
+	@Test
+	public void testSiteMemberDoesNotHaveDepotConnectedSiteMemberUpdatePermission()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		FileEntry fileEntry = _addFileEntry(depotEntry);
+
+		DepotTestUtil.withAssetLibraryPermissions(
+			depotEntry, DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+			DLFileEntry.class.getName(), ActionKeys.VIEW,
+			() -> DepotTestUtil.withGroupPermissions(
+				_group, RoleConstants.SITE_MEMBER, DLFileEntry.class.getName(),
+				ActionKeys.UPDATE,
+				() -> DepotTestUtil.withSiteMember(
+					_group,
+					user -> {
+						PermissionChecker permissionChecker =
+							_permissionCheckerFactory.create(user);
+
+						Assert.assertFalse(
+							permissionChecker.hasPermission(
+								fileEntry.getGroupId(),
+								DLFileEntry.class.getName(),
+								fileEntry.getFileEntryId(), ActionKeys.UPDATE));
+					})));
+	}
+
+	@Test
+	public void testSiteMemberHasDepotConnectedSiteMemberUpdatePermission()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		FileEntry fileEntry = _addFileEntry(depotEntry);
+
+		DepotTestUtil.withAssetLibraryPermissions(
+			depotEntry, DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+			DLFileEntry.class.getName(), ActionKeys.UPDATE,
+			() -> DepotTestUtil.withGroupPermissions(
+				_group, RoleConstants.SITE_MEMBER, DLFileEntry.class.getName(),
+				ActionKeys.UPDATE,
+				() -> DepotTestUtil.withSiteMember(
+					_group,
+					user -> {
+						PermissionChecker permissionChecker =
+							_permissionCheckerFactory.create(user);
+
+						Assert.assertTrue(
+							permissionChecker.hasPermission(
+								fileEntry.getGroupId(),
+								DLFileEntry.class.getName(),
+								fileEntry.getFileEntryId(), ActionKeys.UPDATE));
+					})));
+	}
+
 	private DepotEntry _addDepotEntry(long userId) throws PortalException {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -521,11 +627,32 @@ public class DepotPermissionCheckerWrapperTest {
 		return depotEntry;
 	}
 
+	private FileEntry _addFileEntry(DepotEntry depotEntry)
+		throws PortalException {
+
+		return _dlAppLocalService.addFileEntry(
+			TestPropsValues.getUserId(), depotEntry.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), MimeTypes.OCTET_STREAM,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), new byte[0],
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
 	@DeleteAfterTestRun
 	private final List<DepotEntry> _depotEntries = new ArrayList<>();
 
 	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;

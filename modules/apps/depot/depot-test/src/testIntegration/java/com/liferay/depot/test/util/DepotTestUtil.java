@@ -20,6 +20,8 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -46,35 +48,9 @@ public class DepotTestUtil {
 			UnsafeConsumer<User, Exception> unsafeConsumer)
 		throws Exception {
 
-		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
-
-		User user = UserTestUtil.addUser();
-
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			user.getUserId(), depotEntry.getGroupId(),
-			new long[] {role.getRoleId()});
-
-		UserLocalServiceUtil.addGroupUsers(
-			depotEntry.getGroupId(), new long[] {user.getUserId()});
-
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
-			unsafeConsumer.accept(user);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			UserLocalServiceUtil.deleteUser(user);
-		}
+		_withGroupUser(
+			depotEntry.getGroupId(),
+			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, unsafeConsumer);
 	}
 
 	public static void withAssetLibraryContentReviewer(
@@ -82,35 +58,19 @@ public class DepotTestUtil {
 			UnsafeConsumer<User, Exception> unsafeConsumer)
 		throws Exception {
 
-		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
+		_withGroupUser(
+			depotEntry.getGroupId(),
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, unsafeConsumer);
+	}
 
-		User user = UserTestUtil.addUser();
+	public static void withAssetLibraryPermissions(
+			DepotEntry depotEntry, String roleName, String resourceName,
+			String actionId, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
 
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			user.getUserId(), depotEntry.getGroupId(),
-			new long[] {role.getRoleId()});
-
-		UserLocalServiceUtil.addGroupUsers(
-			depotEntry.getGroupId(), new long[] {user.getUserId()});
-
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
-			unsafeConsumer.accept(user);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			UserLocalServiceUtil.deleteUser(user);
-		}
+		withGroupPermissions(
+			depotEntry.getGroup(), roleName, resourceName, actionId,
+			unsafeRunnable);
 	}
 
 	public static void withDepotDisabled(
@@ -150,11 +110,75 @@ public class DepotTestUtil {
 		_withUser(unsafeBiConsumer, RoleConstants.TYPE_DEPOT);
 	}
 
+	public static void withGroupPermissions(
+			Group group, String roleName, String resourceName, String actionId,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		Role role = RoleLocalServiceUtil.getRole(
+			group.getCompanyId(), roleName);
+
+		RoleTestUtil.addResourcePermission(
+			role, resourceName, ResourceConstants.SCOPE_GROUP,
+			String.valueOf(group.getGroupId()), actionId);
+
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			RoleTestUtil.removeResourcePermission(
+				roleName, resourceName, ResourceConstants.SCOPE_GROUP,
+				String.valueOf(group.getGroupId()), actionId);
+		}
+	}
+
 	public static void withRegularUser(
 			UnsafeBiConsumer<User, Role, Exception> unsafeBiConsumer)
 		throws Exception {
 
 		_withUser(unsafeBiConsumer, RoleConstants.TYPE_REGULAR);
+	}
+
+	public static void withSiteMember(
+			Group group, UnsafeConsumer<User, Exception> unsafeConsumer)
+		throws Exception {
+
+		_withGroupUser(
+			group.getGroupId(), RoleConstants.SITE_MEMBER, unsafeConsumer);
+	}
+
+	private static void _withGroupUser(
+			long groupId, String roleName,
+			UnsafeConsumer<User, Exception> unsafeConsumer)
+		throws Exception {
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), roleName);
+
+		User user = UserTestUtil.addUser();
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			user.getUserId(), groupId, new long[] {role.getRoleId()});
+
+		UserLocalServiceUtil.addGroupUsers(
+			groupId, new long[] {user.getUserId()});
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			unsafeConsumer.accept(user);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+			UserLocalServiceUtil.deleteUser(user);
+		}
 	}
 
 	private static void _withUser(

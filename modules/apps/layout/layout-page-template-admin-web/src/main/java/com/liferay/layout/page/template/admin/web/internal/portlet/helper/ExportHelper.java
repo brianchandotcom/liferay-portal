@@ -32,6 +32,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
+import com.liferay.layout.page.template.headless.delivery.dto.v1_0.DisplayPageTemplateConverterUtil;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.MasterPageConverterUtil;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageTemplateCollectionConverterUtil;
@@ -66,6 +67,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ExportHelper.class)
 public class ExportHelper {
+
+	public File exportDisplayPages(
+			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
+		throws PortletException {
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		try {
+			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+					layoutPageTemplateEntries) {
+
+				_populateDisplayPagesZipWriter(
+					layoutPageTemplateEntry, zipWriter);
+			}
+
+			zipWriter.finish();
+
+			return zipWriter.getFile();
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
+	}
 
 	public File exportMasterLayouts(
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
@@ -137,6 +161,56 @@ public class ExportHelper {
 		}
 
 		return null;
+	}
+
+	private void _populateDisplayPagesZipWriter(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			ZipWriter zipWriter)
+		throws Exception {
+
+		String displayPagePath =
+			"display-page-templates" + StringPool.SLASH +
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
+
+		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
+
+		FilterProvider filterProvider = simpleFilterProvider.addFilter(
+			"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
+
+		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
+
+		zipWriter.addEntry(
+			displayPagePath + StringPool.SLASH +
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_DISPLAY_PAGE_TEMPLATE,
+			objectWriter.writeValueAsString(
+				DisplayPageTemplateConverterUtil.toDisplayPageTemplate(
+					layoutPageTemplateEntry)));
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		if (layout != null) {
+			PageDefinition pageDefinition =
+				PageDefinitionConverterUtil.toPageDefinition(
+					_fragmentCollectionContributorTracker,
+					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+					_infoDisplayContributorTracker, layout);
+
+			zipWriter.addEntry(
+				displayPagePath + "/page-definition.json",
+				objectWriter.writeValueAsString(pageDefinition));
+		}
+
+		FileEntry previewFileEntry = _getPreviewFileEntry(
+			layoutPageTemplateEntry.getPreviewFileEntryId());
+
+		if (previewFileEntry != null) {
+			zipWriter.addEntry(
+				displayPagePath + "/thumbnail." +
+					previewFileEntry.getExtension(),
+				previewFileEntry.getContentStream());
+		}
 	}
 
 	private void _populateLayoutPageTemplateCollectionKeyMap(

@@ -28,6 +28,23 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 
 <c:if test="<%= assetPublisherDisplayContext.isEnableSubscriptions() %>">
 	<div class="subscribe-action">
+		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() && assetPublisherDisplayContext.isEnableRSS() %>">
+			<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
+
+			<div class="btn-group-item">
+				<clay:link
+					elementClasses="btn btn-outline-borderless btn-outline-secondary btn-sm"
+					href="<%= rssURL.toString() %>"
+					icon="rss-full"
+					label='<%= LanguageUtil.get(request, "rss") %>'
+				/>
+			</div>
+
+			<liferay-util:html-top>
+				<link href="<%= HtmlUtil.escapeAttribute(rssURL.toString()) %>" rel="alternate" title="RSS" type="application/rss+xml" />
+			</liferay-util:html-top>
+		</c:if>
+
 		<c:if test="<%= assetPublisherDisplayContext.isSubscriptionEnabled() %>">
 			<c:choose>
 				<c:when test="<%= assetPublisherWebHelper.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), themeDisplay.getPlid(), portletDisplay.getId()) %>">
@@ -35,12 +52,11 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
-					<liferay-ui:icon
-						label="<%= true %>"
-						linkCssClass="btn btn-secondary btn-sm mb-4"
-						markupView="lexicon"
-						message="unsubscribe"
-						url="<%= unsubscribeURL %>"
+					<clay:link
+						buttonStyle="secondary"
+						elementClasses="btn-sm"
+						href="<%= unsubscribeURL %>"
+						label='<%= LanguageUtil.get(request, "unsubscribe") %>'
 					/>
 				</c:when>
 				<c:otherwise>
@@ -48,23 +64,14 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
-					<liferay-ui:icon
-						label="<%= true %>"
-						linkCssClass="btn btn-secondary btn-sm mb-4"
-						markupView="lexicon"
-						message="subscribe"
-						url="<%= subscribeURL %>"
+					<clay:link
+						buttonStyle="secondary"
+						elementClasses="btn-sm"
+						href="<%= subscribeURL %>"
+						label='<%= LanguageUtil.get(request, "subscribe") %>'
 					/>
 				</c:otherwise>
 			</c:choose>
-		</c:if>
-
-		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() && assetPublisherDisplayContext.isEnableRSS() %>">
-			<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
-
-			<liferay-rss:rss
-				resourceURL="<%= rssURL %>"
-			/>
 		</c:if>
 	</div>
 </c:if>

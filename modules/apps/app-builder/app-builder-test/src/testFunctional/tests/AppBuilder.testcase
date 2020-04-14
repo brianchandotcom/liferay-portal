@@ -500,8 +500,7 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as Product Menu"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfProductMenuApp {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -754,8 +753,7 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfStandaloneApp {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -1005,13 +1003,10 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1");
 	}
 
-	// Ignored because of the ticket LRQA-57209
-
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"
-	@ignore = "true"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";

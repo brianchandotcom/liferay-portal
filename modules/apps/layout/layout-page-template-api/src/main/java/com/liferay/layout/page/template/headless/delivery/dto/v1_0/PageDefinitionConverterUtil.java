@@ -22,19 +22,19 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.headless.delivery.dto.v1_0.CollectionDefinition;
-import com.liferay.headless.delivery.dto.v1_0.CollectionItemDefinition;
-import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
-import com.liferay.headless.delivery.dto.v1_0.DropZoneDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
+import com.liferay.headless.delivery.dto.v1_0.PageCollectionDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageCollectionItemDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageDropZoneDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
-import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageRowDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -400,7 +400,7 @@ public class PageDefinitionConverterUtil {
 
 			return new PageElement() {
 				{
-					definition = new CollectionDefinition() {
+					definition = new PageCollectionDefinition() {
 						{
 							collectionConfig = _getConfigAsMap(
 								collectionLayoutStructureItem.
@@ -425,7 +425,7 @@ public class PageDefinitionConverterUtil {
 
 			return new PageElement() {
 				{
-					definition = new CollectionItemDefinition() {
+					definition = new PageCollectionItemDefinition() {
 						{
 							collectionItemConfig = _getConfigAsMap(
 								collectionItemLayoutStructureItem.
@@ -443,7 +443,7 @@ public class PageDefinitionConverterUtil {
 
 			return new PageElement() {
 				{
-					definition = new ColumnDefinition() {
+					definition = new PageColumnDefinition() {
 						{
 							size = columnLayoutStructureItem.getSize();
 						}
@@ -459,7 +459,7 @@ public class PageDefinitionConverterUtil {
 
 			return new PageElement() {
 				{
-					definition = new SectionDefinition() {
+					definition = new PageSectionDefinition() {
 						{
 							backgroundColor = GetterUtil.getString(
 								containerLayoutStructureItem.
@@ -541,7 +541,7 @@ public class PageDefinitionConverterUtil {
 
 			return new PageElement() {
 				{
-					definition = new DropZoneDefinition() {
+					definition = new PageDropZoneDefinition() {
 						{
 							fragmentSettings = _toFragmentSettingsMap(
 								dropZoneLayoutStructureItem,
@@ -582,8 +582,8 @@ public class PageDefinitionConverterUtil {
 				return new PageElement() {
 					{
 						definition =
-							FragmentInstanceDefinitionConverterUtil.
-								toFragmentInstanceDefinition(
+							PageFragmentInstanceDefinitionConverterUtil.
+								toPageFragmentInstanceDefinition(
 									fragmentCollectionContributorTracker,
 									fragmentEntryConfigurationParser,
 									fragmentLayoutStructureItem,
@@ -599,7 +599,7 @@ public class PageDefinitionConverterUtil {
 			return new PageElement() {
 				{
 					definition =
-						WidgetInstanceDefinitionConverterUtil.
+						PageWidgetInstanceDefinitionConverterUtil.
 							toWidgetInstanceDefinition(portletId);
 					type = PageElement.Type.WIDGET;
 				}
@@ -620,7 +620,7 @@ public class PageDefinitionConverterUtil {
 
 			return new PageElement() {
 				{
-					definition = new RowDefinition() {
+					definition = new PageRowDefinition() {
 						{
 							gutters = rowLayoutStructureItem.isGutters();
 							numberOfColumns =

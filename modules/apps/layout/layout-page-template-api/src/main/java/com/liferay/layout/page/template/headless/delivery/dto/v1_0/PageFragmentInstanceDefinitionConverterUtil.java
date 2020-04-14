@@ -35,10 +35,10 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldText;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
-import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
+import com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -74,33 +74,35 @@ import java.util.stream.Stream;
 /**
  * @author Rubén Pulido
  */
-public class FragmentInstanceDefinitionConverterUtil {
+public class PageFragmentInstanceDefinitionConverterUtil {
 
-	public static FragmentInstanceDefinition toFragmentInstanceDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		boolean saveInlineContent, boolean saveMapping) {
+	public static PageFragmentInstanceDefinition
+		toPageFragmentInstanceDefinition(
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+			FragmentLayoutStructureItem fragmentLayoutStructureItem,
+			FragmentRendererTracker fragmentRendererTracker,
+			InfoDisplayContributorTracker infoDisplayContributorTracker,
+			boolean saveInlineContent, boolean saveMapping) {
 
-		return toFragmentInstanceDefinition(
+		return toPageFragmentInstanceDefinition(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
 			fragmentRendererTracker, infoDisplayContributorTracker,
 			saveInlineContent, saveMapping, 0);
 	}
 
-	public static FragmentInstanceDefinition toFragmentInstanceDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		boolean saveInlineContent, boolean saveMapping,
-		long segmentsExperienceId) {
+	public static PageFragmentInstanceDefinition
+		toPageFragmentInstanceDefinition(
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+			FragmentLayoutStructureItem fragmentLayoutStructureItem,
+			FragmentRendererTracker fragmentRendererTracker,
+			InfoDisplayContributorTracker infoDisplayContributorTracker,
+			boolean saveInlineContent, boolean saveMapping,
+			long segmentsExperienceId) {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
@@ -116,7 +118,7 @@ public class FragmentInstanceDefinitionConverterUtil {
 			fragmentCollectionContributorTracker,
 			fragmentEntryLink.getFragmentEntryId(), rendererKey);
 
-		return new FragmentInstanceDefinition() {
+		return new PageFragmentInstanceDefinition() {
 			{
 				fragment = new Fragment() {
 					{
@@ -138,15 +140,16 @@ public class FragmentInstanceDefinitionConverterUtil {
 		};
 	}
 
-	public static FragmentInstanceDefinition toFragmentInstanceDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		FragmentRendererTracker fragmentRendererTracker) {
+	public static PageFragmentInstanceDefinition
+		toPageFragmentInstanceDefinition(
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+			FragmentLayoutStructureItem fragmentLayoutStructureItem,
+			InfoDisplayContributorTracker infoDisplayContributorTracker,
+			FragmentRendererTracker fragmentRendererTracker) {
 
-		return toFragmentInstanceDefinition(
+		return toPageFragmentInstanceDefinition(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
 			fragmentRendererTracker, infoDisplayContributorTracker, true, true);
@@ -776,6 +779,6 @@ public class FragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentInstanceDefinitionConverterUtil.class);
+		PageFragmentInstanceDefinitionConverterUtil.class);
 
 }

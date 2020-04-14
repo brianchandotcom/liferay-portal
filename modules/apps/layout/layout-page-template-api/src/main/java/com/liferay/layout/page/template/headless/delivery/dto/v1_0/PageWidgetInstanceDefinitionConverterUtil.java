@@ -14,23 +14,23 @@
 
 package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Widget;
-import com.liferay.headless.delivery.dto.v1_0.WidgetInstanceDefinition;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Jürgen Kappler
  */
-public class WidgetInstanceDefinitionConverterUtil {
+public class PageWidgetInstanceDefinitionConverterUtil {
 
-	public static WidgetInstanceDefinition toWidgetInstanceDefinition(
+	public static PageWidgetInstanceDefinition toWidgetInstanceDefinition(
 		String portletId) {
 
 		if (Validator.isNull(portletId)) {
 			return null;
 		}
 
-		return new WidgetInstanceDefinition() {
+		return new PageWidgetInstanceDefinition() {
 			{
 				widget = new Widget() {
 					{

@@ -21,6 +21,7 @@ import React, {useState} from 'react';
 const STR_BLANK = '';
 
 const DestinationUrlInput = ({
+	autofocus = false,
 	initialDestinationUrl = STR_BLANK,
 	namespace,
 }) => {
@@ -55,6 +56,7 @@ const DestinationUrlInput = ({
 				<ClayInput.GroupItem prepend>
 					<ClayInput
 						aria-label={Liferay.Language.get('destination-url')}
+						autoFocus={autofocus}
 						id={`${namespace}destinationURL`}
 						name={`${namespace}destinationURL`}
 						onBlur={({currentTarget}) =>
@@ -91,6 +93,7 @@ const DestinationUrlInput = ({
 };
 
 DestinationUrlInput.propTypes = {
+	autofocus: PropTypes.bool,
 	initialDestinationUrl: PropTypes.string,
 	namespace: PropTypes.string.isRequired,
 };

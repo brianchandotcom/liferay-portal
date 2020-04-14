@@ -76,7 +76,11 @@ else {
 		</aui:field-wrapper>
 
 		<%
+		boolean autoFocusDestination = Validator.isNotNull(sourceURL) && Validator.isNull(destinationURL);
+
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"autofocus", autoFocusDestination
+		).put(
 			"initialDestinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : StringPool.BLANK
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
@@ -84,7 +88,7 @@ else {
 		%>
 
 		<div class="destination-url">
-			<aui:input autoFocus="<%= Validator.isNotNull(sourceURL) && Validator.isNull(destinationURL) %>" name="destinationURL" value="<%= destinationURL %>" />
+			<aui:input autoFocus="<%= autoFocusDestination %>" name="destinationURL" value="<%= destinationURL %>" />
 
 			<react:component
 				data="<%= data %>"

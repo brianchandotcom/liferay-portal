@@ -9,7 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {useReducer} from 'react';
+import {useContext, useReducer} from 'react';
+
+import ConnectionContext from '../state/context';
 
 const ADD_DATA_SET_ITEM = 'add-data-key';
 const NEXT_TIME_SPAN = 'next-time-span';
@@ -17,11 +19,9 @@ const PREV_TIME_SPAN = 'previous-time-span';
 const CHANGE_TIME_SPAN_OPTION = 'change-time-span-option';
 const SET_LOADING = 'set-loading';
 
-export const useChartState = ({
-	defaultTimeSpanOption,
-	publishDate,
-	validAnalyticsConnection,
-}) => {
+export const useChartState = ({defaultTimeSpanOption, publishDate}) => {
+	const {validAnalyticsConnection} = useContext(ConnectionContext);
+
 	const [state, dispatch] = useReducer(reducer, {
 		dataSet: {histogram: [], keyList: [], totals: []},
 		loading: true,

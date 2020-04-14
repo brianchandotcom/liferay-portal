@@ -27,7 +27,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 <liferay-ui:success key='<%= AssetPublisherPortletKeys.ASSET_PUBLISHER + "requestProcessed" %>' message="your-request-completed-successfully" />
 
 <c:if test="<%= assetPublisherDisplayContext.isEnableSubscriptions() %>">
-	<div class="subscribe-action">
+	<div class="mb-4 subscribe-action">
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() && assetPublisherDisplayContext.isEnableRSS() %>">
 			<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
 

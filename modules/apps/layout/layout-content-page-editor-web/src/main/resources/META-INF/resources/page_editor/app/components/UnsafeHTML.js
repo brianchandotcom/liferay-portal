@@ -52,14 +52,15 @@ export default class UnsafeHTML extends React.PureComponent {
 
 		ref.innerHTML = this.props.markup;
 
-		requestAnimationFrame(() => {
-			globalEval.runScriptsInElement(ref);
-			this.props.onRender(ref);
-		});
-
-		this.setState({
-			portals: this.props.getPortals(ref),
-		});
+		this.setState(
+			{
+				portals: this.props.getPortals(ref),
+			},
+			() => {
+				globalEval.runScriptsInElement(ref);
+				this.props.onRender(ref);
+			}
+		);
 	}
 
 	/**

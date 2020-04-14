@@ -192,7 +192,7 @@
 <!--DATE-->
 <tr>
 	<td>DATE_FIELD</td>
-	<td>//p[contains(text(),'${key_fieldName}')]/../following-sibling::*//input[@aria-label='date_picker']</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[@type!="hidden"]</td>
 	<td></td>
 </tr>
 

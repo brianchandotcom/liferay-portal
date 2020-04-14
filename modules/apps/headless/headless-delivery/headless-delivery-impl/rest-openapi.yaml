@@ -733,6 +733,19 @@ components:
                     description:
                         The field's internal name. This is valid for comparisons and unique in the structured content.
                     type: string
+        DisplayPageTemplate:
+            description:
+                ""
+            properties:
+                contentSubtypeName:
+                    type: string
+                contentTypeClassName:
+                    type: string
+                key:
+                    type: string
+                name:
+                    type: string
+            type: object
         Document:
             description:
                 Represents a Document Library file, storing binary and metadata information. Properties follow the

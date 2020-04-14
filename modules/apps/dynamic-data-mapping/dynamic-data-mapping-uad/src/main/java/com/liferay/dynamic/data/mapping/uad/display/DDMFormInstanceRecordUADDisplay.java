@@ -226,29 +226,6 @@ public class DDMFormInstanceRecordUADDisplay
 			WebKeys.THEME_DISPLAY);
 	}
 
-	private int _getIndex(DDMFormInstanceRecord ddmFormInstanceRecord) {
-		List<DDMFormInstanceRecord> ddmFormInstanceRecords =
-			_getDDMFormInstanceRecords(
-				ddmFormInstanceRecord.getFormInstanceId(),
-				ddmFormInstanceRecord.getUserId());
-
-		int index = 0;
-
-		for (DDMFormInstanceRecord currentDDMFormInstanceRecord :
-				ddmFormInstanceRecords) {
-
-			if (currentDDMFormInstanceRecord.getFormInstanceRecordId() ==
-					ddmFormInstanceRecord.getFormInstanceRecordId()) {
-
-				return index;
-			}
-
-			index++;
-		}
-
-		return -1;
-	}
-
 	private List<DDMFormInstanceRecord> _getDDMFormInstanceRecords(
 		long formInstanceId, long userId) {
 
@@ -270,6 +247,29 @@ public class DDMFormInstanceRecordUADDisplay
 
 		return ddmFormInstanceRecordUADUserCache.getDDMFormInstanceRecords(
 			userId);
+	}
+
+	private int _getIndex(DDMFormInstanceRecord ddmFormInstanceRecord) {
+		List<DDMFormInstanceRecord> ddmFormInstanceRecords =
+			_getDDMFormInstanceRecords(
+				ddmFormInstanceRecord.getFormInstanceId(),
+				ddmFormInstanceRecord.getUserId());
+
+		int index = 0;
+
+		for (DDMFormInstanceRecord currentDDMFormInstanceRecord :
+				ddmFormInstanceRecords) {
+
+			if (currentDDMFormInstanceRecord.getFormInstanceRecordId() ==
+					ddmFormInstanceRecord.getFormInstanceRecordId()) {
+
+				return index;
+			}
+
+			index++;
+		}
+
+		return -1;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

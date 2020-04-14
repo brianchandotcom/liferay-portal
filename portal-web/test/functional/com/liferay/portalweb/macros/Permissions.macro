@@ -247,10 +247,10 @@ definition {
 
 		Navigator.gotoPage(pageName = "${pageName}");
 
-		Portlet.addPG(
-			i = "${i}",
-			pageName = "${pageName}",
-			portletName = "${portletName}");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "${pageName}",
+			widgetName = "${portletName}");
 
 		JSONUser.addUser(
 			userEmailAddress = "${userEmailAddress}",

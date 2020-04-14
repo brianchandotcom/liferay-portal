@@ -254,9 +254,9 @@ public class CTClosureFactoryImplTest {
 		CTClosure ctClosure = _ctClosureFactory.create(
 			_ctCollection.getCtCollectionId());
 
-		Map<Long, List<Long>> roots = ctClosure.getRoots();
+		Map<Long, List<Long>> rootPKsMap = ctClosure.getRootPKsMap();
 
-		Assert.assertTrue(roots.toString(), roots.isEmpty());
+		Assert.assertTrue(rootPKsMap.toString(), rootPKsMap.isEmpty());
 	}
 
 	@Test
@@ -378,7 +378,7 @@ public class CTClosureFactoryImplTest {
 		Assert.assertEquals(
 			Collections.singletonMap(
 				grandParentClassNameId, Collections.singletonList(1L)),
-			ctClosure.getRoots());
+			ctClosure.getRootPKsMap());
 
 		long childClassNameId = _classNameLocalService.getClassNameId(
 			Child.class);
@@ -387,7 +387,7 @@ public class CTClosureFactoryImplTest {
 			_assertMapContent(
 				Collections.singletonMap(
 					grandParentClassNameId, Arrays.asList(2L, 3L)),
-				ctClosure.getChildren(grandParentClassNameId, 1L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 1L));
 
 			long parentClassNameId = _classNameLocalService.getClassNameId(
 				Parent.class);
@@ -398,42 +398,42 @@ public class CTClosureFactoryImplTest {
 				).put(
 					parentClassNameId, Collections.singletonList(12L)
 				).build(),
-				ctClosure.getChildren(grandParentClassNameId, 2L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 2L));
 
 			Assert.assertEquals(
 				Collections.singletonMap(
 					parentClassNameId, Collections.singletonList(14L)),
-				ctClosure.getChildren(grandParentClassNameId, 3L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 3L));
 
 			Assert.assertEquals(
 				Collections.singletonMap(
 					childClassNameId, Collections.singletonList(22L)),
-				ctClosure.getChildren(parentClassNameId, 12L));
+				ctClosure.getChildPKsMap(parentClassNameId, 12L));
 
 			Assert.assertEquals(
 				Collections.emptyMap(),
-				ctClosure.getChildren(parentClassNameId, 14L));
+				ctClosure.getChildPKsMap(parentClassNameId, 14L));
 		}
 		else {
 			Assert.assertEquals(
 				Collections.singletonMap(
 					grandParentClassNameId, Collections.singletonList(2L)),
-				ctClosure.getChildren(grandParentClassNameId, 1L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 1L));
 
 			Assert.assertEquals(
 				Collections.singletonMap(
 					childClassNameId, Collections.singletonList(21L)),
-				ctClosure.getChildren(grandParentClassNameId, 2L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 2L));
 		}
 
 		Assert.assertEquals(
 			Collections.singletonMap(
 				childClassNameId, Collections.singletonList(22L)),
-			ctClosure.getChildren(childClassNameId, 21L));
+			ctClosure.getChildPKsMap(childClassNameId, 21L));
 
 		Assert.assertEquals(
 			Collections.emptyMap(),
-			ctClosure.getChildren(childClassNameId, 22L));
+			ctClosure.getChildPKsMap(childClassNameId, 22L));
 	}
 
 	private void _testClosureNoCycles(int changeType, boolean addParents)
@@ -514,7 +514,7 @@ public class CTClosureFactoryImplTest {
 		Assert.assertEquals(
 			Collections.singletonMap(
 				grandParentClassNameId, Collections.singletonList(1L)),
-			ctClosure.getRoots());
+			ctClosure.getRootPKsMap());
 
 		long childClassNameId = _classNameLocalService.getClassNameId(
 			Child.class);
@@ -523,7 +523,7 @@ public class CTClosureFactoryImplTest {
 			_assertMapContent(
 				Collections.singletonMap(
 					grandParentClassNameId, Arrays.asList(2L, 3L)),
-				ctClosure.getChildren(grandParentClassNameId, 1L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 1L));
 
 			long parentClassNameId = _classNameLocalService.getClassNameId(
 				Parent.class);
@@ -531,42 +531,42 @@ public class CTClosureFactoryImplTest {
 			Assert.assertEquals(
 				Collections.singletonMap(
 					parentClassNameId, Collections.singletonList(12L)),
-				ctClosure.getChildren(grandParentClassNameId, 2L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 2L));
 
 			Assert.assertEquals(
 				Collections.singletonMap(
 					parentClassNameId, Collections.singletonList(14L)),
-				ctClosure.getChildren(grandParentClassNameId, 3L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 3L));
 
 			Assert.assertEquals(
 				Collections.singletonMap(
 					childClassNameId, Collections.singletonList(21L)),
-				ctClosure.getChildren(parentClassNameId, 12L));
+				ctClosure.getChildPKsMap(parentClassNameId, 12L));
 
 			Assert.assertEquals(
 				Collections.emptyMap(),
-				ctClosure.getChildren(parentClassNameId, 14L));
+				ctClosure.getChildPKsMap(parentClassNameId, 14L));
 		}
 		else {
 			Assert.assertEquals(
 				Collections.singletonMap(
 					grandParentClassNameId, Collections.singletonList(2L)),
-				ctClosure.getChildren(grandParentClassNameId, 1L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 1L));
 
 			Assert.assertEquals(
 				Collections.singletonMap(
 					childClassNameId, Collections.singletonList(21L)),
-				ctClosure.getChildren(grandParentClassNameId, 2L));
+				ctClosure.getChildPKsMap(grandParentClassNameId, 2L));
 		}
 
 		Assert.assertEquals(
 			Collections.singletonMap(
 				childClassNameId, Collections.singletonList(22L)),
-			ctClosure.getChildren(childClassNameId, 21L));
+			ctClosure.getChildPKsMap(childClassNameId, 21L));
 
 		Assert.assertEquals(
 			Collections.emptyMap(),
-			ctClosure.getChildren(childClassNameId, 22L));
+			ctClosure.getChildPKsMap(childClassNameId, 22L));
 	}
 
 	@Inject

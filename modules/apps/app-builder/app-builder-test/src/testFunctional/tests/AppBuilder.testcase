@@ -2076,6 +2076,47 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "Apple");
 	}
 
+	@description = "Remove a field added to the Objects Sidebar and make sure is not possible to save an empty form"
+	@priority = "5"
+	test MakeSureIsNotPossibleSaveEmptyFormView {
+		property portal.upstream = "quarantine";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View Title");
+
+		FormViewBuilder.openFormView(formViewName = "My Form View Title");
+
+		FormViewBuilder.deleteObjectSidebarField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
+
+		FormViewBuilder.addFieldToObject(fieldName = "Text");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
+
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Text");
+
+		FormViewBuilder.fieldEllipsisAction(
+			fieldLabel = "Text",
+			selectAction = "Remove");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
+	}
+
 	@description = "Place a widget in my page with only a Form View of my App"
 	@priority = "5"
 	test PlaceFormViewWidget {
@@ -2724,47 +2765,6 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
 
 		FormViewBuilder.validateObjectFieldName(fieldName = "Text");
-	}
-
-	@description = "Remove a field added to the Objects Sidebar and make sure is not possible to save an empty form"
-	@priority = "5"
-	test MakeSureIsNotPossibleSaveEmptyFormView {
-		property portal.upstream = "quarantine";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFormView(
-			fieldType = "Text",
-			formViewName = "My Form View Title");
-
-		FormViewBuilder.openFormView(formViewName = "My Form View Title");
-
-		FormViewBuilder.deleteObjectSidebarField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		Button.clickSave();
-
-		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
-
-		FormViewBuilder.addFieldToObject(fieldName = "Text");
-
-		Button.clickSave();
-
-		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
-
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Text");
-
-		FormViewBuilder.fieldEllipsisAction(
-			fieldLabel = "Text",
-			selectAction = "Remove");
-
-		Button.clickSave();
-
-		Alert.viewErrorMessage(errorMessage = "Layout is empty.");
 	}
 
 	@description = "Remove fields from the Form View through the 'Remove' option"

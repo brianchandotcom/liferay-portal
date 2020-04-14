@@ -66,7 +66,7 @@ public class DDMUADHelper {
 		return firstChildNode.getTextContent();
 	}
 
-	public Document toXMLDocument(String xml) {
+	private Document toXMLDocument(String xml) {
 		try {
 			DocumentBuilderFactory documentBuilderFactory =
 				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();

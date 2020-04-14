@@ -683,7 +683,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${columnCount}");
 
-			Pause(locator = "3000");
+			Pause(locator1 = "3000");
 		}
 
 		if ("${spaceBetweenColumns}" == "true") {
@@ -716,7 +716,7 @@ definition {
 				key_paletteItem = "${backgroundColor}",
 				locator1 = "Button#PALETTE_ITEM");
 
-			Pause(locator = "3000");
+			Pause(locator1 = "3000");
 		}
 
 		if (isSet(backgroundImage)) {
@@ -760,7 +760,7 @@ definition {
 				SelectFrame(value1 = "relative=top");
 			}
 
-			Pause(locator = "3000");
+			Pause(locator1 = "3000");
 		}
 
 		if (isSet(container)) {
@@ -769,7 +769,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${container}");
 
-			Pause(locator = "3000");
+			Pause(locator1 = "3000");
 		}
 
 		if (isSet(paddingBottom)) {
@@ -778,7 +778,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${paddingBottom}");
 
-			Pause(locator = "3000");
+			Pause(locator1 = "3000");
 		}
 
 		if (isSet(paddingHorizontal)) {
@@ -787,7 +787,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${paddingHorizontal}");
 
-			Pause(locator = "3000");
+			Pause(locator1 = "3000");
 		}
 
 		if (isSet(paddingTop)) {
@@ -796,7 +796,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${paddingTop}");
 
-			Pause(locator = "3000");
+			Pause(locator1 = "3000");
 		}
 
 		PageEditor.waitForAutoSave();
@@ -1288,12 +1288,12 @@ definition {
 		}
 
 		if (isSet(spaceBetweenColumns)) {
-			if ("spaceBetweenColumns" == "true") {
+			if ("${spaceBetweenColumns}" == "true") {
 				AssertElementNotPresent(
 					key_position = "${position}",
 					locator1 = "PageEditor#ROW_CONFIGURATION_COLUMNS_NO_GUTTER");
 			}
-			else if ("spaceBetweenColumns" == "false") {
+			else if ("${spaceBetweenColumns}" == "false") {
 				AssertElementPresent(
 					key_position = "${position}",
 					locator1 = "PageEditor#ROW_CONFIGURATION_COLUMNS_NO_GUTTER");

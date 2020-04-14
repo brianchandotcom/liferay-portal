@@ -367,11 +367,7 @@ definition {
 	@description = "This is a test for LPS-91000 and LPS-95002. User can edit number of columns a section has as well as padding options."
 	@priority = "5"
 	test ChangeLayoutElementProperties {
-
-		// Quarantine test until LRQA-56815 is resolved
-
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add a content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");

@@ -168,7 +168,7 @@ public class TableReferenceDefinitionManager {
 						currentParentJoinHolders) {
 
 					combinedChildJoinHolders.add(
-						currentParentJoinHolder.reverse());
+						TableJoinHolder.reverse(currentParentJoinHolder));
 				}
 			}
 
@@ -188,7 +188,7 @@ public class TableReferenceDefinitionManager {
 						currentChildJoinHolders) {
 
 					combinedParentJoinHolders.add(
-						currentChildJoinHolder.reverse());
+						TableJoinHolder.reverse(currentChildJoinHolder));
 				}
 			}
 		}

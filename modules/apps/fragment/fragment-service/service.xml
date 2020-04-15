@@ -300,6 +300,12 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="G_S_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="segmentsExperienceId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 
 		<!-- References -->
 

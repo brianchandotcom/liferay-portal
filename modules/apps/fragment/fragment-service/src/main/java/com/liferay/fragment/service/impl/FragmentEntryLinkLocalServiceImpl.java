@@ -312,6 +312,15 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinksBySegmentsExperienceId(
+		long groupId, long segmentsExperienceId, long classNameId,
+		long classPK) {
+
+		return fragmentEntryLinkPersistence.findByG_S_C_C(
+			groupId, segmentsExperienceId, classNameId, classPK);
+	}
+
+	@Override
 	public int getFragmentEntryLinksCount(long groupId, long fragmentEntryId) {
 		return fragmentEntryLinkFinder.countByG_F(groupId, fragmentEntryId);
 	}

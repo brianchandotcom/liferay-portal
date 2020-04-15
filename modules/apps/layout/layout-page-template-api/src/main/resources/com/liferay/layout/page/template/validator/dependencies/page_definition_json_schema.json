@@ -642,6 +642,10 @@
 			"properties": {
 				"widget": {
 					"$ref": "#/definitions/Widget"
+				},
+				"widgetConfig": {
+					"title": "The widgetConfig Schema",
+					"type": "object"
 				}
 			},
 			"title": "The WidgetInstanceDefinition Schema",

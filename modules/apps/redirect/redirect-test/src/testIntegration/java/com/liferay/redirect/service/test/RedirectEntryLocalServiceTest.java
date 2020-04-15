@@ -172,7 +172,7 @@ public class RedirectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testFetchRedirectEntryUpdatesTheModifiedDateOnHit()
+	public void testFetchRedirectEntryUpdatesTheLastOccurrenceDate()
 		throws Exception {
 
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
@@ -190,7 +190,7 @@ public class RedirectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testFetchRedirectEntryUpdatesTheModifiedDateOnHitOnceADay()
+	public void testFetchRedirectEntryUpdatesTheLastOccurrenceDateOnceADay()
 		throws Exception {
 
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(

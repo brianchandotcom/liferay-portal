@@ -75,6 +75,36 @@ public class PageWidgetInstanceDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Widget widget;
 
+	@Schema
+	@Valid
+	public Map<String, Object> getWidgetConfig() {
+		return widgetConfig;
+	}
+
+	public void setWidgetConfig(Map<String, Object> widgetConfig) {
+		this.widgetConfig = widgetConfig;
+	}
+
+	@JsonIgnore
+	public void setWidgetConfig(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			widgetConfigUnsafeSupplier) {
+
+		try {
+			widgetConfig = widgetConfigUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> widgetConfig;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -112,6 +142,16 @@ public class PageWidgetInstanceDefinition {
 			sb.append("\"widget\": ");
 
 			sb.append(String.valueOf(widget));
+		}
+
+		if (widgetConfig != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetConfig\": ");
+
+			sb.append(_toJSON(widgetConfig));
 		}
 
 		sb.append("}");

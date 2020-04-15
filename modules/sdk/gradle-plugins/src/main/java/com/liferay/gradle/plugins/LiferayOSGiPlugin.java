@@ -164,10 +164,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, LiferayOSGiExtension.class);
 
+		_applyPlugins(project);
+
 		final Configuration compileIncludeConfiguration =
 			_addConfigurationCompileInclude(project);
-
-		_applyPlugins(project);
 
 		_configureArchivesBaseName(project);
 		_configureDescription(project);

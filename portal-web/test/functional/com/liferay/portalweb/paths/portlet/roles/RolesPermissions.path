@@ -1209,6 +1209,28 @@
 	<td>//input[contains(@value,'MyWorkflowTaskPortletVIEW')]</td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_CONFIGURATION_REDIRECTION_GENERAL_PERMISSIONS-->
+<tr>
+	<td>SITE_ADMIN_CONFIGURATION_REDIRECTION_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
+	<td>//tbody//input[contains(@value,'RedirectPortletACCESS_IN_CONTROL_PANEL')]</td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONFIGURATION_REDIRECTION_RESOURCE_PERMISSIONS-->
+<tr>
+	<td>SITE_ADMIN_CONFIGURATION_REDIRECTION_RESOURCE_PERMISSIONS_REDIRECT_ADD_ENTRY_CHECKBOX</td>
+	<td>//input[contains(@value,'redirectADD_ENTRY')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONFIGURATION_REDIRECTION_RESOURCE_PERMISSIONS_REDIRECT_ENTRY_DELETE_CHECKBOX</td>
+	<td>//input[contains(@value,'RedirectEntryDELETE')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONFIGURATION_REDIRECTION_RESOURCE_PERMISSIONS_REDIRECT_ENTRY_VIEW_CHECKBOX</td>
+	<td>//input[contains(@value,'RedirectEntryVIEW')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -177,6 +177,11 @@
 </tr>
 <!--SITE_ADMIN_CONFIGURATION-->
 <tr>
+	<td>SITE_ADMIN_CONFIGURATION_REDIRECTION</td>
+	<td>//a[contains(.,'Configuration') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Redirection')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_CONFIGURATION_SITE_SETTINGS</td>
 	<td>//a[contains(.,'Configuration') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'Site Settings')]</td>
 	<td></td>

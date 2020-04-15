@@ -850,14 +850,11 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		ProductMenu.gotoScopedPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs");
-
-		BlogsConfiguration.selectScopeCP(
-			scopeDefault = "Default",
-			scopeSelection = "Blogs Page2");
+			portlet = "Blogs",
+			scope = "Blogs Page2");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 

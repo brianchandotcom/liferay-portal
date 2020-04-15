@@ -500,6 +500,33 @@ components:
                 processVersion:
                     type: string
             type: object
+        TaskBulkSelection:
+            description:
+                https://schema.org/TaskBulkSelection
+            properties:
+                assigneeIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                instanceIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                processId:
+                    format: int64
+                    type: integer
+                slaStatuses:
+                    items:
+                        enum: [OnTime, Overdue, Untracked]
+                        type: string
+                    type: array
+                taskNames:
+                    items:
+                        type: string
+                    type: array
+            type: object
         TimeRange:
             description:
                 https://www.schema.org/TimeRange
@@ -1612,6 +1639,42 @@ paths:
                     description:
                         ""
             tags: ["SLA"]
+    "/tasks":
+        post:
+            operationId: postProcessTasksPage
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaskBulkSelection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TaskBulkSelection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Task"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Task"
+                                type: array
+                    description:
+                        ""
+            tags: ["Task"]
     "/time-ranges":
         get:
             operationId: getTimeRangesPage

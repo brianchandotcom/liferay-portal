@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,8 +77,7 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Override
 	public JSONObject getConfigurationJSONObject(
-			String configuration, String editableValues,
-			long[] segmentsExperienceIds)
+			String configuration, String editableValues)
 		throws JSONException {
 
 		JSONObject configurationDefaultValuesJSONObject =
@@ -100,13 +98,6 @@ public class FragmentEntryConfigurationParserImpl
 			return configurationDefaultValuesJSONObject;
 		}
 
-		JSONObject configurationJSONObject = configurationValuesJSONObject;
-
-		if (isPersonalizationSupported(configurationValuesJSONObject)) {
-			configurationJSONObject = getSegmentedConfigurationValues(
-				segmentsExperienceIds, configurationValuesJSONObject);
-		}
-
 		List<FragmentConfigurationField> configurationFields =
 			getFragmentConfigurationFields(configuration);
 
@@ -115,7 +106,7 @@ public class FragmentEntryConfigurationParserImpl
 
 			String name = configurationField.getName();
 
-			Object object = configurationJSONObject.get(name);
+			Object object = configurationValuesJSONObject.get(name);
 
 			if (Validator.isNull(object)) {
 				continue;
@@ -125,25 +116,24 @@ public class FragmentEntryConfigurationParserImpl
 				name,
 				getFieldValue(
 					configurationField,
-					configurationJSONObject.getString(name)));
+					configurationValuesJSONObject.getString(name)));
 		}
 
 		return configurationDefaultValuesJSONObject;
 	}
 
 	@Override
-	public Map<String, Object> getContextObjects(
-		JSONObject configurationValuesJSONObject, String configuration) {
+	public JSONObject getConfigurationJSONObject(
+			String configuration, String editableValues,
+			long[] segmentsExperienceIds)
+		throws JSONException {
 
-		return getContextObjects(
-			configurationValuesJSONObject, configuration,
-			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+		return getConfigurationJSONObject(configuration, editableValues);
 	}
 
 	@Override
 	public Map<String, Object> getContextObjects(
-		JSONObject configurationValuesJSONObject, String configuration,
-		long[] segmentsExperienceIds) {
+		JSONObject configurationValuesJSONObject, String configuration) {
 
 		HashMap<String, Object> contextObjects = new HashMap<>();
 
@@ -174,7 +164,6 @@ public class FragmentEntryConfigurationParserImpl
 					"collectionSelector")) {
 
 				Object contextListObject = _getInfoListObjectEntry(
-					segmentsExperienceIds,
 					configurationValuesJSONObject.getString(name));
 
 				if (contextListObject != null) {
@@ -185,6 +174,14 @@ public class FragmentEntryConfigurationParserImpl
 		}
 
 		return contextObjects;
+	}
+
+	@Override
+	public Map<String, Object> getContextObjects(
+		JSONObject configurationValuesJSONObject, String configuration,
+		long[] segmentsExperienceIds) {
+
+		return getContextObjects(configurationValuesJSONObject, configuration);
 	}
 
 	@Override
@@ -243,6 +240,13 @@ public class FragmentEntryConfigurationParserImpl
 		String configuration, String editableValues,
 		long[] segmentsExperienceIds, String name) {
 
+		return getFieldValue(configuration, editableValues, name);
+	}
+
+	@Override
+	public Object getFieldValue(
+		String configuration, String editableValues, String name) {
+
 		JSONObject editableValuesJSONObject = null;
 
 		try {
@@ -269,14 +273,6 @@ public class FragmentEntryConfigurationParserImpl
 
 			if (!Objects.equals(fragmentConfigurationField.getName(), name)) {
 				continue;
-			}
-
-			if (isPersonalizationSupported(configurationValuesJSONObject)) {
-				JSONObject configurationJSONObject =
-					getSegmentedConfigurationValues(
-						segmentsExperienceIds, configurationValuesJSONObject);
-
-				return configurationJSONObject.get(name);
 			}
 
 			return configurationValuesJSONObject.get(name);
@@ -322,36 +318,12 @@ public class FragmentEntryConfigurationParserImpl
 		long[] segmentsExperienceIds,
 		JSONObject configurationValuesJSONObject) {
 
-		long segmentsExperienceId = SegmentsExperienceConstants.ID_DEFAULT;
-
-		if (segmentsExperienceIds.length > 0) {
-			segmentsExperienceId = segmentsExperienceIds[0];
-		}
-
-		JSONObject configurationJSONObject =
-			configurationValuesJSONObject.getJSONObject(
-				SegmentsExperienceConstants.ID_PREFIX + segmentsExperienceId);
-
-		if (configurationJSONObject == null) {
-			configurationJSONObject = JSONFactoryUtil.createJSONObject();
-		}
-
-		return configurationJSONObject;
+		return configurationValuesJSONObject;
 	}
 
 	@Override
 	public boolean isPersonalizationSupported(JSONObject jsonObject) {
-		Iterator<String> keys = jsonObject.keys();
-
-		while (keys.hasNext()) {
-			String key = keys.next();
-
-			if (key.startsWith(SegmentsExperienceConstants.ID_PREFIX)) {
-				return true;
-			}
-		}
-
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -585,9 +557,7 @@ public class FragmentEntryConfigurationParserImpl
 		return null;
 	}
 
-	private Object _getInfoListObjectEntry(
-		long[] segmentsExperienceIds, String value) {
-
+	private Object _getInfoListObjectEntry(String value) {
 		if (Validator.isNull(value)) {
 			return Collections.emptyList();
 		}
@@ -615,16 +585,9 @@ public class FragmentEntryConfigurationParserImpl
 				return Collections.emptyList();
 			}
 
-			DefaultLayoutListRetrieverContext
-				defaultLayoutListRetrieverContext =
-					new DefaultLayoutListRetrieverContext();
-
-			defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
-				segmentsExperienceIds);
-
 			return layoutListRetriever.getList(
 				listObjectReferenceFactory.getListObjectReference(jsonObject),
-				defaultLayoutListRetrieverContext);
+				new DefaultLayoutListRetrieverContext());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

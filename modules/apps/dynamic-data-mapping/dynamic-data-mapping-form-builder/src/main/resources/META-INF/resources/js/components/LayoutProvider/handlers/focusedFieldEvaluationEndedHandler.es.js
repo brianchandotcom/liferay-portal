@@ -12,14 +12,16 @@
  * details.
  */
 
-import {
-	PagesVisitor,
-	generateInstanceId,
-} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import handleFieldEdited from './fieldEditedHandler.es';
 
-const handleFocusedFieldEvaluationEnded = (props, state, settingsContext) => {
+const handleFocusedFieldEvaluationEnded = (
+	props,
+	state,
+	instanceId,
+	settingsContext
+) => {
 	const visitor = new PagesVisitor(settingsContext.pages);
 	const {focusedField} = state;
 
@@ -27,7 +29,7 @@ const handleFocusedFieldEvaluationEnded = (props, state, settingsContext) => {
 		...state,
 		focusedField: {
 			...focusedField,
-			instanceId: generateInstanceId(8),
+			instanceId,
 			settingsContext,
 		},
 	};

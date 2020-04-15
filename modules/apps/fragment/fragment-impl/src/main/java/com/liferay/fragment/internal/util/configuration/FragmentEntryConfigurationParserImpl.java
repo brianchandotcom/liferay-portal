@@ -122,6 +122,11 @@ public class FragmentEntryConfigurationParserImpl
 		return configurationDefaultValuesJSONObject;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getConfigurationJSONObject(String, String)}
+	 */
+	@Deprecated
 	@Override
 	public JSONObject getConfigurationJSONObject(
 			String configuration, String editableValues,
@@ -176,6 +181,11 @@ public class FragmentEntryConfigurationParserImpl
 		return contextObjects;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getContextObjects(JSONObject, String)}
+	 */
+	@Deprecated
 	@Override
 	public Map<String, Object> getContextObjects(
 		JSONObject configurationValuesJSONObject, String configuration,
@@ -235,6 +245,10 @@ public class FragmentEntryConfigurationParserImpl
 		return _getFieldValue("string", value);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Object getFieldValue(
 		String configuration, String editableValues,
@@ -313,6 +327,10 @@ public class FragmentEntryConfigurationParserImpl
 		return fragmentConfigurationFields;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public JSONObject getSegmentedConfigurationValues(
 		long[] segmentsExperienceIds,
@@ -321,6 +339,10 @@ public class FragmentEntryConfigurationParserImpl
 		return configurationValuesJSONObject;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isPersonalizationSupported(JSONObject jsonObject) {
 		throw new UnsupportedOperationException();

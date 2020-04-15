@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -41,6 +43,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Jürgen Kappler
@@ -81,10 +85,10 @@ public class WidgetLayoutStructureItemHelper
 			return null;
 		}
 
-		Map<String, Object> fragmentDefinitionMap =
+		Map<String, Object> widgetDefinitionMap =
 			(Map<String, Object>)definitionMap.get("widget");
 
-		String name = (String)fragmentDefinitionMap.get("name");
+		String name = (String)widgetDefinitionMap.get("name");
 
 		if (Validator.isNull(name)) {
 			return null;
@@ -103,6 +107,13 @@ public class WidgetLayoutStructureItemHelper
 			).put(
 				"portletId", name
 			);
+
+			Map<String, Object> widgetConfigDefinitionMap =
+				(Map<String, Object>)definitionMap.get("widgetConfig");
+
+			_importPortletConfiguration(
+				layout.getPlid(), PortletIdCodec.encode(name, instanceId),
+				widgetConfigDefinitionMap);
 
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 				layout.getUserId(), layout.getGroupId(), 0, 0,
@@ -157,6 +168,48 @@ public class WidgetLayoutStructureItemHelper
 		}
 
 		return instanceId;
+	}
+
+	private void _importPortletConfiguration(
+			long plid, String portletId, Map<String, Object> widgetConfig)
+		throws Exception {
+
+		if (widgetConfig == null) {
+			return;
+		}
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+		if (layout == null) {
+			return;
+		}
+
+		String portletName = PortletIdCodec.decodePortletName(portletId);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletName);
+
+		if (portlet == null) {
+			return;
+		}
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				portletId, portlet.getDefaultPreferences());
+
+		for (Map.Entry<String, Object> entrySet : widgetConfig.entrySet()) {
+			portletPreferences.setValue(
+				entrySet.getKey(), (String)entrySet.getValue());
+		}
+
+		String portletPreferencesXML = PortletPreferencesFactoryUtil.toXML(
+			portletPreferences);
+
+		PortletPreferencesLocalServiceUtil.addPortletPreferences(
+			layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId,
+			null, portletPreferencesXML);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

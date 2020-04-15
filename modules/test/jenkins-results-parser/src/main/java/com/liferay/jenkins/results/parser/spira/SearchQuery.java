@@ -173,6 +173,16 @@ public class SearchQuery<T extends SpiraArtifact> {
 		_spiraArtifacts.add(spiraArtifact);
 	}
 
+	protected SearchParameter getSearchParameter(String searchParameterName) {
+		for (SearchParameter searchParameter : _searchParameters) {
+			if (searchParameterName.equals(searchParameter.getName())) {
+				return searchParameter;
+			}
+		}
+
+		return null;
+	}
+
 	protected List<T> getSpiraArtifacts() {
 		return _spiraArtifacts;
 	}

@@ -1484,6 +1484,20 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
+		WorkflowMetrics.viewWorkloadByAssigneeCard(
+			assigneeName = "1user user1",
+			tabName = "Total",
+			taskCount = "2");
+
+		WorkflowMetrics.viewUserWorkloadByStepOnAllItems(
+			assigneeName = "1user user1",
+			callingFrom = "CARD",
+			isNotPresent = "2user user2,3user user3",
+			isPresent = "Blogs Entry Title 1,Blogs Entry Title 4",
+			taskName = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "Review");
 
 		WorkflowMetrics.viewWorkloadByAssigneeCard(

@@ -156,6 +156,11 @@ public class RedirectManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getInfoPanelId() {
+		return "infoPanelId";
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 

@@ -18,8 +18,7 @@ import {createPortal} from 'react-dom';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import DisabledArea from './DisabledArea';
-import Layout from './Layout';
-import MasterLayout from './MasterLayout';
+import LayoutViewport from './LayoutViewport';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 
@@ -42,11 +41,10 @@ export default function App() {
 		<>
 			<DisabledArea />
 			<Toolbar />
-			{masterLayoutData.items ? (
-				<MasterLayout />
-			) : (
-				<Layout mainItemId={mainItemId} />
-			)}
+			<LayoutViewport
+				mainItemId={mainItemId}
+				useMasterLayout={masterLayoutData.items}
+			/>
 			{createPortal(<Sidebar />, document.body)}
 		</>
 	);

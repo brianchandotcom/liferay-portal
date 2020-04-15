@@ -12,7 +12,6 @@
  * details.
  */
 
-import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import {closest} from 'metal-dom';
@@ -48,19 +47,11 @@ const LAYOUT_DATA_ITEMS = {
 export default function MasterPage() {
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const masterLayoutData = useSelector(state => state.masterLayoutData);
-	const sidebarOpen = useSelector(
-		state => state.sidebar.panelId && state.sidebar.open
-	);
 
 	const mainItem = masterLayoutData.items[masterLayoutData.rootItems.main];
 
 	return (
-		<div
-			className={classNames('master-page', 'master-page--with-sidebar', {
-				'master-page--with-sidebar-open': sidebarOpen,
-			})}
-			id="master-layout"
-		>
+		<div className="master-page" id="master-layout">
 			<MasterLayoutDataItem
 				fragmentEntryLinks={fragmentEntryLinks}
 				item={mainItem}

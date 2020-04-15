@@ -27,7 +27,7 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import FragmentService from '../../services/FragmentService';
 import {useDispatch, useSelector} from '../../store/index';
 import {useGetFieldValue} from '../CollectionItemContext';
-import PageEditor from '../PageEditor';
+import Layout from '../Layout';
 import UnsafeHTML from '../UnsafeHTML';
 import {
 	useEditableProcessorUniqueId,
@@ -181,7 +181,7 @@ const FragmentContent = React.forwardRef(
 
 						const Component = () =>
 							mainItemId && (
-								<PageEditor
+								<Layout
 									mainItemId={mainItemId}
 									withinMasterPage
 								/>

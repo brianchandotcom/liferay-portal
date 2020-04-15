@@ -66,7 +66,7 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls,
 };
 
-export default function Layout({mainItemId, withinMasterPage = false}) {
+export default function Layout({mainItemId}) {
 	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
@@ -216,11 +216,7 @@ export default function Layout({mainItemId, withinMasterPage = false}) {
 			)}
 
 			<div
-				className={classNames('page-editor', {
-					'page-editor--with-sidebar': !withinMasterPage,
-					'page-editor--with-sidebar-open':
-						sidebarOpen && !withinMasterPage,
-				})}
+				className={classNames('page-editor')}
 				id="page-editor"
 				onClick={onClick}
 				ref={layoutRef}

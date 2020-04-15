@@ -18,7 +18,7 @@
 	},
 	"jest": {
 		"moduleNameMapper": {
-			"^./liferay/modal/Modal.es$": "<rootDir>/test/js/__mock__/Modal.es.js"
+			"^./liferay/modal/Modal$": "<rootDir>/test/js/__mock__/Modal.js"
 		},
 		"modulePathIgnorePatterns": [
 			"/__mock__/"

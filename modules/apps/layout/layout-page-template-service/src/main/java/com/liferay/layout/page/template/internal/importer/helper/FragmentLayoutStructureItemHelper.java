@@ -209,7 +209,9 @@ public class FragmentLayoutStructureItemHelper
 		Map<String, Object> defaultValueMap = (Map<String, Object>)map.get(
 			"defaultValue");
 
-		jsonObject.put("defaultValue", defaultValueMap.get("value"));
+		if (defaultValueMap != null) {
+			jsonObject.put("defaultValue", defaultValueMap.get("value"));
+		}
 
 		_processMapping(jsonObject, (Map<String, String>)map.get("mapping"));
 
@@ -250,7 +252,9 @@ public class FragmentLayoutStructureItemHelper
 			return jsonObject;
 		}
 
-		value = defaultValueMap.get("value");
+		if (defaultValueMap != null) {
+			value = defaultValueMap.get("value");
+		}
 
 		if (value != null) {
 			jsonObject.put("href", value);

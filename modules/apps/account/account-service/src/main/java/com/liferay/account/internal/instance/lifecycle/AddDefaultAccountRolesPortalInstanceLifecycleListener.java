@@ -21,6 +21,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,8 +36,12 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,7 +100,8 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 			HashMapBuilder.put(
 				LocaleThreadLocal.getDefaultLocale(), roleName
 			).build(),
-			null, RoleConstants.TYPE_ACCOUNT, null, null);
+			_getDescriptionMap(roleName), RoleConstants.TYPE_ACCOUNT, null,
+			null);
 
 		accountRole.setCompanyId(role.getCompanyId());
 		accountRole.setAccountEntryId(
@@ -129,7 +135,16 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 			HashMapBuilder.put(
 				LocaleThreadLocal.getDefaultLocale(), roleName
 			).build(),
-			null, RoleConstants.TYPE_REGULAR, null, null);
+			_getDescriptionMap(roleName), RoleConstants.TYPE_REGULAR, null,
+			null);
+	}
+
+	private void _checkRoleDescription(Role role) {
+		if (MapUtil.isEmpty(role.getDescriptionMap())) {
+			role.setDescriptionMap(_getDescriptionMap(role.getName()));
+
+			_roleLocalService.updateRole(role);
+		}
 	}
 
 	private boolean _exists(String roleName) {
@@ -137,10 +152,44 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 			CompanyThreadLocal.getCompanyId(), roleName);
 
 		if (role != null) {
+			_checkRoleDescription(role);
+
 			return true;
 		}
 
 		return false;
+	}
+
+	private Map<Locale, String> _getDescriptionMap(String roleName) {
+		String description = StringPool.BLANK;
+
+		if (Objects.equals(
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
+				roleName)) {
+
+			description =
+				"Account Administrators are super users of their account.";
+		}
+		else if (Objects.equals(
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+					roleName)) {
+
+			description =
+				"Account Managers who belong to an organization can " +
+					"administer all accounts associated to that organization.";
+		}
+		else if (Objects.equals(
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER,
+					roleName)) {
+
+			description =
+				"All users who belong to an account have this role within " +
+					"that account.";
+		}
+
+		return HashMapBuilder.put(
+			LocaleUtil.US, description
+		).build();
 	}
 
 	private static final Map<String, String[]>

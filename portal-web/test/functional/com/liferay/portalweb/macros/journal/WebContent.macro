@@ -2073,30 +2073,6 @@ definition {
 		}
 	}
 
-	macro viewUnlocalizableTextBox {
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${webContentTitle}");
-
-		FormFields.viewTextMultilineValue(
-			fieldName = "TextBox",
-			fieldValue = "${webContentTextBox}");
-
-		PortletEntry.changeLocale(locale = "es-ES");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${localizedTitle}");
-
-		FormFields.viewTextValue(
-			fieldName = "Text",
-			fieldValue = "${localizedText}");
-
-		FormFields.viewTextMultilineValue(
-			fieldName = "TextBox",
-			fieldValue = "${localizedTextBox}");
-	}
-
 	macro viewUserEditCP {
 		AssertTextEquals.assertPartialText(
 			key_webContentTitle = "${webContentTitle}",

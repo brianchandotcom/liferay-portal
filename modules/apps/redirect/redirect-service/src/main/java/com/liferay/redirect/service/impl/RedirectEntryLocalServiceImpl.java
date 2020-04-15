@@ -143,7 +143,9 @@ public class RedirectEntryLocalServiceImpl
 			}
 		}
 
-		return redirectEntry;
+		redirectEntry.setLastOccurrenceDate(new Date());
+
+		return redirectEntryLocalService.updateRedirectEntry(redirectEntry);
 	}
 
 	@Override

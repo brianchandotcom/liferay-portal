@@ -313,7 +313,7 @@ definition {
 
 		Select(
 			locator1 = "Select#SCOPE",
-			value1 = "${scope}");
+			value1 = "regexp:.*${scope}.*");
 
 		Portlet.saveAndCloseConfig();
 	}

@@ -47,7 +47,7 @@ const QuickActionKebab = ({
 
 	return (
 		<>
-			{iconItems.length > 0 && (
+			{!disabled && iconItems.length > 0 && (
 				<div className="quick-action-menu">
 					{iconItems.map(({icon, onClick}, index) => (
 						<IconItem icon={icon} key={index} onClick={onClick} />

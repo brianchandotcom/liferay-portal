@@ -76,9 +76,9 @@ const Item = ({totalCount, ...instance}) => {
 	const assignedToUser = !!assignees.find(({id}) => id === Number(userId));
 	const assigneeNames = assignees.map(user => user.name).join(', ');
 	const completed = status === processStatusConstants.completed;
-	const unassigned = !!assignees.find(({id}) => id === -1);
+	const {reviewer} = assignees.find(({id}) => id === -1) || {};
 
-	const disableCheckbox = (!assignedToUser && !unassigned) || completed;
+	const disableCheckbox = (!assignedToUser && !reviewer) || completed;
 	const slaStatusIcon = getSLAStatusIcon(slaStatus);
 
 	const formattedAssignees = !completed

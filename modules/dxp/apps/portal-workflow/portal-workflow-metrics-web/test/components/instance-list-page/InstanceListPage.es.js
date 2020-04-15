@@ -22,7 +22,7 @@ const items = [
 	{
 		assetTitle: 'New Post 1',
 		assetType: 'Blog',
-		assignees: [{id: -1, name: 'Unassigned'}],
+		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
 		dateCreated: new Date('2019-01-01'),
 		id: 1,
 		taskNames: [],
@@ -30,7 +30,7 @@ const items = [
 	{
 		assetTitle: 'New Post 2',
 		assetType: 'Blog',
-		assignees: [{id: -1, name: 'Unassigned'}],
+		assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
 		creator: {
 			name: 'User 1',
 		},

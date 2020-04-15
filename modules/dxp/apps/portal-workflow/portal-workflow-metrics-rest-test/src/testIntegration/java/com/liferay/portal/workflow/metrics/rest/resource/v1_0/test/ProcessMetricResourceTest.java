@@ -40,7 +40,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -165,18 +164,6 @@ public class ProcessMetricResourceTest
 						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetProcessMetric() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetProcessMetricsPage() throws Exception {
 	}
 
 	@Override

@@ -23,8 +23,6 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.Workfl
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -59,12 +57,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteProcess(
 				testGroup.getCompanyId(), _process);
 		}
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetProcessTask() throws Exception {
 	}
 
 	@Override

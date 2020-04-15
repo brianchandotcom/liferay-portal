@@ -36,7 +36,6 @@ import java.util.Locale;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -97,7 +96,6 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 			calendars);
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGraphQLGetCalendarsPage() throws Exception {

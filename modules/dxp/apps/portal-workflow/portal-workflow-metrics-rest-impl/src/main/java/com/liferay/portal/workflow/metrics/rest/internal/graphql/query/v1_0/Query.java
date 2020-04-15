@@ -193,17 +193,17 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeIds: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, statuses: ___, taskKeys: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeIds: ___, completed: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, taskNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public InstancePage processInstances(
 			@GraphQLName("processId") Long processId,
 			@GraphQLName("assigneeIds") Long[] assigneeIds,
+			@GraphQLName("completed") Boolean completed,
 			@GraphQLName("dateEnd") Date dateEnd,
 			@GraphQLName("dateStart") Date dateStart,
 			@GraphQLName("slaStatuses") String[] slaStatuses,
-			@GraphQLName("statuses") String[] statuses,
-			@GraphQLName("taskKeys") String[] taskKeys,
+			@GraphQLName("taskNames") String[] taskNames,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -213,14 +213,14 @@ public class Query {
 			this::_populateResourceContext,
 			instanceResource -> new InstancePage(
 				instanceResource.getProcessInstancesPage(
-					processId, assigneeIds, dateEnd, dateStart, slaStatuses,
-					statuses, taskKeys, Pagination.of(page, pageSize))));
+					processId, assigneeIds, completed, dateEnd, dateStart,
+					slaStatuses, taskNames, Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstance(instanceId: ___, processId: ___){assetTitle, assetTitle_i18n, assetType, assetType_i18n, assignees, className, classPK, completed, creator, dateCompletion, dateCreated, dateModified, duration, id, processId, processVersion, slaResults, slaStatus, status, taskNames, transitions}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstance(instanceId: ___, processId: ___){assetTitle, assetTitle_i18n, assetType, assetType_i18n, assignees, className, classPK, completed, creator, dateCompletion, dateCreated, dateModified, duration, id, processId, processVersion, slaResults, slaStatus, taskNames, transitions}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Instance processInstance(
@@ -420,7 +420,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processTask(processId: ___, taskId: ___){assigneeId, className, classPK, completed, completionUserId, dateCompletion, dateCreated, dateModified, duration, id, instanceId, label, name, nodeId, processId, processVersion}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processTask(processId: ___, taskId: ___){assetTitle, assetTitle_i18n, assetType, assetType_i18n, assignee, className, classPK, completed, completionUserId, dateCompletion, dateCreated, dateModified, duration, id, instanceId, label, name, nodeId, processId, processVersion}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Task processTask(
@@ -694,11 +694,11 @@ public class Query {
 		@GraphQLField
 		public InstancePage instances(
 				@GraphQLName("assigneeIds") Long[] assigneeIds,
+				@GraphQLName("completed") Boolean completed,
 				@GraphQLName("dateEnd") Date dateEnd,
 				@GraphQLName("dateStart") Date dateStart,
 				@GraphQLName("slaStatuses") String[] slaStatuses,
-				@GraphQLName("statuses") String[] statuses,
-				@GraphQLName("taskKeys") String[] taskKeys,
+				@GraphQLName("taskNames") String[] taskNames,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
@@ -708,8 +708,8 @@ public class Query {
 				Query.this::_populateResourceContext,
 				instanceResource -> new InstancePage(
 					instanceResource.getProcessInstancesPage(
-						_process.getId(), assigneeIds, dateEnd, dateStart,
-						slaStatuses, statuses, taskKeys,
+						_process.getId(), assigneeIds, completed, dateEnd,
+						dateStart, slaStatuses, taskNames,
 						Pagination.of(page, pageSize))));
 		}
 

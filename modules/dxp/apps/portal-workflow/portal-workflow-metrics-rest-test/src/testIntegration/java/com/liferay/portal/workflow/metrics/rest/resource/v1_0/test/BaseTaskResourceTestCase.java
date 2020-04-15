@@ -178,6 +178,8 @@ public abstract class BaseTaskResourceTestCase {
 
 		Task task = randomTask();
 
+		task.setAssetTitle(regex);
+		task.setAssetType(regex);
 		task.setClassName(regex);
 		task.setLabel(regex);
 		task.setName(regex);
@@ -189,6 +191,8 @@ public abstract class BaseTaskResourceTestCase {
 
 		task = TaskSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, task.getAssetTitle());
+		Assert.assertEquals(regex, task.getAssetType());
 		Assert.assertEquals(regex, task.getClassName());
 		Assert.assertEquals(regex, task.getLabel());
 		Assert.assertEquals(regex, task.getName());
@@ -443,8 +447,40 @@ public abstract class BaseTaskResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("assigneeId", additionalAssertFieldName)) {
-				if (task.getAssigneeId() == null) {
+			if (Objects.equals("assetTitle", additionalAssertFieldName)) {
+				if (task.getAssetTitle() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetTitle_i18n", additionalAssertFieldName)) {
+				if (task.getAssetTitle_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetType", additionalAssertFieldName)) {
+				if (task.getAssetType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetType_i18n", additionalAssertFieldName)) {
+				if (task.getAssetType_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assignee", additionalAssertFieldName)) {
+				if (task.getAssignee() == null) {
 					valid = false;
 				}
 
@@ -639,9 +675,51 @@ public abstract class BaseTaskResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("assigneeId", additionalAssertFieldName)) {
+			if (Objects.equals("assetTitle", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						task1.getAssigneeId(), task2.getAssigneeId())) {
+						task1.getAssetTitle(), task2.getAssetTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetTitle_i18n", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)task1.getAssetTitle_i18n(),
+						(Map)task2.getAssetTitle_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						task1.getAssetType(), task2.getAssetType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetType_i18n", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)task1.getAssetType_i18n(),
+						(Map)task2.getAssetType_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assignee", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						task1.getAssignee(), task2.getAssignee())) {
 
 					return false;
 				}
@@ -874,7 +952,33 @@ public abstract class BaseTaskResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("assigneeId")) {
+		if (entityFieldName.equals("assetTitle")) {
+			sb.append("'");
+			sb.append(String.valueOf(task.getAssetTitle()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("assetTitle_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("assetType")) {
+			sb.append("'");
+			sb.append(String.valueOf(task.getAssetType()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("assetType_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("assignee")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1068,7 +1172,10 @@ public abstract class BaseTaskResourceTestCase {
 	protected Task randomTask() throws Exception {
 		return new Task() {
 			{
-				assigneeId = RandomTestUtil.randomLong();
+				assetTitle = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				assetType = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				className = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				classPK = RandomTestUtil.randomLong();

@@ -97,8 +97,6 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 					requestJSONObject.toString()),
 				spiraProject, spiraArtifactClass);
 
-			cacheSpiraArtifact(SpiraCustomProperty.class, spiraCustomProperty);
-
 			SearchQuery.clearSearchQueries(SpiraCustomProperty.class);
 
 			return spiraCustomProperty;
@@ -330,6 +328,8 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 		_spiraCustomList = SpiraCustomList.createSpiraCustomListByName(
 			spiraProject, spiraArtifactClass, getName());
+
+		cacheSpiraArtifact(SpiraCustomProperty.class, this);
 	}
 
 	private final SpiraCustomList _spiraCustomList;

@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraRelease extends PathSpiraArtifact {
+public class SpiraRelease extends IndentLevelSpiraArtifact {
 
 	public static SpiraRelease createSpiraRelease(
 		SpiraProject spiraProject, String releaseName) {
@@ -81,13 +80,8 @@ public class SpiraRelease extends PathSpiraArtifact {
 				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			SpiraRelease spiraRelease = spiraProject.getSpiraReleaseByID(
+			return spiraProject.getSpiraReleaseByID(
 				responseJSONObject.getInt(ID_KEY));
-
-			cacheSpiraArtifacts(
-				SpiraRelease.class, Collections.singletonList(spiraRelease));
-
-			return spiraRelease;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -162,7 +156,7 @@ public class SpiraRelease extends PathSpiraArtifact {
 			return _parentSpiraRelease;
 		}
 
-		String indentLevel = jsonObject.getString("IndentLevel");
+		String indentLevel = getIndentLevel();
 
 		if (indentLevel.length() <= 3) {
 			return null;
@@ -304,6 +298,8 @@ public class SpiraRelease extends PathSpiraArtifact {
 
 	private SpiraRelease(JSONObject jsonObject) {
 		super(jsonObject);
+
+		cacheSpiraArtifact(SpiraRelease.class, this);
 	}
 
 	private SpiraRelease _getSpiraReleaseByIndentLevel(String indentLevel) {

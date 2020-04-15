@@ -251,13 +251,8 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			SpiraTestCaseObject spiraTestCase =
-				spiraProject.getSpiraTestCaseByID(
-					responseJSONObject.getInt(ID_KEY));
-
-			cacheSpiraArtifact(SpiraTestCaseObject.class, spiraTestCase);
-
-			return spiraTestCase;
+			return spiraProject.getSpiraTestCaseByID(
+				responseJSONObject.getInt(ID_KEY));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -305,6 +300,8 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	private SpiraTestCaseObject(JSONObject jsonObject) {
 		super(jsonObject);
+
+		cacheSpiraArtifact(SpiraTestCaseObject.class, this);
 	}
 
 	private SpiraTestCaseFolder _parentSpiraTestCaseFolder;

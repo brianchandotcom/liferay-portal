@@ -143,6 +143,8 @@ public class SpiraTestSet extends PathSpiraArtifact {
 
 	private SpiraTestSet(JSONObject jsonObject) {
 		super(jsonObject);
+
+		cacheSpiraArtifact(SpiraTestSet.class, this);
 	}
 
 	private SpiraTestSetFolder _parentSpiraTestSetFolder;

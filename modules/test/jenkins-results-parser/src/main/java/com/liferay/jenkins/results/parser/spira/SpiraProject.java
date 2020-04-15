@@ -495,6 +495,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 	private SpiraProject(JSONObject jsonObject) {
 		super(jsonObject);
+
+		cacheSpiraArtifact(SpiraProject.class, this);
 	}
 
 }

@@ -72,13 +72,8 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 				urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			SpiraReleaseBuild spiraReleaseBuild =
-				spiraRelease.getSpiraReleaseBuildByID(
-					responseJSONObject.getInt(ID_KEY));
-
-			cacheSpiraArtifact(SpiraReleaseBuild.class, spiraReleaseBuild);
-
-			return spiraReleaseBuild;
+			return spiraRelease.getSpiraReleaseBuildByID(
+				responseJSONObject.getInt(ID_KEY));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -175,6 +170,8 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 
 	private SpiraReleaseBuild(JSONObject jsonObject) {
 		super(jsonObject);
+
+		cacheSpiraArtifact(SpiraReleaseBuild.class, this);
 	}
 
 }

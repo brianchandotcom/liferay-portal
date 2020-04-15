@@ -60,16 +60,12 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		requestJSONObject.put("SortedOnValue", true);
 
 		try {
-			SpiraCustomList spiraCustomList = new SpiraCustomList(
+			return new SpiraCustomList(
 				SpiraRestAPIUtil.requestJSONObject(
 					"project-templates/{project_template_id}/custom-lists",
 					null, urlPathReplacements, HttpRequestMethod.POST,
 					requestJSONObject.toString()),
 				spiraProject, spiraArtifactClass);
-
-			cacheSpiraArtifact(SpiraCustomList.class, spiraCustomList);
-
-			return spiraCustomList;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -273,6 +269,8 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		jsonObject.put("ProjectId", spiraProject.getID());
 
 		_spiraArtifactClass = spiraArtifactClass;
+
+		cacheSpiraArtifact(SpiraCustomList.class, this);
 	}
 
 	private final Class<? extends SpiraArtifact> _spiraArtifactClass;

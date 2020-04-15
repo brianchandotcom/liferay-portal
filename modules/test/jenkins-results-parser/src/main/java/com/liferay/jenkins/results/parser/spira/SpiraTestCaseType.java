@@ -97,6 +97,8 @@ public class SpiraTestCaseType extends BaseSpiraArtifact {
 
 	private SpiraTestCaseType(JSONObject jsonObject) {
 		super(jsonObject);
+
+		cacheSpiraArtifact(SpiraTestCaseType.class, this);
 	}
 
 }

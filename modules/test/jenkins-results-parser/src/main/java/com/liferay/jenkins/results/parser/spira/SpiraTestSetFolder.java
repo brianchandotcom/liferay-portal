@@ -83,13 +83,8 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			SpiraTestSetFolder spiraTestSetFolder =
-				spiraProject.getSpiraTestSetFolderByID(
-					responseJSONObject.getInt(ID_KEY));
-
-			cacheSpiraArtifact(SpiraTestSetFolder.class, spiraTestSetFolder);
-
-			return spiraTestSetFolder;
+			return spiraProject.getSpiraTestSetFolderByID(
+				responseJSONObject.getInt(ID_KEY));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -255,6 +250,8 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 
 	private SpiraTestSetFolder(JSONObject jsonObject) {
 		super(jsonObject);
+
+		cacheSpiraArtifact(SpiraTestSetFolder.class, this);
 	}
 
 	private SpiraTestSetFolder _parentSpiraTestSetFolder;

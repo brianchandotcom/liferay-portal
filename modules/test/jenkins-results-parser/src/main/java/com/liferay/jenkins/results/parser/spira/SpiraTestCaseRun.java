@@ -341,6 +341,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 	private SpiraTestCaseRun(JSONObject jsonObject) {
 		super(jsonObject);
+
+		cacheSpiraArtifact(SpiraTestCaseRun.class, this);
 	}
 
 }

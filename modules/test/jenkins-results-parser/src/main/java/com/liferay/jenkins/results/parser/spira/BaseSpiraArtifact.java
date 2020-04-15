@@ -18,7 +18,6 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.lang.reflect.Field;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -115,47 +114,34 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	protected static <S extends SpiraArtifact> void cacheSpiraArtifact(
 		Class<S> spiraArtifactClass, S spiraArtifact) {
 
-		List<S> spiraArtifacts = new ArrayList<>();
+		Map<Integer, SpiraArtifact> idMap = _getIDMap(spiraArtifactClass);
+		Map<String, PathSpiraArtifact> pathMap = _getPathMap(
+			spiraArtifactClass);
+		Map<String, IndentLevelSpiraArtifact> indentLevelMap =
+			_getIndentLevelMap(spiraArtifactClass);
 
-		spiraArtifacts.add(spiraArtifact);
+		idMap.put(spiraArtifact.getID(), spiraArtifact);
 
-		cacheSpiraArtifacts(spiraArtifactClass, spiraArtifacts);
-	}
+		if (spiraArtifact instanceof PathSpiraArtifact) {
+			PathSpiraArtifact pathSpiraArtifact =
+				(PathSpiraArtifact)spiraArtifact;
 
-	protected static <S extends SpiraArtifact> void cacheSpiraArtifacts(
-		Class<S> spiraArtifactClass, List<S> spiraArtifacts) {
-
-		List<JSONObject> spiraArtifactJSONObjects = new ArrayList<>();
-
-		for (S spiraArtifact : spiraArtifacts) {
-			spiraArtifactJSONObjects.add(spiraArtifact.toJSONObject());
-
-			if (spiraArtifact instanceof PathSpiraArtifact) {
-				Map<String, PathSpiraArtifact> pathSpiraArtifactMap =
-					_spiraArtifactPathMap.get(spiraArtifactClass);
-
-				if (pathSpiraArtifactMap == null) {
-					pathSpiraArtifactMap = new HashMap<>();
-
-					_spiraArtifactPathMap.put(
-						spiraArtifactClass, pathSpiraArtifactMap);
-				}
-
-				PathSpiraArtifact pathSpiraArtifact =
-					(PathSpiraArtifact)spiraArtifact;
-
-				pathSpiraArtifactMap.put(
-					pathSpiraArtifact.getPath(), pathSpiraArtifact);
-			}
+			pathMap.put(pathSpiraArtifact.getPath(), pathSpiraArtifact);
 		}
 
-		_cacheSpiraArtifactJSONObjects(
-			spiraArtifactClass, spiraArtifactJSONObjects);
+		if (spiraArtifact instanceof IndentLevelSpiraArtifact) {
+			IndentLevelSpiraArtifact indentLevelSpiraArtifact =
+				(IndentLevelSpiraArtifact)spiraArtifact;
+
+			indentLevelMap.put(
+				indentLevelSpiraArtifact.getIndentLevel(),
+				indentLevelSpiraArtifact);
+		}
 	}
 
 	protected static <S extends SpiraArtifact> List<S> getSpiraArtifacts(
 		Class<S> spiraArtifactClass,
-		Supplier<List<JSONObject>> spiraArtifactRequest,
+		Supplier<List<JSONObject>> spiraArtifactSupplier,
 		Function<JSONObject, S> spiraArtifactCreator,
 		SearchQuery.SearchParameter... searchParameters) {
 
@@ -170,93 +156,86 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		SearchQuery<S> searchQuery = new SearchQuery<>(
 			spiraArtifactClass, searchParameters);
 
-		if (searchQuery.hasSearchParameter(getIDKey(spiraArtifactClass)) ||
-			searchQuery.hasSearchParameter("IndentLevel")) {
+		String idKey = getIDKey(spiraArtifactClass);
 
-			List<JSONObject> cachedSpiraArtifactJSONObjects =
-				_getCachedSpiraArtifactJSONObjects(spiraArtifactClass);
+		if (searchQuery.hasSearchParameter(idKey)) {
+			Map<Integer, SpiraArtifact> idMap = _getIDMap(spiraArtifactClass);
 
-			for (JSONObject jsonObject : cachedSpiraArtifactJSONObjects) {
-				if (!searchQuery.matches(spiraArtifactClass, jsonObject)) {
-					continue;
+			SearchQuery.SearchParameter searchParameter =
+				searchQuery.getSearchParameter(idKey);
+
+			Integer id = (Integer)searchParameter.getValue();
+
+			if (!idMap.containsKey(id)) {
+				for (JSONObject responseJSONObject :
+						spiraArtifactSupplier.get()) {
+
+					spiraArtifactCreator.apply(responseJSONObject);
 				}
+			}
 
-				S spiraArtifact = spiraArtifactCreator.apply(jsonObject);
+			if (idMap.containsKey(id)) {
+				S spiraArtifact = (S)idMap.get(id);
 
 				searchQuery.addSpiraArtifact(spiraArtifact);
 
 				SearchQuery.cacheSearchQuery(searchQuery);
-
-				return searchQuery.getSpiraArtifacts();
 			}
 
-			List<JSONObject> spiraArtifactJSONObjects =
-				spiraArtifactRequest.get();
+			return searchQuery.getSpiraArtifacts();
+		}
 
-			_cacheSpiraArtifactJSONObjects(
-				spiraArtifactClass, spiraArtifactJSONObjects);
+		if (searchQuery.hasSearchParameter("IndentLevel")) {
+			SearchQuery.SearchParameter searchParameter =
+				searchQuery.getSearchParameter("IndentLevel");
 
-			for (JSONObject spiraArtifactJSONObject :
-					spiraArtifactJSONObjects) {
+			String indentLevel = (String)searchParameter.getValue();
 
-				if (!searchQuery.matches(
-						spiraArtifactClass, spiraArtifactJSONObject)) {
+			Map<String, IndentLevelSpiraArtifact> indentLevelMap =
+				_getIndentLevelMap(spiraArtifactClass);
 
-					continue;
+			if (!indentLevelMap.containsKey(indentLevel)) {
+				for (JSONObject responseJSONObject :
+						spiraArtifactSupplier.get()) {
+
+					spiraArtifactCreator.apply(responseJSONObject);
 				}
+			}
 
-				S spiraArtifact = spiraArtifactCreator.apply(
-					spiraArtifactJSONObject);
+			if (indentLevelMap.containsKey(indentLevel)) {
+				S spiraArtifact = (S)indentLevelMap.get(indentLevel);
 
 				searchQuery.addSpiraArtifact(spiraArtifact);
 
 				SearchQuery.cacheSearchQuery(searchQuery);
-
-				return searchQuery.getSpiraArtifacts();
 			}
 
-			return new ArrayList<>();
+			return searchQuery.getSpiraArtifacts();
 		}
 
 		if (searchQuery.hasSearchParameter("Path")) {
 			SearchQuery.SearchParameter searchParameter =
 				searchQuery.getSearchParameter("Path");
 
-			Object searchParameterValue = searchParameter.getValue();
+			String path = (String)searchParameter.getValue();
 
-			if (searchParameterValue instanceof String) {
-				String path = (String)searchParameterValue;
+			Map<String, PathSpiraArtifact> pathMap = _getPathMap(
+				spiraArtifactClass);
 
-				Map<String, PathSpiraArtifact> pathSpiraArtifactMap =
-					_spiraArtifactPathMap.get(spiraArtifactClass);
+			if (pathMap.containsKey(path)) {
+				S spiraArtifact = (S)pathMap.get(path);
 
-				if (pathSpiraArtifactMap == null) {
-					pathSpiraArtifactMap = new HashMap<>();
+				searchQuery.addSpiraArtifact(spiraArtifact);
 
-					_spiraArtifactPathMap.put(
-						spiraArtifactClass, pathSpiraArtifactMap);
-				}
-
-				if (pathSpiraArtifactMap.containsKey(path)) {
-					S spiraArtifact = (S)pathSpiraArtifactMap.get(path);
-
-					searchQuery.addSpiraArtifact(spiraArtifact);
-
-					SearchQuery.cacheSearchQuery(searchQuery);
-
-					return searchQuery.getSpiraArtifacts();
-				}
+				SearchQuery.cacheSearchQuery(searchQuery);
 			}
-		}
-		else {
-			_cacheSpiraArtifactJSONObjects(
-				spiraArtifactClass, spiraArtifactRequest.get());
+
+			return searchQuery.getSpiraArtifacts();
 		}
 
-		List<S> spiraArtifacts = _getCachedSpiraArtifacts(
-			spiraArtifactClass, spiraArtifactCreator);
+		for (JSONObject responseJSONObject : spiraArtifactSupplier.get()) {
+			S spiraArtifact = spiraArtifactCreator.apply(responseJSONObject);
 
-		for (S spiraArtifact : spiraArtifacts) {
 			if (searchQuery.matches(spiraArtifact)) {
 				searchQuery.addSpiraArtifact(spiraArtifact);
 			}
@@ -269,32 +248,34 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		return searchQuery.getSpiraArtifacts();
 	}
 
-	protected static void removeCachedSpiraArtifactJSONObjects(
-		Class<? extends SpiraArtifact> spiraArtifactClass,
-		List<JSONObject> spiraArtifactJSONObjects) {
-
-		Map<Integer, JSONObject> cachedSpiraArtifactJSONObjects =
-			_getCachedSpiraArtifactJSONObjectMap(spiraArtifactClass);
-
-		String idKey = getIDKey(spiraArtifactClass);
-
-		for (JSONObject spiraArtifactJSONObject : spiraArtifactJSONObjects) {
-			cachedSpiraArtifactJSONObjects.remove(
-				spiraArtifactJSONObject.getInt(idKey));
-		}
-	}
-
 	protected static <S extends SpiraArtifact> void removeCachedSpiraArtifacts(
 		Class<S> spiraArtifactClass, List<S> spiraArtifacts) {
 
-		List<JSONObject> spiraArtifactJSONObjects = new ArrayList<>();
+		Map<Integer, SpiraArtifact> idSpiraArtifactMap = _getIDMap(
+			spiraArtifactClass);
+		Map<String, PathSpiraArtifact> pathSpiraArtifactMap = _getPathMap(
+			spiraArtifactClass);
+		Map<String, IndentLevelSpiraArtifact> indentLevelSpiraArtifactMap =
+			_getIndentLevelMap(spiraArtifactClass);
 
 		for (S spiraArtifact : spiraArtifacts) {
-			spiraArtifactJSONObjects.add(spiraArtifact.toJSONObject());
-		}
+			idSpiraArtifactMap.remove(spiraArtifact.getID());
 
-		removeCachedSpiraArtifactJSONObjects(
-			spiraArtifactClass, spiraArtifactJSONObjects);
+			if (spiraArtifact instanceof PathSpiraArtifact) {
+				PathSpiraArtifact pathSpiraArtifact =
+					(PathSpiraArtifact)spiraArtifact;
+
+				pathSpiraArtifactMap.remove(pathSpiraArtifact.getPath());
+			}
+
+			if (spiraArtifact instanceof IndentLevelSpiraArtifact) {
+				IndentLevelSpiraArtifact indentLevelSpiraArtifact =
+					(IndentLevelSpiraArtifact)spiraArtifact;
+
+				indentLevelSpiraArtifactMap.remove(
+					indentLevelSpiraArtifact.getIndentLevel());
+			}
+		}
 	}
 
 	protected static String toDateString(Calendar calendar) {
@@ -307,95 +288,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	}
 
 	protected final JSONObject jsonObject;
-
-	private static void _cacheSpiraArtifactJSONObjects(
-		Class<? extends SpiraArtifact> spiraArtifactClass,
-		List<JSONObject> spiraArtifactJSONObjects) {
-
-		Map<Integer, JSONObject> cachedSpiraArtifactJSONObjects =
-			_getCachedSpiraArtifactJSONObjectMap(spiraArtifactClass);
-
-		String idKey = getIDKey(spiraArtifactClass);
-
-		for (JSONObject spiraArtifactJSONObject : spiraArtifactJSONObjects) {
-			cachedSpiraArtifactJSONObjects.put(
-				spiraArtifactJSONObject.getInt(idKey), spiraArtifactJSONObject);
-		}
-	}
-
-	private static Map<Integer, JSONObject>
-		_getCachedSpiraArtifactJSONObjectMap(
-			Class<? extends SpiraArtifact> spiraArtifactClass) {
-
-		Map<Integer, JSONObject> spiraArtifactJSONObjects =
-			_spiraArtifactJSONObjectsMap.get(spiraArtifactClass);
-
-		if (spiraArtifactJSONObjects == null) {
-			spiraArtifactJSONObjects = new HashMap<>();
-
-			_spiraArtifactJSONObjectsMap.put(
-				spiraArtifactClass, spiraArtifactJSONObjects);
-		}
-
-		return spiraArtifactJSONObjects;
-	}
-
-	private static List<JSONObject> _getCachedSpiraArtifactJSONObjects(
-		Class<? extends SpiraArtifact> spiraArtifactClass) {
-
-		Map<Integer, JSONObject> spiraArtifactJSONObjects =
-			_getCachedSpiraArtifactJSONObjectMap(spiraArtifactClass);
-
-		return new ArrayList<>(spiraArtifactJSONObjects.values());
-	}
-
-	private static <S extends SpiraArtifact> List<S> _getCachedSpiraArtifacts(
-		Class<S> spiraArtifactClass,
-		Function<JSONObject, S> spiraArtifactCreator) {
-
-		List<S> cachedSpiraArtifacts = new ArrayList<>();
-
-		for (JSONObject jsonObject :
-				_getCachedSpiraArtifactJSONObjects(spiraArtifactClass)) {
-
-			S spiraArtifact = spiraArtifactCreator.apply(jsonObject);
-
-			cachedSpiraArtifacts.add(spiraArtifact);
-
-			if (spiraArtifact instanceof PathSpiraArtifact) {
-				Map<String, PathSpiraArtifact> pathSpiraArtifactMap =
-					_spiraArtifactPathMap.get(spiraArtifactClass);
-
-				if (pathSpiraArtifactMap == null) {
-					pathSpiraArtifactMap = new HashMap<>();
-				}
-
-				PathSpiraArtifact pathSpiraArtifact =
-					(PathSpiraArtifact)spiraArtifact;
-
-				pathSpiraArtifactMap.put(
-					pathSpiraArtifact.getPath(), pathSpiraArtifact);
-			}
-		}
-
-		return cachedSpiraArtifacts;
-	}
-
-	private static <S extends SpiraArtifact> List<S>
-		_getCachedSpiraArtifactsByID(
-			Class<S> spiraArtifactClass,
-			Function<JSONObject, S> spiraArtifactCreator) {
-
-		List<S> cachedSpiraArtifacts = new ArrayList<>();
-
-		for (JSONObject jsonObject :
-				_getCachedSpiraArtifactJSONObjects(spiraArtifactClass)) {
-
-			cachedSpiraArtifacts.add(spiraArtifactCreator.apply(jsonObject));
-		}
-
-		return cachedSpiraArtifacts;
-	}
 
 	private static Object _getClassField(
 		Class<? extends SpiraArtifact> spiraArtifactClass, String fieldName) {
@@ -415,8 +307,57 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		}
 	}
 
-	private static final Map<Class<?>, Map<Integer, JSONObject>>
-		_spiraArtifactJSONObjectsMap = new HashMap<>();
+	private static Map<Integer, SpiraArtifact> _getIDMap(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		Map<Integer, SpiraArtifact> spiraArtifactMap = _spiraArtifactIDMap.get(
+			spiraArtifactClass);
+
+		if (spiraArtifactMap == null) {
+			spiraArtifactMap = new HashMap<>();
+
+			_spiraArtifactIDMap.put(spiraArtifactClass, spiraArtifactMap);
+		}
+
+		return spiraArtifactMap;
+	}
+
+	private static Map<String, IndentLevelSpiraArtifact> _getIndentLevelMap(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		Map<String, IndentLevelSpiraArtifact> spiraArtifacts =
+			_spiraArtifactIndentLevelMap.get(spiraArtifactClass);
+
+		if (spiraArtifacts == null) {
+			spiraArtifacts = new HashMap<>();
+
+			_spiraArtifactIndentLevelMap.put(
+				spiraArtifactClass, spiraArtifacts);
+		}
+
+		return spiraArtifacts;
+	}
+
+	private static Map<String, PathSpiraArtifact> _getPathMap(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		Map<String, PathSpiraArtifact> spiraArtifactJSONObjects =
+			_spiraArtifactPathMap.get(spiraArtifactClass);
+
+		if (spiraArtifactJSONObjects == null) {
+			spiraArtifactJSONObjects = new HashMap<>();
+
+			_spiraArtifactPathMap.put(
+				spiraArtifactClass, spiraArtifactJSONObjects);
+		}
+
+		return spiraArtifactJSONObjects;
+	}
+
+	private static final Map<Class<?>, Map<Integer, SpiraArtifact>>
+		_spiraArtifactIDMap = new HashMap<>();
+	private static final Map<Class<?>, Map<String, IndentLevelSpiraArtifact>>
+		_spiraArtifactIndentLevelMap = new HashMap<>();
 	private static final Map<Class<?>, Map<String, PathSpiraArtifact>>
 		_spiraArtifactPathMap = new HashMap<>();
 

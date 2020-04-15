@@ -162,12 +162,20 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
-
 		final LiferayOSGiExtension liferayOSGiExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, LiferayOSGiExtension.class);
 
+		final Configuration compileIncludeConfiguration =
+			_addConfigurationCompileInclude(project);
+
 		_applyPlugins(project);
+
+		_configureArchivesBaseName(project);
+		_configureDescription(project);
+		_configureLiferay(project, liferayExtension);
+		_configureSourceSetMain(project);
+		_configureVersion(project);
 
 		TaskProvider<AbstractArchiveTask> abstractArchiveTaskProvider =
 			GradleUtil.getTaskProvider(
@@ -178,9 +186,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureTaskProviderDeploy(
 			project, liferayExtension, abstractArchiveTaskProvider, false);
 
-		final Configuration compileIncludeConfiguration =
-			_addConfigurationCompileInclude(project);
-
 		_addTaskProviderAutoUpdateXml(project);
 		_addTaskProviderDeployFast(project, liferayExtension);
 		_addTaskProvidersBuildWSDDJar(project, liferayExtension);
@@ -188,10 +193,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TaskProvider<Copy> deployDependenciesTaskProvider =
 			_addTaskProviderDeployDependencies(project, liferayExtension);
 
-		_configureArchivesBaseName(project);
-		_configureDescription(project);
-		_configureLiferay(project, liferayExtension);
-		_configureSourceSetMain(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project, deployDependenciesTaskProvider);
 		_configureTaskJar(project);
@@ -202,8 +203,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		if (GradleUtil.isRunningInsideDaemon()) {
 			_configureTasksJavaCompileFork(project, true);
 		}
-
-		_configureVersion(project);
 
 		GradleUtil.withPlugin(
 			project, ApplicationPlugin.class,

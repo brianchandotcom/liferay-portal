@@ -82,7 +82,9 @@ definition {
 
 		Staging.gotoPublishToLive();
 
-		Staging.publishToLive(publicationName = "summCheck");
+		Staging.publishToLive(
+			publicationName = "summCheck",
+			remoteStaging = "true");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 

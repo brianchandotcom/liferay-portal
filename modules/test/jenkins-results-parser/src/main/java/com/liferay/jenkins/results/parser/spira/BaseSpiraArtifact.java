@@ -129,6 +129,24 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 		for (S spiraArtifact : spiraArtifacts) {
 			spiraArtifactJSONObjects.add(spiraArtifact.toJSONObject());
+
+			if (spiraArtifact instanceof PathSpiraArtifact) {
+				Map<String, PathSpiraArtifact> pathSpiraArtifactMap =
+					_spiraArtifactPathMap.get(spiraArtifactClass);
+
+				if (pathSpiraArtifactMap == null) {
+					pathSpiraArtifactMap = new HashMap<>();
+
+					_spiraArtifactPathMap.put(
+						spiraArtifactClass, pathSpiraArtifactMap);
+				}
+
+				PathSpiraArtifact pathSpiraArtifact =
+					(PathSpiraArtifact)spiraArtifact;
+
+				pathSpiraArtifactMap.put(
+					pathSpiraArtifact.getPath(), pathSpiraArtifact);
+			}
 		}
 
 		_cacheSpiraArtifactJSONObjects(
@@ -200,7 +218,37 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 			return new ArrayList<>();
 		}
 
-		if (!searchQuery.hasSearchParameter("Path")) {
+		if (searchQuery.hasSearchParameter("Path")) {
+			SearchQuery.SearchParameter searchParameter =
+				searchQuery.getSearchParameter("Path");
+
+			Object searchParameterValue = searchParameter.getValue();
+
+			if (searchParameterValue instanceof String) {
+				String path = (String)searchParameterValue;
+
+				Map<String, PathSpiraArtifact> pathSpiraArtifactMap =
+					_spiraArtifactPathMap.get(spiraArtifactClass);
+
+				if (pathSpiraArtifactMap == null) {
+					pathSpiraArtifactMap = new HashMap<>();
+
+					_spiraArtifactPathMap.put(
+						spiraArtifactClass, pathSpiraArtifactMap);
+				}
+
+				if (pathSpiraArtifactMap.containsKey(path)) {
+					S spiraArtifact = (S)pathSpiraArtifactMap.get(path);
+
+					searchQuery.addSpiraArtifact(spiraArtifact);
+
+					SearchQuery.cacheSearchQuery(searchQuery);
+
+					return searchQuery.getSpiraArtifacts();
+				}
+			}
+		}
+		else {
 			_cacheSpiraArtifactJSONObjects(
 				spiraArtifactClass, spiraArtifactRequest.get());
 		}
@@ -310,6 +358,39 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		for (JSONObject jsonObject :
 				_getCachedSpiraArtifactJSONObjects(spiraArtifactClass)) {
 
+			S spiraArtifact = spiraArtifactCreator.apply(jsonObject);
+
+			cachedSpiraArtifacts.add(spiraArtifact);
+
+			if (spiraArtifact instanceof PathSpiraArtifact) {
+				Map<String, PathSpiraArtifact> pathSpiraArtifactMap =
+					_spiraArtifactPathMap.get(spiraArtifactClass);
+
+				if (pathSpiraArtifactMap == null) {
+					pathSpiraArtifactMap = new HashMap<>();
+				}
+
+				PathSpiraArtifact pathSpiraArtifact =
+					(PathSpiraArtifact)spiraArtifact;
+
+				pathSpiraArtifactMap.put(
+					pathSpiraArtifact.getPath(), pathSpiraArtifact);
+			}
+		}
+
+		return cachedSpiraArtifacts;
+	}
+
+	private static <S extends SpiraArtifact> List<S>
+		_getCachedSpiraArtifactsByID(
+			Class<S> spiraArtifactClass,
+			Function<JSONObject, S> spiraArtifactCreator) {
+
+		List<S> cachedSpiraArtifacts = new ArrayList<>();
+
+		for (JSONObject jsonObject :
+				_getCachedSpiraArtifactJSONObjects(spiraArtifactClass)) {
+
 			cachedSpiraArtifacts.add(spiraArtifactCreator.apply(jsonObject));
 		}
 
@@ -336,5 +417,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 	private static final Map<Class<?>, Map<Integer, JSONObject>>
 		_spiraArtifactJSONObjectsMap = new HashMap<>();
+	private static final Map<Class<?>, Map<String, PathSpiraArtifact>>
+		_spiraArtifactPathMap = new HashMap<>();
 
 }

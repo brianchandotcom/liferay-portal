@@ -19,7 +19,6 @@ import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
-import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import createExperience from '../thunks/createExperience';
@@ -78,8 +77,6 @@ const ExperienceSelector = ({
 	selectedExperience,
 }) => {
 	const dispatch = useDispatch();
-	const layoutData = useSelector(state => state.layoutData);
-	const layoutDataList = useSelector(state => state.layoutDataList);
 
 	const hasEditSegmentsEntryPermission = useSelector(
 		({permissions}) => permissions.EDIT_SEGMENTS_ENTRY
@@ -230,46 +227,8 @@ const ExperienceSelector = ({
 	};
 
 	const deleteExperience = id => {
-		const getLayoutDataFragmentEntryLinkIds = _layoutData =>
-			Object.values(_layoutData.items)
-				.filter(item => item.type === LAYOUT_DATA_ITEM_TYPES.fragment)
-				.map(item => item.config.fragmentEntryLinkId);
-
-		const upToDateLayoutDataList = layoutDataList
-			.filter(
-				({segmentsExperienceId}) =>
-					segmentsExperienceId !==
-					selectedExperience.segmentsExperienceId
-			)
-			.concat({
-				layoutData,
-				segmentsExperienceId: selectedExperience.segmentsExperienceId,
-			});
-
-		const otherExperiencesFragmentEntryLinkIds = upToDateLayoutDataList
-			.filter(entry => entry.segmentsExperienceId !== id)
-			.map(({layoutData}) =>
-				getLayoutDataFragmentEntryLinkIds(layoutData)
-			)
-			.reduce(
-				(acc, fragmentEntryLinkIds) => acc.concat(fragmentEntryLinkIds),
-				[]
-			);
-
-		const uniqueFragmentEntryLinks = getLayoutDataFragmentEntryLinkIds(
-			upToDateLayoutDataList.find(
-				entry => entry.segmentsExperienceId === id
-			).layoutData
-		).filter(
-			fragmentEntryLinkId =>
-				!otherExperiencesFragmentEntryLinkIds.includes(
-					fragmentEntryLinkId
-				)
-		);
-
 		dispatch(
 			removeExperience({
-				fragmentEntryLinkIds: uniqueFragmentEntryLinks,
 				segmentsExperienceId: id,
 				selectedExperienceId: selectedExperience.segmentsExperienceId,
 			})

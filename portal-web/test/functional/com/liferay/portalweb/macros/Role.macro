@@ -278,6 +278,10 @@ definition {
 				var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY";
 				var permissionNavigationValue = "Web Content Display";
 			}
+			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONFIGURATION_REDIRECTION")) {
+				var permissionNavigationKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION";
+				var permissionNavigationValue = "Redirection";
+			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONFIGURATION_SITE_SETTINGS")) {
 				var permissionNavigationKey = "SITE_ADMIN_CONFIGURATION_SITE_SETTINGS";
 				var permissionNavigationValue = "Settings";
@@ -624,6 +628,10 @@ definition {
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY")) {
 			var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY";
 			var permissionNavigationValue = "Web Content Display";
+		}
+		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONFIGURATION_REDIRECTION")) {
+			var permissionNavigationKey = "SITE_ADMIN_CONFIGURATION_REDIRECTION";
+			var permissionNavigationValue = "Redirection";
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_CONTENT_BLOGS")) {
 			var permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS";

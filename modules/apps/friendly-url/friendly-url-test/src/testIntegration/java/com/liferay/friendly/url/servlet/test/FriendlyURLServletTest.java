@@ -349,6 +349,11 @@ public class FriendlyURLServletTest {
 			Assert.assertEquals(
 				"http://www.liferay.com",
 				mockHttpServletResponse.getHeader("Location"));
+
+			redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
+				_group.getGroupId(), "path");
+
+			Assert.assertNotNull(redirectEntry.getLastOccurrenceDate());
 		}
 		finally {
 			_redirectEntryLocalService.deleteRedirectEntry(redirectEntry);
@@ -380,6 +385,11 @@ public class FriendlyURLServletTest {
 			Assert.assertEquals(
 				"http://www.liferay.com",
 				mockHttpServletResponse.getHeader("Location"));
+
+			redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
+				_group.getGroupId(), "path");
+
+			Assert.assertNotNull(redirectEntry.getLastOccurrenceDate());
 		}
 		finally {
 			_redirectEntryLocalService.deleteRedirectEntry(redirectEntry);

@@ -14,10 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,8 +24,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -90,8 +86,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		String layoutData = SegmentsExperienceUtil.copyLayoutData(
 			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-			themeDisplay.getScopeGroupId(),
-			_layoutPageTemplateStructureLocalService, baseSegmentsExperienceId,
+			themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId());
 
 		_populateLayoutDataJSONObject(jsonObject, layoutData);
@@ -99,8 +94,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		Map<Long, String> fragmentEntryLinksEditableValuesMap =
 			SegmentsExperienceUtil.copyFragmentEntryLinksEditableValues(
 				_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-				_fragmentEntryLinkLocalService, themeDisplay.getScopeGroupId(),
-				baseSegmentsExperienceId,
+				themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
 				segmentsExperience.getSegmentsExperienceId());
 
 		_populateFragmentEntryLinksJSONObject(
@@ -120,8 +114,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		}
 
 		SegmentsExperienceUtil.copyPortletPreferences(
-			themeDisplay.getPlid(), _portletLocalService,
-			_portletPreferencesLocalService, baseSegmentsExperienceId,
+			themeDisplay.getPlid(), baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId());
 
 		return jsonObject;
@@ -219,10 +212,8 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		if (draftLayout != null) {
 			SegmentsExperienceUtil.copySegmentsExperienceData(
-				draftLayout.getClassNameId(), draftLayout.getPlid(),
-				_fragmentEntryLinkLocalService, groupId,
-				_layoutPageTemplateStructureLocalService, _portletLocalService,
-				_portletPreferencesLocalService, baseSegmentsExperienceId,
+				draftLayout.getClassNameId(), draftLayout.getPlid(), groupId,
+				baseSegmentsExperienceId,
 				segmentsExperience.getSegmentsExperienceId());
 		}
 	}
@@ -297,23 +288,10 @@ public class AddSegmentsExperienceMVCActionCommand
 	}
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

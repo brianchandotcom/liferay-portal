@@ -135,6 +135,22 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public long getCTRowCTCollectionId(CTEntry ctEntry) throws PortalException {
+		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+			ctEntry.getCtCollectionId());
+
+		if ((ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+			(ctCollection.getStatus() == WorkflowConstants.STATUS_PENDING)) {
+
+			return ctCollection.getCtCollectionId();
+		}
+
+		return ctEntryFinder.findByMCNI_MCPK_SD(
+			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK(),
+			ctCollection.getStatusDate());
+	}
+
+	@Override
 	public List<Long> getExclusiveModelClassPKs(
 		long ctCollectionId, long modelClassNameId) {
 

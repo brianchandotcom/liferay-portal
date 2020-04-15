@@ -30,56 +30,34 @@ portletDisplay.setURLBack(backURL);
 <div class="change-lists-diff-table-wrapper">
 	<table class="table table-autofit">
 		<tr class="table-divider">
-			<c:choose>
-				<c:when test="<%= ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_ADDITION) %>">
-					<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getCTCollectionTitle()) %></td>
-				</c:when>
-				<c:when test="<%= ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION) %>">
-					<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getProductionTitle()) %></td>
-				</c:when>
-				<c:otherwise>
-					<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getProductionTitle()) %></td>
-					<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getCTCollectionTitle()) %></td>
-				</c:otherwise>
-			</c:choose>
+			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_ADDITION) %>">
+				<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getProductionTitle()) %></td>
+			</c:if>
+
+			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION) %>">
+				<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getCTCollectionTitle()) %></td>
+			</c:if>
 		</tr>
 		<tr>
-			<c:choose>
-				<c:when test="<%= ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_ADDITION) %>">
-					<td class="change-lists-diff-td">
+			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_ADDITION) %>">
+				<td class="change-lists-diff-td">
 
-						<%
-						ctEntryDiffDisplay.renderCTCollectionCTEntry();
-						%>
+					<%
+					ctEntryDiffDisplay.renderProductionCTEntry();
+					%>
 
-					</td>
-				</c:when>
-				<c:when test="<%= ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION) %>">
-					<td class="change-lists-diff-td">
+				</td>
+			</c:if>
 
-						<%
-						ctEntryDiffDisplay.renderProductionCTEntry();
-						%>
+			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION) %>">
+				<td class="change-lists-diff-td">
 
-					</td>
-				</c:when>
-				<c:otherwise>
-					<td class="change-lists-diff-td">
+					<%
+					ctEntryDiffDisplay.renderCTCollectionCTEntry();
+					%>
 
-						<%
-						ctEntryDiffDisplay.renderProductionCTEntry();
-						%>
-
-					</td>
-					<td class="change-lists-diff-td">
-
-						<%
-						ctEntryDiffDisplay.renderCTCollectionCTEntry();
-						%>
-
-					</td>
-				</c:otherwise>
-			</c:choose>
+				</td>
+			</c:if>
 		</tr>
 	</table>
 </div>

@@ -168,7 +168,8 @@ public class RedirectManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {
-			"create-date", "modified-date", "source-url", "destination-url"
+			"create-date", "modified-date", "latest-occurrence", "source-url",
+			"destination-url"
 		};
 	}
 

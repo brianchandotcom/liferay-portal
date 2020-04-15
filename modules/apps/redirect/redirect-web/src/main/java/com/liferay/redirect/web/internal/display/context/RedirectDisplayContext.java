@@ -211,6 +211,14 @@ public class RedirectDisplayContext {
 		}
 
 		if (Objects.equals(
+				_redirectEntrySearch.getOrderByCol(), "latest-occurrence")) {
+
+			return new RedirectDateComparator<>(
+				"RedirectEntry", "lastOccurrenceDate",
+				RedirectEntryModel::getModifiedDate, !orderByAsc);
+		}
+
+		if (Objects.equals(
 				_redirectEntrySearch.getOrderByCol(), "modified-date")) {
 
 			return new RedirectDateComparator<>(
@@ -245,6 +253,14 @@ public class RedirectDisplayContext {
 			return new Sort(
 				Field.getSortableFieldName("destinationURL"), Sort.STRING_TYPE,
 				!orderByAsc);
+		}
+
+		if (Objects.equals(
+				_redirectEntrySearch.getOrderByCol(), "latest-occurrence")) {
+
+			return new Sort(
+				Field.getSortableFieldName("lastOccurrenceDate"),
+				Sort.LONG_TYPE, !orderByAsc);
 		}
 
 		if (Objects.equals(

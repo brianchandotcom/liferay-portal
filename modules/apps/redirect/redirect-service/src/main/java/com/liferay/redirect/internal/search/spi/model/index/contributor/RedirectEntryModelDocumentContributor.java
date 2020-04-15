@@ -36,6 +36,8 @@ public class RedirectEntryModelDocumentContributor
 		document.setSortableTextFields(
 			new String[] {"destinationURL", "sourceURL"});
 
+		document.addDateSortable(
+			"lastOccurrenceDate", redirectEntry.getLastOccurrenceDate());
 		document.addText("destinationURL", redirectEntry.getDestinationURL());
 		document.addText("sourceURL", redirectEntry.getSourceURL());
 	}

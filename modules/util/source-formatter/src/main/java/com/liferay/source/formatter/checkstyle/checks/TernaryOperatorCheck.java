@@ -29,8 +29,33 @@ public class TernaryOperatorCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (getStartLineNumber(detailAST) != getEndLineNumber(detailAST)) {
-			log(detailAST, _MSG_AVOID_TERNARY_OPERATOR);
+		_checkTernaryExpression(detailAST, detailAST.getFirstChild());
+
+		DetailAST colonDetailAST = detailAST.findFirstToken(TokenTypes.COLON);
+
+		_checkTernaryExpression(detailAST, colonDetailAST.getNextSibling());
+		_checkTernaryExpression(detailAST, colonDetailAST.getPreviousSibling());
+	}
+
+	private void _checkTernaryExpression(
+		DetailAST questionDetailAST, DetailAST expressionDetailAST) {
+
+		while (true) {
+			if (expressionDetailAST.getType() == TokenTypes.LPAREN) {
+				expressionDetailAST = expressionDetailAST.getNextSibling();
+			}
+			else if (expressionDetailAST.getType() == TokenTypes.RPAREN) {
+				expressionDetailAST = expressionDetailAST.getPreviousSibling();
+			}
+			else {
+				break;
+			}
+		}
+
+		if (getStartLineNumber(expressionDetailAST) != getEndLineNumber(
+				expressionDetailAST)) {
+
+			log(questionDetailAST, _MSG_AVOID_TERNARY_OPERATOR);
 		}
 	}
 

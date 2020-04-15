@@ -152,17 +152,18 @@ public class RedirectEntryLocalServiceImpl
 
 				return null;
 			}
-		}
 
-		if (updateLastOccurrenceDate &&
-			((redirectEntry.getLastOccurrenceDate() == null) ||
-			 !_isInTheSameDay(
-				 redirectEntry.getLastOccurrenceDate(), DateUtil.newDate()))) {
+			if (updateLastOccurrenceDate &&
+				((redirectEntry.getLastOccurrenceDate() == null) ||
+				 !_isInTheSameDay(
+					 redirectEntry.getLastOccurrenceDate(),
+					 DateUtil.newDate()))) {
 
-			redirectEntry.setLastOccurrenceDate(new Date());
+				redirectEntry.setLastOccurrenceDate(new Date());
 
-			redirectEntry = redirectEntryLocalService.updateRedirectEntry(
-				redirectEntry);
+				redirectEntry = redirectEntryLocalService.updateRedirectEntry(
+					redirectEntry);
+			}
 		}
 
 		return redirectEntry;

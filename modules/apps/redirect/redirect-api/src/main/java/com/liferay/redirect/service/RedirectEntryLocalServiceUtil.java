@@ -234,6 +234,13 @@ public class RedirectEntryLocalServiceUtil {
 		return getService().fetchRedirectEntry(groupId, sourceURL);
 	}
 
+	public static com.liferay.redirect.model.RedirectEntry fetchRedirectEntry(
+		long groupId, String sourceURL, boolean updateLastOccurrenceDate) {
+
+		return getService().fetchRedirectEntry(
+			groupId, sourceURL, updateLastOccurrenceDate);
+	}
+
 	/**
 	 * Returns the redirect entry matching the UUID and group.
 	 *

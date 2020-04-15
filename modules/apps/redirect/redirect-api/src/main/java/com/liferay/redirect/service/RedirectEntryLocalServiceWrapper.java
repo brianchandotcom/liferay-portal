@@ -247,6 +247,14 @@ public class RedirectEntryLocalServiceWrapper
 			groupId, sourceURL);
 	}
 
+	@Override
+	public com.liferay.redirect.model.RedirectEntry fetchRedirectEntry(
+		long groupId, String sourceURL, boolean updateLastOccurrenceDate) {
+
+		return _redirectEntryLocalService.fetchRedirectEntry(
+			groupId, sourceURL, updateLastOccurrenceDate);
+	}
+
 	/**
 	 * Returns the redirect entry matching the UUID and group.
 	 *

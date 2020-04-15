@@ -203,6 +203,10 @@ public interface RedirectEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public RedirectEntry fetchRedirectEntry(long groupId, String sourceURL);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RedirectEntry fetchRedirectEntry(
+		long groupId, String sourceURL, boolean updateLastOccurrenceDate);
+
 	/**
 	 * Returns the redirect entry matching the UUID and group.
 	 *

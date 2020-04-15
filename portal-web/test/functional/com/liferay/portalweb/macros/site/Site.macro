@@ -361,7 +361,13 @@ definition {
 
 		AssertVisible(locator1 = "Button#DONE");
 
-		SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
+		if (isSet(depotName)) {
+			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_ASSET_LIBRARY");
+		}
+
+		else {
+			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
+		}
 
 		Pause(locator1 = "3000");
 

@@ -212,9 +212,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		project.afterEvaluate(
 			curProject -> {
-				_configureBundleExtensionDefaults(
+				_configureBundleExtensionAfterEvaluate(
 					curProject, liferayOSGiExtension,
 					compileIncludeConfiguration);
+				_configureTaskProviderDeployDependenciesAfterEvaluate(
+					curProject);
 			});
 	}
 
@@ -358,18 +360,25 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				_configureTaskProviderDeployDependencies(
 					deployDependenciesTask, liferayExtension));
 
-		project.afterEvaluate(
-			curProject ->
-				deployDependenciesTaskProvider.configure(
-					deployDependenciesTask -> {
-						boolean keepVersions = Boolean.getBoolean(
-							"deploy.dependencies.keep.versions");
-
-						deployDependenciesTask.eachFile(
-							new RenameDependencyAction(keepVersions));
-					}));
 
 		return deployDependenciesTaskProvider;
+	}
+
+	private void _configureTaskProviderDeployDependenciesAfterEvaluate(
+		Project project) {
+
+		TaskProvider<Copy> deployDependenciesTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, DEPLOY_DEPENDENCIES_TASK_NAME, Copy.class);
+
+		deployDependenciesTaskProvider.configure(
+			deployDependenciesTask -> {
+				boolean keepVersions = Boolean.getBoolean(
+					"deploy.dependencies.keep.versions");
+
+				deployDependenciesTask.eachFile(
+					new RenameDependencyAction(keepVersions));
+			});
 	}
 
 	private TaskProvider<Copy> _addTaskProviderDeployFast(
@@ -514,7 +523,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureBundleExtensionDefaults(
+	private void _configureBundleExtensionAfterEvaluate(
 		Project project, final LiferayOSGiExtension liferayOSGiExtension,
 		final Configuration compileIncludeConfiguration) {
 

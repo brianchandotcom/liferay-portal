@@ -6851,7 +6851,7 @@ discontinuous-range@1.0.0:
   resolved "https://registry.yarnpkg.com/discontinuous-range/-/discontinuous-range-1.0.0.tgz#e38331f0844bba49b9a9cb71c771585aab1bc65a"
   integrity sha1-44Mx8IRLukm5qctxx3FYWqsbxlo=
 
-dnd-core@10.0.1, dnd-core@^10.0.1:
+dnd-core@^10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-10.0.1.tgz#151d95cd3a7fa47b210905c301364c0828203029"
   integrity sha512-PokpWzFSKbpmJSWbSIfVJtIsRdx3DP5e3//agNNzV8L1k9T4/IFKtgjjwKeLKmP9qMuTXdZZGSS40w+eZ8MmUg==
@@ -11320,10 +11320,10 @@ liferay-amd-loader@4.2.0:
   resolved "https://registry.yarnpkg.com/liferay-amd-loader/-/liferay-amd-loader-4.2.0.tgz#c166fa3723a7cf760deefb8e580d8892c6bf436b"
   integrity sha512-q+b2oU6zy6gDe6uKqHPY2/L9eUjhZAVatCAC5HNrHd+tMIk+MDBSCiHmRvihoJnmPylT+RZ4gNvWxtVwIQBF/Q==
 
-liferay-ckeditor@4.13.1-liferay.4:
-  version "4.13.1-liferay.4"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.13.1-liferay.4.tgz#3e47227b7abbce6d4b2c6a58df02c15d26704676"
-  integrity sha512-GAFSLZncq+biQc7ZmjndVsbYkftzW+sx4gwpepdk9C6kzQwIFBww8DyroXgyDWLOw7BhSzJnLVe2oSfl/p6TQg==
+liferay-ckeditor@4.13.1-liferay.5:
+  version "4.13.1-liferay.5"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.13.1-liferay.5.tgz#8a2da76289f76bbcba6014e93ad835f654c04d73"
+  integrity sha512-wPmk5EAW+LmOxqO0JO98x1ByEzkvDLP+PrIxlz+DMuonuC7O5qWxCuha1v+UtDnPdQnRdf3PNNicY+0xPCYvQw==
 
 liferay-css-parse@~1.7.1:
   version "1.7.1"

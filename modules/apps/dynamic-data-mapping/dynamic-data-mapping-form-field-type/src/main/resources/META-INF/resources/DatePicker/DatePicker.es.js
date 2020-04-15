@@ -100,6 +100,12 @@ const transformToDate = date => {
 	return date;
 };
 
+const getValueForHidden = value => {
+	if (moment(value).isValid()) {
+		return moment(value).format('YYYY-MM-DD');
+	}
+};
+
 const DatePicker = ({
 	disabled,
 	name,
@@ -150,24 +156,31 @@ const DatePicker = ({
 	};
 
 	return (
-		<ClayDatePicker
-			dateFormat={dateMask}
-			disabled={disabled}
-			initialMonth={value ? value : undefined}
-			inputName={name}
-			onInput={event => {
-				maskInstance.current.update(event.target.value);
-			}}
-			onNavigation={handleNavigation}
-			onValueChange={value => {
-				setValue(value);
-				onChange(value);
-			}}
-			ref={inputRef}
-			spritemap={spritemap}
-			value={value}
-			years={years}
-		/>
+		<>
+			<input
+				aria-label="date_picker_hidden"
+				name={name}
+				type="hidden"
+				value={getValueForHidden(value)}
+			/>
+			<ClayDatePicker
+				dateFormat={dateMask}
+				disabled={disabled}
+				initialMonth={value ? value : undefined}
+				onInput={event => {
+					maskInstance.current.update(event.target.value);
+				}}
+				onNavigation={handleNavigation}
+				onValueChange={value => {
+					setValue(value);
+					onChange(value);
+				}}
+				ref={inputRef}
+				spritemap={spritemap}
+				value={value}
+				years={years}
+			/>
+		</>
 	);
 };
 

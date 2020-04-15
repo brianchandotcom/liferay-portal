@@ -843,7 +843,7 @@ public class CalendarBookingLocalServiceImpl
 			long calendarBookingId = calendarBooking.getCalendarBookingId();
 
 			long[] childCalendarIds = getChildCalendarIds(
-				calendarBooking.getCalendarBookingId(), calendarId);
+				calendarBookingId, calendarId);
 
 			long duration =
 				calendarBooking.getEndTime() - calendarBooking.getStartTime();
@@ -855,18 +855,11 @@ public class CalendarBookingLocalServiceImpl
 			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 				CalendarBooking.class.getName(), calendarBookingId);
 
-			List<AssetLink> assetLinks = _assetLinkLocalService.getLinks(
+			List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
 				assetEntry.getEntryId());
 
 			long[] assetLinkEntryIds = ListUtil.toLongArray(
-				assetLinks,
-				assetLink -> {
-					if (assetLink.getEntryId1() == assetEntry.getEntryId()) {
-						return assetLink.getEntryId2();
-					}
-
-					return assetLink.getEntryId1();
-				});
+				assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 			serviceContext.setAssetTagNames(assetEntry.getTagNames());
 			serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());

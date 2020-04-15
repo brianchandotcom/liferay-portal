@@ -173,7 +173,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			GradleUtil.getTaskProvider(
 				project, JavaPlugin.JAR_TASK_NAME, AbstractArchiveTask.class);
 
-		_addDeployedFile(
+		_configureTaskProviderClean(
+			project, liferayExtension, abstractArchiveTaskProvider);
+		_configureTaskProviderDeploy(
 			project, liferayExtension, abstractArchiveTaskProvider, false);
 
 		final Configuration compileIncludeConfiguration =
@@ -236,15 +238,13 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	@SuppressWarnings("serial")
-	private void _addDeployedFile(
+	private void _configureTaskProviderDeploy(
 		final Project project, final LiferayExtension liferayExtension,
 		final TaskProvider<AbstractArchiveTask> abstractArchiveTaskProvider,
 		boolean lazy) {
 
-		final TaskProvider<Copy> deployTaskProvider =
-			GradleUtil.getTaskProvider(
-				project, LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
+		TaskProvider<Copy> deployTaskProvider = GradleUtil.getTaskProvider(
+			project, LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
 
 		deployTaskProvider.configure(
 			deployTask -> {
@@ -282,6 +282,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 				deployTask.from(sourcePath, copySpecClosure);
 			});
+	}
+
+	private void _configureTaskProviderClean(
+		Project project, final LiferayExtension liferayExtension,
+		final TaskProvider<AbstractArchiveTask> abstractArchiveTaskProvider) {
+
+		final TaskProvider<Copy> deployTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
 
 		TaskProvider<Delete> cleanTaskProvider = GradleUtil.getTaskProvider(
 			project, BasePlugin.CLEAN_TASK_NAME, Delete.class);
@@ -1070,7 +1079,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			GradleUtil.getTaskProvider(
 				project, buildWSDDJar.getName(), AbstractArchiveTask.class);
 
-		_addDeployedFile(
+		_configureTaskProviderClean(
+			project, liferayExtension, buildWSDDJarTaskProvider);
+		_configureTaskProviderDeploy(
 			project, liferayExtension, buildWSDDJarTaskProvider, true);
 	}
 

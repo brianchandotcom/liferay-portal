@@ -1222,10 +1222,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				TaskProvider<Jar> taskProvider = GradleUtil.addTaskProvider(
 					project, buildWSDDTask.getName() + "Jar", Jar.class);
 
-				taskProvider.configure(
-					buildWSDDJarTask -> _configureTaskProviderBuildWSDDJar(
-						project, liferayExtension, buildWSDDTask, taskProvider,
-						cleanTaskProvider, deployTaskProvider));
+				_configureTaskProviderBuildWSDDJar(
+					project, liferayExtension, buildWSDDTask, taskProvider,
+					cleanTaskProvider, deployTaskProvider);
 			});
 	}
 

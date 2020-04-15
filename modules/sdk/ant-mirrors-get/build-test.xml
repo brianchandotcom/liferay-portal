@@ -7,6 +7,8 @@
 		name="mirrors-get"
 	/>
 
+	<property name="mirrors.hostname" value="mirrors.lax.liferay.com" />
+
 	<target name="test-1">
 		<mirrors-get
 			dest="test"
@@ -52,6 +54,16 @@
 			force="false"
 			src="https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.15/mysql-connector-java-8.0.15.jar"
 			trylocalnetwork="false"
+			verbose="true"
+		/>
+	</target>
+
+	<target name="test-6">
+		<mirrors-get
+			dest="liferay-portal-tomcat-master-private.tar.gz"
+			force="true"
+			src="https://username:password@files.liferay.com/private/ee/portal/snapshot-master-private/latest/liferay-portal-tomcat-master-private.tar.gz"
+			trylocalnetwork="true"
 			verbose="true"
 		/>
 	</target>

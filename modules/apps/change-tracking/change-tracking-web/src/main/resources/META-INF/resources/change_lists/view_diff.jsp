@@ -31,11 +31,11 @@ portletDisplay.setURLBack(backURL);
 	<table class="table table-autofit">
 		<tr class="table-divider">
 			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_ADDITION) %>">
-				<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getProductionTitle()) %></td>
+				<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getLeftTitle()) %></td>
 			</c:if>
 
 			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION) %>">
-				<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getCTCollectionTitle()) %></td>
+				<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getRightTitle()) %></td>
 			</c:if>
 		</tr>
 		<tr>
@@ -43,7 +43,7 @@ portletDisplay.setURLBack(backURL);
 				<td class="change-lists-diff-td">
 
 					<%
-					ctEntryDiffDisplay.renderProductionCTEntry();
+					ctEntryDiffDisplay.renderLeftCTRow();
 					%>
 
 				</td>
@@ -53,7 +53,7 @@ portletDisplay.setURLBack(backURL);
 				<td class="change-lists-diff-td">
 
 					<%
-					ctEntryDiffDisplay.renderCTCollectionCTEntry();
+					ctEntryDiffDisplay.renderRightCTRow();
 					%>
 
 				</td>

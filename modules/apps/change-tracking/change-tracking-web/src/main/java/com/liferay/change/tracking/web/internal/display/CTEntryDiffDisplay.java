@@ -43,7 +43,7 @@ public class CTEntryDiffDisplay {
 		_name = name;
 	}
 
-	public String getCTCollectionTitle() {
+	public String getRightTitle() {
 		if (_ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
 			return StringBundler.concat(
 				_ctCollection.getName(), " : ", _name, " (",
@@ -53,7 +53,7 @@ public class CTEntryDiffDisplay {
 		return StringBundler.concat(_ctCollection.getName(), " : ", _name);
 	}
 
-	public String getProductionTitle() {
+	public String getLeftTitle() {
 		if (_ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
 			return StringBundler.concat(
 				_language.get(_httpServletRequest, "production"), " : ", _name,
@@ -72,13 +72,13 @@ public class CTEntryDiffDisplay {
 		return false;
 	}
 
-	public void renderCTCollectionCTEntry() throws Exception {
+	public void renderRightCTRow() throws Exception {
 		_ctDisplayRendererRegistry.renderCTEntry(
 			_httpServletRequest, _httpServletResponse, _ctEntry,
 			_ctEntry.getCtCollectionId());
 	}
 
-	public void renderProductionCTEntry() throws Exception {
+	public void renderLeftCTRow() throws Exception {
 		_ctDisplayRendererRegistry.renderCTEntry(
 			_httpServletRequest, _httpServletResponse, _ctEntry,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION);

@@ -378,7 +378,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewURLsNotFoundCP(
+		Redirect.view404URLs(
 			activeIgnoreURL = "true",
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
@@ -393,7 +393,7 @@ definition {
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			unignore = "true");
 
-		Redirect.viewURLsDefaultNotFoundCP();
+		Redirect.view404URLsDefault();
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -403,7 +403,7 @@ definition {
 
 		MenuItem.click(menuItem = "Ignored URLs");
 
-		Redirect.viewURLsNotFoundCP(
+		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
 	}
@@ -586,7 +586,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		Redirect.viewURLsNotFoundCP(
+		Redirect.view404URLs(
 			activeIgnoreURL = "true",
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
@@ -595,13 +595,13 @@ definition {
 
 		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
 
-		Redirect.viewURLsDefaultNotFoundCP();
+		Redirect.view404URLsDefault();
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		MenuItem.click(menuItem = "Ignored URLs");
 
-		Redirect.viewURLsNotFoundCP(
+		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
 	}

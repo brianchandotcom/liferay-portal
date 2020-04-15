@@ -137,6 +137,35 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet");
 	}
 
+	macro view404URLs {
+		if (isSet(activeIgnoreURL)) {
+			AssertClick(
+				key_navItem = "404 URLs",
+				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
+				value1 = "404 URLs");
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "${ignoreURL}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			value1 = "${ignoreURL}");
+
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "${requestNumber}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			value1 = "${requestNumber}");
+	}
+
+	macro view404URLsDefault {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
+			value1 = "All is in order.");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_TAGLIB_DESCRIPTION",
+			value1 = "All your pages are connected or redirected.");
+	}
+
 	macro viewDefault {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_TAGLIB",
@@ -167,35 +196,6 @@ definition {
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
 				value1 = "${expirationDate}");
 		}
-	}
-
-	macro viewURLsDefaultNotFoundCP {
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-			value1 = "All is in order.");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO_TAGLIB_DESCRIPTION",
-			value1 = "All your pages are connected or redirected.");
-	}
-
-	macro viewURLsNotFoundCP {
-		if (isSet(activeIgnoreURL)) {
-			AssertClick(
-				key_navItem = "404 URLs",
-				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
-				value1 = "404 URLs");
-		}
-
-		AssertTextEquals.assertPartialText(
-			key_rowEntry = "${ignoreURL}",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			value1 = "${ignoreURL}");
-
-		AssertTextEquals.assertPartialText(
-			key_rowEntry = "${requestNumber}",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			value1 = "${requestNumber}");
 	}
 
 }

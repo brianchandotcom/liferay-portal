@@ -242,6 +242,9 @@ public interface CTEntryLocalService
 	public CTEntry getCTEntry(long ctEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getCTRowCTCollectionId(CTEntry ctEntry) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getExclusiveModelClassPKs(
 		long ctCollectionId, long modelClassNameId);
 

@@ -305,6 +305,14 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
+	public long getCTRowCTCollectionId(
+			com.liferay.change.tracking.model.CTEntry ctEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctEntryLocalService.getCTRowCTCollectionId(ctEntry);
+	}
+
+	@Override
 	public java.util.List<Long> getExclusiveModelClassPKs(
 		long ctCollectionId, long modelClassNameId) {
 

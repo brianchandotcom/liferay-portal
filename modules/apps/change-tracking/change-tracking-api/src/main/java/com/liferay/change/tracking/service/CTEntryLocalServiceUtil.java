@@ -291,6 +291,13 @@ public class CTEntryLocalServiceUtil {
 		return getService().getCTEntry(ctEntryId);
 	}
 
+	public static long getCTRowCTCollectionId(
+			com.liferay.change.tracking.model.CTEntry ctEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCTRowCTCollectionId(ctEntry);
+	}
+
 	public static java.util.List<Long> getExclusiveModelClassPKs(
 		long ctCollectionId, long modelClassNameId) {
 

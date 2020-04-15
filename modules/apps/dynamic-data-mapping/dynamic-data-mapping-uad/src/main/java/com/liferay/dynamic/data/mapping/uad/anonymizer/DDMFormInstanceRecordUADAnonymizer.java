@@ -99,10 +99,10 @@ public class DDMFormInstanceRecordUADAnonymizer
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
+				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
 				Property formInstanceRecordIdProperty =
 					PropertyFactoryUtil.forName("formInstanceRecordId");
-
-				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
 				for (String userIdFieldName :
 						DDMUADConstants.

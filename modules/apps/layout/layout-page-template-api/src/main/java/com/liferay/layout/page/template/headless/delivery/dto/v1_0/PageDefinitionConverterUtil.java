@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -596,11 +597,16 @@ public class PageDefinitionConverterUtil {
 				};
 			}
 
+			String instanceId = editableValuesJSONObject.getString(
+				"instanceId");
+
 			return new PageElement() {
 				{
 					definition =
 						PageWidgetInstanceDefinitionConverterUtil.
-							toWidgetInstanceDefinition(portletId);
+							toWidgetInstanceDefinition(
+								fragmentEntryLink.getClassPK(),
+								PortletIdCodec.encode(portletId, instanceId));
 					type = PageElement.Type.WIDGET;
 				}
 			};

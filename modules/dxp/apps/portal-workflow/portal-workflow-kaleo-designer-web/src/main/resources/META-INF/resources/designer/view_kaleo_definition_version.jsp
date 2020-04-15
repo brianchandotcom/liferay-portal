@@ -64,7 +64,7 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 					<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
 				</c:otherwise>
 			</c:choose>
 		</span>

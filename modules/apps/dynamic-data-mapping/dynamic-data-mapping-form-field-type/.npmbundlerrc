@@ -19,12 +19,7 @@
 		}
 	},
 	"ignore": [
+		"!**/*.scss.js",
 		"**/__tests__/*.js"
-	],
-	"rules": [
-		{
-			"test": "\\.css$",
-			"use": ["css-loader"]
-		}
 	]
 }

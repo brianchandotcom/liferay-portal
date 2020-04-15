@@ -12,12 +12,14 @@
  * details.
  */
 
-import React, {useEffect, useRef} from 'react';
+import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer';
+import React, {useEffect, useMemo, useRef} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import PageRendererRows from './PageRendererRows.es';
+import Panel from './Panel.es';
 
 class NoRender extends React.Component {
 	shouldComponentUpdate() {
@@ -89,36 +91,66 @@ const PageRendererAdapter = ({
 
 const FieldSet = ({
 	activePage,
+	collapsible,
 	context,
 	editable,
 	label,
 	onBlur,
 	onChange,
 	onFocus,
+	onRemoveButton,
+	onRepeatButton,
 	pageIndex,
+	readOnly,
+	repeatable,
 	rows,
 	showLabel,
+	showRepeatableRemoveButton,
 	spritemap,
 }) => (
 	<>
-		{showLabel && (
+		{showLabel && !collapsible && (
 			<>
 				<label className="text-uppercase">{label}</label>
 				<div className="mt-1 separator" />
 			</>
 		)}
 
-		<PageRendererAdapter
-			activePage={activePage}
-			context={context}
-			editable={editable}
-			onBlur={onBlur}
-			onChange={onChange}
-			onFocus={onFocus}
-			pageIndex={pageIndex}
-			rows={rows}
-			spritemap={spritemap}
-		/>
+		{collapsible ? (
+			<Panel
+				onRemoveButton={onRemoveButton}
+				onRepeatButton={onRepeatButton}
+				readOnly={readOnly}
+				repeatable={repeatable}
+				showRepeatableRemoveButton={showRepeatableRemoveButton}
+				spritemap={spritemap}
+				title={label}
+			>
+				<PageRendererAdapter
+					activePage={activePage}
+					context={context}
+					editable={editable}
+					onBlur={onBlur}
+					onChange={onChange}
+					onFocus={onFocus}
+					pageIndex={pageIndex}
+					rows={rows}
+					spritemap={spritemap}
+				/>
+			</Panel>
+		) : (
+			<PageRendererAdapter
+				activePage={activePage}
+				context={context}
+				editable={editable}
+				onBlur={onBlur}
+				onChange={onChange}
+				onFocus={onFocus}
+				pageIndex={pageIndex}
+				rows={rows}
+				spritemap={spritemap}
+			/>
+		)}
 	</>
 );
 
@@ -154,33 +186,55 @@ const getRows = (rows, nestedFields) => {
 const FieldSetProxy = connectStore(
 	({
 		activePage,
+		collapsible,
 		context,
+		dispatch,
 		editable,
 		label,
+		name,
 		nestedFields = [],
 		pageIndex,
 		propagate,
+		readOnly,
+		repeatable,
 		rows,
 		showLabel,
 		spritemap,
 		...otherProps
-	}) => (
-		<FieldBaseProxy {...otherProps} showLabel={false} spritemap={spritemap}>
-			<FieldSet
-				activePage={activePage}
-				context={context}
-				editable={editable}
-				label={label}
-				onBlur={(event) => propagate('fieldBlurred', event)}
-				onChange={(event) => propagate('fieldEdited', event)}
-				onFocus={(event) => propagate('fieldFocused', event)}
-				pageIndex={pageIndex}
-				rows={getRows(rows, nestedFields)}
-				showLabel={showLabel}
+	}) => {
+		const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
+
+		return (
+			<FieldBaseProxy
+				{...otherProps}
+				name={name}
+				readOnly={readOnly}
+				repeatable={false}
+				showLabel={false}
 				spritemap={spritemap}
-			/>
-		</FieldBaseProxy>
-	)
+			>
+				<FieldSet
+					activePage={activePage}
+					collapsible={collapsible}
+					context={context}
+					editable={editable}
+					label={label}
+					onBlur={(event) => propagate('fieldBlurred', event)}
+					onChange={(event) => propagate('fieldEdited', event)}
+					onFocus={(event) => propagate('fieldFocused', event)}
+					onRemoveButton={() => dispatch('fieldRemoved', name)}
+					onRepeatButton={() => dispatch('fieldRepeated', name)}
+					pageIndex={pageIndex}
+					readOnly={readOnly}
+					repeatable={repeatable}
+					rows={getRows(rows, nestedFields)}
+					showLabel={showLabel}
+					showRepeatableRemoveButton={repeatable && repeatedIndex > 0}
+					spritemap={spritemap}
+				/>
+			</FieldBaseProxy>
+		);
+	}
 );
 
 const ReactFieldSetAdapter = getConnectedReactComponentAdapter(

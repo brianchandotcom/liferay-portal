@@ -46,6 +46,67 @@ definition {
 		}
 	}
 
+	macro addEntryVia404URLs {
+		var portalURL = PropsUtil.get("portal.url");
+
+		if (isSet(ignoredURL)) {
+			AssertClick(
+				key_navItem = "404 URLs",
+				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
+				value1 = "404 URLs");
+
+			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+			MenuItem.click(menuItem = "Ignored URLs");
+
+			Redirect.gotoEntryMenuItem(
+				item = "Create Redirect",
+				sourceURL = "${ignoredURL}");
+		}
+		else {
+			AssertClick(
+				key_navItem = "404 URLs",
+				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
+				value1 = "404 URLs");
+
+			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+			MenuItem.click(menuItem = "Active URLs");
+
+			Redirect.gotoEntryMenuItem(
+				item = "Create Redirect",
+				sourceURL = "${activeIgnoreURL}");
+		}
+
+		AssertTextEquals(
+			locator1 = "TextInput#REDIRECT_SOURCE_URL_PREFIX",
+			value1 = "${portalURL}/web/${siteName}");
+
+		AssertTextEquals(
+			locator1 = "TextInput#REDIRECT_SOURCE_URL",
+			value1 = "${sourceURL}");
+
+		Type(
+			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
+			value1 = "${destinationURL}");
+
+		if (isSet(redirectType)) {
+			Select(
+				locator1 = "Select#REDIRECT_TYPE",
+				value1 = "${redirectType}");
+		}
+
+		if (isSet(expirationDate)) {
+			Type.clickAtType(
+				locator1 = "TextInput#EXPIRATION_DATE",
+				value1 = "${expirationDate}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteEntry {
 		if (isSet(deletions)) {
 			ClickNoError(locator1 = "Icon#DELETE");

@@ -308,8 +308,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			JSONObject configurationJSONObject =
 				_fragmentEntryConfigurationParser.getConfigurationJSONObject(
 					fragmentEntryLink.getConfiguration(),
-					fragmentEntryLink.getEditableValues(),
-					fragmentRendererContext.getSegmentsExperienceIds());
+					fragmentEntryLink.getEditableValues());
 
 			configuration = configurationJSONObject.toString();
 		}

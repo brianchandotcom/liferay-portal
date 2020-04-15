@@ -156,8 +156,7 @@ public class BackgroundImageFragmentEntryProcessor
 			if (Validator.isNull(value)) {
 				value = _fragmentEntryProcessorHelper.getEditableValue(
 					editableValueJSONObject,
-					fragmentEntryProcessorContext.getLocale(),
-					fragmentEntryProcessorContext.getSegmentsExperienceIds());
+					fragmentEntryProcessorContext.getLocale());
 			}
 
 			if (Validator.isNotNull(value)) {

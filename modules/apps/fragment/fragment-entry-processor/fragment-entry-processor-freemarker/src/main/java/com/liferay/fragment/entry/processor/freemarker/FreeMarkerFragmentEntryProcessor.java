@@ -115,8 +115,7 @@ public class FreeMarkerFragmentEntryProcessor
 		JSONObject configurationValuesJSONObject =
 			_fragmentEntryConfigurationParser.getConfigurationJSONObject(
 				fragmentEntryLink.getConfiguration(),
-				fragmentEntryLink.getEditableValues(),
-				fragmentEntryProcessorContext.getSegmentsExperienceIds());
+				fragmentEntryLink.getEditableValues());
 
 		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 			"configuration", configurationValuesJSONObject

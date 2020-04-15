@@ -27,10 +27,7 @@ import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -87,7 +84,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		HttpServletResponse httpServletResponse) {
 
 		JSONObject jsonObject = _getFieldValueJSONObject(
-			fragmentRendererContext, httpServletRequest);
+			fragmentRendererContext);
 
 		if (jsonObject == null) {
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
@@ -114,8 +111,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		Tuple tuple = _getTuple(
-			displayObject.getClass(), fragmentRendererContext,
-			httpServletRequest);
+			displayObject.getClass(), fragmentRendererContext);
 
 		InfoItemRenderer infoItemRenderer = (InfoItemRenderer)tuple.getObject(
 			0);
@@ -166,27 +162,19 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFieldValueJSONObject(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+		FragmentRendererContext fragmentRendererContext) {
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		long[] segmentsExperienceIds = GetterUtil.getLongValues(
-			httpServletRequest.getAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
-
 		return (JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
 			getConfiguration(fragmentRendererContext),
-			fragmentEntryLink.getEditableValues(), segmentsExperienceIds,
-			"itemSelector");
+			fragmentEntryLink.getEditableValues(), "itemSelector");
 	}
 
 	private Tuple _getTuple(
 		Class<?> displayObjectClass,
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+		FragmentRendererContext fragmentRendererContext) {
 
 		List<InfoItemRenderer> infoItemRenderers =
 			FragmentRendererUtil.getInfoItemRenderers(
@@ -199,7 +187,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		InfoItemRenderer defaultInfoItemRenderer = infoItemRenderers.get(0);
 
 		JSONObject jsonObject = _getFieldValueJSONObject(
-			fragmentRendererContext, httpServletRequest);
+			fragmentRendererContext);
 
 		if (jsonObject == null) {
 			return new Tuple(defaultInfoItemRenderer);

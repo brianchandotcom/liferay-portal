@@ -263,8 +263,7 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 						fragmentEntryConfigurationParser.
 							getConfigurationJSONObject(
 								fragmentEntryLink.getConfiguration(),
-								fragmentEntryLink.getEditableValues(),
-								new long[] {0L});
+								fragmentEntryLink.getEditableValues());
 
 					Set<String> keys = jsonObject.keySet();
 

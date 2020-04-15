@@ -254,8 +254,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			else {
 				value = _fragmentEntryProcessorHelper.getEditableValue(
 					editableValueJSONObject,
-					fragmentEntryProcessorContext.getLocale(),
-					fragmentEntryProcessorContext.getSegmentsExperienceIds());
+					fragmentEntryProcessorContext.getLocale());
 			}
 
 			if (Objects.equals(

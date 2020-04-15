@@ -65,6 +65,8 @@ const item = {
 const renderFloatingToolbar = ({onButtonClick = () => {}}) => {
 	const itemRef = React.createRef();
 
+	itemRef.current = document.createElement('div');
+
 	return render(
 		<StoreAPIContextProvider>
 			<div className="page-editor__sidebar__content"></div>

@@ -151,7 +151,6 @@ definition {
 		Upgrade.viewClassicSearchPortletConfiguration();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade7110 {
 		property custom.properties = "upgrade.database.auto.run=true";
@@ -163,7 +162,6 @@ definition {
 		Upgrade.viewClassicSearchPortletConfiguration();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade7210 {
 		property custom.properties = "upgrade.database.auto.run=true";
@@ -176,7 +174,6 @@ definition {
 		Upgrade.viewClassicSearchPortletConfiguration();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade70106 {
 		property custom.properties = "upgrade.database.auto.run=true";
@@ -303,7 +300,6 @@ definition {
 		Upgrade.viewSearchPortletsConfiguration();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade7110 {
 		property custom.properties = "upgrade.database.auto.run=true";
@@ -315,7 +311,6 @@ definition {
 		Upgrade.viewSearchPortletsConfiguration();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade7210 {
 		property custom.properties = "upgrade.database.auto.run=true";

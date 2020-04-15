@@ -1,5 +1,4 @@
 /**
- *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.felix.fileinstall;
 
 import java.io.File;
@@ -22,15 +22,14 @@ import java.io.File;
 /**
  * Objects implementing this interface are able to convert certain
  * kind of artifacts to OSGi bundles.
- *
  */
-public interface ArtifactTransformer extends ArtifactListener
-{
+public interface ArtifactTransformer extends ArtifactListener {
 
-    /**
-     * Process the given file (canHandle returned true previously)
-     * Can return <null> or a pointer to a transformed file.
-     */
-     File transform(File artifact, File tmpDir) throws Exception;
+	/**
+	 * Process the given file (canHandle returned true previously)
+	 * Can return <null> or a pointer to a transformed file.
+	 */
+	public File transform(File artifact, File tmpDir) throws Exception;
 
 }
+/* @generated */

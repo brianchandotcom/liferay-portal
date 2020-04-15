@@ -1,5 +1,4 @@
 /**
- *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.felix.fileinstall;
 
 import java.io.File;
@@ -30,28 +30,28 @@ import java.io.File;
  * artifacts will be reported as new, while any deleted artifact
  * won't be reported as deleted.
  */
-public interface ArtifactInstaller extends ArtifactListener
-{
+public interface ArtifactInstaller extends ArtifactListener {
 
-    /**
-     * Install the artifact
-     *
-     * @param artifact the artifact to be installed
-     */
-    void install(File artifact) throws Exception;
+	/**
+	 * Install the artifact
+	 *
+	 * @param artifact the artifact to be installed
+	 */
+	public void install(File artifact) throws Exception;
 
-    /**
-     * Update the artifact
-     *
-     * @param artifact the artifact to be updated
-     */
-    void update(File artifact) throws Exception;
+	/**
+	 * Uninstall the artifact
+	 *
+	 * @param artifact the artifact to be uninstalled
+	 */
+	public void uninstall(File artifact) throws Exception;
 
-    /**
-     * Uninstall the artifact
-     * 
-     * @param artifact the artifact to be uninstalled
-     */
-    void uninstall(File artifact) throws Exception;
+	/**
+	 * Update the artifact
+	 *
+	 * @param artifact the artifact to be updated
+	 */
+	public void update(File artifact) throws Exception;
 
 }
+/* @generated */

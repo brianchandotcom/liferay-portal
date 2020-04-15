@@ -1,5 +1,4 @@
 /**
- *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.felix.fileinstall;
 
 import java.net.URL;
@@ -23,16 +23,17 @@ import java.net.URL;
  * Objects implementing this interface are able to convert certain
  * kind of artifacts to OSGi bundles on the fly through an URL handler.
  *
- * This kind of artifact listener should be favored over the {@link ArtifactTransformer}
- * because it allows the use of the OSGi update feature on bundles.
+ * This kind of artifact listener should be favored over the
+ * {@link ArtifactTransformer} because it allows the use of the OSGi update
+ * feature on bundles.
  */
-public interface ArtifactUrlTransformer extends ArtifactListener
-{
+public interface ArtifactUrlTransformer extends ArtifactListener {
 
-    /**
-     * Process the given file (canHandle returned true previously)
-     * Can return <null> or a pointer to a transformed file.
-     */
-     URL transform(URL artifact) throws Exception;
+	/**
+	 * Process the given file (canHandle returned true previously)
+	 * Can return <null> or a pointer to a transformed file.
+	 */
+	public URL transform(URL artifact) throws Exception;
 
 }
+/* @generated */

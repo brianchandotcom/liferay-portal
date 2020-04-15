@@ -1,5 +1,4 @@
 /**
- *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,31 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.felix.fileinstall;
 
 import java.io.File;
 
 /**
  * Interface representing a custom deployment mechanism.
- * 
+ *
  * Classes must implement one of its sub-interface, either
  * {@link ArtifactTransformer} or
  * {@link ArtifactInstaller}.
- *
  */
-public interface ArtifactListener
-{
-	
+public interface ArtifactListener {
+
 	/**
-     * Returns true if the listener can process the given artifact.
-     *
-     * Error occuring when checking the artifact should be catched
-     * and not be thrown.
-     *
-     * @param artifact the artifact to check
-     * @return <code>true</code> if this listener supports
-     *         the given artifact, <code>false</code> otherwise
-     */
-    boolean canHandle(File artifact);
+	 * Returns true if the listener can process the given artifact.
+	 *
+	 * Error occuring when checking the artifact should be catched
+	 * and not be thrown.
+	 *
+	 * @param artifact the artifact to check
+	 * @return <code>true</code> if this listener supports
+	 *         the given artifact, <code>false</code> otherwise
+	 */
+	public boolean canHandle(File artifact);
 
 }
+/* @generated */

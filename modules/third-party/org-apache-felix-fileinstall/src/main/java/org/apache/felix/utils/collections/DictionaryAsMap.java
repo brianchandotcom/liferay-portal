@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.apache.felix.utils.collections;
 
 import java.util.AbstractMap;
@@ -29,82 +30,87 @@ import java.util.Set;
 /**
  * A wrapper around a dictionary access it as a Map
  */
-public class DictionaryAsMap<U, V> extends AbstractMap<U, V>
-{
+public class DictionaryAsMap<K, V> extends AbstractMap<K, V> {
 
-    private Dictionary<U, V> dict;
+	public DictionaryAsMap(Dictionary<K, V> dictionary) {
+		_dictionary = dictionary;
+	}
 
-    public DictionaryAsMap(Dictionary<U, V> dict)
-    {
-        this.dict = dict;
-    }
+	@Override
+	public Set<Entry<K, V>> entrySet() {
+		return new AbstractSet<Entry<K, V>>() {
 
-    @Override
-    public Set<Entry<U, V>> entrySet()
-    {
-        return new AbstractSet<Entry<U, V>>()
-        {
-            @Override
-            public Iterator<Entry<U, V>> iterator()
-            {
-                final Enumeration<U> e = dict.keys();
-                return new Iterator<Entry<U, V>>()
-                {
-                    private U key;
-                    public boolean hasNext()
-                    {
-                        return e.hasMoreElements();
-                    }
+			@Override
+			public Iterator<Entry<K, V>> iterator() {
+				Enumeration<K> enumeration = _dictionary.keys();
 
-                    public Entry<U, V> next()
-                    {
-                        key = e.nextElement();
-                        return new KeyEntry(key);
-                    }
+				return new Iterator<Entry<K, V>>() {
 
-                    public void remove()
-                    {
-                        if (key == null)
-                        {
-                            throw new IllegalStateException();
-                        }
-                        dict.remove(key);
-                    }
-                };
-            }
+					@Override
+					public boolean hasNext() {
+						return enumeration.hasMoreElements();
+					}
 
-            @Override
-            public int size()
-            {
-                return dict.size();
-            }
-        };
-    }
+					@Override
+					public Entry<K, V> next() {
+						_key = enumeration.nextElement();
 
-    @Override
-    public V put(U key, V value) {
-        return dict.put(key, value);
-    }
+						return new KeyEntry(_key);
+					}
 
-    class KeyEntry implements Map.Entry<U,V> {
+					@Override
+					public void remove() {
+						if (_key == null) {
+							throw new IllegalStateException();
+						}
 
-        private final U key;
+						_dictionary.remove(_key);
+					}
 
-        KeyEntry(U key) {
-            this.key = key;
-        }
+					private K _key;
 
-        public U getKey() {
-            return key;
-        }
+				};
+			}
 
-        public V getValue() {
-            return dict.get(key);
-        }
+			@Override
+			public int size() {
+				return _dictionary.size();
+			}
 
-        public V setValue(V value) {
-            return DictionaryAsMap.this.put(key, value);
-        }
-    }
+		};
+	}
+
+	@Override
+	public V put(K key, V value) {
+		return _dictionary.put(key, value);
+	}
+
+	private final Dictionary<K, V> _dictionary;
+
+	private class KeyEntry implements Map.Entry<K, V> {
+
+		public KeyEntry(K key) {
+			_key = key;
+		}
+
+		@Override
+		public K getKey() {
+			return _key;
+		}
+
+		@Override
+		public V getValue() {
+			return _dictionary.get(_key);
+		}
+
+		@Override
+		public V setValue(V value) {
+			return DictionaryAsMap.this.put(_key, value);
+		}
+
+		private final K _key;
+
+	}
 
 }
+/* @generated */

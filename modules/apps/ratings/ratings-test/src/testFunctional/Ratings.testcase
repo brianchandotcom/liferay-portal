@@ -517,7 +517,6 @@ definition {
 			voteCount = "1");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test RateKBArticleWithoutSuggestions {
 		JSONLayout.addPublicLayout(
@@ -648,7 +647,6 @@ definition {
 			ratingStarCount = "5");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewKBArticleWithStarRatings {
 		property test.name.skip.portal.instance = "Ratings#ViewKBArticleWithStarRatings";

@@ -20,6 +20,7 @@ import ClayModal from 'clay-modal';
 import {
 	FormSupport,
 	PagesVisitor,
+	generateInstanceId,
 	generateName,
 } from 'dynamic-data-mapping-form-renderer';
 import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
@@ -86,6 +87,7 @@ class Sidebar extends Component {
 				defaultLanguageId,
 				editingLanguageId
 			),
+			instanceId: generateInstanceId(8),
 			settingsContext,
 			type: newFieldType.name,
 		});

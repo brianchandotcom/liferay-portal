@@ -828,15 +828,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page2");
 
-		Portlet.gotoPortletOptions(
+		Portlet.selectScopePG(
 			portletName = "Blogs",
-			portletOption = "Configuration");
-
-		BlogsConfiguration.selectConfigurationIFrame();
-
-		BlogsNavigator.gotoConfigurationScopePG();
-
-		BlogsConfiguration.selectScopePG(scopeSelection = "Blogs Page2");
+			scope = "Blogs Page2");
 
 		Navigator.gotoPage(pageName = "Blogs Page2");
 
@@ -890,15 +884,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		Portlet.gotoPortletOptions(
+		Portlet.selectScopePG(
 			portletName = "Blogs",
-			portletOption = "Configuration");
-
-		BlogsConfiguration.selectConfigurationIFrame();
-
-		BlogsNavigator.gotoConfigurationScopePG();
-
-		BlogsConfiguration.selectScopePG(scopeSelection = "Blogs Page2");
+			scope = "Blogs Page2");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

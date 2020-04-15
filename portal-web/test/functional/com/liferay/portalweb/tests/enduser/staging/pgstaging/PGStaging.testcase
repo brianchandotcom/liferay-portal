@@ -509,7 +509,9 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		MessageboardsPortlet.configureScopePG(scopeName = "Staging Test Page (Create New)");
+		Portlet.selectScopePG(
+			portletName = "Message Boards",
+			scope = "Staging Test Page");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

@@ -471,9 +471,11 @@ definition {
 
 		BlogsNavigator.gotoConfigurationSetupPG();
 
-		BlogsNavigator.gotoConfigurationScopePG();
+		Navigator.gotoPage(pageName = "${pageName}");
 
-		BlogsConfiguration.selectScopePG(scopeSelection = "Liferay");
+		Portlet.selectScopePG(
+			portletName = "Blogs",
+			scope = "Liferay");
 	}
 
 	macro tearDownCP {

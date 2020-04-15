@@ -208,15 +208,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page2");
 
-		Portlet.gotoPortletOptions(
+		Portlet.selectScopePG(
 			portletName = "Blogs",
-			portletOption = "Configuration");
-
-		BlogsConfiguration.selectConfigurationIFrame();
-
-		BlogsNavigator.gotoConfigurationScopePG();
-
-		BlogsConfiguration.selectScopePG(scopeSelection = "Blogs Page2");
+			scope = "Blogs Page2");
 
 		Navigator.gotoPage(pageName = "Blogs Page2");
 
@@ -262,15 +256,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page2");
 
-		Portlet.gotoPortletOptions(
+		Portlet.selectScopePG(
 			portletName = "Blogs",
-			portletOption = "Configuration");
-
-		BlogsConfiguration.selectConfigurationIFrame();
-
-		BlogsNavigator.gotoConfigurationScopePG();
-
-		BlogsConfiguration.selectScopePG(scopeSelection = "${siteName}");
+			scope = "${siteName}");
 
 		Navigator.gotoPage(pageName = "Blogs Page2");
 
@@ -1450,15 +1438,9 @@ definition {
 
 	@priority = "3"
 	test ViewBlogsEntryWithDefaultScope {
-		Portlet.gotoPortletOptions(
+		Portlet.selectScopePG(
 			portletName = "Blogs",
-			portletOption = "Configuration");
-
-		BlogsConfiguration.selectConfigurationIFrame();
-
-		BlogsNavigator.gotoConfigurationScopePG();
-
-		BlogsConfiguration.selectScopePG(scopeSelection = "Blogs Page");
+			scope = "Blogs Page");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1480,26 +1462,17 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		Portlet.gotoPortletOptions(
+		Portlet.selectScopePG(
 			portletName = "Blogs",
-			portletOption = "Configuration");
-
-		BlogsConfiguration.selectConfigurationIFrame();
-
-		BlogsNavigator.gotoConfigurationScopePG();
-
-		BlogsConfiguration.selectScopePG(scopeSelection = "Blogs Page");
+			scope = "Blogs Page");
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		ProductMenu.gotoScopedPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Blogs");
-
-		BlogsConfiguration.selectScopeCP(
-			scopeDefault = "Default Scope",
-			scopeSelection = "Blogs Page");
+			portlet = "Blogs",
+			scope = "Blogs Page");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 

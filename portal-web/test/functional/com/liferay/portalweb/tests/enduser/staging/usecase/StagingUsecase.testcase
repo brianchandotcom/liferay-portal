@@ -990,13 +990,9 @@ definition {
 
 		Portlet.addPG(portletName = "Blogs");
 
-		Portlet.gotoPortletOptions(
+		Portlet.selectScopePG(
 			portletName = "Blogs",
-			portletOption = "Configuration");
-
-		IFrame.selectConfigurationFrame();
-
-		Portlet.selectScope(scope = "Staging Test Page (Create New)");
+			scope = "Staging Test Page");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

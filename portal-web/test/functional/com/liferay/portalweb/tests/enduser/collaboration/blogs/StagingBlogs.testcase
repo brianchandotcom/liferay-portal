@@ -484,7 +484,9 @@ definition {
 			pageName = "Blogs Page 2",
 			siteName = "Site Name");
 
-		BlogsConfiguration.configureScopePG(scopeSelection = "Blogs Page 2 (Create New)");
+		Portlet.selectScopePG(
+			portletName = "Blogs",
+			scope = "Blogs Page 2");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Blogs Page 2",

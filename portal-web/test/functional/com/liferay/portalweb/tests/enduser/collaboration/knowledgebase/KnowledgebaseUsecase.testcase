@@ -1138,13 +1138,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page 1");
 
-		Portlet.gotoPortletOptions(
+		Portlet.selectScopePG(
 			portletName = "Knowledge Base Display",
-			portletOption = "Configuration");
-
-		KBArticle.selectScopePG(
-			currentKBPageScope = "Liferay",
-			newKBPageScope = "Knowledge Base Display Page 1 (Create New)");
+			scope = "Knowledge Base Display Page 1");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1158,30 +1154,29 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page 2");
 
-		Portlet.gotoPortletOptions(
+		Portlet.selectScopePG(
 			portletName = "Knowledge Base Display",
-			portletOption = "Configuration");
-
-		KBArticle.selectScopePG(
-			currentKBPageScope = "Liferay",
-			newKBPageScope = "Knowledge Base Display Page 2 (Create New)");
+			scope = "Knowledge Base Display Page 2");
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		ProductMenu.gotoScopedPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Knowledge Base");
-
-		KBArticle.setScopeCP(kbPageScope = "Knowledge Base Display Page 1");
+			portlet = "Knowledge Base",
+			scope = "Knowledge Base Display Page 1");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title for Page 1");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		Navigator.openURL();
 
-		KBArticle.setScopeCP(kbPageScope = "Knowledge Base Display Page 2");
+		ProductMenu.gotoScopedPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base",
+			scope = "Knowledge Base Display Page 2");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",

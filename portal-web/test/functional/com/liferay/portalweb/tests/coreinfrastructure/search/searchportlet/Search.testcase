@@ -889,9 +889,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		BlogsConfiguration.configureScopePG(
+		Portlet.selectScopePG(
 			portletName = "Blogs",
-			scopeSelection = "Blogs Page (Create New)");
+			scope = "Blogs Page");
 
 		IFrame.closeFrame();
 

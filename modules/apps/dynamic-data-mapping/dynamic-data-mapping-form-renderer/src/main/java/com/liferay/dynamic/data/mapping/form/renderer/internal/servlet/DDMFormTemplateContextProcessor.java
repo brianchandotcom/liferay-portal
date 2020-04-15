@@ -244,6 +244,12 @@ public class DDMFormTemplateContextProcessor {
 		_ddmForm.setDefaultLocale(_locale);
 	}
 
+	protected void setDDMFormFieldCollapsible(
+		boolean collapsible, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty("collapsible", collapsible);
+	}
+
 	protected void setDDMFormFieldDataProviderSettings(
 		long ddmDataProviderInstanceId, String ddmDataProviderInstanceOutput,
 		DDMFormField ddmFormField) {
@@ -282,12 +288,6 @@ public class DDMFormTemplateContextProcessor {
 		boolean localizable, DDMFormField ddmFormField) {
 
 		ddmFormField.setLocalizable(localizable);
-	}
-
-	protected void setDDMFormFieldCollapsible(
-		boolean collapsible, DDMFormField ddmFormField) {
-
-		ddmFormField.setProperty("collapsible", collapsible);
 	}
 
 	protected void setDDMFormFieldMultiple(

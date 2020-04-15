@@ -20,11 +20,16 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "org/apache/felix/fileinstall/ArtifactInstaller.java"
+	fileNames "org/apache/felix/fileinstall/ArtifactListener.java"
+	fileNames "org/apache/felix/fileinstall/ArtifactTransformer.java"
+	fileNames "org/apache/felix/fileinstall/ArtifactUrlTransformer.java"
 	fileNames "org/apache/felix/fileinstall/internal/BundleTransformer.java"
 	fileNames "org/apache/felix/fileinstall/internal/ConfigInstaller.java"
 	fileNames "org/apache/felix/fileinstall/internal/DirectoryWatcher.java"
 	fileNames "org/apache/felix/fileinstall/internal/FileInstall.java"
 	fileNames "org/apache/felix/fileinstall/internal/Util.java"
+	fileNames "org/apache/felix/utils/collections/DictionaryAsMap.java"
 	fileNames "org/apache/felix/utils/manifest/Attribute.java"
 	fileNames "org/apache/felix/utils/manifest/Clause.java"
 	fileNames "org/apache/felix/utils/manifest/Directive.java"

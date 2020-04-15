@@ -1,0 +1,23 @@
+.collapsable-panel {
+	.collapse-icon-options {
+		position: absolute;
+		right: 16px;
+		z-index: auto;
+
+		.ddm-form-field-repeatable-add-button,
+		.ddm-form-field-repeatable-delete-button {
+			margin-right: 9px !important;
+			position: relative;
+			right: 0;
+		}
+	}
+
+	.collapse-icon-closed.actions,
+	.collapse-icon-open.actions {
+		right: 0 !important;
+	}
+}
+
+.panel-header {
+	padding: 0 0 4px;
+}

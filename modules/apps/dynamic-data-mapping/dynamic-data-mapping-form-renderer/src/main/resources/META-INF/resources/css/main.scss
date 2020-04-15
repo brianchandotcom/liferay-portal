@@ -443,8 +443,9 @@ body .ddm-user-view-content {
 .lfr-ddm-form-field-repeatable-toolbar {
 	.ddm-form-field-repeatable-add-button,
 	.ddm-form-field-repeatable-delete-button {
+		border-radius: 12px !important;
+		padding: 2px !important;
 		position: absolute;
-		top: 4px;
 	}
 
 	.ddm-form-field-repeatable-delete-button {

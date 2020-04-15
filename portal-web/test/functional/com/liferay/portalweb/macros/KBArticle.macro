@@ -972,37 +972,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro selectScopePG {
-		SelectFrame(locator1 = "KnowledgeBaseConfiguration#IFRAME");
-
-		Navigator.gotoNavItem(navItem = "Scope");
-
-		Select(
-			locator1 = "Select#SCOPE",
-			value1 = "${newKBPageScope}");
-
-		PortletEntry.save();
-
-		SelectFrame(value1 = "relative=top");
-	}
-
-	macro setScopeCP {
-		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
-			Click(locator1 = "ProductMenu#TOGGLE");
-		}
-
-		Click(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SCOPE_COG");
-
-		AssertClick.assertPartialTextClickAt(
-			key_menuItem = "${kbPageScope}",
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "${kbPageScope}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SCOPE",
-			value1 = "${kbPageScope}");
-	}
-
 	macro subscribeCP {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Subscribe");
 

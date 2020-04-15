@@ -138,24 +138,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureScopePG {
-		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		AssertClick(
-			locator1 = "MessageBoardsConfiguration#NAVIGATION_SCOPE",
-			value1 = "Scope");
-
-		Select(
-			locator1 = "Select#SCOPE",
-			value1 = "${scopeName}");
-
-		PortletEntry.save();
-	}
-
 	macro gotoInlinePermissionsPG {
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 

@@ -1,21 +1,5 @@
 definition {
 
-	macro configureScopePG {
-		Portlet.gotoPortletOptions(
-			portletName = "${portletName}",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		Navigator.gotoNavItem(navItem = "Scope");
-
-		Select(
-			locator1 = "Select#SCOPE",
-			value1 = "${scopeSelection}");
-
-		PortletEntry.save();
-	}
-
 	macro enableReadingTime {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -68,43 +52,6 @@ definition {
 		Select(
 			locator1 = "Select#PAGE_DELTA",
 			value1 = "${maximumItemsToDisplay}");
-	}
-
-	macro selectScopeCP {
-		var key_scopeDefault = "${scopeDefault}";
-
-		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
-			Click(locator1 = "ProductMenu#TOGGLE");
-		}
-
-		Click.pauseClickAt(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SCOPE_COG");
-
-		var key_scopeSelection = "${scopeSelection}";
-
-		AssertClick.assertPartialTextClickAt(
-			key_menuItem = "${scopeSelection}",
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "${scopeSelection}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SCOPE",
-			value1 = "${scopeSelection}");
-	}
-
-	macro selectScopePG {
-		var key_scopeSelection = "${scopeSelection}";
-
-		Select(
-			locator1 = "Select#SCOPE",
-			value1 = "regexp:.*${scopeSelection}.*");
-
-		Pause(locator1 = "3000");
-
-		Click(locator1 = "Button#SAVE");
-
-		Alert.viewSuccessMessage();
-
-		BlogsConfiguration.viewScopeSelection(scopeSelection = "${scopeSelection}");
 	}
 
 	macro uncheckComments {

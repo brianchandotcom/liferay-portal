@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+import debounceRAF from '../../core/debounceRAF';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {useSelectItem} from './Controls';
@@ -40,15 +41,14 @@ export default function LayoutViewport({
 	);
 
 	useEffect(() => {
-		let currentWidth = 0;
 		const handleViewport = handleRef.current;
+
 		let initialWidth = 0;
 		let initialX = 0;
 
 		setLayoutWidth(undefined);
 
-		const onDrag = event => {
-			const layoutMarginLeft = (initialWidth - currentWidth) / 2;
+		const onDrag = debounceRAF(event => {
 			const {maxWidth, minWidth} = config.availableViewportSizes[
 				selectedViewportSize
 			];
@@ -56,16 +56,13 @@ export default function LayoutViewport({
 			setLayoutWidth(
 				Math.min(
 					Math.max(
-						initialWidth +
-							event.clientX -
-							initialX -
-							layoutMarginLeft,
+						initialWidth + (event.clientX - initialX) * 2,
 						minWidth
 					),
 					maxWidth + 1
 				)
 			);
-		};
+		});
 
 		const stopDrag = () => {
 			setResizing(false);
@@ -87,7 +84,6 @@ export default function LayoutViewport({
 					element.getBoundingClientRect().width -
 					(parseInt(getComputedStyle(element).paddingRight, 10) || 0);
 
-				currentWidth = initialWidth;
 				setLayoutWidth(initialWidth);
 
 				document.addEventListener('mousemove', onDrag, true);

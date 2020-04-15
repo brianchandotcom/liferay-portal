@@ -201,14 +201,16 @@ AUI.add(
 										responseControlMenu
 									);
 								}
+
+								// Start timeout for refreshing the data.
+
+								instance._laterTimeout = A.later(
+									renderInterval,
+									instance,
+									'_updateIndexActions'
+								);
 							});
 					}
-
-					instance._laterTimeout = A.later(
-						renderInterval,
-						instance,
-						'_updateIndexActions'
-					);
 				},
 
 				bindUI() {

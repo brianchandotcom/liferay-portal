@@ -630,7 +630,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		AssertElementPresent(locator1 = "Button#SELECT_FILE");
+		AssertElementPresent.assertVisible(locator1 = "Button#SELECT_FILE");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",

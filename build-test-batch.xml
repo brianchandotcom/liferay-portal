@@ -1482,195 +1482,197 @@ app.server.type=@{app.server.type}]]></echo>
 				<contains string="${test.class}" substring="," />
 			</condition>
 
-			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
-				<test-action>
-					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" rebuild.database="false">
-						<test-action>
-							<trycatch>
-								<try>
-									<get-test-batch-app-server-start-executable-arg-line />
+			<retry retrycount="${functional.batch.retry.count}">
+				<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
+					<test-action>
+						<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" rebuild.database="false">
+							<test-action>
+								<trycatch>
+									<try>
+										<get-test-batch-app-server-start-executable-arg-line />
 
-									<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
-										<property name="app.server.start.executable.arg.line" value="${test.batch.app.server.start.executable.arg.line}" />
-										<property name="database.type" value="@{database.type}" />
-										<property name="functional.test.type" value="@{functional.test.type}" />
-										<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
-										<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
-										<property name="test.class" value="${test.class}" />
-									</ant>
+										<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
+											<property name="app.server.start.executable.arg.line" value="${test.batch.app.server.start.executable.arg.line}" />
+											<property name="database.type" value="@{database.type}" />
+											<property name="functional.test.type" value="@{functional.test.type}" />
+											<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
+											<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
+											<property name="test.class" value="${test.class}" />
+										</ant>
 
-									<if>
-										<equals arg1="@{test.legacy.database.dump}" arg2="true" />
-										<then>
-											<get-testcase-property property.name="data.archive.type" />
+										<if>
+											<equals arg1="@{test.legacy.database.dump}" arg2="true" />
+											<then>
+												<get-testcase-property property.name="data.archive.type" />
 
-											<ant dir="${portal.legacy.dir}" target="export-database">
-												<property name="data.archive.type" value="${data.archive.type}" />
-												<property name="database.type" value="@{database.type}" />
-												<property name="database.version" value="@{database.version}" />
-												<property name="test.class" value="${test.class}" />
-											</ant>
-										</then>
-									</if>
-								</try>
-								<finally>
-									<if>
-										<equals arg1="@{test.portal.log.assert}" arg2="true" />
-										<then>
-											<ant dir="portal-kernel" inheritAll="false" target="test-class">
-												<property name="test.class" value="PortalLogAssertorTest" />
-											</ant>
-										</then>
-									</if>
-								</finally>
-							</trycatch>
-						</test-action>
-					</database-test-run-test>
-				</test-action>
+												<ant dir="${portal.legacy.dir}" target="export-database">
+													<property name="data.archive.type" value="${data.archive.type}" />
+													<property name="database.type" value="@{database.type}" />
+													<property name="database.version" value="@{database.version}" />
+													<property name="test.class" value="${test.class}" />
+												</ant>
+											</then>
+										</if>
+									</try>
+									<finally>
+										<if>
+											<equals arg1="@{test.portal.log.assert}" arg2="true" />
+											<then>
+												<ant dir="portal-kernel" inheritAll="false" target="test-class">
+													<property name="test.class" value="PortalLogAssertorTest" />
+												</ant>
+											</then>
+										</if>
+									</finally>
+								</trycatch>
+							</test-action>
+						</database-test-run-test>
+					</test-action>
 
-				<test-set-up>
-					<antcall target="record-test-generated-properties" />
+					<test-set-up>
+						<antcall target="record-test-generated-properties" />
 
-					<if>
-						<and>
-							<or>
-								<matches pattern="(file|https?)://" string="@{test.portal.bundle.war.url}" />
-								<matches pattern="(file|https?)://" string="@{test.portal.bundle.zip.url}" />
-							</or>
-							<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
-						</and>
-						<then>
-							<prepare-release-test-environment
-								app.server.type="${app.server.type}"
-								setup.testable.jboss="@{setup.testable.jboss}"
-								setup.testable.tomcat="@{setup.testable.tomcat}"
-								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-								test.fix.pack.base.url="${test.fix.pack.base.url}"
-								test.license.xml.url="${test.license.xml.url}"
-								test.plugins.war.zip.url="@{test.plugins.war.zip.url}"
-								test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-								test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-								test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-								test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-								test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-								test.sql.zip.url="${test.sql.zip.url}"
-							/>
-
-							<gradle-execute dir="modules/core" task="deploy">
-								<arg value="--parallel" />
-								<arg value="-Dbuild.profile=portal-pre" />
-								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-							</gradle-execute>
-
-							<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
-
-							<ant dir="portal-test" inheritAll="false" target="jar" />
-
-							<local name="artifact.version" />
-
-							<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
-
-							<propertycopy from="app.server.${app.server.type}.lib.global.dir" name="test.app.server.lib.global.dir" />
-							<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
-
-							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
-							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.global.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
-							<copy-artifact-to-local-cache artifact.file="${project.dir}/portal-test/portal-test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
-							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
-							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
-							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
-						</then>
-						<elseif>
+						<if>
 							<and>
-								<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
-								<available file="liferay-portal-source.tar.gz" />
+								<or>
+									<matches pattern="(file|https?)://" string="@{test.portal.bundle.war.url}" />
+									<matches pattern="(file|https?)://" string="@{test.portal.bundle.zip.url}" />
+								</or>
+								<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
 							</and>
 							<then>
-								<prepare-test-environment
+								<prepare-release-test-environment
 									app.server.type="${app.server.type}"
+									setup.testable.jboss="@{setup.testable.jboss}"
 									setup.testable.tomcat="@{setup.testable.tomcat}"
+									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+									test.fix.pack.base.url="${test.fix.pack.base.url}"
+									test.license.xml.url="${test.license.xml.url}"
+									test.plugins.war.zip.url="@{test.plugins.war.zip.url}"
+									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+									test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+									test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+									test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+									test.sql.zip.url="${test.sql.zip.url}"
 								/>
+
+								<gradle-execute dir="modules/core" task="deploy">
+									<arg value="--parallel" />
+									<arg value="-Dbuild.profile=portal-pre" />
+									<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+								</gradle-execute>
+
+								<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
+
+								<ant dir="portal-test" inheritAll="false" target="jar" />
+
+								<local name="artifact.version" />
+
+								<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
+
+								<propertycopy from="app.server.${app.server.type}.lib.global.dir" name="test.app.server.lib.global.dir" />
+								<propertycopy from="app.server.${app.server.type}.lib.portal.dir" name="test.app.server.lib.portal.dir" />
+
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.global.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${project.dir}/portal-test/portal-test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
+								<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
 							</then>
-						</elseif>
-						<else>
-							<antcall target="compile" />
-
-							<if>
-								<or>
-									<equals arg1="@{app.server.type}" arg2="weblogic" />
-									<equals arg1="@{app.server.type}" arg2="websphere" />
-								</or>
-								<then>
-									<prepare-test-build-custom />
-								</then>
-								<else>
-									<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
-								</else>
-							</if>
-
-							<if>
+							<elseif>
 								<and>
-									<equals arg1="@{app.server.type}" arg2="jboss" />
-									<equals arg1="@{setup.testable.jboss}" arg2="true" />
+									<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+									<available file="liferay-portal-source.tar.gz" />
 								</and>
 								<then>
-									<setup-testable-jboss />
+									<prepare-test-environment
+										app.server.type="${app.server.type}"
+										setup.testable.tomcat="@{setup.testable.tomcat}"
+									/>
 								</then>
-								<elseif>
+							</elseif>
+							<else>
+								<antcall target="compile" />
+
+								<if>
+									<or>
+										<equals arg1="@{app.server.type}" arg2="weblogic" />
+										<equals arg1="@{app.server.type}" arg2="websphere" />
+									</or>
+									<then>
+										<prepare-test-build-custom />
+									</then>
+									<else>
+										<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
+									</else>
+								</if>
+
+								<if>
 									<and>
-										<equals arg1="@{app.server.type}" arg2="tomcat" />
-										<equals arg1="@{setup.testable.tomcat}" arg2="true" />
+										<equals arg1="@{app.server.type}" arg2="jboss" />
+										<equals arg1="@{setup.testable.jboss}" arg2="true" />
 									</and>
 									<then>
-										<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
+										<setup-testable-jboss />
 									</then>
-								</elseif>
-							</if>
-						</else>
-					</if>
+									<elseif>
+										<and>
+											<equals arg1="@{app.server.type}" arg2="tomcat" />
+											<equals arg1="@{setup.testable.tomcat}" arg2="true" />
+										</and>
+										<then>
+											<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
+										</then>
+									</elseif>
+								</if>
+							</else>
+						</if>
 
-					<if>
-						<matches pattern="https?://" string="@{test.plugin.zip.url}" />
-						<then>
-							<mkdir dir="${liferay.home}/deploy" />
+						<if>
+							<matches pattern="https?://" string="@{test.plugin.zip.url}" />
+							<then>
+								<mkdir dir="${liferay.home}/deploy" />
 
-							<mirrors-get
-								dest="${liferay.home}/deploy"
-								src="@{test.plugin.zip.url}"
-							/>
-						</then>
-					</if>
+								<mirrors-get
+									dest="${liferay.home}/deploy"
+									src="@{test.plugin.zip.url}"
+								/>
+							</then>
+						</if>
 
-					<if>
-						<isset property="env.CI_TEST_SUITE" />
-						<then>
-							<get-testcase-property property.name="osgi.app.includes" />
+						<if>
+							<isset property="env.CI_TEST_SUITE" />
+							<then>
+								<get-testcase-property property.name="osgi.app.includes" />
 
-							<if>
-								<not>
-									<contains string="${osgi.app.includes}" substring="portal-search-solr7" />
-								</not>
-								<then>
-									<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
-								</then>
-							</if>
-						</then>
-					</if>
+								<if>
+									<not>
+										<contains string="${osgi.app.includes}" substring="portal-search-solr7" />
+									</not>
+									<then>
+										<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
+									</then>
+								</if>
+							</then>
+						</if>
 
-					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
-				</test-set-up>
+						<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
+					</test-set-up>
 
-				<test-tear-down>
-					<if>
-						<available file=".testable.portal.started" />
-						<then>
-							<antcall target="stop-app-server" />
+					<test-tear-down>
+						<if>
+							<available file=".testable.portal.started" />
+							<then>
+								<antcall target="stop-app-server" />
 
-							<delete failonerror="false" file=".testable.portal.started" />
-						</then>
-					</if>
-				</test-tear-down>
-			</run-batch-test>
+								<delete failonerror="false" file=".testable.portal.started" />
+							</then>
+						</if>
+					</test-tear-down>
+				</run-batch-test>
+			</retry>
 		</sequential>
 	</macrodef>
 

@@ -61,7 +61,7 @@ definition {
 	@priority = "5"
 	test HSQLtoOracle {
 		property database.types = "oracle";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracle";
 
 		SetupWizard.configurePG(
@@ -111,7 +111,7 @@ definition {
 	@priority = "5"
 	test HSQLtoSQLServer {
 		property database.types = "sqlserver";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoSQLServer";
 
 		SetupWizard.configurePG(

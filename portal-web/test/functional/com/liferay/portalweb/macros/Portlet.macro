@@ -318,6 +318,16 @@ definition {
 		Portlet.saveAndCloseConfig();
 	}
 
+	macro selectScopePG {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.selectScope(scope = "${scope}");
+	}
+
 	macro selectTreeNode {
 		if (IsElementPresent(locator1 = "Treeview#NODE_UNSELECTED", key_nodeName = "${nodeName}")) {
 			AssertClick.assertPartialTextClickAt(

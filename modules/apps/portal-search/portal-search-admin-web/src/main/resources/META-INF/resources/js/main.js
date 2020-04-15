@@ -40,7 +40,13 @@ AUI.add(
 					value: null,
 				},
 
+				indexActionWrapperSelector: {
+					validator: Lang.isString,
+					value: null,
+				},
+
 				indexActionsPanel: {
+					validator: Lang.isString,
 					value: null,
 				},
 
@@ -145,39 +151,41 @@ AUI.add(
 							.then(response => {
 								var responseDataNode = A.Node.create(response);
 
+								// Replace each progress bar.
+
 								var responseAdminIndexPanel = responseDataNode.one(
 									instance.get(STR_INDEX_ACTIONS_PANEL)
 								);
 
 								var responseAdminIndexNodeList = responseAdminIndexPanel.all(
-									'.index-action-wrapper'
+									instance.get('indexActionWrapperSelector')
 								);
 
 								var currentAdminIndexNodeList = currentAdminIndexPanel.all(
-									'.index-action-wrapper'
+									instance.get('indexActionWrapperSelector')
 								);
 
 								currentAdminIndexNodeList.each(
-									(item, index) => {
-										var inProgress = item.one('.progress');
-
+									(currentNode, index) => {
 										var responseAdminIndexNode = responseAdminIndexNodeList.item(
 											index
 										);
 
-										if (!inProgress) {
-											inProgress = responseAdminIndexNode.one(
+										var inProgress =
+											currentNode.one('.progress') ||
+											responseAdminIndexNode.one(
 												'.progress'
 											);
-										}
 
 										if (inProgress) {
-											item.replace(
+											currentNode.replace(
 												responseAdminIndexNode
 											);
 										}
 									}
 								);
+
+								// Replace control menu bar.
 
 								var controlMenuId =
 									'#' + instance.ns('controlMenu');

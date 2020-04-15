@@ -176,6 +176,7 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 <aui:script use="liferay-admin">
 	new Liferay.Portlet.Admin({
 		form: document.<portlet:namespace />fm,
+		indexActionWrapperSelector: '.index-action-wrapper',
 		indexActionsPanel: '#adminSearchAdminIndexActionsPanel',
 		namespace: '<portlet:namespace />',
 		redirectUrl: '<%= redirectURL %>',

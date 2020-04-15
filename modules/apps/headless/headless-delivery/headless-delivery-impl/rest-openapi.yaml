@@ -1988,6 +1988,10 @@ components:
             properties:
                 widget:
                     $ref: "#/components/schemas/Widget"
+                widgetConfig:
+                    additionalProperties:
+                        type: object
+                    type: object
             type: object
         Rating:
             description:

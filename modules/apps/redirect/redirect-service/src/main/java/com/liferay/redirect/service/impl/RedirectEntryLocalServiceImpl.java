@@ -32,6 +32,9 @@ import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.service.base.RedirectEntryLocalServiceBaseImpl;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import java.util.Date;
 import java.util.List;
 
@@ -143,9 +146,17 @@ public class RedirectEntryLocalServiceImpl
 			}
 		}
 
-		redirectEntry.setLastOccurrenceDate(new Date());
+		if ((redirectEntry.getLastOccurrenceDate() == null) ||
+			!_isInTheSameDay(
+				redirectEntry.getLastOccurrenceDate(), DateUtil.newDate())) {
 
-		return redirectEntryLocalService.updateRedirectEntry(redirectEntry);
+			redirectEntry.setLastOccurrenceDate(new Date());
+
+			redirectEntry = redirectEntryLocalService.updateRedirectEntry(
+				redirectEntry);
+		}
+
+		return redirectEntry;
 	}
 
 	@Override
@@ -188,6 +199,19 @@ public class RedirectEntryLocalServiceImpl
 		redirectEntry.setSourceURL(sourceURL);
 
 		return redirectEntryPersistence.update(redirectEntry);
+	}
+
+	private static Instant _getDayInstant(Date date) {
+		Instant instant = date.toInstant();
+
+		return instant.truncatedTo(ChronoUnit.DAYS);
+	}
+
+	private boolean _isInTheSameDay(Date date1, Date date2) {
+		Instant instant1 = _getDayInstant(date1);
+		Instant instant2 = _getDayInstant(date2);
+
+		return instant1.equals(instant2);
 	}
 
 	private void _validate(String destinationURL, String sourceURL)

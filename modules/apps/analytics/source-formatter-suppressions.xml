@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="UnprocessedExceptionCheck" files="analytics-demo-data-creator-impl/src/main/java/com/liferay/analytics/demo/data/creator/internal/AnalyticsDemoDataCreatorImpl\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="JavaIllegalImportsCheck" files="analytics-client-impl/src/main/java/com/liferay/analytics/client/internal/IdentityClientImpl\.java" />
 		<suppress checks="JavaModuleInternalImportsCheck" files="analytics-client-impl/src/main/java/com/liferay/analytics/client/internal/AnalyticsClientImpl\.java" />

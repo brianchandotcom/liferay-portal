@@ -38,12 +38,15 @@ export default function FloatingToolbar({
 	const isMounted = useIsMounted();
 	const [panelId, setPanelId] = useState(null);
 	const panelRef = useRef(null);
-	const show = useIsActive()(item.itemId);
 	const hoverItem = useHoverItem();
 	const toolbarRef = useRef(null);
 	const [hidden, setHidden] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [windowWidth, setWindowWidth] = useState(0);
+
+	const itemElement = itemRef.current;
+
+	const show = useIsActive()(item.itemId) && itemElement;
 
 	const PanelComponent = useMemo(
 		() => FLOATING_TOOLBAR_CONFIGURATIONS[panelId] || null,
@@ -135,6 +138,7 @@ export default function FloatingToolbar({
 	}, [
 		alignElement,
 		item.config,
+		itemElement,
 		itemRef,
 		panelId,
 		show,

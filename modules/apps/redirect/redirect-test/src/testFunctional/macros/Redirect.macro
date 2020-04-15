@@ -198,4 +198,16 @@ definition {
 		}
 	}
 
+	macro viewOrderedURLs {
+		AssertTextEquals(
+			key_rowNumber = "1",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_2",
+			value1 = "${requestNumber1}");
+
+		AssertTextEquals(
+			key_rowNumber = "2",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_2",
+			value1 = "${requestNumber2}");
+	}
+
 }

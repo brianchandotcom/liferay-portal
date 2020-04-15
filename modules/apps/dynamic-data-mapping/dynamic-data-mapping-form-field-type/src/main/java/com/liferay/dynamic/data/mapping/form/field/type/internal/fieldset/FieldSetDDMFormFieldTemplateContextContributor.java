@@ -87,6 +87,12 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		}
 
 		return HashMapBuilder.<String, Object>put(
+			"collapsible", ddmFormField.getProperty("collapsible")
+		).put(
+			"dataDefinitionId",
+			DDMFormFieldTypeUtil.getPropertyValue(
+				ddmFormFieldRenderingContext, "dataDefinitionId")
+		).put(
 			"ddmStructureId", ddmFormField.getProperty("ddmStructureId")
 		).put(
 			"ddmStructureLayoutId",

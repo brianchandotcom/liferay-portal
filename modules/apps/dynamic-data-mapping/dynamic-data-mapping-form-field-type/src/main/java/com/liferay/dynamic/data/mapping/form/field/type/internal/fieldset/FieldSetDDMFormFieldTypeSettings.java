@@ -49,7 +49,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"label", "name", "repeatable", "rows", "type"
+								"collapsible", "label", "name", "repeatable",
+								"rows", "type"
 							}
 						)
 					}
@@ -60,6 +61,15 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 )
 public interface FieldSetDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+
+	@DDMFormField(
+		label = "%collapsible", properties = "showAsSwitcher=true",
+		type = "checkbox"
+	)
+	public boolean collapsible();
+
+	@DDMFormField(type = "numeric", visibilityExpression = "FALSE")
+	public String dataDefinitionId();
 
 	@DDMFormField(dataType = "numeric")
 	public long ddmStructureId();

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;

@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;

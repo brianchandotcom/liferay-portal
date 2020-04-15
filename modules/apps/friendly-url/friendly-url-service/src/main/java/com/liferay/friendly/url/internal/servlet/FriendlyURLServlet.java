@@ -180,7 +180,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			RedirectEntry redirectEntry =
 				redirectEntryLocalService.fetchRedirectEntry(
-					group.getGroupId(), _normalizeFriendlyURL(friendlyURL));
+					group.getGroupId(), _normalizeFriendlyURL(friendlyURL),
+					true);
 
 			if (redirectEntry != null) {
 				return new Redirect(

@@ -156,7 +156,7 @@ public class RedirectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testFetchRedirectEntryUpdatesTheModifiedDateOnHit()
+	public void testFetchRedirectEntryDoesNotUpdateTheLastOccurrenceDate()
 		throws Exception {
 
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
@@ -167,6 +167,22 @@ public class RedirectEntryLocalServiceTest {
 
 		_redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
 			_group.getGroupId(), "sourceURL");
+
+		Assert.assertNull(_redirectEntry.getLastOccurrenceDate());
+	}
+
+	@Test
+	public void testFetchRedirectEntryUpdatesTheModifiedDateOnHit()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertNull(_redirectEntry.getLastOccurrenceDate());
+
+		_redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
+			_group.getGroupId(), "sourceURL", true);
 
 		Date lastOccurrenceDate = _redirectEntry.getLastOccurrenceDate();
 
@@ -184,12 +200,12 @@ public class RedirectEntryLocalServiceTest {
 		Assert.assertNull(_redirectEntry.getLastOccurrenceDate());
 
 		_redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
-			_group.getGroupId(), "sourceURL");
+			_group.getGroupId(), "sourceURL", true);
 
 		Date lastOccurrenceDate = _redirectEntry.getLastOccurrenceDate();
 
 		_redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
-			_group.getGroupId(), "sourceURL");
+			_group.getGroupId(), "sourceURL", true);
 
 		Assert.assertEquals(
 			lastOccurrenceDate, _redirectEntry.getLastOccurrenceDate());

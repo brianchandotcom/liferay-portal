@@ -129,6 +129,14 @@ public class RedirectEntryLocalServiceImpl
 
 	@Override
 	public RedirectEntry fetchRedirectEntry(long groupId, String sourceURL) {
+		return redirectEntryLocalService.fetchRedirectEntry(
+			groupId, sourceURL, false);
+	}
+
+	@Override
+	public RedirectEntry fetchRedirectEntry(
+		long groupId, String sourceURL, boolean updateLastOccurrenceDate) {
+
 		if (!_redirectConfiguration.isEnabled()) {
 			return null;
 		}
@@ -146,9 +154,10 @@ public class RedirectEntryLocalServiceImpl
 			}
 		}
 
-		if ((redirectEntry.getLastOccurrenceDate() == null) ||
-			!_isInTheSameDay(
-				redirectEntry.getLastOccurrenceDate(), DateUtil.newDate())) {
+		if (updateLastOccurrenceDate &&
+			((redirectEntry.getLastOccurrenceDate() == null) ||
+			 !_isInTheSameDay(
+				 redirectEntry.getLastOccurrenceDate(), DateUtil.newDate()))) {
 
 			redirectEntry.setLastOccurrenceDate(new Date());
 

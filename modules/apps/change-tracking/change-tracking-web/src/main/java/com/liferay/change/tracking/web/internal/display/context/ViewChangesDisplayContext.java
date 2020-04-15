@@ -124,14 +124,6 @@ public class ViewChangesDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public boolean isPublished() {
-		if (_ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private String _getOrderByCol() {
 		return ParamUtil.getString(
 			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,

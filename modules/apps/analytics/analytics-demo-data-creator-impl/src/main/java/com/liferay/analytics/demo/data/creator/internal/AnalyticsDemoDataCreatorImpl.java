@@ -220,6 +220,12 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 			catch (DuplicateOrganizationException
 						duplicateOrganizationException) {
 
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						duplicateOrganizationException,
+						duplicateOrganizationException);
+				}
+
 				organization = _organizationLocalService.getOrganization(
 					_companyId, name);
 			}
@@ -246,6 +252,10 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 					RoleConstants.TYPE_REGULAR, null, null);
 			}
 			catch (DuplicateRoleException duplicateRoleException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(duplicateRoleException, duplicateRoleException);
+				}
+
 				role = _roleLocalService.getRole(_companyId, name);
 			}
 
@@ -271,6 +281,10 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 					new ServiceContext());
 			}
 			catch (DuplicateTeamException duplicateTeamException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(duplicateTeamException, duplicateTeamException);
+				}
+
 				team = _teamLocalService.getTeam(_defaultGroupId, name);
 			}
 
@@ -323,6 +337,12 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 					_defaultUserId, _companyId, name, null, null);
 			}
 			catch (DuplicateUserGroupException duplicateUserGroupException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						duplicateUserGroupException,
+						duplicateUserGroupException);
+				}
+
 				userGroup = _userGroupLocalService.getUserGroup(
 					_companyId, name);
 			}

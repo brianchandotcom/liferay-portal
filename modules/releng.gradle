@@ -459,6 +459,8 @@ portalJavadocJar {
 }
 
 portalSourcesJar {
+	dependsOn portalArtifactsJar
+
 	baseName = "portal"
 	classifier = "sources"
 	includeEmptyDirs = false

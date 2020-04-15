@@ -1482,7 +1482,7 @@ private List<Dependency> _getPortalJavadocDependencies() {
 
 			Map<String, String> map = evaluate("[" + line.substring(13, line.length()) + "]")
 
-			if (!map.group.startsWith("com.liferay") || !map.version.matches("[0-9.]*")) {
+			if (!map.group.startsWith("com.liferay") || (!map.version.equals("default") && !map.version.matches("[0-9.]*"))) {
 				dependencyNotations.add(map.group + ":" + map.name + ":" + map.version)
 			}
 		}

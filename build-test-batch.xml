@@ -1478,6 +1478,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<property name="functional.test.type" value="@{functional.test.type}" />
 
+			<condition else="0" property="functional.batch.retry.count" value="1">
+				<contains string="${test.class}" substring="," />
+			</condition>
+
 			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
 				<test-action>
 					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" rebuild.database="false">

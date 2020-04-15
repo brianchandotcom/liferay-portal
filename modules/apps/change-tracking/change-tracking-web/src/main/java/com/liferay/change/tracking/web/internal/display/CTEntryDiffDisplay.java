@@ -43,16 +43,6 @@ public class CTEntryDiffDisplay {
 		_name = name;
 	}
 
-	public String getRightTitle() {
-		if (_ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
-			return StringBundler.concat(
-				_ctCollection.getName(), " : ", _name, " (",
-				_language.get(_httpServletRequest, "new"), ")");
-		}
-
-		return StringBundler.concat(_ctCollection.getName(), " : ", _name);
-	}
-
 	public String getLeftTitle() {
 		if (_ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
 			return StringBundler.concat(
@@ -64,6 +54,16 @@ public class CTEntryDiffDisplay {
 			_language.get(_httpServletRequest, "production"), " : ", _name);
 	}
 
+	public String getRightTitle() {
+		if (_ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			return StringBundler.concat(
+				_ctCollection.getName(), " : ", _name, " (",
+				_language.get(_httpServletRequest, "new"), ")");
+		}
+
+		return StringBundler.concat(_ctCollection.getName(), " : ", _name);
+	}
+
 	public boolean isChangeType(int changeType) {
 		if (_ctEntry.getChangeType() == changeType) {
 			return true;
@@ -72,16 +72,16 @@ public class CTEntryDiffDisplay {
 		return false;
 	}
 
-	public void renderRightCTRow() throws Exception {
-		_ctDisplayRendererRegistry.renderCTEntry(
-			_httpServletRequest, _httpServletResponse, _ctEntry,
-			_ctEntry.getCtCollectionId());
-	}
-
 	public void renderLeftCTRow() throws Exception {
 		_ctDisplayRendererRegistry.renderCTEntry(
 			_httpServletRequest, _httpServletResponse, _ctEntry,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION);
+	}
+
+	public void renderRightCTRow() throws Exception {
+		_ctDisplayRendererRegistry.renderCTEntry(
+			_httpServletRequest, _httpServletResponse, _ctEntry,
+			_ctEntry.getCtCollectionId());
 	}
 
 	private final CTCollection _ctCollection;

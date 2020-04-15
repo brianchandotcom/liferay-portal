@@ -16,7 +16,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import RatingsLike from '../../src/main/resources/META-INF/resources/js/components/RatingsLike';
+import Ratings from '../../src/main/resources/META-INF/resources/js/components/Ratings';
 import {formDataToObj} from '../utils';
 
 const baseProps = {
@@ -24,11 +24,11 @@ const baseProps = {
 	classPK: 'classPK',
 	enabled: true,
 	signedIn: true,
+	type: 'like',
 	url: 'http://url',
 };
 
-const renderComponent = props =>
-	render(<RatingsLike {...baseProps} {...props} />);
+const renderComponent = props => render(<Ratings {...baseProps} {...props} />);
 
 describe('RatingsLike', () => {
 	afterEach(cleanup);

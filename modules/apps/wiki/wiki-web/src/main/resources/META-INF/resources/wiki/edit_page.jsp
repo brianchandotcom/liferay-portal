@@ -206,6 +206,8 @@ if (portletTitleBasedNavigation) {
 								<div class="entry-title">
 									<h1><%= HtmlUtil.escape(title) %></h1>
 								</div>
+
+								<aui:input name="title" type="hidden" value="<%= title %>" />
 							</c:otherwise>
 						</c:choose>
 

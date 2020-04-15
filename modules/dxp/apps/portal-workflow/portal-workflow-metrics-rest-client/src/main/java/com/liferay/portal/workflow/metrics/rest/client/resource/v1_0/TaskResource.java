@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.problem.Problem;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.TaskSerDes;
 
@@ -83,6 +84,18 @@ public interface TaskResource {
 
 	public HttpInvoker.HttpResponse patchProcessTaskCompleteHttpResponse(
 			Long processId, Long taskId, Task task)
+		throws Exception;
+
+	public Page<Task> postProcessTasksPage(
+			Pagination pagination,
+			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
+				TaskBulkSelection taskBulkSelection)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postProcessTasksPageHttpResponse(
+			Pagination pagination,
+			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
+				TaskBulkSelection taskBulkSelection)
 		throws Exception;
 
 	public static class Builder {
@@ -577,6 +590,81 @@ public interface TaskResource {
 					_builder._port +
 						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}/complete",
 				processId, taskId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<Task> postProcessTasksPage(
+				Pagination pagination,
+				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
+					TaskBulkSelection taskBulkSelection)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postProcessTasksPageHttpResponse(pagination, taskBulkSelection);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return Page.of(content, TaskSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse postProcessTasksPageHttpResponse(
+				Pagination pagination,
+				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
+					TaskBulkSelection taskBulkSelection)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(taskBulkSelection.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/portal-workflow-metrics/v1.0/tasks");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

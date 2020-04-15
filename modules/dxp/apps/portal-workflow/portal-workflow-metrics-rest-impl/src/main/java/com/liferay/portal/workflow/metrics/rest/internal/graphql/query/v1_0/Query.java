@@ -36,6 +36,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ReindexStatus;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Role;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TaskBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.HistogramMetricResource;
@@ -517,11 +518,11 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(Task.class)
+	@GraphQLTypeExtension(TaskBulkSelection.class)
 	public class GetProcessTypeExtension {
 
-		public GetProcessTypeExtension(Task task) {
-			_task = task;
+		public GetProcessTypeExtension(TaskBulkSelection taskBulkSelection) {
+			_taskBulkSelection = taskBulkSelection;
 		}
 
 		@GraphQLField
@@ -530,10 +531,10 @@ public class Query {
 				_processResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
 				processResource -> processResource.getProcess(
-					_task.getProcessId()));
+					_taskBulkSelection.getProcessId()));
 		}
 
-		private Task _task;
+		private TaskBulkSelection _taskBulkSelection;
 
 	}
 

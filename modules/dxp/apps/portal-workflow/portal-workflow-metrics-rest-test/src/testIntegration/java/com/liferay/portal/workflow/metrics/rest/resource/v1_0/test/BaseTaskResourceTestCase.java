@@ -380,6 +380,11 @@ public abstract class BaseTaskResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testPostProcessTasksPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
 	protected Task testGraphQLTask_addTask() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

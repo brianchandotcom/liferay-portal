@@ -32,6 +32,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TaskBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.IndexResource;
@@ -509,6 +510,25 @@ public class Mutation {
 				processId, taskId, task));
 
 		return true;
+	}
+
+	@GraphQLField
+	public java.util.Collection<Task> createProcessTasksPage(
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("taskBulkSelection") TaskBulkSelection
+				taskBulkSelection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taskResource -> {
+				Page paginationPage = taskResource.postProcessTasksPage(
+					Pagination.of(page, pageSize), taskBulkSelection);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

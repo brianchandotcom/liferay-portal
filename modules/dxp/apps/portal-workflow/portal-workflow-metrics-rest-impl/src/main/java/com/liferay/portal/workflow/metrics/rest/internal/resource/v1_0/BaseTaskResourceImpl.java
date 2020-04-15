@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TaskBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
 
 import io.swagger.v3.oas.annotations.Parameter;
@@ -64,6 +65,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -256,6 +258,30 @@ public abstract class BaseTaskResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("taskId") Long taskId,
 			Task task)
 		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/tasks' -d $'{"assigneeIds": ___, "instanceIds": ___, "processId": ___, "slaStatuses": ___, "taskNames": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/tasks")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Task")})
+	public Page<Task> postProcessTasksPage(
+			@Context Pagination pagination, TaskBulkSelection taskBulkSelection)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	@Override

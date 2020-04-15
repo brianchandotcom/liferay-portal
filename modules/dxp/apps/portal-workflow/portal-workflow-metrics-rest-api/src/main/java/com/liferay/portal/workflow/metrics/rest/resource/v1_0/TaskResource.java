@@ -16,7 +16,9 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TaskBulkSelection;
 
 import java.util.Locale;
 
@@ -62,6 +64,10 @@ public interface TaskResource {
 		throws Exception;
 
 	public void patchProcessTaskComplete(Long processId, Long taskId, Task task)
+		throws Exception;
+
+	public Page<Task> postProcessTasksPage(
+			Pagination pagination, TaskBulkSelection taskBulkSelection)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

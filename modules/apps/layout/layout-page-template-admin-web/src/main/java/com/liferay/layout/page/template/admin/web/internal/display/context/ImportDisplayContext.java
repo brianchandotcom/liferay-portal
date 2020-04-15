@@ -198,6 +198,11 @@ public class ImportDisplayContext {
 			return "page-template";
 		}
 		else if (type ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+			return "display-page-template";
+		}
+		else if (type ==
 					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
 
 			return "master-page";

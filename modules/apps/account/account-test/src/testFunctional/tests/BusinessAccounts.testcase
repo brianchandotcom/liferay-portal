@@ -322,6 +322,58 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 	}
 
+	@description = "This is a use case for LPS-107598."
+	@priority = "4"
+	test FilterAccountUserInTheUsersAdminPortlet {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an Account with User.",
+			accountName = "Account with User");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
+
+		AccountUsers.addUsers(
+			accountName = "Account with User",
+			userEmailAddress = "userac@liferay.com",
+			userFirstName = "userac",
+			userLastName = "userac",
+			userScreenName = "userac");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userac userac");
+
+		ManagementBar.setFilterAndOrder(filterBy = "All");
+
+		LexiconEntry.viewEntryName(rowEntry = "userac userac");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Account Users");
+
+		LexiconEntry.viewEntryName(rowEntry = "userac userac");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+	}
+
 	@priority = "4"
 	test ImpersonateUser {
 		property portal.upstream = "quarantine";

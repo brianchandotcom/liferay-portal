@@ -45,19 +45,17 @@
 
 .ratings-like {
 	button {
-		&:hover:not(:disabled) .lexicon-icon-heart {
-			color: $dark;
+		&:hover:not(:disabled) .lexicon-icon {
 			transform: scale(1.3);
 		}
 	}
 
-	.lexicon-icon-heart {
-		transition: all 0.2s ease-in-out;
+	.lexicon-icon {
+		transition: all 0.3s ease-in-out;
+	}
 
-		&.liked {
-			color: $red;
-			fill: $red;
-		}
+	.lexicon-icon-heart-full {
+		fill: red;
 	}
 
 	.likes {

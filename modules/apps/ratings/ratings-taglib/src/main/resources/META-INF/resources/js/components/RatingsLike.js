@@ -103,7 +103,7 @@ const RatingsLike = ({
 				title={getTitle()}
 				value={totalLikes}
 			>
-				<ClayIcon className={liked ? 'liked' : ''} symbol="heart" />
+				<ClayIcon symbol={liked ? 'heart-full' : 'heart'} />
 
 				<strong className="likes">
 					<AnimatedCounter counter={totalLikes} />

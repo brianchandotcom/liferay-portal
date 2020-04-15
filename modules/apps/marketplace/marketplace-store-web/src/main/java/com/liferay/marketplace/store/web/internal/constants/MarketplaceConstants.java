@@ -19,6 +19,6 @@ package com.liferay.marketplace.store.web.internal.constants;
  */
 public class MarketplaceConstants {
 
-	public static final int CLIENT_BUILD = 10;
+	public static final int CLIENT_BUILD = 11;
 
 }

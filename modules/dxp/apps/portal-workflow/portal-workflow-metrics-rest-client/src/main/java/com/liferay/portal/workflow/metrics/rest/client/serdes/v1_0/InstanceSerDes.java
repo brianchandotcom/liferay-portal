@@ -298,20 +298,6 @@ public class InstanceSerDes {
 			sb.append("\"");
 		}
 
-		if (instance.getStatus() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"status\": ");
-
-			sb.append("\"");
-
-			sb.append(instance.getStatus());
-
-			sb.append("\"");
-		}
-
 		if (instance.getTaskNames() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -513,13 +499,6 @@ public class InstanceSerDes {
 			map.put("slaStatus", String.valueOf(instance.getSLAStatus()));
 		}
 
-		if (instance.getStatus() == null) {
-			map.put("status", null);
-		}
-		else {
-			map.put("status", String.valueOf(instance.getStatus()));
-		}
-
 		if (instance.getTaskNames() == null) {
 			map.put("taskNames", null);
 		}
@@ -669,12 +648,6 @@ public class InstanceSerDes {
 					instance.setSLAStatus(
 						Instance.SLAStatus.create(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "status")) {
-				if (jsonParserFieldValue != null) {
-					instance.setStatus(
-						Instance.Status.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "taskNames")) {

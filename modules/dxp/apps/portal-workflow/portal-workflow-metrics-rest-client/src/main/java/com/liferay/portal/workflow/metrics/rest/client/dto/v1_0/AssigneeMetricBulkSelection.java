@@ -155,26 +155,26 @@ public class AssigneeMetricBulkSelection implements Cloneable {
 
 	protected Long[] roleIds;
 
-	public String[] getTaskKeys() {
-		return taskKeys;
+	public String[] getTaskNames() {
+		return taskNames;
 	}
 
-	public void setTaskKeys(String[] taskKeys) {
-		this.taskKeys = taskKeys;
+	public void setTaskNames(String[] taskNames) {
+		this.taskNames = taskNames;
 	}
 
-	public void setTaskKeys(
-		UnsafeSupplier<String[], Exception> taskKeysUnsafeSupplier) {
+	public void setTaskNames(
+		UnsafeSupplier<String[], Exception> taskNamesUnsafeSupplier) {
 
 		try {
-			taskKeys = taskKeysUnsafeSupplier.get();
+			taskNames = taskNamesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String[] taskKeys;
+	protected String[] taskNames;
 
 	@Override
 	public AssigneeMetricBulkSelection clone()

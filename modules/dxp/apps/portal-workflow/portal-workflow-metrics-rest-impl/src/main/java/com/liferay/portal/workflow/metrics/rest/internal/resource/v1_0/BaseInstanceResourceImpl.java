@@ -91,11 +91,11 @@ public abstract class BaseInstanceResourceImpl
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
 			@Parameter(in = ParameterIn.QUERY, name = "assigneeIds"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateStart"),
 			@Parameter(in = ParameterIn.QUERY, name = "slaStatuses"),
-			@Parameter(in = ParameterIn.QUERY, name = "statuses"),
-			@Parameter(in = ParameterIn.QUERY, name = "taskKeys"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskNames"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -108,14 +108,16 @@ public abstract class BaseInstanceResourceImpl
 				processId,
 			@Parameter(hidden = true) @QueryParam("assigneeIds") Long[]
 				assigneeIds,
+			@Parameter(hidden = true) @QueryParam("completed") Boolean
+				completed,
 			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
 				dateEnd,
 			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
 				dateStart,
 			@Parameter(hidden = true) @QueryParam("slaStatuses") String[]
 				slaStatuses,
-			@Parameter(hidden = true) @QueryParam("statuses") String[] statuses,
-			@Parameter(hidden = true) @QueryParam("taskKeys") String[] taskKeys,
+			@Parameter(hidden = true) @QueryParam("taskNames") String[]
+				taskNames,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -330,11 +332,11 @@ public abstract class BaseInstanceResourceImpl
 		return getProcessInstancesPage(
 			(Long)parameters.get("processId"),
 			(Long[])parameters.get("assigneeIds"),
+			(Boolean)parameters.get("completed"),
 			(java.util.Date)parameters.get("dateEnd"),
 			(java.util.Date)parameters.get("dateStart"),
 			(String[])parameters.get("slaStatuses"),
-			(String[])parameters.get("statuses"),
-			(String[])parameters.get("taskKeys"), pagination);
+			(String[])parameters.get("taskNames"), pagination);
 	}
 
 	@Override

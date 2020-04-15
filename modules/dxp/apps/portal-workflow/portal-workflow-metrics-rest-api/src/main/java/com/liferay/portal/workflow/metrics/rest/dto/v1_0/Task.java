@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -49,20 +51,50 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Task {
 
 	@Schema
-	public Long getAssigneeId() {
-		return assigneeId;
+	public String getAssetTitle() {
+		return assetTitle;
 	}
 
-	public void setAssigneeId(Long assigneeId) {
-		this.assigneeId = assigneeId;
+	public void setAssetTitle(String assetTitle) {
+		this.assetTitle = assetTitle;
 	}
 
 	@JsonIgnore
-	public void setAssigneeId(
-		UnsafeSupplier<Long, Exception> assigneeIdUnsafeSupplier) {
+	public void setAssetTitle(
+		UnsafeSupplier<String, Exception> assetTitleUnsafeSupplier) {
 
 		try {
-			assigneeId = assigneeIdUnsafeSupplier.get();
+			assetTitle = assetTitleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String assetTitle;
+
+	@Schema
+	@Valid
+	public Map<String, String> getAssetTitle_i18n() {
+		return assetTitle_i18n;
+	}
+
+	public void setAssetTitle_i18n(Map<String, String> assetTitle_i18n) {
+		this.assetTitle_i18n = assetTitle_i18n;
+	}
+
+	@JsonIgnore
+	public void setAssetTitle_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			assetTitle_i18nUnsafeSupplier) {
+
+		try {
+			assetTitle_i18n = assetTitle_i18nUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -74,7 +106,94 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long assigneeId;
+	protected Map<String, String> assetTitle_i18n;
+
+	@Schema
+	public String getAssetType() {
+		return assetType;
+	}
+
+	public void setAssetType(String assetType) {
+		this.assetType = assetType;
+	}
+
+	@JsonIgnore
+	public void setAssetType(
+		UnsafeSupplier<String, Exception> assetTypeUnsafeSupplier) {
+
+		try {
+			assetType = assetTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String assetType;
+
+	@Schema
+	@Valid
+	public Map<String, String> getAssetType_i18n() {
+		return assetType_i18n;
+	}
+
+	public void setAssetType_i18n(Map<String, String> assetType_i18n) {
+		this.assetType_i18n = assetType_i18n;
+	}
+
+	@JsonIgnore
+	public void setAssetType_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			assetType_i18nUnsafeSupplier) {
+
+		try {
+			assetType_i18n = assetType_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> assetType_i18n;
+
+	@Schema
+	@Valid
+	public Assignee getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(Assignee assignee) {
+		this.assignee = assignee;
+	}
+
+	@JsonIgnore
+	public void setAssignee(
+		UnsafeSupplier<Assignee, Exception> assigneeUnsafeSupplier) {
+
+		try {
+			assignee = assigneeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Assignee assignee;
 
 	@Schema
 	public String getClassName() {
@@ -522,14 +641,62 @@ public class Task {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (assigneeId != null) {
+		if (assetTitle != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"assigneeId\": ");
+			sb.append("\"assetTitle\": ");
 
-			sb.append(assigneeId);
+			sb.append("\"");
+
+			sb.append(_escape(assetTitle));
+
+			sb.append("\"");
+		}
+
+		if (assetTitle_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetTitle_i18n\": ");
+
+			sb.append(_toJSON(assetTitle_i18n));
+		}
+
+		if (assetType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(assetType));
+
+			sb.append("\"");
+		}
+
+		if (assetType_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetType_i18n\": ");
+
+			sb.append(_toJSON(assetType_i18n));
+		}
+
+		if (assignee != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assignee\": ");
+
+			sb.append(String.valueOf(assignee));
 		}
 
 		if (className != null) {

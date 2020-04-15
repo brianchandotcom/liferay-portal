@@ -59,7 +59,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 				version));
 	}
 
-	protected String getTaskKey(
+	protected String getTaskName(
 			KaleoDefinition kaleoDefinition, String taskName)
 		throws PortalException {
 

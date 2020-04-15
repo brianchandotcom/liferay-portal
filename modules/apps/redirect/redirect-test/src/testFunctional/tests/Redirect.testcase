@@ -230,6 +230,90 @@ definition {
 			sourceURLVariation = "Duplicate");
 	}
 
+	@description = "This ensures that an expired permanent redirect can be added from an active 404 URL."
+	@priority = "4"
+	test AddExpiredEntryFromActive404 {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntryVia404URLs(
+			activeIgnoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "12/31/2013",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "test-destination-page1");
+
+		Redirect.view404URLsDefault();
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "Expired",
+			redirectType = "Permanent",
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
+	}
+
+	@description = "This ensures that an expired temporary redirect can be added from an ignored 404 URL."
+	@priority = "4"
+	test AddExpiredEntryFromIgnored404 {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntryVia404URLs(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "12/31/2013",
+			ignoredURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			siteName = "test-site-name",
+			sourceURL = "test-destination-page1");
+
+		Redirect.view404URLsDefault();
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			expirationDate = "Expired",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
+	}
+
 	@description = "This ensures that a permanent redirect can be added."
 	@priority = "5"
 	test AddPermanentEntry {
@@ -249,6 +333,166 @@ definition {
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			redirectType = "Permanent",
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
+	}
+
+	@description = "This ensures that a permanent redirect can be added from an active 404 URL."
+	@priority = "5"
+	test AddPermanentEntryFromActive404 {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntryVia404URLs(
+			activeIgnoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "test-destination-page1");
+
+		Redirect.view404URLsDefault();
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Permanent",
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
+	}
+
+	@description = "This ensures that a permanent redirect can be added from an ignored 404 URL."
+	@priority = "5"
+	test AddPermanentEntryFromIgnored404 {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntryVia404URLs(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			ignoredURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "test-destination-page1");
+
+		Redirect.view404URLsDefault();
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Permanent",
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
+	}
+
+	@description = "This ensures that a temporary redirect can be added from an active 404 URL."
+	@priority = "5"
+	test AddTempEntryFromActive404 {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntryVia404URLs(
+			activeIgnoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			siteName = "test-site-name",
+			sourceURL = "test-destination-page1");
+
+		Redirect.view404URLsDefault();
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
+	}
+
+	@description = "This ensures that a temporary redirect can be added from an ignored 404 URL."
+	@priority = "5"
+	test AddTempEntryFromIgnored404 {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			redirectType = "Permanent (301)",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.ignoreEntry(ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntryVia404URLs(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			ignoredURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			siteName = "test-site-name",
+			sourceURL = "test-destination-page1");
+
+		Redirect.view404URLsDefault();
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
 	}
 
 	@description = "This ensures that all redirect entries can be deleted simultaneously."

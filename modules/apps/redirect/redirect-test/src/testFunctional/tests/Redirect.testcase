@@ -408,6 +408,72 @@ definition {
 			requestNumber = "1");
 	}
 
+	@description = "This ensures that the 404 URLs can be ordered by requests."
+	@priority = "5"
+	test Order404URLsByRequests {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page2");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page2",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page2");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page2",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page2 (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertClick(
+			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page2",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			value1 = "${portalURL}/web/test-site-name/test-source-page2 (Opens New Window)");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.view404URLs(
+			activeIgnoreURL = "true",
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			requestNumber = "1");
+
+		Redirect.view404URLs(
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page2",
+			requestNumber = "2");
+
+		Redirect.viewOrderedURLs(
+			requestNumber1 = "2",
+			requestNumber2 = "1");
+
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+		Redirect.viewOrderedURLs(
+			requestNumber1 = "1",
+			requestNumber2 = "2");
+	}
+
 	@description = "This ensures that an expired permanent redirect can be reset."
 	@priority = "5"
 	test ResetExpiredEntry {

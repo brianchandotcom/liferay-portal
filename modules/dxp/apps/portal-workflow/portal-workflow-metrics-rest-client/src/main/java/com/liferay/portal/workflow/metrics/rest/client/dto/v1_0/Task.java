@@ -18,6 +18,7 @@ import com.liferay.portal.workflow.metrics.rest.client.function.UnsafeSupplier;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.TaskSerDes;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -29,26 +30,112 @@ import javax.annotation.Generated;
 @Generated("")
 public class Task implements Cloneable {
 
-	public Long getAssigneeId() {
-		return assigneeId;
+	public String getAssetTitle() {
+		return assetTitle;
 	}
 
-	public void setAssigneeId(Long assigneeId) {
-		this.assigneeId = assigneeId;
+	public void setAssetTitle(String assetTitle) {
+		this.assetTitle = assetTitle;
 	}
 
-	public void setAssigneeId(
-		UnsafeSupplier<Long, Exception> assigneeIdUnsafeSupplier) {
+	public void setAssetTitle(
+		UnsafeSupplier<String, Exception> assetTitleUnsafeSupplier) {
 
 		try {
-			assigneeId = assigneeIdUnsafeSupplier.get();
+			assetTitle = assetTitleUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long assigneeId;
+	protected String assetTitle;
+
+	public Map<String, String> getAssetTitle_i18n() {
+		return assetTitle_i18n;
+	}
+
+	public void setAssetTitle_i18n(Map<String, String> assetTitle_i18n) {
+		this.assetTitle_i18n = assetTitle_i18n;
+	}
+
+	public void setAssetTitle_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			assetTitle_i18nUnsafeSupplier) {
+
+		try {
+			assetTitle_i18n = assetTitle_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> assetTitle_i18n;
+
+	public String getAssetType() {
+		return assetType;
+	}
+
+	public void setAssetType(String assetType) {
+		this.assetType = assetType;
+	}
+
+	public void setAssetType(
+		UnsafeSupplier<String, Exception> assetTypeUnsafeSupplier) {
+
+		try {
+			assetType = assetTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String assetType;
+
+	public Map<String, String> getAssetType_i18n() {
+		return assetType_i18n;
+	}
+
+	public void setAssetType_i18n(Map<String, String> assetType_i18n) {
+		this.assetType_i18n = assetType_i18n;
+	}
+
+	public void setAssetType_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			assetType_i18nUnsafeSupplier) {
+
+		try {
+			assetType_i18n = assetType_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> assetType_i18n;
+
+	public Assignee getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(Assignee assignee) {
+		this.assignee = assignee;
+	}
+
+	public void setAssignee(
+		UnsafeSupplier<Assignee, Exception> assigneeUnsafeSupplier) {
+
+		try {
+			assignee = assigneeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Assignee assignee;
 
 	public String getClassName() {
 		return className;

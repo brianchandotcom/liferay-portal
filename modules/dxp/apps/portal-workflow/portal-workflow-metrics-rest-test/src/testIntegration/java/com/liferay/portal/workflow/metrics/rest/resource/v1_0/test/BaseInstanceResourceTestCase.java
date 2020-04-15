@@ -199,9 +199,9 @@ public abstract class BaseInstanceResourceTestCase {
 	@Test
 	public void testGetProcessInstancesPage() throws Exception {
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			testGetProcessInstancesPage_getProcessId(), null,
+			testGetProcessInstancesPage_getProcessId(), null, null,
 			RandomTestUtil.nextDate(), RandomTestUtil.nextDate(), null, null,
-			null, Pagination.of(1, 2));
+			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -625,14 +625,6 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("status", additionalAssertFieldName)) {
-				if (instance.getStatus() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("taskNames", additionalAssertFieldName)) {
 				if (instance.getTaskNames() == null) {
 					valid = false;
@@ -925,16 +917,6 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("status", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						instance1.getStatus(), instance2.getStatus())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("taskNames", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						instance1.getTaskNames(), instance2.getTaskNames())) {
@@ -1215,11 +1197,6 @@ public abstract class BaseInstanceResourceTestCase {
 		}
 
 		if (entityFieldName.equals("slaStatus")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("status")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

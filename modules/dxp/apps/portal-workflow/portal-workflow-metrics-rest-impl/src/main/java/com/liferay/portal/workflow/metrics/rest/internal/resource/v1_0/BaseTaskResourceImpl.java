@@ -101,7 +101,7 @@ public abstract class BaseTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks' -d $'{"assigneeId": ___, "className": ___, "classPK": ___, "completed": ___, "completionUserId": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "instanceId": ___, "name": ___, "nodeId": ___, "processId": ___, "processVersion": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks' -d $'{"assetTitle_i18n": ___, "assetType_i18n": ___, "assignee": ___, "className": ___, "classPK": ___, "completed": ___, "completionUserId": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "instanceId": ___, "name": ___, "nodeId": ___, "processId": ___, "processVersion": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -211,7 +211,7 @@ public abstract class BaseTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}' -d $'{"assigneeId": ___, "className": ___, "classPK": ___, "completed": ___, "completionUserId": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "instanceId": ___, "name": ___, "nodeId": ___, "processId": ___, "processVersion": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}' -d $'{"assetTitle_i18n": ___, "assetType_i18n": ___, "assignee": ___, "className": ___, "classPK": ___, "completed": ___, "completionUserId": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "instanceId": ___, "name": ___, "nodeId": ___, "processId": ___, "processVersion": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -236,7 +236,7 @@ public abstract class BaseTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}/complete' -d $'{"assigneeId": ___, "className": ___, "classPK": ___, "completed": ___, "completionUserId": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "instanceId": ___, "name": ___, "nodeId": ___, "processId": ___, "processVersion": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}/complete' -d $'{"assetTitle_i18n": ___, "assetType_i18n": ___, "assignee": ___, "className": ___, "classPK": ___, "completed": ___, "completionUserId": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "instanceId": ___, "name": ___, "nodeId": ___, "processId": ___, "processVersion": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})

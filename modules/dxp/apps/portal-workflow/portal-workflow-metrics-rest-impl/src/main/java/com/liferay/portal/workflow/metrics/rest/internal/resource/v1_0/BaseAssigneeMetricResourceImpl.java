@@ -79,7 +79,7 @@ public abstract class BaseAssigneeMetricResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignees/metrics' -d $'{"completed": ___, "dateEnd": ___, "dateStart": ___, "instanceIds": ___, "keywords": ___, "roleIds": ___, "taskKeys": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignees/metrics' -d $'{"completed": ___, "dateEnd": ___, "dateStart": ___, "instanceIds": ___, "keywords": ___, "roleIds": ___, "taskNames": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})

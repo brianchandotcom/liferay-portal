@@ -59,14 +59,62 @@ public class TaskSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (task.getAssigneeId() != null) {
+		if (task.getAssetTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"assigneeId\": ");
+			sb.append("\"assetTitle\": ");
 
-			sb.append(task.getAssigneeId());
+			sb.append("\"");
+
+			sb.append(_escape(task.getAssetTitle()));
+
+			sb.append("\"");
+		}
+
+		if (task.getAssetTitle_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetTitle_i18n\": ");
+
+			sb.append(_toJSON(task.getAssetTitle_i18n()));
+		}
+
+		if (task.getAssetType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(task.getAssetType()));
+
+			sb.append("\"");
+		}
+
+		if (task.getAssetType_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetType_i18n\": ");
+
+			sb.append(_toJSON(task.getAssetType_i18n()));
+		}
+
+		if (task.getAssignee() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assignee\": ");
+
+			sb.append(String.valueOf(task.getAssignee()));
 		}
 
 		if (task.getClassName() != null) {
@@ -268,11 +316,40 @@ public class TaskSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (task.getAssigneeId() == null) {
-			map.put("assigneeId", null);
+		if (task.getAssetTitle() == null) {
+			map.put("assetTitle", null);
 		}
 		else {
-			map.put("assigneeId", String.valueOf(task.getAssigneeId()));
+			map.put("assetTitle", String.valueOf(task.getAssetTitle()));
+		}
+
+		if (task.getAssetTitle_i18n() == null) {
+			map.put("assetTitle_i18n", null);
+		}
+		else {
+			map.put(
+				"assetTitle_i18n", String.valueOf(task.getAssetTitle_i18n()));
+		}
+
+		if (task.getAssetType() == null) {
+			map.put("assetType", null);
+		}
+		else {
+			map.put("assetType", String.valueOf(task.getAssetType()));
+		}
+
+		if (task.getAssetType_i18n() == null) {
+			map.put("assetType_i18n", null);
+		}
+		else {
+			map.put("assetType_i18n", String.valueOf(task.getAssetType_i18n()));
+		}
+
+		if (task.getAssignee() == null) {
+			map.put("assignee", null);
+		}
+		else {
+			map.put("assignee", String.valueOf(task.getAssignee()));
 		}
 
 		if (task.getClassName() == null) {
@@ -407,10 +484,32 @@ public class TaskSerDes {
 			Task task, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "assigneeId")) {
+			if (Objects.equals(jsonParserFieldName, "assetTitle")) {
 				if (jsonParserFieldValue != null) {
-					task.setAssigneeId(
-						Long.valueOf((String)jsonParserFieldValue));
+					task.setAssetTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetTitle_i18n")) {
+				if (jsonParserFieldValue != null) {
+					task.setAssetTitle_i18n(
+						(Map)TaskSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetType")) {
+				if (jsonParserFieldValue != null) {
+					task.setAssetType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetType_i18n")) {
+				if (jsonParserFieldValue != null) {
+					task.setAssetType_i18n(
+						(Map)TaskSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assignee")) {
+				if (jsonParserFieldValue != null) {
+					task.setAssignee(
+						AssigneeSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "className")) {

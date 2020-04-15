@@ -12,7 +12,6 @@
  * details.
  */
 
-import updateEditableValues from '../actions/updateEditableValues';
 import updateFragmentEntryLinkContent from '../actions/updateFragmentEntryLinkContent';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import FragmentService from '../services/FragmentService';
@@ -21,7 +20,6 @@ export default function updateFragmentConfiguration({
 	configurationValues,
 	fragmentEntryLink,
 	prefixedSegmentsExperienceId,
-	segmentsExperienceId,
 }) {
 	const {editableValues, fragmentEntryLinkId} = fragmentEntryLink;
 
@@ -42,16 +40,9 @@ export default function updateFragmentConfiguration({
 			onNetworkStatus: dispatch,
 		}).then(({content, editableValues}) => {
 			dispatch(
-				updateEditableValues({
-					editableValues,
-					fragmentEntryLinkId,
-					segmentsExperienceId,
-				})
-			);
-
-			dispatch(
 				updateFragmentEntryLinkContent({
 					content,
+					editableValues,
 					fragmentEntryLinkId,
 				})
 			);

@@ -63,6 +63,10 @@ public class FragmentEntryLinkTable extends BaseTable<FragmentEntryLinkTable> {
 	public final Column<FragmentEntryLinkTable, Long> fragmentEntryId =
 		createColumn(
 			"fragmentEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FragmentEntryLinkTable, Long> segmentsExperienceId =
+		createColumn(
+			"segmentsExperienceId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryLinkTable, Long> classNameId =
 		createColumn(
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

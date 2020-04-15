@@ -81,7 +81,8 @@ public class FragmentEntryLinkModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
 		{"originalFragmentEntryLinkId", Types.BIGINT},
-		{"fragmentEntryId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"fragmentEntryId", Types.BIGINT},
+		{"segmentsExperienceId", Types.BIGINT}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"css", Types.CLOB}, {"html", Types.CLOB},
 		{"js", Types.CLOB}, {"configuration", Types.CLOB},
 		{"editableValues", Types.CLOB}, {"namespace", Types.VARCHAR},
@@ -105,6 +106,7 @@ public class FragmentEntryLinkModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("originalFragmentEntryLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fragmentEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("segmentsExperienceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
@@ -120,7 +122,7 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null)";
+		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 
@@ -148,9 +150,11 @@ public class FragmentEntryLinkModelImpl
 
 	public static final long RENDERERKEY_COLUMN_BITMASK = 32L;
 
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long SEGMENTSEXPERIENCEID_COLUMN_BITMASK = 64L;
 
-	public static final long POSITION_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	public static final long POSITION_COLUMN_BITMASK = 256L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -185,6 +189,7 @@ public class FragmentEntryLinkModelImpl
 		model.setOriginalFragmentEntryLinkId(
 			soapModel.getOriginalFragmentEntryLinkId());
 		model.setFragmentEntryId(soapModel.getFragmentEntryId());
+		model.setSegmentsExperienceId(soapModel.getSegmentsExperienceId());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setCss(soapModel.getCss());
@@ -415,6 +420,12 @@ public class FragmentEntryLinkModelImpl
 			"fragmentEntryId",
 			(BiConsumer<FragmentEntryLink, Long>)
 				FragmentEntryLink::setFragmentEntryId);
+		attributeGetterFunctions.put(
+			"segmentsExperienceId", FragmentEntryLink::getSegmentsExperienceId);
+		attributeSetterBiConsumers.put(
+			"segmentsExperienceId",
+			(BiConsumer<FragmentEntryLink, Long>)
+				FragmentEntryLink::setSegmentsExperienceId);
 		attributeGetterFunctions.put(
 			"classNameId", FragmentEntryLink::getClassNameId);
 		attributeSetterBiConsumers.put(
@@ -685,6 +696,29 @@ public class FragmentEntryLinkModelImpl
 
 	public long getOriginalFragmentEntryId() {
 		return _originalFragmentEntryId;
+	}
+
+	@JSON
+	@Override
+	public long getSegmentsExperienceId() {
+		return _segmentsExperienceId;
+	}
+
+	@Override
+	public void setSegmentsExperienceId(long segmentsExperienceId) {
+		_columnBitmask |= SEGMENTSEXPERIENCEID_COLUMN_BITMASK;
+
+		if (!_setOriginalSegmentsExperienceId) {
+			_setOriginalSegmentsExperienceId = true;
+
+			_originalSegmentsExperienceId = _segmentsExperienceId;
+		}
+
+		_segmentsExperienceId = segmentsExperienceId;
+	}
+
+	public long getOriginalSegmentsExperienceId() {
+		return _originalSegmentsExperienceId;
 	}
 
 	@Override
@@ -966,6 +1000,8 @@ public class FragmentEntryLinkModelImpl
 		fragmentEntryLinkImpl.setOriginalFragmentEntryLinkId(
 			getOriginalFragmentEntryLinkId());
 		fragmentEntryLinkImpl.setFragmentEntryId(getFragmentEntryId());
+		fragmentEntryLinkImpl.setSegmentsExperienceId(
+			getSegmentsExperienceId());
 		fragmentEntryLinkImpl.setClassNameId(getClassNameId());
 		fragmentEntryLinkImpl.setClassPK(getClassPK());
 		fragmentEntryLinkImpl.setCss(getCss());
@@ -1094,6 +1130,11 @@ public class FragmentEntryLinkModelImpl
 
 		fragmentEntryLinkModelImpl._setOriginalFragmentEntryId = false;
 
+		fragmentEntryLinkModelImpl._originalSegmentsExperienceId =
+			fragmentEntryLinkModelImpl._segmentsExperienceId;
+
+		fragmentEntryLinkModelImpl._setOriginalSegmentsExperienceId = false;
+
 		fragmentEntryLinkModelImpl._originalClassNameId =
 			fragmentEntryLinkModelImpl._classNameId;
 
@@ -1164,6 +1205,9 @@ public class FragmentEntryLinkModelImpl
 			getOriginalFragmentEntryLinkId();
 
 		fragmentEntryLinkCacheModel.fragmentEntryId = getFragmentEntryId();
+
+		fragmentEntryLinkCacheModel.segmentsExperienceId =
+			getSegmentsExperienceId();
 
 		fragmentEntryLinkCacheModel.classNameId = getClassNameId();
 
@@ -1342,6 +1386,9 @@ public class FragmentEntryLinkModelImpl
 	private long _fragmentEntryId;
 	private long _originalFragmentEntryId;
 	private boolean _setOriginalFragmentEntryId;
+	private long _segmentsExperienceId;
+	private long _originalSegmentsExperienceId;
+	private boolean _setOriginalSegmentsExperienceId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

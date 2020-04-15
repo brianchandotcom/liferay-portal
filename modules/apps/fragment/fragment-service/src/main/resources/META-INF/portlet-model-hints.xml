@@ -93,6 +93,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="originalFragmentEntryLinkId" type="long" />
 		<field name="fragmentEntryId" type="long" />
+		<field name="segmentsExperienceId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="css" type="String">

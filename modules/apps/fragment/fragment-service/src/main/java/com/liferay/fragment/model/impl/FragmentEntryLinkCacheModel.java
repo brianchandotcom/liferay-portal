@@ -78,7 +78,7 @@ public class FragmentEntryLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,8 @@ public class FragmentEntryLinkCacheModel
 		sb.append(originalFragmentEntryLinkId);
 		sb.append(", fragmentEntryId=");
 		sb.append(fragmentEntryId);
+		sb.append(", segmentsExperienceId=");
+		sb.append(segmentsExperienceId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -174,6 +176,7 @@ public class FragmentEntryLinkCacheModel
 		fragmentEntryLinkImpl.setOriginalFragmentEntryLinkId(
 			originalFragmentEntryLinkId);
 		fragmentEntryLinkImpl.setFragmentEntryId(fragmentEntryId);
+		fragmentEntryLinkImpl.setSegmentsExperienceId(segmentsExperienceId);
 		fragmentEntryLinkImpl.setClassNameId(classNameId);
 		fragmentEntryLinkImpl.setClassPK(classPK);
 
@@ -270,6 +273,8 @@ public class FragmentEntryLinkCacheModel
 
 		fragmentEntryId = objectInput.readLong();
 
+		segmentsExperienceId = objectInput.readLong();
+
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
@@ -318,6 +323,8 @@ public class FragmentEntryLinkCacheModel
 		objectOutput.writeLong(originalFragmentEntryLinkId);
 
 		objectOutput.writeLong(fragmentEntryId);
+
+		objectOutput.writeLong(segmentsExperienceId);
 
 		objectOutput.writeLong(classNameId);
 
@@ -389,6 +396,7 @@ public class FragmentEntryLinkCacheModel
 	public long modifiedDate;
 	public long originalFragmentEntryLinkId;
 	public long fragmentEntryId;
+	public long segmentsExperienceId;
 	public long classNameId;
 	public long classPK;
 	public String css;

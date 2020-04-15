@@ -251,6 +251,20 @@ public interface FragmentEntryLinkModel
 	public void setFragmentEntryId(long fragmentEntryId);
 
 	/**
+	 * Returns the segments experience ID of this fragment entry link.
+	 *
+	 * @return the segments experience ID of this fragment entry link
+	 */
+	public long getSegmentsExperienceId();
+
+	/**
+	 * Sets the segments experience ID of this fragment entry link.
+	 *
+	 * @param segmentsExperienceId the segments experience ID of this fragment entry link
+	 */
+	public void setSegmentsExperienceId(long segmentsExperienceId);
+
+	/**
 	 * Returns the fully qualified class name of this fragment entry link.
 	 *
 	 * @return the fully qualified class name of this fragment entry link

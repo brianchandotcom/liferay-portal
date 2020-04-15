@@ -55,6 +55,7 @@ public class FragmentEntryLinkWrapper
 		attributes.put(
 			"originalFragmentEntryLinkId", getOriginalFragmentEntryLinkId());
 		attributes.put("fragmentEntryId", getFragmentEntryId());
+		attributes.put("segmentsExperienceId", getSegmentsExperienceId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("css", getCss());
@@ -138,6 +139,13 @@ public class FragmentEntryLinkWrapper
 
 		if (fragmentEntryId != null) {
 			setFragmentEntryId(fragmentEntryId);
+		}
+
+		Long segmentsExperienceId = (Long)attributes.get(
+			"segmentsExperienceId");
+
+		if (segmentsExperienceId != null) {
+			setSegmentsExperienceId(segmentsExperienceId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -434,6 +442,16 @@ public class FragmentEntryLinkWrapper
 	}
 
 	/**
+	 * Returns the segments experience ID of this fragment entry link.
+	 *
+	 * @return the segments experience ID of this fragment entry link
+	 */
+	@Override
+	public long getSegmentsExperienceId() {
+		return model.getSegmentsExperienceId();
+	}
+
+	/**
 	 * Returns the user ID of this fragment entry link.
 	 *
 	 * @return the user ID of this fragment entry link
@@ -705,6 +723,16 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public void setRendererKey(String rendererKey) {
 		model.setRendererKey(rendererKey);
+	}
+
+	/**
+	 * Sets the segments experience ID of this fragment entry link.
+	 *
+	 * @param segmentsExperienceId the segments experience ID of this fragment entry link
+	 */
+	@Override
+	public void setSegmentsExperienceId(long segmentsExperienceId) {
+		model.setSegmentsExperienceId(segmentsExperienceId);
 	}
 
 	/**

@@ -146,6 +146,8 @@ public class FragmentEntryLinkPersistenceTest {
 
 		newFragmentEntryLink.setFragmentEntryId(RandomTestUtil.nextLong());
 
+		newFragmentEntryLink.setSegmentsExperienceId(RandomTestUtil.nextLong());
+
 		newFragmentEntryLink.setClassNameId(RandomTestUtil.nextLong());
 
 		newFragmentEntryLink.setClassPK(RandomTestUtil.nextLong());
@@ -208,6 +210,9 @@ public class FragmentEntryLinkPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentEntryLink.getFragmentEntryId(),
 			newFragmentEntryLink.getFragmentEntryId());
+		Assert.assertEquals(
+			existingFragmentEntryLink.getSegmentsExperienceId(),
+			newFragmentEntryLink.getSegmentsExperienceId());
 		Assert.assertEquals(
 			existingFragmentEntryLink.getClassNameId(),
 			newFragmentEntryLink.getClassNameId());
@@ -333,6 +338,15 @@ public class FragmentEntryLinkPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_S_C_C() throws Exception {
+		_persistence.countByG_S_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_S_C_C(0L, 0L, 0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FragmentEntryLink newFragmentEntryLink = addFragmentEntryLink();
 
@@ -361,9 +375,10 @@ public class FragmentEntryLinkPersistenceTest {
 			"fragmentEntryLinkId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "originalFragmentEntryLinkId", true,
-			"fragmentEntryId", true, "classNameId", true, "classPK", true,
-			"namespace", true, "position", true, "rendererKey", true,
-			"lastPropagationDate", true, "lastPublishDate", true);
+			"fragmentEntryId", true, "segmentsExperienceId", true,
+			"classNameId", true, "classPK", true, "namespace", true, "position",
+			true, "rendererKey", true, "lastPropagationDate", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -633,6 +648,8 @@ public class FragmentEntryLinkPersistenceTest {
 			RandomTestUtil.nextLong());
 
 		fragmentEntryLink.setFragmentEntryId(RandomTestUtil.nextLong());
+
+		fragmentEntryLink.setSegmentsExperienceId(RandomTestUtil.nextLong());
 
 		fragmentEntryLink.setClassNameId(RandomTestUtil.nextLong());
 

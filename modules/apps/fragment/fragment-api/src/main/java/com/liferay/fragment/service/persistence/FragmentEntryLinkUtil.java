@@ -1882,6 +1882,238 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
+	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByG_S_C_C(
+		long groupId, long segmentsExperienceId, long classNameId,
+		long classPK) {
+
+		return getPersistence().findByG_S_C_C(
+			groupId, segmentsExperienceId, classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of fragment entry links
+	 * @param end the upper bound of the range of fragment entry links (not inclusive)
+	 * @return the range of matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByG_S_C_C(
+		long groupId, long segmentsExperienceId, long classNameId, long classPK,
+		int start, int end) {
+
+		return getPersistence().findByG_S_C_C(
+			groupId, segmentsExperienceId, classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of fragment entry links
+	 * @param end the upper bound of the range of fragment entry links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByG_S_C_C(
+		long groupId, long segmentsExperienceId, long classNameId, long classPK,
+		int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return getPersistence().findByG_S_C_C(
+			groupId, segmentsExperienceId, classNameId, classPK, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of fragment entry links
+	 * @param end the upper bound of the range of fragment entry links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment entry links
+	 */
+	public static List<FragmentEntryLink> findByG_S_C_C(
+		long groupId, long segmentsExperienceId, long classNameId, long classPK,
+		int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_S_C_C(
+			groupId, segmentsExperienceId, classNameId, classPK, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first fragment entry link in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment entry link
+	 * @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	 */
+	public static FragmentEntryLink findByG_S_C_C_First(
+			long groupId, long segmentsExperienceId, long classNameId,
+			long classPK,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+
+		return getPersistence().findByG_S_C_C_First(
+			groupId, segmentsExperienceId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first fragment entry link in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	 */
+	public static FragmentEntryLink fetchByG_S_C_C_First(
+		long groupId, long segmentsExperienceId, long classNameId, long classPK,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return getPersistence().fetchByG_S_C_C_First(
+			groupId, segmentsExperienceId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last fragment entry link in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment entry link
+	 * @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
+	 */
+	public static FragmentEntryLink findByG_S_C_C_Last(
+			long groupId, long segmentsExperienceId, long classNameId,
+			long classPK,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+
+		return getPersistence().findByG_S_C_C_Last(
+			groupId, segmentsExperienceId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last fragment entry link in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
+	 */
+	public static FragmentEntryLink fetchByG_S_C_C_Last(
+		long groupId, long segmentsExperienceId, long classNameId, long classPK,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		return getPersistence().fetchByG_S_C_C_Last(
+			groupId, segmentsExperienceId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the fragment entry links before and after the current fragment entry link in the ordered set where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param fragmentEntryLinkId the primary key of the current fragment entry link
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment entry link
+	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
+	 */
+	public static FragmentEntryLink[] findByG_S_C_C_PrevAndNext(
+			long fragmentEntryLinkId, long groupId, long segmentsExperienceId,
+			long classNameId, long classPK,
+			OrderByComparator<FragmentEntryLink> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchEntryLinkException {
+
+		return getPersistence().findByG_S_C_C_PrevAndNext(
+			fragmentEntryLinkId, groupId, segmentsExperienceId, classNameId,
+			classPK, orderByComparator);
+	}
+
+	/**
+	 * Removes all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 */
+	public static void removeByG_S_C_C(
+		long groupId, long segmentsExperienceId, long classNameId,
+		long classPK) {
+
+		getPersistence().removeByG_S_C_C(
+			groupId, segmentsExperienceId, classNameId, classPK);
+	}
+
+	/**
+	 * Returns the number of fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching fragment entry links
+	 */
+	public static int countByG_S_C_C(
+		long groupId, long segmentsExperienceId, long classNameId,
+		long classPK) {
+
+		return getPersistence().countByG_S_C_C(
+			groupId, segmentsExperienceId, classNameId, classPK);
+	}
+
+	/**
 	 * Caches the fragment entry link in the entity cache if it is enabled.
 	 *
 	 * @param fragmentEntryLink the fragment entry link

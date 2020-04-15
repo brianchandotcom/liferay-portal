@@ -53,6 +53,21 @@ public interface FragmentEntryLinkService extends BaseService {
 	 */
 	public FragmentEntryLink addFragmentEntryLink(
 			long groupId, long originalFragmentEntryLinkId,
+			long fragmentEntryId, long segmentsExperienceId, long classNameId,
+			long classPK, String css, String html, String js,
+			String configuration, String editableValues, String namespace,
+			int position, String rendererKey, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 String, String, String, String, String, String, int, String,
+	 ServiceContext)}
+	 */
+	@Deprecated
+	public FragmentEntryLink addFragmentEntryLink(
+			long groupId, long originalFragmentEntryLinkId,
 			long fragmentEntryId, long classNameId, long classPK, String css,
 			String html, String js, String configuration, String editableValues,
 			String namespace, int position, String rendererKey,

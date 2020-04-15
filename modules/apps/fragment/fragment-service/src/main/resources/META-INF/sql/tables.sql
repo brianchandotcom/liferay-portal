@@ -77,6 +77,7 @@ create table FragmentEntryLink (
 	modifiedDate DATE null,
 	originalFragmentEntryLinkId LONG,
 	fragmentEntryId LONG,
+	segmentsExperienceId LONG,
 	classNameId LONG,
 	classPK LONG,
 	css TEXT null,

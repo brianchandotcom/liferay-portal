@@ -79,6 +79,21 @@ public interface FragmentEntryLinkLocalService
 
 	public FragmentEntryLink addFragmentEntryLink(
 			long userId, long groupId, long originalFragmentEntryLinkId,
+			long fragmentEntryId, long segmentsExperienceId, long classNameId,
+			long classPK, String css, String html, String js,
+			String configuration, String editableValues, String namespace,
+			int position, String rendererKey, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, long,
+	 long, String, String, String, String, String, String, int,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
+	public FragmentEntryLink addFragmentEntryLink(
+			long userId, long groupId, long originalFragmentEntryLinkId,
 			long fragmentEntryId, long classNameId, long classPK, String css,
 			String html, String js, String configuration, String editableValues,
 			String namespace, int position, String rendererKey,
@@ -293,6 +308,11 @@ public interface FragmentEntryLinkLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryId(
 		long fragmentEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinksBySegmentsExperienceId(
+		long groupId, long segmentsExperienceId, long classNameId,
+		long classPK);
 
 	/**
 	 * Returns all the fragment entry links matching the UUID and company.

@@ -254,7 +254,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 				return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 					_serviceContext.getUserId(),
 					_serviceContext.getScopeGroupId(), 0,
-					fragmentEntry.getFragmentEntryId(),
+					fragmentEntry.getFragmentEntryId(), 0,
 					_portal.getClassNameId(Layout.class), plid,
 					fragmentEntry.getCss(), fragmentEntry.getHtml(),
 					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
@@ -264,7 +264,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 			return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				0, 0, _portal.getClassNameId(Layout.class), plid,
+				0, 0, 0, _portal.getClassNameId(Layout.class), plid,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, editableValues, StringPool.BLANK, 0,
 				fragmentEntryKey, _serviceContext);

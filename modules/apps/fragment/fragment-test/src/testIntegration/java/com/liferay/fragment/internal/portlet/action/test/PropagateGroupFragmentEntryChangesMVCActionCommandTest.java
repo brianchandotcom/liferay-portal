@@ -112,7 +112,7 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				_fragmentEntry.getFragmentEntryId(), 0,
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				"css value", "<div>HTML value</div>", "js value",
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,

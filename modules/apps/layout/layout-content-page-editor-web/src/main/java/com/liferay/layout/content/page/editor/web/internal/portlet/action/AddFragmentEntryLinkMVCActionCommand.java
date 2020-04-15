@@ -69,6 +69,9 @@ public class AddFragmentEntryLinkMVCActionCommand
 			ActionRequest actionRequest)
 		throws PortalException {
 
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId",
+			SegmentsExperienceConstants.ID_DEFAULT);
 		String fragmentEntryKey = ParamUtil.getString(
 			actionRequest, "fragmentEntryKey");
 
@@ -96,7 +99,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 
 			return _fragmentEntryLinkService.addFragmentEntryLink(
 				serviceContext.getScopeGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
 				_portal.getClassNameId(Layout.class), serviceContext.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
@@ -104,7 +107,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 		}
 
 		return _fragmentEntryLinkService.addFragmentEntryLink(
-			serviceContext.getScopeGroupId(), 0, 0,
+			serviceContext.getScopeGroupId(), 0, 0, segmentsExperienceId,
 			_portal.getClassNameId(Layout.class), serviceContext.getPlid(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,

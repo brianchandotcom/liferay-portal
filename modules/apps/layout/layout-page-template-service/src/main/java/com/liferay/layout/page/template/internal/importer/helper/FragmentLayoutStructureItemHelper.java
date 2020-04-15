@@ -183,7 +183,7 @@ public class FragmentLayoutStructureItemHelper
 
 		try {
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
-				layout.getUserId(), layout.getGroupId(), 0, fragmentEntryId,
+				layout.getUserId(), layout.getGroupId(), 0, fragmentEntryId, 0,
 				PortalUtil.getClassNameId(Layout.class.getName()),
 				layout.getPlid(), css, html, js, configuration,
 				jsonObject.toString(), StringUtil.randomId(), position,

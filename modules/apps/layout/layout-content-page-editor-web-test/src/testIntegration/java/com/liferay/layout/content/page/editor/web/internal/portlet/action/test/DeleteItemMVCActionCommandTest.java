@@ -136,7 +136,7 @@ public class DeleteItemMVCActionCommandTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				_fragmentEntry.getFragmentEntryId(), 0,
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
@@ -196,7 +196,7 @@ public class DeleteItemMVCActionCommandTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				_fragmentEntry.getFragmentEntryId(), 0,
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
@@ -244,7 +244,7 @@ public class DeleteItemMVCActionCommandTest {
 		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				_fragmentEntry.getFragmentEntryId(), 0,
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
@@ -252,7 +252,7 @@ public class DeleteItemMVCActionCommandTest {
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				_fragmentEntry.getFragmentEntryId(), 0,
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
@@ -306,7 +306,7 @@ public class DeleteItemMVCActionCommandTest {
 		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				_fragmentEntry.getFragmentEntryId(), 0,
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
@@ -314,7 +314,7 @@ public class DeleteItemMVCActionCommandTest {
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				_fragmentEntry.getFragmentEntryId(), 0,
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);

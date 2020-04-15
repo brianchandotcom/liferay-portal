@@ -93,7 +93,7 @@ public class FragmentEntryLinkServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
+				_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(), 0,
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(), css,
 				html, js, configuration, StringPool.BLANK, StringPool.BLANK, 0,
 				null, serviceContext);

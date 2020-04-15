@@ -183,7 +183,7 @@ public class GroupModelListenerTest {
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getFragmentEntryId(), 0,
 			PortalUtil.getClassNameId(Layout.class),
 			RandomTestUtil.randomLong(), fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs(),

@@ -116,7 +116,7 @@ public class WidgetLayoutStructureItemHelper
 				widgetConfigDefinitionMap);
 
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
-				layout.getUserId(), layout.getGroupId(), 0, 0,
+				layout.getUserId(), layout.getGroupId(), 0, 0, 0,
 				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, editableValueJSONObject.toString(),

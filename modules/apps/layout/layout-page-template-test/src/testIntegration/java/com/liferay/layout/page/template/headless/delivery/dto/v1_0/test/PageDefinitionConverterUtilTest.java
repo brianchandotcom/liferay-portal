@@ -589,7 +589,7 @@ public class PageDefinitionConverterUtilTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
+				fragmentEntry.getFragmentEntryId(), 0,
 				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				StringPool.BLANK, html, StringPool.BLANK, configuration,
 				_read(editableValuesFileName), StringPool.BLANK, 0, null,

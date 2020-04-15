@@ -135,7 +135,7 @@ public class LayoutCopyHelperTest {
 
 		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0, 0,
 				_portal.getClassNameId(Layout.class), sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -145,7 +145,7 @@ public class LayoutCopyHelperTest {
 
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0,
+				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0, 0,
 				_portal.getClassNameId(Layout.class), sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,

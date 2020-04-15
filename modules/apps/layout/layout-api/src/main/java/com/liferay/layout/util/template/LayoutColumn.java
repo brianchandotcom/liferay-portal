@@ -105,9 +105,9 @@ public class LayoutColumn {
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-				0, PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK,
+				0, 0, PortalUtil.getClassNameId(Layout.class),
+				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
 				JSONUtil.put(
 					"instanceId", PortletIdCodec.decodeInstanceId(portletId)
 				).put(

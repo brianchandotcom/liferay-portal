@@ -125,7 +125,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0, 0,
+				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0, 0, 0,
 				PortalUtil.getClassNameId(Layout.class),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
@@ -205,7 +205,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(), 0,
-			fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getFragmentEntryId(), 0,
 			PortalUtil.getClassNameId(Layout.class),
 			group.getDefaultPublicPlid(), fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs(),

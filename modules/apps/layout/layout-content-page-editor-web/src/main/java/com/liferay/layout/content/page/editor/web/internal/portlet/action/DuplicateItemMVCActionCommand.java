@@ -276,6 +276,7 @@ public class DuplicateItemMVCActionCommand
 				fragmentEntryLink.getGroupId(),
 				fragmentEntryLink.getOriginalFragmentEntryLinkId(),
 				fragmentEntryLink.getFragmentEntryId(),
+				fragmentEntryLink.getSegmentsExperienceId(),
 				fragmentEntryLink.getClassNameId(),
 				fragmentEntryLink.getClassPK(), fragmentEntryLink.getCss(),
 				fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),

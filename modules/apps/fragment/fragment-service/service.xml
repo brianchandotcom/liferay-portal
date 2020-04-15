@@ -247,6 +247,7 @@
 
 		<column name="originalFragmentEntryLinkId" type="long" />
 		<column name="fragmentEntryId" type="long" />
+		<column name="segmentsExperienceId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="css" type="String" />

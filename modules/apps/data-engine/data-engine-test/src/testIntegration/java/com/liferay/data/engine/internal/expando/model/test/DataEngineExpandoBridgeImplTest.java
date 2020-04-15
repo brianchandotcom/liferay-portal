@@ -21,7 +21,6 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -76,8 +75,7 @@ public class DataEngineExpandoBridgeImplTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		_company = CompanyLocalServiceUtil.getCompany(
-			group.getCompanyId());
+		_company = CompanyLocalServiceUtil.getCompany(group.getCompanyId());
 
 		_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			_company.getCompanyId(), DataDefinition.class.getName(),
@@ -136,8 +134,7 @@ public class DataEngineExpandoBridgeImplTest {
 
 		Assert.assertEquals(
 			defaultValue,
-			_expandoBridge.getAttributeDefault(
-				_addAttribute(defaultValue)));
+			_expandoBridge.getAttributeDefault(_addAttribute(defaultValue)));
 	}
 
 	@Test
@@ -187,6 +184,23 @@ public class DataEngineExpandoBridgeImplTest {
 		Serializable value = _expandoBridge.getAttribute(attributeName);
 
 		Assert.assertEquals(attributeValue, value);
+	}
+
+	@Test
+	public void testSetAttributeDefault() throws Exception {
+		String defaultValue = RandomTestUtil.randomString();
+
+		String attributeName = _addAttribute(defaultValue);
+
+		Assert.assertEquals(
+			defaultValue, _expandoBridge.getAttributeDefault(attributeName));
+
+		defaultValue = RandomTestUtil.randomString();
+
+		_expandoBridge.setAttributeDefault(attributeName, defaultValue);
+
+		Assert.assertEquals(
+			defaultValue, _expandoBridge.getAttributeDefault(attributeName));
 	}
 
 	@Test
@@ -241,23 +255,6 @@ public class DataEngineExpandoBridgeImplTest {
 		_expandoBridge.setAttributes(new ServiceContext());
 	}
 
-	@Test
-	public void testSetAttributeDefault() throws Exception {
-		String defaultValue = RandomTestUtil.randomString();
-
-		String attributeName = _addAttribute(defaultValue);
-
-		Assert.assertEquals(
-			defaultValue, _expandoBridge.getAttributeDefault(attributeName));
-
-		defaultValue = RandomTestUtil.randomString();
-
-		_expandoBridge.setAttributeDefault(attributeName, defaultValue);
-
-		Assert.assertEquals(
-			defaultValue, _expandoBridge.getAttributeDefault(attributeName));
-	}
-
 	private String _addAttribute() throws Exception {
 		String attributeName = RandomTestUtil.randomString();
 
@@ -268,9 +265,7 @@ public class DataEngineExpandoBridgeImplTest {
 		return attributeName;
 	}
 
-	private String _addAttribute(Serializable value)
-		throws Exception {
-
+	private String _addAttribute(Serializable value) throws Exception {
 		String attributeName = RandomTestUtil.randomString();
 
 		_expandoBridge.addAttribute(attributeName, "text", value);
@@ -282,7 +277,7 @@ public class DataEngineExpandoBridgeImplTest {
 
 	private static final Map<String, Serializable> _attributes =
 		new HashMap<>();
-	private static ExpandoBridge _expandoBridge;
 	private static Company _company;
+	private static ExpandoBridge _expandoBridge;
 
 }

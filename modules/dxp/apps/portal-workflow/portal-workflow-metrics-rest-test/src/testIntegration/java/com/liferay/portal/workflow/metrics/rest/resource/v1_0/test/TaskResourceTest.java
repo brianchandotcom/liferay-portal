@@ -92,6 +92,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	}
 
 	@Override
+	protected Task testGraphQLTask_addTask() throws Exception {
+		return testGetProcessTask_addTask();
+	}
+
+	@Override
 	protected Task testPatchProcessTask_addTask() throws Exception {
 		return testGetProcessTask_addTask();
 	}

@@ -16,6 +16,8 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -28,9 +30,11 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.ProcessMetric;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.ProcessMetricSerDes;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +43,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -164,6 +169,57 @@ public class ProcessMetricResourceTest
 						"Bbb" + RandomTestUtil.randomString());
 				}
 			});
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetProcessMetricsPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"processMetrics", graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject processMetricsJSONObject = dataJSONObject.getJSONObject(
+			"processMetrics");
+
+		Assert.assertEquals(0, processMetricsJSONObject.get("totalCount"));
+
+		ProcessMetric processMetric1 =
+			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
+		ProcessMetric processMetric2 =
+			testGetProcessMetricsPage_addProcessMetric(randomProcessMetric());
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		processMetricsJSONObject = dataJSONObject.getJSONObject(
+			"processMetrics");
+
+		Assert.assertEquals(2, processMetricsJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(processMetric1, processMetric2),
+			Arrays.asList(
+				ProcessMetricSerDes.toDTOs(
+					processMetricsJSONObject.getString("items"))));
 	}
 
 	@Override

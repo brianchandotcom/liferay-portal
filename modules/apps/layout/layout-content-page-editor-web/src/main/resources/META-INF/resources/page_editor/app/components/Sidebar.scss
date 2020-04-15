@@ -15,7 +15,7 @@ $zIndexContent: 0;
 	position: fixed;
 	right: 0;
 	top: $toolbarHeight;
-	z-index: $zIndexSidebar;
+	z-index: $sidebarZIndex;
 
 	&__buttons {
 		background-color: $secondary-d1;

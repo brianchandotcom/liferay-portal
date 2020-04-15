@@ -13,10 +13,6 @@
 				outline: none;
 				padding-left: 8px;
 
-				&.with-children:focus {
-					outline: none;
-				}
-
 				&__button-icon {
 					background-color: $white;
 					color: $secondary;

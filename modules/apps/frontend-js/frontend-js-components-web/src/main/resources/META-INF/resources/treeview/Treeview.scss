@@ -47,8 +47,12 @@ $white: #fff;
 			padding-left: 24px;
 		}
 
-		&:focus .card-type-directory {
-			@include treeview-box-shadow;
+		&:focus {
+			outline: none;
+
+			.card-type-directory {
+				@include treeview-box-shadow;
+			}
 		}
 
 		&:not(:first-child) {

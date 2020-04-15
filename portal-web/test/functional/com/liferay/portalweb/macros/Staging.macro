@@ -737,9 +737,12 @@ definition {
 			PortletEntry.inputName(name = "${publicationName}");
 		}
 
-		AssertClickNoError.assertPartialTextClickAt(
-			locator1 = "Button#SUBMIT",
-			value1 = "Publish");
+		if ("${remoteStaging}" == "true") {
+			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
+		}
+		else {
+			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+		}
 
 		Pause(locator1 = "5000");
 

@@ -321,7 +321,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#INFO",
-			value1 = "This application is not supported for Asset Libraries.");
+			value1 = "Info:Web Content is disabled for this scope.");
 	}
 
 	@description = "This ensures that a depot image persists in blog entry as previously and it's not appeared in the item selector on a connected site when DM application is disabled."

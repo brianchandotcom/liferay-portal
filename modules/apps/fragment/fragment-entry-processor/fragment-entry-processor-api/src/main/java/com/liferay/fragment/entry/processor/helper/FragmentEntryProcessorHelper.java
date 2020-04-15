@@ -29,6 +29,8 @@ import java.util.Map;
 @ProviderType
 public interface FragmentEntryProcessorHelper {
 
+	public String getEditableValue(JSONObject jsonObject, Locale locale);
+
 	public String getEditableValue(
 		JSONObject jsonObject, Locale locale, long[] segmentsExperienceIds);
 

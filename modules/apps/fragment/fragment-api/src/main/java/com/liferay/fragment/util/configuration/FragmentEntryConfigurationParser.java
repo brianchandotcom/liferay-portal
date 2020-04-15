@@ -33,6 +33,10 @@ public interface FragmentEntryConfigurationParser {
 		String configuration);
 
 	public JSONObject getConfigurationJSONObject(
+			String configuration, String editableValues)
+		throws JSONException;
+
+	public JSONObject getConfigurationJSONObject(
 			String configuration, String editableValues,
 			long[] segmentsExperienceIds)
 		throws JSONException;
@@ -50,6 +54,9 @@ public interface FragmentEntryConfigurationParser {
 	public Object getFieldValue(
 		String configuration, String editableValues,
 		long[] segmentsExperienceIds, String name);
+
+	public Object getFieldValue(
+		String configuration, String editableValues, String name);
 
 	public List<FragmentConfigurationField> getFragmentConfigurationFields(
 		String configuration);

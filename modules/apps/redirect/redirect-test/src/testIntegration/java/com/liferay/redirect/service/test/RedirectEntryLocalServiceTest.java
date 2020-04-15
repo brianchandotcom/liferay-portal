@@ -155,6 +155,32 @@ public class RedirectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchRedirectEntryUpdatesTheModifiedDateOnHit()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertNull(_redirectEntry.getLastOccurrenceDate());
+
+		_redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
+			_group.getGroupId(), "sourceURL");
+
+		Date originalLastOccurrenceDate =
+			_redirectEntry.getLastOccurrenceDate();
+
+		Assert.assertNotNull(originalLastOccurrenceDate);
+
+		_redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
+			_group.getGroupId(), "sourceURL");
+
+		Assert.assertTrue(
+			originalLastOccurrenceDate.before(
+				_redirectEntry.getLastOccurrenceDate()));
+	}
+
+	@Test
 	public void testFetchRedirectEntryWhenDisabled() throws Exception {
 		RedirectTestUtil.withRedirectDisabled(
 			() -> {

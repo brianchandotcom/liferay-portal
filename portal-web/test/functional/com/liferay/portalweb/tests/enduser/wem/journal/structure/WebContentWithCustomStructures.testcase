@@ -210,10 +210,7 @@ definition {
 
 	@priority = "4"
 	test AddStructureWithUnlocalizableFields {
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Localization,Web Content Administration";
-
-		// Quarantine for LPS-96630
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

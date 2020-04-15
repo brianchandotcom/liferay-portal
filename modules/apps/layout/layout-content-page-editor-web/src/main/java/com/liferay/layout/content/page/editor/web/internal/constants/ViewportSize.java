@@ -21,10 +21,10 @@ public enum ViewportSize {
 
 	DESKTOP("desktop", "desktop", "desktop", 992, 960, 1),
 	MOBILE_LANDSCAPE(
-		"landscapeMobile", "mobile-landscape", "mobile-landscape", 576, 540, 4),
+		"landscapeMobile", "mobile-landscape", "mobile-landscape", 767, 576, 3),
 	PORTRAIT_MOBILE(
-		"portraitMobile", "mobile-portrait", "mobile-portrait", 540, 0, 3),
-	TABLET("tablet", "tablet-portrait", "tablet", 768, 720, 2);
+		"portraitMobile", "mobile-portrait", "mobile-portrait", 575, 240, 4),
+	TABLET("tablet", "tablet-portrait", "tablet", 991, 768, 2);
 
 	public String getIcon() {
 		return _icon;

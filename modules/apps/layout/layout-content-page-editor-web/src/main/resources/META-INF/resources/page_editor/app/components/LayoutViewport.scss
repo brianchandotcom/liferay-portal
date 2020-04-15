@@ -1,0 +1,107 @@
+@import 'atlas-variables';
+
+@import 'variables';
+
+.page-editor__layout-viewport {
+	align-items: stretch;
+	background-color: $gray-400;
+	display: flex;
+	justify-content: center;
+	position: relative;
+	transition: padding-right ease $defaultTransitionDuration;
+	will-change: padding-right;
+
+	&__resizer {
+		background-color: $light-l2;
+	}
+
+	&--size {
+		&-desktop .page-editor__layout-viewport__resizer {
+			flex-grow: 1;
+		}
+
+		&-tablet .page-editor__layout-viewport__resizer {
+			max-width: 991px;
+			min-width: 768px;
+			width: 768px;
+		}
+
+		&-landscapeMobile .page-editor__layout-viewport__resizer {
+			max-width: 767px;
+			min-width: 576px;
+			width: 576px;
+		}
+
+		&-portraitMobile .page-editor__layout-viewport__resizer {
+			max-width: 575px;
+			min-width: 240px;
+			width: 360px;
+		}
+	}
+
+	&__label-width {
+		margin-top: 12px;
+		position: absolute;
+		right: $sidebarButtonWidth;
+		z-index: 1;
+
+		span {
+			background-color: $gray-800;
+			border-radius: 4px;
+			color: $light-l2;
+			font-size: 14px;
+			font-weight: 600;
+			margin-right: 16px;
+			padding: 6px 12px;
+		}
+	}
+
+	&--with-sidebar {
+		padding-right: $sidebarButtonWidth;
+	}
+
+	&--with-sidebar-open {
+		.page-editor__layout-viewport__label-width {
+			right: $sidebarButtonWidth + $sidebarContentWidth;
+		}
+
+		@include media-breakpoint-up(sm) {
+			padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+		}
+	}
+
+	&__handle {
+		background-color: $gray-400;
+		cursor: col-resize;
+		position: relative;
+		width: 16px;
+
+		&:active,
+		&:hover {
+			background-color: $gray-500;
+		}
+
+		&:before,
+		&:after {
+			border: 1px solid $secondary;
+			border-radius: 2px;
+			content: '';
+			height: 20px;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&:before {
+			left: calc(50% - 3px);
+		}
+
+		&:after {
+			left: calc(50% + 1px);
+		}
+	}
+
+	&__resizing {
+		cursor: col-resize;
+	}
+}

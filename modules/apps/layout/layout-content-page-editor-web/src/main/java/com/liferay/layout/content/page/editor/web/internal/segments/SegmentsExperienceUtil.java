@@ -259,7 +259,4 @@ public class SegmentsExperienceUtil {
 		return fragmentEntryLinksEditableValuesMap;
 	}
 
-	private SegmentsExperienceUtil() {
-	}
-
 }

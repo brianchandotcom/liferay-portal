@@ -2005,6 +2005,10 @@ components:
                     additionalProperties:
                         type: object
                     type: object
+                widgetPermissions:
+                    additionalProperties:
+                        type: object
+                    type: object
             type: object
         Rating:
             description:

@@ -302,9 +302,7 @@ public class LayoutPageTemplatesImporterImpl
 						_getThumbnailZipEntry(zipEntry.getName(), zipFile),
 						zipEntry.getName()));
 			}
-			catch (PageDefinitionValidatorException
-						pageDefinitionValidatorException) {
-
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Invalid page definition for: " +

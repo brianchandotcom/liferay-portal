@@ -17,6 +17,8 @@ package com.liferay.change.tracking.internal.reference.closure;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 
+import java.util.Objects;
+
 /**
  * @author Preston Crary
  */
@@ -31,7 +33,9 @@ public class Edge {
 	public boolean equals(Object object) {
 		Edge edge = (Edge)object;
 
-		if (_fromNode.equals(edge._fromNode) && _toNode.equals(edge._toNode)) {
+		if (Objects.equals(_fromNode, edge._fromNode) &&
+			Objects.equals(_toNode, edge._toNode)) {
+
 			return true;
 		}
 

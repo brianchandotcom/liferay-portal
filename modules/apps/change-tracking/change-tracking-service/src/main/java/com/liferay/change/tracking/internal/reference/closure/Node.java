@@ -33,8 +33,8 @@ public class Node {
 	public boolean equals(Object object) {
 		Node node = (Node)object;
 
-		if ((node._classNameId == _classNameId) &&
-			(node._primaryKey == _primaryKey)) {
+		if ((_classNameId == node._classNameId) &&
+			(_primaryKey == node._primaryKey)) {
 
 			return true;
 		}

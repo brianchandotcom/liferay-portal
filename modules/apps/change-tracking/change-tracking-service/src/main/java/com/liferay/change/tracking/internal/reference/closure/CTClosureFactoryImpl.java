@@ -104,7 +104,6 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 			Map.Entry<Long, List<Long>> queueEntry = queue.poll();
 
 			long childClassNameId = queueEntry.getKey();
-			List<Long> childPrimaryKeys = queueEntry.getValue();
 
 			TableReferenceInfo<?> childTableReferenceInfo =
 				combinedTableReferenceInfos.get(childClassNameId);
@@ -113,6 +112,11 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				throw new IllegalArgumentException(
 					"No table reference definition for " + childClassNameId);
 			}
+
+			List<Long> childPrimaryKeys = queueEntry.getValue();
+
+			Long[] childPrimaryKeysArray = childPrimaryKeys.toArray(
+				new Long[0]);
 
 			Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
 				childTableReferenceInfo.getParentTableJoinHoldersMap();
@@ -127,126 +131,118 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				TableReferenceInfo<?> parentTableReferenceInfo =
 					combinedTableReferenceInfos.get(parentClassNameId);
 
-				List<Long> newParents = _collectParents(
-					ctCollectionId, childClassNameId,
-					childPrimaryKeys.toArray(new Long[0]), parentClassNameId,
-					parentTableReferenceInfo, entry.getValue(), nodes, edgeMap);
+				DSLQuery dslQuery = null;
 
-				if (newParents != null) {
-					queue.add(
-						new AbstractMap.SimpleImmutableEntry<>(
-							parentClassNameId, newParents));
+				for (TableJoinHolder parentJoinHolder : entry.getValue()) {
+					Column<?, Long> parentPKColumn =
+						parentJoinHolder.getParentPKColumn();
+					Column<?, Long> childPKColumn =
+						parentJoinHolder.getChildPKColumn();
+
+					FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
+						parentPKColumn, childPKColumn);
+
+					Function<FromStep, JoinStep> joinFunction =
+						parentJoinHolder.getJoinFunction();
+
+					JoinStep joinStep = joinFunction.apply(fromStep);
+
+					GroupByStep groupByStep = joinStep.where(
+						() -> {
+							Predicate predicate = childPKColumn.in(
+								childPrimaryKeysArray);
+
+							Table<?> parentTable = parentPKColumn.getTable();
+
+							Column<?, Long> ctCollectionIdColumn =
+								parentTable.getColumn(
+									"ctCollectionId", Long.class);
+
+							if ((ctCollectionIdColumn != null) &&
+								ctCollectionIdColumn.isPrimaryKey()) {
+
+								predicate = predicate.and(
+									ctCollectionIdColumn.eq(
+										CTConstants.CT_COLLECTION_ID_PRODUCTION
+									).or(
+										ctCollectionIdColumn.eq(ctCollectionId)
+									).withParentheses());
+							}
+
+							return predicate;
+						});
+
+					if (dslQuery == null) {
+						dslQuery = groupByStep;
+					}
+					else {
+						dslQuery = dslQuery.union(groupByStep);
+					}
+				}
+
+				TableReferenceDefinition<?> tableReferenceDefinition =
+					parentTableReferenceInfo.getTableReferenceDefinition();
+
+				BasePersistence<?> basePersistence =
+					tableReferenceDefinition.getBasePersistence();
+
+				DataSource dataSource = basePersistence.getDataSource();
+
+				DefaultASTNodeListener defaultASTNodeListener =
+					new DefaultASTNodeListener();
+
+				try (Connection connection = dataSource.getConnection();
+					PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							SQLTransformer.transform(
+								dslQuery.toSQL(defaultASTNodeListener)))) {
+
+					List<Object> scalarValues =
+						defaultASTNodeListener.getScalarValues();
+
+					for (int i = 0; i < scalarValues.size(); i++) {
+						preparedStatement.setObject(i + 1, scalarValues.get(i));
+					}
+
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						List<Long> newParents = null;
+
+						while (resultSet.next()) {
+							Node parentNode = new Node(
+								parentClassNameId, resultSet.getLong(1));
+							Node childNode = new Node(
+								childClassNameId, resultSet.getLong(2));
+
+							if (nodes.add(parentNode)) {
+								if (newParents == null) {
+									newParents = new ArrayList<>();
+								}
+
+								newParents.add(parentNode.getPrimaryKey());
+							}
+
+							Collection<Edge> edges = edgeMap.computeIfAbsent(
+								parentNode, key -> new LinkedList<>());
+
+							edges.add(new Edge(parentNode, childNode));
+						}
+
+						if (newParents != null) {
+							queue.add(
+								new AbstractMap.SimpleImmutableEntry<>(
+									parentClassNameId, newParents));
+						}
+					}
+				}
+				catch (SQLException sqlException) {
+					throw new ORMException(sqlException);
 				}
 			}
 		}
 
 		return GraphUtil.getNodeMap(nodes, edgeMap);
-	}
-
-	private <P extends Table<P>> List<Long> _collectParents(
-		long ctCollectionId, long childClassNameId, Long[] childPrimaryKeys,
-		long parentClassNameId, TableReferenceInfo<P> parentTableReferenceInfo,
-		List<TableJoinHolder> parentJoinHolders, Set<Node> nodes,
-		Map<Node, Collection<Edge>> edgeMap) {
-
-		DSLQuery dslQuery = null;
-
-		for (TableJoinHolder parentJoinHolder : parentJoinHolders) {
-			Column<?, Long> parentPKColumn =
-				parentJoinHolder.getParentPKColumn();
-			Column<?, Long> childPKColumn = parentJoinHolder.getChildPKColumn();
-
-			FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
-				parentPKColumn, childPKColumn);
-
-			Function<FromStep, JoinStep> joinFunction =
-				parentJoinHolder.getJoinFunction();
-
-			JoinStep joinStep = joinFunction.apply(fromStep);
-
-			GroupByStep groupByStep = joinStep.where(
-				() -> {
-					Predicate predicate = childPKColumn.in(childPrimaryKeys);
-
-					Table<?> parentTable = parentPKColumn.getTable();
-
-					Column<?, Long> ctCollectionIdColumn =
-						parentTable.getColumn("ctCollectionId", Long.class);
-
-					if ((ctCollectionIdColumn != null) &&
-						ctCollectionIdColumn.isPrimaryKey()) {
-
-						predicate = predicate.and(
-							ctCollectionIdColumn.eq(
-								CTConstants.CT_COLLECTION_ID_PRODUCTION
-							).or(
-								ctCollectionIdColumn.eq(ctCollectionId)
-							).withParentheses());
-					}
-
-					return predicate;
-				});
-
-			if (dslQuery == null) {
-				dslQuery = groupByStep;
-			}
-			else {
-				dslQuery = dslQuery.union(groupByStep);
-			}
-		}
-
-		TableReferenceDefinition<P> tableReferenceDefinition =
-			parentTableReferenceInfo.getTableReferenceDefinition();
-
-		BasePersistence<?> basePersistence =
-			tableReferenceDefinition.getBasePersistence();
-
-		DataSource dataSource = basePersistence.getDataSource();
-
-		DefaultASTNodeListener defaultASTNodeListener =
-			new DefaultASTNodeListener();
-
-		try (Connection connection = dataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(
-					dslQuery.toSQL(defaultASTNodeListener)))) {
-
-			List<Object> scalarValues =
-				defaultASTNodeListener.getScalarValues();
-
-			for (int i = 0; i < scalarValues.size(); i++) {
-				preparedStatement.setObject(i + 1, scalarValues.get(i));
-			}
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				List<Long> newParents = null;
-
-				while (resultSet.next()) {
-					Node parentNode = new Node(
-						parentClassNameId, resultSet.getLong(1));
-					Node childNode = new Node(
-						childClassNameId, resultSet.getLong(2));
-
-					if (nodes.add(parentNode)) {
-						if (newParents == null) {
-							newParents = new ArrayList<>();
-						}
-
-						newParents.add(parentNode.getPrimaryKey());
-					}
-
-					Collection<Edge> edges = edgeMap.computeIfAbsent(
-						parentNode, key -> new LinkedList<>());
-
-					edges.add(new Edge(parentNode, childNode));
-				}
-
-				return newParents;
-			}
-		}
-		catch (SQLException sqlException) {
-			throw new ORMException(sqlException);
-		}
 	}
 
 	@Reference

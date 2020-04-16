@@ -20,7 +20,6 @@ export default function(
 	editableId,
 	processorType,
 	languageId,
-	prefixedSegmentsExperienceId,
 	getFieldValue = InfoItemService.getAssetFieldValue
 ) {
 	const editableValue = editableValues[processorType][editableId];
@@ -35,20 +34,12 @@ export default function(
 			fieldId: editableValue.fieldId,
 			languageId,
 		}).catch(() => {
-			return selectEditableValueContent(
-				editableValue,
-				languageId,
-				prefixedSegmentsExperienceId
-			);
+			return selectEditableValueContent(editableValue, languageId);
 		});
 	}
 	else {
 		valuePromise = Promise.resolve(
-			selectEditableValueContent(
-				editableValue,
-				languageId,
-				prefixedSegmentsExperienceId
-			)
+			selectEditableValueContent(editableValue, languageId)
 		);
 	}
 
@@ -76,16 +67,8 @@ export default function(
 	return Promise.all([valuePromise, configPromise]);
 }
 
-function selectEditableValueContent(
-	editableValue,
-	languageId,
-	prefixedSegmentsExperienceId
-) {
+function selectEditableValueContent(editableValue, languageId) {
 	let content = editableValue;
-
-	if (content[prefixedSegmentsExperienceId]) {
-		content = content[prefixedSegmentsExperienceId];
-	}
 
 	if (content[languageId]) {
 		content = content[languageId];

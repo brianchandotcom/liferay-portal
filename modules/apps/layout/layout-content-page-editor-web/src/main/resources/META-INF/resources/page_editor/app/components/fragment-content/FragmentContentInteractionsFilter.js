@@ -21,7 +21,6 @@ import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {config} from '../../config/index';
 import selectCanUpdate from '../../selectors/selectCanUpdate';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
-import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector} from '../../store/index';
 import {
 	useActivationOrigin,
@@ -47,16 +46,8 @@ const EDITABLE_CLASS_NAMES = {
 	translated: 'page-editor__editable--translated',
 };
 
-const isTranslated = (
-	defaultLanguageId,
-	languageId,
-	editableValue,
-	prefixedSegmentsExperienceId
-) =>
-	defaultLanguageId !== languageId &&
-	(editableValue[languageId] ||
-		(editableValue[prefixedSegmentsExperienceId] &&
-			editableValue[prefixedSegmentsExperienceId][languageId]));
+const isTranslated = (defaultLanguageId, languageId, editableValue) =>
+	defaultLanguageId !== languageId && editableValue[languageId];
 
 export default function FragmentContentInteractionsFilter({
 	children,
@@ -76,9 +67,6 @@ export default function FragmentContentInteractionsFilter({
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 	const canUpdate = useSelector(selectCanUpdate);
-	const prefixedSegmentsExperienceId = useSelector(
-		selectPrefixedSegmentsExperienceId
-	);
 	const languageId = useSelector(state => state.languageId);
 
 	const canOnlyUpdateInlineContent = !canUpdate && canUpdateLayoutContent;
@@ -117,8 +105,7 @@ export default function FragmentContentInteractionsFilter({
 					isTranslated(
 						config.defaultLanguageId,
 						languageId,
-						editableValue,
-						prefixedSegmentsExperienceId
+						editableValue
 					)
 				) {
 					editableElement.classList.add(
@@ -135,12 +122,7 @@ export default function FragmentContentInteractionsFilter({
 				}
 			}
 		});
-	}, [
-		editableElements,
-		editableValues,
-		languageId,
-		prefixedSegmentsExperienceId,
-	]);
+	}, [editableElements, editableValues, languageId]);
 
 	useEffect(() => {
 		editableElements.forEach(editableElement => {

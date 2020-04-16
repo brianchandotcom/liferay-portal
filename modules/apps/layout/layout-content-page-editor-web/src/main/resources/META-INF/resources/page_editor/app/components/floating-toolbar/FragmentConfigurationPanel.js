@@ -23,7 +23,6 @@ import {
 } from '../../../prop-types/index';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../../config/constants/fragmentConfigurationFieldTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
-import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateFragmentConfiguration from '../../thunks/updateFragmentConfiguration';
@@ -68,9 +67,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 	);
 
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-	const prefixedSegmentsExperienceId = useSelector(
-		selectPrefixedSegmentsExperienceId
-	);
 
 	const configuration = fragmentEntryLink.configuration;
 	const defaultConfigurationValues =
@@ -81,7 +77,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 			updateFragmentConfiguration({
 				configurationValues: defaultConfigurationValues,
 				fragmentEntryLink,
-				prefixedSegmentsExperienceId,
 				segmentsExperienceId,
 			})
 		);
@@ -91,8 +86,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 		(name, value) => {
 			const configurationValues = getConfigurationValues(
 				defaultConfigurationValues,
-				fragmentEntryLink,
-				prefixedSegmentsExperienceId
+				fragmentEntryLink
 			);
 
 			const nextConfigurationValues = {
@@ -104,7 +98,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 				updateFragmentConfiguration({
 					configurationValues: nextConfigurationValues,
 					fragmentEntryLink,
-					prefixedSegmentsExperienceId,
 					segmentsExperienceId,
 				})
 			);
@@ -113,7 +106,6 @@ export const FragmentConfigurationPanel = ({item}) => {
 			defaultConfigurationValues,
 			dispatch,
 			fragmentEntryLink,
-			prefixedSegmentsExperienceId,
 			segmentsExperienceId,
 		]
 	);
@@ -125,8 +117,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 					<FieldSet
 						configurationValues={getConfigurationValues(
 							defaultConfigurationValues,
-							fragmentEntryLink,
-							prefixedSegmentsExperienceId
+							fragmentEntryLink
 						)}
 						fields={fieldSet.fields}
 						key={index}
@@ -165,22 +156,11 @@ RestoreButton.propTypes = {
 	onRestoreButtonClick: PropTypes.func.isRequired,
 };
 
-function getConfigurationValues(
-	defaultConfigurationValues,
-	fragmentEntryLink,
-	prefixedSegmentsExperienceId
-) {
-	return prefixedSegmentsExperienceId
-		? {
-				...defaultConfigurationValues,
-				...fragmentEntryLink.editableValues[
-					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-				][prefixedSegmentsExperienceId],
-		  }
-		: {
-				...defaultConfigurationValues,
-				...fragmentEntryLink.editableValues[
-					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-				],
-		  };
+function getConfigurationValues(defaultConfigurationValues, fragmentEntryLink) {
+	return {
+		...defaultConfigurationValues,
+		...fragmentEntryLink.editableValues[
+			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+		],
+	};
 }

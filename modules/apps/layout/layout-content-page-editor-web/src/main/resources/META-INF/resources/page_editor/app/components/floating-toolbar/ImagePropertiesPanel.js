@@ -22,7 +22,6 @@ import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectEditableValueContent from '../../selectors/selectEditableValueContent';
-import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValuesThunk from '../../thunks/updateEditableValues';
 
@@ -106,10 +105,6 @@ export function ImagePropertiesPanel({item}) {
 
 		const editableValue = editableProcessorValues[editableId];
 
-		const prefixedSegmentsExperienceId = selectPrefixedSegmentsExperienceId(
-			state
-		);
-
 		let nextEditableValue = {};
 
 		setImageDescription('');
@@ -124,23 +119,11 @@ export function ImagePropertiesPanel({item}) {
 			nextEditableValueConfig.imageTitle = imageTitle;
 		}
 
-		if (prefixedSegmentsExperienceId) {
-			nextEditableValue = {
-				...editableValue,
-				config: nextEditableValueConfig,
-				[prefixedSegmentsExperienceId]: {
-					...editableValue[prefixedSegmentsExperienceId],
-					[state.languageId]: imageUrl,
-				},
-			};
-		}
-		else {
-			nextEditableValue = {
-				...editableValue,
-				config: nextEditableValueConfig,
-				[state.languageId]: imageUrl,
-			};
-		}
+		nextEditableValue = {
+			...editableValue,
+			config: nextEditableValueConfig,
+			[state.languageId]: imageUrl,
+		};
 
 		const nextEditableValues = {
 			...editableValues,

@@ -16,7 +16,6 @@ import PropTypes from 'prop-types';
 import {useEffect, useMemo} from 'react';
 
 import {config} from '../../config/index';
-import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
@@ -39,9 +38,6 @@ export default function FragmentContentProcessor({
 	const isProcessorEnabled = useIsProcessorEnabled();
 	const languageId = useSelector(
 		state => state.languageId || config.defaultLanguageId
-	);
-	const prefixedSegmentsExperienceId = useSelector(
-		selectPrefixedSegmentsExperienceId
 	);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
@@ -91,24 +87,10 @@ export default function FragmentContentProcessor({
 					...editableValue,
 				};
 
-				if (prefixedSegmentsExperienceId) {
-					nextEditableValue = {
-						...nextEditableValue,
-
-						[prefixedSegmentsExperienceId]: {
-							...(nextEditableValue[
-								prefixedSegmentsExperienceId
-							] || {}),
-							[languageId]: value,
-						},
-					};
-				}
-				else {
-					nextEditableValue = {
-						...nextEditableValue,
-						[languageId]: value,
-					};
-				}
+				nextEditableValue = {
+					...nextEditableValue,
+					[languageId]: value,
+				};
 
 				dispatch(
 					updateEditableValues({
@@ -156,7 +138,6 @@ export default function FragmentContentProcessor({
 		editableValues,
 		fragmentEntryLinkId,
 		languageId,
-		prefixedSegmentsExperienceId,
 		segmentsExperienceId,
 		setEditableProcessorUniqueId,
 	]);

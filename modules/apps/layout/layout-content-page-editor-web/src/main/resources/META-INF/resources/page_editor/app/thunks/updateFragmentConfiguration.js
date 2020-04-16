@@ -19,18 +19,12 @@ import FragmentService from '../services/FragmentService';
 export default function updateFragmentConfiguration({
 	configurationValues,
 	fragmentEntryLink,
-	prefixedSegmentsExperienceId,
 }) {
 	const {editableValues, fragmentEntryLinkId} = fragmentEntryLink;
 
 	const nextEditableValues = {
 		...editableValues,
-		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: prefixedSegmentsExperienceId
-			? {
-					...editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR],
-					[prefixedSegmentsExperienceId]: configurationValues,
-			  }
-			: configurationValues,
+		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: configurationValues,
 	};
 
 	return dispatch => {

@@ -9,6 +9,5 @@ dependencies {
 	compileOnly project(":apps:fragment:fragment-api")
 	compileOnly project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
 	compileOnly project(":apps:info:info-api")
-	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":core:petra:petra-string")
 }

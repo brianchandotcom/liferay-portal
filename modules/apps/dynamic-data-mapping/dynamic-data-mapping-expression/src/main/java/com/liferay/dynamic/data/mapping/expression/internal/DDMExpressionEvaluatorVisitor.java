@@ -551,7 +551,7 @@ public class DDMExpressionEvaluatorVisitor
 	private Optional<Method> _getExpressionFunctionApplyMethod(
 		DDMExpressionFunction ddmExpressionFunction) {
 
-		List<Method> methodList = Stream.of(
+		List<Method> methods = Stream.of(
 			_getHierarchicalMethods(ddmExpressionFunction.getClass())
 		).filter(
 			method -> StringUtil.equals("apply", method.getName())
@@ -559,7 +559,7 @@ public class DDMExpressionEvaluatorVisitor
 			Collectors.toList()
 		);
 
-		Iterator<Method> iterator = methodList.iterator();
+		Iterator<Method> iterator = methods.iterator();
 
 		Method method = iterator.next();
 

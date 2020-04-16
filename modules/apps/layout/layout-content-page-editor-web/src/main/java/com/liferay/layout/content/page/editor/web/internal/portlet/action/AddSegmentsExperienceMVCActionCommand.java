@@ -100,7 +100,8 @@ public class AddSegmentsExperienceMVCActionCommand
 			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
 			_commentManager, themeDisplay.getScopeGroupId(),
 			baseSegmentsExperienceId,
-			segmentsExperience.getSegmentsExperienceId(), serviceContext);
+			segmentsExperience.getSegmentsExperienceId(),
+			className -> serviceContext, themeDisplay.getUserId());
 
 		JSONObject jsonObject = JSONUtil.put(
 			"fragmentEntryLinks",
@@ -312,7 +313,8 @@ public class AddSegmentsExperienceMVCActionCommand
 			SegmentsExperienceUtil.copySegmentsExperienceData(
 				draftLayout.getClassNameId(), draftLayout.getPlid(),
 				_commentManager, groupId, baseSegmentsExperienceId,
-				segmentsExperience.getSegmentsExperienceId(), serviceContext);
+				segmentsExperience.getSegmentsExperienceId(),
+				className -> serviceContext, serviceContext.getUserId());
 		}
 	}
 

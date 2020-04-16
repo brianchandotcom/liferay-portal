@@ -57,7 +57,8 @@ public class SegmentsExperimentModelListener
 				segmentsExperiment.getClassPK(), _commentManager,
 				segmentsExperiment.getGroupId(),
 				segmentsExperiment.getWinnerSegmentsExperienceId(),
-				SegmentsExperienceConstants.ID_DEFAULT, serviceContext);
+				SegmentsExperienceConstants.ID_DEFAULT,
+				className -> serviceContext, segmentsExperiment.getUserId());
 
 			Layout draftLayout = _layoutLocalService.fetchLayout(
 				_portal.getClassNameId(Layout.class.getName()),
@@ -68,7 +69,9 @@ public class SegmentsExperimentModelListener
 					draftLayout.getClassNameId(), draftLayout.getPlid(),
 					_commentManager, segmentsExperiment.getGroupId(),
 					segmentsExperiment.getWinnerSegmentsExperienceId(),
-					SegmentsExperienceConstants.ID_DEFAULT, serviceContext);
+					SegmentsExperienceConstants.ID_DEFAULT,
+					className -> serviceContext,
+					segmentsExperiment.getUserId());
 			}
 		}
 		catch (PortalException portalException) {

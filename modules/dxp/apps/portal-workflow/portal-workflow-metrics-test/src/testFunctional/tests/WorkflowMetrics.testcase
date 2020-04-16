@@ -617,88 +617,6 @@ definition {
 			isPresent = "INST_WEEK,INST_MONTH");
 	}
 
-	@description = "LRQA-53628 Automate LPS-98517 [Dashboard] Filter items list by assignee name"
-	@priority = "5"
-	test FilterAllItemsListByAssigneeName {
-		property test.name.skip.portal.instance = "WorkflowMetrics#FilterAllItemsListByAssigneeName";
-
-		WorkflowMetrics.createUsersAndAssignInstances(
-			numberOfBlogInstances = "4",
-			numberOfUsers = "3");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
-
-		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
-
-		for (var blogNumber : list "5,6,7,8") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry ${blogNumber} Content",
-				entryTitle = "Blogs Entry Title ${blogNumber}");
-		}
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-
-		for (var assignUserNumber : list "1,2,3") {
-			var InstanceNameNumber = ${assignUserNumber} + 4;
-
-			Workflow.assignTaskToUser(
-				assetTitle = "Blogs Entry Title ${InstanceNameNumber}",
-				assetType = "Blogs Entry",
-				assigneeName = "${assignUserNumber}user user${assignUserNumber}",
-				workflowTask = "Review");
-		}
-
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		WorkflowMetrics.goToDashboardAllItemsWithFilter(
-			workflowFilterOption = "PENDING",
-			workflowMetricsTab = "DASHBOARD",
-			workflowProcess = "Single Approver");
-
-		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
-			allItemsFilterName = "Assignee",
-			assigneeName = "1user user1",
-			isNotPresent = "2user user2,3user user3",
-			isPresent = "Blogs Entry Title 5",
-			taskName = "Review");
-
-		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
-			allItemsFilterName = "Assignee",
-			assigneeName = "2user user2",
-			isNotPresent = "1user user1,3user user3",
-			isPresent = "Blogs Entry Title 6",
-			taskName = "Review");
-
-		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
-			allItemsFilterName = "Assignee",
-			assigneeName = "3user user3",
-			isNotPresent = "1user user1,2user user2",
-			isPresent = "Blogs Entry Title 7",
-			taskName = "Review");
-
-		WorkflowMetrics.allItemPageFilterCheck(
-			allItemsFilterName = "Process Status",
-			assigneeName = "Pending");
-
-		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
-			allItemsFilterName = "Process Status",
-			assigneeName = "N/A",
-			filterValueName = "Completed",
-			isNotPresent = "1user user1,2user user2,3user user3",
-			isPresent = "Blogs Entry Title 1,Blogs Entry Title 2,Blogs Entry Title 3,Blogs Entry Title 4",
-			taskName = "Completed");
-	}
-
 	@description = "LRQA-53660 Automate LPS-87571 [Reports] Filter the list of items for a certain process"
 	@priority = "5"
 	test FilterAllItemsList {
@@ -889,6 +807,88 @@ definition {
 			isNotPresent = "N/A",
 			isPresent = "Blogs Entry Title 4",
 			taskName = "Review");
+	}
+
+	@description = "LRQA-53628 Automate LPS-98517 [Dashboard] Filter items list by assignee name"
+	@priority = "5"
+	test FilterAllItemsListByAssigneeName {
+		property test.name.skip.portal.instance = "WorkflowMetrics#FilterAllItemsListByAssigneeName";
+
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "4",
+			numberOfUsers = "3");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		for (var blogNumber : list "5,6,7,8") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${blogNumber} Content",
+				entryTitle = "Blogs Entry Title ${blogNumber}");
+		}
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		for (var assignUserNumber : list "1,2,3") {
+			var InstanceNameNumber = ${assignUserNumber} + 4;
+
+			Workflow.assignTaskToUser(
+				assetTitle = "Blogs Entry Title ${InstanceNameNumber}",
+				assetType = "Blogs Entry",
+				assigneeName = "${assignUserNumber}user user${assignUserNumber}",
+				workflowTask = "Review");
+		}
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "Assignee",
+			assigneeName = "1user user1",
+			isNotPresent = "2user user2,3user user3",
+			isPresent = "Blogs Entry Title 5",
+			taskName = "Review");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "Assignee",
+			assigneeName = "2user user2",
+			isNotPresent = "1user user1,3user user3",
+			isPresent = "Blogs Entry Title 6",
+			taskName = "Review");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "Assignee",
+			assigneeName = "3user user3",
+			isNotPresent = "1user user1,2user user2",
+			isPresent = "Blogs Entry Title 7",
+			taskName = "Review");
+
+		WorkflowMetrics.allItemPageFilterCheck(
+			allItemsFilterName = "Process Status",
+			assigneeName = "Pending");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "Process Status",
+			assigneeName = "N/A",
+			filterValueName = "Completed",
+			isNotPresent = "1user user1,2user user2,3user user3",
+			isPresent = "Blogs Entry Title 1,Blogs Entry Title 2,Blogs Entry Title 3,Blogs Entry Title 4",
+			taskName = "Completed");
 	}
 
 	@description = "LRQA-53638 Automate LPS-100677: [Performance] Search for a step in all steps performance list and LRQA-53637 Automate LPS-100678: [Performance] Filter all step performance by completion period"

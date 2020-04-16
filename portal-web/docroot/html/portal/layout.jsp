@@ -14,34 +14,10 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.exception.NoSuchLayoutException" %>
-
 <%@ include file="/html/portal/init.jsp" %>
 
-<%
-String url = ParamUtil.getString(request, "previousURL");
-
-if (Validator.isNull(url)) {
-	url = PortalUtil.getCurrentURL(request);
-}
-
-url = HttpUtil.decodeURL(themeDisplay.getPortalURL() + url);
-%>
-
 <c:if test="<%= SessionErrors.contains(request, NoSuchLayoutException.class) %>">
-	<h3 class="alert alert-danger">
-		<liferay-ui:message key="not-found" />
-	</h3>
-
-	<liferay-ui:message key="the-requested-resource-could-not-be-found" />
-
-	<br /><br />
-
-	<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
-
-	<div class="separator"><!-- --></div>
-
-	<a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>
+	<%@ include file="/html/portal/status.jsp" %>
 </c:if>
 
 <%

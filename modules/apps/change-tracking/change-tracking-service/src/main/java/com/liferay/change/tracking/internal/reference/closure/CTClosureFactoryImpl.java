@@ -135,15 +135,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				DSLQuery dslQuery = _getDSLQuery(
 					ctCollectionId, childPrimaryKeysArray, entry.getValue());
 
-				TableReferenceDefinition<?> tableReferenceDefinition =
-					parentTableReferenceInfo.getTableReferenceDefinition();
-
-				BasePersistence<?> basePersistence =
-					tableReferenceDefinition.getBasePersistence();
-
-				DataSource dataSource = basePersistence.getDataSource();
-
-				try (Connection connection = dataSource.getConnection();
+				try (Connection connection = _getConnection(
+						parentTableReferenceInfo);
 					PreparedStatement preparedStatement = _getPreparedStatement(
 						connection, dslQuery);
 					ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -183,6 +176,20 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		}
 
 		return GraphUtil.getNodeMap(nodes, edgeMap);
+	}
+
+	private Connection _getConnection(TableReferenceInfo<?> tableReferenceInfo)
+		throws SQLException {
+
+		TableReferenceDefinition<?> tableReferenceDefinition =
+			tableReferenceInfo.getTableReferenceDefinition();
+
+		BasePersistence<?> basePersistence =
+			tableReferenceDefinition.getBasePersistence();
+
+		DataSource dataSource = basePersistence.getDataSource();
+
+		return dataSource.getConnection();
 	}
 
 	private DSLQuery _getDSLQuery(

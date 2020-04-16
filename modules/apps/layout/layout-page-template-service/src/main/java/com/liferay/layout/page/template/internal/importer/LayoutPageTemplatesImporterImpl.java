@@ -516,9 +516,7 @@ public class LayoutPageTemplatesImporterImpl
 						_getThumbnailZipEntry(zipEntry.getName(), zipFile),
 						zipEntry.getName()));
 			}
-			catch (PageDefinitionValidatorException
-						pageDefinitionValidatorException) {
-
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Invalid page definition for: " + masterPage.getName());
@@ -623,9 +621,7 @@ public class LayoutPageTemplatesImporterImpl
 				pageTemplate = _objectMapper.readValue(
 					content, PageTemplate.class);
 			}
-			catch (PageTemplateValidatorException
-						pageTemplateValidatorException) {
-
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Invalid page template for: " + zipEntry.getName());
@@ -670,9 +666,7 @@ public class LayoutPageTemplatesImporterImpl
 						_getThumbnailZipEntry(zipEntry.getName(), zipFile),
 						zipEntry.getName()));
 			}
-			catch (PageDefinitionValidatorException
-						pageDefinitionValidatorException) {
-
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Invalid page definition for: " +

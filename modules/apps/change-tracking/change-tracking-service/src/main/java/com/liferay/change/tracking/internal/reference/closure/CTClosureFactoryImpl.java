@@ -61,6 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
+ * @author Preston Crary
  */
 @Component(immediate = true, service = CTClosureFactory.class)
 public class CTClosureFactoryImpl implements CTClosureFactory {
@@ -142,52 +143,37 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 				DataSource dataSource = basePersistence.getDataSource();
 
-				DefaultASTNodeListener defaultASTNodeListener =
-					new DefaultASTNodeListener();
-
 				try (Connection connection = dataSource.getConnection();
-					PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							SQLTransformer.transform(
-								dslQuery.toSQL(defaultASTNodeListener)))) {
+					PreparedStatement preparedStatement = _getPreparedStatement(
+						connection, dslQuery);
+					ResultSet resultSet = preparedStatement.executeQuery()) {
 
-					List<Object> scalarValues =
-						defaultASTNodeListener.getScalarValues();
+					List<Long> newParents = null;
 
-					for (int i = 0; i < scalarValues.size(); i++) {
-						preparedStatement.setObject(i + 1, scalarValues.get(i));
-					}
+					while (resultSet.next()) {
+						Node parentNode = new Node(
+							parentClassNameId, resultSet.getLong(1));
+						Node childNode = new Node(
+							childClassNameId, resultSet.getLong(2));
 
-					try (ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						List<Long> newParents = null;
-
-						while (resultSet.next()) {
-							Node parentNode = new Node(
-								parentClassNameId, resultSet.getLong(1));
-							Node childNode = new Node(
-								childClassNameId, resultSet.getLong(2));
-
-							if (nodes.add(parentNode)) {
-								if (newParents == null) {
-									newParents = new ArrayList<>();
-								}
-
-								newParents.add(parentNode.getPrimaryKey());
+						if (nodes.add(parentNode)) {
+							if (newParents == null) {
+								newParents = new ArrayList<>();
 							}
 
-							Collection<Edge> edges = edgeMap.computeIfAbsent(
-								parentNode, key -> new LinkedList<>());
-
-							edges.add(new Edge(parentNode, childNode));
+							newParents.add(parentNode.getPrimaryKey());
 						}
 
-						if (newParents != null) {
-							queue.add(
-								new AbstractMap.SimpleImmutableEntry<>(
-									parentClassNameId, newParents));
-						}
+						Collection<Edge> edges = edgeMap.computeIfAbsent(
+							parentNode, key -> new LinkedList<>());
+
+						edges.add(new Edge(parentNode, childNode));
+					}
+
+					if (newParents != null) {
+						queue.add(
+							new AbstractMap.SimpleImmutableEntry<>(
+								parentClassNameId, newParents));
 					}
 				}
 				catch (SQLException sqlException) {
@@ -251,6 +237,25 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		}
 
 		return dslQuery;
+	}
+
+	private PreparedStatement _getPreparedStatement(
+			Connection connection, DSLQuery dslQuery)
+		throws SQLException {
+
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
+
+		PreparedStatement preparedStatement = connection.prepareStatement(
+			SQLTransformer.transform(dslQuery.toSQL(defaultASTNodeListener)));
+
+		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
+
+		for (int i = 0; i < scalarValues.size(); i++) {
+			preparedStatement.setObject(i + 1, scalarValues.get(i));
+		}
+
+		return preparedStatement;
 	}
 
 	@Reference

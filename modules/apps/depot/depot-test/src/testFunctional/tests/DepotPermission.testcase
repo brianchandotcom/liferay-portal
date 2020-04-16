@@ -131,6 +131,7 @@ definition {
 			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
+			depotName = "Test Depot Name",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
 			userScreenName = "usersn1");

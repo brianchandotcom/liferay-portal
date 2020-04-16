@@ -29,6 +29,12 @@ export const connectStore = Component => {
 
 		const store = context.store || {};
 
+		// Only emit the event without changing the subscription,
+		// for cases where you want to propagate the emit event (e.g FieldSet).
+		// The implementation of the event must correspond to the use of the
+		// function `emit` below.
+		const propagate = (name, event) => instance.emit(name, event);
+
 		const emit = (name, event, value) =>
 			instance.emit(name, {
 				// A hacky to imitate an instance of a Metal+soy component
@@ -51,6 +57,7 @@ export const connectStore = Component => {
 				context={context}
 				dispatch={dispatch}
 				emit={emit}
+				propagate={propagate}
 				store={store}
 			/>
 		);

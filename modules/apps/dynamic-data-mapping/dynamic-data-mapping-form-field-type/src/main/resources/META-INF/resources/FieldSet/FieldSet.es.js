@@ -155,10 +155,10 @@ const FieldSetProxy = connectStore(
 		activePage,
 		context,
 		editable,
-		emit,
 		label,
 		nestedFields = [],
 		pageIndex,
+		propagate,
 		rows,
 		showLabel,
 		spritemap,
@@ -170,15 +170,9 @@ const FieldSetProxy = connectStore(
 				context={context}
 				editable={editable}
 				label={label}
-				onBlur={event =>
-					emit('fieldBlurred', event.originalEvent, event.value)
-				}
-				onChange={event =>
-					emit('fieldEdited', event.originalEvent, event.value)
-				}
-				onFocus={event =>
-					emit('fieldFocused', event.originalEvent, event.value)
-				}
+				onBlur={event => propagate('fieldBlurred', event)}
+				onChange={event => propagate('fieldEdited', event)}
+				onFocus={event => propagate('fieldFocused', event)}
 				pageIndex={pageIndex}
 				rows={getRows(rows, nestedFields)}
 				showLabel={showLabel}

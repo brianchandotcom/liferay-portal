@@ -212,7 +212,7 @@ function ToolbarBody() {
 
 			<ul className="navbar-nav" onClick={deselectItem}>
 				<NetworkStatusBar {...network} />
-				<Undo></Undo>
+				{config.undoEnabled && <Undo />}
 				<li className="nav-item">
 					<form action={config.discardDraftURL} method="POST">
 						<input

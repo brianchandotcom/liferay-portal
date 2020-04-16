@@ -87,21 +87,21 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		if (joinStepASTNodeListener._fromTable == null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Join function must use provided FromStep for JoinStep \"",
-					joinStep, "\""));
+					"Join function must use provided from step for join step ",
+					"\"", joinStep, "\""));
 		}
 
 		if (!joinStepASTNodeListener._hasRequiredTable) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"Required table \"", _tableReferenceDefinition.getTable(),
-					"\" is unused in JoinStep \"", joinStep, "\""));
+					"\" is unused in join step \"", joinStep, "\""));
 		}
 
 		if (joinStepASTNodeListener._invalidJoin != null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Invalid join for JoinStep \"", joinStep,
+					"Invalid join for join step \"", joinStep,
 					"\", ensure table alias is used for self joins"));
 		}
 
@@ -110,15 +110,15 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 				StringBundler.concat(
 					"Invalid join type \"",
 					joinStepASTNodeListener._invalidJoinType,
-					"\" for JoinStep \"", joinStep, "\""));
+					"\" for join step \"", joinStep, "\""));
 		}
 
 		if (joinStepASTNodeListener._invalidOperand != null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Invalid Predicate Operand \"",
+					"Invalid predicate operand \"",
 					joinStepASTNodeListener._invalidOperand,
-					"\" for JoinStep \"", joinStep, "\""));
+					"\" for join step \"", joinStep, "\""));
 		}
 
 		if (!joinStepASTNodeListener._tables.containsAll(

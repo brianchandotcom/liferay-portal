@@ -333,8 +333,8 @@ public class TableReferenceDefinitionHelperImplTest {
 				catch (IllegalArgumentException illegalArgumentException) {
 					Assert.assertEquals(
 						StringBundler.concat(
-							"Join function must use provided FromStep for ",
-							"JoinStep \"select * from MainExample inner join ",
+							"Join function must use provided from step for ",
+							"join step \"select * from MainExample inner join ",
 							"MainExample on MainExample.mainExampleId = ",
 							"MainExample.mainExampleId\""),
 						illegalArgumentException.getMessage());
@@ -355,8 +355,8 @@ public class TableReferenceDefinitionHelperImplTest {
 				catch (IllegalArgumentException illegalArgumentException) {
 					Assert.assertEquals(
 						StringBundler.concat(
-							"Required table \"MainExample\" is unused in ",
-							"JoinStep \"... from ReferenceExample inner join ",
+							"Required table \"MainExample\" is unused in join ",
+							"step \"... from ReferenceExample inner join ",
 							"ReferenceExample on ",
 							"ReferenceExample.mainExampleId = ",
 							"ReferenceExample.mainExampleId\""),
@@ -378,8 +378,8 @@ public class TableReferenceDefinitionHelperImplTest {
 				catch (IllegalArgumentException illegalArgumentException) {
 					Assert.assertEquals(
 						StringBundler.concat(
-							"Invalid join for JoinStep \"... from MainExample ",
-							"inner join MainExample on ",
+							"Invalid join for join step \"... from ",
+							"MainExample inner join MainExample on ",
 							"MainExample.mainExampleId = ",
 							"MainExample.mainExampleId\", ensure table alias ",
 							"is used for self joins"),
@@ -401,7 +401,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				catch (IllegalArgumentException illegalArgumentException) {
 					Assert.assertEquals(
 						StringBundler.concat(
-							"Invalid join type \"left\" for JoinStep \"... ",
+							"Invalid join type \"left\" for join step \"... ",
 							"from MainExample left join ReferenceExample on ",
 							"ReferenceExample.mainExampleId = ",
 							"MainExample.mainExampleId\""),
@@ -428,7 +428,7 @@ public class TableReferenceDefinitionHelperImplTest {
 				catch (IllegalArgumentException illegalArgumentException) {
 					Assert.assertEquals(
 						StringBundler.concat(
-							"Invalid Predicate Operand \"!=\" for JoinStep ",
+							"Invalid predicate operand \"!=\" for join step ",
 							"\"... from MainExample inner join ",
 							"ReferenceExample on ",
 							"ReferenceExample.mainExampleId != ",
@@ -456,7 +456,7 @@ public class TableReferenceDefinitionHelperImplTest {
 							"Predicate column tables [MainExample, ",
 							"ReferenceExample] do not match join tables ",
 							"[MainExample, MainExample aliasMainExample] for ",
-							"joinStep \"... from MainExample inner join ",
+							"join step \"... from MainExample inner join ",
 							"MainExample aliasMainExample on ",
 							"ReferenceExample.mainExampleId = ",
 							"MainExample.mainExampleId\""),
@@ -477,7 +477,7 @@ public class TableReferenceDefinitionHelperImplTest {
 					Assert.assertEquals(
 						StringBundler.concat(
 							"No long type primary key column found for table ",
-							"\"InvalidTable\" for joinStep \"... from ",
+							"\"InvalidTable\" for join step \"... from ",
 							"InvalidTable inner join MainExample on ",
 							"MainExample.mainExampleId = ",
 							"InvalidTable.mainExampleId\""),
@@ -498,7 +498,7 @@ public class TableReferenceDefinitionHelperImplTest {
 					Assert.assertEquals(
 						StringBundler.concat(
 							"From table should be a different table than ",
-							"\"MainExample\" for joinStep \"... from ",
+							"\"MainExample\" for join step \"... from ",
 							"MainExample inner join ReferenceExample on ",
 							"ReferenceExample.mainExampleId = ",
 							"MainExample.mainExampleId\""),

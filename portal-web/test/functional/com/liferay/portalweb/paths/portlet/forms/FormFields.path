@@ -213,7 +213,7 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD</td>
-	<td>//input[@type='text' and contains(@id,'${key_fieldName}')] | //input[@type='text' and contains(@name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//label[text()='${key_fieldLabel}']</td>
+	<td>//input[@type='text' and contains(@id,'${key_fieldName}')] | //input[@type='text' and contains(@name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//p[text()='${key_fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

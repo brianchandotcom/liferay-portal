@@ -79,6 +79,17 @@ public class PageWidgetInstanceDefinitionSerDes {
 			sb.append(_toJSON(pageWidgetInstanceDefinition.getWidgetConfig()));
 		}
 
+		if (pageWidgetInstanceDefinition.getWidgetPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetPermissions\": ");
+
+			sb.append(
+				_toJSON(pageWidgetInstanceDefinition.getWidgetPermissions()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -119,6 +130,16 @@ public class PageWidgetInstanceDefinitionSerDes {
 				String.valueOf(pageWidgetInstanceDefinition.getWidgetConfig()));
 		}
 
+		if (pageWidgetInstanceDefinition.getWidgetPermissions() == null) {
+			map.put("widgetPermissions", null);
+		}
+		else {
+			map.put(
+				"widgetPermissions",
+				String.valueOf(
+					pageWidgetInstanceDefinition.getWidgetPermissions()));
+		}
+
 		return map;
 	}
 
@@ -149,6 +170,13 @@ public class PageWidgetInstanceDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "widgetConfig")) {
 				if (jsonParserFieldValue != null) {
 					pageWidgetInstanceDefinition.setWidgetConfig(
+						(Map)PageWidgetInstanceDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "widgetPermissions")) {
+				if (jsonParserFieldValue != null) {
+					pageWidgetInstanceDefinition.setWidgetPermissions(
 						(Map)PageWidgetInstanceDefinitionSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}

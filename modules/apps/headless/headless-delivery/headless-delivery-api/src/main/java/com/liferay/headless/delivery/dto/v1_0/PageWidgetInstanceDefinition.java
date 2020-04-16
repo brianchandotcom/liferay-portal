@@ -105,6 +105,36 @@ public class PageWidgetInstanceDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> widgetConfig;
 
+	@Schema
+	@Valid
+	public Map<String, Object> getWidgetPermissions() {
+		return widgetPermissions;
+	}
+
+	public void setWidgetPermissions(Map<String, Object> widgetPermissions) {
+		this.widgetPermissions = widgetPermissions;
+	}
+
+	@JsonIgnore
+	public void setWidgetPermissions(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			widgetPermissionsUnsafeSupplier) {
+
+		try {
+			widgetPermissions = widgetPermissionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> widgetPermissions;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -152,6 +182,16 @@ public class PageWidgetInstanceDefinition {
 			sb.append("\"widgetConfig\": ");
 
 			sb.append(_toJSON(widgetConfig));
+		}
+
+		if (widgetPermissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetPermissions\": ");
+
+			sb.append(_toJSON(widgetPermissions));
 		}
 
 		sb.append("}");

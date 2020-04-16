@@ -72,6 +72,28 @@ public class PageWidgetInstanceDefinition implements Cloneable {
 
 	protected Map<String, Object> widgetConfig;
 
+	public Map<String, Object> getWidgetPermissions() {
+		return widgetPermissions;
+	}
+
+	public void setWidgetPermissions(Map<String, Object> widgetPermissions) {
+		this.widgetPermissions = widgetPermissions;
+	}
+
+	public void setWidgetPermissions(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			widgetPermissionsUnsafeSupplier) {
+
+		try {
+			widgetPermissions = widgetPermissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> widgetPermissions;
+
 	@Override
 	public PageWidgetInstanceDefinition clone()
 		throws CloneNotSupportedException {

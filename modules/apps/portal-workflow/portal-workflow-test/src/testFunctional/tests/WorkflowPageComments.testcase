@@ -142,7 +142,7 @@ definition {
 	@description = "This is a use case for LPS-68780."
 	@priority = "5"
 	test EditCommentAssignedToMe {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Page Comments Page");
 

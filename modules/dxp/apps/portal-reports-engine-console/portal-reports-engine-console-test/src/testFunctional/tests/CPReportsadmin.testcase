@@ -562,9 +562,10 @@ definition {
 		PortletEntry.save();
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewEmailNotificationDelivery {
+		property portal.upstream = "quarantine";
+
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailNotificationDelivery";
 		var portalURL = PropsUtil.get("portal.url");
@@ -641,9 +642,10 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewEmailRecipientDelivery {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailRecipientDelivery";
 		var portalURL = PropsUtil.get("portal.url");
 		property test.assert.javascript.errors = "false";

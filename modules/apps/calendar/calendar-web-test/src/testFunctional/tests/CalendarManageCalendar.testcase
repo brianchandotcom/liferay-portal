@@ -369,7 +369,7 @@ definition {
 	test SearchForOtherCalendars {
 		property portal.upstream = "quarantine";
 
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Calendar#SearchForOtherCalendars";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

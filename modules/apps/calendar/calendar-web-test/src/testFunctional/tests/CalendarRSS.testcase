@@ -71,9 +71,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-67928."
-	@ignore = "true"
 	@priority = "3"
 	test DeleteEventAndViewFeed {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "CalendarRSS#DeleteEventAndViewFeed";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -112,9 +113,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-67928."
-	@ignore = "true"
 	@priority = "3"
 	test DisableFeedForSiteCalendar {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Calendar.chooseSiteCalendarMenulistOption(
@@ -152,9 +154,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-67928."
-	@ignore = "true"
 	@priority = "5"
 	test ViewSiteCalendarFeed {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoPreviousDay();

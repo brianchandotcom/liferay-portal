@@ -605,6 +605,78 @@ definition {
 			resourcePanels = "Portal Services,Sample QA app");
 	}
 
+	@priority = "4"
+	test RefreshTokenTime {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
+		property osgi.module.configurations = "access.token.expires.in=&quot;5&quot;";
+
+		var clientId = "abc123";
+		var clientSecret = "abc123";
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		OAuth2.addApplication(
+			applicationName = "Third-party Application",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			clientProfile = "Web Application");
+
+		OAuth2.inputApplicationValues(
+			clientId = "${clientId}",
+			clientSecret = "${clientSecret}");
+
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(
+			applicationName = "Third-party Application",
+			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
+			resourcePanels = "Portal Services");
+
+		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
+			value1 = "${clientId}");
+
+		Button.click(button = "Authorize My Application");
+
+		Button.click(button = "Authorize");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
+			value1 = "${clientSecret}");
+
+		Button.click(button = "Obtain OAuth2 Access");
+
+		Button.click(button = "Launch Request");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com");
+
+		Pause(locator1 = "6000");
+
+		Button.click(button = "Launch Request");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "403 - Unauthorized!");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "");
+
+		Button.click(button = "Refresh Token");
+
+		Button.click(button = "Launch Request");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com");
+	}
+
 	test UpdateScopeBundlePrefixes {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 

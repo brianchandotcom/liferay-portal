@@ -750,7 +750,15 @@ public class LayoutPageTemplatesImporterImpl
 			bytes = FileUtil.getBytes(is);
 		}
 
-		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
+		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
+			groupId, repository.getDlFolderId(), imageFileName);
+
+		if (fileEntry != null) {
+			_portletFileRepository.deletePortletFileEntry(
+				fileEntry.getFileEntryId());
+		}
+
+		fileEntry = _portletFileRepository.addPortletFileEntry(
 			groupId, serviceContext.getUserId(),
 			LayoutPageTemplateEntry.class.getName(), layoutPageTemplateEntryId,
 			LayoutAdminPortletKeys.GROUP_PAGES, repository.getDlFolderId(),

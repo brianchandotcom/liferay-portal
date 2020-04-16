@@ -29,21 +29,21 @@ public class TableReferenceInfo<T extends Table<T>> {
 	public TableReferenceInfo(
 		TableReferenceDefinition<T> tableReferenceDefinition,
 		Column<T, Long> primaryKeyColumn,
-		Map<Table<?>, List<TableJoinHolder>> parentJoinMap,
-		Map<Table<?>, List<TableJoinHolder>> childJoinMap) {
+		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap,
+		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap) {
 
 		_tableReferenceDefinition = tableReferenceDefinition;
 		_primaryKeyColumn = primaryKeyColumn;
-		_parentJoinMap = parentJoinMap;
-		_childJoinMap = childJoinMap;
+		_parentTableJoinHoldersMap = parentTableJoinHoldersMap;
+		_childTableJoinHoldersMap = childTableJoinHoldersMap;
 	}
 
 	public Map<Table<?>, List<TableJoinHolder>> getChildTableJoinHoldersMap() {
-		return _childJoinMap;
+		return _childTableJoinHoldersMap;
 	}
 
 	public Map<Table<?>, List<TableJoinHolder>> getParentTableJoinHoldersMap() {
-		return _parentJoinMap;
+		return _parentTableJoinHoldersMap;
 	}
 
 	public Column<T, Long> getPrimaryKeyColumn() {
@@ -54,8 +54,10 @@ public class TableReferenceInfo<T extends Table<T>> {
 		return _tableReferenceDefinition;
 	}
 
-	private final Map<Table<?>, List<TableJoinHolder>> _childJoinMap;
-	private final Map<Table<?>, List<TableJoinHolder>> _parentJoinMap;
+	private final Map<Table<?>, List<TableJoinHolder>>
+		_childTableJoinHoldersMap;
+	private final Map<Table<?>, List<TableJoinHolder>>
+		_parentTableJoinHoldersMap;
 	private final Column<T, Long> _primaryKeyColumn;
 	private final TableReferenceDefinition<T> _tableReferenceDefinition;
 

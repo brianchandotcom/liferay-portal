@@ -173,12 +173,12 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		List<TableJoinHolder> tableJoinHolders = null;
 
 		if (joinStepASTNodeListener._parentJoinFunction) {
-			tableJoinHolders = _parentJoinMap.computeIfAbsent(
+			tableJoinHolders = _parentTableJoinHoldersMap.computeIfAbsent(
 				joinStepASTNodeListener._fromTable,
 				fromTable -> new ArrayList<>());
 		}
 		else {
-			tableJoinHolders = _childJoinMap.computeIfAbsent(
+			tableJoinHolders = _childTableJoinHoldersMap.computeIfAbsent(
 				joinStepASTNodeListener._fromTable,
 				fromTable -> new ArrayList<>());
 		}
@@ -214,8 +214,8 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		}
 
 		return new TableReferenceInfo<>(
-			_tableReferenceDefinition, _primaryKeyColumn, _parentJoinMap,
-			_childJoinMap);
+			_tableReferenceDefinition, _primaryKeyColumn,
+			_parentTableJoinHoldersMap, _childTableJoinHoldersMap);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -233,11 +233,11 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		}
 	};
 
-	private final Map<Table<?>, List<TableJoinHolder>> _childJoinMap =
-		new HashMap<>();
+	private final Map<Table<?>, List<TableJoinHolder>>
+		_childTableJoinHoldersMap = new HashMap<>();
 	private final Set<Column<?, ?>> _definedColumns = new HashSet<>();
-	private final Map<Table<?>, List<TableJoinHolder>> _parentJoinMap =
-		new HashMap<>();
+	private final Map<Table<?>, List<TableJoinHolder>>
+		_parentTableJoinHoldersMap = new HashMap<>();
 	private final Column<T, Long> _primaryKeyColumn;
 	private final TableReferenceDefinition<T> _tableReferenceDefinition;
 

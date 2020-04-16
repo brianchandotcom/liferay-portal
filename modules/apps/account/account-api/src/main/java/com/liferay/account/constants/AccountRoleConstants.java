@@ -60,6 +60,16 @@ public class AccountRoleConstants {
 		REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, REQUIRED_ROLE_NAME_ACCOUNT_MEMBER
 	};
 
+	public static boolean isImpliedRole(Role role) {
+		String roleName = role.getName();
+
+		if (roleName.equals(REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isRequiredRole(Role role) {
 		return ArrayUtil.contains(REQUIRED_ROLE_NAMES, role.getName());
 	}

@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountRoleDisplay;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.util.List;
 
 /**
  * @author Pei-Jung Lan
@@ -65,10 +68,16 @@ public class AccountRoleDisplaySearchContainerFactory {
 				keywords, searchContainer.getStart(), searchContainer.getEnd(),
 				new RoleNameComparator(orderByType.equals("asc")));
 
-		searchContainer.setResults(
+		List<AccountRoleDisplay> accountRoleDisplayList =
 			TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(), AccountRoleDisplay::of));
-		searchContainer.setTotal(baseModelSearchResult.getLength());
+				baseModelSearchResult.getBaseModels(), AccountRoleDisplay::of);
+
+		accountRoleDisplayList.removeIf(
+			AccountRoleDisplay -> AccountRoleConstants.isImpliedRole(
+				AccountRoleDisplay.getRole()));
+
+		searchContainer.setResults(accountRoleDisplayList);
+		searchContainer.setTotal(accountRoleDisplayList.size());
 
 		return searchContainer;
 	}

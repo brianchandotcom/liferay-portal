@@ -844,6 +844,7 @@ xpack.monitoring.collection.enabled: true</echo>
 	<target name="create-follower-indices">
 		<exec executable="curl" outputproperty="companyId">
 			<arg value="http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/localhost" />
+			<arg value="-s" />
 			<arg value="-u" />
 			<arg value="test@liferay.com:test" />
 		</exec>
@@ -855,6 +856,23 @@ xpack.monitoring.collection.enabled: true</echo>
 			regexp="(?&lt;=companyId&quot;:&quot;)(.*)(?=&quot;,&quot;home)"
 			select="\1"
 		/>
+
+		<exec executable="curl" outputproperty="indexList">
+			<arg value="-X" />
+			<arg value="GET" />
+			<arg value="http://localhost:9200/_cat/indices?h=idx" />
+			<arg value="-s" />
+		</exec>
+
+		<propertyregex
+			input="${indexList}"
+			override="true"
+			property="indexList"
+			regexp="\n"
+			replace=","
+		/>
+
+		<echo>${indexList}</echo>
 
 		<property name="configure.cluster">
 			<![CDATA[
@@ -882,248 +900,77 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="localhost:9202/_cluster/settings" />
 			<arg value="-d" />
 			<arg value="${configure.cluster}" />
+			<arg value="-s" />
 		</exec>
 
 		<echo>${curl.output.connect.to.remote.cluster}</echo>
 
-		<property name="follower.liferay.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-${companyId}",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
+		<for list="${indexList}" param="indexName">
+			<sequential>
+				<if>
+					<and>
+						<not>
+							<contains string="@{indexName}" substring="." />
+						</not>
+					</and>
+					<then>
+						<property name="follower.index">
+							<![CDATA[
+								{
+									"leader_index": "@{indexName}",
+									"remote_cluster": "leader"
+								}
+							]]>
+						</property>
 
-		<exec executable="curl" outputproperty="curl.output.follower.liferay.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.liferay.index}" />
-		</exec>
+						<exec executable="curl" outputproperty="curl.output.follower.index">
+							<arg value="-H" />
+							<arg value="Content-Type: application/json" />
+							<arg value="-X" />
+							<arg value="PUT" />
+							<arg value="localhost:9202/@{indexName}/_ccr/follow?wait_for_active_shards=1" />
+							<arg value="-d" />
+							<arg value="${follower.index}" />
+							<arg value="-s" />
+						</exec>
 
-		<echo>${curl.output.follower.liferay.index}</echo>
+						<echo>${curl.output.follower.index}</echo>
 
-		<property name="follower.liferay.settings.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-0",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.follower.liferay.settings.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-0/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.liferay.settings.index}" />
-		</exec>
-
-		<echo>${curl.output.follower.liferay.settings.index}</echo>
-
-		<property name="follower.synonyms.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-search-tuning-synonyms-liferay-${companyId}",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.follower.synonyms.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-search-tuning-synonyms-liferay-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.synonyms.index}" />
-		</exec>
-
-		<echo>${curl.output.follower.synonyms.index}</echo>
-
-		<property name="follower.workflow.metrics.instances.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-workflow-metrics-instances-${companyId}",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.instances.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-workflow-metrics-instances-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.workflow.metrics.instances.index}" />
-		</exec>
-
-		<echo>${curl.output.follower.workflow.metrics.instances.index}</echo>
-
-		<property name="follower.workflow.metrics.nodes.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-workflow-metrics-nodes-${companyId}",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.nodes.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-workflow-metrics-nodes-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.workflow.metrics.nodes.index}" />
-		</exec>
-
-		<echo>${curl.output.follower.workflow.metrics.nodes.index}</echo>
-
-		<property name="follower.workflow.metrics.processes.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-workflow-metrics-processes-${companyId}",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.processes.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-workflow-metrics-processes-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.workflow.metrics.processes.index}" />
-		</exec>
-
-		<echo>${curl.output.follower.workflow.metrics.processes.index}</echo>
-
-		<property name="follower.workflow.metrics.sla.instance.results.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-workflow-metrics-sla-instance-results-${companyId}",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.sla.instance.results.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-workflow-metrics-sla-instance-results-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.workflow.metrics.sla.instance.results.index}" />
-		</exec>
-
-		<echo>${curl.output.follower.workflow.metrics.sla.instance.results.index}</echo>
-
-		<property name="follower.workflow.metrics.sla.task.results.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-workflow-metrics-sla-task-results-${companyId}",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.sla.task.results.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-workflow-metrics-sla-task-results-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.workflow.metrics.sla.task.results.index}" />
-		</exec>
-
-		<echo>${curl.output.follower.workflow.metrics.sla.task.results.index}</echo>
-
-		<property name="follower.workflow.metrics.tasks.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-workflow-metrics-tasks-${companyId}",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.tasks.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-workflow-metrics-tasks-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.workflow.metrics.tasks.index}" />
-		</exec>
-
-		<echo>${curl.output.follower.workflow.metrics.tasks.index}</echo>
-
-		<property name="follower.workflow.metrics.transitions.index">
-			<![CDATA[
-				{
-					"leader_index": "liferay-workflow-metrics-transitions-${companyId}",
-					"remote_cluster": "leader"
-				}
-			]]>
-		</property>
-
-		<exec executable="curl" outputproperty="curl.output.follower.workflow.metrics.transitions.index">
-			<arg value="-H" />
-			<arg value="Content-Type: application/json" />
-			<arg value="-X" />
-			<arg value="PUT" />
-			<arg value="localhost:9202/liferay-workflow-metrics-transitions-${companyId}/_ccr/follow?wait_for_active_shards=1" />
-			<arg value="-d" />
-			<arg value="${follower.workflow.metrics.transitions.index}" />
-		</exec>
-
-		<echo>${curl.output.follower.workflow.metrics.transitions.index}</echo>
+						<var name="curl.output.follower.index" unset="true" />
+						<var name="follower.index" unset="true" />
+					</then>
+				</if>
+			</sequential>
+		</for>
 
 		<exec executable="curl" outputproperty="curl.output.follower.indices">
 			<arg value="-X" />
 			<arg value="GET" />
-			<arg value="localhost:9202/_cat/indices" />
+			<arg value="localhost:9202/_cat/indices?h=idx" />
+			<arg value="-s" />
 		</exec>
 
 		<echo>${curl.output.follower.indices}</echo>
 
-		<if>
-			<and>
-				<contains string="${curl.output.follower.indices}" substring="liferay-0" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-search-tuning-synonyms-liferay-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-instances-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-nodes-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-processes-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-sla-instance-results-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-sla-task-results-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-tasks-${companyId}" />
-				<contains string="${curl.output.follower.indices}" substring="liferay-workflow-metrics-transitions-${companyId}" />
-			</and>
-			<then>
-				<echo>Created follower indices.</echo>
-			</then>
-			<else>
-				<fail>Failed to create follower indices.</fail>
-			</else>
-		</if>
+		<for list="${indexList}" param="indexName">
+			<sequential>
+				<if>
+					<and>
+						<not>
+							<contains string="@{indexName}" substring="." />
+						</not>
+						<not>
+							<contains string="${curl.output.follower.indices}" substring="@{indexName}" />
+						</not>
+					</and>
+					<then>
+						<fail>Failed to create follower indices.</fail>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
+		<echo>Created follower indices.</echo>
 	</target>
 
 	<target name="deploy-elasticsearch7">

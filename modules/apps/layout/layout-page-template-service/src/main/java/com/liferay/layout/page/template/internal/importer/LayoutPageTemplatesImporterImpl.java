@@ -1023,8 +1023,8 @@ public class LayoutPageTemplatesImporterImpl
 						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
-							"x-could-not-be-imported-because-because-of-" +
-								"invalid-values-in-its-page-definition",
+							"x-could-not-be-imported-because-of-invalid-" +
+								"values-in-its-page-definition",
 							new String[] {masterPage.getName()})));
 			}
 		}
@@ -1155,8 +1155,8 @@ public class LayoutPageTemplatesImporterImpl
 						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
-							"x-could-not-be-imported-because-because-of-" +
-								"invalid-values-in-its-page-definition",
+							"x-could-not-be-imported-because-of-invalid-" +
+								"values-in-its-page-definition",
 							new String[] {pageTemplate.getName()})));
 			}
 		}

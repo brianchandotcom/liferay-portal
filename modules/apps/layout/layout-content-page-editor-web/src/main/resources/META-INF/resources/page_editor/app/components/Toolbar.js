@@ -28,6 +28,7 @@ import {useSelectItem} from './Controls';
 import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';
 import Translation from './Translation';
+import Undo from './Undo';
 import UnsafeHTML from './UnsafeHTML';
 
 const {Suspense, useCallback, useRef} = React;
@@ -211,6 +212,7 @@ function ToolbarBody() {
 
 			<ul className="navbar-nav" onClick={deselectItem}>
 				<NetworkStatusBar {...network} />
+				<Undo></Undo>
 				<li className="nav-item">
 					<form action={config.discardDraftURL} method="POST">
 						<input

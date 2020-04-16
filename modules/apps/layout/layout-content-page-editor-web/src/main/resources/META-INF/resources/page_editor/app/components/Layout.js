@@ -41,7 +41,6 @@ import {
 	useIsActive,
 	useSelectItem,
 } from './Controls';
-import DragPreview from './DragPreview';
 import {EditableProcessorContextProvider} from './fragment-content/EditableProcessorContext';
 import FragmentWithControls from './layout-data-items/FragmentWithControls';
 import {
@@ -220,8 +219,6 @@ export default function Layout({mainItemId}) {
 				onClick={onClick}
 				ref={layoutRef}
 			>
-				<DragPreview />
-
 				<EditableProcessorContextProvider>
 					<DragAndDropContextProvider>
 						<LayoutDataItem

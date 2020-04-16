@@ -112,7 +112,7 @@ const SaveFragmentCompositionModal = ({
 				{Liferay.Language.get('save-as-fragment')}
 			</ClayModal.Header>
 
-			<ClayModal.Body>
+			<ClayModal.Body scrollable>
 				<ClayForm
 					autoComplete="off"
 					className="mb-3"

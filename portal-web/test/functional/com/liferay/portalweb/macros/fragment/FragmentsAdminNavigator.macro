@@ -45,7 +45,7 @@ definition {
 
 		Button.click(button = "Import");
 
-		IFrame.selectModalFrame();
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
 	macro gotoSpecificScopeCollection {

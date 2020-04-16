@@ -34,6 +34,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_D" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="destinationURL" />
+		</finder>
 		<finder name="G_S" return-type="RedirectEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="sourceURL" />

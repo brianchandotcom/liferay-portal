@@ -114,7 +114,9 @@ const Options = ({
 	const fieldsFilter = fields => {
 		const _fields = [...fields];
 
-		_fields.splice(_fields.length - 1, 1);
+		if (defaultLanguageId === editingLanguageId) {
+			_fields.splice(_fields.length - 1, 1);
+		}
 
 		return {...normalizedValue, [editingLanguageId]: _fields};
 	};

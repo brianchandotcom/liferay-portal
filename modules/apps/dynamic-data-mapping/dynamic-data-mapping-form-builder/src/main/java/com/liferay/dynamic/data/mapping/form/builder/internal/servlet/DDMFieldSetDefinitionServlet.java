@@ -76,9 +76,6 @@ public class DDMFieldSetDefinitionServlet extends BaseDDMFormBuilderServlet {
 		String languageId = ParamUtil.getString(
 			httpServletRequest, "languageId");
 
-		String portletNamespace = ParamUtil.getString(
-			httpServletRequest, "portletNamespace");
-
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		LocaleThreadLocal.setThemeDisplayLocale(locale);
@@ -90,6 +87,9 @@ public class DDMFieldSetDefinitionServlet extends BaseDDMFormBuilderServlet {
 			DDMFormBuilderContextRequest.with(
 				ddmStructureOptional, httpServletRequest, httpServletResponse,
 				locale, true);
+
+		String portletNamespace = ParamUtil.getString(
+			httpServletRequest, "portletNamespace");
 
 		ddmFormBuilderContextRequest.addProperty(
 			"portletNamespace", portletNamespace);

@@ -615,11 +615,19 @@ definition {
 
 		ContentPages.clickPencil();
 
-		PageEditor.editFragmentText(
-			contributed = "false",
-			fragmentName = "Rich Text",
-			id = "rich-text",
-			text = "New editable fragment text");
+		AssertElementNotPresent(
+			key_fragmentName = "Rich Text",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		Click(locator1 = "//div[contains(@class,'fragment-rich-text')]/lfr-editable[contains(@id,'rich-text')]");
+
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
+
+		Type(
+			locator1 = "//div[contains(@class,'fragment-rich-text')]/lfr-editable[contains(@id,'rich-text')]//div[contains(@class,'cke_editable_inline')]",
+			value1 = "New editable fragment text");
+
+		PageEditor.waitForAutoSave();
 
 		PageEditor.clickPublish();
 
@@ -723,10 +731,13 @@ definition {
 
 		ContentPages.clickPencil();
 
-		PageEditorMapping.gotoEditableFieldMapping(
-			contributed = "false",
-			fragmentName = "rich-text",
-			id = "rich-text");
+		AssertElementNotPresent(
+			key_fragmentName = "Rich Text",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		Click(locator1 = "//div[contains(@class,'fragment-rich-text')]/lfr-editable[contains(@id,'rich-text')]");
+
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON");
 
 		Select(
 			locator1 = "PageEditorEditableLink#FIELD",

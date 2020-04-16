@@ -184,6 +184,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_NO_SLA_MESSAGE</td>
+	<td>//div[contains(., 'No SLAs are defined for this process.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_PERFORMANCE_BY_STEP_AVG_COMPLETION_TIME_VALUE</td>
 	<td>//tr[contains(*, '${rowName}')]//td[@data-testid='avgCompletionTime'] | //tr[contains(*, '${rowName}')]//td[@data-testid='durationTaskAvg']</td>
 	<td></td>

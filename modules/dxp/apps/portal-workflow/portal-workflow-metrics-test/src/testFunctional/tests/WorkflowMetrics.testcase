@@ -45,6 +45,167 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
+	}
+
+	@description = "LRQA-53648 Automate LPS-89014: [SLA] Create new SLA for total process resolution"
+	@priority = "5"
+	test AddSLAForTotalProcessResolution {
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0000",
+			slaDefinitionName = "",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Please fill in the required fields.");
+
+		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "A name is required.");
+
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0000",
+			slaDefinitionName = "SLA Name");
+
+		Button.clickSave();
+
+		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "At least one parameter is required.");
+
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionHours = "0000",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "At least one parameter is required.");
+
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "A duration time is required.");
+
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
+			value1 = "_,-+!@#$%^*()=.?/;:{}[]|aA1");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
+			value1 = "1");
+
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "2400",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "Value must be an hour below 23:59.");
+
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_slaTitle = "SLA Name",
+			locator1 = "WorkflowMetricsSLA#SLA_RECORD_TITLE");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0001",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "An SLA with the same name already exists.");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
+			value1 = "SLA Name1");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_slaTitle = "SLA Name1",
+			locator1 = "WorkflowMetricsSLA#SLA_RECORD_TITLE");
 	}
 
 	@description = "Verify the user can set a SLA to Single Approver workflow (LPS-99765)"
@@ -536,6 +697,198 @@ definition {
 			isNotPresent = "1user user1,2user user2,3user user3",
 			isPresent = "Blogs Entry Title 1,Blogs Entry Title 2,Blogs Entry Title 3,Blogs Entry Title 4",
 			taskName = "Completed");
+	}
+
+	@description = "LRQA-53660 Automate LPS-87571 [Reports] Filter the list of items for a certain process"
+	@priority = "5"
+	test FilterAllItemsList {
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 1 Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.allItemPageFilterCheck(
+			allItemsFilterName = "Process Status",
+			assigneeName = "Pending");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "SLA Status",
+			assigneeName = "N/A",
+			filterValueName = "Untracked",
+			isNotPresent = "Unassigned",
+			isPresent = "Blogs Entry Title 1",
+			taskName = "Completed");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "0",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "0002",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		for (var blogNumber : list "2,3,4") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${blogNumber} Content",
+				entryTitle = "Blogs Entry Title ${blogNumber}");
+		}
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 3",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.waitForSLA(
+			key_expectedValue = "0",
+			key_status = "OVERDUE",
+			timesToRun = "24");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 3",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.allItemPageFilterCheck(
+			allItemsFilterName = "Process Status",
+			assigneeName = "Pending");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "SLA Status",
+			assigneeName = "N/A",
+			filterValueName = "On Time",
+			isNotPresent = "Unassigned",
+			isPresent = "Blogs Entry Title 2",
+			taskName = "Completed");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.assertAllItemsValues(
+			assigneeName = "N/A",
+			isNotPresent = "Unassigned",
+			isPresent = "Blogs Entry Title 1,Blogs Entry Title 2,Blogs Entry Title 3",
+			taskName = "Completed");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "SLA Status",
+			assigneeName = "N/A",
+			filterValueName = "Overdue",
+			isNotPresent = "Unassigned",
+			isPresent = "Blogs Entry Title 3",
+			taskName = "Completed");
+
+		WorkflowMetrics.allItemPageFilterCheck(
+			allItemsFilterName = "Process Status",
+			assigneeName = "Completed");
+
+		WorkflowMetrics.allItemPageFilterCheck(
+			allItemsFilterName = "Process Step",
+			assigneeName = "Update");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found.");
+
+		WorkflowMetrics.allItemPageFilterCheck(
+			allItemsFilterName = "Process Step",
+			assigneeName = "Update");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "Process Step",
+			assigneeName = "Unassigned",
+			filterValueName = "Review",
+			isNotPresent = "N/A",
+			isPresent = "Blogs Entry Title 4",
+			taskName = "Review");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "Process Status",
+			assigneeName = "N/A",
+			filterValueName = "Completed",
+			isNotPresent = "Unassigned",
+			isPresent = "Blogs Entry Title 1,Blogs Entry Title 2,Blogs Entry Title 3",
+			taskName = "Completed");
+
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "Process Status",
+			assigneeName = "Unassigned",
+			filterValueName = "Pending",
+			isNotPresent = "N/A",
+			isPresent = "Blogs Entry Title 4",
+			taskName = "Review");
+
+		WorkflowMetrics.allItemPageFilterCheck(
+			allItemsFilterName = "SLA Status",
+			assigneeName = "Overdue");
+
+		WorkflowMetrics.allItemPageFilterCheck(
+			allItemsFilterName = "Process Status",
+			assigneeName = "Pending");
+
+		WorkflowMetrics.assertAllItemsValues(
+			assigneeName = "Unassigned",
+			isNotPresent = "N/A",
+			isPresent = "Blogs Entry Title 4",
+			taskName = "Review");
 	}
 
 	@description = "LRQA-53638 Automate LPS-100677: [Performance] Search for a step in all steps performance list and LRQA-53637 Automate LPS-100678: [Performance] Filter all step performance by completion period"

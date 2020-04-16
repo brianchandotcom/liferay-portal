@@ -265,18 +265,21 @@ definition {
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
 			value1 = "${key_slaDefinitionDescription}");
 
-		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+		if (isSet(slaDefinitionStart)) {
+			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
 
-		AssertClick(
-			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION",
-			value1 = "${key_slaDefinitionStart}");
+			AssertClick(
+				locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION",
+				value1 = "${key_slaDefinitionStart}");
+		}
 
-		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
+		if (isSet(slaDefinitionEnd)) {
+			Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
 
-		AssertClick(
-			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION",
-			value1 = "${key_slaDefinitionEnd}");
-
+			AssertClick(
+				locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION",
+				value1 = "${key_slaDefinitionEnd}");
+		}
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
 			value1 = "${key_slaDefinitionDays}");
@@ -679,6 +682,12 @@ definition {
 
 			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
 		}
+	}
+
+	macro viewSLAErrorMessage {
+		var key_errorMessage = "${errorMessage}";
+
+		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 	}
 
 	macro viewUserWorkloadByStepOnAllItems {

@@ -89,6 +89,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SLA_ERROR_MESSAGE</td>
+	<td>//div[contains(text(), '${key_errorMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_RECORD_TITLE</td>
+	<td>//div[@class='table-list-title']//a[contains(text(),'${key_slaTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_REMOVE_CONFIRMATION_BUTTON</td>
 	<td>//button[@id='removeSlaButton']</td>
 	<td></td>

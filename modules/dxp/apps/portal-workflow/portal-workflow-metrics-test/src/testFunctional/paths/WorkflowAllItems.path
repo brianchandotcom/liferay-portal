@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE_CHECKBOX</td>
+	<td>//label/input[@type='checkbox' and @data-key='${assigneeName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_FILTER_TITLE</td>
 	<td>//div[@class='portlet-body']//ul[@class='navbar-nav']/li//strong[contains(.,'Filter By')]</td>
 	<td></td>

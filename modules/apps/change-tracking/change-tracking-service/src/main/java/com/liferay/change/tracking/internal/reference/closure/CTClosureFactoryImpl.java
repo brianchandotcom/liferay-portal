@@ -131,54 +131,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				TableReferenceInfo<?> parentTableReferenceInfo =
 					combinedTableReferenceInfos.get(parentClassNameId);
 
-				DSLQuery dslQuery = null;
-
-				for (TableJoinHolder parentJoinHolder : entry.getValue()) {
-					Column<?, Long> parentPKColumn =
-						parentJoinHolder.getParentPKColumn();
-					Column<?, Long> childPKColumn =
-						parentJoinHolder.getChildPKColumn();
-
-					FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
-						parentPKColumn, childPKColumn);
-
-					Function<FromStep, JoinStep> joinFunction =
-						parentJoinHolder.getJoinFunction();
-
-					JoinStep joinStep = joinFunction.apply(fromStep);
-
-					GroupByStep groupByStep = joinStep.where(
-						() -> {
-							Predicate predicate = childPKColumn.in(
-								childPrimaryKeysArray);
-
-							Table<?> parentTable = parentPKColumn.getTable();
-
-							Column<?, Long> ctCollectionIdColumn =
-								parentTable.getColumn(
-									"ctCollectionId", Long.class);
-
-							if ((ctCollectionIdColumn != null) &&
-								ctCollectionIdColumn.isPrimaryKey()) {
-
-								predicate = predicate.and(
-									ctCollectionIdColumn.eq(
-										CTConstants.CT_COLLECTION_ID_PRODUCTION
-									).or(
-										ctCollectionIdColumn.eq(ctCollectionId)
-									).withParentheses());
-							}
-
-							return predicate;
-						});
-
-					if (dslQuery == null) {
-						dslQuery = groupByStep;
-					}
-					else {
-						dslQuery = dslQuery.union(groupByStep);
-					}
-				}
+				DSLQuery dslQuery = _getDSLQuery(
+					ctCollectionId, childPrimaryKeysArray, entry.getValue());
 
 				TableReferenceDefinition<?> tableReferenceDefinition =
 					parentTableReferenceInfo.getTableReferenceDefinition();
@@ -243,6 +197,60 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		}
 
 		return GraphUtil.getNodeMap(nodes, edgeMap);
+	}
+
+	private DSLQuery _getDSLQuery(
+		long ctCollectionId, Long[] childPrimaryKeysArray,
+		List<TableJoinHolder> tableJoinHolders) {
+
+		DSLQuery dslQuery = null;
+
+		for (TableJoinHolder parentJoinHolder : tableJoinHolders) {
+			Column<?, Long> parentPKColumn =
+				parentJoinHolder.getParentPKColumn();
+			Column<?, Long> childPKColumn = parentJoinHolder.getChildPKColumn();
+
+			FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
+				parentPKColumn, childPKColumn);
+
+			Function<FromStep, JoinStep> joinFunction =
+				parentJoinHolder.getJoinFunction();
+
+			JoinStep joinStep = joinFunction.apply(fromStep);
+
+			GroupByStep groupByStep = joinStep.where(
+				() -> {
+					Predicate predicate = childPKColumn.in(
+						childPrimaryKeysArray);
+
+					Table<?> parentTable = parentPKColumn.getTable();
+
+					Column<?, Long> ctCollectionIdColumn =
+						parentTable.getColumn("ctCollectionId", Long.class);
+
+					if ((ctCollectionIdColumn != null) &&
+						ctCollectionIdColumn.isPrimaryKey()) {
+
+						predicate = predicate.and(
+							ctCollectionIdColumn.eq(
+								CTConstants.CT_COLLECTION_ID_PRODUCTION
+							).or(
+								ctCollectionIdColumn.eq(ctCollectionId)
+							).withParentheses());
+					}
+
+					return predicate;
+				});
+
+			if (dslQuery == null) {
+				dslQuery = groupByStep;
+			}
+			else {
+				dslQuery = dslQuery.union(groupByStep);
+			}
+		}
+
+		return dslQuery;
 	}
 
 	@Reference

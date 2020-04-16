@@ -1121,7 +1121,6 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewWebContentDisplayPortletMessages {
 		property portal.upstream = "quarantine";

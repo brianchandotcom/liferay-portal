@@ -4,10 +4,14 @@ definition {
 
 		var key_fieldLabel = "${fieldType}";
 
-		DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
+		while ( IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB") ) {
 
-		if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB")) {
 			DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
+
+			if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB")) {
+				DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
+			}
+
 		}
 
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");

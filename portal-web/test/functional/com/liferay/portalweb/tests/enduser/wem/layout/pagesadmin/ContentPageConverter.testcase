@@ -796,13 +796,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
-	@ignore = "true"
 	@priority = "5"
 	test EditConvertedContentPageWithDecorator {
 
-		// Ignore test until LRQA-56526 is resolved
+		// Quarantine test for LRQA-56526
 
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

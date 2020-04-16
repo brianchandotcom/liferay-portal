@@ -87,7 +87,7 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 
 		BaseModelSearchResult<User> baseModelSearchResult =
 			_accountUserRetriever.searchAccountUsers(
-				(accountRoleId > 0) ? accountRoleId :
+				(accountRoleId > 0) ? accountEntryId :
 					AccountConstants.ACCOUNT_ENTRY_ID_ANY,
 				_getEmailAddressDomains(accountEntryId, navigation), keywords,
 				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),

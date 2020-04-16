@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -152,7 +154,9 @@ public class ClassUtil {
 
 		URL url = classLoader.getResource(className);
 
-		String parentPath = getPathFromURL(url);
+		URI uri = getPathURIFromURL(url);
+
+		String parentPath = uri.getPath();
 
 		int pos = parentPath.indexOf(className);
 
@@ -165,60 +169,36 @@ public class ClassUtil {
 		return parentPath;
 	}
 
-	public static String getPathFromURL(URL url) {
-		String path = null;
+	public static URI getPathURIFromURL(URL url) {
+		String urlProtocol = url.getProtocol();
+
+		if (urlProtocol.equals("jar")) {
+			try {
+				url = new URL(url.getPath());
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new SystemException(malformedURLException);
+			}
+		}
+
+		String path = url.getPath();
+
+		if (!path.startsWith(StringPool.SLASH)) {
+			path = StringPool.SLASH + path;
+		}
 
 		try {
-			path = url.getPath();
+			URI uri = new URI("file:" + path);
 
-			URI uri = new URI(path);
-
-			String scheme = uri.getScheme();
-
-			if (path.contains(StringPool.EXCLAMATION) &&
-				((scheme == null) || (scheme.length() <= 1))) {
-
-				if (!path.startsWith(StringPool.SLASH)) {
-					path = StringPool.SLASH + path;
-				}
+			if (_log.isDebugEnabled()) {
+				_log.debug("URI " + uri);
 			}
-			else {
-				path = uri.getPath();
 
-				if (path == null) {
-					path = url.getFile();
-				}
-			}
+			return uri;
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			path = url.getFile();
+			throw new SystemException(uriSyntaxException);
 		}
-
-		if ((ServerDetector.isJBoss() || ServerDetector.isWildfly()) &&
-			path.startsWith("file:") && !path.startsWith("file:/")) {
-
-			path = path.substring(5);
-
-			path = "file:/".concat(path);
-
-			path = StringUtil.replace(path, "%5C", StringPool.SLASH);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Path " + path);
-		}
-
-		String parentPath = path;
-
-		if (parentPath.startsWith("jar:")) {
-			parentPath = parentPath.substring(4);
-		}
-
-		if (parentPath.startsWith("file:/")) {
-			parentPath = parentPath.substring(6);
-		}
-
-		return parentPath;
 	}
 
 	public static boolean isSubclass(Class<?> a, Class<?> b) {

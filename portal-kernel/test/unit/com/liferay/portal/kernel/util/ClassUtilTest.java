@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
@@ -89,40 +90,40 @@ public class ClassUtilTest {
 	}
 
 	@Test
-	public void testGetPathFromURLUnix() throws Exception {
-		testGetPathFromURL(
+	public void testGetPathURIFromURLUnix() throws Exception {
+		testGetPathURIFromURL(
 			"jar:file:/opt/liferay/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class",
 			"/opt/liferay/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"jar:file:/opt/with%20space/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class",
 			"/opt/with space/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"file:/opt/liferay/tomcat/classes/javax/servlet/Servlet.class",
 			"/opt/liferay/tomcat/classes/javax/servlet/Servlet.class");
 	}
 
 	@Test
-	public void testGetPathFromURLWeblogic() throws Exception {
-		testGetPathFromURL(
+	public void testGetPathURIFromURLWeblogic() throws Exception {
+		testGetPathURIFromURL(
 			"zip:/opt/liferay/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class",
 			"/opt/liferay/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"zip:/opt/with%20space/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class",
 			"/opt/with space/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"zip:C:/Liferay/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class",
 			"/C:/Liferay/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"zip:C:/With%20Space/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class",
 			"/C:/With Space/tomcat/lib/servlet-api.jar" +
@@ -130,23 +131,23 @@ public class ClassUtilTest {
 	}
 
 	@Test
-	public void testGetPathFromURLWildfly() throws Exception {
-		testGetPathFromURL(
+	public void testGetPathURIFromURLWildfly() throws Exception {
+		testGetPathURIFromURL(
 			"vfs:/opt/liferay/tomcat/lib/servlet-api.jar/javax/servlet" +
 				"/Servlet.class",
 			"/opt/liferay/tomcat/lib/servlet-api.jar/javax/servlet" +
 				"/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"vfs:/opt/with%20space/tomcat/lib/servlet-api.jar/javax/servlet" +
 				"/Servlet.class",
 			"/opt/with space/tomcat/lib/servlet-api.jar/javax/servlet" +
 				"/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"vfs:/C:/Liferay/tomcat/lib/servlet-api.jar/javax/servlet" +
 				"/Servlet.class",
 			"/C:/Liferay/tomcat/lib/servlet-api.jar/javax/servlet" +
 				"/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"vfs:/C:/With%20Space/tomcat/lib/servlet-api.jar/javax/servlet" +
 				"/Servlet.class",
 			"/C:/With Space/tomcat/lib/servlet-api.jar/javax/servlet" +
@@ -154,18 +155,18 @@ public class ClassUtilTest {
 	}
 
 	@Test
-	public void testGetPathFromURLWindows() throws Exception {
-		testGetPathFromURL(
+	public void testGetPathURIFromURLWindows() throws Exception {
+		testGetPathURIFromURL(
 			"jar:file:/C:/Liferay/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class",
 			"/C:/Liferay/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"jar:file:/C:/With%20Space/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class",
 			"/C:/With Space/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class");
-		testGetPathFromURL(
+		testGetPathURIFromURL(
 			"file:/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class",
 			"/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class");
 	}
@@ -208,12 +209,12 @@ public class ClassUtilTest {
 		Assert.assertEquals(expectedClassNames, actualClassNames);
 	}
 
-	protected void testGetPathFromURL(String url, String expectedPath)
+	protected void testGetPathURIFromURL(String url, String expectedPath)
 		throws MalformedURLException {
 
-		String normalizedPath = ClassUtil.getPathFromURL(new URL(url));
+		URI uri = ClassUtil.getPathURIFromURL(new URL(url));
 
-		Assert.assertEquals(expectedPath, normalizedPath);
+		Assert.assertEquals(expectedPath, uri.getPath());
 	}
 
 }

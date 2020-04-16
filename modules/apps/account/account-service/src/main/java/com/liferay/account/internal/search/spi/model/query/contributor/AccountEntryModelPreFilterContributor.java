@@ -66,6 +66,19 @@ public class AccountEntryModelPreFilterContributor
 			booleanFilter.add(domainTermsFilter, BooleanClauseOccur.MUST);
 		}
 
+		long[] organizationIds = (long[])searchContext.getAttribute(
+			"organizationIds");
+
+		if (ArrayUtil.isNotEmpty(organizationIds)) {
+			TermsFilter accountEntryTermsFilter = new TermsFilter(
+				"organizationIds");
+
+			accountEntryTermsFilter.addValues(
+				ArrayUtil.toStringArray(organizationIds));
+
+			booleanFilter.add(accountEntryTermsFilter, BooleanClauseOccur.MUST);
+		}
+
 		long parentAccountEntryId = GetterUtil.getLong(
 			searchContext.getAttribute("parentAccountEntryId"),
 			AccountConstants.ACCOUNT_ENTRY_ID_ANY);

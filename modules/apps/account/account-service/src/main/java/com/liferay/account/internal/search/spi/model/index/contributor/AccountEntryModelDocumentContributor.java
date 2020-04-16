@@ -15,7 +15,9 @@
 package com.liferay.account.internal.search.spi.model.index.contributor;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryOrganizationRelModel;
 import com.liferay.account.retriever.AccountUserRetriever;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.User;
@@ -47,6 +49,8 @@ public class AccountEntryModelDocumentContributor
 		document.addKeyword("accountUserIds", _getAccountUserIds(accountEntry));
 		document.addKeyword("domains", _getDomains(accountEntry));
 		document.addKeyword(
+			"organizationIds", _getOrganizationIds(accountEntry));
+		document.addKeyword(
 			"parentAccountEntryId", accountEntry.getParentAccountEntryId());
 	}
 
@@ -61,6 +65,18 @@ public class AccountEntryModelDocumentContributor
 		return ArrayUtil.toStringArray(
 			StringUtil.split(accountEntry.getDomains(), CharPool.COMMA));
 	}
+
+	private long[] _getOrganizationIds(AccountEntry accountEntry) {
+		return ListUtil.toLongArray(
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRels(
+					accountEntry.getAccountEntryId()),
+			AccountEntryOrganizationRelModel::getOrganizationId);
+	}
+
+	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
 
 	@Reference
 	private AccountUserRetriever _accountUserRetriever;

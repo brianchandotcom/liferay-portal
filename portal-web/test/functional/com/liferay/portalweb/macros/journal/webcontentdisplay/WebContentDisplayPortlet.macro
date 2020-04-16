@@ -189,6 +189,10 @@ definition {
 
 		Button.clickRemove();
 
+		AssertElementNotPresent(
+			key_text = "Remove",
+			locator1 = "Button#ANY");
+
 		PortletEntry.save();
 	}
 

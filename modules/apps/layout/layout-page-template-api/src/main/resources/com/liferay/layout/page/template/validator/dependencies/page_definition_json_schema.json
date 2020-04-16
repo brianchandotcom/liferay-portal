@@ -645,6 +645,10 @@
 				"widgetConfig": {
 					"title": "The widgetConfig Schema",
 					"type": "object"
+				},
+				"widgetPermissions": {
+					"title": "The widgetPermissions Schema",
+					"type": "object"
 				}
 			},
 			"title": "The WidgetInstanceDefinition Schema",

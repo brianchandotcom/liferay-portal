@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.internal.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 
 import java.util.List;
@@ -28,12 +27,10 @@ public class TableReferenceInfo<T extends Table<T>> {
 
 	public TableReferenceInfo(
 		TableReferenceDefinition<T> tableReferenceDefinition,
-		Column<T, Long> primaryKeyColumn,
 		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap,
 		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap) {
 
 		_tableReferenceDefinition = tableReferenceDefinition;
-		_primaryKeyColumn = primaryKeyColumn;
 		_parentTableJoinHoldersMap = parentTableJoinHoldersMap;
 		_childTableJoinHoldersMap = childTableJoinHoldersMap;
 	}
@@ -46,10 +43,6 @@ public class TableReferenceInfo<T extends Table<T>> {
 		return _parentTableJoinHoldersMap;
 	}
 
-	public Column<T, Long> getPrimaryKeyColumn() {
-		return _primaryKeyColumn;
-	}
-
 	public TableReferenceDefinition<T> getTableReferenceDefinition() {
 		return _tableReferenceDefinition;
 	}
@@ -58,7 +51,6 @@ public class TableReferenceInfo<T extends Table<T>> {
 		_childTableJoinHoldersMap;
 	private final Map<Table<?>, List<TableJoinHolder>>
 		_parentTableJoinHoldersMap;
-	private final Column<T, Long> _primaryKeyColumn;
 	private final TableReferenceDefinition<T> _tableReferenceDefinition;
 
 }

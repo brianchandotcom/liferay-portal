@@ -196,8 +196,7 @@ public class TableReferenceDefinitionManager {
 		}
 
 		return new TableReferenceInfo<>(
-			tableReferenceDefinition, tableReferenceInfo.getPrimaryKeyColumn(),
-			combinedParentTableJoinHoldersMap,
+			tableReferenceDefinition, combinedParentTableJoinHoldersMap,
 			combinedChildTableJoinHoldersMap);
 	}
 

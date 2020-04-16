@@ -89,10 +89,6 @@ public class TableReferenceDefinitionHelperImplTest {
 
 		Assert.assertNotNull(tableReferenceInfo);
 
-		Assert.assertSame(
-			MainExampleTable.INSTANCE.mainExampleId,
-			tableReferenceInfo.getPrimaryKeyColumn());
-
 		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap =
 			tableReferenceInfo.getChildTableJoinHoldersMap();
 
@@ -195,10 +191,6 @@ public class TableReferenceDefinitionHelperImplTest {
 			tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
 
 		Assert.assertNotNull(tableReferenceInfo);
-
-		Assert.assertSame(
-			ReferenceExampleTable.INSTANCE.referenceExampleId,
-			tableReferenceInfo.getPrimaryKeyColumn());
 
 		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap =
 			tableReferenceInfo.getChildTableJoinHoldersMap();
@@ -571,10 +563,6 @@ public class TableReferenceDefinitionHelperImplTest {
 			tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
 
 		Assert.assertNotNull(tableReferenceInfo);
-
-		Assert.assertSame(
-			MainExampleTable.INSTANCE.mainExampleId,
-			tableReferenceInfo.getPrimaryKeyColumn());
 
 		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap =
 			tableReferenceInfo.getChildTableJoinHoldersMap();

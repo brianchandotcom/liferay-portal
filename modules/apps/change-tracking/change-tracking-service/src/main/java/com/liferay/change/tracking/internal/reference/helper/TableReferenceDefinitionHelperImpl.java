@@ -214,8 +214,8 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 		}
 
 		return new TableReferenceInfo<>(
-			_tableReferenceDefinition, _primaryKeyColumn,
-			_parentTableJoinHoldersMap, _childTableJoinHoldersMap);
+			_tableReferenceDefinition, _parentTableJoinHoldersMap,
+			_childTableJoinHoldersMap);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

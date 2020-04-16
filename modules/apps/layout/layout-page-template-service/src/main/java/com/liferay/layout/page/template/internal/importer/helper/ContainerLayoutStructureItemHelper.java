@@ -22,10 +22,12 @@ import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -70,11 +72,18 @@ public class ContainerLayoutStructureItemHelper
 					jsonObject.put("title", titleMap.get("value"));
 				}
 
-				Map<String, String> urlMap =
-					(Map<String, String>)backgroundImageMap.get("url");
+				Map<String, Object> urlMap =
+					(Map<String, Object>)backgroundImageMap.get("url");
 
 				if (urlMap != null) {
-					jsonObject.put("url", urlMap.get("value"));
+					String urlValue = (String)urlMap.get("value");
+
+					if (Validator.isNotNull(urlValue)) {
+						jsonObject.put("url", urlValue);
+					}
+
+					_processMapping(
+						jsonObject, (Map<String, String>)urlMap.get("mapping"));
 				}
 
 				containerLayoutStructureItem.setBackgroundImageJSONObject(
@@ -101,6 +110,38 @@ public class ContainerLayoutStructureItemHelper
 		}
 
 		return containerLayoutStructureItem;
+	}
+
+	private void _processMapping(
+		JSONObject jsonObject, Map<String, String> map) {
+
+		if (map != null) {
+			String fieldKey = map.get("fieldKey");
+
+			if (Validator.isNull(fieldKey)) {
+				return;
+			}
+
+			String itemKey = map.get("itemKey");
+
+			if (Validator.isNull(itemKey)) {
+				jsonObject.put("mappedField", fieldKey);
+
+				return;
+			}
+
+			String[] itemKeyParts = itemKey.split(StringPool.POUND);
+
+			if (itemKeyParts.length == 2) {
+				jsonObject.put(
+					"classNameId", itemKeyParts[0]
+				).put(
+					"classPK", itemKeyParts[1]
+				).put(
+					"fieldId", fieldKey
+				);
+			}
+		}
 	}
 
 }

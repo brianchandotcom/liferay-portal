@@ -3,7 +3,7 @@ definition {
 	macro chooseMenu {
 		Click(locator1 = "Radio#CHOOSE_MENU");
 
-		Click(locator1 = "Button#SELECT");
+		Click.pauseClickAt(locator1 = "Button#SELECT");
 
 		SelectFrame(value1 = "relative=top");
 

@@ -32,6 +32,8 @@ definition {
 	}
 
 	test AssertSearchAdmin {
+		property test.name.skip.portal.instance = "Solr#AssertSearchAdmin";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

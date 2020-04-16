@@ -28,6 +28,8 @@ definition {
 	}
 
 	test AssertSearchAdmin {
+		property test.name.skip.portal.instance = "Elasticsearch6#AssertSearchAdmin";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

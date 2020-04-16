@@ -136,6 +136,48 @@ definition {
 			roleType = "${roleType}");
 	}
 
+	macro setUpOrgRoleCP {
+		JSONUser.addUser(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			newPassword = "${newPassword}",
+			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
+			userEmailAddress = "${userEmailAddress}",
+			userScreenName = "${userScreenName}");
+
+		JSONOrganization.addOrganization(
+			organizationName = "${orgName}",
+			organizationSite = "true");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "${orgName}",
+			userEmailAddress = "${userEmailAddress}");
+
+		JSONLayout.addPublicLayoutByGroupName(
+			groupName = "${orgName}",
+			layoutName = "${pageName}");
+
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "Organization Name");
+
+		JSONRole.addOrganizationRole(roleTitle = "${roleTitle}");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "${orgName}",
+			roleTitle = "${roleTitle}",
+			userEmailAddress = "${userEmailAddress}");
+	}
+
 	macro setUpOrgRoleLoginUserPG {
 		JSONUser.addUser(
 			userEmailAddress = "${userEmailAddress}",

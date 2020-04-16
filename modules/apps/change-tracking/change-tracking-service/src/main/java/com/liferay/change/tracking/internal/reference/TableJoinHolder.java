@@ -57,9 +57,8 @@ public class TableJoinHolder {
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{parentPKColumn=", _parentPKColumn,
-			", childPKColumn=", _childPKColumn, ", joinFunction=",
-			_joinFunction, "}");
+			"{childPKColumn=", _childPKColumn, ", joinFunction=",
+			_joinFunction, ", parentPKColumn=", _parentPKColumn, "}");
 	}
 
 	private final Column<?, Long> _childPKColumn;

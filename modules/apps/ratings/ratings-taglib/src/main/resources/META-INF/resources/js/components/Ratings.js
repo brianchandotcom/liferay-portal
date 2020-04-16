@@ -18,6 +18,7 @@ import React from 'react';
 
 import {errorToast} from '../utils/toast';
 import RatingsLike from './RatingsLike';
+import RatingsStars from './RatingsStars';
 import RatingsThumbs from './RatingsThumbs';
 
 const Ratings = ({
@@ -73,6 +74,7 @@ const Ratings = ({
 
 	const RatingsTypes = {
 		like: RatingsLike,
+		stars: RatingsStars,
 		thumbs: RatingsThumbs,
 	};
 

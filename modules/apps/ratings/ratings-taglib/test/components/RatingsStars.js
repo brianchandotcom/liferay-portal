@@ -29,8 +29,7 @@ const baseProps = {
 	url: 'http://url',
 };
 
-const renderComponent = props =>
-	render(<Ratings {...baseProps} {...props} />);
+const renderComponent = props => render(<Ratings {...baseProps} {...props} />);
 
 describe('RatingsStars', () => {
 	afterEach(cleanup);
@@ -104,7 +103,9 @@ describe('RatingsStars', () => {
 			});
 
 			it('has voted title', () => {
-				expect(starsDropdownToggle.title).toBe('you-have-rated-this-x-stars-out-of-x');
+				expect(starsDropdownToggle.title).toBe(
+					'you-have-rated-this-x-stars-out-of-x'
+				);
 			});
 
 			describe('and the user vote 5/5 stars', () => {

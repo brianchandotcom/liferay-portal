@@ -87,6 +87,13 @@ public class RedirectEntryServiceUtil {
 		return getService().getRedirectEntriesCount(groupId);
 	}
 
+	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
+		getRedirectEntriesDestinationURL(String destinationURL, long groupId) {
+
+		return getService().getRedirectEntriesDestinationURL(
+			destinationURL, groupId);
+	}
+
 	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL,
 			java.util.Date expirationDate, boolean permanent, String sourceURL)

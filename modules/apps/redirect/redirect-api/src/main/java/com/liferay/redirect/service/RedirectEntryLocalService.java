@@ -218,6 +218,9 @@ public interface RedirectEntryLocalService
 	public RedirectEntry fetchRedirectEntryByUuidAndGroupId(
 		String uuid, long groupId);
 
+	public List<RedirectEntry> findRedirectEntryDestinationURL(
+		long groupId, String destinationURL);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

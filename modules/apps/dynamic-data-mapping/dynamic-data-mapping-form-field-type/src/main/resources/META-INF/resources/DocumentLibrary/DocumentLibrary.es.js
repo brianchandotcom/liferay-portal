@@ -15,7 +15,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import {ClayInput} from '@clayui/form';
-import {ClayIcon} from '@clayui/icon';
+import ClayIcon from '@clayui/icon';
 import {
 	ItemSelectorDialog,
 	createActionURL,
@@ -81,7 +81,7 @@ function getUploadURL() {
 	return uploadURL.toString();
 }
 
-const CardItem = ({fileEntryTitle}) => {
+const CardItem = ({fileEntryTitle, fileEntryURL}) => {
 	return (
 		<ClayCard horizontal>
 			<ClayCard.Body>
@@ -92,7 +92,7 @@ const CardItem = ({fileEntryTitle}) => {
 				</div>
 
 				<div className="card-col-field">
-					<a download="{$fileEntryTitle}" href="{$fileEntryURL}">
+					<a download={fileEntryTitle} href={fileEntryURL}>
 						<ClayIcon symbol="download" />
 					</a>
 				</div>
@@ -144,7 +144,10 @@ const DocumentLibrary = ({
 	return (
 		<div className="liferay-ddm-form-field-document-library">
 			{transformedFileEntryURL && readOnly ? (
-				<CardItem fileEntryTitle={transformedFileEntryTitle} />
+				<CardItem
+					fileEntryTitle={transformedFileEntryTitle}
+					fileEntryURL={transformedFileEntryURL}
+				/>
 			) : (
 				<ClayInput.Group>
 					<ClayInput.GroupItem prepend>
@@ -188,7 +191,7 @@ const DocumentLibrary = ({
 				name={name}
 				placeholder={placeholder}
 				type="hidden"
-				value={transformedFileEntryTitle || ''}
+				value={value || ''}
 			/>
 		</div>
 	);
@@ -197,15 +200,15 @@ const DocumentLibrary = ({
 const DocumentLibraryProxy = connectStore(
 	({
 		emit,
-		id,
-		name,
-		readOnly,
 		fileEntryTitle,
 		fileEntryURL,
+		id,
 		itemSelectorAuthToken,
-		store,
+		name,
 		placeholder,
-		value = {},
+		readOnly,
+		store,
+		value = '{}',
 		...otherProps
 	}) => {
 		const [currentValue, setCurrentValue] = useState(value);

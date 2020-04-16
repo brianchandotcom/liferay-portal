@@ -7,7 +7,7 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
       <div class="input-group">
         <div class="input-group-item input-group-prepend"><input aria-label="file" disabled="" id="textFieldinputFile" class="form-control field" value=""></div>
         <div class="input-group-item input-group-append input-group-item-shrink"><button class="select-button btn btn-secondary" type="button"><span class="lfr-btn-label">select</span></button></div>
-      </div><input name="textField" type="hidden" class="form-control" value="">
+      </div><input name="textField" type="hidden" class="form-control" value="{}">
     </div><span class="form-text">Type something</span>
   </div>
 </div>
@@ -21,7 +21,7 @@ exports[`Field DocumentLibrary has a label 1`] = `
       <div class="input-group">
         <div class="input-group-item input-group-prepend"><input aria-label="file" disabled="" id="textFieldinputFile" class="form-control field" value=""></div>
         <div class="input-group-item input-group-append input-group-item-shrink"><button class="select-button btn btn-secondary" type="button"><span class="lfr-btn-label">select</span></button></div>
-      </div><input name="textField" type="hidden" class="form-control" value="">
+      </div><input name="textField" type="hidden" class="form-control" value="{}">
     </div>
   </div>
 </div>
@@ -34,7 +34,7 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
       <div class="input-group">
         <div class="input-group-item input-group-prepend"><input aria-label="file" disabled="" id="textFieldinputFile" class="form-control field" value=""></div>
         <div class="input-group-item input-group-append input-group-item-shrink"><button class="select-button btn btn-secondary" type="button"><span class="lfr-btn-label">select</span></button></div>
-      </div><input name="textField" placeholder="Placeholder" type="hidden" class="form-control" value="">
+      </div><input name="textField" placeholder="Placeholder" type="hidden" class="form-control" value="{}">
     </div>
   </div>
 </div>
@@ -47,7 +47,7 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
       <div class="input-group">
         <div class="input-group-item input-group-prepend"><input aria-label="file" disabled="" id="textFieldinputFile" class="form-control field" value=""></div>
         <div class="input-group-item input-group-append input-group-item-shrink"><button class="select-button btn btn-secondary" type="button"><span class="lfr-btn-label">select</span></button></div>
-      </div><input name="textField" type="hidden" class="form-control" value="">
+      </div><input name="textField" type="hidden" class="form-control" value="{}">
     </div>
   </div>
 </div>
@@ -60,7 +60,7 @@ exports[`Field DocumentLibrary has a value 1`] = `
       <div class="input-group">
         <div class="input-group-item input-group-prepend"><input aria-label="file" disabled="" id="textFieldinputFile" class="form-control field" value=""></div>
         <div class="input-group-item input-group-append input-group-item-shrink"><button class="select-button btn btn-secondary" type="button"><span class="lfr-btn-label">select</span></button></div>
-      </div><input name="textField" type="hidden" class="form-control" value="">
+      </div><input name="textField" type="hidden" class="form-control" value="{&quot;id&quot;:&quot;123&quot;}">
     </div>
   </div>
 </div>
@@ -73,7 +73,7 @@ exports[`Field DocumentLibrary has an id 1`] = `
       <div class="input-group">
         <div class="input-group-item input-group-prepend"><input aria-label="file" disabled="" id="textFieldinputFile" class="form-control field" value=""></div>
         <div class="input-group-item input-group-append input-group-item-shrink"><button class="select-button btn btn-secondary" type="button"><span class="lfr-btn-label">select</span></button></div>
-      </div><input id="ID" name="textField" type="hidden" class="form-control" value="">
+      </div><input id="ID" name="textField" type="hidden" class="form-control" value="{}">
     </div>
   </div>
 </div>
@@ -86,7 +86,7 @@ exports[`Field DocumentLibrary is not readOnly 1`] = `
       <div class="input-group">
         <div class="input-group-item input-group-prepend"><input aria-label="file" disabled="" id="textFieldinputFile" class="form-control field" value=""></div>
         <div class="input-group-item input-group-append input-group-item-shrink"><button class="select-button btn btn-secondary" type="button"><span class="lfr-btn-label">select</span></button></div>
-      </div><input name="textField" type="hidden" class="form-control" value="">
+      </div><input name="textField" type="hidden" class="form-control" value="{}">
     </div>
   </div>
 </div>
@@ -99,7 +99,7 @@ exports[`Field DocumentLibrary is not required 1`] = `
       <div class="input-group">
         <div class="input-group-item input-group-prepend"><input aria-label="file" disabled="" id="textFieldinputFile" class="form-control field" value=""></div>
         <div class="input-group-item input-group-append input-group-item-shrink"><button class="select-button btn btn-secondary" type="button"><span class="lfr-btn-label">select</span></button></div>
-      </div><input name="textField" type="hidden" class="form-control" value="">
+      </div><input name="textField" type="hidden" class="form-control" value="{}">
     </div>
   </div>
 </div>
@@ -113,7 +113,7 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
       <div class="input-group">
         <div class="input-group-item input-group-prepend"><input aria-label="file" disabled="" id="textFieldinputFile" class="form-control field" value=""></div>
         <div class="input-group-item input-group-append input-group-item-shrink"><button class="select-button btn btn-secondary" type="button"><span class="lfr-btn-label">select</span></button></div>
-      </div><input name="textField" type="hidden" class="form-control" value="">
+      </div><input name="textField" type="hidden" class="form-control" value="{}">
     </div>
   </div>
 </div>

@@ -1479,7 +1479,15 @@ app.server.type=@{app.server.type}]]></echo>
 			<property name="functional.test.type" value="@{functional.test.type}" />
 
 			<condition else="0" property="functional.batch.retry.count" value="1">
-				<contains string="${test.class}" substring="," />
+				<and>
+					<not>
+						<contains string="${test.class}" substring="," />
+					</not>
+					<or>
+						<contains string="${env.TOP_LEVEL_JOB_NAME}" substring="test-portal-acceptance" />
+						<contains string="${env.TOP_LEVEL_JOB_NAME}" substring="test-portal-testsuite-upstream" />
+					</or>
+				</and>
 			</condition>
 
 			<retry retrycount="${functional.batch.retry.count}">
@@ -1668,6 +1676,24 @@ app.server.type=@{app.server.type}]]></echo>
 								<antcall target="stop-app-server" />
 
 								<delete failonerror="false" file=".testable.portal.started" />
+							</then>
+						</if>
+
+						<if>
+							<equals arg1="${functional.batch.retry.count}" arg2="1" />
+							<then>
+								<xmlproperty collapseAttributes="true" file="${project.dir}/portal-web/test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml" prefix="poshi.runner" />
+
+								<if>
+									<equals arg1="${poshi.runner.testsuite.failures}" arg2="1" />
+									<then>
+										<var name="functional.batch.retry.count" value="0" />
+
+										<delete dir="${app.server.parent.dir}" failonerror="false" />
+
+										<fail message="Poshi test failure detected, retrying functional test batch." />
+									</then>
+								</if>
 							</then>
 						</if>
 					</test-tear-down>

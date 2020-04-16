@@ -289,6 +289,26 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
+	public void testServiceForwardToDefaultLayoutWith404OnMissingLayout()
+		throws Throwable {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		testGetRedirect(
+			new MockHttpServletRequest(
+				"GET",
+				StringBundler.concat(
+					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+					_group.getFriendlyURL(), StringPool.SLASH, "path")),
+			mockHttpServletResponse, getPath(_group, _layout) + "/path",
+			Portal.PATH_MAIN,
+			_redirectConstructor1.newInstance(getURL(_layout)));
+
+		Assert.assertEquals(404, mockHttpServletResponse.getStatus());
+	}
+
+	@Test
 	public void testServiceRedirect() throws Throwable {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -484,20 +504,30 @@ public class FriendlyURLServletTest {
 	}
 
 	protected void testGetRedirect(
-			HttpServletRequest httpServletRequest, String path, String mainPath,
-			Object expectedRedirect)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String path,
+			String mainPath, Object expectedRedirect)
 		throws Throwable {
 
 		try {
 			Assert.assertEquals(
 				expectedRedirect,
 				_getRedirectMethod.invoke(
-					_servlet, httpServletRequest, new MockHttpServletResponse(),
-					path));
+					_servlet, httpServletRequest, httpServletResponse, path));
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getCause();
 		}
+	}
+
+	protected void testGetRedirect(
+			HttpServletRequest httpServletRequest, String path, String mainPath,
+			Object expectedRedirect)
+		throws Throwable {
+
+		testGetRedirect(
+			httpServletRequest, new MockHttpServletResponse(), path, mainPath,
+			expectedRedirect);
 	}
 
 	@Inject

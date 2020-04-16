@@ -25,8 +25,10 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.model.Layout;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Rubén Pulido
@@ -74,7 +76,7 @@ public class DropZoneLayoutStructureItemHelper
 			return dropZoneLayoutStructureItem;
 		}
 
-		List<String> fragmentEntryKeys = new ArrayList<>();
+		Set<String> fragmentEntryKeys = new HashSet<>();
 
 		if (fragmentSettingsMap.containsKey(_KEY_ALLOWED_FRAGMENTS)) {
 			dropZoneLayoutStructureItem.setAllowNewFragmentEntries(false);
@@ -100,7 +102,8 @@ public class DropZoneLayoutStructureItemHelper
 			}
 		}
 
-		dropZoneLayoutStructureItem.setFragmentEntryKeys(fragmentEntryKeys);
+		dropZoneLayoutStructureItem.setFragmentEntryKeys(
+			new ArrayList<>(fragmentEntryKeys));
 
 		return dropZoneLayoutStructureItem;
 	}

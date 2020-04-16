@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalMessages;
-import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -309,16 +308,10 @@ public class FriendlyURLServlet extends HttpServlet {
 				throw noSuchLayoutException;
 			}
 
-			HttpSession session = PortalSessionThreadLocal.getHttpSession();
-
-			if (session == null) {
-				session = httpServletRequest.getSession();
-			}
-
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			SessionErrors.add(
-				session, noSuchLayoutException.getClass(),
+				httpServletRequest, noSuchLayoutException.getClass(),
 				noSuchLayoutException);
 
 			friendlyURL = null;

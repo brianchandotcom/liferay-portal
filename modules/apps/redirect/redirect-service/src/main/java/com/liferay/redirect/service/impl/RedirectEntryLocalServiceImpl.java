@@ -37,6 +37,8 @@ import java.time.temporal.ChronoUnit;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -167,6 +169,32 @@ public class RedirectEntryLocalServiceImpl
 		}
 
 		return redirectEntry;
+	}
+
+	@Override
+	public List<RedirectEntry> findRedirectEntryDestinationURL(
+		long groupId, String destinationURL) {
+
+		if (!_redirectConfiguration.isEnabled()) {
+			return null;
+		}
+
+		List<RedirectEntry> redirectEntries =
+			redirectEntryPersistence.findByG_D(groupId, destinationURL);
+
+		Stream<RedirectEntry> stream = redirectEntries.stream();
+
+		return stream.filter(
+			redirectEntry -> {
+				int expirationDateBeforeToday = DateUtil.compareTo(
+					redirectEntry.getExpirationDate(), DateUtil.newDate());
+
+				return (redirectEntry.getExpirationDate() == null) ||
+					   (expirationDateBeforeToday <= 0);
+			}
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Override

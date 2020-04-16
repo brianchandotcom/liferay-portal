@@ -124,6 +124,14 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<RedirectEntry> getRedirectEntriesDestinationURL(
+		String destinationURL, long groupId) {
+
+		return redirectEntryLocalService.findRedirectEntryDestinationURL(
+			groupId, destinationURL);
+	}
+
+	@Override
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, Date expirationDate,
 			boolean permanent, String sourceURL)

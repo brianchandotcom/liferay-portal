@@ -70,7 +70,7 @@ public class GroupIdQueryPreFilterContributor
 
 			Group group = _getGroup(groupId);
 
-			if (!groupLocalService.isLiveGroupActive(group)) {
+			if (!_groupLocalService.isLiveGroupActive(group)) {
 				continue;
 			}
 
@@ -102,13 +102,15 @@ public class GroupIdQueryPreFilterContributor
 		booleanFilter.add(scopeBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
-	@Reference
-	protected GroupLocalService groupLocalService;
+	@Reference(unbind = "-")
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
 
 	private void _addInactiveGroupsBooleanFilter(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		List<Long> inactiveGroupIds = groupLocalService.getGroupIds(
+		List<Long> inactiveGroupIds = _groupLocalService.getGroupIds(
 			searchContext.getCompanyId(), false);
 
 		if (ListUtil.isEmpty(inactiveGroupIds)) {
@@ -135,11 +137,13 @@ public class GroupIdQueryPreFilterContributor
 
 	private Group _getGroup(long groupId) {
 		try {
-			return groupLocalService.getGroup(groupId);
+			return _groupLocalService.getGroup(groupId);
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
 	}
+
+	private GroupLocalService _groupLocalService;
 
 }

@@ -29,6 +29,7 @@ import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -76,6 +77,25 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 				_redirectEntryService.updateRedirectEntry(
 					redirectEntryId, destinationURL, expirationDate, permanent,
 					sourceURL);
+			}
+
+			boolean updateReferences = ParamUtil.getBoolean(
+				actionRequest, "updateReferences");
+
+			if (updateReferences) {
+				List<RedirectEntry> redirectEntriesDestinationURL =
+					_redirectEntryService.getRedirectEntriesDestinationURL(
+						sourceURL, themeDisplay.getScopeGroupId());
+
+				for (RedirectEntry redirectEntry :
+						redirectEntriesDestinationURL) {
+
+					_redirectEntryService.updateRedirectEntry(
+						redirectEntry.getRedirectEntryId(), destinationURL,
+						redirectEntry.getExpirationDate(),
+						redirectEntry.isPermanent(),
+						redirectEntry.getSourceURL());
+				}
 			}
 		}
 		catch (Exception exception) {

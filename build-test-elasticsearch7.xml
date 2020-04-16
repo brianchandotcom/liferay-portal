@@ -1064,6 +1064,50 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo></echo>
 		<echo>${curl.output.elasticsearch.indices}</echo>
 		<echo></echo>
+
+		<get-testcase-property property.name="remote.elasticsearch.clusters.enabled" />
+		<get-testcase-property property.name="test.name.skip.portal.instance" />
+
+		<if>
+			<and>
+				<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
+				<not>
+					<contains string="${test.name.skip.portal.instance}" substring="Smoke" />
+				</not>
+			</and>
+			<then>
+				<exec executable="curl" outputproperty="curl.output.local.cluster.elasticsearch.indices">
+					<arg value="-H" />
+					<arg value="Content-Type: application/json" />
+					<arg value="localhost:9202/liferay-${companyId}/_search?pretty" />
+					<arg value="-d" />
+					<arg value="${elasticsearch.print.query}" />
+				</exec>
+
+				<echo></echo>
+				<echo>##</echo>
+				<echo>## Local Cluster Elasticsearch Indices</echo>
+				<echo>##</echo>
+				<echo></echo>
+				<echo>${curl.output.local.cluster.elasticsearch.indices}</echo>
+				<echo></echo>
+
+				<exec executable="curl" outputproperty="curl.output.local.cluster.indices">
+					<arg value="-X" />
+					<arg value="GET" />
+					<arg value="localhost:9202/_cat/indices?h=idx" />
+					<arg value="-s" />
+				</exec>
+
+				<echo></echo>
+				<echo>##</echo>
+				<echo>## Local Cluster Indices</echo>
+				<echo>##</echo>
+				<echo></echo>
+				<echo>${curl.output.local.cluster.indices}</echo>
+				<echo></echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="restore-backup">

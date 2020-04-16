@@ -88,7 +88,7 @@
 </tr>
 <tr>
 	<td>AVERAGE_STAR</td>
-	<td>//div[contains(@class,'ratings-stars')]//div[*[name()='svg'][contains(@class,'ratings-stars-average-icon')]]</td>
+	<td>//div[contains(@class,'ratings-stars')]//*[name()='svg'][contains(@class,'ratings-stars-average-icon')]</td>
 	<td></td>
 </tr>
 <tr>

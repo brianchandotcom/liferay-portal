@@ -117,7 +117,7 @@ const SaveFragmentCompositionModal = ({
 					autoComplete="off"
 					className="mb-3"
 					noValidate
-					onSubmit={event => event.preventDefault()}
+					onSubmit={handleSubmit}
 				>
 					<InvisibleFieldset disabled={loading}>
 						{errorMessage && (

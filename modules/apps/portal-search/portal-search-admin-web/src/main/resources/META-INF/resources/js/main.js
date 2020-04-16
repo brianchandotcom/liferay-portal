@@ -17,6 +17,8 @@ AUI.add(
 	A => {
 		var Lang = A.Lang;
 
+		var IN_PROGRESS_SELECTOR = '.background-task-status-in-progress';
+
 		var INTERVAL_RENDER_IDLE = 60000;
 
 		var INTERVAL_RENDER_IN_PROGRESS = 2000;
@@ -105,9 +107,7 @@ AUI.add(
 
 					return !!(
 						indexActionsNode &&
-						indexActionsNode.one(
-							'.background-task-status-in-progress'
-						)
+						indexActionsNode.one(IN_PROGRESS_SELECTOR)
 					);
 				},
 
@@ -130,12 +130,6 @@ AUI.add(
 
 				_updateIndexActions() {
 					var instance = this;
-
-					var renderInterval = INTERVAL_RENDER_IDLE;
-
-					if (instance._isBackgroundTaskInProgress()) {
-						renderInterval = INTERVAL_RENDER_IN_PROGRESS;
-					}
 
 					var currentAdminIndexPanel = A.one(
 						instance.get(STR_INDEX_ACTIONS_PANEL)
@@ -172,9 +166,11 @@ AUI.add(
 										);
 
 										var inProgress =
-											currentNode.one('.progress') ||
+											currentNode.one(
+												IN_PROGRESS_SELECTOR
+											) ||
 											responseAdminIndexNode.one(
-												'.progress'
+												IN_PROGRESS_SELECTOR
 											);
 
 										if (inProgress) {
@@ -203,6 +199,12 @@ AUI.add(
 								}
 
 								// Start timeout for refreshing the data.
+
+								var renderInterval = INTERVAL_RENDER_IDLE;
+
+								if (instance._isBackgroundTaskInProgress()) {
+									renderInterval = INTERVAL_RENDER_IN_PROGRESS;
+								}
 
 								instance._laterTimeout = A.later(
 									renderInterval,

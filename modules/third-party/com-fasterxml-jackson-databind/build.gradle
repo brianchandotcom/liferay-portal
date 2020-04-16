@@ -1,7 +1,7 @@
 task jarPatched(type: Zip)
 
 dependencies {
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", transitive: false, version: "2.10.0"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", transitive: false, version: "2.10.3"
 }
 
 jar {

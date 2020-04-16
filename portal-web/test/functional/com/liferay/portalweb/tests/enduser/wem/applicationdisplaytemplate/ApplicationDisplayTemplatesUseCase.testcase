@@ -233,13 +233,13 @@ definition {
 			assetTitle = "WC Title");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ADTBreadcrumb {
 
-		// Ignore test until LRQA-54932 is resolved
+		// Quarantine test for LRQA-54932
 
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Breadcrumb,Content and Application Templates";
 
 		JSONLayout.addWidgetToPublicLayout(

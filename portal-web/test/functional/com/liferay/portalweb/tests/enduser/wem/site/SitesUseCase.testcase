@@ -887,7 +887,7 @@ definition {
 
 	@priority = "4"
 	test SitesDemoSiteManagement {
-		property portal.release = "false";
+		property portal.release = "true";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
 		property testray.component.names = "Site Administration,Site Pages Administration";

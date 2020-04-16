@@ -70,7 +70,9 @@ definition {
 			locator1 = "Link#ADD_CHILD_PAGE",
 			value1 = "Add Child Page");
 
-		AlloyEditor.addTitle(title = "${wikiChildPageTitle}");
+		Type(
+			locator1 = "Wiki#ENTRY_TITLE",
+			value1 = "${wikiChildPageTitle}");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

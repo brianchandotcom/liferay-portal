@@ -808,16 +808,6 @@ definition {
 
 		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
 
-		AssertElementPresent(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR");
-
-		Click(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR");
-
-		AssertElementPresent(locator1 = "AlloyEditor#CONTENT_ADD_BUTTON");
-
 		WikiEntry.addPageContent(wikiPageContent = "Edited Wiki Page Content");
 
 		SelectFrame(value1 = "relative=top");

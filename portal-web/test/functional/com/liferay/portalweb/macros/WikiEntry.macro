@@ -9,7 +9,9 @@ definition {
 	}
 
 	macro addPageTitle {
-		AlloyEditor.addTitle(title = "${wikiPageTitle}");
+		Type(
+			locator1 = "Wiki#ENTRY_TITLE",
+			value1 = "${wikiPageTitle}");
 	}
 
 	macro cancel {

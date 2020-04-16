@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_TITLE</td>
+	<td>//input[contains(@id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRONTPAGE_DEFAULT_MESSAGE</td>
 	<td>//div[@class='wiki-body']/div/a</td>
 	<td></td>

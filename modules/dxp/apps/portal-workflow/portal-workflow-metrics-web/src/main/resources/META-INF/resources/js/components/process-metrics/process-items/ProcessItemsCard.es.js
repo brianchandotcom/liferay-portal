@@ -19,7 +19,6 @@ import ContentView from '../../../shared/components/content-view/ContentView.es'
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import {useFetch} from '../../../shared/hooks/useFetch.es';
-import {usePageTitle} from '../../../shared/hooks/usePageTitle.es';
 import PANELS from './Panels.es';
 import SummaryCard from './SummaryCard.es';
 
@@ -40,8 +39,6 @@ const ProcessItemsCard = ({
 		},
 		url: `/processes/${processId}/metrics`,
 	});
-
-	usePageTitle(data.title);
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);
 

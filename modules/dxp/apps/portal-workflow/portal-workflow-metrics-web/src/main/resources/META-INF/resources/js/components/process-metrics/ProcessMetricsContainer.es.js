@@ -19,6 +19,7 @@ import {
 	getPathname,
 	withParams,
 } from '../../shared/components/router/routerUtil.es';
+import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
 import {AppContext} from '../AppContext.es';
 import {useTimeRangeFetch} from '../filter/hooks/useTimeRangeFetch.es';
 import SLAInfo from './SLAInfo.es';
@@ -63,6 +64,8 @@ const PerformanceTab = props => {
 
 const ProcessMetricsContainer = ({history, processId, query}) => {
 	const {defaultDelta} = useContext(AppContext);
+
+	useProcessTitle(processId);
 
 	const dashboardTab = useMemo(
 		() => ({

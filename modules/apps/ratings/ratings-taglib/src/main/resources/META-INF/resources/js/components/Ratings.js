@@ -21,6 +21,12 @@ import RatingsLike from './RatingsLike';
 import RatingsStars from './RatingsStars';
 import RatingsThumbs from './RatingsThumbs';
 
+const TYPES = {
+	LIKE: 'like',
+	STARTS: 'stars',
+	THUMBS: 'thumbs',
+};
+
 const Ratings = ({
 	className,
 	classPK,
@@ -73,9 +79,9 @@ const Ratings = ({
 	};
 
 	const RatingsTypes = {
-		like: RatingsLike,
-		stars: RatingsStars,
-		thumbs: RatingsThumbs,
+		[TYPES.LIKE]: RatingsLike,
+		[TYPES.STARTS]: RatingsStars,
+		[TYPES.THUMBS]: RatingsThumbs,
 	};
 
 	const RatingsComponent = RatingsTypes[type];

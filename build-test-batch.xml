@@ -1680,6 +1680,23 @@ app.server.type=@{app.server.type}]]></echo>
 						</if>
 
 						<if>
+							<equals arg1="${poshi.runner.testsuite.failures}" arg2="1" />
+							<then>
+								<var name="poshi.runner.testsuite.failures" unset="true" />
+
+								<xmlproperty collapseAttributes="true" file="${project.dir}/portal-web/test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml" prefix="poshi.runner" />
+
+								<if>
+									<equals arg1="${poshi.runner.testsuite.failures}" arg2="0" />
+									<then>
+										<echo file="${project.dir}/portal-web/test-results/flaky-tests">
+${poshi.runner.testsuite.testcase.name}</echo>
+									</then>
+								</if>
+							</then>
+						</if>
+
+						<if>
 							<equals arg1="${functional.batch.retry.count}" arg2="1" />
 							<then>
 								<xmlproperty collapseAttributes="true" file="${project.dir}/portal-web/test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml" prefix="poshi.runner" />

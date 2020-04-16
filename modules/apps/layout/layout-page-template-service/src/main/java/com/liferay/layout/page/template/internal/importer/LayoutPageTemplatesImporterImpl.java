@@ -880,25 +880,31 @@ public class LayoutPageTemplatesImporterImpl
 		for (DisplayPageTemplateEntry displayPageTemplateEntry :
 				displayPageTemplateEntries) {
 
-			DisplayPageTemplate displayPageTemplate =
-				displayPageTemplateEntry.getDisplayPageTemplate();
+			Callable<Void> callable = new DisplayPagesImporterCallable(
+				groupId, displayPageTemplateEntry, overwrite, zipFile);
 
-			long classNameId = _portal.getClassNameId(
-				displayPageTemplate.getContentTypeClassName());
-			long classTypeId = _getClassTypeId(displayPageTemplate, groupId);
+			try {
+				TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			}
+			catch (Throwable t) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(t, t);
+				}
 
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntry(
-						groupId, displayPageTemplateEntry.getKey());
+				DisplayPageTemplate displayPageTemplate =
+					displayPageTemplateEntry.getDisplayPageTemplate();
 
-			_processLayoutPageTemplateEntry(
-				classNameId, classTypeId, groupId, 0, layoutPageTemplateEntry,
-				displayPageTemplate.getName(),
-				displayPageTemplateEntry.getPageDefinition(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-				overwrite, displayPageTemplateEntry.getThumbnailZipEntry(),
-				displayPageTemplateEntry.getZipPath(), zipFile);
+				_layoutPageTemplatesImporterResultEntries.add(
+					new LayoutPageTemplatesImporterResultEntry(
+						displayPageTemplate.getName(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						_getErrorMessage(
+							groupId,
+							"x-could-not-be-imported-because-of-invalid-" +
+								"values-in-its-page-definition",
+							new String[] {displayPageTemplate.getName()})));
+			}
 		}
 	}
 
@@ -1475,6 +1481,50 @@ public class LayoutPageTemplatesImporterImpl
 		private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 		private final boolean _overwrite;
 		private final PageTemplateEntry _pageTemplateEntry;
+		private final ZipFile _zipFile;
+
+	}
+
+	private class DisplayPagesImporterCallable implements Callable<Void> {
+
+		@Override
+		public Void call() throws Exception {
+			DisplayPageTemplate displayPageTemplate =
+				_displayPageTemplateEntry.getDisplayPageTemplate();
+
+			long classNameId = _portal.getClassNameId(
+				displayPageTemplate.getContentTypeClassName());
+			long classTypeId = _getClassTypeId(displayPageTemplate, _groupId);
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						_groupId, _displayPageTemplateEntry.getKey());
+
+			_processLayoutPageTemplateEntry(
+				classNameId, classTypeId, _groupId, 0, layoutPageTemplateEntry,
+				displayPageTemplate.getName(),
+				_displayPageTemplateEntry.getPageDefinition(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+				_overwrite, _displayPageTemplateEntry.getThumbnailZipEntry(),
+				_displayPageTemplateEntry.getZipPath(), _zipFile);
+
+			return null;
+		}
+
+		private DisplayPagesImporterCallable(
+			long groupId, DisplayPageTemplateEntry displayPageTemplateEntry,
+			boolean overwrite, ZipFile zipFile) {
+
+			_groupId = groupId;
+			_displayPageTemplateEntry = displayPageTemplateEntry;
+			_overwrite = overwrite;
+			_zipFile = zipFile;
+		}
+
+		private final DisplayPageTemplateEntry _displayPageTemplateEntry;
+		private final long _groupId;
+		private final boolean _overwrite;
 		private final ZipFile _zipFile;
 
 	}

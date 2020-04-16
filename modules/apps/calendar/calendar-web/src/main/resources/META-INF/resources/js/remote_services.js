@@ -135,12 +135,12 @@ AUI.add(
 							return response.json();
 						})
 						.then(data => {
-							if (Liferay.Util.isFunction(callback.success)) {
+							if (typeof callback.success === 'function') {
 								callback.success.apply(this, [data]);
 							}
 						})
 						.catch(err => {
-							if (Liferay.Util.isFunction(callback.failure)) {
+							if (typeof callback.failure === 'function') {
 								callback.failure(err);
 							}
 						});

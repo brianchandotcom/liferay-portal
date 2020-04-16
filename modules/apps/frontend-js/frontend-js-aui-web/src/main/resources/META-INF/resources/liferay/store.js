@@ -125,7 +125,7 @@ AUI.add(
 							}
 						}
 
-						if (Liferay.Util.isFunction(config.callback)) {
+						if (typeof config.callback === 'function') {
 							config.callback(data);
 						}
 					});

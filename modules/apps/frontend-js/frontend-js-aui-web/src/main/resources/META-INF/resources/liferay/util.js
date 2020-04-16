@@ -509,7 +509,7 @@
 
 				result = {};
 
-				var getterFn = this.isFunction(attributeGetter);
+				var getterFn = typeof attributeGetter === 'function';
 				var getterString = typeof attributeGetter === 'string';
 
 				var attrs = el.attributes;
@@ -796,6 +796,9 @@
 			return viewable;
 		},
 
+		/**
+		 * @deprecated as of 7.3 — use `typeof val === 'function'` instead.
+		 */
 		isFunction(val) {
 			return typeof val === 'function';
 		},
@@ -1295,7 +1298,7 @@
 			var toggleBox = document.getElementById(toggleBoxId);
 
 			if (selectBox && toggleBox) {
-				var dynamicValue = this.isFunction(value);
+				var dynamicValue = typeof value === 'function';
 
 				var toggle = function() {
 					var currentValue = selectBox.value;

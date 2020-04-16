@@ -65,6 +65,7 @@ import java.util.Objects;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -131,7 +132,8 @@ public class FriendlyURLServletTest {
 			"com.liferay.friendly.url.internal.servlet.FriendlyURLServlet");
 
 		_getRedirectMethod = clazz.getDeclaredMethod(
-			"getRedirect", HttpServletRequest.class, String.class);
+			"getRedirect", HttpServletRequest.class, HttpServletResponse.class,
+			String.class);
 
 		clazz = classLoader.loadClass(
 			"com.liferay.friendly.url.internal.servlet.FriendlyURLServlet" +
@@ -489,7 +491,9 @@ public class FriendlyURLServletTest {
 		try {
 			Assert.assertEquals(
 				expectedRedirect,
-				_getRedirectMethod.invoke(_servlet, httpServletRequest, path));
+				_getRedirectMethod.invoke(
+					_servlet, httpServletRequest, new MockHttpServletResponse(),
+					path));
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getCause();

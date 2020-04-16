@@ -283,10 +283,8 @@ public class PageDefinitionConverterUtil {
 			return true;
 		}
 
-		Map<String, FragmentEntry> fragmentEntries =
-			fragmentCollectionContributorTracker.getFragmentEntries();
-
-		fragmentEntry = fragmentEntries.get(fragmentEntryKey);
+		fragmentEntry = fragmentCollectionContributorTracker.getFragmentEntry(
+			fragmentEntryKey);
 
 		if (fragmentEntry != null) {
 			return true;

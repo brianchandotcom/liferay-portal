@@ -80,7 +80,6 @@ export default function StructureTreeNode({node}) {
 
 					selectItem(toControlsId(node.id), {
 						itemType: node.type,
-						multiSelect: event.shiftKey,
 						origin: ITEM_ACTIVATION_ORIGINS.structureTree,
 					});
 				}}

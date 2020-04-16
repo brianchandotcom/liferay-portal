@@ -324,7 +324,6 @@ export default function FragmentContentInteractionsFilter({
 			else {
 				selectItem(editableUniqueId, {
 					itemType: ITEM_TYPES.editable,
-					multiSelect: event.shiftKey,
 				});
 			}
 		}

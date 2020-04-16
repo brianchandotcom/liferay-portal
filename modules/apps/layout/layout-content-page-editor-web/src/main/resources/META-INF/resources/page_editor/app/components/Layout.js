@@ -79,7 +79,7 @@ export default function Layout({mainItemId}) {
 
 	const onClick = event => {
 		if (event.target === event.currentTarget) {
-			selectItem(null, {multiSelect: event.shiftKey});
+			selectItem(null);
 		}
 	};
 

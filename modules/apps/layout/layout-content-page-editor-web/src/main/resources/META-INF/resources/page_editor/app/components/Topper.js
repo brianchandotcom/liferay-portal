@@ -35,8 +35,8 @@ import {
 	useActiveItemId,
 	useHoverItem,
 	useHoveredItemId,
+	useIsActive,
 	useIsHovered,
-	useIsSelected,
 	useSelectItem,
 } from './Controls';
 import getLabelName from './layout-data-items/getLabelName';
@@ -85,7 +85,7 @@ function Topper({children, item, itemRef, layoutData}) {
 	const hoveredItemId = useHoveredItemId();
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
-	const isSelected = useIsSelected();
+	const isActive = useIsActive();
 	const selectItem = useSelectItem();
 	const toControlsId = useToControlsId();
 
@@ -202,7 +202,7 @@ function Topper({children, item, itemRef, layoutData}) {
 	return (
 		<div
 			className={classNames('page-editor__topper', {
-				active: isSelected(item.itemId),
+				active: isActive(item.itemId),
 				'drag-over-bottom': isDraggableInPosition(
 					TARGET_POSITION.BOTTOM
 				),
@@ -223,9 +223,7 @@ function Topper({children, item, itemRef, layoutData}) {
 					return;
 				}
 
-				const multiSelect = event.shiftKey;
-
-				selectItem(item.itemId, {multiSelect});
+				selectItem(item.itemId);
 			}}
 			onMouseLeave={event => {
 				event.stopPropagation();

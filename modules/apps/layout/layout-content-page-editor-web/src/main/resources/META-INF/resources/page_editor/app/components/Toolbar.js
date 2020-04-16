@@ -136,7 +136,7 @@ function ToolbarBody() {
 
 	const deselectItem = event => {
 		if (event.target === event.currentTarget) {
-			selectItem(null, {multiSelect: event.shiftKey});
+			selectItem(null);
 		}
 	};
 

@@ -100,10 +100,20 @@ const transformToDate = date => {
 	return date;
 };
 
+const getInitialMonth = value => {
+	if (moment(value).isValid()) {
+		return moment(value).toDate();
+	}
+
+	return moment().toDate();
+};
+
 const getValueForHidden = value => {
 	if (moment(value).isValid()) {
 		return moment(value).format('YYYY-MM-DD');
 	}
+
+	return null;
 };
 
 const DatePicker = ({
@@ -166,14 +176,17 @@ const DatePicker = ({
 			<ClayDatePicker
 				dateFormat={dateMask}
 				disabled={disabled}
-				initialMonth={value ? value : undefined}
+				initialMonth={getInitialMonth(value)}
 				onInput={event => {
 					maskInstance.current.update(event.target.value);
 				}}
 				onNavigation={handleNavigation}
 				onValueChange={value => {
 					setValue(value);
-					onChange(value);
+
+					if (moment(value).isValid()) {
+						onChange(value);
+					}
 				}}
 				ref={inputRef}
 				spritemap={spritemap}

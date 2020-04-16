@@ -64,7 +64,7 @@ public class LFRBuildReadmeCheck extends BaseFileCheck {
 		}
 
 		_modulesReadmeMarkdownContent = getPortalContent(
-			_MODULES_README_MARKDOWN_FILE_NAME, absolutePath, true);
+			_MODULES_README_MARKDOWN_FILE_NAME, absolutePath);
 
 		return _modulesReadmeMarkdownContent;
 	}

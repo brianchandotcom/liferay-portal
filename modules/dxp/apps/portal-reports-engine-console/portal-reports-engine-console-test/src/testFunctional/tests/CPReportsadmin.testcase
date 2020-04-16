@@ -145,7 +145,6 @@ definition {
 	@priority = "4"
 	test ChangeReportName {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 
@@ -184,7 +183,6 @@ definition {
 	@priority = "4"
 	test DeleteReportFile {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

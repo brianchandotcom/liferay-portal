@@ -86,6 +86,16 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 	}
 
 	@Override
+	public Expression visitBinaryOperator(
+		BinaryOperatorKind binaryOperatorKind,
+		Expression leftBinaryOperationExpression,
+		List<Expression> rightBinaryOperationExpressions) {
+
+		throw new UnsupportedOperationException(
+			"Binary operator: " + binaryOperatorKind);
+	}
+
+	@Override
 	public Expression visitEnum(EdmEnumType edmEnumType, List<String> list) {
 		throw new UnsupportedOperationException(
 			"Enum: " + StringUtil.merge(edmEnumType.getMemberNames()));

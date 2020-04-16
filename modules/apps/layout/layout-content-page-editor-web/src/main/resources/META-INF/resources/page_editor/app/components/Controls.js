@@ -163,6 +163,7 @@ const useSelectItem = () => {
 export {
 	ControlsConsumer,
 	ControlsProvider,
+	reducer,
 	useActivationOrigin,
 	useActiveItemId,
 	useActiveItemType,

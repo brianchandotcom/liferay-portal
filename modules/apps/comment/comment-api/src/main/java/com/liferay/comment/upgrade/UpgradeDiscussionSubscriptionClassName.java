@@ -69,42 +69,11 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addSubscriptions();
+		_updateSubscriptions();
 
 		if (_deletionMode == DeletionMode.DELETE_OLD) {
 			_deleteSubscriptions();
 		}
-	}
-
-	private void _addSubscriptions() throws IOException, SQLException {
-		String newSubscriptionClassName =
-			MBDiscussion.class.getName() + StringPool.UNDERLINE +
-				_oldSubscriptionClassName;
-
-		long newClassNameId = ClassNameLocalServiceUtil.getClassNameId(
-			newSubscriptionClassName);
-
-		long oldClassNameId = ClassNameLocalServiceUtil.getClassNameId(
-			_oldSubscriptionClassName);
-
-		PreparedStatement ps = connection.prepareStatement(
-			"select classPK from Subscription where classNameId = " +
-				oldClassNameId);
-
-		ResultSet rs = ps.executeQuery();
-
-		while (rs.next()) {
-			long classPK = rs.getLong("classPK");
-
-			_runUpdateSQL(
-				"AssetEntry", true, classPK, oldClassNameId, newClassNameId);
-
-			_runUpdateSQL(
-				"SocialActivity", true, classPK, oldClassNameId,
-				newClassNameId);
-		}
-
-		_runUpdateSQL("Subscription", false, 0, oldClassNameId, newClassNameId);
 	}
 
 	private void _deleteSubscriptions() throws PortalException {
@@ -145,6 +114,37 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		}
 
 		runSQL(sb.toString());
+	}
+
+	private void _updateSubscriptions() throws IOException, SQLException {
+		String newSubscriptionClassName =
+			MBDiscussion.class.getName() + StringPool.UNDERLINE +
+				_oldSubscriptionClassName;
+
+		long newClassNameId = ClassNameLocalServiceUtil.getClassNameId(
+			newSubscriptionClassName);
+
+		long oldClassNameId = ClassNameLocalServiceUtil.getClassNameId(
+			_oldSubscriptionClassName);
+
+		PreparedStatement ps = connection.prepareStatement(
+			"select classPK from Subscription where classNameId = " +
+				oldClassNameId);
+
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			long classPK = rs.getLong("classPK");
+
+			_runUpdateSQL(
+				"AssetEntry", true, classPK, oldClassNameId, newClassNameId);
+
+			_runUpdateSQL(
+				"SocialActivity", true, classPK, oldClassNameId,
+				newClassNameId);
+		}
+
+		_runUpdateSQL("Subscription", false, 0, oldClassNameId, newClassNameId);
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

@@ -257,6 +257,41 @@ public class RedirectEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
+		getRedirectEntriesDestinationURL(
+			HttpPrincipal httpPrincipal, String destinationURL, long groupId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RedirectEntryServiceUtil.class,
+				"getRedirectEntriesDestinationURL",
+				_getRedirectEntriesDestinationURLParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, destinationURL, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.redirect.model.RedirectEntry>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
 			HttpPrincipal httpPrincipal, long redirectEntryId,
 			String destinationURL, java.util.Date expirationDate,
@@ -266,7 +301,7 @@ public class RedirectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RedirectEntryServiceUtil.class, "updateRedirectEntry",
-				_updateRedirectEntryParameterTypes5);
+				_updateRedirectEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, redirectEntryId, destinationURL, expirationDate,
@@ -319,7 +354,11 @@ public class RedirectEntryServiceHttp {
 		};
 	private static final Class<?>[] _getRedirectEntriesCountParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateRedirectEntryParameterTypes5 =
+	private static final Class<?>[]
+		_getRedirectEntriesDestinationURLParameterTypes5 = new Class[] {
+			String.class, long.class
+		};
+	private static final Class<?>[] _updateRedirectEntryParameterTypes6 =
 		new Class[] {
 			long.class, String.class, java.util.Date.class, boolean.class,
 			String.class

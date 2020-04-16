@@ -780,6 +780,278 @@ public class RedirectEntryUtil {
 	}
 
 	/**
+	 * Returns all the redirect entries where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @return the matching redirect entries
+	 */
+	public static List<RedirectEntry> findByG_D(
+		long groupId, String destinationURL) {
+
+		return getPersistence().findByG_D(groupId, destinationURL);
+	}
+
+	/**
+	 * Returns a range of all the redirect entries where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @return the range of matching redirect entries
+	 */
+	public static List<RedirectEntry> findByG_D(
+		long groupId, String destinationURL, int start, int end) {
+
+		return getPersistence().findByG_D(groupId, destinationURL, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the redirect entries where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching redirect entries
+	 */
+	public static List<RedirectEntry> findByG_D(
+		long groupId, String destinationURL, int start, int end,
+		OrderByComparator<RedirectEntry> orderByComparator) {
+
+		return getPersistence().findByG_D(
+			groupId, destinationURL, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the redirect entries where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching redirect entries
+	 */
+	public static List<RedirectEntry> findByG_D(
+		long groupId, String destinationURL, int start, int end,
+		OrderByComparator<RedirectEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_D(
+			groupId, destinationURL, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching redirect entry
+	 * @throws NoSuchEntryException if a matching redirect entry could not be found
+	 */
+	public static RedirectEntry findByG_D_First(
+			long groupId, String destinationURL,
+			OrderByComparator<RedirectEntry> orderByComparator)
+		throws com.liferay.redirect.exception.NoSuchEntryException {
+
+		return getPersistence().findByG_D_First(
+			groupId, destinationURL, orderByComparator);
+	}
+
+	/**
+	 * Returns the first redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
+	 */
+	public static RedirectEntry fetchByG_D_First(
+		long groupId, String destinationURL,
+		OrderByComparator<RedirectEntry> orderByComparator) {
+
+		return getPersistence().fetchByG_D_First(
+			groupId, destinationURL, orderByComparator);
+	}
+
+	/**
+	 * Returns the last redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching redirect entry
+	 * @throws NoSuchEntryException if a matching redirect entry could not be found
+	 */
+	public static RedirectEntry findByG_D_Last(
+			long groupId, String destinationURL,
+			OrderByComparator<RedirectEntry> orderByComparator)
+		throws com.liferay.redirect.exception.NoSuchEntryException {
+
+		return getPersistence().findByG_D_Last(
+			groupId, destinationURL, orderByComparator);
+	}
+
+	/**
+	 * Returns the last redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
+	 */
+	public static RedirectEntry fetchByG_D_Last(
+		long groupId, String destinationURL,
+		OrderByComparator<RedirectEntry> orderByComparator) {
+
+		return getPersistence().fetchByG_D_Last(
+			groupId, destinationURL, orderByComparator);
+	}
+
+	/**
+	 * Returns the redirect entries before and after the current redirect entry in the ordered set where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param redirectEntryId the primary key of the current redirect entry
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next redirect entry
+	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
+	 */
+	public static RedirectEntry[] findByG_D_PrevAndNext(
+			long redirectEntryId, long groupId, String destinationURL,
+			OrderByComparator<RedirectEntry> orderByComparator)
+		throws com.liferay.redirect.exception.NoSuchEntryException {
+
+		return getPersistence().findByG_D_PrevAndNext(
+			redirectEntryId, groupId, destinationURL, orderByComparator);
+	}
+
+	/**
+	 * Returns all the redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @return the matching redirect entries that the user has permission to view
+	 */
+	public static List<RedirectEntry> filterFindByG_D(
+		long groupId, String destinationURL) {
+
+		return getPersistence().filterFindByG_D(groupId, destinationURL);
+	}
+
+	/**
+	 * Returns a range of all the redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @return the range of matching redirect entries that the user has permission to view
+	 */
+	public static List<RedirectEntry> filterFindByG_D(
+		long groupId, String destinationURL, int start, int end) {
+
+		return getPersistence().filterFindByG_D(
+			groupId, destinationURL, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the redirect entries that the user has permissions to view where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching redirect entries that the user has permission to view
+	 */
+	public static List<RedirectEntry> filterFindByG_D(
+		long groupId, String destinationURL, int start, int end,
+		OrderByComparator<RedirectEntry> orderByComparator) {
+
+		return getPersistence().filterFindByG_D(
+			groupId, destinationURL, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the redirect entries before and after the current redirect entry in the ordered set of redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param redirectEntryId the primary key of the current redirect entry
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next redirect entry
+	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
+	 */
+	public static RedirectEntry[] filterFindByG_D_PrevAndNext(
+			long redirectEntryId, long groupId, String destinationURL,
+			OrderByComparator<RedirectEntry> orderByComparator)
+		throws com.liferay.redirect.exception.NoSuchEntryException {
+
+		return getPersistence().filterFindByG_D_PrevAndNext(
+			redirectEntryId, groupId, destinationURL, orderByComparator);
+	}
+
+	/**
+	 * Removes all the redirect entries where groupId = &#63; and destinationURL = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 */
+	public static void removeByG_D(long groupId, String destinationURL) {
+		getPersistence().removeByG_D(groupId, destinationURL);
+	}
+
+	/**
+	 * Returns the number of redirect entries where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @return the number of matching redirect entries
+	 */
+	public static int countByG_D(long groupId, String destinationURL) {
+		return getPersistence().countByG_D(groupId, destinationURL);
+	}
+
+	/**
+	 * Returns the number of redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @return the number of matching redirect entries that the user has permission to view
+	 */
+	public static int filterCountByG_D(long groupId, String destinationURL) {
+		return getPersistence().filterCountByG_D(groupId, destinationURL);
+	}
+
+	/**
 	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID

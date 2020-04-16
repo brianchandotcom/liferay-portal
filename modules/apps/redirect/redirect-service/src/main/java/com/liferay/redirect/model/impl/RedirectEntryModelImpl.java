@@ -123,13 +123,15 @@ public class RedirectEntryModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long DESTINATIONURL_COLUMN_BITMASK = 2L;
 
-	public static final long SOURCEURL_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long SOURCEURL_COLUMN_BITMASK = 8L;
 
-	public static final long REDIRECTENTRYID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+
+	public static final long REDIRECTENTRYID_COLUMN_BITMASK = 32L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -567,7 +569,17 @@ public class RedirectEntryModelImpl
 
 	@Override
 	public void setDestinationURL(String destinationURL) {
+		_columnBitmask |= DESTINATIONURL_COLUMN_BITMASK;
+
+		if (_originalDestinationURL == null) {
+			_originalDestinationURL = _destinationURL;
+		}
+
 		_destinationURL = destinationURL;
+	}
+
+	public String getOriginalDestinationURL() {
+		return GetterUtil.getString(_originalDestinationURL);
 	}
 
 	@JSON
@@ -767,6 +779,9 @@ public class RedirectEntryModelImpl
 
 		redirectEntryModelImpl._setModifiedDate = false;
 
+		redirectEntryModelImpl._originalDestinationURL =
+			redirectEntryModelImpl._destinationURL;
+
 		redirectEntryModelImpl._originalSourceURL =
 			redirectEntryModelImpl._sourceURL;
 
@@ -951,6 +966,7 @@ public class RedirectEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _destinationURL;
+	private String _originalDestinationURL;
 	private Date _expirationDate;
 	private Date _lastOccurrenceDate;
 	private boolean _permanent;

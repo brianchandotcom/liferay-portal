@@ -232,6 +232,15 @@ public class RedirectEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_D() throws Exception {
+		_persistence.countByG_D(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_D(0L, "null");
+
+		_persistence.countByG_D(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(RandomTestUtil.nextLong(), "");
 

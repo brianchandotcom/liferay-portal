@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -31,6 +32,7 @@ const RatingsLike = ({
 }) => {
 	const [liked, setLiked] = useState(initialLiked);
 	const [totalLikes, setTotalLikes] = useState(positiveVotes);
+	const isMounted = useIsMounted();
 
 	const toggleLiked = () => {
 		const score = liked ? SCORE_UNLIKE : SCORE_LIKE;
@@ -52,7 +54,7 @@ const RatingsLike = ({
 
 	const handleSendVoteRequest = score => {
 		sendVoteRequest(score).then(({totalScore} = {}) => {
-			if (totalScore) {
+			if (isMounted() && totalScore) {
 				setTotalLikes(totalScore);
 			}
 		});

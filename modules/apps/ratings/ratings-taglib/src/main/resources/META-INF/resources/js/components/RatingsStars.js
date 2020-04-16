@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
@@ -58,6 +59,7 @@ const RatingsStars = ({
 		formatAverageScore(initialAverageScore)
 	);
 	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
+	const isMounted = useIsMounted();
 
 	const handleOnClick = index => {
 		const {label, value} = startScores[index];
@@ -70,8 +72,8 @@ const RatingsStars = ({
 	const handleSendVoteRequest = useCallback(
 		score => {
 			sendVoteRequest(score).then(
-				({averageScore, score, totalEntries}) => {
-					if (averageScore && score && totalEntries) {
+				({averageScore, score, totalEntries} = {}) => {
+					if (isMounted() && averageScore && score && totalEntries) {
 						setTotalEntries(totalEntries);
 						setAverageScore(formatAverageScore(averageScore));
 						setScore(getLabelScore(score));
@@ -79,7 +81,7 @@ const RatingsStars = ({
 				}
 			);
 		},
-		[formatAverageScore, getLabelScore, sendVoteRequest]
+		[formatAverageScore, getLabelScore, isMounted, sendVoteRequest]
 	);
 
 	const getTitle = useCallback(() => {

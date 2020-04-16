@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useReducer} from 'react';
 
@@ -80,6 +81,7 @@ const RatingsThumbs = ({
 		positiveVotes: initialPositiveVotes,
 		pressed: thumbDown ? PRESSED_DOWN : thumbUp ? PRESSED_UP : null,
 	});
+	const isMounted = useIsMounted();
 
 	const {negativeVotes, positiveVotes, pressed} = state;
 
@@ -125,8 +127,8 @@ const RatingsThumbs = ({
 
 	const handleSendVoteRequest = useCallback(
 		score => {
-			sendVoteRequest(score).then(({totalEntries, totalScore}) => {
-				if (totalEntries && totalScore) {
+			sendVoteRequest(score).then(({totalEntries, totalScore} = {}) => {
+				if (isMounted() && totalEntries && totalScore) {
 					dispatch({
 						payload: {
 							negativeVotes: totalEntries - totalScore,
@@ -137,7 +139,7 @@ const RatingsThumbs = ({
 				}
 			});
 		},
-		[sendVoteRequest]
+		[isMounted, sendVoteRequest]
 	);
 
 	return (

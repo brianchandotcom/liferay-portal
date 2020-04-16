@@ -168,10 +168,10 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 	protected String convertOperands(
 		List<SPIDDMFormRuleCondition.Operand> operands) {
 
+		StringBundler sb = new StringBundler(operands.size());
+
 		boolean hasNestedFunctionOperands = _hasNestedFunctionOperands(
 			operands);
-
-		StringBundler sb = new StringBundler(operands.size());
 
 		for (SPIDDMFormRuleCondition.Operand operand : operands) {
 			if (hasNestedFunctionOperands) {

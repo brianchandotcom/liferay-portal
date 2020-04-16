@@ -9,9 +9,17 @@ definition {
 	}
 
 	macro addPageTitle {
+		if (isSet(wikiPageTitle)) {
+			var title = "${wikiPageTitle}";
+		}
+
+		else if (isSet(wikiChildPageTitle)) {
+			var title = "${wikiChildPageTitle}";
+		}
+
 		Type(
 			locator1 = "Wiki#ENTRY_TITLE",
-			value1 = "${wikiPageTitle}");
+			value1 = "${title}");
 	}
 
 	macro cancel {

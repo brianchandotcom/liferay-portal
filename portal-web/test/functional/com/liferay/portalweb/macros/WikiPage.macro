@@ -94,8 +94,6 @@ definition {
 			locator1 = "Link#ADD_CHILD_PAGE",
 			value1 = "Add Child Page");
 
-		var key_wikiChildPageTitle = "${wikiChildPageTitle}";
-
 		WikiEntry.addPageTitle(title = "${wikiChildPageTitle}");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
@@ -366,8 +364,6 @@ definition {
 		WikiNavigator.gotoAddPageViaPG();
 
 		WikiEntry.addPageTitle(title = "${wikiPageTitle}");
-
-		var key_wikiPageTitle = "${wikiPageTitle}";
 
 		if ("${viewFormat}" == "true") {
 			AssertSelectedLabel(

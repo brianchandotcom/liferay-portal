@@ -708,14 +708,14 @@ definition {
 			requestNumber = "2");
 
 		Redirect.viewOrderedURLs(
-			requestNumber1 = "2",
-			requestNumber2 = "1");
+			entry1 = "2",
+			entry2 = "1");
 
 		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
 		Redirect.viewOrderedURLs(
-			requestNumber1 = "1",
-			requestNumber2 = "2");
+			entry1 = "1",
+			entry2 = "2");
 	}
 
 	@description = "This ensures that an expired permanent redirect can be reset."

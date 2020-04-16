@@ -97,7 +97,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	public Redirect getRedirect(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String path)
-		throws IOException, PortalException, ServletException {
+		throws PortalException {
 
 		if (path.length() <= 1) {
 			return new Redirect();
@@ -305,18 +305,6 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			if (Validator.isNotNull(
 					PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
-
-				throw noSuchLayoutException;
-			}
-
-			LayoutFriendlyURLSeparatorComposite
-				layoutFriendlyURLSeparatorComposite =
-					portal.getLayoutFriendlyURLSeparatorComposite(
-						group.getGroupId(), _private, null, params,
-						requestContext);
-
-			if (Validator.isNull(
-					layoutFriendlyURLSeparatorComposite.getLayout())) {
 
 				throw noSuchLayoutException;
 			}

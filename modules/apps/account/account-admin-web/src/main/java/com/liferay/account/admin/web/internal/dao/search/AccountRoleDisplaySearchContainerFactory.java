@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.dao.search;
 
+import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.display.AccountRoleDisplay;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountRole;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import javax.portlet.PortletURL;
+
 /**
  * @author Pei-Jung Lan
  */
@@ -36,7 +39,8 @@ public class AccountRoleDisplaySearchContainerFactory {
 		LiferayPortletResponse liferayPortletResponse) {
 
 		SearchContainer searchContainer = new SearchContainer(
-			liferayPortletRequest, liferayPortletResponse.createRenderURL(),
+			liferayPortletRequest,
+			_getViewAccountRolesURL(accountEntryId, liferayPortletResponse),
 			null, "there-are-no-roles");
 
 		searchContainer.setId("accountRoles");
@@ -67,6 +71,23 @@ public class AccountRoleDisplaySearchContainerFactory {
 		searchContainer.setTotal(baseModelSearchResult.getLength());
 
 		return searchContainer;
+	}
+
+	private static PortletURL _getViewAccountRolesURL(
+		long accountEntryId, LiferayPortletResponse liferayPortletResponse) {
+
+		PortletURL viewAccountRolesURL =
+			liferayPortletResponse.createRenderURL();
+
+		viewAccountRolesURL.setParameter(
+			"mvcRenderCommandName", "/account_admin/edit_account_entry");
+		viewAccountRolesURL.setParameter(
+			"screenNavigationCategoryKey",
+			AccountScreenNavigationEntryConstants.CATEGORY_KEY_ROLES);
+		viewAccountRolesURL.setParameter(
+			"accountEntryId", String.valueOf(accountEntryId));
+
+		return viewAccountRolesURL;
 	}
 
 }

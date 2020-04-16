@@ -35,11 +35,11 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 <c:choose>
 	<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
 		<div>
-			<clay:button
-				disabled="<%= true %>"
-				elementClasses="btn-outline-borderless btn-outline-secondary btn-sm"
-				icon="heart"
-			/>
+			<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" disabled type="button">
+				<svg class="lexicon-icon lexicon-icon-heart">
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#heart" />
+				</svg>
+			</button>
 
 			<react:component
 				data="<%= data %>"
@@ -49,17 +49,17 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 	</c:when>
 	<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
 		<div>
-			<clay:button
-				disabled="<%= true %>"
-				elementClasses="btn-outline-borderless btn-outline-secondary btn-sm"
-				icon="thumbs-up"
-			/>
+			<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" disabled type="button">
+				<svg class="lexicon-icon lexicon-icon-thumbs-up">
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-up" />
+				</svg>
+			</button>
 
-			<clay:button
-				disabled="<%= true %>"
-				elementClasses="btn-outline-borderless btn-outline-secondary btn-sm"
-				icon="thumbs-down"
-			/>
+			<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" disabled type="button">
+				<svg class="lexicon-icon lexicon-icon-thumbs-down">
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-down" />
+				</svg>
+			</button>
 
 			<react:component
 				data="<%= data %>"
@@ -72,20 +72,20 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 			<div class="autofit-row autofit-row-center ratings ratings-stars">
 				<div class="autofit-col">
 					<div class="dropdown">
-						<clay:button
-							disabled="<%= true %>"
-							elementClasses="btn btn-outline-borderless btn-outline-secondary btn-sm dropdown-toggle"
-							icon="star-o"
-							label="-"
-						/>
+						<button class="btn btn-outline-borderless btn-outline-secondary dropdown-toggle btn-sm" disabled type="button">
+							<svg class="lexicon-icon lexicon-icon-star-o">
+								<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
+							</svg>
+
+							<span>-</span>
+						</button>
 					</div>
 				</div>
 
 				<div class="autofit-col">
-					<clay:icon
-						elementClasses="ratings-stars-average-icon"
-						symbol="star"
-					/>
+					<svg class="lexicon-icon lexicon-icon-star ratings-stars-average-icon">
+						<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
+					</svg>
 				</div>
 			</div>
 

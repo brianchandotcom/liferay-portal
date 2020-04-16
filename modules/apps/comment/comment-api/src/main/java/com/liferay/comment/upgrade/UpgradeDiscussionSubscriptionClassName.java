@@ -15,6 +15,7 @@
 package com.liferay.comment.upgrade;
 
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -24,6 +25,12 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
+
+import java.io.IOException;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author Roberto Díaz
@@ -69,26 +76,35 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		}
 	}
 
-	private void _addSubscriptions() throws PortalException {
+	private void _addSubscriptions() throws IOException, SQLException {
 		String newSubscriptionClassName =
 			MBDiscussion.class.getName() + StringPool.UNDERLINE +
 				_oldSubscriptionClassName;
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			_subscriptionLocalService.getActionableDynamicQuery();
+		long newClassNameId = ClassNameLocalServiceUtil.getClassNameId(
+			newSubscriptionClassName);
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"classNameId",
-					_classNameLocalService.getClassNameId(
-						_oldSubscriptionClassName))));
-		actionableDynamicQuery.setPerformActionMethod(
-			(Subscription subscription) ->
-				_subscriptionLocalService.addSubscription(
-					subscription.getUserId(), subscription.getGroupId(),
-					newSubscriptionClassName, subscription.getClassPK()));
-		actionableDynamicQuery.performActions();
+		long oldClassNameId = ClassNameLocalServiceUtil.getClassNameId(
+			_oldSubscriptionClassName);
+
+		PreparedStatement ps = connection.prepareStatement(
+			"select classPK from Subscription where classNameId = " +
+				oldClassNameId);
+
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			long classPK = rs.getLong("classPK");
+
+			_runUpdateSQL(
+				"AssetEntry", true, classPK, oldClassNameId, newClassNameId);
+
+			_runUpdateSQL(
+				"SocialActivity", true, classPK, oldClassNameId,
+				newClassNameId);
+		}
+
+		_runUpdateSQL("Subscription", false, 0, oldClassNameId, newClassNameId);
 	}
 
 	private void _deleteSubscriptions() throws PortalException {
@@ -107,6 +123,28 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 					subscription.getSubscriptionId()));
 
 		actionableDynamicQuery.performActions();
+	}
+
+	private void _runUpdateSQL(
+			String tableName, boolean addClassPK, long classPK,
+			long oldClassNameId, long newClassNameId)
+		throws IOException, SQLException {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set classNameId = ");
+		sb.append(newClassNameId);
+		sb.append(" where classNameId = ");
+		sb.append(oldClassNameId);
+
+		if (addClassPK) {
+			sb.append(" and classPK = ");
+			sb.append(classPK);
+		}
+
+		runSQL(sb.toString());
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

@@ -66,7 +66,6 @@ export default {
 		const {fragmentEntryLinkIds, segmentsExperienceId} = body;
 
 		const payload = {
-			deleteSegmentsExperience: true,
 			fragmentEntryLinkIds: JSON.stringify(fragmentEntryLinkIds),
 			segmentsExperienceId,
 		};

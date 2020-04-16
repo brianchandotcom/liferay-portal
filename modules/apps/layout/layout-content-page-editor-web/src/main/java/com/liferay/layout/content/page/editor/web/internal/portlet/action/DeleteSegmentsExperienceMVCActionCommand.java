@@ -62,16 +62,11 @@ public class DeleteSegmentsExperienceMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean deleteSegmentsExperience = ParamUtil.getBoolean(
-			actionRequest, "deleteSegmentsExperience");
-
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
 
-		if (deleteSegmentsExperience &&
-			(segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT)) {
-
+		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
 			_segmentsExperienceService.deleteSegmentsExperience(
 				segmentsExperienceId);
 		}

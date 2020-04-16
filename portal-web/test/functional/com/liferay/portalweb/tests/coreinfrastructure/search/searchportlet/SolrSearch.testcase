@@ -889,8 +889,6 @@ definition {
 			portletName = "Blogs",
 			scope = "Blogs Page");
 
-		IFrame.closeFrame();
-
 		Blogs.addEntry(
 			entryContent = "Entry Content",
 			entryTitle = "Entry Title");

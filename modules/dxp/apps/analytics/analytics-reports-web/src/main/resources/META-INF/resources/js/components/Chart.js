@@ -49,7 +49,6 @@ const CHART_SIZES = {
 };
 
 const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
-
 const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
 
 const LAST_24_HOURS = 'last-24-hours';
@@ -334,8 +333,16 @@ export default function Chart({
 			? dateFormatters.formatNumericHour
 			: dateFormatters.formatNumericDay;
 
+	const publishedToday =
+		new Date().toDateString() ===
+		new Date(chartState.publishDate).toDateString();
+
 	const lineChartWrapperClasses = className('line-chart-wrapper', {
 		'line-chart-wrapper--loading': chartState.loading,
+	});
+
+	const publishedTodayClasses = className({
+		'line-chart-wrapper--published-today text-secondary': publishedToday,
 	});
 
 	return (
@@ -362,6 +369,12 @@ export default function Chart({
 						/>
 					)}
 
+					{validAnalyticsConnection && publishedToday && (
+						<div className={publishedTodayClasses}>
+							{Liferay.Language.get('no-data-available-yet')}
+						</div>
+					)}
+
 					{title && <h5>{title}</h5>}
 
 					<div className="line-chart mt-3">
@@ -371,6 +384,11 @@ export default function Chart({
 							width={CHART_SIZES.width}
 						>
 							<CartesianGrid
+								horizontalPoints={
+									validAnalyticsConnection && publishedToday
+										? [CHART_SIZES.dotRadius]
+										: []
+								}
 								stroke={CHART_COLORS.cartesianGrid}
 								strokeDasharray="0 0"
 								vertical={true}
@@ -393,19 +411,28 @@ export default function Chart({
 								tickLine={false}
 							/>
 
-							<YAxis
-								allowDecimals={false}
-								axisLine={{
-									stroke: CHART_COLORS.cartesianGrid,
-								}}
-								minTickGap={3}
-								tickFormatter={thousandsToKilosFormater}
-								tickLine={false}
-								ticks={
-									!validAnalyticsConnection && [0, 50, 100]
-								}
-								width={CHART_SIZES.yAxisWidth}
-							/>
+							{!validAnalyticsConnection ||
+							(validAnalyticsConnection && publishedToday) ? (
+								<YAxis
+									axisLine={{
+										stroke: CHART_COLORS.cartesianGrid,
+									}}
+									tickLine={false}
+									ticks={[0, 50, 100]}
+									width={CHART_SIZES.yAxisWidth}
+								/>
+							) : (
+								<YAxis
+									allowDecimals={false}
+									axisLine={{
+										stroke: CHART_COLORS.cartesianGrid,
+									}}
+									minTickGap={3}
+									tickFormatter={thousandsToKilosFormater}
+									tickLine={false}
+									width={CHART_SIZES.yAxisWidth}
+								/>
+							)}
 
 							<Tooltip
 								content={
@@ -418,6 +445,12 @@ export default function Chart({
 										}
 									/>
 								}
+								cursor={
+									!validAnalyticsConnection ||
+									(validAnalyticsConnection && publishedToday)
+										? false
+										: true
+								}
 								formatter={(value, name) => {
 									return [
 										numberFormat(languageTag, value),
@@ -429,14 +462,16 @@ export default function Chart({
 								separator={': '}
 							/>
 
-							<ReferenceDot
-								fill={CHART_SIZES.referenceDotFill}
-								r={3}
-								stroke={CHART_COLORS.publishDate}
-								strokeWidth={CHART_SIZES.lineWidth}
-								x={referenceDotPosition}
-								y={0}
-							/>
+							{validAnalyticsConnection && !publishedToday && (
+								<ReferenceDot
+									fill={CHART_SIZES.referenceDotFill}
+									r={3}
+									stroke={CHART_COLORS.publishDate}
+									strokeWidth={CHART_SIZES.lineWidth}
+									x={referenceDotPosition}
+									y={0}
+								/>
+							)}
 
 							<Legend
 								formatter={legendFormatter}

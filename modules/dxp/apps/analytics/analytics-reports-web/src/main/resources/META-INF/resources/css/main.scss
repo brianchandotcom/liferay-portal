@@ -100,6 +100,11 @@
 				}
 			}
 		}
+		.line-chart-wrapper--published-today {
+			left: 95px;
+			position: absolute;
+			top: 80px;
+		}
 		.recharts-cartesian-axis .recharts-cartesian-axis-ticks {
 			opacity: 1;
 			transition: opacity 0.15s ease-in-out;

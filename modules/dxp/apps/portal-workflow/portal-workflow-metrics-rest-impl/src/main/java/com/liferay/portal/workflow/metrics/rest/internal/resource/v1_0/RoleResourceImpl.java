@@ -72,6 +72,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", "0"));
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("assigneeType", User.class.getName()),
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("completed", completed),
 			_queries.term("deleted", Boolean.FALSE),

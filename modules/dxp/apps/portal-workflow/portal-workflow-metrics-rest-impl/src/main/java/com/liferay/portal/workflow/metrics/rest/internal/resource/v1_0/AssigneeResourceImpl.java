@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -132,6 +133,7 @@ public class AssigneeResourceImpl extends BaseAssigneeResourceImpl {
 		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", "0"));
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("assigneeType", User.class.getName()),
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId));

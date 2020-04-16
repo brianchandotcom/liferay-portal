@@ -218,6 +218,7 @@ public class AssigneeMetricResourceImpl
 		}
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("assigneeType", User.class.getName()),
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("instanceCompleted", completed),

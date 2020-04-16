@@ -27,8 +27,11 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(reque
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
+String saveButtonLabel = "save";
+
 if (redirectEntry == null) {
 	renderResponse.setTitle(LanguageUtil.get(request, "new-redirect"));
+	saveButtonLabel = "create";
 }
 else {
 	renderResponse.setTitle(LanguageUtil.get(request, "edit-redirect"));
@@ -36,6 +39,7 @@ else {
 %>
 
 <portlet:actionURL name="/redirect/edit_redirect_entry" var="editRedirectEntryURL" />
+<portlet:actionURL name="/redirect/check_destination_url" var="checkDestinationURL" />
 
 <liferay-frontend:edit-form
 	action="<%= editRedirectEntryURL %>"
@@ -45,6 +49,7 @@ else {
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="updateReferences" type="hidden" value="" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 
 	<c:if test="<%= redirectEntry != null %>">
@@ -110,8 +115,7 @@ else {
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
+		<aui:button type="submit" value="<%= LanguageUtil.get(request, saveButtonLabel) %>" />
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
@@ -121,13 +125,44 @@ else {
 		var form = document.<portlet:namespace />fm;
 
 		var destinationURL = form.elements['<portlet:namespace />destinationURL'];
+		var sourceURL = form.elements['<portlet:namespace />sourceURL'];
 
-		if (destinationURL.value) {
-			submitForm(form);
+		if (destinationURL.value && sourceURL.value) {
+			Liferay.Util.fetch('<%= checkDestinationURL %>', {
+				body: Liferay.Util.objectToFormData({
+					<portlet:namespace />sourceURL: sourceURL.value,
+				}),
+				method: 'POST',
+			})
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(response) {
+					if (response.success) {
+						submitForm(form);
+					}
+					else {
+						<portlet:namespace />submitFormWithReference(
+							confirm(
+								'<liferay-ui:message key="create-redirect-and-update-references" />'
+							)
+						);
+					}
+				});
 		}
 		else {
 			destinationURL.focus();
 			destinationURL.blur();
+			sourceURL.focus();
+			sourceURL.blur();
 		}
+	}
+
+	function <portlet:namespace />submitFormWithReference(update) {
+		var form = document.<portlet:namespace />fm;
+
+		form.elements['<portlet:namespace />updateReferences'].value = update;
+
+		submitForm(form);
 	}
 </script>

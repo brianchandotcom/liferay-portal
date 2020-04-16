@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
@@ -64,7 +65,8 @@ public class FragmentLayoutStructureItemHelper
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			FragmentEntryValidator fragmentEntryValidator, Layout layout,
+			FragmentEntryValidator fragmentEntryValidator,
+			FragmentRendererTracker fragmentRendererTracker, Layout layout,
 			LayoutStructure layoutStructure, PageElement pageElement,
 			String parentItemId, int position)
 		throws Exception {

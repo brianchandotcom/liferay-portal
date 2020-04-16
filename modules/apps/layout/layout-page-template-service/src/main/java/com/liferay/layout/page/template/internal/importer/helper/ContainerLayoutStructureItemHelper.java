@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.internal.importer.helper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.util.PaddingConverter;
@@ -42,7 +43,8 @@ public class ContainerLayoutStructureItemHelper
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			FragmentEntryValidator fragmentEntryValidator, Layout layout,
+			FragmentEntryValidator fragmentEntryValidator,
+			FragmentRendererTracker fragmentRendererTracker, Layout layout,
 			LayoutStructure layoutStructure, PageElement pageElement,
 			String parentItemId, int position)
 		throws Exception {

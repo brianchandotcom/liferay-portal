@@ -25,7 +25,9 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
+import com.liferay.headless.delivery.dto.v1_0.Mapping;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageCollectionItemDefinition;
@@ -36,7 +38,9 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageRowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -52,6 +56,8 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -63,6 +69,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -74,6 +81,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * @author Rubén Pulido
@@ -249,6 +257,18 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
+	private static Function<Object, String> _getImageURLTransformerFunction() {
+		return object -> {
+			if (object instanceof JSONObject) {
+				JSONObject jsonObject = (JSONObject)object;
+
+				return jsonObject.getString("url");
+			}
+
+			return StringPool.BLANK;
+		};
+	}
+
 	private static boolean _isFragmentEntryKey(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
@@ -280,6 +300,178 @@ public class PageDefinitionConverterUtil {
 		}
 
 		return false;
+	}
+
+	private static boolean _isSaveFragmentMappedValue(
+		JSONObject jsonObject, boolean saveMapping) {
+
+		if (saveMapping && jsonObject.has("classNameId") &&
+			jsonObject.has("classPK") && jsonObject.has("fieldId")) {
+
+			return true;
+		}
+
+		if (saveMapping && jsonObject.has("mappedField")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static FragmentImage _toBackgroundFragmentImage(
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		JSONObject jsonObject, boolean saveMappingConfiguration) {
+
+		if (jsonObject == null) {
+			return null;
+		}
+
+		String urlValue = jsonObject.getString("url");
+
+		return new FragmentImage() {
+			{
+				title = _toTitleFragmentInlineValue(jsonObject, urlValue);
+
+				setUrl(
+					() -> {
+						if (_isSaveFragmentMappedValue(
+								jsonObject, saveMappingConfiguration)) {
+
+							return _toFragmentMappedValue(
+								_toDefaultMappingValue(
+									infoDisplayContributorTracker, jsonObject,
+									_getImageURLTransformerFunction()),
+								jsonObject);
+						}
+
+						if (Validator.isNull(urlValue)) {
+							return null;
+						}
+
+						return new FragmentInlineValue() {
+							{
+								value = urlValue;
+							}
+						};
+					});
+			}
+		};
+	}
+
+	private static FragmentInlineValue _toDefaultMappingValue(
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		JSONObject jsonObject, Function<Object, String> transformerFunction) {
+
+		long classNameId = jsonObject.getLong("classNameId");
+
+		if (classNameId == 0) {
+			return null;
+		}
+
+		String className = null;
+
+		try {
+			className = PortalUtil.getClassName(classNameId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get class name for default mapping value",
+					exception);
+			}
+		}
+
+		if (Validator.isNull(className)) {
+			return null;
+		}
+
+		InfoDisplayContributor infoDisplayContributor =
+			infoDisplayContributorTracker.getInfoDisplayContributor(className);
+
+		if (infoDisplayContributor == null) {
+			return null;
+		}
+
+		long classPK = jsonObject.getLong("classPK");
+
+		try {
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+
+			Map<String, Object> fieldValues =
+				infoDisplayContributor.getInfoDisplayFieldsValues(
+					infoDisplayObjectProvider.getDisplayObject(),
+					LocaleUtil.getMostRelevantLocale());
+
+			Object fieldValue = fieldValues.get(
+				jsonObject.getString("fieldId"));
+
+			if (transformerFunction != null) {
+				fieldValue = transformerFunction.apply(fieldValue);
+			}
+
+			String valueString = GetterUtil.getString(fieldValue);
+
+			if (Validator.isNull(valueString)) {
+				return null;
+			}
+
+			return new FragmentInlineValue() {
+				{
+					value = valueString;
+				}
+			};
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get default mapped value", exception);
+		}
+
+		return null;
+	}
+
+	private static FragmentMappedValue _toFragmentMappedValue(
+		FragmentInlineValue fragmentInlineValue, JSONObject jsonObject) {
+
+		return new FragmentMappedValue() {
+			{
+				mapping = new Mapping() {
+					{
+						defaultValue = fragmentInlineValue;
+
+						setFieldKey(
+							() -> {
+								String fieldId = jsonObject.getString(
+									"fieldId");
+
+								if (Validator.isNotNull(fieldId)) {
+									return fieldId;
+								}
+
+								return jsonObject.getString("mappedField");
+							});
+						setItemKey(
+							() -> {
+								String classNameId = jsonObject.getString(
+									"classNameId");
+
+								if (Validator.isNull(classNameId)) {
+									return null;
+								}
+
+								String classPK = jsonObject.getString(
+									"classPK");
+
+								if (Validator.isNull(classPK)) {
+									return null;
+								}
+
+								return StringBundler.concat(
+									classNameId, StringPool.POUND, classPK);
+							});
+					}
+				};
+			}
+		};
 	}
 
 	private static Fragment[] _toFragments(
@@ -466,6 +658,11 @@ public class PageDefinitionConverterUtil {
 								containerLayoutStructureItem.
 									getBackgroundColorCssClass(),
 								null);
+							backgroundImage = _toBackgroundFragmentImage(
+								infoDisplayContributorTracker,
+								containerLayoutStructureItem.
+									getBackgroundImageJSONObject(),
+								saveMappingConfiguration);
 							layout = new Layout() {
 								{
 									paddingBottom =
@@ -499,36 +696,6 @@ public class PageDefinitionConverterUtil {
 										});
 								}
 							};
-
-							setBackgroundImage(
-								() -> {
-									JSONObject backgroundImageJSONObject =
-										containerLayoutStructureItem.
-											getBackgroundImageJSONObject();
-
-									if ((backgroundImageJSONObject == null) ||
-										!backgroundImageJSONObject.has("url")) {
-
-										return null;
-									}
-
-									String urlValue =
-										backgroundImageJSONObject.getString(
-											"url");
-
-									return new FragmentImage() {
-										{
-											title = _toTitleFragmentInlineValue(
-												backgroundImageJSONObject,
-												urlValue);
-											url = new FragmentInlineValue() {
-												{
-													value = urlValue;
-												}
-											};
-										}
-									};
-								});
 						}
 					};
 					type = PageElement.Type.SECTION;

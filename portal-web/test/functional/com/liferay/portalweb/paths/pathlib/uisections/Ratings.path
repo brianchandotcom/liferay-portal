@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_RESULT_COUNT</td>
-	<td>//div[contains(@class,'ratings-stars')]//button[contains(@title,'You have rated this ${key_ratingStarCount} stars out of 5')]//span[@class='inline-item']</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[contains(@title,'You have rated this ${key_ratingStarCount} stars out of 5')]//span[contains(@class,'ratings-stars-button-text')]</td>
 	<td></td>
 </tr>
 <tr>

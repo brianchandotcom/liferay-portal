@@ -18,6 +18,7 @@ import com.liferay.data.engine.internal.expando.model.DataEngineExpandoBridgeImp
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
 
 import java.util.Map;
@@ -40,7 +41,8 @@ public class DataEngineExpandoBridgeFactoryImpl
 	public ExpandoBridge getExpandoBridge(long companyId, String className) {
 		if (_dataEngineNativeObjectClassNames.containsKey(className)) {
 			try {
-				return new DataEngineExpandoBridgeImpl(className, 0, companyId);
+				return new DataEngineExpandoBridgeImpl(
+					className, 0, companyId, _groupLocalService);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
@@ -57,7 +59,7 @@ public class DataEngineExpandoBridgeFactoryImpl
 		if (_dataEngineNativeObjectClassNames.containsKey(className)) {
 			try {
 				return new DataEngineExpandoBridgeImpl(
-					className, classPK, companyId);
+					className, classPK, companyId, _groupLocalService);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
@@ -89,5 +91,8 @@ public class DataEngineExpandoBridgeFactoryImpl
 
 	private final Map<String, String> _dataEngineNativeObjectClassNames =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

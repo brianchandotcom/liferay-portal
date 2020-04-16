@@ -26,7 +26,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -54,14 +54,15 @@ import java.util.stream.Stream;
 public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 
 	public DataEngineExpandoBridgeImpl(
-			String className, long classPK, long companyId)
+			String className, long classPK, long companyId,
+			GroupLocalService groupLocalService)
 		throws Exception {
 
 		_className = className;
 		_classPK = classPK;
 		_companyId = companyId;
 
-		Group group = GroupLocalServiceUtil.fetchCompanyGroup(companyId);
+		Group group = groupLocalService.fetchCompanyGroup(companyId);
 
 		if (group == null) {
 			throw new IllegalArgumentException("Invalid company " + companyId);

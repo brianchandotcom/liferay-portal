@@ -16,7 +16,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import RatingsStars from '../../src/main/resources/META-INF/resources/js/components/RatingsStars';
+import Ratings from '../../src/main/resources/META-INF/resources/js/components/Ratings';
 import {formDataToObj} from '../utils';
 
 const baseProps = {
@@ -25,11 +25,12 @@ const baseProps = {
 	enabled: true,
 	numberOfStars: 5,
 	signedIn: true,
+	type: 'stars',
 	url: 'http://url',
 };
 
 const renderComponent = props =>
-	render(<RatingsStars {...baseProps} {...props} />);
+	render(<Ratings {...baseProps} {...props} />);
 
 describe('RatingsStars', () => {
 	afterEach(cleanup);
@@ -48,15 +49,29 @@ describe('RatingsStars', () => {
 		it('has default user score', () => {
 			expect(starsDropdownToggle.value).toBe('0');
 		});
+
+		it('has vote title', () => {
+			expect(starsDropdownToggle.title).toBe('vote');
+		});
 	});
 
 	describe('when rendered with enabled = false', () => {
-		it('is disabled', () => {
-			const starsDropdownToggle = renderComponent({
+		let starsDropdownToggle;
+
+		beforeEach(() => {
+			starsDropdownToggle = renderComponent({
 				enabled: false,
 			}).getAllByRole('button')[0];
+		});
 
+		it('is disabled', () => {
 			expect(starsDropdownToggle.disabled).toBe(true);
+		});
+
+		it('has disabled title', () => {
+			expect(starsDropdownToggle.title).toBe(
+				'ratings-are-disabled-in-staging'
+			);
 		});
 	});
 
@@ -86,6 +101,10 @@ describe('RatingsStars', () => {
 
 			it('increases the user score', () => {
 				expect(starsDropdownToggle.value).toBe('2');
+			});
+
+			it('has voted title', () => {
+				expect(starsDropdownToggle.title).toBe('you-have-rated-this-x-stars-out-of-x');
 			});
 
 			describe('and the user vote 5/5 stars', () => {

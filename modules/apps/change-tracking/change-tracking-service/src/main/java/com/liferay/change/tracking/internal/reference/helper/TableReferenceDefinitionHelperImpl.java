@@ -141,7 +141,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 				StringBundler.concat(
 					"Predicate column tables ", columnTables,
 					" do not match join tables ", joinTables,
-					" for joinStep \"", joinStep, "\""));
+					" for join step \"", joinStep, "\""));
 		}
 
 		Column<?, Long> fromPKColumn = TableUtil.getPrimaryKeyColumn(
@@ -151,7 +151,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"No long type primary key column found for table \"",
-					joinStepASTNodeListener._fromTable, "\" for joinStep \"",
+					joinStepASTNodeListener._fromTable, "\" for join step \"",
 					joinStep, "\""));
 		}
 
@@ -166,7 +166,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"From table should be a different table than \"",
-					_tableReferenceDefinition.getTable(), "\" for joinStep \"",
+					_tableReferenceDefinition.getTable(), "\" for join step \"",
 					joinStep, "\""));
 		}
 

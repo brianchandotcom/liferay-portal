@@ -118,31 +118,6 @@ function switchLayoutData(state, {currentExperienceId, targetExperienceId}) {
 	return nextState;
 }
 
-/**
- * Updates the fragmentEntryLinks editableValues in State
- *
- * @param {object} state
- * @param {string} state.defaultSegmentsExperienceId
- * @param {object} state.fragmentEntryLinks
- * @param {string} fragmentEntryLinks
- * @returns {object}
- */
-function updateFragmentEntryLinksEditableValues(
-	state,
-	fragmentEntryLinks = {}
-) {
-	const updatedFragmentEntryLinks = state.fragmentEntryLinks;
-
-	Object.entries(fragmentEntryLinks).forEach(([id, editableValues]) => {
-		updatedFragmentEntryLinks[id].editableValues = editableValues;
-	});
-
-	return {
-		...state,
-		fragmentEntryLinks: updatedFragmentEntryLinks,
-	};
-}
-
 function deleteExperienceById(state, segmentsExperienceId) {
 	const experiences = {...state.availableSegmentsExperiences};
 
@@ -237,5 +212,4 @@ export {
 	setUsedWidgets,
 	storeNewLayoutData,
 	switchLayoutData,
-	updateFragmentEntryLinksEditableValues,
 };

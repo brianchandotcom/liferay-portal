@@ -14,15 +14,21 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -70,7 +76,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AddSegmentsExperienceMVCActionCommand
 	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
-	protected JSONObject addSegmentsExperience(ActionRequest actionRequest)
+	protected JSONObject addSegmentsExperience(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -98,8 +105,10 @@ public class AddSegmentsExperienceMVCActionCommand
 		JSONObject jsonObject = JSONUtil.put(
 			"fragmentEntryLinks",
 			_getFragmentEntryLinksJSONObject(
+				actionRequest, actionResponse,
 				_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-				themeDisplay.getScopeGroupId())
+				themeDisplay.getScopeGroupId(),
+				segmentsExperience.getSegmentsExperienceId())
 		).put(
 			"layoutData",
 			_getLayoutDataJSONObject(
@@ -135,7 +144,7 @@ public class AddSegmentsExperienceMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		return addSegmentsExperience(actionRequest);
+		return addSegmentsExperience(actionRequest, actionResponse);
 	}
 
 	private SegmentsExperience _addSegmentsExperience(
@@ -196,21 +205,28 @@ public class AddSegmentsExperienceMVCActionCommand
 	}
 
 	private JSONObject _getFragmentEntryLinksJSONObject(
-			long classNameId, long classPK, long groupId)
-		throws JSONException {
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			long classNameId, long classPK, long groupId,
+			long segmentExperienceId)
+		throws PortalException {
 
 		JSONObject fragmentEntryLinksJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				groupId, classNameId, classPK);
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					groupId, segmentExperienceId, classNameId, classPK);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLinksJSONObject.put(
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues()));
+				FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
+					actionRequest, actionResponse,
+					_fragmentEntryConfigurationParser, fragmentEntryLink,
+					_fragmentCollectionContributorTracker,
+					_fragmentRendererController, _fragmentRendererTracker,
+					_itemSelector, StringPool.BLANK));
 		}
 
 		return fragmentEntryLinksJSONObject;
@@ -304,7 +320,23 @@ public class AddSegmentsExperienceMVCActionCommand
 	private CommentManager _commentManager;
 
 	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentRendererController _fragmentRendererController;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

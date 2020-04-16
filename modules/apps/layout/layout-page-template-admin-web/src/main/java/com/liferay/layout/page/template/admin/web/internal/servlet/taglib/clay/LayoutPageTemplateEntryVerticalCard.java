@@ -157,26 +157,16 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public List<LabelItem> getLabels() {
-		if (_layoutPageTemplateEntry.getLayoutPrototypeId() > 0) {
-			return super.getLabels();
-		}
+		if (Objects.equals(
+				_layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
-
-		if (layout == null) {
-			return super.getLabels();
-		}
-
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
-		if (draftLayout == null) {
 			return super.getLabels();
 		}
 
 		return LabelItemListBuilder.add(
-			labelItem -> labelItem.setStatus(draftLayout.getStatus())
+			labelItem -> labelItem.setStatus(
+				_layoutPageTemplateEntry.getStatus())
 		).build();
 	}
 

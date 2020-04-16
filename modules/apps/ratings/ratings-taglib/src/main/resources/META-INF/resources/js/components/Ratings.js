@@ -14,7 +14,7 @@
 
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useCallback} from 'react';
 
 import {errorToast} from '../utils/toast';
 import RatingsLike from './RatingsLike';
@@ -52,31 +52,34 @@ const Ratings = ({
 		}
 	};
 
-	const sendVoteRequest = score => {
-		Liferay.fire('ratings:vote', {
-			className,
-			classPK,
-			ratingType: type,
-			score,
-		});
-
-		const body = objectToFormData({
-			className,
-			classPK,
-			p_auth: Liferay.authToken,
-			p_l_id: themeDisplay.getPlid(),
-			score,
-		});
-
-		return fetch(url, {
-			body,
-			method: 'POST',
-		})
-			.then(response => response.json())
-			.catch(() => {
-				errorToast();
+	const sendVoteRequest = useCallback(
+		score => {
+			Liferay.fire('ratings:vote', {
+				className,
+				classPK,
+				ratingType: type,
+				score,
 			});
-	};
+
+			const body = objectToFormData({
+				className,
+				classPK,
+				p_auth: Liferay.authToken,
+				p_l_id: themeDisplay.getPlid(),
+				score,
+			});
+
+			return fetch(url, {
+				body,
+				method: 'POST',
+			})
+				.then(response => response.json())
+				.catch(() => {
+					errorToast();
+				});
+		},
+		[className, classPK, type, url]
+	);
 
 	const RatingsTypes = {
 		[TYPES.LIKE]: RatingsLike,

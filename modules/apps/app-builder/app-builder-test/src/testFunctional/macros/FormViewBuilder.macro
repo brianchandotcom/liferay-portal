@@ -4,14 +4,20 @@ definition {
 
 		var key_fieldLabel = "${fieldType}";
 
-		while ( IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB") ) {
+		var iterator = "0";
+		var maxRetryNumber = "3";
+
+		while ( (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB")) && ("${iterator}" != "${maxRetryNumber}") ) {
 
 			DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
 
-			if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB")) {
-				DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
+			Pause(locator1 = "1000");
+
+			if ("${iterator}" == "${maxRetryNumber}") {
+				echo("Couldn't add the field by double-click action, maximum retries number reached: ${iterator}");
 			}
 
+			var iterator = MathUtil.sum("${iterator}", "1");
 		}
 
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");

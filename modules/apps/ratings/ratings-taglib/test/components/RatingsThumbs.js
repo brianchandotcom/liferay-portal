@@ -34,28 +34,54 @@ describe('RatingsThumbs', () => {
 	afterEach(cleanup);
 
 	describe('when rendered with the default props', () => {
-		it('is enabled and has default votes', () => {
-			const {getAllByRole} = renderComponent();
+		let thumbUpButton;
+		let thumbDownButton;
 
-			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
+		beforeEach(() => {
+			[thumbUpButton, thumbDownButton] = renderComponent().getAllByRole(
+				'button'
+			);
+		});
 
-			expect(thumbUpButton.value).toBe('0');
-			expect(thumbDownButton.value).toBe('0');
+		it('is enabled', () => {
 			expect(thumbUpButton.disabled).toBe(false);
 			expect(thumbDownButton.disabled).toBe(false);
+		});
+
+		it('has default votes', () => {
+			expect(thumbUpButton.value).toBe('0');
+			expect(thumbDownButton.value).toBe('0');
+		});
+
+		it('thumb-up button has unrate title', () => {
+			expect(thumbUpButton.title).toBe('rate-this-as-good');
+		});
+
+		it('thumb-down button has rate title', () => {
+			expect(thumbDownButton.title).toBe('rate-this-as-bad');
 		});
 	});
 
 	describe('when rendered with enabled = false', () => {
-		it('is disabled', () => {
-			const {getAllByRole} = renderComponent({
+		let thumbUpButton;
+		let thumbDownButton;
+
+		beforeEach(() => {
+			[thumbUpButton, thumbDownButton] = renderComponent({
 				enabled: false,
-			});
+			}).getAllByRole('button');
+		});
 
-			const [thumbUpButton, thumbDownButton] = getAllByRole('button');
-
+		it('is enabled', () => {
 			expect(thumbUpButton.disabled).toBe(true);
 			expect(thumbDownButton.disabled).toBe(true);
+		});
+
+		it('has disabled titles', () => {
+			expect(thumbUpButton.title).toBe('ratings-are-disabled-in-staging');
+			expect(thumbDownButton.title).toBe(
+				'ratings-are-disabled-in-staging'
+			);
 		});
 	});
 
@@ -89,6 +115,14 @@ describe('RatingsThumbs', () => {
 
 			it('keeps the down counter', () => {
 				expect(thumbDownButton.value).toBe('10');
+			});
+
+			it('thumb-up button has unrate title', () => {
+				expect(thumbUpButton.title).toBe('you-have-rated-this-as-good');
+			});
+
+			it('thumb-down button has rate title', () => {
+				expect(thumbDownButton.title).toBe('rate-this-as-bad');
 			});
 
 			describe('and the user votes down', () => {

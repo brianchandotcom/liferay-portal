@@ -556,6 +556,8 @@ definition {
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
 	@priority = "5"
 	test EditInlineContentWithUpdatePageContentPermission {
+		property portal.acceptance = "true";
+
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Rich Text");
@@ -641,6 +643,8 @@ definition {
 	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
 	@priority = "5"
 	test MapInlineContentWithUpdatePageContentPermission {
+		property portal.acceptance = "true";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();

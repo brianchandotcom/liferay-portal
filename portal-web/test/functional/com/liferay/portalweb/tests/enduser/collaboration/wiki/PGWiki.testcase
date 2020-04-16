@@ -73,6 +73,14 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "This page is empty. Edit it to add some text.");
 
+		Panel.expandPanel(panel = "Configuration");
+
+		SelectNoError(
+			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
+			value1 = "HTML");
+
+		AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
+
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
 		Type(
@@ -149,6 +157,14 @@ definition {
 			value1 = "Add Child Page");
 
 		WikiEntry.addPageTitle(wikiPageTitle = "Wiki FrontPage Child Page Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		SelectNoError(
+			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
+			value1 = "HTML");
+
+		AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
@@ -278,6 +294,14 @@ definition {
 		AssertClick(
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "This page is empty. Edit it to add some text.");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		SelectNoError(
+			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
+			value1 = "HTML");
+
+		AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
@@ -473,6 +497,14 @@ definition {
 		WikiNavigator.gotoAddPageViaPG();
 
 		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		SelectNoError(
+			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
+			value1 = "HTML");
+
+		AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 

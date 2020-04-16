@@ -247,13 +247,21 @@ definition {
 				value1 = "HTML");
 
 			AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
+
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
+				value1 = "${wikiPageContent}");
 		}
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		else {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		Type(
-			locator1 = "CKEditor#BODY",
-			value1 = "${wikiPageContent}");
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${wikiPageContent}");
+		}
 
 		SelectFrame(value1 = "relative=top");
 

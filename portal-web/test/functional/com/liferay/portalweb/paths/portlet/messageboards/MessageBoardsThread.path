@@ -121,13 +121,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MESSAGE_RATING_1_UPVOTE</td>
-	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')])[1]</td>
+	<td>MESSAGE_RATING_THUMBS_DOWN</td>
+	<td>//div[contains(@class,'card panel') and contains(.,'${key_threadBody}')]//button[contains(@title,'Rate this as bad.')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MESSAGE_RATING_2_UPVOTE</td>
-	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/a[contains(@class,'rating-thumb-up')])[2]</td>
+	<td>MESSAGE_RATING_THUMBS_UP</td>
+	<td>//div[contains(@class,'card panel') and contains(.,'${key_threadBody}')]//button[contains(@title,'Rate this as good.')]</td>
 	<td></td>
 </tr>
 <tr>

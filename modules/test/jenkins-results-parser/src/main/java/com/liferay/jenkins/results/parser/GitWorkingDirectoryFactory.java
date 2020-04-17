@@ -56,6 +56,10 @@ public class GitWorkingDirectoryFactory {
 				gitRepositoryDirName);
 		}
 
+		if (gitRepositoryName == null) {
+			gitRepositoryName = gitRepositoryDir.getName();
+		}
+
 		if (!gitRepositoryDir.exists()) {
 			throw new RuntimeException(
 				"Directory path not found " + gitRepositoryDir);

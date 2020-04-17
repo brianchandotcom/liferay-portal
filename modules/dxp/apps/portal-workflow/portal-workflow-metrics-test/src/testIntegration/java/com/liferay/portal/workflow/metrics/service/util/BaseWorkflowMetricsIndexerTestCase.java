@@ -16,10 +16,10 @@ package com.liferay.portal.workflow.metrics.service.util;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
@@ -51,6 +51,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
 import java.io.Serializable;
 
@@ -206,7 +207,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		throws Exception {
 
 		_assertReindex(
-			_workflowMetricsIndexer, indexNamesMap, indexTypes, parameters);
+			this::_reindexMetricIndexes, indexNamesMap, indexTypes, parameters);
 	}
 
 	protected void assertReindex(
@@ -229,7 +230,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		throws Exception {
 
 		_assertReindex(
-			_slaWorkflowMetricsIndexer, indexNamesMap, indexTypes, parameters);
+			this::_reindexSLAIndexes, indexNamesMap, indexTypes, parameters);
 	}
 
 	protected void assertSLAReindex(
@@ -392,16 +393,16 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	private void _assertReindex(
-			Indexer<Object> indexer, Map<String, Integer> indexNamesMap,
-			String[] indexTypes, Object... parameters)
+			UnsafeConsumer<Long, Exception> unsafeConsumer,
+			Map<String, Integer> indexNamesMap, String[] indexTypes,
+			Object... parameters)
 		throws Exception {
 
 		if (searchEngineAdapter == null) {
 			return;
 		}
 
-		indexer.reindex(
-			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
+		unsafeConsumer.accept(TestPropsValues.getCompanyId());
 
 		String[] indexNames = ArrayUtil.toStringArray(indexNamesMap.keySet());
 
@@ -505,6 +506,19 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			_workflowDefinition.getName(), _workflowDefinition.getVersion());
 	}
 
+	private void _reindexMetricIndexes(long companyId) throws Exception {
+		_instanceWorkflowMetricsReindexer.reindex(companyId);
+		_nodeWorkflowMetricsReindexer.reindex(companyId);
+		_processWorkflowMetricsReindexer.reindex(companyId);
+		_taskWorkflowMetricsReindexer.reindex(companyId);
+		_transitionWorkflowMetricsReindexer.reindex(companyId);
+	}
+
+	private void _reindexSLAIndexes(long companyId) throws Exception {
+		_slaInstanceResultWorkflowMetricsReindexer.reindex(companyId);
+		_slaTaskResultWorkflowMetricsReindexer.reindex(companyId);
+	}
+
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<>();
 
 	@Inject
@@ -512,6 +526,9 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 	@Inject
 	private DocumentBuilderFactory _documentBuilderFactory;
+
+	@Inject(filter = "workflow.metrics.index.entity.name=instance")
+	private WorkflowMetricsReindexer _instanceWorkflowMetricsReindexer;
 
 	private KaleoDefinition _kaleoDefinition;
 
@@ -543,10 +560,23 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 	private final List<KaleoTask> _kaleoTasks = new ArrayList<>();
 
-	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.search.SLAWorkflowMetricsIndexer))"
-	)
-	private Indexer<Object> _slaWorkflowMetricsIndexer;
+	@Inject(filter = "workflow.metrics.index.entity.name=node")
+	private WorkflowMetricsReindexer _nodeWorkflowMetricsReindexer;
+
+	@Inject(filter = "workflow.metrics.index.entity.name=process")
+	private WorkflowMetricsReindexer _processWorkflowMetricsReindexer;
+
+	@Inject(filter = "workflow.metrics.index.entity.name=sla-instance-result")
+	private WorkflowMetricsReindexer _slaInstanceResultWorkflowMetricsReindexer;
+
+	@Inject(filter = "workflow.metrics.index.entity.name=sla-task-result")
+	private WorkflowMetricsReindexer _slaTaskResultWorkflowMetricsReindexer;
+
+	@Inject(filter = "workflow.metrics.index.entity.name=task")
+	private WorkflowMetricsReindexer _taskWorkflowMetricsReindexer;
+
+	@Inject(filter = "workflow.metrics.index.entity.name=transition")
+	private WorkflowMetricsReindexer _transitionWorkflowMetricsReindexer;
 
 	private WorkflowDefinition _workflowDefinition;
 
@@ -559,10 +589,5 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 	@Inject
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
-
-	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.search.WorkflowMetricsIndexer))"
-	)
-	private Indexer<Object> _workflowMetricsIndexer;
 
 }

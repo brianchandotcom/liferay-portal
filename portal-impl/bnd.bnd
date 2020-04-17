@@ -16,6 +16,7 @@ Export-Package:\
 	com.liferay.portal.service.permission,\
 	com.liferay.portal.service.persistence.constants,\
 	com.liferay.portal.servlet,\
+	com.liferay.portal.servlet.filters,\
 	com.liferay.portal.servlet.filters.authverifier,\
 	com.liferay.portal.spring.configurator,\
 	com.liferay.portal.template,\
@@ -34,6 +35,7 @@ Export-Package:\
 	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.documentlibrary,\
 	com.liferay.portlet.documentlibrary.antivirus,\
+	com.liferay.portlet.documentlibrary.asset,\
 	com.liferay.portlet.documentlibrary.lar,\
 	com.liferay.portlet.documentlibrary.service.permission,\
 	com.liferay.portlet.documentlibrary.store,\

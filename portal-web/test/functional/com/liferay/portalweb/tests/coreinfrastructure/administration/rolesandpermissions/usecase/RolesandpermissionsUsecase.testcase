@@ -413,7 +413,6 @@ definition {
 	@priority = "4"
 	test RolesOrganizationSearch {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.upstream = "quarantine";
 
 		JSONRole.addOrganizationRole(roleTitle = "Roles Orgrole Name");
 

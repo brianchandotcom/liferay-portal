@@ -1,0 +1,9 @@
+apiDir: "../headless-admin-content-api/src/main/java"
+apiPackagePath: "com.liferay.headless.admin.content"
+application:
+    baseURI: "/headless-admin-content"
+    className: "HeadlessAdminContentApplication"
+    name: "Liferay.Headless.Admin.Content"
+author: "Javier Gamarra"
+clientDir: "../headless-admin-content-client/src/main/java"
+testDir: "../headless-admin-content-test/src/testIntegration/java"

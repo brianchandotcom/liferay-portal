@@ -1,0 +1,47 @@
+components:
+    schemas:
+        PageDefinition:
+            properties:
+                pageElement:
+                    type: object
+            type: object
+info:
+    description:
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.content.client', and version '1.0.0'."
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "Headless Admin Content"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/sites/{siteId}/page-definitions/preview":
+        # @review
+        post:
+            description:
+                Renders and retrieves HTML for the page definition using the theme of specified site.
+            operationId: postSitePageDefinitionPreview
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/PageDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/PageDefinition"
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: ["PageDefinition"]

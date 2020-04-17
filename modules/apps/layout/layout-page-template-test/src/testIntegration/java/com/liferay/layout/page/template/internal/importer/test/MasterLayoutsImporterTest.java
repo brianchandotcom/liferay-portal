@@ -15,6 +15,9 @@
 package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.contributor.FragmentCollectionContributor;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
@@ -35,9 +38,12 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -45,6 +51,9 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,9 +62,13 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -86,6 +99,17 @@ public class MasterLayoutsImporterTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = TestPropsValues.getUser();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			FragmentCollectionContributor.class,
+			new TestMasterPageFragmentCollectionContributor());
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -107,11 +131,16 @@ public class MasterLayoutsImporterTest {
 					_portal.getClassNameId(Layout.class.getName()),
 					layoutPageTemplateEntry.getPlid()),
 			Arrays.asList(
-				"BASIC_COMPONENT-button", "BASIC_COMPONENT-card",
-				"FEATURED_CONTENT-banner-center",
-				"com.liferay.fragment.internal.renderer." +
-					"ContentObjectFragmentRenderer",
-				"content-display"),
+				TestMasterPageFragmentCollectionContributor.
+					TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY,
+				TestMasterPageFragmentCollectionContributor.
+					TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY + StringPool.DASH +
+						TestMasterPageFragmentCollectionContributor.
+							TEST_MASTER_PAGE_FRAGMENT_ENTRY_1,
+				TestMasterPageFragmentCollectionContributor.
+					TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY + StringPool.DASH +
+						TestMasterPageFragmentCollectionContributor.
+							TEST_MASTER_PAGE_FRAGMENT_ENTRY_2),
 			false);
 	}
 
@@ -134,11 +163,16 @@ public class MasterLayoutsImporterTest {
 					_portal.getClassNameId(Layout.class.getName()),
 					layoutPageTemplateEntry.getPlid()),
 			Arrays.asList(
-				"BASIC_COMPONENT-button", "BASIC_COMPONENT-card",
-				"FEATURED_CONTENT-banner-center",
-				"com.liferay.fragment.internal.renderer." +
-					"ContentObjectFragmentRenderer",
-				"content-display"),
+				TestMasterPageFragmentCollectionContributor.
+					TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY,
+				TestMasterPageFragmentCollectionContributor.
+					TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY + StringPool.DASH +
+						TestMasterPageFragmentCollectionContributor.
+							TEST_MASTER_PAGE_FRAGMENT_ENTRY_1,
+				TestMasterPageFragmentCollectionContributor.
+					TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY + StringPool.DASH +
+						TestMasterPageFragmentCollectionContributor.
+							TEST_MASTER_PAGE_FRAGMENT_ENTRY_2),
 			true);
 	}
 
@@ -314,9 +348,9 @@ public class MasterLayoutsImporterTest {
 
 		Assert.assertNotNull(layoutStructure);
 
-		Assert.assertEquals(
-			expectedFragmentEntryKeys,
-			dropZoneLayoutStructureItem.getFragmentEntryKeys());
+		Assert.assertTrue(
+			expectedFragmentEntryKeys.containsAll(
+				dropZoneLayoutStructureItem.getFragmentEntryKeys()));
 
 		Assert.assertEquals(
 			expectedIsAllowNewFragments,
@@ -347,6 +381,77 @@ public class MasterLayoutsImporterTest {
 	@Inject
 	private Portal _portal;
 
+	private ServiceRegistration<FragmentCollectionContributor>
+		_serviceRegistration;
 	private User _user;
+
+	private static class TestMasterPageFragmentCollectionContributor
+		implements FragmentCollectionContributor {
+
+		public static final String TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY =
+			"test-master-page-fragment-collection-contributor";
+
+		public static final String TEST_MASTER_PAGE_FRAGMENT_ENTRY_1 =
+			"test-master-page-fragment-entry-1";
+
+		public static final String TEST_MASTER_PAGE_FRAGMENT_ENTRY_2 =
+			"test-master-page-fragment-entry-2";
+
+		@Override
+		public String getFragmentCollectionKey() {
+			return TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY;
+		}
+
+		@Override
+		public List<FragmentEntry> getFragmentEntries() {
+			List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+			fragmentEntries.add(
+				_getFragmentEntry(TEST_MASTER_PAGE_FRAGMENT_ENTRY_1, 0));
+
+			fragmentEntries.add(
+				_getFragmentEntry(TEST_MASTER_PAGE_FRAGMENT_ENTRY_2, 0));
+
+			return fragmentEntries;
+		}
+
+		@Override
+		public List<FragmentEntry> getFragmentEntries(int type) {
+			return getFragmentEntries();
+		}
+
+		@Override
+		public List<FragmentEntry> getFragmentEntries(Locale locale) {
+			return Collections.emptyList();
+		}
+
+		@Override
+		public String getName() {
+			return "Test Master Page Fragment Collection Contributor";
+		}
+
+		@Override
+		public Map<Locale, String> getNames() {
+			return HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), getName()
+			).build();
+		}
+
+		private FragmentEntry _getFragmentEntry(String key, int type) {
+			FragmentEntry fragmentEntry =
+				FragmentEntryLocalServiceUtil.createFragmentEntry(0L);
+
+			fragmentEntry.setFragmentEntryKey(key);
+			fragmentEntry.setName(RandomTestUtil.randomString());
+			fragmentEntry.setCss(null);
+			fragmentEntry.setHtml(RandomTestUtil.randomString());
+			fragmentEntry.setJs(null);
+			fragmentEntry.setConfiguration(null);
+			fragmentEntry.setType(type);
+
+			return fragmentEntry;
+		}
+
+	}
 
 }

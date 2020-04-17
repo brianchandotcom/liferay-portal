@@ -6,19 +6,10 @@
 					"fragmentSettings": {
 						"unallowedFragments": [
 							{
-								"key": "BASIC_COMPONENT-button"
+								"key": "test-master-page-fragment-collection-contributor-test-master-page-fragment-entry-1"
 							},
 							{
-								"key": "BASIC_COMPONENT-card"
-							},
-							{
-								"key": "FEATURED_CONTENT-banner-center"
-							},
-							{
-								"key": "com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer"
-							},
-							{
-								"key": "content-display"
+								"key": "test-master-page-fragment-collection-contributor-test-master-page-fragment-entry-2"
 							}
 						]
 					}

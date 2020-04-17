@@ -206,7 +206,8 @@ public class SegmentsExperienceUtil {
 
 				JSONObject valueJSONObject = null;
 
-				if (editableJSONObject.has(
+				if ((editableJSONObject != null) &&
+					editableJSONObject.has(
 						SegmentsExperienceConstants.ID_PREFIX +
 							sourceSegmentsExperienceId)) {
 

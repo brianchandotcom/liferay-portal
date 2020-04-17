@@ -874,7 +874,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<echo>${indexList}</echo>
 
-		<property name="configure.cluster">
+		<property name="connect.cluster.request.body">
 			<![CDATA[
 				{
 					"persistent": {
@@ -899,7 +899,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="PUT" />
 			<arg value="localhost:9202/_cluster/settings" />
 			<arg value="-d" />
-			<arg value="${configure.cluster}" />
+			<arg value="${connect.cluster.request.body}" />
 			<arg value="-s" />
 		</exec>
 
@@ -914,7 +914,7 @@ xpack.monitoring.collection.enabled: true</echo>
 						</not>
 					</and>
 					<then>
-						<property name="follower.index">
+						<property name="create.follower.request.body">
 							<![CDATA[
 								{
 									"leader_index": "@{indexName}",
@@ -923,21 +923,21 @@ xpack.monitoring.collection.enabled: true</echo>
 							]]>
 						</property>
 
-						<exec executable="curl" outputproperty="curl.output.follower.index">
+						<exec executable="curl" outputproperty="curl.output.create.follower.index">
 							<arg value="-H" />
 							<arg value="Content-Type: application/json" />
 							<arg value="-X" />
 							<arg value="PUT" />
 							<arg value="localhost:9202/@{indexName}/_ccr/follow?wait_for_active_shards=1" />
 							<arg value="-d" />
-							<arg value="${follower.index}" />
+							<arg value="${create.follower.request.body}" />
 							<arg value="-s" />
 						</exec>
 
-						<echo>${curl.output.follower.index}</echo>
+						<echo>${curl.output.create.follower.index}</echo>
 
-						<var name="curl.output.follower.index" unset="true" />
-						<var name="follower.index" unset="true" />
+						<var name="create.follower.request.body" unset="true" />
+						<var name="curl.output.create.follower.index" unset="true" />
 					</then>
 				</if>
 			</sequential>

@@ -227,6 +227,7 @@ definition {
 	}
 
 	test SearchWithNonLiferayIndex {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Elasticsearch6#SearchWithNonLiferayIndex";
 
 		Navigator.openSpecificURL(url = "http://localhost:9201");

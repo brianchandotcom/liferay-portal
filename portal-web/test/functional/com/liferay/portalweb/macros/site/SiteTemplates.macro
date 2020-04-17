@@ -36,7 +36,7 @@ definition {
 
 		Type(
 			key_fieldLabel = "Description",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			locator1 = "TextInput#SITE_TEMPLATE_TEXT_INPUT",
 			value1 = "This is a site template description");
 
 		if ("${siteTemplateActive}" == "No") {

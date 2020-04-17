@@ -1406,7 +1406,11 @@ definition {
 				value1 = "${userName}");
 
 			AssertTextEquals(
-				locator1 = "MessageBoardsThread#MESSAGE_RATING_1_UPVOTE",
+				locator1 = "MessageBoardsThread#MESSAGE_RATING_THUMBS_UP",
+				value1 = "0");
+
+			AssertTextEquals(
+				locator1 = "MessageBoardsThread#MESSAGE_RATING_THUMBS_DOWN",
 				value1 = "0");
 
 			var key_threadBody = "${threadReplyBody}";
@@ -1420,7 +1424,11 @@ definition {
 				value1 = "${userName}");
 
 			AssertTextEquals(
-				locator1 = "MessageBoardsThread#MESSAGE_RATING_2_UPVOTE",
+				locator1 = "MessageBoardsThread#MESSAGE_RATING_THUMBS_UP",
+				value1 = "0");
+
+			AssertTextEquals(
+				locator1 = "MessageBoardsThread#MESSAGE_RATING_THUMBS_DOWN",
 				value1 = "0");
 		}
 

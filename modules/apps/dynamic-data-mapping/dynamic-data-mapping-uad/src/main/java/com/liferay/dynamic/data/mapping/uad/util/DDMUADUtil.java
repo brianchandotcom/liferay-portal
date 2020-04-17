@@ -53,14 +53,14 @@ public class DDMUADUtil {
 	}
 
 	public static String getFormattedName(DDMFormInstance ddmFormInstance) {
-		Document document = _toDocument(ddmFormInstance.getName());
+		Document document = toDocument(ddmFormInstance.getName());
 
 		Node firstChildNode = document.getFirstChild();
 
 		return firstChildNode.getTextContent();
 	}
 
-	private static Document _toDocument(String xml) {
+	public static Document toDocument(String xml) {
 		try {
 			DocumentBuilderFactory documentBuilderFactory =
 				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();

@@ -25,10 +25,12 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -101,6 +103,10 @@ public class NodeWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
 
 				dynamicQuery.add(companyIdProperty.eq(companyId));
 			});
+
+		AtomicInteger atomicCounter = new AtomicInteger(0);
+		long total = actionableDynamicQuery.performCount();
+
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoTask kaleoTask) -> {
 				KaleoDefinitionVersion kaleoDefinitionVersion =
@@ -119,6 +125,9 @@ public class NodeWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
 					kaleoTask.getKaleoDefinitionId(),
 					kaleoDefinitionVersion.getVersion(), false,
 					NodeType.TASK.name());
+
+				_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
+					atomicCounter.incrementAndGet(), total, "node");
 			});
 
 		actionableDynamicQuery.performActions();
@@ -136,5 +145,9 @@ public class NodeWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
 
 	@Reference
 	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+
+	@Reference
+	private WorkflowMetricsReindexStatusMessageSender
+		_workflowMetricsReindexStatusMessageSender;
 
 }

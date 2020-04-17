@@ -685,7 +685,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<if>
 						<resourcecontains
 							resource="@{gitrepo.file}"
-							substring="git@github.com:liferay/@{subrepository.name}.git"
+							substring="/@{subrepository.name}.git"
 						/>
 						<then>
 							<antelope:stringutil property="module.base.dir" string="@{gitrepo.file}">

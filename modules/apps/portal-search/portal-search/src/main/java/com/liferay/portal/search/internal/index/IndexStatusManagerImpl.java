@@ -35,13 +35,20 @@ import org.osgi.service.component.annotations.Modified;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.configuration.IndexStatusManagerConfiguration",
+	configurationPid = {
+		"com.liferay.portal.search.configuration.IndexStatusManagerConfiguration",
+		"com.liferay.portal.search.internal.index.IndexStatusManagerInternalConfiguration"
+	},
 	immediate = true, service = IndexStatusManager.class
 )
 public class IndexStatusManagerImpl implements IndexStatusManager {
 
 	@Override
 	public boolean isIndexReadOnly() {
+		if (_suppressIndexReadOnly) {
+			return false;
+		}
+
 		if (IndexStatusManagerThreadLocal.isIndexReadOnly() || _indexReadOnly) {
 			return true;
 		}
@@ -122,6 +129,14 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 				IndexStatusManagerConfiguration.class, properties);
 
 		_indexReadOnly = indexStatusManagerConfiguration.indexReadOnly();
+
+		IndexStatusManagerInternalConfiguration
+			indexStatusManagerInternalConfiguration =
+				ConfigurableUtil.createConfigurable(
+					IndexStatusManagerInternalConfiguration.class, properties);
+
+		_suppressIndexReadOnly =
+			indexStatusManagerInternalConfiguration.suppressIndexReadOnly();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -133,5 +148,6 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 		new ConcurrentHashMap<>());
 	private boolean _readWriteRequired;
 	private Throwable _requireIndexReadWriteCallStackThrowable;
+	private boolean _suppressIndexReadOnly;
 
 }

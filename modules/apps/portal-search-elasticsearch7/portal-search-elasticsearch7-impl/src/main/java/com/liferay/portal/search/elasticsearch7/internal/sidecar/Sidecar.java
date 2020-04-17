@@ -317,8 +317,10 @@ public class Sidecar {
 
 		processConfigBuilder.setArguments(_getJVMArguments(bundleURL));
 
+		File file = new File(_props.get(PropsKeys.LIFERAY_LIB_GLOBAL_DIR));
+
 		String bootstrapClasspath = _createClasspath(
-			Paths.get(_props.get(PropsKeys.LIFERAY_LIB_GLOBAL_DIR)),
+			file.toPath(),
 			path -> {
 				String name = String.valueOf(path.getFileName());
 

@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {render} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import './Modal.scss';
 
@@ -26,7 +26,7 @@ const openModal = props => {
 	render(Modal, props, document.createElement('div'));
 };
 
-const Modal = ({buttons, id, onClose, size, title, url}) => {
+const Modal = ({bodyHTML, buttons, id, onClose, size, title, url}) => {
 	const [visible, setVisible] = useState(true);
 
 	const {observer} = useModal({
@@ -93,6 +93,22 @@ const Modal = ({buttons, id, onClose, size, title, url}) => {
 		}
 	};
 
+	const BodyHTML = () => {
+		const bodyRef = useRef();
+
+		useEffect(() => {
+			const fragment = document
+				.createRange()
+				.createContextualFragment(bodyHTML);
+
+			bodyRef.current.innerHTML = '';
+
+			bodyRef.current.appendChild(fragment);
+		}, []);
+
+		return <div ref={bodyRef}></div>;
+	};
+
 	return (
 		<>
 			{visible && (
@@ -103,7 +119,9 @@ const Modal = ({buttons, id, onClose, size, title, url}) => {
 					size={url && !size ? 'full-screen' : size}
 				>
 					<ClayModal.Header>{title}</ClayModal.Header>
-					<ClayModal.Body url={getIframeUrl()} />
+					<ClayModal.Body url={getIframeUrl()}>
+						{bodyHTML && <BodyHTML />}
+					</ClayModal.Body>
 					{buttons && (
 						<ClayModal.Footer
 							last={
@@ -150,6 +168,7 @@ const Modal = ({buttons, id, onClose, size, title, url}) => {
 };
 
 Modal.propTypes = {
+	bodyHTML: PropTypes.string,
 	buttons: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayType: PropTypes.oneOf([

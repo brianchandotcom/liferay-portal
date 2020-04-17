@@ -66,6 +66,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Elements elements = document.select("lfr-drop-zone");
 
+		if (elements.size() <= 0) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Element element : elements) {

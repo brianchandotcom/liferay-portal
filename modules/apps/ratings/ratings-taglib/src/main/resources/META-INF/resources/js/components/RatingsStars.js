@@ -30,7 +30,7 @@ const RatingsStars = ({
 	sendVoteRequest,
 	userScore,
 }) => {
-	const startScores = Array.from(Array(numberOfStars)).map((_, index) => {
+	const starScores = Array.from(Array(numberOfStars)).map((_, index) => {
 		const number = index + 1;
 
 		return {
@@ -41,11 +41,11 @@ const RatingsStars = ({
 
 	const getLabelScore = useCallback(
 		score => {
-			const startScore = startScores.find(({value}) => score === value);
+			const starScore = starScores.find(({value}) => score === value);
 
-			return (startScore && startScore.label) || 0;
+			return (starScore && starScore.label) || 0;
 		},
-		[startScores]
+		[starScores]
 	);
 
 	const formatAverageScore = useCallback(
@@ -62,7 +62,7 @@ const RatingsStars = ({
 	const isMounted = useIsMounted();
 
 	const handleOnClick = index => {
-		const {label, value} = startScores[index];
+		const {label, value} = starScores[index];
 
 		setScore(label);
 		handleSendVoteRequest(value);
@@ -148,7 +148,7 @@ const RatingsStars = ({
 					}
 				>
 					<ClayDropDown.ItemList>
-						{startScores.map(({label}, index) => {
+						{starScores.map(({label}, index) => {
 							const srMessage =
 								index === 0
 									? Liferay.Language.get(

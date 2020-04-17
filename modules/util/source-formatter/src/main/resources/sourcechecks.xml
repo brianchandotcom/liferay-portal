@@ -698,6 +698,7 @@
 		<check name="YMLDefinitionOrderCheck" />
 		<check name="YMLEmptyLinesCheck" />
 		<check name="YMLLongLinesCheck">
+			<property name="enabled" value="false" />
 			<property name="maxLineLength" value="120" />
 		</check>
 		<check name="YMLStylingCheck" />

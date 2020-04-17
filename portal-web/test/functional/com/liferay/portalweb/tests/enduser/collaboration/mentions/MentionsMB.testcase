@@ -147,7 +147,7 @@ definition {
 		Mentions.addMentionViaMessageBoardThreadEdit(
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "usersn",
-			threadBody = "Thread Body",
+			threadBody = "Thread Body Edit",
 			threadSubject = "Thread Subject");
 
 		Navigator.openURL();
@@ -159,7 +159,7 @@ definition {
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
-			threadBody = "Thread Body",
+			threadBody = "Thread Body Edit",
 			threadSubject = "Thread Subject");
 
 		Mentions.viewMentionTagLink(

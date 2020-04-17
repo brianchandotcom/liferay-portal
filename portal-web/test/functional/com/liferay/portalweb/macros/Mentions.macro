@@ -71,10 +71,13 @@ definition {
 			locator1 = "TextInput#SUBJECT",
 			value1 = "${threadSubject}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.sendKeys(
-			key_editor = "body",
-			locator1 = "AlloyEditor#EDITOR",
+			locator1 = "CKEditor#BODY",
 			value1 = "@${mentionsUserScreenName}");
+
+		SelectFrame.selectFrameTop();
 
 		Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
 
@@ -86,20 +89,15 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Type(
-			locator1 = "TextInput#SUBJECT",
-			value1 = "${threadSubject}");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		Click(
-			key_editor = "body",
-			locator1 = "AlloyEditor#EDITOR");
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${threadBody} @${mentionsUserScreenName}");
+
+		SelectFrame(value1 = "relative=top");
 
 		var key_mentionsUserScreenName = "${mentionsUserScreenName}";
-
-		Type.sendKeys(
-			key_editor = "body",
-			locator1 = "AlloyEditor#EDITOR",
-			value1 = " @${mentionsUserScreenName}");
 
 		Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
 

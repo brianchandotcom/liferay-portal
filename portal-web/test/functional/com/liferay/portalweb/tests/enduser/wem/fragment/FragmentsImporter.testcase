@@ -136,7 +136,11 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "fragment-collection.zip");
 
-			Button.click(button = "Import");
+			SelectFrameTop();
+
+			Click.mouseDownMouseUp(
+				key_text = "Import",
+				locator1 = "Modal#ANY_BUTTON");
 		}
 
 		task ("Assert the zip imported properly") {

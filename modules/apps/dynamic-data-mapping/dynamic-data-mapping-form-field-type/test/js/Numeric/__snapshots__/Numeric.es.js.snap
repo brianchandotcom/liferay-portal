@@ -2,70 +2,96 @@
 
 exports[`Field Numeric has a helptext 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group" data-field-name="numericField"><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""><span class="form-text">Type something</span></div>
+  <div class="form-group" data-field-name="numericField">
+    <fieldset><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></fieldset><span class="form-text">Type something</span>
+  </div>
 </div>
 `;
 
 exports[`Field Numeric has a key 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group" data-field-name="numericField"><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></div>
+  <div class="form-group" data-field-name="numericField">
+    <fieldset><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></fieldset>
+  </div>
 </div>
 `;
 
 exports[`Field Numeric has a label 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="numericField">
-    <p class="ddm-label">label</p><input name="numericField" aria-label="numeric" type="text" class="form-control" value="">
+    <fieldset>
+      <legend>
+        <p class="ddm-label">label</p>
+      </legend><input name="numericField" aria-label="numeric" type="text" class="form-control" value="">
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Field Numeric has a placeholder 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group" data-field-name="numericField"><input name="numericField" placeholder="Placeholder" aria-label="numeric" type="text" class="form-control" value=""></div>
+  <div class="form-group" data-field-name="numericField">
+    <fieldset><input name="numericField" placeholder="Placeholder" aria-label="numeric" type="text" class="form-control" value=""></fieldset>
+  </div>
 </div>
 `;
 
 exports[`Field Numeric has a spritemap 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group" data-field-name="numericField"><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></div>
+  <div class="form-group" data-field-name="numericField">
+    <fieldset><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></fieldset>
+  </div>
 </div>
 `;
 
 exports[`Field Numeric has a value 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group" data-field-name="numericField"><input name="numericField" aria-label="numeric" type="text" class="form-control" value="123"></div>
+  <div class="form-group" data-field-name="numericField">
+    <fieldset><input name="numericField" aria-label="numeric" type="text" class="form-control" value="123"></fieldset>
+  </div>
 </div>
 `;
 
 exports[`Field Numeric has an id 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group" data-field-name="numericField"><input id="ID" name="numericField" aria-label="numeric" type="text" class="form-control" value=""></div>
+  <div class="form-group" data-field-name="numericField">
+    <fieldset><input id="ID" name="numericField" aria-label="numeric" type="text" class="form-control" value=""></fieldset>
+  </div>
 </div>
 `;
 
 exports[`Field Numeric is not readOnly 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group" data-field-name="numericField"><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></div>
+  <div class="form-group" data-field-name="numericField">
+    <fieldset><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></fieldset>
+  </div>
 </div>
 `;
 
 exports[`Field Numeric is not required 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group" data-field-name="numericField"><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></div>
+  <div class="form-group" data-field-name="numericField">
+    <fieldset><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></fieldset>
+  </div>
 </div>
 `;
 
 exports[`Field Numeric renders Label if showLabel is true 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="numericField">
-    <p class="ddm-label">Numeric Field</p><input name="numericField" aria-label="numeric" type="text" class="form-control" value="">
+    <fieldset>
+      <legend>
+        <p class="ddm-label">Numeric Field</p>
+      </legend><input name="numericField" aria-label="numeric" type="text" class="form-control" value="">
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Field Numeric renders the default markup 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group" data-field-name="numericField"><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></div>
+  <div class="form-group" data-field-name="numericField">
+    <fieldset><input name="numericField" aria-label="numeric" type="text" class="form-control" value=""></fieldset>
+  </div>
 </div>
 `;

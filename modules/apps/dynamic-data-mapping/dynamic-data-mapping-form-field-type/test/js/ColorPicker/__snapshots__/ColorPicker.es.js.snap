@@ -3,14 +3,16 @@
 exports[`Field Color Picker renders field disabled 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="colorPicker">
-    <div class="clay-color-picker"><input name="colorPicker" style="display: none;" type="text" value="000000">
-      <div class="input-group clay-color">
-        <div class="input-group-item input-group-item-shrink input-group-prepend">
-          <div class="input-group-text"><button aria-label="Select a color" class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; background: rgb(0, 0, 0); height: 28px; width: 28px;" title="000000" type="button"></button></div>
+    <fieldset>
+      <div class="clay-color-picker"><input name="colorPicker" style="display: none;" type="text" value="000000">
+        <div class="input-group clay-color">
+          <div class="input-group-item input-group-item-shrink input-group-prepend">
+            <div class="input-group-text"><button aria-label="Select a color" class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; background: rgb(0, 0, 0); height: 28px; width: 28px;" title="000000" type="button"></button></div>
+          </div>
+          <div class="input-group-item input-group-append"><input aria-label="Color selection is 000000" type="text" class="form-control input-group-inset input-group-inset-before" value="000000"><label class="input-group-inset-item input-group-inset-item-before">#</label></div>
         </div>
-        <div class="input-group-item input-group-append"><input aria-label="Color selection is 000000" type="text" class="form-control input-group-inset input-group-inset-before" value="000000"><label class="input-group-inset-item input-group-inset-item-before">#</label></div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
@@ -18,14 +20,16 @@ exports[`Field Color Picker renders field disabled 1`] = `
 exports[`Field Color Picker renders field with helptext 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="colorPicker">
-    <div class="clay-color-picker"><input name="colorPicker" style="display: none;" type="text" value="000000">
-      <div class="input-group clay-color">
-        <div class="input-group-item input-group-item-shrink input-group-prepend">
-          <div class="input-group-text"><button aria-label="Select a color" class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; background: rgb(0, 0, 0); height: 28px; width: 28px;" title="000000" type="button"></button></div>
+    <fieldset>
+      <div class="clay-color-picker"><input name="colorPicker" style="display: none;" type="text" value="000000">
+        <div class="input-group clay-color">
+          <div class="input-group-item input-group-item-shrink input-group-prepend">
+            <div class="input-group-text"><button aria-label="Select a color" class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; background: rgb(0, 0, 0); height: 28px; width: 28px;" title="000000" type="button"></button></div>
+          </div>
+          <div class="input-group-item input-group-append"><input aria-label="Color selection is 000000" type="text" class="form-control input-group-inset input-group-inset-before" value="000000"><label class="input-group-inset-item input-group-inset-item-before">#</label></div>
         </div>
-        <div class="input-group-item input-group-append"><input aria-label="Color selection is 000000" type="text" class="form-control input-group-inset input-group-inset-before" value="000000"><label class="input-group-inset-item input-group-inset-item-before">#</label></div>
       </div>
-    </div><span class="form-text">Helptext</span>
+    </fieldset><span class="form-text">Helptext</span>
   </div>
 </div>
 `;
@@ -33,15 +37,19 @@ exports[`Field Color Picker renders field with helptext 1`] = `
 exports[`Field Color Picker renders field with label 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="colorPicker">
-    <p class="ddm-label">Label</p>
-    <div class="clay-color-picker"><input name="colorPicker" style="display: none;" type="text" value="000000">
-      <div class="input-group clay-color">
-        <div class="input-group-item input-group-item-shrink input-group-prepend">
-          <div class="input-group-text"><button aria-label="Select a color" class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; background: rgb(0, 0, 0); height: 28px; width: 28px;" title="000000" type="button"></button></div>
+    <fieldset>
+      <legend>
+        <p class="ddm-label">Label</p>
+      </legend>
+      <div class="clay-color-picker"><input name="colorPicker" style="display: none;" type="text" value="000000">
+        <div class="input-group clay-color">
+          <div class="input-group-item input-group-item-shrink input-group-prepend">
+            <div class="input-group-text"><button aria-label="Select a color" class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; background: rgb(0, 0, 0); height: 28px; width: 28px;" title="000000" type="button"></button></div>
+          </div>
+          <div class="input-group-item input-group-append"><input aria-label="Color selection is 000000" type="text" class="form-control input-group-inset input-group-inset-before" value="000000"><label class="input-group-inset-item input-group-inset-item-before">#</label></div>
         </div>
-        <div class="input-group-item input-group-append"><input aria-label="Color selection is 000000" type="text" class="form-control input-group-inset input-group-inset-before" value="000000"><label class="input-group-inset-item input-group-inset-item-before">#</label></div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;

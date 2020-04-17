@@ -2,50 +2,56 @@
 
 exports[`Select emits a field edit event when an item is selected using multiselect 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" size="7" class="form-control form-control">
-      <option value="item7">label7</option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger multiple-label-list" tabindex="0">
-        <li><span value="item7" class="label ddm-select-option-label label-dismissible label-secondary"><span class="label-item label-item-expand">label7</span><span class="label-item label-item-after"><button data-testid="closeButtonitem7" class="close" type="button"><svg class="lexicon-icon lexicon-icon-times" role="presentation">
-                  <use xlink:href="icons.svg#times"></use>
-                </svg></button></span></span></li><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" size="7" class="form-control form-control">
+        <option value="item7">label7</option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger multiple-label-list" tabindex="0">
+          <li><span value="item7" class="label ddm-select-option-label label-dismissible label-secondary"><span class="label-item label-item-expand">label7</span><span class="label-item label-item-after"><button data-testid="closeButtonitem7" class="close" type="button"><svg class="lexicon-icon lexicon-icon-times" role="presentation">
+                    <use xlink:href="icons.svg#times"></use>
+                  </svg></button></span></span></li><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select has a help text 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div><span class="form-text">Type something</span>
+    </fieldset><span class="form-text">Type something</span>
   </div>
 </div>
 `;
 
 exports[`Select has a key 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
@@ -53,144 +59,164 @@ exports[`Select has a key 1`] = `
 exports[`Select has a label 1`] = `
 <div class="react-component-adapter">
   <div class="form-group">
-    <p class="ddm-label">label</p><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <fieldset>
+      <legend>
+        <p class="ddm-label">label</p>
+      </legend><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select has a placeholder 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select has a predefinedValue 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select has a spritemap 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select has a value 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select has an id 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" id="ID" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" id="ID" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select has class dropdown-opened when it's opened 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select is closed by default 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select is not required 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
@@ -198,18 +224,22 @@ exports[`Select is not required 1`] = `
 exports[`Select puts an asterisk when field is required 1`] = `
 <div class="react-component-adapter">
   <div class="form-group">
-    <p class="ddm-label">This is the label<span class="reference-mark"><svg class="lexicon-icon lexicon-icon-asterisk" role="presentation">
-          <use xlink:href="icons.svg#asterisk"></use>
-        </svg></span></p><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <fieldset>
+      <legend>
+        <p class="ddm-label">This is the label<span class="reference-mark"><svg class="lexicon-icon lexicon-icon-asterisk" role="presentation">
+              <use xlink:href="icons.svg#asterisk"></use>
+            </svg></span></p>
+      </legend><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
@@ -217,64 +247,74 @@ exports[`Select puts an asterisk when field is required 1`] = `
 exports[`Select renders Label if showLabel is true 1`] = `
 <div class="react-component-adapter">
   <div class="form-group">
-    <p class="ddm-label">text</p><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <fieldset>
+      <legend>
+        <p class="ddm-label">text</p>
+      </legend><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select renders no options when options come empty 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select renders options 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;
 
 exports[`Select renders the dropdown with search when there are more than six options 1`] = `
 <div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+  <div class="form-group">
+    <fieldset><select multiple="" aria-label="select" hidden="" class="form-control form-control">
+        <option disabled="" value=""></option>
+      </select>
+      <div class="form-builder-select-field input-group-container" style="">
+        <div class="form-control results-chosen select-field-trigger" tabindex="0">
+          <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
+              <use xlink:href="icons.svg#caret-double"></use>
+            </svg></a>
+        </div>
       </div>
-    </div>
+    </fieldset>
   </div>
 </div>
 `;

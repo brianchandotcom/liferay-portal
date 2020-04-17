@@ -166,6 +166,9 @@ public class RatingsTag extends IncludeTag {
 
 			int totalEntries = _getTotalEntries(ratingsStats);
 
+			String type = _getType(httpServletRequest);
+			String url = _getURL(themeDisplay);
+
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:data",
 				HashMapBuilder.<String, Object>put(
@@ -197,9 +200,9 @@ public class RatingsTag extends IncludeTag {
 				).put(
 					"thumbUp", thumbUp
 				).put(
-					"type", _getType(httpServletRequest)
+					"type", type
 				).put(
-					"url", _getURL(themeDisplay)
+					"url", url
 				).put(
 					"userScore", userScore
 				).build());
@@ -211,7 +214,7 @@ public class RatingsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-ratings:ratings:ratingsStats", ratingsStats);
 			httpServletRequest.setAttribute(
-				"liferay-ratings:ratings:type", _getType(httpServletRequest));
+				"liferay-ratings:ratings:type", type);
 			httpServletRequest.setAttribute("liferay-ratings:ratings:url", url);
 		}
 		catch (Exception exception) {

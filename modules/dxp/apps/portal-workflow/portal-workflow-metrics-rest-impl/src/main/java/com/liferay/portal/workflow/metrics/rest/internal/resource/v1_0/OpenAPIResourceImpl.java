@@ -72,6 +72,8 @@ public class OpenAPIResourceImpl {
 
 			add(HistogramMetricResourceImpl.class);
 
+			add(IndexResourceImpl.class);
+
 			add(InstanceResourceImpl.class);
 
 			add(NodeResourceImpl.class);
@@ -81,6 +83,8 @@ public class OpenAPIResourceImpl {
 			add(ProcessResourceImpl.class);
 
 			add(ProcessMetricResourceImpl.class);
+
+			add(ReindexStatusResourceImpl.class);
 
 			add(RoleResourceImpl.class);
 

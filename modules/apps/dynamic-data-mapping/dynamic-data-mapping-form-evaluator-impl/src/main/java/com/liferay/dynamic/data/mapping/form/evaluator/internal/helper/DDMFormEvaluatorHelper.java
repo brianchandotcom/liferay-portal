@@ -209,21 +209,18 @@ public class DDMFormEvaluatorHelper {
 			DDMFormRule ddmFormRuleClone = ddmFormRule;
 
 			if (_evaluatedActions != null) {
-				List<String> ddmFormRuleActions = ddmFormRule.getActions();
+				List<String> actions = ddmFormRule.getActions();
 
-				Stream<String> ddmFormRuleActionsStream =
-					ddmFormRuleActions.stream();
+				Stream<String> stream = actions.stream();
 
-				Stream<String> ddmFormRuleActionsFilteredStream =
-					ddmFormRuleActionsStream.filter(
-						action -> !_evaluatedActions.contains(action));
-
-				List<String> ddmFormRuleActionsFiltered =
-					ddmFormRuleActionsFilteredStream.collect(
-						Collectors.toList());
+				List<String> actionsNotEvaluated = stream.filter(
+					action -> !_evaluatedActions.contains(action)
+				).collect(
+					Collectors.toList()
+				);
 
 				ddmFormRuleClone = new DDMFormRule(
-					ddmFormRule.getCondition(), ddmFormRuleActionsFiltered);
+					ddmFormRule.getCondition(), actionsNotEvaluated);
 			}
 
 			_ddmFormRuleHelper.checkFieldAffectedByAction(ddmFormRuleClone);

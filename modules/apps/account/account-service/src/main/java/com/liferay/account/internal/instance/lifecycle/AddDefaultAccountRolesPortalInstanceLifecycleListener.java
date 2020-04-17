@@ -81,9 +81,16 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 		}
 
 		if (!_exists(AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER)) {
-			_addRole(
-				defaultUser.getUserId(),
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+			_roleLocalService.addRole(
+				defaultUser.getUserId(), null, 0,
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+				HashMapBuilder.put(
+					LocaleThreadLocal.getDefaultLocale(),
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER
+				).build(),
+				_roleDescriptionMaps.get(
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER),
+				RoleConstants.TYPE_REGULAR, null, null);
 		}
 	}
 
@@ -126,16 +133,6 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 					resourceAction);
 			}
 		}
-	}
-
-	private void _addRole(long userId, String roleName) throws PortalException {
-		_roleLocalService.addRole(
-			userId, null, 0, roleName,
-			HashMapBuilder.put(
-				LocaleThreadLocal.getDefaultLocale(), roleName
-			).build(),
-			_roleDescriptionMaps.get(roleName), RoleConstants.TYPE_REGULAR,
-			null, null);
 	}
 
 	private void _checkRoleDescription(Role role) {

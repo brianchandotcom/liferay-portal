@@ -50,6 +50,7 @@ definition {
 				portlet = "Memberships");
 
 			Site.assignUserAsMemberCP(
+				depotName = "Test Depot Name",
 				userFirstName = "userfn${i}",
 				userLastName = "userln${i}",
 				userScreenName = "usersn${i}");

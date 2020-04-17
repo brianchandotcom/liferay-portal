@@ -13,7 +13,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import ConnectionContext from '../state/context';
+import ConnectionContext from '../context/context';
 import Hint from './Hint';
 
 function TotalCount({

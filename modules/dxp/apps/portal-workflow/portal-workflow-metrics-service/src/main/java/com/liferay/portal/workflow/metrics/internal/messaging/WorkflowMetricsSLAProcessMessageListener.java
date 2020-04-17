@@ -39,11 +39,13 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetricsSLAProcessBackgroundTaskExecutor;
 import com.liferay.portal.workflow.metrics.internal.configuration.WorkflowMetricsConfiguration;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -103,6 +105,10 @@ public class WorkflowMetricsSLAProcessMessageListener
 				dynamicQuery.add(
 					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
 			});
+
+		AtomicInteger atomicCounter = new AtomicInteger(0);
+		long total = actionableDynamicQuery.performCount();
+
 		actionableDynamicQuery.setPerformActionMethod(
 			(WorkflowMetricsSLADefinition workflowMetricsSLADefinition) -> {
 				int count = _backgroundTaskLocalService.getBackgroundTasksCount(
@@ -134,6 +140,13 @@ public class WorkflowMetricsSLAProcessMessageListener
 					WorkflowMetricsSLAProcessBackgroundTaskExecutor.class.
 						getName(),
 					taskContextMap, new ServiceContext());
+
+				if (_isReindex(message)) {
+					_workflowMetricsReindexStatusMessageSender.
+						sendStatusMessage(
+							atomicCounter.incrementAndGet(), total,
+							"sla-instance-result");
+				}
 			});
 
 		actionableDynamicQuery.performActions();
@@ -180,6 +193,10 @@ public class WorkflowMetricsSLAProcessMessageListener
 	private TriggerFactory _triggerFactory;
 
 	private volatile WorkflowMetricsConfiguration _workflowMetricsConfiguration;
+
+	@Reference
+	private WorkflowMetricsReindexStatusMessageSender
+		_workflowMetricsReindexStatusMessageSender;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

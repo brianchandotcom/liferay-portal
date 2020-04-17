@@ -28,10 +28,12 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -96,6 +98,7 @@ public class SLATaskResultWorkflowMetricsReindexer
 			return;
 		}
 
+		AtomicInteger atomicCounter = new AtomicInteger(0);
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		Stream.of(
@@ -120,7 +123,14 @@ public class SLATaskResultWorkflowMetricsReindexer
 				}
 			}
 		).forEach(
-			bulkDocumentRequest::addBulkableDocumentRequest
+			indexDocumentRequest -> {
+				bulkDocumentRequest.addBulkableDocumentRequest(
+					indexDocumentRequest);
+
+				_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
+					atomicCounter.incrementAndGet(), searchHits.getTotalHits(),
+					"sla-task-result");
+			}
 		);
 
 		if (ListUtil.isNotEmpty(
@@ -158,5 +168,9 @@ public class SLATaskResultWorkflowMetricsReindexer
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
+
+	@Reference
+	private WorkflowMetricsReindexStatusMessageSender
+		_workflowMetricsReindexStatusMessageSender;
 
 }

@@ -1,0 +1,10 @@
+dependencies {
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.10"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.10"
+	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationCompile project(":apps:headless:headless-admin-content:headless-admin-content-api")
+	testIntegrationCompile project(":apps:headless:headless-admin-content:headless-admin-content-client")
+	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
+	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

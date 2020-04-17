@@ -4132,7 +4132,6 @@ definition {
 	@priority = "3"
 	test ViewBlankLabelWhenAddingNewField {
 		property test.name.skip.portal.instance = "Forms#ViewBlankLabelWhenAddingNewField";
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

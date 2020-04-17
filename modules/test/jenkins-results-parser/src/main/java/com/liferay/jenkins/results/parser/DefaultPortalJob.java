@@ -22,7 +22,8 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultPortalJob extends BaseJob implements PortalTestClassJob {
+public class DefaultPortalJob
+	extends BaseJob implements PortalTestClassJob, TestSuiteJob {
 
 	@Override
 	public Set<String> getBatchNames() {
@@ -78,8 +79,15 @@ public class DefaultPortalJob extends BaseJob implements PortalTestClassJob {
 		return _portalGitWorkingDirectory;
 	}
 
-	protected DefaultPortalJob(String jobName) {
+	@Override
+	public String getTestSuiteName() {
+		return _testSuiteName;
+	}
+
+	protected DefaultPortalJob(String jobName, String testSuiteName) {
 		super(jobName);
+
+		_testSuiteName = testSuiteName;
 
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
@@ -96,5 +104,6 @@ public class DefaultPortalJob extends BaseJob implements PortalTestClassJob {
 	}
 
 	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private final String _testSuiteName;
 
 }

@@ -127,7 +127,6 @@ import com.liferay.rss.util.RSSUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -640,26 +639,7 @@ public class CalendarPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CalendarBooking.class.getName(), actionRequest);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			CalendarBooking.class.getName(), calendarBookingId);
-
-		List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
-			assetEntry.getEntryId());
-
-		long[] assetLinkEntryIds = ListUtil.toLongArray(
-			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
-
-		serviceContext.setAssetTagNames(assetEntry.getTagNames());
-		serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
-		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
-		serviceContext.setAssetPriority(assetEntry.getPriority());
-
-		ExpandoBridge expandoBridge = calendarBooking.getExpandoBridge();
-
-		Map<String, Serializable> expandoBridgeAttributes =
-			expandoBridge.getAttributes();
-
-		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		addAssetEntry(calendarBooking, serviceContext);
 
 		JSONObject jsonObject = null;
 
@@ -692,6 +672,32 @@ public class CalendarPortlet extends MVCPortlet {
 		hideDefaultSuccessMessage(actionRequest);
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
+	}
+
+	protected void addAssetEntry(
+		CalendarBooking calendarBooking, ServiceContext serviceContext) {
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			CalendarBooking.class.getName(),
+			calendarBooking.getCalendarBookingId());
+
+		if (assetEntry != null) {
+			serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
+			serviceContext.setAssetLinkEntryIds(
+				ListUtil.toLongArray(
+					_assetLinkLocalService.getDirectLinks(
+						assetEntry.getEntryId()),
+					AssetLink.ENTRY_ID2_ACCESSOR));
+			serviceContext.setAssetPriority(assetEntry.getPriority());
+			serviceContext.setAssetTagNames(assetEntry.getTagNames());
+		}
+
+		ExpandoBridge expandoBridge = calendarBooking.getExpandoBridge();
+
+		if (expandoBridge != null) {
+			serviceContext.setExpandoBridgeAttributes(
+				expandoBridge.getAttributes());
+		}
 	}
 
 	protected void addCalendar(

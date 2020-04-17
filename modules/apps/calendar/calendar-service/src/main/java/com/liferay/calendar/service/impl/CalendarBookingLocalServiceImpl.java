@@ -17,8 +17,6 @@ package com.liferay.calendar.service.impl;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.calendar.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.exception.CalendarBookingDurationException;
@@ -99,8 +97,6 @@ import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.exception.TrashEntryException;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -840,10 +836,8 @@ public class CalendarBookingLocalServiceImpl
 		if (updateInstance) {
 			long calendarId = calendarBooking.getCalendarId();
 
-			long calendarBookingId = calendarBooking.getCalendarBookingId();
-
 			long[] childCalendarIds = getChildCalendarIds(
-				calendarBookingId, calendarId);
+				calendarBooking.getCalendarBookingId(), calendarId);
 
 			long duration =
 				calendarBooking.getEndTime() - calendarBooking.getStartTime();
@@ -852,26 +846,7 @@ public class CalendarBookingLocalServiceImpl
 
 			String recurrence = null;
 
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				CalendarBooking.class.getName(), calendarBookingId);
-
-			List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
-				assetEntry.getEntryId());
-
-			long[] assetLinkEntryIds = ListUtil.toLongArray(
-				assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
-
-			serviceContext.setAssetTagNames(assetEntry.getTagNames());
-			serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
-			serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
-			serviceContext.setAssetPriority(assetEntry.getPriority());
-
-			ExpandoBridge expandoBridge = calendarBooking.getExpandoBridge();
-
-			Map<String, Serializable> expandoBridgeAttributes =
-				expandoBridge.getAttributes();
-
-			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+			addAssetEntry(calendarBooking, serviceContext);
 
 			if (allFollowing) {
 				List<CalendarBooking> recurringCalendarBookings =
@@ -1682,6 +1657,32 @@ public class CalendarBookingLocalServiceImpl
 
 		return calendarBookingLocalService.updateStatus(
 			userId, calendarBooking, status, serviceContext);
+	}
+
+	protected void addAssetEntry(
+		CalendarBooking calendarBooking, ServiceContext serviceContext) {
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			CalendarBooking.class.getName(),
+			calendarBooking.getCalendarBookingId());
+
+		if (assetEntry != null) {
+			serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
+			serviceContext.setAssetLinkEntryIds(
+				ListUtil.toLongArray(
+					assetLinkLocalService.getDirectLinks(
+						assetEntry.getEntryId()),
+					AssetLink.ENTRY_ID2_ACCESSOR));
+			serviceContext.setAssetPriority(assetEntry.getPriority());
+			serviceContext.setAssetTagNames(assetEntry.getTagNames());
+		}
+
+		ExpandoBridge expandoBridge = calendarBooking.getExpandoBridge();
+
+		if (expandoBridge != null) {
+			serviceContext.setExpandoBridgeAttributes(
+				expandoBridge.getAttributes());
+		}
 	}
 
 	protected void addChildCalendarBookings(
@@ -2682,11 +2683,5 @@ public class CalendarBookingLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingLocalServiceImpl.class);
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetLinkLocalService _assetLinkLocalService;
 
 }

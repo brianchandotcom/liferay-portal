@@ -40,11 +40,9 @@ public class UpgradeRoleName extends UpgradeProcess {
 		_updateRoleName(
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER,
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
-
 		_updateRoleName(
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_OWNER,
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
-
 		_updateRoleName(
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_USER,
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER);

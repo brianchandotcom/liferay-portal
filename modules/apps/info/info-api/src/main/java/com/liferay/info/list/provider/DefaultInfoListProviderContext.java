@@ -65,7 +65,7 @@ public class DefaultInfoListProviderContext implements InfoListProviderContext {
 
 	@Override
 	public Optional<Layout> getLayoutOptional() {
-		return Optional.of(_layout);
+		return Optional.ofNullable(_layout);
 	}
 
 	@Override

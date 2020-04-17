@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
@@ -31,11 +32,19 @@ public class AssetRendererUtil {
 			AssetRenderer assetRenderer, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (assetRenderer.getUserId() > 0) {
-			User assetRendererUser = UserLocalServiceUtil.getUser(
-				assetRenderer.getUserId());
+		long assetRendererUserId = assetRenderer.getUserId();
 
-			return assetRendererUser.getFullName();
+		if (assetRendererUserId > 0) {
+			User user = null;
+
+			try {
+				user = UserLocalServiceUtil.getUser(assetRendererUserId);
+			}
+			catch (NoSuchUserException noSuchUserException) {
+				return LanguageUtil.get(httpServletRequest, "deleted-user");
+			}
+
+			return user.getFullName();
 		}
 
 		return LanguageUtil.get(httpServletRequest, "anonymous");

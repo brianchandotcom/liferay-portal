@@ -23,6 +23,7 @@ import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageT
 import com.liferay.layout.page.template.internal.upgrade.v2_1_0.UpgradeLayout;
 import com.liferay.layout.page.template.internal.upgrade.v3_0_1.util.LayoutPageTemplateStructureRelTable;
 import com.liferay.layout.page.template.internal.upgrade.v3_1_1.UpgradeResourcePermission;
+import com.liferay.layout.page.template.internal.upgrade.v3_3_0.UpgradeLayoutPageTemplateStructureRel;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
@@ -113,6 +114,11 @@ public class LayoutPageTemplateServiceUpgrade
 				UpgradeLayoutPageTemplateCollection(),
 			new com.liferay.layout.page.template.internal.upgrade.v3_2_0.
 				UpgradeLayoutPageTemplateEntry());
+
+		registry.register(
+			"3.2.0", "3.3.0",
+			new UpgradeLayoutPageTemplateStructureRel(
+				_fragmentEntryLinkLocalService));
 	}
 
 	@Reference

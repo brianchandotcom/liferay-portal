@@ -105,61 +105,67 @@ public class SearchQuery<T extends SpiraArtifact> {
 	}
 
 	protected static void cacheSearchQuery(SearchQuery<?> searchQuery) {
-		List<SearchQuery<?>> cachedSearchQueries = _searchQueriesMap.get(
-			searchQuery._spiraArtifactClass);
+		synchronized (_searchQueriesMap) {
+			List<SearchQuery<?>> cachedSearchQueries = _searchQueriesMap.get(
+				searchQuery._spiraArtifactClass);
 
-		if (cachedSearchQueries == null) {
-			cachedSearchQueries = new ArrayList<>();
+			if (cachedSearchQueries == null) {
+				cachedSearchQueries = new ArrayList<>();
 
-			_searchQueriesMap.put(
-				searchQuery._spiraArtifactClass, cachedSearchQueries);
+				_searchQueriesMap.put(
+					searchQuery._spiraArtifactClass, cachedSearchQueries);
+			}
+
+			cachedSearchQueries.add(searchQuery);
 		}
-
-		cachedSearchQueries.add(searchQuery);
 	}
 
 	protected static void clearSearchQueries(
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		List<SearchQuery<?>> cachedSearchQueries = _searchQueriesMap.get(
-			spiraArtifactClass);
+		synchronized (_searchQueriesMap) {
+			List<SearchQuery<?>> cachedSearchQueries = _searchQueriesMap.get(
+				spiraArtifactClass);
 
-		if (cachedSearchQueries == null) {
-			cachedSearchQueries = new ArrayList<>();
+			if (cachedSearchQueries == null) {
+				cachedSearchQueries = new ArrayList<>();
 
-			_searchQueriesMap.put(spiraArtifactClass, cachedSearchQueries);
+				_searchQueriesMap.put(spiraArtifactClass, cachedSearchQueries);
+			}
+
+			cachedSearchQueries.clear();
 		}
-
-		cachedSearchQueries.clear();
 	}
 
 	protected static SearchQuery<?> getCachedSearchQuery(
 		Class<?> spiraArtifactClass, SearchParameter... searchParameters) {
 
-		List<SearchQuery<?>> cachedSearchQueries = _searchQueriesMap.get(
-			spiraArtifactClass);
+		synchronized (_searchQueriesMap) {
+			List<SearchQuery<?>> cachedSearchQueries = _searchQueriesMap.get(
+				spiraArtifactClass);
 
-		if (cachedSearchQueries == null) {
-			cachedSearchQueries = new ArrayList<>();
+			if (cachedSearchQueries == null) {
+				cachedSearchQueries = new ArrayList<>();
 
-			_searchQueriesMap.put(spiraArtifactClass, cachedSearchQueries);
-		}
-
-		for (SearchQuery<?> cachedSearchQuery : cachedSearchQueries) {
-			JSONArray filterJSONArray = new JSONArray();
-
-			for (SearchParameter searchParameter : searchParameters) {
-				filterJSONArray.put(searchParameter.toFilterJSONObject());
+				_searchQueriesMap.put(spiraArtifactClass, cachedSearchQueries);
 			}
 
-			if (filterJSONArray.similar(
-					cachedSearchQuery.toFilterJSONArray())) {
+			for (SearchQuery<?> cachedSearchQuery : cachedSearchQueries) {
+				JSONArray filterJSONArray = new JSONArray();
 
-				return cachedSearchQuery;
+				for (SearchParameter searchParameter : searchParameters) {
+					filterJSONArray.put(searchParameter.toFilterJSONObject());
+				}
+
+				if (filterJSONArray.similar(
+						cachedSearchQuery.toFilterJSONArray())) {
+
+					return cachedSearchQuery;
+				}
 			}
-		}
 
-		return null;
+			return null;
+		}
 	}
 
 	protected SearchQuery(

@@ -1427,30 +1427,23 @@ public abstract class Base${schemaName}ResourceTestCase {
 			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
 				StringBuilder sb = new StringBuilder("{");
 
-				for (String additionalAssertFieldName : getAdditionalAssertFieldNames()) {
-					<#list properties?keys as propertyName>
-						<#if randomDataTypes?seq_contains(properties[propertyName])>
-							if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
-								if (sb.length() > 1) {
-									sb.append(", ");
-								}
+				for (Field field :
+						ReflectionUtil.getDeclaredFields(${schemaName}.class)) {
 
-								sb.append(additionalAssertFieldName);
-								sb.append(": ");
+					if (!ArrayUtil.contains(
+							getAdditionalAssertFieldNames(), field.getName())) {
 
-								Object value = ${schemaVarName}.get${propertyName?cap_first}();
+						continue;
+					}
 
-								if (value instanceof String) {
-									sb.append("\"");
-									sb.append(value);
-									sb.append("\"");
-								}
-								else {
-									sb.append(value);
-								}
-							}
-						</#if>
-					</#list>
+					if (sb.length() > 1) {
+						sb.append(", ");
+					}
+
+					sb.append(field.getName());
+					sb.append(": ");
+
+					appendValue(sb, field.get(${schemaVarName}));
 				}
 
 				sb.append("}");
@@ -1484,6 +1477,57 @@ public abstract class Base${schemaName}ResourceTestCase {
 				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
 				return jsonDeserializer.deserialize(String.valueOf(dataJSONObject.getJSONObject("createSite${schemaName}")), ${schemaName}.class);
+			}
+
+			protected void appendArray(Object[] objects, StringBuilder sb)
+				throws Exception {
+
+				StringBuilder arraySB = new StringBuilder("[");
+
+				for (Object object : objects) {
+					if (arraySB.length() > 1) {
+						arraySB.append(",");
+					}
+
+					arraySB.append("{");
+
+					Class<?> clazz = object.getClass();
+
+					for (Field field :
+							ReflectionUtil.getDeclaredFields(clazz.getSuperclass())) {
+
+						arraySB.append(field.getName());
+						arraySB.append(": ");
+
+						appendValue(arraySB, field.get(object));
+
+						arraySB.append(",");
+					}
+
+					arraySB.setLength(arraySB.length() - 1);
+
+					arraySB.append("}");
+				}
+
+				arraySB.append("]");
+
+				sb.append(arraySB.toString());
+			}
+
+			protected void appendValue(StringBuilder sb, Object value)
+				throws Exception {
+
+				if (value instanceof Object[]) {
+					appendArray((Object[])value, sb);
+				}
+				else if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
 			}
 		<#else>
 			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}() throws Exception {

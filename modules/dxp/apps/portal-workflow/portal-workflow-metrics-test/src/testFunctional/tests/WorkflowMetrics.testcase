@@ -525,6 +525,13 @@ definition {
 			isPresent = "Blogs Entry Title 7",
 			taskName = "Review");
 
+		WorkflowMetrics.viewItemFilterByOnAllItemsPage(
+			allItemsFilterName = "Assignee",
+			assigneeName = "Unassigned",
+			isNotPresent = "1user user1,2user user2,3user user3",
+			isPresent = "Blogs Entry Title 8",
+			taskName = "Review");
+
 		WorkflowMetrics.allItemPageFilterCheck(
 			allItemsFilterName = "Process Status",
 			assigneeName = "Pending");
@@ -533,7 +540,7 @@ definition {
 			allItemsFilterName = "Process Status",
 			assigneeName = "N/A",
 			filterValueName = "Completed",
-			isNotPresent = "1user user1,2user user2,3user user3",
+			isNotPresent = "1user user1,2user user2,3user user3,Unassigned",
 			isPresent = "Blogs Entry Title 1,Blogs Entry Title 2,Blogs Entry Title 3,Blogs Entry Title 4",
 			taskName = "Completed");
 	}

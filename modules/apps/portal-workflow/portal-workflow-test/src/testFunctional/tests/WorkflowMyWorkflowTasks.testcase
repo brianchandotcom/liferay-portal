@@ -158,7 +158,6 @@ definition {
 
 	@priority = "4"
 	test ApproveResubmitTaskByActions {
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

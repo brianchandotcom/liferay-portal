@@ -3,7 +3,6 @@ definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
-	property portal.upstream = "quarantine";
 	property testray.component.names = "Calendar";
 	property testray.main.component.name = "Upgrades Workflow";
 
@@ -22,6 +21,8 @@ definition {
 
 	@priority = "5"
 	test ViewCalendarArchive625 {
+		property portal.upstream = "quarantine";
+
 		property data.archive.type = "data-archive-calendar";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
@@ -39,6 +40,8 @@ definition {
 
 	@priority = "5"
 	test ViewCalendarArchive621021 {
+		property portal.upstream = "quarantine";
+
 		property data.archive.type = "data-archive-calendar";
 		property portal.version = "6.2.10.21";
 

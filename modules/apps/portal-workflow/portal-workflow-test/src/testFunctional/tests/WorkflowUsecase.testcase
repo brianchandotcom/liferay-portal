@@ -916,7 +916,7 @@ definition {
 
 	@priority = "4"
 	test ViewInvalidDefinitionAlert {
-		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "WorkflowUsecase#ViewInvalidDefinitionAlert";
 
 		ProductMenu.gotoPortlet(

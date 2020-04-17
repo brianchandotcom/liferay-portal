@@ -526,7 +526,6 @@ definition {
 
 	@priority = "3"
 	test AddRepeatingRSVPYes {
-		property portal.upstream = "quarantine";
 
 		CalendarNavigator.gotoAddEvent();
 

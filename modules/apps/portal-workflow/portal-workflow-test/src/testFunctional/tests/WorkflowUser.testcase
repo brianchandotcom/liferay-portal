@@ -97,7 +97,6 @@ definition {
 	@description = "This is a use case for LPS-69190."
 	@priority = "4"
 	test ViewUserPreview {
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

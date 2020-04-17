@@ -16,8 +16,10 @@ package com.liferay.portal.workflow.task.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -72,6 +74,11 @@ public class CompleteTaskMVCActionCommand
 			WorkflowConstants.CONTEXT_USER_ID,
 			String.valueOf(themeDisplay.getUserId()));
 
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			"serviceContext");
+
+		serviceContext.setRequest(_portal.getHttpServletRequest(actionRequest));
+
 		workflowTaskManager.completeWorkflowTask(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			workflowTaskId, transitionName, comment, workflowContext);
@@ -93,5 +100,8 @@ public class CompleteTaskMVCActionCommand
 
 		return workflowInstance.getWorkflowContext();
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

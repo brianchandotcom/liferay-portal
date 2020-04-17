@@ -4,6 +4,7 @@ Bundle-Version: 3.3.0
 Export-Package:\
 	com.liferay.portal.workflow.metrics.exception,\
 	com.liferay.portal.workflow.metrics.model,\
+	com.liferay.portal.workflow.metrics.search.background.task,\
 	com.liferay.portal.workflow.metrics.search.index,\
 	com.liferay.portal.workflow.metrics.search.index.name,\
 	com.liferay.portal.workflow.metrics.search.index.reindexer,\

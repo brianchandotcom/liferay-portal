@@ -25,7 +25,7 @@ import {
 	YAxis,
 } from 'recharts';
 
-import ConnectionContext from '../context/context';
+import ConnectionContext from '../context/connection';
 import {useChartState} from '../state/chartState';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';

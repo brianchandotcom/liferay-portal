@@ -41,7 +41,7 @@ export const useChartState = ({defaultTimeSpanOption, publishDate}) => {
 			dispatch({payload, type: CHANGE_TIME_SPAN_OPTION}),
 		nextTimeSpan: () => dispatch({type: NEXT_TIME_SPAN}),
 		previousTimeSpan: () => dispatch({type: PREV_TIME_SPAN}),
-		setLoading: payload => dispatch({payload, type: SET_LOADING}),
+		setLoading: () => dispatch({type: SET_LOADING}),
 	};
 
 	return {actions, state};
@@ -104,7 +104,7 @@ function reducer(state, action) {
 			};
 			break;
 		case SET_LOADING:
-			nextState = setLoadingState(state, action.payload);
+			nextState = setLoadingState(state);
 			break;
 		default:
 			state = nextState;
@@ -117,12 +117,12 @@ function reducer(state, action) {
 /**
  * Declares the state as loading and resets the dataSet histogram values
  */
-function setLoadingState(state, payload) {
+function setLoadingState(state) {
 	/**
 	 * The dataSet does not need to be reset
 	 */
 	if (!state.dataSet) {
-		return {...state, loading: payload.loading};
+		return {...state, loading: true};
 	}
 
 	const histogram = state.dataSet.histogram.map(set => {
@@ -161,7 +161,7 @@ function setLoadingState(state, payload) {
 			histogram,
 			totals,
 		},
-		loading: payload.loading,
+		loading: true,
 	};
 
 	return nextState;

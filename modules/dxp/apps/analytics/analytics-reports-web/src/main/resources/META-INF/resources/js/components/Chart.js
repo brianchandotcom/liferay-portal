@@ -151,57 +151,54 @@ export default function Chart({
 		new Date(chartState.publishDate).toDateString();
 
 	useEffect(() => {
-		if (!publishedToday) {
-			let gone = false;
+		let gone = false;
 
-			actions.setLoading(true);
+		actions.setLoading();
 
-			const timeSpanComparator =
-				chartState.timeSpanOption === LAST_24_HOURS
-					? HOUR_IN_MILLISECONDS
-					: DAY_IN_MILLISECONDS;
+		const timeSpanComparator =
+			chartState.timeSpanOption === LAST_24_HOURS
+				? HOUR_IN_MILLISECONDS
+				: DAY_IN_MILLISECONDS;
 
-			dataProviders.map(getter => {
-				getter({
-					timeSpanKey: chartState.timeSpanOption,
-					timeSpanOffset: chartState.timeSpanOffset,
-				})
-					.then(data => {
-						if (!gone) {
-							if (isMounted()) {
-								Object.keys(data).map(key => {
-									actions.addDataSetItem({
-										dataSetItem: data[key],
-										key,
-										timeSpanComparator,
-									});
+		dataProviders.map(getter => {
+			getter({
+				timeSpanKey: chartState.timeSpanOption,
+				timeSpanOffset: chartState.timeSpanOffset,
+			})
+				.then(data => {
+					if (!gone) {
+						if (isMounted()) {
+							Object.keys(data).map(key => {
+								actions.addDataSetItem({
+									dataSetItem: data[key],
+									key,
+									timeSpanComparator,
 								});
-							}
+							});
 						}
-					})
-					.catch(_error => {
-						let key = '';
+					}
+				})
+				.catch(_error => {
+					let key = '';
 
-						if (getter.name === 'getHistoricalReads') {
-							key = 'analyticsReportsHistoricalReads';
-						}
-						if (getter.name === 'getHistoricalViews') {
-							key = 'analyticsReportsHistoricalViews';
-						}
+					if (getter.name === 'getHistoricalReads') {
+						key = 'analyticsReportsHistoricalReads';
+					}
+					if (getter.name === 'getHistoricalViews') {
+						key = 'analyticsReportsHistoricalViews';
+					}
 
-						actions.addDataSetItem({
-							dataSetItem: {histogram: [], value: null},
-							key,
-							timeSpanComparator,
-						});
+					actions.addDataSetItem({
+						dataSetItem: {histogram: [], value: null},
+						key,
+						timeSpanComparator,
 					});
-			});
+				});
+		});
 
-			return () => {
-				gone = true;
-			};
-		}
-		actions.setLoading(false);
+		return () => {
+			gone = true;
+		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [chartState.timeSpanOption, chartState.timeSpanOffset]);
 

@@ -67,6 +67,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ResourceHelper.class)
 public class ResourceHelper {
 
+	public static final String REINDEX_TASK_EXECUTOR_CLASSNAME =
+		"com.liferay.portal.workflow.metrics.internal.background.task." +
+			"WorkflowMetricsReindexBackgroundTaskExecutor";
+
 	public ScriptedMetricAggregation createBreachedScriptedMetricAggregation() {
 		ScriptedMetricAggregation scriptedMetricAggregation =
 			_aggregations.scriptedMetric("breachedInstanceCount");

@@ -214,7 +214,7 @@ public class JobFactory {
 			return _jobs.get(jobKey);
 		}
 
-		_jobs.put(jobKey, new DefaultPortalJob(jobName));
+		_jobs.put(jobKey, new DefaultPortalJob(jobName, testSuiteName));
 
 		return _jobs.get(jobKey);
 	}

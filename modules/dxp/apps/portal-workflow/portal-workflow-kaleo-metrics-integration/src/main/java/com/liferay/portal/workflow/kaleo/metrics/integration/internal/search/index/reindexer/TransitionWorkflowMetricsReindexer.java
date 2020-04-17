@@ -27,10 +27,12 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
+import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,6 +60,10 @@ public class TransitionWorkflowMetricsReindexer
 
 				dynamicQuery.add(companyIdProperty.eq(companyId));
 			});
+
+		AtomicInteger atomicCounter = new AtomicInteger(0);
+		long total = actionableDynamicQuery.performCount();
+
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoTransition kaleoTransition) -> {
 				KaleoDefinitionVersion kaleoDefinitionVersion =
@@ -83,6 +89,9 @@ public class TransitionWorkflowMetricsReindexer
 					kaleoTransition.getTargetKaleoNodeName(),
 					kaleoTransition.getKaleoTransitionId(),
 					kaleoTransition.getUserId());
+
+				_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
+					atomicCounter.incrementAndGet(), total, "transition");
 			});
 
 		actionableDynamicQuery.performActions();
@@ -119,5 +128,9 @@ public class TransitionWorkflowMetricsReindexer
 
 	@Reference
 	private TransitionWorkflowMetricsIndexer _transitionWorkflowMetricsIndexer;
+
+	@Reference
+	private WorkflowMetricsReindexStatusMessageSender
+		_workflowMetricsReindexStatusMessageSender;
 
 }

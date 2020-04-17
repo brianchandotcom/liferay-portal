@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,6 +54,10 @@ public class ProcessWorkflowMetricsReindexer
 
 				dynamicQuery.add(companyIdProperty.eq(companyId));
 			});
+
+		AtomicInteger atomicCounter = new AtomicInteger(0);
+		long total = actionableDynamicQuery.performCount();
+
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoDefinition kaleoDefinition) -> {
 				String defaultLanguageId =
@@ -68,6 +75,9 @@ public class ProcessWorkflowMetricsReindexer
 					kaleoDefinition.getTitleMap(),
 					StringBundler.concat(
 						kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
+
+				_workflowMetricsReindexStatusMessageSender.sendStatusMessage(
+					atomicCounter.incrementAndGet(), total, "process");
 			});
 
 		actionableDynamicQuery.performActions();
@@ -78,5 +88,9 @@ public class ProcessWorkflowMetricsReindexer
 
 	@Reference
 	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
+
+	@Reference
+	private WorkflowMetricsReindexStatusMessageSender
+		_workflowMetricsReindexStatusMessageSender;
 
 }

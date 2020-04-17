@@ -321,7 +321,6 @@ definition {
 
 	@priority = "5"
 	test AddFormInGlobal {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Forms#AddFormInGlobal";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";

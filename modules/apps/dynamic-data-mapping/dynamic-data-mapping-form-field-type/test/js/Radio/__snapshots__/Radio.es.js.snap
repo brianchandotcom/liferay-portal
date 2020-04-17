@@ -3,12 +3,10 @@
 exports[`Field Radio has a helptext 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
-      </div>
-    </fieldset><span class="form-text">Type something</span>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
+    </div><span class="form-text">Type something</span>
   </div>
 </div>
 `;
@@ -16,15 +14,11 @@ exports[`Field Radio has a helptext 1`] = `
 exports[`Field Radio has a label 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <legend>
-        <p class="ddm-label">label</p>
-      </legend>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
-      </div>
-    </fieldset>
+    <p class="ddm-label">label</p>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
+    </div>
   </div>
 </div>
 `;
@@ -32,12 +26,10 @@ exports[`Field Radio has a label 1`] = `
 exports[`Field Radio has a predefined Value 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
-      </div>
-    </fieldset>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
+    </div>
   </div>
 </div>
 `;
@@ -45,12 +37,10 @@ exports[`Field Radio has a predefined Value 1`] = `
 exports[`Field Radio has a spritemap 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
-      </div>
-    </fieldset>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
+    </div>
   </div>
 </div>
 `;
@@ -58,12 +48,10 @@ exports[`Field Radio has a spritemap 1`] = `
 exports[`Field Radio has a value 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
-      </div>
-    </fieldset>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
+    </div>
   </div>
 </div>
 `;
@@ -71,12 +59,10 @@ exports[`Field Radio has a value 1`] = `
 exports[`Field Radio has an id 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
-      </div>
-    </fieldset>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
+    </div>
   </div>
 </div>
 `;
@@ -84,12 +70,10 @@ exports[`Field Radio has an id 1`] = `
 exports[`Field Radio is not edidable 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
-      </div>
-    </fieldset>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
+    </div>
   </div>
 </div>
 `;
@@ -97,12 +81,10 @@ exports[`Field Radio is not edidable 1`] = `
 exports[`Field Radio is not required 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
-      </div>
-    </fieldset>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
+    </div>
   </div>
 </div>
 `;
@@ -110,15 +92,11 @@ exports[`Field Radio is not required 1`] = `
 exports[`Field Radio renders Label if showLabel is true 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <legend>
-        <p class="ddm-label">text</p>
-      </legend>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
-      </div>
-    </fieldset>
+    <p class="ddm-label">text</p>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 1</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="" checked=""><span class="custom-control-label"><span class="custom-control-label-text">Option 2</span></span></label></div>
+    </div>
   </div>
 </div>
 `;
@@ -126,9 +104,7 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
 exports[`Field Radio renders no options when options is empty 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <div class="ddm-radio"></div>
-    </fieldset>
+    <div class="ddm-radio"></div>
   </div>
 </div>
 `;
@@ -136,12 +112,10 @@ exports[`Field Radio renders no options when options is empty 1`] = `
 exports[`Field Radio renders options 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="radioField">
-    <fieldset>
-      <div class="ddm-radio">
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="item"><span class="custom-control-label"><span class="custom-control-label-text">label</span></span></label></div>
-        <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="item"><span class="custom-control-label"><span class="custom-control-label-text">label2</span></span></label></div>
-      </div>
-    </fieldset>
+    <div class="ddm-radio">
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="item"><span class="custom-control-label"><span class="custom-control-label-text">label</span></span></label></div>
+      <div class="custom-control custom-radio"><label><input name="radioField" class="custom-control-input" role="radio" type="radio" value="item"><span class="custom-control-label"><span class="custom-control-label-text">label2</span></span></label></div>
+    </div>
   </div>
 </div>
 `;

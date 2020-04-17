@@ -3,11 +3,9 @@
 exports[`Field Paragraph has a key 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <fieldset>
-      <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
-        <div class="liferay-ddm-form-field-paragraph-text"></div>
-      </div>
-    </fieldset>
+    <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
+      <div class="liferay-ddm-form-field-paragraph-text"></div>
+    </div>
   </div>
 </div>
 `;
@@ -15,14 +13,10 @@ exports[`Field Paragraph has a key 1`] = `
 exports[`Field Paragraph has a label 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <fieldset>
-      <legend>
-        <p class="ddm-label">label</p>
-      </legend>
-      <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
-        <div class="liferay-ddm-form-field-paragraph-text"></div>
-      </div>
-    </fieldset>
+    <p class="ddm-label">label</p>
+    <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
+      <div class="liferay-ddm-form-field-paragraph-text"></div>
+    </div>
   </div>
 </div>
 `;
@@ -30,11 +24,9 @@ exports[`Field Paragraph has a label 1`] = `
 exports[`Field Paragraph has a placeholder 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <fieldset>
-      <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
-        <div class="liferay-ddm-form-field-paragraph-text"></div>
-      </div>
-    </fieldset>
+    <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
+      <div class="liferay-ddm-form-field-paragraph-text"></div>
+    </div>
   </div>
 </div>
 `;
@@ -42,11 +34,9 @@ exports[`Field Paragraph has a placeholder 1`] = `
 exports[`Field Paragraph has a spritemap 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <fieldset>
-      <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
-        <div class="liferay-ddm-form-field-paragraph-text"></div>
-      </div>
-    </fieldset>
+    <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
+      <div class="liferay-ddm-form-field-paragraph-text"></div>
+    </div>
   </div>
 </div>
 `;
@@ -54,11 +44,9 @@ exports[`Field Paragraph has a spritemap 1`] = `
 exports[`Field Paragraph has a value 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <fieldset>
-      <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
-        <div class="liferay-ddm-form-field-paragraph-text"></div>
-      </div>
-    </fieldset>
+    <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
+      <div class="liferay-ddm-form-field-paragraph-text"></div>
+    </div>
   </div>
 </div>
 `;
@@ -66,11 +54,9 @@ exports[`Field Paragraph has a value 1`] = `
 exports[`Field Paragraph has an id 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <fieldset>
-      <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
-        <div class="liferay-ddm-form-field-paragraph-text"></div>
-      </div>
-    </fieldset>
+    <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
+      <div class="liferay-ddm-form-field-paragraph-text"></div>
+    </div>
   </div>
 </div>
 `;
@@ -78,11 +64,9 @@ exports[`Field Paragraph has an id 1`] = `
 exports[`Field Paragraph is not required 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <fieldset>
-      <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
-        <div class="liferay-ddm-form-field-paragraph-text"></div>
-      </div>
-    </fieldset>
+    <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
+      <div class="liferay-ddm-form-field-paragraph-text"></div>
+    </div>
   </div>
 </div>
 `;
@@ -90,11 +74,9 @@ exports[`Field Paragraph is not required 1`] = `
 exports[`Field Paragraph is readOnly 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <fieldset>
-      <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
-        <div class="liferay-ddm-form-field-paragraph-text"></div>
-      </div>
-    </fieldset>
+    <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
+      <div class="liferay-ddm-form-field-paragraph-text"></div>
+    </div>
   </div>
 </div>
 `;
@@ -102,14 +84,10 @@ exports[`Field Paragraph is readOnly 1`] = `
 exports[`Field Paragraph renders Label if showLabel is true 1`] = `
 <div class="react-component-adapter">
   <div class="form-group" data-field-name="textField">
-    <fieldset>
-      <legend>
-        <p class="ddm-label">text</p>
-      </legend>
-      <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
-        <div class="liferay-ddm-form-field-paragraph-text"></div>
-      </div>
-    </fieldset>
+    <p class="ddm-label">text</p>
+    <div class="form-group liferay-ddm-form-field-paragraph" data-field-name="textField">
+      <div class="liferay-ddm-form-field-paragraph-text"></div>
+    </div>
   </div>
 </div>
 `;

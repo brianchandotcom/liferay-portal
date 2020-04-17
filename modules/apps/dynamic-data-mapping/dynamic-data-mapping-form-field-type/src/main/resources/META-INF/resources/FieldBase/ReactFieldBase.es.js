@@ -96,45 +96,41 @@ function FieldBase({
 						</div>
 					)}
 
-					<fieldset>
-						{((label && showLabel) ||
-							required ||
-							tooltip ||
-							repeatable) && (
-							<legend>
-								<p
-									className={classNames({
-										'ddm-empty': !showLabel && !required,
-										'ddm-label': showLabel,
-									})}
-								>
-									{label && showLabel && label}
+					{((label && showLabel) ||
+						required ||
+						tooltip ||
+						repeatable) && (
+						<p
+							className={classNames({
+								'ddm-empty': !showLabel && !required,
+								'ddm-label': showLabel,
+							})}
+						>
+							{label && showLabel && label}
 
-									{required && spritemap && (
-										<span className="reference-mark">
-											<ClayIcon
-												spritemap={spritemap}
-												symbol="asterisk"
-											/>
-										</span>
-									)}
+							{required && spritemap && (
+								<span className="reference-mark">
+									<ClayIcon
+										spritemap={spritemap}
+										symbol="asterisk"
+									/>
+								</span>
+							)}
 
-									{tooltip && (
-										<div className="ddm-tooltip">
-											<ClayIcon
-												data-tooltip-align="right"
-												spritemap={spritemap}
-												symbol="question-circle-full"
-												title={tooltip}
-											/>
-										</div>
-									)}
-								</p>
-							</legend>
-						)}
+							{tooltip && (
+								<div className="ddm-tooltip">
+									<ClayIcon
+										data-tooltip-align="right"
+										spritemap={spritemap}
+										symbol="question-circle-full"
+										title={tooltip}
+									/>
+								</div>
+							)}
+						</p>
+					)}
 
-						{children}
-					</fieldset>
+					{children}
 
 					{localizedValueArray.length > 0 &&
 						localizedValueArray.map(language => (

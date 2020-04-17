@@ -356,14 +356,6 @@ export default function Chart({
 							height={CHART_SIZES.height}
 							width={CHART_SIZES.width}
 						>
-							<Legend
-								formatter={legendFormatter}
-								iconSize={0}
-								layout="vertical"
-								verticalAlign="top"
-								wrapperStyle={{left: 0, paddingBottom: '1rem'}}
-							/>
-
 							<CartesianGrid
 								stroke={CHART_COLORS.cartesianGrid}
 								strokeDasharray="0 0"
@@ -427,6 +419,17 @@ export default function Chart({
 								strokeWidth={CHART_SIZES.lineWidth}
 								x={referenceDotPosition}
 								y={0}
+							/>
+
+							<Legend
+								formatter={legendFormatter}
+								iconSize={0}
+								layout="vertical"
+								wrapperStyle={{
+									left: 0,
+									paddingBottom: 0,
+									paddingTop: '8px',
+								}}
 							/>
 
 							{keyList.map(keyName => {

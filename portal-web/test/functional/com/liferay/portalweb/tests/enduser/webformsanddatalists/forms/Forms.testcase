@@ -4429,7 +4429,6 @@ definition {
 	@priority = "4"
 	test ViewRepeatableTextFieldLabel {
 		property test.name.skip.portal.instance = "Forms#ViewRepeatableTextFieldLabel";
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

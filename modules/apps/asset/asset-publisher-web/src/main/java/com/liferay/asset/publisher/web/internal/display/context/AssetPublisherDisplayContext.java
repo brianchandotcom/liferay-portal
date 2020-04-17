@@ -353,7 +353,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<InfoListProvider> getAssetEntryInfoListProviders() {
-		return _infoListProviderTracker.getInfoListProviders(AssetEntry.class);
+		return _infoListProviderTracker.getInfoListProviders(
+			AssetEntry.class.getName());
 	}
 
 	public AssetEntryQuery getAssetEntryQuery() throws Exception {

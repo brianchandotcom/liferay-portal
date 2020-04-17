@@ -152,7 +152,7 @@ function Navigation({
 				</ClayAlert>
 			)}
 
-			{validAnalyticsCloudConnection && warning && (
+			{validAnalyticsConnection && warning && (
 				<ClayAlert
 					className="p-0"
 					displayType="warning"

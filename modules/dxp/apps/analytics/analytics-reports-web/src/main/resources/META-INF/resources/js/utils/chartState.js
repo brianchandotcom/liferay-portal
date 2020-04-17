@@ -20,7 +20,7 @@ const SET_LOADING = 'set-loading';
 export const useChartState = ({
 	defaultTimeSpanOption,
 	publishDate,
-	validAnalyticsCloudConnection,
+	validAnalyticsConnection,
 }) => {
 	const [state, dispatch] = useReducer(reducer, {
 		dataSet: {histogram: [], keyList: [], totals: []},
@@ -35,7 +35,7 @@ export const useChartState = ({
 			dispatch({
 				payload,
 				type: ADD_DATA_SET_ITEM,
-				validAnalyticsCloudConnection,
+				validAnalyticsConnection,
 			}),
 		changeTimeSpanOption: payload =>
 			dispatch({payload, type: CHANGE_TIME_SPAN_OPTION}),
@@ -81,7 +81,7 @@ function reducer(state, action) {
 			nextState = addDataSetItem(
 				state,
 				action.payload,
-				action.validAnalyticsCloudConnection
+				action.validAnalyticsConnection
 			);
 			break;
 		case NEXT_TIME_SPAN:
@@ -173,7 +173,7 @@ function mergeDataSets({
 	previousDataSet = {histogram: [], keyList: [], totals: []},
 	publishDate,
 	timeSpanComparator,
-	validAnalyticsCloudConnection,
+	validAnalyticsConnection,
 }) {
 	const resultDataSet = {};
 
@@ -192,7 +192,7 @@ function mergeDataSets({
 		if (
 			(valueDataObject < publishDateObject &&
 				publishDateObject - valueDataObject > timeSpanComparator) ||
-			!validAnalyticsCloudConnection
+			!validAnalyticsConnection
 		) {
 			return {
 				[key]: null,
@@ -248,7 +248,7 @@ function mergeDataSets({
  *  timeSpanComparator: number,
  * }
  */
-function addDataSetItem(state, payload, validAnalyticsCloudConnection) {
+function addDataSetItem(state, payload, validAnalyticsConnection) {
 	/**
 	 * The dataSetItem is recognized as substitutive when the
 	 * previous state was in loading state.
@@ -263,7 +263,7 @@ function addDataSetItem(state, payload, validAnalyticsCloudConnection) {
 			previousDataSet,
 			publishDate: state.publishDate,
 			timeSpanComparator: payload.timeSpanComparator,
-			validAnalyticsCloudConnection,
+			validAnalyticsConnection,
 		}),
 		loading: false,
 	};

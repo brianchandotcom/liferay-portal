@@ -189,7 +189,7 @@ const generateDateFormatters = key => {
 function legendFormatterGenerator(
 	totals,
 	languageTag,
-	validAnalyticsCloudConnection
+	validAnalyticsConnection
 ) {
 	return value => {
 		const preformattedNumber = totals[value];
@@ -207,7 +207,7 @@ function legendFormatterGenerator(
 				</span>
 				{preformattedNumber !== null && (
 					<span className="font-weight-bold">
-						{validAnalyticsCloudConnection
+						{validAnalyticsConnection
 							? numberFormat(languageTag, preformattedNumber)
 							: '-'}
 					</span>
@@ -224,12 +224,12 @@ export default function Chart({
 	publishDate,
 	timeSpanOptions,
 }) {
-	const {validAnalyticsCloudConnection} = useContext(StateContext);
+	const {validAnalyticsConnection} = useContext(StateContext);
 
 	const {actions, state: chartState} = useChartState({
 		defaultTimeSpanOption,
 		publishDate,
-		validAnalyticsCloudConnection,
+		validAnalyticsConnection,
 	});
 	const isMounted = useIsMounted();
 
@@ -325,7 +325,7 @@ export default function Chart({
 		legendFormatterGenerator(
 			dataSet.totals,
 			languageTag,
-			validAnalyticsCloudConnection
+			validAnalyticsConnection
 		);
 
 	const disabledNextTimeSpan = chartState.timeSpanOffset === 0;
@@ -403,11 +403,7 @@ export default function Chart({
 								tickFormatter={thousandsToKilosFormater}
 								tickLine={false}
 								ticks={
-									!validAnalyticsCloudConnection && [
-										0,
-										50,
-										100,
-									]
+									!validAnalyticsConnection && [0, 50, 100]
 								}
 								width={CHART_SIZES.yAxisWidth}
 							/>

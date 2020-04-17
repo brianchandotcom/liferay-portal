@@ -26,14 +26,14 @@ export default function TimeSpanSelector({
 	timeSpanOption,
 	timeSpanOptions,
 }) {
-	const {validAnalyticsCloudConnection} = useContext(StateContext);
+	const {validAnalyticsConnection} = useContext(StateContext);
 
 	return (
 		<div className="d-flex mb-3 mt-3">
 			<ClaySelect
 				aria-label={Liferay.Language.get('select-date-range')}
 				className="bg-white"
-				disabled={!validAnalyticsCloudConnection}
+				disabled={!validAnalyticsConnection}
 				onChange={onTimeSpanChange}
 				value={timeSpanOption}
 			>
@@ -55,7 +55,7 @@ export default function TimeSpanSelector({
 						className="mr-1"
 						data-tooltip-align="top-right"
 						disabled={
-							!validAnalyticsCloudConnection ||
+							!validAnalyticsConnection ||
 							disabledPreviousPeriodButton
 						}
 						displayType="secondary"
@@ -73,9 +73,7 @@ export default function TimeSpanSelector({
 				</ClayTooltipProvider>
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('next-period')}
-					disabled={
-						!validAnalyticsCloudConnection || disabledNextTimeSpan
-					}
+					disabled={!validAnalyticsConnection || disabledNextTimeSpan}
 					displayType="secondary"
 					onClick={onNextTimeSpanClick}
 					small

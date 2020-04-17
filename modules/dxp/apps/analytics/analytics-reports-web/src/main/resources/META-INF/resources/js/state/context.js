@@ -13,11 +13,11 @@ import PropTypes from 'prop-types';
 import {createContext} from 'react';
 
 const StateContext = createContext({
-	validAnalyticsCloudConnection: true,
+	validAnalyticsConnection: true,
 });
 
 StateContext.Provider.propTypes = {
-	validAnalyticsCloudConnection: PropTypes.bool.isRequired,
+	validAnalyticsConnection: PropTypes.bool.isRequired,
 };
 
 export default StateContext;

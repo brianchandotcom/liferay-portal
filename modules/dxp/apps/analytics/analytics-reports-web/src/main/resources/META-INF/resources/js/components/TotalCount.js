@@ -26,13 +26,13 @@ function TotalCount({
 	popoverMessage,
 	popoverPosition,
 }) {
-	const {validAnalyticsCloudConnection} = useContext(StateContext);
+	const {validAnalyticsConnection} = useContext(StateContext);
 
 	const [value, setValue] = useState('-');
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		if (validAnalyticsCloudConnection) {
+		if (validAnalyticsConnection) {
 			dataProvider()
 				.then(value => {
 					if (isMounted()) {
@@ -49,7 +49,7 @@ function TotalCount({
 			setValue('-');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataProvider, validAnalyticsCloudConnection]);
+	}, [dataProvider, validAnalyticsConnection]);
 
 	return (
 		<div className={className}>

@@ -142,6 +142,18 @@ components:
                     format: double
                     type: number
             type: object
+        Index:
+            properties:
+                group:
+                    enum: [All, Metric, SLA]
+                    readOnly: true
+                    type: string
+                key:
+                    type: string
+                label:
+                    readOnly: true
+                    type: string
+            type: object
         Instance:
             description:
                 https://www.schema.org/Instance
@@ -328,6 +340,18 @@ components:
                 untrackedInstanceCount:
                     format: int64
                     type: integer
+            type: object
+        ReindexStatus:
+            description:
+                https://www.schema.org/ReindexStatus
+            properties:
+                completionPercentage:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                key:
+                    readOnly: true
+                    type: string
             type: object
         Role:
             description:
@@ -525,6 +549,63 @@ paths:
                     description:
                         ""
             tags: ["Calendar"]
+    "/indexes":
+        get:
+            operationId: getIndexesPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Index"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Index"
+                                type: array
+                    description:
+                        ""
+            tags: ["Index"]
+    "/indexes/reindex":
+        patch:
+            operationId: patchIndexesReindex
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Index"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Index"
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Index"]
+    "/indexes/reindex/status":
+        get:
+            operationId: getReindexStatusPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ReindexStatus"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ReindexStatus"
+                                type: array
+                    description:
+                        ""
+            tags: ["ReindexStatus"]
     "/processes":
         post:
             operationId: postProcess

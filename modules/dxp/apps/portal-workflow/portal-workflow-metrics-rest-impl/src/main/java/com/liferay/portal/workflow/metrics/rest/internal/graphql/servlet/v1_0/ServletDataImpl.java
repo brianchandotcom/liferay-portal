@@ -21,11 +21,13 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeMetricReso
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.HistogramMetricResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.IndexResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ReindexStatusResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
@@ -54,6 +56,8 @@ public class ServletDataImpl implements ServletData {
 			_assigneeResourceComponentServiceObjects);
 		Mutation.setAssigneeMetricResourceComponentServiceObjects(
 			_assigneeMetricResourceComponentServiceObjects);
+		Mutation.setIndexResourceComponentServiceObjects(
+			_indexResourceComponentServiceObjects);
 		Mutation.setInstanceResourceComponentServiceObjects(
 			_instanceResourceComponentServiceObjects);
 		Mutation.setNodeResourceComponentServiceObjects(
@@ -69,6 +73,8 @@ public class ServletDataImpl implements ServletData {
 			_calendarResourceComponentServiceObjects);
 		Query.setHistogramMetricResourceComponentServiceObjects(
 			_histogramMetricResourceComponentServiceObjects);
+		Query.setIndexResourceComponentServiceObjects(
+			_indexResourceComponentServiceObjects);
 		Query.setInstanceResourceComponentServiceObjects(
 			_instanceResourceComponentServiceObjects);
 		Query.setNodeResourceComponentServiceObjects(
@@ -79,6 +85,8 @@ public class ServletDataImpl implements ServletData {
 			_processResourceComponentServiceObjects);
 		Query.setProcessMetricResourceComponentServiceObjects(
 			_processMetricResourceComponentServiceObjects);
+		Query.setReindexStatusResourceComponentServiceObjects(
+			_reindexStatusResourceComponentServiceObjects);
 		Query.setRoleResourceComponentServiceObjects(
 			_roleResourceComponentServiceObjects);
 		Query.setSLAResourceComponentServiceObjects(
@@ -111,6 +119,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AssigneeMetricResource>
 		_assigneeMetricResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<IndexResource>
+		_indexResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<InstanceResource>
@@ -147,6 +159,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProcessMetricResource>
 		_processMetricResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ReindexStatusResource>
+		_reindexStatusResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<RoleResource>

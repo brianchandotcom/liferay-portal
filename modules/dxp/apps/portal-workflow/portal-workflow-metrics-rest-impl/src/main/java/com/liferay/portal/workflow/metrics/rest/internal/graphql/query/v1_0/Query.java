@@ -26,22 +26,26 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.HistogramMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Index;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.NodeMetric;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ProcessMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ReindexStatus;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Role;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.HistogramMetricResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.IndexResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ReindexStatusResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
@@ -83,6 +87,14 @@ public class Query {
 			histogramMetricResourceComponentServiceObjects;
 	}
 
+	public static void setIndexResourceComponentServiceObjects(
+		ComponentServiceObjects<IndexResource>
+			indexResourceComponentServiceObjects) {
+
+		_indexResourceComponentServiceObjects =
+			indexResourceComponentServiceObjects;
+	}
+
 	public static void setInstanceResourceComponentServiceObjects(
 		ComponentServiceObjects<InstanceResource>
 			instanceResourceComponentServiceObjects) {
@@ -121,6 +133,14 @@ public class Query {
 
 		_processMetricResourceComponentServiceObjects =
 			processMetricResourceComponentServiceObjects;
+	}
+
+	public static void setReindexStatusResourceComponentServiceObjects(
+		ComponentServiceObjects<ReindexStatusResource>
+			reindexStatusResourceComponentServiceObjects) {
+
+		_reindexStatusResourceComponentServiceObjects =
+			reindexStatusResourceComponentServiceObjects;
 	}
 
 	public static void setRoleResourceComponentServiceObjects(
@@ -188,6 +208,19 @@ public class Query {
 			histogramMetricResource ->
 				histogramMetricResource.getProcessHistogramMetric(
 					processId, dateEnd, dateStart, unit));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {indexes{items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public IndexPage indexes() throws Exception {
+		return _applyComponentServiceObjects(
+			_indexResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			indexResource -> new IndexPage(indexResource.getIndexesPage()));
 	}
 
 	/**
@@ -349,6 +382,20 @@ public class Query {
 			this::_populateResourceContext,
 			processMetricResource -> processMetricResource.getProcessMetric(
 				processId, completed, dateEnd, dateStart));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {reindexStatus{items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ReindexStatusPage reindexStatus() throws Exception {
+		return _applyComponentServiceObjects(
+			_reindexStatusResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			reindexStatusResource -> new ReindexStatusPage(
+				reindexStatusResource.getReindexStatusPage()));
 	}
 
 	/**
@@ -781,6 +828,38 @@ public class Query {
 
 	}
 
+	@GraphQLName("IndexPage")
+	public class IndexPage {
+
+		public IndexPage(Page indexPage) {
+			actions = indexPage.getActions();
+			items = indexPage.getItems();
+			lastPage = indexPage.getLastPage();
+			page = indexPage.getPage();
+			pageSize = indexPage.getPageSize();
+			totalCount = indexPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Index> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("InstancePage")
 	public class InstancePage {
 
@@ -926,6 +1005,38 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<ProcessMetric> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ReindexStatusPage")
+	public class ReindexStatusPage {
+
+		public ReindexStatusPage(Page reindexStatusPage) {
+			actions = reindexStatusPage.getActions();
+			items = reindexStatusPage.getItems();
+			lastPage = reindexStatusPage.getLastPage();
+			page = reindexStatusPage.getPage();
+			pageSize = reindexStatusPage.getPageSize();
+			totalCount = reindexStatusPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ReindexStatus> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -1113,6 +1224,17 @@ public class Query {
 		histogramMetricResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(IndexResource indexResource)
+		throws Exception {
+
+		indexResource.setContextAcceptLanguage(_acceptLanguage);
+		indexResource.setContextCompany(_company);
+		indexResource.setContextHttpServletRequest(_httpServletRequest);
+		indexResource.setContextHttpServletResponse(_httpServletResponse);
+		indexResource.setContextUriInfo(_uriInfo);
+		indexResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(InstanceResource instanceResource)
 		throws Exception {
 
@@ -1170,6 +1292,19 @@ public class Query {
 		processMetricResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(
+			ReindexStatusResource reindexStatusResource)
+		throws Exception {
+
+		reindexStatusResource.setContextAcceptLanguage(_acceptLanguage);
+		reindexStatusResource.setContextCompany(_company);
+		reindexStatusResource.setContextHttpServletRequest(_httpServletRequest);
+		reindexStatusResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		reindexStatusResource.setContextUriInfo(_uriInfo);
+		reindexStatusResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(RoleResource roleResource)
 		throws Exception {
 
@@ -1218,6 +1353,8 @@ public class Query {
 		_calendarResourceComponentServiceObjects;
 	private static ComponentServiceObjects<HistogramMetricResource>
 		_histogramMetricResourceComponentServiceObjects;
+	private static ComponentServiceObjects<IndexResource>
+		_indexResourceComponentServiceObjects;
 	private static ComponentServiceObjects<InstanceResource>
 		_instanceResourceComponentServiceObjects;
 	private static ComponentServiceObjects<NodeResource>
@@ -1228,6 +1365,8 @@ public class Query {
 		_processResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProcessMetricResource>
 		_processMetricResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ReindexStatusResource>
+		_reindexStatusResourceComponentServiceObjects;
 	private static ComponentServiceObjects<RoleResource>
 		_roleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>

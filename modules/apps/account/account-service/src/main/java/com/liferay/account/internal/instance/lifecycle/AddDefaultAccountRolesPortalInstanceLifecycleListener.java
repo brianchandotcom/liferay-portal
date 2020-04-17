@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -83,11 +82,7 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 		if (!_exists(AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER)) {
 			_roleLocalService.addRole(
 				defaultUser.getUserId(), null, 0,
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
-				HashMapBuilder.put(
-					LocaleThreadLocal.getDefaultLocale(),
-					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER
-				).build(),
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, null,
 				_roleDescriptionMaps.get(
 					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER),
 				RoleConstants.TYPE_REGULAR, null, null);
@@ -102,12 +97,8 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 
 		Role role = _roleLocalService.addRole(
 			userId, AccountRole.class.getName(), accountRole.getAccountRoleId(),
-			roleName,
-			HashMapBuilder.put(
-				LocaleThreadLocal.getDefaultLocale(), roleName
-			).build(),
-			_roleDescriptionMaps.get(roleName), RoleConstants.TYPE_ACCOUNT,
-			null, null);
+			roleName, null, _roleDescriptionMaps.get(roleName),
+			RoleConstants.TYPE_ACCOUNT, null, null);
 
 		accountRole.setCompanyId(role.getCompanyId());
 		accountRole.setAccountEntryId(

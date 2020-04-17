@@ -693,7 +693,7 @@ definition {
 		}
 
 		if ("${spaceBetweenColumns}" == "false") {
-			Uncheck.uncheckToggleSwitch(
+			Uncheck.uncheckToggleSwitchAndPause(
 				checkboxName = "Columns Gutter",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}

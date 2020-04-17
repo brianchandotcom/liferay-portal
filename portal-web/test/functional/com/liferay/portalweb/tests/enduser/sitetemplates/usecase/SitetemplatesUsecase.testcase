@@ -513,12 +513,6 @@ definition {
 			panel = "Control Panel",
 			portlet = "User Groups");
 
-		UserGroup.viewPG(
-			pageName = "home",
-			portletName = "Message Boards",
-			siteName = "${siteName}",
-			userGroupName = "UG UserGroup Name");
-
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");

@@ -89,8 +89,130 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 	public void testSearchByDDMStructureField() {
 	}
 
+	@Test
+	public void testSearchByDestinationURL() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.addRedirectEntry(
+				serviceContext.getScopeGroupId(), "http://www.liferay.com",
+				null, false, "test", serviceContext);
+
+		List<SearchResult> searchResults = _getSearchResults(
+			"http://www.liferay.com");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectEntry.getRedirectEntryId(), searchResult.getClassPK());
+	}
+
+	@Test
+	public void testSearchByDestinationURLPrefix() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.addRedirectEntry(
+				serviceContext.getScopeGroupId(), "http://www.liferay.com",
+				null, false, "test", serviceContext);
+
+		List<SearchResult> searchResults = _getSearchResults(
+			"http://www.liferay.co");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectEntry.getRedirectEntryId(), searchResult.getClassPK());
+	}
+
+	@Test
+	public void testSearchByDestinationURLSubstring() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.addRedirectEntry(
+				serviceContext.getScopeGroupId(), "http://www.liferay.com",
+				null, false, "test", serviceContext);
+
+		List<SearchResult> searchResults = _getSearchResults("liferay");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectEntry.getRedirectEntryId(), searchResult.getClassPK());
+	}
+
+	@Test
+	public void testSearchByDestinationURLSuffix() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.addRedirectEntry(
+				serviceContext.getScopeGroupId(), "http://www.liferay.com",
+				null, false, "test", serviceContext);
+
+		List<SearchResult> searchResults = _getSearchResults("liferay.com");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectEntry.getRedirectEntryId(), searchResult.getClassPK());
+	}
+
 	@Override
 	public void testSearchByKeywordsInsideParentBaseModel() {
+	}
+
+	@Test
+	public void testSearchBySourceURL() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.addRedirectEntry(
+				serviceContext.getScopeGroupId(), "http://www.liferay.com",
+				null, false, "test", serviceContext);
+
+		List<SearchResult> searchResults = _getSearchResults("test");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectEntry.getRedirectEntryId(), searchResult.getClassPK());
+	}
+
+	@Test
+	public void testSearchBySourceURLSubstring() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.addRedirectEntry(
+				serviceContext.getScopeGroupId(), "http://www.liferay.com",
+				null, false, "liferay", serviceContext);
+
+		List<SearchResult> searchResults = _getSearchResults("life");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectEntry.getRedirectEntryId(), searchResult.getClassPK());
 	}
 
 	@Override
@@ -107,6 +229,10 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 
 	@Override
 	public void testSearchExpireLatestVersion() {
+	}
+
+	@Override
+	public void testSearchMixedPhraseKeywords() {
 	}
 
 	@Override
@@ -248,6 +374,22 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 
 		Assert.assertEquals(
 			redirectEntry2.getRedirectEntryId(), searchResult2.getClassPK());
+	}
+
+	private List<SearchResult> _getSearchResults(String keywords)
+		throws Exception {
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setGroupIds(new long[] {group.getGroupId()});
+		searchContext.setKeywords(keywords);
+
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+			getBaseModelClass());
+
+		return SearchResultUtil.getSearchResults(
+			indexer.search(searchContext), LocaleUtil.getDefault());
 	}
 
 	@Inject

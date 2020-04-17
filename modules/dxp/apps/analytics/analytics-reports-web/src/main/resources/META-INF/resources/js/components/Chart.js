@@ -13,7 +13,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import className from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
 import {
 	CartesianGrid,
 	Legend,
@@ -25,13 +25,12 @@ import {
 	YAxis,
 } from 'recharts';
 
+import StateContext from '../state/context';
 import {useChartState} from '../utils/chartState';
 import {numberFormat} from '../utils/numberFormat';
 import {ActiveDot as CustomActiveDot, Dot as CustomDot} from './CustomDots';
 import CustomTooltip from './CustomTooltip';
 import TimeSpanSelector from './TimeSpanSelector';
-
-const {useEffect, useMemo} = React;
 
 const CHART_COLORS = {
 	analyticsReportsHistoricalReads: '#50D2A0',
@@ -187,7 +186,11 @@ const generateDateFormatters = key => {
 	};
 };
 
-function legendFormatterGenerator(totals, languageTag) {
+function legendFormatterGenerator(
+	totals,
+	languageTag,
+	validAnalyticsCloudConnection
+) {
 	return value => {
 		const preformattedNumber = totals[value];
 
@@ -203,7 +206,11 @@ function legendFormatterGenerator(totals, languageTag) {
 					{keyToTranslatedLabelValue(value)}
 				</span>
 				{preformattedNumber !== null && (
-					<b>{numberFormat(languageTag, preformattedNumber)}</b>
+					<span className="font-weight-bold">
+						{validAnalyticsCloudConnection
+							? numberFormat(languageTag, preformattedNumber)
+							: '-'}
+					</span>
 				)}
 			</span>
 		);
@@ -310,8 +317,15 @@ export default function Chart({
 		actions.nextTimeSpan();
 	};
 
+	const {validAnalyticsCloudConnection} = useContext(StateContext);
+
 	const legendFormatter =
-		dataSet && legendFormatterGenerator(dataSet.totals, languageTag);
+		dataSet &&
+		legendFormatterGenerator(
+			dataSet.totals,
+			languageTag,
+			validAnalyticsCloudConnection
+		);
 
 	const disabledNextTimeSpan = chartState.timeSpanOffset === 0;
 

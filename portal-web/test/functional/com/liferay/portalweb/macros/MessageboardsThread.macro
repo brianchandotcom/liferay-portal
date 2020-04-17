@@ -212,6 +212,8 @@ definition {
 			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody}");
 
+		SelectFrame(value1 = "relative=top");
+
 		Panel.expandPanel(panel = "Permissions");
 
 		Select(

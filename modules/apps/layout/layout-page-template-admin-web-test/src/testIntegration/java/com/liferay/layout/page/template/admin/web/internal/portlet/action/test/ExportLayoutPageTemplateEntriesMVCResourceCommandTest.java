@@ -94,44 +94,6 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testGetFile() throws Exception {
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					TestPropsValues.getUserId(), _group.getGroupId(),
-					"Page Template Collection One", StringPool.BLANK,
-					_serviceContext);
-
-		String name = "Page Template One";
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addLayoutPageTemplateEntry(
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				name);
-
-		long[] layoutPageTemplateEntryIds = {
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-		};
-
-		File file = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
-			layoutPageTemplateEntryIds);
-
-		try (ZipFile zipFile = new ZipFile(file)) {
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
-
-				_validateZipEntry(new String[] {name}, zipEntry, zipFile);
-			}
-
-			Assert.assertEquals(4, zipFile.size());
-		}
-	}
-
-	@Test
 	public void testGetFileNameMultiplePageTemplates() {
 		long[] layoutPageTemplateEntryIds = {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
@@ -177,6 +139,44 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey() +
 						"-"));
 		Assert.assertTrue(fileName.endsWith(".zip"));
+	}
+
+	@Test
+	public void testGetFileSingleLayoutPageTemplate() throws Exception {
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					"Page Template Collection One", StringPool.BLANK,
+					_serviceContext);
+
+		String name = "Page Template One";
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				name);
+
+		long[] layoutPageTemplateEntryIds = {
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		};
+
+		File file = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
+			layoutPageTemplateEntryIds);
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				_validateZipEntry(new String[] {name}, zipEntry, zipFile);
+			}
+
+			Assert.assertEquals(4, zipFile.size());
+		}
 	}
 
 	@Test

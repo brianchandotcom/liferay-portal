@@ -250,12 +250,21 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 			long layoutPageTemplateCollectionId, String name)
 		throws Exception {
 
+		return _addLayoutPageTemplateEntry(
+			layoutPageTemplateCollectionId, name,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
+			long layoutPageTemplateCollectionId, String name, int status)
+		throws Exception {
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollectionId, name,
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0, status,
+				_serviceContext);
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),

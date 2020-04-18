@@ -6,4 +6,5 @@ application:
     name: "Liferay.Headless.Admin.Content"
 author: "Javier Gamarra"
 clientDir: "../headless-admin-content-client/src/main/java"
+generateBatch: false
 testDir: "../headless-admin-content-test/src/testIntegration/java"

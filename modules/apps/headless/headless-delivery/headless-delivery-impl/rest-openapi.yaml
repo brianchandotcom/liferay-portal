@@ -6737,36 +6737,6 @@ paths:
                     description:
                         ""
             tags: ["NavigationMenu"]
-    "/sites/{siteId}/page-definitions/preview":
-        # @review
-        post:
-            description:
-                Renders and retrieves HTML for the page definition using the theme of specified site.
-            operationId: postSitePageDefinitionPreview
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/PageDefinition"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/PageDefinition"
-            responses:
-                200:
-                    content:
-                        text/html:
-                            schema:
-                                type: string
-                    description:
-                        ""
-            tags: ["PageDefinition"]
     "/sites/{siteId}/structured-content-folders":
         get:
             description:

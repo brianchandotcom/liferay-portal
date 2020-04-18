@@ -230,6 +230,35 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testGetFileSingleLayoutPageTemplateDraft() throws Exception {
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					RandomTestUtil.randomString(10), StringPool.BLANK,
+					_serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				RandomTestUtil.randomString(10),
+				WorkflowConstants.STATUS_DRAFT);
+
+		long[] layoutPageTemplateEntryIds = {
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		};
+
+		File file = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
+			layoutPageTemplateEntryIds);
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Assert.assertEquals(0, zipFile.size());
+		}
+	}
+
+	@Test
 	public void testGetLayoutPageTemplateEntryIdsSinglePageTemplate() {
 		long expectedLayoutPageTemplateEntryId = RandomTestUtil.randomLong();
 

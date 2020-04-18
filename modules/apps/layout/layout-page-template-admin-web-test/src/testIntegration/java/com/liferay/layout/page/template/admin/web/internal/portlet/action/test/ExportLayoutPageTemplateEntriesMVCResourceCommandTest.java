@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,6 +54,7 @@ import java.io.File;
 
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -100,38 +102,13 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					"Page Template Collection One", StringPool.BLANK,
 					_serviceContext);
 
+		String name = "Page Template One";
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			_addLayoutPageTemplateEntry(
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Page Template One",
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
-
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
-			layoutPageTemplateEntry.getPlid(), _read("layout_data.json"),
-			_serviceContext);
-
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			_serviceContext);
-
-		Class<?> clazz = getClass();
-
-		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			_group.getGroupId(), TestPropsValues.getUserId(),
-			LayoutPageTemplateEntry.class.getName(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			RandomTestUtil.randomString(), repository.getDlFolderId(),
-			clazz.getResourceAsStream("dependencies/thumbnail.png"),
-			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			fileEntry.getFileEntryId());
+				name);
 
 		long[] layoutPageTemplateEntryIds = {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
@@ -147,7 +124,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 			while (enumeration.hasMoreElements()) {
 				ZipEntry zipEntry = enumeration.nextElement();
 
-				_validateZipEntry(zipEntry, zipFile);
+				_validateZipEntry(new String[] {name}, zipEntry, zipFile);
 			}
 
 			Assert.assertEquals(4, zipFile.size());
@@ -217,6 +194,44 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 		Assert.assertEquals(
 			expectedLayoutPageTemplateEntryId,
 			actualLayoutPageTemplateEntryIds[0]);
+	}
+
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
+			long layoutPageTemplateCollectionId, String name)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				layoutPageTemplateCollectionId, name,
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class.getName()),
+			layoutPageTemplateEntry.getPlid(), _read("layout_data.json"),
+			_serviceContext);
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			_serviceContext);
+
+		Class<?> clazz = getClass();
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			LayoutPageTemplateEntry.class.getName(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			RandomTestUtil.randomString(), repository.getDlFolderId(),
+			clazz.getResourceAsStream("dependencies/thumbnail.png"),
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			fileEntry.getFileEntryId());
+
+		return layoutPageTemplateEntry;
 	}
 
 	private MockResourceRequest _getMockResourceRequest(
@@ -300,7 +315,39 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString());
 	}
 
-	private void _validateZipEntry(ZipEntry zipEntry, ZipFile zipFile)
+	private void _validateContent(
+			String content, String expectedFileName,
+			String[] expectedPageTemplateNames)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
+
+		boolean equals = false;
+
+		for (String expectedPageTemplateName : expectedPageTemplateNames) {
+			Map<String, String> valuesMap = HashMapBuilder.put(
+				"PAGE_TEMPLATE_NAME", expectedPageTemplateName
+			).build();
+
+			JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
+				StringUtil.replace(
+					_read(expectedFileName), "${", "}", valuesMap));
+
+			String expectedJSON1 = expectedJSONObject.toJSONString();
+
+			equals = expectedJSON1.equals(jsonObject.toJSONString());
+
+			if (equals) {
+				break;
+			}
+		}
+
+		Assert.assertTrue(equals);
+	}
+
+	private void _validateZipEntry(
+			String[] expectedPageTemplateNames, ZipEntry zipEntry,
+			ZipFile zipFile)
 		throws Exception {
 
 		if (_isPageDefinitionFile(zipEntry.getName())) {
@@ -318,7 +365,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 		if (_isPageTemplateFile(zipEntry.getName())) {
 			_validateContent(
 				StringUtil.read(zipFile.getInputStream(zipEntry)),
-				"expected_page_template.json");
+				"expected_page_template.json", expectedPageTemplateNames);
 		}
 
 		if (_isPageTemplateThumbnailFile(zipEntry.getName())) {

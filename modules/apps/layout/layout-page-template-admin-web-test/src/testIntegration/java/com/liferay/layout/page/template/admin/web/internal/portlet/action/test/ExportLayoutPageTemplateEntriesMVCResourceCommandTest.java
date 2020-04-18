@@ -94,6 +94,56 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testGetFileMultipleLayoutPageTemplatesSingleCollection()
+		throws Exception {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					"Page Template Collection One", StringPool.BLANK,
+					_serviceContext);
+
+		String name1 = "Page Template One";
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
+			_addLayoutPageTemplateEntry(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				name1);
+
+		String name2 = "Page Template Two";
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
+			_addLayoutPageTemplateEntry(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				name2);
+
+		long[] layoutPageTemplateEntryIds = {
+			layoutPageTemplateEntry1.getLayoutPageTemplateEntryId(),
+			layoutPageTemplateEntry2.getLayoutPageTemplateEntryId()
+		};
+
+		File file = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
+			layoutPageTemplateEntryIds);
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				_validateZipEntry(
+					new String[] {name1, name2}, zipEntry, zipFile);
+			}
+
+			Assert.assertEquals(7, zipFile.size());
+		}
+	}
+
+	@Test
 	public void testGetFileNameMultiplePageTemplates() {
 		long[] layoutPageTemplateEntryIds = {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()

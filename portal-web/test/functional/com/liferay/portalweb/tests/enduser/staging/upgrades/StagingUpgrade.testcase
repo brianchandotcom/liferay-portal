@@ -32,7 +32,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -58,7 +60,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -84,7 +88,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

@@ -416,9 +416,6 @@ public abstract class BaseProcessResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(Process process, Process existingProcess) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

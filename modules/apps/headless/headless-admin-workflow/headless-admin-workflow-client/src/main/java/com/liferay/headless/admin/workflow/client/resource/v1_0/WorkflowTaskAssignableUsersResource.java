@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.workflow.client.resource.v1_0;
 
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignableUsers;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskIds;
 import com.liferay.headless.admin.workflow.client.http.HttpInvoker;
 import com.liferay.headless.admin.workflow.client.problem.Problem;
 
@@ -38,13 +39,11 @@ public interface WorkflowTaskAssignableUsersResource {
 	}
 
 	public WorkflowTaskAssignableUsers postWorkflowTaskAssignableUser(
-			com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskIds
-				workflowTaskIds)
+			WorkflowTaskIds workflowTaskIds)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWorkflowTaskAssignableUserHttpResponse(
-			com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskIds
-				workflowTaskIds)
+			WorkflowTaskIds workflowTaskIds)
 		throws Exception;
 
 	public static class Builder {
@@ -104,8 +103,7 @@ public interface WorkflowTaskAssignableUsersResource {
 		implements WorkflowTaskAssignableUsersResource {
 
 		public WorkflowTaskAssignableUsers postWorkflowTaskAssignableUser(
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTaskIds workflowTaskIds)
+				WorkflowTaskIds workflowTaskIds)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -134,8 +132,7 @@ public interface WorkflowTaskAssignableUsersResource {
 
 		public HttpInvoker.HttpResponse
 				postWorkflowTaskAssignableUserHttpResponse(
-					com.liferay.headless.admin.workflow.client.dto.v1_0.
-						WorkflowTaskIds workflowTaskIds)
+					WorkflowTaskIds workflowTaskIds)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

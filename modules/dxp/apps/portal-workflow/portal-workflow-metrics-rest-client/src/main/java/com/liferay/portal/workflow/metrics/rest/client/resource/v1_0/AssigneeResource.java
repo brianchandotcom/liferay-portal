@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.problem.Problem;
@@ -40,15 +41,11 @@ public interface AssigneeResource {
 	}
 
 	public Page<Assignee> postProcessAssigneesPage(
-			Long processId,
-			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-				AssigneeBulkSelection assigneeBulkSelection)
+			Long processId, AssigneeBulkSelection assigneeBulkSelection)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postProcessAssigneesPageHttpResponse(
-			Long processId,
-			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-				AssigneeBulkSelection assigneeBulkSelection)
+			Long processId, AssigneeBulkSelection assigneeBulkSelection)
 		throws Exception;
 
 	public static class Builder {
@@ -107,9 +104,7 @@ public interface AssigneeResource {
 	public static class AssigneeResourceImpl implements AssigneeResource {
 
 		public Page<Assignee> postProcessAssigneesPage(
-				Long processId,
-				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-					AssigneeBulkSelection assigneeBulkSelection)
+				Long processId, AssigneeBulkSelection assigneeBulkSelection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -137,9 +132,7 @@ public interface AssigneeResource {
 		}
 
 		public HttpInvoker.HttpResponse postProcessAssigneesPageHttpResponse(
-				Long processId,
-				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-					AssigneeBulkSelection assigneeBulkSelection)
+				Long processId, AssigneeBulkSelection assigneeBulkSelection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

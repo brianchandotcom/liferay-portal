@@ -121,9 +121,6 @@ public abstract class BaseStatusResourceImpl implements StatusResource {
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(Status status, Status existingStatus) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

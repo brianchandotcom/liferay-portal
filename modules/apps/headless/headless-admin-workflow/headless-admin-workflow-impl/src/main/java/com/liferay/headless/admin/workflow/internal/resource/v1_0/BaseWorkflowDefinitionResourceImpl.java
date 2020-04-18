@@ -278,11 +278,6 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		WorkflowDefinition workflowDefinition,
-		WorkflowDefinition existingWorkflowDefinition) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

@@ -143,9 +143,6 @@ public abstract class BaseAssigneeResourceImpl implements AssigneeResource {
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(Assignee assignee, Assignee existingAssignee) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

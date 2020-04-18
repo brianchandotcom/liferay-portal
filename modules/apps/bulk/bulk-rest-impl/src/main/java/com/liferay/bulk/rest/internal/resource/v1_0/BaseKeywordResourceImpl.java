@@ -160,9 +160,6 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(Keyword keyword, Keyword existingKeyword) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

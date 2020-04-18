@@ -28,16 +28,16 @@ import javax.annotation.Generated;
 @Generated("")
 public class PageDefinition implements Cloneable {
 
-	public Object getPageElement() {
+	public PageElement getPageElement() {
 		return pageElement;
 	}
 
-	public void setPageElement(Object pageElement) {
+	public void setPageElement(PageElement pageElement) {
 		this.pageElement = pageElement;
 	}
 
 	public void setPageElement(
-		UnsafeSupplier<Object, Exception> pageElementUnsafeSupplier) {
+		UnsafeSupplier<PageElement, Exception> pageElementUnsafeSupplier) {
 
 		try {
 			pageElement = pageElementUnsafeSupplier.get();
@@ -47,7 +47,28 @@ public class PageDefinition implements Cloneable {
 		}
 	}
 
-	protected Object pageElement;
+	protected PageElement pageElement;
+
+	public Settings getSettings() {
+		return settings;
+	}
+
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+	}
+
+	public void setSettings(
+		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
+
+		try {
+			settings = settingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Settings settings;
 
 	@Override
 	public PageDefinition clone() throws CloneNotSupportedException {

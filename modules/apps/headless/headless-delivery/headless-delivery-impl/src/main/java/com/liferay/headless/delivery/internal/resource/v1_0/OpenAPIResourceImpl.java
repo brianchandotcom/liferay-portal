@@ -94,8 +94,6 @@ public class OpenAPIResourceImpl {
 
 			add(NavigationMenuResourceImpl.class);
 
-			add(PageDefinitionResourceImpl.class);
-
 			add(StructuredContentResourceImpl.class);
 
 			add(StructuredContentFolderResourceImpl.class);

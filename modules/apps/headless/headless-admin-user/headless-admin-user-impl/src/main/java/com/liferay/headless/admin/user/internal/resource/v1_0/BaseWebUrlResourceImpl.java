@@ -264,9 +264,6 @@ public abstract class BaseWebUrlResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(WebUrl webUrl, WebUrl existingWebUrl) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

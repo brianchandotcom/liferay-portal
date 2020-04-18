@@ -238,10 +238,6 @@ public abstract class BaseNodeMetricResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		NodeMetric nodeMetric, NodeMetric existingNodeMetric) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

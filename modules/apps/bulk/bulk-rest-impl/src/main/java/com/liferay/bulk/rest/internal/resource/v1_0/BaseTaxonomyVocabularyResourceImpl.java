@@ -138,11 +138,6 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		TaxonomyVocabulary taxonomyVocabulary,
-		TaxonomyVocabulary existingTaxonomyVocabulary) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

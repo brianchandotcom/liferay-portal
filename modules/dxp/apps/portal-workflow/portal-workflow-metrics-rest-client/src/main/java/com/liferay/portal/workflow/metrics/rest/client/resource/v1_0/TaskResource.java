@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.TaskBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
@@ -87,15 +88,11 @@ public interface TaskResource {
 		throws Exception;
 
 	public Page<Task> postProcessTasksPage(
-			Pagination pagination,
-			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-				TaskBulkSelection taskBulkSelection)
+			Pagination pagination, TaskBulkSelection taskBulkSelection)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postProcessTasksPageHttpResponse(
-			Pagination pagination,
-			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-				TaskBulkSelection taskBulkSelection)
+			Pagination pagination, TaskBulkSelection taskBulkSelection)
 		throws Exception;
 
 	public static class Builder {
@@ -598,9 +595,7 @@ public interface TaskResource {
 		}
 
 		public Page<Task> postProcessTasksPage(
-				Pagination pagination,
-				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-					TaskBulkSelection taskBulkSelection)
+				Pagination pagination, TaskBulkSelection taskBulkSelection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -627,9 +622,7 @@ public interface TaskResource {
 		}
 
 		public HttpInvoker.HttpResponse postProcessTasksPageHttpResponse(
-				Pagination pagination,
-				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-					TaskBulkSelection taskBulkSelection)
+				Pagination pagination, TaskBulkSelection taskBulkSelection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

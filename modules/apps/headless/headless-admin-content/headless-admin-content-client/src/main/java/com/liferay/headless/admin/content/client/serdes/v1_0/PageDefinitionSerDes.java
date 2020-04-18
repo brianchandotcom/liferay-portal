@@ -15,6 +15,8 @@
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.PageDefinition;
+import com.liferay.headless.admin.content.client.dto.v1_0.PageElement;
+import com.liferay.headless.admin.content.client.dto.v1_0.Settings;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -62,11 +64,17 @@ public class PageDefinitionSerDes {
 
 			sb.append("\"pageElement\": ");
 
-			sb.append("\"");
+			sb.append(pageDefinition.getPageElement());
+		}
 
-			sb.append(_escape(pageDefinition.getPageElement()));
+		if (pageDefinition.getSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-			sb.append("\"");
+			sb.append("\"settings\": ");
+
+			sb.append(pageDefinition.getSettings());
 		}
 
 		sb.append("}");
@@ -96,6 +104,13 @@ public class PageDefinitionSerDes {
 				"pageElement", String.valueOf(pageDefinition.getPageElement()));
 		}
 
+		if (pageDefinition.getSettings() == null) {
+			map.put("settings", null);
+		}
+		else {
+			map.put("settings", String.valueOf(pageDefinition.getSettings()));
+		}
+
 		return map;
 	}
 
@@ -119,7 +134,13 @@ public class PageDefinitionSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "pageElement")) {
 				if (jsonParserFieldValue != null) {
-					pageDefinition.setPageElement((Object)jsonParserFieldValue);
+					pageDefinition.setPageElement(
+						(PageElement)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "settings")) {
+				if (jsonParserFieldValue != null) {
+					pageDefinition.setSettings((Settings)jsonParserFieldValue);
 				}
 			}
 			else {

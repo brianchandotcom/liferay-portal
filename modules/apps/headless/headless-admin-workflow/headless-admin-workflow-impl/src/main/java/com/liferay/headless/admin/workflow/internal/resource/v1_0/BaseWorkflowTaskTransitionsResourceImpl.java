@@ -135,11 +135,6 @@ public abstract class BaseWorkflowTaskTransitionsResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		WorkflowTaskTransitions workflowTaskTransitions,
-		WorkflowTaskTransitions existingWorkflowTaskTransitions) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

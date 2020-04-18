@@ -259,10 +259,6 @@ public abstract class BaseProcessMetricResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		ProcessMetric processMetric, ProcessMetric existingProcessMetric) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

@@ -643,10 +643,6 @@ public abstract class BaseDataDefinitionResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		DataDefinition dataDefinition, DataDefinition existingDataDefinition) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

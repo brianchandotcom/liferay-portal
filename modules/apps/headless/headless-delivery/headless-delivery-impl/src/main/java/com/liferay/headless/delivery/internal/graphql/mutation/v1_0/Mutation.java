@@ -26,7 +26,6 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
-import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
@@ -45,7 +44,6 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResourc
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
-import com.liferay.headless.delivery.resource.v1_0.PageDefinitionResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
@@ -175,14 +173,6 @@ public class Mutation {
 
 		_messageBoardThreadResourceComponentServiceObjects =
 			messageBoardThreadResourceComponentServiceObjects;
-	}
-
-	public static void setPageDefinitionResourceComponentServiceObjects(
-		ComponentServiceObjects<PageDefinitionResource>
-			pageDefinitionResourceComponentServiceObjects) {
-
-		_pageDefinitionResourceComponentServiceObjects =
-			pageDefinitionResourceComponentServiceObjects;
 	}
 
 	public static void setStructuredContentResourceComponentServiceObjects(
@@ -2139,22 +2129,6 @@ public class Mutation {
 					Long.valueOf(siteKey), callbackURL, object));
 	}
 
-	@GraphQLField(
-		description = "Renders and retrieves HTML for the page definition using the theme of specified site."
-	)
-	public Response createSitePageDefinitionPreview(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("pageDefinition") PageDefinition pageDefinition)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_pageDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			pageDefinitionResource ->
-				pageDefinitionResource.postSitePageDefinitionPreview(
-					Long.valueOf(siteKey), pageDefinition));
-	}
-
 	@GraphQLField(description = "Creates a new structured content.")
 	public StructuredContent createSiteStructuredContent(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -3082,20 +3056,6 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			PageDefinitionResource pageDefinitionResource)
-		throws Exception {
-
-		pageDefinitionResource.setContextAcceptLanguage(_acceptLanguage);
-		pageDefinitionResource.setContextCompany(_company);
-		pageDefinitionResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		pageDefinitionResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		pageDefinitionResource.setContextUriInfo(_uriInfo);
-		pageDefinitionResource.setContextUser(_user);
-	}
-
-	private void _populateResourceContext(
 			StructuredContentResource structuredContentResource)
 		throws Exception {
 
@@ -3184,8 +3144,6 @@ public class Mutation {
 		_messageBoardSectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MessageBoardThreadResource>
 		_messageBoardThreadResourceComponentServiceObjects;
-	private static ComponentServiceObjects<PageDefinitionResource>
-		_pageDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentFolderResource>

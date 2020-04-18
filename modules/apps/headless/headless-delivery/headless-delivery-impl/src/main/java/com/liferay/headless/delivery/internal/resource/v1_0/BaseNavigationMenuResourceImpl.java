@@ -249,10 +249,6 @@ public abstract class BaseNavigationMenuResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		NavigationMenu navigationMenu, NavigationMenu existingNavigationMenu) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

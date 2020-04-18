@@ -14,7 +14,9 @@
 
 package com.liferay.headless.admin.workflow.client.resource.v1_0;
 
+import com.liferay.headless.admin.workflow.client.dto.v1_0.ChangeTransition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstance;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstanceSubmit;
 import com.liferay.headless.admin.workflow.client.http.HttpInvoker;
 import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
@@ -51,13 +53,11 @@ public interface WorkflowInstanceResource {
 		throws Exception;
 
 	public WorkflowInstance postWorkflowInstanceSubmit(
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowInstanceSubmit workflowInstanceSubmit)
+			WorkflowInstanceSubmit workflowInstanceSubmit)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWorkflowInstanceSubmitHttpResponse(
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowInstanceSubmit workflowInstanceSubmit)
+			WorkflowInstanceSubmit workflowInstanceSubmit)
 		throws Exception;
 
 	public void deleteWorkflowInstance(Long workflowInstanceId)
@@ -75,16 +75,12 @@ public interface WorkflowInstanceResource {
 		throws Exception;
 
 	public WorkflowInstance postWorkflowInstanceChangeTransition(
-			Long workflowInstanceId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.ChangeTransition
-				changeTransition)
+			Long workflowInstanceId, ChangeTransition changeTransition)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postWorkflowInstanceChangeTransitionHttpResponse(
-				Long workflowInstanceId,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					ChangeTransition changeTransition)
+				Long workflowInstanceId, ChangeTransition changeTransition)
 		throws Exception;
 
 	public static class Builder {
@@ -236,8 +232,7 @@ public interface WorkflowInstanceResource {
 		}
 
 		public WorkflowInstance postWorkflowInstanceSubmit(
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowInstanceSubmit workflowInstanceSubmit)
+				WorkflowInstanceSubmit workflowInstanceSubmit)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -264,8 +259,7 @@ public interface WorkflowInstanceResource {
 		}
 
 		public HttpInvoker.HttpResponse postWorkflowInstanceSubmitHttpResponse(
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowInstanceSubmit workflowInstanceSubmit)
+				WorkflowInstanceSubmit workflowInstanceSubmit)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -430,9 +424,7 @@ public interface WorkflowInstanceResource {
 		}
 
 		public WorkflowInstance postWorkflowInstanceChangeTransition(
-				Long workflowInstanceId,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					ChangeTransition changeTransition)
+				Long workflowInstanceId, ChangeTransition changeTransition)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -461,9 +453,7 @@ public interface WorkflowInstanceResource {
 
 		public HttpInvoker.HttpResponse
 				postWorkflowInstanceChangeTransitionHttpResponse(
-					Long workflowInstanceId,
-					com.liferay.headless.admin.workflow.client.dto.v1_0.
-						ChangeTransition changeTransition)
+					Long workflowInstanceId, ChangeTransition changeTransition)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

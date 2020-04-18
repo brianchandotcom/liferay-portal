@@ -14,7 +14,6 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
-import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategory;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -138,11 +137,6 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
-	}
-
-	protected void preparePatch(
-		TaxonomyCategory taxonomyCategory,
-		TaxonomyCategory existingTaxonomyCategory) {
 	}
 
 	protected <T, R> List<R> transform(

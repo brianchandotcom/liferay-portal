@@ -655,11 +655,6 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		DataRecordCollection dataRecordCollection,
-		DataRecordCollection existingDataRecordCollection) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

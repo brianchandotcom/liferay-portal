@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -197,34 +198,27 @@ public interface StructuredContentResource {
 			Long structuredContentId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			getStructuredContentMyRating(Long structuredContentId)
+	public Rating getStructuredContentMyRating(Long structuredContentId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getStructuredContentMyRatingHttpResponse(
 			Long structuredContentId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			postStructuredContentMyRating(
-				Long structuredContentId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating postStructuredContentMyRating(
+			Long structuredContentId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postStructuredContentMyRatingHttpResponse(
-			Long structuredContentId,
-			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+			Long structuredContentId, Rating rating)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			putStructuredContentMyRating(
-				Long structuredContentId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating putStructuredContentMyRating(
+			Long structuredContentId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putStructuredContentMyRatingHttpResponse(
-			Long structuredContentId,
-			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+			Long structuredContentId, Rating rating)
 		throws Exception;
 
 	public Page<Permission> getStructuredContentPermissionsPage(
@@ -1580,8 +1574,7 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				getStructuredContentMyRating(Long structuredContentId)
+		public Rating getStructuredContentMyRating(Long structuredContentId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1646,10 +1639,8 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				postStructuredContentMyRating(
-					Long structuredContentId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating postStructuredContentMyRating(
+				Long structuredContentId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1679,8 +1670,7 @@ public interface StructuredContentResource {
 
 		public HttpInvoker.HttpResponse
 				postStructuredContentMyRatingHttpResponse(
-					Long structuredContentId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+					Long structuredContentId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1718,10 +1708,8 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				putStructuredContentMyRating(
-					Long structuredContentId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating putStructuredContentMyRating(
+				Long structuredContentId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1751,8 +1739,7 @@ public interface StructuredContentResource {
 
 		public HttpInvoker.HttpResponse
 				putStructuredContentMyRatingHttpResponse(
-					Long structuredContentId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+					Long structuredContentId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

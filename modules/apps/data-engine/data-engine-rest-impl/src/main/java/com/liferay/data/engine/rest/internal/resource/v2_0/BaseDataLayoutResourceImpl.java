@@ -501,10 +501,6 @@ public abstract class BaseDataLayoutResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		DataLayout dataLayout, DataLayout existingDataLayout) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

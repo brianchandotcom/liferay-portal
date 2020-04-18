@@ -551,9 +551,6 @@ public abstract class BaseWikiPageResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(WikiPage wikiPage, WikiPage existingWikiPage) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

@@ -14,7 +14,6 @@
 
 package com.liferay.headless.admin.content.resource.v1_0;
 
-import com.liferay.headless.admin.content.dto.v1_0.PageDefinition;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.util.Locale;
@@ -46,7 +45,9 @@ public interface PageDefinitionResource {
 	}
 
 	public Response postSitePageDefinitionPreview(
-			Long siteId, PageDefinition pageDefinition)
+			Long siteId,
+			com.liferay.headless.delivery.dto.v1_0.PageDefinition
+				pageDefinition)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

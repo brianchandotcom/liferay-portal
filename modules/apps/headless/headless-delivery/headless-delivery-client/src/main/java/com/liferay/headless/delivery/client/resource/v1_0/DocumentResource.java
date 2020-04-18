@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.resource.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
+import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
@@ -125,34 +126,24 @@ public interface DocumentResource {
 			Long documentId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			getDocumentMyRating(Long documentId)
-		throws Exception;
+	public Rating getDocumentMyRating(Long documentId) throws Exception;
 
 	public HttpInvoker.HttpResponse getDocumentMyRatingHttpResponse(
 			Long documentId)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			postDocumentMyRating(
-				Long documentId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating postDocumentMyRating(Long documentId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postDocumentMyRatingHttpResponse(
-			Long documentId,
-			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+			Long documentId, Rating rating)
 		throws Exception;
 
-	public com.liferay.headless.delivery.client.dto.v1_0.Rating
-			putDocumentMyRating(
-				Long documentId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+	public Rating putDocumentMyRating(Long documentId, Rating rating)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putDocumentMyRatingHttpResponse(
-			Long documentId,
-			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+			Long documentId, Rating rating)
 		throws Exception;
 
 	public Page<Document> getSiteDocumentsPage(
@@ -921,10 +912,7 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				getDocumentMyRating(Long documentId)
-			throws Exception {
-
+		public Rating getDocumentMyRating(Long documentId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
 				getDocumentMyRatingHttpResponse(documentId);
 
@@ -986,10 +974,7 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				postDocumentMyRating(
-					Long documentId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating postDocumentMyRating(Long documentId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1017,8 +1002,7 @@ public interface DocumentResource {
 		}
 
 		public HttpInvoker.HttpResponse postDocumentMyRatingHttpResponse(
-				Long documentId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+				Long documentId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1056,10 +1040,7 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public com.liferay.headless.delivery.client.dto.v1_0.Rating
-				putDocumentMyRating(
-					Long documentId,
-					com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+		public Rating putDocumentMyRating(Long documentId, Rating rating)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1087,8 +1068,7 @@ public interface DocumentResource {
 		}
 
 		public HttpInvoker.HttpResponse putDocumentMyRatingHttpResponse(
-				Long documentId,
-				com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
+				Long documentId, Rating rating)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

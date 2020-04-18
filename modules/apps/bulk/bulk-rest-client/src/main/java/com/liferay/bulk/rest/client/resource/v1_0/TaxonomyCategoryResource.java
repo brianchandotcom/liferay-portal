@@ -14,6 +14,7 @@
 
 package com.liferay.bulk.rest.client.resource.v1_0;
 
+import com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkSelection;
 import com.liferay.bulk.rest.client.http.HttpInvoker;
 import com.liferay.bulk.rest.client.problem.Problem;
 
@@ -37,23 +38,19 @@ public interface TaxonomyCategoryResource {
 	}
 
 	public void patchTaxonomyCategoryBatch(
-			com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkSelection
-				taxonomyCategoryBulkSelection)
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchTaxonomyCategoryBatchHttpResponse(
-			com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkSelection
-				taxonomyCategoryBulkSelection)
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 
 	public void putTaxonomyCategoryBatch(
-			com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkSelection
-				taxonomyCategoryBulkSelection)
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putTaxonomyCategoryBatchHttpResponse(
-			com.liferay.bulk.rest.client.dto.v1_0.TaxonomyCategoryBulkSelection
-				taxonomyCategoryBulkSelection)
+			TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 		throws Exception;
 
 	public static class Builder {
@@ -113,8 +110,7 @@ public interface TaxonomyCategoryResource {
 		implements TaxonomyCategoryResource {
 
 		public void patchTaxonomyCategoryBatch(
-				com.liferay.bulk.rest.client.dto.v1_0.
-					TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
+				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -142,8 +138,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse patchTaxonomyCategoryBatchHttpResponse(
-				com.liferay.bulk.rest.client.dto.v1_0.
-					TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
+				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -181,8 +176,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public void putTaxonomyCategoryBatch(
-				com.liferay.bulk.rest.client.dto.v1_0.
-					TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
+				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -210,8 +204,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse putTaxonomyCategoryBatchHttpResponse(
-				com.liferay.bulk.rest.client.dto.v1_0.
-					TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
+				TaxonomyCategoryBulkSelection taxonomyCategoryBulkSelection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

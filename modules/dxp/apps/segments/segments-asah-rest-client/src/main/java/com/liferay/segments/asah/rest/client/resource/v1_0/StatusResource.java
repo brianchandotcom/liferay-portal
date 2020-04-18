@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.rest.client.resource.v1_0;
 
+import com.liferay.segments.asah.rest.client.dto.v1_0.Experiment;
 import com.liferay.segments.asah.rest.client.dto.v1_0.Status;
 import com.liferay.segments.asah.rest.client.http.HttpInvoker;
 import com.liferay.segments.asah.rest.client.problem.Problem;
@@ -37,8 +38,7 @@ public interface StatusResource {
 		return new Builder();
 	}
 
-	public com.liferay.segments.asah.rest.client.dto.v1_0.Experiment
-			postExperimentStatus(Long experimentId, Status status)
+	public Experiment postExperimentStatus(Long experimentId, Status status)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postExperimentStatusHttpResponse(
@@ -108,8 +108,7 @@ public interface StatusResource {
 
 	public static class StatusResourceImpl implements StatusResource {
 
-		public com.liferay.segments.asah.rest.client.dto.v1_0.Experiment
-				postExperimentStatus(Long experimentId, Status status)
+		public Experiment postExperimentStatus(Long experimentId, Status status)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =

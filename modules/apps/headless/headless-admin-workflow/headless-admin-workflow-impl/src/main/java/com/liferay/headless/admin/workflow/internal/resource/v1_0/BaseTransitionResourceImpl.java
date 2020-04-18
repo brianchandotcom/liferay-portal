@@ -169,10 +169,6 @@ public abstract class BaseTransitionResourceImpl implements TransitionResource {
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		Transition transition, Transition existingTransition) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

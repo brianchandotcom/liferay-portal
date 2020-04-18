@@ -14,7 +14,12 @@
 
 package com.liferay.headless.admin.workflow.client.resource.v1_0;
 
+import com.liferay.headless.admin.workflow.client.dto.v1_0.ChangeTransition;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTask;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignToMe;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignToRole;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignToUser;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTasksBulkSelection;
 import com.liferay.headless.admin.workflow.client.http.HttpInvoker;
 import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
@@ -76,24 +81,20 @@ public interface WorkflowTaskResource {
 
 	public Page<WorkflowTask> postWorkflowTasksPage(
 			Pagination pagination, String sortString,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTasksBulkSelection workflowTasksBulkSelection)
+			WorkflowTasksBulkSelection workflowTasksBulkSelection)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWorkflowTasksPageHttpResponse(
 			Pagination pagination, String sortString,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTasksBulkSelection workflowTasksBulkSelection)
+			WorkflowTasksBulkSelection workflowTasksBulkSelection)
 		throws Exception;
 
 	public void patchWorkflowTaskAssignToUser(
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchWorkflowTaskAssignToUserHttpResponse(
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
 		throws Exception;
 
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
@@ -141,14 +142,12 @@ public interface WorkflowTaskResource {
 		throws Exception;
 
 	public void patchWorkflowTaskChangeTransition(
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				ChangeTransition[] changeTransitions)
+			ChangeTransition[] changeTransitions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			patchWorkflowTaskChangeTransitionHttpResponse(
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					ChangeTransition[] changeTransitions)
+				ChangeTransition[] changeTransitions)
 		throws Exception;
 
 	public Page<WorkflowTask> getWorkflowTasksSubmittingUserPage(
@@ -161,13 +160,11 @@ public interface WorkflowTaskResource {
 		throws Exception;
 
 	public void patchWorkflowTaskUpdateDueDate(
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+			WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchWorkflowTaskUpdateDueDateHttpResponse(
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+			WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
 		throws Exception;
 
 	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
@@ -177,52 +174,40 @@ public interface WorkflowTaskResource {
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToMe(
-			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToMe workflowTaskAssignToMe)
+			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWorkflowTaskAssignToMeHttpResponse(
-			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToMe workflowTaskAssignToMe)
+			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToRole(
 			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToRole workflowTaskAssignToRole)
+			WorkflowTaskAssignToRole workflowTaskAssignToRole)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWorkflowTaskAssignToRoleHttpResponse(
 			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToRole workflowTaskAssignToRole)
+			WorkflowTaskAssignToRole workflowTaskAssignToRole)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToUser(
 			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToUser workflowTaskAssignToUser)
+			WorkflowTaskAssignToUser workflowTaskAssignToUser)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWorkflowTaskAssignToUserHttpResponse(
 			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToUser workflowTaskAssignToUser)
+			WorkflowTaskAssignToUser workflowTaskAssignToUser)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskChangeTransition(
-			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.ChangeTransition
-				changeTransition)
+			Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postWorkflowTaskChangeTransitionHttpResponse(
-				Long workflowTaskId,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					ChangeTransition changeTransition)
+				Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception;
 
 	public String getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
@@ -233,15 +218,11 @@ public interface WorkflowTaskResource {
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
-			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToMe workflowTaskAssignToMe)
+			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postWorkflowTaskUpdateDueDateHttpResponse(
-			Long workflowTaskId,
-			com.liferay.headless.admin.workflow.client.dto.v1_0.
-				WorkflowTaskAssignToMe workflowTaskAssignToMe)
+			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception;
 
 	public static class Builder {
@@ -545,8 +526,7 @@ public interface WorkflowTaskResource {
 
 		public Page<WorkflowTask> postWorkflowTasksPage(
 				Pagination pagination, String sortString,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTasksBulkSelection workflowTasksBulkSelection)
+				WorkflowTasksBulkSelection workflowTasksBulkSelection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -575,8 +555,7 @@ public interface WorkflowTaskResource {
 
 		public HttpInvoker.HttpResponse postWorkflowTasksPageHttpResponse(
 				Pagination pagination, String sortString,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTasksBulkSelection workflowTasksBulkSelection)
+				WorkflowTasksBulkSelection workflowTasksBulkSelection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -626,8 +605,7 @@ public interface WorkflowTaskResource {
 		}
 
 		public void patchWorkflowTaskAssignToUser(
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+				WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -656,8 +634,7 @@ public interface WorkflowTaskResource {
 
 		public HttpInvoker.HttpResponse
 				patchWorkflowTaskAssignToUserHttpResponse(
-					com.liferay.headless.admin.workflow.client.dto.v1_0.
-						WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+					WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1073,8 +1050,7 @@ public interface WorkflowTaskResource {
 		}
 
 		public void patchWorkflowTaskChangeTransition(
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					ChangeTransition[] changeTransitions)
+				ChangeTransition[] changeTransitions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1103,8 +1079,7 @@ public interface WorkflowTaskResource {
 
 		public HttpInvoker.HttpResponse
 				patchWorkflowTaskChangeTransitionHttpResponse(
-					com.liferay.headless.admin.workflow.client.dto.v1_0.
-						ChangeTransition[] changeTransitions)
+					ChangeTransition[] changeTransitions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1226,8 +1201,7 @@ public interface WorkflowTaskResource {
 		}
 
 		public void patchWorkflowTaskUpdateDueDate(
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+				WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1256,8 +1230,7 @@ public interface WorkflowTaskResource {
 
 		public HttpInvoker.HttpResponse
 				patchWorkflowTaskUpdateDueDateHttpResponse(
-					com.liferay.headless.admin.workflow.client.dto.v1_0.
-						WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
+					WorkflowTaskAssignToMe[] workflowTaskAssignToMes)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1367,8 +1340,7 @@ public interface WorkflowTaskResource {
 
 		public WorkflowTask postWorkflowTaskAssignToMe(
 				Long workflowTaskId,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTaskAssignToMe workflowTaskAssignToMe)
+				WorkflowTaskAssignToMe workflowTaskAssignToMe)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1397,8 +1369,7 @@ public interface WorkflowTaskResource {
 
 		public HttpInvoker.HttpResponse postWorkflowTaskAssignToMeHttpResponse(
 				Long workflowTaskId,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTaskAssignToMe workflowTaskAssignToMe)
+				WorkflowTaskAssignToMe workflowTaskAssignToMe)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1439,8 +1410,7 @@ public interface WorkflowTaskResource {
 
 		public WorkflowTask postWorkflowTaskAssignToRole(
 				Long workflowTaskId,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTaskAssignToRole workflowTaskAssignToRole)
+				WorkflowTaskAssignToRole workflowTaskAssignToRole)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1470,8 +1440,7 @@ public interface WorkflowTaskResource {
 		public HttpInvoker.HttpResponse
 				postWorkflowTaskAssignToRoleHttpResponse(
 					Long workflowTaskId,
-					com.liferay.headless.admin.workflow.client.dto.v1_0.
-						WorkflowTaskAssignToRole workflowTaskAssignToRole)
+					WorkflowTaskAssignToRole workflowTaskAssignToRole)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1512,8 +1481,7 @@ public interface WorkflowTaskResource {
 
 		public WorkflowTask postWorkflowTaskAssignToUser(
 				Long workflowTaskId,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTaskAssignToUser workflowTaskAssignToUser)
+				WorkflowTaskAssignToUser workflowTaskAssignToUser)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1543,8 +1511,7 @@ public interface WorkflowTaskResource {
 		public HttpInvoker.HttpResponse
 				postWorkflowTaskAssignToUserHttpResponse(
 					Long workflowTaskId,
-					com.liferay.headless.admin.workflow.client.dto.v1_0.
-						WorkflowTaskAssignToUser workflowTaskAssignToUser)
+					WorkflowTaskAssignToUser workflowTaskAssignToUser)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1584,9 +1551,7 @@ public interface WorkflowTaskResource {
 		}
 
 		public WorkflowTask postWorkflowTaskChangeTransition(
-				Long workflowTaskId,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					ChangeTransition changeTransition)
+				Long workflowTaskId, ChangeTransition changeTransition)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1615,9 +1580,7 @@ public interface WorkflowTaskResource {
 
 		public HttpInvoker.HttpResponse
 				postWorkflowTaskChangeTransitionHttpResponse(
-					Long workflowTaskId,
-					com.liferay.headless.admin.workflow.client.dto.v1_0.
-						ChangeTransition changeTransition)
+					Long workflowTaskId, ChangeTransition changeTransition)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1721,8 +1684,7 @@ public interface WorkflowTaskResource {
 
 		public WorkflowTask postWorkflowTaskUpdateDueDate(
 				Long workflowTaskId,
-				com.liferay.headless.admin.workflow.client.dto.v1_0.
-					WorkflowTaskAssignToMe workflowTaskAssignToMe)
+				WorkflowTaskAssignToMe workflowTaskAssignToMe)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1752,8 +1714,7 @@ public interface WorkflowTaskResource {
 		public HttpInvoker.HttpResponse
 				postWorkflowTaskUpdateDueDateHttpResponse(
 					Long workflowTaskId,
-					com.liferay.headless.admin.workflow.client.dto.v1_0.
-						WorkflowTaskAssignToMe workflowTaskAssignToMe)
+					WorkflowTaskAssignToMe workflowTaskAssignToMe)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

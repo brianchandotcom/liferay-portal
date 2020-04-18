@@ -265,10 +265,6 @@ public abstract class BasePostalAddressResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		PostalAddress postalAddress, PostalAddress existingPostalAddress) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

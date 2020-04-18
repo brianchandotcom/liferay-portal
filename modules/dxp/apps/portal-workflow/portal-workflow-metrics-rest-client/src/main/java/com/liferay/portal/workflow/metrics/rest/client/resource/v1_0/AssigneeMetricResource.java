@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeMetric;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeMetricBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
@@ -42,14 +43,12 @@ public interface AssigneeMetricResource {
 
 	public Page<AssigneeMetric> postProcessAssigneeMetricsPage(
 			Long processId, Pagination pagination, String sortString,
-			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-				AssigneeMetricBulkSelection assigneeMetricBulkSelection)
+			AssigneeMetricBulkSelection assigneeMetricBulkSelection)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postProcessAssigneeMetricsPageHttpResponse(
 			Long processId, Pagination pagination, String sortString,
-			com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-				AssigneeMetricBulkSelection assigneeMetricBulkSelection)
+			AssigneeMetricBulkSelection assigneeMetricBulkSelection)
 		throws Exception;
 
 	public static class Builder {
@@ -110,8 +109,7 @@ public interface AssigneeMetricResource {
 
 		public Page<AssigneeMetric> postProcessAssigneeMetricsPage(
 				Long processId, Pagination pagination, String sortString,
-				com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-					AssigneeMetricBulkSelection assigneeMetricBulkSelection)
+				AssigneeMetricBulkSelection assigneeMetricBulkSelection)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -142,8 +140,7 @@ public interface AssigneeMetricResource {
 		public HttpInvoker.HttpResponse
 				postProcessAssigneeMetricsPageHttpResponse(
 					Long processId, Pagination pagination, String sortString,
-					com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.
-						AssigneeMetricBulkSelection assigneeMetricBulkSelection)
+					AssigneeMetricBulkSelection assigneeMetricBulkSelection)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

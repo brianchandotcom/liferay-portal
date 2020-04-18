@@ -229,11 +229,6 @@ public abstract class BaseHistogramMetricResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(
-		HistogramMetric histogramMetric,
-		HistogramMetric existingHistogramMetric) {
-	}
-
 	protected <T, R> List<R> transform(
 		java.util.Collection<T> collection,
 		UnsafeFunction<T, R, Exception> unsafeFunction) {

@@ -1,0 +1,37 @@
+{
+	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"segments-experience-id-0": {
+			"headingLevel": "h1",
+			"marginBottom": "2",
+			"textAlign": "center",
+			"textColor": {
+				"color": "danger",
+				"cssClass": "danger",
+				"rgbValue": "rgb(171, 16, 16)"
+			}
+		},
+		"segments-experience-id-1": {
+			"headingLevel": "h1",
+			"marginBottom": "0",
+			"textAlign": "center",
+			"textColor": {
+				"color": "primary",
+				"cssClass": "primary",
+				"rgbValue": "rgb(0, 74, 215)"
+			}
+		},
+		"segments-experience-id-2": {
+			"headingLevel": "h1",
+			"marginBottom": "2",
+			"textAlign": "center",
+			"textColor": {
+				"color": "danger",
+				"cssClass": "danger",
+				"rgbValue": "rgb(171, 16, 16)"
+			}
+		}
+	}
+}

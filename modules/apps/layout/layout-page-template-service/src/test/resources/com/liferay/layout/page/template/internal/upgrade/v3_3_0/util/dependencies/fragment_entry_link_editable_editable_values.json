@@ -1,0 +1,19 @@
+{
+	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"element-text": {
+			"config": {},
+			"defaultValue": "Heading Example",
+			"segments-experience-id-0": {
+				"en_US": "Heading Example Segments Experience 0"
+			},
+			"segments-experience-id-1": {
+				"en_US": "Heading Example Segments Experience 1"
+			},
+			"segments-experience-id-2": {
+				"en_US": "Heading Example Segments Experience 2"
+			}
+		}
+	}
+}

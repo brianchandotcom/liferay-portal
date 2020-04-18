@@ -1,0 +1,25 @@
+{
+	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"element-text": {
+			"config": {},
+			"defaultValue": "Heading Example",
+			"segments-experience-id-2": {
+				"en_US": "Heading Example Segments Experience 2"
+			}
+		}
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"segments-experience-id-2": {
+			"headingLevel": "h4",
+			"marginBottom": "3",
+			"textAlign": "left",
+			"textColor": {
+				"color": "secondary",
+				"cssClass": "secondary",
+				"rgbValue": "rgb(84, 84, 98)"
+			}
+		}
+	}
+}

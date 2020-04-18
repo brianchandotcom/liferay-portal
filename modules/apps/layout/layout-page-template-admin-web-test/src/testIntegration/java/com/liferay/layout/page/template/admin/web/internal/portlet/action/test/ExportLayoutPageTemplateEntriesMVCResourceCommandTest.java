@@ -107,7 +107,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					getLayoutPageTemplateCollectionId(),
 				"Page Template One",
 				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),

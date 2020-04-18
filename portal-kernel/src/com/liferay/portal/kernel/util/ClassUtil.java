@@ -33,6 +33,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -154,9 +157,10 @@ public class ClassUtil {
 
 		URL url = classLoader.getResource(className);
 
-		URI uri = getPathURIFromURL(url);
+		Path path = Paths.get(getPathURIFromURL(url));
 
-		String parentPath = uri.getPath();
+		String parentPath = StringUtil.replace(
+			path.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 
 		int pos = parentPath.indexOf(className);
 

@@ -127,6 +127,10 @@ public class ExportHelper {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 					layoutPageTemplateEntries) {
 
+				if (layoutPageTemplateEntry.isDraft()) {
+					continue;
+				}
+
 				_populateLayoutPageTemplateCollectionKeyMap(
 					layoutPageTemplateCollectionKeyMap,
 					layoutPageTemplateEntry);

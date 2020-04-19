@@ -70,8 +70,6 @@ public class AddSegmentsExperienceMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment(
 			actionRequest);
 
@@ -79,7 +77,9 @@ public class AddSegmentsExperienceMVCActionCommand
 			actionRequest, _portal.getClassNameId(Layout.class),
 			themeDisplay.getPlid(), segmentsExperiment);
 
-		_populateSegmentsExperienceJSONObject(jsonObject, segmentsExperience);
+		JSONObject jsonObject = JSONUtil.put(
+			"segmentsExperience",
+			_getSegmentsExperienceJSONObject(segmentsExperience));
 
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
 			segmentsExperiment);
@@ -89,7 +89,7 @@ public class AddSegmentsExperienceMVCActionCommand
 			themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId());
 
-		_populateLayoutDataJSONObject(jsonObject, layoutData);
+		jsonObject.put("layoutData", _getLayoutDataJSONObject(layoutData));
 
 		Map<Long, String> fragmentEntryLinksEditableValuesMap =
 			SegmentsExperienceUtil.copyFragmentEntryLinksEditableValues(
@@ -97,16 +97,20 @@ public class AddSegmentsExperienceMVCActionCommand
 				themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
 				segmentsExperience.getSegmentsExperienceId());
 
-		_populateFragmentEntryLinksJSONObject(
-			jsonObject, fragmentEntryLinksEditableValuesMap);
+		jsonObject.put(
+			"fragmentEntryLinks",
+			_getFragmentEntryLinksJSONObject(
+				fragmentEntryLinksEditableValuesMap));
 
 		if (segmentsExperiment != null) {
 			SegmentsExperimentRel segmentsExperimentRel =
 				_addSegmentsExperimentRel(
 					actionRequest, segmentsExperiment, segmentsExperience);
 
-			_populateSegmentsSegmentsExperimentRelJSONObject(
-				jsonObject, segmentsExperimentRel, themeDisplay.getLocale());
+			jsonObject.put(
+				"segmentsExperimentRel",
+				_getSegmentsSegmentsExperimentRelJSONObject(
+					segmentsExperimentRel, themeDisplay.getLocale()));
 
 			_initializeDraftLayout(
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
@@ -184,6 +188,46 @@ public class AddSegmentsExperienceMVCActionCommand
 		return segmentsExperiment.getSegmentsExperienceId();
 	}
 
+	private JSONObject _getFragmentEntryLinksJSONObject(
+			Map<Long, String> fragmentEntryLinksEditableValuesMap)
+		throws JSONException {
+
+		JSONObject fragmentEntryLinksJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		for (Map.Entry<Long, String> entry :
+				fragmentEntryLinksEditableValuesMap.entrySet()) {
+
+			fragmentEntryLinksJSONObject.put(
+				String.valueOf(entry.getKey()),
+				JSONFactoryUtil.createJSONObject(entry.getValue()));
+		}
+
+		return fragmentEntryLinksJSONObject;
+	}
+
+	private JSONObject _getLayoutDataJSONObject(String layoutData)
+		throws JSONException {
+
+		return JSONFactoryUtil.createJSONObject(layoutData);
+	}
+
+	private JSONObject _getSegmentsExperienceJSONObject(
+		SegmentsExperience segmentsExperience) {
+
+		return JSONUtil.put(
+			"active", segmentsExperience.isActive()
+		).put(
+			"name", segmentsExperience.getNameCurrentValue()
+		).put(
+			"priority", segmentsExperience.getPriority()
+		).put(
+			"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
+		).put(
+			"segmentsExperienceId", segmentsExperience.getSegmentsExperienceId()
+		);
+	}
+
 	private SegmentsExperiment _getSegmentsExperiment(
 			ActionRequest actionRequest)
 		throws PortalException {
@@ -202,6 +246,26 @@ public class AddSegmentsExperienceMVCActionCommand
 		return segmentsExperiment;
 	}
 
+	private JSONObject _getSegmentsSegmentsExperimentRelJSONObject(
+			SegmentsExperimentRel segmentsExperimentRel, Locale locale)
+		throws PortalException {
+
+		return JSONUtil.put(
+			"name", segmentsExperimentRel.getName(locale)
+		).put(
+			"segmentsExperienceId",
+			segmentsExperimentRel.getSegmentsExperienceId()
+		).put(
+			"segmentsExperimentId",
+			segmentsExperimentRel.getSegmentsExperimentId()
+		).put(
+			"segmentsExperimentRelId",
+			segmentsExperimentRel.getSegmentsExperimentRelId()
+		).put(
+			"split", segmentsExperimentRel.getSplit()
+		);
+	}
+
 	private void _initializeDraftLayout(
 			long groupId, long classPK, SegmentsExperience segmentsExperience,
 			long baseSegmentsExperienceId)
@@ -216,75 +280,6 @@ public class AddSegmentsExperienceMVCActionCommand
 				baseSegmentsExperienceId,
 				segmentsExperience.getSegmentsExperienceId());
 		}
-	}
-
-	private void _populateFragmentEntryLinksJSONObject(
-			JSONObject jsonObject,
-			Map<Long, String> fragmentEntryLinksEditableValuesMap)
-		throws JSONException {
-
-		JSONObject fragmentEntryLinksJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		for (Map.Entry<Long, String> entry :
-				fragmentEntryLinksEditableValuesMap.entrySet()) {
-
-			fragmentEntryLinksJSONObject.put(
-				String.valueOf(entry.getKey()),
-				JSONFactoryUtil.createJSONObject(entry.getValue()));
-		}
-
-		jsonObject.put("fragmentEntryLinks", fragmentEntryLinksJSONObject);
-	}
-
-	private void _populateLayoutDataJSONObject(
-			JSONObject jsonObject, String layoutData)
-		throws JSONException {
-
-		jsonObject.put(
-			"layoutData", JSONFactoryUtil.createJSONObject(layoutData));
-	}
-
-	private void _populateSegmentsExperienceJSONObject(
-		JSONObject jsonObject, SegmentsExperience segmentsExperience) {
-
-		jsonObject.put(
-			"segmentsExperience",
-			JSONUtil.put(
-				"active", segmentsExperience.isActive()
-			).put(
-				"name", segmentsExperience.getNameCurrentValue()
-			).put(
-				"priority", segmentsExperience.getPriority()
-			).put(
-				"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
-			).put(
-				"segmentsExperienceId",
-				segmentsExperience.getSegmentsExperienceId()
-			));
-	}
-
-	private void _populateSegmentsSegmentsExperimentRelJSONObject(
-			JSONObject jsonObject, SegmentsExperimentRel segmentsExperimentRel,
-			Locale locale)
-		throws PortalException {
-
-		jsonObject.put(
-			"segmentsExperimentRel",
-			JSONUtil.put(
-				"name", segmentsExperimentRel.getName(locale)
-			).put(
-				"segmentsExperienceId",
-				segmentsExperimentRel.getSegmentsExperienceId()
-			).put(
-				"segmentsExperimentId",
-				segmentsExperimentRel.getSegmentsExperimentId()
-			).put(
-				"segmentsExperimentRelId",
-				segmentsExperimentRel.getSegmentsExperimentRelId()
-			).put(
-				"split", segmentsExperimentRel.getSplit()
-			));
 	}
 
 	@Reference

@@ -84,18 +84,9 @@ public class AddSegmentsExperienceMVCActionCommand
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
 			segmentsExperiment);
 
-		SegmentsExperienceUtil.copyLayoutData(
+		SegmentsExperienceUtil.copySegmentsExperienceData(
 			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
 			themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
-			segmentsExperience.getSegmentsExperienceId());
-
-		SegmentsExperienceUtil.copyFragmentEntryLinksEditableValues(
-			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-			themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
-			segmentsExperience.getSegmentsExperienceId());
-
-		SegmentsExperienceUtil.copyPortletPreferences(
-			themeDisplay.getPlid(), baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId());
 
 		JSONObject jsonObject = JSONUtil.put(

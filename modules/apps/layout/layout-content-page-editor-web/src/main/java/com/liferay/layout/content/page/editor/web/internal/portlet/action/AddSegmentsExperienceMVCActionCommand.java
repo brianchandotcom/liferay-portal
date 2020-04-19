@@ -102,24 +102,25 @@ public class AddSegmentsExperienceMVCActionCommand
 			_getFragmentEntryLinksJSONObject(
 				fragmentEntryLinksEditableValuesMap));
 
-		if (segmentsExperiment != null) {
-			SegmentsExperimentRel segmentsExperimentRel =
-				_addSegmentsExperimentRel(
-					actionRequest, segmentsExperiment, segmentsExperience);
-
-			jsonObject.put(
-				"segmentsExperimentRel",
-				_getSegmentsSegmentsExperimentRelJSONObject(
-					segmentsExperimentRel, themeDisplay.getLocale()));
-
-			_initializeDraftLayout(
-				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-				segmentsExperience, baseSegmentsExperienceId);
-		}
-
 		SegmentsExperienceUtil.copyPortletPreferences(
 			themeDisplay.getPlid(), baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId());
+
+		if (segmentsExperiment == null) {
+			return jsonObject;
+		}
+
+		SegmentsExperimentRel segmentsExperimentRel = _addSegmentsExperimentRel(
+			actionRequest, segmentsExperiment, segmentsExperience);
+
+		jsonObject.put(
+			"segmentsExperimentRel",
+			_getSegmentsSegmentsExperimentRelJSONObject(
+				segmentsExperimentRel, themeDisplay.getLocale()));
+
+		_initializeDraftLayout(
+			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+			segmentsExperience, baseSegmentsExperienceId);
 
 		return jsonObject;
 	}

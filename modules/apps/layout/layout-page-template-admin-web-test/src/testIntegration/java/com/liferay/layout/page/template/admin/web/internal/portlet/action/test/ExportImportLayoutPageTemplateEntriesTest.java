@@ -120,7 +120,7 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 					getLayoutPageTemplateCollectionId(),
 				"Page Template One",
 				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext1);
+				WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
 		String html =
 			"<lfr-editable id=\"element-text\" type=\"text\">Test Text " +

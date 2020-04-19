@@ -14,8 +14,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -41,8 +45,8 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
 
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -77,34 +81,38 @@ public class AddSegmentsExperienceMVCActionCommand
 			actionRequest, _portal.getClassNameId(Layout.class),
 			themeDisplay.getPlid(), segmentsExperiment);
 
-		JSONObject jsonObject = JSONUtil.put(
-			"segmentsExperience",
-			_getSegmentsExperienceJSONObject(segmentsExperience));
-
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
 			segmentsExperiment);
 
-		String layoutData = SegmentsExperienceUtil.copyLayoutData(
+		SegmentsExperienceUtil.copyLayoutData(
 			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
 			themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId());
 
-		jsonObject.put("layoutData", _getLayoutDataJSONObject(layoutData));
-
-		Map<Long, String> fragmentEntryLinksEditableValuesMap =
-			SegmentsExperienceUtil.copyFragmentEntryLinksEditableValues(
-				_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-				themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
-				segmentsExperience.getSegmentsExperienceId());
-
-		jsonObject.put(
-			"fragmentEntryLinks",
-			_getFragmentEntryLinksJSONObject(
-				fragmentEntryLinksEditableValuesMap));
+		SegmentsExperienceUtil.copyFragmentEntryLinksEditableValues(
+			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
+			themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
+			segmentsExperience.getSegmentsExperienceId());
 
 		SegmentsExperienceUtil.copyPortletPreferences(
 			themeDisplay.getPlid(), baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId());
+
+		JSONObject jsonObject = JSONUtil.put(
+			"fragmentEntryLinks",
+			_getFragmentEntryLinksJSONObject(
+				_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
+				themeDisplay.getScopeGroupId())
+		).put(
+			"layoutData",
+			_getLayoutDataJSONObject(
+				_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
+				themeDisplay.getScopeGroupId(),
+				segmentsExperience.getSegmentsExperienceId())
+		).put(
+			"segmentsExperience",
+			_getSegmentsExperienceJSONObject(segmentsExperience)
+		);
 
 		if (segmentsExperiment == null) {
 			return jsonObject;
@@ -190,27 +198,38 @@ public class AddSegmentsExperienceMVCActionCommand
 	}
 
 	private JSONObject _getFragmentEntryLinksJSONObject(
-			Map<Long, String> fragmentEntryLinksEditableValuesMap)
+			long classNameId, long classPK, long groupId)
 		throws JSONException {
 
 		JSONObject fragmentEntryLinksJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		for (Map.Entry<Long, String> entry :
-				fragmentEntryLinksEditableValuesMap.entrySet()) {
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				groupId, classNameId, classPK);
 
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLinksJSONObject.put(
-				String.valueOf(entry.getKey()),
-				JSONFactoryUtil.createJSONObject(entry.getValue()));
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues()));
 		}
 
 		return fragmentEntryLinksJSONObject;
 	}
 
-	private JSONObject _getLayoutDataJSONObject(String layoutData)
-		throws JSONException {
+	private JSONObject _getLayoutDataJSONObject(
+			long classNameId, long classPK, long groupId,
+			long segmentsExperienceId)
+		throws PortalException {
 
-		return JSONFactoryUtil.createJSONObject(layoutData);
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					groupId, classNameId, classPK, true);
+
+		return JSONFactoryUtil.createJSONObject(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
 	}
 
 	private JSONObject _getSegmentsExperienceJSONObject(
@@ -284,7 +303,14 @@ public class AddSegmentsExperienceMVCActionCommand
 	}
 
 	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private Portal _portal;

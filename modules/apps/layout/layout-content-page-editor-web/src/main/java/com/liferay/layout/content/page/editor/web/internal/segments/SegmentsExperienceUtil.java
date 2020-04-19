@@ -40,7 +40,7 @@ import java.util.Map;
  */
 public class SegmentsExperienceUtil {
 
-	public static Map<Long, String> copyFragmentEntryLinksEditableValues(
+	public static void copyFragmentEntryLinksEditableValues(
 			long classNameId, long classPK, long groupId,
 			long sourceSegmentsExperienceId, long targetSegmentsExperienceId)
 		throws PortalException {
@@ -53,11 +53,9 @@ public class SegmentsExperienceUtil {
 
 		FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLinks(
 			fragmentEntryLinksEditableValuesMap);
-
-		return fragmentEntryLinksEditableValuesMap;
 	}
 
-	public static String copyLayoutData(
+	public static void copyLayoutData(
 			long classNameId, long classPK, long groupId,
 			long sourceSegmentsExperienceId, long targetSegmentsExperienceId)
 		throws PortalException {
@@ -67,15 +65,11 @@ public class SegmentsExperienceUtil {
 				fetchLayoutPageTemplateStructure(
 					groupId, classNameId, classPK, true);
 
-		String data = layoutPageTemplateStructure.getData(
-			sourceSegmentsExperienceId);
-
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructure(
 				groupId, classNameId, classPK, targetSegmentsExperienceId,
-				data);
-
-		return data;
+				layoutPageTemplateStructure.getData(
+					sourceSegmentsExperienceId));
 	}
 
 	public static void copyPortletPreferences(

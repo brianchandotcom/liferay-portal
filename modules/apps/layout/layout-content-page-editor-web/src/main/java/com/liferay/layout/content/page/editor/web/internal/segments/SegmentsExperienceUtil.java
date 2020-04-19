@@ -101,20 +101,17 @@ public class SegmentsExperienceUtil {
 				JSONObject editableJSONObject =
 					editableProcessorJSONObject.getJSONObject(editableKey);
 
-				JSONObject valueJSONObject = null;
-
-				if ((editableJSONObject != null) &&
-					editableJSONObject.has(
+				if ((editableJSONObject == null) ||
+					!editableJSONObject.has(
 						SegmentsExperienceConstants.ID_PREFIX +
 							sourceSegmentsExperienceId)) {
 
-					valueJSONObject = editableJSONObject.getJSONObject(
-						SegmentsExperienceConstants.ID_PREFIX +
-							sourceSegmentsExperienceId);
-				}
-				else {
 					continue;
 				}
+
+				JSONObject valueJSONObject = editableJSONObject.getJSONObject(
+					SegmentsExperienceConstants.ID_PREFIX +
+						sourceSegmentsExperienceId);
 
 				editableJSONObject.put(
 					SegmentsExperienceConstants.ID_PREFIX +

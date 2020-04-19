@@ -40,104 +40,20 @@ import java.util.Map;
  */
 public class SegmentsExperienceUtil {
 
-	public static void copyFragmentEntryLinksEditableValues(
-			long classNameId, long classPK, long groupId,
-			long sourceSegmentsExperienceId, long targetSegmentsExperienceId)
-		throws PortalException {
-
-		Map<Long, String> fragmentEntryLinksEditableValuesMap =
-			_copyFragmentEntryLinksEditableValues(
-				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-					groupId, classNameId, classPK),
-				sourceSegmentsExperienceId, targetSegmentsExperienceId);
-
-		FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLinks(
-			fragmentEntryLinksEditableValuesMap);
-	}
-
-	public static void copyLayoutData(
-			long classNameId, long classPK, long groupId,
-			long sourceSegmentsExperienceId, long targetSegmentsExperienceId)
-		throws PortalException {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					groupId, classNameId, classPK, true);
-
-		LayoutPageTemplateStructureLocalServiceUtil.
-			updateLayoutPageTemplateStructure(
-				groupId, classNameId, classPK, targetSegmentsExperienceId,
-				layoutPageTemplateStructure.getData(
-					sourceSegmentsExperienceId));
-	}
-
-	public static void copyPortletPreferences(
-		long plid, long sourceSegmentsExperienceId,
-		long targetSegmentsExperienceId) {
-
-		List<PortletPreferences> portletPreferencesList =
-			PortletPreferencesLocalServiceUtil.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid);
-
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				portletPreferences.getPortletId());
-
-			if ((portlet == null) || portlet.isUndeployedPortlet()) {
-				continue;
-			}
-
-			long segmentsExperienceId =
-				SegmentsExperiencePortletUtil.getSegmentsExperienceId(
-					portletPreferences.getPortletId());
-
-			if (segmentsExperienceId != sourceSegmentsExperienceId) {
-				continue;
-			}
-
-			String newPortletId =
-				SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-					portletPreferences.getPortletId(),
-					targetSegmentsExperienceId);
-
-			PortletPreferences existingPortletPreferences =
-				PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
-					portletPreferences.getOwnerId(),
-					portletPreferences.getOwnerType(), plid, newPortletId);
-
-			if (existingPortletPreferences == null) {
-				PortletPreferencesLocalServiceUtil.addPortletPreferences(
-					portletPreferences.getCompanyId(),
-					portletPreferences.getOwnerId(),
-					portletPreferences.getOwnerType(), plid, newPortletId,
-					portlet, portletPreferences.getPreferences());
-			}
-			else {
-				existingPortletPreferences.setPreferences(
-					portletPreferences.getPreferences());
-
-				PortletPreferencesLocalServiceUtil.updatePortletPreferences(
-					existingPortletPreferences);
-			}
-		}
-	}
-
 	public static void copySegmentsExperienceData(
 			long classNameId, long classPK, long groupId,
 			long sourceSegmentsExperienceId, long targetSegmentsExperienceId)
 		throws PortalException {
 
-		copyLayoutData(
+		_copyLayoutData(
 			classNameId, classPK, groupId, sourceSegmentsExperienceId,
 			targetSegmentsExperienceId);
 
-		copyFragmentEntryLinksEditableValues(
+		_copyFragmentEntryLinksEditableValues(
 			classNameId, classPK, groupId, sourceSegmentsExperienceId,
 			targetSegmentsExperienceId);
 
-		copyPortletPreferences(
+		_copyPortletPreferences(
 			classPK, sourceSegmentsExperienceId, targetSegmentsExperienceId);
 	}
 
@@ -238,6 +154,90 @@ public class SegmentsExperienceUtil {
 		}
 
 		return fragmentEntryLinksEditableValuesMap;
+	}
+
+	private static void _copyFragmentEntryLinksEditableValues(
+			long classNameId, long classPK, long groupId,
+			long sourceSegmentsExperienceId, long targetSegmentsExperienceId)
+		throws PortalException {
+
+		Map<Long, String> fragmentEntryLinksEditableValuesMap =
+			_copyFragmentEntryLinksEditableValues(
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+					groupId, classNameId, classPK),
+				sourceSegmentsExperienceId, targetSegmentsExperienceId);
+
+		FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLinks(
+			fragmentEntryLinksEditableValuesMap);
+	}
+
+	private static void _copyLayoutData(
+			long classNameId, long classPK, long groupId,
+			long sourceSegmentsExperienceId, long targetSegmentsExperienceId)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					groupId, classNameId, classPK, true);
+
+		LayoutPageTemplateStructureLocalServiceUtil.
+			updateLayoutPageTemplateStructure(
+				groupId, classNameId, classPK, targetSegmentsExperienceId,
+				layoutPageTemplateStructure.getData(
+					sourceSegmentsExperienceId));
+	}
+
+	private static void _copyPortletPreferences(
+		long plid, long sourceSegmentsExperienceId,
+		long targetSegmentsExperienceId) {
+
+		List<PortletPreferences> portletPreferencesList =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid);
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				portletPreferences.getPortletId());
+
+			if ((portlet == null) || portlet.isUndeployedPortlet()) {
+				continue;
+			}
+
+			long segmentsExperienceId =
+				SegmentsExperiencePortletUtil.getSegmentsExperienceId(
+					portletPreferences.getPortletId());
+
+			if (segmentsExperienceId != sourceSegmentsExperienceId) {
+				continue;
+			}
+
+			String newPortletId =
+				SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+					portletPreferences.getPortletId(),
+					targetSegmentsExperienceId);
+
+			PortletPreferences existingPortletPreferences =
+				PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
+					portletPreferences.getOwnerId(),
+					portletPreferences.getOwnerType(), plid, newPortletId);
+
+			if (existingPortletPreferences == null) {
+				PortletPreferencesLocalServiceUtil.addPortletPreferences(
+					portletPreferences.getCompanyId(),
+					portletPreferences.getOwnerId(),
+					portletPreferences.getOwnerType(), plid, newPortletId,
+					portlet, portletPreferences.getPreferences());
+			}
+			else {
+				existingPortletPreferences.setPreferences(
+					portletPreferences.getPreferences());
+
+				PortletPreferencesLocalServiceUtil.updatePortletPreferences(
+					existingPortletPreferences);
+			}
+		}
 	}
 
 }

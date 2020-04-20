@@ -169,6 +169,62 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 		throws NoSuchUserException;
 
 	/**
+	 * Returns all the o auth users that the user has permission to view where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching o auth users that the user has permission to view
+	 */
+	public java.util.List<OAuthUser> filterFindByUserId(long userId);
+
+	/**
+	 * Returns a range of all the o auth users that the user has permission to view where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthUserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of o auth users
+	 * @param end the upper bound of the range of o auth users (not inclusive)
+	 * @return the range of matching o auth users that the user has permission to view
+	 */
+	public java.util.List<OAuthUser> filterFindByUserId(
+		long userId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the o auth users that the user has permissions to view where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthUserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of o auth users
+	 * @param end the upper bound of the range of o auth users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth users that the user has permission to view
+	 */
+	public java.util.List<OAuthUser> filterFindByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator);
+
+	/**
+	 * Returns the o auth users before and after the current o auth user in the ordered set of o auth users that the user has permission to view where userId = &#63;.
+	 *
+	 * @param oAuthUserId the primary key of the current o auth user
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth user
+	 * @throws NoSuchUserException if a o auth user with the primary key could not be found
+	 */
+	public OAuthUser[] filterFindByUserId_PrevAndNext(
+			long oAuthUserId, long userId,
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+				orderByComparator)
+		throws NoSuchUserException;
+
+	/**
 	 * Removes all the o auth users where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -182,6 +238,14 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @return the number of matching o auth users
 	 */
 	public int countByUserId(long userId);
+
+	/**
+	 * Returns the number of o auth users that the user has permission to view where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching o auth users that the user has permission to view
+	 */
+	public int filterCountByUserId(long userId);
 
 	/**
 	 * Returns all the o auth users where oAuthApplicationId = &#63;.
@@ -313,6 +377,63 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 		throws NoSuchUserException;
 
 	/**
+	 * Returns all the o auth users that the user has permission to view where oAuthApplicationId = &#63;.
+	 *
+	 * @param oAuthApplicationId the o auth application ID
+	 * @return the matching o auth users that the user has permission to view
+	 */
+	public java.util.List<OAuthUser> filterFindByOAuthApplicationId(
+		long oAuthApplicationId);
+
+	/**
+	 * Returns a range of all the o auth users that the user has permission to view where oAuthApplicationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthUserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param oAuthApplicationId the o auth application ID
+	 * @param start the lower bound of the range of o auth users
+	 * @param end the upper bound of the range of o auth users (not inclusive)
+	 * @return the range of matching o auth users that the user has permission to view
+	 */
+	public java.util.List<OAuthUser> filterFindByOAuthApplicationId(
+		long oAuthApplicationId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the o auth users that the user has permissions to view where oAuthApplicationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuthUserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param oAuthApplicationId the o auth application ID
+	 * @param start the lower bound of the range of o auth users
+	 * @param end the upper bound of the range of o auth users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth users that the user has permission to view
+	 */
+	public java.util.List<OAuthUser> filterFindByOAuthApplicationId(
+		long oAuthApplicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator);
+
+	/**
+	 * Returns the o auth users before and after the current o auth user in the ordered set of o auth users that the user has permission to view where oAuthApplicationId = &#63;.
+	 *
+	 * @param oAuthUserId the primary key of the current o auth user
+	 * @param oAuthApplicationId the o auth application ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth user
+	 * @throws NoSuchUserException if a o auth user with the primary key could not be found
+	 */
+	public OAuthUser[] filterFindByOAuthApplicationId_PrevAndNext(
+			long oAuthUserId, long oAuthApplicationId,
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+				orderByComparator)
+		throws NoSuchUserException;
+
+	/**
 	 * Removes all the o auth users where oAuthApplicationId = &#63; from the database.
 	 *
 	 * @param oAuthApplicationId the o auth application ID
@@ -326,6 +447,14 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @return the number of matching o auth users
 	 */
 	public int countByOAuthApplicationId(long oAuthApplicationId);
+
+	/**
+	 * Returns the number of o auth users that the user has permission to view where oAuthApplicationId = &#63;.
+	 *
+	 * @param oAuthApplicationId the o auth application ID
+	 * @return the number of matching o auth users that the user has permission to view
+	 */
+	public int filterCountByOAuthApplicationId(long oAuthApplicationId);
 
 	/**
 	 * Returns the o auth user where accessToken = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.

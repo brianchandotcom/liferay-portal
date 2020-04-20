@@ -872,9 +872,9 @@ AUI.add(
 		};
 
 		LiferayFieldSupport.prototype._randomString = function(length) {
-			var randomString = Math.ceil(Math.random() * Date.now()).toString(
-				36
-			);
+			var randomString = Math.ceil(
+				Math.random() * Number.MAX_SAFE_INTEGER
+			).toString(36);
 
 			return randomString.substring(0, length);
 		};

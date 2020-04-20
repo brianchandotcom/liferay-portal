@@ -33,7 +33,7 @@ AUI().use(
 
 		var Notification = Config.win.Notification;
 
-		var windowId = Math.ceil(Math.random() * Date.now());
+		var windowId = Math.ceil(Math.random() * Number.MAX_SAFE_INTEGER);
 
 		var now = Date.now;
 

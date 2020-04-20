@@ -919,7 +919,7 @@
 		},
 
 		/**
-		 * @deprecated as of 7.3 - use `Math.ceil(Math.random() * Date.now())` instead
+		 * @deprecated as of 7.3 with no replacement
 		 */
 		randomInt() {
 			return Math.ceil(Math.random() * new Date().getTime());

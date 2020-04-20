@@ -62,7 +62,6 @@ definition {
 
 	@priority = "4"
 	test SalesDemo {
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Web Content Administration,Web Content Display";
 
 		JSONLayout.addPublicLayout(

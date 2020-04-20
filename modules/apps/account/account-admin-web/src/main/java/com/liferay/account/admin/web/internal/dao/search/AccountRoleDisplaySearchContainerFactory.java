@@ -14,7 +14,6 @@
 
 package com.liferay.account.admin.web.internal.dao.search;
 
-import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.display.AccountRoleDisplay;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountRole;
@@ -22,12 +21,11 @@ import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.vulcan.util.TransformUtil;
-
-import javax.portlet.PortletURL;
 
 /**
  * @author Pei-Jung Lan
@@ -40,7 +38,8 @@ public class AccountRoleDisplaySearchContainerFactory {
 
 		SearchContainer searchContainer = new SearchContainer(
 			liferayPortletRequest,
-			_getViewAccountRolesURL(accountEntryId, liferayPortletResponse),
+			PortletURLUtil.getCurrent(
+				liferayPortletRequest, liferayPortletResponse),
 			null, "there-are-no-roles");
 
 		searchContainer.setId("accountRoles");
@@ -71,23 +70,6 @@ public class AccountRoleDisplaySearchContainerFactory {
 		searchContainer.setTotal(baseModelSearchResult.getLength());
 
 		return searchContainer;
-	}
-
-	private static PortletURL _getViewAccountRolesURL(
-		long accountEntryId, LiferayPortletResponse liferayPortletResponse) {
-
-		PortletURL viewAccountRolesURL =
-			liferayPortletResponse.createRenderURL();
-
-		viewAccountRolesURL.setParameter(
-			"mvcRenderCommandName", "/account_admin/edit_account_entry");
-		viewAccountRolesURL.setParameter(
-			"screenNavigationCategoryKey",
-			AccountScreenNavigationEntryConstants.CATEGORY_KEY_ROLES);
-		viewAccountRolesURL.setParameter(
-			"accountEntryId", String.valueOf(accountEntryId));
-
-		return viewAccountRolesURL;
 	}
 
 }

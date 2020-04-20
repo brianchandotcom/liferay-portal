@@ -1487,9 +1487,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<condition else="0" property="functional.batch.retry.count" value="1">
 				<and>
-					<not>
-						<contains string="${test.class}" substring="," />
-					</not>
+					<matches pattern="^[\w\.]+#[\w]+$" string="${test.class}" />
 					<or>
 						<contains string="${env.TOP_LEVEL_JOB_NAME}" substring="test-portal-acceptance" />
 						<contains string="${env.TOP_LEVEL_JOB_NAME}" substring="test-portal-testsuite-upstream" />

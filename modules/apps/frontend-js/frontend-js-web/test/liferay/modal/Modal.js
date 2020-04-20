@@ -72,4 +72,20 @@ describe('Modal', () => {
 
 		expect(onCloseCallback).toBeCalled();
 	});
+
+	// We are skipping this test because Jest does not support
+	// document.createRange, but will support it in a future version. See more:
+	//
+	//      https://github.com/liferay/liferay-npm-tools/issues/440
+	it.skip('renders given body HTML', () => {
+		const sampleId = 'sampleId';
+
+		render(<Modal bodyHTML={`<div id='${sampleId}' />`} />);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(document.getElementById(sampleId)).toBeTruthy();
+	});
 });

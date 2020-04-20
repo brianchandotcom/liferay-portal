@@ -65,35 +65,21 @@ definition {
 		property portal.upstream = "quarantine";
 		property testray.component.names = "Web Content Administration,Web Content Display";
 
-		Navigator.openURL();
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page Name",
+			layoutTemplate = "2 Columns (50/50)");
 
-		WebContentNavigator.gotoAddCP();
+		JSONWebcontent.addWebContent(
+			content = "DHS Content",
+			groupName = "Guest",
+			title = "DHS Title");
 
-		WebContent.addCP(
-			webContentContent = "DHS Content",
-			webContentTitle = "DHS Title");
-
-		PortletEntry.publish();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.configurePage(
-			columnName = "2 Columns (50/50)",
-			pageName = "Home",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Home");
+		Navigator.gotoPage(pageName = "Test Page Name");
 
 		Content.addPG(
 			assetTitle = "DHS Title",
@@ -103,12 +89,7 @@ definition {
 			webContentContent = "DHS Content",
 			webContentTitle = "DHS Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -127,25 +108,27 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
+		Navigator.gotoPage(pageName = "Test Page Name");
+
 		WebContent.viewNoEditWCViaWCD();
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test",
-			webContentContent = "DHS Content");
+			userLoginFullName = "Test Test");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		Navigator.gotoPage(pageName = "Test Page Name");
 
-		SitePages.addPublicPage(pageName = "Sales Page");
+		WebContent.viewEditWCViaWCD(webContentTitle = "DHS Content");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Sales Page");
 
 		Navigator.gotoPage(pageName = "Sales Page");
 
 		MobileDevice.previewPG(deviceType = "tablet");
 
-		Navigator.openURL();
+		Navigator.gotoPage(pageName = "Test Page Name");
 
 		MobileDevice.previewPG(deviceType = "smartphone");
 	}

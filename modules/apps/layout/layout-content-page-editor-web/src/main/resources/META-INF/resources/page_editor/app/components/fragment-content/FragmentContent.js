@@ -119,7 +119,6 @@ const FragmentContent = React.forwardRef(
 		useEffect(() => {
 			let element = document.createElement('div');
 			element.innerHTML = defaultContent;
-			const updatedEditables = updateEditables(element);
 
 			const updateContent = debounce(() => {
 				if (isMounted() && element) {
@@ -128,6 +127,8 @@ const FragmentContent = React.forwardRef(
 			}, 50);
 
 			if (!editableProcessorUniqueId) {
+				const updatedEditables = updateEditables(element);
+
 				updatedEditables.forEach(editable => {
 					resolveEditableValue(
 						editableValues,

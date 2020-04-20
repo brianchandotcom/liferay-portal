@@ -466,7 +466,6 @@ definition {
 	@description = "This test covers LPS-93897. It ensures that previously entered Google credentials can be cleared."
 	@priority = "5"
 	test RevokeGoogleDriveCredentials {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GoogleDrive#RevokeGoogleDriveCredential";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

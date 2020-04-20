@@ -245,8 +245,6 @@ definition {
 	@description = "This ensures that a LAR file consisting of web content can be imported in a depot."
 	@priority = "4"
 	test ImportWebContent {
-		property portal.upstream = "quarantine";
-
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Guest",

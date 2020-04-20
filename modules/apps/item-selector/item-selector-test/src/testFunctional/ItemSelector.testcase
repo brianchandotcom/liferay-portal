@@ -134,8 +134,6 @@ definition {
 	@description = "This ensures that the background image of a fragment can be added."
 	@priority = "5"
 	test FragmentSmoke {
-		property portal.upstream = "quarantine";
-
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
@@ -213,11 +211,6 @@ definition {
 	@description = "This ensures that users can preview the SVG image in item selector."
 	@priority = "5"
 	test PreviewSVG {
-
-		// Ignore test until LRQA-56962 is resolved
-
-		property portal.upstream = "quarantine";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(

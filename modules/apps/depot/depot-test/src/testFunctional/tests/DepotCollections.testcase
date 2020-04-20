@@ -29,8 +29,6 @@ definition {
 	@description = "This ensures that the documents with document type can be selected through Collections in a depot."
 	@priority = "5"
 	test AddDocTypeDocumentsManually {
-		property portal.upstream = "quarantine";
-
 		for (var i : list "1,2") {
 			DepotNavigator.openDepotAdmin();
 
@@ -359,8 +357,6 @@ definition {
 	@description = "This ensures that the image is displayed by AP through Collections in a depot."
 	@priority = "5"
 	test DisplayImageInAP {
-		property portal.upstream = "quarantine";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		DMDocument.addCP(
@@ -764,8 +760,6 @@ definition {
 	@description = "This ensures that multiple web content can be selected through Collections in a depot."
 	@priority = "5"
 	test SelectMultipleWebContentManually {
-		property portal.upstream = "quarantine";
-
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",

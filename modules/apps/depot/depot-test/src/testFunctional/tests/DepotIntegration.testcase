@@ -638,8 +638,6 @@ definition {
 	@description = "This ensures that a connected site can access the depot document."
 	@priority = "5"
 	test ViewDocumentFromAnotherSite {
-		property portal.upstream = "quarantine";
-
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

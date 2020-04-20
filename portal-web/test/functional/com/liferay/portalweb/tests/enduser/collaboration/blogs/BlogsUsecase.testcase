@@ -608,7 +608,6 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsEntriesAsGuestViaAP {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesAsGuestViaAP";
 
 		Portlet.deletePG(portletName = "Blogs");
@@ -811,7 +810,6 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

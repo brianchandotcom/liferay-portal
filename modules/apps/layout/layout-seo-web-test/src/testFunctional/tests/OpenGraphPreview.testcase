@@ -31,8 +31,6 @@ definition {
 	@description = "This ensures that the OG preview is updated when the image is changed."
 	@priority = "5"
 	test PreviewAfterReplacingImage {
-		property portal.upstream = "quarantine";
-
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

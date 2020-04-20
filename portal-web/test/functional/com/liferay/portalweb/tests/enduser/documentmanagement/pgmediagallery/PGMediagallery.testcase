@@ -216,8 +216,7 @@ definition {
 
 	@priority = "5"
 	test DeleteFolderDocument {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

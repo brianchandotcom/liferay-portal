@@ -183,8 +183,6 @@ definition {
 	@description = "This test covers LPS-83426 and LPS-92488. It views management bar details in the staging site and asserts that a replaced image displays in remote site."
 	@priority = "5"
 	test StagingRemoteLiveChangeBlogsEntryCoverImage {
-		property portal.upstream = "quarantine";
-
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveChangeBlogsEntryCoverImage";
 

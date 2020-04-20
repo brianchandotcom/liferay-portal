@@ -134,8 +134,6 @@ definition {
 	@description = "This is a use case for LPS-79925."
 	@priority = "5"
 	test PublishDocumentFromRestrictedFolder {
-		property portal.upstream = "quarantine";
-
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(

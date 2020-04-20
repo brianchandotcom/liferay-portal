@@ -235,8 +235,6 @@ definition {
 
 	@priority = "5"
 	test RestoreDeletedFrontPage {
-		property portal.upstream = "quarantine";
-
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");

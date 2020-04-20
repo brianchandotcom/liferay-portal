@@ -108,8 +108,6 @@ definition {
 
 	@priority = "4"
 	test DeleteMBCategories {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name") {

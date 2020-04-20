@@ -33,7 +33,6 @@ definition {
 	@priority = "4"
 	test ChangeSocialBookmarkSitesForKBArticle {
 		property osgi.app.includes = "social-bookmarks, knowledge-base";
-		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -138,7 +137,6 @@ definition {
 	@priority = "3"
 	test ViewKBArticleWithAllSocialBookmarkSites {
 		property osgi.app.includes = "social-bookmarks, knowledge-base";
-		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

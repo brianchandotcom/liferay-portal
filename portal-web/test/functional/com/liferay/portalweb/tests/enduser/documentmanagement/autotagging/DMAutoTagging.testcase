@@ -33,7 +33,6 @@ definition {
 	@description = "This test covers LPS-89073. It ensures that users can add and remove tags for existing images via Gogo Shell."
 	@priority = "4"
 	test AddAndRemoveImageAutoTagViaGogoShell {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "DMAutoTagging#AddAndRemoveImageAutoTagViaGogoShell";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

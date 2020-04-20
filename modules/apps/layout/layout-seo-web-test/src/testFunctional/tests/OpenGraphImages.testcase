@@ -292,8 +292,6 @@ definition {
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."
 	@priority = "5"
 	test ConfigurePageSpecificImage {
-		property portal.upstream = "quarantine";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -400,8 +398,7 @@ definition {
 	@description = "This ensures that users can introduce an alternative text for the image."
 	@priority = "5"
 	test EditAltDescription {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
 

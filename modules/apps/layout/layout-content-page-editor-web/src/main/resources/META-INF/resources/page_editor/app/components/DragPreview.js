@@ -15,7 +15,10 @@
 import React, {useRef} from 'react';
 import {useDragLayer} from 'react-dnd';
 
-const getItemStyles = (currentOffset, ref) => {
+import {config} from '../config/index';
+import {useSelector} from '../store/index';
+
+const getItemStyles = (currentOffset, ref, rtl) => {
 	if (!currentOffset || !ref.current) {
 		return {
 			display: 'none',
@@ -23,8 +26,11 @@ const getItemStyles = (currentOffset, ref) => {
 	}
 
 	const rect = ref.current.getBoundingClientRect();
-	const x = currentOffset.x - rect.width * 0.5;
+	const x = rtl
+		? currentOffset.x + rect.width * 0.5 - window.innerWidth
+		: currentOffset.x - rect.width * 0.5;
 	const y = currentOffset.y - rect.height * 0.5;
+
 	const transform = `translate(${x}px, ${y}px)`;
 
 	return {
@@ -35,6 +41,8 @@ const getItemStyles = (currentOffset, ref) => {
 
 export default function DragPreview() {
 	const ref = useRef();
+
+	const languageId = useSelector(state => state.languageId);
 
 	const {currentOffset, isDragging, item} = useDragLayer(monitor => ({
 		currentOffset: monitor.getClientOffset(),
@@ -51,7 +59,11 @@ export default function DragPreview() {
 			<div
 				className="page-editor__drag-preview__content"
 				ref={ref}
-				style={getItemStyles(currentOffset, ref)}
+				style={getItemStyles(
+					currentOffset,
+					ref,
+					config.languageDirection[languageId] === 'rtl'
+				)}
 			>
 				{item && item.name
 					? item.name

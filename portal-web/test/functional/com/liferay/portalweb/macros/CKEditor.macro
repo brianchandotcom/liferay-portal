@@ -4,7 +4,7 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		if (isSet(kbArticleContentEdit)) {
-			Type.typeCKEditorWaitForCKEditor(
+			Type(
 				locator1 = "CKEditor#BODY",
 				value1 = "${kbArticleContentEdit}");
 		}

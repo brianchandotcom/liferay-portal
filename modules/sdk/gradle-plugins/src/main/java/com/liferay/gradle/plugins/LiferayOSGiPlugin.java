@@ -156,8 +156,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
-		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
-
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 		final LiferayOSGiExtension liferayOSGiExtension =
@@ -273,6 +271,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
+
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		_configureBundleExtension(project);

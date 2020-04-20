@@ -423,19 +423,6 @@ schema=schema.xml</echo>
 	</target>
 
 	<target name="stop-solr-core">
-		<get-testcase-property property.name="solr.solrcloud.enabled" />
-
-		<if>
-			<equals arg1="${solr.solrcloud.enabled}" arg2="true" />
-			<then>
-				<print-file file.name="${solr.dir}/example/cloud/node1/logs/solr.log" />
-				<print-file file.name="${solr.dir}/example/cloud/node2/logs/solr.log" />
-			</then>
-			<else>
-				<print-file file.name="${solr.dir}/server/logs/solr.log" />
-			</else>
-		</if>
-
 		<if>
 			<os family="unix" />
 			<then>

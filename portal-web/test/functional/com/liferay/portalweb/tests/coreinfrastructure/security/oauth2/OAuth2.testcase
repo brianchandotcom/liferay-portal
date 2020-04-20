@@ -652,12 +652,6 @@ definition {
 
 		Button.click(button = "Obtain OAuth2 Access");
 
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
-
 		Pause(locator1 = "6000");
 
 		Button.click(button = "Launch Request");

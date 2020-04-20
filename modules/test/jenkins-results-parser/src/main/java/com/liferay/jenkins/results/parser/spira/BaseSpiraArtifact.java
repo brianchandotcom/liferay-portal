@@ -295,51 +295,58 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	private static Map<Integer, SpiraArtifact> _getIDSpiraArtifactsMap(
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		Map<Integer, SpiraArtifact> spiraArtifactsMap =
-			_idSpiraArtifactsMap.get(spiraArtifactClass);
+		synchronized (_idSpiraArtifactsMap) {
+			Map<Integer, SpiraArtifact> spiraArtifactsMap =
+				_idSpiraArtifactsMap.get(spiraArtifactClass);
 
-		if (spiraArtifactsMap == null) {
-			spiraArtifactsMap = Collections.synchronizedMap(
-				new HashMap<Integer, SpiraArtifact>());
+			if (spiraArtifactsMap == null) {
+				spiraArtifactsMap = Collections.synchronizedMap(
+					new HashMap<Integer, SpiraArtifact>());
 
-			_idSpiraArtifactsMap.put(spiraArtifactClass, spiraArtifactsMap);
+				_idSpiraArtifactsMap.put(spiraArtifactClass, spiraArtifactsMap);
+			}
+
+			return spiraArtifactsMap;
 		}
-
-		return spiraArtifactsMap;
 	}
 
 	private static Map<String, IndentLevelSpiraArtifact>
 		_getIndentLevelSpiraArtifactsMap(
 			Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		Map<String, IndentLevelSpiraArtifact> spiraArtifactsMap =
-			_indentLevelSpiraArtifactsMap.get(spiraArtifactClass);
+		synchronized (_indentLevelSpiraArtifactsMap) {
+			Map<String, IndentLevelSpiraArtifact> spiraArtifactsMap =
+				_indentLevelSpiraArtifactsMap.get(spiraArtifactClass);
 
-		if (spiraArtifactsMap == null) {
-			spiraArtifactsMap = Collections.synchronizedMap(
-				new HashMap<String, IndentLevelSpiraArtifact>());
+			if (spiraArtifactsMap == null) {
+				spiraArtifactsMap = Collections.synchronizedMap(
+					new HashMap<String, IndentLevelSpiraArtifact>());
 
-			_indentLevelSpiraArtifactsMap.put(
-				spiraArtifactClass, spiraArtifactsMap);
+				_indentLevelSpiraArtifactsMap.put(
+					spiraArtifactClass, spiraArtifactsMap);
+			}
+
+			return spiraArtifactsMap;
 		}
-
-		return spiraArtifactsMap;
 	}
 
 	private static Map<String, PathSpiraArtifact> _getPathSpiraArtifactsMap(
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		Map<String, PathSpiraArtifact> spiraArtifactsMap =
-			_pathSpiraArtifactsMap.get(spiraArtifactClass);
+		synchronized (_pathSpiraArtifactsMap) {
+			Map<String, PathSpiraArtifact> spiraArtifactsMap =
+				_pathSpiraArtifactsMap.get(spiraArtifactClass);
 
-		if (spiraArtifactsMap == null) {
-			spiraArtifactsMap = Collections.synchronizedMap(
-				new HashMap<String, PathSpiraArtifact>());
+			if (spiraArtifactsMap == null) {
+				spiraArtifactsMap = Collections.synchronizedMap(
+					new HashMap<String, PathSpiraArtifact>());
 
-			_pathSpiraArtifactsMap.put(spiraArtifactClass, spiraArtifactsMap);
+				_pathSpiraArtifactsMap.put(
+					spiraArtifactClass, spiraArtifactsMap);
+			}
+
+			return spiraArtifactsMap;
 		}
-
-		return spiraArtifactsMap;
 	}
 
 	private static void _putIDSpiraArtifact(

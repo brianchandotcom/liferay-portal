@@ -16,18 +16,33 @@ package com.liferay.change.tracking.web.internal.portlet;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ChangeListsConfigurationDisplayContext;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
@@ -51,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class ChangeListsConfigurationPortlet extends BaseChangeListsPortlet {
+public class ChangeListsConfigurationPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -73,6 +88,59 @@ public class ChangeListsConfigurationPortlet extends BaseChangeListsPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		Set<String> administratorRoleNames = new HashSet<>();
+
+		CTConfiguration ctConfiguration = ConfigurableUtil.createConfigurable(
+			CTConfiguration.class, properties);
+
+		Collections.addAll(
+			administratorRoleNames, ctConfiguration.administratorRoleNames());
+
+		_administratorRoleNames = administratorRoleNames;
+	}
+
+	@Override
+	protected void checkPermissions(PortletRequest portletRequest)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin()) {
+			return;
+		}
+
+		UserBag userBag = permissionChecker.getUserBag();
+
+		for (Role role : userBag.getRoles()) {
+			if (_administratorRoleNames.contains(role.getName())) {
+				return;
+			}
+		}
+
+		throw new PrincipalException(
+			String.format(
+				"User %s must have administrator role to access %s",
+				permissionChecker.getUserId(), getClass().getSimpleName()));
+	}
+
+	protected void checkRender(RenderRequest renderRequest)
+		throws PortletException {
+
+		try {
+			checkPermissions(renderRequest);
+		}
+		catch (Exception exception) {
+			throw new PortletException(
+				"Unable to check permissions: " + exception.getMessage(),
+				exception);
+		}
+	}
+
+	private Set<String> _administratorRoleNames;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

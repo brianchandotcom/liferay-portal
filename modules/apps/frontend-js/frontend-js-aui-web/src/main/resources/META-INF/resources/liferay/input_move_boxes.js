@@ -433,6 +433,7 @@ AUI.add(
 				},
 
 				sortBox(box) {
+					var instance = this;
 					var newBox = [];
 
 					var options = box.all('option');
@@ -444,7 +445,7 @@ AUI.add(
 						];
 					}
 
-					newBox.sort(Util.sortByAscending);
+					newBox.sort(instance.sortByAscending);
 
 					var boxObj = A.one(box);
 
@@ -460,6 +461,21 @@ AUI.add(
 						);
 					});
 				},
+			},
+
+			sortByAscending(a, b) {
+				a = a[1].toLowerCase();
+				b = b[1].toLowerCase();
+
+				if (a > b) {
+					return 1;
+				}
+
+				if (a < b) {
+					return -1;
+				}
+
+				return 0;
 			},
 		});
 

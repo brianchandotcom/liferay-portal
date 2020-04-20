@@ -43,12 +43,12 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 		content = StringUtil.replace(
 			content,
 			new String[] {
-				"@page import", "@tag import", "\"%>", ")%>", "function (",
-				"javascript: ", "){\n", "\n\n\n"
+				"@page import", "@tag import", "\"%>", ")%>", "javascript: ",
+				"){\n", "\n\n\n"
 			},
 			new String[] {
-				"@ page import", "@ tag import", "\" %>", ") %>", "function(",
-				"javascript:", ") {\n", "\n\n"
+				"@ page import", "@ tag import", "\" %>", ") %>", "javascript:",
+				") {\n", "\n\n"
 			});
 
 		return content;

@@ -104,7 +104,7 @@ definition {
 	@description = "This is a use case for LPS-51432 and LPS-95113."
 	@priority = "4"
 	test AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage";
 
 		ProductMenu.gotoPortlet(

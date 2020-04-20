@@ -8,8 +8,9 @@
 	display: flex;
 	justify-content: center;
 	position: relative;
-	transition: padding-right ease $defaultTransitionDuration;
-	will-change: padding-right;
+	transition: padding-left ease $defaultTransitionDuration,
+		padding-right ease $defaultTransitionDuration;
+	will-change: padding-left, padding-right;
 
 	&__resizer {
 		background-color: $light-l2;

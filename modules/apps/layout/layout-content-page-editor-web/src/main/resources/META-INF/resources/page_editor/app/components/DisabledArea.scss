@@ -6,8 +6,9 @@
 	cursor: not-allowed;
 	padding-right: 40px;
 	position: relative;
-	transition: padding-right ease $defaultTransitionDuration;
-	will-change: padding-right;
+	transition: padding-left ease $defaultTransitionDuration,
+		padding-right ease $defaultTransitionDuration;
+	will-change: padding-left, padding-right;
 
 	&::after {
 		background-color: rgba(255, 255, 255, 0);

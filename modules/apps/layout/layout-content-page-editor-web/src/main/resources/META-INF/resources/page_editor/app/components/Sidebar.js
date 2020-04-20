@@ -48,6 +48,7 @@ export default function Sidebar() {
 	const load = useLoad();
 	const {getInstance, register} = usePlugins();
 
+	const languageId = useSelector(state => state.languageId);
 	const panels = useSelector(selectAvailablePanels(config.panels));
 	const sidebarPanels = useSelector(
 		selectAvailableSidebarPanels(config.sidebarPanels)
@@ -251,6 +252,7 @@ export default function Sidebar() {
 					className={classNames({
 						'page-editor__sidebar__content': true,
 						'page-editor__sidebar__content--open': sidebarOpen,
+						rtl: config.languageDirection[languageId] === 'rtl',
 					})}
 					onClick={deselectItem}
 				>

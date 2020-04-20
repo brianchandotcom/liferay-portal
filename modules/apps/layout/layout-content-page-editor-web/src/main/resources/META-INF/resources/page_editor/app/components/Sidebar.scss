@@ -75,7 +75,11 @@ $zIndexContent: 0;
 		width: $sidebarContentWidth;
 		z-index: $zIndexContent;
 
-		&--open {
+		&.rtl {
+			transform: translateX(-100%);
+		}
+
+		&--open.page-editor__sidebar__content {
 			transform: translateX(0);
 		}
 	}

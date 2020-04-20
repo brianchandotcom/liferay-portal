@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import java.lang.reflect.Field;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -294,138 +295,125 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	private static Map<Integer, SpiraArtifact> _getIDSpiraArtifactsMap(
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		synchronized (_idSpiraArtifactsMap) {
-			Map<Integer, SpiraArtifact> spiraArtifactsMap =
-				_idSpiraArtifactsMap.get(spiraArtifactClass);
+		Map<Integer, SpiraArtifact> spiraArtifactsMap =
+			_idSpiraArtifactsMap.get(spiraArtifactClass);
 
-			if (spiraArtifactsMap == null) {
-				spiraArtifactsMap = new HashMap<>();
+		if (spiraArtifactsMap == null) {
+			spiraArtifactsMap = Collections.synchronizedMap(
+				new HashMap<Integer, SpiraArtifact>());
 
-				_idSpiraArtifactsMap.put(spiraArtifactClass, spiraArtifactsMap);
-			}
-
-			return spiraArtifactsMap;
+			_idSpiraArtifactsMap.put(spiraArtifactClass, spiraArtifactsMap);
 		}
+
+		return spiraArtifactsMap;
 	}
 
 	private static Map<String, IndentLevelSpiraArtifact>
 		_getIndentLevelSpiraArtifactsMap(
 			Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		synchronized (_indentLevelSpiraArtifactsMap) {
-			Map<String, IndentLevelSpiraArtifact> spiraArtifactsMap =
-				_indentLevelSpiraArtifactsMap.get(spiraArtifactClass);
+		Map<String, IndentLevelSpiraArtifact> spiraArtifactsMap =
+			_indentLevelSpiraArtifactsMap.get(spiraArtifactClass);
 
-			if (spiraArtifactsMap == null) {
-				spiraArtifactsMap = new HashMap<>();
+		if (spiraArtifactsMap == null) {
+			spiraArtifactsMap = Collections.synchronizedMap(
+				new HashMap<String, IndentLevelSpiraArtifact>());
 
-				_indentLevelSpiraArtifactsMap.put(
-					spiraArtifactClass, spiraArtifactsMap);
-			}
-
-			return spiraArtifactsMap;
+			_indentLevelSpiraArtifactsMap.put(
+				spiraArtifactClass, spiraArtifactsMap);
 		}
+
+		return spiraArtifactsMap;
 	}
 
 	private static Map<String, PathSpiraArtifact> _getPathSpiraArtifactsMap(
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
-		synchronized (_pathSpiraArtifactsMap) {
-			Map<String, PathSpiraArtifact> spiraArtifactsMap =
-				_pathSpiraArtifactsMap.get(spiraArtifactClass);
+		Map<String, PathSpiraArtifact> spiraArtifactsMap =
+			_pathSpiraArtifactsMap.get(spiraArtifactClass);
 
-			if (spiraArtifactsMap == null) {
-				spiraArtifactsMap = new HashMap<>();
+		if (spiraArtifactsMap == null) {
+			spiraArtifactsMap = Collections.synchronizedMap(
+				new HashMap<String, PathSpiraArtifact>());
 
-				_pathSpiraArtifactsMap.put(
-					spiraArtifactClass, spiraArtifactsMap);
-			}
-
-			return spiraArtifactsMap;
+			_pathSpiraArtifactsMap.put(spiraArtifactClass, spiraArtifactsMap);
 		}
+
+		return spiraArtifactsMap;
 	}
 
 	private static void _putIDSpiraArtifact(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		SpiraArtifact spiraArtifact) {
 
-		synchronized (_idSpiraArtifactsMap) {
-			Map<Integer, SpiraArtifact> idSpiraArtifactsMap =
-				_getIDSpiraArtifactsMap(spiraArtifactClass);
+		Map<Integer, SpiraArtifact> idSpiraArtifactsMap =
+			_getIDSpiraArtifactsMap(spiraArtifactClass);
 
-			idSpiraArtifactsMap.put(spiraArtifact.getID(), spiraArtifact);
-		}
+		idSpiraArtifactsMap.put(spiraArtifact.getID(), spiraArtifact);
 	}
 
 	private static void _putIndentLevelSpiraArtifact(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		IndentLevelSpiraArtifact indentLevelSpiraArtifact) {
 
-		synchronized (_indentLevelSpiraArtifactsMap) {
-			Map<String, IndentLevelSpiraArtifact> indentLevelSpiraArtifactsMap =
-				_getIndentLevelSpiraArtifactsMap(spiraArtifactClass);
+		Map<String, IndentLevelSpiraArtifact> indentLevelSpiraArtifactsMap =
+			_getIndentLevelSpiraArtifactsMap(spiraArtifactClass);
 
-			indentLevelSpiraArtifactsMap.put(
-				indentLevelSpiraArtifact.getIndentLevel(),
-				indentLevelSpiraArtifact);
-		}
+		indentLevelSpiraArtifactsMap.put(
+			indentLevelSpiraArtifact.getIndentLevel(),
+			indentLevelSpiraArtifact);
 	}
 
 	private static void _putPathSpiraArtifact(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		PathSpiraArtifact pathSpiraArtifact) {
 
-		synchronized (_pathSpiraArtifactsMap) {
-			Map<String, PathSpiraArtifact> pathSpiraArtifactsMap =
-				_getPathSpiraArtifactsMap(spiraArtifactClass);
+		Map<String, PathSpiraArtifact> pathSpiraArtifactsMap =
+			_getPathSpiraArtifactsMap(spiraArtifactClass);
 
-			pathSpiraArtifactsMap.put(
-				pathSpiraArtifact.getPath(), pathSpiraArtifact);
-		}
+		pathSpiraArtifactsMap.put(
+			pathSpiraArtifact.getPath(), pathSpiraArtifact);
 	}
 
 	private static void _removeIDSpiraArtifact(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		SpiraArtifact spiraArtifact) {
 
-		synchronized (_idSpiraArtifactsMap) {
-			Map<Integer, SpiraArtifact> idSpiraArtifactsMap =
-				_getIDSpiraArtifactsMap(spiraArtifactClass);
+		Map<Integer, SpiraArtifact> idSpiraArtifactsMap =
+			_getIDSpiraArtifactsMap(spiraArtifactClass);
 
-			idSpiraArtifactsMap.remove(spiraArtifact.getID());
-		}
+		idSpiraArtifactsMap.remove(spiraArtifact.getID());
 	}
 
 	private static void _removeIndentLevelSpiraArtifact(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		IndentLevelSpiraArtifact indentLevelSpiraArtifact) {
 
-		synchronized (_indentLevelSpiraArtifactsMap) {
-			Map<String, IndentLevelSpiraArtifact> indentLevelSpiraArtifactsMap =
-				_getIndentLevelSpiraArtifactsMap(spiraArtifactClass);
+		Map<String, IndentLevelSpiraArtifact> indentLevelSpiraArtifactsMap =
+			_getIndentLevelSpiraArtifactsMap(spiraArtifactClass);
 
-			indentLevelSpiraArtifactsMap.remove(
-				indentLevelSpiraArtifact.getIndentLevel());
-		}
+		indentLevelSpiraArtifactsMap.remove(
+			indentLevelSpiraArtifact.getIndentLevel());
 	}
 
 	private static void _removePathSpiraArtifact(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		PathSpiraArtifact pathSpiraArtifact) {
 
-		synchronized (_pathSpiraArtifactsMap) {
-			Map<String, PathSpiraArtifact> pathSpiraArtifactsMap =
-				_getPathSpiraArtifactsMap(spiraArtifactClass);
+		Map<String, PathSpiraArtifact> pathSpiraArtifactsMap =
+			_getPathSpiraArtifactsMap(spiraArtifactClass);
 
-			pathSpiraArtifactsMap.remove(pathSpiraArtifact.getPath());
-		}
+		pathSpiraArtifactsMap.remove(pathSpiraArtifact.getPath());
 	}
 
 	private static final Map<Class<?>, Map<Integer, SpiraArtifact>>
-		_idSpiraArtifactsMap = new HashMap<>();
+		_idSpiraArtifactsMap = Collections.synchronizedMap(
+			new HashMap<Class<?>, Map<Integer, SpiraArtifact>>());
 	private static final Map<Class<?>, Map<String, IndentLevelSpiraArtifact>>
-		_indentLevelSpiraArtifactsMap = new HashMap<>();
+		_indentLevelSpiraArtifactsMap = Collections.synchronizedMap(
+			new HashMap<Class<?>, Map<String, IndentLevelSpiraArtifact>>());
 	private static final Map<Class<?>, Map<String, PathSpiraArtifact>>
-		_pathSpiraArtifactsMap = new HashMap<>();
+		_pathSpiraArtifactsMap = Collections.synchronizedMap(
+			new HashMap<Class<?>, Map<String, PathSpiraArtifact>>());
 
 }

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,6 +55,10 @@ public class RelatedAssetsInfoListProvider
 			ServiceContextThreadLocal.getServiceContext();
 
 		long assetEntryId = _getLayoutAssetEntryId(serviceContext.getRequest());
+
+		if (assetEntryId == 0) {
+			return Collections.emptyList();
+		}
 
 		Company company = infoListProviderContext.getCompany();
 

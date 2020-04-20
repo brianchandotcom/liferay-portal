@@ -44,8 +44,10 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+import com.liferay.spring.mock.web.portlet.MockActionResponse;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -131,7 +133,8 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 		return ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addSegmentsExperience",
-			new Class<?>[] {ActionRequest.class}, mockActionRequest);
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockActionRequest, new MockActionResponse());
 	}
 
 	private MockActionRequest _getMockActionRequest(

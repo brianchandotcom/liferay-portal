@@ -1,14 +1,12 @@
 {
 	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
-		"segments-experience-id-0": {
-			"collection": {
-				"classNameId": "${classNameId}",
-				"classPK": "${classPK}",
-				"itemSubtype": "",
-				"itemType": "${itemType}",
-				"title": "${title}",
-				"type": "${type}"
-			}
+		"collection": {
+			"classNameId": "${classNameId}",
+			"classPK": "${classPK}",
+			"itemSubtype": "",
+			"itemType": "${itemType}",
+			"title": "${title}",
+			"type": "${type}"
 		}
 	}
 }

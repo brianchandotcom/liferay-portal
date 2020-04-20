@@ -164,7 +164,7 @@
 	if (iframe) {
 		iframe.set(
 			'src',
-			'<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>'
+			'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>'
 		);
 
 		iframe.plug(A.Plugin.AutosizeIframe, {
@@ -204,7 +204,7 @@
 		);
 
 		Liferay.Util.fetch(
-			'<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>',
+			'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>',
 			{
 				headers: headers,
 				mode: 'no-cors',

@@ -236,6 +236,12 @@ definition {
 			Select.pauseSelect(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",
 				value1 = "Creole");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${wikiPageContent}");
 		}
 		else if ("${htmlSource}" == "true") {
 			Panel.expandPanel(panel = "Configuration");

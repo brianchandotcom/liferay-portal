@@ -77,7 +77,7 @@ public class FileInstallConfigTest {
 		expectedBooleans[0] = true;
 		expectedBooleans[1] = false;
 
-		_testConfigurationArray("B[\"True\",\"False\"]", expectedBooleans);
+		_testConfiguration("B[\"True\",\"False\"]", expectedBooleans);
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class FileInstallConfigTest {
 		expectedBytes[0] = 0b1;
 		expectedBytes[1] = 0b11;
 
-		_testConfigurationArray("X[\"1\",\"3\"]", expectedBytes);
+		_testConfiguration("X[\"1\",\"3\"]", expectedBytes);
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class FileInstallConfigTest {
 		expectedCharacters[0] = 'A';
 		expectedCharacters[1] = 'Z';
 
-		_testConfigurationArray("C[\"A\",\"Z\"]", expectedCharacters);
+		_testConfiguration("C[\"A\",\"Z\"]", expectedCharacters);
 	}
 
 	@Test
@@ -122,7 +122,7 @@ public class FileInstallConfigTest {
 		expectedDoubles[0] = 12.2D;
 		expectedDoubles[1] = 12.3D;
 
-		_testConfigurationArray("D[\"12.2\",\"12.3\"]", expectedDoubles);
+		_testConfiguration("D[\"12.2\",\"12.3\"]", expectedDoubles);
 	}
 
 	@Test
@@ -137,7 +137,7 @@ public class FileInstallConfigTest {
 		expectedFloats[0] = 12.2F;
 		expectedFloats[1] = 12.3F;
 
-		_testConfigurationArray("F[\"12.2\",\"12.3\"]", expectedFloats);
+		_testConfiguration("F[\"12.2\",\"12.3\"]", expectedFloats);
 	}
 
 	@Test
@@ -152,7 +152,7 @@ public class FileInstallConfigTest {
 		expectedIntegers[0] = 20;
 		expectedIntegers[1] = 21;
 
-		_testConfigurationArray("I[\"20\",\"21\"]", expectedIntegers);
+		_testConfiguration("I[\"20\",\"21\"]", expectedIntegers);
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class FileInstallConfigTest {
 		expectedLongs[0] = 30L;
 		expectedLongs[1] = 31L;
 
-		_testConfigurationArray("L[\"30\",\"31\"]", expectedLongs);
+		_testConfiguration("L[\"30\",\"31\"]", expectedLongs);
 	}
 
 	@Test
@@ -182,7 +182,7 @@ public class FileInstallConfigTest {
 		expectedShorts[0] = (short)2;
 		expectedShorts[1] = (short)3;
 
-		_testConfigurationArray("S[\"2\",\"3\"]", expectedShorts);
+		_testConfiguration("S[\"2\",\"3\"]", expectedShorts);
 	}
 
 	@Test
@@ -197,8 +197,7 @@ public class FileInstallConfigTest {
 		expectedStrings[0] = "testString";
 		expectedStrings[1] = "testString2";
 
-		_testConfigurationArray(
-			"[\"testString\",\"testString2\"]", expectedStrings);
+		_testConfiguration("[\"testString\",\"testString2\"]", expectedStrings);
 	}
 
 	private void _testConfiguration(String config, Object configValue)
@@ -225,38 +224,15 @@ public class FileInstallConfigTest {
 
 			Object property = properties.get(_TEST_KEY);
 
-			Assert.assertEquals(configValue, property);
-		}
-		finally {
-			Files.deleteIfExists(path);
-		}
-	}
+			Class<?> clazz = configValue.getClass();
 
-	private void _testConfigurationArray(String config, Object[] configValues)
-		throws Exception {
-
-		Path path = Paths.get(
-			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-			_CONFIGURATION_PID.concat(".config"));
-
-		try {
-			_updateConfiguration(
-				() -> {
-					String content = StringBundler.concat(
-						_TEST_KEY, StringPool.EQUAL, config);
-
-					Files.write(path, content.getBytes());
-				});
-
-			Configuration configuration = _configurationAdmin.getConfiguration(
-				_CONFIGURATION_PID, StringPool.QUESTION);
-
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
-
-			Object[] propertyArray = (Object[])properties.get(_TEST_KEY);
-
-			Assert.assertArrayEquals(configValues, propertyArray);
+			if (clazz.isArray()) {
+				Assert.assertArrayEquals(
+					(Object[])configValue, (Object[])property);
+			}
+			else {
+				Assert.assertEquals(configValue, property);
+			}
 		}
 		finally {
 			Files.deleteIfExists(path);

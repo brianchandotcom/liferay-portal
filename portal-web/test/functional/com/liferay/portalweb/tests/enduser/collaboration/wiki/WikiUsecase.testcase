@@ -381,10 +381,6 @@ definition {
 
 		WikiPage.editFrontPagePG(wikiPageContentEdit = '''<script>alert(123);</script>''');
 
-		AssertClick(
-			locator1 = "Link#EDIT",
-			value1 = "Edit");
-
 		AssertAlertNotPresent();
 
 		var actualScript = '''<script>alert(123);</script>''';

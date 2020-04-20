@@ -464,19 +464,20 @@ definition {
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
-		var clientId = "abc123";
-		var clientSecret = "abc123";
-		var portalURL = PropsUtil.get("portal.url");
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		OAuth2.addApplication(
 			applicationName = "Third-party Application",
 			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
 			clientProfile = "Web Application");
+
+		var clientId = "abc123";
+		var clientSecret = "abc123";
 
 		OAuth2.inputApplicationValues(
 			clientId = "${clientId}",
@@ -611,14 +612,14 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=&quot;5&quot;";
 
-		var clientId = "abc123";
-		var clientSecret = "abc123";
-		var portalURL = PropsUtil.get("portal.url");
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
+
+		var clientId = "abc123";
+		var clientSecret = "abc123";
+		var portalURL = PropsUtil.get("portal.url");
 
 		OAuth2.addApplication(
 			applicationName = "Third-party Application",

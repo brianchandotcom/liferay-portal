@@ -168,7 +168,7 @@ describe('FragmentConfigurationPanel', () => {
 				configurationValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
-						'segments-experience-id-1': {headingLevel: 'h2'},
+						headingLevel: 'h2',
 					},
 				},
 			})
@@ -193,7 +193,7 @@ describe('FragmentConfigurationPanel', () => {
 				configurationValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
-						'segments-experience-id-2': {headingLevel: 'h2'},
+						headingLevel: 'h2',
 					},
 				},
 			})
@@ -244,7 +244,7 @@ describe('FragmentConfigurationPanel', () => {
 			editableValues: {
 				[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 				[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
-					'segments-experience-id-0': {anotherThing: 'test'},
+					anotherThing: 'test',
 				},
 			},
 			fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
@@ -267,10 +267,8 @@ describe('FragmentConfigurationPanel', () => {
 				configurationValues: {
 					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {},
 					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {
-						'segments-experience-id-0': {
-							anotherThing: 'test',
-							headingLevel: 'h2',
-						},
+						anotherThing: 'test',
+						headingLevel: 'h2',
 					},
 				},
 			})

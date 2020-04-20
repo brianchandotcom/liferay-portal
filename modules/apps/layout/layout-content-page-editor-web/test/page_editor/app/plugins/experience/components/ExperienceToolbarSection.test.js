@@ -674,7 +674,6 @@ describe('ExperienceToolbarSection', () => {
 			expect.stringContaining(MOCK_DELETE_URL),
 			expect.objectContaining({
 				body: expect.objectContaining({
-					fragmentEntryLinkIds: '[2000]',
 					segmentsExperienceId: 'test-experience-id-01',
 				}),
 			}),

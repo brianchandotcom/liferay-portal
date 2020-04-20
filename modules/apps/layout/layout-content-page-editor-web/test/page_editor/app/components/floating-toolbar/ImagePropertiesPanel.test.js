@@ -314,9 +314,7 @@ describe('TextField', () => {
 									imageTitle: 'New title',
 								},
 
-								'segments-experience-id-s-1': {
-									es: 'new-url.jpg',
-								},
+								es: 'new-url.jpg',
 							}),
 						}
 					),

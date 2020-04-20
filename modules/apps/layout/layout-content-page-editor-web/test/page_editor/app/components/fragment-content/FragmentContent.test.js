@@ -152,7 +152,6 @@ describe('FragmentContent', () => {
 			'editable-id',
 			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			'en_US',
-			'segments-experience-id-0',
 			expect.any(Function)
 		);
 	});
@@ -170,7 +169,6 @@ describe('FragmentContent', () => {
 			'editable-id',
 			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			'en_US',
-			'segments-experience-id-0',
 			expect.any(Function)
 		);
 	});
@@ -193,7 +191,6 @@ describe('FragmentContent', () => {
 			'background-id',
 			BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 			'en_US',
-			'segments-experience-id-0',
 			expect.any(Function)
 		);
 	});

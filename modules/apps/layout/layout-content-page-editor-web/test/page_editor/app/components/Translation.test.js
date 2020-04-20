@@ -58,7 +58,7 @@ const fragmentEntryLink = {
 		[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
 			'element-text': {
 				defaultValue: 'Text',
-				'segments-experience-id-0': {language_1: 'Text language 1'},
+				language_1: 'Text language 1',
 			},
 		},
 		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {},
@@ -78,11 +78,9 @@ const fragmentEntryLink2 = {
 	},
 };
 const languageId = 'language_2';
-const segmentsExperienceId = '0';
 
 const defaultState = {
 	fragmentEntryLinks: {[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink},
-	segmentsExperienceId,
 };
 
 const renderTranslation = ({state}) => {

@@ -34,9 +34,7 @@ describe('resolveEditableValue', () => {
 						href: 'href',
 					},
 					defaultValue: 'default',
-					'segments-experience-id-0': {
-						en_US: 'value',
-					},
+					en_US: 'value',
 				},
 			},
 		};
@@ -46,7 +44,6 @@ describe('resolveEditableValue', () => {
 			'editable-id',
 			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			'en_US',
-			'segments-experience-id-0',
 			() => {}
 		);
 
@@ -61,9 +58,7 @@ describe('resolveEditableValue', () => {
 						href: 'href',
 					},
 					defaultValue: 'default',
-					'segments-experience-id-0': {
-						en_US: 'value',
-					},
+					en_US: 'value',
 				},
 			},
 		};
@@ -73,7 +68,6 @@ describe('resolveEditableValue', () => {
 			'editable-id',
 			BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 			'en_US',
-			'segments-experience-id-0',
 			() => {}
 		);
 
@@ -97,7 +91,6 @@ describe('resolveEditableValue', () => {
 			'editable-id',
 			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			'en_US',
-			'segments-experience-id-0',
 			() => {}
 		);
 
@@ -129,7 +122,6 @@ describe('resolveEditableValue', () => {
 			'editable-id',
 			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			'en_US',
-			'segments-experience-id-0',
 			getField
 		);
 
@@ -169,7 +161,6 @@ describe('resolveEditableValue', () => {
 			'editable-id',
 			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			'en_US',
-			'segments-experience-id-0',
 			getField
 		);
 
@@ -205,7 +196,6 @@ describe('resolveEditableValue', () => {
 			'editable-id',
 			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			'en_US',
-			'segments-experience-id-0',
 			getField
 		);
 

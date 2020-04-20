@@ -49,8 +49,10 @@ definition {
 			locator1 = "MessageBoardsThread#THREAD_REPLY_BUTTON",
 			value1 = "Reply");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.sendKeys(
-			locator1 = "MessageBoardsThread#THREAD_REPLY_EDITOR",
+			locator1 = "CKEditor#BODY",
 			value1 = "${threadBody} @${mentionsUserScreenName}");
 
 		SelectFrame.selectFrameTop();

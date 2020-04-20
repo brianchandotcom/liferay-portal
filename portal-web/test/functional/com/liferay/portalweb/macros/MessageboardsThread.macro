@@ -647,9 +647,13 @@ definition {
 			key_threadSubject = "${threadSubject}",
 			locator1 = "MessageBoardsThread#THREAD_REPLY_BUTTON");
 
-		Type.typeEditor(
-			locator1 = "MessageBoardsThread#THREAD_REPLY_EDITOR",
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
 			value1 = "${threadReplyBody}");
+
+		SelectFrame.selectFrameTop();
 
 		PortletEntry.publish();
 

@@ -17,7 +17,7 @@ AUI.add(
 	A => {
 		var AObject = A.Object;
 
-		var _browserKey = Liferay.Util.randomInt();
+		var _browserKey = Math.ceil(Math.random() * Date.now());
 		var _enabled = false;
 		var _encryptedUserId = null;
 		var _supportsComet = false;

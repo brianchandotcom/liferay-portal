@@ -33,7 +33,7 @@ AUI().use(
 
 		var Notification = Config.win.Notification;
 
-		var windowId = Liferay.Util.randomInt();
+		var windowId = Math.ceil(Math.random() * Date.now());
 
 		var now = Date.now;
 

@@ -918,6 +918,9 @@
 			document.all[id].focus();
 		},
 
+		/**
+		 * @deprecated as of 7.3 - use `Math.ceil(Math.random() * Date.now())` instead
+		 */
 		randomInt() {
 			return Math.ceil(Math.random() * new Date().getTime());
 		},

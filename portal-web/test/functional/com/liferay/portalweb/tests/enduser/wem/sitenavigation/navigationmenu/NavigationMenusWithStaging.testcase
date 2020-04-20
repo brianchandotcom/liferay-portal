@@ -445,10 +445,6 @@ definition {
 	@description = "Navigation menus can be published to live and do not appear in live until published. This test has the Navigation Menu widget display a specific navigation menu. This test covers LPS-86142."
 	@priority = "5"
 	test PublishNavigationMenu {
-		property portal.upstream = "quarantine";
-
-		// Qurantine test for LRQA-56961
-
 		task ("Add the first page to the navigation menu") {
 			NavigationMenusAdmin.addItem(
 				item = "Page",

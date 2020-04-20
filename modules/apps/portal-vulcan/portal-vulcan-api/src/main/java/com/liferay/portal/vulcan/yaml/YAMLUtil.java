@@ -14,6 +14,9 @@
 
 package com.liferay.portal.vulcan.yaml;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.config.Security;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
@@ -36,6 +39,39 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class YAMLUtil {
 
+	public static String formatDescrition(String indent, String descriton) {
+		if (Validator.isNull(descriton)) {
+			return StringPool.BLANK;
+		}
+
+		if ((indent.length() + descriton.length()) <=
+				_DESCRIPTION_MAX_LINE_LENGTH) {
+
+			return indent + descriton;
+		}
+
+		descriton = indent + descriton;
+
+		int x = descriton.indexOf(CharPool.SPACE, indent.length());
+
+		if (x == -1) {
+			return descriton;
+		}
+
+		if (x > _DESCRIPTION_MAX_LINE_LENGTH) {
+			String s = descriton.substring(x + 1);
+
+			return descriton.substring(0, x) + "\n" +
+				formatDescrition(indent, s);
+		}
+
+		x = descriton.lastIndexOf(CharPool.SPACE, _DESCRIPTION_MAX_LINE_LENGTH);
+
+		String s = descriton.substring(x + 1);
+
+		return descriton.substring(0, x) + "\n" + formatDescrition(indent, s);
+	}
+
 	public static ConfigYAML loadConfigYAML(String yamlString) {
 		return _YAML_CONFIG.loadAs(yamlString, ConfigYAML.class);
 	}
@@ -43,6 +79,8 @@ public class YAMLUtil {
 	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
 		return _YAML_OPEN_API.loadAs(yamlString, OpenAPIYAML.class);
 	}
+
+	private static final int _DESCRIPTION_MAX_LINE_LENGTH = 120;
 
 	private static final Yaml _YAML_CONFIG;
 

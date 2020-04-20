@@ -869,6 +869,10 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		AssertTextEquals(
+			locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_TITLE",
+			value1 = "${assetListName}");
+
 		Button.clickSave();
 
 		SelectFrameTop();

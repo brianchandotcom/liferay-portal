@@ -29,6 +29,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SELECT COLLECTION-->
+<tr>
+	<td>ASSET_SELECTION_ASSET_LIST_TITLE</td>
+	<td>//div[contains(@id,'assetListTitle')]</td>
+	<td></td>
+</tr>
 <!--SUBSCRIPTIONS-->
 <tr>
 	<td>SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION_LABEL</td>

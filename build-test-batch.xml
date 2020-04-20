@@ -1476,6 +1476,13 @@ app.server.type=@{app.server.type}]]></echo>
 				<matches pattern="[A-z]+" string="${axis.variable}" />
 			</condition>
 
+			<if>
+				<matches pattern="[0-9]+_[0-9]+" string="${test.class}" />
+				<then>
+					<get-test-class />
+				</then>
+			</if>
+
 			<property name="functional.test.type" value="@{functional.test.type}" />
 
 			<condition else="0" property="functional.batch.retry.count" value="1">

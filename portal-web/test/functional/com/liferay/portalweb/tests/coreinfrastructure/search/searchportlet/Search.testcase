@@ -323,7 +323,11 @@ definition {
 
 		Navigator.openURL();
 
-		Portlet.addPG(portletName = "Language Selector");
+		ContentPages.clickPencil();
+
+		PageEditor.addWidget(portletName = "Language Selector");
+
+		PageEditor.clickPublish();
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "de-DE",

@@ -170,10 +170,10 @@ public class AssetListEntryStagedModelDataHandler
 
 		_importAssetObjects(portletDataContext);
 
-		_importAssetEntryListAssetEntryRelElements(
+		_importAssetEntryListSegmentsEntryRelElements(
 			portletDataContext, assetListEntry);
 
-		_importAssetEntryListSegmentsEntryRelElements(
+		_importAssetEntryListAssetEntryRelElements(
 			portletDataContext, assetListEntry);
 	}
 

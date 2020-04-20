@@ -41,7 +41,7 @@ export const useChartState = ({defaultTimeSpanOption, publishDate}) => {
 			dispatch({payload, type: CHANGE_TIME_SPAN_OPTION}),
 		nextTimeSpan: () => dispatch({type: NEXT_TIME_SPAN}),
 		previousTimeSpan: () => dispatch({type: PREV_TIME_SPAN}),
-		setLoading: () => dispatch({type: SET_LOADING}),
+		setLoading: payload => dispatch({payload, type: SET_LOADING}),
 	};
 
 	return {actions, state};
@@ -104,7 +104,7 @@ function reducer(state, action) {
 			};
 			break;
 		case SET_LOADING:
-			nextState = setLoadingState(state);
+			nextState = setLoadingState(state, action.payload);
 			break;
 		default:
 			state = nextState;
@@ -117,12 +117,12 @@ function reducer(state, action) {
 /**
  * Declares the state as loading and resets the dataSet histogram values
  */
-function setLoadingState(state) {
+function setLoadingState(state, payload) {
 	/**
 	 * The dataSet does not need to be reset
 	 */
 	if (!state.dataSet) {
-		return {...state, loading: true};
+		return {...state, loading: payload.loading};
 	}
 
 	const histogram = state.dataSet.histogram.map(set => {
@@ -161,7 +161,7 @@ function setLoadingState(state) {
 			histogram,
 			totals,
 		},
-		loading: true,
+		loading: payload.loading,
 	};
 
 	return nextState;
@@ -205,6 +205,12 @@ function mergeDataSets({
 			label: h.key,
 		};
 	});
+
+	if (newFormattedHistogram.length === 0) {
+		resultDataSet.histogram = previousDataSet.histogram;
+
+		return resultDataSet;
+	}
 
 	let start = 0;
 	const mergeHistogram = [];

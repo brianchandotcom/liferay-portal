@@ -204,13 +204,11 @@ function legendFormatterGenerator(
 				<span className="mr-2 text-secondary">
 					{keyToTranslatedLabelValue(value)}
 				</span>
-				{preformattedNumber !== null && (
-					<span className="font-weight-bold">
-						{validAnalyticsConnection
-							? numberFormat(languageTag, preformattedNumber)
-							: '-'}
-					</span>
-				)}
+				<span className="font-weight-bold">
+					{validAnalyticsConnection && preformattedNumber !== null
+						? numberFormat(languageTag, preformattedNumber)
+						: '-'}
+				</span>
 			</span>
 		);
 	};
@@ -229,40 +227,65 @@ export default function Chart({
 		defaultTimeSpanOption,
 		publishDate,
 	});
+
 	const isMounted = useIsMounted();
 
+	const publishedToday =
+		new Date().toDateString() ===
+		new Date(chartState.publishDate).toDateString();
+
 	useEffect(() => {
-		let gone = false;
+		if (!publishedToday) {
+			let gone = false;
 
-		actions.setLoading();
+			actions.setLoading(true);
 
-		dataProviders.map(getter => {
-			getter({
-				timeSpanKey: chartState.timeSpanOption,
-				timeSpanOffset: chartState.timeSpanOffset,
-			}).then(data => {
-				if (!gone) {
-					if (isMounted()) {
-						const timeSpanComparator =
-							chartState.timeSpanOption === LAST_24_HOURS
-								? HOUR_IN_MILLISECONDS
-								: DAY_IN_MILLISECONDS;
+			const timeSpanComparator =
+				chartState.timeSpanOption === LAST_24_HOURS
+					? HOUR_IN_MILLISECONDS
+					: DAY_IN_MILLISECONDS;
 
-						Object.keys(data).map(key => {
-							actions.addDataSetItem({
-								dataSetItem: data[key],
-								key,
-								timeSpanComparator,
-							});
+			dataProviders.map(getter => {
+				getter({
+					timeSpanKey: chartState.timeSpanOption,
+					timeSpanOffset: chartState.timeSpanOffset,
+				})
+					.then(data => {
+						if (!gone) {
+							if (isMounted()) {
+								Object.keys(data).map(key => {
+									actions.addDataSetItem({
+										dataSetItem: data[key],
+										key,
+										timeSpanComparator,
+									});
+								});
+							}
+						}
+					})
+					.catch(_error => {
+						let key = '';
+
+						if (getter.name === 'getHistoricalReads') {
+							key = 'analyticsReportsHistoricalReads';
+						}
+						if (getter.name === 'getHistoricalViews') {
+							key = 'analyticsReportsHistoricalViews';
+						}
+
+						actions.addDataSetItem({
+							dataSetItem: {histogram: [], value: null},
+							key,
+							timeSpanComparator,
 						});
-					}
-				}
+					});
 			});
-		});
 
-		return () => {
-			gone = true;
-		};
+			return () => {
+				gone = true;
+			};
+		}
+		actions.setLoading(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [chartState.timeSpanOption, chartState.timeSpanOffset]);
 
@@ -332,10 +355,6 @@ export default function Chart({
 		chartState.timeSpanOption === LAST_24_HOURS
 			? dateFormatters.formatNumericHour
 			: dateFormatters.formatNumericDay;
-
-	const publishedToday =
-		new Date().toDateString() ===
-		new Date(chartState.publishDate).toDateString();
 
 	const lineChartWrapperClasses = className('line-chart-wrapper', {
 		'line-chart-wrapper--loading': chartState.loading,
@@ -412,7 +431,9 @@ export default function Chart({
 							/>
 
 							{!validAnalyticsConnection ||
-							(validAnalyticsConnection && publishedToday) ? (
+							(validAnalyticsConnection && publishedToday) ||
+							(validAnalyticsConnection &&
+								histogram.length === 0) ? (
 								<YAxis
 									axisLine={{
 										stroke: CHART_COLORS.cartesianGrid,

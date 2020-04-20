@@ -159,7 +159,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	public void apply(final Project project) {
 		_applyPlugins(project);
 
-		BundleExtension bundleExtension = _addBundleExtension(project);
+		BundleExtension bundleExtension = _addExtensionBundle(project);
 		final LiferayOSGiExtension liferayOSGiExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, LiferayOSGiExtension.class);
@@ -167,13 +167,13 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
-		_configureBundleExtension(project, bundleExtension);
-		_configureLiferayExtension(project, liferayExtension);
+		_configureExtensionBundle(project, bundleExtension);
+		_configureExtensionLiferay(project, liferayExtension);
 
 		final Configuration compileIncludeConfiguration =
 			_addConfigurationCompileInclude(project);
 
-		_configureArchivesBaseName(project);
+		_configureConventionBasePlugin(project);
 		_configureProject(project);
 		_configureSourceSetMain(project);
 
@@ -205,26 +205,26 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TaskProvider<Test> testTaskProvider = GradleUtil.getTaskProvider(
 			project, JavaPlugin.TEST_TASK_NAME, Test.class);
 
-		_configureTaskProviderAutoUpdateXml(
+		_configureTaskAutoUpdateXmlProvider(
 			project, liferayExtension, liferayOSGiExtension,
 			directDeployTaskProvider, jarTaskProvider);
-		_configureTaskProviderClean(project, cleanTaskProvider);
-		_configureTaskProviderDeploy(
+		_configureTaskCleanProvider(project, cleanTaskProvider);
+		_configureTaskDeployProvider(
 			deployTaskProvider, deployDependenciesTaskProvider);
-		_configureTaskProviderDeployDependencies(
+		_configureTaskDeployDependenciesProvider(
 			liferayExtension, deployDependenciesTaskProvider);
-		_configureTaskProviderDeployFast(
+		_configureTaskDeployFastProvider(
 			project, liferayExtension, classesTaskProvider,
 			compileJSPTaskProvider, deployFastTaskProvider,
 			processResourcesTaskProvider);
-		_configureTaskProviderJar(project, jarTaskProvider);
-		_configureTaskProviderJavadoc(project, javadocTaskProvider);
-		_configureTaskProviderTest(testTaskProvider);
+		_configureTaskJarProvider(project, jarTaskProvider);
+		_configureTaskJavadocProvider(project, javadocTaskProvider);
+		_configureTaskTestProvider(testTaskProvider);
 
-		_configureTaskProviderClean(
+		_configureTaskCleanProvider(
 			liferayExtension, cleanTaskProvider, deployTaskProvider,
 			jarTaskProvider);
-		_configureTaskProviderDeploy(
+		_configureTaskDeployProvider(
 			project, liferayExtension, deployTaskProvider, jarTaskProvider,
 			false);
 
@@ -233,12 +233,13 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		taskContainer.withType(
 			BuildWSDDTask.class,
 			buildWSDDTask -> {
-				TaskProvider<Jar> taskProvider = GradleUtil.addTaskProvider(
-					project, buildWSDDTask.getName() + "Jar", Jar.class);
+				TaskProvider<Jar> buildWSDDJarTaskProvider =
+					GradleUtil.addTaskProvider(
+						project, buildWSDDTask.getName() + "Jar", Jar.class);
 
-				_configureTaskProviderBuildWSDDJar(
+				_configureTaskBuildWSDDJarProvider(
 					project, liferayExtension, liferayOSGiExtension,
-					buildWSDDTask, taskProvider, cleanTaskProvider,
+					buildWSDDTask, buildWSDDJarTaskProvider, cleanTaskProvider,
 					deployTaskProvider);
 			});
 
@@ -258,17 +259,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		pluginContainer.configureEach(
 			plugin -> {
 				if (plugin instanceof ApplicationPlugin) {
-					_configureApplicationPlugin(
+					_configurePluginApplication(
 						project, compileIncludeConfiguration);
 				}
 			});
 
 		project.afterEvaluate(
 			curProject -> {
-				_configureBundleExtensionAfterEvaluate(
+				_configureExtensionBundleAfterEvaluate(
 					curProject, liferayOSGiExtension,
 					compileIncludeConfiguration);
-				_configureTaskProviderDeployDependenciesAfterEvaluate(
+				_configureTaskDeployDependenciesProviderAfterEvaluate(
 					deployDependenciesTaskProvider);
 			});
 	}
@@ -338,7 +339,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		WatchOSGiPlugin.INSTANCE.apply(project);
 	}
 
-	private void _configureApplicationPlugin(
+	private void _configurePluginApplication(
 		Project project, final Configuration compileIncludeConfiguration) {
 
 		ApplicationPluginConvention applicationPluginConvention =
@@ -358,7 +359,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			runTask -> runTask.classpath(compileIncludeConfiguration));
 	}
 
-	private void _configureArchivesBaseName(Project project) {
+	private void _configureConventionBasePlugin(Project project) {
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
 			project, BasePluginConvention.class);
 
@@ -380,7 +381,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		basePluginConvention.setArchivesBaseName(bundleSymbolicName);
 	}
 
-	private BundleExtension _addBundleExtension(Project project) {
+	private BundleExtension _addExtensionBundle(Project project) {
 		BundleExtension bundleExtension = new BundleExtension();
 
 		ExtensionContainer extensionContainer = project.getExtensions();
@@ -391,7 +392,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		return bundleExtension;
 	}
 
-	private void _configureBundleExtension(
+	private void _configureExtensionBundle(
 		Project project, BundleExtension bundleExtension) {
 
 		File file = project.file("bnd.bnd");
@@ -420,7 +421,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureBundleExtensionAfterEvaluate(
+	private void _configureExtensionBundleAfterEvaluate(
 		Project project, final LiferayOSGiExtension liferayOSGiExtension,
 		final Configuration compileIncludeConfiguration) {
 
@@ -473,7 +474,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureLiferayExtension(
+	private void _configureExtensionLiferay(
 		final Project project, final LiferayExtension liferayExtension) {
 
 		liferayExtension.setDeployDir(
@@ -527,7 +528,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskProviderAutoUpdateXml(
+	private void _configureTaskAutoUpdateXmlProvider(
 		final Project project, final LiferayExtension liferayExtension,
 		final LiferayOSGiExtension liferayOSGiExtension,
 		TaskProvider<DirectDeployTask> directDeployTaskProvider,
@@ -642,7 +643,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			jar -> jar.finalizedBy(directDeployTaskProvider));
 	}
 
-	private void _configureTaskProviderBuildWSDDJar(
+	private void _configureTaskBuildWSDDJarProvider(
 		final Project project, LiferayExtension liferayExtension,
 		final LiferayOSGiExtension liferayOSGiExtension,
 		final BuildWSDDTask buildWSDDTask,
@@ -812,15 +813,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				buildWSDDTask.finalizedBy(buildWSDDJarTask);
 			});
 
-		_configureTaskProviderClean(
+		_configureTaskCleanProvider(
 			liferayExtension, cleanTaskProvider, deployTaskProvider,
 			buildWSDDJarTaskProvider);
-		_configureTaskProviderDeploy(
+		_configureTaskDeployProvider(
 			project, liferayExtension, deployTaskProvider,
 			buildWSDDJarTaskProvider, true);
 	}
 
-	private void _configureTaskProviderClean(
+	private void _configureTaskCleanProvider(
 		final LiferayExtension liferayExtension,
 		TaskProvider<Delete> cleanTaskProvider,
 		final TaskProvider<Copy> deployTaskProvider,
@@ -848,7 +849,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}));
 	}
 
-	private void _configureTaskProviderClean(
+	private void _configureTaskCleanProvider(
 		final Project project, TaskProvider<Delete> cleanTaskProvider) {
 
 		cleanTaskProvider.configure(
@@ -921,7 +922,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskProviderDeploy(
+	private void _configureTaskDeployProvider(
 		final Project project, final LiferayExtension liferayExtension,
 		TaskProvider<Copy> deployTaskProvider,
 		final TaskProvider<Jar> jarTaskProvider, boolean lazy) {
@@ -960,7 +961,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskProviderDeploy(
+	private void _configureTaskDeployProvider(
 		TaskProvider<Copy> deployTaskProvider,
 		final TaskProvider<Copy> deployDependenciesTaskProvider) {
 
@@ -969,7 +970,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				deployDependenciesTaskProvider));
 	}
 
-	private void _configureTaskProviderDeployDependencies(
+	private void _configureTaskDeployDependenciesProvider(
 		final LiferayExtension liferayExtension,
 		TaskProvider<Copy> deployDependenciesTaskProvider) {
 
@@ -1005,7 +1006,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskProviderDeployDependenciesAfterEvaluate(
+	private void _configureTaskDeployDependenciesProviderAfterEvaluate(
 		TaskProvider<Copy> deployDependenciesTaskProvider) {
 
 		deployDependenciesTaskProvider.configure(
@@ -1014,7 +1015,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					Boolean.getBoolean("deploy.dependencies.keep.versions"))));
 	}
 
-	private void _configureTaskProviderDeployFast(
+	private void _configureTaskDeployFastProvider(
 		final Project project, final LiferayExtension liferayExtension,
 		final TaskProvider<Task> classesTaskProvider,
 		final TaskProvider<JavaCompile> compileJSPTaskProvider,
@@ -1150,7 +1151,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskProviderJar(
+	private void _configureTaskJarProvider(
 		final Project project, TaskProvider<Jar> jarTaskProvider) {
 
 		jarTaskProvider.configure(
@@ -1211,7 +1212,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskProviderJavadoc(
+	private void _configureTaskJavadocProvider(
 		Project project, TaskProvider<Javadoc> javadocTaskProvider) {
 
 		String bundleName = BndUtil.getInstruction(
@@ -1228,7 +1229,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				String.format("%s %s API", bundleName, bundleVersion)));
 	}
 
-	private void _configureTaskProviderTest(
+	private void _configureTaskTestProvider(
 		TaskProvider<Test> testTaskProvider) {
 
 		testTaskProvider.configure(

@@ -157,6 +157,11 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		if (window[editorName]) {
 			window[editorName].dispose();
 		}
+
+		Liferay.Util.toggleDisabled(
+			'#<portlet:namespace/>replyMessageButton' + messageId,
+			false
+		);
 	}
 
 	<c:if test="<%= thread.getRootMessageId() != message.getMessageId() %>">

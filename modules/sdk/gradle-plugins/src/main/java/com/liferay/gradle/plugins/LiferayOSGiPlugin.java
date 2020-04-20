@@ -170,10 +170,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			_addConfigurationCompileInclude(project);
 
 		_configureArchivesBaseName(project);
-		_configureDescription(project);
 		_configureLiferay(project, liferayExtension);
+		_configureProject(project);
 		_configureSourceSetMain(project);
-		_configureVersion(project);
 
 		final TaskProvider<Copy> deployDependenciesTaskProvider =
 			GradleUtil.addTaskProvider(
@@ -422,7 +421,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureDescription(Project project) {
+	private void _configureProject(Project project) {
 		String description = BndUtil.getInstruction(
 			project, Constants.BUNDLE_DESCRIPTION);
 
@@ -433,6 +432,13 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		if (Validator.isNotNull(description)) {
 			project.setDescription(description);
+		}
+
+		String bundleVersion = BndUtil.getInstruction(
+			project, Constants.BUNDLE_VERSION);
+
+		if (Validator.isNotNull(bundleVersion)) {
+			project.setVersion(bundleVersion);
 		}
 	}
 
@@ -1249,15 +1255,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	private void _configureTaskTestDefaultCharacterEncoding(Test test) {
 		test.setDefaultCharacterEncoding(StandardCharsets.UTF_8.name());
-	}
-
-	private void _configureVersion(Project project) {
-		String bundleVersion = BndUtil.getInstruction(
-			project, Constants.BUNDLE_VERSION);
-
-		if (Validator.isNotNull(bundleVersion)) {
-			project.setVersion(bundleVersion);
-		}
 	}
 
 	private Map<String, String> _getBuilderProperties(

@@ -114,6 +114,7 @@ import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.JavaExec;
@@ -252,17 +253,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}
 			});
 
-		GradleUtil.withPlugin(
-			project, ApplicationPlugin.class,
-			applicationPlugin -> {
-				TaskProvider<JavaExec> runTaskProvider =
-					GradleUtil.getTaskProvider(
-						project, ApplicationPlugin.TASK_RUN_NAME,
-						JavaExec.class);
+		PluginContainer pluginContainer = project.getPlugins();
 
-				_configureApplication(project);
-				_configureTaskProviderRun(
-					compileIncludeConfiguration, runTaskProvider);
+		pluginContainer.configureEach(
+			plugin -> {
+				if (plugin instanceof ApplicationPlugin) {
+					_configureApplicationPlugin(
+						project, compileIncludeConfiguration);
+				}
 			});
 
 		project.afterEvaluate(
@@ -340,7 +338,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		WatchOSGiPlugin.INSTANCE.apply(project);
 	}
 
-	private void _configureApplication(Project project) {
+	private void _configureApplicationPlugin(
+		Project project, final Configuration compileIncludeConfiguration) {
+
 		ApplicationPluginConvention applicationPluginConvention =
 			GradleUtil.getConvention(
 				project, ApplicationPluginConvention.class);
@@ -350,6 +350,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		if (Validator.isNotNull(mainClassName)) {
 			applicationPluginConvention.setMainClassName(mainClassName);
 		}
+
+		TaskProvider<JavaExec> runTaskProvider = GradleUtil.getTaskProvider(
+			project, ApplicationPlugin.TASK_RUN_NAME, JavaExec.class);
+
+		runTaskProvider.configure(
+			runTask -> runTask.classpath(compileIncludeConfiguration));
 	}
 
 	private void _configureArchivesBaseName(Project project) {
@@ -1220,14 +1226,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		javadocTaskProvider.configure(
 			javadocTask -> javadocTask.setTitle(
 				String.format("%s %s API", bundleName, bundleVersion)));
-	}
-
-	private void _configureTaskProviderRun(
-		final Configuration compileIncludeConfiguration,
-		TaskProvider<JavaExec> runTaskProvider) {
-
-		runTaskProvider.configure(
-			runTask -> runTask.classpath(compileIncludeConfiguration));
 	}
 
 	private void _configureTaskProviderTest(

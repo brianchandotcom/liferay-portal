@@ -230,11 +230,19 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureTasksBuildWSDD(
 			project, liferayExtension, liferayOSGiExtension, cleanTaskProvider,
 			deployTaskProvider);
-		_configureTasksTest(project);
 
-		if (GradleUtil.isRunningInsideDaemon()) {
-			_configureTasksJavaCompileFork(project, true);
-		}
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.configureEach(
+			task -> {
+				if (task instanceof JavaCompile) {
+					_configureTaskJavaCompile((JavaCompile)task, true);
+				}
+
+				if (task instanceof Test) {
+					_configureTaskTest((Test)task);
+				}
+			});
 
 		GradleUtil.withPlugin(
 			project, ApplicationPlugin.class,
@@ -495,12 +503,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
 	}
 
-	private void _configureTaskJavaCompileFork(
+	private void _configureTaskJavaCompile(
 		JavaCompile javaCompile, boolean fork) {
 
-		CompileOptions compileOptions = javaCompile.getOptions();
+		if (GradleUtil.isRunningInsideDaemon()) {
+			CompileOptions compileOptions = javaCompile.getOptions();
 
-		compileOptions.setFork(fork);
+			compileOptions.setFork(fork);
+		}
 	}
 
 	private void _configureTaskProviderAutoUpdateXml(
@@ -1245,26 +1255,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTasksJavaCompileFork(
-		Project project, final boolean fork) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			JavaCompile.class,
-			javaCompileTask -> _configureTaskJavaCompileFork(
-				javaCompileTask, fork));
-	}
-
-	private void _configureTasksTest(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			Test.class,
-			testTask -> _configureTaskTestDefaultCharacterEncoding(testTask));
-	}
-
-	private void _configureTaskTestDefaultCharacterEncoding(Test test) {
+	private void _configureTaskTest(Test test) {
 		test.setDefaultCharacterEncoding(StandardCharsets.UTF_8.name());
 	}
 

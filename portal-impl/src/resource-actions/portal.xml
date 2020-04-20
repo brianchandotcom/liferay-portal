@@ -137,9 +137,10 @@
 	<model-resource portal="true">
 		<model-name>com.liferay.portal.kernel.model.LayoutPrototype</model-name>
 		<portlet-ref>
+			<portlet-name>com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet</portlet-name>
 			<portlet-name>com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet</portlet-name>
 		</portlet-ref>
-		<weight>1</weight>
+		<weight>3</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -150,7 +151,9 @@
 			<site-member-defaults>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
-			<guest-defaults />
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>

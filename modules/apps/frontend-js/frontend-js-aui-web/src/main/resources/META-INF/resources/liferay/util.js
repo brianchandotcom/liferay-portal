@@ -800,18 +800,6 @@
 			return typeof val === 'function';
 		},
 
-		isPhone() {
-			var instance = this;
-
-			return instance.getWindowWidth() < Liferay.BREAKPOINTS.PHONE;
-		},
-
-		isTablet() {
-			var instance = this;
-
-			return instance.getWindowWidth() < Liferay.BREAKPOINTS.TABLET;
-		},
-
 		listCheckboxesExcept(form, except, name, checked) {
 			form = Util.getDOM(form);
 
@@ -1921,11 +1909,6 @@
 	Util.Window = Window;
 
 	Liferay.Util = Util;
-
-	Liferay.BREAKPOINTS = {
-		PHONE: 768,
-		TABLET: 980,
-	};
 
 	Liferay.STATUS_CODE = {
 		BAD_REQUEST: 400,

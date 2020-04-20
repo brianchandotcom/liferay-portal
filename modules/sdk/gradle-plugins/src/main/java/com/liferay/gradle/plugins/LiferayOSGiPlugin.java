@@ -227,11 +227,19 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			project, liferayExtension, deployTaskProvider, jarTaskProvider,
 			false);
 
-		_configureTasksBuildWSDD(
-			project, liferayExtension, liferayOSGiExtension, cleanTaskProvider,
-			deployTaskProvider);
-
 		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildWSDDTask.class,
+			buildWSDDTask -> {
+				TaskProvider<Jar> taskProvider = GradleUtil.addTaskProvider(
+					project, buildWSDDTask.getName() + "Jar", Jar.class);
+
+				_configureTaskProviderBuildWSDDJar(
+					project, liferayExtension, liferayOSGiExtension,
+					buildWSDDTask, taskProvider, cleanTaskProvider,
+					deployTaskProvider);
+			});
 
 		taskContainer.configureEach(
 			task -> {
@@ -1231,27 +1239,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
 					"-Duser.timezone=GMT");
 				testTask.setForkEvery(1L);
-			});
-	}
-
-	private void _configureTasksBuildWSDD(
-		final Project project, final LiferayExtension liferayExtension,
-		final LiferayOSGiExtension liferayOSGiExtension,
-		final TaskProvider<Delete> cleanTaskProvider,
-		final TaskProvider<Copy> deployTaskProvider) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildWSDDTask.class,
-			buildWSDDTask -> {
-				TaskProvider<Jar> taskProvider = GradleUtil.addTaskProvider(
-					project, buildWSDDTask.getName() + "Jar", Jar.class);
-
-				_configureTaskProviderBuildWSDDJar(
-					project, liferayExtension, liferayOSGiExtension,
-					buildWSDDTask, taskProvider, cleanTaskProvider,
-					deployTaskProvider);
 			});
 	}
 

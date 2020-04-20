@@ -32,18 +32,31 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -116,6 +129,13 @@ public class WidgetLayoutStructureItemHelper
 			_importPortletConfiguration(
 				layout.getPlid(), PortletIdCodec.encode(name, instanceId),
 				widgetConfigDefinitionMap);
+
+			Map<String, Object> widgetPermissions =
+				(Map<String, Object>)definitionMap.get("widgetPermissions");
+
+			_importPortletPermissions(
+				layout.getPlid(), PortletIdCodec.encode(name, instanceId),
+				widgetPermissions);
 
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 				layout.getUserId(), layout.getGroupId(), 0, 0, 0,
@@ -212,6 +232,84 @@ public class WidgetLayoutStructureItemHelper
 			layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId,
 			null, portletPreferencesXML);
+	}
+
+	private void _importPortletPermissions(
+			long plid, String portletId, Map<String, Object> widgetPermissions)
+		throws Exception {
+
+		if (widgetPermissions == null) {
+			return;
+		}
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+		if (layout == null) {
+			return;
+		}
+
+		String portletName = PortletIdCodec.decodePortletName(portletId);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletName);
+
+		if (portlet == null) {
+			return;
+		}
+
+		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+			plid, portletId);
+
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
+
+		for (Map.Entry<String, Object> entrySet :
+				widgetPermissions.entrySet()) {
+
+			Role role = RoleLocalServiceUtil.fetchRole(
+				layout.getCompanyId(), entrySet.getKey());
+
+			if (role == null) {
+				continue;
+			}
+
+			List<ResourceAction> resourceActions =
+				ResourceActionLocalServiceUtil.getResourceActions(portletName);
+
+			if (ListUtil.isEmpty(resourceActions)) {
+				continue;
+			}
+
+			Stream<ResourceAction> stream = resourceActions.stream();
+
+			List<String> resourceActionsIds = stream.map(
+				ResourceAction::getActionId
+			).collect(
+				Collectors.toList()
+			);
+
+			List<String> importedResourceActions =
+				(List<String>)entrySet.getValue();
+
+			List<String> actionIds = new ArrayList<>();
+
+			for (String importedResourceAction : importedResourceActions) {
+				if (!resourceActionsIds.contains(importedResourceAction)) {
+					continue;
+				}
+
+				actionIds.add(importedResourceAction);
+			}
+
+			if (ListUtil.isNotEmpty(actionIds)) {
+				roleIdsToActionIds.put(
+					role.getRoleId(), actionIds.toArray(new String[0]));
+			}
+		}
+
+		if (MapUtil.isNotEmpty(roleIdsToActionIds)) {
+			ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+				layout.getGroupId(), layout.getCompanyId(), portletName,
+				resourcePrimKey, roleIdsToActionIds);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

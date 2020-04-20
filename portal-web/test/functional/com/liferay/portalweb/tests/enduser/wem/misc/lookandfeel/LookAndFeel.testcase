@@ -24,6 +24,12 @@ definition {
 	test ConfigureCustomStylesViaLookAndFeelPG {
 		property testray.component.names = "Training";
 
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page Name");
+
+		Navigator.gotoPage(pageName = "Test Page Name");
+
 		Portlet.addPG(portletName = "Sign In");
 
 		Portlet.gotoPortletOptions(
@@ -36,7 +42,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
+		Navigator.gotoPage(pageName = "Test Page Name");
 
 		Portlet.viewCustomStylesViaLookandfeelPG();
 
@@ -52,7 +58,7 @@ definition {
 
 		Button.clickCancel();
 
-		Navigator.openURL();
+		Navigator.gotoPage(pageName = "Test Page Name");
 
 		Portlet.viewApplicationDecorator(decorator = "Borderless");
 
@@ -66,7 +72,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
+		Navigator.gotoPage(pageName = "Test Page Name");
 
 		Portlet.viewApplicationDecorator(decorator = "Decorate");
 
@@ -80,7 +86,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
+		Navigator.gotoPage(pageName = "Test Page Name");
 
 		Portlet.viewApplicationDecorator(decorator = "Barebone");
 	}

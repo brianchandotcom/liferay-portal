@@ -61,7 +61,7 @@ public class DeliveryPortletConfigurationIcon
 
 		StringBundler sb = new StringBundler(12);
 
-		sb.append("Liferay.Portlet.openWindow({bodyCssClass: ");
+		sb.append("Liferay.Portlet.openModal({iframeBodyCssClass: ");
 		sb.append("'dialog-with-footer', namespace: '");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -71,13 +71,13 @@ public class DeliveryPortletConfigurationIcon
 
 		sb.append(portletDisplay.getNamespace());
 
-		sb.append("', portlet: '#p_p_id_");
+		sb.append("', portletSelector: '#p_p_id_");
 		sb.append(portletDisplay.getId());
 		sb.append("_', portletId: '");
 		sb.append(portletDisplay.getId());
 		sb.append("', title: '");
 		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "configuration"));
-		sb.append("', uri: '");
+		sb.append("', url: '");
 
 		PortletURL deliveryURL = getDeliveryURL(portletRequest);
 

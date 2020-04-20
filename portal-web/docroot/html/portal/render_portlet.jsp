@@ -482,11 +482,11 @@ if (urlConfiguration != null) {
 
 	StringBundler urlConfigurationJSSB = new StringBundler(15);
 
-	urlConfigurationJSSB.append("Liferay.Portlet.openWindow({bodyCssClass: 'dialog-with-footer', ");
-	urlConfigurationJSSB.append("destroyOnHide: true, ");
+	urlConfigurationJSSB.append("Liferay.Portlet.openModal({");
+	urlConfigurationJSSB.append("iframeBodyCssClass: 'dialog-with-footer', ");
 	urlConfigurationJSSB.append("namespace: '");
 	urlConfigurationJSSB.append(portletDisplay.getNamespace());
-	urlConfigurationJSSB.append("', portlet: '#p_p_id_");
+	urlConfigurationJSSB.append("', portletSelector: '#p_p_id_");
 	urlConfigurationJSSB.append(portletDisplay.getId());
 	urlConfigurationJSSB.append("_', portletId: '");
 	urlConfigurationJSSB.append(portletDisplay.getId());
@@ -498,7 +498,7 @@ if (urlConfiguration != null) {
 
 	urlConfigurationJSSB.append("', title: '");
 	urlConfigurationJSSB.append(UnicodeLanguageUtil.get(request, "configuration"));
-	urlConfigurationJSSB.append("', uri: '");
+	urlConfigurationJSSB.append("', url: '");
 	urlConfigurationJSSB.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration()));
 	urlConfigurationJSSB.append("'}); return false;");
 

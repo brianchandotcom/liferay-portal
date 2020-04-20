@@ -21,6 +21,17 @@ import React, {useEffect, useRef, useState} from 'react';
 import './Modal.scss';
 
 const openModal = props => {
+	if (
+		props &&
+		props.url &&
+		props.bodyHTML &&
+		process.env.NODE_ENV === 'development'
+	) {
+		console.warn(
+			'url and bodyHTML props are both set. bodyHTML will be ignored. Please use one or another.'
+		);
+	}
+
 	// Mount in detached node; Clay will take care of appending to `document.body`.
 	// See: https://github.com/liferay/clay/blob/master/packages/clay-shared/src/Portal.tsx
 	render(Modal, props, document.createElement('div'));

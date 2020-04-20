@@ -17,12 +17,11 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -46,7 +45,7 @@ public class DeleteCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
+		throws Exception {
 
 		long ctCollectionId = ParamUtil.getLong(
 			actionRequest, "ctCollectionId");
@@ -55,7 +54,7 @@ public class DeleteCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			ctCollectionId);
 
 		if (ctCollection != null) {
-			_ctCollectionLocalService.deleteCTCollection(ctCollection);
+			_ctCollectionService.deleteCTCollection(ctCollection);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -67,5 +66,8 @@ public class DeleteCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTCollectionService _ctCollectionService;
 
 }

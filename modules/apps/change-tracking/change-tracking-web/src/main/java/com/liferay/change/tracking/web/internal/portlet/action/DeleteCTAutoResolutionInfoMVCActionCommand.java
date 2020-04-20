@@ -15,13 +15,11 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -46,13 +44,13 @@ public class DeleteCTAutoResolutionInfoMVCActionCommand
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
+		throws Exception {
 
 		long ctAutoResolutionInfoId = ParamUtil.getLong(
 			actionRequest, "ctAutoResolutionInfoId");
 
 		if (ctAutoResolutionInfoId > 0) {
-			_ctCollectionLocalService.deleteCTAutoResolutionInfo(
+			_ctCollectionService.deleteCTAutoResolutionInfo(
 				ctAutoResolutionInfoId);
 		}
 
@@ -64,6 +62,6 @@ public class DeleteCTAutoResolutionInfoMVCActionCommand
 	}
 
 	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionService _ctCollectionService;
 
 }

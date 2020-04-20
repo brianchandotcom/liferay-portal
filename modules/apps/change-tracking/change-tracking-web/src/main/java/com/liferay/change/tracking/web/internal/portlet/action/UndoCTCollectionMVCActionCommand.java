@@ -17,6 +17,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -71,7 +72,7 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				ctCollection.getName(), "\"");
 		}
 
-		CTCollection ctCollection = _ctCollectionLocalService.undoCTCollection(
+		CTCollection ctCollection = _ctCollectionService.undoCTCollection(
 			ctCollectionId, themeDisplay.getUserId(), name, description);
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
@@ -88,6 +89,9 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTCollectionService _ctCollectionService;
 
 	@Reference
 	private Language _language;

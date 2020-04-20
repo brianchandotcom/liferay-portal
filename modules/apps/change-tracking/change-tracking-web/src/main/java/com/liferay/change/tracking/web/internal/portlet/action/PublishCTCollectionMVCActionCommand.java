@@ -15,8 +15,7 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -64,7 +63,7 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			_ctProcessLocalService.addCTProcess(
+			_ctCollectionService.publishCTCollection(
 				themeDisplay.getUserId(), ctCollectionId);
 		}
 		catch (PortalException portalException) {
@@ -89,10 +88,7 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CTPreferencesLocalService _ctPreferencesLocalService;
-
-	@Reference
-	private CTProcessLocalService _ctProcessLocalService;
+	private CTCollectionService _ctCollectionService;
 
 	@Reference
 	private Language _language;

@@ -18,7 +18,7 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -67,13 +67,13 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (ctCollectionId > 0) {
-				_ctCollectionLocalService.updateCTCollection(
+				_ctCollectionService.updateCTCollection(
 					themeDisplay.getUserId(), ctCollectionId, name,
 					description);
 			}
 			else {
 				CTCollection ctCollection =
-					_ctCollectionLocalService.addCTCollection(
+					_ctCollectionService.addCTCollection(
 						themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 						name, description);
 
@@ -106,7 +106,7 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionService _ctCollectionService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

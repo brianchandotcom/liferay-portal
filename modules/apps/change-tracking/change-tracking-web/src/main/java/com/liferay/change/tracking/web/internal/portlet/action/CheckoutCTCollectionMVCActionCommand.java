@@ -22,6 +22,8 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -29,8 +31,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -54,7 +54,7 @@ public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
+		throws Exception {
 
 		long ctCollectionId = ParamUtil.getLong(
 			actionRequest, "ctCollectionId");
@@ -68,6 +68,13 @@ public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 				return;
 			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_ctCollectionModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), ctCollection,
+				ActionKeys.UPDATE);
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -108,6 +115,12 @@ public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
+	)
+	private ModelResourcePermission<CTCollection>
+		_ctCollectionModelResourcePermission;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

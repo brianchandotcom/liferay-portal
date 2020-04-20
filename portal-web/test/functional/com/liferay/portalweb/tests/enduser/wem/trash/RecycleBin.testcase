@@ -652,63 +652,6 @@ definition {
 	}
 
 	@priority = "3"
-	test RestoreMessageboardsThreadViaRBCP {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
-
-		MessageboardsCategory.addCP(categoryName = "MB Category Name");
-
-		MessageboardsCategory.gotoCP(
-			categoryName = "MB Category Name",
-			siteScopeName = "Site Name");
-
-		MessageboardsThread.addCP(
-			threadBody = "MB Body",
-			threadSubject = "MB Subject");
-
-		MessageboardsThread.replyCP(
-			threadReplyBody = "MB Body Reply",
-			threadSubject = "MB Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
-
-		MessageboardsCategory.deleteCP(
-			assetType = "Message Boards Category",
-			categoryName = "MB Category Name",
-			siteScopeName = "Site Name");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
-
-		RecycleBin.viewCP(
-			assetName = "MB Category Name",
-			assetType = "Message Boards Category",
-			deleteUser = "Test Test");
-
-		RecycleBin.restoreCP(
-			assetName = "MB Category Name",
-			assetRestoreLocation = "Home",
-			assetType = "Message Boards Category");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
-
-		MessageboardsCategory.viewCP(
-			categoryCount = "0",
-			categoryName = "MB Category Name",
-			replyCount = "1",
-			threadCount = "1");
-
-		MessageboardsThread.viewCP(
-			replyCount = "1",
-			threadBody = "MB Body",
-			threadSubject = "MB Subject",
-			userName = "Test Test");
-
-		MessageboardsThread.viewReplyCP(
-			threadBody = "MB Body Reply",
-			threadSubject = "MB Subject",
-			userName = "Test Test");
-	}
-
-	@priority = "3"
 	test RestoreWebContentFromFolderCP {
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",

@@ -159,19 +159,20 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_applyPlugins(project);
 
 		BundleExtension bundleExtension = _addBundleExtension(project);
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
 		final LiferayOSGiExtension liferayOSGiExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, LiferayOSGiExtension.class);
 
+		LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
 		_configureBundleExtension(project, bundleExtension);
+		_configureLiferayExtension(project, liferayExtension);
 
 		final Configuration compileIncludeConfiguration =
 			_addConfigurationCompileInclude(project);
 
 		_configureArchivesBaseName(project);
-		_configureLiferay(project, liferayExtension);
 		_configureProject(project);
 		_configureSourceSetMain(project);
 
@@ -204,8 +205,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			project, JavaPlugin.TEST_TASK_NAME, Test.class);
 
 		_configureTaskProviderAutoUpdateXml(
-			project, liferayExtension, directDeployTaskProvider,
-			jarTaskProvider);
+			project, liferayExtension, liferayOSGiExtension,
+			directDeployTaskProvider, jarTaskProvider);
 		_configureTaskProviderClean(project, cleanTaskProvider);
 		_configureTaskProviderDeploy(
 			deployTaskProvider, deployDependenciesTaskProvider);
@@ -227,7 +228,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			false);
 
 		_configureTasksBuildWSDD(
-			project, liferayExtension, cleanTaskProvider, deployTaskProvider);
+			project, liferayExtension, liferayOSGiExtension, cleanTaskProvider,
+			deployTaskProvider);
 		_configureTasksTest(project);
 
 		if (GradleUtil.isRunningInsideDaemon()) {
@@ -449,7 +451,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureLiferay(
+	private void _configureLiferayExtension(
 		final Project project, final LiferayExtension liferayExtension) {
 
 		liferayExtension.setDeployDir(
@@ -503,6 +505,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	private void _configureTaskProviderAutoUpdateXml(
 		final Project project, final LiferayExtension liferayExtension,
+		final LiferayOSGiExtension liferayOSGiExtension,
 		TaskProvider<DirectDeployTask> directDeployTaskProvider,
 		TaskProvider<Jar> jarTaskProvider) {
 
@@ -596,10 +599,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 				directDeployTask.onlyIf(
 					task -> {
-						LiferayOSGiExtension liferayOSGiExtension =
-							GradleUtil.getExtension(
-								project, LiferayOSGiExtension.class);
-
 						if (liferayOSGiExtension.isAutoUpdateXml() &&
 							FileUtil.exists(
 								project, "docroot/WEB-INF/portlet.xml")) {
@@ -621,6 +620,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	private void _configureTaskProviderBuildWSDDJar(
 		final Project project, LiferayExtension liferayExtension,
+		final LiferayOSGiExtension liferayOSGiExtension,
 		final BuildWSDDTask buildWSDDTask,
 		TaskProvider<Jar> buildWSDDJarTaskProvider,
 		TaskProvider<Delete> cleanTaskProvider,
@@ -645,7 +645,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 								new Processor(gradleProperties, false))) {
 
 							Map<String, String> properties =
-								_getBuilderProperties(project, buildWSDDTask);
+								_getBuilderProperties(
+									project, liferayOSGiExtension,
+									buildWSDDTask);
 
 							File buildFile = project.getBuildFile();
 
@@ -1224,6 +1226,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	private void _configureTasksBuildWSDD(
 		final Project project, final LiferayExtension liferayExtension,
+		final LiferayOSGiExtension liferayOSGiExtension,
 		final TaskProvider<Delete> cleanTaskProvider,
 		final TaskProvider<Copy> deployTaskProvider) {
 
@@ -1236,8 +1239,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					project, buildWSDDTask.getName() + "Jar", Jar.class);
 
 				_configureTaskProviderBuildWSDDJar(
-					project, liferayExtension, buildWSDDTask, taskProvider,
-					cleanTaskProvider, deployTaskProvider);
+					project, liferayExtension, liferayOSGiExtension,
+					buildWSDDTask, taskProvider, cleanTaskProvider,
+					deployTaskProvider);
 			});
 	}
 
@@ -1265,10 +1269,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private Map<String, String> _getBuilderProperties(
-		Project project, BuildWSDDTask buildWSDDTask) {
-
-		LiferayOSGiExtension liferayOSGiExtension = GradleUtil.getExtension(
-			project, LiferayOSGiExtension.class);
+		Project project, LiferayOSGiExtension liferayOSGiExtension,
+		BuildWSDDTask buildWSDDTask) {
 
 		Map<String, String> properties = GradleUtil.toStringMap(
 			liferayOSGiExtension.getBundleDefaultInstructions());

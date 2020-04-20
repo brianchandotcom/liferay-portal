@@ -52,7 +52,7 @@ page import="com.liferay.redirect.web.internal.constants.RedirectWebKeys" %><%@
 page import="com.liferay.redirect.web.internal.display.context.RedirectDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.display.context.RedirectManagementToolbarDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.display.context.RedirectNotFoundEntriesDisplayContext" %><%@
-page import="com.liferay.redirect.web.internal.display.context.RedirectNotFountEntriesManagementToolbarDisplayContext" %><%@
+page import="com.liferay.redirect.web.internal.display.context.RedirectNotFoundEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.util.RedirectUtil" %>
 
 <%@ page import="java.text.DateFormat" %>

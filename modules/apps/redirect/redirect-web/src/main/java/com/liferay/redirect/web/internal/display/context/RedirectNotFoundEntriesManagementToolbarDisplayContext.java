@@ -45,10 +45,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alejandro Tardín
  */
-public class RedirectNotFountEntriesManagementToolbarDisplayContext
+public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public RedirectNotFountEntriesManagementToolbarDisplayContext(
+	public RedirectNotFoundEntriesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,

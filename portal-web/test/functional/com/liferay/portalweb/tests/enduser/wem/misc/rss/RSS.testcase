@@ -687,7 +687,7 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
 
-		var rssFeedUrl = selenium.getAttribute("//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]@href");
+		var rssFeedUrl = selenium.getAttribute("//div[contains(@class,'subscribe-action')]//a[contains(@href,'asset-publisher') and contains(.,'RSS')]@href");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",

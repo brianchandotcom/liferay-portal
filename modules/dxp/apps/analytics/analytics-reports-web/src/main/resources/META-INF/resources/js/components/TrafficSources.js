@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
+import {useAddWarning} from '../context/store';
 import {numberFormat} from '../utils/numberFormat';
 import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
@@ -45,11 +46,17 @@ export default function TrafficSources({
 }) {
 	const [highlighted, setHighlighted] = useState(null);
 
+	const addWarning = useAddWarning();
+
 	const fullPieChart = trafficSources.some(source => !!source.value);
 
-	const missingTrafficSourceValue = trafficSources.some(trafficSource => {
-		return trafficSource.value === undefined;
-	});
+	const missingTrafficSourceValue = trafficSources.some(
+		trafficSource => trafficSource.value === undefined
+	);
+
+	if (missingTrafficSourceValue) {
+		addWarning();
+	}
 
 	function handleLegendMouseEnter(name) {
 		setHighlighted(name);

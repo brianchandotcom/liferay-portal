@@ -43,3 +43,9 @@ export function useAddWarning() {
 		});
 	}, [dispatch]);
 }
+
+export function useHasWarning() {
+	const [state] = useContext(StoreContext);
+
+	return state.warning;
+}

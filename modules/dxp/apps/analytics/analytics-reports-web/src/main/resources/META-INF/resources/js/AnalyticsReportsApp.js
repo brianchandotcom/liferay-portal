@@ -15,6 +15,7 @@ import React, {useContext, useState} from 'react';
 import Detail from './components/Detail';
 import Main from './components/Main';
 import ConnectionContext from './context/connection';
+import {StoreContextProvider, useHasWarning} from './context/store';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
 
@@ -49,6 +50,7 @@ export default function({context, props}) {
 				validAnalyticsConnection,
 			}}
 		>
+			<StoreContextProvider>
 			<Navigation
 				api={api}
 				authorName={authorName}
@@ -59,6 +61,7 @@ export default function({context, props}) {
 				timeSpanOptions={timeSpans}
 				trafficSources={trafficSources}
 			/>
+			</StoreContextProvider>
 		</ConnectionContext.Provider>
 	);
 }
@@ -79,11 +82,9 @@ function Navigation({
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const {getHistoricalReads, getHistoricalViews} = api;
+	const hasWarning = useHasWarning();
 
-	const warning = trafficSources.some(
-		trafficSource => trafficSource.value === undefined
-	);
+	const {getHistoricalReads, getHistoricalViews} = api;
 
 	function handleCurrentPage(currentPage) {
 		setCurrentPage({view: currentPage.view});
@@ -152,7 +153,7 @@ function Navigation({
 				</ClayAlert>
 			)}
 
-			{validAnalyticsConnection && warning && (
+			{validAnalyticsConnection && hasWarning && (
 				<ClayAlert
 					className="p-0"
 					displayType="warning"

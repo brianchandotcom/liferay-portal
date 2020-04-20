@@ -26,6 +26,7 @@ import {
 } from 'recharts';
 
 import ConnectionContext from '../context/connection';
+import {useAddWarning} from '../context/store';
 import {useChartState} from '../state/chartState';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';
@@ -139,6 +140,8 @@ export default function Chart({
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
+	const addWarning = useAddWarning();
+
 	const {actions, state: chartState} = useChartState({
 		defaultTimeSpanOption,
 		publishDate,
@@ -187,6 +190,8 @@ export default function Chart({
 					if (getter.name === 'getHistoricalViews') {
 						key = 'analyticsReportsHistoricalViews';
 					}
+
+					addWarning();
 
 					actions.addDataSetItem({
 						dataSetItem: {histogram: [], value: null},

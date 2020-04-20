@@ -158,11 +158,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	public void apply(final Project project) {
 		_applyPlugins(project);
 
+		BundleExtension bundleExtension = _addBundleExtension(project);
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 		final LiferayOSGiExtension liferayOSGiExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, LiferayOSGiExtension.class);
+
+		_configureBundleExtension(project, bundleExtension);
 
 		final Configuration compileIncludeConfiguration =
 			_addConfigurationCompileInclude(project);
@@ -275,8 +278,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		_configureBundleExtension(project);
-
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 
 		GradleUtil.applyPlugin(project, NodePlugin.class);
@@ -355,13 +356,19 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		basePluginConvention.setArchivesBaseName(bundleSymbolicName);
 	}
 
-	private void _configureBundleExtension(Project project) {
+	private BundleExtension _addBundleExtension(Project project) {
 		BundleExtension bundleExtension = new BundleExtension();
 
 		ExtensionContainer extensionContainer = project.getExtensions();
 
 		extensionContainer.add(
 			BundleExtension.class, "bundle", bundleExtension);
+
+		return bundleExtension;
+	}
+
+	private void _configureBundleExtension(
+		Project project, BundleExtension bundleExtension) {
 
 		File file = project.file("bnd.bnd");
 

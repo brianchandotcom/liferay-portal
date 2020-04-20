@@ -20,6 +20,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -77,17 +79,21 @@ public class AddSegmentsExperienceMVCActionCommand
 		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment(
 			actionRequest);
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		SegmentsExperience segmentsExperience = _addSegmentsExperience(
 			actionRequest, _portal.getClassNameId(Layout.class),
-			themeDisplay.getPlid(), segmentsExperiment);
+			themeDisplay.getPlid(), segmentsExperiment, serviceContext);
 
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
 			segmentsExperiment);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
 			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-			themeDisplay.getScopeGroupId(), baseSegmentsExperienceId,
-			segmentsExperience.getSegmentsExperienceId());
+			_commentManager, themeDisplay.getScopeGroupId(),
+			baseSegmentsExperienceId,
+			segmentsExperience.getSegmentsExperienceId(), serviceContext);
 
 		JSONObject jsonObject = JSONUtil.put(
 			"fragmentEntryLinks",
@@ -119,7 +125,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		_initializeDraftLayout(
 			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-			segmentsExperience, baseSegmentsExperienceId);
+			segmentsExperience, baseSegmentsExperienceId, serviceContext);
 
 		return jsonObject;
 	}
@@ -134,7 +140,8 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	private SegmentsExperience _addSegmentsExperience(
 			ActionRequest actionRequest, long classNameId, long classPK,
-			SegmentsExperiment segmentsExperiment)
+			SegmentsExperiment segmentsExperiment,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
@@ -164,7 +171,7 @@ public class AddSegmentsExperienceMVCActionCommand
 				LocaleUtil.getSiteDefault(),
 				ParamUtil.getString(actionRequest, "name")
 			).build(),
-			active, ServiceContextFactory.getInstance(actionRequest));
+			active, serviceContext);
 	}
 
 	private SegmentsExperimentRel _addSegmentsExperimentRel(
@@ -279,7 +286,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	private void _initializeDraftLayout(
 			long groupId, long classPK, SegmentsExperience segmentsExperience,
-			long baseSegmentsExperienceId)
+			long baseSegmentsExperienceId, ServiceContext serviceContext)
 		throws PortalException {
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
@@ -287,11 +294,14 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		if (draftLayout != null) {
 			SegmentsExperienceUtil.copySegmentsExperienceData(
-				draftLayout.getClassNameId(), draftLayout.getPlid(), groupId,
-				baseSegmentsExperienceId,
-				segmentsExperience.getSegmentsExperienceId());
+				draftLayout.getClassNameId(), draftLayout.getPlid(),
+				_commentManager, groupId, baseSegmentsExperienceId,
+				segmentsExperience.getSegmentsExperienceId(), serviceContext);
 		}
 	}
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

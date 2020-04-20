@@ -15,12 +15,15 @@
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
@@ -46,12 +49,15 @@ public class SegmentsExperimentModelListener
 		}
 
 		try {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
 			SegmentsExperienceUtil.copySegmentsExperienceData(
 				segmentsExperiment.getClassNameId(),
-				segmentsExperiment.getClassPK(),
+				segmentsExperiment.getClassPK(), _commentManager,
 				segmentsExperiment.getGroupId(),
 				segmentsExperiment.getWinnerSegmentsExperienceId(),
-				SegmentsExperienceConstants.ID_DEFAULT);
+				SegmentsExperienceConstants.ID_DEFAULT, serviceContext);
 
 			Layout draftLayout = _layoutLocalService.fetchLayout(
 				_portal.getClassNameId(Layout.class.getName()),
@@ -60,9 +66,9 @@ public class SegmentsExperimentModelListener
 			if (draftLayout != null) {
 				SegmentsExperienceUtil.copySegmentsExperienceData(
 					draftLayout.getClassNameId(), draftLayout.getPlid(),
-					segmentsExperiment.getGroupId(),
+					_commentManager, segmentsExperiment.getGroupId(),
 					segmentsExperiment.getWinnerSegmentsExperienceId(),
-					SegmentsExperienceConstants.ID_DEFAULT);
+					SegmentsExperienceConstants.ID_DEFAULT, serviceContext);
 			}
 		}
 		catch (PortalException portalException) {
@@ -88,6 +94,9 @@ public class SegmentsExperimentModelListener
 
 		return false;
 	}
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

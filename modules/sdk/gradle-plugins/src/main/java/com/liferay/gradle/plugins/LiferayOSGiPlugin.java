@@ -157,7 +157,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
+
+		// Plugins
+
 		_applyPlugins(project);
+
+		// Extensions
 
 		BundleExtension bundleExtension = _addExtensionBundle(project);
 		final LiferayOSGiExtension liferayOSGiExtension =
@@ -170,12 +175,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureExtensionBundle(project, bundleExtension);
 		_configureExtensionLiferay(project, liferayExtension);
 
+		// Configurations
+
 		final Configuration compileIncludeConfiguration =
 			_addConfigurationCompileInclude(project);
 
-		_configureConventionBasePlugin(project);
-		_configureProject(project);
-		_configureSourceSetMain(project);
+		// Tasks
 
 		final TaskProvider<Copy> deployDependenciesTaskProvider =
 			GradleUtil.addTaskProvider(
@@ -227,6 +232,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureTaskDeployProvider(
 			project, liferayExtension, deployTaskProvider, jarTaskProvider,
 			false);
+
+		// Other
+
+		_configureConventionBasePlugin(project);
+		_configureProject(project);
+		_configureSourceSetMain(project);
 
 		TaskContainer taskContainer = project.getTasks();
 

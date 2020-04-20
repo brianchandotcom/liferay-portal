@@ -52,7 +52,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,7 +109,14 @@ public class CTCollectionLocalServiceImpl
 		ctCollection.setDescription(description);
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-		return ctCollectionPersistence.update(ctCollection);
+		ctCollection = ctCollectionPersistence.update(ctCollection);
+
+		_resourceLocalService.addResources(
+			ctCollection.getCompanyId(), 0, ctCollection.getUserId(),
+			CTCollection.class.getName(), ctCollection.getCtCollectionId(),
+			false, false, false);
+
+		return ctCollection;
 	}
 
 	@Override
@@ -280,7 +289,9 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCompanyCTCollections(long companyId) {
+	public void deleteCompanyCTCollections(long companyId)
+		throws PortalException {
+
 		List<CTCollection> ctCollections =
 			ctCollectionPersistence.findByCompanyId(companyId);
 
@@ -301,7 +312,9 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
-	public CTCollection deleteCTCollection(CTCollection ctCollection) {
+	public CTCollection deleteCTCollection(CTCollection ctCollection)
+		throws PortalException {
+
 		_ctServiceRegistry.onBeforeRemove(ctCollection.getCtCollectionId());
 
 		try {
@@ -395,6 +408,11 @@ public class CTCollectionLocalServiceImpl
 		for (CTProcess ctProcess : ctProcesses) {
 			_ctProcessLocalService.deleteCTProcess(ctProcess);
 		}
+
+		_resourceLocalService.deleteResource(
+			ctCollection.getCompanyId(), CTCollection.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			ctCollection.getCtCollectionId());
 
 		return ctCollectionPersistence.remove(ctCollection);
 	}
@@ -603,6 +621,9 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private CTServiceRegistry _ctServiceRegistry;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	private ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver>
 		_serviceTrackerMap;

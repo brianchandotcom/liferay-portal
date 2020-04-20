@@ -34,7 +34,7 @@
 			<finder-column name="ctCollectionId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CTCollection" remote-service="false" trash-enabled="false" uuid="false">
+	<entity local-service="true" name="CTCollection" remote-service="true" trash-enabled="false" uuid="false">
 
 		<!-- PK fields -->
 
@@ -174,7 +174,7 @@
 			<finder-column name="userId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CTProcess" remote-service="false" trash-enabled="false" uuid="false">
+	<entity local-service="true" name="CTProcess" remote-service="true" trash-enabled="false" uuid="false">
 
 		<!-- PK fields -->
 

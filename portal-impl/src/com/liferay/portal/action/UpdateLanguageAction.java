@@ -100,8 +100,10 @@ public class UpdateLanguageAction implements Action {
 	}
 
 	public String getRedirect(
-		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
-		Locale locale) throws PortalException {
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
+			Locale locale)
+		throws PortalException {
+
 		String redirect = PortalUtil.escapeRedirect(
 			ParamUtil.getString(httpServletRequest, "redirect"));
 
@@ -179,6 +181,7 @@ public class UpdateLanguageAction implements Action {
 		if (Validator.isNotNull(queryString)) {
 			redirect = redirect + queryString;
 		}
+
 		return redirect;
 	}
 

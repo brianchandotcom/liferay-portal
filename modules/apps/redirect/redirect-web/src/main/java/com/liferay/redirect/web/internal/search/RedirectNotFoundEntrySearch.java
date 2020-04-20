@@ -14,6 +14,7 @@
 
 package com.liferay.redirect.web.internal.search;
 
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -23,6 +24,7 @@ import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -32,8 +34,8 @@ public class RedirectNotFoundEntrySearch
 	extends SearchContainer<RedirectNotFoundEntry> {
 
 	public RedirectNotFoundEntrySearch(
-		PortletRequest portletRequest, PortletURL iteratorURL,
-		String searchContainerId) {
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		PortletURL iteratorURL, String searchContainerId) {
 
 		super(portletRequest, iteratorURL, null, _EMPTY_RESULTS_MESSAGE);
 
@@ -69,6 +71,7 @@ public class RedirectNotFoundEntrySearch
 		setId(searchContainerId);
 		setOrderByCol(orderByCol);
 		setOrderByType(orderByType);
+		setRowChecker(new EmptyOnClickRowChecker(portletResponse));
 	}
 
 	private static final String _EMPTY_RESULTS_MESSAGE =

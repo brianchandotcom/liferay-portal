@@ -57,9 +57,26 @@ public class EditRedirectNotFoundEntryMVCActionCommand
 			0, RedirectPortletKeys.REDIRECT, ActionKeys.ACCESS_IN_CONTROL_PANEL,
 			true);
 
-		_redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
-			ParamUtil.getLong(actionRequest, "redirectNotFoundEntryId"),
-			ParamUtil.getBoolean(actionRequest, "ignored"));
+		long redirectNotFoundEntryId = ParamUtil.getLong(
+			actionRequest, "redirectNotFoundEntryId");
+
+		if (redirectNotFoundEntryId > 0) {
+			_redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
+				redirectNotFoundEntryId,
+				ParamUtil.getBoolean(actionRequest, "ignored"));
+		}
+		else {
+			long[] editRedirectNotFoundEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+
+			for (long editRedirectNotFoundEntryId :
+					editRedirectNotFoundEntryIds) {
+
+				_redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
+					editRedirectNotFoundEntryId,
+					ParamUtil.getBoolean(actionRequest, "ignored"));
+			}
+		}
 	}
 
 	@Reference

@@ -36,6 +36,7 @@ RedirectNotFountEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 
 	<c:choose>
 		<c:when test="<%= results.size() > 0 %>">
+			<aui:input name="ignored" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<liferay-ui:search-container
@@ -47,6 +48,11 @@ RedirectNotFountEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 					keyProperty="redirectNotFoundEntryId"
 					modelVar="redirectNotFoundEntry"
 				>
+
+					<%
+					row.setData(HashMapBuilder.<String, Object>put("actions", redirectNotFoundEntriesManagementToolbarDisplayContext.getAvailableActions(redirectNotFoundEntry)).build());
+					%>
+
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
 						name="not-found-urls"
@@ -96,3 +102,9 @@ RedirectNotFountEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 		</c:otherwise>
 	</c:choose>
 </aui:form>
+
+<liferay-frontend:component
+	componentId="<%= redirectNotFoundEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= redirectNotFoundEntriesManagementToolbarDisplayContext.getComponentContext() %>"
+	module="js/RedirectNotFoundEntriesManagementToolbarDefaultEventHandler.es"
+/>

@@ -154,7 +154,8 @@ public class RedirectNotFoundEntriesDisplayContext {
 		}
 
 		_redirectNotFoundEntrySearch = new RedirectNotFoundEntrySearch(
-			_liferayPortletRequest, _getPortletURL(), getSearchContainerId());
+			_liferayPortletRequest, _liferayPortletResponse, _getPortletURL(),
+			getSearchContainerId());
 
 		if (_redirectNotFoundEntrySearch.isSearch()) {
 			_populateWithSearchIndex(_redirectNotFoundEntrySearch);

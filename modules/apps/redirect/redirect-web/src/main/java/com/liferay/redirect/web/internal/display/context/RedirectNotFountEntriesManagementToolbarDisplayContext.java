@@ -26,13 +26,18 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,12 +64,70 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData(
+					"action", "ignoreSelectedRedirectNotFoundEntries");
+				dropdownItem.setIcon("hidden");
+				dropdownItem.setLabel(LanguageUtil.get(request, "ignore"));
+				dropdownItem.setQuickAction(true);
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData(
+					"action", "unignoreSelectedRedirectNotFoundEntries");
+				dropdownItem.setIcon("view");
+				dropdownItem.setLabel(LanguageUtil.get(request, "unignore"));
+				dropdownItem.setQuickAction(true);
+			}
+		).build();
+	}
+
+	public String getAvailableActions(
+		RedirectNotFoundEntry redirectNotFoundEntry) {
+
+		if (redirectNotFoundEntry.isIgnored()) {
+			return "unignoreSelectedRedirectNotFoundEntries";
+		}
+
+		return "ignoreSelectedRedirectNotFoundEntries";
+	}
+
+	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = liferayPortletResponse.createRenderURL();
 
 		clearResultsURL.setParameter("navigation", "404-urls");
 
 		return clearResultsURL.toString();
+	}
+
+	public Map<String, Object> getComponentContext() {
+		return HashMapBuilder.<String, Object>put(
+			"editRedirectNotFoundEntriesURL",
+			() -> {
+				ActionURL editRedirectNotFoundEntriesURL =
+					liferayPortletResponse.createActionURL();
+
+				editRedirectNotFoundEntriesURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/redirect/edit_redirect_not_found_entry");
+
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				editRedirectNotFoundEntriesURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
+
+				return editRedirectNotFoundEntriesURL.toString();
+			}
+		).build();
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "redirectNotFoundEntriesManagementToolbarDefaultEventHandler";
 	}
 
 	@Override
@@ -161,11 +224,6 @@ public class RedirectNotFountEntriesManagementToolbarDisplayContext
 				themeDisplay.getScopeGroupId(), null, null);
 
 		return redirectNotFoundEntriesCount == 0;
-	}
-
-	@Override
-	public Boolean isSelectable() {
-		return false;
 	}
 
 	@Override

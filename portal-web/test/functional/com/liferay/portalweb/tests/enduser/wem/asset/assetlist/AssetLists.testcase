@@ -209,11 +209,11 @@ definition {
 	}
 
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
-	@ignore = "true"
 	@priority = "4"
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {
+		property portal.upstream = "quarantine";
 
-		// Ignore test until LRQA-55437 is resolved
+		// Quarantine test until LRQA-55437 is resolved
 
 		task ("Create public page") {
 			JSONLayout.addPublicLayout(

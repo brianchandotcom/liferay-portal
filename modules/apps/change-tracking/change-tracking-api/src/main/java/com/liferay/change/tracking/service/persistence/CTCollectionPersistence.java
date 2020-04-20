@@ -169,6 +169,62 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 		throws NoSuchCollectionException;
 
 	/**
+	 * Returns all the ct collections that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching ct collections that the user has permission to view
+	 */
+	public java.util.List<CTCollection> filterFindByCompanyId(long companyId);
+
+	/**
+	 * Returns a range of all the ct collections that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ct collections
+	 * @param end the upper bound of the range of ct collections (not inclusive)
+	 * @return the range of matching ct collections that the user has permission to view
+	 */
+	public java.util.List<CTCollection> filterFindByCompanyId(
+		long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the ct collections that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ct collections
+	 * @param end the upper bound of the range of ct collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct collections that the user has permission to view
+	 */
+	public java.util.List<CTCollection> filterFindByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
+			orderByComparator);
+
+	/**
+	 * Returns the ct collections before and after the current ct collection in the ordered set of ct collections that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param ctCollectionId the primary key of the current ct collection
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ct collection
+	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
+	 */
+	public CTCollection[] filterFindByCompanyId_PrevAndNext(
+			long ctCollectionId, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
+				orderByComparator)
+		throws NoSuchCollectionException;
+
+	/**
 	 * Removes all the ct collections where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -182,6 +238,14 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 * @return the number of matching ct collections
 	 */
 	public int countByCompanyId(long companyId);
+
+	/**
+	 * Returns the number of ct collections that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching ct collections that the user has permission to view
+	 */
+	public int filterCountByCompanyId(long companyId);
 
 	/**
 	 * Returns all the ct collections where companyId = &#63; and status = &#63;.
@@ -321,6 +385,67 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 		throws NoSuchCollectionException;
 
 	/**
+	 * Returns all the ct collections that the user has permission to view where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching ct collections that the user has permission to view
+	 */
+	public java.util.List<CTCollection> filterFindByC_S(
+		long companyId, int status);
+
+	/**
+	 * Returns a range of all the ct collections that the user has permission to view where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of ct collections
+	 * @param end the upper bound of the range of ct collections (not inclusive)
+	 * @return the range of matching ct collections that the user has permission to view
+	 */
+	public java.util.List<CTCollection> filterFindByC_S(
+		long companyId, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the ct collections that the user has permissions to view where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of ct collections
+	 * @param end the upper bound of the range of ct collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct collections that the user has permission to view
+	 */
+	public java.util.List<CTCollection> filterFindByC_S(
+		long companyId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
+			orderByComparator);
+
+	/**
+	 * Returns the ct collections before and after the current ct collection in the ordered set of ct collections that the user has permission to view where companyId = &#63; and status = &#63;.
+	 *
+	 * @param ctCollectionId the primary key of the current ct collection
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ct collection
+	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
+	 */
+	public CTCollection[] filterFindByC_S_PrevAndNext(
+			long ctCollectionId, long companyId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
+				orderByComparator)
+		throws NoSuchCollectionException;
+
+	/**
 	 * Removes all the ct collections where companyId = &#63; and status = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -336,6 +461,15 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 * @return the number of matching ct collections
 	 */
 	public int countByC_S(long companyId, int status);
+
+	/**
+	 * Returns the number of ct collections that the user has permission to view where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the number of matching ct collections that the user has permission to view
+	 */
+	public int filterCountByC_S(long companyId, int status);
 
 	/**
 	 * Caches the ct collection in the entity cache if it is enabled.

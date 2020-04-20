@@ -91,7 +91,9 @@ public class CTCollectionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCompanyCTCollections(long companyId) {
+	public void deleteCompanyCTCollections(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_ctCollectionLocalService.deleteCompanyCTCollections(companyId);
 	}
 
@@ -106,10 +108,12 @@ public class CTCollectionLocalServiceWrapper
 	 *
 	 * @param ctCollection the ct collection
 	 * @return the ct collection that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.change.tracking.model.CTCollection deleteCTCollection(
-		com.liferay.change.tracking.model.CTCollection ctCollection) {
+			com.liferay.change.tracking.model.CTCollection ctCollection)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.deleteCTCollection(ctCollection);
 	}

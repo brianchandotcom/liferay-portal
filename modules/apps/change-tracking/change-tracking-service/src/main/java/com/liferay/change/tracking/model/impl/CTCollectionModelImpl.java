@@ -16,11 +16,13 @@ package com.liferay.change.tracking.model.impl;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionModel;
+import com.liferay.change.tracking.model.CTCollectionSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -37,10 +39,12 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -56,6 +60,7 @@ import java.util.function.Function;
  * @see CTCollectionImpl
  * @generated
  */
+@JSON(strict = true)
 public class CTCollectionModelImpl
 	extends BaseModelImpl<CTCollection> implements CTCollectionModel {
 
@@ -121,6 +126,55 @@ public class CTCollectionModelImpl
 
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
 		_finderCacheEnabled = finderCacheEnabled;
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static CTCollection toModel(CTCollectionSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CTCollection model = new CTCollectionImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
+		model.setDescription(soapModel.getDescription());
+		model.setStatus(soapModel.getStatus());
+		model.setStatusByUserId(soapModel.getStatusByUserId());
+		model.setStatusDate(soapModel.getStatusDate());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<CTCollection> toModels(CTCollectionSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CTCollection> models = new ArrayList<CTCollection>(
+			soapModels.length);
+
+		for (CTCollectionSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public CTCollectionModelImpl() {
@@ -304,6 +358,7 @@ public class CTCollectionModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -314,6 +369,7 @@ public class CTCollectionModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getCtCollectionId() {
 		return _ctCollectionId;
@@ -324,6 +380,7 @@ public class CTCollectionModelImpl
 		_ctCollectionId = ctCollectionId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -346,6 +403,7 @@ public class CTCollectionModelImpl
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -372,6 +430,7 @@ public class CTCollectionModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -384,6 +443,7 @@ public class CTCollectionModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -400,6 +460,7 @@ public class CTCollectionModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -415,6 +476,7 @@ public class CTCollectionModelImpl
 		_name = name;
 	}
 
+	@JSON
 	@Override
 	public String getDescription() {
 		if (_description == null) {
@@ -430,6 +492,7 @@ public class CTCollectionModelImpl
 		_description = description;
 	}
 
+	@JSON
 	@Override
 	public int getStatus() {
 		return _status;
@@ -452,6 +515,7 @@ public class CTCollectionModelImpl
 		return _originalStatus;
 	}
 
+	@JSON
 	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
@@ -478,6 +542,7 @@ public class CTCollectionModelImpl
 	public void setStatusByUserUuid(String statusByUserUuid) {
 	}
 
+	@JSON
 	@Override
 	public Date getStatusDate() {
 		return _statusDate;

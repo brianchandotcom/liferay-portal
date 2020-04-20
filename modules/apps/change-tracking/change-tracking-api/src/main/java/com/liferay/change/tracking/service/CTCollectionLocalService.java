@@ -95,7 +95,8 @@ public interface CTCollectionLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteCompanyCTCollections(long companyId);
+	public void deleteCompanyCTCollections(long companyId)
+		throws PortalException;
 
 	public void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId);
 
@@ -104,9 +105,11 @@ public interface CTCollectionLocalService
 	 *
 	 * @param ctCollection the ct collection
 	 * @return the ct collection that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public CTCollection deleteCTCollection(CTCollection ctCollection);
+	public CTCollection deleteCTCollection(CTCollection ctCollection)
+		throws PortalException;
 
 	/**
 	 * Deletes the ct collection with the primary key from the database. Also notifies the appropriate model listeners.

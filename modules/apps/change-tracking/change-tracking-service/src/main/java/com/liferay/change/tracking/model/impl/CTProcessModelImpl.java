@@ -16,11 +16,13 @@ package com.liferay.change.tracking.model.impl;
 
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.model.CTProcessModel;
+import com.liferay.change.tracking.model.CTProcessSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -37,10 +39,12 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -56,6 +60,7 @@ import java.util.function.Function;
  * @see CTProcessImpl
  * @generated
  */
+@JSON(strict = true)
 public class CTProcessModelImpl
 	extends BaseModelImpl<CTProcess> implements CTProcessModel {
 
@@ -115,6 +120,50 @@ public class CTProcessModelImpl
 
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
 		_finderCacheEnabled = finderCacheEnabled;
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static CTProcess toModel(CTProcessSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CTProcess model = new CTProcessImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtProcessId(soapModel.getCtProcessId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
+		model.setBackgroundTaskId(soapModel.getBackgroundTaskId());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<CTProcess> toModels(CTProcessSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CTProcess> models = new ArrayList<CTProcess>(soapModels.length);
+
+		for (CTProcessSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public CTProcessModelImpl() {
@@ -278,6 +327,7 @@ public class CTProcessModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -288,6 +338,7 @@ public class CTProcessModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getCtProcessId() {
 		return _ctProcessId;
@@ -298,6 +349,7 @@ public class CTProcessModelImpl
 		_ctProcessId = ctProcessId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -320,6 +372,7 @@ public class CTProcessModelImpl
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -346,6 +399,7 @@ public class CTProcessModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -358,6 +412,7 @@ public class CTProcessModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public long getCtCollectionId() {
 		return _ctCollectionId;
@@ -380,6 +435,7 @@ public class CTProcessModelImpl
 		return _originalCtCollectionId;
 	}
 
+	@JSON
 	@Override
 	public long getBackgroundTaskId() {
 		return _backgroundTaskId;

@@ -63,8 +63,15 @@ a.control-menu-icon,
 	justify-content: space-between;
 
 	> li > .control-menu-nav > .control-menu-nav-item {
-		margin-left: 4px;
-		margin-right: 4px;
+		@include media-breakpoint-up(xs) {
+			margin-left: 4px;
+			margin-right: 4px;
+		}
+
+		@include media-breakpoint-up(sm) {
+			margin-left: 8px;
+			margin-right: 8px;
+		}
 	}
 
 	> .control-menu-nav-item {

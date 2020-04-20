@@ -37,6 +37,17 @@ public class CTProcessServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTProcessServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
+		getCTProcesses(
+			long companyId, long userId, String keywords, int status, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.change.tracking.model.CTProcess>
+					orderByComparator) {
+
+		return getService().getCTProcesses(
+			companyId, userId, keywords, status, start, end, orderByComparator);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.

@@ -14,9 +14,15 @@
 
 package com.liferay.change.tracking.service.http;
 
+import com.liferay.change.tracking.service.CTProcessServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.change.tracking.service.CTProcessServiceUtil</code> service
+ * <code>CTProcessServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -54,4 +60,32 @@ package com.liferay.change.tracking.service.http;
  * @generated
  */
 public class CTProcessServiceSoap {
+
+	public static com.liferay.change.tracking.model.CTProcessSoap[]
+			getCTProcesses(
+				long companyId, long userId, String keywords, int status,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.change.tracking.model.CTProcess>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.change.tracking.model.CTProcess>
+				returnValue = CTProcessServiceUtil.getCTProcesses(
+					companyId, userId, keywords, status, start, end,
+					orderByComparator);
+
+			return com.liferay.change.tracking.model.CTProcessSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CTProcessServiceSoap.class);
+
 }

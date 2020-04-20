@@ -21,20 +21,14 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface CTProcessFinder {
+public interface CTCollectionFinder {
 
-	public java.util.List<com.liferay.change.tracking.model.CTProcess>
-		filterFindByC_U_N_D_S(
-			long companyId, long userId, String keywords, int status, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator<?>
-				orderByComparator);
+	public int filterCountByC_S(long companyId, int status, String keywords);
 
-	public java.util.List<com.liferay.change.tracking.model.CTProcess>
-		findByC_U_N_D_S(
-			long companyId, long userId, String keywords, int status, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator<?>
-				orderByComparator);
+	public java.util.List<com.liferay.change.tracking.model.CTCollection>
+		filterFindByC_S(
+			long companyId, int status, String keywords, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.change.tracking.model.CTCollection> obc);
 
 }

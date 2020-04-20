@@ -14,9 +14,15 @@
 
 package com.liferay.change.tracking.service.http;
 
+import com.liferay.change.tracking.service.CTCollectionServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.change.tracking.service.CTCollectionServiceUtil</code> service
+ * <code>CTCollectionServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -54,4 +60,180 @@ package com.liferay.change.tracking.service.http;
  * @generated
  */
 public class CTCollectionServiceSoap {
+
+	public static com.liferay.change.tracking.model.CTCollectionSoap
+			addCTCollection(
+				long companyId, long userId, String name, String description)
+		throws RemoteException {
+
+		try {
+			com.liferay.change.tracking.model.CTCollection returnValue =
+				CTCollectionServiceUtil.addCTCollection(
+					companyId, userId, name, description);
+
+			return com.liferay.change.tracking.model.CTCollectionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId)
+		throws RemoteException {
+
+		try {
+			CTCollectionServiceUtil.deleteCTAutoResolutionInfo(
+				ctAutoResolutionInfoId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.change.tracking.model.CTCollectionSoap
+			deleteCTCollection(
+				com.liferay.change.tracking.model.CTCollectionSoap ctCollection)
+		throws RemoteException {
+
+		try {
+			com.liferay.change.tracking.model.CTCollection returnValue =
+				CTCollectionServiceUtil.deleteCTCollection(
+					com.liferay.change.tracking.model.impl.
+						CTCollectionModelImpl.toModel(ctCollection));
+
+			return com.liferay.change.tracking.model.CTCollectionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.change.tracking.model.CTCollectionSoap[]
+			getCTCollections(
+				long companyId, int status, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.change.tracking.model.CTCollection>
+						orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.change.tracking.model.CTCollection>
+				returnValue = CTCollectionServiceUtil.getCTCollections(
+					companyId, status, start, end, orderByComparator);
+
+			return com.liferay.change.tracking.model.CTCollectionSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.change.tracking.model.CTCollectionSoap[]
+			getCTCollections(
+				long companyId, int status, String keywords, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.change.tracking.model.CTCollection> obc)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.change.tracking.model.CTCollection>
+				returnValue = CTCollectionServiceUtil.getCTCollections(
+					companyId, status, keywords, start, end, obc);
+
+			return com.liferay.change.tracking.model.CTCollectionSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCTCollectionsCount(
+			long companyId, int status, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue = CTCollectionServiceUtil.getCTCollectionsCount(
+				companyId, status, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void publishCTCollection(long userId, long ctCollectionId)
+		throws RemoteException {
+
+		try {
+			CTCollectionServiceUtil.publishCTCollection(userId, ctCollectionId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.change.tracking.model.CTCollectionSoap
+			undoCTCollection(
+				long ctCollectionId, long userId, String name,
+				String description)
+		throws RemoteException {
+
+		try {
+			com.liferay.change.tracking.model.CTCollection returnValue =
+				CTCollectionServiceUtil.undoCTCollection(
+					ctCollectionId, userId, name, description);
+
+			return com.liferay.change.tracking.model.CTCollectionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.change.tracking.model.CTCollectionSoap
+			updateCTCollection(
+				long userId, long ctCollectionId, String name,
+				String description)
+		throws RemoteException {
+
+		try {
+			com.liferay.change.tracking.model.CTCollection returnValue =
+				CTCollectionServiceUtil.updateCTCollection(
+					userId, ctCollectionId, name, description);
+
+			return com.liferay.change.tracking.model.CTCollectionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CTCollectionServiceSoap.class);
+
 }

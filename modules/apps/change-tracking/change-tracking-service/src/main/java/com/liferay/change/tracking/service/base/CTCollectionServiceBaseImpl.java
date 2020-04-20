@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.change.tracking.service.persistence.CTCollectionFinder;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
@@ -119,6 +120,9 @@ public abstract class CTCollectionServiceBaseImpl
 
 	@Reference
 	protected CTCollectionPersistence ctCollectionPersistence;
+
+	@Reference
+	protected CTCollectionFinder ctCollectionFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

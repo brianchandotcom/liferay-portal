@@ -30,6 +30,61 @@ public class CTCollectionServiceWrapper
 		_ctCollectionService = ctCollectionService;
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTCollection addCTCollection(
+			long companyId, long userId, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionService.addCTCollection(
+			companyId, userId, name, description);
+	}
+
+	@Override
+	public void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ctCollectionService.deleteCTAutoResolutionInfo(ctAutoResolutionInfoId);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTCollection deleteCTCollection(
+			com.liferay.change.tracking.model.CTCollection ctCollection)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionService.deleteCTCollection(ctCollection);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTCollection>
+		getCTCollections(
+			long companyId, int status, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.change.tracking.model.CTCollection>
+					orderByComparator) {
+
+		return _ctCollectionService.getCTCollections(
+			companyId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTCollection>
+		getCTCollections(
+			long companyId, int status, String keywords, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.change.tracking.model.CTCollection> obc) {
+
+		return _ctCollectionService.getCTCollections(
+			companyId, status, keywords, start, end, obc);
+	}
+
+	@Override
+	public int getCTCollectionsCount(
+		long companyId, int status, String keywords) {
+
+		return _ctCollectionService.getCTCollectionsCount(
+			companyId, status, keywords);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -38,6 +93,31 @@ public class CTCollectionServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _ctCollectionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void publishCTCollection(long userId, long ctCollectionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ctCollectionService.publishCTCollection(userId, ctCollectionId);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTCollection undoCTCollection(
+			long ctCollectionId, long userId, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionService.undoCTCollection(
+			ctCollectionId, userId, name, description);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTCollection updateCTCollection(
+			long userId, long ctCollectionId, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionService.updateCTCollection(
+			userId, ctCollectionId, name, description);
 	}
 
 	@Override

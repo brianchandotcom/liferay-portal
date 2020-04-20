@@ -111,7 +111,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.journal.configuration.JournalServiceConfiguration",
-	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+	property = {
+		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"schema.version=" + JournalPortletDataHandler.SCHEMA_VERSION
+	},
 	service = PortletDataHandler.class
 )
 public class JournalPortletDataHandler extends BasePortletDataHandler {

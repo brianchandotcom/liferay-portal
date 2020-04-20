@@ -17,7 +17,9 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <c:if test="<%= SessionErrors.contains(request, NoSuchLayoutException.class) %>">
-	<%@ include file="/html/portal/status.jsp" %>
+	<div class="container pb-3 pt-3">
+		<%@ include file="/html/portal/status.jsp" %>
+	</div>
 </c:if>
 
 <%

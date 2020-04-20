@@ -7,9 +7,9 @@ definition {
 
 		PortletEntry.inputName(name = "${contactName}");
 
-		PortletEntry.inputText(
-			fieldLabel = "Email Address",
-			text = "${emailAddress}");
+		Type.typePause(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "${emailAddress}");
 
 		Button.clickSave();
 

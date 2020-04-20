@@ -721,8 +721,11 @@
 			return window.name || Window._name || '';
 		},
 
+		/**
+		 * @deprecated as of 7.3 - use `window.innerWidth` instead
+		 */
 		getWindowWidth() {
-			return window.innerWidth > 0 ? window.innerWidth : screen.width;
+			return window.innerWidth;
 		},
 
 		inBrowserView(node, win, nodeRegion) {

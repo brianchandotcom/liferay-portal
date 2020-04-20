@@ -356,7 +356,9 @@ definition {
 	test ModifyPaginationPortalProperties {
 		property custom.properties = "search.container.page.default.delta=2";
 
-		Portlet.addPG(portletName = "Search Results");
+		ContentPages.clickPencil();
+
+		PageEditor.addWidget(portletName = "Search Results");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
@@ -369,6 +371,8 @@ definition {
 			value1 = "2");
 
 		IFrame.closeFrame();
+
+		PageEditor.clickPublish();
 
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(

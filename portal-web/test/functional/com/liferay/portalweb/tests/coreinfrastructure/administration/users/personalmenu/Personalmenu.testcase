@@ -296,6 +296,17 @@ definition {
 
 	@priority = "4"
 	test ViewMyAccountViaSignInPortlet {
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Sign In Page",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Sign In Page");
+
 		Portlet.addPG(portletName = "Sign In");
 
 		AssertClick(

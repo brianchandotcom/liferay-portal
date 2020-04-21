@@ -59,12 +59,13 @@ public class XPackSecuritySettingsContributor implements SettingsContributor {
 
 	@Override
 	public void populate(ClientSettingsHelper clientSettingsHelper) {
-		if (!xPackSecurityConfiguration.requiresAuthentication()) {
-			return;
+		if (xPackSecurityConfiguration.requiresAuthentication()) {
+			configureAuthentication(clientSettingsHelper);
 		}
 
-		configureAuthentication(clientSettingsHelper);
-		configureSSL(clientSettingsHelper);
+		if (xPackSecurityConfiguration.transportSSLEnabled()) {
+			configureSSL(clientSettingsHelper);
+		}
 	}
 
 	@Activate

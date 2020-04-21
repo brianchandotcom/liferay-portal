@@ -36,7 +36,13 @@ public class XPackSecuritySettingsImpl implements XPackSecuritySettings {
 
 	@Override
 	public boolean requiresXPackSecurity() {
-		return xPackSecurityConfiguration.requiresAuthentication();
+		if (xPackSecurityConfiguration.requiresAuthentication() ||
+			xPackSecurityConfiguration.transportSSLEnabled()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Activate

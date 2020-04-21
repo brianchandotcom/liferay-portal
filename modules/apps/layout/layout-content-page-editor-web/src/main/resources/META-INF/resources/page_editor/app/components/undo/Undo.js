@@ -31,6 +31,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 			<ClayButtonWithIcon
 				aria-label={Liferay.Language.get('redo')}
 				className="btn-monospaced"
+				disabled
 				displayType="secondary"
 				onClick={onRedo}
 				small

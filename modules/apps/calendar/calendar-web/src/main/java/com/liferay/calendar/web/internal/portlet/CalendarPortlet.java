@@ -616,6 +616,9 @@ public class CalendarPortlet extends MVCPortlet {
 		boolean allFollowing = ParamUtil.getBoolean(
 			actionRequest, "allFollowing");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CalendarBooking.class.getName(), actionRequest);
+
 		if (calendarBooking != null) {
 			childCalendarIds = _calendarBookingLocalService.getChildCalendarIds(
 				calendarBookingId, calendarId);
@@ -630,16 +633,13 @@ public class CalendarPortlet extends MVCPortlet {
 				calendarBooking.getFirstReminderType(),
 				calendarBooking.getSecondReminderType()
 			};
+
+			addAssetEntry(calendarBooking, serviceContext);
 		}
 
 		String title = ParamUtil.getString(actionRequest, "title");
 
 		titleMap.put(LocaleUtil.getSiteDefault(), title);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CalendarBooking.class.getName(), actionRequest);
-
-		addAssetEntry(calendarBooking, serviceContext);
 
 		JSONObject jsonObject = null;
 

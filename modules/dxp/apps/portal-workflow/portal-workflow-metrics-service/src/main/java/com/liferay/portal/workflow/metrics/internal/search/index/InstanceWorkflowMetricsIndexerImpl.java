@@ -187,17 +187,6 @@ public class InstanceWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public void deleteDocument(Document document) {
-		super.deleteDocument(document);
-
-		_slaInstanceResultWorkflowMetricsIndexer.deleteDocuments(
-			document.getLong("companyId"), document.getLong("instanceId"));
-
-		_slaTaskResultWorkflowMetricsIndexer.deleteDocuments(
-			document.getLong("companyId"), document.getLong("instanceId"));
-	}
-
-	@Override
 	public void deleteInstance(long companyId, long instanceId) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
@@ -210,7 +199,15 @@ public class InstanceWorkflowMetricsIndexerImpl
 		);
 
 		workflowMetricsPortalExecutor.execute(
-			() -> deleteDocument(documentBuilder));
+			() -> {
+				deleteDocument(documentBuilder);
+
+				_slaInstanceResultWorkflowMetricsIndexer.deleteDocuments(
+					companyId, instanceId);
+
+				_slaTaskResultWorkflowMetricsIndexer.deleteDocuments(
+					companyId, instanceId);
+			});
 	}
 
 	@Override

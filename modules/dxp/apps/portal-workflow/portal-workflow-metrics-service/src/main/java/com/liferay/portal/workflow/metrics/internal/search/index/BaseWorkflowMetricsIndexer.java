@@ -177,10 +177,6 @@ public abstract class BaseWorkflowMetricsIndexer
 		searchEngineAdapter.execute(createIndexRequest);
 	}
 
-	public void deleteDocument(Document document) {
-		_updateDocument(document);
-	}
-
 	public void deleteDocument(DocumentBuilder documentBuilder) {
 		documentBuilder.setValue("deleted", true);
 

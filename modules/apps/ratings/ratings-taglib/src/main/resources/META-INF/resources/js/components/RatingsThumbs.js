@@ -129,10 +129,12 @@ const RatingsThumbs = ({
 		score => {
 			sendVoteRequest(score).then(({totalEntries, totalScore} = {}) => {
 				if (isMounted() && totalEntries && totalScore) {
+					const positiveVotes = Math.round(totalScore);
+
 					dispatch({
 						payload: {
-							negativeVotes: totalEntries - totalScore,
-							positiveVotes: totalScore,
+							negativeVotes: totalEntries - positiveVotes,
+							positiveVotes,
 						},
 						type: UPDATE_VOTES,
 					});

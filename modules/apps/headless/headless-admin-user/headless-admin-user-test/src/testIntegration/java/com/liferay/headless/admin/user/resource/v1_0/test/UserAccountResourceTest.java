@@ -15,7 +15,12 @@
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
+import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccountContactInformation;
+import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
@@ -37,6 +42,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -47,7 +53,11 @@ import com.liferay.portal.odata.entity.EntityField;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -258,6 +268,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
+	public void testPostUserAccount() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
+			randomUserAccount);
+
+		assertEquals(randomUserAccount, postUserAccount);
+		assertValid(postUserAccount);
+
+		_assertUserContactInformation(randomUserAccount, postUserAccount);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"familyName", "givenName"};
 	}
@@ -265,6 +288,94 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {"emailAddress"};
+	}
+
+	protected EmailAddress randomEmailAddress() throws Exception {
+		return new EmailAddress() {
+			{
+				setEmailAddress(RandomTestUtil.randomString() + "@liferay.com");
+				setPrimary(true);
+				setType("email-address");
+			}
+		};
+	}
+
+	protected Phone randomPhone() throws Exception {
+		return new Phone() {
+			{
+				setExtension(String.valueOf(RandomTestUtil.randomInt()));
+				setPhoneNumber(String.valueOf(RandomTestUtil.randomInt()));
+				setPhoneType("personal");
+				setPrimary(true);
+			}
+		};
+	}
+
+	protected PostalAddress randomPostalAddress() throws Exception {
+		return new PostalAddress() {
+			{
+				setAddressCountry("united-states");
+				setAddressLocality("Diamond Bar");
+				setAddressRegion("California");
+				setAddressType("personal");
+				setPostalCode("91765");
+				setPrimary(true);
+				setStreetAddressLine1(RandomTestUtil.randomString());
+				setStreetAddressLine2(RandomTestUtil.randomString());
+				setStreetAddressLine3(RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	@Override
+	protected UserAccount randomUserAccount() throws Exception {
+		UserAccount userAccount = super.randomUserAccount();
+
+		userAccount.setBirthDate(
+			() -> {
+				Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+				calendar.setTime(RandomTestUtil.nextDate());
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+
+				return calendar.getTime();
+			});
+		userAccount.setUserAccountContactInformation(
+			randomUserAccountContactInformation());
+
+		return userAccount;
+	}
+
+	protected UserAccountContactInformation
+			randomUserAccountContactInformation()
+		throws Exception {
+
+		return new UserAccountContactInformation() {
+			{
+				setEmailAddresses(new EmailAddress[] {randomEmailAddress()});
+				setFacebook(RandomTestUtil.randomString());
+				setJabber(RandomTestUtil.randomString());
+				setPostalAddresses(new PostalAddress[] {randomPostalAddress()});
+				setSkype(RandomTestUtil.randomString());
+				setSms(RandomTestUtil.randomString());
+				setTelephones(new Phone[] {randomPhone()});
+				setTwitter(RandomTestUtil.randomString());
+				setWebUrls(new WebUrl[] {randomWebUrl()});
+			}
+		};
+	}
+
+	protected WebUrl randomWebUrl() throws Exception {
+		return new WebUrl() {
+			{
+				setPrimary(true);
+				setUrl("https://" + RandomTestUtil.randomString() + ".com");
+				setUrlType("personal");
+			}
+		};
 	}
 
 	@Override
@@ -328,6 +439,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			testGetSiteUserAccountsPage_getSiteId(), randomUserAccount());
 	}
 
+	@Override
+	protected UserAccount testPostUserAccount_addUserAccount(
+			UserAccount userAccount)
+		throws Exception {
+
+		return userAccountResource.postUserAccount(userAccount);
+	}
+
 	private UserAccount _addUserAccount(long siteId, UserAccount userAccount)
 		throws Exception {
 
@@ -354,6 +473,75 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		UserLocalServiceUtil.addGroupUser(siteId, userAccount.getId());
 
 		return userAccount;
+	}
+
+	private <T> void _assertArrays(
+			Object[] arr1, Object[] arr2, String fieldName)
+		throws Exception {
+
+		Assert.assertEquals(Arrays.toString(arr2), arr1.length, arr2.length);
+
+		Comparator<Object> comparator = Comparator.comparing(
+			object -> {
+				try {
+					return BeanUtils.getProperty(object, fieldName);
+				}
+				catch (Exception exception) {
+					return null;
+				}
+			});
+
+		Arrays.sort(arr1, comparator);
+		Arrays.sort(arr2, comparator);
+
+		for (int i = 0; i < arr1.length; i++) {
+			Object bean1 = arr1[i];
+			Object bean2 = arr2[i];
+
+			Assert.assertEquals(
+				BeanUtils.getProperty(bean1, fieldName),
+				BeanUtils.getProperty(bean2, fieldName));
+		}
+	}
+
+	private void _assertUserContactInformation(
+			UserAccount userAccount1, UserAccount userAccount2)
+		throws Exception {
+
+		UserAccountContactInformation userAccountContactInformation1 =
+			userAccount1.getUserAccountContactInformation();
+		UserAccountContactInformation userAccountContactInformation2 =
+			userAccount2.getUserAccountContactInformation();
+
+		_assertArrays(
+			userAccountContactInformation1.getEmailAddresses(),
+			userAccountContactInformation2.getEmailAddresses(), "emailAddress");
+		_assertArrays(
+			userAccountContactInformation1.getPostalAddresses(),
+			userAccountContactInformation2.getPostalAddresses(),
+			"streetAddressLine1");
+		_assertArrays(
+			userAccountContactInformation1.getTelephones(),
+			userAccountContactInformation2.getTelephones(), "phoneNumber");
+		_assertArrays(
+			userAccountContactInformation1.getWebUrls(),
+			userAccountContactInformation2.getWebUrls(), "url");
+
+		Assert.assertEquals(
+			userAccountContactInformation1.getFacebook(),
+			userAccountContactInformation2.getFacebook());
+		Assert.assertEquals(
+			userAccountContactInformation1.getJabber(),
+			userAccountContactInformation2.getJabber());
+		Assert.assertEquals(
+			userAccountContactInformation1.getSkype(),
+			userAccountContactInformation2.getSkype());
+		Assert.assertEquals(
+			userAccountContactInformation1.getSms(),
+			userAccountContactInformation2.getSms());
+		Assert.assertEquals(
+			userAccountContactInformation1.getTwitter(),
+			userAccountContactInformation2.getTwitter());
 	}
 
 	@DeleteAfterTestRun

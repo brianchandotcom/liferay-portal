@@ -186,14 +186,14 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
 
-			boolean fieldName = ddmFormFieldsStream.anyMatch(
+			boolean hasParameterValue = ddmFormFieldsStream.anyMatch(
 				ddmFormField -> ddmFormField.getProperty(
 					"name"
 				).equals(
 					parameterValue
 				));
 
-			if (!fieldName) {
+			if (!hasParameterValue) {
 				continue;
 			}
 

@@ -36,8 +36,8 @@ public class LayoutStructureItemExportHelperTrackerImpl
 	implements LayoutStructureItemExportHelperTracker {
 
 	@Override
-	public LayoutStructureItemExportHelper
-		getLayoutStructureItemExportHelper(String className) {
+	public LayoutStructureItemExportHelper getLayoutStructureItemExportHelper(
+		String className) {
 
 		List<LayoutStructureItemExportHelper>
 			layoutStructureItemExportHelperList = new ArrayList<>(

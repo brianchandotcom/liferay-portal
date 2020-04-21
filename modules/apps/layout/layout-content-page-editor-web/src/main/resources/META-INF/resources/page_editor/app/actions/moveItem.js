@@ -12,21 +12,11 @@
  * details.
  */
 
-import moveItemAction from '../actions/moveItem';
-import LayoutService from '../services/LayoutService';
+import {MOVE_ITEM} from './types';
 
-export default function moveItem({itemId, parentItemId, position, store}) {
-	return dispatch => {
-		const {segmentsExperienceId} = store;
-
-		LayoutService.moveItem({
-			itemId,
-			onNetworkStatus: dispatch,
-			parentItemId,
-			position,
-			segmentsExperienceId,
-		}).then(layoutData => {
-			dispatch(moveItemAction({layoutData}));
-		});
+export default function moveItem({layoutData}) {
+	return {
+		layoutData,
+		type: MOVE_ITEM,
 	};
 }

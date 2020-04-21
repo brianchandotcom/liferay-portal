@@ -57,7 +57,7 @@ describe('The HeaderBackButton component should', () => {
 
 		const {children} = getByTestId('workflow');
 
-		const link = children[1].children[0].children[0];
+		const link = children[1].children[0];
 		const {classList} = link.children[0].children[0];
 		const href = link.getAttribute('href');
 

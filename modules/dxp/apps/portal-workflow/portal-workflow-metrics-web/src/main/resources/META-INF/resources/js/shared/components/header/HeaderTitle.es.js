@@ -30,7 +30,7 @@ const HeaderTitle = ({container, title}) => {
 	}, [title]);
 
 	return (
-		<Portal container={container} replace>
+		<Portal container={container} elementId="headerTitle" replace>
 			{currentTitle}
 		</Portal>
 	);

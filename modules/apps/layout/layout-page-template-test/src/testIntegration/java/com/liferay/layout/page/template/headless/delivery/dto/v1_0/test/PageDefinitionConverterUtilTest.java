@@ -16,15 +16,12 @@ package com.liferay.layout.page.template.headless.delivery.dto.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
@@ -42,15 +39,13 @@ import com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageRowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
+import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
@@ -138,10 +133,7 @@ public class PageDefinitionConverterUtilTest {
 			_layoutPageTemplateEntry.getPlid());
 
 		PageDefinition pageDefinition =
-			PageDefinitionConverterUtil.toPageDefinition(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				_infoDisplayContributorTracker, layout);
+			_pageDefinitionConverter.toPageDefinition(layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -191,10 +183,7 @@ public class PageDefinitionConverterUtilTest {
 			_layoutPageTemplateEntry.getPlid());
 
 		PageDefinition pageDefinition =
-			PageDefinitionConverterUtil.toPageDefinition(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				_infoDisplayContributorTracker, layout);
+			_pageDefinitionConverter.toPageDefinition(layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -362,10 +351,7 @@ public class PageDefinitionConverterUtilTest {
 		Theme theme = layout.getTheme();
 
 		PageDefinition pageDefinition =
-			PageDefinitionConverterUtil.toPageDefinition(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				_infoDisplayContributorTracker, layout);
+			_pageDefinitionConverter.toPageDefinition(layout);
 
 		Settings settings = pageDefinition.getSettings();
 
@@ -393,10 +379,7 @@ public class PageDefinitionConverterUtilTest {
 			_layoutPageTemplateEntry.getPlid());
 
 		PageDefinition pageDefinition =
-			PageDefinitionConverterUtil.toPageDefinition(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				_infoDisplayContributorTracker, layout);
+			_pageDefinitionConverter.toPageDefinition(layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -452,10 +435,7 @@ public class PageDefinitionConverterUtilTest {
 			_layoutPageTemplateEntry.getPlid());
 
 		PageDefinition pageDefinition =
-			PageDefinitionConverterUtil.toPageDefinition(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				_infoDisplayContributorTracker, layout);
+			_pageDefinitionConverter.toPageDefinition(layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -603,10 +583,7 @@ public class PageDefinitionConverterUtilTest {
 			).build());
 
 		PageDefinition pageDefinition =
-			PageDefinitionConverterUtil.toPageDefinition(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				_infoDisplayContributorTracker, layout);
+			_pageDefinitionConverter.toPageDefinition(layout);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -758,14 +735,7 @@ public class PageDefinitionConverterUtilTest {
 	private FragmentCollection _fragmentCollection;
 
 	@Inject
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
-
-	@Inject
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
@@ -773,14 +743,8 @@ public class PageDefinitionConverterUtilTest {
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
-	@Inject
-	private FragmentRendererTracker _fragmentRendererTracker;
-
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
@@ -800,8 +764,7 @@ public class PageDefinitionConverterUtilTest {
 		_layoutPageTemplateStructureLocalService;
 
 	@Inject
-	private LayoutPageTemplateStructureRelLocalService
-		_layoutPageTemplateStructureRelLocalService;
+	private PageDefinitionConverter _pageDefinitionConverter;
 
 	@Inject
 	private Portal _portal;

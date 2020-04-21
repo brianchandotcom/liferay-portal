@@ -94,10 +94,6 @@ definition {
 			layoutName = "Staging Test Page",
 			widgetName = "Documents and Media");
 
-		Portlet.addPG(
-			pageName = "Staging Test Page",
-			portletName = "Documents and Media");
-
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(

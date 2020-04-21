@@ -9,8 +9,10 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
+	compileOnly project(":apps:message-boards:message-boards-service")
 	compileOnly project(":apps:message-boards:message-boards-web")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":dxp:apps:akismet:akismet-client")
 }

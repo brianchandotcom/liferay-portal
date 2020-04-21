@@ -39,6 +39,7 @@ import {showTab} from './portal/tabs.es';
 import {showTooltip} from './portal/tooltip.es';
 import portlet, {minimizePortlet} from './portlet/portlet.es';
 import SideNavigation from './side_navigation.es';
+import addParams from './util/add_params';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
 import fetch from './util/fetch.es';
@@ -107,6 +108,11 @@ Liferay.Portlet.minimize = minimizePortlet;
 Liferay.SideNavigation = SideNavigation;
 
 Liferay.Util = Liferay.Util || {};
+
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `import {addParams} from 'frontend-js-web'`
+ */
+Liferay.Util.addParams = addParams;
 
 Liferay.Util.escape = escape;
 Liferay.Util.fetch = fetch;

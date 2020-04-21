@@ -21,7 +21,6 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.util.Date;
 import java.util.Locale;
@@ -33,10 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(
-	immediate = true, property = "workflow.metrics.index.entity.name=process",
-	service = {ProcessWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
-)
+@Component(immediate = true, service = ProcessWorkflowMetricsIndexer.class)
 public class ProcessWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer
 	implements ProcessWorkflowMetricsIndexer {
@@ -61,9 +57,13 @@ public class ProcessWorkflowMetricsIndexerImpl
 					setType(_instanceWorkflowMetricsIndex.getIndexType());
 				}
 			});
+
+		WorkflowMetricsIndex slaInstanceResultWorkflowMetricsIndex =
+			_slaInstanceResultWorkflowMetricsIndexer.getWorkflowMetricsIndex();
+
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				_slaInstanceResultWorkflowMetricsIndexer.getIndexName(
+				slaInstanceResultWorkflowMetricsIndex.getIndexName(
 					document.getLong("companyId")),
 				_slaInstanceResultWorkflowMetricsIndexer.creatDefaultDocument(
 					document.getLong("companyId"),
@@ -71,16 +71,18 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 				{
 					setType(
-						_slaInstanceResultWorkflowMetricsIndexer.
-							getIndexType());
+						slaInstanceResultWorkflowMetricsIndex.getIndexType());
 				}
 			});
+
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				getIndexName(document.getLong("companyId")), document) {
+				_processWorkflowMetricsIndex.getIndexName(
+					document.getLong("companyId")),
+				document) {
 
 				{
-					setType(getIndexType());
+					setType(_processWorkflowMetricsIndex.getIndexType());
 				}
 			});
 
@@ -149,13 +151,8 @@ public class ProcessWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public String getIndexName(long companyId) {
-		return _processWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
-	}
-
-	@Override
-	public String getIndexType() {
-		return "WorkflowMetricsProcessType";
+	public WorkflowMetricsIndex getWorkflowMetricsIndex() {
+		return _processWorkflowMetricsIndex;
 	}
 
 	@Override
@@ -229,8 +226,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndexNameBuilder
-		_processWorkflowMetricsIndexNameBuilder;
+	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
 
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer

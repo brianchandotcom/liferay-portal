@@ -22,7 +22,6 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.time.Duration;
 
@@ -35,10 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(
-	immediate = true, property = "workflow.metrics.index.entity.name=task",
-	service = {TaskWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
-)
+@Component(immediate = true, service = TaskWorkflowMetricsIndexer.class)
 public class TaskWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer implements TaskWorkflowMetricsIndexer {
 
@@ -189,13 +185,8 @@ public class TaskWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public String getIndexName(long companyId) {
-		return _taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
-	}
-
-	@Override
-	public String getIndexType() {
-		return "WorkflowMetricsTaskType";
+	public WorkflowMetricsIndex getWorkflowMetricsIndex() {
+		return _taskWorkflowMetricsIndex;
 	}
 
 	@Override
@@ -263,7 +254,6 @@ public class TaskWorkflowMetricsIndexerImpl
 		_slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=task)")
-	private WorkflowMetricsIndexNameBuilder
-		_taskWorkflowMetricsIndexNameBuilder;
+	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
 
 }

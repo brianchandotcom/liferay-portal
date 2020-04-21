@@ -20,7 +20,6 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 
 import java.util.Date;
 import java.util.Objects;
@@ -31,10 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(
-	immediate = true, property = "workflow.metrics.index.entity.name=node",
-	service = {NodeWorkflowMetricsIndexer.class, WorkflowMetricsIndex.class}
-)
+@Component(immediate = true, service = NodeWorkflowMetricsIndexer.class)
 public class NodeWorkflowMetricsIndexerImpl
 	extends BaseWorkflowMetricsIndexer implements NodeWorkflowMetricsIndexer {
 
@@ -100,13 +96,8 @@ public class NodeWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public String getIndexName(long companyId) {
-		return _nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId);
-	}
-
-	@Override
-	public String getIndexType() {
-		return "WorkflowMetricsNodeType";
+	public WorkflowMetricsIndex getWorkflowMetricsIndex() {
+		return _nodeWorkflowMetricsIndex;
 	}
 
 	@Override
@@ -116,9 +107,12 @@ public class NodeWorkflowMetricsIndexerImpl
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		if (Objects.equals(document.getString("type"), "TASK")) {
+			WorkflowMetricsIndex slaTaskResultWorkflowMetricsIndex =
+				_slaTaskResultWorkflowMetricsIndexer.getWorkflowMetricsIndex();
+
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					_slaTaskResultWorkflowMetricsIndexer.getIndexName(
+					slaTaskResultWorkflowMetricsIndex.getIndexName(
 						document.getLong("companyId")),
 					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
 						document.getLong("companyId"),
@@ -128,8 +122,7 @@ public class NodeWorkflowMetricsIndexerImpl
 
 					{
 						setType(
-							_slaTaskResultWorkflowMetricsIndexer.
-								getIndexType());
+							slaTaskResultWorkflowMetricsIndex.getIndexType());
 					}
 				});
 
@@ -151,10 +144,12 @@ public class NodeWorkflowMetricsIndexerImpl
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				getIndexName(document.getLong("companyId")), document) {
+				_nodeWorkflowMetricsIndex.getIndexName(
+					document.getLong("companyId")),
+				document) {
 
 				{
-					setType(getIndexType());
+					setType(_nodeWorkflowMetricsIndex.getIndexType());
 				}
 			});
 
@@ -199,8 +194,7 @@ public class NodeWorkflowMetricsIndexerImpl
 	}
 
 	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndexNameBuilder
-		_nodeWorkflowMetricsIndexNameBuilder;
+	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

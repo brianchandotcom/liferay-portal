@@ -28,6 +28,7 @@ export default function duplicateItem({itemId, store, selectItem = () => {}}) {
 				dispatch(
 					duplicateItemAction({
 						addedFragmentEntryLinks: duplicatedFragmentEntryLinks,
+						duplicatedItemId,
 						layoutData,
 					})
 				);

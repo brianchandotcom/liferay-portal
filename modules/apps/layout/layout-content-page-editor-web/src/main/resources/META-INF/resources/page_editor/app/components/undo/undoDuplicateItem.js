@@ -12,17 +12,14 @@
  * details.
  */
 
-import {DUPLICATE_ITEM} from './types';
+import deleteItem from '../../thunks/deleteItem';
 
-export default function duplicateItem({
-	addedFragmentEntryLinks = [],
-	duplicatedItemId,
-	layoutData,
-}) {
-	return {
-		addedFragmentEntryLinks,
-		duplicatedItemId,
-		layoutData,
-		type: DUPLICATE_ITEM,
-	};
+function undoAction({action, store}) {
+	return deleteItem({...action, store});
 }
+
+function getDerivedStateForUndo({action}) {
+	return {itemId: action.duplicatedItemId};
+}
+
+export {undoAction, getDerivedStateForUndo};

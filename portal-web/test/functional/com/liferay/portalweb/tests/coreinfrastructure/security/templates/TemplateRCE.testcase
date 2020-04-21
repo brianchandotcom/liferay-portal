@@ -1,0 +1,292 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "RCE";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@priority = "4"
+	test ViewInstanceManager {
+		property app.server.types = "tomcat,wildfly";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page 2");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page 2",
+			widgetName = "Web Content Display");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		var templateScript = '''
+${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apache.bcel.internal.util.ClassLoader')}
+''';
+
+		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+
+		PortletEntry.save();
+
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description 2",
+			templateName = "WC Template Name 2");
+
+		var templateScript = '''
+${Application['org.apache.catalina.resources'].getContext().getInstanceManager()}
+''';
+
+		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		WebContent.addStructuredPGViaWCD(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentTitle = "WC Title");
+
+		Portlet.viewBody(
+			portletBody = "Denied access to method or field newInstance of class org.apache.catalina.core.DefaultInstanceManager",
+			portletName = "WC Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page 2",
+			siteName = "Test Site Name");
+
+		WebContent.addStructuredPGViaWCD(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name 2",
+			webContentTitle = "WC Title 2");
+
+		Portlet.viewBody(
+			portletBody = "Denied access to method or field getContext of class org.apache.catalina.webresources.StandardRoot",
+			portletName = "WC Title 2");
+	}
+
+	@priority = "4"
+	test ViewInstanceManagerVelocity {
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Dynamic Data Lists Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		var templateScript = '''
+$request.servletContext.getAttribute("org.apache.tomcat.InstanceManager"))
+''';
+
+		DDLList.addViaDDLDisplayPG();
+
+		DDLDataDefinition.addViaDDLDisplayPG();
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Name",
+			fieldName = "Name");
+
+		DDLDataDefinition.saveViaDDLDisplayPG();
+
+		DDLDataDefinition.selectViaDDLDisplayPG();
+
+		DDLList.saveViaDDLDisplayPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		DDLRecord.addViaDDLDisplayPG();
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Name1",
+			fieldFieldLabel = "Name",
+			fieldName = "Name");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		DDLTemplate.addDisplayTemplateTemplateViaDDLDisplayPG(
+			ddlDisplayTemplateLanguage = "Velocity (.vm)",
+			ddlDisplayTemplateName = "Velocity Template",
+			ddlDisplayTemplateScript = "${templateScript}");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		AssertConsoleTextPresent(value1 = "java.lang.IllegalArgumentException: Denied resolving class org.apache.catalina.core.ApplicationContextFacade by org.apache");
+	}
+
+	@priority = "4"
+	test ViewServletContext {
+		property app.server.types = "tomcat,weblogic,websphere,wildfly";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		var templateScript = '''
+<#list request.getServletContext().getAttributeNames() as item>
+	<p>${item}</p>
+</#list>
+''';
+
+		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		WebContent.addStructuredPGViaWCD(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentTitle = "WC Title");
+
+		Portlet.viewBody(
+			portletBody = "Denied access to method or field getAttributeNames of class org.apache.catalina.core.ApplicationContextFacade",
+			portletName = "WC Title");
+	}
+
+	@priority = "4"
+	test ViewSpringBeans {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		var templateScript = '''
+<#assign ac=Application['org.springframework.web.context.WebApplicationContext.ROOT']>
+<#list ac.getBeanDefinitionNames() as item>
+	<p><b>${item}</b></p>
+</#list>
+''';
+
+		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		WebContent.addStructuredPGViaWCD(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentTitle = "WC Title");
+
+		Portlet.viewBody(
+			portletBody = "Denied access to method or field getBeanDefinitionNames of class com.liferay.portal.spring.context.PortalApplicationContext",
+			portletName = "WC Title");
+	}
+
+}

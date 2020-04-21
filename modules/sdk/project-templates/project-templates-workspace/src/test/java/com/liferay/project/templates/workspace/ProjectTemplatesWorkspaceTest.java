@@ -32,6 +32,7 @@ import java.util.regex.Matcher;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -187,6 +188,7 @@ public class ProjectTemplatesWorkspaceTest
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testCompareAntBndPluginVersions() throws Exception {
 		String template = "mvc-portlet";

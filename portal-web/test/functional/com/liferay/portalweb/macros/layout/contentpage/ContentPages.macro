@@ -18,6 +18,44 @@ definition {
 		}
 	}
 
+	macro addChildPage {
+		MouseOver(
+			key_itemName = "${parentPageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
+
+		Click(
+			key_pageName = "${parentPageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+
+		ContentPages._selectCard(
+			basicTemplate = "${basicTemplate}",
+			collectionName = "${collectionName}",
+			masterLayoutName = "${masterLayoutName}",
+			pageTemplateName = "${pageTemplateName}");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		PortletEntry.inputName(name = "${childPageName}");
+
+		if (isSet(categoryName)) {
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		if (isSet(categoryNameList)) {
+			AssetCategorization.addMultipleCategories(
+				categoryNameList = "${categoryNameList}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		PageEditor.assertFragmentSidebarLoaded();
+	}
+
 	macro addPage {
 		var key_breadcrumbName="Pages";
 

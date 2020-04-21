@@ -13,24 +13,29 @@
  */
 
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 export default function Frame({children}) {
 	const [iframe, setIframe] = useState();
 	const [iframeBody, setIframeBody] = useState();
+	const setFrameContext = useSetFrameContext();
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
 		let intervalId = null;
 
 		if (iframe) {
-			let body;
+			let _body;
 
 			intervalId = setInterval(() => {
-				if (isMounted() && body !== iframe.contentDocument.body) {
-					body = iframe.contentDocument.body;
-					setIframeBody(body);
+				if (isMounted()) {
+					if (_body !== iframe.contentDocument.body) {
+						setFrameContext(iframe.contentWindow);
+						setIframeBody(iframe.contentDocument.body);
+
+						_body = iframe.contentDocument.body;
+					}
 				}
 			}, 500);
 		}
@@ -38,7 +43,7 @@ export default function Frame({children}) {
 		return () => {
 			clearInterval(intervalId);
 		};
-	}, [iframe, isMounted]);
+	}, [iframe, isMounted, setFrameContext]);
 
 	return (
 		<>
@@ -46,4 +51,28 @@ export default function Frame({children}) {
 			{iframeBody && createPortal(children, iframeBody)}
 		</>
 	);
+}
+
+const FrameContext = React.createContext({
+	getValue: () => {},
+	setValue: () => {},
+});
+
+export function FrameContextProvider({children}) {
+	const [value, setValue] = useState(null);
+	const getValue = useCallback(() => value, [value]);
+
+	return (
+		<FrameContext.Provider value={{getValue, setValue}}>
+			{children}
+		</FrameContext.Provider>
+	);
+}
+
+export function useFrameContext() {
+	return useContext(FrameContext).getValue();
+}
+
+export function useSetFrameContext() {
+	return useContext(FrameContext).setValue;
 }

@@ -157,60 +157,6 @@
 			Util.addInputCancel = function() {};
 		},
 
-		addParams(params, url) {
-			if (typeof params === 'object') {
-				var paramKeys = Object.keys(params);
-
-				params = paramKeys
-					.map(key => {
-						return (
-							encodeURIComponent(key) +
-							'=' +
-							encodeURIComponent(params[key])
-						);
-					})
-					.join('&');
-			}
-			else {
-				params = String(params).trim();
-			}
-
-			var loc = url || location.href;
-
-			var finalUrl = loc;
-
-			if (params) {
-				var anchorHash;
-
-				if (loc.indexOf('#') > -1) {
-					var locationPieces = loc.split('#');
-
-					loc = locationPieces[0];
-					anchorHash = locationPieces[1];
-				}
-
-				if (loc.indexOf('?') == -1) {
-					params = '?' + params;
-				}
-				else {
-					params = '&' + params;
-				}
-
-				if (loc.indexOf(params) == -1) {
-					finalUrl = loc + params;
-
-					if (anchorHash) {
-						finalUrl += '#' + anchorHash;
-					}
-					if (!url) {
-						location.href = finalUrl;
-					}
-				}
-			}
-
-			return finalUrl;
-		},
-
 		checkAll(form, name, allBox, selectClassName) {
 			if (form) {
 				form = Util.getDOM(form);

@@ -9,22 +9,20 @@
  * distribution rights of the Software.
  */
 
-import {useCallback, useContext} from 'react';
+import React from 'react';
+import {Route, Switch} from 'react-router-dom';
 
-import {AppContext} from '../../components/AppContext.es';
+import {usePageTitle} from '../../shared/hooks/usePageTitle.es';
+import IndexesPage from './indexes-page/IndexesPage.es';
 
-const usePatch = ({body = {}, admin = false, url}) => {
-	const {getClient} = useContext(AppContext);
+const SettingsContainer = () => {
+	usePageTitle(Liferay.Language.get('settings'));
 
-	const client = getClient(admin);
-	const queryBodyStr = JSON.stringify(body);
-	const patchData = useCallback(
-		patchBody => client.patch(url, patchBody || body),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[queryBodyStr, url, admin]
+	return (
+		<Switch>
+			<Route component={IndexesPage} exact path="/settings/indexes" />
+		</Switch>
 	);
-
-	return {patchData};
 };
 
-export {usePatch};
+export default SettingsContainer;

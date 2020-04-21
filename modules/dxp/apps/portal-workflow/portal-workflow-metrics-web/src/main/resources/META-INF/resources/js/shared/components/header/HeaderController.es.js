@@ -13,6 +13,7 @@ import React, {useContext, useEffect, useMemo} from 'react';
 
 import {AppContext} from '../../../components/AppContext.es';
 import HeaderBackButton from './HeaderBackButton.es';
+import HeaderReindexStatus from './HeaderReindexStatus.es';
 import HeaderTitle from './HeaderTitle.es';
 
 const HeaderController = ({basePath}) => {
@@ -30,6 +31,9 @@ const HeaderController = ({basePath}) => {
 		return {
 			button: header.querySelector(
 				'.sites-control-group .control-menu-nav'
+			),
+			status: header.querySelector(
+				'.user-control-group li.control-menu-nav-item'
 			),
 			title: header.querySelector(
 				'.tools-control-group .control-menu-level-1-heading'
@@ -53,6 +57,8 @@ const HeaderController = ({basePath}) => {
 				basePath={basePath}
 				container={container.button}
 			/>
+
+			<HeaderReindexStatus container={container.status} />
 
 			<HeaderTitle container={container.title} title={title} />
 		</>

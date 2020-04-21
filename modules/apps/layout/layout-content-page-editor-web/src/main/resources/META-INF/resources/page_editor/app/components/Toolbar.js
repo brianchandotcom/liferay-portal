@@ -24,12 +24,13 @@ import * as Actions from '../actions/index';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
+import undo from '../thunks/undo';
 import {useSelectItem} from './Controls';
 import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';
 import Translation from './Translation';
-import Undo from './Undo';
 import UnsafeHTML from './UnsafeHTML';
+import Undo from './undo/Undo';
 
 const {Suspense, useCallback, useRef} = React;
 
@@ -134,6 +135,10 @@ function ToolbarBody() {
 		}
 	};
 
+	const onUndo = () => {
+		dispatch(undo({store}));
+	};
+
 	const deselectItem = event => {
 		if (event.target === event.currentTarget) {
 			selectItem(null);
@@ -212,7 +217,7 @@ function ToolbarBody() {
 
 			<ul className="navbar-nav" onClick={deselectItem}>
 				<NetworkStatusBar {...network} />
-				{config.undoEnabled && <Undo />}
+				{config.undoEnabled && <Undo onUndo={onUndo} />}
 				<li className="nav-item">
 					<form action={config.discardDraftURL} method="POST">
 						<input

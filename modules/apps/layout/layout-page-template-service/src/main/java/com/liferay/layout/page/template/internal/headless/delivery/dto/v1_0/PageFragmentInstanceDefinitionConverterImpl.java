@@ -87,29 +87,24 @@ public class PageFragmentInstanceDefinitionConverterImpl
 
 	@Override
 	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		boolean saveInlineContent, boolean saveMapping) {
+		FragmentLayoutStructureItem fragmentLayoutStructureItem) {
 
 		return toPageFragmentInstanceDefinition(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
-			fragmentRendererTracker, infoDisplayContributorTracker,
-			saveInlineContent, saveMapping, 0);
+			fragmentLayoutStructureItem, true, true);
 	}
 
 	@Override
 	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		boolean saveInlineContent, boolean saveMapping) {
+
+		return toPageFragmentInstanceDefinition(
+			fragmentLayoutStructureItem, saveInlineContent, saveMapping, 0);
+	}
+
+	@Override
+	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
+		FragmentLayoutStructureItem fragmentLayoutStructureItem,
 		boolean saveInlineContent, boolean saveMapping,
 		long segmentsExperienceId) {
 
@@ -124,7 +119,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 		String rendererKey = fragmentEntryLink.getRendererKey();
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			fragmentCollectionContributorTracker,
 			fragmentEntryLink.getFragmentEntryId(), rendererKey);
 
 		return new PageFragmentInstanceDefinition() {
@@ -132,36 +126,18 @@ public class PageFragmentInstanceDefinitionConverterImpl
 				fragment = new Fragment() {
 					{
 						collectionName = _getFragmentCollectionName(
-							fragmentCollectionContributorTracker, fragmentEntry,
-							fragmentRendererTracker, rendererKey);
+							fragmentEntry, rendererKey);
 						key = _getFragmentKey(fragmentEntry, rendererKey);
 						name = _getFragmentName(
-							fragmentEntry, fragmentEntryLink,
-							fragmentRendererTracker, rendererKey);
+							fragmentEntry, fragmentEntryLink, rendererKey);
 					}
 				};
-				fragmentConfig = _getFragmentConfig(
-					fragmentEntryConfigurationParser, fragmentEntryLink);
+				fragmentConfig = _getFragmentConfig(fragmentEntryLink);
 				fragmentFields = _getFragmentFields(
-					fragmentEntryLink, infoDisplayContributorTracker,
-					saveInlineContent, saveMapping);
+					fragmentEntryLink, saveInlineContent, saveMapping
+					);
 			}
 		};
-	}
-
-	@Override
-	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		FragmentRendererTracker fragmentRendererTracker) {
-
-		return toPageFragmentInstanceDefinition(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
-			fragmentRendererTracker, infoDisplayContributorTracker, true, true);
 	}
 
 	private List<String> _getAvailableLanguageIds() {
@@ -177,7 +153,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private List<FragmentField> _getBackgroundImageFragmentFields(
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		JSONObject jsonObject, boolean saveMapping) {
 
 		List<FragmentField> fragmentFields = new ArrayList<>();
@@ -195,8 +170,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 					{
 						id = backgroundImageId;
 						value = _toFragmentFieldBackgroundImage(
-							infoDisplayContributorTracker, imageJSONObject,
-							localeMap, saveMapping);
+							imageJSONObject, localeMap, saveMapping);
 					}
 				});
 		}
@@ -205,10 +179,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private String _getFragmentCollectionName(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntry fragmentEntry,
-		FragmentRendererTracker fragmentRendererTracker, String rendererKey) {
+		FragmentEntry fragmentEntry, String rendererKey) {
 
 		if (fragmentEntry == null) {
 			if (Validator.isNull(rendererKey)) {
@@ -218,7 +189,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 			}
 
 			FragmentRenderer fragmentRenderer =
-				fragmentRendererTracker.getFragmentRenderer(rendererKey);
+				_fragmentRendererTracker.getFragmentRenderer(rendererKey);
 
 			return LanguageUtil.get(
 				ResourceBundleUtil.getBundle(
@@ -242,7 +213,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 		}
 
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			fragmentCollectionContributorTracker.
+			_fragmentCollectionContributorTracker.
 				getFragmentCollectionContributors();
 
 		for (FragmentCollectionContributor fragmentCollectionContributor :
@@ -260,14 +231,13 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private Map<String, Object> _getFragmentConfig(
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentEntryLink fragmentEntryLink) {
 
 		try {
 			return new HashMap<String, Object>() {
 				{
 					JSONObject jsonObject =
-						fragmentEntryConfigurationParser.
+						_fragmentEntryConfigurationParser.
 							getConfigurationJSONObject(
 								fragmentEntryLink.getConfiguration(),
 								fragmentEntryLink.getEditableValues(),
@@ -299,8 +269,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private FragmentEntry _getFragmentEntry(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
 		long fragmentEntryId, String rendererKey) {
 
 		FragmentEntry fragmentEntry =
@@ -311,15 +279,14 @@ public class PageFragmentInstanceDefinitionConverterImpl
 		}
 
 		Map<String, FragmentEntry> fragmentEntries =
-			fragmentCollectionContributorTracker.getFragmentEntries();
+			_fragmentCollectionContributorTracker.getFragmentEntries();
 
 		return fragmentEntries.get(rendererKey);
 	}
 
 	private FragmentField[] _getFragmentFields(
-		FragmentEntryLink fragmentEntryLink,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		boolean saveInlineContent, boolean saveMapping) {
+		FragmentEntryLink fragmentEntryLink, boolean saveInlineContent,
+		boolean saveMapping) {
 
 		if (!saveInlineContent && !saveMapping) {
 			return new FragmentField[0];
@@ -339,7 +306,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 
 		fragmentFields.addAll(
 			_getBackgroundImageFragmentFields(
-				infoDisplayContributorTracker,
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.background.image." +
 						"BackgroundImageFragmentEntryProcessor"),
@@ -351,7 +317,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 
 		fragmentFields.addAll(
 			_getTextFragmentFields(
-				editableTypes, infoDisplayContributorTracker,
+				editableTypes,
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.editable." +
 						"EditableFragmentEntryProcessor"),
@@ -372,7 +338,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 
 	private String _getFragmentName(
 		FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink,
-		FragmentRendererTracker fragmentRendererTracker, String rendererKey) {
+		String rendererKey) {
 
 		if (fragmentEntry != null) {
 			return fragmentEntry.getName();
@@ -401,7 +367,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 		}
 
 		FragmentRenderer fragmentRenderer =
-			fragmentRendererTracker.getFragmentRenderer(rendererKey);
+			_fragmentRendererTracker.getFragmentRenderer(rendererKey);
 
 		return fragmentRenderer.getLabel(LocaleUtil.getSiteDefault());
 	}
@@ -419,9 +385,8 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private List<FragmentField> _getTextFragmentFields(
-		Map<String, String> editableTypes,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		JSONObject jsonObject, boolean saveMapping) {
+		Map<String, String> editableTypes, JSONObject jsonObject,
+		boolean saveMapping) {
 
 		List<FragmentField> fragmentFields = new ArrayList<>();
 
@@ -430,8 +395,8 @@ public class PageFragmentInstanceDefinitionConverterImpl
 		for (String textId : textIds) {
 			fragmentFields.add(
 				_toFragmentField(
-					editableTypes, infoDisplayContributorTracker, jsonObject,
-					saveMapping, textId));
+					editableTypes, jsonObject, saveMapping,
+					textId));
 		}
 
 		return fragmentFields;
@@ -454,7 +419,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private FragmentInlineValue _toDefaultMappingValue(
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		JSONObject jsonObject, Function<Object, String> transformerFunction) {
 
 		long classNameId = jsonObject.getLong("classNameId");
@@ -481,7 +445,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 		}
 
 		InfoDisplayContributor infoDisplayContributor =
-			infoDisplayContributorTracker.getInfoDisplayContributor(className);
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
 		if (infoDisplayContributor == null) {
 			return null;
@@ -547,9 +511,8 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private FragmentField _toFragmentField(
-		Map<String, String> editableTypes,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		JSONObject jsonObject, boolean saveMapping, String textId) {
+		Map<String, String> editableTypes, JSONObject jsonObject,
+		boolean saveMapping, String textId) {
 
 		JSONObject textJSONObject = jsonObject.getJSONObject(textId);
 
@@ -564,26 +527,22 @@ public class PageFragmentInstanceDefinitionConverterImpl
 
 						if (Objects.equals(type, "html")) {
 							return _toFragmentFieldHTML(
-								infoDisplayContributorTracker, textJSONObject,
-								saveMapping);
+								textJSONObject, saveMapping);
 						}
 
 						if (Objects.equals(type, "image")) {
 							return _toFragmentFieldImage(
-								infoDisplayContributorTracker, textJSONObject,
-								saveMapping);
+								textJSONObject, saveMapping);
 						}
 
 						return _toFragmentFieldText(
-							infoDisplayContributorTracker, textJSONObject,
-							saveMapping);
+							textJSONObject, saveMapping);
 					});
 			}
 		};
 	}
 
 	private FragmentFieldBackgroundImage _toFragmentFieldBackgroundImage(
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		JSONObject jsonObject, Map<String, String> localeMap,
 		boolean saveMapping) {
 
@@ -601,7 +560,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
-											infoDisplayContributorTracker,
 											jsonObject,
 											_getImageURLTransformerFunction()),
 										jsonObject);
@@ -620,7 +578,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private FragmentFieldHTML _toFragmentFieldHTML(
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		JSONObject jsonObject, boolean saveMapping) {
 
 		return new FragmentFieldHTML() {
@@ -631,9 +588,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 								jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
-								_toDefaultMappingValue(
-									infoDisplayContributorTracker, jsonObject,
-									null),
+								_toDefaultMappingValue(jsonObject, null),
 								jsonObject);
 						}
 
@@ -648,7 +603,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private FragmentFieldImage _toFragmentFieldImage(
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		JSONObject jsonObject, boolean saveMapping) {
 
 		Map<String, String> localeMap = _toLocaleMap(jsonObject);
@@ -669,7 +623,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
-											infoDisplayContributorTracker,
 											jsonObject,
 											_getImageURLTransformerFunction()),
 										jsonObject);
@@ -683,20 +636,17 @@ public class PageFragmentInstanceDefinitionConverterImpl
 							});
 					}
 				};
-				fragmentLink = _toFragmentLink(
-					infoDisplayContributorTracker, jsonObject, saveMapping);
+				fragmentLink = _toFragmentLink(jsonObject, saveMapping);
 			}
 		};
 	}
 
 	private FragmentFieldText _toFragmentFieldText(
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		JSONObject jsonObject, boolean saveMapping) {
 
 		return new FragmentFieldText() {
 			{
-				fragmentLink = _toFragmentLink(
-					infoDisplayContributorTracker, jsonObject, saveMapping);
+				fragmentLink = _toFragmentLink(jsonObject, saveMapping);
 
 				setText(
 					() -> {
@@ -704,9 +654,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 								jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
-								_toDefaultMappingValue(
-									infoDisplayContributorTracker, jsonObject,
-									null),
+								_toDefaultMappingValue(jsonObject, null),
 								jsonObject);
 						}
 
@@ -728,7 +676,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 	}
 
 	private FragmentLink _toFragmentLink(
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		JSONObject jsonObject, boolean saveMapping) {
 
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");
@@ -747,9 +694,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 								configJSONObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
-								_toDefaultMappingValue(
-									infoDisplayContributorTracker,
-									configJSONObject, null),
+								_toDefaultMappingValue(configJSONObject, null),
 								configJSONObject);
 						}
 
@@ -867,13 +812,26 @@ public class PageFragmentInstanceDefinitionConverterImpl
 		PageFragmentInstanceDefinitionConverterImpl.class);
 
 	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private Portal _portal;

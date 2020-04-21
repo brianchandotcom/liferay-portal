@@ -113,15 +113,13 @@ definition {
 
 		WikiEntry.addPageTitle(wikiPageTitle = "New Wiki Page Title");
 
-		ItemSelector.gotoItemSelectorViaAlloyEditor();
+		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addFromURL(
 			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
 			navTab = "URL");
 
-		AssertElementPresent(
-			key_contentImageName = "Document_2.jpg",
-			locator1 = "Wiki#CONTENT_IMAGE_NAME");
+		CKEditor.viewEntryContentImage(contentImageName = "Document_2.jpg");
 
 		PortletEntry.publish();
 

@@ -140,8 +140,8 @@ const OptionsRenderer = ({displayType, options, values = []}) => {
 	);
 };
 
-const StringRenderer = ({value}) => (
-	<div>{(Array.isArray(value) ? value.join(', ') : value) || ' - '}</div>
+const StringRenderer = ({value = ' - '}) => (
+	<div>{Array.isArray(value) ? value.join(', ') : value}</div>
 );
 
 const getFieldValueRenderer = (dataDefinitionField, displayType) => {

@@ -14,9 +14,11 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v3_3_0.util;
 
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
 
@@ -36,6 +38,12 @@ public class EditableValuesTransformerUtilTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		_objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			}
+		};
 	}
 
 	@Test
@@ -44,18 +52,22 @@ public class EditableValuesTransformerUtilTest {
 			"fragment_entry_link_background_images_editable_values.json");
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_background_images_editable_values_" +
 						"segments_experience_0.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 0));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 0)));
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_background_images_editable_values_" +
 						"segments_experience_1.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 1));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 1)));
 	}
 
 	@Test
@@ -64,25 +76,31 @@ public class EditableValuesTransformerUtilTest {
 			"fragment_entry_link_editable_editable_values.json");
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_editable_editable_values_segments_" +
 						"experience_0.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 0));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 0)));
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_editable_editable_values_segments_" +
 						"experience_1.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 1));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 1)));
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_editable_editable_values_segments_" +
 						"experience_2.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 2));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 2)));
 	}
 
 	@Test
@@ -94,18 +112,22 @@ public class EditableValuesTransformerUtilTest {
 				"json");
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_editable_values_without_default_" +
 						"experience_segments_experience_0.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 0));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 0)));
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_editable_values_without_default_" +
 						"experience_segments_experience_2.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 2));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 2)));
 	}
 
 	@Test
@@ -114,25 +136,31 @@ public class EditableValuesTransformerUtilTest {
 			"fragment_entry_link_free_marker_editable_values.json");
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_free_marker_editable_values_" +
 						"segments_experience_0.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 0));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 0)));
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_free_marker_editable_values_" +
 						"segments_experience_1.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 1));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 1)));
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_free_marker_editable_values_" +
 						"segments_experience_2.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 2));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 2)));
 	}
 
 	@Test
@@ -141,11 +169,13 @@ public class EditableValuesTransformerUtilTest {
 			"fragment_entry_link_mapped_editable_values.json");
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_mapped_editable_values_segments_" +
 						"experience_0.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 0));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 0)));
 	}
 
 	@Test
@@ -154,11 +184,13 @@ public class EditableValuesTransformerUtilTest {
 			"fragment_entry_link_portlet_editable_values.json");
 
 		Assert.assertEquals(
-			_toString(
+			_objectMapper.readTree(
 				_read(
 					"fragment_entry_link_portlet_editable_values_segments_" +
 						"experience_0.json")),
-			EditableValuesTransformerUtil.getEditableValues(editableValues, 0));
+			_objectMapper.readTree(
+				EditableValuesTransformerUtil.getEditableValues(
+					editableValues, 0)));
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -166,11 +198,6 @@ public class EditableValuesTransformerUtilTest {
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
-	private String _toString(String editableValues) throws Exception {
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			editableValues);
-
-		return editableValuesJSONObject.toJSONString();
-	}
+	private ObjectMapper _objectMapper;
 
 }

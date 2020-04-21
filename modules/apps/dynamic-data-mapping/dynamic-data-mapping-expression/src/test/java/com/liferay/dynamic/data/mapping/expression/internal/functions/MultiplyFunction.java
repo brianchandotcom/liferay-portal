@@ -31,7 +31,7 @@ public class MultiplyFunction
 		return Stream.of(
 			numbers
 		).map(
-			value -> new BigDecimal(value.toString())
+			number -> new BigDecimal(number.toString())
 		).reduce(
 			BigDecimal.ONE, (n1, n2) -> n1.multiply(n2)
 		);

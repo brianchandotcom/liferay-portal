@@ -12,31 +12,11 @@
  * details.
  */
 
-import addItemAction from '../actions/addItem';
-import LayoutService from '../services/LayoutService';
+import {ADD_ITEM} from './types';
 
-export default function addItem({
-	itemType,
-	parentItemId,
-	position,
-	selectItem = () => {},
-	store,
-}) {
-	return dispatch => {
-		const {segmentsExperienceId} = store;
-
-		LayoutService.addItem({
-			itemType,
-			onNetworkStatus: dispatch,
-			parentItemId,
-			position,
-			segmentsExperienceId,
-		}).then(({addedItemId, layoutData}) => {
-			dispatch(addItemAction({layoutData}));
-
-			if (addedItemId) {
-				selectItem(addedItemId);
-			}
-		});
+export default function addItem({layoutData}) {
+	return {
+		layoutData,
+		type: ADD_ITEM,
 	};
 }

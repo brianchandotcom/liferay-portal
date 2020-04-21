@@ -65,7 +65,7 @@ import toCharCode from './util/to_char_code.es';
 Liferay = window.Liferay || {};
 
 /**
- * @deprecated As of Athanasius (7.3.x), replaced by `import BREAKPOINTS from 'frontend-js-web'`
+ * @deprecated As of Athanasius (7.3.x), replaced by `import {BREAKPOINTS} from 'frontend-js-web'`
  */
 Liferay.BREAKPOINTS = BREAKPOINTS;
 
@@ -119,12 +119,12 @@ Liferay.Util.groupBy = groupBy;
 Liferay.Util.isEqual = isEqual;
 
 /**
- * @deprecated As of Athanasius (7.3.x), replaced by `import isPhone from 'frontend-js-web'`
+ * @deprecated As of Athanasius (7.3.x), replaced by `import {isPhone} from 'frontend-js-web'`
  */
 Liferay.Util.isPhone = isPhone;
 
 /**
- * @deprecated As of Athanasius (7.3.x), replaced by `import isTablet from 'frontend-js-web'`
+ * @deprecated As of Athanasius (7.3.x), replaced by `import {isTablet} from 'frontend-js-web'`
  */
 Liferay.Util.isTablet = isTablet;
 

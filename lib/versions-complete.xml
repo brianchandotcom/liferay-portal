@@ -1248,7 +1248,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-bmp.jar</file-name>
-				<version>3.5</version>
+				<version>3.4.3</version>
 				<project-name>TwelveMonkeys :: ImageIO :: BMP plugin</project-name>
 				<licenses>
 					<license>
@@ -1551,6 +1551,28 @@
 					<license>
 						<license-name>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</license-name>
 						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth2.provider.web.jar!jgrapht-core.jar</file-name>
+				<version>1.3.0</version>
+				<project-name>JGraphT - Core</project-name>
+				<licenses>
+					<license>
+						<license-name>http://jgrapht.sourceforge.net/LGPL.html, http://www.eclipse.org/legal/epl-v20.html</license-name>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth2.provider.web.jar!jheaps.jar</file-name>
+				<version>0.9</version>
+				<project-name>JHeaps</project-name>
+				<project-url>http://www.jheaps.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7307,6 +7329,16 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-1.1</license-url>
 						<copyright-notice>Copyright (c) 1999 The Apache Software Foundation. All rights reserved.</copyright-notice>
 					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/sparse-bit-set.jar</file-name>
+				<version>1.2</version>
+				<project-name>SparseBitSet</project-name>
+				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
+				<licenses>
+					<license>Apache License 2.0</license>
+					<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 				</licenses>
 			</library>
 			<library>

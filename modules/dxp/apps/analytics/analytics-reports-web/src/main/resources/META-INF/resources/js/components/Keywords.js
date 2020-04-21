@@ -12,6 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayList from '@clayui/list';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -35,10 +36,10 @@ export default function Keywords({currentPage, languageTag}) {
 	);
 
 	return (
-		<ul className="list-group list-group-keywords-list list-group-sm">
-			<li className="list-group-item list-group-item-flex">
-				<div className="autofit-col autofit-col-expand">
-					<div className="list-group-title text-truncate-inline">
+		<ClayList className="list-group-keywords-list">
+			<ClayList.Item flex>
+				<ClayList.ItemField expand>
+					<ClayList.ItemTitle className="text-truncate-inline">
 						<span className="text-truncate">
 							{Liferay.Language.get('best-keyword')}
 							<span className="text-secondary">
@@ -50,10 +51,10 @@ export default function Keywords({currentPage, languageTag}) {
 								/>
 							</span>
 						</span>
-					</div>
-				</div>
-				<div className="autofit-col">
-					<div className="list-group-title">
+					</ClayList.ItemTitle>
+				</ClayList.ItemField>
+				<ClayList.ItemField>
+					<ClayList.ItemTitle>
 						<ClayDropDown
 							active={isDropdownOpen}
 							onActiveChange={isActive =>
@@ -101,42 +102,43 @@ export default function Keywords({currentPage, languageTag}) {
 								))}
 							</ClayDropDown.ItemList>
 						</ClayDropDown>
-					</div>
-				</div>
-			</li>
+					</ClayList.ItemTitle>
+				</ClayList.ItemField>
+			</ClayList.Item>
 			{currentPage.data.keywords.map(keyword => {
 				return (
-					<li
-						className="list-group-item list-group-item-flex"
-						key={keyword.title}
-					>
-						<div className="autofit-col autofit-col-expand">
-							<ClayTooltipProvider>
-								<span
-									className="text-dark text-truncate-inline"
-									data-tooltip-align="top"
-									title={keyword.title}
-								>
-									<span className="text-truncate">
-										{keyword.title}
+					<ClayList.Item flex key={keyword.title}>
+						<ClayList.ItemField expand>
+							<ClayList.ItemText>
+								<ClayTooltipProvider>
+									<span
+										className="text-truncate-inline"
+										data-tooltip-align="top"
+										title={keyword.title}
+									>
+										<span className="text-truncate">
+											{keyword.title}
+										</span>
 									</span>
-								</span>
-							</ClayTooltipProvider>
-						</div>
-						<div className="autofit-col text-right text-secondary">
-							{numberFormat(
-								languageTag,
-								keywordValueType.name === 'traffic'
-									? keyword.value
-									: keywordValueType.name === 'volume'
-									? keyword.volume
-									: keyword.position
-							)}
-						</div>
-					</li>
+								</ClayTooltipProvider>
+							</ClayList.ItemText>
+						</ClayList.ItemField>
+						<ClayList.ItemField expand>
+							<span className="align-self-end">
+								{numberFormat(
+									languageTag,
+									keywordValueType.name === 'traffic'
+										? keyword.value
+										: keywordValueType.name === 'volume'
+										? keyword.volume
+										: keyword.position
+								)}
+							</span>
+						</ClayList.ItemField>
+					</ClayList.Item>
 				);
 			})}
-		</ul>
+		</ClayList>
 	);
 }
 

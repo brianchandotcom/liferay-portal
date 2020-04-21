@@ -120,7 +120,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		if (jobName.contains("pullrequest")) {
 			String acceptanceUpstreamJobURL = JenkinsResultsParserUtil.combine(
 				"https://test-1-1.liferay.com/job/",
-				jobName.replace("pullrequest", "upstream"));
+				jobName.replace("pullrequest", "upstream-dxp"));
 
 			try {
 				JenkinsResultsParserUtil.toString(

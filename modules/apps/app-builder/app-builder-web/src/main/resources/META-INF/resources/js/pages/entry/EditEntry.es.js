@@ -52,22 +52,24 @@ export const EditEntry = ({
 				dataRecordValues: {},
 			};
 
+			const languageId = themeDisplay.getLanguageId();
+
 			visitor.mapFields(({fieldName, localizable, repeatable, value}) => {
 				if (localizable) {
 					if (!dataRecord.dataRecordValues[fieldName]) {
 						dataRecord.dataRecordValues[fieldName] = {
-							[themeDisplay.getLanguageId()]: [],
+							[languageId]: [],
 						};
 					}
 
 					if (repeatable) {
-						dataRecord.dataRecordValues[fieldName][
-							themeDisplay.getLanguageId()
-						].push(value);
+						dataRecord.dataRecordValues[fieldName][languageId].push(
+							value
+						);
 					}
 					else {
 						dataRecord.dataRecordValues[fieldName] = {
-							[themeDisplay.getLanguageId()]: value,
+							[languageId]: value,
 						};
 					}
 				}

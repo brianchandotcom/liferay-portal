@@ -12,11 +12,13 @@
  * details.
  */
 
-import {ADD_ITEM} from '../../actions/types';
+import {ADD_ITEM, MOVE_ITEM, UPDATE_ITEM_CONFIG} from '../../actions/types';
 import * as undoLayoutDataAction from './undoLayoutDataAction';
 
 const UNDO_ACTIONS = {
 	[ADD_ITEM]: undoLayoutDataAction,
+	[MOVE_ITEM]: undoLayoutDataAction,
+	[UPDATE_ITEM_CONFIG]: undoLayoutDataAction,
 };
 
 export function canUndoAction(action) {

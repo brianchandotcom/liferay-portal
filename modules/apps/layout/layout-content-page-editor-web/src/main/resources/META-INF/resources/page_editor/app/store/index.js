@@ -23,6 +23,7 @@ import React, {
 } from 'react';
 
 import useThunk from '../../core/hooks/useThunk';
+import useUndo from '../components/undo/useUndo';
 
 const StoreContext = React.createContext(null);
 
@@ -84,7 +85,9 @@ export const StoreAPIContextProvider = ({
  * of the raw React context.
  */
 export const StoreContextProvider = ({children, initialState, reducer}) => {
-	const [state, dispatch] = useThunk(useReducer(reducer, initialState));
+	const [state, dispatch] = useThunk(
+		useUndo(useReducer(reducer, initialState))
+	);
 
 	const getState = useCallback(() => state, [state]);
 

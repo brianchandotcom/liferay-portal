@@ -47,6 +47,8 @@ definition {
 
 	@priority = "4"
 	test AssertSearchInsightsExplain {
+		property test.name.skip.portal.instance = "Solr#AssertSearchInsightsExplain";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

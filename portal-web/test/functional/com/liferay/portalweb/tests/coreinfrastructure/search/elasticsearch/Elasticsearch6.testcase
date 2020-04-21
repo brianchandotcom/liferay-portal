@@ -66,6 +66,8 @@ definition {
 
 	@priority = "4"
 	test AssertSearchInsightsExplain {
+		property test.name.skip.portal.instance = "Elasticsearch6#AssertSearchInsightsExplain";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

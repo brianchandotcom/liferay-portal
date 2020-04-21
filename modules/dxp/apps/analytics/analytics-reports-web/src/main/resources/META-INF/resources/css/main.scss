@@ -20,6 +20,7 @@
 		padding-bottom: 0.75rem;
 		padding-top: 0.75rem;
 	}
+
 	@media only screen and (min-width: 768px) {
 		.sidebar-header {
 			padding-bottom: 12px;
@@ -27,6 +28,7 @@
 			padding-top: 12px;
 		}
 	}
+
 	.sidebar-header {
 		background-color: #272833;
 		color: #d5d6e1;
@@ -37,6 +39,7 @@
 		padding-right: 9px;
 		padding-top: 8px;
 	}
+
 	.sidebar-body {
 		bottom: 0;
 		left: 0;
@@ -45,6 +48,7 @@
 		right: 0;
 		top: 56px;
 	}
+
 	@media only screen and (min-width: 768px) {
 		.sidebar-header {
 			padding-bottom: 12px;
@@ -141,13 +145,21 @@
 			transform: translateX(-50%);
 		}
 	}
-
 	.traffic-source-detail {
 		thead > tr {
 			height: 40px;
 		}
 		tbody > tr {
 			height: 30px;
+		}
+	}
+
+	.list-group-keywords-list {
+		li {
+			border-width: 0;
+		}
+		li > div.autofit-col.autofit-col-expand {
+			padding-left: 0;
 		}
 	}
 }

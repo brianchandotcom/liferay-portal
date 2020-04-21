@@ -35,21 +35,25 @@ export default function Keywords({currentPage, languageTag}) {
 	);
 
 	return (
-		<table className="table-autofit table-keywords">
-			<thead>
-				<tr>
-					<th>
-						{Liferay.Language.get('best-keyword')}
-						<span className="text-secondary">
-							<Hint
-								message={Liferay.Language.get(
-									'best-keyword-help'
-								)}
-								title={Liferay.Language.get('best-keyword')}
-							/>
+		<ul className="list-group list-group-keywords-list list-group-sm">
+			<li className="list-group-item list-group-item-flex">
+				<div className="autofit-col autofit-col-expand">
+					<div className="list-group-title text-truncate-inline">
+						<span className="text-truncate">
+							{Liferay.Language.get('best-keyword')}
+							<span className="text-secondary">
+								<Hint
+									message={Liferay.Language.get(
+										'best-keyword-help'
+									)}
+									title={Liferay.Language.get('best-keyword')}
+								/>
+							</span>
 						</span>
-					</th>
-					<th className="text-right">
+					</div>
+				</div>
+				<div className="autofit-col">
+					<div className="list-group-title">
 						<ClayDropDown
 							active={isDropdownOpen}
 							onActiveChange={isActive =>
@@ -61,7 +65,7 @@ export default function Keywords({currentPage, languageTag}) {
 									displayType="link"
 									small
 								>
-									<span className="font-weight-bold">
+									<span className="font-weight-semi-bold">
 										<span className="pr-2">
 											{keywordValueType.label}
 										</span>
@@ -97,41 +101,42 @@ export default function Keywords({currentPage, languageTag}) {
 								))}
 							</ClayDropDown.ItemList>
 						</ClayDropDown>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				{currentPage.data.keywords.map(keyword => {
-					return (
-						<tr key={keyword.title}>
-							<td className="table-cell-expand">
-								<ClayTooltipProvider>
-									<span
-										className="text-truncate-inline"
-										data-tooltip-align="top"
-										title={keyword.title}
-									>
-										<span className="text-truncate">
-											{keyword.title}
-										</span>
+					</div>
+				</div>
+			</li>
+			{currentPage.data.keywords.map(keyword => {
+				return (
+					<li
+						className="list-group-item list-group-item-flex"
+						key={keyword.title}
+					>
+						<div className="autofit-col autofit-col-expand">
+							<ClayTooltipProvider>
+								<span
+									className="text-dark text-truncate-inline"
+									data-tooltip-align="top"
+									title={keyword.title}
+								>
+									<span className="text-truncate">
+										{keyword.title}
 									</span>
-								</ClayTooltipProvider>
-							</td>
-							<td align="right" className="text-secondary">
-								{numberFormat(
-									languageTag,
-									keywordValueType.name === 'traffic'
-										? keyword.value
-										: keywordValueType.name === 'volume'
-										? keyword.volume
-										: keyword.position
-								)}
-							</td>
-						</tr>
-					);
-				})}
-			</tbody>
-		</table>
+								</span>
+							</ClayTooltipProvider>
+						</div>
+						<div className="autofit-col text-right text-secondary">
+							{numberFormat(
+								languageTag,
+								keywordValueType.name === 'traffic'
+									? keyword.value
+									: keywordValueType.name === 'volume'
+									? keyword.volume
+									: keyword.position
+							)}
+						</div>
+					</li>
+				);
+			})}
+		</ul>
 	);
 }
 

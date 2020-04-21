@@ -14,23 +14,10 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -42,13 +29,8 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
-import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
-import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
-import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
-import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -73,7 +55,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -82,8 +63,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Inácio Nery
  */
-public abstract class BaseWorkflowMetricsIndexer
-	implements WorkflowMetricsIndex {
+public abstract class BaseWorkflowMetricsIndexer {
 
 	public void addDocuments(List<Document> documents) {
 		if (searchEngineAdapter == null) {
@@ -92,14 +72,17 @@ public abstract class BaseWorkflowMetricsIndexer
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
+		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
+
 		documents.forEach(
 			document -> bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					getIndexName(document.getLong("companyId")),
+					workflowMetricsIndex.getIndexName(
+						document.getLong("companyId")),
 					document.getString("uid"), document) {
 
 					{
-						setType(getIndexType());
+						setType(workflowMetricsIndex.getIndexType());
 					}
 				}));
 
@@ -114,102 +97,16 @@ public abstract class BaseWorkflowMetricsIndexer
 		}
 	}
 
-	@Override
-	public void clearIndex(long companyId) throws PortalException {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		if (!hasIndex(getIndexName(companyId))) {
-			return;
-		}
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
-
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		booleanFilter.add(
-			new TermFilter("companyId", String.valueOf(companyId)),
-			BooleanClauseOccur.MUST);
-
-		booleanQuery.setPreBooleanFilter(booleanFilter);
-
-		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-			new DeleteByQueryDocumentRequest(
-				booleanQuery, getIndexName(companyId));
-
-		if (PortalRunMode.isTestMode()) {
-			deleteByQueryDocumentRequest.setRefresh(true);
-		}
-
-		searchEngineAdapter.execute(deleteByQueryDocumentRequest);
-	}
-
-	@Override
-	public void createIndex(long companyId) throws PortalException {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		if (hasIndex(getIndexName(companyId))) {
-			return;
-		}
-
-		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-			getIndexName(companyId));
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			StringUtil.read(getClass(), "/META-INF/search/mappings.json"));
-
-		createIndexRequest.setSource(
-			JSONUtil.put(
-				"mappings",
-				JSONUtil.put(getIndexType(), jsonObject.get(getIndexType()))
-			).put(
-				"settings",
-				JSONFactoryUtil.createJSONObject(
-					StringUtil.read(
-						getClass(), "/META-INF/search/settings.json"))
-			).toString());
-
-		searchEngineAdapter.execute(createIndexRequest);
-	}
-
 	public void deleteDocument(DocumentBuilder documentBuilder) {
 		documentBuilder.setValue("deleted", true);
 
 		_updateDocument(documentBuilder.build());
 	}
 
-	@Override
-	public void removeIndex(long companyId) throws PortalException {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		if (!hasIndex(getIndexName(companyId))) {
-			return;
-		}
-
-		searchEngineAdapter.execute(
-			new DeleteIndexRequest(getIndexName(companyId)));
-	}
+	public abstract WorkflowMetricsIndex getWorkflowMetricsIndex();
 
 	public void updateDocument(Document document) {
 		_updateDocument(document);
-	}
-
-	@Activate
-	protected void activate() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			companyLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			(Company company) -> createIndex(company.getCompanyId()));
-
-		actionableDynamicQuery.performActions();
 	}
 
 	protected void addDocument(Document document) {
@@ -217,14 +114,17 @@ public abstract class BaseWorkflowMetricsIndexer
 			return;
 		}
 
+		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
+
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			getIndexName(document.getLong("companyId")), document);
+			workflowMetricsIndex.getIndexName(document.getLong("companyId")),
+			document);
 
 		if (PortalRunMode.isTestMode()) {
 			indexDocumentRequest.setRefresh(true);
 		}
 
-		indexDocumentRequest.setType(getIndexType());
+		indexDocumentRequest.setType(workflowMetricsIndex.getIndexType());
 
 		searchEngineAdapter.execute(indexDocumentRequest);
 	}
@@ -236,8 +136,12 @@ public abstract class BaseWorkflowMetricsIndexer
 			sb.append(part);
 		}
 
-		return StringUtil.removeSubstring(getIndexType(), "Type") +
-			DigestUtils.sha256Hex(sb.toString());
+		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
+
+		String indexType = StringUtil.removeSubstring(
+			workflowMetricsIndex.getIndexType(), "Type");
+
+		return indexType + DigestUtils.sha256Hex(sb.toString());
 	}
 
 	protected String formatDate(Date date) {
@@ -258,20 +162,6 @@ public abstract class BaseWorkflowMetricsIndexer
 
 	protected String formatLocalDateTime(LocalDateTime localDateTime) {
 		return _dateTimeFormatter.format(localDateTime);
-	}
-
-	protected boolean hasIndex(String indexName) {
-		if (searchEngineAdapter == null) {
-			return false;
-		}
-
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(indexName);
-
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		return indicesExistsIndexResponse.isExists();
 	}
 
 	protected void setLocalizedField(
@@ -308,11 +198,14 @@ public abstract class BaseWorkflowMetricsIndexer
 			return;
 		}
 
+		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.setIndexNames(getIndexName(companyId));
+		searchSearchRequest.setIndexNames(
+			workflowMetricsIndex.getIndexName(companyId));
 		searchSearchRequest.setQuery(query);
-		searchSearchRequest.setTypes(getIndexType());
+		searchSearchRequest.setTypes(workflowMetricsIndex.getIndexType());
 		searchSearchRequest.setSelectedFieldNames("uid");
 		searchSearchRequest.setSize(10000);
 
@@ -344,11 +237,11 @@ public abstract class BaseWorkflowMetricsIndexer
 					(name, value) -> documentBuilder.setValue(name, value));
 
 				return new UpdateDocumentRequest(
-					getIndexName(companyId), document.getString("uid"),
-					documentBuilder.build()) {
+					workflowMetricsIndex.getIndexName(companyId),
+					document.getString("uid"), documentBuilder.build()) {
 
 					{
-						setType(getIndexType());
+						setType(workflowMetricsIndex.getIndexType());
 						setUpsert(true);
 					}
 				};
@@ -367,9 +260,6 @@ public abstract class BaseWorkflowMetricsIndexer
 			searchEngineAdapter.execute(bulkDocumentRequest);
 		}
 	}
-
-	@Reference
-	protected CompanyLocalService companyLocalService;
 
 	@Reference
 	protected DocumentBuilderFactory documentBuilderFactory;
@@ -393,15 +283,17 @@ public abstract class BaseWorkflowMetricsIndexer
 			return;
 		}
 
+		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
+
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
-			getIndexName(document.getLong("companyId")),
+			workflowMetricsIndex.getIndexName(document.getLong("companyId")),
 			document.getString("uid"), document);
 
 		if (PortalRunMode.isTestMode()) {
 			updateDocumentRequest.setRefresh(true);
 		}
 
-		updateDocumentRequest.setType(getIndexType());
+		updateDocumentRequest.setType(workflowMetricsIndex.getIndexType());
 		updateDocumentRequest.setUpsert(true);
 
 		searchEngineAdapter.execute(updateDocumentRequest);

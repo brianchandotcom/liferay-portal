@@ -27,6 +27,7 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import FragmentService from '../../services/FragmentService';
 import {useDispatch, useSelector} from '../../store/index';
 import {useGetFieldValue} from '../CollectionItemContext';
+import {useFrameContext} from '../Frame';
 import Layout from '../Layout';
 import UnsafeHTML from '../UnsafeHTML';
 import {
@@ -45,6 +46,7 @@ const FragmentContent = React.forwardRef(
 		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const editableProcessorUniqueId = useEditableProcessorUniqueId();
+		const frameContext = useFrameContext();
 		const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 		const canUpdateLayoutContent = useSelector(
 			selectCanUpdateLayoutContent
@@ -232,6 +234,7 @@ const FragmentContent = React.forwardRef(
 						})}
 						contentRef={ref}
 						getPortals={getPortals}
+						globalContext={frameContext || window}
 						markup={content}
 						onRender={updateEditables}
 					/>

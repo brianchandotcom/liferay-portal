@@ -20,16 +20,13 @@ import com.liferay.headless.admin.user.dto.v1_0.Location;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
-import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Service;
-import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.OrganizationEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -45,17 +42,11 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
-import com.liferay.portal.kernel.service.AddressLocalService;
-import com.liferay.portal.kernel.service.CountryService;
-import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrgLaborLocalService;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -254,7 +245,11 @@ public class OrganizationResourceImpl
 			OrganizationContactInformation::getPostalAddresses
 		).map(
 			postalAddresses -> ListUtil.filter(
-				transformToList(postalAddresses, this::_toAddress),
+				transformToList(
+					postalAddresses,
+					_postalAddress -> _contactInformationHelper.toAddress(
+						_postalAddress,
+						ListTypeConstants.ORGANIZATION_ADDRESS)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -267,7 +262,7 @@ public class OrganizationResourceImpl
 		).map(
 			Location::getAddressCountry
 		).map(
-			this::_toCountryId
+			_contactInformationHelper::toCountryId
 		).orElse(
 			0L
 		);
@@ -337,7 +332,11 @@ public class OrganizationResourceImpl
 		).map(
 			emailAddresses -> ListUtil.filter(
 				transformToList(
-					emailAddresses, this::_toServiceBuilderEmailAddress),
+					emailAddresses,
+					emailAddress ->
+						_contactInformationHelper.toServiceBuilderEmailAddress(
+							emailAddress,
+							ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -412,7 +411,11 @@ public class OrganizationResourceImpl
 			OrganizationContactInformation::getTelephones
 		).map(
 			telephones -> ListUtil.filter(
-				transformToList(telephones, this::_toServiceBuilderPhone),
+				transformToList(
+					telephones,
+					telephone ->
+						_contactInformationHelper.toServiceBuilderPhone(
+							telephone, ListTypeConstants.ORGANIZATION_PHONE)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -480,82 +483,13 @@ public class OrganizationResourceImpl
 			OrganizationContactInformation::getWebUrls
 		).map(
 			webUrls -> ListUtil.filter(
-				transformToList(webUrls, this::_toWebsite), Objects::nonNull)
+				transformToList(
+					webUrls,
+					webUrl -> _contactInformationHelper.toWebsite(
+						webUrl, ListTypeConstants.ORGANIZATION_WEBSITE)),
+				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
-		);
-	}
-
-	private Address _toAddress(PostalAddress postalAddress) {
-		String street1 = postalAddress.getStreetAddressLine1();
-		String street2 = postalAddress.getStreetAddressLine2();
-		String street3 = postalAddress.getStreetAddressLine3();
-		String city = postalAddress.getAddressLocality();
-		String zip = postalAddress.getPostalCode();
-		long countryId = _toCountryId(postalAddress.getAddressCountry());
-
-		if (Validator.isNull(street1) && Validator.isNull(street2) &&
-			Validator.isNull(street3) && Validator.isNull(city) &&
-			Validator.isNull(zip) && (countryId == 0)) {
-
-			return null;
-		}
-
-		Address address = _addressLocalService.createAddress(
-			GetterUtil.getLong(postalAddress.getId()));
-
-		address.setStreet1(street1);
-		address.setStreet2(street2);
-		address.setStreet3(street3);
-		address.setCity(city);
-		address.setZip(zip);
-		address.setRegionId(
-			_getRegionId(postalAddress.getAddressRegion(), countryId));
-		address.setCountryId(countryId);
-		address.setTypeId(
-			_toListTypeId(
-				"other", postalAddress.getAddressType(),
-				ListTypeConstants.ORGANIZATION_ADDRESS));
-		address.setMailing(true);
-		address.setPrimary(GetterUtil.getBoolean(postalAddress.getPrimary()));
-
-		return address;
-	}
-
-	private Country _toCountry(String addressCountry) {
-		try {
-			Country country = _countryService.fetchCountryByA2(addressCountry);
-
-			if (country != null) {
-				return country;
-			}
-
-			country = _countryService.fetchCountryByA3(addressCountry);
-
-			if (country != null) {
-				return country;
-			}
-
-			return _countryService.getCountryByName(addressCountry);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
-			}
-		}
-
-		return null;
-	}
-
-	private long _toCountryId(String addressCountry) {
-		return Optional.ofNullable(
-			addressCountry
-		).map(
-			this::_toCountry
-		).map(
-			Country::getCountryId
-		).orElse(
-			(long)0
 		);
 	}
 
@@ -659,56 +593,6 @@ public class OrganizationResourceImpl
 		return orgLabor;
 	}
 
-	private com.liferay.portal.kernel.model.EmailAddress
-		_toServiceBuilderEmailAddress(EmailAddress emailAddress) {
-
-		String address = emailAddress.getEmailAddress();
-
-		if (Validator.isNull(address)) {
-			return null;
-		}
-
-		com.liferay.portal.kernel.model.EmailAddress
-			serviceBuilderEmailAddress =
-				_emailAddressLocalService.createEmailAddress(
-					GetterUtil.getLong(emailAddress.getId()));
-
-		serviceBuilderEmailAddress.setAddress(address);
-		serviceBuilderEmailAddress.setTypeId(
-			_toListTypeId(
-				"email-address", emailAddress.getType(),
-				ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS));
-		serviceBuilderEmailAddress.setPrimary(
-			GetterUtil.getBoolean(emailAddress.getPrimary()));
-
-		return serviceBuilderEmailAddress;
-	}
-
-	private com.liferay.portal.kernel.model.Phone _toServiceBuilderPhone(
-		Phone phone) {
-
-		String number = phone.getPhoneNumber();
-		String extension = phone.getExtension();
-
-		if (Validator.isNull(number) && Validator.isNull(extension)) {
-			return null;
-		}
-
-		com.liferay.portal.kernel.model.Phone serviceBuilderPhone =
-			_phoneLocalService.createPhone(GetterUtil.getLong(phone.getId()));
-
-		serviceBuilderPhone.setNumber(number);
-		serviceBuilderPhone.setExtension(extension);
-		serviceBuilderPhone.setTypeId(
-			_toListTypeId(
-				"other", phone.getPhoneType(),
-				ListTypeConstants.ORGANIZATION_PHONE));
-		serviceBuilderPhone.setPrimary(
-			GetterUtil.getBoolean(phone.getPrimary()));
-
-		return serviceBuilderPhone;
-	}
-
 	private int _toTime(String timeString) {
 		if (Validator.isNull(timeString)) {
 			return -1;
@@ -735,26 +619,6 @@ public class OrganizationResourceImpl
 		return GetterUtil.getInteger(format.format(date));
 	}
 
-	private Website _toWebsite(WebUrl webUrl) {
-		String url = webUrl.getUrl();
-
-		if (Validator.isNull(url)) {
-			return null;
-		}
-
-		Website website = _websiteLocalService.createWebsite(
-			GetterUtil.getLong(webUrl.getId()));
-
-		website.setUrl(url);
-		website.setTypeId(
-			_toListTypeId(
-				"public", webUrl.getUrlType(),
-				ListTypeConstants.ORGANIZATION_WEBSITE));
-		website.setPrimary(GetterUtil.getBoolean(webUrl.getPrimary()));
-
-		return website;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationResourceImpl.class);
 
@@ -762,19 +626,10 @@ public class OrganizationResourceImpl
 		new OrganizationEntityModel();
 
 	@Reference
-	private AddressLocalService _addressLocalService;
-
-	@Reference
-	private CountryService _countryService;
-
-	@Reference
-	private EmailAddressLocalService _emailAddressLocalService;
+	private ContactInformationHelper _contactInformationHelper;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
-
-	@Reference
-	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
@@ -786,12 +641,6 @@ public class OrganizationResourceImpl
 	private OrgLaborLocalService _orgLaborLocalService;
 
 	@Reference
-	private PhoneLocalService _phoneLocalService;
-
-	@Reference
 	private RegionService _regionService;
-
-	@Reference
-	private WebsiteLocalService _websiteLocalService;
 
 }

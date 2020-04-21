@@ -224,7 +224,11 @@ definition {
 
 	@priority = "4"
 	test NavigationPortletSmoke {
-		Navigator.openURL(pageName = "Wiki Test Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Navigation Test Page");
+
+		Navigator.gotoPage(pageName = "Navigation Test Page");
 
 		Portlet.addPG(portletName = "Tree Menu");
 

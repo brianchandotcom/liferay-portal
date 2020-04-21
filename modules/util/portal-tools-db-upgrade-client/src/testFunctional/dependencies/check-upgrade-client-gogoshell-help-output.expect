@@ -1,0 +1,102 @@
+#!/usr/bin/expect
+
+spawn [db.upgrade.client.home]/db_upgrade[file.suffix.bat] -s
+
+set timeout 900
+
+expect {
+    "Type \"help\" to get available upgrade and verify commands.\r\nType \"help \{command\}\" to get additional information about the command. For example, \"help upgrade:list\"." {send "help\r"}
+    timeout {send_user "No Gogoshell messages display";exit 2}
+}
+
+set timeout 5
+
+expect {
+    "executeAll - Execute all verify processes\r\r\n   scope: verify" {}
+    timeout {send_user "No available command verify:executeAll";exit 2}
+}
+
+expect {
+    "list - List all registered verify processes\r\r\n   scope: verify" {}
+    timeout {send_user "No available command verify:list";exit 2}
+}
+
+expect {
+    "list - List registered upgrade processes for all modules\r\r\n   scope: upgrade" {}
+    timeout {send_user "No available command upgrade:list";exit 2}
+}
+
+expect {
+    "check - List pending or running upgrades\r\r\n   scope: upgrade" {}
+    timeout {send_user "No available command upgrade:check";exit 2}
+}
+
+expect {
+    "show - Show all verify processes for a specific verify process name\r\r\n   scope: verify" {}
+    timeout {send_user "No available command verify:show";exit 2}
+}
+
+expect {
+    "showReports - Show all available outputs\r\r\n   scope: verify" {}
+    timeout {send_user "No available command verify:showReports";exit 2}
+}
+
+expect {
+    "executeAll - Execute all pending upgrades\r\r\n   scope: upgrade" {}
+    timeout {send_user "No available command upgrade:executeAll";exit 2}
+}
+
+expect {
+    "execute - Execute a specific verify process\r\r\n   scope: verify" {}
+    timeout {send_user "No available command verify:execute";exit 2}
+}
+
+expect {
+    "execute - Execute upgrade for a specific module and final version\r\r\n   scope: upgrade" {send "help upgrade:check\r"}
+    timeout {send_user "No available command upgrade:execute";exit 2}
+}
+
+expect {
+    "check - List pending or running upgrades" {send "help upgrade:execute\r"}
+    timeout {send_user "No help output for command upgrade:check";exit 2}
+}
+
+expect {
+    "execute - Execute upgrade for a specific module and final version" {send "help upgrade:executeAll\r"}
+    timeout {send_user "No help output for command upgrade:execute";exit 2}
+}
+
+expect {
+    "executeAll - Execute all pending upgrades" {send "help upgrade:list\r"}
+    timeout {send_user "No help output for command upgrade:executeAll";exit 2}
+}
+
+expect {
+    "list - List registered upgrade processes for all modules" {send "help verify:execute\r"}
+    timeout {send_user "No help output for command upgrade:list";exit 2}
+}
+
+expect {
+    "execute - Execute a specific verify process" {send "help verify:executeAll\r"}
+    timeout {send_user "No help output for command verify:execute";exit 2}
+}
+
+expect {
+    "executeAll - Execute all verify processes" {send "help verify:list\r"}
+    timeout {send_user "No help output for command verify:executeAll";exit 2}
+}
+
+expect {
+    "list - List all registered verify processes" {send "help verify:show\r"}
+    timeout {send_user "No help output for command verify:list";exit 2}
+}
+
+expect {
+    "show - Show all verify processes for a specific verify process name" {send "help verify:showReports\r"}
+    timeout {send_user "No help output for command verify:show";exit 2}
+}
+
+expect {
+    "showReports - Show all available outputs" {send_user "PASS"}
+    timeout {send_user "No help output for command verify:showReports";exit 2}
+}

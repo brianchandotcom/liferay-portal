@@ -433,7 +433,6 @@ AUI.add(
 				},
 
 				sortBox(box) {
-					var instance = this;
 					var newBox = [];
 
 					var options = box.all('option');

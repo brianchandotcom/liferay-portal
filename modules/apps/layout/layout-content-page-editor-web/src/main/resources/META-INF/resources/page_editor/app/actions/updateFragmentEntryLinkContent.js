@@ -18,11 +18,13 @@ export default function updateFragmentEntryLinkContent({
 	content,
 	editableValues,
 	fragmentEntryLinkId,
+	isUndo = false,
 }) {
 	return {
 		content,
 		editableValues,
 		fragmentEntryLinkId,
+		isUndo,
 		type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
 	};
 }

@@ -12,25 +12,15 @@
  * details.
  */
 
-import updateFragmentEntryLinkContent from '../actions/updateFragmentEntryLinkContent';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
-import FragmentService from '../services/FragmentService';
+import {updateFragmentEntryLinkContent} from '../../actions/index';
+import FragmentService from '../../services/FragmentService';
 
-export default function updateFragmentConfiguration({
-	configurationValues,
-	fragmentEntryLink,
-	isUndo = false,
-}) {
-	const {editableValues, fragmentEntryLinkId} = fragmentEntryLink;
-
-	const nextEditableValues = {
-		...editableValues,
-		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: configurationValues,
-	};
+function undoAction({action}) {
+	const {editableValues, fragmentEntryLinkId} = action;
 
 	return dispatch => {
 		return FragmentService.updateConfigurationValues({
-			configurationValues: nextEditableValues,
+			configurationValues: editableValues,
 			fragmentEntryLinkId,
 			onNetworkStatus: dispatch,
 		}).then(({content, editableValues}) => {
@@ -39,9 +29,22 @@ export default function updateFragmentConfiguration({
 					content,
 					editableValues,
 					fragmentEntryLinkId,
-					isUndo,
+					isUndo: true,
 				})
 			);
 		});
 	};
 }
+
+function getDerivedStateForUndo({action, state}) {
+	const {fragmentEntryLinkId} = action;
+
+	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+
+	return {
+		editableValues: fragmentEntryLink.editableValues,
+		fragmentEntryLinkId,
+	};
+}
+
+export {undoAction, getDerivedStateForUndo};

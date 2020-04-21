@@ -21,7 +21,6 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
@@ -41,7 +40,7 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverter;
-import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageFragmentInstanceDefinitionConverterUtil;
+import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageFragmentInstanceDefinitionConverter;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageWidgetInstanceDefinitionConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -635,15 +634,11 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 				return new PageElement() {
 					{
 						definition =
-							PageFragmentInstanceDefinitionConverterUtil.
+							_pageFragmentInstanceDefinitionConverter.
 								toPageFragmentInstanceDefinition(
-									_fragmentCollectionContributorTracker,
-									_fragmentEntryConfigurationParser,
 									fragmentLayoutStructureItem,
-									_fragmentRendererTracker,
-									_infoDisplayContributorTracker,
-									saveInlineContent,
-									saveMappingConfiguration);
+									saveInlineContent, saveMappingConfiguration
+								);
 						type = PageElement.Type.FRAGMENT;
 					}
 				};
@@ -819,9 +814,6 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 		_fragmentCollectionContributorTracker;
 
 	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
@@ -840,6 +832,10 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private PageFragmentInstanceDefinitionConverter
+		_pageFragmentInstanceDefinitionConverter;
 
 	@Reference
 	private Portal _portal;

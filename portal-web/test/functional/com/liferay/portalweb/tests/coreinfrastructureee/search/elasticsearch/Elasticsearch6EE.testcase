@@ -448,8 +448,6 @@ definition {
 	}
 
 	test ConfigureSimilarResultsMinimumShouldMatch {
-		property portal.upstream = "quarantine";
-
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
@@ -509,8 +507,6 @@ definition {
 	}
 
 	test ConfigureSimilarResultsStopWords {
-		property portal.upstream = "quarantine";
-
 		JSONWebcontent.addWebContent(
 			content = "No Match",
 			groupName = "Guest",

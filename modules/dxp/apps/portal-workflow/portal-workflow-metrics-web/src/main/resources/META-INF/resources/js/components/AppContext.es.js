@@ -16,10 +16,13 @@ import ToasterProvider from '../shared/components/toaster/ToasterProvider.es';
 const AppContext = React.createContext();
 
 const AppContextProvider = ({children, ...props}) => {
+	const [reindexStatuses, setReindexStatuses] = useState([]);
 	const [title, setTitle] = useState(Liferay.Language.get('metrics'));
 
 	const state = {
 		...props,
+		reindexStatuses,
+		setReindexStatuses,
 		setTitle,
 		title,
 	};

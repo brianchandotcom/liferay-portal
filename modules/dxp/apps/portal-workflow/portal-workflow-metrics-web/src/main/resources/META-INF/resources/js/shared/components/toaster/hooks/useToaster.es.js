@@ -21,7 +21,7 @@ const useToaster = () => {
 			addToast({
 				autoClose,
 				message: message || Liferay.Language.get('error'),
-				title: title || Liferay.Language.get('error'),
+				title: title || `${Liferay.Language.get('error')}:`,
 				type: 'danger',
 			});
 		},
@@ -37,7 +37,7 @@ const useToaster = () => {
 			addToast({
 				autoClose,
 				message: message || Liferay.Language.get('success'),
-				title: title || Liferay.Language.get('success'),
+				title: title || `${Liferay.Language.get('success')}:`,
 				type: 'success',
 			});
 		},

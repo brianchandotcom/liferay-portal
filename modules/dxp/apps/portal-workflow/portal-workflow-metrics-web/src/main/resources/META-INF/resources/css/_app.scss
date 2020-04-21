@@ -1,3 +1,5 @@
+$font-weight-semi-bold: 600;
+
 .portal-workflow-metrics-app {
 	margin-top: 0 !important;
 	padding-top: 0;
@@ -22,6 +24,15 @@
 		pointer-events: none;
 	}
 
+	.reindex-action {
+		color: black;
+		min-height: 66px;
+
+		&:nth-child(2) :first-child {
+			font-weight: $font-weight-semi-bold !important;
+		}
+	}
+
 	.sla-form > .sheet {
 		margin-top: 24px;
 
@@ -44,6 +55,10 @@
 
 .control-menu-level-1-nav .dropdown-menu-header .dropdown-item {
 	color: #6b6c7e;
+}
+
+.font-weight-semi-bold {
+	font-weight: $font-weight-semi-bold !important;
 }
 
 .link-text:hover {

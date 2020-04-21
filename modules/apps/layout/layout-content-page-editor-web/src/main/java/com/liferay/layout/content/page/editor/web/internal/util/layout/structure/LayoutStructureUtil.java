@@ -26,12 +26,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
+import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
@@ -92,13 +88,10 @@ public class LayoutStructureUtil {
 	}
 
 	public static String getLayoutStructureItemJSON(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-			FragmentRendererTracker fragmentRendererTracker, long groupId,
-			InfoDisplayContributorTracker infoDisplayContributorTracker,
-			String itemId, long plid, boolean saveInlineContent,
-			boolean saveMappingConfiguration, long segmentsExperienceId)
+			long groupId, String itemId,
+			PageDefinitionConverter pageDefinitionConverter, long plid,
+			boolean saveInlineContent, boolean saveMappingConfiguration,
+			long segmentsExperienceId)
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -110,12 +103,10 @@ public class LayoutStructureUtil {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-		PageElement pageElement = PageDefinitionConverterUtil.toPageElement(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker, groupId,
-			infoDisplayContributorTracker, layoutStructure,
+		PageElement pageElement = pageDefinitionConverter.toPageElement(
+			groupId, layoutStructure,
 			layoutStructure.getLayoutStructureItem(itemId), saveInlineContent,
-			saveMappingConfiguration, segmentsExperienceId);
+			saveMappingConfiguration);
 
 		try {
 			SimpleFilterProvider simpleFilterProvider =

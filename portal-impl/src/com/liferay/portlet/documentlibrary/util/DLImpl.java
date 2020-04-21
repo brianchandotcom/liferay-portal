@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -1227,6 +1228,7 @@ public class DLImpl implements DL {
 					SetUtil.fromArray(
 						PropsUtil.getArray(
 							PropsKeys.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES)));
+				add(ContentTypes.IMAGE_SVG_XML);
 			}
 		};
 

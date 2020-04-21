@@ -12,12 +12,19 @@
  * details.
  */
 
-import {ADD_ITEM, MOVE_ITEM, UPDATE_ITEM_CONFIG} from '../../actions/types';
+import {
+	ADD_ITEM,
+	MOVE_ITEM,
+	UPDATE_EDITABLE_VALUES,
+	UPDATE_ITEM_CONFIG,
+} from '../../actions/types';
+import * as undoEditableValuesAction from './undoEditableValuesAction';
 import * as undoLayoutDataAction from './undoLayoutDataAction';
 
 const UNDO_ACTIONS = {
 	[ADD_ITEM]: undoLayoutDataAction,
 	[MOVE_ITEM]: undoLayoutDataAction,
+	[UPDATE_EDITABLE_VALUES]: undoEditableValuesAction,
 	[UPDATE_ITEM_CONFIG]: undoLayoutDataAction,
 };
 

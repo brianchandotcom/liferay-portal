@@ -12,19 +12,25 @@
  * details.
  */
 
-import {UPDATE_EDITABLE_VALUES} from './types';
+import updateEditableValues from '../../thunks/updateEditableValues';
 
-export default function updateEditableValues({
-	editableValues,
-	fragmentEntryLinkId,
-	isUndo,
-	segmentsExperienceId,
-}) {
+function undoAction({action, store}) {
+	return updateEditableValues({
+		...action,
+		isUndo: true,
+		segmentsExperienceId: store.segmentsExperienceId,
+	});
+}
+
+function getDerivedStateForUndo({action, state}) {
+	const {fragmentEntryLinkId} = action;
+
+	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+
 	return {
-		editableValues,
+		editableValues: fragmentEntryLink.editableValues,
 		fragmentEntryLinkId,
-		isUndo,
-		segmentsExperienceId,
-		type: UPDATE_EDITABLE_VALUES,
 	};
 }
+
+export {undoAction, getDerivedStateForUndo};

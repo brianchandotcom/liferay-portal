@@ -18,10 +18,12 @@ export default function updateLayoutData({
 	addedFragmentEntryLinks = [],
 	deletedFragmentEntryLinkIds = [],
 	layoutData,
+	isUndo = false,
 }) {
 	return {
 		addedFragmentEntryLinks,
 		deletedFragmentEntryLinkIds,
+		isUndo,
 		layoutData,
 		type: UPDATE_LAYOUT_DATA,
 	};

@@ -25,6 +25,7 @@ import permissionsReducer from './permissionsReducer';
 import selectedViewportSizeReducer from './selectedViewportSizeReducer';
 import showResolvedCommentsReducer from './showResolvedCommentsReducer';
 import sidebarReducer from './sidebarReducer';
+import undoReducer from './undoReducer';
 import widgetsReducer from './widgetsReducer';
 
 /**
@@ -32,11 +33,13 @@ import widgetsReducer from './widgetsReducer';
  * been registered from plugins.
  */
 export function reducer(state, action) {
+	const nextState = undoReducer(state, action);
+
 	return [combinedReducer, ...Object.values(state.reducers || {})].reduce(
 		(nextState, nextReducer) => {
 			return nextReducer(nextState, action);
 		},
-		state
+		nextState
 	);
 }
 

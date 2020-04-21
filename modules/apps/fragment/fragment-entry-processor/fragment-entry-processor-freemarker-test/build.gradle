@@ -5,8 +5,10 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationCompile group: "org.jsoup", name: "jsoup", version: "1.10.2"
+	testIntegrationCompile project(":apps:asset:asset-list-api")
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:fragment:fragment-service")
+	testIntegrationCompile project(":apps:item-selector:item-selector-criteria-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:layout:layout-test-util")

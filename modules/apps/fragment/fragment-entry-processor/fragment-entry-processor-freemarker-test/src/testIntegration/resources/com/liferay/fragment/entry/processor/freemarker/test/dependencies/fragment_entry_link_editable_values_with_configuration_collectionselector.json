@@ -1,0 +1,19 @@
+{
+	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor": {
+		"dropZones": []
+	},
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"segments-experience-id-0": {
+			"collection": {
+				"classNameId": "${classNameId}",
+				"classPK": "${classPK}",
+				"itemSubtype": "",
+				"itemType": "${itemType}",
+				"title": "${title}",
+				"type": "${type}"
+			}
+		}
+	}
+}

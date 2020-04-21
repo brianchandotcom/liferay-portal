@@ -566,7 +566,10 @@ describe('LayoutProvider', () => {
 
 				const {dispatch} = child.context;
 
-				dispatch('focusedFieldEvaluationEnded', mockFieldType);
+				dispatch('focusedFieldEvaluationEnded', {
+					...mockFieldType,
+					instanceId: 'instanceId',
+				});
 
 				jest.runAllTimers();
 

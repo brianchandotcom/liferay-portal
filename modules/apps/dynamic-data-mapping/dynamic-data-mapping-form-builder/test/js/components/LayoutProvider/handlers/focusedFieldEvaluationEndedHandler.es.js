@@ -78,6 +78,7 @@ describe('LayoutProvider/handlers/focusedFieldEvaluationEndedHandler', () => {
 			state = handleFocusedFieldEvaluationEnded(
 				props,
 				state,
+				'instanceIdCurrentOrNew',
 				state.focusedField.settingsContext
 			);
 

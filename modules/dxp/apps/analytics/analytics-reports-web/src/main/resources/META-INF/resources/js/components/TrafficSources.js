@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
 import {useAddWarning} from '../context/store';
@@ -54,9 +54,12 @@ export default function TrafficSources({
 		trafficSource => trafficSource.value === undefined
 	);
 
-	if (missingTrafficSourceValue) {
-		addWarning();
-	}
+	useEffect(() => {
+		if (missingTrafficSourceValue) {
+			addWarning();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [missingTrafficSourceValue]);
 
 	function handleLegendMouseEnter(name) {
 		setHighlighted(name);

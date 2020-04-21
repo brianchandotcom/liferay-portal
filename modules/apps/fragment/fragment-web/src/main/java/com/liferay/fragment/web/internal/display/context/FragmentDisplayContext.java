@@ -58,6 +58,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -652,8 +653,15 @@ public class FragmentDisplayContext {
 			return StringPool.BLANK;
 		}
 
+		Stream<FragmentCollectionContributor> stream =
+			fragmentCollectionContributors.stream();
+
 		FragmentCollectionContributor fragmentCollectionContributor =
-			fragmentCollectionContributors.get(0);
+			stream.sorted(
+				new FragmentCollectionContributorNameComparator(
+					_themeDisplay.getLocale())
+			).findFirst(
+			).get();
 
 		return fragmentCollectionContributor.getFragmentCollectionKey();
 	}

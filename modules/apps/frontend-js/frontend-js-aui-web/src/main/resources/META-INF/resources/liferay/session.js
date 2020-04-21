@@ -643,10 +643,21 @@ AUI.add(
 					if (!instance._alertClosed) {
 						var banner = instance._getBanner();
 
+						var bannerFocused = banner.bodyNode.contains(
+							document.activeElement
+						);
+
 						banner.set(
 							'message',
 							Lang.sub(instance._warningText, [remainingTime])
 						);
+
+						if (bannerFocused) {
+							banner.bodyNode
+								.all('a')
+								.item(0)
+								.focus();
+						}
 					}
 
 					DOC.title =

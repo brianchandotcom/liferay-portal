@@ -12,6 +12,7 @@
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import React, {useMemo} from 'react';
 
+import HeaderKebab from '../../shared/components/header/HeaderKebab.es';
 import PromisesResolver from '../../shared/components/promises-resolver/PromisesResolver.es';
 import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import {parse} from '../../shared/components/router/queryString.es';
@@ -75,6 +76,14 @@ const ProcessListPage = ({history, query, routeParams}) => {
 
 	return (
 		<PromisesResolver promises={promises}>
+			<HeaderKebab
+				kebabItems={[
+					{
+						label: Liferay.Language.get('settings'),
+						link: `/settings/indexes`,
+					},
+				]}
+			/>
 			<ProcessListPage.Header
 				search={search}
 				totalCount={data.totalCount}

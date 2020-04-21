@@ -55,7 +55,7 @@ const RatingsLike = ({
 	const handleSendVoteRequest = score => {
 		sendVoteRequest(score).then(({totalScore} = {}) => {
 			if (isMounted() && totalScore) {
-				setTotalLikes(totalScore);
+				setTotalLikes(Math.round(totalScore));
 			}
 		});
 	};

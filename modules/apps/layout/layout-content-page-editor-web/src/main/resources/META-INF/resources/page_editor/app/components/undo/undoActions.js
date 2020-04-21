@@ -14,6 +14,6 @@
 
 const UNDO_ACTIONS = {};
 
-export function canUndoAction(actionType) {
-	return Object.keys(UNDO_ACTIONS).includes(actionType);
+export function canUndoAction(action) {
+	return Object.keys(UNDO_ACTIONS).includes(action.type) && !action.isUndo;
 }

@@ -469,6 +469,7 @@ describe('Sidebar', () => {
 				'focusedFieldEvaluationEnded',
 				{
 					...changedFieldType,
+					instanceId: expect.any(String),
 					settingsContext: {
 						...changedFieldType.settingsContext,
 						pages: [
@@ -564,6 +565,7 @@ describe('Sidebar', () => {
 				'focusedFieldEvaluationEnded',
 				{
 					...changedFieldType,
+					instanceId: expect.any(String),
 					settingsContext: {
 						...changedFieldType.settingsContext,
 						pages: [

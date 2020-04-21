@@ -108,6 +108,7 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 			_nodeWorkflowMetricsReindexer.reindex(companyId);
 			_processWorkflowMetricsReindexer.reindex(companyId);
 			_taskWorkflowMetricsReindexer.reindex(companyId);
+			_transitionWorkflowMetricsReindexer.reindex(companyId);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);

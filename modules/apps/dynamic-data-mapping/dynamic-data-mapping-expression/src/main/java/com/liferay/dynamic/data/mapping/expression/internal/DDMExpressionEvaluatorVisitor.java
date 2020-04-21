@@ -215,10 +215,10 @@ public class DDMExpressionEvaluatorVisitor
 		method.setAccessible(true);
 
 		try {
+			Class<?>[] parameterTypes = method.getParameterTypes();
+
 			Object[] functionParameters = getFunctionParameters(
 				context.functionParameters());
-
-			Class<?>[] parameterTypes = method.getParameterTypes();
 
 			if ((parameterTypes.length == 1) &&
 				(parameterTypes[0] == new Object[0].getClass())) {

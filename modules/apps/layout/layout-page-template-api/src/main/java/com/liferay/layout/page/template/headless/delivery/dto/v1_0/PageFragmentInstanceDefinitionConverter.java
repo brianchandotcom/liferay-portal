@@ -14,11 +14,7 @@
 
 package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -30,30 +26,15 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface PageFragmentInstanceDefinitionConverter {
 
 	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentLayoutStructureItem fragmentLayoutStructureItem);
+
+	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
 		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		boolean saveInlineContent, boolean saveMapping);
 
 	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		boolean saveInlineContent, boolean saveMapping,
 		long segmentsExperienceId);
-
-	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		FragmentRendererTracker fragmentRendererTracker);
 
 }

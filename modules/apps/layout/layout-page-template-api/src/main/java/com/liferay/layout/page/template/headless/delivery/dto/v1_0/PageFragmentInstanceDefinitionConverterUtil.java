@@ -46,10 +46,7 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 
 		return pageFragmentInstanceDefinitionConverter.
 			toPageFragmentInstanceDefinition(
-				fragmentCollectionContributorTracker,
-				fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
-				fragmentRendererTracker, infoDisplayContributorTracker,
-				saveInlineContent, saveMapping, 0);
+				fragmentLayoutStructureItem, saveInlineContent, saveMapping, 0);
 	}
 
 	public static PageFragmentInstanceDefinition
@@ -69,10 +66,8 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 
 		return pageFragmentInstanceDefinitionConverter.
 			toPageFragmentInstanceDefinition(
-				fragmentCollectionContributorTracker,
-				fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
-				fragmentRendererTracker, infoDisplayContributorTracker,
-				saveInlineContent, saveMapping, segmentsExperienceId);
+				fragmentLayoutStructureItem, saveInlineContent, saveMapping,
+				segmentsExperienceId);
 	}
 
 	public static PageFragmentInstanceDefinition
@@ -90,10 +85,7 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 
 		return pageFragmentInstanceDefinitionConverter.
 			toPageFragmentInstanceDefinition(
-				fragmentCollectionContributorTracker,
-				fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
-				fragmentRendererTracker, infoDisplayContributorTracker, true,
-				true);
+				fragmentLayoutStructureItem, true, true);
 	}
 
 	private static final ServiceTracker

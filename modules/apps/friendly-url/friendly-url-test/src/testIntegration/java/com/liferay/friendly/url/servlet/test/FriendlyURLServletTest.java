@@ -309,6 +309,46 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
+	public void testServiceLinkToURLRedirectWithQueryParams() throws Throwable {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		Layout redirectLayout = LayoutTestUtil.addLayout(_group);
+
+		redirectLayout.setType(LayoutConstants.TYPE_URL);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put("url", _layout.getFriendlyURL());
+
+		redirectLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+		_layoutLocalService.updateLayout(redirectLayout);
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		String requestURI =
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				getPath(_group, redirectLayout);
+
+		mockHttpServletRequest.setRequestURI(requestURI);
+
+		mockHttpServletRequest.setParameter("param", "true");
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		String redirectedURL = mockHttpServletResponse.getRedirectedUrl();
+
+		Assert.assertTrue(
+			"Redirect URL must include queryString ?param=true",
+			redirectedURL.contains("?param=true"));
+	}
+
+	@Test
 	public void testServiceRedirect() throws Throwable {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

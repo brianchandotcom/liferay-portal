@@ -25,7 +25,7 @@ describe('The HeaderKebab component should', () => {
 
 		body.className = 'user-control-group';
 
-		body.innerHTML = `<div class="control-menu-icon"></div>`;
+		body.innerHTML = `<ul class="control-menu-nav"><li></li></ul>`;
 
 		document.body.appendChild(body);
 	});

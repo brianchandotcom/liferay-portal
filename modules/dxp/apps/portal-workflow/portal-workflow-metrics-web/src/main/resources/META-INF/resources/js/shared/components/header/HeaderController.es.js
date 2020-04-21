@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
 
 import {AppContext} from '../../../components/AppContext.es';
 import HeaderBackButton from './HeaderBackButton.es';
@@ -36,6 +36,16 @@ const HeaderController = ({basePath}) => {
 			),
 		};
 	}, [portletNamespace]);
+
+	useEffect(() => {
+		const legacyElm = document.querySelector(
+			'[data-qa-id="headerOptions"]'
+		);
+
+		if (legacyElm) {
+			legacyElm.innerHTML = '';
+		}
+	}, []);
 
 	return (
 		<>

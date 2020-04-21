@@ -13,6 +13,7 @@
  */
 
 import {
+	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
 	MOVE_ITEM,
 	UPDATE_EDITABLE_VALUES,
@@ -21,9 +22,11 @@ import {
 } from '../../actions/types';
 import * as undoEditableValuesAction from './undoEditableValuesAction';
 import * as undoFragmentConfiguration from './undoFragmentConfiguration';
+import * as undoFragmentEntryLinks from './undoFragmentEntryLinks';
 import * as undoLayoutDataAction from './undoLayoutDataAction';
 
 const UNDO_ACTIONS = {
+	[ADD_FRAGMENT_ENTRY_LINKS]: undoFragmentEntryLinks,
 	[ADD_ITEM]: undoLayoutDataAction,
 	[MOVE_ITEM]: undoLayoutDataAction,
 	[UPDATE_EDITABLE_VALUES]: undoEditableValuesAction,

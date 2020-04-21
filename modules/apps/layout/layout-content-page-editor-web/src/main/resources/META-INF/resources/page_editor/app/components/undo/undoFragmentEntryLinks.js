@@ -12,19 +12,23 @@
  * details.
  */
 
-import {UPDATE_UNDO_ACTIONS} from '../actions/types';
-import {undoAction} from '../components/undo/undoActions';
+import deleteItem from '../../thunks/deleteItem';
 
-export default function undo({store}) {
-	return dispatch => {
-		if (store.undoHistory && store.undoHistory.length === 0) {
-			return;
-		}
-
-		const [lastUndo, ...undos] = store.undoHistory || [];
-
-		dispatch({type: UPDATE_UNDO_ACTIONS, undoHistory: undos});
-
-		undoAction({action: lastUndo, store})(dispatch);
-	};
+function undoAction({action, store}) {
+	return deleteItem({...action, store});
 }
+
+function getDerivedStateForUndo({action}) {
+	const fragmentEntryLinkId =
+		action.fragmentEntryLinks[0].fragmentEntryLinkId;
+
+	const itemId = Object.values(action.layoutData.items).find(
+		item =>
+			item.config &&
+			item.config.fragmentEntryLinkId === fragmentEntryLinkId
+	).itemId;
+
+	return {itemId};
+}
+
+export {undoAction, getDerivedStateForUndo};

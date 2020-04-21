@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.LocationVariableProtocol;
 import com.liferay.portal.kernel.settings.LocationVariableResolver;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -171,7 +172,8 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		try {
 			if ((_locationVariableResolver != null) &&
-				_locationVariableResolver.isLocationVariable(value)) {
+				_locationVariableResolver.isLocationVariable(
+					value, LocationVariableProtocol.RESOURCE)) {
 
 				value = _locationVariableResolver.resolve(value);
 			}

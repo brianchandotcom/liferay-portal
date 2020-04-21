@@ -192,9 +192,9 @@ export default function Chart({
 						key = 'analyticsReportsHistoricalViews';
 					}
 
-						if (!hasWarning) {
-					addWarning();
-						}
+					if (!hasWarning) {
+						addWarning();
+					}
 
 					actions.addDataSetItem({
 						dataSetItem: {histogram: [], value: null},

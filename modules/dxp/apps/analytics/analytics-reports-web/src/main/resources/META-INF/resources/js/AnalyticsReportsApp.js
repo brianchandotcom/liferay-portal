@@ -51,16 +51,16 @@ export default function({context, props}) {
 			}}
 		>
 			<StoreContextProvider>
-			<Navigation
-				api={api}
-				authorName={authorName}
-				defaultTimeSpanKey={defaultTimeSpanKey}
-				languageTag={languageTag}
-				pagePublishDate={publishDate}
-				pageTitle={title}
-				timeSpanOptions={timeSpans}
-				trafficSources={trafficSources}
-			/>
+				<Navigation
+					api={api}
+					authorName={authorName}
+					defaultTimeSpanKey={defaultTimeSpanKey}
+					languageTag={languageTag}
+					pagePublishDate={publishDate}
+					pageTitle={title}
+					timeSpanOptions={timeSpans}
+					trafficSources={trafficSources}
+				/>
 			</StoreContextProvider>
 		</ConnectionContext.Provider>
 	);

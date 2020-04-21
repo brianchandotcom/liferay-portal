@@ -12,7 +12,7 @@
  * details.
  */
 
-import updateLayoutData from '../actions/updateLayoutData';
+import updateItemConfigAction from '../actions/updateItemConfig';
 import updatePageContents from '../actions/updatePageContents';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
@@ -30,7 +30,7 @@ export default function updateItemConfig({
 			segmentsExperienceId,
 		})
 			.then(layoutData => {
-				dispatch(updateLayoutData({layoutData}));
+				dispatch(updateItemConfigAction({layoutData}));
 			})
 			.then(() => {
 				InfoItemService.getPageContents({

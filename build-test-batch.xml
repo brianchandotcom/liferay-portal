@@ -6338,6 +6338,13 @@ information. Make sure to commit in all build services results.
 					verbose="true"
 				/>
 
+				<if>
+					<contains string="${module.base.dir}" substring="dxp" />
+					<then>
+						<antcall inheritAll="false" target="setup-profile-dxp" />
+					</then>
+				</if>
+
 				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" refreshdependencies="true" task="test" />
 
 				<move

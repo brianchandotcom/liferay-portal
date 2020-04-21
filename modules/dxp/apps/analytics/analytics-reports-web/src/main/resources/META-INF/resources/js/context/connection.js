@@ -17,7 +17,9 @@ const ConnectionContext = createContext({
 });
 
 ConnectionContext.Provider.propTypes = {
-	validAnalyticsConnection: PropTypes.bool.isRequired,
+	value: PropTypes.shape({
+		validAnalyticsConnection: PropTypes.bool.isRequired,
+	}).isRequired,
 };
 
 export default ConnectionContext;

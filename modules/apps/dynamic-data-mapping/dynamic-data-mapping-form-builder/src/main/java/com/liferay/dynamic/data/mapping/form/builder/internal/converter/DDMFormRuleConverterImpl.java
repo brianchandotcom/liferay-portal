@@ -170,11 +170,10 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 
 		StringBundler sb = new StringBundler(operands.size());
 
-		boolean hasNestedFunctionOperands = _hasNestedFunctionOperands(
-			operands);
+		boolean hasNestedFunction = _hasNestedFunction(operands);
 
 		for (SPIDDMFormRuleCondition.Operand operand : operands) {
-			if (hasNestedFunctionOperands) {
+			if (hasNestedFunction) {
 				sb.append(operand.getValue());
 			}
 			else {
@@ -305,7 +304,7 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 	@Reference
 	protected DDMExpressionFactory ddmExpressionFactory;
 
-	private boolean _hasNestedFunctionOperands(
+	private boolean _hasNestedFunction(
 		List<SPIDDMFormRuleCondition.Operand> operands) {
 
 		Stream<SPIDDMFormRuleCondition.Operand> operandStream =

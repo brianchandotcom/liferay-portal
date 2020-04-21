@@ -279,7 +279,7 @@ definition {
 	}
 
 	macro addInlineImageViaEdit {
-		ItemSelector.gotoItemSelectorViaAlloyEditor();
+		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.uploadFile(
 			navTab = "${navTab}",

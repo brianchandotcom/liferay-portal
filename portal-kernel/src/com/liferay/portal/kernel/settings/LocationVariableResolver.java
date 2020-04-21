@@ -43,7 +43,20 @@ public class LocationVariableResolver {
 
 		if (value.startsWith(_LOCATION_VARIABLE_START) &&
 			value.endsWith(_LOCATION_VARIABLE_END) &&
-			value.contains(_LOCATION_VARIABLE_PROTOCOL_SEPARATOR)) {
+			value.contains(_LOCATION_VARIABLE_PROTOCOL_SEPARATOR) &&
+			LocationVariableProtocol.isProtocol(_getProtocol(value))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isLocationVariable(
+		String value, LocationVariableProtocol locationVariableProtocol) {
+
+		if (isLocationVariable(value) &&
+			locationVariableProtocol.equals(_getProtocol(value))) {
 
 			return true;
 		}
@@ -55,13 +68,13 @@ public class LocationVariableResolver {
 		String protocol = _getProtocol(value);
 		String location = _getLocation(value);
 
-		if (protocol.equals("resource")) {
+		if (LocationVariableProtocol.RESOURCE.equals(protocol)) {
 			return _resolveResource(location);
 		}
-		else if (protocol.equals("file")) {
+		else if (LocationVariableProtocol.FILE.equals(protocol)) {
 			return _resolveFile(location);
 		}
-		else if (protocol.equals("server-property")) {
+		else if (LocationVariableProtocol.SERVER_PROPERTY.equals(protocol)) {
 			return _resolveServerProperty(location);
 		}
 

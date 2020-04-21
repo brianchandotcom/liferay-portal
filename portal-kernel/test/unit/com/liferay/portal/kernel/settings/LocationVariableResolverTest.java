@@ -51,8 +51,25 @@ public class LocationVariableResolverTest extends PowerMockito {
 	}
 
 	@Test
+	public void testIsLocationVariableWithProtocol() {
+		Assert.assertTrue(
+			_locationVariableResolver.isLocationVariable(
+				"${resource:location}", LocationVariableProtocol.RESOURCE));
+		Assert.assertFalse(
+			_locationVariableResolver.isLocationVariable(
+				"${resource:location}", LocationVariableProtocol.FILE));
+	}
+
+	@Test
 	public void testIsLocationVariableWithVariable() {
 		Assert.assertTrue(
+			_locationVariableResolver.isLocationVariable(
+				"${resource:location}"));
+	}
+
+	@Test
+	public void testIsLocationVariableWithVariableWithInvalidProtocol() {
+		Assert.assertFalse(
 			_locationVariableResolver.isLocationVariable(
 				"${protocol:location}"));
 	}

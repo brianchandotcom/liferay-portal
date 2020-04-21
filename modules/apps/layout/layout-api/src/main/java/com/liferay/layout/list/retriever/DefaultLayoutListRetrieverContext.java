@@ -26,7 +26,7 @@ public class DefaultLayoutListRetrieverContext
 
 	@Override
 	public Optional<Pagination> getPaginationOptional() {
-		return Optional.of(_pagination);
+		return Optional.ofNullable(_pagination);
 	}
 
 	@Override

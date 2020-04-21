@@ -36,13 +36,16 @@ import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -53,11 +56,15 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -68,8 +75,12 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -174,6 +185,99 @@ public class UserAccountResourceImpl
 			search, filter, pagination, sorts);
 	}
 
+	@Override
+	public UserAccount postUserAccount(UserAccount userAccount)
+		throws Exception {
+
+		User user = _userService.addUser(
+			contextCompany.getCompanyId(), true, null, null, false,
+			userAccount.getAdditionalName(), userAccount.getEmailAddress(), 0,
+			null, contextAcceptLanguage.getPreferredLocale(),
+			userAccount.getGivenName(), userAccount.getAdditionalName(),
+			userAccount.getFamilyName(), _getPrefixId(userAccount),
+			_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+			_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
+			userAccount.getJobTitle(), new long[0], new long[0], new long[0],
+			new long[0], _getAddresses(userAccount),
+			_getServiceBuilderEmailAddresses(userAccount),
+			_getServiceBuilderPhones(userAccount), _getWebsites(userAccount),
+			Collections.emptyList(), false,
+			ServiceContextFactory.getInstance(contextHttpServletRequest));
+
+		UserAccountContactInformation userAccountContactInformation =
+			userAccount.getUserAccountContactInformation();
+
+		if (userAccountContactInformation != null) {
+			Contact contact = user.getContact();
+
+			contact.setSmsSn(userAccountContactInformation.getSms());
+			contact.setFacebookSn(userAccountContactInformation.getFacebook());
+			contact.setJabberSn(userAccountContactInformation.getJabber());
+			contact.setSkypeSn(userAccountContactInformation.getSkype());
+			contact.setTwitterSn(userAccountContactInformation.getTwitter());
+
+			_contactLocalService.updateContact(contact);
+
+			user = _userService.getUserById(user.getUserId());
+		}
+
+		return _toUserAccount(user);
+	}
+
+	private List<Address> _getAddresses(UserAccount userAccount) {
+		return Optional.ofNullable(
+			userAccount.getUserAccountContactInformation()
+		).map(
+			UserAccountContactInformation::getPostalAddresses
+		).map(
+			postalAddresses -> ListUtil.filter(
+				transformToList(
+					postalAddresses,
+					_postalAddress -> _contactInformationHelper.toAddress(
+						_postalAddress, ListTypeConstants.CONTACT_ADDRESS)),
+				Objects::nonNull)
+		).orElse(
+			Collections.emptyList()
+		);
+	}
+
+	private int _getBirthdayDay(UserAccount userAccount) {
+		return _getCalendarFieldValue(userAccount, Calendar.DAY_OF_MONTH, 1);
+	}
+
+	private int _getBirthdayMonth(UserAccount userAccount) {
+		return _getCalendarFieldValue(
+			userAccount, Calendar.MONTH, Calendar.JANUARY);
+	}
+
+	private int _getBirthdayYear(UserAccount userAccount) {
+		return _getCalendarFieldValue(userAccount, Calendar.YEAR, 1977);
+	}
+
+	private int _getCalendarFieldValue(
+		UserAccount userAccount, int calendarField, int defaultValue) {
+
+		return Optional.ofNullable(
+			userAccount.getBirthDate()
+		).map(
+			date -> {
+				Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+				calendar.setTime(date);
+
+				return calendar.get(calendarField);
+			}
+		).orElse(
+			defaultValue
+		);
+	}
+
+	private long _getListTypeId(String value, String type) {
+		ListType listType = _listTypeLocalService.addListType(value, type);
+
+		return listType.getListTypeId();
+	}
+
 	private String _getListTypeMessage(long listTypeId) throws Exception {
 		if (listTypeId == 0) {
 			return null;
@@ -183,6 +287,67 @@ public class UserAccountResourceImpl
 
 		return LanguageUtil.get(
 			contextAcceptLanguage.getPreferredLocale(), listType.getName());
+	}
+
+	private long _getPrefixId(UserAccount userAccount) {
+		return Optional.ofNullable(
+			userAccount.getHonorificPrefix()
+		).map(
+			prefix -> _getListTypeId(prefix, ListTypeConstants.CONTACT_PREFIX)
+		).orElse(
+			0L
+		);
+	}
+
+	private List<com.liferay.portal.kernel.model.EmailAddress>
+		_getServiceBuilderEmailAddresses(UserAccount userAccount) {
+
+		return Optional.ofNullable(
+			userAccount.getUserAccountContactInformation()
+		).map(
+			UserAccountContactInformation::getEmailAddresses
+		).map(
+			emailAddresses -> ListUtil.filter(
+				transformToList(
+					emailAddresses,
+					emailAddress ->
+						_contactInformationHelper.toServiceBuilderEmailAddress(
+							emailAddress,
+							ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
+				Objects::nonNull)
+		).orElse(
+			Collections.emptyList()
+		);
+	}
+
+	private List<com.liferay.portal.kernel.model.Phone>
+		_getServiceBuilderPhones(UserAccount userAccount) {
+
+		return Optional.ofNullable(
+			userAccount.getUserAccountContactInformation()
+		).map(
+			UserAccountContactInformation::getTelephones
+		).map(
+			telephones -> ListUtil.filter(
+				transformToList(
+					telephones,
+					telephone ->
+						_contactInformationHelper.toServiceBuilderPhone(
+							telephone, ListTypeConstants.CONTACT_PHONE)),
+				Objects::nonNull)
+		).orElse(
+			Collections.emptyList()
+		);
+	}
+
+	private long _getSuffixId(UserAccount userAccount) {
+		return Optional.ofNullable(
+			userAccount.getHonorificSuffix()
+		).map(
+			prefix -> _getListTypeId(prefix, ListTypeConstants.CONTACT_SUFFIX)
+		).orElse(
+			0L
+		);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group) {
@@ -214,6 +379,23 @@ public class UserAccountResourceImpl
 			document -> _toUserAccount(
 				_userService.getUserById(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	private List<Website> _getWebsites(UserAccount userAccount) {
+		return Optional.ofNullable(
+			userAccount.getUserAccountContactInformation()
+		).map(
+			UserAccountContactInformation::getWebUrls
+		).map(
+			webUrls -> ListUtil.filter(
+				transformToList(
+					webUrls,
+					webUrl -> _contactInformationHelper.toWebsite(
+						webUrl, ListTypeConstants.CONTACT_WEBSITE)),
+				Objects::nonNull)
+		).orElse(
+			Collections.emptyList()
+		);
 	}
 
 	private OrganizationBrief _toOrganizationBrief(Organization organization) {
@@ -364,7 +546,16 @@ public class UserAccountResourceImpl
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private ContactInformationHelper _contactInformationHelper;
+
+	@Reference
+	private ContactLocalService _contactLocalService;
+
+	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
 	private ListTypeService _listTypeService;

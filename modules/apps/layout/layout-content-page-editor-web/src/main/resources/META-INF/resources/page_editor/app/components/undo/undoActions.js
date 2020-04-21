@@ -12,8 +12,27 @@
  * details.
  */
 
-const UNDO_ACTIONS = {};
+import {ADD_ITEM} from '../../actions/types';
+import * as undoLayoutDataAction from './undoLayoutDataAction';
+
+const UNDO_ACTIONS = {
+	[ADD_ITEM]: undoLayoutDataAction,
+};
 
 export function canUndoAction(action) {
 	return Object.keys(UNDO_ACTIONS).includes(action.type) && !action.isUndo;
+}
+
+export function getDerivedStateForUndo({action, state, type}) {
+	const undoAction = UNDO_ACTIONS[type];
+
+	return undoAction.getDerivedStateForUndo({action, state});
+}
+
+export function undoAction({action, store}) {
+	const {type} = action;
+
+	const undoAction = UNDO_ACTIONS[type];
+
+	return undoAction.undoAction({action, store});
 }

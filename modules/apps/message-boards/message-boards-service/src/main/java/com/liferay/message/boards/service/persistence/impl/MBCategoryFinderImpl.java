@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -574,7 +575,8 @@ public class MBCategoryFinderImpl
 				category.setGroupId(group.getGroupId());
 				category.setCompanyId(group.getCompanyId());
 				category.setName(group.getDescriptiveName());
-				category.setDescription(group.getDescription());
+				category.setDescription(
+					group.getDescription(LocaleUtil.getMostRelevantLocale()));
 				category.setThreadCount(threadCount);
 				category.setMessageCount(messageCount);
 

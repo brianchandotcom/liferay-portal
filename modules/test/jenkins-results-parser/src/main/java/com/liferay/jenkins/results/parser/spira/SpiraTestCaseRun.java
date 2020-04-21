@@ -38,9 +38,10 @@ import org.json.JSONObject;
  */
 public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
-	public static List<SpiraTestCaseRun> recordTestSpiraTestCaseRuns(
+	public static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
-		SpiraReleaseBuild spiraReleaseBuild, List<Result> results) {
+		SpiraReleaseBuild spiraReleaseBuild, SpiraTestSet spiraTestSet,
+		List<Result> results) {
 
 		Integer releaseID = null;
 
@@ -52,6 +53,12 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		if (spiraReleaseBuild != null) {
 			releaseBuildID = spiraReleaseBuild.getID();
+		}
+
+		Integer testSetID = null;
+
+		if (spiraTestSet != null) {
+			testSetID = spiraTestSet.getID();
 		}
 
 		Calendar calendar = Calendar.getInstance();
@@ -78,11 +85,22 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 				"TestRunFormatId", result.getRunnerFormatID());
 
 			if (releaseID != null) {
-				requestJSONObject.put("ReleaseId", releaseID);
+				requestJSONObject.put(SpiraRelease.ID_KEY, releaseID);
 			}
 
 			if (releaseBuildID != null) {
-				requestJSONObject.put("BuildId", releaseBuildID);
+				requestJSONObject.put(SpiraReleaseBuild.ID_KEY, releaseBuildID);
+			}
+
+			if (testSetID != null) {
+				requestJSONObject.put(SpiraTestSet.ID_KEY, testSetID);
+
+				SpiraTestSet.SpiraTestSetTestCase spiraTestSetTestCase =
+					spiraTestSet.assignSpiraTestCase(spiraTestCase);
+
+				requestJSONObject.put(
+					SpiraTestSet.SpiraTestSetTestCase.ID_KEY,
+					spiraTestSetTestCase.getID());
 			}
 
 			requestJSONArray.put(requestJSONObject);
@@ -119,14 +137,16 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		}
 	}
 
-	public static List<SpiraTestCaseRun> recordTestSpiraTestCaseRuns(
+	public static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(
 		final SpiraProject spiraProject, final SpiraRelease spiraRelease,
-		final SpiraReleaseBuild spiraReleaseBuild, List<Result> results,
+		final SpiraReleaseBuild spiraReleaseBuild,
+		final SpiraTestSet spiraTestSet, List<Result> results,
 		Integer resultGroupSize, Integer threadCount) {
 
 		if (results.size() < resultGroupSize) {
-			return recordTestSpiraTestCaseRuns(
-				spiraProject, spiraRelease, spiraReleaseBuild, results);
+			return recordSpiraTestCaseRuns(
+				spiraProject, spiraRelease, spiraReleaseBuild, spiraTestSet,
+				results);
 		}
 
 		List<Callable<List<SpiraTestCaseRun>>> callables = new ArrayList<>();
@@ -169,9 +189,9 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 						}
 
 						List<SpiraTestCaseRun> spiraTestCaseRuns =
-							recordTestSpiraTestCaseRuns(
+							recordSpiraTestCaseRuns(
 								spiraProject, spiraRelease, spiraReleaseBuild,
-								resultGroup);
+								spiraTestSet, resultGroup);
 
 						String durationString =
 							JenkinsResultsParserUtil.toDurationString(
@@ -369,46 +389,6 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 			},
 			searchParameters);
-	}
-
-	protected static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(
-		SpiraProject spiraProject, JSONObject... requestJSONObjects) {
-
-		String urlPath = "projects/{project_id}/test-runs/record-multiple";
-
-		Map<String, String> urlPathReplacements = new HashMap<>();
-
-		urlPathReplacements.put(
-			"project_id", String.valueOf(spiraProject.getID()));
-
-		JSONArray requestJSONArray = new JSONArray();
-
-		for (JSONObject requestJSONObject : requestJSONObjects) {
-			requestJSONArray.put(requestJSONObject);
-		}
-
-		try {
-			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
-				requestJSONArray.toString());
-
-			List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
-
-			for (int i = 0; i < responseJSONArray.length(); i++) {
-				JSONObject responseJSONObject = responseJSONArray.getJSONObject(
-					i);
-
-				responseJSONObject.put(
-					SpiraProject.ID_KEY, spiraProject.getID());
-
-				spiraTestCaseRuns.add(new SpiraTestCaseRun(responseJSONObject));
-			}
-
-			return spiraTestCaseRuns;
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	protected static final Integer ARTIFACT_TYPE_ID = 5;

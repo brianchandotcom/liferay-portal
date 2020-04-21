@@ -12,21 +12,37 @@
  * details.
  */
 
-import {ADD_UNDO_ACTION} from '../actions/types';
+import {ADD_UNDO_ACTION, UPDATE_UNDO_ACTIONS} from '../actions/types';
 import {getDerivedStateForUndo} from '../components/undo/undoActions';
 
 export default function undoReducer(state, action) {
-	if (action.type === ADD_UNDO_ACTION) {
-		const {actionType} = action;
+	switch (action.type) {
+		case ADD_UNDO_ACTION: {
+			const {actionType} = action;
 
-		return {
-			...state,
-			undoHistory: [
-				getDerivedStateForUndo({action, state, type: actionType}),
-				...(state.undoHistory || []),
-			],
-		};
+			return {
+				...state,
+				undoHistory: [
+					getDerivedStateForUndo({action, state, type: actionType}),
+					...(state.undoHistory || []),
+				],
+			};
+		}
+		case UPDATE_UNDO_ACTIONS: {
+			return {
+				...state,
+				undoHistory: action.undoHistory,
+			};
+		}
+		default:
+			return state;
 	}
-
-	return state;
 }
+
+// function getItemIdFromFragmentEntry(fragmentEntryLinkId, layoutData) {
+// 	return Object.values(layoutData.items).find(
+// 		item =>
+// 			item.config &&
+// 			item.config.fragmentEntryLinkId === fragmentEntryLinkId
+// 	).itemId;
+// }

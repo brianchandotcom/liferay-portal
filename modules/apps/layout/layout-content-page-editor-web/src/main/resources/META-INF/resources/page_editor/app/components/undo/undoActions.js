@@ -26,7 +26,7 @@ export function canUndoAction(action) {
 export function getDerivedStateForUndo({action, state, type}) {
 	const undoAction = UNDO_ACTIONS[type];
 
-	return undoAction.getDerivedStateForUndo({action, state});
+	return {...undoAction.getDerivedStateForUndo({action, state}), type};
 }
 
 export function undoAction({action, store}) {

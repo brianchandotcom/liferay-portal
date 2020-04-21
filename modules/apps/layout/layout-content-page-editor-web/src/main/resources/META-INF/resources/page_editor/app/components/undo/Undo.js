@@ -13,15 +13,17 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function Undo() {
+export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 	return (
 		<ClayButton.Group className="d-block d-none mr-3">
 			<ClayButtonWithIcon
 				aria-label={Liferay.Language.get('undo')}
 				className="btn-monospaced"
 				displayType="secondary"
+				onClick={onUndo}
 				small
 				symbol="undo"
 				title={Liferay.Language.get('undo')}
@@ -30,6 +32,7 @@ export default function Undo() {
 				aria-label={Liferay.Language.get('redo')}
 				className="btn-monospaced"
 				displayType="secondary"
+				onClick={onRedo}
 				small
 				symbol="redo"
 				title={Liferay.Language.get('redo')}
@@ -37,3 +40,8 @@ export default function Undo() {
 		</ClayButton.Group>
 	);
 }
+
+Undo.propTypes = {
+	onRedo: PropTypes.func,
+	onUndo: PropTypes.func,
+};

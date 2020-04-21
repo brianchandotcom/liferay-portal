@@ -11,7 +11,13 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${entryTitle}");
 
-		CKEditor.addContent(content = "${entryContent}");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		KeyPress(
+			locator1 = "CKEditor#BODY",
+			value1 = "${entryContent}");
+
+		SelectFrame(value1 = "relative=top");
 
 		Panel.expandPanel(panel = "Configuration");
 

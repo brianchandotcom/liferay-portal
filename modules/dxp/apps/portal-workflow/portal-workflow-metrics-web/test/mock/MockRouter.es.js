@@ -39,6 +39,7 @@ const MockRouter = ({
 	children,
 	client,
 	initialPath = '/1/20/title%3Aasc',
+	initialReindexStatuses = [],
 	isAmPm,
 	path = '/:page/:pageSize/:sort',
 	query = '?backPath=%2F',
@@ -47,6 +48,9 @@ const MockRouter = ({
 	withoutRouterProps,
 }) => {
 	const [title, setTitle] = useState(null);
+	const [reindexStatuses, setReindexStatuses] = useState(
+		initialReindexStatuses
+	);
 
 	const contextState = useMemo(
 		() => ({
@@ -56,14 +60,16 @@ const MockRouter = ({
 			getClient: () => client,
 			isAmPm,
 			maxPages: 3,
-			namespace: 'workflow_',
+			portletNamespace: 'workflow',
+			reindexStatuses,
+			setReindexStatuses,
 			setTitle,
 			title,
 			userId,
 			userName,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
+		[reindexStatuses, title]
 	);
 
 	const initialEntries = useMemo(

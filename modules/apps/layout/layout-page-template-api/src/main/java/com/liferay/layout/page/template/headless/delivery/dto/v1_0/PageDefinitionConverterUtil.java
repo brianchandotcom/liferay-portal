@@ -34,6 +34,19 @@ import org.osgi.util.tracker.ServiceTracker;
 public class PageDefinitionConverterUtil {
 
 	public static PageDefinition toPageDefinition(
+		com.liferay.portal.kernel.model.Layout layout,
+		boolean saveInlineContent, boolean saveMappingConfiguration,
+		long segmentsExperienceId) {
+
+		PageDefinitionConverter pageDefinitionConverter =
+			_serviceTracker.getService();
+
+		return pageDefinitionConverter.toPageDefinition(
+			layout, saveInlineContent, saveMappingConfiguration,
+			segmentsExperienceId);
+	}
+
+	public static PageDefinition toPageDefinition(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -44,10 +57,7 @@ public class PageDefinitionConverterUtil {
 		PageDefinitionConverter pageDefinitionConverter =
 			_serviceTracker.getService();
 
-		return pageDefinitionConverter.toPageDefinition(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			infoDisplayContributorTracker, layout);
+		return pageDefinitionConverter.toPageDefinition(layout);
 	}
 
 	public static PageDefinition toPageDefinition(
@@ -63,30 +73,7 @@ public class PageDefinitionConverterUtil {
 			_serviceTracker.getService();
 
 		return pageDefinitionConverter.toPageDefinition(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			infoDisplayContributorTracker, layout, saveInlineContent,
-			saveMappingConfiguration);
-	}
-
-	public static PageDefinition toPageDefinition(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		com.liferay.portal.kernel.model.Layout layout,
-		boolean saveInlineContent, boolean saveMappingConfiguration,
-		long segmentsExperienceId) {
-
-		PageDefinitionConverter pageDefinitionConverter =
-			_serviceTracker.getService();
-
-		return pageDefinitionConverter.toPageDefinition(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			infoDisplayContributorTracker, layout, saveInlineContent,
-			saveMappingConfiguration, segmentsExperienceId);
+			layout, saveInlineContent, saveMappingConfiguration);
 	}
 
 	/**
@@ -143,10 +130,8 @@ public class PageDefinitionConverterUtil {
 			_serviceTracker.getService();
 
 		return pageDefinitionConverter.toPageElement(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker, groupId,
-			infoDisplayContributorTracker, layoutStructure, layoutStructureItem,
-			saveInlineContent, saveMappingConfiguration, segmentsExperienceId);
+			groupId, layoutStructure, layoutStructureItem, saveInlineContent,
+			saveMappingConfiguration, segmentsExperienceId);
 	}
 
 	private static final ServiceTracker

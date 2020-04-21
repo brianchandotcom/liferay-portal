@@ -17,6 +17,7 @@ import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
 import unescape from 'lodash.unescape';
 
+import BREAKPOINTS from './breakpoints';
 import {
 	component,
 	componentReady,
@@ -49,6 +50,8 @@ import formatStorage from './util/format_storage.es';
 import formatXML from './util/format_xml.es';
 import getCropRegion from './util/get_crop_region.es';
 import getPortletNamespace from './util/get_portlet_namespace.es';
+import isPhone from './util/is_phone';
+import isTablet from './util/is_tablet';
 import navigate from './util/navigate.es';
 import ns from './util/ns.es';
 import objectToURLSearchParams from './util/object_to_url_search_params.es';
@@ -60,6 +63,11 @@ import {getSessionValue, setSessionValue} from './util/session.es';
 import toCharCode from './util/to_char_code.es';
 
 Liferay = window.Liferay || {};
+
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `import BREAKPOINTS from 'frontend-js-web'`
+ */
+Liferay.BREAKPOINTS = BREAKPOINTS;
 
 Liferay.component = component;
 Liferay.componentReady = componentReady;
@@ -109,6 +117,17 @@ Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.getPortletNamespace = getPortletNamespace;
 Liferay.Util.groupBy = groupBy;
 Liferay.Util.isEqual = isEqual;
+
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `import isPhone from 'frontend-js-web'`
+ */
+Liferay.Util.isPhone = isPhone;
+
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `import isTablet from 'frontend-js-web'`
+ */
+Liferay.Util.isTablet = isTablet;
+
 Liferay.Util.navigate = navigate;
 Liferay.Util.ns = ns;
 Liferay.Util.objectToFormData = objectToFormData;

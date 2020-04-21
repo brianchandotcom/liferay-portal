@@ -92,10 +92,10 @@ public class DDMFormInstanceUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		DDMFormInstance formInstance =
+		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceLocalService.fetchDDMFormInstance(baseModelPK);
 
-		if (formInstance == null) {
+		if (ddmFormInstance == null) {
 			return true;
 		}
 

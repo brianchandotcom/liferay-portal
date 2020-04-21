@@ -121,11 +121,11 @@ public class DDMFormInstanceRecordUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		DDMFormInstanceRecord formInstanceRecord =
+		DDMFormInstanceRecord ddmFormInstanceRecord =
 			_ddmFormInstanceRecordLocalService.fetchDDMFormInstanceRecord(
 				baseModelPK);
 
-		if (formInstanceRecord == null) {
+		if (ddmFormInstanceRecord == null) {
 			return true;
 		}
 

@@ -156,11 +156,10 @@ public class RedirectNotFoundEntryLocalServiceTest {
 			allRedirectNotFoundEntries.toString(), 2,
 			allRedirectNotFoundEntries.size());
 
-		Assert.assertEquals(
-			activeRedirectNotFoundEntry, allRedirectNotFoundEntries.get(0));
-
-		Assert.assertEquals(
-			ignoredRedirectNotFoundEntry, allRedirectNotFoundEntries.get(1));
+		Assert.assertTrue(
+			allRedirectNotFoundEntries.contains(activeRedirectNotFoundEntry));
+		Assert.assertTrue(
+			allRedirectNotFoundEntries.contains(ignoredRedirectNotFoundEntry));
 	}
 
 	@Test

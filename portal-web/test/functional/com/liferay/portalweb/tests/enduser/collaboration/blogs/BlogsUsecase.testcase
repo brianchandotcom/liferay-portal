@@ -1206,6 +1206,8 @@ definition {
 			specificURL = "http://www.baker.com:8080/group/guest",
 			userEmailAddress = "test@liferay.com");
 
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080/private-blogs-page");
+
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(

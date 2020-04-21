@@ -340,7 +340,7 @@ export default function FragmentContentInteractionsFilter({
 }
 
 FragmentContentInteractionsFilter.propTypes = {
-	element: PropTypes.instanceOf(HTMLElement),
+	element: PropTypes.object,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	itemId: PropTypes.string.isRequired,
 };

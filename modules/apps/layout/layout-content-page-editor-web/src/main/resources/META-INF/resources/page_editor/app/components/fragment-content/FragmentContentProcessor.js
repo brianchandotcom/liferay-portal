@@ -169,7 +169,7 @@ FragmentContentProcessor.propTypes = {
 		PropTypes.shape({
 			editableId: PropTypes.string.isRequired,
 			editableValueNamespace: PropTypes.string.isRequired,
-			element: PropTypes.instanceOf(HTMLElement).isRequired,
+			element: PropTypes.object.isRequired,
 			processor: PropTypes.object,
 		})
 	),

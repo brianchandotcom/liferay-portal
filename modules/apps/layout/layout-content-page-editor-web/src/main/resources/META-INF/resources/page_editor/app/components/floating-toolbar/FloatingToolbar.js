@@ -333,7 +333,7 @@ FloatingToolbar.propTypes = {
 		getEditableItemPropTypes(),
 		getLayoutDataItemPropTypes(),
 	]),
-	itemRef: PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+	itemRef: PropTypes.shape({current: PropTypes.object}),
 	onButtonClick: PropTypes.func,
 };
 

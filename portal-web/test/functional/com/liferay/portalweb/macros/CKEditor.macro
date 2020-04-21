@@ -30,7 +30,7 @@ definition {
 	macro viewEntryContentImage {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_contentImageName = "${contentImageName}",
 			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 

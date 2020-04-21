@@ -134,7 +134,7 @@ public class PageDefinitionConverterUtil {
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					infoDisplayContributorTracker, layout, saveInlineContent,
-					saveMappingConfiguration, segmentsExperienceId);
+					saveMappingConfiguration);
 				settings = _toSettings(layout);
 			}
 		};
@@ -208,8 +208,7 @@ public class PageDefinitionConverterUtil {
 						fragmentEntryConfigurationParser,
 						fragmentRendererTracker, groupId,
 						infoDisplayContributorTracker, childLayoutStructureItem,
-						saveInlineContent, saveMappingConfiguration,
-						segmentsExperienceId));
+						saveInlineContent, saveMappingConfiguration));
 			}
 			else {
 				pageElements.add(
@@ -227,7 +226,7 @@ public class PageDefinitionConverterUtil {
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker, groupId,
 			infoDisplayContributorTracker, layoutStructureItem,
-			saveInlineContent, saveMappingConfiguration, segmentsExperienceId);
+			saveInlineContent, saveMappingConfiguration);
 
 		if (!pageElements.isEmpty()) {
 			pageElement.setPageElements(
@@ -529,8 +528,7 @@ public class PageDefinitionConverterUtil {
 		FragmentRendererTracker fragmentRendererTracker,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		com.liferay.portal.kernel.model.Layout layout,
-		boolean saveInlineContent, boolean saveMappingConfiguration,
-		long segmentsExperienceId) {
+		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
@@ -566,7 +564,7 @@ public class PageDefinitionConverterUtil {
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			layout.getGroupId(), infoDisplayContributorTracker,
 			mainLayoutStructureItem, saveInlineContent,
-			saveMappingConfiguration, segmentsExperienceId);
+			saveMappingConfiguration);
 
 		if (!mainPageElements.isEmpty()) {
 			pageElement.setPageElements(
@@ -583,7 +581,7 @@ public class PageDefinitionConverterUtil {
 		FragmentRendererTracker fragmentRendererTracker, long groupId,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
-		boolean saveMappingConfiguration, long segmentsExperienceId) {
+		boolean saveMappingConfiguration) {
 
 		if (layoutStructureItem instanceof CollectionLayoutStructureItem) {
 			CollectionLayoutStructureItem collectionLayoutStructureItem =
@@ -755,8 +753,8 @@ public class PageDefinitionConverterUtil {
 									fragmentLayoutStructureItem,
 									fragmentRendererTracker,
 									infoDisplayContributorTracker,
-									saveInlineContent, saveMappingConfiguration,
-									segmentsExperienceId);
+									saveInlineContent,
+									saveMappingConfiguration);
 						type = PageElement.Type.FRAGMENT;
 					}
 				};

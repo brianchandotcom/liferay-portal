@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.search.test.util.TestIndexer;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -82,6 +83,9 @@ public class IndexerRegistryImplTest {
 		Assert.assertNotNull(testIndexer);
 		Assert.assertEquals(_CLASS_NAME, testIndexer.getClassName());
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();
 

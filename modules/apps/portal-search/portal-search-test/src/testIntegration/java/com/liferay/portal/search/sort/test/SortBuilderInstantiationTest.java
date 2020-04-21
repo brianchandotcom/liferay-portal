@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortBuilder;
 import com.liferay.portal.search.sort.SortBuilderFactory;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -50,6 +51,9 @@ public class SortBuilderInstantiationTest {
 
 		Assert.assertNotNull(sort);
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
 	private static SortBuilderFactory _sortBuilderFactory;

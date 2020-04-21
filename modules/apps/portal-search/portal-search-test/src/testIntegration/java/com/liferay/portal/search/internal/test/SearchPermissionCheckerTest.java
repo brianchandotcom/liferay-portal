@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.internal.test.util.BaseTestFilterVisitor;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.After;
@@ -243,6 +244,9 @@ public class SearchPermissionCheckerTest {
 			null, Field.GROUP_ROLE_ID,
 			_group.getGroupId() + StringPool.DASH + _role.getRoleId());
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected void addViewPermission(int scope, long primKey, long roleId)
 		throws Exception {

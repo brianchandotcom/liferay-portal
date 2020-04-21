@@ -20,12 +20,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.search.test.util.TestIndexer;
 
 import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -66,6 +68,9 @@ public class BaseIndexerGetFullQueryTest {
 		Assert.assertNull(
 			_searchContext.getAttribute("relatedEntryClassNames"));
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected void assertEntryClassNames(String... expectedEntryClassNames) {
 		Arrays.sort(expectedEntryClassNames);

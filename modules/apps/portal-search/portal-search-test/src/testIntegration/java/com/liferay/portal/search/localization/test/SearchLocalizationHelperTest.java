@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -152,6 +153,9 @@ public class SearchLocalizationHelperTest {
 			locales, "test_de_DE", "test_es_ES", "example_de_DE",
 			"example_es_ES");
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Company addCompany(Locale... locales) throws Exception {
 		Company company = CompanyTestUtil.addCompany();

@@ -24,6 +24,7 @@ import com.liferay.portal.search.sort.ScoreSort;
 import com.liferay.portal.search.sort.ScriptSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -90,6 +91,9 @@ public class SortsInstantiationTest {
 
 		Assert.assertNotNull(scriptSort);
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
 	private static Sorts _sorts;

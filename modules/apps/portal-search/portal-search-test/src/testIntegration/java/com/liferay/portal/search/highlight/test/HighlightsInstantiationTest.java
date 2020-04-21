@@ -17,6 +17,7 @@ package com.liferay.portal.search.highlight.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.highlight.Highlights;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -54,6 +55,9 @@ public class HighlightsInstantiationTest {
 		Assert.assertNotNull(
 			_highlights.highlight(_highlights.fieldConfig("field")));
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
 	private static Highlights _highlights;

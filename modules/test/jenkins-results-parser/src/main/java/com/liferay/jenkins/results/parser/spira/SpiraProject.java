@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -50,7 +52,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 
 	public static SpiraProject getSpiraProjectByName(String projectName) {
 		List<SpiraProject> spiraProjects = _getSpiraProjects(
-			new SearchQuery.SearchParameter("Name", projectName));
+			new SearchQuery.SearchParameter(
+				"Name", StringEscapeUtils.unescapeJava(projectName)));
 
 		if (spiraProjects.size() > 1) {
 			throw new RuntimeException("Duplicate project name " + projectName);
@@ -105,7 +108,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 			return spiraReleases;
 		}
 
-		String releaseName = PathSpiraArtifact.getPathName(releasePath);
+		String releaseName = StringEscapeUtils.unescapeJava(
+			PathSpiraArtifact.getPathName(releasePath));
 
 		List<SpiraRelease> nameSpiraReleases = SpiraRelease.getSpiraReleases(
 			this, new SearchQuery.SearchParameter("Name", releaseName));
@@ -209,10 +213,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 			return spiraTestCaseFolders;
 		}
 
-		String testCaseFolderName = PathSpiraArtifact.getPathName(
-			testCaseFolderPath);
-
-		testCaseFolderName = testCaseFolderName.replaceAll("\\\\/", "/");
+		String testCaseFolderName = StringEscapeUtils.unescapeJava(
+			PathSpiraArtifact.getPathName(testCaseFolderPath));
 
 		List<SpiraTestCaseFolder> spiraTestCaseFoldersByName =
 			SpiraTestCaseFolder.getSpiraTestCaseFolders(
@@ -243,7 +245,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 			return spiraTestCases;
 		}
 
-		String testCaseName = PathSpiraArtifact.getPathName(testCasePath);
+		String testCaseName = StringEscapeUtils.unescapeJava(
+			PathSpiraArtifact.getPathName(testCasePath));
 
 		List<SpiraTestCaseObject> spiraTestCasesByName =
 			SpiraTestCaseObject.getSpiraTestCases(
@@ -286,7 +289,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 		List<SpiraTestCaseType> spiraTestCaseTypes =
 			SpiraTestCaseType.getSpiraTestCaseTypes(
 				this,
-				new SearchQuery.SearchParameter("Name", testCaseTypeName));
+				new SearchQuery.SearchParameter(
+					"Name", StringEscapeUtils.unescapeJava(testCaseTypeName)));
 
 		if (spiraTestCaseTypes.size() > 1) {
 			throw new RuntimeException(
@@ -383,10 +387,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 			return spiraTestSetFolders;
 		}
 
-		String testSetFolderName = PathSpiraArtifact.getPathName(
-			testSetFolderPath);
-
-		testSetFolderName = testSetFolderName.replaceAll("\\\\/", "/");
+		String testSetFolderName = StringEscapeUtils.unescapeJava(
+			PathSpiraArtifact.getPathName(testSetFolderPath));
 
 		List<SpiraTestSetFolder> spiraTestSetFoldersByName =
 			SpiraTestSetFolder.getSpiraTestSetFolders(
@@ -414,7 +416,8 @@ public class SpiraProject extends BaseSpiraArtifact {
 			return spiraTestSets;
 		}
 
-		String testSetName = PathSpiraArtifact.getPathName(testSetPath);
+		String testSetName = StringEscapeUtils.unescapeJava(
+			PathSpiraArtifact.getPathName(testSetPath));
 
 		List<SpiraTestSet> spiraTestSetsByName = SpiraTestSet.getSpiraTestSets(
 			this, new SearchQuery.SearchParameter("Name", testSetName));

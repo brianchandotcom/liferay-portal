@@ -26,15 +26,11 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.DisplayPageTemplateConverterUtil;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.MasterPageConverterUtil;
-import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
+import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverter;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageTemplateCollectionConverterUtil;
 import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -196,10 +192,7 @@ public class ExportHelper {
 
 		if (layout != null) {
 			PageDefinition pageDefinition =
-				PageDefinitionConverterUtil.toPageDefinition(
-					_fragmentCollectionContributorTracker,
-					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-					_infoDisplayContributorTracker, layout);
+				_pageDefinitionConverter.toPageDefinition(layout);
 
 			zipWriter.addEntry(
 				displayPagePath + "/page-definition.json",
@@ -266,10 +259,7 @@ public class ExportHelper {
 
 		if (layout != null) {
 			PageDefinition pageDefinition =
-				PageDefinitionConverterUtil.toPageDefinition(
-					_fragmentCollectionContributorTracker,
-					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-					_infoDisplayContributorTracker, layout);
+				_pageDefinitionConverter.toPageDefinition(layout);
 
 			zipWriter.addEntry(
 				masterLayoutPath + "/page-definition.json",
@@ -336,10 +326,7 @@ public class ExportHelper {
 
 		if (layout != null) {
 			PageDefinition pageDefinition =
-				PageDefinitionConverterUtil.toPageDefinition(
-					_fragmentCollectionContributorTracker,
-					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-					_infoDisplayContributorTracker, layout);
+				_pageDefinitionConverter.toPageDefinition(layout);
 
 			zipWriter.addEntry(
 				layoutPageTemplateEntryPath + "/page-definition.json",
@@ -374,23 +361,13 @@ public class ExportHelper {
 	};
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
+	private PageDefinitionConverter _pageDefinitionConverter;
 
 }

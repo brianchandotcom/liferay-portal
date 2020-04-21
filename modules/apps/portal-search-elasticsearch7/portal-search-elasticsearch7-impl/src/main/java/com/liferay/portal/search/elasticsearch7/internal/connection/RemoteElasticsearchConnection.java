@@ -92,8 +92,12 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	protected void configureSecurity(RestClientBuilder restClientBuilder) {
 		restClientBuilder.setHttpClientConfigCallback(
 			httpClientBuilder -> {
-				httpClientBuilder.setDefaultCredentialsProvider(
-					createCredentialsProvider());
+				if (_elasticsearchConnectionConfiguration.
+						authenticationEnabled()) {
+
+					httpClientBuilder.setDefaultCredentialsProvider(
+						createCredentialsProvider());
+				}
 
 				if (_elasticsearchConnectionConfiguration.httpSSLEnabled()) {
 					httpClientBuilder.setSSLContext(createSSLContext());
@@ -129,9 +133,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 		RestClientBuilder restClientBuilder = RestClient.builder(httpHosts);
 
-		if (_elasticsearchConnectionConfiguration.authenticationEnabled()) {
-			configureSecurity(restClientBuilder);
-		}
+		configureSecurity(restClientBuilder);
 
 		Class<? extends RemoteElasticsearchConnection> clazz = getClass();
 

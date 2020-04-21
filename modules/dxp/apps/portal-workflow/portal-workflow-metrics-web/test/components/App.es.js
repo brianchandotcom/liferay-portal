@@ -20,7 +20,7 @@ const processItems = [
 	{
 		instancesCount: 5,
 		process: {
-			id: 1,
+			id: 1234,
 			title: 'Single Approver',
 		},
 	},
@@ -31,7 +31,7 @@ const pending = {
 	onTimeInstanceCount: 0,
 	overdueInstanceCount: 0,
 	process: {
-		id: 1,
+		id: 1234,
 		title: 'Single Approver',
 	},
 	untrackedInstanceCount: 0,
@@ -44,6 +44,8 @@ const jestEmpty = jest
 const client = {
 	get: jest
 		.fn()
+		.mockResolvedValueOnce({data: {items: [], totalCount: 0}})
+		.mockResolvedValueOnce({data: {items: [], totalCount: 0}})
 		.mockResolvedValueOnce({
 			data: {
 				items: processItems,
@@ -65,13 +67,21 @@ const mockProps = {
 	getClient: jest.fn(() => client),
 	isAmPm: false,
 	maxPages: 15,
-	namespace: 'WorkflowMetricsPortlet',
+	portletNamespace: 'workflow',
+	reindexStatuses: [],
 };
 
 describe('The App component should', () => {
 	let container, getAllByTestId, getByTestId;
 
 	beforeAll(() => {
+		const header = document.createElement('div');
+
+		header.id = '_workflow_controlMenu';
+		header.innerHTML = `<div class="sites-control-group"><ul class="control-menu-nav"></ul></div><div class="user-control-group"><ul class="control-menu-nav"><li></li></ul></div>`;
+
+		document.body.appendChild(header);
+
 		const renderResult = render(<App {...mockProps} />);
 
 		container = renderResult.container;
@@ -79,16 +89,38 @@ describe('The App component should', () => {
 		getByTestId = renderResult.getByTestId;
 	});
 
-	test('Render the process list page', () => {
+	test('Navigate to settings indexes page', () => {
+		const kebabButton = getByTestId('headerKebabButton');
+
+		fireEvent.click(kebabButton);
+
+		const dropDownItems = getAllByTestId('headerKebabItem');
+
+		expect(dropDownItems[0]).toHaveTextContent('settings');
+
+		fireEvent.click(dropDownItems[0]);
+
+		expect(window.location.hash).toContain('#/settings/indexes');
+
+		fireEvent.click(getByTestId('headerBackButton'));
+	});
+
+	test('Return to process list page', () => {
 		const processName = getAllByTestId('processName');
 		const processNameLink = processName[0].children[0];
 
 		expect(processNameLink).toHaveTextContent('Single Approver');
 
+		expect(window.location.hash).toContain('#/processes');
+
 		fireEvent.click(processNameLink);
 	});
 
 	test('Render the process metrics page on dashboard tab', () => {
+		expect(window.location.hash).toContain(
+			'#/metrics/1234/dashboard/20/1/overdueInstanceCount%3Aasc'
+		);
+
 		const tabs = container.querySelectorAll('a.nav-link');
 
 		expect(tabs[0]).toHaveTextContent('dashboard');
@@ -96,7 +128,7 @@ describe('The App component should', () => {
 		expect(tabs[1]).toHaveTextContent('performance');
 
 		expect(window.location.hash).toContain(
-			'#/metrics/1/dashboard/20/1/overdueInstanceCount%3Aasc'
+			'#/metrics/1234/dashboard/20/1/overdueInstanceCount%3Aasc'
 		);
 
 		fireEvent.click(tabs[1]);
@@ -109,12 +141,12 @@ describe('The App component should', () => {
 		expect(tabs[1]).toHaveTextContent('performance');
 		expect(tabs[1].className.includes('active')).toBe(true);
 
-		expect(window.location.hash).toContain('#/metrics/1/performance');
+		expect(window.location.hash).toContain('#/metrics/1234/performance');
 
 		fireEvent.click(tabs[0]);
 
 		expect(tabs[0].className.includes('active')).toBe(true);
-		expect(window.location.hash).toContain('#/metrics/1/dashboard');
+		expect(window.location.hash).toContain('#/metrics/1234/dashboard');
 	});
 
 	test('Navigate to new SLA page', () => {
@@ -122,6 +154,6 @@ describe('The App component should', () => {
 
 		fireEvent.click(slaInfoLink);
 
-		expect(window.location.hash).toContain('#/sla/1/new');
+		expect(window.location.hash).toContain('#/sla/1234/new');
 	});
 });

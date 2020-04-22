@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.service.persistence.impl;
 
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.model.CTProcessTable;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -46,10 +48,30 @@ public class CTProcessFinderImpl
 	extends CTProcessFinderBaseImpl implements CTProcessFinder {
 
 	@Override
-	@SuppressWarnings("unchecked")
+	public List<CTProcess> filterFindByC_U_N_D_S(
+		long companyId, long userId, String keywords, int status, int start,
+		int end, OrderByComparator<?> orderByComparator) {
+
+		return doFindByC_U_N_D_S(
+			companyId, userId, keywords, status, start, end, orderByComparator,
+			true);
+	}
+
+	@Override
 	public List<CTProcess> findByC_U_N_D_S(
 		long companyId, long userId, String keywords, int status, int start,
 		int end, OrderByComparator<?> orderByComparator) {
+
+		return doFindByC_U_N_D_S(
+			companyId, userId, keywords, status, start, end, orderByComparator,
+			false);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected List<CTProcess> doFindByC_U_N_D_S(
+		long companyId, long userId, String keywords, int status, int start,
+		int end, OrderByComparator<?> orderByComparator,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -103,6 +125,13 @@ public class CTProcessFinderImpl
 				predicate = predicate.and(keywordsPredicate.withParentheses());
 			}
 
+			if (inlineSQLHelper) {
+				predicate = predicate.and(
+					_inlineSQLHelper.getPermissionWherePredicate(
+						CTCollection.class,
+						CTCollectionTable.INSTANCE.ctCollectionId));
+			}
+
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
 				DSLQueryFactoryUtil.select(
 					CTProcessTable.INSTANCE
@@ -152,5 +181,8 @@ public class CTProcessFinderImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private InlineSQLHelper _inlineSQLHelper;
 
 }

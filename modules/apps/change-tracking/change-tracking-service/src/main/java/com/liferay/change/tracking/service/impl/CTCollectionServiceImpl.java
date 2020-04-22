@@ -14,23 +14,29 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
+import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.model.CTAutoResolutionInfo;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionServiceBaseImpl;
+import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * The implementation of the ct collection remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.change.tracking.service.CTCollectionService</code> interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see CTCollectionServiceBaseImpl
+ * @author Preston Crary
  */
 @Component(
 	property = {
@@ -41,9 +47,130 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.change.tracking.service.CTCollectionServiceUtil</code> to access the ct collection remote service.
-	 */
+	@Override
+	public CTCollection addCTCollection(
+			long companyId, long userId, String name, String description)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, CTActionKeys.ADD_PUBLICATION);
+
+		return ctCollectionLocalService.addCTCollection(
+			companyId, userId, name, description);
+	}
+
+	@Override
+	public void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId)
+		throws PortalException {
+
+		CTAutoResolutionInfo ctAutoResolutionInfo =
+			_ctAutoResolutionInfoPersistence.fetchByPrimaryKey(
+				ctAutoResolutionInfoId);
+
+		if (ctAutoResolutionInfo == null) {
+			return;
+		}
+
+		_ctCollectionModelResourcePermission.check(
+			getPermissionChecker(), ctAutoResolutionInfo.getCtCollectionId(),
+			ActionKeys.UPDATE);
+
+		ctCollectionLocalService.deleteCTAutoResolutionInfo(
+			ctAutoResolutionInfoId);
+	}
+
+	@Override
+	public CTCollection deleteCTCollection(CTCollection ctCollection)
+		throws PortalException {
+
+		_ctCollectionModelResourcePermission.check(
+			getPermissionChecker(), ctCollection, ActionKeys.DELETE);
+
+		return ctCollectionLocalService.deleteCTCollection(ctCollection);
+	}
+
+	@Override
+	public List<CTCollection> getCTCollections(
+		long companyId, int status, int start, int end,
+		OrderByComparator<CTCollection> orderByComparator) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return ctCollectionPersistence.filterFindByCompanyId(
+				companyId, start, end, orderByComparator);
+		}
+
+		return ctCollectionPersistence.filterFindByC_S(
+			companyId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CTCollection> getCTCollections(
+		long companyId, int status, String keywords, int start, int end,
+		OrderByComparator<CTCollection> obc) {
+
+		return ctCollectionFinder.filterFindByC_S(
+			companyId, status, keywords, start, end, obc);
+	}
+
+	@Override
+	public int getCTCollectionsCount(
+		long companyId, int status, String keywords) {
+
+		return ctCollectionFinder.filterCountByC_S(companyId, status, keywords);
+	}
+
+	@Override
+	public void publishCTCollection(long userId, long ctCollectionId)
+		throws PortalException {
+
+		_ctCollectionModelResourcePermission.check(
+			getPermissionChecker(), ctCollectionId, CTActionKeys.PUBLISH);
+
+		_ctProcessLocalService.addCTProcess(userId, ctCollectionId);
+	}
+
+	@Override
+	public CTCollection undoCTCollection(
+			long ctCollectionId, long userId, String name, String description)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		_portletResourcePermission.check(
+			permissionChecker, ctCollectionId, ActionKeys.VIEW);
+
+		_portletResourcePermission.check(
+			permissionChecker, null, CTActionKeys.ADD_PUBLICATION);
+
+		return ctCollectionLocalService.undoCTCollection(
+			userId, ctCollectionId, name, description);
+	}
+
+	@Override
+	public CTCollection updateCTCollection(
+			long userId, long ctCollectionId, String name, String description)
+		throws PortalException {
+
+		_ctCollectionModelResourcePermission.check(
+			getPermissionChecker(), ctCollectionId, ActionKeys.UPDATE);
+
+		return ctCollectionLocalService.updateCTCollection(
+			userId, ctCollectionId, name, description);
+	}
+
+	@Reference
+	private CTAutoResolutionInfoPersistence _ctAutoResolutionInfoPersistence;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
+	)
+	private ModelResourcePermission<CTCollection>
+		_ctCollectionModelResourcePermission;
+
+	@Reference
+	private CTProcessLocalService _ctProcessLocalService;
+
+	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
+
 }

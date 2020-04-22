@@ -14,23 +14,17 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.base.CTProcessServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the ct process remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.change.tracking.service.CTProcessService</code> interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see CTProcessServiceBaseImpl
+ * @author Preston Crary
  */
 @Component(
 	property = {
@@ -41,9 +35,13 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.change.tracking.service.CTProcessServiceUtil</code> to access the ct process remote service.
-	 */
+	@Override
+	public List<CTProcess> getCTProcesses(
+		long companyId, long userId, String keywords, int status, int start,
+		int end, OrderByComparator<CTProcess> orderByComparator) {
+
+		return ctProcessFinder.filterFindByC_U_N_D_S(
+			companyId, userId, keywords, status, start, end, orderByComparator);
+	}
+
 }

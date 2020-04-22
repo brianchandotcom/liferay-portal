@@ -98,6 +98,24 @@ public class AnalyticsReportsDisplayContext {
 
 	private Map<String, Object> _getContext() {
 		return HashMapBuilder.<String, Object>put(
+			"defaultTimeRange",
+			() -> {
+				TimeSpan defaultTimeSpan = TimeSpan.of(
+					TimeSpan.defaultTimeSpanKey());
+
+				TimeRange defaultTimeRange = defaultTimeSpan.toTimeRange(0);
+
+				return HashMapBuilder.<String, Object>put(
+					"endDate",
+					DateTimeFormatter.ISO_DATE.format(
+						defaultTimeRange.getEndLocalDate())
+				).put(
+					"startDate",
+					DateTimeFormatter.ISO_DATE.format(
+						defaultTimeRange.getStartLocalDate())
+				).build();
+			}
+		).put(
 			"defaultTimeSpanKey", TimeSpan.defaultTimeSpanKey()
 		).put(
 			"endpoints",

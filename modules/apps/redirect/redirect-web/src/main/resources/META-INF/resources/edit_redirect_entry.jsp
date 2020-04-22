@@ -120,6 +120,16 @@ else {
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
+<div>
+	<react:component
+		data='<%= HashMapBuilder.<String, Object>put(
+		"namespace", liferayPortletResponse.getNamespace()
+		).build()
+		%>'
+		module="js/ChainedRedirections"
+	/>
+</div>
+
 <script>
 	function <portlet:namespace />saveRedirectEntry() {
 		var form = document.<portlet:namespace />fm;
@@ -142,27 +152,25 @@ else {
 						submitForm(form);
 					}
 					else {
-						<portlet:namespace />submitFormWithReference(
-							confirm(
-								'<liferay-ui:message key="create-redirect-and-update-references" />'
-							)
-						);
+						Liferay.componentReady(
+							'<portlet:namespace />RedirectsChainedRedirections'
+						).then(function(documentLibraryCheckinModal) {
+							documentLibraryCheckinModal.open(function(
+								updateReferences
+							) {
+								Liferay.Util.postForm(form, {
+									data: {
+										updateReferences: updateReferences,
+									},
+								});
+							});
+						});
 					}
 				});
 		}
 		else {
 			destinationURL.focus();
 			destinationURL.blur();
-			sourceURL.focus();
-			sourceURL.blur();
 		}
-	}
-
-	function <portlet:namespace />submitFormWithReference(update) {
-		var form = document.<portlet:namespace />fm;
-
-		form.elements['<portlet:namespace />updateReferences'].value = update;
-
-		submitForm(form);
 	}
 </script>

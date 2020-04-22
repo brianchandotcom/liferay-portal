@@ -151,7 +151,7 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 			Role role = RoleLocalServiceUtil.fetchRole(
 				resourcePermission.getRoleId());
 
-			Set<String> actionsIdsSet = new HashSet<>();
+			Set<String> actionIdsSet = new HashSet<>();
 
 			long actionIds = resourcePermission.getActionIds();
 
@@ -159,12 +159,12 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 				long bitwiseValue = resourceAction.getBitwiseValue();
 
 				if ((actionIds & bitwiseValue) == bitwiseValue) {
-					actionsIdsSet.add(resourceAction.getActionId());
+					actionIdsSet.add(resourceAction.getActionId());
 				}
 			}
 
 			widgetPermissionsMap.put(
-				role.getName(), actionsIdsSet.toArray(new String[0]));
+				role.getName(), actionIdsSet.toArray(new String[0]));
 		}
 
 		return widgetPermissionsMap;

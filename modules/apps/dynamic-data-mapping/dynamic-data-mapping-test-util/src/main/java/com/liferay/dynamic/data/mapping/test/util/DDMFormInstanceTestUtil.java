@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.uad.util;
+package com.liferay.dynamic.data.mapping.test.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -20,9 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -38,7 +35,7 @@ import java.util.Map;
 /**
  * @author Gabriel Ibson
  */
-public class DDMFormInstanceUADTestUtil {
+public class DDMFormInstanceTestUtil {
 
 	public static DDMFormInstance addDDMFormInstance(
 		DDMForm ddmForm, Group group, DDMFormValues settingsDDMFormValues,
@@ -85,6 +82,6 @@ public class DDMFormInstanceUADTestUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormInstanceUADTestUtil.class);
+		DDMFormInstanceTestUtil.class);
 
 }

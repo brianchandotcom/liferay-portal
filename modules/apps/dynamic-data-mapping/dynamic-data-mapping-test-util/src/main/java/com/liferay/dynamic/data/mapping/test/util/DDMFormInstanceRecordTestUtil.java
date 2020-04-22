@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.uad.util;
+package com.liferay.dynamic.data.mapping.test.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -20,8 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -31,7 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 /**
  * @author Gabriel Ibson
  */
-public class DDMFormInstanceRecordUADTestUtil {
+public class DDMFormInstanceRecordTestUtil {
 
 	public static DDMFormInstanceRecord addDDMFormInstanceRecord(
 			Group group, long userId)
@@ -43,7 +41,7 @@ public class DDMFormInstanceRecordUADTestUtil {
 			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
 
 		DDMFormInstance ddmFormInstance =
-			DDMFormInstanceUADTestUtil.addDDMFormInstance(
+			DDMFormInstanceTestUtil.addDDMFormInstance(
 				ddmForm, group, settingsDDMFormValues, userId);
 
 		return DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(

@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.dynamic.data.mapping.uad.util.DDMFormInstanceUADTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -63,7 +63,7 @@ public class DDMFormInstanceUADAnonymizerTest
 			long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		return DDMFormInstanceUADTestUtil.addDDMFormInstance(_group, userId);
+		return DDMFormInstanceTestUtil.addDDMFormInstance(_group, userId);
 	}
 
 	@Override

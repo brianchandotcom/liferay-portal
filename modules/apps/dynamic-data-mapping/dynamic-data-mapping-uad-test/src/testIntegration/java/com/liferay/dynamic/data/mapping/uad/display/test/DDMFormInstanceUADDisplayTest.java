@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.uad.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
-import com.liferay.dynamic.data.mapping.uad.util.DDMFormInstanceRecordUADTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceRecordTestUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -59,7 +59,7 @@ public class DDMFormInstanceUADDisplayTest
 	@Test
 	public void testGetTopLevelContainer() throws Exception {
 		DDMFormInstanceRecord ddmFormInstanceRecord =
-			DDMFormInstanceRecordUADTestUtil.addDDMFormInstanceRecord(
+			DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
 				_group, TestPropsValues.getUserId());
 
 		Assert.assertNull(
@@ -70,7 +70,7 @@ public class DDMFormInstanceUADDisplayTest
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		return DDMFormInstanceRecordUADTestUtil.addDDMFormInstanceRecord(
+		return DDMFormInstanceRecordTestUtil.addDDMFormInstanceRecord(
 			_group, userId);
 	}
 

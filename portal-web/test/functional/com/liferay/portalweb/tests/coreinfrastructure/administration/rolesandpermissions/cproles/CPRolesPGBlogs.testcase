@@ -627,7 +627,6 @@ definition {
 	@priority = "5"
 	test DeleteBlogsEntryOrgRoleDefinePermission {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		Permissions.setUpOrgRoleLoginUserPG(
 			orgName = "Organization Name",

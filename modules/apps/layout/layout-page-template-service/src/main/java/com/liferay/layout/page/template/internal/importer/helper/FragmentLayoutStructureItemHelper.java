@@ -396,25 +396,41 @@ public class FragmentLayoutStructureItemHelper
 				return;
 			}
 
-			String itemKey = map.get("itemKey");
+			String itemClassName = map.get("itemClassName");
+			String itemClassPK = map.get("itemClassPK");
 
-			if (Validator.isNull(itemKey)) {
+			if (Validator.isNull(itemClassName) ||
+				Validator.isNull(itemClassPK)) {
+
 				jsonObject.put("mappedField", fieldKey);
 
 				return;
 			}
 
-			String[] itemKeyParts = itemKey.split(StringPool.POUND);
+			String classNameId = null;
 
-			if (itemKeyParts.length == 2) {
-				jsonObject.put(
-					"classNameId", itemKeyParts[0]
-				).put(
-					"classPK", itemKeyParts[1]
-				).put(
-					"fieldId", fieldKey
-				);
+			try {
+				classNameId = String.valueOf(
+					PortalUtil.getClassNameId(itemClassName));
 			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Mapping could not be processed since no class name " +
+							"ID could be obtained for class name " +
+								itemClassName);
+				}
+
+				return;
+			}
+
+			jsonObject.put(
+				"classNameId", classNameId
+			).put(
+				"classPK", itemClassPK
+			).put(
+				"fieldId", fieldKey
+			);
 		}
 	}
 

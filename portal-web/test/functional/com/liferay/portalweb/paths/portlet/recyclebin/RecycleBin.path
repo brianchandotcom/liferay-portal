@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECYCLE_BIN_ASSET_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_assetName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

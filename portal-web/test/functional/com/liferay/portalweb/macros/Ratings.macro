@@ -1,5 +1,36 @@
 definition {
 
+	macro configureRatingType {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Navigator.gotoNavTab(navTab = "Social");
+
+		Select(
+			key_applications = "${applications}",
+			locator1 = "Select#APPLICATIONS_RATING",
+			value1 = "${ratingType}");
+
+		AssertClickNoError(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertConfirm(value1 = "Existing ratings data values will be adapted to match the new ratings type even though it may not be accurate. Do you want to continue?");
+
+		AssertSelectedLabel(
+			key_applications = "${applications}",
+			locator1 = "Select#APPLICATIONS_RATING",
+			value1 = "${ratingType}");
+	}
+
+	macro rateLike {
+		Click(locator1 = "Ratings#LIKE");
+
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
+	}
+
 	macro rateStar {
 		Click(locator1 = "Ratings#YOUR_RATING_STAR");
 
@@ -18,11 +49,27 @@ definition {
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#COMMENT_RATING_THUMB");
 		}
+
+		if (isSet(replyRating)) {
+			Click.mouseOverClick(
+				key_ratingResult = "${ratingResult}",
+				key_threadSubject = "${threadSubject}",
+				locator1 = "Ratings#REPLY_RATING_THUMB");
+		}
+
 		else {
 			Click(
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#THUMB");
 		}
+	}
+
+	macro viewRateLike {
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
+
+		AssertTextEquals(
+			locator1 = "Ratings#YOUR_RATING_LIKE_COUNT",
+			value1 = "${ratingLikeCount}");
 	}
 
 	macro viewRateStar {

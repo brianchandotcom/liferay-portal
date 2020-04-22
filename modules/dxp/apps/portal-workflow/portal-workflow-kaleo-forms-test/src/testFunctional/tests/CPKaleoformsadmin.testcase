@@ -228,6 +228,8 @@ definition {
 
 	@priority = "4"
 	test DeactivateAndDeleteWorkflowDefinition {
+		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndDeleteWorkflowDefinition";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

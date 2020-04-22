@@ -28,6 +28,8 @@ public class UpgradeFragmentEntryLink extends UpgradeProcess {
 			alter(
 				FragmentEntryLinkTable.class,
 				new AlterTableAddColumn("segmentsExperienceId", "LONG"));
+
+			runSQL("update FragmentEntryLink set segmentsExperienceId = 0");
 		}
 	}
 

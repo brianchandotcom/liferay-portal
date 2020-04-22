@@ -4280,6 +4280,70 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-docker-os">
+		<sequential>
+			<get-operating-system-property property.name="operating.system.docker.os.options" />
+			<get-operating-system-property property.name="operating.system.docker.image" />
+			<get-operating-system-property property.name="operating.system.docker.run.options" />
+			<get-operating-system-property property.name="operating.system.host" />
+
+			<local name="operating.system.docker.network.run.option" />
+
+			<condition else="" property="operating.system.docker.network.run.option" value="--network=${env.DOCKER_NETWORK_NAME}">
+				<isset property="env.DOCKER_NETWORK_NAME" />
+			</condition>
+
+			<local name="docker.os.start.script" />
+
+			<property name="docker.os.start.script" value="docker_os_start.sh" />
+
+			<propertyregex
+				input="${portal.dir}"
+				property="portal.dir.name"
+				regexp=".*\/(.*)"
+				select="\1"
+			/>
+
+			<echo file="${docker.os.start.script}">
+				<![CDATA[
+					docker run \
+						--detach \
+						--hostname=localhost \
+						--interactive \
+						--mount type=bind,source=/data/slaves/${env.NODE_NAME}/git/liferay/${portal.dir.name},target=${portal.dir} \
+						--name=${operating.system.host} \
+						--tty \
+						\
+						${operating.system.docker.network.run.option} \
+						${operating.system.docker.run.options} \
+						\
+						${operating.system.docker.image} \
+						\
+						${operating.system.docker.os.options}
+				]]>
+			</echo>
+
+			<chmod
+				perm="a+x"
+			>
+				<fileset
+					dir="."
+					includes="${docker.os.start.script}"
+				/>
+			</chmod>
+
+			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
+				<arg value="${docker.os.start.script}" />
+			</exec>
+
+			<exec executable="cmd.exe" os="${os.windows}">
+				<arg value="${docker.os.start.script}" />
+			</exec>
+
+			<delete file="${docker.os.start.script}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-lcs-app-server">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -4579,6 +4643,45 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					fi
 
 					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${database.host}
+				]]>
+			</echo>
+
+			<chmod
+				perm="a+x"
+			>
+				<fileset
+					dir="."
+					includes="${docker.stop.script}"
+				/>
+			</chmod>
+
+			<exec executable="/bin/bash" failonerror="false" os="${os.apple},${os.unix}">
+				<arg value="${docker.stop.script}" />
+			</exec>
+
+			<exec executable="cmd.exe" failonerror="false" os="${os.windows}">
+				<arg value="${docker.stop.script}" />
+			</exec>
+
+			<delete file="${docker.stop.script}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-docker-os">
+		<sequential>
+			<get-operating-system-property property.name="operating.system.host" />
+
+			<local name="docker.stop.script" />
+
+			<property name="docker.stop.script" value="docker_stop.sh" />
+
+			<echo file="${docker.stop.script}">
+				<![CDATA[
+					docker kill ${operating.system.host}
+
+					docker rm -f ${operating.system.host}
+
+					docker network disconnect -f ${env.DOCKER_NETWORK_NAME} ${operating.system.host}
 				]]>
 			</echo>
 

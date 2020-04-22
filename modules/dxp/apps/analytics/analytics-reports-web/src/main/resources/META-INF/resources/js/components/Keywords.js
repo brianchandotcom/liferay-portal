@@ -54,55 +54,50 @@ export default function Keywords({currentPage, languageTag}) {
 					</ClayList.ItemTitle>
 				</ClayList.ItemField>
 				<ClayList.ItemField>
-					<ClayList.ItemTitle>
-						<ClayDropDown
-							active={isDropdownOpen}
-							onActiveChange={isActive =>
-								setIsDropdownOpen(isActive)
-							}
-							trigger={
-								<ClayButton
-									className="px-0 text-body"
-									displayType="link"
-									small
-								>
-									<span className="font-weight-semi-bold">
-										<span className="pr-2">
-											{keywordValueType.label}
-										</span>
-										<ClayIcon symbol="caret-bottom" />
+					<ClayDropDown
+						active={isDropdownOpen}
+						onActiveChange={isActive => setIsDropdownOpen(isActive)}
+						trigger={
+							<ClayButton
+								className="px-0 text-body"
+								displayType="link"
+								small
+							>
+								<span className="font-weight-semi-bold">
+									<span className="pr-2">
+										{keywordValueType.label}
 									</span>
-								</ClayButton>
-							}
-						>
-							<ClayDropDown.ItemList>
-								{KEYWORD_VALUE_TYPE.map((valueType, index) => (
-									<ClayDropDown.Item
-										active={
-											valueType.name ===
-											keywordValueType.name
-										}
-										key={index}
-										onClick={() => {
-											setKeywordValueType(
-												KEYWORD_VALUE_TYPE.find(
-													keywordValueType => {
-														return (
-															keywordValueType.name ===
-															valueType.name
-														);
-													}
-												)
-											);
-											setIsDropdownOpen(false);
-										}}
-									>
-										{valueType.label}
-									</ClayDropDown.Item>
-								))}
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					</ClayList.ItemTitle>
+									<ClayIcon symbol="caret-bottom" />
+								</span>
+							</ClayButton>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{KEYWORD_VALUE_TYPE.map((valueType, index) => (
+								<ClayDropDown.Item
+									active={
+										valueType.name === keywordValueType.name
+									}
+									key={index}
+									onClick={() => {
+										setKeywordValueType(
+											KEYWORD_VALUE_TYPE.find(
+												keywordValueType => {
+													return (
+														keywordValueType.name ===
+														valueType.name
+													);
+												}
+											)
+										);
+										setIsDropdownOpen(false);
+									}}
+								>
+									{valueType.label}
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 				</ClayList.ItemField>
 			</ClayList.Item>
 			{currentPage.data.keywords.map(keyword => {

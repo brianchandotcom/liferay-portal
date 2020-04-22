@@ -85,23 +85,15 @@ public class KeywordResourceImpl
 	public Page<Keyword> getKeywordsRankedPage(
 		Long siteId, Pagination pagination) {
 
-		DynamicQuery dynamicQuery = _assetTagLocalService.dynamicQuery();
-
-		if (siteId != null) {
-			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));
-		}
-
-		dynamicQuery.addOrder(OrderFactoryUtil.desc("count"));
-		dynamicQuery.setLimit(
-			pagination.getStartPosition(), pagination.getEndPosition());
-		dynamicQuery.setProjection(_getProjectionList(), true);
+		DynamicQuery dynamicQuery = _getDynamicQuery(siteId, pagination);
 
 		return Page.of(
 			transform(
 				transform(
 					_assetTagLocalService.dynamicQuery(dynamicQuery),
 					this::_toAssetTag),
-				this::_toKeyword));
+				this::_toKeyword),
+			pagination, _getTotalCount(siteId));
 	}
 
 	@Override
@@ -154,6 +146,21 @@ public class KeywordResourceImpl
 			_assetTagService.updateTag(keywordId, keyword.getName(), null));
 	}
 
+	private DynamicQuery _getDynamicQuery(Long siteId, Pagination pagination) {
+		DynamicQuery dynamicQuery = _assetTagLocalService.dynamicQuery();
+
+		if (siteId != null) {
+			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));
+		}
+
+		dynamicQuery.addOrder(OrderFactoryUtil.desc("count"));
+		dynamicQuery.setLimit(
+			pagination.getStartPosition(), pagination.getEndPosition());
+		dynamicQuery.setProjection(_getProjectionList(), true);
+
+		return dynamicQuery;
+	}
+
 	private ProjectionList _getProjectionList() {
 		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
 
@@ -176,10 +183,28 @@ public class KeywordResourceImpl
 		return projectionList;
 	}
 
+	private long _getTotalCount(Long siteId) {
+		DynamicQuery dynamicQuery = _assetTagLocalService.dynamicQuery();
+
+		if (siteId != null) {
+			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));
+		}
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.sqlRestriction(
+				"EXISTS (select 1 from AssetEntries_AssetTags where tagId = " +
+					"this_.tagId)"));
+
+		return _assetTagLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
 	private AssetTag _toAssetTag(Object[] assetTags) {
 		return new AssetTagImpl() {
 			{
-				setAssetCount((int)assetTags[0]);
+				if (assetTags[0] != null) {
+					setAssetCount((int)assetTags[0]);
+				}
+
 				setCompanyId((long)assetTags[1]);
 				setCreateDate(_toDate((Timestamp)assetTags[2]));
 				setGroupId((long)assetTags[3]);

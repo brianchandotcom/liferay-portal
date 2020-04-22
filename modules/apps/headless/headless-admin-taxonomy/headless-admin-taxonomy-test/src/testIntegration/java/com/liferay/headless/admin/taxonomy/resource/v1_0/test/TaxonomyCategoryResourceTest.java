@@ -15,8 +15,11 @@
 package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -44,22 +47,6 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@Override
-	public void testGetTaxonomyCategoryRankedPage() {
-	}
-
-	@Override
-	public void testGetTaxonomyCategoryRankedPageWithPagination() {
-	}
-
-	@Override
-	public void testGraphQLDeleteTaxonomyCategory() {
-	}
-
-	@Override
-	public void testGraphQLGetTaxonomyCategory() {
-	}
-
-	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"description", "name"};
 	}
@@ -78,6 +65,25 @@ public class TaxonomyCategoryResourceTest
 
 		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
+	}
+
+	@Override
+	protected TaxonomyCategory
+			testGetTaxonomyCategoryRankedPage_addTaxonomyCategory(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		taxonomyCategory =
+			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
+				taxonomyCategory);
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			testGroup.getGroupId());
+
+		AssetCategoryLocalServiceUtil.addAssetEntryAssetCategory(
+			assetEntry.getEntryId(), Long.valueOf(taxonomyCategory.getId()));
+
+		return taxonomyCategory;
 	}
 
 	@Override

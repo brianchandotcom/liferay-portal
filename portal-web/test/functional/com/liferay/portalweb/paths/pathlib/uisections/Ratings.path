@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>LIKE</td>
+	<td>//div[contains(@class,'ratings-like')]//button[contains(@title,'Like This')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THUMB</td>
 	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@title,'${key_ratingResult}')]</td>
 	<td></td>
@@ -35,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPLY_RATING_THUMB</td>
+	<td>//h4[contains(@title,'RE: ${key_threadSubject}')]//following-sibling::div//button[contains(@title,'${key_ratingResult}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -43,6 +53,16 @@
 <tr>
 	<td>YOUR_RATING_LABEL</td>
 	<td>xPath=(//div[@class='rating-label'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_LIKE_COUNT</td>
+	<td>//div[contains(@class,'ratings-like')]//button[contains(@title,'Unlike This')]//span[contains(@class,'current')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_LIKE_RESULT</td>
+	<td>//div[contains(@class,'ratings-like')]//button[contains(@title,'Unlike This')]</td>
 	<td></td>
 </tr>
 <tr>

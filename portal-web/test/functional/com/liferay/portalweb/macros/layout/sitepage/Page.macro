@@ -507,7 +507,7 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${logoFile}");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "10000");
 
 		Button.clickDone();
 

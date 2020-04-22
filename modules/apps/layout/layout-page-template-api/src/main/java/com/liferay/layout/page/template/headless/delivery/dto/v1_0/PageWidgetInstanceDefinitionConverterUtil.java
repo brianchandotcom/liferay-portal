@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -144,8 +145,16 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 				layout.getCompanyId(), portletName,
 				ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 
+		if (ListUtil.isEmpty(resourcePermissions)) {
+			return null;
+		}
+
 		List<ResourceAction> resourceActions =
 			ResourceActionLocalServiceUtil.getResourceActions(portletName);
+
+		if (ListUtil.isEmpty(resourceActions)) {
+			return null;
+		}
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			Role role = RoleLocalServiceUtil.fetchRole(

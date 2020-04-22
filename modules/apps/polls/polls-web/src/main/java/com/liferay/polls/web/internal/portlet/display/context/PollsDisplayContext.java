@@ -23,7 +23,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBu
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
+import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.polls.util.comparator.PollsQuestionCreateDateComparator;
 import com.liferay.polls.util.comparator.PollsQuestionTitleComparator;
 import com.liferay.polls.web.internal.portlet.display.context.util.PollsRequestHelper;
@@ -56,10 +56,12 @@ import javax.servlet.http.HttpServletRequest;
 public class PollsDisplayContext {
 
 	public PollsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		PollsQuestionLocalService pollsQuestionLocalService) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_pollsQuestionLocalService = pollsQuestionLocalService;
 
 		_pollsRequestHelper = new PollsRequestHelper(renderRequest);
 	}
@@ -355,7 +357,7 @@ public class PollsDisplayContext {
 	protected void setDDMPollSearchResults(
 		PollsQuestionSearch pollsQuestionSearch) {
 
-		List<PollsQuestion> results = PollsQuestionLocalServiceUtil.search(
+		List<PollsQuestion> results = _pollsQuestionLocalService.search(
 			_pollsRequestHelper.getCompanyId(),
 			new long[] {_pollsRequestHelper.getScopeGroupId()}, getKeywords(),
 			pollsQuestionSearch.getStart(), pollsQuestionSearch.getEnd(),
@@ -367,13 +369,14 @@ public class PollsDisplayContext {
 	protected void setDDMPollSearchTotal(
 		PollsQuestionSearch pollsQuestionSearch) {
 
-		int total = PollsQuestionLocalServiceUtil.searchCount(
+		int total = _pollsQuestionLocalService.searchCount(
 			_pollsRequestHelper.getCompanyId(),
 			new long[] {_pollsRequestHelper.getScopeGroupId()}, getKeywords());
 
 		pollsQuestionSearch.setTotal(total);
 	}
 
+	private final PollsQuestionLocalService _pollsQuestionLocalService;
 	private final PollsRequestHelper _pollsRequestHelper;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

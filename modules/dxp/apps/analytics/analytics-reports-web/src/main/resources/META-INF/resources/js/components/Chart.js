@@ -133,6 +133,7 @@ function legendFormatterGenerator(
 
 export default function Chart({
 	dataProviders = [],
+	defaultTimeRange,
 	defaultTimeSpanOption,
 	languageTag,
 	publishDate,
@@ -262,7 +263,13 @@ export default function Chart({
 				new Date(lastDateLabel),
 			]);
 		}
-	}, [histogram, dateFormatters]);
+		else {
+			return dateFormatters.formatChartTitle([
+				new Date(defaultTimeRange.startDate),
+				new Date(defaultTimeRange.endDate),
+			]);
+		}
+	}, [dateFormatters, defaultTimeRange, histogram]);
 
 	const handleTimeSpanChange = event => {
 		const {value} = event.target;
@@ -468,6 +475,7 @@ export default function Chart({
 
 Chart.propTypes = {
 	dataProviders: PropTypes.arrayOf(PropTypes.func).isRequired,
+	defaultTimeRange: PropTypes.object.isRequired,
 	defaultTimeSpanOption: PropTypes.string.isRequired,
 	languageTag: PropTypes.string.isRequired,
 	publishDate: PropTypes.number.isRequired,

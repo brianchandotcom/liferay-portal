@@ -181,6 +181,10 @@
 			&.btn-section {
 				font-size: var(--btn-section-font-size);
 			}
+
+			&.inline-item {
+				font-size: var(--btn-inline-item-font-size);
+			}
 		}
 
 		:not(.btn-group) > & {
@@ -223,6 +227,10 @@
 			&.btn-section {
 				font-size: var(--btn-section-font-size-lg);
 			}
+
+			&.inline-item {
+				font-size: var(--btn-inline-item-font-size-lg);
+			}
 		}
 
 		:not(.btn-group) > & {
@@ -264,6 +272,10 @@
 
 			&.btn-section {
 				font-size: var(--btn-section-font-size-sm);
+			}
+
+			&.inline-item {
+				font-size: var(--btn-inline-item-font-size-sm);
 			}
 		}
 

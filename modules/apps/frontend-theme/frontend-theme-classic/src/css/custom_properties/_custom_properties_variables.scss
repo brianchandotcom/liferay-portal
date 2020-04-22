@@ -175,6 +175,11 @@ $theme-colors-cp: map-deep-merge(
 	--btn-section-font-size-lg: #{$btn-section-font-size-lg};
 	--btn-section-font-size-sm: #{$btn-section-font-size-sm};
 
+	--btn-inline-item-font-size: #{$btn-inline-item-font-size};
+	--btn-inline-item-font-size-lg: #{$btn-inline-item-font-size-lg};
+	--btn-inline-item-font-size-sm: #{$btn-inline-item-font-size};
+	// $btn-inline-item-font-size-sm is not defined in Clay
+
 	// Alerts
 
 	--alert-padding-y: #{$alert-padding-y};

@@ -232,8 +232,6 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
-	macro openFormView {
-		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 	macro enableCheckboxPredefined {
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED", key_fieldName = "${fieldName}")) {
 			Click(
@@ -243,9 +241,6 @@ definition {
 
 		FormViewBuilder.viewCheckboxChecked(fieldName = "${fieldName}");
 
-		Pause(
-			itemName = "${formViewName}",
-			locator1 = "1000");
 	}
 
 	macro openFormView {
@@ -299,7 +294,6 @@ definition {
 			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST",
 			value1 = "${selectOption}");
 
-		Pause(locator1 = "1000");
 	}
 
 	macro selectSelectWithMultipleOptions {
@@ -309,7 +303,6 @@ definition {
 			FormViewBuilder.enableCheckbox(fieldName = "${selectOption}");
 		}
 
-		Pause(locator1 = "1000");
 	}
 
 	macro selectSelectWithMultipleOptionsPredefined {
@@ -322,7 +315,6 @@ definition {
 			FormViewBuilder.enableCheckboxPredefined(fieldName = "${selectOption}");
 		}
 
-		Pause(locator1 = "1000");
 	}
 
 	macro setFieldHelpText {

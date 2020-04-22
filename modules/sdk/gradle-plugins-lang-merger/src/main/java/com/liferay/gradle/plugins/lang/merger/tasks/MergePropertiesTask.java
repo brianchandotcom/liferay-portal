@@ -215,6 +215,20 @@ public class MergePropertiesTask extends DefaultTask {
 		return sourceDirs(Arrays.asList(sourceDirs));
 	}
 
+	private String _getSettingName(File file) throws IOException {
+		if (file.isFile()) {
+			file = file.getParentFile();
+		}
+
+		String name = file.getCanonicalPath();
+
+		if (File.separatorChar != '/') {
+			name = name.replace(File.separatorChar, '/');
+		}
+
+		return name;
+	}
+
 	private FileCollection _getSourceFiles(File sourceDir) {
 		Project project = getProject();
 
@@ -283,20 +297,6 @@ public class MergePropertiesTask extends DefaultTask {
 
 			mergedProperties.store(bufferedWriter, null);
 		}
-	}
-
-	private String _getSettingName(File file) throws IOException {
-		if (file.isFile()) {
-			file = file.getParentFile();
-		}
-
-		String name = file.getCanonicalPath();
-
-		if (File.separatorChar != '/') {
-			name = name.replace(File.separatorChar, '/');
-		}
-
-		return name;
 	}
 
 	private static final String _PATTERN = "*.properties";

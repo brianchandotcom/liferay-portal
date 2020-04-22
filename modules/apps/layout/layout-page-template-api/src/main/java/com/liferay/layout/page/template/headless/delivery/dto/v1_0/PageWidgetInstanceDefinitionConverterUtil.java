@@ -134,8 +134,7 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 			return null;
 		}
 
-		List<ResourceAction> resourceActions =
-			ResourceActionLocalServiceUtil.getResourceActions(portletName);
+		Map<String, Object> widgetPermissionsMap = new HashMap<>();
 
 		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			plid, portletId);
@@ -145,7 +144,8 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 				layout.getCompanyId(), portletName,
 				ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 
-		Map<String, Object> widgetPermissionsMap = new HashMap<>();
+		List<ResourceAction> resourceActions =
+			ResourceActionLocalServiceUtil.getResourceActions(portletName);
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			Role role = RoleLocalServiceUtil.fetchRole(

@@ -71,6 +71,7 @@
 
 		<order by="desc">
 			<order-column name="hits" />
+			<order-column name="redirectNotFoundEntryId" />
 		</order>
 
 		<!-- Finder methods -->

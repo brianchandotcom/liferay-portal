@@ -57,7 +57,7 @@ public class WorkflowMetricsSLACalendarTrackerImpl
 			Set::stream
 		).collect(
 			Collectors.toMap(
-				entry -> entry.getKey(),
+				Map.Entry::getKey,
 				entry -> {
 					WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
 						entry.getValue();

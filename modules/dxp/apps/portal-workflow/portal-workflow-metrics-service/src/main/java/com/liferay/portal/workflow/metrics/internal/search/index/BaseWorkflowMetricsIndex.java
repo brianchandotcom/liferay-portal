@@ -21,12 +21,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,29 +46,25 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public void clearIndex(long companyId) throws PortalException {
-		if (searchEngineAdapter == null) {
+		if ((searchEngineAdapter == null) ||
+			!hasIndex(getIndexName(companyId))) {
+
 			return;
 		}
-
-		if (!hasIndex(getIndexName(companyId))) {
-			return;
-		}
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
-
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		booleanFilter.add(
-			new TermFilter("companyId", String.valueOf(companyId)),
-			BooleanClauseOccur.MUST);
-
-		booleanQuery.setPreBooleanFilter(booleanFilter);
 
 		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
 			new DeleteByQueryDocumentRequest(
-				booleanQuery, getIndexName(companyId));
+				new BooleanQueryImpl() {
+					{
+						setPreBooleanFilter(
+							new BooleanFilter() {
+								{
+									addRequiredTerm("companyId", companyId);
+								}
+							});
+					}
+				},
+				getIndexName(companyId));
 
 		if (PortalRunMode.isTestMode()) {
 			deleteByQueryDocumentRequest.setRefresh(true);
@@ -83,11 +75,9 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public void createIndex(long companyId) throws PortalException {
-		if (searchEngineAdapter == null) {
-			return;
-		}
+		if ((searchEngineAdapter == null) ||
+			hasIndex(getIndexName(companyId))) {
 
-		if (hasIndex(getIndexName(companyId))) {
 			return;
 		}
 
@@ -113,11 +103,9 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public void removeIndex(long companyId) throws PortalException {
-		if (searchEngineAdapter == null) {
-			return;
-		}
+		if ((searchEngineAdapter == null) ||
+			!hasIndex(getIndexName(companyId))) {
 
-		if (!hasIndex(getIndexName(companyId))) {
 			return;
 		}
 

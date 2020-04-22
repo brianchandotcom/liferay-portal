@@ -51,6 +51,8 @@ definition {
 	}
 
 	macro addSitePageViaSiteTemplateCP {
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage",
 			rowEntry = "${siteTemplateName}");

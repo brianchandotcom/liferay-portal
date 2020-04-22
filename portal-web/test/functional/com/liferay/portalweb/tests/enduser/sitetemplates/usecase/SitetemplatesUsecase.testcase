@@ -114,11 +114,6 @@ definition {
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Site Page Name",
 			siteTemplateName = "Site Template Name");
@@ -253,11 +248,6 @@ definition {
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page1 Name",
 			siteTemplateName = "Site Template Name");
@@ -275,11 +265,6 @@ definition {
 		Portlet.addPG(
 			defaultURL = "false",
 			portletName = "Hello World");
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page2 Name",
@@ -531,11 +516,6 @@ definition {
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Test Page Name",
 			siteTemplateName = "Site Template Name");
@@ -635,21 +615,11 @@ definition {
 
 		SiteTemplates.addCP(siteTemplateName = "Template Site");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page1 Name",
 			siteTemplateName = "Template Site");
 
 		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page2 Name",
@@ -893,11 +863,6 @@ definition {
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Test Page Name",
 			siteTemplateName = "Site Template Name");
@@ -949,13 +914,9 @@ definition {
 
 		var siteTemplateID = SiteTemplates.getSiteTemplateID(siteTemplateName = "Site Template Name");
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
-
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page1 Name",
 			siteTemplateName = "Site Template Name");
-
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page2 Name",

@@ -54,6 +54,7 @@ export default function({context, props}) {
 				<Navigation
 					api={api}
 					authorName={authorName}
+					defaultTimeRange={defaultTimeRange}
 					defaultTimeSpanKey={defaultTimeSpanKey}
 					languageTag={languageTag}
 					pagePublishDate={publishDate}
@@ -69,6 +70,7 @@ export default function({context, props}) {
 function Navigation({
 	api,
 	authorName,
+	defaultTimeRange,
 	defaultTimeSpanKey,
 	languageTag,
 	pagePublishDate,
@@ -173,6 +175,7 @@ function Navigation({
 							getHistoricalViews,
 							getHistoricalReads,
 						]}
+						defaultTimeRange={defaultTimeRange}
 						defaultTimeSpanOption={defaultTimeSpanKey}
 						languageTag={languageTag}
 						onTrafficSourceClick={handleTrafficSourceClick}

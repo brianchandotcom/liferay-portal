@@ -93,7 +93,7 @@ else {
 		%>
 
 		<div class="destination-url">
-			<aui:input autoFocus="<%= autoFocusDestination %>" name="destinationURL" value="<%= destinationURL %>" />
+			<aui:input name="destinationURL" value="<%= destinationURL %>" />
 
 			<react:component
 				data="<%= data %>"

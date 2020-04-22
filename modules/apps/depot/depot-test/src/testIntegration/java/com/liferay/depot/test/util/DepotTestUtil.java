@@ -77,6 +77,42 @@ public class DepotTestUtil {
 		}
 	}
 
+	public static void withAssetLibraryContentReviewer(
+			DepotEntry depotEntry,
+			UnsafeConsumer<User, Exception> unsafeConsumer)
+		throws Exception {
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
+
+		User user = UserTestUtil.addUser();
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			user.getUserId(), depotEntry.getGroupId(),
+			new long[] {role.getRoleId()});
+
+		UserLocalServiceUtil.addGroupUsers(
+			depotEntry.getGroupId(), new long[] {user.getUserId()});
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			unsafeConsumer.accept(user);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+			UserLocalServiceUtil.deleteUser(user);
+		}
+	}
+
 	public static void withDepotDisabled(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {

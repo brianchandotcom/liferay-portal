@@ -213,7 +213,7 @@ public class DepotPermissionCheckerWrapperTest {
 	}
 
 	@Test
-	public void testIsGroupAdminWithDepotGroupAndAssetLibraryAdmin()
+	public void testIsContentReviewerWithAssetLibraryAdministrator()
 		throws Exception {
 
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
@@ -225,7 +225,26 @@ public class DepotPermissionCheckerWrapperTest {
 					_permissionCheckerFactory.create(user);
 
 				Assert.assertTrue(
-					permissionChecker.isGroupAdmin(depotEntry.getGroupId()));
+					permissionChecker.isContentReviewer(
+						user.getCompanyId(), depotEntry.getGroupId()));
+			});
+	}
+
+	@Test
+	public void testIsContentReviewerWithAssetLibraryContentReviewer()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
+
+		DepotTestUtil.withAssetLibraryContentReviewer(
+			depotEntry,
+			user -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
+
+				Assert.assertTrue(
+					permissionChecker.isContentReviewer(
+						user.getCompanyId(), depotEntry.getGroupId()));
 			});
 	}
 

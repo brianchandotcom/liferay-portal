@@ -352,9 +352,8 @@ export default function Chart({
 							/>
 
 							{!validAnalyticsConnection ||
-							(validAnalyticsConnection && publishedToday) ||
-							(validAnalyticsConnection &&
-								histogram.length === 0) ? (
+							publishedToday ||
+							histogram.length === 0 ? (
 								<YAxis
 									axisLine={{
 										stroke: CHART_COLORS.cartesianGrid,
@@ -388,10 +387,10 @@ export default function Chart({
 									/>
 								}
 								cursor={
-									!validAnalyticsConnection ||
-									(validAnalyticsConnection && publishedToday)
-										? false
-										: true
+									!(
+										validAnalyticsConnection &&
+										publishedToday
+									)
 								}
 								formatter={(value, name) => {
 									return [

@@ -518,6 +518,40 @@ definition {
 	}
 
 	@priority = "4"
+	test RateBookmarksWithLikeStyle {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Bookmarks Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Bookmarks Page",
+			widgetName = "Asset Publisher");
+
+		Ratings.configureRatingType(
+			applications = "Bookmarks",
+			ratingType = "Like");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Ratings");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Bookmark.addBookmarkViaAP(
+			bookmarkDescription = "Test Bookmark Description",
+			bookmarkName = "Test Bookmark Name",
+			bookmarkURL = "https://www.liferay.com");
+
+		Navigator.gotoPage(pageName = "Bookmarks Page");
+
+		Ratings.rateLike();
+
+		Ratings.viewRateLike(ratingLikeCount = "1");
+	}
+
+	@priority = "4"
 	test RateKBArticleWithoutSuggestions {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -541,6 +575,65 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
+			voteCount = "1");
+	}
+
+	@priority = "4"
+	test RateMBThreadAndReply {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.gotoPG(
+			lastPostUserName = "Test Test",
+			replyCount = "0",
+			threadBody = "",
+			threadSubject = "MB Thread Message Subject");
+
+		Ratings.rateThumb(ratingResult = "Rate this as good");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
+			voteCount = "1");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.replyPG(
+			threadBody = "MB Thread Message Body",
+			threadReplyBody = "MB Thread Message Reply Body",
+			threadSubject = "MB Thread Message Subject");
+
+		Ratings.rateThumb(
+			ratingResult = "Rate this as bad",
+			replyRating = "true",
+			threadSubject = "MB Thread Message Subject");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as bad",
 			voteCount = "1");
 	}
 
@@ -720,6 +813,77 @@ definition {
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
 			voteCount = "1");
+	}
+
+	@priority = "4"
+	test ViewLikeCountForDocument {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Ratings.configureRatingType(
+			applications = "document",
+			ratingType = "Like");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Description",
+			dmDocumentTitle = "DM Title",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Title");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateLike();
+
+		Ratings.viewRateLike(ratingLikeCount = "1");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Title");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateLike();
+
+		Ratings.viewRateLike(ratingLikeCount = "2");
 	}
 
 }

@@ -291,8 +291,10 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "${emptyPageMessage}");
 
-		Type.typeEditor(
-			locator1 = "//div[contains(@class,'alloy-editor') and contains(@class,'cke_editable_inline')]",
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContent}");
 
 		if ("${rtl}" == "true") {
@@ -302,7 +304,9 @@ definition {
 			var textDirection = "ltr";
 		}
 
-		AssertElementPresent(locator1 = "//div[contains(@class,'cke_contents_${textDirection}')]");
+		AssertElementPresent(locator1 = "//body[contains(@class,'cke_contents_${textDirection}')]");
+
+		SelectFrame(value1 = "relative=top");
 
 		Click(locator1 = "Button#PUBLISH_LOCALIZED");
 

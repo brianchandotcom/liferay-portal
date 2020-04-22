@@ -219,6 +219,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESTORE</td>
+	<td>//*[*[name()='svg'][contains(@class,'icon-restore')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHARE</td>
 	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-share')]]</td>
 	<td></td>

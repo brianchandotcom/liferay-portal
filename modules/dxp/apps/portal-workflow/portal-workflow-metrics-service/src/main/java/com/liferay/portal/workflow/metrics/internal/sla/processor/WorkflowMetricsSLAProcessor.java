@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -783,8 +781,7 @@ public class WorkflowMetricsSLAProcessor {
 	}
 
 	private final DateTimeFormatter _dateTimeFormatter =
-		DateTimeFormatter.ofPattern(
-			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
+		DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
 	@Reference
 	private FilterBuilders _filterBuilders;

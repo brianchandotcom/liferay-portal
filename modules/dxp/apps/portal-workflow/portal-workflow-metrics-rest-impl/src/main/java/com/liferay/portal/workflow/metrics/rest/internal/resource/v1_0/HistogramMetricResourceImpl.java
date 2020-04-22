@@ -14,8 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -294,8 +292,7 @@ public class HistogramMetricResourceImpl
 	private Aggregations _aggregations;
 
 	private final DateTimeFormatter _dateTimeFormatter =
-		DateTimeFormatter.ofPattern(
-			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
+		DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
 	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
 	private WorkflowMetricsIndexNameBuilder

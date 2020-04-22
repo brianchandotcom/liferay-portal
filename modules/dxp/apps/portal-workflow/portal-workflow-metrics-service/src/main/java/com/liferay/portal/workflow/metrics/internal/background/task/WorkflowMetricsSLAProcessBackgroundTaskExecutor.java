@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.BucketAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
@@ -603,14 +601,14 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			slaTaskResultDocuments);
 	}
 
-	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
-		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowMetricsSLAProcessBackgroundTaskExecutor.class);
 
 	@Reference
 	private Aggregations _aggregations;
+
+	private final DateTimeFormatter _dateTimeFormatter =
+		DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
 	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
 	private WorkflowMetricsIndexNameBuilder

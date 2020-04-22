@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -290,7 +288,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 		BaseWorkflowMetricsIndexer.class);
 
 	private final DateTimeFormatter _dateTimeFormatter =
-		DateTimeFormatter.ofPattern(
-			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
+		DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
 }

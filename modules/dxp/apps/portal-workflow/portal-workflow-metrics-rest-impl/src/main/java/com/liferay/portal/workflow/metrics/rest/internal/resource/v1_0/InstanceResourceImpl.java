@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -1160,9 +1158,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_getNextTransitionNames(instance.getProcessId(), instance.getId()),
 			this::_toTransition, Transition.class);
 	}
-
-	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
-		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InstanceResourceImpl.class);

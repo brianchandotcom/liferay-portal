@@ -613,6 +613,53 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 	}
 
+	@description = "This is a use case for LPS-109555. Automatically rename documents when bulk restore them from recycle bin if document names already exist in the destination."
+	@priority = "5"
+	test RenameBulkRestoreDocumentsAutomaticallyWhenDocumentNamesAlreadyExistInTheDestination {
+		task ("Add multiple document entries") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			for (var fileName : list "Document_1.png,Document_1.txt") {
+				DMDocument.addCP(
+					dmDocumentFile = "${fileName}",
+					dmDocumentTitle = "${fileName}");
+			}
+		}
+
+		task ("Move all items to recycle bin") {
+			DMDocument.moveAllToRecycleBinCP();
+		}
+
+		task ("Add multiple document entries with the same names as ones in recycle bin") {
+			for (var fileName : list "Document_1.png,Document_1.txt") {
+				DMDocument.addCP(
+					dmDocumentFile = "${fileName}",
+					dmDocumentTitle = "${fileName}");
+			}
+		}
+
+		task ("Bulk restore all documents in recycle bin") {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			for (var entryName : list "Document_1.png,Document_1.txt") {
+				RecycleBin.viewCP(
+					assetName = "${entryName}",
+					assetType = "Document",
+					deleteUser = "Test Test");
+			}
+
+			RecycleBin.bulkRestoreCP(assetList = "Document_1.png,Document_1.txt");
+		}
+
+		task ("Assert restored documents are renamed") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			for (var assetName : list "Document_1.png,Document_1.txt,Document_1 (1).png,Document_1 (1).txt") {
+				DMDocument.viewCardTitle(dmDocumentTitle = "${assetName}");
+			}
+		}
+	}
+
 	@priority = "5"
 	test RestoreDMDocumentFromFolderCP {
 		property portal.acceptance = "true";

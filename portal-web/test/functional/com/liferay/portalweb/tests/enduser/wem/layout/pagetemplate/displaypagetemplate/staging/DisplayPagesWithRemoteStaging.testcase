@@ -46,7 +46,6 @@ definition {
 	@description = "This is a use case for LPS-91192."
 	@priority = "4"
 	test PublishDisplayPageMapWebContentWithAssetPublisher {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "DisplayPagesWithRemoteStaging#PublishDisplayPageMapWebContentWithAssetPublisher";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

@@ -42,24 +42,25 @@ const ChainedRedirectionsModal = ({
 				<ClayModal.Body>
 					<p>
 						<strong>
-							Do you want to create the redirect and update the
-							references?
+							{Liferay.Language.get(
+								'do-you-want-to-create-the-redirect-and-update-the-references'
+							)}
 						</strong>
 					</p>
 					<p className="text-secondary">
-						There are other redirects pointing to the source url of
-						this redirect. This will create a Redirect chain, so
-						users will be redirected multiple times before reaching
-						the destination.
+						{Liferay.Language.get(
+							'there-are-other-redirects-pointing-to-the-source-url-of-this-redirect.-this-will-create-a-redirect-chain-so-users-will-be-redirected-multiple-times-before-reaching-the-destination'
+						)}
 					</p>
 					<p className="text-secondary">
-						To avoid this chain, update the references of the other
-						redirects
+						{Liferay.Language.get(
+							'to-avoid-this-chain-update-the-references-of-the-other-redirects'
+						)}
 					</p>
 					<fieldset className="fieldset">
 						<ClayCheckbox
 							checked={updateReferences}
-							label="Update References"
+							label={Liferay.Language.get('update-references')}
 							onChange={() => setUpdateReferences(val => !val)}
 						/>
 					</fieldset>
@@ -76,7 +77,7 @@ const ChainedRedirectionsModal = ({
 							</ClayButton>
 
 							<ClayButton displayType="primary" type="submit">
-								{Liferay.Language.get('save')}
+								{Liferay.Language.get('create')}
 							</ClayButton>
 						</ClayButton.Group>
 					}

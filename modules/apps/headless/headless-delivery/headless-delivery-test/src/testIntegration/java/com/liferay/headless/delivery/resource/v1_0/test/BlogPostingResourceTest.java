@@ -16,9 +16,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPosting;
-import com.liferay.portal.search.test.util.SearchTestRule;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,9 +49,6 @@ public class BlogPostingResourceTest extends BaseBlogPostingResourceTestCase {
 			blogPostingResource.putSiteBlogPostingUnsubscribeHttpResponse(
 				blogPosting.getSiteId()));
 	}
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

@@ -15,14 +15,12 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,9 +41,6 @@ public class WikiNodeResourceTest extends BaseWikiNodeResourceTestCase {
 			WikiNodeLocalServiceUtil.deleteNode(wikiNode);
 		}
 	}
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

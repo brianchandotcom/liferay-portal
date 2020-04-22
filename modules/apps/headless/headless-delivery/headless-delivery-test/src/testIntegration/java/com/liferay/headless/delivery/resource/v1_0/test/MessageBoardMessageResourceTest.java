@@ -24,10 +24,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.test.util.SearchTestRule;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -78,9 +76,6 @@ public class MessageBoardMessageResourceTest
 	@Override
 	public void testGraphQLGetSiteMessageBoardMessagesPage() {
 	}
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

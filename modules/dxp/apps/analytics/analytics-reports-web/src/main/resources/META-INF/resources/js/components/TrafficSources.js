@@ -10,6 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import className from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
@@ -175,13 +176,15 @@ export default function TrafficSources({
 										entry.name
 									);
 
+									const cellClasses = className({
+										dim:
+											highlighted &&
+											entry.name !== highlighted,
+									});
+
 									return (
 										<Cell
-											className={{
-												dim:
-													highlighted &&
-													entry.name !== highlighted,
-											}}
+											className={cellClasses}
 											fill={fillColor}
 											key={i}
 											onMouseOut={handleLegendMouseLeave}

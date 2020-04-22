@@ -200,6 +200,51 @@ public class FileInstallConfigTest {
 		_testConfiguration("[\"testString\",\"testString2\"]", expectedStrings);
 	}
 
+	@Test
+	public void testConfigurationTypedAndNontypedValues() throws Exception {
+		Path path = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			_CONFIGURATION_PID.concat(".config"));
+
+		try {
+			String[] configs = {
+				"configBoolean=B\"True\"\n", "configByte=X\"1\"\n",
+				"configCharacter=C\"A\"\n", "configDouble=D\"12.2\"\n",
+				"configFloat=F\"12.2\"\n", "configInteger=I\"20\"\n",
+				"configLong=L\"30\"\n", "configShort=S\"2\"\n",
+				"configString=\"testString\""
+			};
+
+			_updateConfiguration(
+				() -> {
+					StringBundler sb = new StringBundler(configs);
+
+					String content = sb.toString();
+
+					Files.write(path, content.getBytes());
+				});
+
+			Configuration configuration = _configurationAdmin.getConfiguration(
+				_CONFIGURATION_PID, StringPool.QUESTION);
+
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			Assert.assertEquals(true, properties.get("configBoolean"));
+			Assert.assertEquals((byte)1, properties.get("configByte"));
+			Assert.assertEquals('A', properties.get("configCharacter"));
+			Assert.assertEquals(12.2D, properties.get("configDouble"));
+			Assert.assertEquals(12.2F, properties.get("configFloat"));
+			Assert.assertEquals(20, properties.get("configInteger"));
+			Assert.assertEquals(30L, properties.get("configLong"));
+			Assert.assertEquals((short)2, properties.get("configShort"));
+			Assert.assertEquals("testString", properties.get("configString"));
+		}
+		finally {
+			Files.deleteIfExists(path);
+		}
+	}
+
 	private void _testConfiguration(String config, Object configValue)
 		throws Exception {
 

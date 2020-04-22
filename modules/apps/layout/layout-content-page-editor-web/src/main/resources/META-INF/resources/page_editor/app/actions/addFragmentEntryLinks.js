@@ -20,10 +20,12 @@ import {ADD_FRAGMENT_ENTRY_LINKS} from './types';
  * @param {object} data.layoutData
  */
 export default function addFragmentEntryLinks({
+	addedItemId,
 	fragmentEntryLinks,
 	layoutData,
 }) {
 	return {
+		addedItemId,
 		fragmentEntryLinks,
 		layoutData,
 		type: ADD_FRAGMENT_ENTRY_LINKS,

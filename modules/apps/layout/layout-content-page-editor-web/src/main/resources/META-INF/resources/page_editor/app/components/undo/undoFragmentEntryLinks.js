@@ -19,16 +19,7 @@ function undoAction({action, store}) {
 }
 
 function getDerivedStateForUndo({action}) {
-	const fragmentEntryLinkId =
-		action.fragmentEntryLinks[0].fragmentEntryLinkId;
-
-	const itemId = Object.values(action.layoutData.items).find(
-		item =>
-			item.config &&
-			item.config.fragmentEntryLinkId === fragmentEntryLinkId
-	).itemId;
-
-	return {itemId};
+	return {itemId: action.addedItemId};
 }
 
 export {undoAction, getDerivedStateForUndo};

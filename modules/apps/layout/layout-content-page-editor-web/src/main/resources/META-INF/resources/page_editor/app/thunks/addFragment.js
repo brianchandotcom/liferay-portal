@@ -41,6 +41,7 @@ export default function addFragment({
 		const updateState = (fragmentEntryLinks, layoutData, itemId) => {
 			dispatch(
 				addFragmentEntryLinks({
+					addedItemId: itemId,
 					fragmentEntryLinks,
 					layoutData,
 				})
@@ -51,11 +52,11 @@ export default function addFragment({
 
 		if (type === FRAGMENT_TYPES.composition) {
 			FragmentService.addFragmentEntryLinks(params).then(
-				({fragmentEntryLinks, layoutData}) => {
+				({addedItemId, fragmentEntryLinks, layoutData}) => {
 					updateState(
 						Object.values(fragmentEntryLinks),
 						layoutData,
-						parentItemId
+						addedItemId
 					);
 				}
 			);

@@ -11,10 +11,11 @@
 
 import React, {createContext, useCallback, useContext, useReducer} from 'react';
 
-export const StoreContext = createContext(null);
 const INITIAL_STATE = {warning: false};
 
 const ADD_WARNING = 'add-warning';
+
+export const StoreContext = createContext([INITIAL_STATE, () => {}]);
 
 function reducer(state = INITIAL_STATE, action) {
 	if (action.type === ADD_WARNING) {

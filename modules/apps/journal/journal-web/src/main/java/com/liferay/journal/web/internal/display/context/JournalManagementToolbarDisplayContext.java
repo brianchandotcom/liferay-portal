@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
@@ -445,6 +448,22 @@ public class JournalManagementToolbarDisplayContext
 	@Override
 	protected String getDefaultDisplayStyle() {
 		return _journalWebConfiguration.defaultDisplayView();
+	}
+
+	@Override
+	protected String getDisplayStyle() {
+		String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+			displayStyle = portalPreferences.getValue(
+				JournalPortletKeys.JOURNAL, "display-style",
+				getDefaultDisplayStyle());
+		}
+
+		return displayStyle;
 	}
 
 	@Override

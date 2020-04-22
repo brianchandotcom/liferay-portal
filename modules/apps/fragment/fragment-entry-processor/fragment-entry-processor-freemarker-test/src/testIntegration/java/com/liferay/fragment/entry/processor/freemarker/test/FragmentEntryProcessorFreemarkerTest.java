@@ -216,7 +216,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 		).build();
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration_collectionselector.html",
+			"fragment_entry_with_configuration_collectionselector_dynamic_" +
+				"collection.html",
 			"configuration_collectionselector.json", new HashMap<>());
 
 		FragmentEntryLink fragmentEntryLink =
@@ -227,7 +228,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
 				"fragment_entry_link_editable_values_with_configuration_" +
-					"collectionselector.json",
+					"collectionselector_dynamic_collection.json",
 				editableValuesValues));
 
 		DefaultFragmentEntryProcessorContext
@@ -247,7 +248,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
 				"expected_processed_fragment_entry_with_configuration_" +
-					"collectionselector.html",
+					"collectionselector_dynamic_collection.html",
 				expectedValues));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);

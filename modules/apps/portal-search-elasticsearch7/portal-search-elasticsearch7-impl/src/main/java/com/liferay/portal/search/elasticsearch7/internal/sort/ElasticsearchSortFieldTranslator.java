@@ -85,7 +85,7 @@ public class ElasticsearchSortFieldTranslator
 			fieldSortBuilder.sortMode(translate(sortMode));
 		}
 
-		return fieldSortBuilder;
+		return fieldSortBuilder.unmappedType("keyword");
 	}
 
 	@Override

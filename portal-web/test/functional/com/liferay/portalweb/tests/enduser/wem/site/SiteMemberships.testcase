@@ -377,7 +377,6 @@ definition {
 	@priority = "5"
 	test OrganizationsView {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SiteMemberships#OrganizationsView";
 		property testray.component.names = "Site Administration,Users and Organizations";
 

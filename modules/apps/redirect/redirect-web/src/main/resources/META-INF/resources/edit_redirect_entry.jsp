@@ -45,7 +45,7 @@ else {
 	action="<%= editRedirectEntryURL %>"
 	method="post"
 	name="fm"
-	onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRedirectEntry();" %>'
+	onSubmit="event.preventDefault();"
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -127,47 +127,11 @@ else {
 	/>
 </div>
 
-<script>
-	function <portlet:namespace />saveRedirectEntry() {
-		var form = document.<portlet:namespace />fm;
-
-		var destinationURL = form.elements['<portlet:namespace />destinationURL'];
-		var sourceURL = form.elements['<portlet:namespace />sourceURL'];
-
-		if (destinationURL.value && sourceURL.value) {
-			Liferay.Util.fetch('<%= checkDestinationURL %>', {
-				body: Liferay.Util.objectToFormData({
-					<portlet:namespace />sourceURL: sourceURL.value,
-				}),
-				method: 'POST',
-			})
-				.then(function(response) {
-					return response.json();
-				})
-				.then(function(response) {
-					if (response.success) {
-						submitForm(form);
-					}
-					else {
-						Liferay.componentReady(
-							'<portlet:namespace />RedirectsChainedRedirections'
-						).then(function(documentLibraryCheckinModal) {
-							documentLibraryCheckinModal.open(function(
-								updateReferences
-							) {
-								Liferay.Util.postForm(form, {
-									data: {
-										updateReferences: updateReferences,
-									},
-								});
-							});
-						});
-					}
-				});
-		}
-		else {
-			destinationURL.focus();
-			destinationURL.blur();
-		}
-	}
-</script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"checkDestinationURL", checkDestinationURL
+		).build()
+	%>'
+	module="js/editRedirectEntry"
+/>

@@ -212,13 +212,10 @@ public abstract class BaseMoreLikeThisQueryTestCase
 		assertSearch(
 			indexingTestHelper -> {
 				SearchSearchRequest searchSearchRequest =
-					new SearchSearchRequest();
+					createSearchSearchRequest();
 
-				searchSearchRequest.setIndexNames(
-					String.valueOf(getCompanyId()));
 				searchSearchRequest.setQuery(legacyMoreLikeThisQuery);
 				searchSearchRequest.setQuery(moreLikeThisQuery);
-				searchSearchRequest.setSize(30);
 
 				SearchEngineAdapter searchEngineAdapter =
 					getSearchEngineAdapter();
@@ -271,6 +268,15 @@ public abstract class BaseMoreLikeThisQueryTestCase
 		moreLikeThisQuery.setMinTermFrequency(Integer.valueOf(1));
 
 		assertSearch(null, moreLikeThisQuery, expectedValues);
+	}
+
+	protected SearchSearchRequest createSearchSearchRequest() {
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(String.valueOf(getCompanyId()));
+		searchSearchRequest.setSize(30);
+
+		return searchSearchRequest;
 	}
 
 	protected void deleteDocumentById(String id) {

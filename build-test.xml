@@ -234,6 +234,42 @@ module.framework.properties.osgi.console=11312</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="docker-copy">
+		<attribute name="dest.path" />
+		<attribute name="src.path" />
+
+		<sequential>
+			<execute>
+				<![CDATA[
+					docker cp @{src.path} @{dest.path}
+				]]>
+			</execute>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="docker-execute">
+		<attribute name="container" />
+		<text name="script" />
+
+		<sequential>
+			<property location="${project.dir}/script.sh" name="script.sh.file" />
+
+			<echo file="${script.sh.file}"><![CDATA[@{script}]]></echo>
+
+			<execute>
+				<![CDATA[
+					docker exec @{container} mkdir -p /tmp
+
+					docker cp ${script.sh.file} @{container}:/tmp/script.sh
+
+					docker exec @{container} /bin/bash /tmp/script.sh
+
+					docker exec @{container} rm -f /tmp/script.sh
+				]]>
+			</execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="generate-gulp-user-config-json">
 		<attribute name="portlet.name" />
 

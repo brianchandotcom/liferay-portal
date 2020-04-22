@@ -14,38 +14,37 @@
 
 package com.liferay.gradle.plugins.lang.merger.tasks;
 
+import com.liferay.gradle.plugins.lang.merger.internal.util.MergePropertiesUtil;
+import com.liferay.gradle.plugins.lang.merger.internal.work.MergePropertiesWorkAction;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
+
+import javax.inject.Inject;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
+import org.gradle.api.file.ConfigurableFileCollection;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
+import org.gradle.api.provider.MapProperty;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
@@ -54,8 +53,9 @@ import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
+import org.gradle.workers.WorkQueue;
+import org.gradle.workers.WorkerExecutor;
 
 /**
  * @author Andrea Di Giorgi
@@ -63,11 +63,14 @@ import org.gradle.util.GUtil;
 @CacheableTask
 public class MergePropertiesTask extends DefaultTask {
 
-	public MergePropertiesTask() {
+	@Inject
+	public MergePropertiesTask(WorkerExecutor workerExecutor) {
 		Project project = getProject();
 
 		_mergePropertiesSettings = project.container(
 			MergePropertiesSetting.class);
+
+		_workerExecutor = workerExecutor;
 	}
 
 	@Input
@@ -131,52 +134,46 @@ public class MergePropertiesTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public void merge() throws IOException {
-		File destinationDir = getDestinationDir();
-		FileCollection sourceDirs = getSourceDirs();
+	public void merge() {
+		WorkQueue workQueue = _workerExecutor.processIsolation();
 
-		for (File destinationFile : getDestinationFiles()) {
-			Set<File> sourceFiles = new LinkedHashSet<>();
+		workQueue.submit(
+			MergePropertiesWorkAction.class,
+			mergePropertiesWorkParameters -> {
+				Property<String> charsetNameProperty =
+					mergePropertiesWorkParameters.getCharsetName();
 
-			String fileName = FileUtil.relativize(
-				destinationFile, destinationDir);
+				charsetNameProperty.set(getCharsetName());
 
-			for (File sourceDir : sourceDirs) {
-				File sourceFile = new File(sourceDir, fileName);
+				Property<Boolean> copyAllowedProperty =
+					mergePropertiesWorkParameters.getCopyAllowed();
 
-				if (sourceFile.exists()) {
-					sourceFiles.add(sourceFile);
-				}
-			}
+				copyAllowedProperty.set(_isCopyAllowed());
 
-			File destinationFileDir = destinationFile.getParentFile();
+				DirectoryProperty destinationDirDirectoryProperty =
+					mergePropertiesWorkParameters.getDestinationDir();
 
-			destinationFileDir.mkdirs();
+				destinationDirDirectoryProperty.set(getDestinationDir());
 
-			if ((sourceFiles.size() == 1) && _isCopyAllowed()) {
-				Iterator<File> iterator = sourceFiles.iterator();
+				ConfigurableFileCollection
+					destinationFilesConfigurableFileCollection =
+						mergePropertiesWorkParameters.getDestinationFiles();
 
-				File sourceFile = iterator.next();
+				destinationFilesConfigurableFileCollection.setFrom(
+					getDestinationFiles());
 
-				Files.copy(
-					sourceFile.toPath(), destinationFile.toPath(),
-					StandardCopyOption.REPLACE_EXISTING);
+				ConfigurableFileCollection
+					sourceDirsConfigurableFileCollection =
+						mergePropertiesWorkParameters.getSourceDirs();
 
-				if (_logger.isInfoEnabled()) {
-					_logger.info(
-						"Copied " + sourceFile + " into " + destinationFile);
-				}
-			}
-			else {
-				_merge(sourceFiles, destinationFile);
+				sourceDirsConfigurableFileCollection.setFrom(getSourceDirs());
 
-				if (_logger.isInfoEnabled()) {
-					_logger.info(
-						"Merged " + CollectionUtils.join(", ", sourceFiles) +
-							" into " + destinationFile);
-				}
-			}
-		}
+				MapProperty<String, MergePropertiesSetting>
+					settingsMapProperty =
+						mergePropertiesWorkParameters.getSettings();
+
+				settingsMapProperty.set(_mergePropertiesSettings.getAsMap());
+			});
 	}
 
 	public void setCharsetName(Object charsetName) {
@@ -202,7 +199,8 @@ public class MergePropertiesTask extends DefaultTask {
 
 		File dir = GradleUtil.toFile(getProject(), object);
 
-		return _mergePropertiesSettings.create(_getSettingName(dir), closure);
+		return _mergePropertiesSettings.create(
+			MergePropertiesUtil.getSettingName(dir), closure);
 	}
 
 	public MergePropertiesTask sourceDirs(Iterable<Object> sourceDirs) {
@@ -213,20 +211,6 @@ public class MergePropertiesTask extends DefaultTask {
 
 	public MergePropertiesTask sourceDirs(Object... sourceDirs) {
 		return sourceDirs(Arrays.asList(sourceDirs));
-	}
-
-	private String _getSettingName(File file) throws IOException {
-		if (file.isFile()) {
-			file = file.getParentFile();
-		}
-
-		String name = file.getCanonicalPath();
-
-		if (File.separatorChar != '/') {
-			name = name.replace(File.separatorChar, '/');
-		}
-
-		return name;
 	}
 
 	private FileCollection _getSourceFiles(File sourceDir) {
@@ -248,66 +232,13 @@ public class MergePropertiesTask extends DefaultTask {
 		return false;
 	}
 
-	private void _merge(Set<File> sourceFiles, File destinationFile)
-		throws IOException {
-
-		Charset charset = Charset.forName(getCharsetName());
-
-		Properties mergedProperties = new Properties();
-
-		for (File sourceFile : sourceFiles) {
-			if (!sourceFile.exists()) {
-				continue;
-			}
-
-			Properties sourceProperties = new Properties();
-
-			try (BufferedReader bufferedReader = Files.newBufferedReader(
-					sourceFile.toPath(), charset)) {
-
-				sourceProperties.load(bufferedReader);
-			}
-
-			MergePropertiesSetting mergePropertiesSetting =
-				_mergePropertiesSettings.findByName(
-					_getSettingName(sourceFile));
-
-			if (mergePropertiesSetting != null) {
-				Map<String, String> transformKeys =
-					mergePropertiesSetting.getTransformKeys();
-
-				for (Map.Entry<String, String> entry :
-						transformKeys.entrySet()) {
-
-					String sourceKey = entry.getKey();
-					String destinationKey = entry.getValue();
-
-					String value = sourceProperties.getProperty(sourceKey);
-
-					mergedProperties.setProperty(destinationKey, value);
-				}
-			}
-			else {
-				mergedProperties.putAll(sourceProperties);
-			}
-		}
-
-		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
-				destinationFile.toPath(), charset)) {
-
-			mergedProperties.store(bufferedWriter, null);
-		}
-	}
-
 	private static final String _PATTERN = "*.properties";
-
-	private static final Logger _logger = Logging.getLogger(
-		MergePropertiesTask.class);
 
 	private Object _charsetName = StandardCharsets.UTF_8.name();
 	private Object _destinationDir;
 	private final NamedDomainObjectContainer<MergePropertiesSetting>
 		_mergePropertiesSettings;
 	private final Set<Object> _sourceDirs = new LinkedHashSet<>();
+	private final WorkerExecutor _workerExecutor;
 
 }

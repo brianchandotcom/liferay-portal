@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Widget;
+import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -64,10 +66,9 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 					{
 						name = PortletIdCodec.decodePortletName(portletId);
 						widgetConfig = _getWidgetConfig(plid, portletId);
-						widgetPermissions = _getWidgetPermissions(
-							plid, portletId);
 					}
 				};
+				widgetPermissions = _getWidgetPermissions(plid, portletId);
 			}
 		};
 	}
@@ -120,7 +121,7 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 		return widgetConfigMap;
 	}
 
-	private static Map<String, Object> _getWidgetPermissions(
+	private static WidgetPermission[] _getWidgetPermissions(
 		long plid, String portletId) {
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
@@ -156,7 +157,7 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 			return null;
 		}
 
-		Map<String, Object> widgetPermissionsMap = new HashMap<>();
+		List<WidgetPermission> widgetPermissions = new ArrayList<>();
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			Role role = RoleLocalServiceUtil.fetchRole(
@@ -187,11 +188,16 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 				}
 			}
 
-			widgetPermissionsMap.put(
-				role.getName(), actionIdsSet.toArray(new String[0]));
+			widgetPermissions.add(
+				new WidgetPermission() {
+					{
+						actionKeys = actionIdsSet.toArray(new String[0]);
+						roleKey = role.getName();
+					}
+				});
 		}
 
-		return widgetPermissionsMap;
+		return widgetPermissions.toArray(new WidgetPermission[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

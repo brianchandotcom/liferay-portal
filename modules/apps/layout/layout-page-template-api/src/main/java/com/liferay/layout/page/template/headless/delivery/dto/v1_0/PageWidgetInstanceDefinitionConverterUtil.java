@@ -65,9 +65,9 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 				widget = new Widget() {
 					{
 						name = PortletIdCodec.decodePortletName(portletId);
-						widgetConfig = _getWidgetConfig(plid, portletId);
 					}
 				};
+				widgetConfig = _getWidgetConfig(plid, portletId);
 				widgetPermissions = _getWidgetPermissions(plid, portletId);
 			}
 		};

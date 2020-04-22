@@ -14,7 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -110,6 +110,12 @@ const Options = ({
 				: false,
 		].filter(Boolean);
 	});
+
+	const defaultOptionRef = useRef(
+		fields.length === 2 &&
+			fields[0].label.toLowerCase() ===
+				Liferay.Language.get('option').toLowerCase()
+	);
 
 	const fieldsFilter = fields => {
 		const _fields = [...fields];
@@ -219,6 +225,7 @@ const Options = ({
 						}
 					>
 						{children({
+							defaultOptionRef,
 							handleBlur: composedBlur,
 							handleField: !(fields.length - 1 === index)
 								? composedChange.bind(this, index)
@@ -262,7 +269,13 @@ const OptionsProxy = connectStore(
 					onChange={value => emit('fieldEdited', {}, value)}
 					value={value}
 				>
-					{({handleBlur, handleField, index, option}) => (
+					{({
+						defaultOptionRef,
+						handleBlur,
+						handleField,
+						index,
+						option,
+					}) => (
 						<KeyValue
 							dispatch={dispatch}
 							generateKeyword={option.generateKeyword}
@@ -280,6 +293,12 @@ const OptionsProxy = connectStore(
 							onTextChange={event =>
 								handleField('label', event.target.value)
 							}
+							onTextFocus={() => {
+								if (defaultOptionRef.current) {
+									handleField('label', '');
+									defaultOptionRef.current = false;
+								}
+							}}
 							placeholder={placeholder}
 							readOnly={option.disabled}
 							required={required}

@@ -97,6 +97,7 @@ const Main = ({
 				showLabel={showLabel}
 				spritemap={spritemap}
 				store={store}
+				syncDelay={false}
 				value={value}
 				visible={visible}
 			/>

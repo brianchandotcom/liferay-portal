@@ -19,7 +19,7 @@ import {useEffect, useRef, useState} from 'react';
  * value, only update the internal value with the new initial value if the
  * values are different and when the value is not changed for more than ms.
  */
-export const useSyncValue = newValue => {
+export const useSyncValue = (newValue, isDelay = true) => {
 	// Maintains the reference of the last value to check in later renderings if the
 	// value is new or keeps the same, it covers cases where the value typed by
 	// the user is sent to LayoutProvider but it does not descend with the new changes.
@@ -28,17 +28,23 @@ export const useSyncValue = newValue => {
 	const [value, setValue] = useState(newValue);
 
 	useEffect(() => {
-		const handler = setTimeout(() => {
-			if (value !== newValue && previousValueRef.current !== newValue) {
-				previousValueRef.current = newValue;
-				setValue(newValue);
-			}
-		}, 300);
+		const handler = setTimeout(
+			() => {
+				if (
+					value !== newValue &&
+					previousValueRef.current !== newValue
+				) {
+					previousValueRef.current = newValue;
+					setValue(newValue);
+				}
+			},
+			isDelay ? 300 : 0
+		);
 
 		return () => {
 			clearTimeout(handler);
 		};
-	}, [newValue, value]);
+	}, [isDelay, newValue, value]);
 
 	return [value, setValue];
 };

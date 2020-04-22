@@ -1,5 +1,25 @@
 definition {
 
+	macro bulkRestoreCP {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForManagementBar();
+		}
+
+		for (var assetName : list "${assetList}") {
+			LexiconTable.viewTableEntryTitle(tableEntry = "${assetName}");
+
+			Check(
+				key_assetName = "${assetName}",
+				locator1 = "RecycleBin#RECYCLE_BIN_ASSET_CHECKBOX");
+		}
+
+		Click(locator1 = "Icon#RESTORE");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro clickEllipsisItem {
 		LexiconTable.clickEllipsisItem(
 			item = "${item}",

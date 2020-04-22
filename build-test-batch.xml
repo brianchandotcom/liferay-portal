@@ -398,6 +398,19 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						</else>
 					</if>
 
+					<if>
+						<and>
+							<equals arg1="${operating.system.type}" arg2="centos" />
+							<equals arg1="${operating.system.centos.version}" arg2="8" />
+							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+						</and>
+						<then>
+							<stop-docker-os />
+
+							<start-docker-os />
+						</then>
+					</if>
+
 					<antcall inheritall="false" target="copy-optional-jars">
 						<param name="database.type" value="@{database.type}" />
 						<param name="todir" value="lib/development" />
@@ -424,6 +437,17 @@ mariadb.executable=${mariadb.executable}]]></echo>
 							<antcall target="stop-app-server" />
 
 							<delete failonerror="false" file=".testable.portal.started" />
+						</then>
+					</if>
+
+					<if>
+						<and>
+							<equals arg1="${operating.system.type}" arg2="centos" />
+							<equals arg1="${operating.system.centos.version}" arg2="8" />
+							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+						</and>
+						<then>
+							<stop-docker-os />
 						</then>
 					</if>
 

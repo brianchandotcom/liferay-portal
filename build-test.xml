@@ -1122,6 +1122,18 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					</then>
 				</elseif>
 				<elseif>
+					<and>
+						<equals arg1="${operating.system.type}" arg2="centos" />
+						<equals arg1="${operating.system.centos.version}" arg2="8" />
+						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+					</and>
+					<then>
+						<get-operating-system-property property.name="operating.system.host" />
+
+						<var name="test.url" value="http://${operating.system.host}:8080" />
+					</then>
+				</elseif>
+				<elseif>
 					<or>
 						<equals arg1="${browser.type}" arg2="android" />
 						<equals arg1="${browser.type}" arg2="androidchrome" />
@@ -3971,6 +3983,24 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 										<arg value="${app.server.start.executable.arg.line}" />
 									</exec>
 								</then>
+								<elseif>
+									<and>
+										<equals arg1="${operating.system.type}" arg2="centos" />
+										<equals arg1="${operating.system.centos.version}" arg2="8" />
+										<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+									</and>
+									<then>
+										<sequential>
+											<get-operating-system-property property.name="operating.system.host" />
+
+											<docker-execute container="${operating.system.host}">
+												chmod +x ${test.app.server.bin.dir}/${app.server.start.executable}
+
+												${test.app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}
+											</docker-execute>
+										</sequential>
+									</then>
+								</elseif>
 								<else>
 									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="${app.server.fail.on.error}" output="app.server.log" resolveexecutable="true">
 										<arg line="${app.server.start.executable.arg.line}" />
@@ -5019,6 +5049,18 @@ war.path=${app.server.portal.dir}/</echo>
 				<then>
 					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
 				</then>
+				<elseif>
+					<and>
+						<equals arg1="${operating.system.type}" arg2="centos" />
+						<equals arg1="${operating.system.centos.version}" arg2="8" />
+						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+					</and>
+					<then>
+						<get-operating-system-property property.name="operating.system.host" />
+
+						<property name="app.server.waiting.url" value="http://${operating.system.host}:${test.app.server.leading.port.number}080/web/guest" />
+					</then>
+				</elseif>
 				<else>
 					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
 				</else>

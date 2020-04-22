@@ -117,11 +117,11 @@ definition {
 			locator1 = "Link#ADD_CHILD_PAGE",
 			value1 = "Add Child Page");
 
+		WikiEntry.addPageTitle(wikiPageTitle = "Wiki FrontPage Child Page Title");
+
 		WikiEntry.selectPageFormat(pageFormat = "HTML");
 
 		WikiEntry.confirmHTML();
-
-		WikiEntry.addPageTitle(wikiPageTitle = "Wiki FrontPage Child Page Title");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 

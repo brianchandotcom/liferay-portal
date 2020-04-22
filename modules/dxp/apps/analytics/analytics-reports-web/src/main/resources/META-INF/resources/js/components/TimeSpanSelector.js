@@ -15,7 +15,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import ConnectionContext from '../context/connection';
+import ConnectionContext from '../context/ConnectionContext';
 
 export default function TimeSpanSelector({
 	disabledNextTimeSpan,

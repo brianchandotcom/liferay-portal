@@ -14,7 +14,7 @@ import React, {useContext, useState} from 'react';
 
 import Detail from './components/Detail';
 import Main from './components/Main';
-import ConnectionContext from './context/connection';
+import ConnectionContext from './context/ConnectionContext';
 import {StoreContextProvider, useHasWarning} from './context/store';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';

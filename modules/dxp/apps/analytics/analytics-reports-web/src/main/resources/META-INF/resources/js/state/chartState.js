@@ -11,7 +11,7 @@
 
 import {useContext, useReducer} from 'react';
 
-import ConnectionContext from '../context/connection';
+import ConnectionContext from '../context/ConnectionContext';
 
 const ADD_DATA_SET_ITEM = 'add-data-key';
 const NEXT_TIME_SPAN = 'next-time-span';

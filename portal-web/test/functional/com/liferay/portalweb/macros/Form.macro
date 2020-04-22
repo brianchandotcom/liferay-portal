@@ -202,6 +202,8 @@ definition {
 	}
 
 	macro editName {
+		Pause(locator1 = "2000");
+
 		AssertVisible(locator1 = "Form#ADD_FIELD");
 
 		AssertVisible(locator1 = "Form#NAME_FIELD");

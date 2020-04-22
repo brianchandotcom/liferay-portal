@@ -21,7 +21,7 @@ import {numberFormat} from './utils/numberFormat';
 
 export default function({context, props}) {
 	const {languageTag, namespace, page} = context;
-	const {defaultTimeSpanKey, timeSpans} = context;
+	const {defaultTimeRange, defaultTimeSpanKey, timeSpans} = context;
 	const {validAnalyticsConnection} = context;
 	const {authorName, publishDate, title} = props;
 	const {trafficSources} = props;

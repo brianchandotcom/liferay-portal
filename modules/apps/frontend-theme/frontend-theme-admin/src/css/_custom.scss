@@ -46,16 +46,4 @@ body {
 		margin-left: -($grid-gutter-width / 2);
 		margin-top: 20px;
 	}
-
-	.sidenav-container {
-		.sidenav-content {
-			@include media-breakpoint-up(sm) {
-				margin-right: -15px;
-			}
-		}
-
-		&.closed .sidenav-content {
-			margin-right: 0;
-		}
-	}
 }

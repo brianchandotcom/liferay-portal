@@ -1127,7 +1127,7 @@
 		breakpoint: 768,
 		content: '.sidenav-content',
 		equalHeight: true, // equalHeight option is deprecated, use heightType instead
-		gutter: '15px',
+		gutter: '0px',
 		heightType: null,
 		loadingIndicatorTPL:
 			'<div class="loading-animation loading-animation-md"></div>',

@@ -1058,7 +1058,7 @@ SideNavigation.instance = getInstance;
 const defaults = {
 	breakpoint: 768,
 	content: '.sidenav-content',
-	gutter: '15px',
+	gutter: '0px',
 	loadingIndicatorTPL:
 		'<div class="loading-animation loading-animation-md"></div>',
 	navigation: '.sidenav-menu-slider',

@@ -647,8 +647,29 @@
 					"type": "object"
 				},
 				"widgetPermissions": {
+					"items": {
+						"additionalProperties": false,
+						"properties": {
+							"actionKeys": {
+								"items": {
+									"type": "string"
+								},
+								"title": "The actionKeys Schema",
+								"type": "array"
+							},
+							"roleKey": {
+								"title": "The roleKey Schema",
+								"type": "string"
+							}
+						},
+						"required": [
+							"actionKeys",
+							"roleKey"
+						],
+						"type": "object"
+					},
 					"title": "The widgetPermissions Schema",
-					"type": "object"
+					"type": "array"
 				}
 			},
 			"title": "The WidgetInstanceDefinition Schema",

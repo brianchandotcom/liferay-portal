@@ -1063,8 +1063,11 @@ components:
                     properties:
                         fieldKey:
                             type: string
-                        itemKey:
+                        itemClassName:
                             type: string
+                        itemClassPK:
+                            format: int64
+                            type: integer
                     type: object
             type: object
         FragmentSettingsAllowed:

@@ -100,10 +100,10 @@ public class RedirectNotFoundEntryModelImpl
 		"drop table RedirectNotFoundEntry";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY redirectNotFoundEntry.hits DESC";
+		" ORDER BY redirectNotFoundEntry.hits DESC, redirectNotFoundEntry.redirectNotFoundEntryId DESC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY RedirectNotFoundEntry.hits DESC";
+		" ORDER BY RedirectNotFoundEntry.hits DESC, RedirectNotFoundEntry.redirectNotFoundEntryId DESC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -116,6 +116,8 @@ public class RedirectNotFoundEntryModelImpl
 	public static final long URL_COLUMN_BITMASK = 2L;
 
 	public static final long HITS_COLUMN_BITMASK = 4L;
+
+	public static final long REDIRECTNOTFOUNDENTRYID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -346,6 +348,8 @@ public class RedirectNotFoundEntryModelImpl
 
 	@Override
 	public void setRedirectNotFoundEntryId(long redirectNotFoundEntryId) {
+		_columnBitmask = -1L;
+
 		_redirectNotFoundEntryId = redirectNotFoundEntryId;
 	}
 
@@ -564,6 +568,26 @@ public class RedirectNotFoundEntryModelImpl
 			value = -1;
 		}
 		else if (getHits() > redirectNotFoundEntry.getHits()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		if (getRedirectNotFoundEntryId() <
+				redirectNotFoundEntry.getRedirectNotFoundEntryId()) {
+
+			value = -1;
+		}
+		else if (getRedirectNotFoundEntryId() >
+					redirectNotFoundEntry.getRedirectNotFoundEntryId()) {
+
 			value = 1;
 		}
 		else {

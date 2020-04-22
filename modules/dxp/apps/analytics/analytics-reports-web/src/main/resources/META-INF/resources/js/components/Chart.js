@@ -188,7 +188,7 @@ export default function Chart({
 					if (getter.name === 'getHistoricalReads') {
 						key = 'analyticsReportsHistoricalReads';
 					}
-					if (getter.name === 'getHistoricalViews') {
+					else if (getter.name === 'getHistoricalViews') {
 						key = 'analyticsReportsHistoricalViews';
 					}
 

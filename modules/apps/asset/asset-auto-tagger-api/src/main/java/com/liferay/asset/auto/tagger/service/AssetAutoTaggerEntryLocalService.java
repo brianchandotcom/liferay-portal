@@ -80,6 +80,10 @@ public interface AssetAutoTaggerEntryLocalService
 	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(
 		AssetEntry assetEntry, AssetTag assetTag);
 
+	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(
+			AssetEntry assetEntry, String assetTagName)
+		throws PortalException;
+
 	/**
 	 * Creates a new asset auto tagger entry with the primary key. Does not add the asset auto tagger entry to the database.
 	 *

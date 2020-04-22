@@ -59,6 +59,16 @@ public class AssetAutoTaggerEntryLocalServiceWrapper
 			assetEntry, assetTag);
 	}
 
+	@Override
+	public AssetAutoTaggerEntry addAssetAutoTaggerEntry(
+			com.liferay.asset.kernel.model.AssetEntry assetEntry,
+			String assetTagName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetAutoTaggerEntryLocalService.addAssetAutoTaggerEntry(
+			assetEntry, assetTagName);
+	}
+
 	/**
 	 * Creates a new asset auto tagger entry with the primary key. Does not add the asset auto tagger entry to the database.
 	 *

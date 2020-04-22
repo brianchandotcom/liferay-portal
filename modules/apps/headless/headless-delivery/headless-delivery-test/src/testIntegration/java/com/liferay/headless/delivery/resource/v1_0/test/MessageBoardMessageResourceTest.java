@@ -16,16 +16,26 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardMessageSerDes;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -45,6 +55,40 @@ public class MessageBoardMessageResourceTest
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 	}
 
+	@Test
+	public void testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPath()
+		throws Exception {
+
+		MessageBoardMessage messageBoardMessage =
+			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"messageBoardMessageByFriendlyUrlPath",
+				HashMapBuilder.<String, Object>put(
+					"friendlyUrlPath",
+					"\"" + messageBoardMessage.getFriendlyUrlPath() + "\""
+				).put(
+					"siteKey", "\"" + messageBoardMessage.getSiteId() + "\""
+				).build(),
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equals(
+				messageBoardMessage,
+				MessageBoardMessageSerDes.toDTO(
+					dataJSONObject.getString(
+						"messageBoardMessageByFriendlyUrlPath"))));
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"articleBody", "headline"};
@@ -52,7 +96,10 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"creatorId", "messageBoardSectionId"};
+		return new String[] {
+			"creatorId", "messageBoardSectionId", "messageBoardThreadId",
+			"parentMessageBoardMessageId", "ratingValue"
+		};
 	}
 
 	@Override
@@ -115,11 +162,34 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected MessageBoardMessage
+			testGetSiteMessageBoardMessageByFriendlyUrlPath_addMessageBoardMessage()
+		throws Exception {
+
+		return testPostMessageBoardMessageMessageBoardMessage_addMessageBoardMessage(
+			randomMessageBoardMessage());
+	}
+
+	@Override
+	protected MessageBoardMessage
 			testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
 				Long siteId, MessageBoardMessage messageBoardMessage)
 		throws Exception {
 
 		return _addMessageBoardMessage(messageBoardMessage, siteId);
+	}
+
+	@Override
+	protected MessageBoardMessage
+			testGraphQLMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), "test", testGroup.getGroupId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new ServiceContext());
+
+		return messageBoardMessageResource.getMessageBoardMessage(
+			mbMessage.getMessageId());
 	}
 
 	@Override

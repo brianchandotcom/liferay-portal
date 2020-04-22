@@ -902,10 +902,10 @@ public class GroupServiceTest {
 		String siteFriendlyURL = _portal.getGroupFriendlyURL(
 			_group.getPublicLayoutSet(), themeDisplay);
 
-		boolean validSiteFriendlyURLI18nPath = !siteFriendlyURL.contains(
-			themeDisplay.getI18nPath());
-
-		Assert.assertTrue(validSiteFriendlyURLI18nPath);
+		Assert.assertFalse(
+			siteFriendlyURL + " should not contain " +
+				themeDisplay.getI18nPath(),
+			siteFriendlyURL.contains(themeDisplay.getI18nPath()));
 	}
 
 	@Test

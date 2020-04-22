@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -202,6 +203,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#assign
 		enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
 		generateGetMultipartFilesMethod = false
+		generateSearchTestRule = false
 		javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
 		randomDataTypes = ["Boolean", "Double", "Integer", "Long", "String"]
@@ -468,6 +470,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 				}
 
 				<#if parameters?contains("Filter filter")>
+					<#assign generateSearchTestRule = true />
+
 					@Test
 					public void test${javaMethodSignature.methodName?cap_first}WithFilterDateTimeEquals() throws Exception {
 						List<EntityField> entityFields = getEntityFields(EntityField.Type.DATE_TIME);
@@ -1729,6 +1733,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 			Assert.assertTrue(valid);
 		}
 	</#list>
+
+	<#if generateSearchTestRule>
+		@Rule
+		public SearchTestRule searchTestRule = new SearchTestRule();
+	</#if>
 
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];

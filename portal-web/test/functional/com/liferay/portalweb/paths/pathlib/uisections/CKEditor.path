@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_FIELD_SOURCE_ON_3</td>
+	<td>//div[contains(@class,'cke_contents')]/textarea</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_FIELD_IFRAME</td>
 	<td>//*[contains(@id,'cke')]/iframe</td>
 	<td></td>

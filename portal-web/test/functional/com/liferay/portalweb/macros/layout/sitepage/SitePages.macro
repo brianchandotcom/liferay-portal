@@ -251,6 +251,12 @@ definition {
 			vocabularyName = "${vocabularyName}");
 	}
 
+	macro checkPage {
+		var key_pageName = "${pageName}";
+
+		Check.checkNotVisible(locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
+	}
+
 	macro configureChildPage {
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
@@ -407,6 +413,12 @@ definition {
 				key_itemName = "${privacy}",
 				locator1 = "SitePages#LIST_GROUP_ITEM");
 		}
+	}
+
+	macro viewCheckboxChecked {
+		AssertChecked.assertCheckedNotVisible(
+			key_pageName = "${pageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_CHECKBOX");
 	}
 
 }

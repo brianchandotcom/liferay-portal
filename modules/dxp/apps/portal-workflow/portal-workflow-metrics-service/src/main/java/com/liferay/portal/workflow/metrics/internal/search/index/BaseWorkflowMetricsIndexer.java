@@ -103,7 +103,9 @@ public abstract class BaseWorkflowMetricsIndexer {
 		_updateDocument(documentBuilder.build());
 	}
 
-	public abstract WorkflowMetricsIndex getWorkflowMetricsIndex();
+	public abstract String getIndexName(long companyId);
+
+	public abstract String getIndexType();
 
 	public void updateDocument(Document document) {
 		_updateDocument(document);

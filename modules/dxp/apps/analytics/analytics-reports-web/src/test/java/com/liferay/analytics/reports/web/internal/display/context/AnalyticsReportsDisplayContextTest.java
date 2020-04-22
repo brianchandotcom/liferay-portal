@@ -34,6 +34,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.PortalImpl;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -71,6 +75,40 @@ public class AnalyticsReportsDisplayContextTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
+	@Test
+	public void testGetContextWithInvalidAnalyticsConnection() {
+		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
+			new AnalyticsReportsDisplayContext(
+				_getAnalyticsReportsDataProvider(
+					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+					false),
+				_getAnalyticsReportsItem(), null, null, new PortalImpl(),
+				_getRenderResponse(), _getResourceBundle(),
+				_getThemeDisplay(_getLayout()));
+
+		Map<String, Object> data = analyticsReportsDisplayContext.getData();
+
+		Map<String, Object> context = (Map<String, Object>)data.get("context");
+
+		Map<String, Object> defaultTimeRange = (Map<String, Object>)context.get(
+			"defaultTimeRange");
+
+		LocalDate localDate = LocalDate.now();
+
+		localDate.atStartOfDay();
+
+		Assert.assertEquals(
+			DateTimeFormatter.ISO_DATE.format(
+				localDate.minus(1, ChronoUnit.DAYS)),
+			defaultTimeRange.get("endDate"));
+
+		Assert.assertEquals(
+			DateTimeFormatter.ISO_DATE.format(
+				localDate.minus(7, ChronoUnit.DAYS)),
+			defaultTimeRange.get("startDate"));
 	}
 
 	@Test

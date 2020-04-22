@@ -28,6 +28,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLin
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -140,7 +141,14 @@ public class AddFragmentEntryLinksMVCActionCommand
 					_itemSelector, StringPool.BLANK));
 		}
 
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(parentItemId);
+
+		List<String> childrenItemIds = layoutStructureItem.getChildrenItemIds();
+
 		return JSONUtil.put(
+			"addedItemId", childrenItemIds.get(position)
+		).put(
 			"fragmentEntryLinks", fragmentEntryLinksJSONObject
 		).put(
 			"layoutData", layoutStructure.toJSONObject()

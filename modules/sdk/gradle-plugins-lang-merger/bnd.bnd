@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Gradle Plugins Lang Merger
 Bundle-SymbolicName: com.liferay.gradle.plugins.lang.merger
-Bundle-Version: 1.1.4
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.gradle.plugins.lang.merger,\
 	com.liferay.gradle.plugins.lang.merger.tasks

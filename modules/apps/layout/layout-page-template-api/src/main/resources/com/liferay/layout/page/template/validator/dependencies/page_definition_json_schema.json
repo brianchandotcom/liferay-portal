@@ -292,9 +292,13 @@
 							"title": "The fieldKey Schema",
 							"type": "string"
 						},
-						"itemKey": {
-							"title": "The itemKey Schema",
+						"itemClassName": {
+							"title": "The itemClassName Schema",
 							"type": "string"
+						},
+						"itemClassPK": {
+							"title": "The itemClassPK Schema",
+							"type": "integer"
 						}
 					},
 					"required": [

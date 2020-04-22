@@ -17,6 +17,8 @@ package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Widget;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -160,6 +162,19 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 			Role role = RoleLocalServiceUtil.fetchRole(
 				resourcePermission.getRoleId());
 
+			if (role == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						String.format(
+							"Resource permission %s will not be exported " +
+								"since no role was found for role id %s",
+							resourcePermission.getName(),
+							resourcePermission.getRoleId()));
+				}
+
+				continue;
+			}
+
 			Set<String> actionIdsSet = new HashSet<>();
 
 			long actionIds = resourcePermission.getActionIds();
@@ -178,5 +193,8 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 
 		return widgetPermissionsMap;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PageWidgetInstanceDefinitionConverterUtil.class);
 
 }

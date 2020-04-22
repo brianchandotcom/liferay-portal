@@ -30,6 +30,8 @@ definition {
 	}
 
 	macro addCP {
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = "${siteTemplateName}");

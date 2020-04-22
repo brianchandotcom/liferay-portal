@@ -654,11 +654,6 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationWithSites#SiteTemplateLocalization";
 		property testray.component.names = "Site and Page Templates,Site Localization";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",
 			siteTemplateName = "Site Template Name");

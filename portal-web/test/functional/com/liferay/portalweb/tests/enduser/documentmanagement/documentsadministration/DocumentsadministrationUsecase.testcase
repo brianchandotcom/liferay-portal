@@ -1268,11 +1268,6 @@ definition {
 
 		DMPortlet.viewDefaultPG(portletName = "Documents and Media");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
 		ProductMenu.gotoPortlet(

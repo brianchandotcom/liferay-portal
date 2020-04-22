@@ -33,11 +33,6 @@ definition {
 
 		// Quarantine for LPS-88600
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "search",
 			pageTemplateName = "Search",

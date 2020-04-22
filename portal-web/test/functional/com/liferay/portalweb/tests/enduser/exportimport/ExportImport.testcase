@@ -162,8 +162,6 @@ definition {
 	test EditImportedContentPageViaImportedSiteTemplate {
 		property testray.component.names = "Training";
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
-
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",
 			siteTemplateName = "Site Template Name");

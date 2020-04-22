@@ -27,11 +27,14 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.gradle.api.file.Directory;
 import org.gradle.api.file.DirectoryProperty;
@@ -124,7 +127,16 @@ public abstract class MergePropertiesWorkAction
 
 		Charset charset = Charset.forName(charsetName);
 
-		Properties mergedProperties = new Properties();
+		Properties mergedProperties = new Properties() {
+
+			@Override
+			public Enumeration<Object> keys() {
+				Set<Object> keys = super.keySet();
+
+				return Collections.enumeration(new TreeSet<Object>(keys));
+			}
+
+		};
 
 		for (File sourceFile : sourceFiles) {
 			if (!sourceFile.exists()) {

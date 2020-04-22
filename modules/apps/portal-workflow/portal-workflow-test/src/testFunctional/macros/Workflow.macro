@@ -24,10 +24,11 @@ definition {
 			Button.clickSave();
 		}
 
-		for (var workflowResourceValue : list "Blogs Entry,Calendar Event,Comment,Message Boards Message,Page Revision,Wiki Page") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "${workflowResourceValue}");
+		for (var workflowResourceValue : list "Blogs Entry,Calendar Event,Comment,Content Page,Knowledge Base Article,Message Boards Message,Page Revision,Web Content Article,Wiki Page") {
+			AssertClick.pauseAssertTextClickAt(
+				key_rowEntry = "${workflowResourceValue}",
+				locator1 = "Button#EDIT_ROW",
+				value1 = "Edit");
 
 			var key_workflowResourceValue = "${workflowResourceValue}";
 
@@ -35,7 +36,9 @@ definition {
 				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
 				value1 = "${noWorkflow}");
 
-			Button.clickSave();
+			AssertClick(
+				locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SAVE",
+				value1 = "Save");
 		}
 	}
 

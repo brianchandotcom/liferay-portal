@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "false";
+	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles";
 	property testray.main.component.name = "Workflow";
 
@@ -80,9 +80,7 @@ definition {
 	test ApproveEventWithInvitedUser {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "quarantine";
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		var siteName = TestCase.getSiteName();
 
@@ -113,6 +111,8 @@ definition {
 			workflowAssetTitle = "Calendar Event Title",
 			workflowAssetType = "Calendar Event",
 			workflowTask = "Review");
+
+		Pause(locator1 = "30000");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 

@@ -430,6 +430,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
+		Pause(locator1 = "5000");
+
 		while (IsElementPresent(locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS", key_index = "4")) {
 			Click.waitForMenuToggleJSClick(
 				key_index = "4",

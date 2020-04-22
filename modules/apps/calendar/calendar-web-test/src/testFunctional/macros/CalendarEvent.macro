@@ -880,6 +880,12 @@ definition {
 
 			var key_resource = "${resourceName}";
 
+			if (IsElementNotPresent(locator1 = "CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST")) {
+				Type(
+					locator1 = "CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD",
+					value1 = "${resourceName}");
+			}
+
 			Click(
 				locator1 = "CalendarEditEvent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST",
 				value1 = "${resourceName}");
@@ -1480,19 +1486,26 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		var key_siteCalendarName = "${siteCalendarName}";
+		var key_userCalendarName = "${userCalendarName}";
 		var key_siteName = "${siteName}";
 
-		AssertClick(
-			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
-			value1 = "${siteCalendarName}");
+		Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
+
+		Pause(locator1 = "5000");
+
+		if (IsElementPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
+			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
+		}
+
+		if (IsElementNotPresent(locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
+			Click(locator1 = "Calendar#MY_CALENDARS_CALENDAR");
+		}
 
 		CalendarEvent.viewInvitedEventWithWorkflow(
 			eventTitle = "${eventTitle}",
 			userCalendarName = "${userCalendarName}");
 
-		AssertClick(
-			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
-			value1 = "${siteCalendarName}");
+		Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
 	}
 
 	macro viewNoRepeating {

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
+import com.liferay.portal.util.PortalImpl;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,6 +42,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -90,10 +94,12 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, null, null, _getResourceBundle(),
-				_getThemeDisplay(layout));
+				null, new PortalImpl(), _getRenderResponse(),
+				_getResourceBundle(), _getThemeDisplay(layout));
 
-		Map<String, Object> props = analyticsReportsDisplayContext.getProps();
+		Map<String, Object> data = analyticsReportsDisplayContext.getData();
+
+		Map<String, Object> props = (Map<String, Object>)data.get("props");
 
 		Assert.assertEquals(
 			analyticsReportsInfoItem.getAuthorName(null),
@@ -149,10 +155,12 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, null, null, _getResourceBundle(),
-				_getThemeDisplay(layout));
+				null, new PortalImpl(), _getRenderResponse(),
+				_getResourceBundle(), _getThemeDisplay(layout));
 
-		Map<String, Object> props = analyticsReportsDisplayContext.getProps();
+		Map<String, Object> data = analyticsReportsDisplayContext.getData();
+
+		Map<String, Object> props = (Map<String, Object>)data.get("props");
 
 		Assert.assertEquals(
 			analyticsReportsInfoItem.getAuthorName(null),
@@ -259,6 +267,18 @@ public class AnalyticsReportsDisplayContextTest {
 		).getPublishDate();
 
 		return layout;
+	}
+
+	private RenderResponse _getRenderResponse() {
+		RenderResponse renderResponse = Mockito.mock(RenderResponse.class);
+
+		Mockito.when(
+			renderResponse.createResourceURL()
+		).thenReturn(
+			Mockito.mock(ResourceURL.class)
+		);
+
+		return renderResponse;
 	}
 
 	private ResourceBundle _getResourceBundle() {

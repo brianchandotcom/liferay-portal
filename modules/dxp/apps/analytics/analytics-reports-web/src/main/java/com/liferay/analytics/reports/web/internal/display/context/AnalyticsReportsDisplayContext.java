@@ -17,6 +17,7 @@ package com.liferay.analytics.reports.web.internal.display.context;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
+import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+
+import java.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -83,7 +86,7 @@ public class AnalyticsReportsDisplayContext {
 		_data = HashMapBuilder.<String, Object>put(
 			"context", _getContext()
 		).put(
-			"props", getProps()
+			"props", _getProps()
 		).build();
 
 		return _data;
@@ -91,36 +94,6 @@ public class AnalyticsReportsDisplayContext {
 
 	public String getLiferayAnalyticsURL(long companyId) {
 		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL");
-	}
-
-	protected Map<String, Object> getProps() {
-		return HashMapBuilder.<String, Object>put(
-			"authorName",
-			_analyticsReportsInfoItem.getAuthorName(
-				_analyticsReportsInfoItemObject)
-		).put(
-			"publishDate",
-			() -> {
-				Date publishDate = _analyticsReportsInfoItem.getPublishDate(
-					_analyticsReportsInfoItemObject);
-
-				Layout layout = _themeDisplay.getLayout();
-
-				if (DateUtil.compareTo(publishDate, layout.getPublishDate()) >
-						0) {
-
-					return publishDate;
-				}
-
-				return layout.getPublishDate();
-			}
-		).put(
-			"title",
-			_analyticsReportsInfoItem.getTitle(
-				_analyticsReportsInfoItemObject, _themeDisplay.getLocale())
-		).put(
-			"trafficSources", _getTrafficSourcesJSONArray()
-		).build();
 	}
 
 	private Map<String, Object> _getContext() {
@@ -198,6 +171,36 @@ public class AnalyticsReportsDisplayContext {
 			"timeSpans", _getTimeSpansJSONArray()
 		).put(
 			"validAnalyticsConnection", _validAnalyticsConnection
+		).build();
+	}
+
+	private Map<String, Object> _getProps() {
+		return HashMapBuilder.<String, Object>put(
+			"authorName",
+			_analyticsReportsInfoItem.getAuthorName(
+				_analyticsReportsInfoItemObject)
+		).put(
+			"publishDate",
+			() -> {
+				Date publishDate = _analyticsReportsInfoItem.getPublishDate(
+					_analyticsReportsInfoItemObject);
+
+				Layout layout = _themeDisplay.getLayout();
+
+				if (DateUtil.compareTo(publishDate, layout.getPublishDate()) >
+						0) {
+
+					return publishDate;
+				}
+
+				return layout.getPublishDate();
+			}
+		).put(
+			"title",
+			_analyticsReportsInfoItem.getTitle(
+				_analyticsReportsInfoItemObject, _themeDisplay.getLocale())
+		).put(
+			"trafficSources", _getTrafficSourcesJSONArray()
 		).build();
 	}
 

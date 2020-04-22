@@ -26,7 +26,7 @@ import {
 } from 'recharts';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {useAddWarning, useHasWarning} from '../context/store';
+import {useWarning} from '../context/store';
 import {useChartState} from '../state/chartState';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';
@@ -140,8 +140,7 @@ export default function Chart({
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const addWarning = useAddWarning();
-	const hasWarning = useHasWarning();
+	const [hasWarning, addWarning] = useWarning();
 
 	const {actions, state: chartState} = useChartState({
 		defaultTimeSpanOption,

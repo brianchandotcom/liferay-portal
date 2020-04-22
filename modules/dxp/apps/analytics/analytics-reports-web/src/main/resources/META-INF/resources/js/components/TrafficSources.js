@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
-import {useAddWarning} from '../context/store';
+import {useWarning} from '../context/store';
 import {numberFormat} from '../utils/numberFormat';
 import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
@@ -46,7 +46,7 @@ export default function TrafficSources({
 }) {
 	const [highlighted, setHighlighted] = useState(null);
 
-	const addWarning = useAddWarning();
+	const [, addWarning] = useWarning();
 
 	const fullPieChart = trafficSources.some(source => !!source.value);
 

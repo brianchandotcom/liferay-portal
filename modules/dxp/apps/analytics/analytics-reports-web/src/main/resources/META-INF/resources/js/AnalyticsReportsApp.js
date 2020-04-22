@@ -15,7 +15,7 @@ import React, {useContext, useState} from 'react';
 import Detail from './components/Detail';
 import Main from './components/Main';
 import ConnectionContext from './context/ConnectionContext';
-import {StoreContextProvider, useHasWarning} from './context/store';
+import {StoreContextProvider, useWarning} from './context/store';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
 
@@ -82,7 +82,7 @@ function Navigation({
 
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const hasWarning = useHasWarning();
+	const [hasWarning] = useWarning();
 
 	const {getHistoricalReads, getHistoricalViews} = api;
 

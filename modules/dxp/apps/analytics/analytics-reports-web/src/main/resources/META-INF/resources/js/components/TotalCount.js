@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {useAddWarning} from '../context/store';
+import {useWarning} from '../context/store';
 import Hint from './Hint';
 
 function TotalCount({
@@ -33,7 +33,7 @@ function TotalCount({
 
 	const isMounted = useIsMounted();
 
-	const addWarning = useAddWarning();
+	const [, addWarning] = useWarning();
 
 	useEffect(() => {
 		if (validAnalyticsConnection) {

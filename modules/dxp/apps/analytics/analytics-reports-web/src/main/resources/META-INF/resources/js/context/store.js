@@ -34,18 +34,16 @@ export function StoreContextProvider({children}) {
 	);
 }
 
-export function useAddWarning() {
-	const [, dispatch] = useContext(StoreContext);
+export function useWarning() {
+	const [state, dispatch] = useContext(StoreContext);
 
-	return useCallback(() => {
+	const addWarning = useCallback(() => {
 		dispatch({
 			type: ADD_WARNING,
 		});
 	}, [dispatch]);
-}
 
-export function useHasWarning() {
-	const [state] = useContext(StoreContext);
+	const hasWarning = state.warning;
 
-	return state.warning;
+	return [hasWarning, addWarning];
 }

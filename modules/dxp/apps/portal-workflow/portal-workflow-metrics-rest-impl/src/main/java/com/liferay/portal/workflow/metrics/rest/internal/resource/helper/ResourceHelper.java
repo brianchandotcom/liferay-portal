@@ -17,10 +17,11 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.helper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -49,8 +50,6 @@ import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsInde
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.io.IOException;
-
-import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -307,22 +306,6 @@ public class ResourceHelper {
 		return scriptedMetricAggregation;
 	}
 
-	public String formatDate(Date date) {
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss");
-
-		try {
-			return dateFormat.format(date);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
-			}
-
-			return null;
-		}
-	}
-
 	public long getBreachedInstanceCount(Bucket bucket) {
 		FilterAggregationResult filterAggregationResult =
 			(FilterAggregationResult)bucket.getChildAggregationResult(
@@ -344,6 +327,20 @@ public class ResourceHelper {
 						"breachedInstancePercentage");
 
 		return bucketScriptPipelineAggregationResult.getValue();
+	}
+
+	public String getDate(Date date) {
+		try {
+			return DateUtil.getDate(
+				date, "yyyyMMddHHmmss", LocaleUtil.getDefault());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			return null;
+		}
 	}
 
 	public String getLatestProcessVersion(long companyId, long processId) {

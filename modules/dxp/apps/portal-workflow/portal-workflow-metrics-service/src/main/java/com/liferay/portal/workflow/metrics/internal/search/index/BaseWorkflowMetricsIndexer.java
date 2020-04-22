@@ -18,8 +18,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
@@ -38,8 +39,6 @@ import com.liferay.portal.search.query.Query;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 
 import java.io.Serializable;
-
-import java.text.DateFormat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -134,12 +133,14 @@ public abstract class BaseWorkflowMetricsIndexer {
 			DigestUtils.sha256Hex(sb.toString());
 	}
 
-	protected String formatDate(Date date) {
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss");
+	protected String formatLocalDateTime(LocalDateTime localDateTime) {
+		return _dateTimeFormatter.format(localDateTime);
+	}
 
+	protected String getDate(Date date) {
 		try {
-			return dateFormat.format(date);
+			return DateUtil.getDate(
+				date, "yyyyMMddHHmmss", LocaleUtil.getDefault());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -148,10 +149,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 			return null;
 		}
-	}
-
-	protected String formatLocalDateTime(LocalDateTime localDateTime) {
-		return _dateTimeFormatter.format(localDateTime);
 	}
 
 	protected void setLocalizedField(

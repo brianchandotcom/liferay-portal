@@ -23,8 +23,9 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.BucketAggregationResult;
@@ -60,8 +61,6 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionL
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 import com.liferay.portal.workflow.metrics.util.comparator.WorkflowMetricsSLADefinitionVersionIdComparator;
-
-import java.text.DateFormat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -270,12 +269,10 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_queries.term("status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 	}
 
-	private String _formatDate(Date date) {
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			_INDEX_DATE_FORMAT_PATTERN);
-
+	private String _getDate(Date date) {
 		try {
-			return dateFormat.format(date);
+			return DateUtil.getDate(
+				date, "yyyyMMddHHmmss", LocaleUtil.getDefault());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -412,12 +409,10 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 					workflowMetricsSLADefinitionVersion.getCompanyId(),
 					LocalDateTime.parse(
 						(String)sourcesMap.get("completionDate"),
-						DateTimeFormatter.ofPattern(
-							_INDEX_DATE_FORMAT_PATTERN)),
+						_dateTimeFormatter),
 					LocalDateTime.parse(
 						(String)sourcesMap.get("createDate"),
-						DateTimeFormatter.ofPattern(
-							_INDEX_DATE_FORMAT_PATTERN)),
+						_dateTimeFormatter),
 					GetterUtil.getLong(sourcesMap.get("instanceId")),
 					LocalDateTime.now(), startNodeId,
 					workflowMetricsSLADefinitionVersion)
@@ -569,8 +564,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			sourcesMap -> _workflowMetricsSLAProcessor.process(
 				workflowMetricsSLADefinitionVersion.getCompanyId(), null,
 				LocalDateTime.parse(
-					(String)sourcesMap.get("createDate"),
-					DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN)),
+					(String)sourcesMap.get("createDate"), _dateTimeFormatter),
 				GetterUtil.getLong(sourcesMap.get("instanceId")),
 				LocalDateTime.now(), startNodeId,
 				workflowMetricsSLADefinitionVersion)

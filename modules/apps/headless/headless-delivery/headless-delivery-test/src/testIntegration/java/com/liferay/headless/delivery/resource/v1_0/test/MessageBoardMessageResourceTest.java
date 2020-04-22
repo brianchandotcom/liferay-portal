@@ -46,38 +46,6 @@ public class MessageBoardMessageResourceTest
 	}
 
 	@Override
-	public void testGetMessageBoardMessageMessageBoardMessagesPageWithSortInteger() {
-	}
-
-	@Override
-	public void testGetMessageBoardThreadMessageBoardMessagesPageWithSortInteger() {
-	}
-
-	@Override
-	public void testGetSiteMessageBoardMessageByFriendlyUrlPath() {
-	}
-
-	@Override
-	public void testGetSiteMessageBoardMessagesPageWithSortInteger() {
-	}
-
-	@Override
-	public void testGraphQLDeleteMessageBoardMessage() {
-	}
-
-	@Override
-	public void testGraphQLGetMessageBoardMessage() {
-	}
-
-	@Override
-	public void testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPath() {
-	}
-
-	@Override
-	public void testGraphQLGetSiteMessageBoardMessagesPage() {
-	}
-
-	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"articleBody", "headline"};
 	}

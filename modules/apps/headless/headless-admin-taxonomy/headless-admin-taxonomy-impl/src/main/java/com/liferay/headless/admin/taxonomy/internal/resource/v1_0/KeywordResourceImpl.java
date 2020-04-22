@@ -105,7 +105,8 @@ public class KeywordResourceImpl
 						dynamicQuery, pagination.getStartPosition(),
 						pagination.getEndPosition()),
 					this::_toAssetTag),
-				this::_toKeyword));
+				this::_toKeyword),
+			pagination, _getTotalCount(siteId));
 	}
 
 	@Override
@@ -180,10 +181,32 @@ public class KeywordResourceImpl
 		return projectionList;
 	}
 
+	private long _getTotalCount(Long siteId) {
+		DynamicQuery dynamicQuery = _assetTagLocalService.dynamicQuery();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"companyId", contextCompany.getCompanyId()));
+
+		if (siteId != null) {
+			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));
+		}
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.sqlRestriction(
+				"EXISTS (select 1 from AssetEntries_AssetTags where tagId = " +
+					"this_.tagId)"));
+
+		return _assetTagLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
 	private AssetTag _toAssetTag(Object[] assetTags) {
 		return new AssetTagImpl() {
 			{
-				setAssetCount((int)assetTags[0]);
+				if (assetTags[0] != null) {
+					setAssetCount((int)assetTags[0]);
+				}
+
 				setCompanyId((long)assetTags[1]);
 				setCreateDate(_toDate((Timestamp)assetTags[2]));
 				setGroupId((long)assetTags[3]);

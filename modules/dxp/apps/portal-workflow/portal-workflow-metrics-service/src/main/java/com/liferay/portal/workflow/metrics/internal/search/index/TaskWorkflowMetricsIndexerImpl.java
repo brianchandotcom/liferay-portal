@@ -185,8 +185,13 @@ public class TaskWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public WorkflowMetricsIndex getWorkflowMetricsIndex() {
-		return _taskWorkflowMetricsIndex;
+	public String getIndexName(long companyId) {
+		return _taskWorkflowMetricsIndex.getIndexName(companyId);
+	}
+
+	@Override
+	public String getIndexType() {
+		return _taskWorkflowMetricsIndex.getIndexType();
 	}
 
 	@Override

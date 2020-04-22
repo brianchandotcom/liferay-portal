@@ -28,7 +28,6 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
@@ -111,20 +110,14 @@ public class SLATaskResultWorkflowMetricsReindexer
 					companyId, document.getLong("nodeId"),
 					document.getLong("processId"), document.getString("name"))
 		).map(
-			document -> {
-				WorkflowMetricsIndex slaTaskResultWorkflowMetricsIndex =
-					_slaTaskResultWorkflowMetricsIndexer.
-						getWorkflowMetricsIndex();
+			document -> new IndexDocumentRequest(
+				_slaTaskResultWorkflowMetricsIndexer.getIndexName(companyId),
+				document) {
 
-				return new IndexDocumentRequest(
-					slaTaskResultWorkflowMetricsIndex.getIndexName(companyId),
-					document) {
-
-					{
-						setType(
-							slaTaskResultWorkflowMetricsIndex.getIndexType());
-					}
-				};
+				{
+					setType(
+						_slaTaskResultWorkflowMetricsIndexer.getIndexType());
+				}
 			}
 		).forEach(
 			bulkDocumentRequest::addBulkableDocumentRequest

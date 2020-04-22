@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 public class InstanceWorkflowMetricsIndexImpl
 	extends BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
+	@Override
 	public String getIndexName(long companyId) {
 		return _workflowMetricsIndexNameBuilder.getIndexName(companyId);
 	}

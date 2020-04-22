@@ -123,8 +123,13 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 	}
 
 	@Override
-	public WorkflowMetricsIndex getWorkflowMetricsIndex() {
-		return _slaInstanceResultWorkflowMetricsIndex;
+	public String getIndexName(long companyId) {
+		return _slaInstanceResultWorkflowMetricsIndex.getIndexName(companyId);
+	}
+
+	@Override
+	public String getIndexType() {
+		return _slaInstanceResultWorkflowMetricsIndex.getIndexType();
 	}
 
 	@Reference(

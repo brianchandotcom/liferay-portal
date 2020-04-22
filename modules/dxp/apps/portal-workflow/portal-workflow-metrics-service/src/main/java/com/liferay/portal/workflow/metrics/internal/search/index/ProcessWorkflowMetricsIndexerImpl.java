@@ -58,12 +58,9 @@ public class ProcessWorkflowMetricsIndexerImpl
 				}
 			});
 
-		WorkflowMetricsIndex slaInstanceResultWorkflowMetricsIndex =
-			_slaInstanceResultWorkflowMetricsIndexer.getWorkflowMetricsIndex();
-
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				slaInstanceResultWorkflowMetricsIndex.getIndexName(
+				_slaInstanceResultWorkflowMetricsIndexer.getIndexName(
 					document.getLong("companyId")),
 				_slaInstanceResultWorkflowMetricsIndexer.creatDefaultDocument(
 					document.getLong("companyId"),
@@ -71,7 +68,8 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 				{
 					setType(
-						slaInstanceResultWorkflowMetricsIndex.getIndexType());
+						_slaInstanceResultWorkflowMetricsIndexer.
+							getIndexType());
 				}
 			});
 
@@ -151,8 +149,13 @@ public class ProcessWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public WorkflowMetricsIndex getWorkflowMetricsIndex() {
-		return _processWorkflowMetricsIndex;
+	public String getIndexName(long companyId) {
+		return _processWorkflowMetricsIndex.getIndexName(companyId);
+	}
+
+	@Override
+	public String getIndexType() {
+		return _processWorkflowMetricsIndex.getIndexType();
 	}
 
 	@Override

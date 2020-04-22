@@ -96,8 +96,13 @@ public class NodeWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public WorkflowMetricsIndex getWorkflowMetricsIndex() {
-		return _nodeWorkflowMetricsIndex;
+	public String getIndexName(long companyId) {
+		return _nodeWorkflowMetricsIndex.getIndexName(companyId);
+	}
+
+	@Override
+	public String getIndexType() {
+		return _nodeWorkflowMetricsIndex.getIndexType();
 	}
 
 	@Override
@@ -107,12 +112,9 @@ public class NodeWorkflowMetricsIndexerImpl
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		if (Objects.equals(document.getString("type"), "TASK")) {
-			WorkflowMetricsIndex slaTaskResultWorkflowMetricsIndex =
-				_slaTaskResultWorkflowMetricsIndexer.getWorkflowMetricsIndex();
-
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					slaTaskResultWorkflowMetricsIndex.getIndexName(
+					_slaTaskResultWorkflowMetricsIndexer.getIndexName(
 						document.getLong("companyId")),
 					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
 						document.getLong("companyId"),
@@ -122,7 +124,8 @@ public class NodeWorkflowMetricsIndexerImpl
 
 					{
 						setType(
-							slaTaskResultWorkflowMetricsIndex.getIndexType());
+							_slaTaskResultWorkflowMetricsIndexer.
+								getIndexType());
 					}
 				});
 

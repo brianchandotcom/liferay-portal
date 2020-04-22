@@ -208,8 +208,13 @@ public class InstanceWorkflowMetricsIndexerImpl
 	}
 
 	@Override
-	public WorkflowMetricsIndex getWorkflowMetricsIndex() {
-		return _instanceWorkflowMetricsIndex;
+	public String getIndexName(long companyId) {
+		return _instanceWorkflowMetricsIndex.getIndexName(companyId);
+	}
+
+	@Override
+	public String getIndexType() {
+		return _instanceWorkflowMetricsIndex.getIndexType();
 	}
 
 	@Override

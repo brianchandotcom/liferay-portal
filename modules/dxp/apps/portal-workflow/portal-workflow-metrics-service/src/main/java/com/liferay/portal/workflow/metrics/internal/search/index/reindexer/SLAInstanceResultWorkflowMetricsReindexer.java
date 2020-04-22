@@ -33,7 +33,6 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLAProcessMessageListener;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
@@ -138,22 +137,16 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 				_slaInstanceResultWorkflowMetricsIndexer.creatDefaultDocument(
 					companyId, document.getLong("processId"))
 		).map(
-			document -> {
-				WorkflowMetricsIndex slaInstanceResultWorkflowMetricsIndex =
-					_slaInstanceResultWorkflowMetricsIndexer.
-						getWorkflowMetricsIndex();
+			document -> new IndexDocumentRequest(
+				_slaInstanceResultWorkflowMetricsIndexer.getIndexName(
+					companyId),
+				document) {
 
-				return new IndexDocumentRequest(
-					slaInstanceResultWorkflowMetricsIndex.getIndexName(
-						companyId),
-					document) {
-
-					{
-						setType(
-							slaInstanceResultWorkflowMetricsIndex.
-								getIndexType());
-					}
-				};
+				{
+					setType(
+						_slaInstanceResultWorkflowMetricsIndexer.
+							getIndexType());
+				}
 			}
 		).forEach(
 			bulkDocumentRequest::addBulkableDocumentRequest

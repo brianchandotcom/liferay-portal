@@ -72,17 +72,14 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
-
 		documents.forEach(
 			document -> bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					workflowMetricsIndex.getIndexName(
-						document.getLong("companyId")),
+					getIndexName(document.getLong("companyId")),
 					document.getString("uid"), document) {
 
 					{
-						setType(workflowMetricsIndex.getIndexType());
+						setType(getIndexType());
 					}
 				}));
 
@@ -116,17 +113,14 @@ public abstract class BaseWorkflowMetricsIndexer {
 			return;
 		}
 
-		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
-
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			workflowMetricsIndex.getIndexName(document.getLong("companyId")),
-			document);
+			getIndexName(document.getLong("companyId")), document);
 
 		if (PortalRunMode.isTestMode()) {
 			indexDocumentRequest.setRefresh(true);
 		}
 
-		indexDocumentRequest.setType(workflowMetricsIndex.getIndexType());
+		indexDocumentRequest.setType(getIndexType());
 
 		searchEngineAdapter.execute(indexDocumentRequest);
 	}
@@ -138,12 +132,8 @@ public abstract class BaseWorkflowMetricsIndexer {
 			sb.append(part);
 		}
 
-		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
-
-		String indexType = StringUtil.removeSubstring(
-			workflowMetricsIndex.getIndexType(), "Type");
-
-		return indexType + DigestUtils.sha256Hex(sb.toString());
+		return StringUtil.removeSubstring(getIndexType(), "Type") +
+			DigestUtils.sha256Hex(sb.toString());
 	}
 
 	protected String formatDate(Date date) {
@@ -200,14 +190,11 @@ public abstract class BaseWorkflowMetricsIndexer {
 			return;
 		}
 
-		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
-
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.setIndexNames(
-			workflowMetricsIndex.getIndexName(companyId));
+		searchSearchRequest.setIndexNames(getIndexName(companyId));
 		searchSearchRequest.setQuery(query);
-		searchSearchRequest.setTypes(workflowMetricsIndex.getIndexType());
+		searchSearchRequest.setTypes(getIndexType());
 		searchSearchRequest.setSelectedFieldNames("uid");
 		searchSearchRequest.setSize(10000);
 
@@ -239,11 +226,11 @@ public abstract class BaseWorkflowMetricsIndexer {
 					(name, value) -> documentBuilder.setValue(name, value));
 
 				return new UpdateDocumentRequest(
-					workflowMetricsIndex.getIndexName(companyId),
-					document.getString("uid"), documentBuilder.build()) {
+					getIndexName(companyId), document.getString("uid"),
+					documentBuilder.build()) {
 
 					{
-						setType(workflowMetricsIndex.getIndexType());
+						setType(getIndexType());
 						setUpsert(true);
 					}
 				};
@@ -285,17 +272,15 @@ public abstract class BaseWorkflowMetricsIndexer {
 			return;
 		}
 
-		WorkflowMetricsIndex workflowMetricsIndex = getWorkflowMetricsIndex();
-
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
-			workflowMetricsIndex.getIndexName(document.getLong("companyId")),
+			getIndexName(document.getLong("companyId")),
 			document.getString("uid"), document);
 
 		if (PortalRunMode.isTestMode()) {
 			updateDocumentRequest.setRefresh(true);
 		}
 
-		updateDocumentRequest.setType(workflowMetricsIndex.getIndexType());
+		updateDocumentRequest.setType(getIndexType());
 		updateDocumentRequest.setUpsert(true);
 
 		searchEngineAdapter.execute(updateDocumentRequest);

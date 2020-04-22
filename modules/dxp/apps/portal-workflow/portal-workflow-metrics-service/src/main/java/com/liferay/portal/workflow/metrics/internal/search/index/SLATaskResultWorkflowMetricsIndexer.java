@@ -129,8 +129,13 @@ public class SLATaskResultWorkflowMetricsIndexer
 	}
 
 	@Override
-	public WorkflowMetricsIndex getWorkflowMetricsIndex() {
-		return _slaTaskResultWorkflowMetricsIndex;
+	public String getIndexName(long companyId) {
+		return _slaTaskResultWorkflowMetricsIndex.getIndexName(companyId);
+	}
+
+	@Override
+	public String getIndexType() {
+		return _slaTaskResultWorkflowMetricsIndex.getIndexType();
 	}
 
 	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")

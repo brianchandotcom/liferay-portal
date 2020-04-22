@@ -34,10 +34,17 @@ public class ComplexQueryBuilderFactoryImpl
 		return new ComplexQueryBuilderImpl(_queries, _scripts);
 	}
 
-	@Reference
-	private Queries _queries;
+	@Reference(unbind = "-")
+	protected void setQueries(Queries queries) {
+		_queries = queries;
+	}
 
-	@Reference
+	@Reference(unbind = "-")
+	protected void setScripts(Scripts scripts) {
+		_scripts = scripts;
+	}
+
+	private Queries _queries;
 	private Scripts _scripts;
 
 }

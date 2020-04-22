@@ -135,7 +135,7 @@ public class DDMFormInstanceRecordUADExporter
 	}
 
 	/**
-	 * Extracts DDMFormInstance name from xml structure storaged in the database
+	 * Extracts DDMFormInstance name from xml structure stored in database
 	 * @return DDMFormInstance Name
 	 */
 	private String _getFormInstanceName(

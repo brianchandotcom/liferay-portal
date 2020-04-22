@@ -9,8 +9,10 @@ Import-Package:\
 Main-Class: com.liferay.portal.tools.rest.builder.RESTBuilder
 -includeresource:\
 	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
+	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/CharPool.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringBundler.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringBundler$UnsafeStringBuilder.class,\
+	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringPool.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/BaseImportsFormatter.class,\

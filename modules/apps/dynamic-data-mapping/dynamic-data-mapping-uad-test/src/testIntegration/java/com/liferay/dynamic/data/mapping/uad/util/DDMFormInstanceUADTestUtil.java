@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.uad.util;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
@@ -73,9 +72,7 @@ public class DDMFormInstanceUADTestUtil {
 		return null;
 	}
 
-	public static DDMFormInstance addDDMFormInstance(
-			DDMFormInstanceLocalService ddmFormInstanceLocalService,
-			Group group, long userId)
+	public static DDMFormInstance addDDMFormInstance(Group group, long userId)
 		throws Exception {
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("text");

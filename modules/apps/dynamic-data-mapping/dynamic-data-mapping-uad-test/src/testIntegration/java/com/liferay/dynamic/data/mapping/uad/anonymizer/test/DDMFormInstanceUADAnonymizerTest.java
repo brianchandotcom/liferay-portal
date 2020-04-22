@@ -63,8 +63,7 @@ public class DDMFormInstanceUADAnonymizerTest
 			long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		return DDMFormInstanceUADTestUtil.addDDMFormInstance(
-			_ddmFormInstanceLocalService, _group, userId);
+		return DDMFormInstanceUADTestUtil.addDDMFormInstance(_group, userId);
 	}
 
 	@Override

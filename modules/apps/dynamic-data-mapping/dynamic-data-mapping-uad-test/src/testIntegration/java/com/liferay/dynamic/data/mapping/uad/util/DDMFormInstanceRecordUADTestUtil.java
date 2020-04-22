@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 public class DDMFormInstanceRecordUADTestUtil {
 
 	public static DDMFormInstanceRecord addDDMFormInstanceRecord(
-			DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
 			Group group, long userId)
 		throws Exception {
 
@@ -47,20 +46,18 @@ public class DDMFormInstanceRecordUADTestUtil {
 			DDMFormInstanceUADTestUtil.addDDMFormInstance(
 				ddmForm, group, settingsDDMFormValues, userId);
 
-		return ddmFormInstanceRecordLocalService.addFormInstanceRecord(
+		return DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
 			userId, group.getGroupId(), ddmFormInstance.getFormInstanceId(),
 			settingsDDMFormValues, ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static DDMFormInstanceRecord
 			addDDMFormInstanceRecordWithStatusByUserId(
-				DDMFormInstanceRecordLocalService
-					ddmFormInstanceRecordLocalService,
 				Group group, long statusByUserId, long userId)
 		throws Exception {
 
 		DDMFormInstanceRecord ddmFormInstanceRecord = addDDMFormInstanceRecord(
-			ddmFormInstanceRecordLocalService, group, userId);
+			group, userId);
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			ddmFormInstanceRecord.getFormInstanceRecordVersion();
@@ -69,7 +66,7 @@ public class DDMFormInstanceRecordUADTestUtil {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		return ddmFormInstanceRecordLocalService.updateStatus(
+		return DDMFormInstanceRecordLocalServiceUtil.updateStatus(
 			statusByUserId,
 			ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);

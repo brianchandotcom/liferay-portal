@@ -73,20 +73,20 @@ public class Mapping {
 	protected String fieldKey;
 
 	@Schema
-	public String getItemKey() {
-		return itemKey;
+	public String getItemClassName() {
+		return itemClassName;
 	}
 
-	public void setItemKey(String itemKey) {
-		this.itemKey = itemKey;
+	public void setItemClassName(String itemClassName) {
+		this.itemClassName = itemClassName;
 	}
 
 	@JsonIgnore
-	public void setItemKey(
-		UnsafeSupplier<String, Exception> itemKeyUnsafeSupplier) {
+	public void setItemClassName(
+		UnsafeSupplier<String, Exception> itemClassNameUnsafeSupplier) {
 
 		try {
-			itemKey = itemKeyUnsafeSupplier.get();
+			itemClassName = itemClassNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -98,7 +98,35 @@ public class Mapping {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String itemKey;
+	protected String itemClassName;
+
+	@Schema
+	public Long getItemPK() {
+		return itemPK;
+	}
+
+	public void setItemPK(Long itemPK) {
+		this.itemPK = itemPK;
+	}
+
+	@JsonIgnore
+	public void setItemPK(
+		UnsafeSupplier<Long, Exception> itemPKUnsafeSupplier) {
+
+		try {
+			itemPK = itemPKUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long itemPK;
 
 	@Override
 	public boolean equals(Object object) {
@@ -141,18 +169,28 @@ public class Mapping {
 			sb.append("\"");
 		}
 
-		if (itemKey != null) {
+		if (itemClassName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"itemKey\": ");
+			sb.append("\"itemClassName\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(itemKey));
+			sb.append(_escape(itemClassName));
 
 			sb.append("\"");
+		}
+
+		if (itemPK != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"itemPK\": ");
+
+			sb.append(itemPK);
 		}
 
 		sb.append("}");

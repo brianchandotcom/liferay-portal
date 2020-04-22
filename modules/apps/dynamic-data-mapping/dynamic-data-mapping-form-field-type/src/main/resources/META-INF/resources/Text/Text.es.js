@@ -32,9 +32,10 @@ const Text = ({
 	onChange,
 	onFocus,
 	placeholder,
+	syncDelay,
 	value: initialValue,
 }) => {
-	const [value, setValue] = useSyncValue(initialValue);
+	const [value, setValue] = useSyncValue(initialValue, syncDelay);
 
 	return (
 		<ClayInput
@@ -68,9 +69,10 @@ const Textarea = ({
 	onChange,
 	onFocus,
 	placeholder,
+	syncDelay,
 	value: initialValue,
 }) => {
-	const [value, setValue] = useSyncValue(initialValue);
+	const [value, setValue] = useSyncValue(initialValue, syncDelay);
 
 	return (
 		<textarea
@@ -100,9 +102,10 @@ const Autocomplete = ({
 	onFocus,
 	options,
 	placeholder,
+	syncDelay,
 	value: initialValue,
 }) => {
-	const [value, setValue] = useSyncValue(initialValue);
+	const [value, setValue] = useSyncValue(initialValue, syncDelay);
 	const [visible, setVisible] = useState(false);
 	const inputRef = useRef(null);
 	const itemListRef = useRef(null);
@@ -246,6 +249,7 @@ const Main = ({
 	placeholder,
 	predefinedValue = '',
 	readOnly,
+	syncDelay = true,
 	value,
 	...otherProps
 }) => {
@@ -269,6 +273,7 @@ const Main = ({
 				onFocus={onFocus}
 				options={optionsMemo}
 				placeholder={placeholder}
+				syncDelay={syncDelay}
 				value={value ? value : predefinedValue}
 			/>
 		</FieldBaseProxy>

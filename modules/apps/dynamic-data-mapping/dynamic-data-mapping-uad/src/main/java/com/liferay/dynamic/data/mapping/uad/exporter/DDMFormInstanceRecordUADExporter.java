@@ -87,9 +87,6 @@ public class DDMFormInstanceRecordUADExporter
 		return sb.toString();
 	}
 
-	@Reference
-	protected DDMContentLocalService ddmContentLocalService;
-
 	private String _getFieldValuesDDMContent(
 		DDMFormInstanceRecord ddmFormInstanceRecord) {
 
@@ -100,7 +97,7 @@ public class DDMFormInstanceRecordUADExporter
 			sb.append("com.liferay.dynamic.data.mapping.model.DDMContent");
 			sb.append("</model-name>");
 
-			DDMContent ddmContent = ddmContentLocalService.getDDMContent(
+			DDMContent ddmContent = _ddmContentLocalService.getDDMContent(
 				ddmFormInstanceRecord.getStorageId());
 
 			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
@@ -169,5 +166,8 @@ public class DDMFormInstanceRecordUADExporter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordUADExporter.class);
+
+	@Reference
+	private DDMContentLocalService _ddmContentLocalService;
 
 }

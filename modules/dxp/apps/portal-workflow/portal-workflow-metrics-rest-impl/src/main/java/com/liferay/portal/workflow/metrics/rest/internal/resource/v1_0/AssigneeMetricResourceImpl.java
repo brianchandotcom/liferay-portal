@@ -246,8 +246,8 @@ public class AssigneeMetricResourceImpl
 		return booleanQuery.addShouldQueryClauses(
 			_queries.rangeTerm(
 				"completionDate", true, true,
-				_resourceHelper.formatDate(dateStart),
-				_resourceHelper.formatDate(dateEnd)),
+				_resourceHelper.getDate(dateStart),
+				_resourceHelper.getDate(dateEnd)),
 			_queries.term("slaDefinitionId", 0));
 	}
 
@@ -307,8 +307,8 @@ public class AssigneeMetricResourceImpl
 			booleanQuery.addMustQueryClauses(
 				_queries.rangeTerm(
 					"completionDate", true, true,
-					_resourceHelper.formatDate(dateStart),
-					_resourceHelper.formatDate(dateEnd)));
+					_resourceHelper.getDate(dateStart),
+					_resourceHelper.getDate(dateEnd)));
 		}
 
 		booleanQuery.addMustQueryClauses(_queries.term("completed", completed));

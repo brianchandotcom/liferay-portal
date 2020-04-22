@@ -49,13 +49,13 @@ public class NodeWorkflowMetricsIndexerImpl
 		documentBuilder.setLong(
 			"companyId", companyId
 		).setDate(
-			"createDate", formatDate(createDate)
+			"createDate", getDate(createDate)
 		).setValue(
 			"deleted", false
 		).setValue(
 			"initial", initial
 		).setDate(
-			"modifiedDate", formatDate(modifiedDate)
+			"modifiedDate", getDate(modifiedDate)
 		).setString(
 			"name", name
 		).setLong(

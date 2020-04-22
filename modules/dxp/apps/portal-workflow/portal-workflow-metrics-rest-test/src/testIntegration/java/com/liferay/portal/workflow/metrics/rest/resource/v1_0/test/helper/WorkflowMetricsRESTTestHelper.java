@@ -779,7 +779,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		if (Objects.equals(status, "COMPLETED")) {
 			documentBuilder.setDate(
-				"completionDate", formatDate(new Date())
+				"completionDate", getDate(new Date())
 			).setValue(
 				"completionUserId", assigneeId
 			);

@@ -489,9 +489,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					_getLocalizedName("assetTitle"));
 				assetType = document.getString(_getLocalizedName("assetType"));
 				creator = _toCreator(document.getLong("userId"));
-				dateCompletion = _toDate(document.getDate("completionDate"));
-				dateCreated = _toDate(document.getDate("createDate"));
-				dateModified = _toDate(document.getDate("modifiedDate"));
+				dateCompletion = _parseDate(document.getDate("completionDate"));
+				dateCreated = _parseDate(document.getDate("createDate"));
+				dateModified = _parseDate(document.getDate("modifiedDate"));
 				id = document.getLong("instanceId");
 				processId = document.getLong("processId");
 				status = _getStatus(
@@ -509,11 +509,11 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					sourcesMap.get(_getLocalizedName("assetType")));
 				creator = _toCreator(
 					GetterUtil.getLong(sourcesMap.get("userId")));
-				dateCompletion = _toDate(
+				dateCompletion = _parseDate(
 					GetterUtil.getString(sourcesMap.get("completionDate")));
-				dateCreated = _toDate(
+				dateCreated = _parseDate(
 					GetterUtil.getString(sourcesMap.get("createDate")));
-				dateModified = _toDate(
+				dateModified = _parseDate(
 					GetterUtil.getString(sourcesMap.get("modifiedDate")));
 				id = GetterUtil.getLong(sourcesMap.get("instanceId"));
 				processId = GetterUtil.getLong(sourcesMap.get("processId"));
@@ -557,7 +557,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private SLAResult _createSLAResult(Map<String, Object> sourcesMap) {
 		return new SLAResult() {
 			{
-				dateOverdue = _toDate(
+				dateOverdue = _parseDate(
 					GetterUtil.getString(sourcesMap.get("overdueDate")));
 
 				id = GetterUtil.getLong(sourcesMap.get("slaDefinitionId"));

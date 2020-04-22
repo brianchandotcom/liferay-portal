@@ -236,10 +236,10 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			RangeTermQuery rangeTermQuery = _queries.rangeTerm(
 				"completionDate", true, false);
 
-			rangeTermQuery.setLowerBound(_formatDate(startDate));
+			rangeTermQuery.setLowerBound(_getDate(startDate));
 
 			if (endDate != null) {
-				rangeTermQuery.setUpperBound(_formatDate(endDate));
+				rangeTermQuery.setUpperBound(_getDate(endDate));
 			}
 
 			booleanQuery.addMustQueryClauses(rangeTermQuery);

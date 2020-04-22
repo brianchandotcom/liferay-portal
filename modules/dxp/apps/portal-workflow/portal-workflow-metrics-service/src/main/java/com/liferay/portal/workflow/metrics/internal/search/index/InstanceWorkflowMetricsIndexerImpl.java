@@ -62,7 +62,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 
 		if (completionDate != null) {
 			documentBuilder.setDate(
-				"completionDate", formatDate(completionDate)
+				"completionDate", getDate(completionDate)
 			).setValue(
 				Field.getSortableFieldName(
 					StringBundler.concat(
@@ -72,7 +72,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 		}
 
 		documentBuilder.setDate(
-			"createDate", formatDate(createDate)
+			"createDate", getDate(createDate)
 		).setValue(
 			Field.getSortableFieldName(
 				StringBundler.concat(
@@ -90,7 +90,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 		documentBuilder.setLong(
 			"instanceId", instanceId
 		).setDate(
-			"modifiedDate", formatDate(modifiedDate)
+			"modifiedDate", getDate(modifiedDate)
 		).setLong(
 			"processId", processId
 		).setString(
@@ -125,7 +125,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 		).setValue(
 			"completed", completionDate != null
 		).setDate(
-			"completionDate", formatDate(completionDate)
+			"completionDate", getDate(completionDate)
 		).setValue(
 			Field.getSortableFieldName(
 				StringBundler.concat(
@@ -136,7 +136,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 		).setLong(
 			"instanceId", instanceId
 		).setDate(
-			"modifiedDate", formatDate(modifiedDate)
+			"modifiedDate", getDate(modifiedDate)
 		).setString(
 			"uid", digest(companyId, instanceId)
 		);
@@ -227,7 +227,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 		documentBuilder.setLong(
 			"companyId", companyId
 		).setDate(
-			"modifiedDate", formatDate(modifiedDate)
+			"modifiedDate", getDate(modifiedDate)
 		).setString(
 			"uid", digest(companyId, instanceId)
 		);

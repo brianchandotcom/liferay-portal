@@ -47,11 +47,11 @@ public class TransitionWorkflowMetricsIndexerImpl
 		documentBuilder.setLong(
 			"companyId", companyId
 		).setDate(
-			"createDate", formatDate(createDate)
+			"createDate", getDate(createDate)
 		).setValue(
 			"deleted", false
 		).setDate(
-			"modifiedDate", formatDate(modifiedDate)
+			"modifiedDate", getDate(modifiedDate)
 		).setString(
 			"name", name
 		).setLong(

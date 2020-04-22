@@ -186,8 +186,8 @@ public class NodeMetricResourceImpl
 			mustBooleanQuery.addMustQueryClauses(
 				_queries.rangeTerm(
 					"completionDate", true, true,
-					_resourceHelper.formatDate(dateStart),
-					_resourceHelper.formatDate(dateEnd)),
+					_resourceHelper.getDate(dateStart),
+					_resourceHelper.getDate(dateEnd)),
 				_queries.term("instanceCompleted", true)),
 			_queries.term("slaDefinitionId", 0));
 	}
@@ -304,8 +304,8 @@ public class NodeMetricResourceImpl
 			booleanQuery.addMustQueryClauses(
 				_queries.rangeTerm(
 					"completionDate", true, true,
-					_resourceHelper.formatDate(dateStart),
-					_resourceHelper.formatDate(dateEnd)));
+					_resourceHelper.getDate(dateStart),
+					_resourceHelper.getDate(dateEnd)));
 		}
 
 		if (!taskNames.isEmpty()) {

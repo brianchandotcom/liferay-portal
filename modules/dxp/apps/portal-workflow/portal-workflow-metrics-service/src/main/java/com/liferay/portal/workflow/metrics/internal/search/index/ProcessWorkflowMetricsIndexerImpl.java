@@ -104,13 +104,13 @@ public class ProcessWorkflowMetricsIndexerImpl
 		).setLong(
 			"companyId", companyId
 		).setDate(
-			"createDate", formatDate(createDate)
+			"createDate", getDate(createDate)
 		).setValue(
 			"deleted", false
 		).setString(
 			"description", description
 		).setDate(
-			"modifiedDate", formatDate(modifiedDate)
+			"modifiedDate", getDate(modifiedDate)
 		).setString(
 			"name", name
 		).setLong(
@@ -177,7 +177,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 		}
 
 		documentBuilder.setDate(
-			"modifiedDate", formatDate(modifiedDate)
+			"modifiedDate", getDate(modifiedDate)
 		).setLong(
 			"processId", processId
 		);

@@ -335,7 +335,7 @@ public class RESTBuilder {
 				description, clientMessage, clientVersion, "'.");
 		}
 
-		String formattedDescription = formatDescrition(
+		String formattedDescription = _formatDescrition(
 			StringPool.FOUR_SPACES + StringPool.FOUR_SPACES,
 			"\"" + description + "\"");
 
@@ -1587,7 +1587,7 @@ public class RESTBuilder {
 		return yamlString;
 	}
 
-	public static String formatDescrition(String indent, String descriton) {
+	private String _formatDescrition(String indent, String descriton) {
 		if (Validator.isNull(descriton)) {
 			return StringPool.BLANK;
 		}
@@ -1610,14 +1610,14 @@ public class RESTBuilder {
 			String s = descriton.substring(x + 1);
 
 			return descriton.substring(0, x) + "\n" +
-				formatDescrition(indent, s);
+				_formatDescrition(indent, s);
 		}
 
 		x = descriton.lastIndexOf(CharPool.SPACE, _DESCRIPTION_MAX_LINE_LENGTH);
 
 		String s = descriton.substring(x + 1);
 
-		return descriton.substring(0, x) + "\n" + formatDescrition(indent, s);
+		return descriton.substring(0, x) + "\n" + _formatDescrition(indent, s);
 	}
 
 	private String _getClientMavenGroupId(String apiPackagePath) {

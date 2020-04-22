@@ -1565,15 +1565,14 @@ public class HttpImpl implements Http {
 			Http.Response response, boolean followRedirects, int timeout)
 		throws IOException {
 
-		InputStream inputStream = URLtoInputStream(
-			location, method, headers, cookies, auth, body, fileParts, parts,
-			response, followRedirects, timeout);
+		try (InputStream inputStream = URLtoInputStream(
+				location, method, headers, cookies, auth, body, fileParts,
+				parts, response, followRedirects, timeout)) {
 
-		if (inputStream == null) {
-			return null;
-		}
+			if (inputStream == null) {
+				return null;
+			}
 
-		try {
 			long contentLengthLong = response.getContentLengthLong();
 
 			if (contentLengthLong > _MAX_BYTE_ARRAY_LENGTH) {
@@ -1590,9 +1589,6 @@ public class HttpImpl implements Http {
 			}
 
 			return FileUtil.getBytes(inputStream);
-		}
-		finally {
-			inputStream.close();
 		}
 	}
 

@@ -94,33 +94,23 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 	@Override
 	public <T> T deepCopyProperties(Object source) throws Exception {
-		ObjectInputStream objectInputStream = null;
-		ObjectOutputStream objectOutputStream = null;
-
-		try {
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
-
-			objectOutputStream = new ObjectOutputStream(
-				unsyncByteArrayOutputStream);
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream)) {
 
 			objectOutputStream.writeObject(source);
 
 			objectOutputStream.flush();
 
-			UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-				new UnsyncByteArrayInputStream(
-					unsyncByteArrayOutputStream.toByteArray());
+			try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+					new UnsyncByteArrayInputStream(
+						unsyncByteArrayOutputStream.toByteArray());
+				ObjectInputStream objectInputStream = new ObjectInputStream(
+					unsyncByteArrayInputStream)) {
 
-			objectInputStream = new ObjectInputStream(
-				unsyncByteArrayInputStream);
-
-			return (T)objectInputStream.readObject();
-		}
-		finally {
-			objectInputStream.close();
-
-			objectOutputStream.close();
+				return (T)objectInputStream.readObject();
+			}
 		}
 	}
 

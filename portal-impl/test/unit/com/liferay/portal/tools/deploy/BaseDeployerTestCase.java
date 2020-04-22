@@ -109,25 +109,19 @@ public abstract class BaseDeployerTestCase {
 	}
 
 	protected void setUpLiferayPluginPackageProperties() throws Exception {
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-
-		try {
-			inputStream = BaseDeployerTestCase.class.getResourceAsStream(
-				"dependencies/liferay-plugin-package.properties");
+		try (InputStream inputStream =
+				BaseDeployerTestCase.class.getResourceAsStream(
+					"dependencies/liferay-plugin-package.properties")) {
 
 			File webInfDir = getWebInfDir();
 
 			webInfDir.mkdirs();
 
-			outputStream = new FileOutputStream(
-				new File(webInfDir, "liferay-plugin-package.properties"));
+			try (OutputStream outputStream = new FileOutputStream(
+					new File(webInfDir, "liferay-plugin-package.properties"))) {
 
-			StreamUtil.transfer(inputStream, outputStream);
-		}
-		finally {
-			inputStream.close();
-			outputStream.close();
+				StreamUtil.transfer(inputStream, outputStream);
+			}
 		}
 	}
 

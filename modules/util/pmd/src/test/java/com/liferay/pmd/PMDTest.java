@@ -125,10 +125,10 @@ public class PMDTest extends AutoBalanceTestCase {
 
 		_pmdTask.addConfiguredSourceLanguage(sourceLanguage);
 
-		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ClassTypeResolver.class.getName(), Level.SEVERE);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					ClassTypeResolver.class.getName(), Level.SEVERE)) {
 
-		try {
 			_pmdTask.execute();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -150,9 +150,6 @@ public class PMDTest extends AutoBalanceTestCase {
 				_logFilePath, Charset.defaultCharset());
 
 			Assert.assertTrue(list.toString(), list.isEmpty());
-		}
-		finally {
-			captureHandler.close();
 		}
 	}
 

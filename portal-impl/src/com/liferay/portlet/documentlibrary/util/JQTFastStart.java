@@ -44,11 +44,8 @@ public class JQTFastStart {
 
 		validate(inputFile, outputFile);
 
-		RandomAccessFile randomAccessInputFile = null;
-		RandomAccessFile randomAccessOutputFile = null;
-
-		try {
-			randomAccessInputFile = new RandomAccessFile(inputFile, "r");
+		try (RandomAccessFile randomAccessInputFile = new RandomAccessFile(
+				inputFile, "r")) {
 
 			Atom atom = null;
 			Atom ftypAtom = null;
@@ -119,41 +116,33 @@ public class JQTFastStart {
 			randomAccessInputFile.seek(
 				ftypAtom.getOffset() + ftypAtom.getSize());
 
-			randomAccessOutputFile = new RandomAccessFile(outputFile, "rw");
+			try (RandomAccessFile randomAccessOutputFile = new RandomAccessFile(
+					outputFile, "rw")) {
 
-			randomAccessOutputFile.setLength(0);
+				randomAccessOutputFile.setLength(0);
 
-			randomAccessOutputFile.write(ftypAtom.getBuffer());
-			randomAccessOutputFile.write(moovAtom.getBuffer());
+				randomAccessOutputFile.write(ftypAtom.getBuffer());
+				randomAccessOutputFile.write(moovAtom.getBuffer());
 
-			byte[] buffer = new byte[1024 * 1024];
+				byte[] buffer = new byte[1024 * 1024];
 
-			while ((randomAccessInputFile.getFilePointer() + buffer.length) <
-						moovAtom.getOffset()) {
+				while ((randomAccessInputFile.getFilePointer() +
+							buffer.length) < moovAtom.getOffset()) {
 
-				int read = randomAccessInputFile.read(buffer);
+					int read = randomAccessInputFile.read(buffer);
 
-				randomAccessOutputFile.write(buffer, 0, read);
-			}
+					randomAccessOutputFile.write(buffer, 0, read);
+				}
 
-			int bufferSize =
-				(int)
-					(moovAtom.getOffset() -
+				int bufferSize =
+					(int)(moovAtom.getOffset() -
 						randomAccessInputFile.getFilePointer());
 
-			buffer = new byte[bufferSize];
+				buffer = new byte[bufferSize];
 
-			randomAccessInputFile.readFully(buffer);
+				randomAccessInputFile.readFully(buffer);
 
-			randomAccessOutputFile.write(buffer);
-		}
-		finally {
-			if (randomAccessInputFile != null) {
-				randomAccessInputFile.close();
-			}
-
-			if (randomAccessOutputFile != null) {
-				randomAccessOutputFile.close();
+				randomAccessOutputFile.write(buffer);
 			}
 		}
 	}

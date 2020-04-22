@@ -72,16 +72,16 @@ public class PageWidgetInstanceDefinition implements Cloneable {
 
 	protected Map<String, Object> widgetConfig;
 
-	public Map<String, Object> getWidgetPermissions() {
+	public WidgetPermission[] getWidgetPermissions() {
 		return widgetPermissions;
 	}
 
-	public void setWidgetPermissions(Map<String, Object> widgetPermissions) {
+	public void setWidgetPermissions(WidgetPermission[] widgetPermissions) {
 		this.widgetPermissions = widgetPermissions;
 	}
 
 	public void setWidgetPermissions(
-		UnsafeSupplier<Map<String, Object>, Exception>
+		UnsafeSupplier<WidgetPermission[], Exception>
 			widgetPermissionsUnsafeSupplier) {
 
 		try {
@@ -92,7 +92,7 @@ public class PageWidgetInstanceDefinition implements Cloneable {
 		}
 	}
 
-	protected Map<String, Object> widgetPermissions;
+	protected WidgetPermission[] widgetPermissions;
 
 	@Override
 	public PageWidgetInstanceDefinition clone()

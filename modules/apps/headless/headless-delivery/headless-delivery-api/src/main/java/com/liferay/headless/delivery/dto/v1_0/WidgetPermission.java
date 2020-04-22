@@ -32,8 +32,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -41,27 +39,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageWidgetInstanceDefinition")
+@GraphQLName("WidgetPermission")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageWidgetInstanceDefinition")
-public class PageWidgetInstanceDefinition {
+@XmlRootElement(name = "WidgetPermission")
+public class WidgetPermission {
 
 	@Schema
-	@Valid
-	public Widget getWidget() {
-		return widget;
+	public String[] getActionKeys() {
+		return actionKeys;
 	}
 
-	public void setWidget(Widget widget) {
-		this.widget = widget;
+	public void setActionKeys(String[] actionKeys) {
+		this.actionKeys = actionKeys;
 	}
 
 	@JsonIgnore
-	public void setWidget(
-		UnsafeSupplier<Widget, Exception> widgetUnsafeSupplier) {
+	public void setActionKeys(
+		UnsafeSupplier<String[], Exception> actionKeysUnsafeSupplier) {
 
 		try {
-			widget = widgetUnsafeSupplier.get();
+			actionKeys = actionKeysUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,25 +70,23 @@ public class PageWidgetInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Widget widget;
+	protected String[] actionKeys;
 
 	@Schema
-	@Valid
-	public Map<String, Object> getWidgetConfig() {
-		return widgetConfig;
+	public String getRoleKey() {
+		return roleKey;
 	}
 
-	public void setWidgetConfig(Map<String, Object> widgetConfig) {
-		this.widgetConfig = widgetConfig;
+	public void setRoleKey(String roleKey) {
+		this.roleKey = roleKey;
 	}
 
 	@JsonIgnore
-	public void setWidgetConfig(
-		UnsafeSupplier<Map<String, Object>, Exception>
-			widgetConfigUnsafeSupplier) {
+	public void setRoleKey(
+		UnsafeSupplier<String, Exception> roleKeyUnsafeSupplier) {
 
 		try {
-			widgetConfig = widgetConfigUnsafeSupplier.get();
+			roleKey = roleKeyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -103,37 +98,7 @@ public class PageWidgetInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> widgetConfig;
-
-	@Schema
-	@Valid
-	public WidgetPermission[] getWidgetPermissions() {
-		return widgetPermissions;
-	}
-
-	public void setWidgetPermissions(WidgetPermission[] widgetPermissions) {
-		this.widgetPermissions = widgetPermissions;
-	}
-
-	@JsonIgnore
-	public void setWidgetPermissions(
-		UnsafeSupplier<WidgetPermission[], Exception>
-			widgetPermissionsUnsafeSupplier) {
-
-		try {
-			widgetPermissions = widgetPermissionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected WidgetPermission[] widgetPermissions;
+	protected String roleKey;
 
 	@Override
 	public boolean equals(Object object) {
@@ -141,15 +106,13 @@ public class PageWidgetInstanceDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageWidgetInstanceDefinition)) {
+		if (!(object instanceof WidgetPermission)) {
 			return false;
 		}
 
-		PageWidgetInstanceDefinition pageWidgetInstanceDefinition =
-			(PageWidgetInstanceDefinition)object;
+		WidgetPermission widgetPermission = (WidgetPermission)object;
 
-		return Objects.equals(
-			toString(), pageWidgetInstanceDefinition.toString());
+		return Objects.equals(toString(), widgetPermission.toString());
 	}
 
 	@Override
@@ -164,44 +127,42 @@ public class PageWidgetInstanceDefinition {
 
 		sb.append("{");
 
-		if (widget != null) {
+		if (actionKeys != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"widget\": ");
-
-			sb.append(String.valueOf(widget));
-		}
-
-		if (widgetConfig != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"widgetConfig\": ");
-
-			sb.append(_toJSON(widgetConfig));
-		}
-
-		if (widgetPermissions != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"widgetPermissions\": ");
+			sb.append("\"actionKeys\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < widgetPermissions.length; i++) {
-				sb.append(String.valueOf(widgetPermissions[i]));
+			for (int i = 0; i < actionKeys.length; i++) {
+				sb.append("\"");
 
-				if ((i + 1) < widgetPermissions.length) {
+				sb.append(_escape(actionKeys[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < actionKeys.length) {
 					sb.append(", ");
 				}
 			}
 
 			sb.append("]");
+		}
+
+		if (roleKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(roleKey));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -210,7 +171,7 @@ public class PageWidgetInstanceDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.WidgetPermission",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.PageWidgetInstanceDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -86,8 +88,25 @@ public class PageWidgetInstanceDefinitionSerDes {
 
 			sb.append("\"widgetPermissions\": ");
 
-			sb.append(
-				_toJSON(pageWidgetInstanceDefinition.getWidgetPermissions()));
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageWidgetInstanceDefinition.getWidgetPermissions().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						pageWidgetInstanceDefinition.getWidgetPermissions()
+							[i]));
+
+				if ((i + 1) < pageWidgetInstanceDefinition.
+						getWidgetPermissions().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -177,8 +196,14 @@ public class PageWidgetInstanceDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "widgetPermissions")) {
 				if (jsonParserFieldValue != null) {
 					pageWidgetInstanceDefinition.setWidgetPermissions(
-						(Map)PageWidgetInstanceDefinitionSerDes.toMap(
-							(String)jsonParserFieldValue));
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> WidgetPermissionSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new WidgetPermission[size]
+						));
 				}
 			}
 			else {

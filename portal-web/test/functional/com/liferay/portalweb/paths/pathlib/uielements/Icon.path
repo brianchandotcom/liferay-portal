@@ -244,11 +244,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TRASH</td>
-	<td>//*[*[name()='svg'][contains(@class,'icon-trash')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

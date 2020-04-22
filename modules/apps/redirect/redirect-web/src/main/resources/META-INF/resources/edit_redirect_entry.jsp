@@ -122,10 +122,7 @@ else {
 
 <div>
 	<react:component
-		data='<%= HashMapBuilder.<String, Object>put(
-		"namespace", liferayPortletResponse.getNamespace()
-		).build()
-		%>'
+		data="<%= Collections.emptyMap() %>"
 		module="js/ChainedRedirections"
 	/>
 </div>

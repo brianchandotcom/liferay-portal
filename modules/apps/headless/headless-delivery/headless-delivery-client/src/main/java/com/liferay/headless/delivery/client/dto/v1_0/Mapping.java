@@ -49,26 +49,47 @@ public class Mapping implements Cloneable {
 
 	protected String fieldKey;
 
-	public String getItemKey() {
-		return itemKey;
+	public String getItemClassName() {
+		return itemClassName;
 	}
 
-	public void setItemKey(String itemKey) {
-		this.itemKey = itemKey;
+	public void setItemClassName(String itemClassName) {
+		this.itemClassName = itemClassName;
 	}
 
-	public void setItemKey(
-		UnsafeSupplier<String, Exception> itemKeyUnsafeSupplier) {
+	public void setItemClassName(
+		UnsafeSupplier<String, Exception> itemClassNameUnsafeSupplier) {
 
 		try {
-			itemKey = itemKeyUnsafeSupplier.get();
+			itemClassName = itemClassNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String itemKey;
+	protected String itemClassName;
+
+	public Long getItemPK() {
+		return itemPK;
+	}
+
+	public void setItemPK(Long itemPK) {
+		this.itemPK = itemPK;
+	}
+
+	public void setItemPK(
+		UnsafeSupplier<Long, Exception> itemPKUnsafeSupplier) {
+
+		try {
+			itemPK = itemPKUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long itemPK;
 
 	@Override
 	public Mapping clone() throws CloneNotSupportedException {

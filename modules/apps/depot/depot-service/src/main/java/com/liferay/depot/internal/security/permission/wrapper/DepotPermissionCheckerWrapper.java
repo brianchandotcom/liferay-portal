@@ -23,13 +23,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 
@@ -108,10 +112,15 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 	@Override
 	public boolean isContentReviewer(long companyId, long groupId) {
-		if (super.isContentReviewer(companyId, groupId) ||
-			isGroupAdmin(groupId)) {
+		try {
+			if (super.isContentReviewer(companyId, groupId) ||
+				_isContentReviewerImpl(companyId, groupId)) {
 
-			return true;
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -197,7 +206,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 			Group group = _groupLocalService.getGroup(primKey);
 
-			if (group.getType() == GroupConstants.TYPE_DEPOT) {
+			if (_isAssetLibrary(group)) {
 				return group;
 			}
 
@@ -272,12 +281,94 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 	}
 
+	private boolean _isAssetLibrary(Group group) {
+		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isContentReviewerImpl(long groupId)
+		throws PortalException {
+
+		if (isCompanyAdmin() || isGroupAdmin(groupId)) {
+			return true;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (RoleLocalServiceUtil.hasUserRole(
+				getUserId(), group.getCompanyId(),
+				RoleConstants.PORTAL_CONTENT_REVIEWER, true)) {
+
+			return true;
+		}
+
+		if (_isAssetLibrary(group) &&
+			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+				getUserId(), groupId,
+				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isContentReviewerImpl(long companyId, long groupId)
+		throws Exception {
+
+		if (!isSignedIn()) {
+			return false;
+		}
+
+		if (isOmniadmin()) {
+			return true;
+		}
+
+		if (isCompanyAdmin(companyId)) {
+			return true;
+		}
+
+		if (groupId <= 0) {
+			return false;
+		}
+
+		if (isGroupAdmin(groupId)) {
+			return true;
+		}
+
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			getUserId(), groupId,
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
+
+		try {
+			if (value == null) {
+				value = _isContentReviewerImpl(groupId);
+
+				PermissionCacheUtil.putUserPrimaryKeyRole(
+					getUserId(), groupId,
+					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, value);
+			}
+		}
+		catch (Exception exception) {
+			PermissionCacheUtil.removeUserPrimaryKeyRole(
+				getUserId(), groupId,
+				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
+
+			throw exception;
+		}
+
+		return value;
+	}
+
 	private boolean _isDepotGroupOwner(Group group) {
 		if (group == null) {
 			return false;
 		}
 
-		if (group.getType() != GroupConstants.TYPE_DEPOT) {
+		if (!_isAssetLibrary(group)) {
 			return false;
 		}
 
@@ -289,7 +380,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	private boolean _isGroupAdmin(Group group) throws PortalException {
-		if (group.getType() != GroupConstants.TYPE_DEPOT) {
+		if (!_isAssetLibrary(group)) {
 			return false;
 		}
 

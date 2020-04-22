@@ -43,6 +43,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
@@ -53,6 +54,7 @@ import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
 import org.gradle.workers.WorkQueue;
 import org.gradle.workers.WorkerExecutor;
@@ -153,7 +155,9 @@ public class MergePropertiesTask extends DefaultTask {
 				DirectoryProperty destinationDirDirectoryProperty =
 					mergePropertiesWorkParameters.getDestinationDir();
 
-				destinationDirDirectoryProperty.set(getDestinationDir());
+				File destinationDir = getDestinationDir();
+
+				destinationDirDirectoryProperty.set(destinationDir);
 
 				ConfigurableFileCollection
 					destinationFilesConfigurableFileCollection =
@@ -166,13 +170,23 @@ public class MergePropertiesTask extends DefaultTask {
 					sourceDirsConfigurableFileCollection =
 						mergePropertiesWorkParameters.getSourceDirs();
 
-				sourceDirsConfigurableFileCollection.setFrom(getSourceDirs());
+				FileCollection sourceDirs = getSourceDirs();
+
+				sourceDirsConfigurableFileCollection.setFrom(sourceDirs);
 
 				MapProperty<String, MergePropertiesSetting>
 					settingsMapProperty =
 						mergePropertiesWorkParameters.getSettings();
 
 				settingsMapProperty.set(_mergePropertiesSettings.getAsMap());
+
+				Logger logger = getLogger();
+
+				if (logger.isInfoEnabled()) {
+					logger.info(
+						"Merged " + CollectionUtils.join(", ", sourceDirs) +
+							" into " + destinationDir);
+				}
 			});
 	}
 

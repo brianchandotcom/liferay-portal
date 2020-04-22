@@ -23,17 +23,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 
@@ -206,7 +202,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 			Group group = _groupLocalService.getGroup(primKey);
 
-			if (_isAssetLibrary(group)) {
+			if (group.getType() == GroupConstants.TYPE_DEPOT) {
 				return group;
 			}
 
@@ -281,32 +277,16 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 	}
 
-	private boolean _isAssetLibrary(Group group) {
-		if (group.getType() == GroupConstants.TYPE_DEPOT) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isContentReviewerImpl(long groupId)
 		throws PortalException {
 
-		if (isCompanyAdmin() || isGroupAdmin(groupId)) {
-			return true;
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (group.getType() != GroupConstants.TYPE_DEPOT) {
+			return false;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (RoleLocalServiceUtil.hasUserRole(
-				getUserId(), group.getCompanyId(),
-				RoleConstants.PORTAL_CONTENT_REVIEWER, true)) {
-
-			return true;
-		}
-
-		if (_isAssetLibrary(group) &&
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+		if (_userGroupRoleLocalService.hasUserGroupRole(
 				getUserId(), groupId,
 				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
 
@@ -368,7 +348,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return false;
 		}
 
-		if (!_isAssetLibrary(group)) {
+		if (group.getType() != GroupConstants.TYPE_DEPOT) {
 			return false;
 		}
 
@@ -380,7 +360,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	private boolean _isGroupAdmin(Group group) throws PortalException {
-		if (!_isAssetLibrary(group)) {
+		if (group.getType() != GroupConstants.TYPE_DEPOT) {
 			return false;
 		}
 

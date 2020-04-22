@@ -1063,7 +1063,7 @@ definition {
 			locator1 = "TextInput#UPLOAD_FILE",
 			value1 = "${imageName}");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "10000");
 
 		WaitForElementNotPresent(
 			key_text = "Done",

@@ -130,12 +130,13 @@ public class WidgetLayoutStructureItemHelper
 				layout.getPlid(), PortletIdCodec.encode(name, instanceId),
 				widgetConfigDefinitionMap);
 
-			Map<String, Object> widgetPermissions =
-				(Map<String, Object>)definitionMap.get("widgetPermissions");
+			List<Map<String, Object>> widgetPermissionMaps =
+				(List<Map<String, Object>>)definitionMap.get(
+					"widgetPermissions");
 
 			_importPortletPermissions(
 				layout.getPlid(), PortletIdCodec.encode(name, instanceId),
-				widgetPermissions);
+				widgetPermissionMaps);
 
 			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 				layout.getUserId(), layout.getGroupId(), 0, 0, 0,
@@ -235,10 +236,11 @@ public class WidgetLayoutStructureItemHelper
 	}
 
 	private void _importPortletPermissions(
-			long plid, String portletId, Map<String, Object> widgetPermissions)
+			long plid, String portletId,
+			List<Map<String, Object>> widgetPermissionMaps)
 		throws Exception {
 
-		if (widgetPermissions == null) {
+		if (widgetPermissionMaps == null) {
 			return;
 		}
 
@@ -261,11 +263,10 @@ public class WidgetLayoutStructureItemHelper
 
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
-		for (Map.Entry<String, Object> entrySet :
-				widgetPermissions.entrySet()) {
-
+		for (Map<String, Object> widgetPermissionMap : widgetPermissionMaps) {
 			Role role = RoleLocalServiceUtil.fetchRole(
-				layout.getCompanyId(), entrySet.getKey());
+				layout.getCompanyId(),
+				(String)widgetPermissionMap.get("roleKey"));
 
 			if (role == null) {
 				continue;
@@ -286,17 +287,17 @@ public class WidgetLayoutStructureItemHelper
 				Collectors.toList()
 			);
 
-			List<String> importedResourceActions =
-				(List<String>)entrySet.getValue();
+			List<String> actionKeys = (List<String>)widgetPermissionMap.get(
+				"actionKeys");
 
 			List<String> actionIds = new ArrayList<>();
 
-			for (String importedResourceAction : importedResourceActions) {
-				if (!resourceActionsIds.contains(importedResourceAction)) {
+			for (String actionKey : actionKeys) {
+				if (!resourceActionsIds.contains(actionKey)) {
 					continue;
 				}
 
-				actionIds.add(importedResourceAction);
+				actionIds.add(actionKey);
 			}
 
 			if (ListUtil.isNotEmpty(actionIds)) {

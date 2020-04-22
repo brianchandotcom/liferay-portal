@@ -80,6 +80,24 @@ CTCollection ctCollection = (CTCollection)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= CTCollection.class.getName() %>"
+			modelResourceDescription="<%= ctCollection.getName() %>"
+			resourcePrimKey="<%= String.valueOf(ctCollection.getCtCollectionId()) %>"
+			var="permissionsEntryURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			label="<%= true %>"
+			message="permissions"
+			method="get"
+			url="<%= permissionsEntryURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, ActionKeys.DELETE) %>">
 		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 

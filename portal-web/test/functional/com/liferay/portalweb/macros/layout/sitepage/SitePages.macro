@@ -59,6 +59,8 @@ definition {
 	@summary = "Add newly created pages to specified navigation menus or assert that the option to add the pages to navigation menus is missing."
 	macro _addPageToNavigationMenu {
 		if (isSet(navigationMenus)) {
+			Pause(locator1 = "5000");
+
 			for (var navigationMenu : list "${navigationMenus}") {
 				if ("${assertCheckboxMissing}" == "true") {
 					AssertElementNotPresent(

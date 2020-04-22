@@ -51,42 +51,56 @@ rankingResultContentDisplayBuilder.setRenderResponse(renderResponse);
 RankingResultContentDisplayContext rankingResultContentDisplayContext = rankingResultContentDisplayBuilder.build();
 %>
 
-<c:if test="<%= rankingResultContentDisplayContext.isVisible() %>">
-	<!--liferay-ui:header
-	localizeTitle="<%= false %>"
-	title="<%= rankingResultContentDisplayContext.getHeaderTitle() %>"
-	/ -->
+<div class="container container-no-gutters-sm-down container-view">
+	<c:choose>
+		<c:when test="<%= rankingResultContentDisplayContext.isVisible() %>">
+			<div class="result-rankings-view-content-container sheet sheet-lg">
+				<div class="autofit-row">
+					<div class="autofit-col autofit-col-expand">
+						<div class="sheet-title">
+							<%= rankingResultContentDisplayContext.getHeaderTitle() %>
+						</div>
+					</div>
 
-	<%= rankingResultContentDisplayContext.getHeaderTitle() %>
+					<div class="autofit-col visible-interaction">
+						<c:if test="<%= rankingResultContentDisplayContext.hasEditPermission() %>">
+							<div class="asset-actions lfr-meta-actions">
 
-	<c:if test="<%= rankingResultContentDisplayContext.hasEditPermission() %>">
-		<div class="asset-actions lfr-meta-actions">
+								<%
+								Map<String, Object> data = new HashMap<String, Object>();
 
-			<%
-			Map<String, Object> data = new HashMap<String, Object>();
+								data.put("destroyOnHide", true);
+								data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
+								data.put("title", LanguageUtil.format(request, "edit-x", HtmlUtil.escape(rankingResultContentDisplayContext.getIconEditTarget()), false));
+								%>
 
-			data.put("destroyOnHide", true);
-			data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-			data.put("title", LanguageUtil.format(request, "edit-x", HtmlUtil.escape(rankingResultContentDisplayContext.getIconEditTarget()), false));
-			%>
+								<liferay-ui:icon
+									cssClass="visible-interaction"
+									data="<%= data %>"
+									icon="pencil"
+									label="<%= false %>"
+									markupView="lexicon"
+									message='<%= LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(rankingResultContentDisplayContext.getIconEditTarget())}, false) %>'
+									method="get"
+									url="<%= rankingResultContentDisplayContext.getIconURLString() %>"
+									useDialog="<%= true %>"
+								/>
+							</div>
+						</c:if>
+					</div>
+				</div>
 
-			<liferay-ui:icon
-				cssClass="visible-interaction"
-				data="<%= data %>"
-				icon="pencil"
-				label="<%= false %>"
-				markupView="lexicon"
-				message='<%= LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(rankingResultContentDisplayContext.getIconEditTarget())}, false) %>'
-				method="get"
-				url="<%= rankingResultContentDisplayContext.getIconURLString() %>"
-				useDialog="<%= true %>"
-			/>
-		</div>
-	</c:if>
-
-	<liferay-asset:asset-display
-		assetEntry="<%= rankingResultContentDisplayContext.getAssetEntry() %>"
-		assetRenderer="<%= rankingResultContentDisplayContext.getAssetRenderer() %>"
-		assetRendererFactory="<%= rankingResultContentDisplayContext.getAssetRendererFactory() %>"
-	/>
-</c:if>
+				<liferay-asset:asset-display
+					assetEntry="<%= rankingResultContentDisplayContext.getAssetEntry() %>"
+					assetRenderer="<%= rankingResultContentDisplayContext.getAssetRenderer() %>"
+					assetRendererFactory="<%= rankingResultContentDisplayContext.getAssetRendererFactory() %>"
+				/>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="alert alert-danger">
+				<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
+			</div>
+		</c:otherwise>
+	</c:choose>
+</div>

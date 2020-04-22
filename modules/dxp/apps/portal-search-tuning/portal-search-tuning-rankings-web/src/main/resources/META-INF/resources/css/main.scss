@@ -11,10 +11,11 @@
 	@import 'page';
 	@import 'page_toolbar';
 	@import 'result_rankings_form';
+	@import 'view_content';
 }
 
 body {
-	// Resizes the page navbar when product menu is expanded.
+	// Resizes the page navbar when product menu is expanded
 
 	&.open .result-rankings-root .navbar.page-toolbar-root {
 		left: 320px;
@@ -22,7 +23,7 @@ body {
 	}
 
 	// Allows the modal to scroll when the modal height is greater than the
-	// window height.
+	// window height
 
 	&.modal-open .modal.result-ranking-modal-root {
 		overflow-y: auto;

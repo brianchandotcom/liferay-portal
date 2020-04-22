@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.lang.merger.tasks;
 
+import java.io.Serializable;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class MergePropertiesSetting {
+public class MergePropertiesSetting implements Serializable {
 
 	public MergePropertiesSetting(String name) {
 		_name = name;

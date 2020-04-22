@@ -65,7 +65,6 @@ const DestinationUrlInput = ({
 						onChange={({currentTarget}) =>
 							setDestinationUrl(currentTarget.value)
 						}
-						required
 						type="text"
 						value={destinationUrl}
 					/>

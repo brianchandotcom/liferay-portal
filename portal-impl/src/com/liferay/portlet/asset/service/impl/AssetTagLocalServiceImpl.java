@@ -593,8 +593,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 *         tag is being applied
 	 * @return the asset tag
 	 */
-	@Indexable(type = IndexableType.REINDEX)
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetTag incrementAssetCount(long tagId, long classNameId)
 		throws PortalException {

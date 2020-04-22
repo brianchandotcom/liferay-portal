@@ -392,6 +392,9 @@
 			Util.toggleDisabled(inputs, false);
 		},
 
+		/**
+		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+		 */
 		escapeCDATA(str) {
 			return str.replace(/<!\[CDATA\[|\]\]>/gi, match => {
 				var str = '';

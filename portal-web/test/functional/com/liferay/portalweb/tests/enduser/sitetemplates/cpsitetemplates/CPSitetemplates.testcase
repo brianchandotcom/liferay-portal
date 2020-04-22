@@ -520,11 +520,6 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
 			pageName = "Home",
 			siteName = "${siteName}",

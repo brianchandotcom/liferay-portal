@@ -3,6 +3,8 @@ definition {
 	macro gotoSiteTemplatesPage {
 		var key_siteTemplateName = "${siteTemplateName}";
 
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
 			value1 = "${siteTemplateName}");

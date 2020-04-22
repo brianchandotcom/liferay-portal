@@ -232,11 +232,6 @@ definition {
 			pageName = "Page1 Name",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
 			pageName = "Page1 Name",
 			siteName = "${siteName}",
@@ -490,22 +485,12 @@ definition {
 			pageName = "Test Page Name",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
 			pageName = "Test Page Name",
 			siteName = "${siteName}",
 			siteTemplateName = "Site Template Name");
 
 		Portlet.addPG(portletName = "Documents and Media");
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
 
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
 			pageName = "Test Page Name",
@@ -518,11 +503,6 @@ definition {
 			dmDocumentTitle = "Document_1.png");
 
 		if (IsElementNotPresent(locator1 = "Portlet#PORTLET_CONTENT")) {
-			ProductMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
-
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Test Page Name",
 				siteName = "${siteName}",
@@ -589,11 +569,6 @@ definition {
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Page2 Name",
 			siteTemplateName = "Template Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
 
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
 			pageName = "Page2 Name",
@@ -820,11 +795,6 @@ definition {
 			pageName = "Test Page Name",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
-
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
 			pageName = "Test Page Name",
 			siteName = "${siteName}",
@@ -833,11 +803,6 @@ definition {
 		Portlet.addPG(
 			defaultURL = "false",
 			portletName = "Web Content Display");
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
 
 		SiteTemplatesNavigator.gotoSiteTemplatesPage(
 			pageName = "Test Page Name",

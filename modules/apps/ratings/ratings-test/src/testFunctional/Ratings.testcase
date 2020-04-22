@@ -24,8 +24,6 @@ definition {
 
 	@priority = "4"
 	test ChangeBlogsRatingType {
-		User.firstLoginPG();
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");

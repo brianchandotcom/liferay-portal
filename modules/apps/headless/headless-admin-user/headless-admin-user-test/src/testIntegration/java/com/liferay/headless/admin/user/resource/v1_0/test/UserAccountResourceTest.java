@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
-import com.liferay.portal.search.test.util.SearchTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +52,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -285,9 +283,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				UserAccountSerDes.toDTOs(
 					userAccountsJSONObject.getString("items"))));
 	}
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

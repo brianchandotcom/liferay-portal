@@ -20,9 +20,7 @@ import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.test.util.SearchTestRule;
 
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -31,9 +29,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class MessageBoardSectionResourceTest
 	extends BaseMessageBoardSectionResourceTestCase {
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

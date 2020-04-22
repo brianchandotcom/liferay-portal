@@ -21,10 +21,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.test.util.SearchTestRule;
 
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -33,9 +31,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DocumentFolderResourceTest
 	extends BaseDocumentFolderResourceTestCase {
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

@@ -1800,9 +1800,13 @@ definition {
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 
+		FormViewBuilder.closeSidebar();
+
 		FormViewBuilder.setName(formViewName = "Upload Form View");
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Upload");
+
+		FormViewBuilder.closeSidebar();
 
 		FormViewBuilder.save();
 

@@ -23,7 +23,6 @@ import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,9 +31,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,28 +69,10 @@ public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 			return;
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		for (String assetTagName : assetTagNames) {
 			try {
-				AssetTag assetTag = _assetTagLocalService.fetchTag(
-					assetEntry.getGroupId(),
-					StringUtil.toLowerCase(assetTagName));
-
-				if (assetTag == null) {
-					assetTag = _assetTagLocalService.addTag(
-						assetEntry.getUserId(), assetEntry.getGroupId(),
-						assetTagName, serviceContext);
-				}
-
-				_assetTagLocalService.addAssetEntryAssetTag(
-					assetEntry.getEntryId(), assetTag);
-
 				_assetAutoTaggerEntryLocalService.addAssetAutoTaggerEntry(
-					assetEntry, assetTag);
-
-				_assetTagLocalService.incrementAssetCount(
-					assetTag.getTagId(), assetEntry.getClassNameId());
+					assetEntry, assetTagName);
 			}
 			catch (AssetTagException assetTagException) {
 				if (_log.isWarnEnabled()) {

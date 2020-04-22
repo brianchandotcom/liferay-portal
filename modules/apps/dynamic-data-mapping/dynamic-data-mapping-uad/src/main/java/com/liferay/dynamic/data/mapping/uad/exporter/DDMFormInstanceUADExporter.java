@@ -48,11 +48,11 @@ public class DDMFormInstanceUADExporter extends BaseDDMFormInstanceUADExporter {
 				formInstanceIdDynamicQuery.add(
 					RestrictionsFactoryUtil.eq("userId", userId));
 
-				Property formInstanceRecordIdProperty =
+				Property formInstanceIdProperty =
 					PropertyFactoryUtil.forName("formInstanceId");
 
 				dynamicQuery.add(
-					formInstanceRecordIdProperty.in(
+					formInstanceIdProperty.in(
 						formInstanceIdDynamicQuery));
 			});
 

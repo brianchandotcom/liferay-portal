@@ -46,11 +46,11 @@ public class DDMFormInstanceRecordUADExporter
 	protected String toXmlString(DDMFormInstanceRecord ddmFormInstanceRecord) {
 		StringBundler sb = new StringBundler(33);
 
-		String ddmFormInstanceRecordStr =
+		String className =
 			"com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord";
 
 		sb.append("<model><model-name>");
-		sb.append(ddmFormInstanceRecordStr);
+		sb.append(className);
 		sb.append("</model-name>");
 
 		sb.append("<column><column-name>");
@@ -103,15 +103,16 @@ public class DDMFormInstanceRecordUADExporter
 			DDMContent ddmContent = ddmContentLocalService.getDDMContent(
 				ddmFormInstanceRecord.getStorageId());
 
-			JSONObject ddmContentData = JSONFactoryUtil.createJSONObject(
+			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
 				ddmContent.getData());
 
-			JSONArray fieldValuesJSONArray = ddmContentData.getJSONArray(
+			JSONArray fieldValuesJSONArray = dataJSONObject.getJSONArray(
 				"fieldValues");
 
 			fieldValuesJSONArray.forEach(
 				fieldValue -> {
 					JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
+
 					sb.append("<column><column-name>");
 					sb.append(fieldValueJSONObject.get("name"));
 					sb.append("</column-name>");
@@ -148,13 +149,13 @@ public class DDMFormInstanceRecordUADExporter
 			Document document = DDMUADUtil.toDocument(
 				ddmFormInstance.getName());
 
-			Node firstChild = document.getFirstChild();
+			Node firstChildNode = document.getFirstChild();
 
-			NodeList childNodes = firstChild.getChildNodes();
+			NodeList childNodes = firstChildNode.getChildNodes();
 
-			Node formInstanceNameItem = childNodes.item(0);
+			Node formInstanceNameNode = childNodes.item(0);
 
-			return formInstanceNameItem.getTextContent();
+			return formInstanceNameNode.getTextContent();
 		}
 		catch (PortalException portalException) {
 			_log.error(

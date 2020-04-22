@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM_CHECKBOX</td>
+	<td>//li[contains(.,'${key_pageName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM_CHILD_INDICATOR</td>
 	<td>//li[contains(.,'${key_pageName}')]//*[contains(@class,'child-indicator')]</td>
 	<td></td>

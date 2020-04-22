@@ -2006,9 +2006,16 @@ components:
                         type: object
                     type: object
                 widgetPermissions:
-                    additionalProperties:
+                    items:
+                        properties:
+                            actionKeys:
+                                items:
+                                    type: string
+                                type: array
+                            roleKey:
+                                type: string
                         type: object
-                    type: object
+                    type: array
             type: object
         Rating:
             description:

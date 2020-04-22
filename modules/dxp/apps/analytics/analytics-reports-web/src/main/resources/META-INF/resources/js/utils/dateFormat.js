@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
-/*
+/**
  * It generates a set of functions used to produce
  * internationalized date related content.
  */
 export const generateDateFormatters = key => {
-	/*
+	/**
 	 * Given 2 date objects it produces a user friendly date interval
 	 *
 	 * For 'en-US'
@@ -52,8 +52,8 @@ export const generateDateFormatters = key => {
 		)} - ${dateFormatter(finalDate)}`;
 	}
 
-	/*
-	 * Given a date like string it produces a internationalized long date
+	/**
+	 * Given a date-like string it produces a internationalized long date
 	 *
 	 * For 'en-US'
 	 * String => '06/17/2020'
@@ -62,8 +62,8 @@ export const generateDateFormatters = key => {
 		return Intl.DateTimeFormat([key]).format(new Date(value));
 	}
 
-	/*
-	 * Given a date like string produces the day of the month
+	/**
+	 * Given a date-like string produces the day of the month
 	 *
 	 * For 'en-US'
 	 * String => '16'
@@ -74,8 +74,8 @@ export const generateDateFormatters = key => {
 		}).format(new Date(value));
 	}
 
-	/*
-	 * Given a date like string produces the hour of the day
+	/**
+	 * Given a date-like string produces the hour of the day
 	 *
 	 * For 'en-US'
 	 * String => '04 AM'

@@ -612,6 +612,7 @@ definition {
 
 		WikiPage.viewPageWithAttachment(
 			attachmentFileName = "Document_1.jpg",
+			inlineImage = "true",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Title");
 	}

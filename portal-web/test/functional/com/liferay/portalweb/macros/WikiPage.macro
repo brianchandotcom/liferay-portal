@@ -1398,9 +1398,20 @@ definition {
 		var key_wikiPageContent = "${wikiPageContent}";
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		WikiPage.viewPG(
-			wikiPageContent = "${wikiPageContent}",
-			wikiPageTitle = "${wikiPageTitle}");
+		if ("${inlineImage}" == "true") {
+			AssertTextEquals(
+				locator1 = "Portlet#H3_HEADER",
+				value1 = "${wikiPageTitle}");
+
+			AssertTextEquals(
+				locator1 = "WikiEntry#BODY_GENERIC",
+				value1 = "${wikiPageContent}");
+		}
+		else {
+			WikiPage.viewPG(
+				wikiPageContent = "${wikiPageContent}",
+				wikiPageTitle = "${wikiPageTitle}");
+		}
 
 		AssertElementPresent(locator1 = "WikiEntry#ATTACHMENTS_LABEL");
 

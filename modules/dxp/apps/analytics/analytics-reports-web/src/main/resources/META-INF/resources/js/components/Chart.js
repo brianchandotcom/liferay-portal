@@ -163,45 +163,60 @@ export default function Chart({
 				? HOUR_IN_MILLISECONDS
 				: DAY_IN_MILLISECONDS;
 
-		dataProviders.map(getter => {
-			getter({
-				timeSpanKey: chartState.timeSpanOption,
-				timeSpanOffset: chartState.timeSpanOffset,
-			})
-				.then(data => {
-					if (!gone) {
-						if (isMounted()) {
-							Object.keys(data).map(key => {
-								actions.addDataSetItem({
-									dataSetItem: data[key],
-									key,
-									timeSpanComparator,
-								});
-							});
-						}
-					}
+		if (validAnalyticsConnection) {
+			dataProviders.map(getter => {
+				getter({
+					timeSpanKey: chartState.timeSpanOption,
+					timeSpanOffset: chartState.timeSpanOffset,
 				})
-				.catch(_error => {
-					let key = '';
+					.then(data => {
+						if (!gone) {
+							if (isMounted()) {
+								Object.keys(data).map(key => {
+									actions.addDataSetItem({
+										dataSetItem: data[key],
+										key,
+										timeSpanComparator,
+									});
+								});
+							}
+						}
+					})
+					.catch(_error => {
+						let key = '';
 
-					if (getter.name === 'getHistoricalReads') {
-						key = 'analyticsReportsHistoricalReads';
-					}
-					else if (getter.name === 'getHistoricalViews') {
-						key = 'analyticsReportsHistoricalViews';
-					}
+						if (getter.name === 'getHistoricalReads') {
+							key = 'analyticsReportsHistoricalReads';
+						}
+						else if (getter.name === 'getHistoricalViews') {
+							key = 'analyticsReportsHistoricalViews';
+						}
 
-					if (!hasWarning) {
-						addWarning();
-					}
+						if (!hasWarning) {
+							addWarning();
+						}
 
-					actions.addDataSetItem({
-						dataSetItem: {histogram: [], value: null},
-						key,
-						timeSpanComparator,
+						actions.addDataSetItem({
+							dataSetItem: {histogram: [], value: null},
+							key,
+							timeSpanComparator,
+						});
 					});
-				});
-		});
+			});
+		}
+		else {
+			actions.addDataSetItem({
+				dataSetItem: {histogram: [], value: null},
+				key: 'analyticsReportsHistoricalViews',
+				timeSpanComparator,
+			});
+
+			actions.addDataSetItem({
+				dataSetItem: {histogram: [], value: null},
+				key: 'analyticsReportsHistoricalReads',
+				timeSpanComparator,
+			});
+		}
 
 		return () => {
 			gone = true;

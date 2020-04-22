@@ -25,6 +25,7 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -184,6 +185,11 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 
 	@Reference
 	private CounterLocalService _counterLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.account.service)(&(release.schema.version>=1.0.2)))"
+	)
+	private Release _release;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

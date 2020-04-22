@@ -56,7 +56,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -434,6 +433,8 @@ public class PageDefinitionConverterUtil {
 				mapping = new Mapping() {
 					{
 						defaultValue = fragmentInlineValue;
+						itemClassName = _toItemClassName(jsonObject);
+						itemPK = _toItemPK(jsonObject);
 
 						setFieldKey(
 							() -> {
@@ -445,25 +446,6 @@ public class PageDefinitionConverterUtil {
 								}
 
 								return jsonObject.getString("mappedField");
-							});
-						setItemKey(
-							() -> {
-								String classNameId = jsonObject.getString(
-									"classNameId");
-
-								if (Validator.isNull(classNameId)) {
-									return null;
-								}
-
-								String classPK = jsonObject.getString(
-									"classPK");
-
-								if (Validator.isNull(classPK)) {
-									return null;
-								}
-
-								return StringBundler.concat(
-									classNameId, StringPool.POUND, classPK);
 							});
 					}
 				};
@@ -519,6 +501,78 @@ public class PageDefinitionConverterUtil {
 				fragmentCollectionContributorTracker, fragmentRendererTracker,
 				groupId)
 		).build();
+	}
+
+	private static String _toItemClassName(JSONObject jsonObject) {
+		String classNameIdString = jsonObject.getString("classNameId");
+
+		if (Validator.isNull(classNameIdString)) {
+			return null;
+		}
+
+		long classNameId = 0;
+
+		try {
+			classNameId = Long.parseLong(classNameIdString);
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"Item class name could not be set since class name " +
+							"ID %s could not be parsed to long",
+						classNameIdString),
+					numberFormatException);
+			}
+
+			return null;
+		}
+
+		String className = null;
+
+		try {
+			className = PortalUtil.getClassName(classNameId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Item class name could not be set since no class name " +
+						"could be obtained for class name ID " + classNameId,
+					exception);
+			}
+
+			return null;
+		}
+
+		return className;
+	}
+
+	private static Long _toItemPK(JSONObject jsonObject) {
+		String classPKString = jsonObject.getString("classPK");
+
+		if (Validator.isNull(classPKString)) {
+			return null;
+		}
+
+		Long classPK = null;
+
+		try {
+			classPK = Long.parseLong(classPKString);
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"Item PK could not be set since class PK %s could " +
+							"not be parsed to long",
+						classPKString),
+					numberFormatException);
+			}
+
+			return null;
+		}
+
+		return classPK;
 	}
 
 	private static PageElement _toPageElement(

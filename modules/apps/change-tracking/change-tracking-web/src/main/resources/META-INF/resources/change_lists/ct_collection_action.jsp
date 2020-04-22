@@ -29,28 +29,30 @@ CTCollection ctCollection = (CTCollection)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= ctCollection.getCtCollectionId() != changeListsDisplayContext.getCtCollectionId() %>">
-		<liferay-portlet:actionURL name="/change_lists/checkout_ct_collection" var="checkoutURL">
+	<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, ActionKeys.UPDATE) %>">
+		<c:if test="<%= ctCollection.getCtCollectionId() != changeListsDisplayContext.getCtCollectionId() %>">
+			<liferay-portlet:actionURL name="/change_lists/checkout_ct_collection" var="checkoutURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
+			</liferay-portlet:actionURL>
+
+			<liferay-ui:icon
+				message="work-on-publication"
+				url="<%= checkoutURL %>"
+			/>
+		</c:if>
+
+		<liferay-portlet:renderURL var="editURL">
+			<portlet:param name="mvcRenderCommandName" value="/change_lists/edit_ct_collection" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-		</liferay-portlet:actionURL>
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			message="work-on-publication"
-			url="<%= checkoutURL %>"
+			message="edit"
+			url="<%= editURL %>"
 		/>
 	</c:if>
-
-	<liferay-portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="/change_lists/edit_ct_collection" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-	</liferay-portlet:renderURL>
-
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL %>"
-	/>
 
 	<liferay-portlet:renderURL var="reviewURL">
 		<portlet:param name="mvcRenderCommandName" value="/change_lists/view_changes" />
@@ -63,7 +65,7 @@ CTCollection ctCollection = (CTCollection)row.getObject();
 		url="<%= reviewURL %>"
 	/>
 
-	<c:if test="<%= changeListsDisplayContext.isPublishEnabled(ctCollection.getCtCollectionId()) %>">
+	<c:if test="<%= changeListsDisplayContext.isPublishEnabled(ctCollection.getCtCollectionId()) && CTCollectionPermission.contains(permissionChecker, ctCollection, CTActionKeys.PUBLISH) %>">
 		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 
 		<liferay-portlet:renderURL var="conflictsURL">
@@ -78,16 +80,18 @@ CTCollection ctCollection = (CTCollection)row.getObject();
 		/>
 	</c:if>
 
-	<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
+	<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, ActionKeys.DELETE) %>">
+		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 
-	<liferay-portlet:actionURL name="/change_lists/delete_ct_collection" var="deleteURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-	</liferay-portlet:actionURL>
+		<liferay-portlet:actionURL name="/change_lists/delete_ct_collection" var="deleteURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
+		</liferay-portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		confirmation="are-you-sure-you-want-to-delete-this-publication"
-		message="delete"
-		url="<%= deleteURL %>"
-	/>
+		<liferay-ui:icon-delete
+			confirmation="are-you-sure-you-want-to-delete-this-publication"
+			message="delete"
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

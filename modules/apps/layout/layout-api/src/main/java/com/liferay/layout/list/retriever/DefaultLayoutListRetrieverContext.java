@@ -31,7 +31,7 @@ public class DefaultLayoutListRetrieverContext
 
 	@Override
 	public Optional<long[]> getSegmentsExperienceIdsOptional() {
-		return Optional.of(_segmentsExperienceIds);
+		return Optional.ofNullable(_segmentsExperienceIds);
 	}
 
 	public void setPagination(Pagination pagination) {

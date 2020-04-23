@@ -20,29 +20,29 @@ const Portal = ({
 	position = 'appendChild',
 	replace,
 }) => {
-	const portalEl = useMemo(() => document.createElement('div'), []);
+	const portalElement = useMemo(() => document.createElement('div'), []);
 
 	useEffect(() => {
 		if (container) {
 			if (className) {
-				portalEl.classList.add(className);
+				portalElement.classList.add(className);
 			}
 
 			if (elementId) {
-				portalEl.id = elementId;
+				portalElement.id = elementId;
 			}
 
 			if (replace) {
 				container.innerHTML = '';
 			}
 
-			container[position](portalEl);
+			container[position](portalElement);
 
 			return () => {
-				const currentEl = document.getElementById(elementId);
+				const currentElement = document.getElementById(elementId);
 
-				if (currentEl && currentEl.parentNode) {
-					currentEl.parentNode.removeChild(currentEl);
+				if (currentElement && currentElement.parentNode) {
+					currentElement.parentNode.removeChild(currentElement);
 				}
 			};
 		}
@@ -53,7 +53,7 @@ const Portal = ({
 		return null;
 	}
 
-	return <>{ReactDOM.createPortal(children, portalEl)}</>;
+	return <>{ReactDOM.createPortal(children, portalElement)}</>;
 };
 
 export default Portal;

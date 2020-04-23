@@ -106,8 +106,9 @@ public class WorkflowMetricsSLAProcessMessageListener
 					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
 			});
 
-		AtomicInteger atomicCounter = new AtomicInteger(0);
 		long total = actionableDynamicQuery.performCount();
+
+		AtomicInteger atomicCounter = new AtomicInteger(0);
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(WorkflowMetricsSLADefinition workflowMetricsSLADefinition) -> {

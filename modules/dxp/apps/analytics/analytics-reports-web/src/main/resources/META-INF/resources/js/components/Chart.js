@@ -363,13 +363,31 @@ export default function Chart({
 									stroke: CHART_COLORS.cartesianGrid,
 								}}
 								dataKey="label"
-								interval={
-									chartState.timeSpanOption === LAST_7_DAYS
-										? 'preserveStartEnd'
-										: 4
+								domain={
+									!validAnalyticsConnection
+										? [
+												new Date(
+													defaultTimeRange.startDate
+												).getDate(),
+												new Date(
+													defaultTimeRange.endDate
+												).getDate(),
+										  ]
+										: []
 								}
-								tickFormatter={xAxisFormatter}
+								interval="preserveStartEnd"
+								tickCount={7}
+								tickFormatter={value => {
+									return validAnalyticsConnection
+										? xAxisFormatter(value)
+										: value;
+								}}
 								tickLine={false}
+								type={
+									validAnalyticsConnection
+										? 'category'
+										: 'number'
+								}
 							/>
 
 							{!validAnalyticsConnection ||

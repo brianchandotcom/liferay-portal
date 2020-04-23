@@ -85,7 +85,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			}
 		}
 
-		Object[] plidAndPortletId = fetchPlidAndPortletId(
+		Object[] plidAndPortletId = _fetchPlidAndPortletId(
 			themeDisplay.getPermissionChecker(), groupId, portletIds);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
@@ -98,7 +98,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 				 SitesUtil.isUserGroupLayoutSetViewable(
 					 themeDisplay.getPermissionChecker(), scopeGroup)) {
 
-			Object[] scopePlidAndPortletId = fetchPlidAndPortletId(
+			Object[] scopePlidAndPortletId = _fetchPlidAndPortletId(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), portletIds);
 
@@ -118,34 +118,23 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	protected Object[] fetchPlidAndPortletId(
 			PermissionChecker permissionChecker, long groupId,
 			String[] portletIds)
 		throws PortalException {
 
-		for (String portletId : portletIds) {
-			ObjectValuePair<Long, String> plidAndPortletIdObjectValuePair =
-				_getPlidPortletIdObjectValuePair(groupId, portletId);
+		Object[] plidAndPortletId = _fetchPlidAndPortletId(
+			permissionChecker, groupId, portletIds);
 
-			long plid = plidAndPortletIdObjectValuePair.getKey();
-
-			if (plid == LayoutConstants.DEFAULT_PLID) {
-				continue;
-			}
-
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, LayoutLocalServiceUtil.getLayout(plid),
-					ActionKeys.VIEW)) {
-
-				continue;
-			}
-
-			return new Object[] {
-				plid, plidAndPortletIdObjectValuePair.getValue()
-			};
+		if (plidAndPortletId == null) {
+			return null;
 		}
 
-		return null;
+		return new Object[] {plidAndPortletId[0], plidAndPortletId[1]};
 	}
 
 	protected String getPortletId(
@@ -185,6 +174,36 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		private final long _plid;
 		private final String _portletId;
 
+	}
+
+	private Object[] _fetchPlidAndPortletId(
+			PermissionChecker permissionChecker, long groupId,
+			String[] portletIds)
+		throws PortalException {
+
+		for (String portletId : portletIds) {
+			ObjectValuePair<Long, String> plidAndPortletIdObjectValuePair =
+				_getPlidPortletIdObjectValuePair(groupId, portletId);
+
+			long plid = plidAndPortletIdObjectValuePair.getKey();
+
+			if (plid == LayoutConstants.DEFAULT_PLID) {
+				continue;
+			}
+
+			if (!LayoutPermissionUtil.contains(
+					permissionChecker, LayoutLocalServiceUtil.getLayout(plid),
+					ActionKeys.VIEW)) {
+
+				continue;
+			}
+
+			return new Object[] {
+				plid, plidAndPortletIdObjectValuePair.getValue()
+			};
+		}
+
+		return null;
 	}
 
 	private String _getErrorMessage(

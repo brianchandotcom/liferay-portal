@@ -162,7 +162,7 @@
 
 <tr>
 	<td>SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST</td>
-	<td>//p[contains(text(),'Predefined Value')]/following-sibling::div[contains(@class,'ddm-select-dropdown')]//button[contains(@ref,'triggerButton')]</td>
+	<td>//div[contains(@data-field-name,'predefinedValue')]//div[contains(@class,'ddm-select-dropdown')]</td>
 	<td></td>
 </tr>
 
@@ -173,8 +173,20 @@
 </tr>
 
 <tr>
+	<td>PREDEFINED_VALUE_AT_FORM_DATE_FIELD</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/../following-sibling::div[contains(@class,'input')]//input[contains(@value,'${key_fieldValue}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>PREDEFINED_VALUE_AT_FORM_SINGLE_SELECTION</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//span[contains(.,'${key_fieldValue}')]/../input[contains(@type,'radio')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>PREDEFINED_VALUE_AT_FORM_SELECTLIST</td>
-	<td>//p[contains(text(),'${key_fieldName}')]/..//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')]</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/../following-sibling::div[contains(@class,'ddm-select-dropdown')]//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 
@@ -203,6 +215,12 @@
 <tr>
 	<td>CHECKBOX</td>
 	<td>//input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]/..//preceding-sibling::input[contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CHECKBOX_AT_FORM_BODY</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldValue}')]/..//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 

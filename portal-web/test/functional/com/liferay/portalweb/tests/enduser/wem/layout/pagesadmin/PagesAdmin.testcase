@@ -156,6 +156,42 @@ definition {
 		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 	}
 
+	@description = "This is for LPS-110108. Select non root item, it shows Add Page quick action and a Kebap menu with the actions available for that item."
+	@priority = "4"
+	test SelectNonRootPageAndViewPage {
+		property testray.component.names = "Site Pages Administration";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addChildPage(
+			childPageName = "Child Content Page Name",
+			parentPageName = "Test Content Page Name");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.expandPageTree(depth = "2");
+
+		SitePages.checkPage(pageName = "Child Content Page Name");
+
+		AssertVisible(
+			key_pageName = "Child Content Page Name", 
+			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Child Content Page Name");
+
+		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+	}
+
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {

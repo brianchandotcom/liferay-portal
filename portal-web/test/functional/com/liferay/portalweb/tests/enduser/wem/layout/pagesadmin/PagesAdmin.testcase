@@ -76,6 +76,40 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@description = "This is for LPS-110108. Management Toolbar shows count of selected items and all visible items are selected after checking the Select All checkbox."
+	@priority = "5"
+	test CheckAndViewCountViaManagementToolbar {
+		property testray.component.names = "Site Pages Administration";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name 1");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name 2");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.checkPage(pageName = "Test Content Page Name 1");
+
+		AssertTextEquals(
+			locator1 = "ManagementBar#NAVBAR_TEXT",
+			value1 = "1 of 2 Selected");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ManagementBar.clickSelectAllCheckbox();
+
+		SitePages.viewCheckboxChecked(pageName = "Test Content Page Name 1");
+
+		SitePages.viewCheckboxChecked(pageName = "Test Content Page Name 2");
+	}
+
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {

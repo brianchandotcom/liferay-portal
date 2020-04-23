@@ -156,11 +156,11 @@ public class ImportFragmentEntriesStrutsActionTest {
 
 		Assert.assertNotNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), "mp1"));
+				_group.getGroupId(), "master-page"));
 
 		Assert.assertNotNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), "pt1"));
+				_group.getGroupId(), "page-template"));
 	}
 
 	private static Map<String, FileItem[]> _getFileParameters(

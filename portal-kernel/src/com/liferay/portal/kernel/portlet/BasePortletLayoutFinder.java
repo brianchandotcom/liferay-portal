@@ -90,36 +90,32 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if ((plidAndPortletId == null) &&
-			(scopeGroup.isSite() ||
-			 SitesUtil.isUserGroupLayoutSetViewable(
-				 themeDisplay.getPermissionChecker(), scopeGroup))) {
-
-			plidAndPortletId = fetchPlidAndPortletId(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), portletIds);
-		}
-
 		if (plidAndPortletId != null) {
 			return new ResultImpl(
 				(long)plidAndPortletId[0], (String)plidAndPortletId[1]);
 		}
+		else if (scopeGroup.isSite() ||
+				 SitesUtil.isUserGroupLayoutSetViewable(
+					 themeDisplay.getPermissionChecker(), scopeGroup)) {
 
-		StringBundler sb = new StringBundler(portletIds.length * 2 + 5);
+			Object[] scopePlidAndPortletId = fetchPlidAndPortletId(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), portletIds);
 
-		sb.append("{groupId=");
-		sb.append(groupId);
-		sb.append(", plid=");
-		sb.append(themeDisplay.getPlid());
+			if (scopePlidAndPortletId != null) {
+				return new ResultImpl(
+					(long)scopePlidAndPortletId[0],
+					(String)scopePlidAndPortletId[1]);
+			}
 
-		for (String portletId : portletIds) {
-			sb.append(", portletId=");
-			sb.append(portletId);
+			throw new NoSuchLayoutException(
+				_getErrorMessage(
+					themeDisplay.getScopeGroupId(), themeDisplay, portletIds));
 		}
-
-		sb.append("}");
-
-		throw new NoSuchLayoutException(sb.toString());
+		else {
+			throw new NoSuchLayoutException(
+				_getErrorMessage(groupId, themeDisplay, portletIds));
+		}
 	}
 
 	protected Object[] fetchPlidAndPortletId(
@@ -189,6 +185,26 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		private final long _plid;
 		private final String _portletId;
 
+	}
+
+	private String _getErrorMessage(
+		long groupId, ThemeDisplay themeDisplay, String[] portletIds) {
+
+		StringBundler sb = new StringBundler(portletIds.length * 2 + 5);
+
+		sb.append("{groupId=");
+		sb.append(groupId);
+		sb.append(", plid=");
+		sb.append(themeDisplay.getPlid());
+
+		for (String portletId : portletIds) {
+			sb.append(", portletId=");
+			sb.append(portletId);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private ObjectValuePair<Long, String> _getPlidPortletIdObjectValuePair(

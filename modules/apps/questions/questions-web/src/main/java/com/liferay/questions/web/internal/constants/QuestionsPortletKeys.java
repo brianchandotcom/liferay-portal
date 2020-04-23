@@ -19,6 +19,8 @@ package com.liferay.questions.web.internal.constants;
  */
 public class QuestionsPortletKeys {
 
+	public static final String DEFAULT_RANK_ATTRIBUTE = "DEFAULT_RANK";
+
 	public static final String QUESTIONS =
 		"com_liferay_questions_web_internal_portlet_QuestionsPortlet";
 

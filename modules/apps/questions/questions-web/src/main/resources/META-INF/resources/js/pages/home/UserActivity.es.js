@@ -33,6 +33,7 @@ export default withRouter(
 		const context = useContext(AppContext);
 		const siteKey = context.siteKey;
 		const defaultPostsNumber = 0;
+		const defaultRank = context.defaultRank;
 
 		const [creatorInfo, setCreatorInfo] = useState({});
 		const [loading, setLoading] = useState(true);
@@ -70,9 +71,9 @@ export default withRouter(
 					JSON.parse(`"${Liferay.ThemeDisplay.getUserName()}"`)
 				),
 				postsNumber: defaultPostsNumber,
-				rank: 'Youngling',
+				rank: defaultRank,
 			}),
-			[defaultPostsNumber]
+			[defaultPostsNumber, defaultRank]
 		);
 
 		return (

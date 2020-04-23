@@ -26,6 +26,8 @@ String questionsRootElementId = renderResponse.getNamespace() + "-questions-root
 
 	<%
 	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		"defaultRank", renderRequest.getAttribute(QuestionsPortletKeys.DEFAULT_RANK_ATTRIBUTE)
+	).put(
 		"isOmniAdmin", permissionChecker.isOmniadmin()
 	).put(
 		"siteKey", String.valueOf(themeDisplay.getScopeGroupId())

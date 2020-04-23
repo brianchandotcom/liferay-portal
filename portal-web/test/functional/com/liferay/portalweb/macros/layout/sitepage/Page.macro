@@ -542,7 +542,7 @@ definition {
 			AssertConfirm.waitForConfirmation(value1 = "${javaScriptPage}");
 		}
 
-		MouseOver.mouseOverClickNavigation(locator1 = "Home#PAGE_2");
+		MouseOver(locator1 = "Home#PAGE_2");
 
 		var key_childPageName = "${childPageName}";
 

@@ -1,5 +1,31 @@
 definition {
 
+	macro configureLookAndFeelShowFooter {
+		if ("${showFooter}" == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Footer",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${showFooter}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Show Footer",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+	}
+
+	macro configureLookAndFeelShowHeader {
+		if ("${showHeader}" == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Header",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${showHeader}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Show Header",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+	}
+
 	macro configureLookAndFeelShowHeaderSearch {
 		if ("${showHeaderSearch}" == "true") {
 			Check.checkToggleSwitch(
@@ -28,6 +54,19 @@ definition {
 
 	macro configureLookAndFeelSpecificLook {
 		Click(locator1 = "Radio#SPECIFIC_LOOK");
+	}
+
+	macro configureLookAndFeelWrapWidgetPageContent {
+		if ("${wrapWidgetPageContent}" == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Wrap Widget Page Content",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${wrapWidgetPageContent}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Wrap Widget Page Content",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
 	}
 
 	macro viewMaxPortletOption {

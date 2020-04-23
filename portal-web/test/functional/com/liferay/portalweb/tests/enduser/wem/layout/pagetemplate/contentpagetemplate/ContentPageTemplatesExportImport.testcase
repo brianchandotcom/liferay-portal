@@ -26,6 +26,62 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-106212. Can not export multiple selected content page templates when one of them doesn't has published version."
+	@priority = "4"
+	test CannotExportMultipleWhenOneOfSelectedWithoutPublishedVersion {
+		task ("Add a content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		}
+
+		task ("Add a Heading fragment then publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a second content page template but not publish") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Second Page Template Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Assert workflow status of both and select them") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Page Template Name",
+				workflowStatus = "Approved");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Second Page Template Name",
+				workflowStatus = "Draft");
+
+			for (var entry : list "Page Template Name,Second Page Template Name") {
+				PageTemplatesAdmin.selectPageTemplate(pageTemplateName = "${entry}");
+			}
+		}
+
+		task ("Assert Export button is disabled") {
+			AssertElementPresent(locator1 = "Icon#EXPORT_DISABLED");
+		}
+	}
+
 	@description = "This is a use case for LPS-106212. Can export a content page template in draft status when it has published version and only the published version is exported."
 	@priority = "4"
 	test OnlyPublishedVersionIsExported {

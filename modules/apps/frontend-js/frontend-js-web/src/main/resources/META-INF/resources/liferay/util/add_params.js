@@ -28,7 +28,7 @@ export default function addParams(params, baseUrl) {
 		throw new TypeError('Parameter baseUrl must be a string');
 	}
 
-	const url = new URL(baseUrl);
+	const url = new URL(baseUrl, window.location.href);
 
 	if (typeof params === 'object') {
 		Object.entries(params).forEach(([key, value]) => {

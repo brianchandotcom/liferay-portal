@@ -12,9 +12,10 @@
  * details.
  */
 
+import {errorToast} from './utils/toast';
+
 export default function({checkDestinationURL, namespace}) {
 	var form = document[`${namespace}fm`];
-
 	form.addEventListener('submit', saveRedirectEntry);
 
 	function saveRedirectEntry() {
@@ -36,25 +37,30 @@ export default function({checkDestinationURL, namespace}) {
 						submitForm(form);
 					}
 					else {
-						Liferay.componentReady(
-							`${namespace}RedirectsChainedRedirections`
-						).then(documentLibraryCheckinModal => {
-							documentLibraryCheckinModal.open(
-								updateReferences => {
-									Liferay.Util.postForm(form, {
-										data: {
-											updateReferences,
-										},
-									});
-								}
-							);
-						});
+						showModal();
 					}
+				})
+				.catch(() => {
+					errorToast();
 				});
 		}
 		else {
 			destinationURL.focus();
 			destinationURL.blur();
 		}
+	}
+
+	function showModal() {
+		Liferay.componentReady(`${namespace}RedirectsChainedRedirections`).then(
+			ChainedRedirections => {
+				ChainedRedirections.open(updateReferences => {
+					Liferay.Util.postForm(form, {
+						data: {
+							updateReferences,
+						},
+					});
+				});
+			}
+		);
 	}
 }

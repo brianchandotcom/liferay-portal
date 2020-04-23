@@ -66,13 +66,16 @@ public class FileInstallConfigTest {
 
 	@Test
 	public void testConfigurationArrayValues() throws Exception {
+		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
+			".testConfigurationArrayValues");
+
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-			_CONFIGURATION_PID.concat(".config"));
+			configurationPid.concat(".config"));
 
 		try {
-			_updateConfiguration(
-				path,
+			Configuration configuration = _createConfiguration(
+				configurationPid, path,
 				StringBundler.concat(
 					"configBooleanArray=B[\"True\",\"False\"]\n",
 					"configByteArray=X[\"1\",\"3\"]\n",
@@ -85,9 +88,6 @@ public class FileInstallConfigTest {
 					"configStringArray=T[\"testString\",\"testString2\"]\n",
 					"configUntypedStringArray=[\"testUntypedString\"",
 					",\"testUntypedString2\"]"));
-
-			Configuration configuration = _configurationAdmin.getConfiguration(
-				_CONFIGURATION_PID, StringPool.QUESTION);
 
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
@@ -130,13 +130,16 @@ public class FileInstallConfigTest {
 
 	@Test
 	public void testConfigurationValues() throws Exception {
+		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
+			".testConfigurationValues");
+
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-			_CONFIGURATION_PID.concat(".config"));
+			configurationPid.concat(".config"));
 
 		try {
-			_updateConfiguration(
-				path,
+			Configuration configuration = _createConfiguration(
+				configurationPid, path,
 				StringBundler.concat(
 					"configBoolean=B\"True\"\n", "configByte=X\"1\"\n",
 					"configCharacter=C\"A\"\n", "configDouble=D\"12.2\"\n",
@@ -144,9 +147,6 @@ public class FileInstallConfigTest {
 					"configLong=L\"30\"\n", "configShort=S\"2\"\n",
 					"configString=T\"testString\"\n",
 					"configUntypedString=\"testUntypedString\""));
-
-			Configuration configuration = _configurationAdmin.getConfiguration(
-				_CONFIGURATION_PID, StringPool.QUESTION);
 
 			Dictionary<String, Object> properties =
 				configuration.getProperties();
@@ -168,14 +168,15 @@ public class FileInstallConfigTest {
 		}
 	}
 
-	private void _updateConfiguration(Path path, String content)
+	private Configuration _createConfiguration(
+			String configurationPid, Path path, String content)
 		throws Exception {
 
 		CountDownLatch countDownLatch = new CountDownLatch(2);
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put(Constants.SERVICE_PID, _CONFIGURATION_PID);
+		properties.put(Constants.SERVICE_PID, configurationPid);
 
 		ServiceRegistration<ManagedService> serviceRegistration =
 			_bundleContext.registerService(
@@ -190,9 +191,12 @@ public class FileInstallConfigTest {
 		finally {
 			serviceRegistration.unregister();
 		}
+
+		return _configurationAdmin.getConfiguration(
+			configurationPid, StringPool.QUESTION);
 	}
 
-	private static final String _CONFIGURATION_PID =
+	private static final String _CONFIGURATION_PID_PREFIX =
 		FileInstallConfigTest.class.getName() + "Configuration";
 
 	@Inject

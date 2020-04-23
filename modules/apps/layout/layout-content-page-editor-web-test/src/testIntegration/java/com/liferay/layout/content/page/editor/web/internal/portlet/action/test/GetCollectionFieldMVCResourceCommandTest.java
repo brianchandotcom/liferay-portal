@@ -67,7 +67,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Jürgen Kappler
+ * @author Víctor Galán
  */
 @RunWith(Arquillian.class)
 @Sync

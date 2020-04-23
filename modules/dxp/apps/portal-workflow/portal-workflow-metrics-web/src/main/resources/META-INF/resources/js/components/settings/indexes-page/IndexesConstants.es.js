@@ -19,11 +19,6 @@ const INDEXES_GROUPS_KEYS = [
 	SLA_INDEXES_KEY,
 ];
 
-const SUCCESS_MESSAGES = {
-	ALL: Liferay.Language.get('all-x-have-reindexed-successfully'),
-	SINGLE: Liferay.Language.get('x-has-reindexed-successfully'),
-};
-
 const getIndexesGroups = () => ({
 	[METRIC_INDEXES_KEY]: {
 		indexes: [
@@ -52,6 +47,5 @@ export {
 	METRIC_INDEXES_KEY,
 	SLA_INDEXES_KEY,
 	INDEXES_GROUPS_KEYS,
-	SUCCESS_MESSAGES,
 	getIndexesGroups,
 };

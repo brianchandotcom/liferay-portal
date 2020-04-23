@@ -83,15 +83,6 @@ public class RedirectEntryServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.redirect.model.RedirectEntry>
-		getRedirectEntriesByGroupAndDestinationURL(
-			String destinationURL, long groupId) {
-
-		return _redirectEntryService.getRedirectEntriesByGroupAndDestinationURL(
-			destinationURL, groupId);
-	}
-
-	@Override
 	public int getRedirectEntriesCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

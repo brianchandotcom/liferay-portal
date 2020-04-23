@@ -81,14 +81,6 @@ public class RedirectEntryServiceUtil {
 		return getService().getRedirectEntries(groupId, start, end, obc);
 	}
 
-	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
-		getRedirectEntriesByGroupAndDestinationURL(
-			String destinationURL, long groupId) {
-
-		return getService().getRedirectEntriesByGroupAndDestinationURL(
-			destinationURL, groupId);
-	}
-
 	public static int getRedirectEntriesCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

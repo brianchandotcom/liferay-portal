@@ -236,7 +236,7 @@
 /portal/slf4j-api.jar
 /portal/soap.jar
 /portal/soap-api.jar
-/portal/SparseBitSet.jar
+/portal/sparsebitset.jar
 /portal/spring-aop.jar
 /portal/spring-aspects.jar
 /portal/spring-beans.jar

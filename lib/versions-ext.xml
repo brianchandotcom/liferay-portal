@@ -2809,7 +2809,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/SparseBitSet.jar</file-name>
+				<file-name>lib/portal/sparsebitset.jar</file-name>
 				<version>1.2</version>
 				<project-name>SparseBitSet</project-name>
 				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>

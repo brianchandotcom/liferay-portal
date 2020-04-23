@@ -38,10 +38,6 @@ public class IndexUtil {
 					resourceBundle, _labelMap.get(indexEntityName));
 				setGroup(
 					() -> {
-						if (indexEntityName.startsWith("All")) {
-							return Index.Group.ALL;
-						}
-
 						if (indexEntityName.startsWith("sla")) {
 							return Index.Group.SLA;
 						}

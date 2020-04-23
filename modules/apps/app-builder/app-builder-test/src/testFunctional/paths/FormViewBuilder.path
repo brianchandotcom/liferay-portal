@@ -226,7 +226,7 @@
 
 <tr>
 	<td>CHECKBOX_LABEL</td>
-	<td>//input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 

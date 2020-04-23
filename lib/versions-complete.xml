@@ -20,7 +20,7 @@
 				<file-name>com.liferay.adaptive.media.image.impl.jar!xmpcore.jar</file-name>
 				<version>6.0.6</version>
 				<project-name>XMP Library for Java</project-name>
-				<project-url>http://www.adobe.com/devnet/xmp.html</project-url>
+				<project-url>https://zerowing.corp.adobe.com/display/granite</project-url>
 				<licenses>
 					<license>
 						<license-name>The BSD License</license-name>
@@ -1248,7 +1248,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-bmp.jar</file-name>
-				<version>3.5</version>
+				<version>3.4.3</version>
 				<project-name>TwelveMonkeys :: ImageIO :: BMP plugin</project-name>
 				<licenses>
 					<license>
@@ -1551,6 +1551,28 @@
 					<license>
 						<license-name>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</license-name>
 						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth2.provider.web.jar!jgrapht-core.jar</file-name>
+				<version>1.3.0</version>
+				<project-name>JGraphT - Core</project-name>
+				<licenses>
+					<license>
+						<license-name>http://jgrapht.sourceforge.net/LGPL.html, http://www.eclipse.org/legal/epl-v20.html</license-name>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.oauth2.provider.web.jar!jheaps.jar</file-name>
+				<version>0.9</version>
+				<project-name>JHeaps</project-name>
+				<project-url>http://www.jheaps.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

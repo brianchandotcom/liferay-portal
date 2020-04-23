@@ -17,7 +17,7 @@ package com.liferay.change.tracking.web.internal.display.context;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.change.tracking.service.CTProcessService;
 import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
@@ -53,13 +53,13 @@ public class ViewHistoryDisplayContext {
 	public ViewHistoryDisplayContext(
 		BackgroundTaskLocalService backgroundTaskLocalService,
 		CTCollectionLocalService ctCollectionLocalService,
-		CTProcessLocalService ctProcessLocalService,
+		CTProcessService ctProcessService,
 		HttpServletRequest httpServletRequest, Language language,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_backgroundTaskLocalService = backgroundTaskLocalService;
 		_ctCollectionLocalService = ctCollectionLocalService;
-		_ctProcessLocalService = ctProcessLocalService;
+		_ctProcessService = ctProcessService;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 
@@ -101,7 +101,7 @@ public class ViewHistoryDisplayContext {
 
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
-		List<CTProcess> results = _ctProcessLocalService.getCTProcesses(
+		List<CTProcess> results = _ctProcessService.getCTProcesses(
 			_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
 			displayTerms.getKeywords(), _getStatus(_getFilterByStatus()), 0, 5,
 			_getOrderByComparator(_getOrderByCol(), _getOrderByType()));
@@ -215,7 +215,7 @@ public class ViewHistoryDisplayContext {
 
 	private final BackgroundTaskLocalService _backgroundTaskLocalService;
 	private final CTCollectionLocalService _ctCollectionLocalService;
-	private final CTProcessLocalService _ctProcessLocalService;
+	private final CTProcessService _ctProcessService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final RenderRequest _renderRequest;

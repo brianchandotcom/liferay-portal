@@ -26,6 +26,58 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-106212. Can not export multiple selected page templates if one of them is widget page template."
+	@priority = "4"
+	test CannotExportMultipleWhenOneOfSelectedIsWidgetPageTemplate {
+		task ("Add a content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		}
+
+		task ("Add a Heading fragment then publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Widget Page Template Name",
+				pageTemplateType = "Widget Page Template");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Assert workflow status of both and select them") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			for (var entry : list "Page Template Name,Widget Page Template Name") {
+				PageTemplatesAdmin.viewEntryWorkflowStatus(
+					entry = "${entry}",
+					workflowStatus = "Approved");
+
+				PageTemplatesAdmin.selectPageTemplate(pageTemplateName = "${entry}");
+			}
+		}
+
+		task ("Assert Export button is disabled") {
+			AssertElementPresent(locator1 = "Icon#EXPORT_DISABLED");
+		}
+	}
+
 	@description = "This is a use case for LPS-106212. Can not export multiple selected content page templates when one of them doesn't has published version."
 	@priority = "4"
 	test CannotExportMultipleWhenOneOfSelectedWithoutPublishedVersion {

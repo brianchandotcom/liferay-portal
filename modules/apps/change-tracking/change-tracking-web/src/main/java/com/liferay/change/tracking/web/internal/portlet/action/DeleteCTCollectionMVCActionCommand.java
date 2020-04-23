@@ -14,10 +14,13 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.petra.lang.SafeClosable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -54,7 +57,12 @@ public class DeleteCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			ctCollectionId);
 
 		if (ctCollection != null) {
-			_ctCollectionService.deleteCTCollection(ctCollection);
+			try (SafeClosable safeClosable =
+					CTCollectionThreadLocal.setCTCollectionId(
+						CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
+				_ctCollectionService.deleteCTCollection(ctCollection);
+			}
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

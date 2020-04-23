@@ -99,6 +99,7 @@ public class SLATaskResultWorkflowMetricsReindexer
 		}
 
 		AtomicInteger atomicCounter = new AtomicInteger(0);
+
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		Stream.of(

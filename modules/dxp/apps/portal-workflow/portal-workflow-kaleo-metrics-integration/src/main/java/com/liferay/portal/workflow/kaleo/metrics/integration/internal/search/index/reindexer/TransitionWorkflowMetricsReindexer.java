@@ -61,8 +61,9 @@ public class TransitionWorkflowMetricsReindexer
 				dynamicQuery.add(companyIdProperty.eq(companyId));
 			});
 
-		AtomicInteger atomicCounter = new AtomicInteger(0);
 		long total = actionableDynamicQuery.performCount();
+
+		AtomicInteger atomicCounter = new AtomicInteger(0);
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoTransition kaleoTransition) -> {

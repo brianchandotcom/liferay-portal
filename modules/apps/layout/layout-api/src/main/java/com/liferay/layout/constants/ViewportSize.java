@@ -19,12 +19,13 @@ package com.liferay.layout.constants;
  */
 public enum ViewportSize {
 
-	DESKTOP("desktop", "desktop", "desktop", 992, 960, 1),
+	DESKTOP("desktop", "desktop", "desktop", 992, 960, 3, 1),
 	MOBILE_LANDSCAPE(
-		"landscapeMobile", "mobile-landscape", "mobile-landscape", 767, 576, 3),
+		"landscapeMobile", "mobile-landscape", "mobile-landscape", 767, 576, 2,
+		3),
 	PORTRAIT_MOBILE(
-		"portraitMobile", "mobile-portrait", "mobile-portrait", 575, 240, 4),
-	TABLET("tablet", "tablet-portrait", "tablet", 991, 768, 2);
+		"portraitMobile", "mobile-portrait", "mobile-portrait", 575, 240, 1, 4),
+	TABLET("tablet", "tablet-portrait", "tablet", 991, 768, 3, 2);
 
 	public String getIcon() {
 		return _icon;
@@ -42,6 +43,10 @@ public enum ViewportSize {
 		return _minWidth;
 	}
 
+	public int getModulesPerRow() {
+		return _modulesPerRow;
+	}
+
 	public int getOrder() {
 		return _order;
 	}
@@ -52,13 +57,14 @@ public enum ViewportSize {
 
 	private ViewportSize(
 		String viewportSizeId, String icon, String label, int maxWidth,
-		int minWidth, int order) {
+		int minWidth, int modulesPerRow, int order) {
 
 		_viewportSizeId = viewportSizeId;
 		_icon = icon;
 		_label = label;
 		_maxWidth = maxWidth;
 		_minWidth = minWidth;
+		_modulesPerRow = modulesPerRow;
 		_order = order;
 	}
 
@@ -66,6 +72,7 @@ public enum ViewportSize {
 	private final String _label;
 	private final int _maxWidth;
 	private final int _minWidth;
+	private final int _modulesPerRow;
 	private final int _order;
 	private final String _viewportSizeId;
 

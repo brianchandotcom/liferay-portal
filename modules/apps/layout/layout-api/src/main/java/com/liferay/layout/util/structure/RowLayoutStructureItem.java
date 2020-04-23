@@ -14,11 +14,15 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.layout.constants.ViewportSize;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -62,7 +66,7 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"gutters", _gutters
 		).put(
 			"modulesPerRow", _modulesPerRow
@@ -73,6 +77,42 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 		).put(
 			"verticalAlignment", _verticalAlignment
 		);
+
+		for (ViewportSize viewportSize : ViewportSize.values()) {
+			if (viewportSize.equals(ViewportSize.DESKTOP)) {
+				continue;
+			}
+
+			JSONObject configurationJSONObject =
+				_viewportSizeConfigurations.getOrDefault(
+					viewportSize.getViewportSizeId(),
+					JSONFactoryUtil.createJSONObject());
+
+			jsonObject.put(
+				viewportSize.getViewportSizeId(),
+				JSONUtil.put(
+					"gutters",
+					configurationJSONObject.getBoolean("gutters", _gutters)
+				).put(
+					"modulesPerRow",
+					configurationJSONObject.getInt(
+						"modulesPerRow", _modulesPerRow)
+				).put(
+					"numberOfColumns",
+					configurationJSONObject.getInt(
+						"numberOfColumns", _numberOfColumns)
+				).put(
+					"reverseOrder",
+					configurationJSONObject.getBoolean(
+						"reverseOrder", _reverseOrder)
+				).put(
+					"verticalAlignment",
+					configurationJSONObject.getString(
+						"verticalAlignment", _verticalAlignment)
+				));
+		}
+
+		return jsonObject;
 	}
 
 	@Override
@@ -125,6 +165,46 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 		_verticalAlignment = verticalAlignment;
 	}
 
+	public void setViewportSizeConfiguration(
+		String viewportSizeId, JSONObject configurationJSONObject) {
+
+		JSONObject currentConfigurationJSONObject =
+			_viewportSizeConfigurations.getOrDefault(
+				viewportSizeId, JSONFactoryUtil.createJSONObject());
+
+		if (configurationJSONObject.has("gutters")) {
+			currentConfigurationJSONObject.put(
+				"gutters", configurationJSONObject.getBoolean("gutters"));
+		}
+
+		if (configurationJSONObject.has("modulesPerRow")) {
+			currentConfigurationJSONObject.put(
+				"modulesPerRow",
+				configurationJSONObject.getInt("modulesPerRow"));
+		}
+
+		if (configurationJSONObject.has("numberOfColumns")) {
+			currentConfigurationJSONObject.put(
+				"numberOfColumns",
+				configurationJSONObject.getInt("numberOfColumns"));
+		}
+
+		if (configurationJSONObject.has("reverseOrder")) {
+			currentConfigurationJSONObject.put(
+				"reverseOrder",
+				configurationJSONObject.getBoolean("reverseOrder"));
+		}
+
+		if (configurationJSONObject.has("verticalAlignment")) {
+			currentConfigurationJSONObject.put(
+				"verticalAlignment",
+				configurationJSONObject.getString("verticalAlignment"));
+		}
+
+		_viewportSizeConfigurations.put(
+			viewportSizeId, currentConfigurationJSONObject);
+	}
+
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		if (itemConfigJSONObject.has("gutters")) {
@@ -147,6 +227,19 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 			setVerticalAlignment(
 				itemConfigJSONObject.getString("verticalAlignment"));
 		}
+
+		for (ViewportSize viewportSize : ViewportSize.values()) {
+			if (viewportSize.equals(ViewportSize.DESKTOP)) {
+				continue;
+			}
+
+			if (itemConfigJSONObject.has(viewportSize.getViewportSizeId())) {
+				setViewportSizeConfiguration(
+					viewportSize.getViewportSizeId(),
+					itemConfigJSONObject.getJSONObject(
+						viewportSize.getViewportSizeId()));
+			}
+		}
 	}
 
 	private boolean _gutters = true;
@@ -154,5 +247,7 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 	private int _numberOfColumns;
 	private boolean _reverseOrder;
 	private String _verticalAlignment = "top";
+	private Map<String, JSONObject> _viewportSizeConfigurations =
+		new HashMap<>();
 
 }

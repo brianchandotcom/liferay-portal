@@ -2208,9 +2208,6 @@ definition {
 	@priority = "5"
 	test PredefinedValuesArePersistedInFormView {
 
-		property portal.acceptance = "true";
-		var myFormViewName = "Forms";
-
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "My new object",
 			isCreatingFormView = "true",
@@ -2218,7 +2215,7 @@ definition {
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 		FormViewBuilder.switchToAdvancedTab();
-		FormViewBuilder.setFieldPredefinedText(fieldValue = "Rebeca");
+		FormViewBuilder.setFieldPredefinedText(fieldValue = "Predefined Text");
 		FormViewBuilder.closeSidebar();
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
@@ -2276,13 +2273,13 @@ definition {
 
 		FormViewBuilder.validatePredefinedText(
 			fieldName = "Text",
-			fieldValue = "Rebeca");
+			fieldValue = "Predefined Text");
 
 		FormViewBuilder.validatePredefinedText(
 			fieldName = "Numeric",
 			fieldValue = "12345");
 
-		FormViewBuilder.validatePredefinedText(
+		FormViewBuilder.validatePredefinedDate(
 			fieldName = "Date",
 			fieldValue = "03/02/2019");
 
@@ -2296,7 +2293,7 @@ definition {
 
 		FormViewBuilder.validatePredefinedSingleSelection(
 			fieldName = "Single Selection",
-			fieldValue = "Task3");
+			fieldValue = "Task 3");
 	}
 
 	@description = "Publish my app as a widget and submit entry"

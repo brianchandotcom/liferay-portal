@@ -19,7 +19,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from './AppContext.es';
-import ListCustomObjects from './pages/custom-object/ListCustomObjects.es';
+import AppTabs from './AppTabs.es';
 import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
 
 export default (props) => (
@@ -29,11 +29,7 @@ export default (props) => (
 				<Router>
 					<div className="custom-object-app">
 						<Switch>
-							<Route
-								component={ListCustomObjects}
-								exact
-								path="/"
-							/>
+							<Route component={AppTabs} exact path="/" />
 
 							<Route
 								component={ViewCustomObject}

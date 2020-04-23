@@ -112,6 +112,8 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		long oldClassNameId = ClassNameLocalServiceUtil.getClassNameId(
 			_oldSubscriptionClassName);
 
+		Long classPK = null;
+
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select classPK from Subscription where classNameId = " +
 					oldClassNameId);
@@ -126,7 +128,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
-				long classPK = rs.getLong("classPK");
+				classPK = rs.getLong("classPK");
 
 				ps2.setLong(1, newClassNameId);
 				ps2.setLong(2, oldClassNameId);
@@ -146,10 +148,12 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			ps3.executeBatch();
 		}
 
-		runSQL(
-			StringBundler.concat(
-				"update Subscription set classNameId = ", newClassNameId,
-				" where classNameId = ", oldClassNameId));
+		if (classPK != null) {
+			runSQL(
+				StringBundler.concat(
+					"update Subscription set classNameId = ", newClassNameId,
+					" where classNameId = ", oldClassNameId));
+		}
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

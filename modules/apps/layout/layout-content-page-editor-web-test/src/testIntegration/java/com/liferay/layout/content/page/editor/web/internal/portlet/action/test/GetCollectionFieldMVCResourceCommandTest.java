@@ -152,11 +152,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				"Collection Title",
-				_getTypeSettings(
-					_group.getGroupId(),
-					_portal.getClassNameId(BlogsEntry.class.getName())),
-				serviceContext);
+				"Collection Title", _getTypeSettings(), serviceContext);
 
 		JSONObject layoutObjectReferenceJSONObject = JSONUtil.put(
 			"classNameId",
@@ -205,11 +201,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				"Collection Title",
-				_getTypeSettings(
-					_group.getGroupId(),
-					_portal.getClassNameId(BlogsEntry.class.getName())),
-				serviceContext);
+				"Collection Title", _getTypeSettings(), serviceContext);
 
 		JSONObject layoutObjectReferenceJSONObject = JSONUtil.put(
 			"classNameId",
@@ -249,16 +241,18 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			new String[0], StringPool.BLANK, null, null, serviceContext);
 	}
 
-	private String _getTypeSettings(long groupId, long classNameId) {
+	private String _getTypeSettings() {
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-		unicodeProperties.put("anyAssetType", String.valueOf(classNameId));
+		unicodeProperties.put(
+			"anyAssetType",
+			String.valueOf(_portal.getClassNameId(BlogsEntry.class)));
 		unicodeProperties.put(
 			"anyClassTypeDLFileEntryAssetRendererFactory", "true");
 		unicodeProperties.put(
 			"anyClassTypeJournalArticleAssetRendererFactory", "true");
-		unicodeProperties.put("classNameIds", String.valueOf(classNameId));
-		unicodeProperties.put("groupIds", String.valueOf(groupId));
+		unicodeProperties.put("classNameIds", BlogsEntry.class.getName());
+		unicodeProperties.put("groupIds", String.valueOf(_group.getGroupId()));
 		unicodeProperties.put("orderByColumn1", "modifiedDate");
 		unicodeProperties.put("orderByColumn2", "title");
 		unicodeProperties.put("orderByType1", "ASC");

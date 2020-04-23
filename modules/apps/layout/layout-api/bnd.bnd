@@ -2,6 +2,7 @@ Bundle-Name: Liferay Layout API
 Bundle-SymbolicName: com.liferay.layout.api
 Bundle-Version: 6.3.0
 Export-Package:\
+	com.liferay.layout.constants,\
 	com.liferay.layout.exception,\
 	com.liferay.layout.friendly.url,\
 	com.liferay.layout.list.retriever,\

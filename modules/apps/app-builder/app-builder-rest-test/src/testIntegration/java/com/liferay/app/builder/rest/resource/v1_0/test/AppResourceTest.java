@@ -42,8 +42,6 @@ import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -67,24 +65,6 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 			testGroup.getCreatorUserId(), StringPool.BLANK,
 			_ddmStructure.getStructureId(), StringPool.BLANK, null,
 			StringPool.BLANK);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLDeleteApp() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetApp() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteAppsPage() {
 	}
 
 	@Override
@@ -176,6 +156,12 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 		return appResource.postDataDefinitionApp(
 			app.getDataDefinitionId(), app);
+	}
+
+	@Override
+	protected App testGraphQLApp_addApp() throws Exception {
+		return appResource.postDataDefinitionApp(
+			_ddmStructure.getStructureId(), randomApp());
 	}
 
 	@Override

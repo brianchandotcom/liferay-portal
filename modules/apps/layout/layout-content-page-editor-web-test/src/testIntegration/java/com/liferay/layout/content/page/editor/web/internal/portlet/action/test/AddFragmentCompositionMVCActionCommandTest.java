@@ -147,35 +147,52 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			RandomTestUtil.randomString());
 
 		HashMap<String, String> valuesMap = HashMapBuilder.put(
-			"FRAGMENT_COLLECTION_NAME", fragmentCollection.getName()
+			"FRAGMENT_COLLECTION_NAME",
+			StringUtil.quote(fragmentCollection.getName(), StringPool.QUOTE)
 		).put(
-			"FRAGMENT_ENTRY_KEY", fragmentEntry.getFragmentEntryKey()
+			"FRAGMENT_ENTRY_KEY",
+			StringUtil.quote(
+				fragmentEntry.getFragmentEntryKey(), StringPool.QUOTE)
 		).put(
-			"FRAGMENT_ENTRY_NAME", fragmentEntry.getName()
+			"FRAGMENT_ENTRY_NAME",
+			StringUtil.quote(fragmentEntry.getName(), StringPool.QUOTE)
+		).put(
+			"MAPPED_LINK_CLASS_NAME",
+			StringUtil.quote(
+				"com.liferay.journal.model.JournalArticle", StringPool.QUOTE)
 		).put(
 			"MAPPED_LINK_CLASS_NAME_ID",
-			String.valueOf(
-				_portal.getClassNameId(
-					"com.liferay.journal.model.JournalArticle"))
+			StringUtil.quote(
+				String.valueOf(
+					_portal.getClassNameId(
+						"com.liferay.journal.model.JournalArticle")))
 		).put(
 			"MAPPED_LINK_CLASS_PK",
 			String.valueOf(journalArticle1.getResourcePrimKey())
 		).put(
-			"MAPPED_LINK_DEFAULT_VALUE", journalArticle1.getTitle()
+			"MAPPED_LINK_DEFAULT_VALUE",
+			StringUtil.quote(journalArticle1.getTitle())
+		).put(
+			"MAPPED_TEXT_CLASS_NAME",
+			StringUtil.quote(
+				"com.liferay.journal.model.JournalArticle", StringPool.QUOTE)
 		).put(
 			"MAPPED_TEXT_CLASS_NAME_ID",
-			String.valueOf(
-				_portal.getClassNameId(
-					"com.liferay.journal.model.JournalArticle"))
+			StringUtil.quote(
+				String.valueOf(
+					_portal.getClassNameId(
+						"com.liferay.journal.model.JournalArticle")),
+				StringPool.QUOTE)
 		).put(
 			"MAPPED_TEXT_CLASS_PK",
 			String.valueOf(journalArticle2.getResourcePrimKey())
 		).put(
-			"MAPPED_TEXT_DEFAULT_VALUE", journalArticle2.getTitle()
+			"MAPPED_TEXT_DEFAULT_VALUE",
+			StringUtil.quote(journalArticle2.getTitle(), StringPool.QUOTE)
 		).build();
 
 		String editableValues = StringUtil.replace(
-			_read("editable_values.json"), "${", "}", valuesMap);
+			_read("editable_values.json"), "\"${", "}\"", valuesMap);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -241,11 +258,12 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			_fragmentCompositionLocalService.fetchFragmentComposition(
 				_group.getGroupId(), jsonObject.getString("fragmentEntryKey"));
 
+		String expectedFragmentCompositionData = StringUtil.replace(
+			_read("expected_fragment_composition_data.json"), "\"${", "}\"",
+			valuesMap);
+
 		JSONObject expectedFragmentCompositionDataJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				StringUtil.replace(
-					_read("expected_fragment_composition_data.json"), "${", "}",
-					valuesMap));
+			JSONFactoryUtil.createJSONObject(expectedFragmentCompositionData);
 
 		JSONObject fragmentCompositionDataJSONObject =
 			fragmentComposition.getDataJSONObject();

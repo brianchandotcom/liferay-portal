@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,17 +12,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-import CKEditor from 'ckeditor4-react';
-import React from 'react';
+<%@ include file="/init.jsp" %>
 
-const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
+<%
+String name = GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
 
-const Editor = React.forwardRef((props, ref) => {
-	return <CKEditor ref={ref} {...props} />;
-});
+name = namespace + name;
 
-CKEditor.editorUrl = `${BASEPATH}ckeditor.js`;
-window.CKEDITOR_BASEPATH = BASEPATH;
+Map<String, Object> defaultEditorData = new HashMap<String, Object>();
 
-export {Editor};
+defaultEditorData.put("name", HtmlUtil.escapeAttribute(name));
+%>
+
+<div>
+	<react:component
+		data="<%= defaultEditorData %>"
+		module="editor/ClassicEditor"
+	/>
+</div>

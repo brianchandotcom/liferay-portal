@@ -74,6 +74,7 @@ dependencies {
 	compileOnly project(":apps:frontend-editor:frontend-editor-api")
 	compileOnly project(":apps:frontend-editor:frontend-editor-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")

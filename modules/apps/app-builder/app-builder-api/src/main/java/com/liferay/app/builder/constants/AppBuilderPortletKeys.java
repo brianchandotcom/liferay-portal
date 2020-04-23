@@ -25,8 +25,15 @@ public class AppBuilderPortletKeys {
 	public static final String APPS =
 		"com_liferay_app_builder_web_internal_portlet_AppsPortlet";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String CUSTOM_OBJECTS =
 		"com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet";
+
+	public static final String OBJECTS =
+		"com_liferay_app_builder_web_internal_portlet_ObjectsPortlet";
 
 	public static final String PRODUCT_MENU_APP =
 		"com_liferay_app_builder_web_internal_portlet_ProductMenuAppPortlet";

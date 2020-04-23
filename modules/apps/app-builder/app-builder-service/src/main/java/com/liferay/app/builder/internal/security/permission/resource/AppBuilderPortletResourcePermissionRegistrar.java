@@ -48,7 +48,7 @@ public class AppBuilderPortletResourcePermissionRegistrar {
 			PortletResourcePermissionFactory.create(
 				AppBuilderConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
-					_stagingPermission, AppBuilderPortletKeys.CUSTOM_OBJECTS)),
+					_stagingPermission, AppBuilderPortletKeys.OBJECTS)),
 			properties);
 	}
 

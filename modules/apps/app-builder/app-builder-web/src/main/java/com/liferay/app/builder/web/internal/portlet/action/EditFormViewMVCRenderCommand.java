@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + AppBuilderPortletKeys.CUSTOM_OBJECTS,
+		"javax.portlet.name=" + AppBuilderPortletKeys.OBJECTS,
 		"mvc.command.name=/edit_form_view"
 	},
 	service = MVCRenderCommand.class

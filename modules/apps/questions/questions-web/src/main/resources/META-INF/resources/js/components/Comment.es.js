@@ -16,7 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {deleteMessage} from '../utils/client.es';
+import {commentWithEmbeddedAuthor, deleteMessage} from '../utils/client.es';
+import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 
 export default ({comment, commentChange}) => {
 	const deleteComment = () => {
@@ -34,13 +35,11 @@ export default ({comment, commentChange}) => {
 			</div>
 
 			<div className="col-10 col-lg-11">
-				<p className="c-mb-0">
-					{comment.articleBody}
-					{' - '}
-					<span className="font-weight-bold">
-						{comment.creator.name}
-					</span>
-				</p>
+				<div className="c-mb-0">
+					<ArticleBodyRenderer
+						{...commentWithEmbeddedAuthor(comment)}
+					/>
+				</div>
 
 				{comment.actions.delete && (
 					<ClayButton

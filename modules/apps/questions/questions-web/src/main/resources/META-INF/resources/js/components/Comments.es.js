@@ -13,11 +13,13 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
+import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useState} from 'react';
 
 import {createComment} from '../utils/client.es';
 import lang from '../utils/lang.es';
+import {getCKEditorConfig, onBeforeLoadCKEditor} from '../utils/utils.es';
 import Comment from './Comment.es';
 
 export default ({
@@ -63,12 +65,13 @@ export default ({
 			{showNewComment && (
 				<>
 					<ClayForm.Group small>
-						<ClayInput
-							component="textarea"
-							// placeholder="Insert your name here"
-							onChange={event => setComment(event.target.value)}
-							type="text"
-							value={comment}
+						<Editor
+							config={getCKEditorConfig()}
+							data={comment}
+							onBeforeLoad={onBeforeLoadCKEditor}
+							onChange={event =>
+								setComment(event.editor.getData())
+							}
 						/>
 
 						{comment.length < 15 && (

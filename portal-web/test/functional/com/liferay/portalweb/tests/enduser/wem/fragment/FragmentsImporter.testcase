@@ -52,6 +52,8 @@ definition {
 		}
 
 		task ("Assert the form validator displays an error that the file is not a zip file") {
+			Pause(locator1 = "10000");
+
 			AssertTextEquals(
 				locator1 = "Message#ERROR_FORM_VALIDATION",
 				value1 = "Please enter a file with a valid extension (zip).");

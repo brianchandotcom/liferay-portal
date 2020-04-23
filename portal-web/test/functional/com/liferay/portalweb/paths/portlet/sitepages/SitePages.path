@@ -55,6 +55,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM_PAGE_STATUS</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_itemName}')]//*[contains(@class,'label-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM_PAGE_TYPE</td>
 	<td>//li[contains(@class,'list-group-item')]//h5[contains(.,'Content Page')]/../ h4[contains(.,'${key_pageName}')]</td>
 	<td></td>

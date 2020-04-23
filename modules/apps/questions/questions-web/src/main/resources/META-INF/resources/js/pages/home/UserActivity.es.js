@@ -15,11 +15,10 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import Error from '../../components/Error.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import UserIcon from '../../components/UserIcon.es';
 import {getUserActivity} from '../../utils/client.es';
@@ -33,9 +32,9 @@ export default withRouter(
 	}) => {
 		const context = useContext(AppContext);
 		const siteKey = context.siteKey;
+		const defaultPostsNumber = 0;
 
 		const [creatorInfo, setCreatorInfo] = useState({});
-		const [error, setError] = useState({});
 		const [loading, setLoading] = useState(true);
 		const [page, setPage] = useState(1);
 		const [questions, setQuestions] = useState([]);
@@ -59,9 +58,22 @@ export default withRouter(
 				})
 				.catch(_ => {
 					setLoading(false);
-					setError({message: 'Loading Questions', title: 'Error'});
+					setCreatorInfo(getCreatorDefaultInfo(creatorId));
 				});
-		}, [creatorId, siteKey]);
+		}, [creatorId, getCreatorDefaultInfo, siteKey]);
+
+		const getCreatorDefaultInfo = useCallback(
+			creatorId => ({
+				id: creatorId,
+				image: null,
+				name: decodeURI(
+					JSON.parse(`"${Liferay.ThemeDisplay.getUserName()}"`)
+				),
+				postsNumber: defaultPostsNumber,
+				rank: 'Youngling',
+			}),
+			[defaultPostsNumber]
+		);
 
 		return (
 			<>
@@ -141,7 +153,6 @@ export default withRouter(
 								)}
 							/>
 						)}
-					<Error error={error} />
 				</>
 			);
 		}

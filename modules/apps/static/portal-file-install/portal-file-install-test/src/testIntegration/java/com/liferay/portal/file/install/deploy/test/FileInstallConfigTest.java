@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -173,14 +173,11 @@ public class FileInstallConfigTest {
 
 		CountDownLatch countDownLatch = new CountDownLatch(2);
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(Constants.SERVICE_PID, configurationPid);
-
 		ServiceRegistration<ManagedService> serviceRegistration =
 			_bundleContext.registerService(
 				ManagedService.class, props -> countDownLatch.countDown(),
-				properties);
+				MapUtil.singletonDictionary(
+					Constants.SERVICE_PID, configurationPid));
 
 		try {
 			Files.write(_configurationPath, content.getBytes());

@@ -149,6 +149,14 @@ definition {
 		Modal.save();
 	}
 
+	macro selectPageTemplate {
+		LexiconCard.viewCardTitle(card = "${pageTemplateName}");
+
+		Check.checkNotVisible(
+			key_card = "${pageTemplateName}",
+			locator1 = "LexiconCard#CARD_CHECKBOX");
+	}
+
 	macro viewEntryWorkflowStatus {
 		LexiconCard.viewCardLabel(
 			card = "${entry}",

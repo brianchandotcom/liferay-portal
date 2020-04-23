@@ -64,16 +64,22 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 
 	public enum DeletionMode {
 
-		ADD_NEW, DELETE_OLD
+		/**
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link #UPDATE}
+		 */
+		@Deprecated
+		ADD_NEW,
+		DELETE_OLD, UPDATE
 
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_updateSubscriptions();
-
 		if (_deletionMode == DeletionMode.DELETE_OLD) {
 			_deleteSubscriptions();
+		}
+		else {
+			_updateSubscriptions();
 		}
 	}
 

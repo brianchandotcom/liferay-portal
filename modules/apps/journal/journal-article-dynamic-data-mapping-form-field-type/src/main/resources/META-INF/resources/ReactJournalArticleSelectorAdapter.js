@@ -28,40 +28,32 @@ const JournalArticleSelectorWithState = ({
 	portletNamespace,
 	readOnly,
 }) => {
-	const [article, setArticle] = useState({});
+	const [article, setArticle] = useState(() =>
+		JSON.parse(inputValue || '{}')
+	);
 
 	useEffect(() => {
-		setArticle({
-			...JSON.parse(inputValue || '{}'),
-		});
+		setArticle(JSON.parse(inputValue || '{}'));
 	}, [inputValue]);
 
-	const _dispatchValue = (value, clear) => {
-		setArticle(() => {
-			dispatch({
-				payload: clear ? '' : JSON.stringify(value),
-				type: 'value',
-			});
-
-			return value;
-		});
-	};
-
 	const _handleClearClick = () => {
-		_dispatchValue({}, true);
+		setArticle({});
+
+		dispatch({
+			payload: '',
+			type: 'value',
+		});
 	};
 
 	const _handleFieldChanged = event => {
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem && selectedItem.value) {
-			setArticle(() => {
-				dispatch({
-					payload: selectedItem.value,
-					type: 'value',
-				});
+			setArticle(JSON.parse(selectedItem.value));
 
-				return selectedItem.value;
+			dispatch({
+				payload: selectedItem.value,
+				type: 'value',
 			});
 		}
 	};
@@ -86,7 +78,11 @@ const JournalArticleSelectorWithState = ({
 			<ClayForm.Group style={{marginBottom: '0.5rem'}}>
 				<ClayInput.Group>
 					<ClayInput.GroupItem className="d-none d-sm-block" prepend>
-						<input name={name} type="hidden" value={inputValue} />
+						<input
+							name={name}
+							type="hidden"
+							value={JSON.stringify(article)}
+						/>
 
 						<ClayInput
 							className="bg-light"

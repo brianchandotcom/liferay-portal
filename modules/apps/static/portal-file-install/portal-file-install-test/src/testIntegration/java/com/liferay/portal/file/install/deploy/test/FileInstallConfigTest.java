@@ -65,93 +65,67 @@ public class FileInstallConfigTest {
 	}
 
 	@Test
-	public void testConfigurationBooleanArray() throws Exception {
-		Boolean[] expectedBooleans = new Boolean[2];
+	public void testConfigurationArrayValues() throws Exception {
+		Path path = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			_CONFIGURATION_PID.concat(".config"));
 
-		expectedBooleans[0] = true;
-		expectedBooleans[1] = false;
+		try {
+			_updateConfiguration(
+				path,
+				StringBundler.concat(
+					"configBooleanArray=B[\"True\",\"False\"]\n",
+					"configByteArray=X[\"1\",\"3\"]\n",
+					"configCharacterArray=C[\"A\",\"Z\"]\n",
+					"configDoubleArray=D[\"12.2\",\"12.3\"]\n",
+					"configFloatArray=F[\"12.2\",\"12.3\"]\n",
+					"configIntegerArray=I[\"20\",\"21\"]\n",
+					"configLongArray=L[\"30\",\"31\"]\n",
+					"configShortArray=S[\"2\",\"3\"]\n",
+					"configStringArray=T[\"testString\",\"testString2\"]\n",
+					"configUntypedStringArray=[\"testUntypedString\"",
+					",\"testUntypedString2\"]"));
 
-		_testConfiguration("B[\"True\",\"False\"]", expectedBooleans);
-	}
+			Configuration configuration = _configurationAdmin.getConfiguration(
+				_CONFIGURATION_PID, StringPool.QUESTION);
 
-	@Test
-	public void testConfigurationByteArray() throws Exception {
-		Byte[] expectedBytes = new Byte[2];
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
 
-		expectedBytes[0] = 0b1;
-		expectedBytes[1] = 0b11;
-
-		_testConfiguration("X[\"1\",\"3\"]", expectedBytes);
-	}
-
-	@Test
-	public void testConfigurationCharacterArray() throws Exception {
-		Character[] expectedCharacters = new Character[2];
-
-		expectedCharacters[0] = 'A';
-		expectedCharacters[1] = 'Z';
-
-		_testConfiguration("C[\"A\",\"Z\"]", expectedCharacters);
-	}
-
-	@Test
-	public void testConfigurationDoubleArray() throws Exception {
-		Double[] expectedDoubles = new Double[2];
-
-		expectedDoubles[0] = 12.2D;
-		expectedDoubles[1] = 12.3D;
-
-		_testConfiguration("D[\"12.2\",\"12.3\"]", expectedDoubles);
-	}
-
-	@Test
-	public void testConfigurationFloatArray() throws Exception {
-		Float[] expectedFloats = new Float[2];
-
-		expectedFloats[0] = 12.2F;
-		expectedFloats[1] = 12.3F;
-
-		_testConfiguration("F[\"12.2\",\"12.3\"]", expectedFloats);
-	}
-
-	@Test
-	public void testConfigurationIntegerArray() throws Exception {
-		Integer[] expectedIntegers = new Integer[2];
-
-		expectedIntegers[0] = 20;
-		expectedIntegers[1] = 21;
-
-		_testConfiguration("I[\"20\",\"21\"]", expectedIntegers);
-	}
-
-	@Test
-	public void testConfigurationLongArray() throws Exception {
-		Long[] expectedLongs = new Long[2];
-
-		expectedLongs[0] = 30L;
-		expectedLongs[1] = 31L;
-
-		_testConfiguration("L[\"30\",\"31\"]", expectedLongs);
-	}
-
-	@Test
-	public void testConfigurationShortArray() throws Exception {
-		Short[] expectedShorts = new Short[2];
-
-		expectedShorts[0] = (short)2;
-		expectedShorts[1] = (short)3;
-
-		_testConfiguration("S[\"2\",\"3\"]", expectedShorts);
-	}
-
-	@Test
-	public void testConfigurationStringArray() throws Exception {
-		String[] expectedStrings = new String[2];
-
-		expectedStrings[0] = "testString";
-		expectedStrings[1] = "testString2";
-
-		_testConfiguration("[\"testString\",\"testString2\"]", expectedStrings);
+			Assert.assertArrayEquals(
+				new Boolean[] {true, false},
+				(Boolean[])properties.get("configBooleanArray"));
+			Assert.assertArrayEquals(
+				new Byte[] {0b1, 0b11},
+				(Byte[])properties.get("configByteArray"));
+			Assert.assertArrayEquals(
+				new Character[] {'A', 'Z'},
+				(Character[])properties.get("configCharacterArray"));
+			Assert.assertArrayEquals(
+				new Double[] {12.2D, 12.3D},
+				(Double[])properties.get("configDoubleArray"));
+			Assert.assertArrayEquals(
+				new Float[] {12.2F, 12.3F},
+				(Float[])properties.get("configFloatArray"));
+			Assert.assertArrayEquals(
+				new Integer[] {20, 21},
+				(Integer[])properties.get("configIntegerArray"));
+			Assert.assertArrayEquals(
+				new Long[] {30L, 31L},
+				(Long[])properties.get("configLongArray"));
+			Assert.assertArrayEquals(
+				new Short[] {(short)2, (short)3},
+				(Short[])properties.get("configShortArray"));
+			Assert.assertArrayEquals(
+				new String[] {"testString", "testString2"},
+				(String[])properties.get("configStringArray"));
+			Assert.assertArrayEquals(
+				new String[] {"testUntypedString", "testUntypedString2"},
+				(String[])properties.get("configUntypedStringArray"));
+		}
+		finally {
+			Files.deleteIfExists(path);
+		}
 	}
 
 	@Test
@@ -194,41 +168,6 @@ public class FileInstallConfigTest {
 		}
 	}
 
-	private void _testConfiguration(String config, Object configValue)
-		throws Exception {
-
-		Path path = Paths.get(
-			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-			_CONFIGURATION_PID.concat(".config"));
-
-		try {
-			_updateConfiguration(
-				path,
-				StringBundler.concat(_TEST_KEY, StringPool.EQUAL, config));
-
-			Configuration configuration = _configurationAdmin.getConfiguration(
-				_CONFIGURATION_PID, StringPool.QUESTION);
-
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
-
-			Object property = properties.get(_TEST_KEY);
-
-			Class<?> clazz = configValue.getClass();
-
-			if (clazz.isArray()) {
-				Assert.assertArrayEquals(
-					(Object[])configValue, (Object[])property);
-			}
-			else {
-				Assert.assertEquals(configValue, property);
-			}
-		}
-		finally {
-			Files.deleteIfExists(path);
-		}
-	}
-
 	private void _updateConfiguration(Path path, String content)
 		throws Exception {
 
@@ -255,8 +194,6 @@ public class FileInstallConfigTest {
 
 	private static final String _CONFIGURATION_PID =
 		FileInstallConfigTest.class.getName() + "Configuration";
-
-	private static final String _TEST_KEY = "testKey";
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;

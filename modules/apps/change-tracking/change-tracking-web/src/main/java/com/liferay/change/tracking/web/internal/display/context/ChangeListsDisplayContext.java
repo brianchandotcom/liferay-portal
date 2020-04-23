@@ -17,17 +17,12 @@ package com.liferay.change.tracking.web.internal.display.context;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
@@ -37,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -56,14 +50,14 @@ import javax.servlet.http.HttpServletRequest;
 public class ChangeListsDisplayContext {
 
 	public ChangeListsDisplayContext(
-		CTCollectionLocalService ctCollectionLocalService,
+		CTCollectionService ctCollectionService,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
 		CTPreferencesLocalService ctPreferencesLocalService, Language language,
 		Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		_ctCollectionLocalService = ctCollectionLocalService;
+		_ctCollectionService = ctCollectionService;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
 		_language = language;
@@ -135,8 +129,9 @@ public class ChangeListsDisplayContext {
 
 		String keywords = displayTerms.getKeywords();
 
-		int count = (int)_ctCollectionLocalService.dynamicQueryCount(
-			_getSearchDynamicQuery(_themeDisplay.getCompanyId(), keywords));
+		int count = _ctCollectionService.getCTCollectionsCount(
+			_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
+			keywords);
 
 		searchContainer.setTotal(count);
 
@@ -151,9 +146,9 @@ public class ChangeListsDisplayContext {
 				"CTCollection", column,
 				Objects.equals(searchContainer.getOrderByType(), "asc"));
 
-		List<CTCollection> results = _ctCollectionLocalService.dynamicQuery(
-			_getSearchDynamicQuery(_themeDisplay.getCompanyId(), keywords),
-			searchContainer.getStart(), searchContainer.getEnd(),
+		List<CTCollection> results = _ctCollectionService.getCTCollections(
+			_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
+			keywords, searchContainer.getStart(), searchContainer.getEnd(),
 			orderByComparator);
 
 		searchContainer.setResults(results);
@@ -206,34 +201,8 @@ public class ChangeListsDisplayContext {
 			"desc");
 	}
 
-	private DynamicQuery _getSearchDynamicQuery(
-		long companyId, String keywords) {
-
-		DynamicQuery dynamicQuery = _ctCollectionLocalService.dynamicQuery();
-
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"status", WorkflowConstants.STATUS_DRAFT));
-
-		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
-
-		for (String keyword : StringUtil.split(keywords, CharPool.SPACE)) {
-			disjunction.add(
-				RestrictionsFactoryUtil.ilike(
-					"name", StringUtil.quote(keyword, StringPool.PERCENT)));
-			disjunction.add(
-				RestrictionsFactoryUtil.ilike(
-					"description",
-					StringUtil.quote(keyword, StringPool.PERCENT)));
-		}
-
-		return dynamicQuery.add(disjunction);
-	}
-
 	private final long _ctCollectionId;
-	private final CTCollectionLocalService _ctCollectionLocalService;
+	private final CTCollectionService _ctCollectionService;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final HttpServletRequest _httpServletRequest;

@@ -15,7 +15,6 @@
 package com.liferay.portal.file.install.deploy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -207,22 +206,14 @@ public class FileInstallConfigTest {
 			_CONFIGURATION_PID.concat(".config"));
 
 		try {
-			String[] configs = {
-				"configBoolean=B\"True\"\n", "configByte=X\"1\"\n",
-				"configCharacter=C\"A\"\n", "configDouble=D\"12.2\"\n",
-				"configFloat=F\"12.2\"\n", "configInteger=I\"20\"\n",
-				"configLong=L\"30\"\n", "configShort=S\"2\"\n",
-				"configString=\"testString\""
-			};
-
 			_updateConfiguration(
-				() -> {
-					StringBundler sb = new StringBundler(configs);
-
-					String content = sb.toString();
-
-					Files.write(path, content.getBytes());
-				});
+				path,
+				StringBundler.concat(
+					"configBoolean=B\"True\"\n", "configByte=X\"1\"\n",
+					"configCharacter=C\"A\"\n", "configDouble=D\"12.2\"\n",
+					"configFloat=F\"12.2\"\n", "configInteger=I\"20\"\n",
+					"configLong=L\"30\"\n", "configShort=S\"2\"\n",
+					"configString=\"testString\""));
 
 			Configuration configuration = _configurationAdmin.getConfiguration(
 				_CONFIGURATION_PID, StringPool.QUESTION);
@@ -254,12 +245,8 @@ public class FileInstallConfigTest {
 
 		try {
 			_updateConfiguration(
-				() -> {
-					String content = StringBundler.concat(
-						_TEST_KEY, StringPool.EQUAL, config);
-
-					Files.write(path, content.getBytes());
-				});
+				path,
+				StringBundler.concat(_TEST_KEY, StringPool.EQUAL, config));
 
 			Configuration configuration = _configurationAdmin.getConfiguration(
 				_CONFIGURATION_PID, StringPool.QUESTION);
@@ -284,7 +271,7 @@ public class FileInstallConfigTest {
 		}
 	}
 
-	private void _updateConfiguration(UnsafeRunnable<Exception> runnable)
+	private void _updateConfiguration(Path path, String content)
 		throws Exception {
 
 		CountDownLatch countDownLatch = new CountDownLatch(2);
@@ -299,7 +286,7 @@ public class FileInstallConfigTest {
 				properties);
 
 		try {
-			runnable.run();
+			Files.write(path, content.getBytes());
 
 			countDownLatch.await();
 		}

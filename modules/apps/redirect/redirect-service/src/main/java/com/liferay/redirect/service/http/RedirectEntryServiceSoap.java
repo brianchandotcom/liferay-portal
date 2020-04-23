@@ -141,14 +141,20 @@ public class RedirectEntryServiceSoap {
 		}
 	}
 
-	public static int getRedirectEntriesCount(long groupId)
+	public static com.liferay.redirect.model.RedirectEntrySoap[]
+			getRedirectEntriesByGroupAndDestinationURL(
+				String destinationURL, long groupId)
 		throws RemoteException {
 
 		try {
-			int returnValue = RedirectEntryServiceUtil.getRedirectEntriesCount(
-				groupId);
+			java.util.List<com.liferay.redirect.model.RedirectEntry>
+				returnValue =
+					RedirectEntryServiceUtil.
+						getRedirectEntriesByGroupAndDestinationURL(
+							destinationURL, groupId);
 
-			return returnValue;
+			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModels(
+				returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -157,19 +163,14 @@ public class RedirectEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.redirect.model.RedirectEntrySoap[]
-			getRedirectEntriesDestinationURL(
-				String destinationURL, long groupId)
+	public static int getRedirectEntriesCount(long groupId)
 		throws RemoteException {
 
 		try {
-			java.util.List<com.liferay.redirect.model.RedirectEntry>
-				returnValue =
-					RedirectEntryServiceUtil.getRedirectEntriesDestinationURL(
-						destinationURL, groupId);
+			int returnValue = RedirectEntryServiceUtil.getRedirectEntriesCount(
+				groupId);
 
-			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModels(
-				returnValue);
+			return returnValue;
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

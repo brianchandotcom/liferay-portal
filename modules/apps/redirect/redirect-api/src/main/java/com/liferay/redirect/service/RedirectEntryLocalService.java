@@ -218,9 +218,6 @@ public interface RedirectEntryLocalService
 	public RedirectEntry fetchRedirectEntryByUuidAndGroupId(
 		String uuid, long groupId);
 
-	public List<RedirectEntry> getRedirectEntriesByGroupAndDestinationURL(
-		long groupId, String destinationURL);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -263,6 +260,10 @@ public interface RedirectEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RedirectEntry> getRedirectEntries(
 		long groupId, int start, int end, OrderByComparator<RedirectEntry> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RedirectEntry> getRedirectEntriesByGroupAndDestinationURL(
+		long groupId, String destinationURL);
 
 	/**
 	 * Returns all the redirect entries matching the UUID and company.

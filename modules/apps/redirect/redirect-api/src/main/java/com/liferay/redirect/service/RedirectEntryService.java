@@ -80,11 +80,11 @@ public interface RedirectEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRedirectEntriesCount(long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<RedirectEntry> getRedirectEntriesByGroupAndDestinationURL(
 		String destinationURL, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRedirectEntriesCount(long groupId) throws PortalException;
 
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, Date expirationDate,

@@ -218,6 +218,41 @@ public class RedirectEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
+		getRedirectEntriesByGroupAndDestinationURL(
+			HttpPrincipal httpPrincipal, String destinationURL, long groupId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RedirectEntryServiceUtil.class,
+				"getRedirectEntriesByGroupAndDestinationURL",
+				_getRedirectEntriesByGroupAndDestinationURLParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, destinationURL, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.redirect.model.RedirectEntry>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static int getRedirectEntriesCount(
 			HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -225,7 +260,7 @@ public class RedirectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RedirectEntryServiceUtil.class, "getRedirectEntriesCount",
-				_getRedirectEntriesCountParameterTypes4);
+				_getRedirectEntriesCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -247,41 +282,6 @@ public class RedirectEntryServiceHttp {
 			}
 
 			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
-		getRedirectEntriesDestinationURL(
-			HttpPrincipal httpPrincipal, String destinationURL, long groupId) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				RedirectEntryServiceUtil.class,
-				"getRedirectEntriesByGroupAndDestinationURL",
-				_getRedirectEntriesDestinationURLParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, destinationURL, groupId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List<com.liferay.redirect.model.RedirectEntry>)
-				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -352,12 +352,11 @@ public class RedirectEntryServiceHttp {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getRedirectEntriesCountParameterTypes4 =
-		new Class[] {long.class};
 	private static final Class<?>[]
-		_getRedirectEntriesDestinationURLParameterTypes5 = new Class[] {
-			String.class, long.class
-		};
+		_getRedirectEntriesByGroupAndDestinationURLParameterTypes4 =
+			new Class[] {String.class, long.class};
+	private static final Class<?>[] _getRedirectEntriesCountParameterTypes5 =
+		new Class[] {long.class};
 	private static final Class<?>[] _updateRedirectEntryParameterTypes6 =
 		new Class[] {
 			long.class, String.class, java.util.Date.class, boolean.class,

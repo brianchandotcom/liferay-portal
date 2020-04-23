@@ -254,13 +254,6 @@ public class RedirectEntryLocalServiceUtil {
 		return getService().fetchRedirectEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
-		findRedirectEntryDestinationURL(long groupId, String destinationURL) {
-
-		return getService().getRedirectEntriesByGroupAndDestinationURL(
-			groupId, destinationURL);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -325,6 +318,14 @@ public class RedirectEntryLocalServiceUtil {
 				<com.liferay.redirect.model.RedirectEntry> obc) {
 
 		return getService().getRedirectEntries(groupId, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
+		getRedirectEntriesByGroupAndDestinationURL(
+			long groupId, String destinationURL) {
+
+		return getService().getRedirectEntriesByGroupAndDestinationURL(
+			groupId, destinationURL);
 	}
 
 	/**

@@ -1,0 +1,110 @@
+@component-name = "portal-wcm"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.layout.page.template.admin.web.internal.configuration.ExportImportLayoutPageTemplateConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Layout Page Templates";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-106212. Can export a content page template in draft status when it has published version and only the published version is exported."
+	@priority = "4"
+	test OnlyPublishedVersionIsExported {
+		task ("Add a content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		}
+
+		task ("Add a Heading fragment and edit inline content then publish") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert content page template has Approved label") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Page Template Name",
+				workflowStatus = "Approved");
+		}
+
+		task ("Edit inline content of Heading in content page template but not publish") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Modified Text");
+		}
+
+		task ("Assert content page template has Draft label") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Page Template Name",
+				workflowStatus = "Draft");
+		}
+
+		task ("Export content page template") {
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Export",
+				pageTemplateName = "Page Template Name");
+		}
+
+		task ("Import content page template in a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
+		}
+
+		task ("Assert only published version is imported") {
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "New editable fragment text",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+	}
+
+}

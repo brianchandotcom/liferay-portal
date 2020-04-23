@@ -42,12 +42,12 @@ const HeaderController = ({basePath}) => {
 	}, [portletNamespace]);
 
 	useEffect(() => {
-		const legacyElm = document.querySelector(
+		const legacyElement = document.querySelector(
 			'[data-qa-id="headerOptions"]'
 		);
 
-		if (legacyElm) {
-			legacyElm.innerHTML = '';
+		if (legacyElement) {
+			legacyElement.innerHTML = '';
 		}
 	}, []);
 

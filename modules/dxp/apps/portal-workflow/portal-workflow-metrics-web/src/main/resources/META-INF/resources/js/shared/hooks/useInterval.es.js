@@ -16,7 +16,7 @@ const useInterval = cancelOnDestroy => {
 	const isMounted = useIsMounted();
 
 	return useCallback(
-		(callback, ms) => {
+		(callback, milliseconds) => {
 			const interval = setInterval(() => {
 				if (!cancelOnDestroy || isMounted()) {
 					callback();
@@ -24,7 +24,7 @@ const useInterval = cancelOnDestroy => {
 				else {
 					clearInterval(interval);
 				}
-			}, ms);
+			}, milliseconds);
 
 			return () => clearInterval(interval);
 		},

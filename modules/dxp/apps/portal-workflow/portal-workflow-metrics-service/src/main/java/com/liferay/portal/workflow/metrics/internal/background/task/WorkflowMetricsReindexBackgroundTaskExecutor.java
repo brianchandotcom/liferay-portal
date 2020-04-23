@@ -33,10 +33,8 @@ import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetric
 
 import java.io.Serializable;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Comparator;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
@@ -132,24 +130,18 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		Map<String, List<String>> indexEntityNameMap = Stream.of(
+		return Stream.of(
 			(String[])taskContextMap.get("workflow.metrics.index.entity.names")
 		).filter(
+			_workflowMetricsIndexes::containsKey
+		).filter(
 			_workflowMetricsReindexers::containsKey
-		).collect(
-			Collectors.groupingBy(
-				indexEntityName ->
-					indexEntityName.startsWith("sla") ? "sla" : "metrics")
+		).sorted(
+			Comparator.comparing(
+				indexEntityName -> indexEntityName.startsWith("sla"))
+		).toArray(
+			String[]::new
 		);
-
-		List<String> metricIndexEntityNames = indexEntityNameMap.getOrDefault(
-			"metrics", Collections.emptyList());
-		List<String> slaIndexEntityNames = indexEntityNameMap.getOrDefault(
-			"sla", Collections.emptyList());
-
-		return ArrayUtil.append(
-			metricIndexEntityNames.toArray(new String[0]),
-			slaIndexEntityNames.toArray(new String[0]));
 	}
 
 	private void _sendStatusMessage(

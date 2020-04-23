@@ -116,7 +116,7 @@ public class WorkflowMetricsReindexBackgroundTaskStatusMessageTranslator
 		double indexerPercentage = count / (double)total;
 
 		double totalPercentage =
-			(indexerCount + indexerPercentage) / (double)indexerTotal;
+			(indexerCount + indexerPercentage) / indexerTotal;
 
 		return (int)Math.min(Math.ceil(totalPercentage * 100), 100);
 	}

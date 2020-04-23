@@ -18,7 +18,7 @@ import {useInterval} from '../../../../shared/hooks/useInterval.es';
 import {usePatch} from '../../../../shared/hooks/usePatch.es';
 import {sub} from '../../../../shared/util/lang.es';
 import {AppContext} from '../../../AppContext.es';
-import {INDEXES_GROUPS_KEYS, SUCCESS_MESSAGES} from '../IndexesConstants.es';
+import {INDEXES_GROUPS_KEYS} from '../IndexesConstants.es';
 
 const useReindexActions = () => {
 	const {reindexStatuses, setReindexStatuses} = useContext(AppContext);
@@ -86,8 +86,8 @@ const useReindexActions = () => {
 
 	const sendSuccess = (key, label) => {
 		const message = INDEXES_GROUPS_KEYS.includes(key)
-			? SUCCESS_MESSAGES.ALL
-			: SUCCESS_MESSAGES.SINGLE;
+			? Liferay.Language.get('all-x-have-reindexed-successfully')
+			: Liferay.Language.get('x-has-reindexed-successfully');
 
 		toaster.success(sub(message, [label]));
 	};

@@ -33,30 +33,37 @@ const ChainedRedirectionsModal = ({
 	};
 
 	return (
-		<ClayModal observer={observer} size="md" status="warning">
+		<ClayModal
+			className="portlet-redirect-modal"
+			observer={observer}
+			size="md"
+			status="warning"
+		>
 			<ClayModal.Header>
 				{Liferay.Language.get('redirect-chain')}
 			</ClayModal.Header>
 
 			<form onSubmit={handleSubmit}>
 				<ClayModal.Body>
-					<p>
+					<p className="portlet-redirect-modal-title">
 						<strong>
 							{Liferay.Language.get(
 								'do-you-want-to-create-the-redirect-and-update-the-references'
 							)}
 						</strong>
 					</p>
-					<p className="text-secondary">
-						{Liferay.Language.get(
-							'there-are-other-redirects-pointing-to-the-source-url-of-this-redirect.-this-will-create-a-redirect-chain-so-users-will-be-redirected-multiple-times-before-reaching-the-destination'
-						)}
-					</p>
-					<p className="text-secondary">
-						{Liferay.Language.get(
-							'to-avoid-this-chain-update-the-references-of-the-other-redirects'
-						)}
-					</p>
+					<div className="portlet-redirect-modal-description">
+						<p>
+							{Liferay.Language.get(
+								'there-are-other-redirects-pointing-to-the-source-url-of-this-redirect.-this-will-create-a-redirect-chain-so-users-will-be-redirected-multiple-times-before-reaching-the-destination'
+							)}
+						</p>
+						<p>
+							{Liferay.Language.get(
+								'to-avoid-this-chain-update-the-references-of-the-other-redirects'
+							)}
+						</p>
+					</div>
 					<fieldset className="fieldset">
 						<ClayCheckbox
 							checked={updateReferences}

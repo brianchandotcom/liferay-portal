@@ -1,6 +1,19 @@
-.destination-url {
-	.has-error .form-feedback-item {
-		font-weight: 400;
+.portlet-redirect {
+	.destination-url {
+		.has-error .form-feedback-item {
+			font-weight: 400;
+		}
+	}
+
+	&-modal {
+		&-title {
+			font-weight: 600;
+		}
+
+		&-description {
+			color: grey;
+			font-size: 0.875rem;
+		}
 	}
 }
 

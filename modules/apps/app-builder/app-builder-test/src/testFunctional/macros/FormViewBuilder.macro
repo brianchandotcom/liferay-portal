@@ -138,18 +138,19 @@ definition {
 		var key_fieldName = "${fieldName}";
 
 		for (var selectOption : list "${selectOptionsList}") {
-			FormViewBuilder.disableCheckbox(fieldName = "${selectOption}");
+			FormViewBuilder.disableCheckbox(fieldValue = "${selectOption}");
 		}
 	}
 
 	macro disableCheckbox {
-		if (IsChecked(locator1 = "FormViewBuilder#CHECKBOX", key_fieldName = "${fieldName}")) {
-			Click(
-				key_fieldName = "${fieldName}",
-				locator1 = "FormViewBuilder#CHECKBOX_LABEL");
+		var key_fieldName = "${fieldName}";
+		var key_fieldValue = "${fieldValue}";
+
+		if (IsChecked(locator1 = "FormViewBuilder#CHECKBOX_AT_FORM_BODY")) {
+			Click(locator1 = "FormViewBuilder#CHECKBOX_LABEL");
 		}
 
-		FormViewBuilder.viewCheckboxNotChecked(fieldName = "${fieldName}");
+		FormViewBuilder.viewCheckboxNotChecked();
 	}
 
 	macro editDate {
@@ -195,20 +196,23 @@ definition {
 	}
 
 	macro enableCheckbox {
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX", key_fieldName = "${fieldName}")) {
-			Click(
-				key_fieldName = "${fieldName}",
-				locator1 = "FormViewBuilder#CHECKBOX_LABEL");
+		var key_fieldName = "${fieldName}";
+		var key_fieldValue = "${fieldValue}";
+
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX_AT_FORM_BODY")) {
+			Click(locator1 = "FormViewBuilder#CHECKBOX_LABEL");
 		}
 
-		FormViewBuilder.viewCheckboxChecked(fieldName = "${fieldName}");
+		FormViewBuilder.viewCheckboxChecked(
+			fieldName = "${fieldName}",
+			fieldValue = "${fieldValue}");
 	}
 
 	macro enableCheckboxPredefined {
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED", key_fieldName = "${fieldName}")) {
-			Click(
-				key_fieldName = "${fieldName}",
-				locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED_LIST");
+		var key_fieldName = "${fieldName}";
+
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED")) {
+			Click(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED_LIST");
 		}
 
 		FormViewBuilder.viewCheckboxCheckedAtPredefinedValue(fieldName = "${fieldName}");
@@ -295,10 +299,11 @@ definition {
 	}
 
 	macro selectSelectWithMultipleOptions {
-		var key_fieldName = "${fieldName}";
 
 		for (var selectOption : list "${selectOptionsList}") {
-			FormViewBuilder.enableCheckbox(fieldName = "${selectOption}");
+			FormViewBuilder.enableCheckbox(
+				fieldName = "${fieldName}",
+				fieldValue = "${selectOption}");
 		}
 	}
 
@@ -504,7 +509,8 @@ definition {
 	macro viewCheckboxNotChecked {
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_fieldName = "${fieldName}",
-			locator1 = "FormViewBuilder#CHECKBOX");
+			key_fieldValue = "${fieldValue}",
+			locator1 = "FormViewBuilder#CHECKBOX_AT_FORM_BODY");
 	}
 
 	macro viewSelectChecked {

@@ -1,0 +1,41 @@
+{
+	"definition": {
+		"layout": {
+			"containerType": "Fixed",
+			"paddingBottom": 1,
+			"paddingHorizontal": 1,
+			"paddingTop": 1
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragment": {
+					"collectionName": "Basic Components",
+					"key": "BASIC_COMPONENT-heading",
+					"name": "Heading"
+				},
+				"fragmentConfig": {
+					"bottomSpacing": "3",
+					"headingLevel": "h1",
+					"textAlign": "left",
+					"textColor": ""
+				},
+				"fragmentFields": [
+					{
+						"id": "element-text",
+						"value": {
+							"text": {
+								"value_i18n": {
+									"en_US": "Fragment composition content"
+								}
+							}
+						}
+					}
+				]
+			},
+			"type": "Fragment"
+		}
+	],
+	"type": "Section"
+}

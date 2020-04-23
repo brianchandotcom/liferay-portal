@@ -129,6 +129,12 @@ definition {
 		Modal.save();
 	}
 
+	macro viewEntryWorkflowStatus {
+		LexiconCard.viewCardLabel(
+			card = "${entry}",
+			cardLabel = "${workflowStatus}");
+	}
+
 	macro viewPageTemplateNotPresent {
 		LexiconCard.viewCardNotPresent(card = "${pageTemplateName}");
 	}

@@ -17,6 +17,7 @@ package com.liferay.comment.upgrade;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -94,28 +95,6 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	private void _runUpdateSQL(
-			String tableName, boolean addClassPK, long classPK,
-			long oldClassNameId, long newClassNameId)
-		throws IOException, SQLException {
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("update ");
-		sb.append(tableName);
-		sb.append(" set classNameId = ");
-		sb.append(newClassNameId);
-		sb.append(" where classNameId = ");
-		sb.append(oldClassNameId);
-
-		if (addClassPK) {
-			sb.append(" and classPK = ");
-			sb.append(classPK);
-		}
-
-		runSQL(sb.toString());
-	}
-
 	private void _updateSubscriptions() throws IOException, SQLException {
 		String newSubscriptionClassName =
 			MBDiscussion.class.getName() + StringPool.UNDERLINE +
@@ -130,22 +109,41 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select classPK from Subscription where classNameId = " +
 					oldClassNameId);
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update AssetEntry set classNameId = ? where classNameId " +
+						"= ? and classPK = ?"));
+			PreparedStatement ps3 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update SocialActivity set classNameId = ? where " +
+						"classNameId = ? and classPK = ?"));
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long classPK = rs.getLong("classPK");
 
-				_runUpdateSQL(
-					"AssetEntry", true, classPK, oldClassNameId,
-					newClassNameId);
+				ps2.setLong(1, newClassNameId);
+				ps2.setLong(2, oldClassNameId);
+				ps2.setLong(3, classPK);
 
-				_runUpdateSQL(
-					"SocialActivity", true, classPK, oldClassNameId,
-					newClassNameId);
+				ps2.addBatch();
+
+				ps3.setLong(1, newClassNameId);
+				ps3.setLong(2, oldClassNameId);
+				ps3.setLong(3, classPK);
+
+				ps3.addBatch();
 			}
+
+			ps2.executeBatch();
+
+			ps3.executeBatch();
 		}
 
-		_runUpdateSQL("Subscription", false, 0, oldClassNameId, newClassNameId);
+		runSQL(
+			StringBundler.concat(
+				"update Subscription set classNameId = ", newClassNameId,
+				" where classNameId = ", oldClassNameId));
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

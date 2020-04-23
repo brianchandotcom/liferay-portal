@@ -211,10 +211,7 @@ public class ChangeListsDisplayContext {
 
 		DynamicQuery dynamicQuery = _ctCollectionLocalService.dynamicQuery();
 
-		if (companyId > 0) {
-			dynamicQuery.add(
-				RestrictionsFactoryUtil.eq("companyId", companyId));
-		}
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(

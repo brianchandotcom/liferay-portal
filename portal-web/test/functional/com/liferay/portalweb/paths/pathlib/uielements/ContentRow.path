@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ROW_NUMBER_TD_3</td>
+	<td>xpath=(//*[@data-qa-id='row'])[${key_rowNumber}]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_ROW_NUMBER_CHECKBOX</td>
 	<td>xpath=(//*[@data-qa-id='row'])[${key_rowNumber}]//input[@title='Select']</td>
 	<td></td>

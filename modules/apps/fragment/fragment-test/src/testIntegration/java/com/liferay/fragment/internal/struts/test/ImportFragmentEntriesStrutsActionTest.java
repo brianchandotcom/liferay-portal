@@ -207,7 +207,7 @@ public class ImportFragmentEntriesStrutsActionTest {
 
 	private byte[] _getFileBytes() throws IOException {
 		Enumeration<URL> enumeration = _bundle.findEntries(
-			_RESOURCES_PATH + "import", "*", true);
+			_RESOURCES_PATH, "*", true);
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
@@ -218,8 +218,7 @@ public class ImportFragmentEntriesStrutsActionTest {
 
 			if (!path.endsWith(StringPool.SLASH)) {
 				zipWriter.addEntry(
-					StringUtil.removeSubstring(
-						url.getPath(), _RESOURCES_PATH + "import"),
+					StringUtil.removeSubstring(url.getPath(), _RESOURCES_PATH),
 					url.openStream());
 			}
 		}
@@ -244,7 +243,7 @@ public class ImportFragmentEntriesStrutsActionTest {
 	}
 
 	private static final String _RESOURCES_PATH =
-		"com/liferay/fragment/dependencies/fragments/";
+		"com/liferay/fragment/dependencies/fragments/import/";
 
 	private Bundle _bundle;
 

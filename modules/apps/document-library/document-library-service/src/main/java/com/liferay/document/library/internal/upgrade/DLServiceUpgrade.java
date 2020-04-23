@@ -66,8 +66,7 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 			"3.0.0", "3.0.1",
 			new UpgradeDiscussionSubscriptionClassName(
 				_subscriptionLocalService, DLFileEntry.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.
-					DELETE_OLD));
+				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
 	}
 
 	@Reference

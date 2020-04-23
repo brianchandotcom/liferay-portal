@@ -29,6 +29,11 @@ public class AppBuilderDataLayoutBuilderDefinition
 	implements DataLayoutBuilderDefinition {
 
 	@Override
+	public boolean allowFieldSets() {
+		return true;
+	}
+
+	@Override
 	public boolean allowMultiplePages() {
 		return false;
 	}

@@ -70,18 +70,15 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			return JSONFactoryUtil.createJSONObject();
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONObject defaultEditableValuesJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
 		for (Element element : elements) {
-			jsonArray.put(
-				JSONUtil.put(
-					"id", element.attr("id")
-				).put(
-					"uuid", StringPool.BLANK
-				));
+			defaultEditableValuesJSONObject.put(
+				element.attr("id"), StringPool.BLANK);
 		}
 
-		return JSONUtil.put("dropZones", jsonArray);
+		return defaultEditableValuesJSONObject;
 	}
 
 	@Override

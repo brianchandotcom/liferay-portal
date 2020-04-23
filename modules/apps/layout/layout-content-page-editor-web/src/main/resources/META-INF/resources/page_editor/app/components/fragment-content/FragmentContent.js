@@ -168,25 +168,19 @@ const FragmentContent = React.forwardRef(
 				fragmentEntryLinkId
 			] || {editableValues: {}};
 
-			const dropZoneValues =
+			return (
 				fragmentEntryLink.editableValues[
 					DROP_ZONE_FRAGMENT_ENTRY_PROCESSOR
-				] || {};
-
-			return dropZoneValues.dropZones || {};
+				] || {}
+			);
 		});
 
 		const getPortals = useCallback(
 			element =>
 				Array.from(element.querySelectorAll('lfr-drop-zone')).map(
 					dropZoneElement => {
-						const mainItemId = (
-							dropZones.find(
-								dropZone =>
-									dropZone.id ===
-									dropZoneElement.getAttribute('id')
-							) || {}
-						).uuid;
+						const mainItemId =
+							dropZones[dropZoneElement.getAttribute('id')] || '';
 
 						const Component = () =>
 							mainItemId && (

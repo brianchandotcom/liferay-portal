@@ -28,40 +28,30 @@ const LayoutSelectorWithState = ({
 	portletNamespace,
 	readOnly,
 }) => {
-	const [layout, setLayout] = useState({});
+	const [layout, setLayout] = useState(() => JSON.parse(inputValue || '{}'));
 
 	useEffect(() => {
-		setLayout({
-			...JSON.parse(inputValue || '{}'),
-		});
+		setLayout(JSON.parse(inputValue || '{}'));
 	}, [inputValue]);
 
-	const _dispatchValue = (value, clear) => {
-		setLayout(() => {
-			dispatch({
-				payload: clear ? '' : JSON.stringify(value),
-				type: 'value',
-			});
-
-			return value;
-		});
-	};
-
 	const _handleClearClick = () => {
-		_dispatchValue({}, true);
+		setLayout({});
+
+		dispatch({
+			payload: '',
+			type: 'value',
+		});
 	};
 
 	const _handleFieldChanged = event => {
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem && selectedItem.layoutId) {
-			setLayout(() => {
-				dispatch({
-					payload: JSON.stringify(selectedItem),
-					type: 'value',
-				});
+			setLayout(selectedItem);
 
-				return selectedItem;
+			dispatch({
+				payload: JSON.stringify(selectedItem),
+				type: 'value',
 			});
 		}
 	};
@@ -86,7 +76,11 @@ const LayoutSelectorWithState = ({
 			<ClayForm.Group style={{marginBottom: '0.5rem'}}>
 				<ClayInput.Group>
 					<ClayInput.GroupItem className="d-none d-sm-block" prepend>
-						<input name={name} type="hidden" value={inputValue} />
+						<input
+							name={name}
+							type="hidden"
+							value={JSON.stringify(layout)}
+						/>
 
 						<ClayInput
 							className="bg-light"

@@ -27,6 +27,8 @@ import {
 } from '../../../prop-types/index';
 import {EDITABLE_FLOATING_TOOLBAR_CLASSNAMES} from '../../config/constants/editableFloatingToolbarClassNames';
 import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../../config/constants/floatingToolbarConfigurations';
+import {config} from '../../config/index';
+import {useSelector} from '../../store/index';
 import {useHoverItem, useIsActive} from '../Controls';
 
 export default function FloatingToolbar({
@@ -43,6 +45,8 @@ export default function FloatingToolbar({
 	const [hidden, setHidden] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [windowWidth, setWindowWidth] = useState(0);
+
+	const languageId = useSelector(state => state.languageId);
 
 	const itemElement = itemRef.current;
 
@@ -65,7 +69,11 @@ export default function FloatingToolbar({
 					Align.align(
 						elementRef.current,
 						anchorRef.current,
-						getElementAlign(elementRef.current, anchorRef.current),
+						getElementAlign(
+							elementRef.current,
+							anchorRef.current,
+							config.languageDirection[languageId] === 'rtl'
+						),
 						false
 					);
 				}
@@ -80,7 +88,7 @@ export default function FloatingToolbar({
 				}
 			}
 		},
-		[isMounted, show]
+		[isMounted, languageId, show]
 	);
 
 	const handleButtonClick = useCallback(
@@ -122,14 +130,21 @@ export default function FloatingToolbar({
 			return;
 		}
 
-		const {marginRight: itemRefMarginRight} = getComputedStyle(
-			itemRef.current
-		);
+		const {
+			marginLeft: itemRefMarginLeft,
+			marginRight: itemRefMarginRight,
+		} = getComputedStyle(itemRef.current);
 
-		if (show && parseInt(itemRefMarginRight, 10) < 0) {
-			toolbarRef.current.style.transform = `translate(${itemRefMarginRight})`;
+		const rtl = config.languageDirection[languageId] === 'rtl';
+
+		const marginValue = rtl
+			? Math.abs(parseInt(itemRefMarginLeft, 10))
+			: parseInt(itemRefMarginRight, 10);
+
+		if (show && marginValue) {
+			toolbarRef.current.style.transform = `translate(${marginValue}px)`;
 		}
-	}, [itemRef, show]);
+	}, [itemRef, languageId, show]);
 
 	useEffect(() => {
 		alignElement(toolbarRef, itemRef, () => {
@@ -192,7 +207,7 @@ export default function FloatingToolbar({
 
 	useEffect(() => {
 		const sideNavigation =
-			Liferay.sideNavigation &&
+			Liferay.SideNavigation &&
 			Liferay.SideNavigation.instance(
 				document.querySelector('.product-menu-toggle')
 			);
@@ -262,7 +277,7 @@ export default function FloatingToolbar({
 						ref={toolbarRef}
 					>
 						<div className="popover position-static">
-							<div className="p-2 popover-body">
+							<div className="d-flex p-2 popover-body">
 								{buttons.map(button => (
 									<ClayButtonWithIcon
 										borderless
@@ -369,18 +384,75 @@ const ELEMENT_POSITION = {
 };
 
 /**
- * Gets a suggested align of an element to an anchor, following this logic:
- * - Vertically, if the element fits at bottom, it's placed there, otherwise
- *   it is placed at top.
- * - Horizontally, if the element fits at right, it's placed there, otherwise
- *   it is placed at left.
+ * Gets a suggested align of an element to an anchor
  * @param {HTMLElement|null} element
  * @param {HTMLElement|null} anchor
+ * @param {boolean} rtl
  * @private
  * @return {number} Selected align
  * @review
  */
-const getElementAlign = (element, anchor) => {
+const getElementAlign = (element, anchor, rtl) => {
+	let horizontal, vertical;
+
+	try {
+		horizontal = getHorizontalPosition(anchor, element, rtl);
+		vertical = getVerticalPosition(anchor, element, horizontal);
+	}
+	catch (error) {}
+
+	return ELEMENT_POSITION[vertical][horizontal];
+};
+
+/**
+ * Gets an elements horizontal position. If the element fits at the preferred
+ * position (left in rtl, right in ltr), it's placed there, otherwise it is
+ * placed at the opposite.
+ * @param {HTMLElement|null} element
+ * @param {HTMLElement|null} anchor
+ * @param {boolean} rtl
+ * @private
+ * @return {number} Selected horizontal position
+ * @review
+ */
+const getHorizontalPosition = (anchor, element, rtl) => {
+	const pageEditor = document.getElementById('page-editor');
+
+	const {
+		left: pageEditorLeft,
+		right: pageEditorRight,
+	} = pageEditor.getBoundingClientRect();
+
+	const {
+		left: anchorLeft,
+		right: anchorRight,
+	} = anchor.getBoundingClientRect();
+
+	const {width: elementWidth} = element.getBoundingClientRect();
+
+	if (rtl) {
+		const fitsOnLeft = anchorLeft + elementWidth < pageEditorRight;
+
+		return fitsOnLeft ? 'left' : 'right';
+	}
+	else {
+		const fitsOnRight = anchorRight - elementWidth > pageEditorLeft;
+
+		return fitsOnRight ? 'right' : 'left';
+	}
+};
+
+/**
+ * Gets an elements vertical position. If the element fits at bottom,
+ * it's placed there, otherwise it is placed at top.
+ * @param {HTMLElement|null} element
+ * @param {HTMLElement|null} anchor
+ * @param {string} horizontalPosition
+ * @private
+ * @return {number} Selected vertical position
+ * @review
+ */
+const getVerticalPosition = (anchor, element, horizontalPosition) => {
 	const alignFits = (align, availableAlign) => {
 		try {
 			return availableAlign.includes(
@@ -393,44 +465,20 @@ const getElementAlign = (element, anchor) => {
 	};
 
 	const fallbackVertical = 'top';
-	let horizontal = 'left';
 	let vertical = 'bottom';
-
-	const productMenu = document.querySelector('.product-menu-toggle');
-
-	const productMenuOpen = productMenu
-		? Liferay.SideNavigation.instance(productMenu).visible()
-		: false;
-
-	const wrapperWidth = document
-		.getElementById('wrapper')
-		.getBoundingClientRect().width;
-
-	try {
-		const {right: anchorRight} = anchor.getBoundingClientRect();
-		const {width: elementWidth} = element.getBoundingClientRect();
-
-		if (productMenuOpen && anchorRight - elementWidth < wrapperWidth / 2) {
-			horizontal = 'left';
-		}
-		else {
-			horizontal = anchorRight - elementWidth > 0 ? 'right' : 'left';
-		}
-	}
-	catch (error) {}
 
 	if (
 		!alignFits(
-			ELEMENT_POSITION[vertical][horizontal],
+			ELEMENT_POSITION[vertical][horizontalPosition],
 			ELEMENT_AVAILABLE_POSITIONS[vertical]
 		) &&
 		alignFits(
-			ELEMENT_POSITION[fallbackVertical][horizontal],
+			ELEMENT_POSITION[fallbackVertical][horizontalPosition],
 			ELEMENT_AVAILABLE_POSITIONS[fallbackVertical]
 		)
 	) {
 		vertical = fallbackVertical;
 	}
 
-	return ELEMENT_POSITION[vertical][horizontal];
+	return vertical;
 };

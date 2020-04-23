@@ -123,19 +123,16 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			"type", InfoListProviderItemSelectorReturnType.class.getName()
 		);
 
-		int length = 1;
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {String.class, Locale.class, long.class, int.class},
-			layoutObjectReferenceJSONObject.toString(), LocaleUtil.US, 0,
-			length);
+			layoutObjectReferenceJSONObject.toString(), LocaleUtil.US, 0, 1);
 
-		Assert.assertEquals(length, jsonObject.getInt("length"));
+		Assert.assertEquals(1, jsonObject.getInt("length"));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
-		Assert.assertEquals(length, jsonArray.length());
+		Assert.assertEquals(1, jsonArray.length());
 
 		JSONObject item = jsonArray.getJSONObject(0);
 
@@ -173,19 +170,16 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			"type", InfoListItemSelectorReturnType.class.getName()
 		);
 
-		int length = 2;
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {String.class, Locale.class, long.class, int.class},
-			layoutObjectReferenceJSONObject.toString(), LocaleUtil.US, 0,
-			length);
+			layoutObjectReferenceJSONObject.toString(), LocaleUtil.US, 0, 2);
 
-		Assert.assertEquals(length, jsonObject.getInt("length"));
+		Assert.assertEquals(2, jsonObject.getInt("length"));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
-		Assert.assertEquals(length, jsonArray.length());
+		Assert.assertEquals(2, jsonArray.length());
 
 		JSONObject item1 = jsonArray.getJSONObject(0);
 
@@ -229,19 +223,16 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			"type", InfoListItemSelectorReturnType.class.getName()
 		);
 
-		int length = 1;
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
 			new Class<?>[] {String.class, Locale.class, long.class, int.class},
-			layoutObjectReferenceJSONObject.toString(), LocaleUtil.US, 0,
-			length);
+			layoutObjectReferenceJSONObject.toString(), LocaleUtil.US, 0, 1);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
-		Assert.assertEquals(length, jsonArray.length());
+		Assert.assertEquals(1, jsonArray.length());
 
 		JSONObject item1 = jsonArray.getJSONObject(0);
 

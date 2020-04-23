@@ -70,6 +70,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK</td>
+	<td>//li[contains(.,'${key_pageName}')]//h4/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM_ROW_ENTRY_ON_PAGE</td>
 	<td>xpath=(//li[contains(@id,'SiteNavigationMenuPortlet')])[${key_index}]</td>
 	<td></td>

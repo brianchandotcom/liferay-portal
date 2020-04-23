@@ -134,6 +134,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_DISABLED</td>
+	<td>//button[*[name()='svg'][contains(@class,'icon-download')] and contains(@disabled,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EYE_PREVIEW</td>
 	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
 	<td></td>

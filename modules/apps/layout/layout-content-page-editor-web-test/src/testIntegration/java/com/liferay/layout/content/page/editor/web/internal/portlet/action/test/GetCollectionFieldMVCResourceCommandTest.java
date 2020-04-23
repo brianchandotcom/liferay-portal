@@ -247,22 +247,12 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		unicodeProperties.put(
 			"anyAssetType",
 			String.valueOf(_portal.getClassNameId(BlogsEntry.class)));
-		unicodeProperties.put(
-			"anyClassTypeDLFileEntryAssetRendererFactory", "true");
-		unicodeProperties.put(
-			"anyClassTypeJournalArticleAssetRendererFactory", "true");
 		unicodeProperties.put("classNameIds", BlogsEntry.class.getName());
 		unicodeProperties.put("groupIds", String.valueOf(_group.getGroupId()));
 		unicodeProperties.put("orderByColumn1", "modifiedDate");
 		unicodeProperties.put("orderByColumn2", "title");
 		unicodeProperties.put("orderByType1", "ASC");
 		unicodeProperties.put("orderByType2", "ASC");
-		unicodeProperties.put(
-			"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory",
-			"false");
-		unicodeProperties.put(
-			"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory",
-			"false");
 
 		return unicodeProperties.toString();
 	}

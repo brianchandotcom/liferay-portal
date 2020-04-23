@@ -110,7 +110,7 @@ definition {
 		SitePages.viewCheckboxChecked(pageName = "Test Content Page Name 2");
 	}
 
-	@description = "This is for LPS-110108. The hovered item shows Add Page quick action and a Kebap menu with the actions available for that item."
+	@description = "This is for LPS-110108. The hovered item shows Add Page quick action and a Kebab menu with the actions available for that item. Clicking on item title navigates to the content."
 	@priority = "5"
 	test MouseOverNonRootPageAndViewPage {
 		property testray.component.names = "Site Pages Administration";
@@ -154,9 +154,21 @@ definition {
 			pageName = "Child Content Page Name 1");
 
 		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+	
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			
+		Click(
+			key_pageName = "Test Content Page Name 1",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
+
+		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+	
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "Test Content Page Name 1");
 	}
 
-	@description = "This is for LPS-110108. Select non root item, it shows Add Page quick action and a Kebap menu with the actions available for that item."
+	@description = "This is for LPS-110108. Select non root item, it shows Add Page quick action and a Kebab menu with the actions available for that item."
 	@priority = "4"
 	test SelectNonRootPageAndViewPage {
 		property testray.component.names = "Site Pages Administration";

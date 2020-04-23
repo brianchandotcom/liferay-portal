@@ -77,75 +77,13 @@ public class GetCollectionFieldMVCResourceCommand
 		String layoutObjectReference = ParamUtil.getString(
 			resourceRequest, "layoutObjectReference");
 		int size = ParamUtil.getInteger(resourceRequest, "size");
+		long segmentsExperienceId = ParamUtil.getLong(
+			resourceRequest, "segmentsExperienceId");
 
 		try {
-			JSONObject layoutObjectReferenceJSONObject =
-				JSONFactoryUtil.createJSONObject(layoutObjectReference);
-
-			String type = layoutObjectReferenceJSONObject.getString("type");
-
-			LayoutListRetriever layoutListRetriever =
-				_layoutListRetrieverTracker.getLayoutListRetriever(type);
-
-			if (layoutListRetriever != null) {
-				ListObjectReferenceFactory listObjectReferenceFactory =
-					_listObjectReferenceFactoryTracker.getListObjectReference(
-						type);
-
-				if (listObjectReferenceFactory != null) {
-					long segmentsExperienceId = ParamUtil.getLong(
-						resourceRequest, "segmentsExperienceId");
-
-					DefaultLayoutListRetrieverContext
-						defaultLayoutListRetrieverContext =
-							new DefaultLayoutListRetrieverContext();
-
-					defaultLayoutListRetrieverContext.setPagination(
-						Pagination.of(size, 0));
-					defaultLayoutListRetrieverContext.
-						setSegmentsExperienceIdsOptional(
-							new long[] {segmentsExperienceId});
-
-					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-					ListObjectReference listObjectReference =
-						listObjectReferenceFactory.getListObjectReference(
-							layoutObjectReferenceJSONObject);
-
-					List list = layoutListRetriever.getList(
-						listObjectReference, defaultLayoutListRetrieverContext);
-
-					// LPS-111037
-
-					String itemType = listObjectReference.getItemType();
-
-					if (Objects.equals(
-							DLFileEntryConstants.getClassName(), itemType)) {
-
-						itemType = FileEntry.class.getName();
-					}
-
-					InfoDisplayContributor infoDisplayContributor =
-						_infoDisplayContributorTracker.
-							getInfoDisplayContributor(itemType);
-
-					for (Object object : list) {
-						jsonArray.put(
-							_getDisplayObjectJSONObject(
-								infoDisplayContributor, object,
-								themeDisplay.getLocale()));
-					}
-
-					jsonObject.put(
-						"items", jsonArray
-					).put(
-						"length",
-						layoutListRetriever.getListCount(
-							listObjectReference,
-							defaultLayoutListRetrieverContext)
-					);
-				}
-			}
+			jsonObject = _getCollectionFieldsJSONObject(
+				layoutObjectReference, themeDisplay.getLocale(),
+				segmentsExperienceId, size);
 		}
 		catch (Exception exception) {
 			jsonObject.put(
@@ -156,6 +94,78 @@ public class GetCollectionFieldMVCResourceCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
+	}
+
+	private JSONObject _getCollectionFieldsJSONObject(
+			String layoutObjectReference, Locale locale,
+			long segmentsExperienceId, int size)
+		throws PortalException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject layoutObjectReferenceJSONObject =
+			JSONFactoryUtil.createJSONObject(layoutObjectReference);
+
+		String type = layoutObjectReferenceJSONObject.getString("type");
+
+		LayoutListRetriever layoutListRetriever =
+			_layoutListRetrieverTracker.getLayoutListRetriever(type);
+
+		if (layoutListRetriever != null) {
+			ListObjectReferenceFactory listObjectReferenceFactory =
+				_listObjectReferenceFactoryTracker.getListObjectReference(type);
+
+			if (listObjectReferenceFactory != null) {
+				DefaultLayoutListRetrieverContext
+					defaultLayoutListRetrieverContext =
+						new DefaultLayoutListRetrieverContext();
+
+				defaultLayoutListRetrieverContext.setPagination(
+					Pagination.of(size, 0));
+				defaultLayoutListRetrieverContext.
+					setSegmentsExperienceIdsOptional(
+						new long[] {segmentsExperienceId});
+
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				ListObjectReference listObjectReference =
+					listObjectReferenceFactory.getListObjectReference(
+						layoutObjectReferenceJSONObject);
+
+				List list = layoutListRetriever.getList(
+					listObjectReference, defaultLayoutListRetrieverContext);
+
+				// LPS-111037
+
+				String itemType = listObjectReference.getItemType();
+
+				if (Objects.equals(
+						DLFileEntryConstants.getClassName(), itemType)) {
+
+					itemType = FileEntry.class.getName();
+				}
+
+				InfoDisplayContributor infoDisplayContributor =
+					_infoDisplayContributorTracker.getInfoDisplayContributor(
+						itemType);
+
+				for (Object object : list) {
+					jsonArray.put(
+						_getDisplayObjectJSONObject(
+							infoDisplayContributor, object, locale));
+				}
+
+				jsonObject.put(
+					"items", jsonArray
+				).put(
+					"length",
+					layoutListRetriever.getListCount(
+						listObjectReference, defaultLayoutListRetrieverContext)
+				);
+			}
+		}
+
+		return jsonObject;
 	}
 
 	private JSONObject _getDisplayObjectJSONObject(

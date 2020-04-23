@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + AppBuilderPortletKeys.CUSTOM_OBJECTS,
+		"javax.portlet.name=" + AppBuilderPortletKeys.OBJECTS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
 	service = Portlet.class
 )
-public class CustomObjectsPortlet extends MVCPortlet {
+public class ObjectsPortlet extends MVCPortlet {
 }

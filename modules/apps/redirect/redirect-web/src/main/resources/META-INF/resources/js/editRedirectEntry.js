@@ -12,7 +12,7 @@
  * details.
  */
 
-import {errorToast} from './utils/toast';
+import {openToast} from 'frontend-js-web';
 
 export default function({checkDestinationURL, namespace}) {
 	var form = document[`${namespace}fm`];
@@ -41,7 +41,13 @@ export default function({checkDestinationURL, namespace}) {
 					}
 				})
 				.catch(() => {
-					errorToast();
+					openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						title: `${Liferay.Language.get('error')}:`,
+						type: 'danger',
+					});
 				});
 		}
 		else {

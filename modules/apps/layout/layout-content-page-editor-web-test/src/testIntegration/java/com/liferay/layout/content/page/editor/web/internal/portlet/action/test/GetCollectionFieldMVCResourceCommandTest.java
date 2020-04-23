@@ -25,7 +25,6 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,7 +52,6 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -84,11 +81,12 @@ public class GetCollectionFieldMVCResourceCommandTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = new ServiceContext();
+		_serviceContext = new ServiceContext();
 
-		serviceContext.setScopeGroupId(_group.getGroupId());
+		_serviceContext.setScopeGroupId(_group.getGroupId());
+		_serviceContext.setUserId(TestPropsValues.getUserId());
 
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -109,11 +107,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 	public void testGetCollectionFieldFromCollectionProvider()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		BlogsEntry blogsEntry = _addBlogsEntry(serviceContext);
+		BlogsEntry blogsEntry = _addBlogsEntry();
 
 		JSONObject layoutObjectReferenceJSONObject = JSONUtil.put(
 			"itemType", BlogsEntry.class.getName()
@@ -141,18 +135,14 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 	@Test
 	public void testGetCollectionFieldFromDynamicCollection() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		BlogsEntry blogsEntry1 = _addBlogsEntry();
 
-		BlogsEntry blogsEntry1 = _addBlogsEntry(serviceContext);
-
-		BlogsEntry blogsEntry2 = _addBlogsEntry(serviceContext);
+		BlogsEntry blogsEntry2 = _addBlogsEntry();
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				"Collection Title", _getTypeSettings(), serviceContext);
+				"Collection Title", _getTypeSettings(), _serviceContext);
 
 		JSONObject layoutObjectReferenceJSONObject = JSONUtil.put(
 			"classNameId",
@@ -190,18 +180,14 @@ public class GetCollectionFieldMVCResourceCommandTest {
 	public void testGetCollectionFieldFromDynamicCollectionWithSize()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		BlogsEntry blogsEntry = _addBlogsEntry(serviceContext);
-
-		_addBlogsEntry(serviceContext);
+		_addBlogsEntry();
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				"Collection Title", _getTypeSettings(), serviceContext);
+				"Collection Title", _getTypeSettings(), _serviceContext);
 
 		JSONObject layoutObjectReferenceJSONObject = JSONUtil.put(
 			"classNameId",
@@ -231,14 +217,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		Assert.assertEquals(blogsEntry.getTitle(), item1.getString("title"));
 	}
 
-	private BlogsEntry _addBlogsEntry(ServiceContext serviceContext)
-		throws Exception {
-
+	private BlogsEntry _addBlogsEntry() throws Exception {
 		return _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, null, null, serviceContext);
+			RandomTestUtil.randomString(), _serviceContext);
 	}
 
 	private String _getTypeSettings() {
@@ -274,6 +256,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	private ServiceContext _serviceContext;
 
 	private class TestInfoListProvider implements InfoListProvider<BlogsEntry> {
 

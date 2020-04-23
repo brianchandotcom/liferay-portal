@@ -218,7 +218,7 @@ describe('RatingsThumbs', () => {
 	describe('when there is a valid server response', () => {
 		beforeEach(() => {
 			fetch.mockResponseOnce(
-				JSON.stringify({totalEntries: 59 + 27, totalScore: 59})
+				JSON.stringify({totalEntries: 59 + 27, totalScore: 26.7})
 			);
 		});
 
@@ -250,9 +250,9 @@ describe('RatingsThumbs', () => {
 				expect(objFormData.score).toBe('1');
 			});
 
-			it('updates the counters with the ones from the server', () => {
-				expect(thumbUpButton.value).toBe('59');
-				expect(thumbDownButton.value).toBe('27');
+			it('updates the rounded counters with the ones from the server', () => {
+				expect(thumbUpButton.value).toBe('27');
+				expect(thumbDownButton.value).toBe('59');
 			});
 		});
 	});

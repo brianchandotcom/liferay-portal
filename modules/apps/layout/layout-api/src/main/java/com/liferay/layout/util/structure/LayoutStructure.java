@@ -39,6 +39,10 @@ import java.util.UUID;
 public class LayoutStructure {
 
 	public static LayoutStructure of(String layoutStructure) {
+		if (Validator.isNull(layoutStructure)) {
+			return new LayoutStructure();
+		}
+
 		try {
 			JSONObject layoutStructureJSONObject =
 				JSONFactoryUtil.createJSONObject(layoutStructure);

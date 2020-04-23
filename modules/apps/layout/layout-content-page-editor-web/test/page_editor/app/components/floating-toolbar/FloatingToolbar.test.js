@@ -40,6 +40,17 @@ jest.mock(
 	})
 );
 
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			languageDirection: {
+				language: 'ltr',
+			},
+		},
+	})
+);
+
 const buttons = [
 	{
 		icon: 'icon',
@@ -67,8 +78,12 @@ const renderFloatingToolbar = ({onButtonClick = () => {}}) => {
 
 	itemRef.current = document.createElement('div');
 
+	const state = {
+		languageId: 'language',
+	};
+
 	return render(
-		<StoreAPIContextProvider>
+		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
 			<div className="page-editor__sidebar__content"></div>
 			<FloatingToolbar
 				buttons={buttons}

@@ -392,9 +392,42 @@ definition {
 
 		Refresh();
 
-		AssertElementPresent(
-			key_searchAssetTitle = "multiple connections is cool",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+		if (IsElementPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE", key_searchAssetTitle = "multiple connections is cool")) {
+			AssertElementPresent(
+				key_searchAssetTitle = "multiple connections is cool",
+				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+		}
+		else {
+			Portlet.gotoPortletOptions(
+				portletName = "Search Results",
+				portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			ScrollWebElementIntoView(
+				key_text = "Fields to Display",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			takeScreenshot();
+
+			IFrame.closeFrame();
+
+			Portlet.gotoPortletOptions(
+				portletName = "Custom Filter",
+				portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			ScrollWebElementIntoView(
+				key_text = "Occur",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			takeScreenshot();
+
+			IFrame.closeFrame();
+
+			fail("FAIL - need to check screenshots.");
+		}
 	}
 
 	@priority = "5"

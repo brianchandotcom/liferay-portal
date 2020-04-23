@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.configuration.RedirectConfiguration;
@@ -37,8 +38,6 @@ import java.time.temporal.ChronoUnit;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -147,11 +146,7 @@ public class RedirectEntryLocalServiceImpl
 			groupId, sourceURL);
 
 		if (redirectEntry != null) {
-			Date expirationDate = redirectEntry.getExpirationDate();
-
-			if ((expirationDate != null) &&
-				(DateUtil.compareTo(expirationDate, DateUtil.newDate()) <= 0)) {
-
+			if (_isExpired(redirectEntry)) {
 				return null;
 			}
 
@@ -187,22 +182,9 @@ public class RedirectEntryLocalServiceImpl
 			return null;
 		}
 
-		List<RedirectEntry> redirectEntries =
-			redirectEntryPersistence.findByG_D(groupId, destinationURL);
-
-		Stream<RedirectEntry> stream = redirectEntries.stream();
-
-		return stream.filter(
-			redirectEntry -> {
-				int expirationDateBeforeToday = DateUtil.compareTo(
-					redirectEntry.getExpirationDate(), DateUtil.newDate());
-
-				return (redirectEntry.getExpirationDate() == null) ||
-					   (expirationDateBeforeToday <= 0);
-			}
-		).collect(
-			Collectors.toList()
-		);
+		return ListUtil.filter(
+			redirectEntryPersistence.findByG_D(groupId, destinationURL),
+			redirectEntry -> !_isExpired(redirectEntry));
 	}
 
 	@Override
@@ -243,6 +225,18 @@ public class RedirectEntryLocalServiceImpl
 		Instant instant = date.toInstant();
 
 		return instant.truncatedTo(ChronoUnit.DAYS);
+	}
+
+	private boolean _isExpired(RedirectEntry redirectEntry) {
+		Date expirationDate = redirectEntry.getExpirationDate();
+
+		if ((expirationDate != null) &&
+			(DateUtil.compareTo(expirationDate, DateUtil.newDate()) <= 0)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isInTheSameDay(Date date1, Date date2) {

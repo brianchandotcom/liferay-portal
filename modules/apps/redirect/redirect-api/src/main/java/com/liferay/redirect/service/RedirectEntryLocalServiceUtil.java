@@ -257,7 +257,7 @@ public class RedirectEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
 		findRedirectEntryDestinationURL(long groupId, String destinationURL) {
 
-		return getService().findRedirectEntryDestinationURL(
+		return getService().getRedirectEntriesByGroupAndDestinationURL(
 			groupId, destinationURL);
 	}
 

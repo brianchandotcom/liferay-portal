@@ -58,7 +58,7 @@ public class CheckDestinationURLMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		List<RedirectEntry> redirectEntriesDestinationURL =
-			_redirectEntryService.getRedirectEntriesDestinationURL(
+			_redirectEntryService.getRedirectEntriesByGroupAndDestinationURL(
 				sourceURL, themeDisplay.getScopeGroupId());
 
 		JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);

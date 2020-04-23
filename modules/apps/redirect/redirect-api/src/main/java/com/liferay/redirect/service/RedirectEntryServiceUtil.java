@@ -90,7 +90,7 @@ public class RedirectEntryServiceUtil {
 	public static java.util.List<com.liferay.redirect.model.RedirectEntry>
 		getRedirectEntriesDestinationURL(String destinationURL, long groupId) {
 
-		return getService().getRedirectEntriesDestinationURL(
+		return getService().getRedirectEntriesByGroupAndDestinationURL(
 			destinationURL, groupId);
 	}
 

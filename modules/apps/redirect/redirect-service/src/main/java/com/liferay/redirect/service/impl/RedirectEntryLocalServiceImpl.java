@@ -172,7 +172,15 @@ public class RedirectEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<RedirectEntry> findRedirectEntryDestinationURL(
+	public List<RedirectEntry> getRedirectEntries(
+		long groupId, int start, int end,
+		OrderByComparator<RedirectEntry> obc) {
+
+		return redirectEntryPersistence.findByGroupId(groupId, start, end, obc);
+	}
+
+	@Override
+	public List<RedirectEntry> getRedirectEntriesByGroupAndDestinationURL(
 		long groupId, String destinationURL) {
 
 		if (!_redirectConfiguration.isEnabled()) {
@@ -195,14 +203,6 @@ public class RedirectEntryLocalServiceImpl
 		).collect(
 			Collectors.toList()
 		);
-	}
-
-	@Override
-	public List<RedirectEntry> getRedirectEntries(
-		long groupId, int start, int end,
-		OrderByComparator<RedirectEntry> obc) {
-
-		return redirectEntryPersistence.findByGroupId(groupId, start, end, obc);
 	}
 
 	@Override

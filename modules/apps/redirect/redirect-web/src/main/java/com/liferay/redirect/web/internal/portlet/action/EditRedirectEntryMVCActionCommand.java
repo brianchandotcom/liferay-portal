@@ -84,8 +84,9 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (updateReferences) {
 				List<RedirectEntry> redirectEntriesDestinationURL =
-					_redirectEntryService.getRedirectEntriesDestinationURL(
-						sourceURL, themeDisplay.getScopeGroupId());
+					_redirectEntryService.
+						getRedirectEntriesByGroupAndDestinationURL(
+							sourceURL, themeDisplay.getScopeGroupId());
 
 				for (RedirectEntry redirectEntry :
 						redirectEntriesDestinationURL) {

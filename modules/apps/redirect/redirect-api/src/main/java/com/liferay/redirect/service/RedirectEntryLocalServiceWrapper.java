@@ -272,9 +272,9 @@ public class RedirectEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.redirect.model.RedirectEntry>
-		findRedirectEntryDestinationURL(long groupId, String destinationURL) {
+	getRedirectEntriesByGroupAndDestinationURL(long groupId, String destinationURL) {
 
-		return _redirectEntryLocalService.findRedirectEntryDestinationURL(
+		return _redirectEntryLocalService.getRedirectEntriesByGroupAndDestinationURL(
 			groupId, destinationURL);
 	}
 

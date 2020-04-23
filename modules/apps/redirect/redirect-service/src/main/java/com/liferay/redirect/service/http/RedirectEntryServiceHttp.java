@@ -264,7 +264,7 @@ public class RedirectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RedirectEntryServiceUtil.class,
-				"getRedirectEntriesDestinationURL",
+				"getRedirectEntriesByGroupAndDestinationURL",
 				_getRedirectEntriesDestinationURLParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(

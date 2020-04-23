@@ -218,7 +218,7 @@ public interface RedirectEntryLocalService
 	public RedirectEntry fetchRedirectEntryByUuidAndGroupId(
 		String uuid, long groupId);
 
-	public List<RedirectEntry> findRedirectEntryDestinationURL(
+	public List<RedirectEntry> getRedirectEntriesByGroupAndDestinationURL(
 		long groupId, String destinationURL);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -115,6 +115,7 @@ import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.JavaExec;
@@ -243,45 +244,66 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		taskContainer.withType(
 			BuildWSDDTask.class,
-			buildWSDDTask -> {
-				TaskProvider<Jar> buildWSDDJarTaskProvider =
-					GradleUtil.addTaskProvider(
-						project, buildWSDDTask.getName() + "Jar", Jar.class);
+			new Action<BuildWSDDTask>() {
 
-				_configureTaskBuildWSDDJarProvider(
-					project, liferayExtension, liferayOSGiExtension,
-					buildWSDDTask, buildWSDDJarTaskProvider, cleanTaskProvider,
-					deployTaskProvider);
+				@Override
+				public void execute(BuildWSDDTask buildWSDDTask) {
+					TaskProvider<Jar> buildWSDDJarTaskProvider =
+						GradleUtil.addTaskProvider(
+							project, buildWSDDTask.getName() + "Jar",
+							Jar.class);
+
+					_configureTaskBuildWSDDJarProvider(
+						project, liferayExtension, liferayOSGiExtension,
+						buildWSDDTask, buildWSDDJarTaskProvider,
+						cleanTaskProvider, deployTaskProvider);
+				}
+
 			});
 
 		taskContainer.configureEach(
-			task -> {
-				if (task instanceof JavaCompile) {
-					_configureTaskJavaCompile((JavaCompile)task, true);
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					if (task instanceof JavaCompile) {
+						_configureTaskJavaCompile((JavaCompile)task, true);
+					}
+
+					if (task instanceof Test) {
+						_configureTaskTest((Test)task);
+					}
 				}
 
-				if (task instanceof Test) {
-					_configureTaskTest((Test)task);
-				}
 			});
 
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.configureEach(
-			plugin -> {
-				if (plugin instanceof ApplicationPlugin) {
-					_configurePluginApplication(
-						project, compileIncludeConfiguration);
+			new Action<Plugin>() {
+
+				@Override
+				public void execute(Plugin plugin) {
+					if (plugin instanceof ApplicationPlugin) {
+						_configurePluginApplication(
+							project, compileIncludeConfiguration);
+					}
 				}
+
 			});
 
 		project.afterEvaluate(
-			curProject -> {
-				_configureExtensionBundleAfterEvaluate(
-					curProject, liferayOSGiExtension,
-					compileIncludeConfiguration);
-				_configureTaskDeployDependenciesProviderAfterEvaluate(
-					deployDependenciesTaskProvider);
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureExtensionBundleAfterEvaluate(
+						project, liferayOSGiExtension,
+						compileIncludeConfiguration);
+					_configureTaskDeployDependenciesProviderAfterEvaluate(
+						deployDependenciesTaskProvider);
+				}
+
 			});
 	}
 
@@ -422,8 +444,23 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		IncludeResourceCompileIncludeInstruction
 			includeResourceCompileIncludeInstruction =
 				new IncludeResourceCompileIncludeInstruction(
-					() -> compileIncludeConfiguration,
-					liferayOSGiExtension::isExpandCompileInclude);
+					new Callable<Iterable<File>>() {
+
+						@Override
+						public Iterable<File> call() throws Exception {
+							return compileIncludeConfiguration;
+						}
+
+					},
+					new Callable<Boolean>() {
+
+						@Override
+						public Boolean call() throws Exception {
+							return liferayOSGiExtension.
+								isExpandCompileInclude();
+						}
+
+					});
 
 		bundleInstructions.put(
 			Constants.INCLUDERESOURCE + "." +
@@ -448,11 +485,18 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final Project project, final LiferayExtension liferayExtension) {
 
 		liferayExtension.setDeployDir(
-			(Callable<File>)() -> {
-				File dir = new File(
-					liferayExtension.getAppServerParentDir(), "osgi/modules");
+			new Callable<File>() {
 
-				return GradleUtil.getProperty(project, "auto.deploy.dir", dir);
+				@Override
+				public File call() throws Exception {
+					File dir = new File(
+						liferayExtension.getAppServerParentDir(),
+						"osgi/modules");
+
+					return GradleUtil.getProperty(
+						project, "auto.deploy.dir", dir);
+				}
+
 			});
 	}
 
@@ -473,7 +517,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			project, ApplicationPlugin.TASK_RUN_NAME, JavaExec.class);
 
 		runTaskProvider.configure(
-			runTask -> runTask.classpath(compileIncludeConfiguration));
+			new Action<JavaExec>() {
+
+				@Override
+				public void execute(JavaExec runTask) {
+					runTask.classpath(compileIncludeConfiguration);
+				}
+
+			});
 	}
 
 	private void _configureProject(Project project) {
@@ -536,112 +587,161 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TaskProvider<Jar> jarTaskProvider) {
 
 		directDeployTaskProvider.configure(
-			directDeployTask -> {
-				directDeployTask.setAppServerDeployDir(
-					directDeployTask.getTemporaryDir());
-				directDeployTask.setAppServerType("tomcat");
+			new Action<DirectDeployTask>() {
 
-				final Jar jarTask = jarTaskProvider.get();
+				@Override
+				public void execute(final DirectDeployTask directDeployTask) {
+					directDeployTask.setAppServerDeployDir(
+						directDeployTask.getTemporaryDir());
+					directDeployTask.setAppServerType("tomcat");
 
-				directDeployTask.setWebAppFile(
-					(Callable<File>)() -> FileUtil.replaceExtension(
-						jarTask.getArchivePath(), War.WAR_EXTENSION));
+					final Jar jarTask = jarTaskProvider.get();
 
-				directDeployTask.setWebAppType("portlet");
+					directDeployTask.setWebAppFile(
+						new Callable<File>() {
 
-				directDeployTask.doFirst(
-					task -> {
-						File jarFile = jarTask.getArchivePath();
+							@Override
+							public File call() throws Exception {
+								return FileUtil.replaceExtension(
+									jarTask.getArchivePath(),
+									War.WAR_EXTENSION);
+							}
 
-						jarFile.renameTo(directDeployTask.getWebAppFile());
-					});
+						});
 
-				directDeployTask.doLast(
-					task -> {
-						Logger logger = task.getLogger();
+					directDeployTask.setWebAppType("portlet");
 
-						project.delete("liferay/logs");
+					directDeployTask.doFirst(
+						new Action<Task>() {
 
-						File liferayDir = project.file("liferay");
+							@Override
+							public void execute(Task task) {
+								File jarFile = jarTask.getArchivePath();
 
-						boolean deleted = liferayDir.delete();
+								jarFile.renameTo(
+									directDeployTask.getWebAppFile());
+							}
 
-						if (!deleted && logger.isInfoEnabled()) {
-							logger.info("Unable to delete " + liferayDir);
-						}
-					});
+						});
 
-				directDeployTask.doLast(
-					task -> {
-						String deployedPluginDirName = FileUtil.stripExtension(
-							jarTask.getArchiveName());
+					directDeployTask.doLast(
+						new Action<Task>() {
 
-						File deployedPluginDir = new File(
-							directDeployTask.getAppServerDeployDir(),
-							deployedPluginDirName);
+							@Override
+							public void execute(Task task) {
+								Logger logger = task.getLogger();
 
-						if (!deployedPluginDir.exists()) {
-							deployedPluginDir = new File(
-								directDeployTask.getAppServerDeployDir(),
-								project.getName());
-						}
+								project.delete("liferay/logs");
 
-						if (!deployedPluginDir.exists()) {
-							_logger.warn(
-								"Unable to automatically update web.xml in " +
-									jarTask.getArchivePath());
+								File liferayDir = project.file("liferay");
 
-							return;
-						}
+								boolean deleted = liferayDir.delete();
 
-						FileUtil.touchFiles(
-							project, deployedPluginDir, 0,
-							"WEB-INF/liferay-web.xml", "WEB-INF/web.xml",
-							"WEB-INF/tld/*");
+								if (!deleted && logger.isInfoEnabled()) {
+									logger.info(
+										"Unable to delete " + liferayDir);
+								}
+							}
 
-						deployedPluginDirName = project.relativePath(
-							deployedPluginDir);
+						});
 
-						String[][] filesets = {
-							{
-								project.relativePath(
-									liferayExtension.getAppServerPortalDir()),
-								"WEB-INF/tld/c.tld"
-							},
-							{
-								deployedPluginDirName,
-								"WEB-INF/liferay-web.xml,WEB-INF/web.xml"
-							},
-							{deployedPluginDirName, "WEB-INF/tld/*"}
-						};
+					directDeployTask.doLast(
+						new Action<Task>() {
 
-						File warFile = directDeployTask.getWebAppFile();
+							@Override
+							public void execute(Task task) {
+								String deployedPluginDirName =
+									FileUtil.stripExtension(
+										jarTask.getArchiveName());
 
-						FileUtil.jar(
-							project, warFile, "preserve", true, filesets);
+								File deployedPluginDir = new File(
+									directDeployTask.getAppServerDeployDir(),
+									deployedPluginDirName);
 
-						warFile.renameTo(jarTask.getArchivePath());
-					});
+								if (!deployedPluginDir.exists()) {
+									deployedPluginDir = new File(
+										directDeployTask.
+											getAppServerDeployDir(),
+										project.getName());
+								}
 
-				directDeployTask.onlyIf(
-					task -> {
-						if (liferayOSGiExtension.isAutoUpdateXml() &&
-							FileUtil.exists(
-								project, "docroot/WEB-INF/portlet.xml")) {
+								if (!deployedPluginDir.exists()) {
+									_logger.warn(
+										"Unable to automatically update " +
+											"web.xml in " +
+												jarTask.getArchivePath());
 
-							return true;
-						}
+									return;
+								}
 
-						return false;
-					});
+								FileUtil.touchFiles(
+									project, deployedPluginDir, 0,
+									"WEB-INF/liferay-web.xml",
+									"WEB-INF/web.xml", "WEB-INF/tld/*");
 
-				TaskInputs taskInputs = directDeployTask.getInputs();
+								deployedPluginDirName = project.relativePath(
+									deployedPluginDir);
 
-				taskInputs.file((Callable<File>)jarTask::getArchivePath);
+								String[][] filesets = {
+									{
+										project.relativePath(
+											liferayExtension.
+												getAppServerPortalDir()),
+										"WEB-INF/tld/c.tld"
+									},
+									{
+										deployedPluginDirName,
+										"WEB-INF/liferay-web.xml," +
+											"WEB-INF/web.xml"
+									},
+									{deployedPluginDirName, "WEB-INF/tld/*"}
+								};
+
+								File warFile = directDeployTask.getWebAppFile();
+
+								FileUtil.jar(
+									project, warFile, "preserve", true,
+									filesets);
+
+								warFile.renameTo(jarTask.getArchivePath());
+							}
+
+						});
+
+					directDeployTask.onlyIf(
+						new Spec<Task>() {
+
+							@Override
+							public boolean isSatisfiedBy(Task task) {
+								if (liferayOSGiExtension.isAutoUpdateXml() &&
+									FileUtil.exists(
+										project,
+										"docroot/WEB-INF/portlet.xml")) {
+
+									return true;
+								}
+
+								return false;
+							}
+
+						});
+
+					TaskInputs taskInputs = directDeployTask.getInputs();
+
+					taskInputs.file((Callable<File>)jarTask::getArchivePath);
+				}
+
 			});
 
 		jarTaskProvider.configure(
-			jar -> jar.finalizedBy(directDeployTaskProvider));
+			new Action<Jar>() {
+
+				@Override
+				public void execute(Jar jarTask) {
+					jarTask.finalizedBy(directDeployTaskProvider);
+				}
+
+			});
 	}
 
 	private void _configureTaskBuildWSDDJarProvider(
@@ -653,165 +753,188 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TaskProvider<Copy> deployTaskProvider) {
 
 		buildWSDDJarTaskProvider.configure(
-			buildWSDDJarTask -> {
-				buildWSDDJarTask.setActions(Collections.emptyList());
+			new Action<Jar>() {
 
-				buildWSDDJarTask.dependsOn(buildWSDDTask);
+				@Override
+				public void execute(Jar buildWSDDJarTask) {
+					buildWSDDJarTask.setActions(Collections.emptyList());
 
-				buildWSDDJarTask.doLast(
-					task -> {
-						Logger logger = project.getLogger();
+					buildWSDDJarTask.dependsOn(buildWSDDTask);
 
-						Properties gradleProperties = new PropertiesWrapper();
+					buildWSDDJarTask.doLast(
+						new Action<Task>() {
 
-						gradleProperties.put("project", project);
-						gradleProperties.put("task", task);
+							@Override
+							public void execute(Task task) {
+								Logger logger = project.getLogger();
 
-						try (Builder builder = new Builder(
-								new Processor(gradleProperties, false))) {
+								Properties gradleProperties =
+									new PropertiesWrapper();
 
-							Map<String, String> properties =
-								_getBuilderProperties(
-									project, liferayOSGiExtension,
-									buildWSDDTask);
+								gradleProperties.put("project", project);
+								gradleProperties.put("task", task);
 
-							File buildFile = project.getBuildFile();
+								try (Builder builder = new Builder(
+										new Processor(
+											gradleProperties, false))) {
 
-							builder.setBase(buildFile.getParentFile());
+									Map<String, String> properties =
+										_getBuilderProperties(
+											project, liferayOSGiExtension,
+											buildWSDDTask);
 
-							builder.putAll(properties, true);
+									File buildFile = project.getBuildFile();
 
-							SourceSet sourceSet = GradleUtil.getSourceSet(
-								project, SourceSet.MAIN_SOURCE_SET_NAME);
+									builder.setBase(buildFile.getParentFile());
 
-							SourceDirectorySet sourceDirectorySet =
-								sourceSet.getJava();
+									builder.putAll(properties, true);
 
-							SourceSetOutput sourceSetOutput =
-								sourceSet.getOutput();
+									SourceSet sourceSet =
+										GradleUtil.getSourceSet(
+											project,
+											SourceSet.MAIN_SOURCE_SET_NAME);
 
-							FileCollection buildDirs = project.files(
-								sourceDirectorySet.getOutputDir(),
-								sourceSetOutput.getResourcesDir());
+									SourceDirectorySet sourceDirectorySet =
+										sourceSet.getJava();
 
-							builder.setClasspath(
-								buildDirs.getFiles(
-								).toArray(
-									new File[0]
-								));
-							builder.setProperty(
-								"project.buildpath", buildDirs.getAsPath());
+									SourceSetOutput sourceSetOutput =
+										sourceSet.getOutput();
 
-							if (logger.isDebugEnabled()) {
-								logger.debug(
-									"Builder Classpath: {}",
-									buildDirs.getAsPath());
+									FileCollection buildDirs = project.files(
+										sourceDirectorySet.getOutputDir(),
+										sourceSetOutput.getResourcesDir());
+
+									builder.setClasspath(
+										buildDirs.getFiles(
+										).toArray(
+											new File[0]
+										));
+									builder.setProperty(
+										"project.buildpath",
+										buildDirs.getAsPath());
+
+									if (logger.isDebugEnabled()) {
+										logger.debug(
+											"Builder Classpath: {}",
+											buildDirs.getAsPath());
+									}
+
+									SourceDirectorySet allSource =
+										sourceSet.getAllSource();
+
+									Set<File> srcDirs = allSource.getSrcDirs();
+
+									Stream<File> stream = srcDirs.stream();
+
+									FileCollection sourceDirs = project.files(
+										stream.filter(
+											File::exists
+										).collect(
+											Collectors.toList()
+										));
+
+									builder.setProperty(
+										"project.sourcepath",
+										sourceDirs.getAsPath());
+									builder.setSourcepath(
+										sourceDirs.getFiles(
+										).toArray(
+											new File[0]
+										));
+
+									if (logger.isDebugEnabled()) {
+										logger.debug(
+											"Builder Sourcepath: {}",
+											builder.getSourcePath());
+									}
+
+									String bundleSymbolicName =
+										builder.getProperty(
+											Constants.BUNDLE_SYMBOLICNAME);
+
+									if (Validator.isNull(bundleSymbolicName) ||
+										Constants.EMPTY_HEADER.equals(
+											bundleSymbolicName)) {
+
+										builder.setProperty(
+											Constants.BUNDLE_SYMBOLICNAME,
+											project.getName());
+									}
+
+									String bundleVersion = builder.getProperty(
+										Constants.BUNDLE_VERSION);
+
+									if ((Validator.isNull(bundleVersion) ||
+										 Constants.EMPTY_HEADER.equals(
+											 bundleVersion)) &&
+										(project.getVersion() != null)) {
+
+										Object version = project.getVersion();
+
+										MavenVersion mavenVersion =
+											MavenVersion.parseString(
+												version.toString());
+
+										Version osgiVersion =
+											mavenVersion.getOSGiVersion();
+
+										builder.setProperty(
+											Constants.BUNDLE_VERSION,
+											osgiVersion.toString());
+									}
+
+									if (logger.isDebugEnabled()) {
+										logger.debug(
+											"Builder Properties: {}",
+											properties);
+									}
+
+									aQute.bnd.osgi.Jar bndJar = builder.build();
+
+									if (!builder.isOk()) {
+										BndUtils.logReport(builder, logger);
+
+										new GradleException(
+											buildWSDDTask + " failed");
+									}
+
+									TaskOutputs taskOutputs = task.getOutputs();
+
+									FileCollection fileCollection =
+										taskOutputs.getFiles();
+
+									bndJar.write(
+										fileCollection.getSingleFile());
+
+									BndUtils.logReport(builder, logger);
+
+									if (!builder.isOk()) {
+										new GradleException(
+											buildWSDDTask + " failed");
+									}
+								}
+								catch (Exception exception) {
+									new GradleException(
+										buildWSDDTask + " failed", exception);
+								}
 							}
 
-							SourceDirectorySet allSource =
-								sourceSet.getAllSource();
+						});
 
-							Set<File> srcDirs = allSource.getSrcDirs();
+					String taskName = buildWSDDTask.getName();
 
-							Stream<File> stream = srcDirs.stream();
+					if (taskName.equals(
+							WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME)) {
 
-							FileCollection sourceDirs = project.files(
-								stream.filter(
-									File::exists
-								).collect(
-									Collectors.toList()
-								));
+						buildWSDDJarTask.setAppendix("wsdd");
+					}
+					else {
+						buildWSDDJarTask.setAppendix("wsdd-" + taskName);
+					}
 
-							builder.setProperty(
-								"project.sourcepath", sourceDirs.getAsPath());
-							builder.setSourcepath(
-								sourceDirs.getFiles(
-								).toArray(
-									new File[0]
-								));
-
-							if (logger.isDebugEnabled()) {
-								logger.debug(
-									"Builder Sourcepath: {}",
-									builder.getSourcePath());
-							}
-
-							String bundleSymbolicName = builder.getProperty(
-								Constants.BUNDLE_SYMBOLICNAME);
-
-							if (Validator.isNull(bundleSymbolicName) ||
-								Constants.EMPTY_HEADER.equals(
-									bundleSymbolicName)) {
-
-								builder.setProperty(
-									Constants.BUNDLE_SYMBOLICNAME,
-									project.getName());
-							}
-
-							String bundleVersion = builder.getProperty(
-								Constants.BUNDLE_VERSION);
-
-							if ((Validator.isNull(bundleVersion) ||
-								 Constants.EMPTY_HEADER.equals(
-									 bundleVersion)) &&
-								(project.getVersion() != null)) {
-
-								Object version = project.getVersion();
-
-								MavenVersion mavenVersion =
-									MavenVersion.parseString(
-										version.toString());
-
-								Version osgiVersion =
-									mavenVersion.getOSGiVersion();
-
-								builder.setProperty(
-									Constants.BUNDLE_VERSION,
-									osgiVersion.toString());
-							}
-
-							if (logger.isDebugEnabled()) {
-								logger.debug(
-									"Builder Properties: {}", properties);
-							}
-
-							aQute.bnd.osgi.Jar bndJar = builder.build();
-
-							if (!builder.isOk()) {
-								BndUtils.logReport(builder, logger);
-
-								new GradleException(buildWSDDTask + " failed");
-							}
-
-							TaskOutputs taskOutputs = task.getOutputs();
-
-							FileCollection fileCollection =
-								taskOutputs.getFiles();
-
-							bndJar.write(fileCollection.getSingleFile());
-
-							BndUtils.logReport(builder, logger);
-
-							if (!builder.isOk()) {
-								new GradleException(buildWSDDTask + " failed");
-							}
-						}
-						catch (Exception exception) {
-							new GradleException(
-								buildWSDDTask + " failed", exception);
-						}
-					});
-
-				String taskName = buildWSDDTask.getName();
-
-				if (taskName.equals(WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME)) {
-					buildWSDDJarTask.setAppendix("wsdd");
+					buildWSDDTask.finalizedBy(buildWSDDJarTask);
 				}
-				else {
-					buildWSDDJarTask.setAppendix("wsdd-" + taskName);
-				}
 
-				buildWSDDTask.finalizedBy(buildWSDDJarTask);
 			});
 
 		_configureTaskCleanProvider(
@@ -829,97 +952,116 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final TaskProvider<Jar> jarTaskProvider) {
 
 		cleanTaskProvider.configure(
-			cleanTask -> cleanTask.delete(
-				(Callable<File>)() -> {
-					boolean cleanDeployed = GradleUtil.getProperty(
-						cleanTask, CLEAN_DEPLOYED_PROPERTY_NAME, true);
+			new Action<Delete>() {
 
-					if (!cleanDeployed) {
-						return null;
-					}
+				@Override
+				public void execute(Delete cleanTask) {
+					cleanTask.delete(
+						new Callable<File>() {
 
-					Copy deployTask = deployTaskProvider.get();
-					Jar jarTask = jarTaskProvider.get();
+							@Override
+							public File call() throws Exception {
+								boolean cleanDeployed = GradleUtil.getProperty(
+									cleanTask, CLEAN_DEPLOYED_PROPERTY_NAME,
+									true);
 
-					Closure<String> deployedFileNameClosure =
-						liferayExtension.getDeployedFileNameClosure();
+								if (!cleanDeployed) {
+									return null;
+								}
 
-					return new File(
-						deployTask.getDestinationDir(),
-						deployedFileNameClosure.call(jarTask));
-				}));
+								Copy deployTask = deployTaskProvider.get();
+								Jar jarTask = jarTaskProvider.get();
+
+								Closure<String> deployedFileNameClosure =
+									liferayExtension.
+										getDeployedFileNameClosure();
+
+								return new File(
+									deployTask.getDestinationDir(),
+									deployedFileNameClosure.call(jarTask));
+							}
+
+						});
+				}
+
+			});
 	}
 
 	private void _configureTaskCleanProvider(
 		final Project project, TaskProvider<Delete> cleanTaskProvider) {
 
 		cleanTaskProvider.configure(
-			cleanTask -> {
-				Closure<Set<String>> c = new Closure<Set<String>>(project) {
+			new Action<Delete>() {
 
-					@SuppressWarnings("unused")
-					public Set<String> doCall(Delete delete) {
-						Set<String> cleanTaskNames = new HashSet<>();
+				@Override
+				public void execute(Delete cleanTask) {
+					Closure<Set<String>> c = new Closure<Set<String>>(project) {
 
-						Project project = delete.getProject();
+						@SuppressWarnings("unused")
+						public Set<String> doCall(Delete delete) {
+							Set<String> cleanTaskNames = new HashSet<>();
 
-						for (Task task : project.getTasks()) {
-							String taskName = task.getName();
+							Project project = delete.getProject();
 
-							if (taskName.equals(DEPLOY_FAST_TASK_NAME) ||
-								taskName.equals(
-									LiferayBasePlugin.DEPLOY_TASK_NAME) ||
-								taskName.equals("eclipseClasspath") ||
-								taskName.equals("eclipseProject") ||
-								taskName.equals("ideaModule") ||
-								(task instanceof BuildSoyTask) ||
-								(task instanceof DownloadNodeModuleTask) ||
-								(task instanceof NpmInstallTask)) {
+							for (Task task : project.getTasks()) {
+								String taskName = task.getName();
 
-								continue;
+								if (taskName.equals(DEPLOY_FAST_TASK_NAME) ||
+									taskName.equals(
+										LiferayBasePlugin.DEPLOY_TASK_NAME) ||
+									taskName.equals("eclipseClasspath") ||
+									taskName.equals("eclipseProject") ||
+									taskName.equals("ideaModule") ||
+									(task instanceof BuildSoyTask) ||
+									(task instanceof DownloadNodeModuleTask) ||
+									(task instanceof NpmInstallTask)) {
+
+									continue;
+								}
+
+								if (GradleUtil.hasPlugin(
+										project, _CACHE_PLUGIN_ID) &&
+									taskName.startsWith("save") &&
+									taskName.endsWith("Cache")) {
+
+									continue;
+								}
+
+								if (GradleUtil.hasPlugin(
+										project, WSDLBuilderPlugin.class) &&
+									taskName.startsWith(
+										WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME +
+											"Generate")) {
+
+									continue;
+								}
+
+								boolean autoClean = GradleUtil.getProperty(
+									task, AUTO_CLEAN_PROPERTY_NAME, true);
+
+								if (!autoClean) {
+									continue;
+								}
+
+								TaskOutputs taskOutputs = task.getOutputs();
+
+								if (!taskOutputs.getHasOutput()) {
+									continue;
+								}
+
+								cleanTaskNames.add(
+									BasePlugin.CLEAN_TASK_NAME +
+										StringUtil.capitalize(taskName));
 							}
 
-							if (GradleUtil.hasPlugin(
-									project, _CACHE_PLUGIN_ID) &&
-								taskName.startsWith("save") &&
-								taskName.endsWith("Cache")) {
-
-								continue;
-							}
-
-							if (GradleUtil.hasPlugin(
-									project, WSDLBuilderPlugin.class) &&
-								taskName.startsWith(
-									WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME +
-										"Generate")) {
-
-								continue;
-							}
-
-							boolean autoClean = GradleUtil.getProperty(
-								task, AUTO_CLEAN_PROPERTY_NAME, true);
-
-							if (!autoClean) {
-								continue;
-							}
-
-							TaskOutputs taskOutputs = task.getOutputs();
-
-							if (!taskOutputs.getHasOutput()) {
-								continue;
-							}
-
-							cleanTaskNames.add(
-								BasePlugin.CLEAN_TASK_NAME +
-									StringUtil.capitalize(taskName));
+							return cleanTaskNames;
 						}
 
-						return cleanTaskNames;
-					}
+					};
 
-				};
+					cleanTask.dependsOn(c);
+				}
 
-				cleanTask.dependsOn(c);
 			});
 	}
 
@@ -928,34 +1070,48 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TaskProvider<Copy> deployDependenciesTaskProvider) {
 
 		deployDependenciesTaskProvider.configure(
-			deployDependenciesTask -> {
-				boolean keepVersions = Boolean.getBoolean(
-					"deploy.dependencies.keep.versions");
+			new Action<Copy>() {
 
-				GradleUtil.setProperty(
-					deployDependenciesTask,
-					LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME, false);
-				GradleUtil.setProperty(
-					deployDependenciesTask, "keepVersions", keepVersions);
+				@Override
+				public void execute(Copy deployDependenciesTask) {
+					boolean keepVersions = Boolean.getBoolean(
+						"deploy.dependencies.keep.versions");
 
-				String renameSuffix = ".jar";
+					GradleUtil.setProperty(
+						deployDependenciesTask,
+						LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME, false);
+					GradleUtil.setProperty(
+						deployDependenciesTask, "keepVersions", keepVersions);
 
-				if (keepVersions) {
-					renameSuffix = "-$1.jar";
+					String renameSuffix = ".jar";
+
+					if (keepVersions) {
+						renameSuffix = "-$1.jar";
+					}
+
+					GradleUtil.setProperty(
+						deployDependenciesTask, "renameSuffix", renameSuffix);
+
+					deployDependenciesTask.into(
+						(Callable<File>)liferayExtension::getDeployDir);
+
+					deployDependenciesTask.setDescription(
+						"Deploys additional dependencies.");
+
+					TaskOutputs taskOutputs =
+						deployDependenciesTask.getOutputs();
+
+					taskOutputs.upToDateWhen(
+						new Spec<Task>() {
+
+							@Override
+							public boolean isSatisfiedBy(Task task) {
+								return false;
+							}
+
+						});
 				}
 
-				GradleUtil.setProperty(
-					deployDependenciesTask, "renameSuffix", renameSuffix);
-
-				deployDependenciesTask.into(
-					(Callable<File>)liferayExtension::getDeployDir);
-
-				deployDependenciesTask.setDescription(
-					"Deploys additional dependencies.");
-
-				TaskOutputs taskOutputs = deployDependenciesTask.getOutputs();
-
-				taskOutputs.upToDateWhen(task -> false);
 			});
 	}
 
@@ -963,9 +1119,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TaskProvider<Copy> deployDependenciesTaskProvider) {
 
 		deployDependenciesTaskProvider.configure(
-			deployDependenciesTask -> deployDependenciesTask.eachFile(
-				new RenameDependencyAction(
-					Boolean.getBoolean("deploy.dependencies.keep.versions"))));
+			new Action<Copy>() {
+
+				@Override
+				public void execute(Copy deployDependenciesTask) {
+					deployDependenciesTask.eachFile(
+						new RenameDependencyAction(
+							Boolean.getBoolean(
+								"deploy.dependencies.keep.versions")));
+				}
+
+			});
 	}
 
 	private void _configureTaskDeployFastProvider(
@@ -976,131 +1140,162 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TaskProvider<Copy> processResourcesTaskProvider) {
 
 		deployFastTaskProvider.configure(
-			deployFastTask -> {
-				deployFastTask.setDescription(
-					"Builds and deploys resources to the Liferay work " +
-						"directory.");
-				deployFastTask.setGroup(LifecycleBasePlugin.BUILD_GROUP);
+			new Action<Copy>() {
 
-				deployFastTask.setDestinationDir(
-					liferayExtension.getLiferayHome());
-				deployFastTask.setIncludeEmptyDirs(false);
+				@Override
+				public void execute(Copy deployFastTask) {
+					deployFastTask.setDescription(
+						"Builds and deploys resources to the Liferay work " +
+							"directory.");
+					deployFastTask.setGroup(LifecycleBasePlugin.BUILD_GROUP);
 
-				String bundleSymbolicName = BndUtil.getInstruction(
-					project, Constants.BUNDLE_SYMBOLICNAME);
-				String bundleVersion = BndUtil.getInstruction(
-					project, Constants.BUNDLE_VERSION);
+					deployFastTask.setDestinationDir(
+						liferayExtension.getLiferayHome());
+					deployFastTask.setIncludeEmptyDirs(false);
 
-				StringBuilder sb = new StringBuilder();
+					String bundleSymbolicName = BndUtil.getInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME);
+					String bundleVersion = BndUtil.getInstruction(
+						project, Constants.BUNDLE_VERSION);
 
-				sb.append("work/");
-				sb.append(bundleSymbolicName);
-				sb.append("-");
-				sb.append(bundleVersion);
+					StringBuilder sb = new StringBuilder();
 
-				final String pathName = sb.toString();
+					sb.append("work/");
+					sb.append(bundleSymbolicName);
+					sb.append("-");
+					sb.append(bundleVersion);
 
-				deployFastTask.from(
-					compileJSPTaskProvider,
-					new Closure<Void>(project) {
+					final String pathName = sb.toString();
 
-						@SuppressWarnings("unused")
-						public void doCall(CopySpec copySpec) {
-							copySpec.into(pathName);
-						}
+					deployFastTask.from(
+						compileJSPTaskProvider,
+						new Closure<Void>(project) {
 
-					});
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								copySpec.into(pathName);
+							}
 
-				deployFastTask.from(
-					processResourcesTaskProvider,
-					new Closure<Void>(project) {
+						});
 
-						@SuppressWarnings("unused")
-						public void doCall(CopySpec copySpec) {
-							Action<FileCopyDetails> action = details -> {
-								RelativePath relativePath =
-									details.getRelativePath();
+					deployFastTask.from(
+						processResourcesTaskProvider,
+						new Closure<Void>(project) {
 
-								String[] segments = relativePath.getSegments();
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								Action action = new Action<FileCopyDetails>() {
 
-								if ((segments.length > 4) &&
-									segments[2].equals("META-INF") &&
-									segments[3].equals("resources")) {
+									@Override
+									public void execute(
+										FileCopyDetails fileCopyDetails) {
 
-									List<String> list = new ArrayList<>();
+										RelativePath relativePath =
+											fileCopyDetails.getRelativePath();
 
-									list.add(segments[0]);
-									list.add(segments[1]);
+										String[] segments =
+											relativePath.getSegments();
 
-									for (int i = 4; i < segments.length; i++) {
-										String segment = segments[i];
+										if ((segments.length > 4) &&
+											segments[2].equals("META-INF") &&
+											segments[3].equals("resources")) {
 
-										if (!segment.equals(".sass-cache")) {
-											list.add(segment);
+											List<String> list =
+												new ArrayList<>();
+
+											list.add(segments[0]);
+											list.add(segments[1]);
+
+											for (int i = 4; i < segments.length;
+												 i++) {
+
+												String segment = segments[i];
+
+												if (!segment.equals(
+														".sass-cache")) {
+
+													list.add(segment);
+												}
+											}
+
+											segments = list.toArray(
+												new String[0]);
 										}
+
+										fileCopyDetails.setRelativePath(
+											new RelativePath(true, segments));
 									}
 
-									segments = list.toArray(new String[0]);
-								}
+								};
 
-								details.setRelativePath(
-									new RelativePath(true, segments));
-							};
+								copySpec.eachFile(action);
 
-							copySpec.eachFile(action);
+								copySpec.include("**/*.css");
+								copySpec.include("**/*.css.map");
+								copySpec.into(pathName);
+							}
 
-							copySpec.include("**/*.css");
-							copySpec.include("**/*.css.map");
-							copySpec.into(pathName);
-						}
+						});
 
-					});
+					deployFastTask.dependsOn(classesTaskProvider);
 
-				deployFastTask.dependsOn(classesTaskProvider);
+					SourceSet mainSourceSet = GradleUtil.getSourceSet(
+						project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-				SourceSet mainSourceSet = GradleUtil.getSourceSet(
-					project, SourceSet.MAIN_SOURCE_SET_NAME);
+					deployFastTask.from(
+						mainSourceSet.getOutput(),
+						new Closure<Void>(project) {
 
-				deployFastTask.from(
-					mainSourceSet.getOutput(),
-					new Closure<Void>(project) {
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								Action action = new Action<FileCopyDetails>() {
 
-						@SuppressWarnings("unused")
-						public void doCall(CopySpec copySpec) {
-							Action<FileCopyDetails> action = details -> {
-								RelativePath relativePath =
-									details.getRelativePath();
+									@Override
+									public void execute(
+										FileCopyDetails fileCopyDetails) {
 
-								String[] segments = relativePath.getSegments();
+										RelativePath relativePath =
+											fileCopyDetails.getRelativePath();
 
-								if ((segments.length > 4) &&
-									segments[2].equals("META-INF") &&
-									segments[3].equals("resources")) {
+										String[] segments =
+											relativePath.getSegments();
 
-									List<String> list = new ArrayList<>();
+										if ((segments.length > 4) &&
+											segments[2].equals("META-INF") &&
+											segments[3].equals("resources")) {
 
-									list.add(segments[0]);
-									list.add(segments[1]);
+											List<String> list =
+												new ArrayList<>();
 
-									for (int i = 4; i < segments.length; i++) {
-										list.add(segments[i]);
+											list.add(segments[0]);
+											list.add(segments[1]);
+
+											for (int i = 4; i < segments.length;
+												 i++) {
+
+												list.add(segments[i]);
+											}
+
+											segments = list.toArray(
+												new String[0]);
+										}
+
+										fileCopyDetails.setRelativePath(
+											new RelativePath(true, segments));
 									}
 
-									segments = list.toArray(new String[0]);
-								}
+								};
 
-								details.setRelativePath(
-									new RelativePath(true, segments));
-							};
+								copySpec.eachFile(action);
 
-							copySpec.eachFile(action);
+								copySpec.include("**/*.js");
+								copySpec.include("**/*.js.map");
+								copySpec.into(pathName);
+							}
 
-							copySpec.include("**/*.js");
-							copySpec.include("**/*.js.map");
-							copySpec.into(pathName);
-						}
+						});
+				}
 
-					});
 			});
 	}
 
@@ -1110,36 +1305,48 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final TaskProvider<Jar> jarTaskProvider, boolean lazy) {
 
 		deployTaskProvider.configure(
-			deployTask -> {
-				final Jar jarTask = jarTaskProvider.get();
+			new Action<Copy>() {
 
-				Object sourcePath = jarTask;
+				@Override
+				public void execute(Copy deployTask) {
+					final Jar jarTask = jarTaskProvider.get();
 
-				if (lazy) {
-					sourcePath = (Callable<File>)() -> jarTask.getArchivePath();
-				}
+					Object sourcePath = jarTask;
 
-				Closure<Void> copySpecClosure = new Closure<Void>(project) {
+					if (lazy) {
+						sourcePath = new Callable<File>() {
 
-					@SuppressWarnings("unused")
-					public void doCall(CopySpec copySpec) {
-						copySpec.rename(
-							new Closure<String>(project) {
+							@Override
+							public File call() throws Exception {
+								return jarTask.getArchivePath();
+							}
 
-								public String doCall(String fileName) {
-									Closure<String> closure =
-										liferayExtension.
-											getDeployedFileNameClosure();
-
-									return closure.call(jarTask);
-								}
-
-							});
+						};
 					}
 
-				};
+					Closure<Void> copySpecClosure = new Closure<Void>(project) {
 
-				deployTask.from(sourcePath, copySpecClosure);
+						@SuppressWarnings("unused")
+						public void doCall(CopySpec copySpec) {
+							copySpec.rename(
+								new Closure<String>(project) {
+
+									public String doCall(String fileName) {
+										Closure<String> closure =
+											liferayExtension.
+												getDeployedFileNameClosure();
+
+										return closure.call(jarTask);
+									}
+
+								});
+						}
+
+					};
+
+					deployTask.from(sourcePath, copySpecClosure);
+				}
+
 			});
 	}
 
@@ -1148,68 +1355,96 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final TaskProvider<Copy> deployDependenciesTaskProvider) {
 
 		deployTaskProvider.configure(
-			deployTask -> deployTask.finalizedBy(
-				deployDependenciesTaskProvider));
+			new Action<Copy>() {
+
+				@Override
+				public void execute(Copy deployTask) {
+					deployTask.finalizedBy(deployDependenciesTaskProvider);
+				}
+
+			});
 	}
 
 	private void _configureTaskJarProvider(
 		final Project project, TaskProvider<Jar> jarTaskProvider) {
 
 		jarTaskProvider.configure(
-			jarTask -> {
-				Convention convention = jarTask.getConvention();
+			new Action<Jar>() {
 
-				Map<String, Object> plugins = convention.getPlugins();
+				@Override
+				public void execute(Jar jarTask) {
+					Convention convention = jarTask.getConvention();
 
-				final BundleTaskConvention bundleTaskConvention =
-					new BundleTaskConvention(jarTask);
+					Map<String, Object> plugins = convention.getPlugins();
 
-				plugins.put("bundle", bundleTaskConvention);
+					final BundleTaskConvention bundleTaskConvention =
+						new BundleTaskConvention(jarTask);
 
-				jarTask.setDescription(
-					"Assembles a bundle containing the main classes.");
+					plugins.put("bundle", bundleTaskConvention);
 
-				jarTask.doFirst(
-					task -> {
-						Map<String, Object> instructions =
-							BndUtil.getInstructions(project);
+					jarTask.setDescription(
+						"Assembles a bundle containing the main classes.");
 
-						instructions.forEach(
-							(k, v) -> instructions.put(
-								k, GradleUtil.toString(v)));
+					jarTask.doFirst(
+						new Action<Task>() {
 
-						Map<String, ?> projectProperties =
-							project.getProperties();
+							@Override
+							public void execute(Task task) {
+								Map<String, Object> instructions =
+									BndUtil.getInstructions(project);
 
-						for (Map.Entry<String, ?> entry :
-								projectProperties.entrySet()) {
+								for (Map.Entry<String, Object> entry :
+										instructions.entrySet()) {
 
-							String key = entry.getKey();
-							Object value = entry.getValue();
+									instructions.put(
+										entry.getKey(),
+										GradleUtil.toString(entry.getValue()));
+								}
 
-							Matcher matcher = _keyRegex.matcher(key);
+								Map<String, ?> projectProperties =
+									project.getProperties();
 
-							if (matcher.matches() &&
-								(value instanceof String)) {
+								for (Map.Entry<String, ?> entry :
+										projectProperties.entrySet()) {
 
-								instructions.put(key, entry.getValue());
+									String key = entry.getKey();
+									Object value = entry.getValue();
+
+									Matcher matcher = _keyRegex.matcher(key);
+
+									if (matcher.matches() &&
+										(value instanceof String)) {
+
+										instructions.put(key, entry.getValue());
+									}
+								}
+
+								bundleTaskConvention.setBnd(instructions);
 							}
-						}
 
-						bundleTaskConvention.setBnd(instructions);
-					});
+						});
 
-				jarTask.doLast(task -> bundleTaskConvention.buildBundle());
+					jarTask.doLast(
+						new Action<Task>() {
 
-				File bndFile = project.file("bnd.bnd");
+							@Override
+							public void execute(Task task) {
+								bundleTaskConvention.buildBundle();
+							}
 
-				if (!bndFile.exists()) {
-					return;
+						});
+
+					File bndFile = project.file("bnd.bnd");
+
+					if (!bndFile.exists()) {
+						return;
+					}
+
+					TaskInputs taskInputs = jarTask.getInputs();
+
+					taskInputs.file(bndFile);
 				}
 
-				TaskInputs taskInputs = jarTask.getInputs();
-
-				taskInputs.file(bndFile);
 			});
 	}
 
@@ -1236,8 +1471,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 
 		javadocTaskProvider.configure(
-			javadocTask -> javadocTask.setTitle(
-				String.format("%s %s API", bundleName, bundleVersion)));
+			new Action<Javadoc>() {
+
+				@Override
+				public void execute(Javadoc javadocTask) {
+					String title = String.format(
+						"%s %s API", bundleName, bundleVersion);
+
+					javadocTask.setTitle(title);
+				}
+
+			});
 	}
 
 	private void _configureTaskTest(Test test) {
@@ -1248,11 +1492,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TaskProvider<Test> testTaskProvider) {
 
 		testTaskProvider.configure(
-			testTask -> {
-				testTask.jvmArgs(
-					"-Djava.net.preferIPv4Stack=true", "-Dliferay.mode=test",
-					"-Duser.timezone=GMT");
-				testTask.setForkEvery(1L);
+			new Action<Test>() {
+
+				@Override
+				public void execute(Test testTask) {
+					testTask.jvmArgs(
+						"-Djava.net.preferIPv4Stack=true",
+						"-Dliferay.mode=test", "-Duser.timezone=GMT");
+
+					testTask.setForkEvery(1L);
+				}
+
 			});
 	}
 

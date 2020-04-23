@@ -65,11 +65,6 @@ public class FileInstallConfigTest {
 	}
 
 	@Test
-	public void testConfigurationBoolean() throws Exception {
-		_testConfiguration("B\"True\"", true);
-	}
-
-	@Test
 	public void testConfigurationBooleanArray() throws Exception {
 		Boolean[] expectedBooleans = new Boolean[2];
 
@@ -77,11 +72,6 @@ public class FileInstallConfigTest {
 		expectedBooleans[1] = false;
 
 		_testConfiguration("B[\"True\",\"False\"]", expectedBooleans);
-	}
-
-	@Test
-	public void testConfigurationByte() throws Exception {
-		_testConfiguration("X\"1\"", (byte)1);
 	}
 
 	@Test
@@ -95,11 +85,6 @@ public class FileInstallConfigTest {
 	}
 
 	@Test
-	public void testConfigurationCharacter() throws Exception {
-		_testConfiguration("C\"A\"", 'A');
-	}
-
-	@Test
 	public void testConfigurationCharacterArray() throws Exception {
 		Character[] expectedCharacters = new Character[2];
 
@@ -107,11 +92,6 @@ public class FileInstallConfigTest {
 		expectedCharacters[1] = 'Z';
 
 		_testConfiguration("C[\"A\",\"Z\"]", expectedCharacters);
-	}
-
-	@Test
-	public void testConfigurationDouble() throws Exception {
-		_testConfiguration("D\"12.2\"", 12.2D);
 	}
 
 	@Test
@@ -125,11 +105,6 @@ public class FileInstallConfigTest {
 	}
 
 	@Test
-	public void testConfigurationFloat() throws Exception {
-		_testConfiguration("F\"12.2\"", 12.2F);
-	}
-
-	@Test
 	public void testConfigurationFloatArray() throws Exception {
 		Float[] expectedFloats = new Float[2];
 
@@ -137,11 +112,6 @@ public class FileInstallConfigTest {
 		expectedFloats[1] = 12.3F;
 
 		_testConfiguration("F[\"12.2\",\"12.3\"]", expectedFloats);
-	}
-
-	@Test
-	public void testConfigurationInteger() throws Exception {
-		_testConfiguration("I\"20\"", 20);
 	}
 
 	@Test
@@ -155,11 +125,6 @@ public class FileInstallConfigTest {
 	}
 
 	@Test
-	public void testConfigurationLong() throws Exception {
-		_testConfiguration("L\"30\"", 30L);
-	}
-
-	@Test
 	public void testConfigurationLongArray() throws Exception {
 		Long[] expectedLongs = new Long[2];
 
@@ -167,11 +132,6 @@ public class FileInstallConfigTest {
 		expectedLongs[1] = 31L;
 
 		_testConfiguration("L[\"30\",\"31\"]", expectedLongs);
-	}
-
-	@Test
-	public void testConfigurationShort() throws Exception {
-		_testConfiguration("S\"2\"", (short)2);
 	}
 
 	@Test
@@ -185,11 +145,6 @@ public class FileInstallConfigTest {
 	}
 
 	@Test
-	public void testConfigurationString() throws Exception {
-		_testConfiguration("\"testString\"", "testString");
-	}
-
-	@Test
 	public void testConfigurationStringArray() throws Exception {
 		String[] expectedStrings = new String[2];
 
@@ -200,7 +155,7 @@ public class FileInstallConfigTest {
 	}
 
 	@Test
-	public void testConfigurationTypedAndNontypedValues() throws Exception {
+	public void testConfigurationValues() throws Exception {
 		Path path = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
 			_CONFIGURATION_PID.concat(".config"));
@@ -213,7 +168,8 @@ public class FileInstallConfigTest {
 					"configCharacter=C\"A\"\n", "configDouble=D\"12.2\"\n",
 					"configFloat=F\"12.2\"\n", "configInteger=I\"20\"\n",
 					"configLong=L\"30\"\n", "configShort=S\"2\"\n",
-					"configString=\"testString\""));
+					"configString=T\"testString\"\n",
+					"configUntypedString=\"testUntypedString\""));
 
 			Configuration configuration = _configurationAdmin.getConfiguration(
 				_CONFIGURATION_PID, StringPool.QUESTION);
@@ -230,6 +186,8 @@ public class FileInstallConfigTest {
 			Assert.assertEquals(30L, properties.get("configLong"));
 			Assert.assertEquals((short)2, properties.get("configShort"));
 			Assert.assertEquals("testString", properties.get("configString"));
+			Assert.assertEquals(
+				"testUntypedString", properties.get("configUntypedString"));
 		}
 		finally {
 			Files.deleteIfExists(path);

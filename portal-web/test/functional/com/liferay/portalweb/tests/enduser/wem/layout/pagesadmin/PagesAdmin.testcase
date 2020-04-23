@@ -24,6 +24,23 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-110108. Add a Draft page and check label."
+	@priority = "4"
+	test AddDraftPageAndViewLabel {
+		property testray.component.names = "Site Pages Administration";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		AssertTextEquals(
+			key_itemName = "Test Content Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_STATUS",
+			value1 = "Draft");
+	}
+
 	@description = "This is for LPS-110108. Adding a fourth level child page and viewing it on Page admin."
 	@priority = "5"
 	test AddPageWithFourthLevelChildPagesToSite {
@@ -146,7 +163,7 @@ definition {
 			locator1 = "SitePages#LIST_GROUP_ITEM");
 
 		AssertVisible(
-			key_pageName = "Child Content Page Name 1", 
+			key_pageName = "Child Content Page Name 1",
 			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
 
 		SitePages.gotoPageMenuItem(
@@ -154,54 +171,18 @@ definition {
 			pageName = "Child Content Page Name 1");
 
 		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
-	
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-			
+
 		Click(
 			key_pageName = "Test Content Page Name 1",
 			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY_TITLE_LINK");
 
 		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
-	
+
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
 			value1 = "Test Content Page Name 1");
-	}
-
-	@description = "This is for LPS-110108. Select non root item, it shows Add Page quick action and a Kebab menu with the actions available for that item."
-	@priority = "4"
-	test SelectNonRootPageAndViewPage {
-		property testray.component.names = "Site Pages Administration";
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addChildPage(
-			childPageName = "Child Content Page Name",
-			parentPageName = "Test Content Page Name");
-
-		PageEditor.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.expandPageTree(depth = "2");
-
-		SitePages.checkPage(pageName = "Child Content Page Name");
-
-		AssertVisible(
-			key_pageName = "Child Content Page Name", 
-			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "View",
-			pageName = "Child Content Page Name");
-
-		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 	}
 
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
@@ -285,6 +266,42 @@ definition {
 
 			AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'Page Two')]");
 		}
+	}
+
+	@description = "This is for LPS-110108. Select non root item, it shows Add Page quick action and a Kebab menu with the actions available for that item."
+	@priority = "4"
+	test SelectNonRootPageAndViewPage {
+		property testray.component.names = "Site Pages Administration";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addChildPage(
+			childPageName = "Child Content Page Name",
+			parentPageName = "Test Content Page Name");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.expandPageTree(depth = "2");
+
+		SitePages.checkPage(pageName = "Child Content Page Name");
+
+		AssertVisible(
+			key_pageName = "Child Content Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Child Content Page Name");
+
+		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 	}
 
 }

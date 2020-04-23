@@ -14,24 +14,6 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseOverClickNavigation {
-		WaitForSPARefresh();
-
-		selenium.clickAt("//div[@id='navigationCollapse']", "");
-
-		selenium.waitForElementPresent(
-			"//script[contains(@src,'/frontend-js-aui-web/liferay/sign_in_modal.js')]"
-		);
-
-		MouseOver.mouseOver();
-
-		selenium.pause("1000");
-
-		selenium.assertJavaScriptErrors();
-
-		selenium.assertLiferayErrors();
-	}
-
 	function mouseOverInvisible {
 		WaitForSPARefresh();
 

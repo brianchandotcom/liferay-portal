@@ -31,6 +31,10 @@ public interface PortletLayoutFinder {
 
 		public String getPortletId();
 
+		public default boolean isSignInRequired() {
+			return false;
+		}
+
 	}
 
 }

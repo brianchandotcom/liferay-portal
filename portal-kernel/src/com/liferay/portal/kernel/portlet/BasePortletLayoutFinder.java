@@ -72,7 +72,8 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 					portletId = getPortletId(layoutTypePortlet, portletId);
 
-					return new ResultImpl(themeDisplay.getPlid(), portletId);
+					return new ResultImpl(
+						themeDisplay.getPlid(), portletId, false);
 				}
 			}
 			catch (NoSuchLayoutException noSuchLayoutException) {
@@ -90,9 +91,10 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (plidAndPortletId != null) {
+		if ((plidAndPortletId != null) && !(boolean)plidAndPortletId[2]) {
 			return new ResultImpl(
-				(long)plidAndPortletId[0], (String)plidAndPortletId[1]);
+				(long)plidAndPortletId[0], (String)plidAndPortletId[1],
+				(boolean)plidAndPortletId[2]);
 		}
 		else if (scopeGroup.isSite() ||
 				 SitesUtil.isUserGroupLayoutSetViewable(
@@ -105,17 +107,19 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			if (scopePlidAndPortletId != null) {
 				return new ResultImpl(
 					(long)scopePlidAndPortletId[0],
-					(String)scopePlidAndPortletId[1]);
+					(String)scopePlidAndPortletId[1],
+					(boolean)scopePlidAndPortletId[2]);
 			}
-
-			throw new NoSuchLayoutException(
-				_getErrorMessage(
-					themeDisplay.getScopeGroupId(), themeDisplay, portletIds));
 		}
-		else {
+
+		if (plidAndPortletId == null) {
 			throw new NoSuchLayoutException(
 				_getErrorMessage(groupId, themeDisplay, portletIds));
 		}
+
+		return new ResultImpl(
+			(long)plidAndPortletId[0], (String)plidAndPortletId[1],
+			(boolean)plidAndPortletId[2]);
 	}
 
 	/**
@@ -130,7 +134,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		Object[] plidAndPortletId = _fetchPlidAndPortletId(
 			permissionChecker, groupId, portletIds);
 
-		if (plidAndPortletId == null) {
+		if ((plidAndPortletId == null) || (boolean)plidAndPortletId[2]) {
 			return null;
 		}
 
@@ -156,9 +160,19 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 	protected class ResultImpl implements PortletLayoutFinder.Result {
 
+		/**
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ResultImpl(
+		 *             long, String, boolean)}
+		 */
+		@Deprecated
 		public ResultImpl(long plid, String portletId) {
+			this(plid, portletId, false);
+		}
+
+		public ResultImpl(long plid, String portletId, boolean signInRequired) {
 			_plid = plid;
 			_portletId = portletId;
+			_signInRequired = signInRequired;
 		}
 
 		@Override
@@ -171,8 +185,14 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			return _portletId;
 		}
 
+		@Override
+		public boolean isSignInRequired() {
+			return _signInRequired;
+		}
+
 		private final long _plid;
 		private final String _portletId;
+		private final boolean _signInRequired;
 
 	}
 
@@ -180,6 +200,8 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			PermissionChecker permissionChecker, long groupId,
 			String[] portletIds)
 		throws PortalException {
+
+		Object[] fallbackPlidAndPortletId = null;
 
 		for (String portletId : portletIds) {
 			ObjectValuePair<Long, String> plidAndPortletIdObjectValuePair =
@@ -193,17 +215,22 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 			if (!LayoutPermissionUtil.contains(
 					permissionChecker, LayoutLocalServiceUtil.getLayout(plid),
-					ActionKeys.VIEW)) {
+					ActionKeys.VIEW) &&
+				!permissionChecker.isSignedIn()) {
+
+				fallbackPlidAndPortletId = new Object[] {
+					plid, plidAndPortletIdObjectValuePair.getValue(), true
+				};
 
 				continue;
 			}
 
 			return new Object[] {
-				plid, plidAndPortletIdObjectValuePair.getValue()
+				plid, plidAndPortletIdObjectValuePair.getValue(), false
 			};
 		}
 
-		return null;
+		return fallbackPlidAndPortletId;
 	}
 
 	private String _getErrorMessage(

@@ -94,7 +94,7 @@ public abstract class FindStrutsAction implements StrutsAction {
 					themeDisplay.getPermissionChecker(), layout, true,
 					ActionKeys.VIEW)) {
 
-				if (!themeDisplay.isSignedIn()) {
+				if (!themeDisplay.isSignedIn() && result.isSignInRequired()) {
 					String currentCompleteURL =
 						PortalUtil.getCurrentCompleteURL(httpServletRequest);
 

@@ -36,7 +36,16 @@ export default function addParams(params, baseUrl) {
 		});
 	}
 	else {
-		url.searchParams.append(params.trim(), '');
+		const searchParams = new URLSearchParams(params.trim());
+
+		searchParams.forEach((value, key) => {
+			if (value) {
+				url.searchParams.append(key, value);
+			}
+			else {
+				url.searchParams.append(key, '');
+			}
+		});
 	}
 
 	return url.toString();

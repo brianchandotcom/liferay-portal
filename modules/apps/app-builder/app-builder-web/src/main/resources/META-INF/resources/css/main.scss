@@ -12,6 +12,16 @@
 		height: calc(100vh - 91px);
 	}
 
+	.object-tabs {
+		background-color: #393a4a;
+
+		.nav-container {
+			button {
+				color: white;
+			}
+		}
+	}
+
 	.taglib-empty-result-message {
 		margin: auto;
 		padding: 0 2rem;

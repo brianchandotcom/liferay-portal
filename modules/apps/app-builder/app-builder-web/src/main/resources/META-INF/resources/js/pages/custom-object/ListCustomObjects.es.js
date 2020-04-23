@@ -158,7 +158,7 @@ export default ({history}) => {
 		<>
 			<ControlMenu
 				title={Liferay.Language.get(
-					'javax.portlet.title.com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet'
+					'javax.portlet.title.com_liferay_app_builder_web_internal_portlet_ObjectsPortlet'
 				)}
 			/>
 

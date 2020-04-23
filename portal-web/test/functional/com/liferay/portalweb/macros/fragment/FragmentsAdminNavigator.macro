@@ -37,7 +37,6 @@ definition {
 	macro gotoImportCollection {
 		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
 			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
-
 		}
 		else {
 			Button.click(button = "New");

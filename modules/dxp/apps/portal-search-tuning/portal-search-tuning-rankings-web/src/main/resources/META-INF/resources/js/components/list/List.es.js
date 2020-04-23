@@ -191,6 +191,7 @@ class List extends PureComponent {
 				author={item.author}
 				clicks={item.clicks}
 				date={item.date}
+				deleted={item.deleted}
 				description={item.description}
 				focus={index === focusIndex}
 				hidden={item.hidden}

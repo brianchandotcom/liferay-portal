@@ -38,6 +38,7 @@ function renderTestItem(props) {
 			author={'Test Test'}
 			clicks={289}
 			date={'Apr 18 2018, 11:04 AM'}
+			deleted={false}
 			description={
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
 			}
@@ -130,5 +131,11 @@ describe('Item', () => {
 		const {container} = renderTestItem({viewURL});
 
 		expect(container.querySelector('a').getAttribute('href')).toBe(viewURL);
+	});
+
+	it('displays a deleted label if deleted is true', () => {
+		const {container} = renderTestItem({deleted: true});
+
+		expect(container).toHaveTextContent('deleted');
 	});
 });

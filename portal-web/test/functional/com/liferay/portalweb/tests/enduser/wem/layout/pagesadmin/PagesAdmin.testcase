@@ -110,6 +110,52 @@ definition {
 		SitePages.viewCheckboxChecked(pageName = "Test Content Page Name 2");
 	}
 
+	@description = "This is for LPS-110108. The hovered item shows Add Page quick action and a Kebap menu with the actions available for that item."
+	@priority = "5"
+	test MouseOverNonRootPageAndViewPage {
+		property testray.component.names = "Site Pages Administration";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name 1");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name 2");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addChildPage(
+			childPageName = "Child Content Page Name 1",
+			parentPageName = "Test Content Page Name 1");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.expandPageTree(depth = "2");
+
+		SitePages.checkPage(pageName = "Test Content Page Name 1");
+
+		MouseOver(
+			key_itemName = "Child Content Page Name 1",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
+
+		AssertVisible(
+			key_pageName = "Child Content Page Name 1", 
+			locator1 = "SitePages#LIST_GROUP_ITEM_PLUS_ICON");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Child Content Page Name 1");
+
+		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+	}
+
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {

@@ -100,11 +100,16 @@ public class JournalArticleCTDisplayRenderer
 			JournalArticle journalArticle)
 		throws Exception {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		httpServletRequest.setAttribute(
 			WebKeys.JOURNAL_ARTICLE_DISPLAY,
 			_journalContent.getDisplay(
 				journalArticle, "", "",
-				_language.getLanguageId(httpServletRequest), 1, null, null));
+				_language.getLanguageId(httpServletRequest), 1, null,
+				themeDisplay));
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher("/ct_display/render.jsp");

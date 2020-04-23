@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -59,6 +60,27 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CTDisplayRendererRegistry.class)
 public class CTDisplayRendererRegistry {
+
+	public <T extends BaseModel<T>> BaseModel<T> fetchCTModel(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		CTService<?> ctService = _ctServiceServiceTrackerMap.getService(
+			modelClassNameId);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
+
+			BaseModel<T> model = null;
+
+			if (ctService != null) {
+				model = (BaseModel<T>)ctService.updateWithUnsafeFunction(
+					ctPersistence -> ctPersistence.fetchByPrimaryKey(
+						modelClassPK));
+			}
+
+			return model;
+		}
+	}
 
 	public <T extends CTModel<T>> String getEditURL(
 		HttpServletRequest httpServletRequest, CTEntry ctEntry) {
@@ -117,7 +139,7 @@ public class CTDisplayRendererRegistry {
 			httpServletRequest, languageKey,
 			new Object[] {
 				ctEntry.getUserName(),
-				getTypeName(httpServletRequest.getLocale(), ctEntry),
+				getTypeName(ctEntry, httpServletRequest.getLocale()),
 				_language.getTimeDescription(
 					httpServletRequest.getLocale(),
 					System.currentTimeMillis() - modifiedDate.getTime(), true)
@@ -127,55 +149,52 @@ public class CTDisplayRendererRegistry {
 		return _html.escape(entryTitle);
 	}
 
-	public <T extends CTModel<T>> String getTypeName(
-		Locale locale, CTEntry ctEntry) {
+	public <T extends BaseModel<T>> String getTypeName(
+		CTEntry ctEntry, Locale locale) {
+
+		long ctCollectionId = ctEntry.getCtCollectionId();
+
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
+			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		}
+
+		return getTypeName(
+			locale,
+			(T)fetchCTModel(
+				ctCollectionId, ctEntry.getModelClassNameId(),
+				ctEntry.getModelClassPK()),
+			ctEntry.getModelClassNameId());
+	}
+
+	public <T extends BaseModel<T>> String getTypeName(
+		Locale locale, T model, long modelClassNameId) {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
-			_ctDisplayServiceTrackerMap.getService(
-				ctEntry.getModelClassNameId());
+			_ctDisplayServiceTrackerMap.getService(modelClassNameId);
 
 		String name = null;
 
 		if (ctDisplayRenderer != null) {
-			CTService<T> ctService = _ctServiceServiceTrackerMap.getService(
-				ctEntry.getModelClassNameId());
-
-			long ctCollectionId = ctEntry.getCtCollectionId();
-
-			if (ctEntry.getChangeType() ==
-					CTConstants.CT_CHANGE_TYPE_DELETION) {
-
-				ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+			if (model == null) {
+				name = ctDisplayRenderer.getTypeName(locale);
 			}
-
-			try (SafeClosable safeClosable =
-					CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
-
-				T ctModel = ctService.updateWithUnsafeFunction(
-					ctPersistence -> ctPersistence.fetchByPrimaryKey(
-						ctEntry.getModelClassPK()));
-
-				if (ctModel == null) {
-					name = ctDisplayRenderer.getTypeName(locale);
+			else {
+				try {
+					name = ctDisplayRenderer.getTypeName(locale, model);
 				}
-				else {
-					try {
-						name = ctDisplayRenderer.getTypeName(locale, ctModel);
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException, portalException);
 					}
-					catch (PortalException portalException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(portalException, portalException);
-						}
 
-						name = ctDisplayRenderer.getTypeName(locale);
-					}
+					name = ctDisplayRenderer.getTypeName(locale);
 				}
 			}
 		}
 
 		if (name == null) {
 			ClassName className = _classNameLocalService.fetchClassName(
-				ctEntry.getModelClassNameId());
+				modelClassNameId);
 
 			if (className != null) {
 				name = _resourceActions.getModelResource(
@@ -217,14 +236,23 @@ public class CTDisplayRendererRegistry {
 			if (viewDiff) {
 				portletURL.setParameter(
 					"mvcRenderCommandName", "/change_lists/view_diff");
+
+				portletURL.setParameter(
+					"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 			}
 			else {
 				portletURL.setParameter(
-					"mvcPath", "/change_lists/view_entry.jsp");
-			}
+					"mvcRenderCommandName", "/change_lists/view_entry");
 
-			portletURL.setParameter(
-				"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+				portletURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(ctEntry.getCtCollectionId()));
+				portletURL.setParameter(
+					"modelClassNameId",
+					String.valueOf(ctEntry.getModelClassNameId()));
+				portletURL.setParameter(
+					"modelClassPK", String.valueOf(ctEntry.getModelClassPK()));
+			}
 
 			try {
 				portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -242,64 +270,93 @@ public class CTDisplayRendererRegistry {
 		}
 	}
 
-	public <T extends CTModel<T>> void renderCTEntry(
+	public <T extends CTModel<T>> String getViewURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, long modelClassNameId,
+		long modelClassPK) {
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/change_lists/view_entry");
+		portletURL.setParameter(
+			"modelClassNameId", String.valueOf(modelClassNameId));
+		portletURL.setParameter("modelClassPK", String.valueOf(modelClassPK));
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException windowStateException) {
+			ReflectionUtil.throwException(windowStateException);
+		}
+
+		return StringBundler.concat(
+			"javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: ",
+			"true}, title: '",
+			getTypeName(
+				liferayPortletRequest.getLocale(), null, modelClassNameId),
+			"', uri: '", portletURL.toString(), "'});");
+	}
+
+	public <T extends BaseModel<T>> void renderCTEntry(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, CTEntry ctEntry,
-			long ctCollectionId)
+			HttpServletResponse httpServletResponse, T model,
+			long modelClassNameId)
 		throws Exception {
 
-		CTService<T> ctService = _ctServiceServiceTrackerMap.getService(
-			ctEntry.getModelClassNameId());
+		CTDisplayRenderer<T> ctDisplayRenderer =
+			_ctDisplayServiceTrackerMap.getService(modelClassNameId);
 
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
+		if (ctDisplayRenderer == null) {
+			ctDisplayRenderer = CTModelDisplayRendererAdapter.getInstance();
 
-			T ctModel = ctService.updateWithUnsafeFunction(
-				ctPersistence -> ctPersistence.fetchByPrimaryKey(
-					ctEntry.getModelClassPK()));
+			ctDisplayRenderer.render(
+				httpServletRequest, httpServletResponse, model);
 
-			if (ctModel == null) {
-				return;
-			}
-
-			CTDisplayRenderer<T> ctDisplayRenderer =
-				_ctDisplayServiceTrackerMap.getService(
-					ctEntry.getModelClassNameId());
-
-			if (ctDisplayRenderer == null) {
-				ctDisplayRenderer = CTModelDisplayRendererAdapter.getInstance();
-
-				ctDisplayRenderer.render(
-					httpServletRequest, httpServletResponse, ctModel);
-
-				return;
-			}
-
-			try (UnsyncStringWriter unsyncStringWriter =
-					new UnsyncStringWriter()) {
-
-				PipingServletResponse pipingServletResponse =
-					new PipingServletResponse(
-						httpServletResponse, unsyncStringWriter);
-
-				ctDisplayRenderer.render(
-					httpServletRequest, pipingServletResponse, ctModel);
-
-				StringBundler sb = unsyncStringWriter.getStringBundler();
-
-				sb.writeTo(httpServletResponse.getWriter());
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception, exception);
-				}
-
-				ctDisplayRenderer = CTModelDisplayRendererAdapter.getInstance();
-
-				ctDisplayRenderer.render(
-					httpServletRequest, httpServletResponse, ctModel);
-			}
+			return;
 		}
+
+		try (UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
+			PipingServletResponse pipingServletResponse =
+				new PipingServletResponse(
+					httpServletResponse, unsyncStringWriter);
+
+			ctDisplayRenderer.render(
+				httpServletRequest, pipingServletResponse, model);
+
+			StringBundler sb = unsyncStringWriter.getStringBundler();
+
+			sb.writeTo(httpServletResponse.getWriter());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			ctDisplayRenderer = CTModelDisplayRendererAdapter.getInstance();
+
+			ctDisplayRenderer.render(
+				httpServletRequest, httpServletResponse, model);
+		}
+	}
+
+	public <T extends BaseModel<T>> void renderCTEntry(
+			long ctCollectionId, CTEntry ctEntry,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		T model = (T)fetchCTModel(
+			ctCollectionId, ctEntry.getModelClassNameId(),
+			ctEntry.getModelClassPK());
+
+		if (model == null) {
+			return;
+		}
+
+		renderCTEntry(
+			httpServletRequest, httpServletResponse, model,
+			ctEntry.getModelClassNameId());
 	}
 
 	@Activate

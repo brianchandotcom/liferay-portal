@@ -84,14 +84,14 @@ public class CTEntryDiffDisplay {
 					_getCTSQLMode(_ctEntry.getCtCollectionId()))) {
 
 				_ctDisplayRendererRegistry.renderCTEntry(
-					_httpServletRequest, _httpServletResponse, _ctEntry,
-					_ctEntry.getCtCollectionId());
+					_ctCollection.getCtCollectionId(), _ctEntry,
+					_httpServletRequest, _httpServletResponse);
 			}
 		}
 		else {
 			_ctDisplayRendererRegistry.renderCTEntry(
-				_httpServletRequest, _httpServletResponse, _ctEntry,
-				CTConstants.CT_COLLECTION_ID_PRODUCTION);
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, _ctEntry,
+				_httpServletRequest, _httpServletResponse);
 		}
 	}
 
@@ -104,14 +104,14 @@ public class CTEntryDiffDisplay {
 					_getCTSQLMode(ctCollectionId))) {
 
 				_ctDisplayRendererRegistry.renderCTEntry(
-					_httpServletRequest, _httpServletResponse, _ctEntry,
-					ctCollectionId);
+					ctCollectionId, _ctEntry, _httpServletRequest,
+					_httpServletResponse);
 			}
 		}
 		else {
 			_ctDisplayRendererRegistry.renderCTEntry(
-				_httpServletRequest, _httpServletResponse, _ctEntry,
-				_ctEntry.getCtCollectionId());
+				_ctCollection.getCtCollectionId(), _ctEntry,
+				_httpServletRequest, _httpServletResponse);
 		}
 	}
 

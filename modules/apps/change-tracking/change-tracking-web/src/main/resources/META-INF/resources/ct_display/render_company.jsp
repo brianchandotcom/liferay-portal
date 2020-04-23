@@ -14,14 +14,16 @@
  */
 --%>
 
-<%@ include file="/change_lists/init.jsp" %>
+<%@ include file="/ct_display/init.jsp" %>
 
-<clay:container-fluid>
+<%
+Company companyObject = (Company)request.getAttribute(CTWebKeys.COMPANY);
+%>
 
-	<%
-	ViewEntryDisplayContext viewEntryDisplayContext = (ViewEntryDisplayContext)request.getAttribute(CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT);
+<p>
+	<b><liferay-ui:message key="company-id" /></b>: <%= String.valueOf(companyObject.getCompanyId()) %>
+</p>
 
-	viewEntryDisplayContext.renderEntry(request, response);
-	%>
-
-</clay:container-fluid>
+<p>
+	<b><liferay-ui:message key="name" /></b>: <%= HtmlUtil.escape(companyObject.getName()) %>
+</p>

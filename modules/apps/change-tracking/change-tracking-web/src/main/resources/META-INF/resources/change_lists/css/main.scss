@@ -56,3 +56,28 @@
 #selectChangeListManagementToolbar nav:last-child {
 	margin-bottom: 0;
 }
+
+.view-tree-change-list-wrapper {
+	.breadcrumb {
+		margin-bottom: 0;
+	}
+
+	.sheet {
+		margin-bottom: 16px;
+	}
+
+	.table {
+		.change-row-button {
+			background-color: inherit;
+			border: none;
+			padding: 0;
+			text-align: left;
+
+			&:active:focus,
+			&:focus {
+				box-shadow: none;
+				outline: none;
+			}
+		}
+	}
+}

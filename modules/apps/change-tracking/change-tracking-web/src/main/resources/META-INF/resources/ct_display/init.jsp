@@ -14,14 +14,18 @@
  */
 --%>
 
-<%@ include file="/change_lists/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<clay:container-fluid>
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-	<%
-	ViewEntryDisplayContext viewEntryDisplayContext = (ViewEntryDisplayContext)request.getAttribute(CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT);
+<%@ page import="com.liferay.change.tracking.web.internal.constants.CTWebKeys" %><%@
+page import="com.liferay.portal.kernel.model.Company" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
-	viewEntryDisplayContext.renderEntry(request, response);
-	%>
+<liferay-frontend:defineObjects />
 
-</clay:container-fluid>
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />

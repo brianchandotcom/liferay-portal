@@ -15,9 +15,12 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.reference.closure.CTClosureFactory;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
+import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
+import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -56,10 +59,10 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ViewChangesDisplayContext viewChangesDisplayContext =
 				new ViewChangesDisplayContext(
+					_basePersistenceRegistry, _ctClosureFactory,
 					_ctCollectionLocalService.getCTCollection(ctCollectionId),
-					_ctEntryLocalService,
-					_portal.getHttpServletRequest(renderRequest), _language,
-					renderRequest, renderResponse);
+					_ctDisplayRendererRegistry, _ctEntryLocalService, _language,
+					_portal, renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT,
@@ -73,7 +76,16 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
+	private BasePersistenceRegistry _basePersistenceRegistry;
+
+	@Reference
+	private CTClosureFactory _ctClosureFactory;
+
+	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

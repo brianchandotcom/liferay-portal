@@ -21,10 +21,6 @@ ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext
 
 CTCollection ctCollection = viewChangesDisplayContext.getCtCollection();
 
-SearchContainer<CTEntry> searchContainer = viewChangesDisplayContext.getSearchContainer();
-
-ViewChangesManagementToolbarDisplayContext viewChangesManagementToolbarDisplayContext = new ViewChangesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer);
-
 Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 renderResponse.setTitle(LanguageUtil.get(request, "changes"));
@@ -91,7 +87,7 @@ portletDisplay.setShowBackIcon(true);
 							<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
 						</liferay-portlet:renderURL>
 
-						<a class="btn btn-primary btn-sm <%= changeListsDisplayContext.isPublishEnabled(ctCollection.getCtCollectionId()) ? StringPool.BLANK : "disabled" %>" href="<%= conflictsURL %>" type="button">
+						<a class="btn btn-primary btn-sm <%= viewChangesDisplayContext.hasChanges() ? StringPool.BLANK : "disabled" %>" href="<%= conflictsURL %>" type="button">
 							<liferay-ui:message key="prepare-to-publish" />
 						</a>
 					</li>
@@ -144,64 +140,15 @@ portletDisplay.setShowBackIcon(true);
 	</clay:container-fluid>
 </nav>
 
-<clay:management-toolbar
-	displayContext="<%= viewChangesManagementToolbarDisplayContext %>"
-	id="viewChangesManagementToolbar"
+<clay:navigation-bar
+	navigationItems="<%= viewChangesDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:container-fluid>
-	<liferay-ui:search-container
-		cssClass="change-lists-changes-table change-lists-table"
-		searchContainer="<%= searchContainer %>"
-		var="reviewChangesSearchContainer"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.change.tracking.model.CTEntry"
-			escapedModel="<%= true %>"
-			keyProperty="ctEntryId"
-			modelVar="ctEntry"
-		>
-			<liferay-ui:search-container-column-text>
-				<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(ctEntry.getUserName()) %>">
-					<liferay-ui:user-portrait
-						userId="<%= ctEntry.getUserId() %>"
-					/>
-				</span>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="change"
-			>
-				<div class="change-list-name">
-					<%= ctDisplayRendererRegistry.getTypeName(locale, ctEntry) %>
-				</div>
-
-				<div class="change-list-description">
-					<%= ctDisplayRendererRegistry.getEntryTitle(ctEntry, request) %>
-				</div>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smaller"
-				name="last-modified"
-			>
-
-				<%
-				Date modifiedDate = ctEntry.getModifiedDate();
-				%>
-
-				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-jsp
-				path="/change_lists/ct_entry_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-			searchContainer="<%= searchContainer %>"
-		/>
-	</liferay-ui:search-container>
-</clay:container-fluid>
+<c:choose>
+	<c:when test='<%= Objects.equals(viewChangesDisplayContext.getDisplayStyle(), "all-items") %>'>
+		<liferay-util:include page="/change_lists/view_all_items.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/change_lists/view_tree.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>

@@ -22,9 +22,11 @@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.change.tracking.conflict.ConflictInfo" %><%@
 page import="com.liferay.change.tracking.constants.CTActionKeys" %><%@
@@ -44,6 +46,7 @@ page import="com.liferay.change.tracking.web.internal.display.context.ChangeList
 page import="com.liferay.change.tracking.web.internal.display.context.SelectChangeListManagementToolbarDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewChangesManagementToolbarDisplayContext" %><%@
+page import="com.liferay.change.tracking.web.internal.display.context.ViewEntryDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewHistoryDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewHistoryManagementToolbarDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission" %><%@

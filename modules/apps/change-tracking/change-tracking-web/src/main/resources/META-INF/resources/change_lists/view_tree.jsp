@@ -16,12 +16,15 @@
 
 <%@ include file="/change_lists/init.jsp" %>
 
-<clay:container-fluid>
+<%
+ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext)request.getAttribute(CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT);
+%>
 
-	<%
-	ViewEntryDisplayContext viewEntryDisplayContext = (ViewEntryDisplayContext)request.getAttribute(CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT);
-
-	viewEntryDisplayContext.renderEntry(request, response);
-	%>
-
-</clay:container-fluid>
+<div class="container container-fluid-1280">
+	<div class="view-tree-change-list-wrapper">
+		<react:component
+			data="<%= viewChangesDisplayContext.getReactData() %>"
+			module="change_lists/js/ChangeTrackingTreeView"
+		/>
+	</div>
+</div>

@@ -33,29 +33,39 @@ CTCollection ctCollection = viewChangesDisplayContext.getCtCollection();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
+	<c:choose>
+		<c:when test="<%= ctEntry.getCtCollectionId() == CTConstants.CT_COLLECTION_ID_PRODUCTION %>">
+			<liferay-ui:icon
+				message="view"
+				url="<%= ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry, false) %>"
+			/>
+		</c:when>
+		<c:otherwise>
 
-	<%
-	String editURL = ctDisplayRendererRegistry.getEditURL(request, ctEntry);
-	%>
+			<%
+			String editURL = ctDisplayRendererRegistry.getEditURL(request, ctEntry);
+			%>
 
-	<c:if test="<%= Validator.isNotNull(editURL) && (ctCollection.getCtCollectionId() == changeListsDisplayContext.getCtCollectionId()) %>">
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
-		/>
-	</c:if>
+			<c:if test="<%= Validator.isNotNull(editURL) && (ctCollection.getCtCollectionId() == changeListsDisplayContext.getCtCollectionId()) %>">
+				<liferay-ui:icon
+					message="edit"
+					url="<%= editURL %>"
+				/>
+			</c:if>
 
-	<%
-	PortletURL diffURL = renderResponse.createRenderURL();
+			<%
+			PortletURL diffURL = renderResponse.createRenderURL();
 
-	diffURL.setParameter("mvcRenderCommandName", "/change_lists/view_diff");
-	diffURL.setParameter("ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+			diffURL.setParameter("mvcRenderCommandName", "/change_lists/view_diff");
+			diffURL.setParameter("ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 
-	diffURL.setWindowState(LiferayWindowState.POP_UP);
-	%>
+			diffURL.setWindowState(LiferayWindowState.POP_UP);
+			%>
 
-	<liferay-ui:icon
-		message="view-diff"
-		url='<%= StringBundler.concat("javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, title: '", ctDisplayRendererRegistry.getEntryTitle(ctEntry, request), "', uri: '", diffURL.toString(), "'});") %>'
-	/>
+			<liferay-ui:icon
+				message="view-diff"
+				url='<%= StringBundler.concat("javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, title: '", ctDisplayRendererRegistry.getEntryTitle(ctEntry, request), "', uri: '", diffURL.toString(), "'});") %>'
+			/>
+		</c:otherwise>
+	</c:choose>
 </liferay-ui:icon-menu>

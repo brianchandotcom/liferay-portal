@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.web.internal.display;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.io.Writer;
@@ -30,11 +30,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Samuel Trong Tran
  */
-public class CTModelDisplayRendererAdapter<T extends CTModel<T>>
+public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 	implements CTDisplayRenderer<T> {
 
 	@SuppressWarnings("unchecked")
-	public static <T extends CTModel<T>> CTDisplayRenderer<T> getInstance() {
+	public static <T> CTDisplayRenderer<T> getInstance() {
 		return (CTDisplayRenderer<T>)_INSTANCE;
 	}
 

@@ -170,14 +170,11 @@ const FragmentContent = React.forwardRef(
 							dropZoneElement.getAttribute('id') || '';
 
 						const Component = () =>
-							mainItemId && (
-								<Layout
-									mainItemId={mainItemId}
-									withinMasterPage
-								/>
-							);
+							mainItemId ? (
+								<Layout mainItemId={mainItemId} />
+							) : null;
 
-						Component.displayName = 'DropZoneComponent';
+						Component.displayName = `DropZone(${mainItemId})`;
 
 						return {
 							Component,

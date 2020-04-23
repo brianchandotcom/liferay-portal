@@ -100,7 +100,7 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeDiscussionSubscriptionClassName(
 				_classNameLocalService, _subscriptionLocalService,
 				CalendarBooking.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
+				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
 
 		registry.register(
 			"3.0.1", "4.0.0",

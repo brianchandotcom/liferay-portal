@@ -262,12 +262,12 @@ definition {
 	macro viewOrderedURLs {
 		AssertTextEquals(
 			key_rowNumber = "1",
-			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_2",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_3",
 			value1 = "${entry1}");
 
 		AssertTextEquals(
 			key_rowNumber = "2",
-			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_2",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_3",
 			value1 = "${entry2}");
 	}
 

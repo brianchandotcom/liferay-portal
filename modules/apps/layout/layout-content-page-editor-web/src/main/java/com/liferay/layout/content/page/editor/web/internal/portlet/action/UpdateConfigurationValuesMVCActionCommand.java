@@ -114,44 +114,52 @@ public class UpdateConfigurationValuesMVCActionCommand
 		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
 			editableValues);
 
-		JSONObject editableFragmentEntryProcessorJSONObject =
-			editableValuesJSONObject.getJSONObject(
-				_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+		for (String fragmentEntryProcessorKey :
+				_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
 
-		JSONObject mergedEditableFragmentEntryProcessorJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			JSONObject editableFragmentEntryProcessorJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					fragmentEntryProcessorKey);
 
-		JSONObject defaultEditableFragmentEntryProcessorJSONObject =
-			defaultEditableValuesJSONObject.getJSONObject(
-				_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+			JSONObject mergedEditableFragmentEntryProcessorJSONObject =
+				JSONFactoryUtil.createJSONObject();
 
-		Iterator<String> keys =
-			defaultEditableFragmentEntryProcessorJSONObject.keys();
+			JSONObject defaultEditableFragmentEntryProcessorJSONObject =
+				defaultEditableValuesJSONObject.getJSONObject(
+					fragmentEntryProcessorKey);
 
-		while (keys.hasNext()) {
-			String key = keys.next();
+			Iterator<String> keys =
+				defaultEditableFragmentEntryProcessorJSONObject.keys();
 
-			if (editableFragmentEntryProcessorJSONObject.has(key)) {
-				mergedEditableFragmentEntryProcessorJSONObject.put(
-					key, editableFragmentEntryProcessorJSONObject.get(key));
+			while (keys.hasNext()) {
+				String key = keys.next();
+
+				if (editableFragmentEntryProcessorJSONObject.has(key)) {
+					mergedEditableFragmentEntryProcessorJSONObject.put(
+						key, editableFragmentEntryProcessorJSONObject.get(key));
+				}
+				else {
+					mergedEditableFragmentEntryProcessorJSONObject.put(
+						key,
+						defaultEditableFragmentEntryProcessorJSONObject.get(
+							key));
+				}
 			}
-			else {
-				mergedEditableFragmentEntryProcessorJSONObject.put(
-					key,
-					defaultEditableFragmentEntryProcessorJSONObject.get(key));
-			}
+
+			editableValuesJSONObject.put(
+				fragmentEntryProcessorKey,
+				mergedEditableFragmentEntryProcessorJSONObject);
 		}
-
-		editableValuesJSONObject.put(
-			_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-			mergedEditableFragmentEntryProcessorJSONObject);
 
 		return editableValuesJSONObject;
 	}
 
-	private static final String _KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR =
+	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
 		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor";
+			"EditableFragmentEntryProcessor",
+		"com.liferay.fragment.entry.processor.drop.zone." +
+			"DropZoneFragmentEntryProcessor"
+	};
 
 	@Reference
 	private FragmentCollectionContributorTracker

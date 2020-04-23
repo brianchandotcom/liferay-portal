@@ -235,7 +235,6 @@ export default function Layout({mainItemId}) {
 
 Layout.propTypes = {
 	mainItemId: PropTypes.string.isRequired,
-	withinMasterPage: PropTypes.bool,
 };
 
 class LayoutDataItem extends React.PureComponent {

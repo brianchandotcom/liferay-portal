@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.model.RedirectEntry;
-import com.liferay.redirect.service.RedirectEntryService;
+import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
 import java.util.List;
@@ -58,8 +58,9 @@ public class CheckDestinationURLMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		List<RedirectEntry> redirectEntriesDestinationURL =
-			_redirectEntryService.getRedirectEntriesByGroupAndDestinationURL(
-				sourceURL, themeDisplay.getScopeGroupId());
+			_redirectEntryLocalService.
+				getRedirectEntriesByGroupAndDestinationURL(
+					themeDisplay.getScopeGroupId(), sourceURL);
 
 		JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
 
@@ -74,6 +75,6 @@ public class CheckDestinationURLMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private RedirectEntryService _redirectEntryService;
+	private RedirectEntryLocalService _redirectEntryLocalService;
 
 }

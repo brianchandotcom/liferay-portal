@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.model.RedirectEntry;
+import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
@@ -84,9 +85,9 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (updateReferences) {
 				List<RedirectEntry> redirectEntriesDestinationURL =
-					_redirectEntryService.
+					_redirectEntryLocalService.
 						getRedirectEntriesByGroupAndDestinationURL(
-							sourceURL, themeDisplay.getScopeGroupId());
+							themeDisplay.getScopeGroupId(), sourceURL);
 
 				for (RedirectEntry redirectEntry :
 						redirectEntriesDestinationURL) {
@@ -125,6 +126,9 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 				"yyyy-MM-dd", themeDisplay.getLocale()),
 			null);
 	}
+
+	@Reference
+	private RedirectEntryLocalService _redirectEntryLocalService;
 
 	@Reference
 	private RedirectEntryService _redirectEntryService;

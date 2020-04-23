@@ -108,14 +108,6 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 	}
 
 	@Override
-	public List<RedirectEntry> getRedirectEntriesByGroupAndDestinationURL(
-		String destinationURL, long groupId) {
-
-		return redirectEntryLocalService.
-			getRedirectEntriesByGroupAndDestinationURL(groupId, destinationURL);
-	}
-
-	@Override
 	public int getRedirectEntriesCount(long groupId) throws PortalException {
 		PermissionChecker permissionChecker = getPermissionChecker();
 

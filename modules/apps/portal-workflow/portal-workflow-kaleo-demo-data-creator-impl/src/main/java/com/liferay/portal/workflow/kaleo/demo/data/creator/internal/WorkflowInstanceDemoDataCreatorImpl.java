@@ -105,7 +105,7 @@ public class WorkflowInstanceDemoDataCreatorImpl
 	@Reference
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
-	@Reference
+	@Reference(target = "(proxy.bean=false)")
 	private WorkflowInstanceManager _workflowInstanceManager;
 
 }

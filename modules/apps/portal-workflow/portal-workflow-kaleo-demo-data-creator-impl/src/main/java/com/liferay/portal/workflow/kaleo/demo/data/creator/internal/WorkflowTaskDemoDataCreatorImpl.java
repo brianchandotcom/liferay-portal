@@ -174,10 +174,10 @@ public class WorkflowTaskDemoDataCreatorImpl
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference
+	@Reference(target = "(proxy.bean=false)")
 	private WorkflowInstanceManager _workflowInstanceManager;
 
-	@Reference
+	@Reference(target = "(proxy.bean=false)")
 	private WorkflowTaskManager _workflowTaskManager;
 
 }

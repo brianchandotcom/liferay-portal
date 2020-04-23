@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ItemSelectorDialog, PortletBase} from 'frontend-js-web';
+import {ItemSelectorDialog, PortletBase, addParams} from 'frontend-js-web';
 
 class SharedAssets extends PortletBase {
 	constructor(config, ...args) {
@@ -49,7 +49,7 @@ class SharedAssets extends PortletBase {
 				if (selectedItem) {
 					let uri = viewAssetTypeURL;
 
-					uri = Liferay.Util.addParams(
+					uri = addParams(
 						namespace + 'className=' + selectedItem.value,
 						uri
 					);

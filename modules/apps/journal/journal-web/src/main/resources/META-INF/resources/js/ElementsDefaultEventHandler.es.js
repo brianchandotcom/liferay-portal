@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	ItemSelectorDialog,
+	addParams,
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {
@@ -34,11 +38,11 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 			event => {
 				let uri = itemData.redirectURL;
 
-				uri = Liferay.Util.addParams(
+				uri = addParams(
 					namespace + 'sourceVersion=' + event.sourceversion,
 					uri
 				);
-				uri = Liferay.Util.addParams(
+				uri = addParams(
 					namespace + 'targetVersion=' + event.targetversion,
 					uri
 				);

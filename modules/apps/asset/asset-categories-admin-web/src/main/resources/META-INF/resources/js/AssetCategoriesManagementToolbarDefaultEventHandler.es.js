@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	ItemSelectorDialog,
+	addParams,
+} from 'frontend-js-web';
 
 class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedCategories() {
@@ -45,7 +49,7 @@ class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHa
 				: null;
 
 			if (category) {
-				location.href = Liferay.Util.addParams(
+				location.href = addParams(
 					namespace + 'categoryId=' + category.categoryId,
 					itemData.viewCategoriesURL
 				);

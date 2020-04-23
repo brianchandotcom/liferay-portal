@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	ItemSelectorDialog,
+	addParams,
+} from 'frontend-js-web';
 import dom from 'metal-dom';
 
 class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
@@ -45,7 +49,7 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				uri: itemData.selectRolesURL,
 			},
 			event => {
-				location.href = Liferay.Util.addParams(
+				location.href = addParams(
 					`${this.ns('roleId')}=${event.id}`,
 					itemData.viewRoleURL
 				);

@@ -185,6 +185,8 @@ definition {
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 				item = "Export",
 				pageTemplateName = "Page Template Name");
+
+			DownloadTempFile();
 		}
 
 		task ("Add a custom master have the same name in a new site") {
@@ -294,6 +296,8 @@ definition {
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 				item = "Export",
 				pageTemplateName = "Page Template Name");
+
+			DownloadTempFile();
 		}
 
 		task ("Import content page template in a new site") {
@@ -396,6 +400,8 @@ definition {
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 				item = "Export",
 				pageTemplateName = "Page Template Name");
+
+			DownloadTempFile();
 		}
 
 		task ("Import content page template in a new site") {

@@ -235,6 +235,108 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-106212. Can export a content page template with the custom Look and Feel and import."
+	@priority = "4"
+	test ExportImportContentPageTemplateWithCustomLookAndFeel {
+		task ("Add a content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		}
+
+		task ("Set up Look and Feel") {
+			PageEditor.gotoTab(tabName = "Look and Feel");
+
+			Theme.configureLookAndFeelSpecificLook();
+
+			Theme.configureLookAndFeelShowFooter(showFooter = "false");
+
+			Pause(locator1 = "3000");
+
+			Theme.configureLookAndFeelShowHeader(showHeader = "false");
+
+			Pause(locator1 = "3000");
+
+			Theme.configureLookAndFeelShowHeaderSearch(showHeaderSearch = "false");
+
+			Pause(locator1 = "3000");
+
+			Theme.configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = "true");
+
+			Pause(locator1 = "3000");
+
+			Theme.configureLookAndFeelWrapWidgetPageContent(wrapWidgetPageContent = "false");
+
+			Pause(locator1 = "3000");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Export content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.viewEntryWorkflowStatus(
+				entry = "Page Template Name",
+				workflowStatus = "Approved");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Export",
+				pageTemplateName = "Page Template Name");
+		}
+
+		task ("Import content page template in a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
+		}
+
+		task ("Assert the Look and Feel Setting is imported") {
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.gotoTab(tabName = "Look and Feel");
+
+			Pause(locator1 = "3000");
+
+			AssertChecked.assertCheckedNotVisible(locator1 = "Radio#SPECIFIC_LOOK");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Show Footer",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Show Header",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Show Header Search",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Show Maximize/Minimize Application Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Wrap Widget Page Content",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+	}
+
 	@description = "This is a use case for LPS-106212. Can export a content page template in draft status when it has published version and only the published version is exported."
 	@priority = "4"
 	test OnlyPublishedVersionIsExported {

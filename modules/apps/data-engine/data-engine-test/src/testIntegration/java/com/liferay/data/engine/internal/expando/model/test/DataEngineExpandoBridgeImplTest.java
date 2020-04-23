@@ -70,7 +70,20 @@ public class DataEngineExpandoBridgeImplTest {
 		}
 
 		bundleContext.registerService(
-			DataEngineNativeObject.class, DataDefinition.class::getName,
+			DataEngineNativeObject.class,
+			new DataEngineNativeObject() {
+
+				@Override
+				public String getClassName() {
+					return DataDefinition.class.getName();
+				}
+
+				@Override
+				public String getName() {
+					return DataDefinition.class.getSimpleName();
+				}
+
+			},
 			new HashMapDictionary<>());
 
 		Group group = GroupTestUtil.addGroup();

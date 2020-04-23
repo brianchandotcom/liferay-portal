@@ -12,7 +12,7 @@
  * details.
  */
 
-import updateLayoutData from '../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updateLayoutData';
+import updateItemConfig from '../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updateItemConfig';
 import LayoutService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/LayoutService';
 import updateRowColumns from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
 
@@ -22,7 +22,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updateLayoutData',
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updateItemConfig',
 	() => jest.fn()
 );
 
@@ -34,7 +34,7 @@ jest.mock(
 describe('updateRowColumns', () => {
 	beforeEach(() => {
 		LayoutService.updateRowColumns.mockClear();
-		updateLayoutData.mockClear();
+		updateItemConfig.mockClear();
 
 		LayoutService.updateRowColumns.mockImplementation(() =>
 			Promise.resolve()
@@ -69,10 +69,10 @@ describe('updateRowColumns', () => {
 		);
 	});
 
-	it('dispatch updateLayoutData action when the promise is resolved', async () => {
+	it('dispatch updateItemConfig action when the promise is resolved', async () => {
 		await runThunk();
 
-		expect(updateLayoutData).toHaveBeenCalledWith({
+		expect(updateItemConfig).toHaveBeenCalledWith({
 			layoutData: {
 				items: {},
 				version: 1,

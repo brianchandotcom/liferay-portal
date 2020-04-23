@@ -56,24 +56,23 @@ describe('Liferay.Util.addParams', () => {
 				'http://example.com/?something=other&sampleId=2'
 			);
 		});
+
+		it('adds parameters when the base URL already has parameters', () => {
+			expect(addParams('extra=thing', sampleUrlWithParams)).toEqual(
+				'http://example.com/?param=&extra=thing'
+			);
+		});
 	});
 
-	it('throws an error when passing something else than an object or a string as the first argument', () => {
-		const fn1 = () => {
-			return addParams(1);
-		};
-		expect(fn1).toThrow(TypeError);
+	it('throws an error if not passed params as an object or a string', () => {
+		expect(() => addParams(1)).toThrow(TypeError);
 
-		const fn2 = () => {
-			return addParams(['one', 'two']);
-		};
-		expect(fn2).toThrow(TypeError);
+		expect(() => addParams(['one', 'two'])).toThrow(TypeError);
 	});
 
 	it('throws an error when passing an invalid URL', () => {
-		const fn = () => {
-			return addParams('something=other', 'invalid url');
-		};
-		expect(fn).toThrow();
+		expect(() => addParams('something=other', 'broken input')).toThrow(
+			/Invalid URL: broken input/
+		);
 	});
 });

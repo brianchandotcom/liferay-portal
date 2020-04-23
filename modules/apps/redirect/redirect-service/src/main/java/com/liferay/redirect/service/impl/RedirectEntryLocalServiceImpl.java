@@ -178,10 +178,6 @@ public class RedirectEntryLocalServiceImpl
 	public List<RedirectEntry> getRedirectEntriesByGroupAndDestinationURL(
 		long groupId, String destinationURL) {
 
-		if (!_redirectConfiguration.isEnabled()) {
-			return null;
-		}
-
 		return ListUtil.filter(
 			redirectEntryPersistence.findByG_D(groupId, destinationURL),
 			redirectEntry -> !_isExpired(redirectEntry));

@@ -167,8 +167,7 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 				String[]::new
 			);
 		}
-
-		if (_indexEntityNameSet.contains(index.getKey())) {
+		else if (_indexEntityNameSet.contains(index.getKey())) {
 			return new String[] {index.getKey()};
 		}
 

@@ -91,24 +91,17 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if ((plidAndPortletId != null) && !(boolean)plidAndPortletId[2]) {
-			return new ResultImpl(
-				(long)plidAndPortletId[0], (String)plidAndPortletId[1],
-				(boolean)plidAndPortletId[2]);
-		}
-		else if (scopeGroup.isSite() ||
-				 SitesUtil.isUserGroupLayoutSetViewable(
-					 themeDisplay.getPermissionChecker(), scopeGroup)) {
+		if (((plidAndPortletId == null) || (boolean)plidAndPortletId[2]) &&
+			(scopeGroup.isSite() ||
+			 SitesUtil.isUserGroupLayoutSetViewable(
+				 themeDisplay.getPermissionChecker(), scopeGroup))) {
 
 			Object[] scopePlidAndPortletId = _fetchPlidAndPortletId(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), portletIds);
 
 			if (scopePlidAndPortletId != null) {
-				return new ResultImpl(
-					(long)scopePlidAndPortletId[0],
-					(String)scopePlidAndPortletId[1],
-					(boolean)scopePlidAndPortletId[2]);
+				plidAndPortletId = scopePlidAndPortletId;
 			}
 		}
 

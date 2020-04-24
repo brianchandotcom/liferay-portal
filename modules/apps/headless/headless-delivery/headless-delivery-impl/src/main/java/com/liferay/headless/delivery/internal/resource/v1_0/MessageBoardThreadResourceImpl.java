@@ -90,8 +90,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -600,6 +602,15 @@ public class MessageBoardThreadResourceImpl
 				dateModified = mbMessage.getModifiedDate();
 				encodingFormat = mbMessage.getFormat();
 				friendlyUrlPath = mbMessage.getUrlSubject();
+				hasValidAnswer = Stream.of(
+					_mbMessageLocalService.getChildMessages(
+						mbMessage.getMessageId(),
+						WorkflowConstants.STATUS_APPROVED)
+				).flatMap(
+					List::stream
+				).anyMatch(
+					MBMessage::isAnswer
+				);
 				headline = mbMessage.getSubject();
 				id = mbThread.getThreadId();
 				keywords = ListUtil.toArray(

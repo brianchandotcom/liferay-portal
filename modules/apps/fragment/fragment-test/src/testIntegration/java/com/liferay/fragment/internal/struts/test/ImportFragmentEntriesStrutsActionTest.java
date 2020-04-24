@@ -113,7 +113,7 @@ public class ImportFragmentEntriesStrutsActionTest {
 		Map<String, FileItem[]> fileParameters = _getFileParameters(
 			bytes, "file");
 
-		HttpServletRequest httpServletRequest = _getMultipartRequest(
+		HttpServletRequest httpServletRequest = _getMultipartHttpServletRequest(
 			bytes, "file");
 
 		UploadPortletRequest uploadPortletRequest =
@@ -183,7 +183,7 @@ public class ImportFragmentEntriesStrutsActionTest {
 		).build();
 	}
 
-	private static HttpServletRequest _getMultipartRequest(
+	private static HttpServletRequest _getMultipartHttpServletRequest(
 		byte[] bytes, String fileNameParameter) {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =

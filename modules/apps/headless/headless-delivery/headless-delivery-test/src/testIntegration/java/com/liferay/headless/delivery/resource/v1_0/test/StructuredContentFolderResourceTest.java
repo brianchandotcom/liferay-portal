@@ -18,9 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.test.util.SearchTestRule;
 
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -29,9 +27,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class StructuredContentFolderResourceTest
 	extends BaseStructuredContentFolderResourceTestCase {
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

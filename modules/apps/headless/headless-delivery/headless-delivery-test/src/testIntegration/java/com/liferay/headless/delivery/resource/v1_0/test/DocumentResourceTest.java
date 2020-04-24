@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.search.test.util.SearchTestRule;
 
 import java.io.File;
 
@@ -37,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -93,9 +91,6 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 			Arrays.asList(
 				DocumentSerDes.toDTOs(documentsJSONObject.getString("items"))));
 	}
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected void assertValid(

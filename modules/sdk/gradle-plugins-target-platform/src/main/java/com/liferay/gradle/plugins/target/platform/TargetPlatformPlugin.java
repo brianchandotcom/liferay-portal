@@ -263,8 +263,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 	private static final List<String> _configurationNames = Arrays.asList(
 		"compile", "compileClasspath", "compileInclude", "compileOnly",
-		"default", "implementation", "jsCompile", "originalModule",
-		"parentThemes", "portalCommonCSS", "runtime", "runtimeClasspath",
+		"default", "implementation", "originalModule", "parentThemes",
+		"portalCommonCSS", "runtime", "runtimeClasspath",
 		"runtimeImplementation", "runtimeOnly", "testCompileClasspath",
 		"testCompileOnly", "testImplementation", "testIntegration",
 		"testRuntime", "testRuntimeClasspath", "testRuntimeOnly");

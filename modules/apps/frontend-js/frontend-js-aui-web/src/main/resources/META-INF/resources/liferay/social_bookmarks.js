@@ -15,7 +15,7 @@
 /**
  * The Social Bookmarks Component.
  *
- * @deprecated
+ * @deprecated As of Mueller (7.2.x)
  * @module liferay-social-bookmarks
  */
 

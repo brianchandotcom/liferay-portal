@@ -106,7 +106,7 @@ AUI.add(
 			},
 
 			/*
-			 * @deprecated
+			 * @deprecated As of Wilberforce (7.0.x)
 			 */
 
 			setCopyCurrentRenderParameters() {
@@ -132,7 +132,7 @@ AUI.add(
 			},
 
 			/*
-			 * @deprecated
+			 * @deprecated As of Wilberforce (7.0.x)
 			 */
 
 			setEncrypt() {
@@ -209,7 +209,7 @@ AUI.add(
 			},
 
 			/*
-			 * @deprecated
+			 * @deprecated As of Wilberforce (7.0.x)
 			 */
 
 			setPortletConfiguration() {
@@ -243,7 +243,7 @@ AUI.add(
 			},
 
 			/*
-			 * @deprecated since 7.2, unused
+			 * @deprecated As of Mueller (7.2.x), with no direct replacement
 			 */
 			setSecure(secure) {
 				var instance = this;

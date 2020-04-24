@@ -33,7 +33,7 @@ AUI.add(
 		var STR_SHOW = 'show';
 
 		/**
-		 * @deprecated
+		 * @deprecated As of Wilberforce (7.0.x)
 		 *
 		 * OPTIONS
 		 *

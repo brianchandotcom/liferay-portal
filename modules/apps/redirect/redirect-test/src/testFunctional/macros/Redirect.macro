@@ -9,6 +9,8 @@ definition {
 			locator1 = "TextInput#REDIRECT_SOURCE_URL_PREFIX",
 			value1 = "${portalURL}/web/${siteName}");
 
+		AssertElementPresent(locator1 = "Button#TRY_REDIRECTION_DISABLED");
+
 		Type(
 			locator1 = "TextInput#REDIRECT_SOURCE_URL",
 			value1 = "${sourceURL}");
@@ -16,6 +18,16 @@ definition {
 		Type(
 			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
 			value1 = "${destinationURL}");
+
+		if (isSet(checkDestinationURL)) {
+			Click(locator1 = "Button#TRY_REDIRECTION");
+
+			SelectWindow(locator1 = "title=${destinationPageName} - ${groupName} - ${portalName}");
+
+			AssertLocation(value1 = "${destinationURL}");
+
+			Close.closeWindow(locator1 = "title=${destinationPageName} - ${groupName} - ${portalName}");
+		}
 
 		if (isSet(redirectType)) {
 			Select(
@@ -39,6 +51,12 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
 				value1 = "Error:There is already a redirect set for the same source URL.");
+		}
+
+		else if ("${destinationURLVariation}" == "Space") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "Error:The destination URL must be specified.");
 		}
 
 		else {

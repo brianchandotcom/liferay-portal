@@ -39,6 +39,58 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to add a Document entry with uploaded file"
+	macro addFileWithUploadedFile {
+		Variables.assertDefined(parameterList = "${groupName},${mimeType},${sourceFileName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+
+		if (isSet(folderName)) {
+			Variables.assertDefined(parameterList = "${folderName}");
+
+			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+				name = "${folderName}",
+				groupName = "${groupName}");
+		}
+		else {
+			var folderId = "0";
+		}
+
+		var baseDir = PropsUtil.get("test.base.dir.name");
+		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+		var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
+
+		if (isSet(dmDocumentDescription)) {
+			var description = "${dmDocumentDescription}";
+		}
+		else {
+			var description = "";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/add-file-entry \
+			-u test@liferay.com:test \
+			-F repositoryId=${repositoryId} \
+			-F folderId=${folderId} \
+			-F sourceFileName=${sourceFileName} \
+			-F mimeType=${mimeType} \
+			-F title=${dmDocumentTitle} \
+		 	-F description=${description} \
+			-F changeLog='' \
+			-F file=@${filePath}
+		''';
+
+		echo("## Adding a 'File' with the following info using JSONWS:");
+
+		echo("## * Title: ${dmDocumentTitle}");
+
+		echo("## * Description: ${description}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to add a DL Folder"
 	macro addFolder {
 		var portalURL = JSONCompany.getPortalURL();

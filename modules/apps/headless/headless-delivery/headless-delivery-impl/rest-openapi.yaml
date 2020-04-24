@@ -988,7 +988,7 @@ components:
                 id:
                     type: string
                 value:
-                    oneOf:
+                    anyOf:
                         - $ref: "#/components/schemas/FragmentFieldBackgroundImage"
                         - $ref: "#/components/schemas/FragmentFieldHTML"
                         - $ref: "#/components/schemas/FragmentFieldImage"

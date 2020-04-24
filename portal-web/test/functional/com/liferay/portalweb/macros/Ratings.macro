@@ -45,12 +45,12 @@ definition {
 
 	macro rateThumb {
 		if (isSet(commentRating)) {
-			Click.mouseOverClick(
+			Click.clickNoMouseOver(
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#COMMENT_RATING_THUMB");
 		}
 
-		if (isSet(replyRating)) {
+		else if (isSet(replyRating)) {
 			Click.mouseOverClick(
 				key_ratingResult = "${ratingResult}",
 				key_threadSubject = "${threadSubject}",

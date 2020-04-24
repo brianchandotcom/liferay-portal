@@ -77,6 +77,22 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						<span>
 							<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
 						</span>
+
+						<%
+						Map<String, String> data = HashMapBuilder.put(
+							"href", HtmlUtil.escape(redirectEntry.getDestinationURL())
+						).build();
+						%>
+
+						<clay:button
+							data="<%= data %>"
+							elementClasses="icon-shortcut"
+							icon="shortcut"
+							monospaced="<%= true %>"
+							size="sm"
+							style="unstyled"
+							title='<%= LanguageUtil.get(request, "try-redirection") %>'
+						/>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
@@ -124,3 +140,20 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 	context="<%= redirectManagementToolbarDisplayContext.getComponentContext() %>"
 	module="js/RedirectManagementToolbarDefaultEventHandler.es"
 />
+
+<aui:script require="metal-dom/src/all/dom as dom">
+	dom.delegate(
+		document.querySelector('#<portlet:namespace />fm'),
+		'click',
+		'.icon-shortcut',
+		function(event) {
+			var delegateTarget = event.delegateTarget;
+
+			var destinationUrl = delegateTarget.dataset.href;
+
+			if (destinationUrl) {
+				window.open(destinationUrl, '_blank');
+			}
+		}
+	);
+</aui:script>

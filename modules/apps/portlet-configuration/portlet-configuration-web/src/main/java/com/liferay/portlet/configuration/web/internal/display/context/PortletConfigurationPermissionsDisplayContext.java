@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.ResourcePrimKeyException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
@@ -540,6 +541,10 @@ public class PortletConfigurationPermissionsDisplayContext {
 		}
 
 		_roleTypes = RoleConstants.TYPES_REGULAR_AND_SITE;
+
+		if (_group.getType() == GroupConstants.TYPE_DEPOT) {
+			_roleTypes = RoleConstants.TYPES_DEPOT_AND_REGULAR;
+		}
 
 		if (ResourceActionsUtil.isPortalModelResource(getModelResource())) {
 			if (Objects.equals(

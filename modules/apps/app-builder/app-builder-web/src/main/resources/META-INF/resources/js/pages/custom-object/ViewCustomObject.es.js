@@ -16,6 +16,7 @@ import React, {useEffect, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
+import NavigationBar from '../../components/navigation-bar/NavigationBar.es';
 import {getItem} from '../../utils/client.es';
 import EditApp from '../app/EditApp.es';
 import ListApps from '../app/ListApps.es';
@@ -23,7 +24,6 @@ import EditFormView from '../form-view/EditFormView.es';
 import ListFormViews from '../form-view/ListFormViews.es';
 import EditTableView from '../table-view/EditTableView.es';
 import ListTableViews from '../table-view/ListTableViews.es';
-import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
 
 export default ({
 	match: {
@@ -67,7 +67,24 @@ export default ({
 				render={() => (
 					<>
 						<ControlMenu backURL="/" title={title} />
-						<CustomObjectNavigationBar />
+						<NavigationBar tabs={[
+							{
+								active: true,
+								label: Liferay.Language.get('form-views'),
+								path: url => `${url}/form-views`,
+
+							},
+							{
+								label: Liferay.Language.get('table-views'),
+								path: url => `${url}/table-views`,
+								
+							},
+							{
+								label: Liferay.Language.get('apps'),
+								path: url => `${url}/apps`,
+								
+							}
+						]} />
 
 						<Switch>
 							<Route

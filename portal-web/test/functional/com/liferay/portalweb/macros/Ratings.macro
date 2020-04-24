@@ -31,6 +31,16 @@ definition {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
 	}
 
+	macro rateStackedStars {
+		Click(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STACKED_STAR_COUNT");
+
+		AssertElementPresent(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STACKED_STAR_RESULT");
+	}
+
 	macro rateStar {
 		Click(locator1 = "Ratings#YOUR_RATING_STAR");
 
@@ -70,6 +80,17 @@ definition {
 		AssertTextEquals(
 			locator1 = "Ratings#YOUR_RATING_LIKE_COUNT",
 			value1 = "${ratingLikeCount}");
+	}
+
+	macro viewRateStackedStar {
+
+		AssertElementPresent(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#YOUR_RATING_STACKED_STAR_RESULT");
+
+		AssertElementPresent(
+			key_ratingStarCount = "${ratingStarCount}",
+			locator1 = "Ratings#AVERAGE_STACKED_STAR_RESULT");
 	}
 
 	macro viewRateStar {

@@ -39,7 +39,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
-		<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
+		<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280 redirect-entries" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<liferay-ui:search-container
@@ -74,10 +74,6 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						cssClass="table-cell-content"
 						name="destination-url"
 					>
-						<span>
-							<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
-						</span>
-
 						<%
 						Map<String, String> data = HashMapBuilder.put(
 							"href", HtmlUtil.escape(redirectEntry.getDestinationURL())
@@ -93,6 +89,11 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 							style="unstyled"
 							title='<%= LanguageUtil.get(request, "try-redirection") %>'
 						/>
+
+						<span>
+							<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
+						</span>
+
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

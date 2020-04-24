@@ -302,13 +302,13 @@ public class DDMDataProviderInstanceLocalServiceImpl
 
 		validate(nameMap, ddmFormValues);
 
-		Date now = new Date();
-
-		User user = userLocalService.getUser(userId);
-
 		DDMDataProviderInstance dataProviderInstance =
 			ddmDataProviderInstancePersistence.findByPrimaryKey(
 				dataProviderInstanceId);
+
+		User user = userLocalService.getUser(userId);
+
+		Date now = new Date();
 
 		dataProviderInstance.setUserId(user.getUserId());
 		dataProviderInstance.setUserName(user.getFullName());

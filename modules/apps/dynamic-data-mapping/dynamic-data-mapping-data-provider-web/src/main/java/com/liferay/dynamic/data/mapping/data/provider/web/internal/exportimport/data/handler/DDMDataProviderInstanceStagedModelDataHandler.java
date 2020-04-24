@@ -171,9 +171,6 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 					dataProviderInstance.getType());
 		}
 
-		long userId = portletDataContext.getUserId(
-			dataProviderInstance.getUserUuid());
-
 		DDMDataProviderInstance importedDataProviderInstance =
 			(DDMDataProviderInstance)dataProviderInstance.clone();
 
@@ -203,13 +200,16 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 					portletDataContext, importedDataProviderInstance);
 		}
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			dataProviderInstance);
+		long userId = portletDataContext.getUserId(
+			dataProviderInstance.getUserUuid());
 
 		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
 
 		DDMFormValues ddmFormValues = deserialize(
 			dataProviderInstance.getDefinition(), ddmForm);
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			dataProviderInstance);
 
 		_ddmDataProviderInstanceLocalService.updateDataProviderInstance(
 			userId, importedDataProviderInstance.getDataProviderInstanceId(),

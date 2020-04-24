@@ -92,6 +92,40 @@ public class FriendlyURLLayoutLocalServiceTest {
 		}
 	}
 
+	@Test
+	public void testPrivateLayoutCanHaveTheSameFriendlyURLAsPublicOne()
+		throws Exception {
+
+		String friendlyURL = "/friendly-url";
+
+		Layout privateLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), true,
+			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
+			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
+
+		Layout publicLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), false,
+			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
+			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
+
+		Assert.assertEquals(
+			privateLayout,
+			_layoutLocalService.fetchLayoutByFriendlyURL(
+				_group.getGroupId(), true, friendlyURL));
+		Assert.assertEquals(
+			privateLayout,
+			_layoutLocalService.getFriendlyURLLayout(
+				_group.getGroupId(), true, friendlyURL));
+		Assert.assertEquals(
+			publicLayout,
+			_layoutLocalService.fetchLayoutByFriendlyURL(
+				_group.getGroupId(), false, friendlyURL));
+		Assert.assertEquals(
+			publicLayout,
+			_layoutLocalService.getFriendlyURLLayout(
+				_group.getGroupId(), false, friendlyURL));
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 

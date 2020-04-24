@@ -714,6 +714,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRY_REDIRECTION</td>
+	<td>//button[@type='button' and @title='Try Redirection']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRY_REDIRECTION_DISABLED</td>
+	<td>//button[@type='button' and @title='Try Redirection'][@disabled='']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBMIT_FOR_PUBLICATION</td>
 	<td>//button[contains(.,'Submit for Publication')]</td>
 	<td></td>

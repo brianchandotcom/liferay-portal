@@ -70,20 +70,24 @@ describe('Liferay.Util.addParams', () => {
 		expect(() => addParams(['one', 'two'])).toThrow(TypeError);
 	});
 
-	it("doesn't throw an error when passing what seems like an invalid URL", () => {
-		expect(() => addParams('something=other', 'broken input')).toThrow(
-			/Invalid URL: broken input/
-		);
+	it('throws an error when passed an invalid URL', () => {
+		expect(() =>
+			addParams('something=other', 'not a relative or absolute URL')
+		).toThrow(/Invalid URL: not a relative or absolute URL/);
 	});
 
-	it("doesn't throw an error when passing a relative path as the second argument", () => {
+	it('gracefully handles a relative path as the second argument', () => {
+		// Invariant: Jest environment sets up location like so:
+		expect(location.href).toBe('http://localhost/');
+
 		expect(addParams('something=other', '/hello-there')).toEqual(
-			`${location.href}hello-there?something=other`
+			`http://localhost/hello-there?something=other`
 		);
 	});
 
 	it('changes the base URL if the second argument is an absolute URL', () => {
 		const url = addParams('something=other', 'https://liferay.com');
+
 		expect(url).toEqual('https://liferay.com/?something=other');
 	});
 });

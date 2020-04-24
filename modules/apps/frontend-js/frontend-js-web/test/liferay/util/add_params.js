@@ -71,19 +71,15 @@ describe('Liferay.Util.addParams', () => {
 	});
 
 	it("doesn't throw an error when passing what seems like an invalid URL", () => {
-		expect(() => addParams('something=other', 'broken input')).not.toThrow(
+		expect(() => addParams('something=other', 'broken input')).toThrow(
 			/Invalid URL: broken input/
 		);
 	});
 
 	it("doesn't throw an error when passing a relative path as the second argument", () => {
-		expect(() =>
-			addParams('something=other', '/hello-there')
-		).not.toThrow();
-	});
-
-	it("doesn't throw an error when passing a unicode string as the second argument", () => {
-		expect(() => addParams('something=other', '\u2655')).not.toThrow();
+		expect(addParams('something=other', '/hello-there')).toEqual(
+			`${location.href}hello-there?something=other`
+		);
 	});
 
 	it('changes the base URL if the second argument is an absolute URL', () => {

@@ -152,6 +152,7 @@ public class DepotRolesPortalInstanceLifecycleListener
 
 	private static final String[] _DEPOT_ROLE_NAMES = {
 		DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+		DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
 		DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
 		DepotRolesConstants.ASSET_LIBRARY_MEMBER,
 		DepotRolesConstants.ASSET_LIBRARY_OWNER

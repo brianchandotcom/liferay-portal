@@ -98,6 +98,9 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 			Objects.equals(
 				role.getName(), DepotRolesConstants.ASSET_LIBRARY_MEMBER) ||
 			Objects.equals(
+				role.getName(),
+				DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER) ||
+			Objects.equals(
 				role.getName(), DepotRolesConstants.ASSET_LIBRARY_OWNER)) {
 
 			return false;

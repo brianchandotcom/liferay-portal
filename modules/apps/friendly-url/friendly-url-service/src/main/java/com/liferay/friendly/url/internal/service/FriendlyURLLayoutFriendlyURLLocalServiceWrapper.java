@@ -14,15 +14,14 @@
 
 package com.liferay.friendly.url.internal.service;
 
+import com.liferay.friendly.url.internal.util.FriendlyURLLayoutUtil;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collections;
 import java.util.List;
@@ -60,7 +59,8 @@ public class FriendlyURLLayoutFriendlyURLLocalServiceWrapper
 			userId, companyId, groupId, plid, privateLayout, friendlyURL,
 			languageId, serviceContext);
 
-		_addFriendlyURLEntry(groupId, layoutFriendlyURL, serviceContext);
+		_addFriendlyURLEntry(
+			groupId, layoutFriendlyURL, privateLayout, serviceContext);
 
 		return layoutFriendlyURL;
 	}
@@ -78,7 +78,8 @@ public class FriendlyURLLayoutFriendlyURLLocalServiceWrapper
 				serviceContext);
 
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLS) {
-			_addFriendlyURLEntry(groupId, layoutFriendlyURL, serviceContext);
+			_addFriendlyURLEntry(
+				groupId, layoutFriendlyURL, privateLayout, serviceContext);
 		}
 
 		return layoutFriendlyURLS;
@@ -86,11 +87,11 @@ public class FriendlyURLLayoutFriendlyURLLocalServiceWrapper
 
 	private void _addFriendlyURLEntry(
 			long groupId, LayoutFriendlyURL layoutFriendlyURL,
-			ServiceContext serviceContext)
+			boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException {
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
-			groupId, _portal.getClassNameId(Layout.class),
+			groupId, FriendlyURLLayoutUtil.getLayoutClassNameId(privateLayout),
 			layoutFriendlyURL.getPlid(),
 			Collections.singletonMap(
 				layoutFriendlyURL.getLanguageId(),
@@ -100,8 +101,5 @@ public class FriendlyURLLayoutFriendlyURLLocalServiceWrapper
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

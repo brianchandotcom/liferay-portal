@@ -14,6 +14,7 @@
 
 package com.liferay.friendly.url.internal.service;
 
+import com.liferay.friendly.url.internal.util.FriendlyURLLayoutUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -54,7 +55,7 @@ public class FriendlyURLLayoutLocalServiceWrapper
 			return layout;
 		}
 
-		return _fetchLayoutByFriendlyURL(groupId, friendlyURL);
+		return _fetchLayoutByFriendlyURL(groupId, privateLayout, friendlyURL);
 	}
 
 	@Override
@@ -67,7 +68,8 @@ public class FriendlyURLLayoutLocalServiceWrapper
 				groupId, privateLayout, friendlyURL);
 		}
 		catch (NoSuchLayoutException noSuchLayoutException) {
-			Layout layout = _fetchLayoutByFriendlyURL(groupId, friendlyURL);
+			Layout layout = _fetchLayoutByFriendlyURL(
+				groupId, privateLayout, friendlyURL);
 
 			if (layout != null) {
 				return layout;
@@ -77,10 +79,14 @@ public class FriendlyURLLayoutLocalServiceWrapper
 		}
 	}
 
-	private Layout _fetchLayoutByFriendlyURL(long groupId, String friendlyURL) {
+	private Layout _fetchLayoutByFriendlyURL(
+		long groupId, boolean privateLayout, String friendlyURL) {
+
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, Layout.class, friendlyURL);
+				groupId,
+				FriendlyURLLayoutUtil.getLayoutClassNameId(privateLayout),
+				friendlyURL);
 
 		if (friendlyURLEntry != null) {
 			Layout layout = fetchLayout(friendlyURLEntry.getClassPK());

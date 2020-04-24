@@ -38,6 +38,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -88,25 +89,14 @@ public class LayoutStructureUtil {
 	}
 
 	public static String getLayoutStructureItemJSON(
-			long groupId, String itemId,
-			PageDefinitionConverter pageDefinitionConverter, long plid,
-			boolean saveInlineContent, boolean saveMappingConfiguration,
-			long segmentsExperienceId)
+			String itemId, PageDefinitionConverter pageDefinitionConverter,
+			long plid, boolean saveInlineContent,
+			boolean saveMappingConfiguration, long segmentsExperienceId)
 		throws PortalException {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-					plid, true);
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
-
 		PageElement pageElement = pageDefinitionConverter.toPageElement(
-			groupId, layoutStructure,
-			layoutStructure.getLayoutStructureItem(itemId), saveInlineContent,
-			saveMappingConfiguration);
+			LayoutLocalServiceUtil.getLayout(plid), itemId, saveInlineContent,
+			saveMappingConfiguration, segmentsExperienceId);
 
 		try {
 			SimpleFilterProvider simpleFilterProvider =

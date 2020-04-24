@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -193,24 +194,12 @@ public class RenderFragmentLayoutDisplayContext {
 	}
 
 	public String getPortletPaths() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
 			_httpServletResponse, unsyncStringWriter);
 
-		List<PortletPreferences> portletPreferencesList =
-			PortletPreferencesLocalServiceUtil.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid());
-
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				themeDisplay.getCompanyId(), portletPreferences.getPortletId());
-
+		for (Portlet portlet : _getPortlets()) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			try {
@@ -233,6 +222,32 @@ public class RenderFragmentLayoutDisplayContext {
 		return unsyncStringWriter.toString();
 	}
 
+	private List<Portlet> _getPortlets() {
+		if (_portlets != null) {
+			return _portlets;
+		}
+
+		_portlets = new ArrayList<>();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<PortletPreferences> portletPreferencesList =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid());
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletPreferences.getPortletId());
+
+			_portlets.add(portlet);
+		}
+
+		return _portlets;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderFragmentLayoutDisplayContext.class);
 
@@ -242,5 +257,6 @@ public class RenderFragmentLayoutDisplayContext {
 	private final LayoutListRetrieverTracker _layoutListRetrieverTracker;
 	private final ListObjectReferenceFactoryTracker
 		_listObjectReferenceFactoryTracker;
+	private List<Portlet> _portlets;
 
 }

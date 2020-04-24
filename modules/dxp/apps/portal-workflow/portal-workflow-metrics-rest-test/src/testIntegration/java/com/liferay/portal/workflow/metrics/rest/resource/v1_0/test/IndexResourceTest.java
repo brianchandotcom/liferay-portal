@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Index;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.IndexSerDes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,8 +75,10 @@ public class IndexResourceTest extends BaseIndexResourceTestCase {
 
 		Assert.assertEquals(7, indexesJSONObject.get("totalCount"));
 
-		assertEqualsJSONArray(
-			_getDefaultIndexes(), indexesJSONObject.getJSONArray("items"));
+		assertEqualsIgnoringOrder(
+			_getDefaultIndexes(),
+			Arrays.asList(
+				IndexSerDes.toDTOs(indexesJSONObject.getString("items"))));
 	}
 
 	@Override

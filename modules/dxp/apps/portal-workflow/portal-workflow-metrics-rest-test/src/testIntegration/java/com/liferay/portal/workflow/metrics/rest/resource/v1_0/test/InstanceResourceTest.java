@@ -82,17 +82,17 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 				Collections.singletonList(instance2),
 				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
-			null, new String[] {"Completed"},
+			null, true,
 			(instance1, instance2, page) -> assertEquals(
 				Collections.singletonList(instance1),
 				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
-			null, new String[] {"Completed", "Pending"},
+			null, null,
 			(instance1, instance2, page) -> assertEqualsIgnoringOrder(
 				Arrays.asList(instance1, instance2),
 				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
-			null, new String[] {"Pending"},
+			null, false,
 			(instance1, instance2, page) -> assertEquals(
 				Collections.singletonList(instance2),
 				(List<Instance>)page.getItems()));
@@ -161,7 +161,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		for (Assignee assignee : instance.getAssignees()) {
 			_workflowMetricsRESTTestHelper.addTask(
-				assignee.getId(), testGroup.getCompanyId(), instance);
+				assignee, testGroup.getCompanyId(), instance);
 		}
 
 		if (instance.getCompleted()) {
@@ -211,7 +211,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	}
 
 	private void _testGetProcessInstancesPage(
-			Long[] assigneeIds, String[] statuses,
+			Long[] assigneeIds, Boolean completed,
 			UnsafeTriConsumer<Instance, Instance, Page<Instance>, Exception>
 				unsafeTriConsumer)
 		throws Exception {
@@ -239,7 +239,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
 
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			_process.getId(), assigneeIds, null, null, null, statuses, null,
+			_process.getId(), assigneeIds, completed, null, null, null, null,
 			Pagination.of(1, 2));
 
 		unsafeTriConsumer.accept(instance1, instance2, page);

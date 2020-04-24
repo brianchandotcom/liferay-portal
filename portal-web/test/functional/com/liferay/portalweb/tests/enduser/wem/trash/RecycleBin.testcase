@@ -46,14 +46,16 @@ definition {
 				entryTitle = "Blogs Entry Title",
 				groupName = "Site Name");
 
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-			DMDocument.addCP(
-				dmDocumentFile = "Document_1.png",
-				dmDocumentTitle = "Document_1.png");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.png",
+				groupName = "Site Name",
+				mimeType = "image/png",
+				sourceFileName = "Document_1.png");
 		}
 
 		task ("Move them to recycle bin") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
 			DMDocument.moveToRecycleBinCP(dmDocumentTitle = "Document_1.png");
 
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
@@ -688,25 +690,37 @@ definition {
 	@priority = "5"
 	test RenameBulkRestoreDocumentsAutomaticallyWhenDocumentNamesAlreadyExistInTheDestination {
 		task ("Add multiple document entries") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.png",
+				groupName = "Site Name",
+				mimeType = "image/png",
+				sourceFileName = "Document_1.png");
 
-			for (var fileName : list "Document_1.png,Document_1.txt") {
-				DMDocument.addCP(
-					dmDocumentFile = "${fileName}",
-					dmDocumentTitle = "${fileName}");
-			}
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.txt",
+				groupName = "Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
 		}
 
 		task ("Move all items to recycle bin") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
 			DMDocument.moveAllToRecycleBinCP();
 		}
 
 		task ("Add multiple document entries with the same names as ones in recycle bin") {
-			for (var fileName : list "Document_1.png,Document_1.txt") {
-				DMDocument.addCP(
-					dmDocumentFile = "${fileName}",
-					dmDocumentTitle = "${fileName}");
-			}
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.png",
+				groupName = "Site Name",
+				mimeType = "image/png",
+				sourceFileName = "Document_1.png");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.txt",
+				groupName = "Site Name",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
 		}
 
 		task ("Bulk restore all documents in recycle bin") {

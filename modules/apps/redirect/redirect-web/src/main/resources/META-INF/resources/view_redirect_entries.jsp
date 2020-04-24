@@ -65,7 +65,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						String sourceUrl = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL();
 						%>
 
-						<span>
+						<span data-title="<%= sourceUrl %>">
 							<%= HtmlUtil.escape(sourceUrl) %>
 						</span>
 					</liferay-ui:search-container-column-text>
@@ -92,7 +92,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 							title='<%= LanguageUtil.get(request, "try-redirection") %>'
 						/>
 
-						<span>
+						<span data-title="<%= destinationUrl %>">
 							<%= destinationUrl %>
 						</span>
 

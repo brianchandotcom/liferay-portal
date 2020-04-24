@@ -50,6 +50,7 @@ const SELECTOR_TRIGGER = `
 	.preview-toolbar-container [title]:not(.lfr-portal-tooltip),
 	.preview-tooltbar-containter [data-restore-title],
 	.progress-container[data-title],
+	.redirect-entries span[data-title],
 	.source-editor__fixed-text__help[data-title],
 	.taglib-discussion [data-title]:not(.lfr-portal-tooltip),
 	.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""]),

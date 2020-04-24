@@ -241,8 +241,7 @@
 							}
 						},
 						"required": [
-							"id",
-							"value"
+							"id"
 						],
 						"type": "object"
 					},

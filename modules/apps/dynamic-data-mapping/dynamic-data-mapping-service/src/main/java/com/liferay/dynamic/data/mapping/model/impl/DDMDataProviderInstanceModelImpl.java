@@ -88,7 +88,7 @@ public class DDMDataProviderInstanceModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
 		{"description", Types.CLOB}, {"definition", Types.CLOB},
-		{"type_", Types.VARCHAR}
+		{"type_", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -108,10 +108,11 @@ public class DDMDataProviderInstanceModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("definition", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMDataProviderInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,dataProviderInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,definition TEXT null,type_ VARCHAR(75) null)";
+		"create table DDMDataProviderInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,dataProviderInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,definition TEXT null,type_ VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMDataProviderInstance";
@@ -172,6 +173,7 @@ public class DDMDataProviderInstanceModelImpl
 		model.setDescription(soapModel.getDescription());
 		model.setDefinition(soapModel.getDefinition());
 		model.setType(soapModel.getType());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -408,6 +410,12 @@ public class DDMDataProviderInstanceModelImpl
 			"type",
 			(BiConsumer<DDMDataProviderInstance, String>)
 				DDMDataProviderInstance::setType);
+		attributeGetterFunctions.put(
+			"lastPublishDate", DDMDataProviderInstance::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<DDMDataProviderInstance, Date>)
+				DDMDataProviderInstance::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -823,6 +831,17 @@ public class DDMDataProviderInstanceModelImpl
 		_type = type;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -969,6 +988,7 @@ public class DDMDataProviderInstanceModelImpl
 		ddmDataProviderInstanceImpl.setDescription(getDescription());
 		ddmDataProviderInstanceImpl.setDefinition(getDefinition());
 		ddmDataProviderInstanceImpl.setType(getType());
+		ddmDataProviderInstanceImpl.setLastPublishDate(getLastPublishDate());
 
 		ddmDataProviderInstanceImpl.resetOriginalValues();
 
@@ -1134,6 +1154,16 @@ public class DDMDataProviderInstanceModelImpl
 			ddmDataProviderInstanceCacheModel.type = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			ddmDataProviderInstanceCacheModel.lastPublishDate =
+				lastPublishDate.getTime();
+		}
+		else {
+			ddmDataProviderInstanceCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return ddmDataProviderInstanceCacheModel;
 	}
 
@@ -1235,6 +1265,7 @@ public class DDMDataProviderInstanceModelImpl
 	private String _descriptionCurrentLanguageId;
 	private String _definition;
 	private String _type;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private DDMDataProviderInstance _escapedModel;
 

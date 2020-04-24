@@ -69,6 +69,10 @@ public class DDMDataProviderInstanceTable
 		createColumn("definition", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<DDMDataProviderInstanceTable, String> type =
 		createColumn("type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DDMDataProviderInstanceTable, Date> lastPublishDate =
+		createColumn(
+			"lastPublishDate", Date.class, Types.TIMESTAMP,
+			Column.FLAG_DEFAULT);
 
 	private DDMDataProviderInstanceTable() {
 		super("DDMDataProviderInstance", DDMDataProviderInstanceTable::new);

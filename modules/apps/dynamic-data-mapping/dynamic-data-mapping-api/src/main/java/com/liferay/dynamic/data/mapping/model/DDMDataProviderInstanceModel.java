@@ -17,11 +17,10 @@ package com.liferay.dynamic.data.mapping.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -42,8 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMDataProviderInstanceModel
-	extends BaseModel<DDMDataProviderInstance>, GroupedModel, LocalizedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<DDMDataProviderInstance>, LocalizedModel, MVCCModel,
+			ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -454,6 +453,22 @@ public interface DDMDataProviderInstanceModel
 	 * @param type the type of this ddm data provider instance
 	 */
 	public void setType(String type);
+
+	/**
+	 * Returns the last publish date of this ddm data provider instance.
+	 *
+	 * @return the last publish date of this ddm data provider instance
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this ddm data provider instance.
+	 *
+	 * @param lastPublishDate the last publish date of this ddm data provider instance
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public String[] getAvailableLanguageIds();

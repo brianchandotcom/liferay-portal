@@ -58,6 +58,7 @@ public class DDMDataProviderInstanceWrapper
 		attributes.put("description", getDescription());
 		attributes.put("definition", getDefinition());
 		attributes.put("type", getType());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -141,6 +142,12 @@ public class DDMDataProviderInstanceWrapper
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -278,6 +285,16 @@ public class DDMDataProviderInstanceWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the last publish date of this ddm data provider instance.
+	 *
+	 * @return the last publish date of this ddm data provider instance
+	 */
+	@Override
+	public Date getLastPublishDate() {
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -571,6 +588,16 @@ public class DDMDataProviderInstanceWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the last publish date of this ddm data provider instance.
+	 *
+	 * @param lastPublishDate the last publish date of this ddm data provider instance
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

@@ -47,6 +47,7 @@ public class DDMDataProviderInstanceSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDefinition(model.getDefinition());
 		soapModel.setType(model.getType());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -214,6 +215,14 @@ public class DDMDataProviderInstanceSoap implements Serializable {
 		_type = type;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _dataProviderInstanceId;
@@ -227,5 +236,6 @@ public class DDMDataProviderInstanceSoap implements Serializable {
 	private String _description;
 	private String _definition;
 	private String _type;
+	private Date _lastPublishDate;
 
 }

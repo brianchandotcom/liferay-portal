@@ -364,6 +364,9 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 		exportActionableDynamicQuery.setCompanyId(
 			portletDataContext.getCompanyId());
 
+		exportActionableDynamicQuery.setGroupId(
+			portletDataContext.getScopeGroupId());
+
 		exportActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod
 				<DDMDataProviderInstance>() {

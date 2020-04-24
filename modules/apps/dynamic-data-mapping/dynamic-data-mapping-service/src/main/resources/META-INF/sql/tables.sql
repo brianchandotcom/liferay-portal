@@ -26,7 +26,8 @@ create table DDMDataProviderInstance (
 	name STRING null,
 	description TEXT null,
 	definition TEXT null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	lastPublishDate DATE null
 );
 
 create table DDMDataProviderInstanceLink (

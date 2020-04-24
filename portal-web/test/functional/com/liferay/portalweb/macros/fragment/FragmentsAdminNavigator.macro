@@ -44,6 +44,8 @@ definition {
 
 		Button.click(button = "Import");
 
+		Pause(locator1 = "3000");
+
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}
 

@@ -137,8 +137,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				SegmentsExperienceConstants.ID_DEFAULT));
 
 		actionRequest.addParameter("fragmentCollectionId", String.valueOf(0));
-		actionRequest.addParameter("name", "test name");
-		actionRequest.addParameter("description", "test description");
+		actionRequest.addParameter("name", RandomTestUtil.randomString());
 		actionRequest.addParameter("itemId", layoutStructure.getMainItemId());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
@@ -193,8 +192,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			"fragmentCollectionId",
 			String.valueOf(newFragmentCollection.getFragmentCollectionId()));
 
-		actionRequest.addParameter("name", "test name");
-		actionRequest.addParameter("description", "test description");
+		actionRequest.addParameter("name", RandomTestUtil.randomString());
 		actionRequest.addParameter("itemId", layoutStructure.getMainItemId());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(

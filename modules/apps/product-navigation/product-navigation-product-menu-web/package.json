@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.3.0",
-		"@clayui/drop-down": "3.4.1",
-		"@clayui/icon": "3.0.4",
-		"@clayui/loading-indicator": "3.0.1",
+		"@clayui/button": "3.3.1",
+		"@clayui/drop-down": "3.4.2",
+		"@clayui/icon": "3.0.5",
+		"@clayui/loading-indicator": "3.0.2",
 		"frontend-js-web": "*",
 		"metal": "2.16.8",
 		"metal-dom": "2.16.8",

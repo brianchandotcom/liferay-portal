@@ -14,7 +14,7 @@
 
 import {openToast} from 'frontend-js-web';
 
-export default function({checkDestinationURL, namespace}) {
+export default function ({checkDestinationURL, namespace}) {
 	var form = document[`${namespace}fm`];
 	form.addEventListener('submit', saveRedirectEntry);
 
@@ -29,10 +29,10 @@ export default function({checkDestinationURL, namespace}) {
 				}),
 				method: 'POST',
 			})
-				.then(response => {
+				.then((response) => {
 					return response.json();
 				})
-				.then(response => {
+				.then((response) => {
 					if (response.success) {
 						submitForm(form);
 					}
@@ -58,8 +58,8 @@ export default function({checkDestinationURL, namespace}) {
 
 	function showModal() {
 		Liferay.componentReady(`${namespace}RedirectsChainedRedirections`).then(
-			ChainedRedirections => {
-				ChainedRedirections.open(updateReferences => {
+			(ChainedRedirections) => {
+				ChainedRedirections.open((updateReferences) => {
 					Liferay.Util.postForm(form, {
 						data: {
 							updateReferences,

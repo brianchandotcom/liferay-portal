@@ -21,13 +21,14 @@ import React, {useState} from 'react';
 const noop = () => {};
 
 const ChainedRedirectionsModal = ({
+	callback = noop,
 	observer,
 	onModalClose = noop,
-	callback = noop,
+	saveButtonLabel,
 }) => {
 	const [updateReferences, setUpdateReferences] = useState(true);
 
-	const handleSubmit = event => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 		callback(updateReferences);
 	};
@@ -68,7 +69,7 @@ const ChainedRedirectionsModal = ({
 						<ClayCheckbox
 							checked={updateReferences}
 							label={Liferay.Language.get('update-references')}
-							onChange={() => setUpdateReferences(val => !val)}
+							onChange={() => setUpdateReferences((val) => !val)}
 						/>
 					</fieldset>
 				</ClayModal.Body>
@@ -84,7 +85,7 @@ const ChainedRedirectionsModal = ({
 							</ClayButton>
 
 							<ClayButton displayType="primary" type="submit">
-								{Liferay.Language.get('create')}
+								{saveButtonLabel}
 							</ClayButton>
 						</ClayButton.Group>
 					}
@@ -98,6 +99,7 @@ ChainedRedirectionsModal.propTypes = {
 	callback: PropTypes.func,
 	observer: PropTypes.object.isRequired,
 	onModalClose: PropTypes.func,
+	saveButtonLabel: PropTypes.string.isRequired,
 };
 
 export default ChainedRedirectionsModal;

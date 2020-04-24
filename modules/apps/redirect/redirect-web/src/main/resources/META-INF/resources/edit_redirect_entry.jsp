@@ -122,7 +122,10 @@ else {
 
 <div>
 	<react:component
-		data="<%= Collections.emptyMap() %>"
+		data='<%=
+			HashMapBuilder.<String, Object>put(
+				"saveButtonLabel", LanguageUtil.get(request, saveButtonLabel)
+			).build() %>'
 		module="js/ChainedRedirections"
 	/>
 </div>

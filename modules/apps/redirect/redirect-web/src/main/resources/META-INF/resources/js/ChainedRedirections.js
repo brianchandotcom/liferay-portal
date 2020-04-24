@@ -22,7 +22,7 @@ import React, {useState} from 'react';
 
 import ChainedRedirectionsModal from './ChainedRedirectionsModal';
 
-function ChainedRedirections({portletNamespace}) {
+function ChainedRedirections({portletNamespace, ...restProps}) {
 	const [showModal, setShowModal] = useState(false);
 	const [callback, setCallback] = useState();
 	const BRIDGE_COMPONENT_ID = `${portletNamespace}RedirectsChainedRedirections`;
@@ -39,7 +39,7 @@ function ChainedRedirections({portletNamespace}) {
 		Liferay.component(
 			BRIDGE_COMPONENT_ID,
 			{
-				open: callback => {
+				open: (callback) => {
 					setCallback(() => callback);
 					setShowModal(true);
 				},
@@ -54,6 +54,7 @@ function ChainedRedirections({portletNamespace}) {
 		<>
 			{showModal && (
 				<ChainedRedirectionsModal
+					{...restProps}
 					callback={callback}
 					observer={observer}
 					onModalClose={onClose}
@@ -67,7 +68,7 @@ ChainedRedirections.propTypes = {
 	portletNamespace: PropTypes.string.isRequired,
 };
 
-export default function(props) {
+export default function (props) {
 	return (
 		<ChainedRedirections
 			{...props}

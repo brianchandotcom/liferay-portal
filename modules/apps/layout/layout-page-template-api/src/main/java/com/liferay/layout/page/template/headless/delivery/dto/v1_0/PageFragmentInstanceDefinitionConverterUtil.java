@@ -46,7 +46,7 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 
 		return pageFragmentInstanceDefinitionConverter.
 			toPageFragmentInstanceDefinition(
-				fragmentLayoutStructureItem, saveInlineContent, saveMapping, 0);
+				fragmentLayoutStructureItem, saveInlineContent, saveMapping);
 	}
 
 	public static PageFragmentInstanceDefinition
@@ -66,8 +66,7 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 
 		return pageFragmentInstanceDefinitionConverter.
 			toPageFragmentInstanceDefinition(
-				fragmentLayoutStructureItem, saveInlineContent, saveMapping,
-				segmentsExperienceId);
+				fragmentLayoutStructureItem, saveInlineContent, saveMapping);
 	}
 
 	public static PageFragmentInstanceDefinition

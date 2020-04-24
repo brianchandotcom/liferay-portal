@@ -89,14 +89,22 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-		auditRequestThreadLocal.setClientIP(serviceContext.getRemoteAddr());
 		auditRequestThreadLocal.setClientHost(serviceContext.getRemoteHost());
+		auditRequestThreadLocal.setClientIP(serviceContext.getRemoteAddr());
 
-		auditRequestThreadLocal.setRealUserId(
-			Long.valueOf((String)workflowContext.get("userId")));
+		long userId = GetterUtil.getLong(
+			(String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
+
+		if (userId != 0) {
+			auditRequestThreadLocal.setRealUserId(userId);
+		}
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getOriginalServletRequest(serviceContext.getRequest());
+
+		if (httpServletRequest == null) {
+			return;
+		}
 
 		auditRequestThreadLocal.setServerName(
 			httpServletRequest.getServerName());
@@ -104,6 +112,10 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 			httpServletRequest.getServerPort());
 
 		HttpSession session = httpServletRequest.getSession();
+
+		if (session == null) {
+			return;
+		}
 
 		auditRequestThreadLocal.setSessionID(session.getId());
 	}

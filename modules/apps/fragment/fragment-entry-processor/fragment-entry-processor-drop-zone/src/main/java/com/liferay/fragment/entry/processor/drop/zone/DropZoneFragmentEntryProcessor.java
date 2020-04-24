@@ -14,10 +14,12 @@
 
 package com.liferay.fragment.entry.processor.drop.zone;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.fragment.renderer.FragmentDropZoneRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -30,6 +32,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,6 +44,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -110,10 +115,38 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			return html;
 		}
 
+		if (Objects.equals(
+				fragmentEntryProcessorContext.getMode(),
+				FragmentEntryLinkConstants.EDIT)) {
+
+			for (Element element : elements) {
+				element.attr(
+					"id",
+					dropZoneProcessorJSONObject.getString(element.attr("id")));
+			}
+
+			Element bodyElement = document.body();
+
+			return bodyElement.html();
+		}
+
+		Optional<Map<String, Object>> fieldValuesOptional =
+			fragmentEntryProcessorContext.getFieldValuesOptional();
+
 		for (Element element : elements) {
-			element.attr(
-				"id",
-				dropZoneProcessorJSONObject.getString(element.attr("id")));
+			String dropZoneHTML = _fragmentDropZoneRenderer.renderDropZone(
+				fragmentEntryProcessorContext.getHttpServletRequest(),
+				fragmentEntryProcessorContext.getHttpServletResponse(),
+				fieldValuesOptional.orElse(null),
+				fragmentEntryLink.getGroupId(), fragmentEntryLink.getClassPK(),
+				dropZoneProcessorJSONObject.getString(element.attr("id")),
+				fragmentEntryProcessorContext.getMode(), true);
+
+			Element dropZoneElement = new Element("div");
+
+			dropZoneElement.html(dropZoneHTML);
+
+			element.replaceWith(dropZoneElement);
 		}
 
 		Element bodyElement = document.body();
@@ -174,5 +207,8 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		return document;
 	}
+
+	@Reference
+	private FragmentDropZoneRenderer _fragmentDropZoneRenderer;
 
 }

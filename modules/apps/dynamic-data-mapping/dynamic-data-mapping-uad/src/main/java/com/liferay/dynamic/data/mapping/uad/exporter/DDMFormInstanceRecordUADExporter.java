@@ -45,13 +45,11 @@ public class DDMFormInstanceRecordUADExporter
 
 	@Override
 	protected String toXmlString(DDMFormInstanceRecord ddmFormInstanceRecord) {
-		String formInstanceRecordXmlString = super.toXmlString(
-			ddmFormInstanceRecord);
+		String xmlString = super.toXmlString(ddmFormInstanceRecord);
 
-		formInstanceRecordXmlString = StringUtil.removeSubstring(
-			formInstanceRecordXmlString, "</model>");
+		xmlString = StringUtil.removeSubstring(xmlString, "</model>");
 
-		StringBundler sb = new StringBundler(formInstanceRecordXmlString);
+		StringBundler sb = new StringBundler(xmlString);
 
 		sb.append("<column><column-name>");
 		sb.append("formInstanceName</column-name><column-value><![CDATA[");

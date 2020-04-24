@@ -18,6 +18,7 @@
 
 <%
 LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("liferay-layout:render-fragment-layout:layoutStructure");
+String mainItemId = (String)request.getAttribute("liferay-layout:render-fragment-layout:mainItemId");
 %>
 
 <div class="layout-content portlet-layout" id="main-content" role="main">
@@ -26,7 +27,7 @@ LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("liferay
 	try {
 		request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
 
-		LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
+		LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(mainItemId);
 
 		request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 

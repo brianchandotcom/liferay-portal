@@ -54,6 +54,10 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		return _groupId;
 	}
 
+	public String getMainItemId() {
+		return _mainItemId;
+	}
+
 	public String getMode() {
 		return _mode;
 	}
@@ -72,6 +76,10 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+	}
+
+	public void setMainItemId(String mainItemId) {
+		_mainItemId = mainItemId;
 	}
 
 	public void setMode(String mode) {
@@ -100,6 +108,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		_fieldValues = null;
 		_groupId = 0;
 		_layoutStructure = null;
+		_mainItemId = null;
 		_mode = null;
 		_plid = 0;
 		_showPreview = false;
@@ -119,6 +128,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:layoutStructure",
 			_getLayoutStructure());
+		httpServletRequest.setAttribute(
+			"liferay-layout:render-fragment-layout:mainItemId",
+			_getMainItemId());
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:mode", _mode);
 		httpServletRequest.setAttribute(
@@ -177,6 +189,16 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 			return null;
 		}
+	}
+
+	private String _getMainItemId() {
+		if (Validator.isNotNull(_mainItemId)) {
+			return _mainItemId;
+		}
+
+		LayoutStructure layoutStructure = _getLayoutStructure();
+
+		return layoutStructure.getMainItemId();
 	}
 
 	private String _getMasterLayoutData() {
@@ -271,6 +293,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	private Map<String, Object> _fieldValues;
 	private long _groupId;
 	private LayoutStructure _layoutStructure;
+	private String _mainItemId;
 	private String _mode;
 	private long _plid;
 	private boolean _showPreview;

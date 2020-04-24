@@ -34,10 +34,6 @@ public interface PageDefinitionConverter {
 		Layout layout, boolean saveInlineContent,
 		boolean saveMappingConfiguration);
 
-	public PageDefinition toPageDefinition(
-		Layout layout, boolean saveInlineContent,
-		boolean saveMappingConfiguration, long segmentsExperienceId);
-
 	public PageElement toPageElement(
 		long groupId, LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,

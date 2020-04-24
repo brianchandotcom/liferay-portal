@@ -164,6 +164,10 @@ public class OpenAPIParserUtil {
 				new AbstractMap.SimpleImmutableEntry<>(
 					items.getType(), items.getFormat()));
 
+			if (items.getAdditionalPropertySchema() != null) {
+				javaDataType = Map.class.getName();
+			}
+
 			if (items.getReference() != null) {
 				javaDataType = javaDataTypeMap.get(
 					getReferenceName(items.getReference()));
@@ -173,35 +177,8 @@ public class OpenAPIParserUtil {
 		}
 
 		if (Objects.equals(schema.getType(), "object")) {
-			String javaDataType = Object.class.getName();
-
-			if (schema.getAdditionalPropertySchema() != null) {
-				Schema additionalPropertySchema =
-					schema.getAdditionalPropertySchema();
-
-				if (additionalPropertySchema.getReference() != null) {
-					String referenceType = javaDataTypeMap.get(
-						getReferenceName(
-							additionalPropertySchema.getReference()));
-
-					javaDataType = "Map<String, " + referenceType + ">";
-				}
-
-				AbstractMap.SimpleImmutableEntry<String, String> key =
-					new AbstractMap.SimpleImmutableEntry<>(
-						additionalPropertySchema.getType(),
-						additionalPropertySchema.getFormat());
-
-				if (_openAPIDataTypeMap.containsKey(key)) {
-					String additionalJavaDataType = getJavaDataType(
-						javaDataTypeMap, schema.getAdditionalPropertySchema());
-
-					javaDataType =
-						"Map<String, " + additionalJavaDataType + ">";
-				}
-			}
-
-			return javaDataType;
+			return _getMapType(
+				javaDataTypeMap, schema.getAdditionalPropertySchema());
 		}
 
 		if (schema.getReference() != null) {
@@ -334,6 +311,32 @@ public class OpenAPIParserUtil {
 		}
 
 		return false;
+	}
+
+	private static String _getMapType(
+		Map<String, String> javaDataTypeMap, Schema schema) {
+
+		if (schema != null) {
+			if (schema.getReference() != null) {
+				String referenceType = javaDataTypeMap.get(
+					getReferenceName(schema.getReference()));
+
+				return "Map<String, " + referenceType + ">";
+			}
+
+			AbstractMap.SimpleImmutableEntry<String, String> key =
+				new AbstractMap.SimpleImmutableEntry<>(
+					schema.getType(), schema.getFormat());
+
+			if (_openAPIDataTypeMap.containsKey(key)) {
+				String additionalJavaDataType = getJavaDataType(
+					javaDataTypeMap, schema);
+
+				return "Map<String, " + additionalJavaDataType + ">";
+			}
+		}
+
+		return Object.class.getName();
 	}
 
 	private static final Map<Map.Entry<String, String>, String>

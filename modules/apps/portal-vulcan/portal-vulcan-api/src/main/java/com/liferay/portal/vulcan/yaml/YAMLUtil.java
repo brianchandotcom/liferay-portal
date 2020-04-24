@@ -75,6 +75,10 @@ public class YAMLUtil {
 			"$ref", String.class, "getReference", "setReference");
 
 		itemsTypeDescription.substituteProperty(
+			"additionalProperties", Schema.class, "getAdditionalPropertySchema",
+			"setAdditionalPropertySchema");
+
+		itemsTypeDescription.substituteProperty(
 			"properties", Map.class, "getPropertySchemas",
 			"setPropertySchemas");
 

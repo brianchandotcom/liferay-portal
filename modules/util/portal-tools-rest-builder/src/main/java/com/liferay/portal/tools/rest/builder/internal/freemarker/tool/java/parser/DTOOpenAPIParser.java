@@ -222,11 +222,8 @@ public class DTOOpenAPIParser {
 		if (StringUtil.equals(type, "array") && (items != null) &&
 			StringUtil.equalsIgnoreCase(items.getType(), "object")) {
 
-			String name = StringUtil.upperCaseFirstLetter(propertySchemaName);
-
-			if (items != null) {
-				name = OpenAPIUtil.formatSingular(name);
-			}
+			String name = OpenAPIUtil.formatSingular(
+				StringUtil.upperCaseFirstLetter(propertySchemaName));
 
 			if (javaDataTypeMap.containsKey(name)) {
 				return name + "[]";

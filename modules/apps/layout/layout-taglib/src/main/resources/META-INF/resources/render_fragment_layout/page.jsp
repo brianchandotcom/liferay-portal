@@ -19,7 +19,13 @@
 <%
 LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("liferay-layout:render-fragment-layout:layoutStructure");
 String mainItemId = (String)request.getAttribute("liferay-layout:render-fragment-layout:mainItemId");
+
+RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("liferay-layout:render-fragment-layout:renderFragmentLayoutDisplayContext");
 %>
+
+<liferay-util:html-top>
+	<%= renderFragmentLayoutDisplayContext.getPortletPaths() %>
+</liferay-util:html-top>
 
 <div class="layout-content portlet-layout" id="main-content" role="main">
 
@@ -30,11 +36,7 @@ String mainItemId = (String)request.getAttribute("liferay-layout:render-fragment
 		LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(mainItemId);
 
 		request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-
-		RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("liferay-layout:render-fragment-layout:renderFragmentLayoutDisplayContext");
 	%>
-
-		<%= renderFragmentLayoutDisplayContext.getPortletPaths() %>
 
 		<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 

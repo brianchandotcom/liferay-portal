@@ -17,16 +17,10 @@ package com.liferay.portal.workflow.metrics.internal.search.index.creation.insta
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
-
-import java.util.Objects;
+import com.liferay.portal.workflow.metrics.internal.search.index.creation.helper.WorkflowMetricsIndexHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rafael Praxedes
@@ -37,65 +31,15 @@ public class WorkflowMetricsPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (Objects.isNull(_searchEngineAdapter)) {
-			return;
-		}
-
-		_instanceWorkflowMetricsIndex.createIndex(company.getCompanyId());
-		_nodeWorkflowMetricsIndex.createIndex(company.getCompanyId());
-		_processWorkflowMetricsIndex.createIndex(company.getCompanyId());
-		_slaInstanceResultWorkflowMetricsIndex.createIndex(
-			company.getCompanyId());
-		_slaTaskResultWorkflowMetricsIndex.createIndex(company.getCompanyId());
-		_taskWorkflowMetricsIndex.createIndex(company.getCompanyId());
-		_transitionWorkflowMetricsIndex.createIndex(company.getCompanyId());
+		_workflowMetricsIndexHelper.createIndex(company);
 	}
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
-		if (Objects.isNull(_searchEngineAdapter)) {
-			return;
-		}
-
-		_instanceWorkflowMetricsIndex.removeIndex(company.getCompanyId());
-		_nodeWorkflowMetricsIndex.removeIndex(company.getCompanyId());
-		_processWorkflowMetricsIndex.removeIndex(company.getCompanyId());
-		_slaInstanceResultWorkflowMetricsIndex.removeIndex(
-			company.getCompanyId());
-		_slaTaskResultWorkflowMetricsIndex.removeIndex(company.getCompanyId());
-		_taskWorkflowMetricsIndex.removeIndex(company.getCompanyId());
-		_transitionWorkflowMetricsIndex.removeIndex(company.getCompanyId());
+		_workflowMetricsIndexHelper.removeIndex(company);
 	}
 
-	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
-	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Elasticsearch)"
-	)
-	private volatile SearchEngineAdapter _searchEngineAdapter;
-
-	@Reference(
-		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
-	)
-	private WorkflowMetricsIndex _slaInstanceResultWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
-	private WorkflowMetricsIndex _slaTaskResultWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=task)")
-	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
-	private WorkflowMetricsIndex _transitionWorkflowMetricsIndex;
+	@Reference
+	private WorkflowMetricsIndexHelper _workflowMetricsIndexHelper;
 
 }

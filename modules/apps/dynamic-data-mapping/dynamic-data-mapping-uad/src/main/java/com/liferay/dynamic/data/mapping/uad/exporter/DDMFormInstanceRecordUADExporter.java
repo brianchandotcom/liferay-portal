@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,44 +45,21 @@ public class DDMFormInstanceRecordUADExporter
 
 	@Override
 	protected String toXmlString(DDMFormInstanceRecord ddmFormInstanceRecord) {
-		StringBundler sb = new StringBundler(33);
+		String formInstanceRecordXmlString = super.toXmlString(
+			ddmFormInstanceRecord);
 
-		String className =
-			"com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord";
+		formInstanceRecordXmlString = StringUtil.removeSubstring(
+			formInstanceRecordXmlString, "</model>");
 
-		sb.append("<model><model-name>");
-		sb.append(className);
-		sb.append("</model-name>");
+		StringBundler sb = new StringBundler(formInstanceRecordXmlString);
 
 		sb.append("<column><column-name>");
 		sb.append("formInstanceName</column-name><column-value><![CDATA[");
 		sb.append(_getFormInstanceName(ddmFormInstanceRecord));
 		sb.append("]]></column-value></column>");
-		sb.append("<column><column-name>");
-		sb.append("formInstanceRecordId</column-name><column-value><![CDATA[");
-		sb.append(ddmFormInstanceRecord.getFormInstanceRecordId());
-		sb.append("]]></column-value></column>");
-		sb.append("<column><column-name>");
-		sb.append("versionUserId</column-name><column-value><![CDATA[");
-		sb.append(ddmFormInstanceRecord.getVersionUserId());
-		sb.append("]]></column-value></column>");
-		sb.append("<column><column-name>");
-		sb.append("versionUserName</column-name><column-value><![CDATA[");
-		sb.append(ddmFormInstanceRecord.getVersionUserName());
-		sb.append("]]></column-value></column>");
-		sb.append("<column><column-name>");
-		sb.append("userId</column-name><column-value><![CDATA[");
-		sb.append(ddmFormInstanceRecord.getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append("<column><column-name>");
-		sb.append("userName</column-name><column-value><![CDATA[");
-		sb.append(ddmFormInstanceRecord.getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append("<column><column-name>");
-		sb.append("version</column-name><column-value><![CDATA[");
-		sb.append(ddmFormInstanceRecord.getVersion());
-		sb.append("]]></column-value></column>");
+
 		sb.append(_getFieldValuesDDMContent(ddmFormInstanceRecord));
+
 		sb.append("</model>");
 
 		return sb.toString();

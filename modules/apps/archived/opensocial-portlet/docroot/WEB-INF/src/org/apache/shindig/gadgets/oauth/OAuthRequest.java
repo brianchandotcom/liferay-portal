@@ -318,7 +318,7 @@ public class OAuthRequest {
   private void checkCanApprove() throws OAuthRequestException {
     String pageOwner = realRequest.getSecurityToken().getOwnerId();
     String pageViewer = realRequest.getSecurityToken().getViewerId();
-    String stateOwner = clientState.getOwner();
+    // String stateOwner = clientState.getOwner();
     if (pageOwner == null || pageViewer == null) {
       throw new OAuthRequestException(OAuthError.UNAUTHENTICATED);
     }

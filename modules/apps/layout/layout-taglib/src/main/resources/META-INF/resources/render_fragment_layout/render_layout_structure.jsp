@@ -204,7 +204,7 @@ for (String childrenItemId : childrenItemIds) {
 
 			<c:choose>
 				<c:when test="<%= includeContainer %>">
-					<div className="container-fluid p-0">
+					<div class="container-fluid p-0">
 						<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
 
 							<%

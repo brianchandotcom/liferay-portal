@@ -13,7 +13,7 @@
  */
 
 /**
- * @deprecated As of Athanasius(7.3.x), replaced by ItemSelectorUrl.es.js
+ * @deprecated As of Athanasius (7.3.x), replaced by ItemSelectorUrl.es.js
  * @module liferay-item-selector-url
  */
 

@@ -13,7 +13,7 @@
  */
 
 /**
- * @deprecated As of Athanasius(7.3.x), replaced by ItemSelectorRepositoryEntryBrowser.es.js
+ * @deprecated As of Athanasius (7.3.x), replaced by ItemSelectorRepositoryEntryBrowser.es.js
  * @module liferay-item-selector-repository-entry-browser
  */
 

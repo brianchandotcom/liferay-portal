@@ -15,7 +15,7 @@
 /**
  * The Storage Formatter Utility
  *
- * @deprecated As of Athanasius(7.3.x), replaced by Liferay.Util.formatStorage
+ * @deprecated As of Athanasius (7.3.x), replaced by Liferay.Util.formatStorage
  * @module liferay-storage-formatter
  */
 

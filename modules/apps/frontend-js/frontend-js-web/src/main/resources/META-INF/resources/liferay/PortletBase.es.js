@@ -167,7 +167,7 @@ PortletBase.STATE = {
 	/**
 	 * Portlet's namespace.
 	 *
-	 * @deprecated since 7.1
+	 * @deprecated As of Judson (7.1.x)
 	 * @instance
 	 * @memberof PortletBase
 	 * @type {string}

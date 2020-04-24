@@ -13,7 +13,7 @@
  */
 
 /**
- * @deprecated As of Athanasius(7.3.x), replaced by ItemSelectorDialog.es.js
+ * @deprecated As of Athanasius (7.3.x), replaced by ItemSelectorDialog.es.js
  * @module liferay-item-selector-dialog
  */
 

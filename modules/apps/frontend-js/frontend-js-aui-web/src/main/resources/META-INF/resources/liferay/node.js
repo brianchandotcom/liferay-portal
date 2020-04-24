@@ -15,7 +15,7 @@
 /**
  * The Liferay Node Utility
  *
- * @deprecated As of Athanasius(7.3.x), with no direct replacement
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @module liferay-node
  */
 

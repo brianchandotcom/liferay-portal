@@ -15,7 +15,7 @@
 /**
  * The Portlet URL Utility
  *
- * @deprecated As of Athanasius(7.3.x), replaced by Liferay.Util.PortletURL
+ * @deprecated As of Athanasius (7.3.x), replaced by Liferay.Util.PortletURL
  * @module liferay-portlet-url
  */
 

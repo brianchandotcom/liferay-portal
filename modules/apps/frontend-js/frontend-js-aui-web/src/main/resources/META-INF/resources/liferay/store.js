@@ -15,7 +15,7 @@
 /**
  * The Store Utility
  *
- * @deprecated As of Athanasius(7.3.x), replaced by Liferay.Util.Session
+ * @deprecated As of Athanasius (7.3.x), replaced by Liferay.Util.Session
  * @module liferay-store
  */
 

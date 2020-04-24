@@ -135,10 +135,11 @@ definition {
 	}
 
 	macro deselectSelectWithMultipleOptions {
-		var key_fieldName = "${fieldName}";
 
 		for (var selectOption : list "${selectOptionsList}") {
-			FormViewBuilder.disableCheckbox(fieldValue = "${selectOption}");
+			FormViewBuilder.disableCheckbox(
+				fieldName = "${fieldName}",
+				fieldValue = "${selectOption}");
 		}
 	}
 
@@ -150,7 +151,9 @@ definition {
 			Click(locator1 = "FormViewBuilder#CHECKBOX_LABEL");
 		}
 
-		FormViewBuilder.viewCheckboxNotChecked();
+		FormViewBuilder.viewCheckboxNotChecked(
+			fieldName = "${fieldName}",
+			fieldValue = "${fieldValue}");
 	}
 
 	macro editDate {

@@ -19,8 +19,25 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from './AppContext.es';
-import AppTabs from './AppTabs.es';
+import NavigationBar from './components/navigation-bar/NavigationBar.es';
+import ListCustomObjects from './pages/custom-object/ListCustomObjects.es';
 import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
+import ListNativeObjects from './pages/native-object/ListNativeObjects.es';
+
+export const AppNavigationBar = () => (
+	<NavigationBar tabs={[
+		{
+			active: true,
+			exact: true,
+			label: Liferay.Language.get('custom'),
+			path: () => "/" 
+		},
+		{
+			label: Liferay.Language.get('native'),
+			path: () => "/native-objects" 
+		}
+	]} />
+);
 
 export default (props) => (
 	<DndProvider backend={HTML5Backend}>
@@ -29,7 +46,16 @@ export default (props) => (
 				<Router>
 					<div className="custom-object-app">
 						<Switch>
-							<Route component={AppTabs} exact path="/" />
+							<Route
+								component={ListCustomObjects}
+								exact
+								path="/"
+							/>
+
+							<Route
+								component={ListNativeObjects}
+								path="/native-objects"
+							/>
 
 							<Route
 								component={ViewCustomObject}

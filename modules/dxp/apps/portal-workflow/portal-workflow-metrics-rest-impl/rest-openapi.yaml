@@ -442,9 +442,22 @@ components:
             description:
                 https://www.schema.org/Task
             properties:
-                assigneeId:
-                    format: int64
-                    type: integer
+                assetTitle:
+                    readOnly: true
+                    type: string
+                assetTitle_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                assetType:
+                    readOnly: true
+                    type: string
+                assetType_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                assignee:
+                    $ref: "#/components/schemas/Assignee"
                 className:
                     type: string
                 classPK:

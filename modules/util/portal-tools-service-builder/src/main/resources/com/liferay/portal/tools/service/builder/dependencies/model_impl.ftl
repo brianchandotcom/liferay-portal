@@ -1636,18 +1636,26 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 						${entity.varName}CacheModel.${entityColumn.name} = Long.MIN_VALUE;
 					}
 				<#else>
-					<#if stringUtil.equals(entityColumn.type, "boolean")>
-						${entity.varName}CacheModel.${entityColumn.name} = is${entityColumn.methodName}();
-					<#else>
-						${entity.varName}CacheModel.${entityColumn.name} = get${entityColumn.methodName}();
-					</#if>
+					<#if serviceBuilder.isPrimitiveWrapper(entityColumn.type)>
+						${entityColumn.type} ${entityColumn.name} = get${entityColumn.methodName}();
 
-					<#if stringUtil.equals(entityColumn.type, "String")>
-						String ${entityColumn.name} = ${entity.varName}CacheModel.${entityColumn.name};
-
-						if ((${entityColumn.name} != null) && (${entityColumn.name}.length() == 0)) {
-							${entity.varName}CacheModel.${entityColumn.name} = null;
+						if (${entityColumn.name} != null) {
+							${entity.varName}CacheModel.${entityColumn.name} = ${entityColumn.name};
 						}
+					<#else>
+						<#if stringUtil.equals(entityColumn.type, "boolean")>
+							${entity.varName}CacheModel.${entityColumn.name} = is${entityColumn.methodName}();
+						<#else>
+							${entity.varName}CacheModel.${entityColumn.name} = get${entityColumn.methodName}();
+						</#if>
+
+						<#if stringUtil.equals(entityColumn.type, "String")>
+							String ${entityColumn.name} = ${entity.varName}CacheModel.${entityColumn.name};
+
+							if ((${entityColumn.name} != null) && (${entityColumn.name}.length() == 0)) {
+								${entity.varName}CacheModel.${entityColumn.name} = null;
+							}
+						</#if>
 					</#if>
 				</#if>
 			</#if>

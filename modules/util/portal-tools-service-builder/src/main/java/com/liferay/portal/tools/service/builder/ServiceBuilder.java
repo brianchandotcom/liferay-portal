@@ -1850,6 +1850,17 @@ public class ServiceBuilder {
 		return false;
 	}
 
+	public boolean isPrimitiveWrapper(String type) {
+		if (type.equals("Boolean") || type.equals("Double") ||
+			type.equals("Float") || type.equals("Integer") ||
+			type.equals("Long") || type.equals("Short")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isReadOnlyMethod(
 		JavaMethod javaMethod, List<String> txRequiredMethodNames,
 		String[] prefixes) {

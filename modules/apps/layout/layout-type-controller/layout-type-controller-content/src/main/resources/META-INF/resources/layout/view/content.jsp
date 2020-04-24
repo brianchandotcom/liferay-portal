@@ -50,12 +50,14 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 
 	</c:when>
 	<c:otherwise>
-		<liferay-layout:render-fragment-layout
-			groupId="<%= layout.getGroupId() %>"
-			mode="<%= FragmentEntryLinkConstants.VIEW %>"
-			plid="<%= layout.getPlid() %>"
-			showPreview="<%= true %>"
-		/>
+		<div class="layout-content portlet-layout" id="main-content" role="main">
+			<liferay-layout:render-fragment-layout
+				groupId="<%= layout.getGroupId() %>"
+				mode="<%= FragmentEntryLinkConstants.VIEW %>"
+				plid="<%= layout.getPlid() %>"
+				showPreview="<%= true %>"
+			/>
+		</div>
 	</c:otherwise>
 </c:choose>
 

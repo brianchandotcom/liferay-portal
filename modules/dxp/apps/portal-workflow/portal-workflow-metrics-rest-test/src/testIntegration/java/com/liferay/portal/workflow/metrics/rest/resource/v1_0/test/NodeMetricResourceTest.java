@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.NodeMetric;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
@@ -408,7 +409,12 @@ public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
 
 		return _workflowMetricsRESTTestHelper.addNodeMetric(
-			adminUser.getUserId(), testGroup.getCompanyId(),
+			new Assignee() {
+				{
+					id = adminUser.getUserId();
+				}
+			},
+			testGroup.getCompanyId(),
 			() -> _workflowMetricsRESTTestHelper.addInstance(
 				testGroup.getCompanyId(), Objects.equals(status, "COMPLETED"),
 				processId),

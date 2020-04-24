@@ -12,23 +12,16 @@
  * details.
  */
 
+import {isPhone, isTablet} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {Editor} from './Editor';
 
-const DEFAULT_CONFIG = {
-	filebrowserBrowseUrl: '',
-	filebrowserFlashBrowseUrl: '',
-	filebrowserImageBrowseLinkUrl: '',
-	filebrowserImageBrowseUrl: '',
-	filebrowserUploadUrl: null,
-};
-
 const getToolbarSet = toolbarSet => {
-	if (Liferay.Util.isPhone()) {
+	if (isPhone()) {
 		toolbarSet = 'phone';
 	}
-	else if (Liferay.Util.isTablet()) {
+	else if (isTablet()) {
 		toolbarSet = 'tablet';
 	}
 
@@ -48,7 +41,6 @@ const ClassicEditor = ({
 
 	const config = useMemo(() => {
 		return {
-			...DEFAULT_CONFIG,
 			toolbar: toolbarSet,
 			...editorConfig,
 		};
@@ -60,14 +52,6 @@ const ClassicEditor = ({
 
 	return (
 		<div className={cssClass} id={`${name}Container`}>
-			<textarea
-				id={name}
-				name={name}
-				style={{
-					display: 'none',
-				}}
-			></textarea>
-
 			<Editor
 				className="lfr-editable"
 				config={config}

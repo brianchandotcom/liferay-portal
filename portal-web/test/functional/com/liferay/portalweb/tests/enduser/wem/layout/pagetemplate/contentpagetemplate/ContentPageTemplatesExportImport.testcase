@@ -215,7 +215,7 @@ definition {
 			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
 		}
 
-		task ("Assert content page template is based on new custom master") {
+		task ("Assert only the reference of custom master is exported and imported") {
 			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name");
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");

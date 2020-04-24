@@ -13,8 +13,11 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
+import classNames from 'classnames';
 import {render} from 'frontend-js-react-web';
+import dom from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -38,31 +41,81 @@ const openModal = (props) => {
 	render(Modal, props, document.createElement('div'));
 };
 
-const Modal = ({bodyHTML, buttons, id, onClose, size, title, url}) => {
+const openPortletModal = ({
+	iframeBodyCssClass,
+	portletSelector,
+	subTitle,
+	title,
+	url,
+}) => {
+	const portlet = document.querySelector(portletSelector);
+
+	if (portlet && url) {
+		const titleElement =
+			portlet.querySelector('.portlet-title') ||
+			portlet.querySelector('.portlet-title-default');
+
+		if (titleElement) {
+			if (portlet.querySelector('#cpPortletTitle')) {
+				const titleTextElement = titleElement.querySelector(
+					'.portlet-title-text'
+				);
+
+				if (titleTextElement) {
+					title = `${titleTextElement.outerHTML} - ${title}`;
+				}
+			}
+			else {
+				title = `${titleElement.textContent} - ${title}`;
+			}
+		}
+
+		let headerHTML;
+
+		if (subTitle) {
+			headerHTML = `${title}<div class="portlet-configuration-subtitle small"><span class="portlet-configuration-subtitle-text">${subTitle}</span></div>`;
+		}
+
+		openModal({
+			headerHTML,
+			iframeBodyCssClass,
+			title,
+			url,
+		});
+	}
+};
+
+/**
+ * A utility with API that matches Liferay.Portlet.openWindow. The purpose of
+ * this utility is backwards compatibility.
+ * @deprecated As of Athanasius (7.3.x), replaced by Liferay.Portlet.openModal
+ */
+const openPortletWindow = ({bodyCssClass, portlet, uri, ...otherProps}) => {
+	openPortletModal({
+		iframeBodyCssClass: bodyCssClass,
+		portletSelector: portlet,
+		url: uri,
+		...otherProps,
+	});
+};
+
+const Modal = ({
+	bodyHTML,
+	buttons,
+	headerHTML,
+	id,
+	iframeBodyCssClass,
+	onClose,
+	size,
+	title,
+	url,
+}) => {
+	const [loading, setLoading] = useState(true);
 	const [visible, setVisible] = useState(true);
 
 	const {observer} = useModal({
-		onClose: () => {
-			processClose();
-		},
+		onClose: () => processClose(),
 	});
-
-	const getIframeUrl = () => {
-		if (!url) {
-			return null;
-		}
-
-		const iframeURL = new URL(url);
-
-		const namespace = iframeURL.searchParams.get('p_p_id');
-
-		iframeURL.searchParams.set(
-			`_${namespace}_bodyCssClass`,
-			'dialog-iframe-popup'
-		);
-
-		return iframeURL.toString();
-	};
 
 	const onButtonClick = ({formId, type}) => {
 		if (type === 'cancel') {
@@ -105,18 +158,18 @@ const Modal = ({bodyHTML, buttons, id, onClose, size, title, url}) => {
 		}
 	};
 
-	const BodyHTML = () => {
+	const Body = ({html}) => {
 		const bodyRef = useRef();
 
 		useEffect(() => {
 			const fragment = document
 				.createRange()
-				.createContextualFragment(bodyHTML);
+				.createContextualFragment(html);
 
 			bodyRef.current.innerHTML = '';
 
 			bodyRef.current.appendChild(fragment);
-		}, []);
+		}, [html]);
 
 		return <div ref={bodyRef}></div>;
 	};
@@ -130,10 +183,38 @@ const Modal = ({bodyHTML, buttons, id, onClose, size, title, url}) => {
 					observer={observer}
 					size={url && !size ? 'full-screen' : size}
 				>
-					<ClayModal.Header>{title}</ClayModal.Header>
-					<ClayModal.Body url={getIframeUrl()}>
-						{bodyHTML && <BodyHTML />}
-					</ClayModal.Body>
+					<ClayModal.Header>
+						{headerHTML ? (
+							<div
+								dangerouslySetInnerHTML={{
+									__html: headerHTML,
+								}}
+							></div>
+						) : (
+							title
+						)}
+					</ClayModal.Header>
+					<div
+						className={classNames('modal-body', {
+							'modal-body-iframe': url,
+						})}
+					>
+						{url ? (
+							<>
+								{loading && <ClayLoadingIndicator />}
+								<Iframe
+									iframeBodyCssClass={iframeBodyCssClass}
+									processClose={processClose}
+									updateLoading={loading => {
+										setLoading(loading);
+									}}
+									url={url}
+								/>
+							</>
+						) : (
+							<>{bodyHTML && <Body html={bodyHTML} />}</>
+						)}
+					</div>
 					{buttons && (
 						<ClayModal.Footer
 							last={
@@ -179,6 +260,63 @@ const Modal = ({bodyHTML, buttons, id, onClose, size, title, url}) => {
 	);
 };
 
+class Iframe extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.iframeRef = React.createRef();
+
+		const iframeURL = new URL(props.url);
+
+		const namespace = iframeURL.searchParams.get('p_p_id');
+
+		let bodyCssClass = 'dialog-iframe-popup';
+
+		if (props.iframeBodyCssClass) {
+			bodyCssClass = `${bodyCssClass} ${props.iframeBodyCssClass}`;
+		}
+
+		iframeURL.searchParams.set(`_${namespace}_bodyCssClass`, bodyCssClass);
+
+		this.state = {loading: true, src: iframeURL.toString()};
+	}
+
+	componentWillUnmount() {
+		if (this.delegateHandler) {
+			this.delegateHandler.removeListener();
+		}
+	}
+
+	onLoadHandler = () => {
+		const iframe = this.iframeRef.current;
+
+		this.delegateHandler = dom.delegate(
+			iframe.contentWindow.document,
+			'click',
+			'.btn-cancel',
+			() => this.props.processClose()
+		);
+
+		this.props.updateLoading(false);
+
+		this.setState({loading: false});
+	};
+
+	render() {
+		return (
+			<iframe
+				className={classNames({
+					hide: this.state.loading,
+				})}
+				onLoad={this.onLoadHandler}
+				ref={this.iframeRef}
+				src={this.state.src}
+				title={this.state.src}
+			/>
+		);
+	}
+}
+
 Modal.propTypes = {
 	bodyHTML: PropTypes.string,
 	buttons: PropTypes.arrayOf(
@@ -195,6 +333,7 @@ Modal.propTypes = {
 			type: PropTypes.oneOf(['cancel', 'submit']),
 		})
 	),
+	headerHTML: PropTypes.string,
 	id: PropTypes.string,
 	onClose: PropTypes.func,
 	size: PropTypes.oneOf(['full-screen', 'lg', 'sm']),
@@ -202,4 +341,4 @@ Modal.propTypes = {
 	url: PropTypes.string,
 };
 
-export {Modal, openModal};
+export {Modal, openModal, openPortletModal, openPortletWindow};

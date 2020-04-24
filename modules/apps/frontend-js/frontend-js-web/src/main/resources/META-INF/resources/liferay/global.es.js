@@ -112,6 +112,18 @@ Liferay.Portlet = Liferay.Portlet || {};
 
 Liferay.Portlet.minimize = minimizePortlet;
 
+Liferay.Portlet.openModal = (...args) => {
+	Liferay.Loader.require('frontend-js-web/liferay/modal/Modal', commands => {
+		commands.openPortletModal(...args);
+	});
+};
+
+Liferay.Portlet.openWindow = (...args) => {
+	Liferay.Loader.require('frontend-js-web/liferay/modal/Modal', commands => {
+		commands.openPortletWindow(...args);
+	});
+};
+
 Liferay.SideNavigation = SideNavigation;
 
 Liferay.Util = Liferay.Util || {};

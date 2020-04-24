@@ -21,7 +21,7 @@ const filterConstants = {
 		title: Liferay.Language.get('process-status'),
 	},
 	processStep: {
-		key: 'taskKeys',
+		key: 'taskNames',
 		pinned: false,
 		title: Liferay.Language.get('process-step'),
 	},

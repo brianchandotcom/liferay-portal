@@ -178,7 +178,7 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 					StringPool.BLANK, StringPool.BLANK, 5000, "Abc",
 					new String[0], kaleoDefinition.getKaleoDefinitionId(),
 					new String[] {
-						getTaskKey(kaleoDefinition, "review") + ":enter"
+						getTaskName(kaleoDefinition, "review") + ":enter"
 					},
 					new String[] {getTerminalNodeKey(kaleoDefinition)},
 					ServiceContextTestUtil.getServiceContext());

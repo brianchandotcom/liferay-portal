@@ -87,7 +87,7 @@ describe('The workload by assignee body should', () => {
 			);
 			expect(
 				viewAllAssignees[0].parentNode.getAttribute('href')
-			).not.toContain('filters.taskKeys%5B0%5D=allSteps');
+			).not.toContain('filters.taskNames%5B0%5D=allSteps');
 		});
 	});
 
@@ -110,7 +110,7 @@ describe('The workload by assignee body should', () => {
 
 			expect(assigneeName).toHaveTextContent('User 1');
 			expect(assigneeName.parentNode.getAttribute('href')).toContain(
-				'&filters.assigneeIds%5B0%5D=1&filters.statuses%5B0%5D=Pending&filters.taskKeys%5B0%5D=review'
+				'&filters.assigneeIds%5B0%5D=1&filters.statuses%5B0%5D=Pending&filters.taskNames%5B0%5D=review'
 			);
 		});
 
@@ -121,7 +121,7 @@ describe('The workload by assignee body should', () => {
 				'view-all-assignees (1)'
 			);
 			expect(viewAllAssignees.parentNode.getAttribute('href')).toContain(
-				'filters.taskKeys%5B0%5D=review'
+				'filters.taskNames%5B0%5D=review'
 			);
 		});
 	});
@@ -146,7 +146,7 @@ describe('The workload by assignee body should', () => {
 			expect(assigneeName).toHaveTextContent('User 2');
 
 			expect(assigneeName.parentNode.getAttribute('href')).toContain(
-				'&filters.assigneeIds%5B0%5D=2&filters.statuses%5B0%5D=Pending&filters.taskKeys%5B0%5D=update&filters.slaStatuses%5B0%5D=OnTime'
+				'&filters.assigneeIds%5B0%5D=2&filters.statuses%5B0%5D=Pending&filters.taskNames%5B0%5D=update&filters.slaStatuses%5B0%5D=OnTime'
 			);
 		});
 
@@ -157,7 +157,7 @@ describe('The workload by assignee body should', () => {
 
 			expect(viewAllAssignees.innerHTML).toBe('view-all-assignees (1)');
 			expect(viewAllAssignees.parentNode.getAttribute('href')).toContain(
-				'filters.taskKeys%5B0%5D=update'
+				'filters.taskNames%5B0%5D=update'
 			);
 		});
 	});

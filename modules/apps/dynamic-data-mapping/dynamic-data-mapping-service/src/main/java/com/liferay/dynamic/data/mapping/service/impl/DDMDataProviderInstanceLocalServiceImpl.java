@@ -300,11 +300,11 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
+		validate(nameMap, ddmFormValues);
+
 		Date now = new Date();
 
 		User user = userLocalService.getUser(userId);
-
-		validate(nameMap, ddmFormValues);
 
 		DDMDataProviderInstance dataProviderInstance =
 			ddmDataProviderInstancePersistence.findByPrimaryKey(

@@ -27,8 +27,10 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Rubén Pulido
- * @deprecated As of Athanasius (7.3.x)
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *			PageFragmentInstanceDefinitionConverter}
  */
+@Deprecated
 public class PageFragmentInstanceDefinitionConverterUtil {
 
 	public static PageFragmentInstanceDefinition

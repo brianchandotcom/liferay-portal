@@ -146,6 +146,7 @@ describe('Chart', () => {
 
 	it('displays total views and date range title for default time span', async () => {
 		const testProps = {
+			defaultTimeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
 			defaultTimeSpanOption: 'last-7-days',
 			languageTag: 'en-US',
 		};
@@ -153,6 +154,7 @@ describe('Chart', () => {
 		const {getByText} = render(
 			<Chart
 				dataProviders={[mockViewsDataProvider]}
+				defaultTimeRange={testProps.defaultTimeRange}
 				defaultTimeSpanOption={testProps.defaultTimeSpanOption}
 				languageTag={testProps.languageTag}
 				publishDate={mockPublishDate}
@@ -176,6 +178,7 @@ describe('Chart', () => {
 
 	it('displays total views and reads and date range title for default time span', async () => {
 		const testProps = {
+			defaultTimeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
 			defaultTimeSpanOption: 'last-7-days',
 			languageTag: 'en-US',
 		};
@@ -183,6 +186,7 @@ describe('Chart', () => {
 		const {getByText} = render(
 			<Chart
 				dataProviders={[mockViewsDataProvider, mockReadsDataProvider]}
+				defaultTimeRange={testProps.defaultTimeRange}
 				defaultTimeSpanOption={testProps.defaultTimeSpanOption}
 				languageTag={testProps.languageTag}
 				publishDate={mockPublishDate}

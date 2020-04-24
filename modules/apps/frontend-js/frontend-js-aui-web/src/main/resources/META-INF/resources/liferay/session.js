@@ -572,6 +572,12 @@ AUI.add(
 							duration: 500,
 							message: instance._warningText,
 							on: {
+								blur() {
+									A.one('div[role="alert"').setAttribute(
+										'role',
+										'alert'
+									);
+								},
 								click(event) {
 									if (
 										event.domEvent.target.test(
@@ -587,6 +593,11 @@ AUI.add(
 										instance._destroyBanner();
 										instance._alertClosed = true;
 									}
+								},
+								focus() {
+									A.one('div[role="alert"').removeAttribute(
+										'role'
+									);
 								},
 							},
 							title: Liferay.Language.get('warning'),
@@ -641,20 +652,11 @@ AUI.add(
 					remainingTime = instance._formatTime(remainingTime);
 
 					if (!instance._alertClosed) {
-						var banner = instance._getBanner();
+						var counterTextNode = document.getElementsByClassName(
+							'countdown-timer'
+						)[0];
 
-						var bannerFocused = banner.bodyNode.contains(
-							document.activeElement
-						);
-
-						banner.set(
-							'message',
-							Lang.sub(instance._warningText, [remainingTime])
-						);
-
-						if (bannerFocused) {
-							banner.bodyNode.all('a').item(0).focus();
-						}
+						counterTextNode.innerHTML = remainingTime;
 					}
 
 					DOC.title =

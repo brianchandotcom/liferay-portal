@@ -74,12 +74,12 @@ public class AssigneeResourceTest extends BaseAssigneeResourceTestCase {
 		Assignee assignee1 = randomAssignee();
 
 		_workflowMetricsRESTTestHelper.addTask(
-			assignee1.getId(), testGroup.getCompanyId(), _instance);
+			assignee1, testGroup.getCompanyId(), _instance);
 
 		Assignee assignee2 = randomAssignee();
 
 		_workflowMetricsRESTTestHelper.addTask(
-			assignee2.getId(), testGroup.getCompanyId(), _instance);
+			assignee2, testGroup.getCompanyId(), _instance);
 
 		Page<Assignee> page = assigneeResource.postProcessAssigneesPage(
 			_process.getId(), new AssigneeBulkSelection());

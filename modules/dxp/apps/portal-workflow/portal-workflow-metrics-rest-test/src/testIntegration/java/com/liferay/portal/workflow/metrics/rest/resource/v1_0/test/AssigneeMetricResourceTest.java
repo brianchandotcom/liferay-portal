@@ -96,7 +96,7 @@ public class AssigneeMetricResourceTest
 		Long reviewNodeId = RandomTestUtil.nextLong();
 
 		_addNodeMetric(
-			assignee1.getId(), () -> instance1, _process.getId(),
+			assignee1, () -> instance1, _process.getId(),
 			new NodeMetric() {
 				{
 					durationAvg = 0L;
@@ -116,7 +116,7 @@ public class AssigneeMetricResourceTest
 		Long updateNodeId = RandomTestUtil.nextLong();
 
 		_addNodeMetric(
-			assignee1.getId(), () -> instance1, _process.getId(),
+			assignee1, () -> instance1, _process.getId(),
 			new NodeMetric() {
 				{
 					durationAvg = 0L;
@@ -137,7 +137,7 @@ public class AssigneeMetricResourceTest
 			testGroup.getCompanyId(), false, _process.getId());
 
 		_addNodeMetric(
-			assignee1.getId(), () -> instance2, _process.getId(),
+			assignee1, () -> instance2, _process.getId(),
 			new NodeMetric() {
 				{
 					durationAvg = 0L;
@@ -167,7 +167,7 @@ public class AssigneeMetricResourceTest
 		assigneeMetric2.setTaskCount(2L);
 
 		_addNodeMetric(
-			assignee2.getId(), () -> instance1, _process.getId(),
+			assignee2, () -> instance1, _process.getId(),
 			new NodeMetric() {
 				{
 					durationAvg = 0L;
@@ -187,7 +187,7 @@ public class AssigneeMetricResourceTest
 		Long submitNodeId = RandomTestUtil.nextLong();
 
 		_addNodeMetric(
-			assignee2.getId(), () -> instance2, _process.getId(),
+			assignee2, () -> instance2, _process.getId(),
 			new NodeMetric() {
 				{
 					durationAvg = 0L;
@@ -335,7 +335,7 @@ public class AssigneeMetricResourceTest
 		assigneeMetric3.setTaskCount(1L);
 
 		_addNodeMetric(
-			assignee3.getId(), () -> instance1, _process.getId(),
+			assignee3, () -> instance1, _process.getId(),
 			new NodeMetric() {
 				{
 					durationAvg = 0L;
@@ -370,7 +370,7 @@ public class AssigneeMetricResourceTest
 			testGroup.getCompanyId(), true, _process.getId());
 
 		_addNodeMetric(
-			assignee1.getId(), () -> instance3, _process.getId(), "COMPLETED",
+			assignee1, () -> instance3, _process.getId(), "COMPLETED",
 			new NodeMetric() {
 				{
 					durationAvg = 1000L;
@@ -403,7 +403,7 @@ public class AssigneeMetricResourceTest
 			});
 
 		_addNodeMetric(
-			assignee2.getId(), () -> instance3, _process.getId(), "COMPLETED",
+			assignee2, () -> instance3, _process.getId(), "COMPLETED",
 			new NodeMetric() {
 				{
 					durationAvg = 2000L;
@@ -511,25 +511,25 @@ public class AssigneeMetricResourceTest
 	}
 
 	private void _addNodeMetric(
-			long assigneeId,
+			Assignee assignee,
 			UnsafeSupplier<Instance, Exception> instanceSupplier,
 			long processId, NodeMetric... nodeMetrics)
 		throws Exception {
 
 		_addNodeMetric(
-			assigneeId, instanceSupplier, processId, "RUNNING", nodeMetrics);
+			assignee, instanceSupplier, processId, "RUNNING", nodeMetrics);
 	}
 
 	private void _addNodeMetric(
-			long assigneeId,
+			Assignee assignee,
 			UnsafeSupplier<Instance, Exception> instanceSupplier,
 			long processId, String status, NodeMetric... nodeMetrics)
 		throws Exception {
 
 		for (NodeMetric nodeMetric : nodeMetrics) {
 			_workflowMetricsRESTTestHelper.addNodeMetric(
-				assigneeId, testGroup.getCompanyId(), instanceSupplier,
-				processId, status, nodeMetric, "1.0");
+				assignee, testGroup.getCompanyId(), instanceSupplier, processId,
+				status, nodeMetric, "1.0");
 		}
 	}
 

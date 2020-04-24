@@ -18,6 +18,8 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -37,6 +39,7 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
@@ -203,7 +206,7 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public NodeMetric addNodeMetric(
-			long assigneeId, long companyId,
+			Assignee assignee, long companyId,
 			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
 			String status)
 		throws Exception {
@@ -227,12 +230,12 @@ public class WorkflowMetricsRESTTestHelper {
 		};
 
 		return addNodeMetric(
-			assigneeId, companyId, instanceSuplier, processId, status, task,
+			assignee, companyId, instanceSuplier, processId, status, task,
 			"1.0");
 	}
 
 	public NodeMetric addNodeMetric(
-			long assigneeId, long companyId,
+			Assignee assignee, long companyId,
 			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
 			String status, NodeMetric nodeMetric, String version)
 		throws Exception {
@@ -249,21 +252,21 @@ public class WorkflowMetricsRESTTestHelper {
 
 			if (onTimeInstanceCount > 0) {
 				addSLATaskResult(
-					assigneeId, false, companyId, instance, node.getId(), true,
-					status, taskId, node.getName());
+					assignee.getId(), false, companyId, instance, node.getId(),
+					true, status, taskId, node.getName());
 
 				onTimeInstanceCount--;
 			}
 			else if (overdueInstanceCount > 0) {
 				addSLATaskResult(
-					assigneeId, true, companyId, instance, node.getId(), false,
-					status, taskId, node.getName());
+					assignee.getId(), true, companyId, instance, node.getId(),
+					false, status, taskId, node.getName());
 
 				overdueInstanceCount--;
 			}
 
 			addTask(
-				assigneeId, companyId, nodeMetric.getDurationAvg(), instance,
+				assignee, companyId, nodeMetric.getDurationAvg(), instance,
 				processId, node.getId(), taskId, node.getName());
 
 			if (instance.getCompleted()) {
@@ -431,15 +434,63 @@ public class WorkflowMetricsRESTTestHelper {
 			"taskId", taskId, "taskName", taskName);
 	}
 
+	public Task addTask(Assignee assignee, long companyId, Instance instance)
+		throws Exception {
+
+		return addTask(
+			assignee, companyId, 0L, instance, instance.getProcessId(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomString());
+	}
+
+	public Task addTask(
+			Assignee assignee, long companyId, long durationAvg,
+			Instance instance, long processId, long nodeId, long taskId,
+			String name)
+		throws Exception {
+
+		Task task = new Task();
+
+		task.setAssignee(assignee);
+		task.setClassName(StringPool.BLANK);
+		task.setClassPK(0L);
+		task.setCompleted(durationAvg > 0);
+		task.setDateCompletion((durationAvg > 0) ? new Date() : null);
+		task.setCompletionUserId((durationAvg > 0) ? assignee.getId() : null);
+		task.setDateCreated(new Date());
+		task.setDateModified(new Date());
+		task.setDuration(durationAvg);
+		task.setId(taskId);
+		task.setInstanceId(instance.getId());
+		task.setName(name);
+		task.setNodeId(nodeId);
+		task.setProcessId(processId);
+		task.setProcessVersion("1.0");
+
+		return addTask(companyId, instance, task);
+	}
+
 	public Task addTask(long companyId, Instance instance, Task task)
 		throws Exception {
 
+		Assignee assignee = task.getAssignee();
+
+		Long[] assigneeIds = null;
+		String assigneeType = null;
+
+		if ((assignee != null) && (assignee.getId() != null)) {
+			assigneeIds = new Long[] {assignee.getId()};
+			assigneeType = User.class.getName();
+		}
+
 		_taskWorkflowMetricsIndexer.addTask(
-			new Long[] {task.getAssigneeId()}, User.class.getName(),
-			task.getClassName(), task.getClassPK(), companyId, false, null,
-			null, task.getDateCreated(), false, instance.getId(),
-			task.getDateModified(), task.getName(), task.getNodeId(),
-			task.getProcessId(), task.getProcessVersion(), task.getId(), 0);
+			_createLocalizationMap(task.getAssetTitle()),
+			_createLocalizationMap(task.getAssetType()), assigneeIds,
+			assigneeType, task.getClassName(), task.getClassPK(), companyId,
+			false, null, null, task.getDateCreated(), false, null,
+			instance.getId(), task.getDateModified(), task.getName(),
+			task.getNodeId(), task.getProcessId(), task.getProcessVersion(),
+			task.getId(), 0);
 
 		_assertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
@@ -447,18 +498,19 @@ public class WorkflowMetricsRESTTestHelper {
 			instance.getId(), "processId", task.getProcessId(), "nodeId",
 			task.getNodeId(), "name", task.getName(), "taskId", task.getId());
 
-		if (task.getAssigneeId() != 0) {
+		if (assigneeIds != null) {
 			_taskWorkflowMetricsIndexer.updateTask(
-				new Long[] {task.getAssigneeId()}, User.class.getName(),
-				companyId, new Date(), task.getId(), 0);
+				_createLocalizationMap(task.getAssetTitle()),
+				_createLocalizationMap(task.getAssetType()), assigneeIds,
+				assigneeType, companyId, new Date(), task.getId(), 0);
 
 			_assertCount(
 				_taskWorkflowMetricsIndexNameBuilder.getIndexName(companyId),
-				"assigneeIds", task.getAssigneeId(), "assigneeType",
-				User.class.getName(), "companyId", companyId, "deleted", false,
-				"instanceId", instance.getId(), "processId",
-				task.getProcessId(), "nodeId", task.getNodeId(), "name",
-				task.getName(), "taskId", task.getId());
+				"assigneeIds", assigneeIds[0], "assigneeType", assigneeType,
+				"companyId", companyId, "deleted", false, "instanceId",
+				instance.getId(), "processId", task.getProcessId(), "nodeId",
+				task.getNodeId(), "name", task.getName(), "taskId",
+				task.getId());
 		}
 
 		if (task.getCompleted()) {
@@ -476,42 +528,6 @@ public class WorkflowMetricsRESTTestHelper {
 		}
 
 		return task;
-	}
-
-	public Task addTask(long assigneeId, long companyId, Instance instance)
-		throws Exception {
-
-		return addTask(
-			assigneeId, companyId, 0L, instance, instance.getProcessId(),
-			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomString());
-	}
-
-	public Task addTask(
-			long assigneeId, long companyId, long durationAvg,
-			Instance instance, long processId, long nodeId, long taskId,
-			String name)
-		throws Exception {
-
-		Task task = new Task();
-
-		task.setAssigneeId(assigneeId);
-		task.setClassName(StringPool.BLANK);
-		task.setClassPK(0L);
-		task.setCompleted(durationAvg > 0);
-		task.setDateCompletion((durationAvg > 0) ? new Date() : null);
-		task.setCompletionUserId((durationAvg > 0) ? assigneeId : null);
-		task.setDateCreated(new Date());
-		task.setDateModified(new Date());
-		task.setDuration(durationAvg);
-		task.setId(taskId);
-		task.setInstanceId(instance.getId());
-		task.setName(name);
-		task.setNodeId(nodeId);
-		task.setProcessId(processId);
-		task.setProcessVersion("1.0");
-
-		return addTask(companyId, instance, task);
 	}
 
 	public void completeInstance(long companyId, Instance instance)
@@ -668,6 +684,10 @@ public class WorkflowMetricsRESTTestHelper {
 				date, "yyyyMMddHHmmss", LocaleUtil.getDefault());
 		}
 		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
 			return null;
 		}
 	}
@@ -967,6 +987,10 @@ public class WorkflowMetricsRESTTestHelper {
 				"yyyyMMddHHmmss", dateString, LocaleUtil.getDefault());
 		}
 		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
 			return new Date();
 		}
 	}
@@ -978,6 +1002,9 @@ public class WorkflowMetricsRESTTestHelper {
 	private static final String _CLASS_NAME_SLA_TASK_RESULT_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
 			"SLATaskResultWorkflowMetricsIndexer";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowMetricsRESTTestHelper.class);
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;

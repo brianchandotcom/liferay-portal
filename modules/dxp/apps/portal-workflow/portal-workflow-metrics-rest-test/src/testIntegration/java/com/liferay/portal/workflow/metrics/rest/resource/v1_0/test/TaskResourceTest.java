@@ -15,7 +15,11 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
@@ -41,6 +45,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		_instance = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), false, _process.getId());
+
+		_user = UserTestUtil.addUser();
 	}
 
 	@After
@@ -83,7 +89,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	@Override
 	protected Task testGetProcessTask_addTask() throws Exception {
 		return _workflowMetricsRESTTestHelper.addTask(
-			0, testGroup.getCompanyId(), _instance);
+			new Assignee() {
+				{
+					id = _user.getUserId();
+				}
+			},
+			testGroup.getCompanyId(), _instance);
 	}
 
 	@Override
@@ -109,6 +120,9 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 	private Instance _instance;
 	private Process _process;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 	@Inject
 	private WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;

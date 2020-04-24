@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Role;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
@@ -113,7 +114,12 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		_userLocalService.addRoleUser(role.getId(), user);
 
 		_workflowMetricsRESTTestHelper.addNodeMetric(
-			user.getUserId(), testGroup.getCompanyId(),
+			new Assignee() {
+				{
+					id = user.getUserId();
+				}
+			},
+			testGroup.getCompanyId(),
 			() -> _workflowMetricsRESTTestHelper.addInstance(
 				testGroup.getCompanyId(), Objects.equals(status, "COMPLETED"),
 				processId),

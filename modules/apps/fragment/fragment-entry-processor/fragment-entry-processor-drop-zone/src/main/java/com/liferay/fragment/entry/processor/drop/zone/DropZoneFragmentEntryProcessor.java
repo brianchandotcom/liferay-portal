@@ -15,7 +15,9 @@
 package com.liferay.fragment.entry.processor.drop.zone;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -79,6 +81,44 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return defaultEditableValuesJSONObject;
+	}
+
+	@Override
+	public String processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink, String html,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		JSONObject dropZoneProcessorJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				DropZoneFragmentEntryProcessor.class.getName());
+
+		if ((dropZoneProcessorJSONObject == null) ||
+			(dropZoneProcessorJSONObject.length() <= 0)) {
+
+			return html;
+		}
+
+		Document document = _getDocument(html);
+
+		Elements elements = document.select("lfr-drop-zone");
+
+		if (elements.size() <= 0) {
+			return html;
+		}
+
+		for (Element element : elements) {
+			element.attr(
+				"id",
+				dropZoneProcessorJSONObject.getString(element.attr("id")));
+		}
+
+		Element bodyElement = document.body();
+
+		return bodyElement.html();
 	}
 
 	@Override

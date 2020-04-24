@@ -17,14 +17,14 @@ import {MockRouter} from '../../../mock/MockRouter.es';
 
 describe('The ResultsBar component should', () => {
 	const mockProps = {
-		filterKeys: ['taskKeys'],
+		filterKeys: ['taskNames'],
 		filters: [
 			{
 				items: [
 					{active: true, key: 'review', name: 'Review'},
 					{active: true, key: 'update', name: 'Update'},
 				],
-				key: 'taskKeys',
+				key: 'taskNames',
 				name: 'Process Step',
 				pinned: false,
 			},

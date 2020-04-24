@@ -22,7 +22,7 @@ const Body = ({
 	page,
 	pageSize,
 	processId,
-	taskKeys,
+	taskNames,
 	totalCount,
 }) => {
 	const statesProps = useMemo(
@@ -48,7 +48,7 @@ const Body = ({
 						<Body.Table
 							items={items}
 							processId={processId}
-							taskKeys={taskKeys}
+							taskNames={taskNames}
 						/>
 
 						<PaginationBar

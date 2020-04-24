@@ -89,7 +89,7 @@ const Footer = ({processId, processStepKey, totalCount}) => {
 	const filters = {};
 
 	if (processStepKey && processStepKey !== 'allSteps') {
-		filters.taskKeys = [processStepKey];
+		filters.taskNames = [processStepKey];
 	}
 
 	const viewAllAssigneesQuery = {filters};

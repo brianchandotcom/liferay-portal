@@ -66,7 +66,7 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 		filterValues: {
 			assigneeDateEnd,
 			assigneeDateStart,
-			assigneeTaskKeys: [taskKey] = ['allSteps'],
+			assigneeTaskNames: [taskName] = ['allSteps'],
 			assigneeTimeRange: [key] = [],
 		},
 		filtersError,
@@ -75,7 +75,7 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 		prefixKeys,
 	});
 
-	const taskKeys = taskKey !== 'allSteps' ? [taskKey] : undefined;
+	const taskNames = taskName !== 'allSteps' ? [taskName] : undefined;
 	const timeRange = useMemo(
 		() => getTimeRangeParams(assigneeDateStart, assigneeDateEnd),
 		[assigneeDateEnd, assigneeDateStart]
@@ -84,7 +84,7 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 	const {data, postData} = usePost({
 		body: {
 			completed: true,
-			taskKeys,
+			taskNames,
 			...timeRange,
 		},
 		params: {
@@ -108,11 +108,11 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 
 				<PerformanceByAssigneeCard.Body
 					{...data}
-					filtered={!!taskKeys}
+					filtered={!!taskNames}
 				/>
 
 				<PerformanceByAssigneeCard.Footer
-					processStep={taskKey}
+					processStep={taskName}
 					timeRange={{key, ...timeRange}}
 					totalCount={data.totalCount}
 					{...routeParams}

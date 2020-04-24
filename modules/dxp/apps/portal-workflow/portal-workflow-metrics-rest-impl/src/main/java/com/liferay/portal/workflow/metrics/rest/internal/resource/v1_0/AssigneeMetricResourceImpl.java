@@ -119,7 +119,7 @@ public class AssigneeMetricResourceImpl
 			assigneeMetricBulkSelection.getDateEnd(),
 			assigneeMetricBulkSelection.getDateStart(),
 			assigneeMetricBulkSelection.getInstanceIds(), processId,
-			assigneeMetricBulkSelection.getTaskKeys(), userIds);
+			assigneeMetricBulkSelection.getTaskNames(), userIds);
 
 		if (count > 0) {
 			return Page.of(
@@ -130,7 +130,7 @@ public class AssigneeMetricResourceImpl
 					assigneeMetricBulkSelection.getDateStart(),
 					assigneeMetricBulkSelection.getInstanceIds(),
 					_toFieldSort(sorts), pagination, processId,
-					assigneeMetricBulkSelection.getTaskKeys(), userIds),
+					assigneeMetricBulkSelection.getTaskNames(), userIds),
 				pagination, count);
 		}
 
@@ -157,7 +157,7 @@ public class AssigneeMetricResourceImpl
 
 	private BooleanQuery _createBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
-		long processId, String[] taskKeys, Set<Long> userIds) {
+		long processId, String[] taskNames, Set<Long> userIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -172,8 +172,8 @@ public class AssigneeMetricResourceImpl
 					contextCompany.getCompanyId())));
 		slaTaskResultsBooleanQuery.addMustQueryClauses(
 			_createSLATaskResultsBooleanQuery(
-				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
-				userIds));
+				completed, dateEnd, dateStart, instanceIds, processId,
+				taskNames, userIds));
 
 		BooleanQuery tasksBooleanQuery = _queries.booleanQuery();
 
@@ -184,8 +184,8 @@ public class AssigneeMetricResourceImpl
 					contextCompany.getCompanyId())));
 		tasksBooleanQuery.addMustQueryClauses(
 			_createTasksBooleanQuery(
-				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
-				userIds));
+				completed, dateEnd, dateStart, instanceIds, processId,
+				taskNames, userIds));
 
 		return booleanQuery.addShouldQueryClauses(
 			slaTaskResultsBooleanQuery, tasksBooleanQuery);
@@ -265,7 +265,7 @@ public class AssigneeMetricResourceImpl
 
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
-		long processId, String[] taskKeys, Set<Long> userIds) {
+		long processId, String[] taskNames, Set<Long> userIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -283,10 +283,10 @@ public class AssigneeMetricResourceImpl
 					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 		}
 
-		if (ArrayUtil.isNotEmpty(taskKeys)) {
+		if (ArrayUtil.isNotEmpty(taskNames)) {
 			TermsQuery termsQuery = _queries.terms("taskName");
 
-			termsQuery.addValues(taskKeys);
+			termsQuery.addValues(taskNames);
 
 			booleanQuery.addMustQueryClauses(termsQuery);
 		}
@@ -297,7 +297,7 @@ public class AssigneeMetricResourceImpl
 
 	private BooleanQuery _createTasksBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
-		long processId, String[] taskKeys, Set<Long> userIds) {
+		long processId, String[] taskNames, Set<Long> userIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -313,10 +313,10 @@ public class AssigneeMetricResourceImpl
 
 		booleanQuery.addMustQueryClauses(_queries.term("completed", completed));
 
-		if (ArrayUtil.isNotEmpty(taskKeys)) {
+		if (ArrayUtil.isNotEmpty(taskNames)) {
 			TermsQuery termsQuery = _queries.terms("name");
 
-			termsQuery.addValues(taskKeys);
+			termsQuery.addValues(taskNames);
 
 			booleanQuery.addMustQueryClauses(termsQuery);
 		}
@@ -328,7 +328,7 @@ public class AssigneeMetricResourceImpl
 	private List<AssigneeMetric> _getAssigneeMetrics(
 			boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
 			FieldSort fieldSort, Pagination pagination, Long processId,
-			String[] taskKeys, Set<Long> userIds)
+			String[] taskNames, Set<Long> userIds)
 		throws Exception {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -381,8 +381,8 @@ public class AssigneeMetricResourceImpl
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(
-				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
-				userIds));
+				completed, dateEnd, dateStart, instanceIds, processId,
+				taskNames, userIds));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -404,7 +404,7 @@ public class AssigneeMetricResourceImpl
 
 	private long _getAssigneeMetricsCount(
 			boolean completed, Date dateEnd, Date dateStart, Long[] instanceIds,
-			long processId, String[] taskKeys, Set<Long> userIds)
+			long processId, String[] taskNames, Set<Long> userIds)
 		throws Exception {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -417,8 +417,8 @@ public class AssigneeMetricResourceImpl
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
 			_createTasksBooleanQuery(
-				completed, dateEnd, dateStart, instanceIds, processId, taskKeys,
-				userIds));
+				completed, dateEnd, dateStart, instanceIds, processId,
+				taskNames, userIds));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)

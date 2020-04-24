@@ -234,13 +234,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	@Override
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeIds, Date dateEnd, Date dateStart,
-			String[] slaStatuses, String[] statuses, String[] taskKeys,
+			String[] slaStatuses, String[] statuses, String[] taskNames,
 			Pagination pagination)
 		throws Exception {
 
 		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(
 			assigneeIds, dateEnd, dateStart, processId, slaStatuses, statuses,
-			taskKeys);
+			taskNames);
 
 		int instanceCount = _getInstanceCount(searchSearchResponse);
 
@@ -249,7 +249,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				_getInstances(
 					assigneeIds, dateEnd, dateStart,
 					searchSearchResponse.getCount(), pagination, processId,
-					slaStatuses, statuses, taskKeys),
+					slaStatuses, statuses, taskNames),
 				pagination, instanceCount);
 		}
 
@@ -697,7 +697,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private List<Instance> _getInstances(
 		Long[] assigneeIds, Date dateEnd, Date dateStart, long instanceCount,
 		Pagination pagination, long processId, String[] slaStatuses,
-		String[] statuses, String[] taskKeys) {
+		String[] statuses, String[] taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -760,7 +760,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.fromArray(assigneeIds), dateEnd, dateStart,
 				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
-				ListUtil.fromArray(taskKeys)));
+				ListUtil.fromArray(taskNames)));
 
 		termsAggregation.addOrders(Order.key(true));
 		termsAggregation.addPipelineAggregations(
@@ -920,7 +920,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private SearchSearchResponse _getSearchSearchResponse(
 		Long[] assigneeIds, Date dateEnd, Date dateStart, long processId,
-		String[] slaStatuses, String[] statuses, String[] taskKeys) {
+		String[] slaStatuses, String[] statuses, String[] taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -928,7 +928,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.fromArray(assigneeIds), dateEnd, dateStart,
 				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
-				ListUtil.fromArray(taskKeys)));
+				ListUtil.fromArray(taskNames)));
 		searchSearchRequest.setIndexNames(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()),

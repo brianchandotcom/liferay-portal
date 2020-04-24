@@ -215,10 +215,6 @@ components:
                     enum: [OnTime, Overdue, Untracked]
                     readOnly: true
                     type: string
-                status:
-                    enum: [Completed, Pending]
-                    readOnly: true
-                    type: string
                 taskNames:
                     items:
                         type: string
@@ -865,6 +861,10 @@ paths:
                           type: integer
                       type: array
                 - in: query
+                  name: completed
+                  schema:
+                      type: boolean
+                - in: query
                   name: dateEnd
                   schema:
                       format: date-time
@@ -879,13 +879,6 @@ paths:
                   schema:
                       items:
                           enum: [OnTime, Overdue, Untracked]
-                          type: string
-                      type: array
-                - in: query
-                  name: statuses
-                  schema:
-                      items:
-                          enum: [Completed, Pending]
                           type: string
                       type: array
                 - in: query

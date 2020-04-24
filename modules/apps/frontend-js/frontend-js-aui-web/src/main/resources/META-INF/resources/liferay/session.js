@@ -465,7 +465,9 @@ AUI.add(
 
 					var banner = instance._getBanner();
 
-					var counterTextNode = banner.one('.countdown-timer');
+					var counterTextNode = banner
+						.one('.countdown-timer')
+						.getDOMNode();
 
 					instance._uiSetRemainingTime(
 						remainingTime,
@@ -572,11 +574,23 @@ AUI.add(
 							duration: 500,
 							message: instance._warningText,
 							on: {
-								blur() {
-									A.one('div[role="alert"').setAttribute(
-										'role',
-										'alert'
-									);
+								blur(event) {
+									if (instance._alert) {
+										var notificationContainer = A.one(
+											'.lfr-notification-container'
+										);
+
+										if (
+											!notificationContainer.contains(
+												event.domEvent.relatedTarget
+											)
+										) {
+											instance._alert.setAttribute(
+												'role',
+												'alert'
+											);
+										}
+									}
 								},
 								click(event) {
 									if (
@@ -593,11 +607,6 @@ AUI.add(
 										instance._destroyBanner();
 										instance._alertClosed = true;
 									}
-								},
-								focus() {
-									A.one('div[role="alert"').removeAttribute(
-										'role'
-									);
 								},
 							},
 							title: Liferay.Language.get('warning'),
@@ -646,15 +655,23 @@ AUI.add(
 					DOC.title = instance.get('pageTitle');
 				},
 
-				_uiSetRemainingTime(remainingTime) {
+				_uiSetRemainingTime(remainingTime, counterTextNode) {
 					var instance = this;
 
 					remainingTime = instance._formatTime(remainingTime);
 
 					if (!instance._alertClosed) {
-						var counterTextNode = document.getElementsByClassName(
-							'countdown-timer'
-						)[0];
+						var alert = counterTextNode.closest(
+							'div[role="alert"]'
+						);
+
+						// Prevent screen-reader from re-reading alert:
+
+						if (alert) {
+							alert.removeAttribute('role');
+
+							instance._alert = alert;
+						}
 
 						counterTextNode.innerHTML = remainingTime;
 					}

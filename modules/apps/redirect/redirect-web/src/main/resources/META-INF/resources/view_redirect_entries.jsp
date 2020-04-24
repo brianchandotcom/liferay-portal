@@ -65,18 +65,18 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						String url = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL();
 						%>
 
-						<aui:a href="<%= HtmlUtil.escapeAttribute(url) %>" target="_blank">
+						<span>
 							<%= HtmlUtil.escape(url) %>
-						</aui:a>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
 						name="destination-url"
 					>
-						<aui:a href="<%= HtmlUtil.escapeAttribute(redirectEntry.getDestinationURL()) %>" target="_blank">
+						<span>
 							<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
-						</aui:a>
+						</span>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

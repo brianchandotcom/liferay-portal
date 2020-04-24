@@ -35,4 +35,16 @@ public interface CTConfiguration {
 	)
 	public String[] administratorRoleNames();
 
+	@Meta.AD(
+		deflt = "com.liferay.portal.kernel.model.Group|com.liferay.portal.kernel.model.User",
+		name = "root-display-class-names", required = false
+	)
+	public String[] rootDisplayClassNames();
+
+	@Meta.AD(
+		deflt = "com.liferay.asset.kernel.model.AssetEntry",
+		name = "root-display-child-class-names", required = false
+	)
+	public String[] rootDisplayChildClassNames();
+
 }

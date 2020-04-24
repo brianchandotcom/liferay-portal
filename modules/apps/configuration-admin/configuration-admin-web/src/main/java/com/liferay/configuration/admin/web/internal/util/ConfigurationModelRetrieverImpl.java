@@ -334,10 +334,6 @@ public class ConfigurationModelRetrieverImpl
 			return null;
 		}
 
-		if (!scope.equals(scope.SYSTEM) && configurationModel.isFactory()) {
-			return null;
-		}
-
 		if (scope.equals(scope.COMPANY) && configurationModel.isSystemScope()) {
 			return null;
 		}

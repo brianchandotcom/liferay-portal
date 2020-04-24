@@ -16,8 +16,6 @@ package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.model.Layout;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -35,8 +33,7 @@ public interface PageDefinitionConverter {
 		boolean saveMappingConfiguration);
 
 	public PageElement toPageElement(
-		long groupId, LayoutStructure layoutStructure,
-		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
+		Layout layout, String layoutStructureItemId, boolean saveInlineContent,
 		boolean saveMappingConfiguration, long segmentsExperienceId);
 
 }

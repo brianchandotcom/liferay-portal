@@ -78,7 +78,7 @@ components:
                         format: int64
                         type: integer
                     type: array
-                taskKeys:
+                taskNames:
                     items:
                         type: string
                     type: array
@@ -889,7 +889,7 @@ paths:
                           type: string
                       type: array
                 - in: query
-                  name: taskKeys
+                  name: taskNames
                   schema:
                       items:
                           type: string

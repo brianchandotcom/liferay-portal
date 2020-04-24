@@ -54,7 +54,6 @@ const DAY_IN_MILLISECONDS = 24 * 60 * 60 * 1000;
 const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
 
 const LAST_24_HOURS = 'last-24-hours';
-const LAST_7_DAYS = 'last-7-days';
 
 const METRICS_STATIC_VALUES = {
 	analyticsReportsHistoricalReads: {

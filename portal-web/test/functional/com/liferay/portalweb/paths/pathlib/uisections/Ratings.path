@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>YOUR_RATING_STACKED_STAR_COUNT</td>
+	<td>//div[contains(@class,'stacked-stars')]//a[contains(@title,'Rate this ${key_ratingStarCount} stars out of 5')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>YOUR_RATING_STAR_COUNT</td>
 	<td>//div[contains(@class,'ratings-stars-dropdown')]//button[contains(.,'Rate this ${key_ratingStarCount} stars out of 5')]</td>
 	<td></td>
@@ -83,6 +88,11 @@
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY</td>
 	<td>//div[contains(@class,'ratings-stars')]//button[contains(@title,'Vote')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STACKED_STAR_RESULT</td>
+	<td>//div[contains(@class,'stacked-stars')]//div[contains(@class,'rating-content')]//a[contains(@title,'You have rated this ${key_ratingStarCount} stars out of 5')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -109,6 +119,11 @@
 <tr>
 	<td>AVERAGE_STAR</td>
 	<td>//div[contains(@class,'ratings-stars')]//*[name()='svg'][contains(@class,'ratings-stars-average-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STACKED_STAR_RESULT</td>
+	<td>//div[contains(@class,'stacked-stars')]//span[contains(@title,'The average rating is ${key_ratingStarCount} stars out of 5.')]</td>
 	<td></td>
 </tr>
 <tr>

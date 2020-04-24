@@ -25,6 +25,8 @@ definition {
 			locator1 = "Microblogs#TIMELINE_ENTRY_ACTION",
 			value1 = "Edit");
 
+		AssertVisible(locator1 = "TextArea#FIELD_INPUT");
+
 		Type.clickAtType(
 			locator1 = "TextArea#FIELD_INPUT",
 			value1 = "${entryContentEdit}");

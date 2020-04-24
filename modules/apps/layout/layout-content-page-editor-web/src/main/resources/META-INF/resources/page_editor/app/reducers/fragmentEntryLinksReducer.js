@@ -186,11 +186,23 @@ export default function fragmentEntryLinksReducer(
 					action.fragmentEntryLink,
 			};
 
-		case UPDATE_FRAGMENT_ENTRY_LINK_CONTENT:
+		case UPDATE_FRAGMENT_ENTRY_LINK_CONTENT: {
+			const fragmentEntryLink =
+				fragmentEntryLinks[action.fragmentEntryLinkId];
+
+			let collectionContent = fragmentEntryLink.collectionContent || [];
+
+			if (action.collectionItemIndex != null) {
+				collectionContent = [...collectionContent];
+
+				collectionContent[action.collectionItemIndex] = action.content;
+			}
+
 			return {
 				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
 					...fragmentEntryLinks[action.fragmentEntryLinkId],
+					collectionContent,
 					content: action.content,
 					editableValues:
 						action.editableValues ||
@@ -198,6 +210,7 @@ export default function fragmentEntryLinksReducer(
 							.editableValues,
 				},
 			};
+		}
 
 		case UPDATE_LAYOUT_DATA: {
 			const nextFragmentEntryLinks = {...fragmentEntryLinks};

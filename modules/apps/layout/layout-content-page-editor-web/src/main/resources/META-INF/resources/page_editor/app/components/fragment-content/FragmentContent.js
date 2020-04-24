@@ -16,23 +16,17 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {updateFragmentEntryLinkContent} from '../../actions/index';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import FragmentService from '../../services/FragmentService';
 import {useDispatch, useSelector} from '../../store/index';
 import {
-	CollectionItemContext,
+	useGetContent,
 	useGetFieldValue,
+	useRenderFragmentContent,
 } from '../CollectionItemContext';
 import {useFrameContext} from '../Frame';
 import Layout from '../Layout';
@@ -60,6 +54,8 @@ const FragmentContent = React.forwardRef(
 		);
 
 		const getFieldValue = useGetFieldValue();
+		const getContent = useGetContent();
+		const renderFragmentContent = useRenderFragmentContent();
 
 		const [editables, setEditables] = useState([]);
 
@@ -87,11 +83,11 @@ const FragmentContent = React.forwardRef(
 
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-		const defaultContent = useSelector((state) =>
-			state.fragmentEntryLinks[fragmentEntryLinkId]
-				? state.fragmentEntryLinks[fragmentEntryLinkId].content
-				: ''
+		const fragmentEntryLink = useSelector(
+			(state) => state.fragmentEntryLinks[fragmentEntryLinkId]
 		);
+
+		const defaultContent = getContent(fragmentEntryLink);
 
 		const editableValues = useSelector((state) =>
 			state.fragmentEntryLinks[fragmentEntryLinkId]
@@ -99,62 +95,33 @@ const FragmentContent = React.forwardRef(
 				: {}
 		);
 
-		const collectionItemContext = useContext(CollectionItemContext);
-
 		const [content, setContent] = useState(defaultContent);
 
-		const collectionItemClassName = collectionItemContext.collectionItem
-			? collectionItemContext.collectionItem.className
-			: '';
-
-		const collectionItemClassPK = collectionItemContext.collectionItem
-			? collectionItemContext.collectionItem.classPK
-			: '';
-
-		const collectionItemContent = collectionItemContext.collectionItem
-			? collectionItemContext.collectionItemContent
-			: '';
-
-		const setCollectionItemContent = collectionItemContext.setCollectionItemContent
-			? collectionItemContext.setCollectionItemContent
-			: undefined;
-
 		useEffect(() => {
-			FragmentService.renderFragmentEntryLinkContent({
-				collectionItemClassName,
-				collectionItemClassPK,
+			renderFragmentContent({
 				fragmentEntryLinkId,
 				onNetworkStatus: dispatch,
 				segmentsExperienceId,
-			}).then(({content}) => {
-				if (setCollectionItemContent) {
-					setCollectionItemContent(content);
-
-					setContent(content);
-				}
-				else {
-					dispatch(
-						updateFragmentEntryLinkContent({
-							content,
-							editableValues,
-							fragmentEntryLinkId,
-						})
-					);
-				}
+			}).then((action) => {
+				dispatch(
+					updateFragmentEntryLinkContent({
+						...action,
+						editableValues,
+						fragmentEntryLinkId,
+					})
+				);
 			});
 		}, [
-			collectionItemClassName,
-			collectionItemClassPK,
 			dispatch,
 			editableValues,
 			fragmentEntryLinkId,
+			renderFragmentContent,
 			segmentsExperienceId,
-			setCollectionItemContent,
 		]);
 
 		useEffect(() => {
 			let element = document.createElement('div');
-			element.innerHTML = collectionItemContent || defaultContent;
+			element.innerHTML = defaultContent;
 
 			const updateContent = debounce(() => {
 				if (isMounted() && element) {
@@ -192,7 +159,6 @@ const FragmentContent = React.forwardRef(
 				element = null;
 			};
 		}, [
-			collectionItemContent,
 			defaultContent,
 			editableProcessorUniqueId,
 			editableValues,

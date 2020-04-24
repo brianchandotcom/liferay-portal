@@ -14,6 +14,7 @@
 
 import React, {useCallback, useContext} from 'react';
 
+import FragmentService from '../services/FragmentService';
 import InfoItemService from '../services/InfoItemService';
 
 const defaultFromControlsId = (itemId) => itemId;
@@ -57,6 +58,27 @@ const useCollectionFields = () => {
 	return context.collectionFields;
 };
 
+const useGetContent = () => {
+	const context = useContext(CollectionItemContext);
+
+	return useCallback(
+		(fragmentEntryLink) => {
+			if (context.collectionItemIndex != null) {
+				const collectionContent =
+					fragmentEntryLink.collectionContent || [];
+
+				return (
+					collectionContent[context.collectionItemIndex] ||
+					fragmentEntryLink.content
+				);
+			}
+
+			return fragmentEntryLink.content;
+		},
+		[context.collectionItemIndex]
+	);
+};
+
 const useGetFieldValue = () => {
 	const context = useContext(CollectionItemContext);
 
@@ -93,9 +115,35 @@ const useGetFieldValue = () => {
 	}
 };
 
+const useRenderFragmentContent = () => {
+	const context = useContext(CollectionItemContext);
+
+	const {className, classPK} = context.collectionItem || {};
+
+	return useCallback(
+		({fragmentEntryLinkId, onNetworkStatus, segmentsExperienceId}) => {
+			return FragmentService.renderFragmentEntryLinkContent({
+				collectionItemClassName: className,
+				collectionItemClassPK: classPK,
+				fragmentEntryLinkId,
+				onNetworkStatus,
+				segmentsExperienceId,
+			}).then(({content}) => {
+				return {
+					collectionItemIndex: context.collectionItemIndex,
+					content,
+				};
+			});
+		},
+		[className, classPK, context.collectionItemIndex]
+	);
+};
+
 export {
 	CollectionItemContext,
 	CollectionItemContextProvider,
+	useRenderFragmentContent,
+	useGetContent,
 	useCanElevate,
 	useCollectionFields,
 	useFromControlsId,

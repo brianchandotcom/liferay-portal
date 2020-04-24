@@ -24,11 +24,14 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSe
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -47,9 +50,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Máté Thurzó
  */
-@Component(immediate = true, service = ChangesetManager.class)
-public class ChangesetManagerImpl implements ChangesetManager {
+@Component(immediate = true, service = AopService.class)
+public class ChangesetManagerImpl
+	implements AopService, ChangesetManager, IdentifiableOSGiService {
 
+	@Clusterable(onMaster = true)
 	@Override
 	public void addChangeset(Changeset changeset) {
 		Objects.nonNull(changeset);
@@ -66,6 +71,11 @@ public class ChangesetManagerImpl implements ChangesetManager {
 	@Override
 	public void clearChangesets() {
 		_changesets = new HashMap<>();
+	}
+
+	@Override
+	public String getOSGiServiceIdentifier() {
+		return ChangesetManager.class.getName();
 	}
 
 	@Override

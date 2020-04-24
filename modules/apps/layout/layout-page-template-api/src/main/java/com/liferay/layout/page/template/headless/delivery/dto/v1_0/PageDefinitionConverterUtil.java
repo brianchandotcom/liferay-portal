@@ -30,7 +30,10 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Rubén Pulido
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *			PageDefinitionConverter}
  */
+@Deprecated
 public class PageDefinitionConverterUtil {
 
 	public static PageDefinition toPageDefinition(
@@ -125,12 +128,7 @@ public class PageDefinitionConverterUtil {
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
 		boolean saveMappingConfiguration, long segmentsExperienceId) {
 
-		PageDefinitionConverter pageDefinitionConverter =
-			_serviceTracker.getService();
-
-		return pageDefinitionConverter.toPageElement(
-			groupId, layoutStructure, layoutStructureItem, saveInlineContent,
-			saveMappingConfiguration);
+		throw new UnsupportedOperationException();
 	}
 
 	private static final ServiceTracker

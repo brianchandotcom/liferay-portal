@@ -105,19 +105,10 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 		Layout layout, boolean saveInlineContent,
 		boolean saveMappingConfiguration) {
 
-		return toPageDefinition(
-			layout, saveInlineContent, saveMappingConfiguration, 0);
-	}
-
-	@Override
-	public PageDefinition toPageDefinition(
-		Layout layout, boolean saveInlineContent,
-		boolean saveMappingConfiguration, long segmentsExperienceId) {
-
 		return new PageDefinition() {
 			{
 				pageElement = _toPageElement(
-					layout, saveInlineContent, saveMappingConfiguration);
+					layout, saveInlineContent, saveMappingConfiguration, 0);
 				settings = _toSettings(layout);
 			}
 		};
@@ -434,7 +425,7 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 
 	private PageElement _toPageElement(
 		Layout layout, boolean saveInlineContent,
-		boolean saveMappingConfiguration) {
+		boolean saveMappingConfiguration, long segmentsExperienceId) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -457,7 +448,8 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 				toPageElement(
 					layout.getGroupId(), layoutStructure,
 					layoutStructure.getLayoutStructureItem(childItemId),
-					saveInlineContent, saveMappingConfiguration, 0));
+					saveInlineContent, saveMappingConfiguration,
+					segmentsExperienceId));
 		}
 
 		PageElement pageElement = _toPageElement(
@@ -650,7 +642,8 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 									fragmentLayoutStructureItem,
 									_fragmentRendererTracker,
 									_infoDisplayContributorTracker,
-									saveInlineContent, saveMappingConfiguration);
+									saveInlineContent,
+									saveMappingConfiguration);
 						type = PageElement.Type.FRAGMENT;
 					}
 				};

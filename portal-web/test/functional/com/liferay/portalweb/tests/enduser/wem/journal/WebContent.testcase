@@ -228,7 +228,7 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 		MenuItem.click(menuItem = "Edit");
 

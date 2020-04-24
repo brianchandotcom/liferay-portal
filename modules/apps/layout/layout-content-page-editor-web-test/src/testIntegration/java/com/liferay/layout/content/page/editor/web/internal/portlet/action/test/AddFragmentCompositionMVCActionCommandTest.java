@@ -15,23 +15,33 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCompositionLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -41,16 +51,30 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.spring.mock.web.portlet.MockActionRequest;
+import com.liferay.spring.mock.web.portlet.MockActionResponse;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -87,13 +111,12 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 		_layout = LayoutTestUtil.addLayout(_group);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+		_serviceContext.setCompanyId(TestPropsValues.getCompanyId());
 
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@Test
@@ -199,6 +222,172 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	}
 
 	@Test
+	public void testAddFragmentCompositionSaveMappingConfigurationEditableLink()
+		throws Exception {
+
+		_layout = _addLayout();
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				_serviceContext);
+
+		String html =
+			"<div><a data-lfr-editable-id=\"my-link-editable-id\" " +
+				"data-lfr-editable-type=\"link\" href=\"\" id=\"my-link-id\">" +
+					"Example</a></div>";
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				"example-fragment-entry-key", RandomTestUtil.randomString(),
+				StringPool.BLANK, html, StringPool.BLANK, StringPool.BLANK, 0,
+				FragmentConstants.TYPE_COMPONENT,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		JournalArticle journalArticle1 = _addJournalArticle(
+			RandomTestUtil.randomString());
+
+		JournalArticle journalArticle2 = _addJournalArticle(
+			RandomTestUtil.randomString());
+
+		HashMap<String, String> valuesMap = HashMapBuilder.put(
+			"FRAGMENT_COLLECTION_NAME",
+			StringUtil.quote(fragmentCollection.getName(), StringPool.QUOTE)
+		).put(
+			"FRAGMENT_ENTRY_KEY",
+			StringUtil.quote(
+				fragmentEntry.getFragmentEntryKey(), StringPool.QUOTE)
+		).put(
+			"FRAGMENT_ENTRY_NAME",
+			StringUtil.quote(fragmentEntry.getName(), StringPool.QUOTE)
+		).put(
+			"MAPPED_LINK_CLASS_NAME",
+			StringUtil.quote(
+				"com.liferay.journal.model.JournalArticle", StringPool.QUOTE)
+		).put(
+			"MAPPED_LINK_CLASS_NAME_ID",
+			StringUtil.quote(
+				String.valueOf(
+					_portal.getClassNameId(
+						"com.liferay.journal.model.JournalArticle")))
+		).put(
+			"MAPPED_LINK_CLASS_PK",
+			String.valueOf(journalArticle1.getResourcePrimKey())
+		).put(
+			"MAPPED_LINK_DEFAULT_VALUE",
+			StringUtil.quote(journalArticle1.getTitle())
+		).put(
+			"MAPPED_TEXT_CLASS_NAME",
+			StringUtil.quote(
+				"com.liferay.journal.model.JournalArticle", StringPool.QUOTE)
+		).put(
+			"MAPPED_TEXT_CLASS_NAME_ID",
+			StringUtil.quote(
+				String.valueOf(
+					_portal.getClassNameId(
+						"com.liferay.journal.model.JournalArticle")),
+				StringPool.QUOTE)
+		).put(
+			"MAPPED_TEXT_CLASS_PK",
+			String.valueOf(journalArticle2.getResourcePrimKey())
+		).put(
+			"MAPPED_TEXT_DEFAULT_VALUE",
+			StringUtil.quote(journalArticle2.getTitle(), StringPool.QUOTE)
+		).build();
+
+		String editableValues = StringUtil.replace(
+			_read("editable_values_with_mapping.json"), "\"${", "}\"",
+			valuesMap);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_portal.getClassNameId(Layout.class), _layout.getPlid(),
+				StringPool.BLANK, html, StringPool.BLANK,
+				_read("fragment_configuration.json"), editableValues,
+				StringPool.BLANK, 0, null, _serviceContext);
+
+		String data = StringUtil.replace(
+			_read("layout_data_with_section_with_fragment_with_mapping.json"),
+			"${", "}",
+			HashMapBuilder.put(
+				"FRAGMENT_ENTRY_LINK_ID",
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+			).build());
+
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class.getName()), _layout.getPlid(),
+			data, _serviceContext);
+
+		MockActionRequest mockActionRequest = _getMockActionRequest();
+
+		mockActionRequest.addParameter(
+			"description", RandomTestUtil.randomString());
+		mockActionRequest.addParameter(
+			"fragmentCollectionId",
+			String.valueOf(fragmentCollection.getFragmentCollectionId()));
+		mockActionRequest.addParameter("itemId", "SECTION_ID");
+		mockActionRequest.addParameter("name", RandomTestUtil.randomString());
+		mockActionRequest.addParameter(
+			"saveInlineContent", Boolean.TRUE.toString());
+		mockActionRequest.addParameter(
+			"saveMappingConfiguration", Boolean.TRUE.toString());
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockActionRequest, new MockActionResponse());
+
+		Assert.assertEquals(
+			String.valueOf(fragmentCollection.getFragmentCollectionId()),
+			jsonObject.getString("fragmentCollectionId"));
+		Assert.assertEquals(
+			fragmentCollection.getName(),
+			jsonObject.getString("fragmentCollectionName"));
+
+		Assert.assertTrue(
+			Validator.isNotNull(jsonObject.getString("fragmentEntryKey")));
+		Assert.assertEquals(
+			String.valueOf(_group.getGroupId()),
+			jsonObject.getString("groupId"));
+		Assert.assertEquals(
+			mockActionRequest.getParameter("name"),
+			jsonObject.getString("name"));
+		Assert.assertEquals("composition", jsonObject.getString("type"));
+
+		FragmentComposition fragmentComposition =
+			_fragmentCompositionLocalService.fetchFragmentComposition(
+				_group.getGroupId(), jsonObject.getString("fragmentEntryKey"));
+
+		Assert.assertNotNull(fragmentComposition);
+		Assert.assertEquals(
+			mockActionRequest.getParameter("description"),
+			fragmentComposition.getDescription());
+		Assert.assertEquals(
+			mockActionRequest.getParameter("name"),
+			fragmentComposition.getName());
+
+		String expectedFragmentCompositionData = StringUtil.replace(
+			_read("expected_fragment_composition_data.json"), "\"${", "}\"",
+			valuesMap);
+
+		JSONObject expectedFragmentCompositionDataJSONObject =
+			JSONFactoryUtil.createJSONObject(expectedFragmentCompositionData);
+
+		JSONObject fragmentCompositionDataJSONObject =
+			fragmentComposition.getDataJSONObject();
+
+		Assert.assertEquals(
+			expectedFragmentCompositionDataJSONObject.toJSONString(),
+			fragmentCompositionDataJSONObject.toJSONString());
+	}
+
+	@Test
 	public void testAddFragmentCompositionWithThumbnail() throws Exception {
 		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
 		MockLiferayPortletActionResponse actionResponse =
@@ -225,8 +414,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			"fragmentCollectionId",
 			String.valueOf(newFragmentCollection.getFragmentCollectionId()));
 
-		actionRequest.addParameter("name", "test name");
-		actionRequest.addParameter("description", "test description");
+		actionRequest.addParameter("name", RandomTestUtil.randomString());
 		actionRequest.addParameter("itemId", layoutStructure.getMainItemId());
 		actionRequest.addParameter("previewImageURL", _THUMBNAIL_DATA);
 
@@ -243,6 +431,35 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 		Assert.assertNotNull(fragmentComposition);
 		Assert.assertTrue(fragmentComposition.getPreviewFileEntryId() > 0);
+	}
+
+	private JournalArticle _addJournalArticle(String title) throws Exception {
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, title
+		).build();
+
+		Map<Locale, String> contentMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		return JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class), titleMap, null,
+			contentMap, LocaleUtil.getSiteDefault(), false, true,
+			_serviceContext);
+	}
+
+	private Layout _addLayout() throws PortalException {
+		String randomString = FriendlyURLNormalizerUtil.normalize(
+			RandomTestUtil.randomString());
+
+		String friendlyURL = StringPool.SLASH + randomString;
+
+		return LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_CONTENT, false, friendlyURL, _serviceContext);
 	}
 
 	private MockActionRequest _getMockActionRequest() throws PortalException {
@@ -273,6 +490,11 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		return themeDisplay;
 	}
 
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
 	private static final String _THUMBNAIL_DATA =
 		"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAA" +
 			"AADUlEQVQYV2M4c+bMfwAIMANkq3cY2wAAAABJRU5ErkJggg==";
@@ -288,6 +510,12 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	@Inject
 	private FragmentCompositionLocalService _fragmentCompositionLocalService;
 
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -301,6 +529,11 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		filter = "mvc.command.name=/content_layout/add_fragment_composition"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private Portal _portal;
+
+	private ServiceContext _serviceContext;
 
 	private static class MockActionRequest
 		extends MockLiferayPortletActionRequest {

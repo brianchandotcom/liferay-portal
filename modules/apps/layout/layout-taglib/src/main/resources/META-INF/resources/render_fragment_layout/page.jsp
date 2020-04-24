@@ -24,7 +24,7 @@ RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderF
 %>
 
 <liferay-util:html-top>
-	<%= renderFragmentLayoutDisplayContext.getPortletPaths() %>
+	<%= renderFragmentLayoutDisplayContext.getPortletHeaderPaths() %>
 </liferay-util:html-top>
 
 <div class="layout-content portlet-layout" id="main-content" role="main">
@@ -48,3 +48,7 @@ RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderF
 	%>
 
 </div>
+
+<liferay-util:html-bottom>
+	<%= renderFragmentLayoutDisplayContext.getPortletFooterPaths() %>
+</liferay-util:html-bottom>

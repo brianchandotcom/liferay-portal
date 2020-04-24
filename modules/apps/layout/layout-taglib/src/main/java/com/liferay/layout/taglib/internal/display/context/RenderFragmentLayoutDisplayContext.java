@@ -193,7 +193,7 @@ public class RenderFragmentLayoutDisplayContext {
 			defaultLayoutListRetrieverContext);
 	}
 
-	public String getPortletPaths() {
+	public String getPortletFooterPaths() {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
@@ -208,6 +208,29 @@ public class RenderFragmentLayoutDisplayContext {
 
 				PortletJSONUtil.writeHeaderPaths(
 					pipingServletResponse, jsonObject);
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to write portlet paths " + portlet.getPortletId(),
+					exception);
+			}
+		}
+
+		return unsyncStringWriter.toString();
+	}
+
+	public String getPortletHeaderPaths() {
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			_httpServletResponse, unsyncStringWriter);
+
+		for (Portlet portlet : _getPortlets()) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			try {
+				PortletJSONUtil.populatePortletJSONObject(
+					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
 
 				PortletJSONUtil.writeFooterPaths(
 					pipingServletResponse, jsonObject);

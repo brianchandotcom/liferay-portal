@@ -30,12 +30,10 @@ const LayoutSelector = ({
 	onChange,
 	portletNamespace,
 }) => {
-	const [layout, setLayout] = useState({});
+	const [layout, setLayout] = useState(() => JSON.parse(inputValue || '{}'));
 
 	useEffect(() => {
-		setLayout({
-			...JSON.parse(inputValue || '{}'),
-		});
+		setLayout(JSON.parse(inputValue || '{}'));
 	}, [inputValue]);
 
 	const handleClearClick = () => {
@@ -48,7 +46,7 @@ const LayoutSelector = ({
 
 		if (selectedItem && selectedItem.layoutId) {
 			setLayout(selectedItem);
-			onChange(selectedItem);
+			onChange(JSON.stringify(selectedItem));
 		}
 	};
 
@@ -71,7 +69,11 @@ const LayoutSelector = ({
 		<ClayForm.Group style={{marginBottom: '0.5rem'}}>
 			<ClayInput.Group>
 				<ClayInput.GroupItem className="d-none d-sm-block" prepend>
-					<input name={name} type="hidden" value={inputValue} />
+					<input
+						name={name}
+						type="hidden"
+						value={JSON.stringify(layout)}
+					/>
 
 					<ClayInput
 						className="bg-light"

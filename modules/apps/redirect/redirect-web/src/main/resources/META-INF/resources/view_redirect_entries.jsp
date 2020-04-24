@@ -28,7 +28,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 	displayContext="<%= redirectManagementToolbarDisplayContext %>"
 />
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<div class="closed container-fluid-1280 redirect-entries sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/redirect/info_panel" var="sidebarPanelURL" />
 
 	<liferay-frontend:sidebar-panel
@@ -39,7 +39,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
-		<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280 redirect-entries" name="fm">
+		<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<liferay-ui:search-container

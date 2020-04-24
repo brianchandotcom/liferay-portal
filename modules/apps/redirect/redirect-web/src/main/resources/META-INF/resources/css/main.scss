@@ -4,10 +4,26 @@
 	}
 }
 
-.redirect-entries .table-cell-content {
-	direction: rtl;
-	overflow: hidden;
-	text-align: left;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+.redirect-entries {
+	.sidebar-dd {
+		margin-bottom: 1.5rem;
+	}
+
+	.sidebar-dt {
+		margin-bottom: 0.5rem;
+		font-size: 0.875rem;
+		text-transform: capitalize;
+	}
+
+	.sidebar-title {
+		text-transform: uppercase;
+	}
+
+	.table-cell-content {
+		direction: rtl;
+		overflow: hidden;
+		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }

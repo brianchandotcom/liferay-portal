@@ -115,19 +115,23 @@ public class TaxonomyCategoryResourceImpl
 
 		DynamicQuery dynamicQuery = _assetCategoryLocalService.dynamicQuery();
 
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"companyId", contextCompany.getCompanyId()));
+
 		if (siteId != null) {
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));
 		}
 
-		dynamicQuery.addOrder(OrderFactoryUtil.desc("count"));
-		dynamicQuery.setLimit(
-			pagination.getStartPosition(), pagination.getEndPosition());
+		dynamicQuery.addOrder(OrderFactoryUtil.desc("assetCount"));
 		dynamicQuery.setProjection(_getProjectionList(), true);
 
 		return Page.of(
 			transform(
 				transform(
-					_assetCategoryLocalService.dynamicQuery(dynamicQuery),
+					_assetCategoryLocalService.dynamicQuery(
+						dynamicQuery, pagination.getStartPosition(),
+						pagination.getEndPosition()),
 					this::_toAssetCategory),
 				this::_toTaxonomyCategory));
 	}
@@ -397,11 +401,13 @@ public class TaxonomyCategoryResourceImpl
 		projectionList.add(
 			ProjectionFactoryUtil.alias(
 				ProjectionFactoryUtil.sqlProjection(
-					"(select count(entryId) AS count from " +
-						"AssetEntries_AssetCategories where categoryId = " +
-							"this_.categoryId group by categoryId) AS count",
-					new String[] {"count"}, new Type[] {Type.INTEGER}),
-				"count"));
+					StringBundler.concat(
+						"(select count(entryId) assetCount from ",
+						"AssetEntries_AssetCategories where categoryId = ",
+						"this_.categoryId group by categoryId) AS ",
+						"assetCount"),
+					new String[] {"assetCount"}, new Type[] {Type.INTEGER}),
+				"assetCount"));
 		projectionList.add(ProjectionFactoryUtil.property("categoryId"));
 		projectionList.add(ProjectionFactoryUtil.property("companyId"));
 		projectionList.add(ProjectionFactoryUtil.property("createDate"));

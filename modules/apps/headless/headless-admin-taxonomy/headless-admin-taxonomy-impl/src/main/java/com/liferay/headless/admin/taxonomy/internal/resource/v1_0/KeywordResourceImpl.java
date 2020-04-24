@@ -87,19 +87,23 @@ public class KeywordResourceImpl
 
 		DynamicQuery dynamicQuery = _assetTagLocalService.dynamicQuery();
 
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"companyId", contextCompany.getCompanyId()));
+
 		if (siteId != null) {
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));
 		}
 
-		dynamicQuery.addOrder(OrderFactoryUtil.desc("count"));
-		dynamicQuery.setLimit(
-			pagination.getStartPosition(), pagination.getEndPosition());
+		dynamicQuery.addOrder(OrderFactoryUtil.desc("assetCount"));
 		dynamicQuery.setProjection(_getProjectionList(), true);
 
 		return Page.of(
 			transform(
 				transform(
-					_assetTagLocalService.dynamicQuery(dynamicQuery),
+					_assetTagLocalService.dynamicQuery(
+						dynamicQuery, pagination.getStartPosition(),
+						pagination.getEndPosition()),
 					this::_toAssetTag),
 				this::_toKeyword));
 	}
@@ -160,11 +164,11 @@ public class KeywordResourceImpl
 		projectionList.add(
 			ProjectionFactoryUtil.alias(
 				ProjectionFactoryUtil.sqlProjection(
-					"(select count(entryId) AS count from " +
+					"(select count(entryId) assetCount from " +
 						"AssetEntries_AssetTags where tagId = this_.tagId " +
-							"group by tagId) AS count",
-					new String[] {"count"}, new Type[] {Type.INTEGER}),
-				"count"));
+							"group by tagId) AS assetCount",
+					new String[] {"assetCount"}, new Type[] {Type.INTEGER}),
+				"assetCount"));
 		projectionList.add(ProjectionFactoryUtil.property("companyId"));
 		projectionList.add(ProjectionFactoryUtil.property("createDate"));
 		projectionList.add(ProjectionFactoryUtil.property("groupId"));

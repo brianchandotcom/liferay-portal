@@ -42,8 +42,7 @@ public class PageDefinitionConverterUtil {
 			_serviceTracker.getService();
 
 		return pageDefinitionConverter.toPageDefinition(
-			layout, saveInlineContent, saveMappingConfiguration,
-			segmentsExperienceId);
+			layout, saveInlineContent, saveMappingConfiguration);
 	}
 
 	public static PageDefinition toPageDefinition(
@@ -131,7 +130,7 @@ public class PageDefinitionConverterUtil {
 
 		return pageDefinitionConverter.toPageElement(
 			groupId, layoutStructure, layoutStructureItem, saveInlineContent,
-			saveMappingConfiguration, segmentsExperienceId);
+			saveMappingConfiguration);
 	}
 
 	private static final ServiceTracker

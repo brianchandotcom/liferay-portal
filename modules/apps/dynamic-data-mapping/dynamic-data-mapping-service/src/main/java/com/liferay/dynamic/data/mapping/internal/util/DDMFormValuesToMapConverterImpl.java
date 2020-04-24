@@ -78,10 +78,12 @@ public class DDMFormValuesToMapConverterImpl
 			return;
 		}
 
+		String name = ddmFormField.getName();
+
 		Value value = ddmFormFieldValue.getValue();
 
 		if (value == null) {
-			values.put(ddmFormField.getName(), null);
+			values.put(name, null);
 
 			return;
 		}
@@ -90,7 +92,7 @@ public class DDMFormValuesToMapConverterImpl
 			if (ddmFormField.isLocalizable()) {
 				Map<String, Object> localizedValues =
 					(Map<String, Object>)values.getOrDefault(
-						ddmFormField.getName(), new HashMap<>());
+						name, new HashMap<>());
 
 				LocalizedValue localizedValue = (LocalizedValue)value;
 
@@ -109,26 +111,24 @@ public class DDMFormValuesToMapConverterImpl
 					localizedValues.put(languageId, instancesValue);
 				}
 
-				values.put(ddmFormField.getName(), localizedValues);
+				values.put(name, localizedValues);
 			}
 			else {
 				List<Object> instancesValue = (List<Object>)values.getOrDefault(
-					ddmFormField.getName(), new ArrayList<>());
+					name, new ArrayList<>());
 
 				instancesValue.add(value.getString(value.getDefaultLocale()));
 
-				values.put(ddmFormField.getName(), instancesValue);
+				values.put(name, instancesValue);
 			}
 		}
 		else if (ddmFormField.isLocalizable()) {
 			values.put(
-				ddmFormField.getName(),
+				name,
 				_toLocalizedMap(ddmFormField.getType(), (LocalizedValue)value));
 		}
 		else {
-			values.put(
-				ddmFormField.getName(),
-				value.getString(value.getDefaultLocale()));
+			values.put(name, value.getString(value.getDefaultLocale()));
 		}
 	}
 

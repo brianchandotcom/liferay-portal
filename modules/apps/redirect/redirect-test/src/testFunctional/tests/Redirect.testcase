@@ -495,6 +495,32 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
 	}
 
+	@description = "This ensures that the destination URL passes validation before it can be used."
+	@priority = "5"
+	test CheckDestinationURL {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = " ",
+			destinationURLVariation = "Space",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			checkDestinationURL = "true",
+			destinationPageName = "Test Destination Page",
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			groupName = "Test Site Name",
+			portalName = "${siteName}",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+	}
+
 	@description = "This ensures that all redirect entries can be deleted simultaneously."
 	@priority = "5"
 	test DeleteEntries {

@@ -25,18 +25,20 @@ import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
 import ListNativeObjects from './pages/native-object/ListNativeObjects.es';
 
 export const AppNavigationBar = () => (
-	<NavigationBar tabs={[
-		{
-			active: true,
-			exact: true,
-			label: Liferay.Language.get('custom'),
-			path: () => "/" 
-		},
-		{
-			label: Liferay.Language.get('native'),
-			path: () => "/native-objects" 
-		}
-	]} />
+	<NavigationBar
+		tabs={[
+			{
+				active: true,
+				exact: true,
+				label: Liferay.Language.get('custom'),
+				path: () => '/',
+			},
+			{
+				label: Liferay.Language.get('native'),
+				path: () => '/native-objects',
+			},
+		]}
+	/>
 );
 
 export default (props) => (

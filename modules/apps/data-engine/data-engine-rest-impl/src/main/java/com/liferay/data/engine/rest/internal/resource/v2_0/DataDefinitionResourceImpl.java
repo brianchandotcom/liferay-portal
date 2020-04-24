@@ -17,6 +17,8 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataListView;
+import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
+import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutColumn;
@@ -36,6 +38,7 @@ import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
@@ -88,6 +91,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -106,11 +110,13 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -296,6 +302,54 @@ public class DataDefinitionResourceImpl
 				LanguageUtil.format(
 					contextAcceptLanguage.getPreferredLocale(),
 					"page-size-is-greater-than-x", 250));
+		}
+
+		if (Objects.equals(contentType, "native-object") &&
+			Validator.isNull(keywords)) {
+
+			Collection<DataEngineNativeObject> dataEngineNativeObjects =
+				_dataEngineNativeObjectTracker.getDataEngineNativeObjects();
+
+			for (DataEngineNativeObject dataEngineNativeObject :
+					dataEngineNativeObjects) {
+
+				DataDefinition dataDefinition = null;
+
+				try {
+					getSiteDataDefinitionByContentTypeByDataDefinitionKey(
+						siteId, "native-object",
+						dataEngineNativeObject.getClassName());
+				}
+				catch (Exception exception) {
+					if ((exception instanceof NoSuchStructureException) ||
+						(exception.getCause() instanceof
+							NoSuchStructureException)) {
+
+						dataDefinition = new DataDefinition();
+
+						dataDefinition.setAvailableLanguageIds(
+							new String[] {
+								contextAcceptLanguage.getPreferredLanguageId()
+							});
+						dataDefinition.setDataDefinitionKey(
+							dataEngineNativeObject.getClassName());
+						dataDefinition.setName(
+							HashMapBuilder.<String, Object>put(
+								contextAcceptLanguage.getPreferredLanguageId(),
+								dataEngineNativeObject.getName()
+							).build());
+						dataDefinition.setStorageType("json");
+					}
+					else {
+						throw exception;
+					}
+				}
+
+				if (dataDefinition != null) {
+					postDataDefinitionByContentType(
+						"native-object", dataDefinition);
+				}
+			}
 		}
 
 		if (ArrayUtil.isEmpty(sorts)) {
@@ -1172,6 +1226,9 @@ public class DataDefinitionResourceImpl
 	@Reference
 	private DataDefinitionModelResourcePermission
 		_dataDefinitionModelResourcePermission;
+
+	@Reference
+	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

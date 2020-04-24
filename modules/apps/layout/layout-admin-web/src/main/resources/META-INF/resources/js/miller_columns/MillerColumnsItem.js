@@ -211,7 +211,9 @@ const MillerColumnsItem = ({
 	useEffect(() => {
 		if (!active && dropZone === DROP_ZONES.ELEMENT && !timeoutRef.current) {
 			timeoutRef.current = setTimeout(() => {
-				onItemStayHover(itemId);
+				if (isOver) {
+					onItemStayHover(itemId);
+				}
 			}, ITEM_HOVER_TIMEOUT);
 		}
 		else if (

@@ -32,9 +32,4 @@ public interface PageFragmentInstanceDefinitionConverter {
 		FragmentLayoutStructureItem fragmentLayoutStructureItem,
 		boolean saveInlineContent, boolean saveMapping);
 
-	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		boolean saveInlineContent, boolean saveMapping,
-		long segmentsExperienceId);
-
 }

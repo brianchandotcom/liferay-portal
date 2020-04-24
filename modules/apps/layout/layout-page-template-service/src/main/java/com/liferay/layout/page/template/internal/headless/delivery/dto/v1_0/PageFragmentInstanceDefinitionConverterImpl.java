@@ -98,16 +98,6 @@ public class PageFragmentInstanceDefinitionConverterImpl
 		FragmentLayoutStructureItem fragmentLayoutStructureItem,
 		boolean saveInlineContent, boolean saveMapping) {
 
-		return toPageFragmentInstanceDefinition(
-			fragmentLayoutStructureItem, saveInlineContent, saveMapping, 0);
-	}
-
-	@Override
-	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		boolean saveInlineContent, boolean saveMapping,
-		long segmentsExperienceId) {
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentLayoutStructureItem.getFragmentEntryLinkId());
@@ -134,8 +124,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 				};
 				fragmentConfig = _getFragmentConfig(fragmentEntryLink);
 				fragmentFields = _getFragmentFields(
-					fragmentEntryLink, saveInlineContent, saveMapping
-					);
+					fragmentEntryLink, saveInlineContent, saveMapping);
 			}
 		};
 	}
@@ -395,8 +384,7 @@ public class PageFragmentInstanceDefinitionConverterImpl
 		for (String textId : textIds) {
 			fragmentFields.add(
 				_toFragmentField(
-					editableTypes, jsonObject, saveMapping,
-					textId));
+					editableTypes, jsonObject, saveMapping, textId));
 		}
 
 		return fragmentFields;

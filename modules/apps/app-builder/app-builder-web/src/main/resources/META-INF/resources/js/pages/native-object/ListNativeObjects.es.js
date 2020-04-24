@@ -54,7 +54,7 @@ export default () => {
 				}}
 				endpoint={`/o/data-engine/v2.0/data-definitions/by-content-type/native-object`}
 			>
-				{item => ({
+				{(item) => ({
 					...item,
 					dateCreated: fromNow(item.dateCreated),
 					dateModified: fromNow(item.dateModified),

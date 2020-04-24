@@ -18,7 +18,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 
 const {Item} = ClayNavigationBar;
 
-export default withRouter(({match: {url}}) => {
+export default withRouter(({match: {url}, tabs}) => {
 	const blur = (event) => {
 		event.target.blur();
 	};
@@ -26,40 +26,21 @@ export default withRouter(({match: {url}}) => {
 	return (
 		<ClayNavigationBar
 			inverted
-			triggerLabel={Liferay.Language.get('form-views')}
+			triggerLabel={tabs.find(({active}) => active).label}
 		>
-			<Item key="0">
-				<NavLink
-					activeClassName="active"
-					className="nav-link"
-					onClick={blur}
-					to={`${url}/form-views`}
-				>
-					{Liferay.Language.get('form-views')}
-				</NavLink>
-			</Item>
-
-			<Item key="1">
-				<NavLink
-					activeClassName="active"
-					className="nav-link"
-					onClick={blur}
-					to={`${url}/table-views`}
-				>
-					{Liferay.Language.get('table-views')}
-				</NavLink>
-			</Item>
-
-			<Item key="2">
-				<NavLink
-					activeClassName="active"
-					className="nav-link"
-					onClick={blur}
-					to={`${url}/apps`}
-				>
-					{Liferay.Language.get('apps')}
-				</NavLink>
-			</Item>
+			{tabs.map(({exact, label, path}, index) => (
+				<Item key={index}>
+					<NavLink
+						activeClassName="active"
+						className="nav-link"
+						exact={exact}
+						onClick={blur}
+						to={path(url)}
+					>
+						{label}
+					</NavLink>
+				</Item>
+			))}
 		</ClayNavigationBar>
 	);
 });

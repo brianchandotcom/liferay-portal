@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import {AppNavigationBar} from '../../App.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import ListView from '../../components/list-view/ListView.es';
 import {fromNow} from '../../utils/time.es';
@@ -45,6 +46,9 @@ export default () => {
 					'javax.portlet.title.com_liferay_app_builder_web_internal_portlet_ObjectsPortlet'
 				)}
 			/>
+
+			<AppNavigationBar />
+
 			<ListView
 				columns={COLUMNS}
 				emptyState={{

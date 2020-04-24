@@ -62,11 +62,11 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 					>
 
 						<%
-						String url = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL();
+						String sourceUrl = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL();
 						%>
 
 						<span>
-							<%= HtmlUtil.escape(url) %>
+							<%= HtmlUtil.escape(sourceUrl) %>
 						</span>
 					</liferay-ui:search-container-column-text>
 
@@ -75,8 +75,10 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						name="destination-url"
 					>
 						<%
+						String destinationUrl = HtmlUtil.escape(redirectEntry.getDestinationURL());
+
 						Map<String, String> data = HashMapBuilder.put(
-							"href", HtmlUtil.escape(redirectEntry.getDestinationURL())
+							"href", destinationUrl
 						).build();
 						%>
 
@@ -91,7 +93,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						/>
 
 						<span>
-							<%= HtmlUtil.escape(redirectEntry.getDestinationURL()) %>
+							<%= destinationUrl %>
 						</span>
 
 					</liferay-ui:search-container-column-text>

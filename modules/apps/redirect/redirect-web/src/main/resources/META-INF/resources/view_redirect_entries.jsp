@@ -74,6 +74,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						cssClass="table-cell-content"
 						name="destination-url"
 					>
+
 						<%
 						String destinationUrl = HtmlUtil.escape(redirectEntry.getDestinationURL());
 
@@ -95,7 +96,6 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						<span data-title="<%= destinationUrl %>">
 							<%= destinationUrl %>
 						</span>
-
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

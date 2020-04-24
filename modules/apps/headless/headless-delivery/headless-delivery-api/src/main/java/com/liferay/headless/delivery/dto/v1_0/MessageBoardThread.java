@@ -386,6 +386,38 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
+	@Schema(
+		description = "A flag that indicates whether this thread has a message considered as valid"
+	)
+	public Boolean getHasValidAnswer() {
+		return hasValidAnswer;
+	}
+
+	public void setHasValidAnswer(Boolean hasValidAnswer) {
+		this.hasValidAnswer = hasValidAnswer;
+	}
+
+	@JsonIgnore
+	public void setHasValidAnswer(
+		UnsafeSupplier<Boolean, Exception> hasValidAnswerUnsafeSupplier) {
+
+		try {
+			hasValidAnswer = hasValidAnswerUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "A flag that indicates whether this thread has a message considered as valid"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean hasValidAnswer;
+
 	@Schema(description = "The thread's main title.")
 	public String getHeadline() {
 		return headline;
@@ -997,6 +1029,16 @@ public class MessageBoardThread {
 			sb.append(_escape(friendlyUrlPath));
 
 			sb.append("\"");
+		}
+
+		if (hasValidAnswer != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hasValidAnswer\": ");
+
+			sb.append(hasValidAnswer);
 		}
 
 		if (headline != null) {

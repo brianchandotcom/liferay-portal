@@ -1860,6 +1860,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("hasValidAnswer", additionalAssertFieldName)) {
+				if (messageBoardThread.getHasValidAnswer() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("headline", additionalAssertFieldName)) {
 				if (messageBoardThread.getHeadline() == null) {
 					valid = false;
@@ -2258,6 +2266,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getFriendlyUrlPath(),
 						messageBoardThread2.getFriendlyUrlPath())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("hasValidAnswer", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread1.getHasValidAnswer(),
+						messageBoardThread2.getHasValidAnswer())) {
 
 					return false;
 				}
@@ -2728,6 +2747,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("hasValidAnswer")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("headline")) {
 			sb.append("'");
 			sb.append(String.valueOf(messageBoardThread.getHeadline()));
@@ -2861,6 +2885,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 					RandomTestUtil.randomString());
 				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				hasValidAnswer = RandomTestUtil.randomBoolean();
 				headline = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

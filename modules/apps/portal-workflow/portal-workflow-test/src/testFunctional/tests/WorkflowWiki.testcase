@@ -56,9 +56,12 @@ definition {
 		}
 	}
 
+	// Quarantine flaky test under ticket LPS-108480
+
 	@priority = "5"
 	test ApproveFrontPageUserEdit {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

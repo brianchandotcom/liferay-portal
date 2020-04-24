@@ -1651,6 +1651,11 @@ components:
                     description:
                         The thread's main title.
                     type: string
+                hasValidAnswer:
+                    # @review
+                    description:
+                        A flag that indicates whether this thread has a message considered as valid
+                    type: boolean
                 id:
                     description:
                         The thread's ID.

@@ -30,12 +30,12 @@ const JournalArticleSelector = ({
 	onChange,
 	portletNamespace,
 }) => {
-	const [article, setArticle] = useState({});
+	const [article, setArticle] = useState(() =>
+		JSON.parse(inputValue || '{}')
+	);
 
 	useEffect(() => {
-		setArticle({
-			...JSON.parse(inputValue || '{}'),
-		});
+		setArticle(JSON.parse(inputValue || '{}'));
 	}, [inputValue]);
 
 	const handleClearClick = () => {
@@ -47,7 +47,7 @@ const JournalArticleSelector = ({
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem && selectedItem.value) {
-			setArticle(selectedItem.value);
+			setArticle(JSON.parse(selectedItem.value));
 			onChange(selectedItem.value);
 		}
 	};
@@ -71,7 +71,11 @@ const JournalArticleSelector = ({
 		<ClayForm.Group style={{marginBottom: '0.5rem'}}>
 			<ClayInput.Group>
 				<ClayInput.GroupItem className="d-none d-sm-block" prepend>
-					<input name={name} type="hidden" value={inputValue} />
+					<input
+						name={name}
+						type="hidden"
+						value={JSON.stringify(article)}
+					/>
 
 					<ClayInput
 						className="bg-light"

@@ -19,7 +19,6 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {updateFragmentEntryLinkContent} from '../../actions/index';
-import {DROP_ZONE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/dropZoneFragmentEntryProcessor';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
@@ -163,24 +162,12 @@ const FragmentContent = React.forwardRef(
 			updateEditables,
 		]);
 
-		const dropZones = useSelector(state => {
-			const fragmentEntryLink = state.fragmentEntryLinks[
-				fragmentEntryLinkId
-			] || {editableValues: {}};
-
-			return (
-				fragmentEntryLink.editableValues[
-					DROP_ZONE_FRAGMENT_ENTRY_PROCESSOR
-				] || {}
-			);
-		});
-
 		const getPortals = useCallback(
 			element =>
 				Array.from(element.querySelectorAll('lfr-drop-zone')).map(
 					dropZoneElement => {
 						const mainItemId =
-							dropZones[dropZoneElement.getAttribute('id')] || '';
+							dropZoneElement.getAttribute('id') || '';
 
 						const Component = () =>
 							mainItemId && (
@@ -198,7 +185,7 @@ const FragmentContent = React.forwardRef(
 						};
 					}
 				),
-			[dropZones]
+			[]
 		);
 
 		const onFloatingToolbarButtonClick = (buttonId, editableId) => {

@@ -60,10 +60,20 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 		Layout layout, boolean saveInlineContent,
 		boolean saveMappingConfiguration) {
 
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), _portal.getClassNameId(Layout.class),
+					layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(0L));
+
 		return new PageDefinition() {
 			{
 				pageElement = _toPageElement(
-					layout, saveInlineContent, saveMappingConfiguration, 0);
+					layout, layoutStructure, saveInlineContent,
+					saveMappingConfiguration);
 				settings = _toSettings(layout);
 			}
 		};
@@ -71,9 +81,59 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 
 	@Override
 	public PageElement toPageElement(
+		Layout layout, String layoutStructureItemId, boolean saveInlineContent,
+		boolean saveMappingConfiguration, long segmentsExperienceId) {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), _portal.getClassNameId(Layout.class),
+					layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		return _toPageElement(
+			layout.getGroupId(), layoutStructure,
+			layoutStructure.getLayoutStructureItem(layoutStructureItemId),
+			saveInlineContent, saveMappingConfiguration);
+	}
+
+	private PageElement _toPageElement(
+		Layout layout, LayoutStructure layoutStructure,
+		boolean saveInlineContent, boolean saveMappingConfiguration) {
+
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		List<PageElement> mainPageElements = new ArrayList<>();
+
+		for (String childItemId :
+				mainLayoutStructureItem.getChildrenItemIds()) {
+
+			mainPageElements.add(
+				_toPageElement(
+					layout.getGroupId(), layoutStructure,
+					layoutStructure.getLayoutStructureItem(childItemId),
+					saveInlineContent, saveMappingConfiguration));
+		}
+
+		PageElement pageElement = _toPageElement(
+			layout.getGroupId(), mainLayoutStructureItem, saveInlineContent,
+			saveMappingConfiguration);
+
+		if (!mainPageElements.isEmpty()) {
+			pageElement.setPageElements(
+				mainPageElements.toArray(new PageElement[0]));
+		}
+
+		return pageElement;
+	}
+
+	private PageElement _toPageElement(
 		long groupId, LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
-		boolean saveMappingConfiguration, long segmentsExperienceId) {
+		boolean saveMappingConfiguration) {
 
 		List<PageElement> pageElements = new ArrayList<>();
 
@@ -94,10 +154,9 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 			}
 			else {
 				pageElements.add(
-					toPageElement(
+					_toPageElement(
 						groupId, layoutStructure, childLayoutStructureItem,
-						saveInlineContent, saveMappingConfiguration,
-						segmentsExperienceId));
+						saveInlineContent, saveMappingConfiguration));
 			}
 		}
 
@@ -108,47 +167,6 @@ public class PageDefinitionConverterImpl implements PageDefinitionConverter {
 		if (!pageElements.isEmpty()) {
 			pageElement.setPageElements(
 				pageElements.toArray(new PageElement[0]));
-		}
-
-		return pageElement;
-	}
-
-	private PageElement _toPageElement(
-		Layout layout, boolean saveInlineContent,
-		boolean saveMappingConfiguration, long segmentsExperienceId) {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), _portal.getClassNameId(Layout.class),
-					layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(0L));
-
-		LayoutStructureItem mainLayoutStructureItem =
-			layoutStructure.getMainLayoutStructureItem();
-
-		List<PageElement> mainPageElements = new ArrayList<>();
-
-		for (String childItemId :
-				mainLayoutStructureItem.getChildrenItemIds()) {
-
-			mainPageElements.add(
-				toPageElement(
-					layout.getGroupId(), layoutStructure,
-					layoutStructure.getLayoutStructureItem(childItemId),
-					saveInlineContent, saveMappingConfiguration,
-					segmentsExperienceId));
-		}
-
-		PageElement pageElement = _toPageElement(
-			layout.getGroupId(), mainLayoutStructureItem, saveInlineContent,
-			saveMappingConfiguration);
-
-		if (!mainPageElements.isEmpty()) {
-			pageElement.setPageElements(
-				mainPageElements.toArray(new PageElement[0]));
 		}
 
 		return pageElement;

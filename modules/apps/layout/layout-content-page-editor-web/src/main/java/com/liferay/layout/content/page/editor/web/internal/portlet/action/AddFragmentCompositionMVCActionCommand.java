@@ -119,8 +119,7 @@ public class AddFragmentCompositionMVCActionCommand
 
 		String layoutStructureJSON =
 			LayoutStructureUtil.getLayoutStructureItemJSON(
-				themeDisplay.getScopeGroupId(), itemId,
-				_pageDefinitionConverter, themeDisplay.getPlid(),
+				itemId, _pageDefinitionConverter, themeDisplay.getPlid(),
 				saveInlineContent, saveMappingConfiguration,
 				segmentsExperienceId);
 

@@ -49,7 +49,9 @@ public class DDMFormInstanceRecordUADExporter
 
 		xmlString = StringUtil.removeSubstring(xmlString, "</model>");
 
-		StringBundler sb = new StringBundler(xmlString);
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(xmlString);
 
 		sb.append("<column><column-name>");
 		sb.append("formInstanceName</column-name><column-value><![CDATA[");

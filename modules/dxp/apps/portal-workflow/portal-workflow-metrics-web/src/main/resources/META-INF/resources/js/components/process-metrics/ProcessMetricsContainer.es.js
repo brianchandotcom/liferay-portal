@@ -98,7 +98,7 @@ const ProcessMetricsContainer = ({history, processId, query}) => {
 
 		const search = stringify({
 			...parse(query),
-			filters: {taskKeys: ['allSteps']},
+			filters: {taskNames: ['allSteps']},
 		});
 
 		history.replace({pathname, search});

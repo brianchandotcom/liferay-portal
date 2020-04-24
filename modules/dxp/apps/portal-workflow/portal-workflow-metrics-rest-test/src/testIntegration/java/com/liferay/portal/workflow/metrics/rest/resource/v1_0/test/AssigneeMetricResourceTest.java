@@ -210,7 +210,7 @@ public class AssigneeMetricResourceTest
 				new AssigneeMetricBulkSelection() {
 					{
 						completed = false;
-						taskKeys = new String[] {"update"};
+						taskNames = new String[] {"update"};
 					}
 				});
 
@@ -234,7 +234,7 @@ public class AssigneeMetricResourceTest
 			new AssigneeMetricBulkSelection() {
 				{
 					completed = false;
-					taskKeys = new String[] {"review"};
+					taskNames = new String[] {"review"};
 				}
 			});
 
@@ -268,7 +268,7 @@ public class AssigneeMetricResourceTest
 				{
 					completed = false;
 					roleIds = new Long[] {siteAdministrationRole.getRoleId()};
-					taskKeys = new String[] {"review"};
+					taskNames = new String[] {"review"};
 				}
 			});
 
@@ -294,7 +294,7 @@ public class AssigneeMetricResourceTest
 					completed = false;
 					keywords = assignee2.getName();
 					roleIds = new Long[] {siteAdministrationRole.getRoleId()};
-					taskKeys = new String[] {"review"};
+					taskNames = new String[] {"review"};
 				}
 			});
 
@@ -320,7 +320,7 @@ public class AssigneeMetricResourceTest
 					completed = false;
 					keywords = assignee1.getName();
 					roleIds = new Long[] {siteAdministrationRole.getRoleId()};
-					taskKeys = new String[] {"review"};
+					taskNames = new String[] {"review"};
 				}
 			});
 

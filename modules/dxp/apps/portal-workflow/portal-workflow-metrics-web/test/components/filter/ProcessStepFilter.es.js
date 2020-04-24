@@ -15,7 +15,7 @@ import React from 'react';
 import ProcessStepFilter from '../../../src/main/resources/META-INF/resources/js/components/filter/ProcessStepFilter.es';
 import {MockRouter} from '../../mock/MockRouter.es';
 
-const query = '?filters.taskKeys%5B0%5D=update';
+const query = '?filters.taskNames%5B0%5D=update';
 
 const items = [
 	{label: 'Review', name: 'review'},

@@ -19,6 +19,7 @@ import {
 	DUPLICATE_ITEM,
 	EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
 	UPDATE_EDITABLE_VALUES,
+	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
 	UPDATE_LAYOUT_DATA,
 } from '../actions/types';
@@ -176,6 +177,13 @@ export default function fragmentEntryLinksReducer(
 					...fragmentEntryLinks[action.fragmentEntryLinkId],
 					editableValues: action.editableValues,
 				},
+			};
+
+		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
+			return {
+				...fragmentEntryLinks,
+				[action.fragmentEntryLink.fragmentEntryLinkId]:
+					action.fragmentEntryLink,
 			};
 
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONTENT:

@@ -12,7 +12,7 @@
  * details.
  */
 
-import updateFragmentEntryLinkContent from '../actions/updateFragmentEntryLinkContent';
+import updateFragmentEntryLinkConfiguration from '../actions/updateFragmentEntryLinkConfiguration';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import FragmentService from '../services/FragmentService';
 
@@ -33,13 +33,12 @@ export default function updateFragmentConfiguration({
 			configurationValues: nextEditableValues,
 			fragmentEntryLinkId,
 			onNetworkStatus: dispatch,
-		}).then(({content, editableValues}) => {
+		}).then(({fragmentEntryLink, layoutData}) => {
 			dispatch(
-				updateFragmentEntryLinkContent({
-					content,
-					editableValues,
-					fragmentEntryLinkId,
+				updateFragmentEntryLinkConfiguration({
+					fragmentEntryLink,
 					isUndo,
+					layoutData,
 				})
 			);
 		});

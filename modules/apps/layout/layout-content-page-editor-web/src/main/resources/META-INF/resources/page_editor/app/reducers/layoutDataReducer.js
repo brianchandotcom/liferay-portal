@@ -18,6 +18,7 @@ import {
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
 	UPDATE_COL_SIZE,
+	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
 	UPDATE_LAYOUT_DATA,
 } from '../actions/types';
@@ -68,6 +69,7 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 		case ADD_ITEM:
 		case DUPLICATE_ITEM:
 		case MOVE_ITEM:
+		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
 		case UPDATE_ITEM_CONFIG:
 			return action.layoutData;
 

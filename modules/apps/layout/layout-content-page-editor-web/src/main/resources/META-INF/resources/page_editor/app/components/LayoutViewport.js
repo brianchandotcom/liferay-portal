@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
 import debounceRAF from '../../core/debounceRAF';
+import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {useSelectItem} from './Controls';
@@ -133,7 +134,7 @@ export default function LayoutViewport({
 				)}
 			</div>
 
-			{selectedViewportSize !== 'desktop' && (
+			{selectedViewportSize !== VIEWPORT_SIZES.desktop && (
 				<div
 					className="page-editor__layout-viewport__handle"
 					ref={handleRef}

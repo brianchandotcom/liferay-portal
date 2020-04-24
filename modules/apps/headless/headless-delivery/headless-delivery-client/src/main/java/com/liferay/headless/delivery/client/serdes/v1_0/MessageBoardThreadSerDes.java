@@ -203,6 +203,16 @@ public class MessageBoardThreadSerDes {
 			sb.append("\"");
 		}
 
+		if (messageBoardThread.getHasValidAnswer() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"hasValidAnswer\": ");
+
+			sb.append(messageBoardThread.getHasValidAnswer());
+		}
+
 		if (messageBoardThread.getHeadline() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -535,6 +545,15 @@ public class MessageBoardThreadSerDes {
 				String.valueOf(messageBoardThread.getFriendlyUrlPath()));
 		}
 
+		if (messageBoardThread.getHasValidAnswer() == null) {
+			map.put("hasValidAnswer", null);
+		}
+		else {
+			map.put(
+				"hasValidAnswer",
+				String.valueOf(messageBoardThread.getHasValidAnswer()));
+		}
+
 		if (messageBoardThread.getHeadline() == null) {
 			map.put("headline", null);
 		}
@@ -753,6 +772,12 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setFriendlyUrlPath(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "hasValidAnswer")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setHasValidAnswer(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "headline")) {

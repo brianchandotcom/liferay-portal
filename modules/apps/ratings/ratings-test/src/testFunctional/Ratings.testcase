@@ -515,6 +515,35 @@ definition {
 	}
 
 	@priority = "4"
+	test RateBlogsEntryWithStackedStarsRatings {
+		Ratings.configureRatingType(
+			applications = "Blogs",
+			ratingType = "Stacked Stars");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Ratings.rateStackedStars(ratingStarCount = "3");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Ratings.viewRateStackedStar(ratingStarCount = "3");
+	}
+
+	@priority = "4"
 	test RateBookmarksWithLikeStyle {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

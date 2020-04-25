@@ -163,6 +163,13 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public String getFactoryPid() {
+		if (_extendedObjectClassDefinition instanceof ConfigurationModel) {
+			ConfigurationModel configurationModel =
+				(ConfigurationModel)_extendedObjectClassDefinition;
+
+			return configurationModel.getFactoryPid();
+		}
+
 		return _extendedObjectClassDefinition.getID();
 	}
 

@@ -406,6 +406,12 @@ public class AccountEntryLocalServiceImpl
 			searchContext.setAttribute("domains", domains);
 		}
 
+		long[] organizationIds = (long[])params.get("organizationIds");
+
+		if (ArrayUtil.isNotEmpty(organizationIds)) {
+			searchContext.setAttribute("organizationIds", organizationIds);
+		}
+
 		long parentAccountEntryId = GetterUtil.getLong(
 			params.get("parentAccountEntryId"),
 			AccountConstants.ACCOUNT_ENTRY_ID_ANY);

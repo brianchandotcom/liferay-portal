@@ -35,7 +35,7 @@ ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute
 
 viewFactoryInstancesURL.setParameter("factoryPid", configurationModel.getFactoryPid());
 
-if (!configurationModel.isCompanyFactory() && configurationModel.isFactory()) {
+if (configurationModel.isFactory()) {
 	bindRedirectURL = viewFactoryInstancesURL.toString();
 }
 
@@ -59,7 +59,7 @@ ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle
 
 String configurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
 
-if (configurationModel.isFactory() && !configurationModel.isCompanyFactory()) {
+if (configurationModel.isFactory()) {
 	PortalUtil.addPortletBreadcrumbEntry(request, configurationModelName, viewFactoryInstancesURL.toString());
 }
 
@@ -111,7 +111,7 @@ renderResponse.setTitle(categoryDisplayName);
 					ConfigurationScopeDisplayContext
 						configurationScopeDisplayContext = ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
-					if (configurationModel.isFactory() && !configurationModel.isCompanyFactory()) {
+					if (configurationModel.isFactory()) {
 						if (configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope())) {
 							configurationTitle = configurationModel.getLabel();
 						}
@@ -135,7 +135,7 @@ renderResponse.setTitle(categoryDisplayName);
 								showWhenSingleIcon="<%= true %>"
 							>
 								<c:choose>
-									<c:when test="<%= configurationModel.isFactory() && !configurationModel.isCompanyFactory() %>">
+									<c:when test="<%= configurationModel.isFactory() %>">
 										<portlet:actionURL name="deleteConfiguration" var="deleteConfigActionURL">
 											<portlet:param name="redirect" value="<%= currentURL %>" />
 											<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />

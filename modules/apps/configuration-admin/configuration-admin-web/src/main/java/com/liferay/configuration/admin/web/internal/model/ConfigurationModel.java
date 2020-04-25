@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -82,11 +80,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	@Override
 	public ExtendedAttributeDefinition[] getAttributeDefinitions(int filter) {
-		ExtendedAttributeDefinition[] extendedAttributeDefinitions =
-			_extendedObjectClassDefinition.getAttributeDefinitions(filter);
-
-		return removeFactoryInstanceLabelAttribute(
-			extendedAttributeDefinitions);
+		return _extendedObjectClassDefinition.getAttributeDefinitions(filter);
 	}
 
 	public String getBundleLocation() {
@@ -356,31 +350,6 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	protected boolean isScope(Scope scope) {
 		return scope.equals(getScope());
-	}
-
-	protected ExtendedAttributeDefinition[] removeFactoryInstanceLabelAttribute(
-		ExtendedAttributeDefinition[] extendedAttributeDefinitions) {
-
-		if (!isCompanyFactory()) {
-			return extendedAttributeDefinitions;
-		}
-
-		List<ExtendedAttributeDefinition>
-			filteredExtendedAttributeDefinitionsList = new ArrayList<>();
-
-		for (ExtendedAttributeDefinition extendedAttributeDefinition :
-				extendedAttributeDefinitions) {
-
-			String attributeId = extendedAttributeDefinition.getID();
-
-			if (!attributeId.equals(getLabelAttribute())) {
-				filteredExtendedAttributeDefinitionsList.add(
-					extendedAttributeDefinition);
-			}
-		}
-
-		return filteredExtendedAttributeDefinitionsList.toArray(
-			new ExtendedAttributeDefinition[0]);
 	}
 
 	private final String _bundleLocation;

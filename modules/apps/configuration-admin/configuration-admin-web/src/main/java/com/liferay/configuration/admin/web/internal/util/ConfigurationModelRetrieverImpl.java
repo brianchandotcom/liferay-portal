@@ -26,7 +26,6 @@ import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInf
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -298,25 +297,6 @@ public class ConfigurationModelRetrieverImpl
 		return sb.toString();
 	}
 
-	protected Configuration getCompanyDefaultConfiguration(String factoryPid) {
-		Configuration configuration = null;
-
-		try {
-			Configuration[] factoryConfigurations = getFactoryConfigurations(
-				factoryPid, ConfigurationModel.PROPERTY_KEY_COMPANY_ID,
-				ConfigurationModel.PROPERTY_VALUE_COMPANY_ID_DEFAULT);
-
-			if (ArrayUtil.isNotEmpty(factoryConfigurations)) {
-				configuration = factoryConfigurations[0];
-			}
-		}
-		catch (IOException ioException) {
-			ReflectionUtil.throwException(ioException);
-		}
-
-		return configuration;
-	}
-
 	protected ConfigurationModel getConfigurationModel(
 		Bundle bundle, ExtendedMetaTypeInformation extendedMetaTypeInformation,
 		String pid, boolean factory, String locale,
@@ -346,16 +326,6 @@ public class ConfigurationModelRetrieverImpl
 
 		if (scope.equals(scope.GROUP) && !configurationModel.isGroupScope()) {
 			return null;
-		}
-
-		if (configurationModel.isCompanyFactory()) {
-			Configuration configuration = getCompanyDefaultConfiguration(pid);
-
-			configurationModel = new ConfigurationModel(
-				StringPool.QUESTION, bundle.getSymbolicName(),
-				configurationModel.getClassLoader(), configuration,
-				configurationModel.getExtendedObjectClassDefinition(),
-				configurationModel.isFactory());
 		}
 
 		return configurationModel;

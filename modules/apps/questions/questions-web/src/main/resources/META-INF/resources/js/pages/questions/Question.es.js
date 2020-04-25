@@ -88,6 +88,19 @@ export default withRouter(
 			});
 		};
 
+		const updateMarkAsAnswer = useCallback(
+			answerId => {
+				setAnswers([
+					...answers.map(otherAnswer => {
+						otherAnswer.showAsAnswer = otherAnswer.id === answerId;
+
+						return otherAnswer;
+					}),
+				]);
+			},
+			[answers]
+		);
+
 		const deleteThread = () => {
 			deleteMessageBoardThread(question.id).then(() => history.goBack());
 		};
@@ -112,19 +125,15 @@ export default withRouter(
 				if (answer) {
 					markAsAnswerMessageBoardMessage(answer.id, false).then(
 						() => {
-							setAnswers([
-								...answers.map(otherAnswer => {
-									otherAnswer.showAsAnswer =
-										otherAnswer.id === answerId;
-
-									return otherAnswer;
-								}),
-							]);
+							updateMarkAsAnswer(answerId);
 						}
 					);
 				}
+				else {
+					updateMarkAsAnswer(answerId);
+				}
 			},
-			[answers]
+			[answers, updateMarkAsAnswer]
 		);
 
 		const filterBy = filterBy => {

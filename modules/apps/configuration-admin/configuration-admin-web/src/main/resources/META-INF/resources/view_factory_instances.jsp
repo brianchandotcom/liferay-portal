@@ -110,7 +110,7 @@ renderResponse.setTitle(categoryDisplayName);
 							<portlet:renderURL var="createFactoryConfigURL">
 								<portlet:param name="mvcRenderCommandName" value="/edit_configuration" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="factoryPid" value="<%= configurationModel.getID() %>" />
+								<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
 							</portlet:renderURL>
 
 							<a class="btn btn-secondary btn-sm" href="<%= createFactoryConfigURL %>"><liferay-ui:message key="add" /></a>

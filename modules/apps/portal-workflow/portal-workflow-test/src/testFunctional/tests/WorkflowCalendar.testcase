@@ -112,8 +112,6 @@ definition {
 			workflowAssetType = "Calendar Event",
 			workflowTask = "Review");
 
-		Pause(locator1 = "30000");
-
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoView(viewType = "Week");

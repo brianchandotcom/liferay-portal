@@ -74,24 +74,6 @@ export const getURL = params => {
 	return uri.toString();
 };
 
-export const commentWithEmbeddedAuthor = comment => {
-	const formattedComment = {...comment};
-	let articleBody = comment.articleBody.replace(/[\r\n]+/gm, '');
-	let endFormatComment = '';
-	if (articleBody.endsWith('</p>')) {
-		endFormatComment = articleBody.slice(-4);
-		articleBody = articleBody.slice(0, -4);
-	}
-	formattedComment.articleBody =
-		articleBody +
-		' - <span class="font-weight-bold">' +
-		comment.creator.name +
-		'</span>' +
-		endFormatComment;
-
-	return formattedComment;
-};
-
 export const createAnswer = (articleBody, messageBoardThreadId) =>
 	request(gql`
         mutation {

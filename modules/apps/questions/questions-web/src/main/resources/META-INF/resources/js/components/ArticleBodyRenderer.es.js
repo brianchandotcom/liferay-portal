@@ -15,15 +15,22 @@
 import parser from 'bbcode-to-react';
 import React from 'react';
 
-export default ({articleBody, encodingFormat}) => {
-	return (
-		<>
-			{encodingFormat === 'bbcode' && (
-				<p>{parser.toReact(articleBody)}</p>
-			)}
-			{encodingFormat !== 'bbcode' && (
-				<div dangerouslySetInnerHTML={{__html: articleBody}} />
-			)}
-		</>
-	);
-};
+export default ({articleBody, encodingFormat, id, signature}) => (
+	<>
+		{encodingFormat === 'bbcode' && <p>{parser.toReact(articleBody)}</p>}
+		{encodingFormat !== 'bbcode' && (
+			<div
+				className={`questions-article-body-${id}`}
+				dangerouslySetInnerHTML={{__html: articleBody}}
+			/>
+		)}
+
+		{signature && (
+			<style
+				dangerouslySetInnerHTML={{
+					__html: `.questions-article-body-${id} p:last-child:after {content: " - ${signature}"; font-weight: bold;}`,
+				}}
+			/>
+		)}
+	</>
+);

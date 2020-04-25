@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {commentWithEmbeddedAuthor, deleteMessage} from '../utils/client.es';
+import {deleteMessage} from '../utils/client.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 
 export default ({comment, commentChange}) => {
@@ -37,7 +37,8 @@ export default ({comment, commentChange}) => {
 			<div className="col-10 col-lg-11">
 				<div className="c-mb-0">
 					<ArticleBodyRenderer
-						{...commentWithEmbeddedAuthor(comment)}
+						{...comment}
+						signature={comment.creator.name}
 					/>
 				</div>
 

@@ -98,13 +98,15 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 			configurationModel = configurationModels.get(factoryPid);
 		}
 
-		if ((configurationModel != null) &&
-			!configurationModel.isCompanyFactory()) {
-
+		if (configurationModel != null) {
 			Configuration configuration =
 				_configurationModelRetriever.getConfiguration(
 					pid, configurationScopeDisplayContext.getScope(),
 					configurationScopeDisplayContext.getScopePK());
+
+			if (configurationModel.isFactory() && pid.equals(factoryPid)) {
+				configuration = null;
+			}
 
 			configurationModel = new ConfigurationModel(
 				configurationModel.getBundleLocation(),
@@ -112,9 +114,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 				configurationModel.getClassLoader(), configuration,
 				configurationModel.getExtendedObjectClassDefinition(),
 				configurationModel.isFactory());
-		}
 
-		if (configurationModel != null) {
 			ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
 				_configurationEntryRetriever.
 					getConfigurationCategoryMenuDisplay(

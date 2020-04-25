@@ -199,8 +199,14 @@ public class ConfigurationModelRetrieverImpl
 			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
 		throws IOException {
 
+		String factoryPid = factoryConfigurationModel.getFactoryPid();
+
+		if (!scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
+			factoryPid += ".scoped";
+		}
+
 		Configuration[] configurations = getFactoryConfigurations(
-			factoryConfigurationModel.getFactoryPid());
+			factoryPid, scope.getPropertyKey(), String.valueOf(scopePK));
 
 		if (configurations == null) {
 			return Collections.emptyList();

@@ -22,8 +22,6 @@ String redirect = ParamUtil.getString(request, "redirect", String.valueOf(render
 ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
 
-ConfigurationScopeDisplayContext configurationScopeDisplayContext = ConfigurationScopeDisplayContextFactory.create(renderRequest);
-
 PortalUtil.addPortletBreadcrumbEntry(request, portletDisplay.getPortletDisplayName(), String.valueOf(renderResponse.createRenderURL()));
 
 ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = (ConfigurationCategoryMenuDisplay)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY);
@@ -76,7 +74,7 @@ renderResponse.setTitle(categoryDisplayName);
 						<h2><%= factoryConfigurationModelName %></h2>
 					</div>
 
-					<c:if test="<%= (configurationModelIterator.getTotal() > 0) && ExtendedObjectClassDefinition.Scope.SYSTEM.equals(configurationScopeDisplayContext.getScope()) %>">
+					<c:if test="<%= configurationModelIterator.getTotal() > 0 %>">
 						<div class="autofit-col">
 							<liferay-ui:icon-menu
 								cssClass="float-right"
@@ -199,18 +197,16 @@ renderResponse.setTitle(categoryDisplayName);
 										url="<%= deleteConfigActionURL %>"
 									/>
 
-									<c:if test="<%= ExtendedObjectClassDefinition.Scope.SYSTEM.equals(configurationScopeDisplayContext.getScope()) %>">
-										<portlet:resourceURL id="export" var="exportURL">
-											<portlet:param name="factoryPid" value="<%= curConfigurationModel.getFactoryPid() %>" />
-											<portlet:param name="pid" value="<%= curConfigurationModel.getID() %>" />
-										</portlet:resourceURL>
+									<portlet:resourceURL id="export" var="exportURL">
+										<portlet:param name="factoryPid" value="<%= curConfigurationModel.getFactoryPid() %>" />
+										<portlet:param name="pid" value="<%= curConfigurationModel.getID() %>" />
+									</portlet:resourceURL>
 
-										<liferay-ui:icon
-											message="export"
-											method="get"
-											url="<%= exportURL %>"
-										/>
-									</c:if>
+									<liferay-ui:icon
+										message="export"
+										method="get"
+										url="<%= exportURL %>"
+									/>
 								</c:if>
 							</liferay-ui:icon-menu>
 						</liferay-ui:search-container-column-text>

@@ -21,6 +21,26 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameExc
  */
 public class LayoutPageTemplateEntryValidator {
 
+	public static boolean isBlacklistedChar(char c) {
+		for (char blacklistedChar : _BLACKLIST_CHAR) {
+			if (c == blacklistedChar) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isValidName(String layoutPageTemplateEntryName) {
+		for (char c : _BLACKLIST_CHAR) {
+			if (layoutPageTemplateEntryName.indexOf(c) >= 0) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public static void validateNameCharacters(
 			String layoutPageTemplateEntryName)
 		throws LayoutPageTemplateEntryNameException {

@@ -1485,10 +1485,21 @@ definition {
 	macro viewInvitedUserRSVPWithApprovedWorkflow {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		var key_userCalendarName = "${userCalendarName}";
 		var key_siteCalendarName = "${siteCalendarName}";
 		var key_siteName = "${siteName}";
 
 		Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
+
+		Pause(locator1 = "5000");
+
+		if (IsElementPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
+			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
+		}
+
+		if (IsElementNotPresent(locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
+			Click(locator1 = "Calendar#MY_CALENDARS_CALENDAR");
+		}
 
 		CalendarEvent.viewInvitedEventWithWorkflow(
 			eventTitle = "${eventTitle}",

@@ -26,7 +26,6 @@ import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetri
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -81,17 +80,18 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
+			ConfigurationScopeDisplayContextFactory.create(renderRequest);
+
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(
 				themeDisplay.getLanguageId(),
-				ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+				configurationScopeDisplayContext.getScope(),
+				configurationScopeDisplayContext.getScopePK());
 
 		try {
 			ConfigurationModel factoryConfigurationModel =
 				configurationModels.get(factoryPid);
-
-			ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-				ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
 			ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
 				_configurationEntryRetriever.
@@ -108,7 +108,8 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 			List<ConfigurationModel> factoryInstances =
 				_configurationModelRetriever.getFactoryInstances(
 					factoryConfigurationModel,
-					ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+					configurationScopeDisplayContext.getScope(),
+					configurationScopeDisplayContext.getScopePK());
 
 			ConfigurationEntry configurationEntry =
 				new ConfigurationModelConfigurationEntry(

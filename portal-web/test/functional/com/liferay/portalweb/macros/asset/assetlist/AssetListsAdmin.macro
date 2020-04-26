@@ -109,6 +109,8 @@ definition {
 			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 			value1 = "${selectedAsset}");
 
+		Pause(locator1 = "3000");
+
 		PortletEntry.save();
 	}
 
@@ -254,6 +256,7 @@ definition {
 
 		if (isSet(entryList)) {
 			for (var assetName : list "${entryList}") {
+
 				LexiconEntry.selectEntry(rowEntry = "${assetName}");
 
 				Pause(locator1 = "3000");

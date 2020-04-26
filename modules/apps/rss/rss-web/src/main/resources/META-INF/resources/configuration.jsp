@@ -28,32 +28,31 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:error exception="<%= ValidatorException.class %>">
-			<liferay-ui:message key="the-following-are-invalid-urls" />
+		<liferay-ui:tabs
+			names="feeds,display-settings"
+			refresh="<%= false %>"
+		>
+			<liferay-ui:error exception="<%= ValidatorException.class %>">
+				<liferay-ui:message key="the-following-are-invalid-urls" />
 
-			<%
-			ValidatorException ve = (ValidatorException)errorException;
+				<%
+				ValidatorException ve = (ValidatorException)errorException;
 
-			Enumeration enu = ve.getFailedKeys();
+				Enumeration enu = ve.getFailedKeys();
 
-			while (enu.hasMoreElements()) {
-				String url = (String)enu.nextElement();
-			%>
+				while (enu.hasMoreElements()) {
+					String url = (String)enu.nextElement();
+				%>
 
-				<strong><%= HtmlUtil.escape(url) %></strong><%= enu.hasMoreElements() ? ", " : "." %>
+					<strong><%= HtmlUtil.escape(url) %></strong><%= enu.hasMoreElements() ? ", " : "." %>
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</liferay-ui:error>
+			</liferay-ui:error>
 
-		<liferay-frontend:fieldset-group>
-			<liferay-frontend:fieldset
-				collapsed="<%= false %>"
-				collapsible="<%= true %>"
-				label="display-settings"
-			>
+			<liferay-ui:section>
 				<div class="display-template">
 					<liferay-ddm:template-selector
 						className="<%= RSSFeed.class.getName() %>"
@@ -100,13 +99,9 @@
 						<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
 					</aui:col>
 				</aui:row>
-			</liferay-frontend:fieldset>
+			</liferay-ui:section>
 
-			<liferay-frontend:fieldset
-				collapsed="<%= true %>"
-				collapsible="<%= true %>"
-				label="feeds"
-			>
+			<liferay-ui:section>
 				<div id="<portlet:namespace />subscriptions">
 
 					<%
@@ -140,8 +135,8 @@
 					%>
 
 				</div>
-			</liferay-frontend:fieldset>
-		</liferay-frontend:fieldset-group>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

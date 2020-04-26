@@ -102,9 +102,10 @@ definition {
 
 		if (isSet(startingValue)) {
 			if ("${customFieldType}" == "Text Field") {
-				PortletEntry.inputText(
-					fieldLabel = "Starting Value",
-					text = "${startingValue}");
+				Type(
+					key_fieldLabel = "Starting Value",
+					locator1 = "CustomFields#CUSTOM_INPUT_FIELD",
+					value1 = "${startingValue}");
 			}
 		}
 

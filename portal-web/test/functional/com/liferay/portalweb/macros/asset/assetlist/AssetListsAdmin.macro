@@ -252,7 +252,16 @@ definition {
 			LexiconCard.clickCard(card = "${depotName}");
 		}
 
-		LexiconEntry.selectEntry(rowEntry = "${assetName}");
+		if (isSet(entryList)) {
+			for (var assetName : list "${entryList}") {
+				LexiconEntry.selectEntry(rowEntry = "${assetName}");
+
+				Pause(locator1 = "3000");
+			}
+		}
+		else {
+			LexiconEntry.selectEntry(rowEntry = "${assetName}");
+		}
 
 		SelectFrameTop();
 

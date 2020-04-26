@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Bean Portlet Registration Implementation
+Bundle-SymbolicName: com.liferay.bean.portlet.registration.impl
+Bundle-Version: 1.0.0

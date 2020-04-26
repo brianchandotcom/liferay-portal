@@ -65,6 +65,21 @@
 					/>
 				</div>
 
+				<aui:input label="num-of-entries-per-feed" name="preferences--entriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.entriesPerFeed() %>">
+					<aui:validator name="digits" />
+					<aui:validator name="min">1</aui:validator>
+				</aui:input>
+
+				<aui:input label="num-of-expanded-entries-per-feed" name="preferences--expandedEntriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>">
+					<aui:validator name="digits" />
+					<aui:validator name="min">1</aui:validator>
+				</aui:input>
+
+				<aui:select disabled="<%= !rssPortletInstanceConfiguration.showFeedImage() %>" name="preferences--feedImageAlignment--">
+					<aui:option label="left" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("left") %>' />
+					<aui:option label="right" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("right") %>' />
+				</aui:select>
+
 				<aui:row>
 					<aui:col width="<%= 50 %>">
 						<aui:input name="preferences--showFeedTitle--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>" />
@@ -85,21 +100,6 @@
 						<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
 					</aui:col>
 				</aui:row>
-
-				<aui:input label="num-of-entries-per-feed" name="preferences--entriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.entriesPerFeed() %>">
-					<aui:validator name="digits" />
-					<aui:validator name="min">1</aui:validator>
-				</aui:input>
-
-				<aui:input label="num-of-expanded-entries-per-feed" name="preferences--expandedEntriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>">
-					<aui:validator name="digits" />
-					<aui:validator name="min">1</aui:validator>
-				</aui:input>
-
-				<aui:select disabled="<%= !rssPortletInstanceConfiguration.showFeedImage() %>" name="preferences--feedImageAlignment--">
-					<aui:option label="left" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("left") %>' />
-					<aui:option label="right" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("right") %>' />
-				</aui:select>
 			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset

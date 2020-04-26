@@ -409,8 +409,9 @@ export default function Chart({
 								}
 								cursor={
 									!(
-										validAnalyticsConnection &&
-										publishedToday
+										!validAnalyticsConnection ||
+										(validAnalyticsConnection &&
+											publishedToday)
 									)
 								}
 								formatter={(value, name) => {
@@ -423,17 +424,6 @@ export default function Chart({
 								labelFormatter={dateFormatters.formatLongDate}
 								separator={': '}
 							/>
-
-							{validAnalyticsConnection && !publishedToday && (
-								<ReferenceDot
-									fill={CHART_SIZES.referenceDotFill}
-									r={3}
-									stroke={CHART_COLORS.publishDate}
-									strokeWidth={CHART_SIZES.lineWidth}
-									x={referenceDotPosition}
-									y={0}
-								/>
-							)}
 
 							<Legend
 								formatter={legendFormatter}
@@ -465,6 +455,17 @@ export default function Chart({
 									/>
 								);
 							})}
+
+							{validAnalyticsConnection && !publishedToday && (
+								<ReferenceDot
+									isFront={true}
+									r={4}
+									stroke={CHART_COLORS.publishDate}
+									strokeWidth={CHART_SIZES.lineWidth}
+									x={referenceDotPosition}
+									y={0}
+								/>
+							)}
 						</LineChart>
 					</div>
 				</div>

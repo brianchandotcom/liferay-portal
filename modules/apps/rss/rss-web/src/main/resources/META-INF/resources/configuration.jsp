@@ -32,27 +32,27 @@
 			names="feeds,display-settings"
 			refresh="<%= false %>"
 		>
-			<liferay-ui:error exception="<%= ValidatorException.class %>">
-				<liferay-ui:message key="the-following-are-invalid-urls" />
-
-				<%
-				ValidatorException ve = (ValidatorException)errorException;
-
-				Enumeration enu = ve.getFailedKeys();
-
-				while (enu.hasMoreElements()) {
-					String url = (String)enu.nextElement();
-				%>
-
-					<strong><%= HtmlUtil.escape(url) %></strong><%= enu.hasMoreElements() ? ", " : "." %>
-
-				<%
-				}
-				%>
-
-			</liferay-ui:error>
-
 			<liferay-ui:section>
+				<liferay-ui:error exception="<%= ValidatorException.class %>">
+					<liferay-ui:message key="the-following-are-invalid-urls" />
+
+					<%
+					ValidatorException ve = (ValidatorException)errorException;
+
+					Enumeration enu = ve.getFailedKeys();
+
+					while (enu.hasMoreElements()) {
+						String url = (String)enu.nextElement();
+					%>
+
+						<strong><%= HtmlUtil.escape(url) %></strong><%= enu.hasMoreElements() ? ", " : "." %>
+
+					<%
+					}
+					%>
+
+				</liferay-ui:error>
+
 				<div id="<portlet:namespace />subscriptions">
 
 					<%

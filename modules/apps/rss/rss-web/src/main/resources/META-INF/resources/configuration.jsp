@@ -67,11 +67,11 @@
 
 				<aui:row>
 					<aui:col width="<%= 50 %>">
-						<aui:input name="preferences--showFeedTitle--" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>" />
+						<aui:input name="preferences--showFeedTitle--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>" />
 
-						<aui:input name="preferences--showFeedPublishedDate--" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedPublishedDate() %>" />
+						<aui:input name="preferences--showFeedPublishedDate--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedPublishedDate() %>" />
 
-						<aui:input name="preferences--showFeedDescription--" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedDescription() %>" />
+						<aui:input name="preferences--showFeedDescription--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedDescription() %>" />
 					</aui:col>
 
 					<aui:col width="<%= 50 %>">
@@ -80,9 +80,9 @@
 						String taglibShowFeedImageOnClick = "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "feedImageAlignment.disabled = '';} else {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "feedImageAlignment.disabled = 'disabled';}";
 						%>
 
-						<aui:input name="preferences--showFeedImage--" onClick="<%= taglibShowFeedImageOnClick %>" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedImage() %>" />
+						<aui:input name="preferences--showFeedImage--" onClick="<%= taglibShowFeedImageOnClick %>" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedImage() %>" />
 
-						<aui:input name="preferences--showFeedItemAuthor--" type="toggle-switch" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
+						<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
 					</aui:col>
 				</aui:row>
 

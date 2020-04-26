@@ -1,5 +1,42 @@
 definition {
 
+	macro addCollectionDisplay {
+		Pause(locator1 = "10000");
+
+		PageEditor.gotoTab(tabName = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "Collection Display");
+
+		if ("${scope}" == "Master") {
+			if ("${dropTarget}" == "Header") {
+				DragAndDrop.javaScriptDragAndDropToObject(
+					key_fragmentName = "${fragmentName}",
+					locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+					value1 = "");
+			}
+			else if ("${dropTarget}" == "Footer") {
+				DragAndDrop.javaScriptDragAndDropToObject(
+					key_fragmentName = "${fragmentName}",
+					locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+					locator2 = "PageEditor#FOOTER_DROP_TARGET",
+					value1 = "");
+			}
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+				value1 = "");
+		}
+
+		AssertVisible(
+			key_fragmentName = "${fragmentName}",
+			key_message = "No Collection Selected Yet",
+			locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
+	}
+
 	macro addComment {
 		Pause(locator1 = "10000");
 

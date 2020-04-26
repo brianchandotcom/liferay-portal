@@ -59,6 +59,78 @@ definition {
 		YoutubePortlet.assertVideoTitle(videoTitle = "Life at Liferay - A Look into Liferay Culture");
 	}
 
+	@description = "This is a use case for LPS-86141. The collections with multiple asset type are unavailable to the Collection Display."
+	@priority = "4"
+	test CollectionsWithMultipleAssetTypeAreUnavailableToCollectionDisplay {
+		task ("Add a Web Content Article based on Basic Web Content and a Blogs Entry") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a dynamic Collections and select Any as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Any");
+		}
+
+		task ("Add a manual Collections and select the Web Content Article and Blogs entry") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetName = "Web Content Title",
+				assetType = "Basic Web Content");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetName = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+		}
+
+		task ("Add a Collection Display to page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+			ContentPages.clickPencil();
+
+			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+		}
+
+		task ("Assert both collections are unavailable to Collection Display") {
+			Click.clickNoMouseOver(
+				key_elementType = "Collection Display",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
+			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			NavItem.click(navItem = "Collections");
+
+			for (var assetListName : list "Dynamic Collection,Manual Collection") {
+				LexiconCard.viewCardNotPresent(card = "${assetListName}");
+			}
+		}
+	}
+
 	@description = "Given a content page with a configured Content fragment, when the content is deleted the fragment should not be visible in view mode and a message should be shown in page editor."
 	@priority = "4"
 	test DeletedContentInContentDisplayFragmentIsNotVisible {

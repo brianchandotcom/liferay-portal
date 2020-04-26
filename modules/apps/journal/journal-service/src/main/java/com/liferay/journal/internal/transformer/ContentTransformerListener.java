@@ -14,12 +14,14 @@
 
 package com.liferay.journal.internal.transformer;
 
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
@@ -36,18 +38,26 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Tina Tian
  */
 @Component(
+	configurationPid = "com.liferay.journal.configuration.JournalServiceConfiguration",
 	immediate = true,
 	property = "javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 	service = TransformerListener.class
 )
 public class ContentTransformerListener extends BaseTransformerListener {
+
+	@Override
+	public boolean isEnabled() {
+		return _journalServiceConfiguration.enableContentTransformerListener();
+	}
 
 	@Override
 	public String onScript(
@@ -72,6 +82,13 @@ public class ContentTransformerListener extends BaseTransformerListener {
 		replace(document, tokens);
 
 		return document;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_journalServiceConfiguration = ConfigurableUtil.createConfigurable(
+			JournalServiceConfiguration.class, properties);
 	}
 
 	protected String getDynamicContent(Document document, String elementName) {
@@ -236,5 +253,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentTransformerListener.class);
+
+	private volatile JournalServiceConfiguration _journalServiceConfiguration;
 
 }

@@ -17,6 +17,7 @@ package com.liferay.journal.internal.transformer;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.util.JournalTransformerListenerRegistry;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,15 @@ public class DefaultJournalTransformerListenerRegistryImpl
 
 	@Override
 	public List<TransformerListener> getTransformerListeners() {
-		return new ArrayList(_transformerListeners.values());
+		return ListUtil.filter(
+			new ArrayList<>(_transformerListeners.values()),
+			transformerListener -> {
+				if (transformerListener.isEnabled()) {
+					return true;
+				}
+
+				return false;
+			});
 	}
 
 	@Reference(

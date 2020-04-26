@@ -50,10 +50,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
 
@@ -94,14 +91,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
-
-		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
-
-		Close.closeWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -111,12 +101,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
-
-		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-page");
 	}
@@ -137,12 +122,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
-
-		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-page");
 
@@ -180,14 +160,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
-
-		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
-
-		Close.closeWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -197,12 +170,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
-
-		SelectWindow(locator1 = "title=New Test Destination Page - Test Site Name - ${siteName}");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		AssertLocation(value1 = "${portalURL}/web/test-site-name/new-test-destination-page");
 	}
@@ -244,10 +212,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -285,10 +250,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -349,10 +311,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -387,10 +346,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -430,10 +386,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -468,10 +421,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -641,10 +591,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -703,24 +650,15 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page2",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page2 (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page2");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page2",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page2 (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page2");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -824,10 +762,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		SelectWindow(locator1 = "title=Test Source Page - Test Site Name - ${siteName}");
 
@@ -841,10 +776,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
 
@@ -915,10 +847,7 @@ definition {
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
-		AssertClick(
-			key_rowEntry = "${portalURL}/web/test-site-name/test-source-page",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${portalURL}/web/test-site-name/test-source-page (Opens New Window)");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 

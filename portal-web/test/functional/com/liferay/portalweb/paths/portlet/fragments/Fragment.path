@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOT_COLLECTION_SELECTED_MESSAGE</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[@class='page-editor__collection' and contains(.,'${key_message}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -587,6 +587,19 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						"duplicate-widgets-within-the-same-fragment-must-" +
 							"have-an-id"));
 			}
+
+			if (elements.size() > 1) {
+				Portlet portlet = _portletLocalService.getPortletById(
+					_portletRegistry.getPortletName(alias));
+
+				if (!portlet.isInstanceable()) {
+					throw new FragmentEntryContentException(
+						LanguageUtil.format(
+							_resourceBundle,
+							"you-cannot-add-the-widget-x-more-than-once",
+							alias));
+				}
+			}
 		}
 	}
 

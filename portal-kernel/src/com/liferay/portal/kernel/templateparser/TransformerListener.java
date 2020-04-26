@@ -24,6 +24,10 @@ import java.util.Map;
  */
 public interface TransformerListener {
 
+	public default boolean isEnabled() {
+		return true;
+	}
+
 	public String onOutput(
 		String output, String languageId, Map<String, String> tokens);
 

@@ -53,6 +53,42 @@
 			</liferay-ui:error>
 
 			<liferay-ui:section>
+				<div id="<portlet:namespace />subscriptions">
+
+					<%
+					String[] urls = rssPortletInstanceConfiguration.urls();
+
+					if (urls.length == 0) {
+						urls = new String[1];
+						urls[0] = StringPool.BLANK;
+					}
+
+					String[] titles = rssPortletInstanceConfiguration.titles();
+
+					for (int i = 0; i < urls.length; i++) {
+						String title = StringPool.BLANK;
+
+						if (i < titles.length) {
+							title = titles[i];
+						}
+					%>
+
+						<div class="field-row lfr-form-row lfr-form-row-inline">
+							<div class="row-fields">
+								<aui:input cssClass="lfr-input-text-container" label="title" name='<%= "title" + i %>' value="<%= title %>" />
+
+								<aui:input cssClass="lfr-input-text-container" label="url" name='<%= "url" + i %>' value="<%= urls[i] %>" />
+							</div>
+						</div>
+
+					<%
+					}
+					%>
+
+				</div>
+			</liferay-ui:section>
+
+			<liferay-ui:section>
 				<div class="display-template">
 					<liferay-ddm:template-selector
 						className="<%= RSSFeed.class.getName() %>"
@@ -99,42 +135,6 @@
 						<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
 					</aui:col>
 				</aui:row>
-			</liferay-ui:section>
-
-			<liferay-ui:section>
-				<div id="<portlet:namespace />subscriptions">
-
-					<%
-					String[] urls = rssPortletInstanceConfiguration.urls();
-
-					if (urls.length == 0) {
-						urls = new String[1];
-						urls[0] = StringPool.BLANK;
-					}
-
-					String[] titles = rssPortletInstanceConfiguration.titles();
-
-					for (int i = 0; i < urls.length; i++) {
-						String title = StringPool.BLANK;
-
-						if (i < titles.length) {
-							title = titles[i];
-						}
-					%>
-
-						<div class="field-row lfr-form-row lfr-form-row-inline">
-							<div class="row-fields">
-								<aui:input cssClass="lfr-input-text-container" label="title" name='<%= "title" + i %>' value="<%= title %>" />
-
-								<aui:input cssClass="lfr-input-text-container" label="url" name='<%= "url" + i %>' value="<%= urls[i] %>" />
-							</div>
-						</div>
-
-					<%
-					}
-					%>
-
-				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>

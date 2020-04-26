@@ -525,6 +525,68 @@ definition {
 		AssertTextNotPresent(value1 = "${fragmentComment}");
 	}
 
+	macro editCollectionDisplay {
+		var key_fragmentName = "${fragmentName}";
+
+		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
+
+		Click(locator1 = "Fragment#FRAGMENT_BODY");
+
+		Click.clickNoMouseOver(
+			key_elementType = "Collection Display",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
+		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		if (isSet(assetListName)) {
+			NavItem.click(navItem = "Collections");
+
+			LexiconCard.clickCard(card = "${assetListName}");
+
+			AssertElementPresent(
+				key_contentName = "${assetListName}",
+				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+
+			if (isSet(layout)) {
+				Select(
+					key_fieldLabel = "Layout",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${layout}");
+
+				Pause(locator1 = "3000");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Layout",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${layout}");
+			}
+
+			if (isSet(maxNumberOfItems)) {
+				Type(
+					key_fieldLabel = "Max Number Of Items",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "${maxNumberOfItems}");
+
+				AssertTextEquals(
+					key_fieldLabel = "Max Number Of Items",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "${maxNumberOfItems}");
+			}
+		}
+
+		if (isSet(infoListProviderName)) {
+			NavItem.click(navItem = "Collections Providers");
+
+			LexiconCard.clickCard(card = "${infoListProviderName}");
+
+			AssertElementPresent(
+				key_contentName = "${infoListProviderName}",
+				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+		}
+	}
+
 	macro editComment {
 		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
 

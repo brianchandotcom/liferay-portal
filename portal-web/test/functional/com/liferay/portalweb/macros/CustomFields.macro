@@ -25,9 +25,10 @@ definition {
 				value1 = "${customInputDataType}");
 
 			if (isSet(startingValue)) {
-				PortletEntry.inputText(
-					fieldLabel = "Starting Value",
-					text = "${startingValue}");
+				Type(
+					key_fieldLabel = "Starting Value",
+					locator1 = "CustomFields#CUSTOM_INPUT_FIELD",
+					value1 = "${startingValue}");
 			}
 		}
 

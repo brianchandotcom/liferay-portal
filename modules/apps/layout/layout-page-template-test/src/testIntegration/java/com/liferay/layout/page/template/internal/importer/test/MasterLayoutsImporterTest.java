@@ -177,6 +177,33 @@ public class MasterLayoutsImporterTest {
 	}
 
 	@Test
+	public void testImportMasterLayoutExistingNameNoOvewrite()
+		throws Exception {
+
+		String testCaseName = "master-page-drop-zone-allowed-fragments";
+
+		_importLayoutPageTemplateEntry(testCaseName);
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries =
+				_getLayoutPageTemplatesImporterResultEntries(testCaseName);
+
+		LayoutPageTemplatesImporterResultEntry
+			layoutPageTemplatesImporterResultEntry =
+				layoutPageTemplatesImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutPageTemplatesImporterResultEntry.Status.IGNORED,
+			layoutPageTemplatesImporterResultEntry.getStatus());
+		Assert.assertEquals(
+			String.format(
+				"%s/master-pages/%s/master-page.json was ignored because a " +
+					"master page with the same key already exists.",
+				testCaseName, testCaseName),
+			layoutPageTemplatesImporterResultEntry.getErrorMessage());
+	}
+
+	@Test
 	public void testImportMasterLayoutsDropZone() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_importLayoutPageTemplateEntry("master-page-drop-zone");

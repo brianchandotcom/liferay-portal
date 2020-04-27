@@ -1,0 +1,35 @@
+{
+	"items": {
+		"DROP-ZONE-UUID": {
+			"children": [],
+			"config": {
+				"allowNewFragmentEntries": true,
+				"fragmentEntryKeys": [
+					"BASIC_COMPONENT-button",
+					"BASIC_COMPONENT-card",
+					"BASIC_COMPONENT",
+					"com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer",
+					"content-display",
+					"lfr-all-fragments-id"
+				]
+			},
+			"itemId": "DROP-ZONE-UUID",
+			"parentId": "MAIN-UUID",
+			"type": "drop-zone"
+		},
+		"MAIN-UUID": {
+			"children": [
+				"DROP-ZONE-UUID"
+			],
+			"config": {},
+			"itemId": "MAIN-UUID",
+			"parentId": "",
+			"type": "root"
+		}
+	},
+	"rootItems": {
+		"dropZone": "DROP-ZONE-UUID",
+		"main": "MAIN-UUID"
+	},
+	"version": 1
+}

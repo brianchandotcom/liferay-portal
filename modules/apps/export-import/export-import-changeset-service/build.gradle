@@ -5,4 +5,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:export-import:export-import-changeset-api")
+	compileOnly project(":apps:portal:portal-aop-api")
 }

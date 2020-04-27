@@ -72,6 +72,8 @@ public class KBContentCKEditorConfigContributor
 			jsonArray.put(toJSONArray("['Source']"));
 		}
 
+		jsonArray.put(toJSONArray("['A11YBtn']"));
+
 		return jsonArray;
 	}
 

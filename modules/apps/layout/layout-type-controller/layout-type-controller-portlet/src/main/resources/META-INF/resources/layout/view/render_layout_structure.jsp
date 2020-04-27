@@ -143,6 +143,14 @@ for (String childrenItemId : childrenItemIds) {
 			%>
 
 		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof FragmentDropZoneLayoutStructureItem %>">
+
+			<%
+			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
+
+			<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
 			<div class="master-layout-fragment">
 

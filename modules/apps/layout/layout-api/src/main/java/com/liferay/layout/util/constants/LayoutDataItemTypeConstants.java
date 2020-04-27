@@ -31,6 +31,8 @@ public class LayoutDataItemTypeConstants {
 
 	public static final String TYPE_FRAGMENT = "fragment";
 
+	public static final String TYPE_FRAGMENT_DROP_ZONE = "fragment-drop-zone";
+
 	public static final String TYPE_ROOT = "root";
 
 	public static final String TYPE_ROW = "row";

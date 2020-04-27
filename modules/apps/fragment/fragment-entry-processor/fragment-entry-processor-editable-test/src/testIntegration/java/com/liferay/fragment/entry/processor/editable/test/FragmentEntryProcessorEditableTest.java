@@ -138,6 +138,20 @@ public class FragmentEntryProcessorEditableTest {
 			_originalThemeDisplayDefaultLocale);
 	}
 
+	@Test(expected = FragmentEntryContentException.class)
+	public void testCanAddOneNoninstanceableWidget() throws Exception {
+		_addFragmentEntry(
+			"fragment_entry_with_noninstanceable_widget_tag.html");
+	}
+
+	@Test(expected = FragmentEntryContentException.class)
+	public void testCannotAddMoreThanOneNoninstanceableWidget()
+		throws Exception {
+
+		_addFragmentEntry(
+			"fragment_entry_with_duplicate_noninstanceable_widget_tag.html");
+	}
+
 	@Test
 	public void testFragmentEntryLinkPortletPreferences() throws Exception {
 		FragmentEntry fragmentEntry = _addFragmentEntry(
@@ -519,6 +533,11 @@ public class FragmentEntryProcessorEditableTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject(
+		filter = "javax.portlet.name=" + FragmentEntryLinkPortletKeys.FRAGMENT_ENTRY_LINK_NONINSTANCEABLE_TEST_PORTLET
+	)
+	private final Portlet _nonInstanceablePortlet = null;
 
 	private Locale _originalSiteDefaultLocale;
 	private Locale _originalThemeDisplayDefaultLocale;

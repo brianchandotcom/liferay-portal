@@ -12,7 +12,7 @@
  * details.
  */
 
-export const checkInvalidFieldNameCharacter = character => {
+export const checkInvalidFieldNameCharacter = (character) => {
 	return /[\\~`!@#$%^&*(){}[\];:"'<,.>?/\-+=|]/g.test(character);
 };
 

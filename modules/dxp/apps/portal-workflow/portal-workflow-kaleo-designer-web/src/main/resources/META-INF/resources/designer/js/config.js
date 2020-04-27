@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-(function() {
+(function () {
 	AUI().applyConfig({
 		groups: {
 			'kaleo-designer': {

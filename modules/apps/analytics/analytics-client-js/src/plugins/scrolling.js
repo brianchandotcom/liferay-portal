@@ -26,7 +26,7 @@ function scrolling(analytics) {
 	let scrollTracker = new ScrollTracker();
 
 	const onScroll = debounce(() => {
-		scrollTracker.onDepthReached(depth => {
+		scrollTracker.onDepthReached((depth) => {
 			analytics.send('pageDepthReached', applicationId, {depth});
 		});
 	}, DEBOUNCE);

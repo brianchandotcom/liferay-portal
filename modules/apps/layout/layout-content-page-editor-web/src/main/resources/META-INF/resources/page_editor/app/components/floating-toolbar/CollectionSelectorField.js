@@ -28,7 +28,7 @@ export const CollectionSelectorField = ({field, onValueSelect, value}) => {
 				collectionTitle={value.title}
 				itemSelectorURL={typeOptions.infoListSelectorURL}
 				label={field.label}
-				onCollectionSelect={collection => {
+				onCollectionSelect={(collection) => {
 					onValueSelect(field.name, collection);
 				}}
 			></CollectionSelector>

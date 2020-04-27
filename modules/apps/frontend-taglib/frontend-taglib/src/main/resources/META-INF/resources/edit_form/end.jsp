@@ -71,14 +71,14 @@ String fullName = namespace + HtmlUtil.escapeJS(name);
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
-		config.onSubmit = function(event) {
+		config.onSubmit = function (event) {
 			<%= onSubmit %>;
 		};
 	</c:if>
 
 	Liferay.Form.register(config);
 
-	var onDestroyPortlet = function(event) {
+	var onDestroyPortlet = function (event) {
 		if (event.portletId === '<%= portletDisplay.getId() %>') {
 			delete Liferay.Form._INSTANCES['<%= fullName %>'];
 		}

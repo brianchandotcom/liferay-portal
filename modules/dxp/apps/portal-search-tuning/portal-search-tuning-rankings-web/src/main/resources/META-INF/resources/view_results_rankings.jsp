@@ -136,7 +136,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	var submitForm = function(url) {
+	var submitForm = function (url) {
 		var searchContainer = document.getElementById(
 			'<portlet:namespace />resultsRankingEntries'
 		);
@@ -157,7 +157,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 		}
 	};
 
-	var activateResultsRankingsEntries = function() {
+	var activateResultsRankingsEntries = function () {
 		<portlet:actionURL name="/results_ranking/edit" var="activateResultsRankingEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.ACTIVATE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -166,7 +166,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 		submitForm('<%= activateResultsRankingEntryURL %>');
 	};
 
-	var deactivateResultsRankingsEntries = function() {
+	var deactivateResultsRankingsEntries = function () {
 		<portlet:actionURL name="/results_ranking/edit" var="deactivateResultsRankingEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.DEACTIVATE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -175,7 +175,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 		submitForm('<%= deactivateResultsRankingEntryURL %>');
 	};
 
-	var deleteResultsRankingsEntries = function() {
+	var deleteResultsRankingsEntries = function () {
 		if (
 			confirm(
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
@@ -196,10 +196,10 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 		deleteResultsRankingsEntries: deleteResultsRankingsEntries,
 	};
 
-	Liferay.componentReady('resultsRankingEntriesManagementToolbar').then(function(
+	Liferay.componentReady('resultsRankingEntriesManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

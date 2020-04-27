@@ -12,10 +12,10 @@
  * details.
  */
 
-(function($) {
+(function ($) {
 	var jqueryInit = $.prototype.init;
 
-	$.prototype.init = function(selector, context, root) {
+	$.prototype.init = function (selector, context, root) {
 		if (selector === '#') {
 			selector = '';
 		}

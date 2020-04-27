@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-portlet-segments-simulation',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var SegmentsSimulation = A.Component.create({

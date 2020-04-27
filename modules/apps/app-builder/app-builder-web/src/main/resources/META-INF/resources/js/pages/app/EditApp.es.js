@@ -49,14 +49,14 @@ export default ({
 			setLoading(true);
 
 			getItem(`/o/app-builder/v1.0/apps/${appId}`)
-				.then(app => {
+				.then((app) => {
 					dispatch({
 						app,
 						type: UPDATE_APP,
 					});
 					setLoading(false);
 				})
-				.catch(_ => setLoading(false));
+				.catch((_) => setLoading(false));
 		}
 	}, [appId]);
 
@@ -73,7 +73,7 @@ export default ({
 		};
 	};
 
-	const onCurrentStepChange = step => {
+	const onCurrentStepChange = (step) => {
 		setCurrentStep(step);
 	};
 

@@ -40,7 +40,7 @@ const CollectionWithControls = React.forwardRef(
 			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration
 		);
 
-		const handleButtonClick = id => {
+		const handleButtonClick = (id) => {
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
 				dispatch(
 					duplicateItem({

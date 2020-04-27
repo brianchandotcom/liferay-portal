@@ -155,7 +155,7 @@ renderResponse.setTitle(title);
 							);
 
 							if (selectFolderButton) {
-								selectFolderButton.addEventListener('click', function(event) {
+								selectFolderButton.addEventListener('click', function (event) {
 									event.preventDefault();
 
 									var itemSelectorDialog = new ItemSelectorDialog.default({
@@ -174,7 +174,7 @@ renderResponse.setTitle(title);
 
 									itemSelectorDialog.open();
 
-									itemSelectorDialog.on('selectedItemChange', function(event) {
+									itemSelectorDialog.on('selectedItemChange', function (event) {
 										var selectedItem = event.selectedItem;
 
 										if (selectedItem) {
@@ -392,7 +392,7 @@ renderResponse.setTitle(title);
 	);
 
 	if (selectDDMStructureButton) {
-		selectDDMStructureButton.addEventListener('click', function(event) {
+		selectDDMStructureButton.addEventListener('click', function (event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -404,7 +404,7 @@ renderResponse.setTitle(title);
 					uri:
 						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
 				},
-				function(event) {
+				function (event) {
 					var ddmStructureLink =
 						'<a class="modify-link" data-rowId="' +
 						event.ddmstructureid +
@@ -441,7 +441,7 @@ renderResponse.setTitle(title);
 
 	searchContainer.get('contentBox').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var tr = link.ancestor('tr');

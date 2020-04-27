@@ -182,7 +182,7 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 			'.ldap-servers .table-data tr'
 		);
 
-		var ldapServerIds = Array.prototype.map.call(ldapServerIdsNodes, function(
+		var ldapServerIds = Array.prototype.map.call(ldapServerIdsNodes, function (
 			ldapServerIdsNode
 		) {
 			return ldapServerIdsNode.dataset.ldapserverid;

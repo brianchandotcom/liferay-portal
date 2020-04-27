@@ -24,7 +24,7 @@ import ReactDOM from 'react-dom';
  * It is triggered on hover, thus it does not need to re-calculate on window resize,
  * scroll or any other event
  */
-const Popover = props => {
+const Popover = (props) => {
 	return ReactDOM.createPortal(
 		<PopoverComponent {...props} />,
 		document.body

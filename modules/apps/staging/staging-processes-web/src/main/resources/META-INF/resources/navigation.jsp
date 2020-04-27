@@ -81,7 +81,7 @@ String searchContainerId = "publishLayoutProcesses";
 		timeZoneOffset: <%= timeZoneOffset %>,
 	});
 
-	Liferay.once('destroyPortlet', function() {
+	Liferay.once('destroyPortlet', function () {
 		exportImport.destroy();
 	});
 </aui:script>

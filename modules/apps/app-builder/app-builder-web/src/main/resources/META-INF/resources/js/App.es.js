@@ -22,7 +22,7 @@ import {AppContextProvider} from './AppContext.es';
 import ListCustomObjects from './pages/custom-object/ListCustomObjects.es';
 import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
 
-export default props => (
+export default (props) => (
 	<DndProvider backend={HTML5Backend}>
 		<AppContextProvider {...props}>
 			<ClayModalProvider>

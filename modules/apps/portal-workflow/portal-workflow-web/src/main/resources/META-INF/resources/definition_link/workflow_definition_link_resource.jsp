@@ -57,11 +57,11 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 	);
 
 	if (resourceTooltip) {
-		resourceTooltip.addEventListener('mouseover', function() {
+		resourceTooltip.addEventListener('mouseover', function () {
 			dom.toggleClasses(tooltip, 'show');
 		});
 
-		resourceTooltip.addEventListener('mouseout', function() {
+		resourceTooltip.addEventListener('mouseout', function () {
 			dom.toggleClasses(tooltip, 'show');
 		});
 	}

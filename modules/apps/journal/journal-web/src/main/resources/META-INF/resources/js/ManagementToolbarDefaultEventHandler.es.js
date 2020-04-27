@@ -20,7 +20,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		const addArticleURL = this.addArticleURL;
 		const namespace = this.namespace;
 
-		Liferay.on(this.ns('selectAddMenuItem'), event => {
+		Liferay.on(this.ns('selectAddMenuItem'), (event) => {
 			const selectAddMenuItemWindow = Liferay.Util.Window.getById(
 				namespace + 'selectAddMenuItem'
 			);
@@ -95,7 +95,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			);
 		}
 
-		entrySelectorNodes.forEach(node => {
+		entrySelectorNodes.forEach((node) => {
 			if (node.checked) {
 				moveArticlesAndFoldersURL = addParams(
 					`${node.name}=${node.value}`,
@@ -121,7 +121,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('structures'),
 				uri: this.selectEntityURL,
 			},
-			event => {
+			(event) => {
 				Liferay.Util.navigate(
 					addParams(
 						namespace + 'ddmStructureKey=' + event.ddmstructurekey,

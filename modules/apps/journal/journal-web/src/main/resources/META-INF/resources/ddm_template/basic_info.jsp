@@ -90,7 +90,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 		);
 
 		if (selectDDMStructure) {
-			selectDDMStructure.addEventListener('click', function(event) {
+			selectDDMStructure.addEventListener('click', function (event) {
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
@@ -102,7 +102,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 						uri:
 							'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
 					},
-					function(event) {
+					function (event) {
 						if (
 							document.<portlet:namespace />fm
 								.<portlet:namespace />classPK.value !=

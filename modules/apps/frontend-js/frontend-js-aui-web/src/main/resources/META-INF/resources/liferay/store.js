@@ -21,14 +21,14 @@
 
 AUI.add(
 	'liferay-store',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var isObject = Lang.isObject;
 
 		var TOKEN_SERIALIZE = 'serialize://';
 
-		var Store = function(key, value) {
+		var Store = function (key, value) {
 			var method;
 
 			if (Lang.isFunction(value)) {
@@ -84,9 +84,9 @@ AUI.add(
 
 				const body = new URLSearchParams();
 
-				Object.keys(config.data).forEach(key => {
+				Object.keys(config.data).forEach((key) => {
 					if (Array.isArray(config.data[key])) {
-						config.data[key].forEach(value => {
+						config.data[key].forEach((value) => {
 							body.append(key, value);
 						});
 					}
@@ -102,7 +102,7 @@ AUI.add(
 						method: 'POST',
 					}
 				)
-					.then(response => {
+					.then((response) => {
 						if (config.dataType === 'json') {
 							return response.json();
 						}
@@ -110,7 +110,7 @@ AUI.add(
 							return response.text();
 						}
 					})
-					.then(data => {
+					.then((data) => {
 						if (config.dataType === 'json') {
 							if (
 								Lang.isString(data) &&

@@ -136,7 +136,7 @@ describe('Field Checkbox', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('emits field edit event on field change', done => {
+	it('emits field edit event on field change', (done) => {
 		const handleFieldEdited = jest.fn();
 
 		const events = {fieldEdited: handleFieldEdited};

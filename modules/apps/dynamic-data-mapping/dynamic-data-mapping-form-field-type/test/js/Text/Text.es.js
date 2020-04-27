@@ -113,8 +113,8 @@ describe('Field Text', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('emits a field edit with correct parameters', done => {
-		const handleFieldEdited = data => {
+	it('emits a field edit with correct parameters', (done) => {
+		const handleFieldEdited = (data) => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					fieldInstance: expect.any(Object),

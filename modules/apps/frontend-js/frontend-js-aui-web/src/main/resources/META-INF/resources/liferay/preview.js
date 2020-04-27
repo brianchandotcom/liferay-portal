@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-preview',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var ATTR_DATA_IMAGE_INDEX = 'data-imageIndex';

@@ -244,7 +244,7 @@ Modal.STATE = {
 	 */
 
 	autoFocus: {
-		validator: val => val === false || core.isString(val),
+		validator: (val) => val === false || core.isString(val),
 		value: '.close',
 	},
 

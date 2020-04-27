@@ -129,8 +129,8 @@
 
 		<aui:script require="map-common/js/MapBase.es as MapBase">
 			var geolocationField = {
-				init: function() {
-					Liferay.MapBase.get('<portlet:namespace /><%= name %>', function(map) {
+				init: function () {
+					Liferay.MapBase.get('<portlet:namespace /><%= name %>', function (map) {
 						map.on(
 							'positionChange',
 							geolocationField.onPositionChange,
@@ -138,7 +138,7 @@
 						);
 					});
 				},
-				onPositionChange: function(event) {
+				onPositionChange: function (event) {
 					var inputName = '<portlet:namespace /><%= name %>';
 					var inputNode = document.querySelector('[name="' + inputName + '"]');
 
@@ -321,7 +321,7 @@
 	}
 
 	function updateElement(formElementIds, action) {
-		formElementIds.forEach(function(formElementId) {
+		formElementIds.forEach(function (formElementId) {
 			var formElement = document.getElementById(
 				'<portlet:namespace />' + formElementId
 			);

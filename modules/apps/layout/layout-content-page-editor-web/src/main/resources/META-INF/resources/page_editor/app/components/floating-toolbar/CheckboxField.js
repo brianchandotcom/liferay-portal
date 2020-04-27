@@ -24,7 +24,7 @@ export const CheckboxField = ({field, onValueSelect, value}) => (
 			aria-label={field.label}
 			checked={value}
 			label={field.label}
-			onChange={event => {
+			onChange={(event) => {
 				onValueSelect(field.name, event.target.checked);
 			}}
 		/>

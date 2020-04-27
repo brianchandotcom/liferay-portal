@@ -44,7 +44,7 @@ const defaultProps = {
 	siteAvailableLocales,
 	siteDefaultLocaleId: 'b',
 };
-const renderLanguagesComponent = props => render(<Languages {...props} />);
+const renderLanguagesComponent = (props) => render(<Languages {...props} />);
 
 describe('Languages', () => {
 	afterEach(cleanup);

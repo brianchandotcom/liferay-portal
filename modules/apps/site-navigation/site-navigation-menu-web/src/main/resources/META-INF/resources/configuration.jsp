@@ -314,7 +314,7 @@ else {
 		selectSiteNavigationMenuTypeSelect &&
 		siteNavigationMenuIdInput
 	) {
-		chooseRootMenuItemButton.addEventListener('click', function(event) {
+		chooseRootMenuItemButton.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			var uri =
@@ -340,7 +340,7 @@ else {
 				url: uri,
 			});
 
-			itemSelectorDialog.on('selectedItemChange', function(event) {
+			itemSelectorDialog.on('selectedItemChange', function (event) {
 				var selectedItem = event.selectedItem;
 
 				if (selectedItem) {
@@ -375,7 +375,7 @@ else {
 		rootMenuItemNameSpan &&
 		siteNavigationMenuIdInput
 	) {
-		chooseSiteNavigationMenuButton.addEventListener('click', function(event) {
+		chooseSiteNavigationMenuButton.addEventListener('click', function (event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -391,7 +391,7 @@ else {
 					uri:
 						'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>',
 				},
-				function(selectedItem) {
+				function (selectedItem) {
 					if (selectedItem) {
 						navigationMenuName.innerText = selectedItem.name;
 						rootMenuItemIdInput.value = '0';
@@ -419,7 +419,7 @@ else {
 		rootMenuItemNameSpan &&
 		siteNavigationMenuIdInput
 	) {
-		removeSiteNavigationMenuButton.addEventListener('click', function(event) {
+		removeSiteNavigationMenuButton.addEventListener('click', function (event) {
 			navigationMenuName.innerText = '';
 			rootMenuItemIdInput.value = '0';
 			rootMenuItemNameSpan.innerText = '';
@@ -439,7 +439,7 @@ else {
 
 	Liferay.Util.toggleSelectBox(
 		'<portlet:namespace />rootMenuItemType',
-		function(currentValue, value) {
+		function (currentValue, value) {
 			return currentValue === 'absolute' || currentValue === 'relative';
 		},
 		'<portlet:namespace />rootMenuItemLevel'
@@ -454,7 +454,7 @@ else {
 		selectSiteNavigationMenuTypeSelect &&
 		siteNavigationMenuType
 	) {
-		selectSiteNavigationMenuTypeSelect.addEventListener('change', function() {
+		selectSiteNavigationMenuTypeSelect.addEventListener('change', function () {
 			var selectedSelectSiteNavigationMenuType = document.querySelector(
 				'#<portlet:namespace />selectSiteNavigationMenuType option:checked'
 			);
@@ -483,7 +483,7 @@ else {
 			document.<portlet:namespace />fm,
 			'change',
 			'.select-navigation',
-			function() {
+			function () {
 				var siteNavigationDisabled =
 					selectSiteNavigationMenuTypeSelect.disabled;
 

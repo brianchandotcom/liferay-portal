@@ -17,18 +17,18 @@ AUI().use(
 	'aui-io-plugin-deprecated',
 	'liferay-portlet-url',
 	'liferay-util-window',
-	function(A) {
+	function (A) {
 		Liferay.namespace('Microblogs');
 
 		Liferay.Microblogs = {
-			init: function(param) {
+			init: function (param) {
 				var instance = this;
 
 				instance._baseActionURL = param.baseActionURL;
 				instance._microblogsEntriesURL = param.microblogsEntriesURL;
 			},
 
-			closePopup: function() {
+			closePopup: function () {
 				var instance = this;
 
 				var popup = instance.getPopup();
@@ -38,7 +38,7 @@ AUI().use(
 				}
 			},
 
-			displayPopup: function(url, title) {
+			displayPopup: function (url, title) {
 				var instance = this;
 
 				var popup = instance.getPopup();
@@ -52,7 +52,7 @@ AUI().use(
 				popup.io.start();
 			},
 
-			getPopup: function() {
+			getPopup: function () {
 				var instance = this;
 
 				if (!instance._popup) {
@@ -75,20 +75,20 @@ AUI().use(
 				return instance._popup;
 			},
 
-			updateMicroblogs: function(form, url, updateContainer) {
+			updateMicroblogs: function (form, url, updateContainer) {
 				var instance = this;
 
 				Liferay.Util.fetch(form.getAttribute('action'), {
 					body: new FormData(form.getDOM()),
 					method: 'POST',
-				}).then(function() {
+				}).then(function () {
 					instance.updateMicroblogsList(url, updateContainer);
 
 					Liferay.fire('microblogPosted');
 				});
 			},
 
-			updateMicroblogsList: function(url, updateContainer) {
+			updateMicroblogsList: function (url, updateContainer) {
 				var instance = this;
 
 				instance._micrblogsEntries = updateContainer;
@@ -108,7 +108,7 @@ AUI().use(
 				instance._micrblogsEntries.io.start();
 			},
 
-			updateViewCount: function(microblogsEntryId) {
+			updateViewCount: function (microblogsEntryId) {
 				var instance = this;
 
 				var portletURL = new Liferay.PortletURL.createURL(
@@ -128,8 +128,8 @@ AUI().use(
 			},
 		};
 
-		Liferay.on('sessionExpired', function(event) {
-			var reload = function() {
+		Liferay.on('sessionExpired', function (event) {
+			var reload = function () {
 				window.location.reload();
 			};
 

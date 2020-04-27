@@ -55,7 +55,7 @@ const ImagePicker = ({
 	});
 
 	const dispatchValue = ({clear, value}, callback = () => {}) => {
-		setImageValues(oldValues => {
+		setImageValues((oldValues) => {
 			let mergedValues = {...oldValues, ...value};
 
 			mergedValues = clear ? {} : mergedValues;
@@ -66,17 +66,17 @@ const ImagePicker = ({
 		});
 	};
 
-	const handleClearClick = event => {
+	const handleClearClick = (event) => {
 		dispatchValue(
 			{clear: true, value: {description: '', event, title: '', url: ''}},
-			mergedValues => {
+			(mergedValues) => {
 				onClearClick(mergedValues);
 			}
 		);
 	};
 
 	const [debounce] = useDebounceCallback(({event, value}) => {
-		dispatchValue({value: {description: value, event}}, mergedValues => {
+		dispatchValue({value: {description: value, event}}, (mergedValues) => {
 			onDescriptionChange(mergedValues);
 		});
 	}, 500);
@@ -84,13 +84,13 @@ const ImagePicker = ({
 	const handleDescriptionChange = ({event, target: {value}}) =>
 		debounce({event, value});
 
-	const handleFieldChanged = event => {
+	const handleFieldChanged = (event) => {
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem && selectedItem.value) {
 			const img = new Image();
 			const item = JSON.parse(selectedItem.value);
-			img.addEventListener('load', event => {
+			img.addEventListener('load', (event) => {
 				const {
 					target: {height, width},
 				} = event;
@@ -107,7 +107,7 @@ const ImagePicker = ({
 					...item,
 				};
 
-				dispatchValue({value: imageData}, mergedValues => {
+				dispatchValue({value: imageData}, (mergedValues) => {
 					onFieldChanged(mergedValues);
 				});
 			});
@@ -115,7 +115,7 @@ const ImagePicker = ({
 		}
 	};
 
-	const handleItemSelectorTriggerClick = event => {
+	const handleItemSelectorTriggerClick = (event) => {
 		event.preventDefault();
 
 		const itemSelectorDialog = new ItemSelectorDialog({
@@ -262,17 +262,17 @@ const ImagePickerProxy = connectStore(
 				inputValue={inputValue}
 				itemSelectorURL={itemSelectorURL}
 				name={name}
-				onClearClick={data => {
+				onClearClick={(data) => {
 					const {event} = data;
 
 					emit('fieldEdited', event, data);
 				}}
-				onDescriptionChange={data => {
+				onDescriptionChange={(data) => {
 					const {event} = data;
 
 					emit('fieldEdited', event, data);
 				}}
-				onFieldChanged={data => {
+				onFieldChanged={(data) => {
 					const {event} = data;
 
 					emit('fieldEdited', event, data);

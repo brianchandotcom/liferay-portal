@@ -15,7 +15,7 @@
 import dom from 'metal-dom';
 
 export default (target, ...elements) => {
-	return !elements.some(element => {
+	return !elements.some((element) => {
 		if (typeof element === 'string') {
 			return !!dom.closest(target, element);
 		}

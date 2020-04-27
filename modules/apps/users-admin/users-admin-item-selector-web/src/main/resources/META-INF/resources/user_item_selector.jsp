@@ -103,11 +103,11 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		var allSelectedElements = event.elements.allSelectedElements;
 		var arr = [];
 
-		allSelectedElements.each(function() {
+		allSelectedElements.each(function () {
 			var row = this.ancestor('tr');
 
 			var data = row.getDOM().dataset;

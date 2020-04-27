@@ -48,14 +48,14 @@ export default ({actions}) => {
 			active={active}
 			alignmentPosition={Align.RightCenter}
 			className="dropdown-action"
-			onActiveChange={item => setActive(item)}
+			onActiveChange={(item) => setActive(item)}
 			trigger={DropdownButton}
 		>
 			<ItemList>
 				{actions.map((action, index) => (
 					<Item
 						key={index}
-						onClick={event => onSelectItem(event, action)}
+						onClick={(event) => onSelectItem(event, action)}
 					>
 						{action.name}
 					</Item>

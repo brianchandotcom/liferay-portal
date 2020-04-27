@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-autocomplete-util',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 
 		var AutoCompleteUtil = {

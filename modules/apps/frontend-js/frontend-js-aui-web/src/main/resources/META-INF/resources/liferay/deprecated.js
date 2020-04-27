@@ -14,7 +14,7 @@
 
 // For details about this file see: LPS-2155
 
-(function(A, Liferay) {
+(function (A, Liferay) {
 	var Util = Liferay.Util;
 
 	var Lang = A.Lang;
@@ -62,34 +62,34 @@
 
 	Util.MAP_HTML_CHARS_ESCAPED = MAP_HTML_CHARS_ESCAPED;
 
-	Util.actsAsAspect = function(object) {
+	Util.actsAsAspect = function (object) {
 		object.yield = null;
 		object.rv = {};
 
-		object.before = function(method, f) {
+		object.before = function (method, f) {
 			var original = eval('this.' + method);
 
-			this[method] = function() {
+			this[method] = function () {
 				f.apply(this, arguments);
 
 				return original.apply(this, arguments);
 			};
 		};
 
-		object.after = function(method, f) {
+		object.after = function (method, f) {
 			var original = eval('this.' + method);
 
-			this[method] = function() {
+			this[method] = function () {
 				this.rv[method] = original.apply(this, arguments);
 
 				return f.apply(this, arguments);
 			};
 		};
 
-		object.around = function(method, f) {
+		object.around = function (method, f) {
 			var original = eval('this.' + method);
 
-			this[method] = function() {
+			this[method] = function () {
 				this.yield = original;
 
 				return f.apply(this, arguments);
@@ -97,9 +97,9 @@
 		};
 	};
 
-	Util.addInputFocus = function() {
-		A.use('aui-base', A => {
-			var handleFocus = function(event) {
+	Util.addInputFocus = function () {
+		A.use('aui-base', (A) => {
+			var handleFocus = function (event) {
 				var target = event.target;
 
 				var tagName = target.get('tagName');
@@ -128,14 +128,14 @@
 			A.on('blur', handleFocus, document);
 		});
 
-		Util.addInputFocus = function() {};
+		Util.addInputFocus = function () {};
 	};
 
-	Util.addInputType = function(el) {
+	Util.addInputType = function (el) {
 		Util.addInputType = Lang.emptyFn;
 
 		if (Liferay.Browser.isIe() && Liferay.Browser.getMajorVersion() < 7) {
-			Util.addInputType = function(el) {
+			Util.addInputType = function (el) {
 				if (el) {
 					el = A.one(el);
 				}
@@ -145,7 +145,7 @@
 
 				var defaultType = 'text';
 
-				el.all('input').each(item => {
+				el.all('input').each((item) => {
 					var type = item.get('type') || defaultType;
 
 					item.addClass(type);
@@ -156,7 +156,7 @@
 		return Util.addInputType(el);
 	};
 
-	Util.camelize = function(value, separator) {
+	Util.camelize = function (value, separator) {
 		var regex = REGEX_DASH;
 
 		if (separator) {
@@ -170,11 +170,11 @@
 		return value;
 	};
 
-	Util.clamp = function(value, min, max) {
+	Util.clamp = function (value, min, max) {
 		return Math.min(Math.max(value, min), max);
 	};
 
-	Util.escapeHTML = function(str, preventDoubleEscape, entities) {
+	Util.escapeHTML = function (str, preventDoubleEscape, entities) {
 		var regex = REGEX_HTML_ESCAPE;
 
 		var entitiesList = [];
@@ -215,15 +215,15 @@
 		);
 	};
 
-	Util.isEditorPresent = function(editorName) {
+	Util.isEditorPresent = function (editorName) {
 		return Liferay.EDITORS && Liferay.EDITORS[editorName];
 	};
 
-	Util.randomMinMax = function(min, max) {
+	Util.randomMinMax = function (min, max) {
 		return Math.round(Math.random() * (max - min)) + min;
 	};
 
-	Util.selectAndCopy = function(el) {
+	Util.selectAndCopy = function (el) {
 		el.focus();
 		el.select();
 
@@ -234,7 +234,7 @@
 		}
 	};
 
-	Util.setBox = function(oldBox, newBox) {
+	Util.setBox = function (oldBox, newBox) {
 		for (var i = oldBox.length - 1; i > -1; i--) {
 			oldBox.options[i] = null;
 		}
@@ -246,11 +246,11 @@
 		oldBox.options[0].selected = true;
 	};
 
-	Util.startsWith = function(str, x) {
+	Util.startsWith = function (str, x) {
 		return str.indexOf(x) === 0;
 	};
 
-	Util.textareaTabs = function(event) {
+	Util.textareaTabs = function (event) {
 		var el = event.currentTarget.getDOM();
 
 		if (event.isKey('TAB')) {
@@ -282,7 +282,7 @@
 		}
 	};
 
-	Util.uncamelize = function(value, separator) {
+	Util.uncamelize = function (value, separator) {
 		separator = separator || ' ';
 
 		value = value.replace(
@@ -294,7 +294,7 @@
 		return value;
 	};
 
-	Util.unescapeHTML = function(str, entities) {
+	Util.unescapeHTML = function (str, entities) {
 		var regex = REGEX_HTML_UNESCAPE;
 
 		var entitiesMap = MAP_HTML_CHARS_UNESCAPED;
@@ -316,7 +316,7 @@
 		return str.replace(regex, A.bind('_unescapeHTML', Util, entitiesMap));
 	};
 
-	Util._escapeHTML = function(
+	Util._escapeHTML = function (
 		preventDoubleEscape,
 		entities,
 		entitiesValues,
@@ -350,7 +350,7 @@
 		return result;
 	};
 
-	Util._unescapeHTML = function(entities, match) {
+	Util._unescapeHTML = function (entities, match) {
 		return entities[match];
 	};
 
@@ -377,7 +377,7 @@
 			if (selectBox && toggleBox) {
 				var dynamicValue = Lang.isFunction(value);
 
-				var disabled = function() {
+				var disabled = function () {
 					var currentValue = selectBox.val();
 
 					var visible = value == currentValue;
@@ -400,7 +400,7 @@
 	Liferay.provide(
 		Util,
 		'disableTextareaTabs',
-		textarea => {
+		(textarea) => {
 			textarea = A.one(textarea);
 
 			if (textarea && textarea.attr('textareatabs') != 'enabled') {
@@ -415,7 +415,7 @@
 	Liferay.provide(
 		Util,
 		'enableTextareaTabs',
-		textarea => {
+		(textarea) => {
 			textarea = A.one(textarea);
 
 			if (textarea && textarea.attr('textareatabs') != 'enabled') {
@@ -436,9 +436,7 @@
 			var selectedIndex = box.get('selectedIndex');
 
 			if (!value) {
-				box.all('option')
-					.item(selectedIndex)
-					.remove(true);
+				box.all('option').item(selectedIndex).remove(true);
 			}
 			else {
 				box.all('option[value=' + value + STR_RIGHT_SQUARE_BRACKET)
@@ -466,7 +464,7 @@
 
 				var diff;
 
-				var resize = function(event) {
+				var resize = function (event) {
 					var pageBodyHeight = pageBody.get('winHeight');
 
 					if (usingRichEditor) {
@@ -566,7 +564,7 @@
 	Liferay.provide(
 		Util,
 		'switchEditor',
-		options => {
+		(options) => {
 			var uri = options.uri;
 
 			var windowName = Liferay.Util.getWindowName();

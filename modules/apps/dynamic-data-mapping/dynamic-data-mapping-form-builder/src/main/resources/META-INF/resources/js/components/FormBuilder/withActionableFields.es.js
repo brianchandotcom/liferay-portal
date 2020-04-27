@@ -26,7 +26,7 @@ const _CSS_HOVERED = 'hovered';
 
 const ACTIONABLE_FIELDS_CONTAINER = 'ddm-actionable-fields-container';
 
-const withActionableFields = ChildComponent => {
+const withActionableFields = (ChildComponent) => {
 	class ActionableFields extends Component {
 		attached() {
 			this._eventHandler = new EventHandler();

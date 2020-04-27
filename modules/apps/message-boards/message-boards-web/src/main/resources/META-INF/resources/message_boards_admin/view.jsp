@@ -102,7 +102,7 @@ if (category != null) {
 
 	<portlet:actionURL name="/message_boards/edit_entry" var="editEntryURL" />
 
-	var deleteEntries = function() {
+	var deleteEntries = function () {
 		if (
 			<%= trashHelper.isTrashEnabled(scopeGroupId) %> ||
 			confirm(
@@ -119,7 +119,7 @@ if (category != null) {
 		}
 	};
 
-	var lockEntries = function() {
+	var lockEntries = function () {
 		Liferay.Util.postForm(form, {
 			data: {
 				<%= Constants.CMD %>: '<%= Constants.LOCK %>',
@@ -128,7 +128,7 @@ if (category != null) {
 		});
 	};
 
-	var unlockEntries = function() {
+	var unlockEntries = function () {
 		Liferay.Util.postForm(form, {
 			data: {
 				<%= Constants.CMD %>: '<%= Constants.UNLOCK %>',
@@ -143,10 +143,10 @@ if (category != null) {
 		unlockEntries: unlockEntries,
 	};
 
-	Liferay.componentReady('mbEntriesManagementToolbar').then(function(
+	Liferay.componentReady('mbEntriesManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

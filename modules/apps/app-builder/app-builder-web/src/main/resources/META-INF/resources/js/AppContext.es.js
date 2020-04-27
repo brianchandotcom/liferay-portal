@@ -21,7 +21,7 @@ const AppContextProvider = ({
 	pathFriendlyURLPublic,
 	...restProps
 }) => {
-	const getStandaloneURL = appId =>
+	const getStandaloneURL = (appId) =>
 		`${Liferay.ThemeDisplay.getPortalURL()}${pathFriendlyURLPublic}/App${appId}`;
 
 	return (

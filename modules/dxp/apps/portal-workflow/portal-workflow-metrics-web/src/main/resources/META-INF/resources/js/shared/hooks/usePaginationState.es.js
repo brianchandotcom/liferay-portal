@@ -14,7 +14,7 @@ import {useContext, useMemo, useState} from 'react';
 import {AppContext} from '../../components/AppContext.es';
 import {paginateArray} from '../util/array.es';
 
-const usePaginationState = props => {
+const usePaginationState = (props) => {
 	const {defaultDelta} = useContext(AppContext);
 	const {
 		initialPage = 1,

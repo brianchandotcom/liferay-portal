@@ -35,7 +35,7 @@ FragmentEntry fragmentEntry = (FragmentEntry)request.getAttribute("liferay-fragm
 </div>
 
 <aui:script>
-	(function() {
+	(function () {
 		var fragment = document.getElementById('<%= randomNamespace %>');
 
 		<%= fragmentEntry.getJs() %>;

@@ -50,8 +50,8 @@ export function getSessionValue(key) {
 		body: formData,
 		method: 'POST',
 	})
-		.then(response => response.text())
-		.then(responseText => {
+		.then((response) => response.text())
+		.then((responseText) => {
 			if (responseText.startsWith(TOKEN_SERIALIZE)) {
 				const value = responseText.substring(TOKEN_SERIALIZE.length);
 

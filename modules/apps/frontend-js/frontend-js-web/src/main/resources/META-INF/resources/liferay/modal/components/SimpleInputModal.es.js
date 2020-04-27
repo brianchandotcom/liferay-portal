@@ -48,11 +48,11 @@ const SimpleInputModal = ({
 	const [inputValue, setInputValue] = useState('');
 	const [isChecked, setChecked] = useState(checkboxFieldValue);
 
-	const handleFormError = responseContent => {
+	const handleFormError = (responseContent) => {
 		setErrorMessage(responseContent.error || '');
 	};
 
-	const _handleSubmit = event => {
+	const _handleSubmit = (event) => {
 		event.preventDefault();
 
 		const formData = new FormData(
@@ -63,8 +63,8 @@ const SimpleInputModal = ({
 			body: formData,
 			method: 'POST',
 		})
-			.then(response => response.json())
-			.then(responseContent => {
+			.then((response) => response.json())
+			.then((responseContent) => {
 				if (isMounted()) {
 					if (responseContent.error) {
 						setLoadingResponse(false);
@@ -91,7 +91,7 @@ const SimpleInputModal = ({
 					}
 				}
 			})
-			.catch(response => {
+			.catch((response) => {
 				handleFormError(response);
 			});
 
@@ -150,7 +150,7 @@ const SimpleInputModal = ({
 								disabled={loadingResponse}
 								id={`${namespace}${mainFieldName}`}
 								name={`${namespace}${mainFieldName}`}
-								onChange={event =>
+								onChange={(event) =>
 									setInputValue(event.target.value)
 								}
 								placeholder={placeholder}
@@ -179,7 +179,7 @@ const SimpleInputModal = ({
 									label={checkboxFieldLabel}
 									name={`${namespace}${checkboxFieldName}`}
 									onChange={() =>
-										setChecked(isChecked => !isChecked)
+										setChecked((isChecked) => !isChecked)
 									}
 								/>
 							</div>

@@ -39,7 +39,7 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 />
 
 <aui:script>
-	var deleteEntries = function() {
+	var deleteEntries = function () {
 		if (
 			<%= trashHelper.isTrashEnabled(scopeGroupId) %> ||
 			confirm(
@@ -74,10 +74,10 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 		deleteEntries: deleteEntries,
 	};
 
-	Liferay.componentReady('bookmarksManagementToolbar').then(function(
+	Liferay.componentReady('bookmarksManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

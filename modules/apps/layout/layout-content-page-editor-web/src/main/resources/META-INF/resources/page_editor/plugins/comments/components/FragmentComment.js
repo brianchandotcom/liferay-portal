@@ -55,7 +55,7 @@ export default function FragmentComment({
 	const [showResolveMask, setShowResolveMask] = useState(false);
 
 	const showResolvedComments = useSelector(
-		state => state.showResolvedComments
+		(state) => state.showResolvedComments
 	);
 	const dispatch = useDispatch();
 
@@ -80,7 +80,7 @@ export default function FragmentComment({
 			onNetworkStatus: dispatch,
 			resolved: !resolved,
 		})
-			.then(comment => {
+			.then((comment) => {
 				setChangingResolved(false);
 
 				if (showResolvedComments) {
@@ -110,7 +110,7 @@ export default function FragmentComment({
 
 	const isMounted = useIsMounted();
 
-	const hideComment = onHide => {
+	const hideComment = (onHide) => {
 		setHidden(true);
 
 		setTimeout(() => {
@@ -233,7 +233,7 @@ export default function FragmentComment({
 				Boolean(comment.children.length) && (
 					<footer className="mb-2 page-editor__fragment-comment-replies">
 						{comment.children &&
-							comment.children.map(childComment => (
+							comment.children.map((childComment) => (
 								<FragmentComment
 									comment={{
 										...childComment,

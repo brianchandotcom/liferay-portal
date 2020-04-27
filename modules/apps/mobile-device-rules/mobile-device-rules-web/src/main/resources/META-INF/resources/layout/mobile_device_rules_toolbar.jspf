@@ -43,10 +43,10 @@
 
 			'<%= HtmlUtil.escapeJS(viewRuleGroupInstancesURL.toString()) %>'
 		)
-			.then(function(response) {
+			.then(function (response) {
 				return response.text();
 			})
-			.then(function(response) {
+			.then(function (response) {
 				var uniqueRuleGroupInstancesContainer = document.getElementById(
 					'<portlet:namespace />uniqueRuleGroupInstancesContainer'
 				);
@@ -67,7 +67,7 @@
 					userId: themeDisplay.getUserId(),
 				}),
 			},
-			function(response, xhr) {
+			function (response, xhr) {
 				<portlet:namespace />updateRuleGroupInstances();
 			}
 		);
@@ -89,7 +89,7 @@
 					userId: themeDisplay.getUserId(),
 				}),
 			},
-			function(response, xhr) {
+			function (response, xhr) {
 				<portlet:namespace />updateRuleGroupInstances();
 			}
 		);
@@ -102,7 +102,7 @@
 	);
 
 	if (saveInstanceButton) {
-		saveInstanceButton.addEventListener('click', function(event) {
+		saveInstanceButton.addEventListener('click', function (event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -124,7 +124,7 @@
 
 					uri: '<%= selectRuleGroupURL %>',
 				},
-				function(event) {
+				function (event) {
 					<portlet:namespace />saveRuleGroupInstance(
 						event.rulegroupid,
 						event.rulegroupname
@@ -139,7 +139,7 @@
 	);
 
 	if (managePrioritiesButton) {
-		managePrioritiesButton.addEventListener('click', function(event) {
+		managePrioritiesButton.addEventListener('click', function (event) {
 			Liferay.Util.openWindow({
 				dialogIframe: {
 					bodyCssClass: 'dialog-with-footer',

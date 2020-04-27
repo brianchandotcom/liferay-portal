@@ -30,7 +30,7 @@ const uppdateAppDeployment = (state, appDeploymentType, appDeployment) => ({
 	app: {
 		...state.app,
 		appDeployments: state.app.appDeployments
-			.filter(appDeployment => appDeployment.type !== appDeploymentType)
+			.filter((appDeployment) => appDeployment.type !== appDeploymentType)
 			.concat(appDeployment),
 	},
 });
@@ -63,7 +63,7 @@ const reducer = (state, action) => {
 				app: {
 					...state.app,
 					appDeployments: state.app.appDeployments.filter(
-						appDeployment =>
+						(appDeployment) =>
 							appDeployment.type !== action.deploymentType
 					),
 				},
@@ -71,7 +71,7 @@ const reducer = (state, action) => {
 		}
 		case TOGGLE_SETTINGS_SITE_ID: {
 			const appDeployment = state.app.appDeployments.find(
-				appDeployment => appDeployment.type === PRODUCT_MENU
+				(appDeployment) => appDeployment.type === PRODUCT_MENU
 			);
 
 			let {
@@ -85,7 +85,7 @@ const reducer = (state, action) => {
 			}
 			else {
 				siteIds = siteIds.includes(siteId)
-					? siteIds.filter(id => id != siteId)
+					? siteIds.filter((id) => id != siteId)
 					: siteIds.concat(siteId);
 			}
 
@@ -139,7 +139,7 @@ const reducer = (state, action) => {
 		}
 		case UPDATE_SETTINGS_SCOPE: {
 			const appDeployment = state.app.appDeployments.find(
-				appDeployment => appDeployment.type === PRODUCT_MENU
+				(appDeployment) => appDeployment.type === PRODUCT_MENU
 			);
 
 			const newAppDeployment = {

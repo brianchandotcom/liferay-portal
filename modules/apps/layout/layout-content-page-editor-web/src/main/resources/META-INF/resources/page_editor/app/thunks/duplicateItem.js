@@ -18,7 +18,7 @@ import FragmentService from '../services/FragmentService';
 export default function duplicateItem({itemId, store, selectItem = () => {}}) {
 	const {segmentsExperienceId} = store;
 
-	return dispatch => {
+	return (dispatch) => {
 		FragmentService.duplicateItem({
 			itemId,
 			onNetworkStatus: dispatch,

@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-xml-definition-serializer',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var AObject = A.Object;
 		var Lang = A.Lang;
@@ -28,11 +28,11 @@ AUI.add(
 
 		var STR_BLANK = '';
 
-		var isNotEmptyValue = function(item) {
+		var isNotEmptyValue = function (item) {
 			return isValue(item) && item !== STR_BLANK;
 		};
 
-		var serializeDefinition = function(xmlNamespace, metadata, json) {
+		var serializeDefinition = function (xmlNamespace, metadata, json) {
 			var xml = toXML(xmlNamespace, metadata, json);
 
 			xml = XMLUtil.format(xml);
@@ -44,7 +44,7 @@ AUI.add(
 			return xml;
 		};
 
-		var toXML = function(xmlNamespace, metadata, json) {
+		var toXML = function (xmlNamespace, metadata, json) {
 			var description = metadata.description;
 			var name = metadata.name;
 			var version = metadata.version;
@@ -70,7 +70,7 @@ AUI.add(
 				buffer.push(XMLUtil.create('version', version));
 			}
 
-			json.nodes.forEach(item => {
+			json.nodes.forEach((item) => {
 				var description = item.description;
 				var initial = item.initial;
 				var metadata = item.metadata;
@@ -123,7 +123,7 @@ AUI.add(
 			return buffer.join(STR_BLANK);
 		};
 
-		var appendXMLActions = function(
+		var appendXMLActions = function (
 			buffer,
 			actions,
 			notifications,
@@ -205,7 +205,7 @@ AUI.add(
 			}
 		};
 
-		var appendXMLAssignments = function(
+		var appendXMLAssignments = function (
 			buffer,
 			dataAssignments,
 			wrapperNodeName,
@@ -222,7 +222,7 @@ AUI.add(
 				buffer.push(xmlAssignments.open);
 
 				if (dataAssignments.address) {
-					dataAssignments.address.forEach(item => {
+					dataAssignments.address.forEach((item) => {
 						if (isValue(item)) {
 							buffer.push(XMLUtil.create('address', item));
 						}
@@ -374,7 +374,11 @@ AUI.add(
 			}
 		};
 
-		var appendXMLNotifications = function(buffer, notifications, nodeName) {
+		var appendXMLNotifications = function (
+			buffer,
+			notifications,
+			nodeName
+		) {
 			if (
 				notifications &&
 				notifications.name &&
@@ -422,7 +426,7 @@ AUI.add(
 					}
 
 					if (isValidValue(notificationTypes, index)) {
-						notificationTypes[index].forEach(item => {
+						notificationTypes[index].forEach((item) => {
 							buffer.push(
 								XMLUtil.create(
 									'notificationType',
@@ -471,7 +475,7 @@ AUI.add(
 			}
 		};
 
-		var appendXMLTaskTimers = function(buffer, taskTimers) {
+		var appendXMLTaskTimers = function (buffer, taskTimers) {
 			if (taskTimers && taskTimers.name && taskTimers.name.length > 0) {
 				var xmlTaskTimers = XMLUtil.createObj('task-timers');
 
@@ -554,14 +558,14 @@ AUI.add(
 			}
 		};
 
-		var appendXMLTransitions = function(buffer, transitions) {
+		var appendXMLTransitions = function (buffer, transitions) {
 			if (transitions && transitions.length > 0) {
 				var xmlTransition = XMLUtil.createObj('transition');
 				var xmlTransitions = XMLUtil.createObj('transitions');
 
 				buffer.push(xmlTransitions.open);
 
-				var pickDefault = transitions.some(item => {
+				var pickDefault = transitions.some((item) => {
 					return item.connector.default === true;
 				});
 
@@ -587,7 +591,7 @@ AUI.add(
 			}
 		};
 
-		var isValidValue = function(array, index) {
+		var isValidValue = function (array, index) {
 			return array && array[index] !== undefined;
 		};
 

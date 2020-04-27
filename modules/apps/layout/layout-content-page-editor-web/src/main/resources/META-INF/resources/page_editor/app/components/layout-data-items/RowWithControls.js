@@ -73,7 +73,7 @@ const RowWithControls = React.forwardRef(
 			},
 		});
 
-		const state = useSelector(state => state);
+		const state = useSelector((state) => state);
 
 		const rowRef = useRef(null);
 		const rowRect = getRect(rowRef.current);
@@ -81,7 +81,7 @@ const RowWithControls = React.forwardRef(
 		const [resizeFinished, setResizeFinished] = useState(false);
 		const [showOverlay, setShowOverlay] = useState(false);
 
-		const handleButtonClick = id => {
+		const handleButtonClick = (id) => {
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
 				dispatch(
 					duplicateItem({
@@ -98,7 +98,7 @@ const RowWithControls = React.forwardRef(
 			}
 		};
 
-		const getHighlightedColumnIndex = clientX => {
+		const getHighlightedColumnIndex = (clientX) => {
 			const gridSizes = getGridSizes(rowRect.width);
 			const mousePosition = clientX - rowRect.left;
 
@@ -187,7 +187,7 @@ const RowWithControls = React.forwardRef(
 					className="page-editor__row"
 					item={item}
 					layoutData={layoutData}
-					ref={node => {
+					ref={(node) => {
 						if (node) {
 							rowRef.current = node;
 

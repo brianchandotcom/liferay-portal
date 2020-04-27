@@ -26,7 +26,7 @@ const createForm = () => {
 	return document.querySelector('#mockForm');
 };
 
-const createInput = id => {
+const createInput = (id) => {
 	dom.enterDocument(`<input id="${id}" value="0" />`);
 
 	return document.querySelector(`#${id}`);

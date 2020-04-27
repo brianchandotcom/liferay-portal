@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var pluginName = 'restore';
 
 	CKEDITOR.plugins.add(pluginName, {

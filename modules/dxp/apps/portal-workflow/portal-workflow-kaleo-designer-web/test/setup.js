@@ -37,7 +37,7 @@ function filter(name) {
 }
 
 function walk(dir, callback) {
-	fs.readdirSync(dir, {withFileTypes: true}).forEach(entry => {
+	fs.readdirSync(dir, {withFileTypes: true}).forEach((entry) => {
 		const entryPath = path.join(dir, entry.name);
 
 		if (entry.isDirectory()) {
@@ -56,7 +56,7 @@ beforeEach(() => {
 
 	const _YUI = YUI();
 
-	global.AUI = function() {
+	global.AUI = function () {
 		return _YUI;
 	};
 
@@ -70,7 +70,7 @@ beforeEach(() => {
 	);
 
 	// eslint-disable-next-line liferay/no-dynamic-require
-	walk(build, source => require(source));
+	walk(build, (source) => require(source));
 
 	global.Liferay = {
 		Language: {

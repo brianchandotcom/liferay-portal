@@ -12,12 +12,12 @@
  * details.
  */
 
-(function() {
+(function () {
 	var NAMESPACE = '_com_liferay_reading_time_web_portlet_ReadingTimePortlet_';
 
 	CKEDITOR.plugins.add('readingtime', {
 		init(editor) {
-			AUI().use('aui-debounce', A => {
+			AUI().use('aui-debounce', (A) => {
 				editor.on(
 					'change',
 					A.debounce(() => {
@@ -38,10 +38,10 @@
 							credentials: 'same-origin',
 							method: 'POST',
 						})
-							.then(response => {
+							.then((response) => {
 								return response.json();
 							})
-							.then(message => {
+							.then((message) => {
 								var readingTimeElement = A.one(
 									'#' + editor.config.readingTime.elementId
 								);

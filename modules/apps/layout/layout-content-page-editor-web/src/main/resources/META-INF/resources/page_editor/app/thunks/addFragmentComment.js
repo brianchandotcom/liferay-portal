@@ -20,13 +20,13 @@ export default function addFragmentComment({
 	fragmentEntryLinkId,
 	parentCommentId = undefined,
 }) {
-	return dispatch => {
+	return (dispatch) => {
 		return FragmentService.addComment({
 			body,
 			fragmentEntryLinkId,
 			onNetworkStatus: dispatch,
 			parentCommentId,
-		}).then(fragmentEntryLinkComment => {
+		}).then((fragmentEntryLinkComment) => {
 			dispatch(
 				addFragmentEntryLinkComment({
 					fragmentEntryLinkComment,

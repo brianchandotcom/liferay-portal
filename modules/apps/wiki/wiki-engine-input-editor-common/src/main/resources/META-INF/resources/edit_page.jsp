@@ -55,7 +55,7 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 				'#<%= renderResponse.getNamespace() + "toggle_id_wiki_editor_help" %>'
 			);
 
-			helpPageLink.on('click', function(event) {
+			helpPageLink.on('click', function (event) {
 				event.preventDefault();
 
 				var helpPageDialog = Liferay.Util.Window.getWindow({

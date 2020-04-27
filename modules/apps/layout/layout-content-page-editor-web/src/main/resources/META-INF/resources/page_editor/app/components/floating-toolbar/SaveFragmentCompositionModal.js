@@ -38,9 +38,9 @@ const SaveFragmentCompositionModal = ({
 	onErrorDismiss,
 }) => {
 	const dispatch = useDispatch();
-	const store = useSelector(state => state);
+	const store = useSelector((state) => state);
 
-	const collections = useSelector(state => state.collections);
+	const collections = useSelector((state) => state.collections);
 
 	const [name, setName] = useState(undefined);
 	const [description, setDescription] = useState('');
@@ -55,7 +55,7 @@ const SaveFragmentCompositionModal = ({
 
 	const [thumbnail, setThumbnail] = useState({});
 
-	const handleSubmit = event => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 
 		if (!name) {
@@ -93,7 +93,7 @@ const SaveFragmentCompositionModal = ({
 		}
 	};
 
-	const handleThumbnailSelected = image => {
+	const handleThumbnailSelected = (image) => {
 		setThumbnail(image);
 	};
 
@@ -144,7 +144,9 @@ const SaveFragmentCompositionModal = ({
 							<ClayInput
 								autoFocus
 								id={nameInputId}
-								onChange={event => setName(event.target.value)}
+								onChange={(event) =>
+									setName(event.target.value)
+								}
 								placeholder={Liferay.Language.get('name')}
 								required
 								type="text"
@@ -207,7 +209,7 @@ const SaveFragmentCompositionModal = ({
 							<ClayInput
 								component="textarea"
 								id={descriptionInputId}
-								onChange={event =>
+								onChange={(event) =>
 									setDescription(event.target.value)
 								}
 								placeholder={Liferay.Language.get(
@@ -227,7 +229,7 @@ const SaveFragmentCompositionModal = ({
 										label={Liferay.Language.get(
 											'save-inline-content'
 										)}
-										onChange={event =>
+										onChange={(event) =>
 											setSaveInlineContent(
 												event.target.checked
 											)
@@ -241,7 +243,7 @@ const SaveFragmentCompositionModal = ({
 										label={Liferay.Language.get(
 											'save-mapping-configuration'
 										)}
-										onChange={event =>
+										onChange={(event) =>
 											setSaveMappingConfiguration(
 												event.target.checked
 											)
@@ -260,7 +262,7 @@ const SaveFragmentCompositionModal = ({
 									</p>
 
 									<div className="row">
-										{collections.map(collection => (
+										{collections.map((collection) => (
 											<div
 												className="col-md-4"
 												key={

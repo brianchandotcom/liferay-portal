@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-message-util',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 		var LString = Lang.String;
 
@@ -124,7 +124,7 @@ AUI.add(
 			confirm(message, yesButtonLabel, noButtonLabel, yesFn, noFn) {
 				var confirmationPanel;
 
-				var getButtonConfig = function(label, callback) {
+				var getButtonConfig = function (label, callback) {
 					return {
 						label,
 						on: {

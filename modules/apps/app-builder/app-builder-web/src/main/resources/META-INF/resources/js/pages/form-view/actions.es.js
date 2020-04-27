@@ -21,7 +21,7 @@ export const UPDATE_FIELD_TYPES = 'UPDATE_FIELD_TYPES';
 export const UPDATE_IDS = 'UPDATE_IDS';
 export const UPDATE_PAGES = 'UPDATE_PAGES';
 
-export const deleteDefinitionField = fieldName => ({
+export const deleteDefinitionField = (fieldName) => ({
 	payload: {fieldName},
 	type: DataLayoutBuilderActions.DELETE_DATA_DEFINITION_FIELD,
 });

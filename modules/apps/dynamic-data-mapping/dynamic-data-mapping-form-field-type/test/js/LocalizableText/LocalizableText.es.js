@@ -67,7 +67,7 @@ const LocalizableTextWithContextMock = withContextMock(LocalizableText);
 describe('Field LocalizableText', () => {
 	beforeAll(() => {
 		// @ts-ignore
-		ReactDOM.createPortal = jest.fn(element => {
+		ReactDOM.createPortal = jest.fn((element) => {
 			return element;
 		});
 	});
@@ -177,10 +177,10 @@ describe('Field LocalizableText', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('emits field edit event on field change', done => {
+	it('emits field edit event on field change', (done) => {
 		const EXPECTED_VALUE =
 			'{"ca_ES":"Teste ES","en_US":"Test 2 EUA","pt_BR":"Teste BR"}';
-		const handleFieldEdited = data => {
+		const handleFieldEdited = (data) => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					fieldInstance: expect.any(Object),

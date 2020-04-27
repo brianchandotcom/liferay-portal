@@ -112,7 +112,7 @@ export default class UnsafeHTML extends React.PureComponent {
 	 * portals to prevent them from failing because their DOM nodes
 	 * are not linked to the document anymore.
 	 */
-	_updateRef = nextRef => {
+	_updateRef = (nextRef) => {
 		this.setState(({ref: prevRef}) => {
 			if (prevRef !== nextRef) {
 				if (typeof this.props.contentRef === 'function') {

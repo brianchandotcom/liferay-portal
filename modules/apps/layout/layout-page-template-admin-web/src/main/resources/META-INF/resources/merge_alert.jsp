@@ -38,13 +38,13 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
 	</span>
 
 	<script>
-		(function() {
+		(function () {
 			var resetButton = document.getElementById(
 				'<%= randomNamespace %>resetButton'
 			);
 
 			if (resetButton) {
-				resetButton.addEventListener('click', function(event) {
+				resetButton.addEventListener('click', function (event) {
 					<portlet:actionURL name="/layout_prototype/reset_merge_fail_count_and_merge" var="resetMergeFailCountURL">
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />

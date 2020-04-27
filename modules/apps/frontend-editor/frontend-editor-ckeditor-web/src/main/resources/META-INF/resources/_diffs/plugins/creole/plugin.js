@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	CKEDITOR.plugins.add('creole', {
 		init(editor) {
 			var instance = this;

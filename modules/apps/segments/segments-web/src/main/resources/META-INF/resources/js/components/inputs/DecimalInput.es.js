@@ -22,13 +22,13 @@ class DecimalInput extends React.Component {
 		value: propTypes.oneOfType([propTypes.string, propTypes.number]),
 	};
 
-	_handleDecimalBlur = event => {
+	_handleDecimalBlur = (event) => {
 		const value = Number.parseFloat(event.target.value).toFixed(2);
 
 		this.props.onChange({value});
 	};
 
-	_handleDecimalChange = event => {
+	_handleDecimalChange = (event) => {
 		this.props.onChange({value: event.target.value});
 	};
 

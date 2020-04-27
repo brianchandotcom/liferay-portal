@@ -13,13 +13,13 @@ import {useMemo} from 'react';
 
 import filterConstants from '../util/filterConstants.es';
 
-const useFiltersConstants = filterKeys => {
+const useFiltersConstants = (filterKeys) => {
 	return useMemo(() => {
 		const keys = [];
 		const pinnedValues = [];
 		const titles = [];
 
-		filterKeys.forEach(filterKey => {
+		filterKeys.forEach((filterKey) => {
 			if (filterConstants[filterKey]) {
 				keys.push(filterConstants[filterKey].key);
 				pinnedValues.push(filterConstants[filterKey].pinned);

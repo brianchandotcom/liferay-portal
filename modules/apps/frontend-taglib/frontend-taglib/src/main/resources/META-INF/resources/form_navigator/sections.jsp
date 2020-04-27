@@ -134,10 +134,10 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 				</c:otherwise>
 			</c:choose>
 
-			Liferay.once('<portlet:namespace />formReady', function(event) {
+			Liferay.once('<portlet:namespace />formReady', function (event) {
 				if (!sectionContent.classList.contains('show')) {
 					if (focusField) {
-						Liferay.on('liferay.collapse.shown', function(event) {
+						Liferay.on('liferay.collapse.shown', function (event) {
 							var panelId = event.panel.getAttribute('id');
 
 							if (panelId === sectionContent.getAttribute('id')) {

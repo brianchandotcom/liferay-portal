@@ -54,7 +54,7 @@ function computeParentSelection(nodeId, selectedNodeIds, nodes) {
 		return selectedNodeIds;
 	}
 
-	const allChildrenSelected = node.children.every(children =>
+	const allChildrenSelected = node.children.every((children) =>
 		selectedNodeIds.has(children.id)
 	);
 
@@ -67,7 +67,7 @@ function computeParentSelection(nodeId, selectedNodeIds, nodes) {
 	}
 	else {
 		nextSelectedNodeIds = selectedNodeIds.has(nodeId)
-			? new Set([...selectedNodeIds].filter(id => id !== nodeId))
+			? new Set([...selectedNodeIds].filter((id) => id !== nodeId))
 			: selectedNodeIds;
 	}
 
@@ -83,7 +83,7 @@ function filterNodes(nodes, filterQuery) {
 
 	const filteredNodes = [];
 
-	nodes.forEach(node => {
+	nodes.forEach((node) => {
 		if (node.name.toLowerCase().indexOf(filterQuery) !== -1) {
 			filteredNodes.push({
 				...node,
@@ -101,7 +101,7 @@ function filterNodes(nodes, filterQuery) {
  * Recursively get all the children of a parent.
  */
 function getChildrenIds(node, childrenIds = []) {
-	node.children.forEach(children => {
+	node.children.forEach((children) => {
 		childrenIds.push(children.id);
 
 		getChildrenIds(children, childrenIds);
@@ -138,13 +138,13 @@ function init({
 
 	const nodeMap = {};
 
-	const nodes = addLinks(initialNodes).map(node => {
+	const nodes = addLinks(initialNodes).map((node) => {
 		return visit(
 			node,
-			node => {
+			(node) => {
 				const expanded =
 					node.expanded ||
-					node.children.some(child => {
+					node.children.some((child) => {
 						return child.expanded || child.selected;
 					});
 
@@ -200,7 +200,7 @@ function updateNode(state, id, callback) {
 
 		node = {
 			...parent,
-			children: parent.children.map(child => {
+			children: parent.children.map((child) => {
 				return child.id === node.id ? node : child;
 			}),
 		};
@@ -208,7 +208,7 @@ function updateNode(state, id, callback) {
 		nodeMap[node.id] = node;
 	}
 
-	return state.nodes.map(child => {
+	return state.nodes.map((child) => {
 		return child.id === node.id ? node : child;
 	});
 }
@@ -244,7 +244,7 @@ function reducer(state, action) {
 			if (!filteredNodes) {
 				return {
 					...state,
-					nodes: updateNode(state, action.nodeId, node => {
+					nodes: updateNode(state, action.nodeId, (node) => {
 						return node.expanded
 							? {
 									...node,
@@ -406,7 +406,7 @@ function reducer(state, action) {
 			if (!filteredNodes) {
 				return {
 					...state,
-					nodes: updateNode(state, action.nodeId, node => {
+					nodes: updateNode(state, action.nodeId, (node) => {
 						return {
 							...node,
 							expanded: !node.expanded,
@@ -419,10 +419,10 @@ function reducer(state, action) {
 		case 'EXPAND_ALL':
 			{
 				if (!filteredNodes) {
-					const nodes = state.nodes.map(node =>
+					const nodes = state.nodes.map((node) =>
 						visit(
 							node,
-							node =>
+							(node) =>
 								!node.expanded
 									? {
 											...node,
@@ -469,7 +469,7 @@ function reducer(state, action) {
 					if (node.expanded) {
 						return {
 							...state,
-							nodes: updateNode(state, action.nodeId, node => {
+							nodes: updateNode(state, action.nodeId, (node) => {
 								return {
 									...node,
 									expanded: false,
@@ -497,7 +497,7 @@ function reducer(state, action) {
 					if (!node.expanded) {
 						return {
 							...state,
-							nodes: updateNode(state, action.nodeId, node => {
+							nodes: updateNode(state, action.nodeId, (node) => {
 								return {
 									...node,
 									expanded: true,
@@ -536,7 +536,7 @@ function reducer(state, action) {
 					if (selectedNodeIds.has(id)) {
 						nextSelectedNodeIds = new Set(
 							[...selectedNodeIds].filter(
-								selectedId =>
+								(selectedId) =>
 									!parentAndChildrenIds.includes(selectedId)
 							)
 						);
@@ -558,7 +558,7 @@ function reducer(state, action) {
 					if (selectedNodeIds.has(id)) {
 						selectedNodeIds = new Set(
 							[...selectedNodeIds].filter(
-								selectedId => selectedId !== id
+								(selectedId) => selectedId !== id
 							)
 						);
 					}
@@ -574,14 +574,14 @@ function reducer(state, action) {
 					...state,
 					filteredNodes:
 						filteredNodes &&
-						filteredNodes.map(node =>
+						filteredNodes.map((node) =>
 							toggleNode(node, selectedNodeIds)
 						),
 					focusedNodeId: id,
-					nodes: state.nodes.map(node =>
+					nodes: state.nodes.map((node) =>
 						visit(
 							node,
-							node => toggleNode(node, selectedNodeIds),
+							(node) => toggleNode(node, selectedNodeIds),
 							nodeMap
 						)
 					),
@@ -596,17 +596,17 @@ function reducer(state, action) {
 			break;
 
 		case 'UPDATE_NODES': {
-			const nodes = addLinks(action.newNodes).map(node => {
+			const nodes = addLinks(action.newNodes).map((node) => {
 				return visit(
 					node,
-					node => {
+					(node) => {
 						const {selectedNodeIds} = state;
 						const oldNode = nodeMap[node.id] || {};
 
 						const expanded =
 							oldNode.expanded ||
 							node.expanded ||
-							node.children.some(child => {
+							node.children.some((child) => {
 								return child.expanded || child.selected;
 							});
 
@@ -743,7 +743,7 @@ function Treeview({
 	const handleFocus = () => {
 		cancelTimer();
 
-		setHasFocus(hadFocus => {
+		setHasFocus((hadFocus) => {
 			if (!hadFocus) {
 				dispatch({type: 'ACTIVATE'});
 			}
@@ -760,7 +760,7 @@ function Treeview({
 		// the treeview); so, we defer this state update until the next
 		// tick, giving us a chance to cancel it if needed.
 		focusTimer.current = delay(() => {
-			setHasFocus(hadFocus => {
+			setHasFocus((hadFocus) => {
 				if (hadFocus) {
 					dispatch({type: 'DEACTIVATE'});
 				}

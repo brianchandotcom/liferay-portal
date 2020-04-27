@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-util',
-	A => {
+	(A) => {
 		var DateMath = A.DataType.DateMath;
 		var Lang = A.Lang;
 
@@ -22,7 +22,7 @@ AUI.add(
 
 		var isDate = Lang.isDate;
 
-		var toInt = function(value) {
+		var toInt = function (value) {
 			return Lang.toInt(value, 10, 0);
 		};
 
@@ -246,7 +246,7 @@ AUI.add(
 			},
 
 			updateSchedulerEvents(schedulerEvents, calendarBooking) {
-				A.each(schedulerEvents, schedulerEvent => {
+				A.each(schedulerEvents, (schedulerEvent) => {
 					if (schedulerEvent.isRecurring()) {
 						var scheduler = schedulerEvent.get('scheduler');
 

@@ -38,7 +38,7 @@ const STATUS_TO_TYPE = {
 	[STATUS_TERMINATED]: 'danger',
 };
 
-const _statusToLabelDisplayType = status => STATUS_TO_TYPE[status];
+const _statusToLabelDisplayType = (status) => STATUS_TO_TYPE[status];
 
 /**
  * This component simlpy maps a `value` to an associated `displayType` for Experiment statuses

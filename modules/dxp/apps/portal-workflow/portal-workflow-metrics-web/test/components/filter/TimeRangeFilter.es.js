@@ -78,7 +78,7 @@ describe('The time range filter component should', () => {
 		test('Be rendered with active option "Last 7 Days"', async () => {
 			const filterItems = getAllByTestId('filterItem');
 
-			const activeItem = filterItems.find(item =>
+			const activeItem = filterItems.find((item) =>
 				item.className.includes('active')
 			);
 			const activeItemName = await findByTestId(

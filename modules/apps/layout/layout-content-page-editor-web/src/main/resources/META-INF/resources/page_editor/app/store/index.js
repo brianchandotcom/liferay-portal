@@ -43,13 +43,13 @@ export const StoreAPIContextProvider = ({
 }) => {
 	const subscribers = useRef([]);
 
-	const subscribe = useCallback(subscriber => {
+	const subscribe = useCallback((subscriber) => {
 		subscribers.current = [...subscribers.current, subscriber];
 	}, []);
 
-	const unsubscribe = useCallback(subscriber => {
+	const unsubscribe = useCallback((subscriber) => {
 		subscribers.current = subscribers.current.filter(
-			_subscriber => _subscriber !== subscriber
+			(_subscriber) => _subscriber !== subscriber
 		);
 	}, []);
 
@@ -59,7 +59,7 @@ export const StoreAPIContextProvider = ({
 
 	useEffect(() => {
 		storeRef.current.getState = getState;
-		subscribers.current.forEach(subscriber => subscriber());
+		subscribers.current.forEach((subscriber) => subscriber());
 	}, [getState]);
 
 	const storeRef = useRef({

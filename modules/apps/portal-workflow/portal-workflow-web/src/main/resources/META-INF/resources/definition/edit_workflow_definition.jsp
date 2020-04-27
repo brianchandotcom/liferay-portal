@@ -323,13 +323,13 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	var previousContent = '';
 
 	if (uploadFile) {
-		uploadFile.addEventListener('change', function(evt) {
+		uploadFile.addEventListener('change', function (evt) {
 			var files = evt.target.files;
 
 			if (files) {
 				var reader = new FileReader();
 
-				reader.onloadend = function(evt) {
+				reader.onloadend = function (evt) {
 					if (evt.target.readyState == FileReader.DONE) {
 						previousContent = contentEditor.get(STR_VALUE);
 
@@ -351,7 +351,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	var uploadLink = document.getElementById('<portlet:namespace />uploadLink');
 
 	if (uploadLink) {
-		uploadLink.addEventListener('click', function(event) {
+		uploadLink.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			uploadFile.click();
@@ -364,7 +364,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 	var form = document.<portlet:namespace />fm;
 
-	Liferay.on('<portlet:namespace />publishDefinition', function(event) {
+	Liferay.on('<portlet:namespace />publishDefinition', function (event) {
 		var titleElement = Liferay.Util.getFormElement(
 			form,
 			'title_' + defaultLanguageId
@@ -385,7 +385,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		});
 	});
 
-	Liferay.on('<portlet:namespace />saveDefinition', function(event) {
+	Liferay.on('<portlet:namespace />saveDefinition', function (event) {
 		var titleElement = Liferay.Util.getFormElement(
 			form,
 			'title_' + defaultLanguageId
@@ -406,7 +406,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		});
 	});
 
-	Liferay.on('<portlet:namespace />undoDefinition', function(event) {
+	Liferay.on('<portlet:namespace />undoDefinition', function (event) {
 		if (contentEditor) {
 			contentEditor.set(STR_VALUE, previousContent);
 
@@ -416,7 +416,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 	var duplicateWorkflowTitle = '<liferay-ui:message key="duplicate-workflow" />';
 
-	Liferay.on('<portlet:namespace />duplicateDefinition', function(event) {
+	Liferay.on('<portlet:namespace />duplicateDefinition', function (event) {
 		Liferay.WorkflowWeb.confirmBeforeDuplicateDialog(
 			this,
 			'<%= duplicateWorkflowDefinition %>',
@@ -429,7 +429,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	var title = document.getElementById('<portlet:namespace />title');
 
 	if (title) {
-		title.addEventListener('keypress', function(event) {
+		title.addEventListener('keypress', function (event) {
 			var keycode = event.keyCode ? event.keyCode : event.which;
 
 			if (keycode == '13') {

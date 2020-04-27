@@ -28,7 +28,7 @@ export default ({tagsChange, tagsLoaded, tags = [], ...props}) => {
 	const [sourceItems, setSourceItems] = useState([]);
 
 	useEffect(() => {
-		getAllTags(context.siteKey).then(data => {
+		getAllTags(context.siteKey).then((data) => {
 			setSourceItems(
 				data.items.map(({name}) => ({
 					label: name,
@@ -53,11 +53,11 @@ export default ({tagsChange, tagsLoaded, tags = [], ...props}) => {
 		}
 	}, [inputValue, tagsLoaded]);
 
-	const maxTags = tags => tags.length > 5;
-	const duplicatedTags = tags =>
-		new Set(tags.map(tag => tag.value)).size !== tags.length;
+	const maxTags = (tags) => tags.length > 5;
+	const duplicatedTags = (tags) =>
+		new Set(tags.map((tag) => tag.value)).size !== tags.length;
 
-	const filterItems = tags => {
+	const filterItems = (tags) => {
 		if (!maxTags(tags) && !duplicatedTags(tags)) {
 			setError(false);
 			setItems(tags);

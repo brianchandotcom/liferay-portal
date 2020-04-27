@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-list',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 

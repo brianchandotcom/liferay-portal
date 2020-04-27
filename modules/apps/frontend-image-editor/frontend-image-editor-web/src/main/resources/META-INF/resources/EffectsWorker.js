@@ -23,7 +23,7 @@
  *                      - imageData: The ImageData to transform
  *                      - effect: The effect to apply
  */
-onmessage = function(event) {
+onmessage = function (event) {
 	var imageData = event.data.imageData;
 	var effect = event.data.effect;
 	var controlPoints = getControlPoints(effect);
@@ -94,7 +94,7 @@ onmessage = function(event) {
  *
  * @see  http://www.instructables.com/id/How-to-make-Instagram-Filters-in-Photoshop
  */
-var getControlPoints = function(effect) {
+var getControlPoints = function (effect) {
 	var controlPoints;
 
 	switch (effect.toLowerCase()) {
@@ -166,7 +166,7 @@ var getControlPoints = function(effect) {
  * @param  {[type]} controlPoints [description]
  * @return {[type]}               [description]
  */
-var generateColorCurve = function(controlPoints) {
+var generateColorCurve = function (controlPoints) {
 	var curve = new Lagrange(
 		controlPoints[0][0],
 		controlPoints[0][1],
@@ -174,7 +174,7 @@ var generateColorCurve = function(controlPoints) {
 		controlPoints[1][1]
 	);
 
-	controlPoints.slice(2).forEach(controlPoint => {
+	controlPoints.slice(2).forEach((controlPoint) => {
 		curve.addPoint(controlPoint[0], controlPoint[1]);
 	});
 

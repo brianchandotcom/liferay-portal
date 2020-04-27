@@ -21,7 +21,7 @@ import FieldsSidebarBody from './FieldsSidebarBody.es';
 import FieldsSidebarSettingsBody from './FieldsSidebarSettingsBody.es';
 import FieldsSidebarSettingsHeader from './FieldsSidebarSettingsHeader.es';
 
-export default function({title}) {
+export default function ({title}) {
 	const [{focusedCustomObjectField, focusedField}] = useContext(AppContext);
 	const [keywords, setKeywords] = useState('');
 
@@ -39,9 +39,9 @@ export default function({title}) {
 				{displaySettings ? (
 					<FieldsSidebarSettingsHeader />
 				) : (
-					<ClayForm onSubmit={event => event.preventDefault()}>
+					<ClayForm onSubmit={(event) => event.preventDefault()}>
 						<Sidebar.SearchInput
-							onSearch={keywords => setKeywords(keywords)}
+							onSearch={(keywords) => setKeywords(keywords)}
 						/>
 					</ClayForm>
 				)}

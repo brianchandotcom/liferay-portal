@@ -217,7 +217,7 @@ class CriteriaRow extends Component {
 			body: objectToFormData(data),
 			method: 'POST',
 		})
-			.then(response => response.json())
+			.then((response) => response.json())
 			.then(({fieldValueName: displayValue}) => {
 				if (displayValue === undefined) {
 					throw new Error(DISPLAY_VALUE_NOT_FOUND_ERROR);
@@ -225,7 +225,7 @@ class CriteriaRow extends Component {
 
 				onChange({...criterion, displayValue, unknownEntity: false});
 			})
-			.catch(error => {
+			.catch((error) => {
 				if (error && error.message === DISPLAY_VALUE_NOT_FOUND_ERROR) {
 					onChange({
 						...criterion,
@@ -268,7 +268,7 @@ class CriteriaRow extends Component {
 	 * @return {object} An object with a `name`, `label` and `type` property.
 	 */
 	_getSelectedItem = (list, idSelected) => {
-		const selectedItem = list.find(item => item.name === idSelected);
+		const selectedItem = list.find((item) => item.name === idSelected);
 
 		return selectedItem
 			? selectedItem
@@ -280,7 +280,7 @@ class CriteriaRow extends Component {
 			  };
 	};
 
-	_handleDelete = event => {
+	_handleDelete = (event) => {
 		event.preventDefault();
 
 		const {index, onDelete} = this.props;
@@ -288,7 +288,7 @@ class CriteriaRow extends Component {
 		onDelete(index);
 	};
 
-	_handleDuplicate = event => {
+	_handleDuplicate = (event) => {
 		event.preventDefault();
 
 		const {criterion, index, onAdd} = this.props;
@@ -296,7 +296,7 @@ class CriteriaRow extends Component {
 		onAdd(index + 1, criterion);
 	};
 
-	_handleInputChange = propertyName => event => {
+	_handleInputChange = (propertyName) => (event) => {
 		const {criterion, onChange} = this.props;
 
 		onChange({
@@ -313,11 +313,11 @@ class CriteriaRow extends Component {
 	 * @param {Array|object} value The properties or list of objects with
 	 * properties to update.
 	 */
-	_handleTypedInputChange = value => {
+	_handleTypedInputChange = (value) => {
 		const {criterion, onChange} = this.props;
 
 		if (Array.isArray(value)) {
-			const items = value.map(item => ({
+			const items = value.map((item) => ({
 				...criterion,
 				...item,
 			}));
@@ -538,7 +538,7 @@ class CriteriaRow extends Component {
 				? false
 				: selectedProperty.options.length === 0
 				? false
-				: selectedProperty.options.find(option => {
+				: selectedProperty.options.find((option) => {
 						return (
 							option.value === value &&
 							option.disabled === undefined
@@ -550,7 +550,7 @@ class CriteriaRow extends Component {
 		if (
 			selectedProperty.options !== undefined &&
 			selectedProperty.options.length > 0 &&
-			selectedProperty.options.find(option => {
+			selectedProperty.options.find((option) => {
 				return option.value === value;
 			}) === undefined &&
 			warning

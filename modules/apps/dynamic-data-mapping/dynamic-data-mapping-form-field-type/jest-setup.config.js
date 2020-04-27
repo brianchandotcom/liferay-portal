@@ -91,7 +91,7 @@ const languageMap = {
 window.Liferay = {
 	...(window.Liferay || {}),
 	Language: {
-		get: key => {
+		get: (key) => {
 			if (languageMap[key]) {
 				return languageMap[key];
 			}

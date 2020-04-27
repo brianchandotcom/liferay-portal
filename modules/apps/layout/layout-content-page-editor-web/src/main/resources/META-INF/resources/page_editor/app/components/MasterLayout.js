@@ -45,8 +45,8 @@ const LAYOUT_DATA_ITEMS = {
 };
 
 export default function MasterPage() {
-	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
-	const masterLayoutData = useSelector(state => state.masterLayoutData);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const masterLayoutData = useSelector((state) => state.masterLayoutData);
 
 	const mainItem = masterLayoutData.items[masterLayoutData.rootItems.main];
 
@@ -74,7 +74,7 @@ function MasterLayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 			item={item}
 			layoutData={layoutData}
 		>
-			{item.children.map(childId => {
+			{item.children.map((childId) => {
 				return (
 					<MasterLayoutDataItem
 						fragmentEntryLinks={fragmentEntryLinks}
@@ -95,7 +95,7 @@ MasterLayoutDataItem.propTypes = {
 };
 
 function DropZoneContainer() {
-	const mainItemId = useSelector(state => state.layoutData.rootItems.main);
+	const mainItemId = useSelector((state) => state.layoutData.rootItems.main);
 
 	return <Layout mainItemId={mainItemId} withinMasterPage />;
 }
@@ -126,7 +126,7 @@ const FragmentContent = React.memo(function FragmentContent({
 			return;
 		}
 
-		const handler = event => {
+		const handler = (event) => {
 			const element = event.target;
 
 			if (closest(element, '[href]')) {
@@ -153,7 +153,7 @@ const FragmentContent = React.memo(function FragmentContent({
 			}
 		}, 50);
 
-		getAllEditables(element).forEach(editable => {
+		getAllEditables(element).forEach((editable) => {
 			resolveEditableValue(
 				editableValues,
 				editable.editableId,
@@ -203,7 +203,7 @@ function Fragment({fragmentEntryLinks, item}) {
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
-	const languageId = useSelector(state => state.languageId);
+	const languageId = useSelector((state) => state.languageId);
 
 	return (
 		<FragmentContent

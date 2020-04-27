@@ -22,10 +22,10 @@ export default class Observer {
 	}
 
 	unsubscribe(fn) {
-		this.handlers = this.handlers.filter(handler => handler !== fn);
+		this.handlers = this.handlers.filter((handler) => handler !== fn);
 	}
 
 	dispatch(value) {
-		this.handlers.forEach(handler => handler(value));
+		this.handlers.forEach((handler) => handler(value));
 	}
 }

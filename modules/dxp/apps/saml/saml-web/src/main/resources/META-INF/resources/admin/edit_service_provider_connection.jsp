@@ -112,7 +112,7 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 	Liferay.provide(
 		window,
 		'<portlet:namespace />uploadMetadataXml',
-		function() {
+		function () {
 			var A = AUI();
 
 			var uploadMetadataXmlForm = A.one(

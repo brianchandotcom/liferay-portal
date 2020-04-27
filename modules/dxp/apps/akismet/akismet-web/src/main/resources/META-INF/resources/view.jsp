@@ -32,7 +32,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteMBMessages',
-		function(dicussion) {
+		function (dicussion) {
 			var deleteMBMessageIds = Liferay.Util.listCheckedExcept(
 				document.<portlet:namespace />fm,
 				'<portlet:namespace />allRowIds'
@@ -66,7 +66,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	Liferay.provide(
 		window,
 		'<portlet:namespace />notSpamMBMessages',
-		function() {
+		function () {
 			var notSpamMBMessageIds = Liferay.Util.listCheckedExcept(
 				document.<portlet:namespace />fm,
 				'<portlet:namespace />allRowIds'

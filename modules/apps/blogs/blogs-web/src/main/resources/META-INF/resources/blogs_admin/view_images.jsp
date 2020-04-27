@@ -109,7 +109,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 </div>
 
 <aui:script>
-	var deleteImages = function() {
+	var deleteImages = function () {
 		if (
 			confirm(
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-images" />'
@@ -149,10 +149,10 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 		deleteImages: deleteImages,
 	};
 
-	Liferay.componentReady('blogImagesManagementToolbar').then(function(
+	Liferay.componentReady('blogImagesManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

@@ -77,7 +77,7 @@ class FragmentCollectionsView extends PortletBase {
 			Liferay.Language.get('delete'),
 			Liferay.Language.get('delete-collection'),
 			this.viewDeleteFragmentCollectionsURL,
-			selectedItems => {
+			(selectedItems) => {
 				if (
 					confirm(
 						Liferay.Language.get(
@@ -85,7 +85,7 @@ class FragmentCollectionsView extends PortletBase {
 						)
 					)
 				) {
-					selectedItems.forEach(item => {
+					selectedItems.forEach((item) => {
 						this._fragmentCollectionsFm.appendChild(item);
 					});
 				}
@@ -108,8 +108,8 @@ class FragmentCollectionsView extends PortletBase {
 			Liferay.Language.get('export'),
 			Liferay.Language.get('export-collection'),
 			this.viewExportFragmentCollectionsURL,
-			selectedItems => {
-				selectedItems.forEach(item => {
+			(selectedItems) => {
+				selectedItems.forEach((item) => {
 					this._fragmentCollectionsFm.append(item);
 				});
 
@@ -144,7 +144,7 @@ class FragmentCollectionsView extends PortletBase {
 			url: dialogURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			if (event.selectedItem) {
 				callback(event.selectedItem);
 			}

@@ -115,7 +115,7 @@ renderResponse.setTitle(role.getTitle(locale));
 <aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var form = document.<portlet:namespace />fm;
 
-	var addAssignees = function(event) {
+	var addAssignees = function (event) {
 		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<portlet:namespace />selectAssignees',
 			title:
@@ -133,7 +133,7 @@ renderResponse.setTitle(role.getTitle(locale));
 			url: '<%= selectAssigneesURL %>',
 		});
 
-		itemSelectorDialog.on('selectedItemChange', function(event) {
+		itemSelectorDialog.on('selectedItemChange', function (event) {
 			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
@@ -168,7 +168,7 @@ renderResponse.setTitle(role.getTitle(locale));
 		itemSelectorDialog.open();
 	};
 
-	<portlet:namespace />unsetRoleAssignments = function() {
+	<portlet:namespace />unsetRoleAssignments = function () {
 		var assigneeType = '<%= HtmlUtil.escapeJS(tabs2) %>';
 		var ids = Liferay.Util.listCheckedExcept(
 			form,
@@ -195,7 +195,7 @@ renderResponse.setTitle(role.getTitle(locale));
 		});
 	};
 
-	Liferay.componentReady('editRoleAssignmentsManagementToolbar').then(function(
+	Liferay.componentReady('editRoleAssignmentsManagementToolbar').then(function (
 		managementToolbar
 	) {
 		managementToolbar.on('creationButtonClicked', addAssignees);

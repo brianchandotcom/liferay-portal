@@ -47,7 +47,7 @@ String samlSubjectScreenName = (String)request.getAttribute(SamlWebKeys.SAML_SUB
 </liferay-util:buffer>
 
 <script type="text/javascript">
-	AUI().use('liferay-notification', function(A) {
+	AUI().use('liferay-notification', function (A) {
 		new Liferay.Notification({
 			closeable: true,
 			delay: {

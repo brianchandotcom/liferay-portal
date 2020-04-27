@@ -140,7 +140,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		rootNode: '#<portlet:namespace />inviteMembersContainer',
 	});
 
-	var destroyInstance = function(event) {
+	var destroyInstance = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			portletInviteMembers.destroy();
 

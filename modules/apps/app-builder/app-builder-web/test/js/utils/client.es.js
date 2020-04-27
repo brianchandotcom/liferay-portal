@@ -42,7 +42,7 @@ describe('client', () => {
 		const item = {data: 'hello'};
 		fetch.mockResponseOnce(JSON.stringify(item));
 
-		addItem('/test', item).then(res => {
+		addItem('/test', item).then((res) => {
 			expect(res.data).toEqual('hello');
 		});
 
@@ -69,19 +69,19 @@ describe('client', () => {
 	it('confirmDelete', () => {
 		const item = {id: 123};
 		window.confirm = jest.fn(() => false);
-		confirmDelete('/test')(item).then(confirmed =>
+		confirmDelete('/test')(item).then((confirmed) =>
 			expect(confirmed).toBeFalsy()
 		);
 
 		fetch.mockResponseOnce('');
 		window.confirm = jest.fn(() => true);
 
-		confirmDelete('/test')(item).then(confirmed =>
+		confirmDelete('/test')(item).then((confirmed) =>
 			expect(confirmed).toBeTruthy()
 		);
 
 		fetch.mockReject(new Error('error'));
-		confirmDelete('/test')(item).catch(error =>
+		confirmDelete('/test')(item).catch((error) =>
 			expect(error.message).toEqual('error')
 		);
 	});
@@ -89,7 +89,7 @@ describe('client', () => {
 	it('deleteItem', () => {
 		fetch.mockResponseOnce('');
 
-		deleteItem('/test').then(res => {
+		deleteItem('/test').then((res) => {
 			expect(res).toEqual({});
 		});
 
@@ -116,7 +116,7 @@ describe('client', () => {
 		const item = {data: 'hello'};
 		fetch.mockResponseOnce(JSON.stringify(item));
 
-		getItem('/test').then(res => {
+		getItem('/test').then((res) => {
 			expect(res.data).toEqual('hello');
 		});
 
@@ -141,7 +141,7 @@ describe('client', () => {
 	it('invalid response body', () => {
 		fetch.mockResponseOnce('not a valid json object');
 
-		addItem('/', {}).catch(error => {
+		addItem('/', {}).catch((error) => {
 			expect(error.message).toEqual(
 				'Unexpected token o in JSON at position 1'
 			);
@@ -151,7 +151,7 @@ describe('client', () => {
 	it('reject', () => {
 		fetch.mockReject(new Error('error'));
 
-		addItem('/', {}).catch(error => {
+		addItem('/', {}).catch((error) => {
 			expect(error.message).toEqual('error');
 		});
 	});
@@ -160,7 +160,7 @@ describe('client', () => {
 		const item = {data: 'hello'};
 		fetch.mockResponseOnce(JSON.stringify(item));
 
-		request('/test').then(res => {
+		request('/test').then((res) => {
 			expect(res.data).toEqual('hello');
 		});
 
@@ -188,7 +188,7 @@ describe('client', () => {
 
 		fetch.mockResponseOnce(JSON.stringify(res), {status: 404});
 
-		addItem('/', {}).catch(error => {
+		addItem('/', {}).catch((error) => {
 			expect(error).toEqual(res);
 		});
 	});
@@ -197,7 +197,7 @@ describe('client', () => {
 		const item = {data: 'hello'};
 		fetch.mockResponseOnce(JSON.stringify(item));
 
-		updateItem('/test', item).then(res => {
+		updateItem('/test', item).then((res) => {
 			expect(res.data).toEqual('hello');
 		});
 

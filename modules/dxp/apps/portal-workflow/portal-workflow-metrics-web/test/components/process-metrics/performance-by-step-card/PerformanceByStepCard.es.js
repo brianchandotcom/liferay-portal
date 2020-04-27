@@ -108,7 +108,7 @@ describe('The performance by step card component should', () => {
 
 			const filterItems = await getAllByTestId('filterItem');
 
-			const activeItem = filterItems.find(item =>
+			const activeItem = filterItems.find((item) =>
 				item.className.includes('active')
 			);
 			const activeItemName = await findByTestId(

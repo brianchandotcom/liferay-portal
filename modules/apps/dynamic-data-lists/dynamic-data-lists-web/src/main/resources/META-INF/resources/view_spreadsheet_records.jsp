@@ -62,11 +62,11 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		<%= editable %>
 	);
 
-	var ignoreEmptyRecordsNumericSort = function(recA, recB, desc, field) {
+	var ignoreEmptyRecordsNumericSort = function (recA, recB, desc, field) {
 		var a = recA.get(field);
 		var b = recB.get(field);
 
-		return A.ArraySort.compareIgnoreWhiteSpace(a, b, desc, function(
+		return A.ArraySort.compareIgnoreWhiteSpace(a, b, desc, function (
 			a,
 			b,
 			desc
@@ -87,7 +87,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		});
 	};
 
-	var ignoreEmptyRecordsStringSort = function(recA, recB, desc, field) {
+	var ignoreEmptyRecordsStringSort = function (recA, recB, desc, field) {
 		var a = recA.get(field);
 		var b = recB.get(field);
 
@@ -100,7 +100,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		number: 1,
 	};
 
-	var keys = columns.map(function(item, index) {
+	var keys = columns.map(function (item, index) {
 		var key = item.key;
 
 		if (!item.sortFn) {
@@ -127,7 +127,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	var records = <%= ddlDisplayContext.getRecordsJSONArray(records, !editable, locale) %>;
 
-	records.sort(function(a, b) {
+	records.sort(function (a, b) {
 		return a.displayIndex - b.displayIndex;
 	});
 
@@ -136,7 +136,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		keys
 	);
 
-	records.forEach(function(item, index) {
+	records.forEach(function (item, index) {
 		data.splice(item.displayIndex, 0, item);
 	});
 
@@ -174,7 +174,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	<c:if test="<%= editable %>">
 		var numberOfRecordsNode = A.one('#<portlet:namespace />numberOfRecords');
 
-		A.one('#<portlet:namespace />addRecords').on('click', function(event) {
+		A.one('#<portlet:namespace />addRecords').on('click', function (event) {
 			var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
 
 			spreadSheet.addEmptyRows(numberOfRecords);

@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-dialogs',
-	A => {
+	(A) => {
 		var KaleoDesignerDialogs = {
 			_duplicationDialog: null,
 			_forms: {},
@@ -111,7 +111,7 @@ AUI.add(
 			},
 		};
 
-		var openConfirmDeleteDialog = function(title, message, actionUrl) {
+		var openConfirmDeleteDialog = function (title, message, actionUrl) {
 			var dialog = Liferay.Util.Window.getWindow({
 				dialog: {
 					bodyContent: message,
@@ -167,7 +167,7 @@ AUI.add(
 			});
 		};
 
-		var showActionUndoneSuccessMessage = function() {
+		var showActionUndoneSuccessMessage = function () {
 			var instance = this;
 
 			var successMessage = Liferay.Language.get('action-undone');
@@ -197,7 +197,7 @@ AUI.add(
 			instance._alert = alert;
 		};
 
-		var showDefinitionImportSuccessMessage = function(namespace) {
+		var showDefinitionImportSuccessMessage = function (namespace) {
 			var instance = this;
 
 			var undo = Liferay.Language.get('undo');

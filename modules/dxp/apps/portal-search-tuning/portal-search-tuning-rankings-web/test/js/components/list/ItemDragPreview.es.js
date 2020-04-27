@@ -34,7 +34,7 @@ function testText(text) {
 describe('ItemDragPreview', () => {
 	it.each(['title', 'description', 'author', 'clicks', 'date'])(
 		'displays the %s',
-		element => {
+		(element) => {
 			testText(`${MOCK_DOCUMENT[element]}`);
 		}
 	);

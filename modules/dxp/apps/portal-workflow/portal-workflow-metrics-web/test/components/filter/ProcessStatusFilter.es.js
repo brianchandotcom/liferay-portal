@@ -44,7 +44,7 @@ describe('The process status filter component should', () => {
 	test('Be rendered with active option "Completed"', async () => {
 		const filterItems = getAllByTestId('filterItem');
 
-		const activeItem = filterItems.find(item =>
+		const activeItem = filterItems.find((item) =>
 			item.className.includes('active')
 		);
 		const activeItemName = await findByTestId(activeItem, 'filterItemName');

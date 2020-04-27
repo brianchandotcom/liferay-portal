@@ -153,7 +153,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 				uri:
 					'<%= editAssetListDisplayContext.getSelectSegmentsEntryURL() %>',
 			},
-			function(event) {
+			function (event) {
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {
 					data: {
 						segmentsEntryId: event.entityid,

@@ -42,13 +42,13 @@ class DateTimeInput extends React.Component {
 		return returnVal;
 	}
 
-	_handleDateChange = event => {
+	_handleDateChange = (event) => {
 		const value = event.target.value;
 
 		this.setState({value});
 	};
 
-	_handleDateBlur = event => {
+	_handleDateBlur = (event) => {
 		const date = dateFns.format(event.target.value, INPUT_DATE_FORMAT);
 
 		if (date !== 'Invalid Date') {

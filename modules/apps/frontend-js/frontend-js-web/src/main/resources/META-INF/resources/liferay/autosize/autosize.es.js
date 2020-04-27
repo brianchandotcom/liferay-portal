@@ -57,7 +57,7 @@ class AutoSize {
 		return template;
 	}
 
-	handleInput = event => {
+	handleInput = (event) => {
 		requestAnimationFrame(() => {
 			const target = event.target;
 			const value = target.value;

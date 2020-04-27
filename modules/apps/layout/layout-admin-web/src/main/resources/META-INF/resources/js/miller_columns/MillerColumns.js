@@ -19,7 +19,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import MillerColumnsColumn from './MillerColumnsColumn';
 
-const getItemsMap = columns => {
+const getItemsMap = (columns) => {
 	const map = new Map();
 
 	let parentId, parentKey;
@@ -28,7 +28,7 @@ const getItemsMap = columns => {
 		let childrenCount = 0;
 		let newParentId, newParentKey;
 
-		column.forEach(item => {
+		column.forEach((item) => {
 			childrenCount++;
 
 			map.set(item.key, {
@@ -92,7 +92,7 @@ const MillerColumns = ({
 
 		// Add empty column in the end if last column has an active item
 		const lastColumnActiveItem = columns[columns.length - 1].items.find(
-			item => item.active
+			(item) => item.active
 		);
 		if (lastColumnActiveItem && !lastColumnActiveItem.hasChild) {
 			columns.push({
@@ -130,8 +130,8 @@ const MillerColumns = ({
 
 		const itemsArray = Array.from(items.values());
 
-		const source = itemsArray.find(item => item.id === sourceId);
-		const parent = itemsArray.find(item => item.id === newParentId);
+		const source = itemsArray.find((item) => item.id === sourceId);
+		const parent = itemsArray.find((item) => item.id === newParentId);
 
 		// If no newIndex is provided set it as the last of the siblings.
 		if (typeof newIndex !== 'number') {

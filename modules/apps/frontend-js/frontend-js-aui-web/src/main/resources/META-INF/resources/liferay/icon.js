@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-icon',
-	A => {
+	(A) => {
 		var _ICON_REGISTRY = {};
 
 		var Icon = {

@@ -57,7 +57,7 @@ const Body = ({history, id, processId, query}) => {
 
 	usePageTitle(id ? sla.name : Liferay.Language.get('new-sla'));
 
-	const handleErrors = error => {
+	const handleErrors = (error) => {
 		const {data} = error.response || {};
 
 		if (Array.isArray(data)) {
@@ -136,7 +136,7 @@ const Body = ({history, id, processId, query}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id, processId, saveSLA, sla]);
 
-	const onChangeHandler = validateFunction => ({
+	const onChangeHandler = (validateFunction) => ({
 		target: {name, value = ''},
 	}) => {
 		changeValue(name, value);
@@ -146,7 +146,7 @@ const Body = ({history, id, processId, query}) => {
 		}
 	};
 
-	const onNameChanged = newName => {
+	const onNameChanged = (newName) => {
 		setErrors({
 			...errors,
 			[ALERT_MESSAGE]: '',

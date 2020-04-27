@@ -20,7 +20,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import './Modal.scss';
 
-const openModal = props => {
+const openModal = (props) => {
 	if (
 		props &&
 		props.url &&

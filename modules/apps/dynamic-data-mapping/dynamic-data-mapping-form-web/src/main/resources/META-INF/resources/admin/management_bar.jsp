@@ -34,7 +34,7 @@
 />
 
 <aui:script sandbox="<%= true %>">
-	var deleteFormInstances = function() {
+	var deleteFormInstances = function () {
 		if (
 			confirm(
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
@@ -67,7 +67,7 @@
 		}
 	};
 
-	var deleteStructures = function() {
+	var deleteStructures = function () {
 		if (
 			confirm(
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
@@ -106,10 +106,10 @@
 		deleteStructures: deleteStructures,
 	};
 
-	Liferay.componentReady('ddmFormManagementToolbar').then(function(
+	Liferay.componentReady('ddmFormManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on(['actionItemClicked'], function(event) {
+		managementToolbar.on(['actionItemClicked'], function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

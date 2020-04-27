@@ -49,7 +49,7 @@ AssetCategoriesSelectorTag.propTypes = {
 	portletURL: PropTypes.string,
 };
 
-export default function(props) {
+export default function (props) {
 	return (
 		<AssetCategoriesSelectorTag
 			{...props}

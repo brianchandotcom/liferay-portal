@@ -86,7 +86,7 @@ const PreviewSeoContainer = ({
 	const [inputTargets, setInputTargets] = useState({});
 
 	const getDefaultValue = useCallback(
-		type => {
+		(type) => {
 			let defaultValue = targets[type] && targets[type].defaultValue;
 
 			if (isObject(defaultValue)) {
@@ -102,7 +102,7 @@ const PreviewSeoContainer = ({
 	useEffect(() => {
 		const inputLocalizedLocaleChangedHandle = Liferay.on(
 			'inputLocalized:localeChanged',
-			event => {
+			(event) => {
 				const newLanguage =
 					event.item && event.item.getAttribute('data-value');
 
@@ -123,7 +123,7 @@ const PreviewSeoContainer = ({
 				return;
 			}
 
-			setFields(state => ({
+			setFields((state) => ({
 				...state,
 				[type]: {...props},
 			}));
@@ -168,7 +168,7 @@ const PreviewSeoContainer = ({
 
 		const inputs = Object.values(inputTargets).reduce(
 			(acc, {input, type}) => {
-				const listener = event => {
+				const listener = (event) => {
 					handleInputChange({
 						event,
 						type,
@@ -213,10 +213,13 @@ const PreviewSeoContainer = ({
 			{}
 		);
 
-		setFields(prevFieldsState => ({...prevFieldsState, ...newFieldsState}));
+		setFields((prevFieldsState) => ({
+			...prevFieldsState,
+			...newFieldsState,
+		}));
 	}, [inputTargets, isMounted, language]);
 
-	const getValue = type => {
+	const getValue = (type) => {
 		const disabled = fields[type] && fields[type].disabled;
 		let value = fields[type] && fields[type].value;
 
@@ -268,7 +271,7 @@ PreviewSeoContainer.propTypes = {
 	}).isRequired,
 };
 
-export default function(props) {
+export default function (props) {
 	return (
 		<PreviewSeoContainer
 			{...props}

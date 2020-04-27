@@ -48,7 +48,7 @@ class RenderState {
 	from(renderState) {
 		this.parameters = {};
 
-		Object.keys(renderState.parameters).forEach(name => {
+		Object.keys(renderState.parameters).forEach((name) => {
 			if (Array.isArray(renderState.parameters[name])) {
 				this.parameters[name] = renderState.parameters[name].slice(0);
 			}

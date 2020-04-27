@@ -20,7 +20,7 @@ import PageContent from './PageContent';
 export default function PageContents(props) {
 	return (
 		<ul className="list-unstyled">
-			{props.pageContents.map(pageContent => (
+			{props.pageContents.map((pageContent) => (
 				<PageContent key={pageContent.classPK} {...pageContent} />
 			))}
 		</ul>

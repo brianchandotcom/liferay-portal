@@ -42,7 +42,7 @@ const CustomObjectPopover = ({
 		}
 	};
 
-	const validate = value => {
+	const validate = (value) => {
 		const invalid = value.trim() === '';
 
 		setHasError(invalid);
@@ -71,7 +71,7 @@ const CustomObjectPopover = ({
 			className={`${className} mw-100`}
 			content={() => (
 				<ClayForm
-					onSubmit={event => {
+					onSubmit={(event) => {
 						event.preventDefault();
 
 						handleSubmit();

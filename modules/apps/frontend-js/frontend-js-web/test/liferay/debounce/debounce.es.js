@@ -47,7 +47,7 @@ describe('debounce', () => {
 		const expectedContext = {};
 		let context;
 
-		const fn = function() {
+		const fn = function () {
 			context = this;
 		};
 

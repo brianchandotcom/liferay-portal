@@ -17,7 +17,7 @@ import ThemeContext from '../../ThemeContext.es';
 const HiddenInputs = ({valueMap = {}}) => {
 	const {namespace} = useContext(ThemeContext);
 
-	return Object.keys(valueMap).map(key => (
+	return Object.keys(valueMap).map((key) => (
 		<input
 			id={`${namespace}${key}`}
 			key={key}

@@ -12,12 +12,12 @@
  * details.
  */
 
-(function() {
+(function () {
 	CKEDITOR.plugins.add('autocomplete', {
 		init(editor) {
 			var instance = this;
 
-			AUI().use('aui-debounce', 'liferay-autocomplete-input', A => {
+			AUI().use('aui-debounce', 'liferay-autocomplete-input', (A) => {
 				var path = instance.path;
 
 				var dependencies = [CKEDITOR.getUrl(path + 'autocomplete.js')];

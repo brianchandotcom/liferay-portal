@@ -70,7 +70,7 @@ class Form extends Component {
 		this._eventHandler = new EventHandler();
 
 		const dependencies = [
-			this._createEditor('nameEditor').then(editor => {
+			this._createEditor('nameEditor').then((editor) => {
 				this._eventHandler.add(
 					dom.on(
 						editor.element.$,
@@ -297,7 +297,9 @@ class Form extends Component {
 		this._eventHandler.removeAllListeners();
 
 		if (this._translationManagerHandles) {
-			this._translationManagerHandles.forEach(handle => handle.detach());
+			this._translationManagerHandles.forEach((handle) =>
+				handle.detach()
+			);
 		}
 	}
 
@@ -629,8 +631,8 @@ class Form extends Component {
 			promise = Promise.resolve(CKEDITOR.instances[editorName]);
 		}
 		else {
-			promise = new Promise(resolve => {
-				Liferay.on('editorAPIReady', event => {
+			promise = new Promise((resolve) => {
+				Liferay.on('editorAPIReady', (event) => {
 					if (event.editorName === editorName) {
 						event.editor.create();
 
@@ -667,7 +669,7 @@ class Form extends Component {
 		if (settingsDDMForm) {
 			const settingsPageVisitor = new PagesVisitor(settingsDDMForm.pages);
 
-			settingsPageVisitor.mapFields(field => {
+			settingsPageVisitor.mapFields((field) => {
 				if (field.fieldName === 'requireAuthentication') {
 					requireAuthentication = field.value;
 				}
@@ -881,7 +883,7 @@ class Form extends Component {
 
 		return {
 			...context,
-			pages: context.pages.map(page => {
+			pages: context.pages.map((page) => {
 				let {
 					description,
 					localizedDescription,

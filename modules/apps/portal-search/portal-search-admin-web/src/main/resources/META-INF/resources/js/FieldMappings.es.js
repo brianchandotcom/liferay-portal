@@ -26,7 +26,7 @@ class AceEditor extends React.Component {
 	}
 
 	componentDidMount() {
-		AUI().use('aui-ace-editor', A => {
+		AUI().use('aui-ace-editor', (A) => {
 			const editor = new A.AceEditor({
 				boundingBox: this.container.current,
 				highlightActiveLine: false,
@@ -74,7 +74,7 @@ const FieldMappings = ({
 
 	const delay = useTimeout();
 
-	const handleCopyEditorText = event => {
+	const handleCopyEditorText = (event) => {
 		const editorTextInput = editorTextInputRef.current;
 
 		editorTextInput.focus();
@@ -106,7 +106,7 @@ const FieldMappings = ({
 								{Liferay.Language.get('index')}
 							</li>
 
-							{fieldMappingIndexDisplayContexts.map(item => {
+							{fieldMappingIndexDisplayContexts.map((item) => {
 								return (
 									<li className="nav-item" key={item.name}>
 										<a
@@ -193,8 +193,9 @@ const FieldMappings = ({
 						</div>
 
 						<div
-							className={`${theme === 'dark' &&
-								'ace_dark'} lfr-source-editor lfr-source-editor-content sheet-section`}
+							className={`${
+								theme === 'dark' && 'ace_dark'
+							} lfr-source-editor lfr-source-editor-content sheet-section`}
 						>
 							<AceEditor
 								fieldMappings={fieldMappings}

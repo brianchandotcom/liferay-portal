@@ -46,7 +46,7 @@ export default function FloatingToolbar({
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [windowWidth, setWindowWidth] = useState(0);
 
-	const languageId = useSelector(state => state.languageId);
+	const languageId = useSelector((state) => state.languageId);
 
 	const itemElement = itemRef.current;
 
@@ -167,7 +167,7 @@ export default function FloatingToolbar({
 		);
 
 		if (sidebarElement) {
-			const handleTransitionEnd = event => {
+			const handleTransitionEnd = (event) => {
 				if (event.target === sidebarElement) {
 					alignElement(toolbarRef, itemRef, () => {
 						alignElement(panelRef, toolbarRef);
@@ -176,7 +176,7 @@ export default function FloatingToolbar({
 				}
 			};
 
-			const handleTransitionStart = event => {
+			const handleTransitionStart = (event) => {
 				if (event.target === sidebarElement) {
 					setHidden(true);
 				}
@@ -244,7 +244,7 @@ export default function FloatingToolbar({
 		}
 
 		return () => {
-			sideNavigationListeners.forEach(listener =>
+			sideNavigationListeners.forEach((listener) =>
 				listener.removeListener()
 			);
 		};
@@ -259,7 +259,7 @@ export default function FloatingToolbar({
 	return (
 		show &&
 		buttons.length > 0 && (
-			<div onClick={event => event.stopPropagation()}>
+			<div onClick={(event) => event.stopPropagation()}>
 				{createPortal(
 					<div
 						className={classNames(
@@ -270,7 +270,7 @@ export default function FloatingToolbar({
 								'page-editor__floating-toolbar--hidden': hidden,
 							}
 						)}
-						onMouseOver={event => {
+						onMouseOver={(event) => {
 							event.stopPropagation();
 							hoverItem(null);
 						}}
@@ -278,7 +278,7 @@ export default function FloatingToolbar({
 					>
 						<div className="popover position-static">
 							<div className="d-flex p-2 popover-body">
-								{buttons.map(button => (
+								{buttons.map((button) => (
 									<ClayButtonWithIcon
 										borderless
 										className={classNames(

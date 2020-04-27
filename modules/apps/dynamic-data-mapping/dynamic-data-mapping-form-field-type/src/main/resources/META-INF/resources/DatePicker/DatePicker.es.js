@@ -26,7 +26,7 @@ import {connectStore} from '../util/connectStore.es';
 const getInputMask = (dateFormat, dateDelimiter) => {
 	const inputMaskArray = [];
 
-	dateFormat.split('').forEach(item => {
+	dateFormat.split('').forEach((item) => {
 		if (item === dateDelimiter) {
 			inputMaskArray.push(dateDelimiter);
 		}
@@ -48,7 +48,7 @@ const getInputMask = (dateFormat, dateDelimiter) => {
 const getDateMask = (dateFormat, dateDelimiter) => {
 	return dateFormat
 		.split(dateDelimiter)
-		.map(item => {
+		.map((item) => {
 			let currentFormat;
 
 			if (item === '%Y') {
@@ -66,7 +66,7 @@ const getDateMask = (dateFormat, dateDelimiter) => {
 		.join(dateDelimiter);
 };
 
-const getDelimiter = dateFormat => {
+const getDelimiter = (dateFormat) => {
 	let dateDelimiter = '/';
 
 	if (dateFormat.indexOf('.') != -1) {
@@ -92,7 +92,7 @@ const useDateFormat = () => {
 	}, []);
 };
 
-const transformToDate = date => {
+const transformToDate = (date) => {
 	if (typeof date === 'string' && date.indexOf('_') === -1 && date !== '') {
 		return moment(date).toDate();
 	}
@@ -100,7 +100,7 @@ const transformToDate = date => {
 	return date;
 };
 
-const getInitialMonth = value => {
+const getInitialMonth = (value) => {
 	if (moment(value).isValid()) {
 		return moment(value).toDate();
 	}
@@ -108,7 +108,7 @@ const getInitialMonth = value => {
 	return moment().toDate();
 };
 
-const getValueForHidden = value => {
+const getValueForHidden = (value) => {
 	if (moment(value).isValid()) {
 		return moment(value).format('YYYY-MM-DD');
 	}
@@ -156,7 +156,7 @@ const DatePicker = ({
 		}
 	}, [inputMask, dateMask, inputRef]);
 
-	const handleNavigation = date => {
+	const handleNavigation = (date) => {
 		const currentYear = date.getFullYear();
 
 		setYears({
@@ -177,11 +177,11 @@ const DatePicker = ({
 				dateFormat={dateMask}
 				disabled={disabled}
 				initialMonth={getInitialMonth(value)}
-				onInput={event => {
+				onInput={(event) => {
 					maskInstance.current.update(event.target.value);
 				}}
 				onNavigation={handleNavigation}
-				onValueChange={value => {
+				onValueChange={(value) => {
 					setValue(value);
 
 					if (moment(value).isValid()) {
@@ -217,7 +217,7 @@ const DatePickerProxy = connectStore(
 			<DatePicker
 				disabled={readOnly}
 				name={name}
-				onChange={value => emit('fieldEdited', {}, value)}
+				onChange={(value) => emit('fieldEdited', {}, value)}
 				placeholder={placeholder}
 				spritemap={spritemap}
 				value={value ? value : predefinedValue}

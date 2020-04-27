@@ -61,7 +61,7 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 	Liferay.provide(
 		window,
 		'<portlet:namespace />testCasSettings',
-		function() {
+		function () {
 			var A = AUI();
 
 			var data = {};

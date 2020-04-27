@@ -21,7 +21,7 @@ import {ModalContext} from '../ModalProvider.es';
 import {Body} from './InstanceDetailsModalBody.es';
 
 const Header = ({id = '', slaResults = [], slaStatus, status}) => {
-	const getStatus = status => (slaResults.length === 0 ? 'Empty' : status);
+	const getStatus = (status) => (slaResults.length === 0 ? 'Empty' : status);
 	const icons = {
 		Empty: 'hr',
 		Overdue: 'exclamation-circle',

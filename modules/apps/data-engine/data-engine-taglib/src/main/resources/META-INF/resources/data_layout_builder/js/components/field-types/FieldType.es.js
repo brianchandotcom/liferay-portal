@@ -33,7 +33,7 @@ const ICONS = {
 	select: 'list',
 };
 
-export default props => {
+export default (props) => {
 	const {
 		active,
 		className,
@@ -52,8 +52,8 @@ export default props => {
 	} = props;
 
 	const [{dragging}, drag, preview] = useDrag({
-		canDrag: _ => !disabled && draggable,
-		collect: monitor => ({
+		canDrag: (_) => !disabled && draggable,
+		collect: (monitor) => ({
 			dragging: monitor.isDragging(),
 		}),
 		item: {
@@ -155,14 +155,14 @@ export default props => {
 								data-tooltip-align="right"
 								data-tooltip-delay="200"
 								displayType="secondary"
-								onClick={event => {
+								onClick={(event) => {
 									event.stopPropagation();
 
 									setLoading(true);
 
 									onDelete(name)
 										.then(() => setLoading(false))
-										.catch(error => {
+										.catch((error) => {
 											setLoading(false);
 
 											throw error;

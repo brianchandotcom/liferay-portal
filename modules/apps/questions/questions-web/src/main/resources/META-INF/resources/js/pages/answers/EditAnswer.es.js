@@ -66,7 +66,7 @@ export default withRouter(
 										config={getCKEditorConfig()}
 										data={articleBody}
 										onBeforeLoad={onBeforeLoadCKEditor}
-										onChange={event =>
+										onChange={(event) =>
 											setArticleBody(
 												event.editor.getData()
 											)

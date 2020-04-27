@@ -223,7 +223,7 @@ renderResponse.setTitle(title);
 				uri:
 					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(dlEditDDMStructureDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>',
 			},
-			function(event) {
+			function (event) {
 				var form = document.<portlet:namespace />fm;
 
 				Liferay.Util.setFormValues(form, {
@@ -268,7 +268,7 @@ renderResponse.setTitle(title);
 		<c:choose>
 			<c:when test="<%= FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor() %>">
 				Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
-					function(dataLayoutBuilder) {
+					function (dataLayoutBuilder) {
 						var formData = dataLayoutBuilder.getFormData();
 
 						var dataDefinition = formData.definition;

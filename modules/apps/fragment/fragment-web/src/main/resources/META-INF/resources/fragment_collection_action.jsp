@@ -72,7 +72,7 @@
 
 <c:if test="<%= fragmentDisplayContext.hasUpdatePermission() %>">
 	<aui:script>
-		var openImportCollectionView = function() {
+		var openImportCollectionView = function () {
 			Liferay.Util.openModal({
 				buttons: [
 					{
@@ -86,7 +86,7 @@
 					},
 				],
 				id: '<portlet:namespace />openImportCollectionView',
-				onClose: function() {
+				onClose: function () {
 					window.location.reload();
 				},
 				title: '<liferay-ui:message key="import" />',

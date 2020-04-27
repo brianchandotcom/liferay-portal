@@ -53,7 +53,7 @@ const WINDOW_STATE_KEY = 'p_p_state';
  * @review
  */
 
-const decodeUpdateString = function(pageRenderState, updateString) {
+const decodeUpdateString = function (pageRenderState, updateString) {
 	const portlets =
 		pageRenderState && pageRenderState.portlets
 			? pageRenderState.portlets
@@ -65,7 +65,7 @@ const decodeUpdateString = function(pageRenderState, updateString) {
 		if (newRenderState.portlets) {
 			const keys = Object.keys(portlets);
 
-			keys.forEach(key => {
+			keys.forEach((key) => {
 				const newState = newRenderState.portlets[key].state;
 				const oldState = portlets[key].state;
 
@@ -96,7 +96,7 @@ const decodeUpdateString = function(pageRenderState, updateString) {
  * @review
  */
 
-const encodeFormAsString = function(portletId, form) {
+const encodeFormAsString = function (portletId, form) {
 	const parameters = [];
 
 	for (let i = 0; i < form.elements.length; i++) {
@@ -110,7 +110,7 @@ const encodeFormAsString = function(portletId, form) {
 			if (tag === 'SELECT' && element.multiple) {
 				const options = [...element.options];
 
-				options.forEach(opt => {
+				options.forEach((opt) => {
 					if (opt.checked) {
 						const value = opt.value;
 
@@ -147,7 +147,7 @@ const encodeFormAsString = function(portletId, form) {
  * @review
  */
 
-const encodeParameter = function(name, values) {
+const encodeParameter = function (name, values) {
 	let str = '';
 
 	if (Array.isArray(values)) {
@@ -159,7 +159,7 @@ const encodeParameter = function(name, values) {
 				VALUE_ARRAY_EMPTY;
 		}
 		else {
-			values.forEach(value => {
+			values.forEach((value) => {
 				str += TOKEN_DELIM + encodeURIComponent(name);
 
 				if (value === null) {
@@ -186,7 +186,7 @@ const encodeParameter = function(name, values) {
  * @review
  */
 
-const generateActionUrl = function(portletId, url, form) {
+const generateActionUrl = function (portletId, url, form) {
 	const request = {
 		credentials: 'same-origin',
 		method: 'POST',
@@ -237,7 +237,7 @@ const generateActionUrl = function(portletId, url, form) {
  * @review
  */
 
-const generateParameterString = function(
+const generateParameterString = function (
 	pageRenderState,
 	portletId,
 	name,
@@ -282,7 +282,7 @@ const generateParameterString = function(
  * @review
  */
 
-const generatePortletModeAndWindowStateString = function(
+const generatePortletModeAndWindowStateString = function (
 	pageRenderState,
 	portletId
 ) {
@@ -321,7 +321,7 @@ const generatePortletModeAndWindowStateString = function(
  * @review
  */
 
-const getUpdatedPublicRenderParameters = function(
+const getUpdatedPublicRenderParameters = function (
 	pageRenderState,
 	portletId,
 	state
@@ -336,7 +336,7 @@ const getUpdatedPublicRenderParameters = function(
 
 			const keys = Object.keys(portletPublicParameters);
 
-			keys.forEach(key => {
+			keys.forEach((key) => {
 				if (
 					!isParameterInStateEqual(
 						pageRenderState,
@@ -368,7 +368,7 @@ const getUpdatedPublicRenderParameters = function(
  * @review
  */
 
-const getUrl = function(
+const getUrl = function (
 	pageRenderState,
 	type,
 	portletId,
@@ -462,7 +462,7 @@ const getUrl = function(
 
 						const keys = Object.keys(stateParameters);
 
-						keys.forEach(key => {
+						keys.forEach((key) => {
 							if (
 								!isPublicParameter(
 									pageRenderState,
@@ -492,12 +492,12 @@ const getUrl = function(
 
 					const mapKeys = Object.keys(pageRenderState.prpMap);
 
-					mapKeys.forEach(mapKey => {
+					mapKeys.forEach((mapKey) => {
 						const groupKeys = Object.keys(
 							pageRenderState.prpMap[mapKey]
 						);
 
-						groupKeys.forEach(groupKey => {
+						groupKeys.forEach((groupKey) => {
 							const groupName =
 								pageRenderState.prpMap[mapKey][groupKey];
 
@@ -538,7 +538,7 @@ const getUrl = function(
 		str = '';
 		const parameterKeys = Object.keys(parameters);
 
-		parameterKeys.forEach(parameterKey => {
+		parameterKeys.forEach((parameterKey) => {
 			str += encodeParameter(
 				portletId + parameterKey,
 				parameters[parameterKey]
@@ -560,7 +560,7 @@ const getUrl = function(
  * @review
  */
 
-const isParameterEqual = function(parameter1, parameter2) {
+const isParameterEqual = function (parameter1, parameter2) {
 	let result = false;
 
 	// The values are either string arrays or undefined.
@@ -597,7 +597,7 @@ const isParameterEqual = function(parameter1, parameter2) {
  * @review
  */
 
-const isParameterInStateEqual = function(
+const isParameterInStateEqual = function (
 	pageRenderState,
 	portletId,
 	state,
@@ -628,7 +628,7 @@ const isParameterInStateEqual = function(
  * @review
  */
 
-const isPublicParameter = function(pageRenderState, portletId, name) {
+const isPublicParameter = function (pageRenderState, portletId, name) {
 	let result = false;
 
 	if (pageRenderState && pageRenderState.portlets) {
@@ -654,7 +654,7 @@ const isPublicParameter = function(pageRenderState, portletId, name) {
  * @review
  */
 
-const stateChanged = function(pageRenderState, newState, portletId) {
+const stateChanged = function (pageRenderState, newState, portletId) {
 	let result = false;
 
 	if (pageRenderState && pageRenderState.portlets) {
@@ -682,7 +682,7 @@ const stateChanged = function(pageRenderState, newState, portletId) {
 
 				const newKeys = Object.keys(newState.parameters);
 
-				newKeys.forEach(key => {
+				newKeys.forEach((key) => {
 					const newParameter = newState.parameters[key];
 					const oldParameter = oldState.parameters[key];
 
@@ -695,7 +695,7 @@ const stateChanged = function(pageRenderState, newState, portletId) {
 
 				const oldKeys = Object.keys(oldState.parameters);
 
-				oldKeys.forEach(key => {
+				oldKeys.forEach((key) => {
 					if (!newState.parameters[key]) {
 						result = true;
 					}
@@ -722,7 +722,7 @@ const stateChanged = function(pageRenderState, newState, portletId) {
  * @review
  */
 
-const validateArguments = function(args = [], min = 0, max = 1, types = []) {
+const validateArguments = function (args = [], min = 0, max = 1, types = []) {
 	if (args.length < min) {
 		throw new TypeError(
 			`Too few arguments provided: Number of arguments: ${args.length}`
@@ -762,7 +762,7 @@ const validateArguments = function(args = [], min = 0, max = 1, types = []) {
  * @review
  */
 
-const validateForm = function(form) {
+const validateForm = function (form) {
 	if (!(form instanceof HTMLFormElement)) {
 		throw new TypeError('Element must be an HTMLFormElement');
 	}
@@ -827,14 +827,14 @@ const validateForm = function(form) {
  * @review
  */
 
-const validateParameters = function(parameters) {
+const validateParameters = function (parameters) {
 	if (!isDefAndNotNull(parameters)) {
 		throw new TypeError(`The parameter object is: ${typeof parameters}`);
 	}
 
 	const keys = Object.keys(parameters);
 
-	keys.forEach(key => {
+	keys.forEach((key) => {
 		if (!Array.isArray(parameters[key])) {
 			throw new TypeError(`${key} parameter is not an array`);
 		}
@@ -855,7 +855,7 @@ const validateParameters = function(parameters) {
  * @review
  */
 
-const validatePortletId = function(pageRenderState = {}, portletId = '') {
+const validatePortletId = function (pageRenderState = {}, portletId = '') {
 	return (
 		pageRenderState.portlets &&
 		Object.keys(pageRenderState.portlets).includes(portletId)
@@ -871,7 +871,7 @@ const validatePortletId = function(pageRenderState = {}, portletId = '') {
  * @review
  */
 
-const validateState = function(state = {}, portletData = {}) {
+const validateState = function (state = {}, portletData = {}) {
 	validateParameters(state.parameters);
 
 	const portletMode = state.portletMode;

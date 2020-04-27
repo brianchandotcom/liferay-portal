@@ -24,7 +24,7 @@ const AppContext = React.createContext({});
  * Convenience function that returns a component that provides the passed
  * `value` as context.
  */
-export const Component = value => ({children}) => (
+export const Component = (value) => ({children}) => (
 	<AppContext.Provider value={value}>{children}</AppContext.Provider>
 );
 

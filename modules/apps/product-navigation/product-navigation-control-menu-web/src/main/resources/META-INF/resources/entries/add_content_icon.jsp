@@ -63,7 +63,7 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 			node: A.one('.portlet-item'),
 		});
 
-		Liferay.once('updatedLayout', function() {
+		Liferay.once('updatedLayout', function () {
 			Liferay.Util.navigate(
 				'<%= PortalUtil.getLayoutFullURL(layout, themeDisplay) %>'
 			);

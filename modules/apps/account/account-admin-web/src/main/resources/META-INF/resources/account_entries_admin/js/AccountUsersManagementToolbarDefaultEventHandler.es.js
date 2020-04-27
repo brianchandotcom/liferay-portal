@@ -50,7 +50,7 @@ class AccountUsersManagementToolbarDefaultEventHandler extends DefaultEventHandl
 
 		itemSelectorDialog.open();
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {

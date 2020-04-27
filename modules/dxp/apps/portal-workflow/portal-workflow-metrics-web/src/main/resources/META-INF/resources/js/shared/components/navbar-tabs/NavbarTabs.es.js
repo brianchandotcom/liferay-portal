@@ -35,7 +35,9 @@ const NavbarTabs = ({tabs = []}) => {
 		location: {pathname},
 	} = useRouter();
 
-	const isActive = useCallback(tab => pathname.includes(tab.key), [pathname]);
+	const isActive = useCallback((tab) => pathname.includes(tab.key), [
+		pathname,
+	]);
 
 	const {name: activeTabName} = tabs.filter(isActive)[0] || {};
 

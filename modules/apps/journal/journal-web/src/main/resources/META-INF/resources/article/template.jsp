@@ -79,7 +79,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 		);
 
 		if (previewWithTemplate) {
-			previewWithTemplate.addEventListener('click', function(event) {
+			previewWithTemplate.addEventListener('click', function (event) {
 				var uri = '<%= previewArticleContentTemplateURL %>';
 
 				<%
@@ -136,7 +136,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 						title: '<liferay-ui:message key="preview" />',
 						uri: uri,
 					},
-					function(event) {
+					function (event) {
 						changeDDMTemplate(event.ddmtemplateid);
 					}
 				);
@@ -182,7 +182,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	);
 
 	if (clearDDMTemplateButton) {
-		clearDDMTemplateButton.addEventListener('click', function(event) {
+		clearDDMTemplateButton.addEventListener('click', function (event) {
 			changeDDMTemplate(-1);
 		});
 	}
@@ -192,7 +192,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	);
 
 	if (selectDDMTemplateButton) {
-		selectDDMTemplateButton.addEventListener('click', function(event) {
+		selectDDMTemplateButton.addEventListener('click', function (event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -206,7 +206,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 					uri:
 						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_template.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>',
 				},
-				function(event) {
+				function (event) {
 					changeDDMTemplate(event.ddmtemplateid);
 				}
 			);
@@ -218,7 +218,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	);
 
 	if (editDDMTemplateLink) {
-		editDDMTemplateLink.addEventListener('click', function(event) {
+		editDDMTemplateLink.addEventListener('click', function (event) {
 			if (
 				confirm(
 					'<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>'

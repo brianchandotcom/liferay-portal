@@ -11,7 +11,7 @@
 
 import React from 'react';
 
-const RetryButton = props => {
+const RetryButton = (props) => {
 	return (
 		<button
 			className="btn btn-link btn-sm"

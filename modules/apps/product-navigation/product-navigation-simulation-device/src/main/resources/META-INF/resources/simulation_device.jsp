@@ -100,13 +100,13 @@
 		namespace: '<portlet:namespace />',
 	});
 
-	Liferay.once('screenLoad', function() {
+	Liferay.once('screenLoad', function () {
 		simulationDevice.destroy();
 	});
 
 	A.one('.devices').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var currentTarget = event.currentTarget;
 
 			var dataDevice = currentTarget.attr('data-device');

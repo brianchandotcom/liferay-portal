@@ -96,7 +96,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 		return null;
 	}
 
-	const scrollIntoView = event => {
+	const scrollIntoView = (event) => {
 		const target = document.querySelector(state.selectedTarget);
 
 		if (target) {
@@ -255,7 +255,7 @@ function OverlayContainer({allowEdit, root}) {
 	}, []);
 
 	const handleKeydown = useCallback(
-		event => {
+		(event) => {
 			if (ESCAPE_KEYS.includes(event.key)) {
 				dispatch({type: 'deactivate'});
 				event.preventDefault();
@@ -266,7 +266,7 @@ function OverlayContainer({allowEdit, root}) {
 	);
 
 	const handleClick = useCallback(
-		event => {
+		(event) => {
 			// Clicking anywhere other than a target aborts target selection.
 			event.preventDefault();
 			stopImmediatePropagation(event);
@@ -321,7 +321,7 @@ function Overlay({allowEdit, root, targetableElements}) {
 	return (
 		<div className="lfr-segments-experiment-click-goal-root">
 			{targetableElements
-				.filter(element => {
+				.filter((element) => {
 					if (allowEdit === true) {
 						return true;
 					}
@@ -331,7 +331,7 @@ function Overlay({allowEdit, root, targetableElements}) {
 
 					return false;
 				})
-				.map(element => {
+				.map((element) => {
 					const selector = `#${element.id}`;
 
 					const mode =
@@ -383,7 +383,7 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 		return null;
 	}
 
-	const handleClick = event => {
+	const handleClick = (event) => {
 		dispatch({
 			selector,
 			type: 'editTarget',
@@ -483,7 +483,7 @@ function TargetTopper({allowEdit, geometry, isEditing, selector}) {
 		}
 	}, [geometry.left, geometry.width]);
 
-	const handleClick = event => {
+	const handleClick = (event) => {
 		stopImmediatePropagation(event);
 
 		dispatch({

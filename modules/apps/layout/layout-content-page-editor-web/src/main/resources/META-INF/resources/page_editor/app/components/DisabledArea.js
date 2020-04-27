@@ -48,10 +48,10 @@ const DisabledArea = () => {
 	const [currentElementClicked, setCurrentElementClicked] = useState(null);
 	const [show, setShow] = useState(false);
 	const [position, setPosition] = useState('bottom');
-	const sidebarOpen = useSelector(state => state.sidebar.open);
+	const sidebarOpen = useSelector((state) => state.sidebar.open);
 	const selectItem = useSelectItem();
 
-	const isDisabled = element => {
+	const isDisabled = (element) => {
 		const {height} = element.getBoundingClientRect();
 		const {position} = window.getComputedStyle(element);
 
@@ -63,7 +63,7 @@ const DisabledArea = () => {
 			!hasZeroHeight &&
 			!hasAbsolutePosition &&
 			!DEFAULT_WHITELIST.some(
-				selector =>
+				(selector) =>
 					match(element, `.${selector}`) ||
 					element.querySelector(`.${selector}`)
 			)
@@ -99,7 +99,7 @@ const DisabledArea = () => {
 
 	useEventListener(
 		'click',
-		event => {
+		(event) => {
 			if (
 				Array.from(event.target.classList).includes(
 					DEFAULT_DISABLED_AREA_CLASS
@@ -147,7 +147,7 @@ const DisabledArea = () => {
 
 		while (element.parentElement && element !== document.body) {
 			Array.from(element.parentElement.children).forEach(
-				child =>
+				(child) =>
 					isDisabled(child) &&
 					child.classList.add(DEFAULT_DISABLED_AREA_CLASS)
 			);
@@ -160,7 +160,7 @@ const DisabledArea = () => {
 				`.${DEFAULT_DISABLED_AREA_CLASS}`
 			);
 
-			elements.forEach(element =>
+			elements.forEach((element) =>
 				element.classList.remove(DEFAULT_DISABLED_AREA_CLASS)
 			);
 		};

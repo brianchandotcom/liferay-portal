@@ -74,15 +74,15 @@ describe('PortletBase', () => {
 
 		beforeEach(() => {
 			globalFetch = global.fetch;
-			portletBase.ns = obj => obj;
+			portletBase.ns = (obj) => obj;
 		});
 
 		afterEach(() => {
 			global.fetch = globalFetch;
 		});
 
-		it('makes the request to the given url', done => {
-			global.fetch = jest.fn(url => {
+		it('makes the request to the given url', (done) => {
+			global.fetch = jest.fn((url) => {
 				expect(url).toBe(sampleUrl);
 				done();
 			});
@@ -90,7 +90,7 @@ describe('PortletBase', () => {
 			portletBase.fetch(sampleUrl, sampleBody);
 		});
 
-		it('adds credentials option to the request', done => {
+		it('adds credentials option to the request', (done) => {
 			global.fetch = jest.fn((url, options) => {
 				expect(options.credentials).toBe('include');
 				done();
@@ -99,7 +99,7 @@ describe('PortletBase', () => {
 			portletBase.fetch(sampleUrl, sampleBody);
 		});
 
-		it('adds the POST method option to the request', done => {
+		it('adds the POST method option to the request', (done) => {
 			global.fetch = jest.fn((url, options) => {
 				expect(options.method).toBe('POST');
 				done();
@@ -108,7 +108,7 @@ describe('PortletBase', () => {
 			portletBase.fetch(sampleUrl, sampleBody);
 		});
 
-		it('adds the given body to the request', done => {
+		it('adds the given body to the request', (done) => {
 			global.fetch = jest.fn((url, options) => {
 				expect(options.body).toBe(sampleBody);
 				done();
@@ -118,7 +118,7 @@ describe('PortletBase', () => {
 			portletBase.fetch(sampleUrl, sampleBody);
 		});
 
-		it('transforms the given body using getRequestBody_', done => {
+		it('transforms the given body using getRequestBody_', (done) => {
 			portletBase.getRequestBody_ = jest.fn();
 
 			global.fetch = jest.fn(() => {
@@ -166,7 +166,7 @@ describe('PortletBase', () => {
 		});
 
 		it('appends all object keys inside a new FormData element', () => {
-			portletBase.ns = obj => obj;
+			portletBase.ns = (obj) => obj;
 
 			const sampleBody = {
 				fieldA: 'valueA',

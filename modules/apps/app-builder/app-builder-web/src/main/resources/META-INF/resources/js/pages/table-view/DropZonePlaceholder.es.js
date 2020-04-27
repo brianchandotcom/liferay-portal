@@ -66,7 +66,7 @@ const getStyle = (container, index, total) => {
 const Placeholder = ({container, index, onAddFieldName, total}) => {
 	const [{canDrop, overTarget}, drop] = useDrop({
 		accept: DragTypes.DRAG_FIELD_TYPE,
-		collect: monitor => ({
+		collect: (monitor) => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver(),
 		}),

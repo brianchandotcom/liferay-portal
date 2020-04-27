@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-remote-services',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 		var LString = Lang.String;
 
@@ -56,7 +56,7 @@ AUI.add(
 
 					const data = new URLSearchParams();
 
-					Object.keys(payload).forEach(key => {
+					Object.keys(payload).forEach((key) => {
 						data.append(key, payload[key]);
 					});
 
@@ -64,10 +64,10 @@ AUI.add(
 						body: data,
 						method: 'POST',
 					})
-						.then(response => {
+						.then((response) => {
 							return response.json();
 						})
-						.then(data => {
+						.then((data) => {
 							config.callback(data);
 						});
 				},
@@ -99,7 +99,7 @@ AUI.add(
 					const data = new URLSearchParams();
 
 					if (payload) {
-						Object.keys(payload).forEach(key => {
+						Object.keys(payload).forEach((key) => {
 							data.append(key, payload[key]);
 						});
 					}
@@ -108,10 +108,10 @@ AUI.add(
 						body: data,
 						method: 'POST',
 					})
-						.then(response => {
+						.then((response) => {
 							return response.text();
 						})
-						.then(data => {
+						.then((data) => {
 							if (data.length) {
 								config.callback(JSON.parse(data));
 							}
@@ -131,15 +131,15 @@ AUI.add(
 						body: data,
 						method: 'POST',
 					})
-						.then(response => {
+						.then((response) => {
 							return response.json();
 						})
-						.then(data => {
+						.then((data) => {
 							if (typeof callback.success === 'function') {
 								callback.success.apply(this, [data]);
 							}
 						})
-						.catch(err => {
+						.catch((err) => {
 							if (typeof callback.failure === 'function') {
 								callback.failure(err);
 							}

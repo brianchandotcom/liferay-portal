@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-xml-definition',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var isNumber = Lang.isNumber;
@@ -419,7 +419,7 @@ AUI.add(
 				forEachField(fn) {
 					var instance = this;
 
-					COL_TYPES_FIELD.forEach(item => {
+					COL_TYPES_FIELD.forEach((item) => {
 						var fieldData = instance.translate(item);
 
 						if (fn && !fieldData.error) {

@@ -16,7 +16,7 @@ export function findField(dataLayoutPages, fieldName) {
 	return (dataLayoutPages || []).find(({dataLayoutRows}) => {
 		return (dataLayoutRows || []).find(({dataLayoutColumns}) => {
 			return (dataLayoutColumns || []).find(({fieldNames}) => {
-				return (fieldNames || []).find(name => name === fieldName);
+				return (fieldNames || []).find((name) => name === fieldName);
 			});
 		});
 	});
@@ -59,7 +59,7 @@ export function deleteField(dataLayoutPages, fieldName) {
 			return {
 				...dataLayoutColumn,
 				fieldNames: (fieldNames || []).filter(
-					name => name !== fieldName
+					(name) => name !== fieldName
 				),
 			};
 		}
@@ -80,7 +80,7 @@ export function getIndexesFromFieldName({dataLayoutPages}, fieldName) {
 	dataLayoutPages.some(({dataLayoutRows}, pageIndex) => {
 		return dataLayoutRows.some(({dataLayoutColumns}, rowIndex) => {
 			return dataLayoutColumns.some(({fieldNames = []}, columnIndex) => {
-				return fieldNames.some(name => {
+				return fieldNames.some((name) => {
 					if (name === fieldName) {
 						indexes = {
 							columnIndex,

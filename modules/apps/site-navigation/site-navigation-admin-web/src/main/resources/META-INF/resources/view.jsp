@@ -153,7 +153,7 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 		document.body,
 		'click',
 		'.<portlet:namespace />update-site-navigation-menu-action-option > a',
-		function(event) {
+		function (event) {
 			var data = event.delegateTarget.dataset;
 
 			event.preventDefault();

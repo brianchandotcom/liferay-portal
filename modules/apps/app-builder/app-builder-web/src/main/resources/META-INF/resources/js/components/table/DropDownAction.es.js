@@ -24,7 +24,7 @@ export default ({action: {action, name}, item, setActive}) => {
 
 	return (
 		<Item
-			onClick={event => {
+			onClick={(event) => {
 				event.preventDefault();
 				setActive(false);
 

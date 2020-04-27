@@ -146,7 +146,7 @@ function trackFieldFocused(analytics) {
  * @param {Object} The Analytics client instance
  */
 function trackFormSubmitted(analytics) {
-	const onSubmit = event => {
+	const onSubmit = (event) => {
 		const {target} = event;
 
 		if (
@@ -172,8 +172,8 @@ function trackFormViewed(analytics) {
 	return onReady(() => {
 		Array.prototype.slice
 			.call(document.querySelectorAll('form'))
-			.filter(form => isTrackableForm(form))
-			.forEach(form => {
+			.filter((form) => isTrackableForm(form))
+			.forEach((form) => {
 				const payload = getFormPayload(form);
 
 				analytics.send('formViewed', applicationId, payload);

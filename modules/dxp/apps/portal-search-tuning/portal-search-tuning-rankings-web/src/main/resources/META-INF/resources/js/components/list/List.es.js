@@ -56,14 +56,14 @@ class List extends PureComponent {
 		this._handleReorder(false);
 	};
 
-	_handleItemFocus = index => {
+	_handleItemFocus = (index) => {
 		this.setState({focusIndex: index});
 	};
 
 	/**
 	 * Will trigger the KeyDownFocus as long as focusIndex is defined.
 	 */
-	_handleKeyDown = event => {
+	_handleKeyDown = (event) => {
 		if (!isNull(this.state.focusIndex)) {
 			this._handleKeyDownFocus(event);
 		}
@@ -74,7 +74,7 @@ class List extends PureComponent {
 	 * pinned items up or down. If reorder is false, it will scroll through
 	 * all items.
 	 */
-	_handleKeyDownFocus = event => {
+	_handleKeyDownFocus = (event) => {
 		const {onMove, resultIds, resultIdsPinned} = this.props;
 
 		const {focusIndex, reorder} = this.state;
@@ -120,18 +120,18 @@ class List extends PureComponent {
 	 * Used in case where pinning/hiding needs to remove itself from the
 	 * selected ids list.
 	 */
-	_handleRemoveSelect = ids => {
-		this.setState(state => ({
-			selectedIds: state.selectedIds.filter(id => !ids.includes(id)),
+	_handleRemoveSelect = (ids) => {
+		this.setState((state) => ({
+			selectedIds: state.selectedIds.filter((id) => !ids.includes(id)),
 		}));
 	};
 
-	_handleReorder = val => {
+	_handleReorder = (val) => {
 		this.setState({reorder: val});
 	};
 
-	_handleSelect = id => {
-		this.setState(state => ({
+	_handleSelect = (id) => {
+		this.setState((state) => ({
 			selectedIds: toggleListItem(state.selectedIds, id),
 		}));
 	};

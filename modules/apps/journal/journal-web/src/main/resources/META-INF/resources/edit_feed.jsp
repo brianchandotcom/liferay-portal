@@ -352,7 +352,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 				uri:
 					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
 			},
-			function(event) {
+			function (event) {
 				if (
 					document.<portlet:namespace />fm
 						.<portlet:namespace />ddmStructureKey.value !=
@@ -429,7 +429,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	);
 
 	if (contentFieldSelector) {
-		contentFieldSelector.addEventListener('change', function() {
+		contentFieldSelector.addEventListener('change', function () {
 			var contentFieldValue = '';
 			var ddmRendererTemplateKeyValue = '';
 

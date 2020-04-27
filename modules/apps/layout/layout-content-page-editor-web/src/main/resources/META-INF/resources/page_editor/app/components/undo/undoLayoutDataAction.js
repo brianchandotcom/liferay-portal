@@ -18,7 +18,7 @@ import LayoutService from '../../services/LayoutService';
 function undoAction({action, store}) {
 	const {layoutData} = action;
 
-	return dispatch => {
+	return (dispatch) => {
 		return LayoutService.updateLayoutData({
 			layoutData,
 			onNetworkStatus: dispatch,

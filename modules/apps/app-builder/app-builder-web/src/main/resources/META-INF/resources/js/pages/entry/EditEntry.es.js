@@ -43,7 +43,7 @@ export const EditEntry = ({
 		const {pages} = ddmForm;
 		const visitor = new PagesVisitor(pages);
 
-		ddmForm.validate().then(validForm => {
+		ddmForm.validate().then((validForm) => {
 			if (!validForm) {
 				return;
 			}
@@ -78,7 +78,7 @@ export const EditEntry = ({
 				}
 			});
 
-			const openSuccessToast = isNew => {
+			const openSuccessToast = (isNew) => {
 				const message = isNew
 					? Liferay.Language.get('an-entry-was-added')
 					: Liferay.Language.get('an-entry-was-updated');

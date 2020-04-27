@@ -34,13 +34,13 @@ class UserDropdownDefaultEventHandler extends DefaultEventHandler {
 			url: itemData.assignRolesURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				const editUserGroupRoleFm = this.one('#editUserGroupRoleFm');
 
-				selectedItem.forEach(item => {
+				selectedItem.forEach((item) => {
 					dom.append(editUserGroupRoleFm, item);
 				});
 

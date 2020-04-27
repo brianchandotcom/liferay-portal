@@ -32,7 +32,7 @@
 />
 
 <aui:script sandbox="<%= true %>">
-	var deleteKaleoProcess = function() {
+	var deleteKaleoProcess = function () {
 		if (
 			confirm(
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
@@ -63,10 +63,10 @@
 		deleteKaleoProcess: deleteKaleoProcess,
 	};
 
-	Liferay.componentReady('kaleoFormsManagementToolbar').then(function(
+	Liferay.componentReady('kaleoFormsManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on(['actionItemClicked'], function(event) {
+		managementToolbar.on(['actionItemClicked'], function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

@@ -17,7 +17,7 @@ import React from 'react';
 
 export default ({currentStep}) => {
 	const steps = ['1', '2', '3'];
-	const isComplete = index =>
+	const isComplete = (index) =>
 		index !== steps.length - 1 && currentStep > index;
 
 	return (

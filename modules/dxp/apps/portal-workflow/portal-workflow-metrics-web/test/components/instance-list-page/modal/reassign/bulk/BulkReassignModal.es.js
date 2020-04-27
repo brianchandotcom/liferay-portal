@@ -122,7 +122,7 @@ const ContainerMock = ({children}) => {
 	const processId = '12345';
 	const [selectAll, setSelectAll] = useState(false);
 	const [visibleModal, setVisibleModal] = useState('bulkReassign');
-	const task = id => ({
+	const task = (id) => ({
 		assignees: [{id, name: 'Test Test'}],
 		items: [
 			{

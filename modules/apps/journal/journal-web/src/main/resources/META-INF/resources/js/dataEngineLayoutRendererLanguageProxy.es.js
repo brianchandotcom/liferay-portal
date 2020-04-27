@@ -22,7 +22,7 @@ export default function dataEngineLayoutRendererLanguageProxy(props) {
 	let localeChangedHandler = null;
 
 	Liferay.componentReady(props.namespace + 'dataEngineLayoutRenderer').then(
-		event => {
+		(event) => {
 			localeChangedHandler = Liferay.after(
 				'inputLocalized:localeChanged',
 				onLocaleChange.bind(this, event)

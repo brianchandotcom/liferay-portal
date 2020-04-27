@@ -76,7 +76,7 @@ name = namespace + name;
 		</c:if>
 	};
 
-	var createMap = function() {
+	var createMap = function () {
 		var map = new MapOpenStreetMap.default(mapConfig);
 
 		Liferay.MapBase.register(

@@ -114,7 +114,7 @@
 <aui:script use="aui-base,liferay-search-container">
 	var assetSelectorHandle = A.getBody().delegate(
 		'click',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			var searchContainerName =
@@ -133,7 +133,7 @@
 
 			Liferay.Loader.require(
 				'frontend-js-web/liferay/ItemSelectorDialog.es',
-				function(ItemSelectorDialog) {
+				function (ItemSelectorDialog) {
 					var itemSelectorDialog = new ItemSelectorDialog.default({
 						buttonAddLabel: '<liferay-ui:message key="done" />',
 						eventName:
@@ -144,11 +144,11 @@
 
 					itemSelectorDialog.open();
 
-					itemSelectorDialog.on('selectedItemChange', function(event) {
+					itemSelectorDialog.on('selectedItemChange', function (event) {
 						var assetEntryIds = event.selectedItem;
 
 						if (assetEntryIds) {
-							Array.prototype.forEach.call(assetEntryIds, function(
+							Array.prototype.forEach.call(assetEntryIds, function (
 								assetEntry
 							) {
 								var entityId = assetEntry.entityid;
@@ -190,7 +190,7 @@
 		'.asset-selector a'
 	);
 
-	var clearAssetSelectorHandle = function(event) {
+	var clearAssetSelectorHandle = function (event) {
 		if (event.portletId === '<%= portletDisplay.getId() %>') {
 			assetSelectorHandle.detach();
 
@@ -208,7 +208,7 @@
 
 	searchContainer.get('contentBox').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var tr = link.ancestor('tr');

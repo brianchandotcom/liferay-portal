@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-recurrence-converter',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var LString = Lang.String;
@@ -37,7 +37,7 @@ AUI.add(
 
 		var padNumber = A.rbind('padNumber', LString, 2);
 
-		var RecurrenceConverter = function() {};
+		var RecurrenceConverter = function () {};
 
 		A.mix(RecurrenceConverter.prototype, {
 			_encode(value) {

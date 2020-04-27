@@ -59,7 +59,7 @@ export const getLabel = (originalField, editingLanguageId) => {
 	]);
 };
 
-export const getValidation = originalField => {
+export const getValidation = (originalField) => {
 	const validation = getSettingsContextProperty(
 		originalField.settingsContext,
 		'validation'
@@ -83,7 +83,7 @@ export const duplicateField = (
 
 	if (parentField) {
 		return visitor.mapFields(
-			field => {
+			(field) => {
 				if (field.fieldName === parentField.fieldName) {
 					const nestedFields = field.nestedFields
 						? [...field.nestedFields, duplicatedField]

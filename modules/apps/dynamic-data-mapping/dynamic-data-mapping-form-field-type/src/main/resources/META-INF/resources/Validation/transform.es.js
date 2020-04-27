@@ -24,7 +24,7 @@ const getValidationFromExpression = (validations, validation) => {
 
 		if (expression) {
 			mutValidation = validations.find(
-				validation => validation.name === expression.name
+				(validation) => validation.name === expression.name
 			);
 		}
 
@@ -35,7 +35,7 @@ const getValidationFromExpression = (validations, validation) => {
 const transformValidations = (validations, initialDataType) => {
 	const dataType = initialDataType == 'string' ? initialDataType : 'numeric';
 
-	return VALIDATIONS[dataType].map(validation => {
+	return VALIDATIONS[dataType].map((validation) => {
 		return {
 			...validation,
 			checked: false,
@@ -77,7 +77,7 @@ const getValidation = (
 	};
 };
 
-export const getSelectedValidation = validations => {
+export const getSelectedValidation = (validations) => {
 	return function transformSelectedValidation(value) {
 		if (Array.isArray(value)) {
 			value = value[0];

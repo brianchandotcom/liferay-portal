@@ -59,7 +59,7 @@ export function useIsProcessorEnabled() {
 	const toControlsId = useToControlsId();
 
 	return useCallback(
-		editableUniqueId =>
+		(editableUniqueId) =>
 			state.editableUniqueId === toControlsId(editableUniqueId),
 		[state.editableUniqueId, toControlsId]
 	);

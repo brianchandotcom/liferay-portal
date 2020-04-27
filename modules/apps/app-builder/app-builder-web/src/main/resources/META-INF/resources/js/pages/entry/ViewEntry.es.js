@@ -42,7 +42,7 @@ const ViewDataLayoutPageValues = ({
 			],
 			[]
 		)
-		.map(fieldName => (
+		.map((fieldName) => (
 			<FieldPreview
 				dataDefinition={dataDefinition}
 				dataRecordValues={dataRecordValues}
@@ -94,10 +94,10 @@ export default withRouter(
 				}),
 				getItem(
 					`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-				).then(dataDefinition => setDataDefinition(dataDefinition)),
+				).then((dataDefinition) => setDataDefinition(dataDefinition)),
 				getItem(
 					`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`
-				).then(dataLayout => setDataLayout(dataLayout)),
+				).then((dataLayout) => setDataLayout(dataLayout)),
 			]).then(() => setLoading(false));
 		}, [dataDefinitionId, dataLayoutId, entryIndex, query]);
 
@@ -107,7 +107,7 @@ export default withRouter(
 		const onDelete = () => {
 			confirmDelete('/o/data-engine/v2.0/data-records/')({
 				id: dataRecord.id,
-			}).then(confirmed => {
+			}).then((confirmed) => {
 				if (confirmed) {
 					successToast(Liferay.Language.get('an-entry-was-deleted'));
 					history.push('/');

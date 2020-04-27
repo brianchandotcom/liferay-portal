@@ -21,13 +21,13 @@ import React, {useContext} from 'react';
 import {getItem} from '../../utils/client.es';
 import FormViewContext from './FormViewContext.es';
 
-export default callback => {
+export default (callback) => {
 	const [{dataDefinition, dataDefinitionId, fieldTypes}] = useContext(
 		FormViewContext
 	);
 	const [{onClose}, dispatchModal] = useContext(ClayModalContext);
 
-	return fieldName => {
+	return (fieldName) => {
 		const {fieldType, label} = DataDefinitionUtils.getDataDefinitionField(
 			dataDefinition,
 			fieldName
@@ -101,8 +101,9 @@ export default callback => {
 												<label
 													className="d-block"
 													key={index}
-												>{`${index +
-													1}. ${dataLayoutName}`}</label>
+												>{`${
+													index + 1
+												}. ${dataLayoutName}`}</label>
 											)
 										)}
 									</ClayPanel.Body>
@@ -123,8 +124,9 @@ export default callback => {
 												<label
 													className="d-block"
 													key={index}
-												>{`${index +
-													1}. ${dataListViewName}`}</label>
+												>{`${
+													index + 1
+												}. ${dataListViewName}`}</label>
 											)
 										)}
 									</ClayPanel.Body>

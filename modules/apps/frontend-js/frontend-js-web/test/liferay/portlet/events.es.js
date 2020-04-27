@@ -18,7 +18,7 @@ describe('PortletHub', () => {
 	it('adds client event listener', () => {
 		const stub = jest.fn();
 
-		return register('PortletA').then(hub => {
+		return register('PortletA').then((hub) => {
 			const handle = hub.addEventListener('clientEvent', stub);
 
 			expect(handle).not.toBeUndefined();
@@ -29,7 +29,7 @@ describe('PortletHub', () => {
 	it('returns number of listeners', () => {
 		const stub = jest.fn();
 
-		return register('PortletA').then(hub => {
+		return register('PortletA').then((hub) => {
 			expect(stub.mock.calls.length).toBe(0);
 
 			const handle = hub.addEventListener('clientEvent', stub);
@@ -44,7 +44,7 @@ describe('PortletHub', () => {
 	});
 
 	it('throws error if addEventListener is called with invalid args', () => {
-		return register('PortletA').then(hub => {
+		return register('PortletA').then((hub) => {
 			expect(() => {
 				hub.addEventListener(1, 2, 3);
 			}).toThrow('Too many arguments passed to addEventListener');
@@ -62,7 +62,7 @@ describe('PortletHub', () => {
 	it('does not call listener if it is removed', () => {
 		const stub = jest.fn();
 
-		return register('PortletA').then(hub => {
+		return register('PortletA').then((hub) => {
 			const handle = hub.addEventListener('toBeRemoved', stub);
 
 			hub.removeEventListener(handle);
@@ -77,7 +77,7 @@ describe('PortletHub', () => {
 	});
 
 	it('throws error if dispatchClientEvent is called with invalid args', () => {
-		return register('PortletA').then(hub => {
+		return register('PortletA').then((hub) => {
 			expect(() => {
 				hub.dispatchClientEvent(1, 2, 3);
 			}).toThrowErrorMatchingSnapshot();
@@ -89,7 +89,7 @@ describe('PortletHub', () => {
 	});
 
 	it('throws error when attempting to dispatch event with protected name', () => {
-		return register('PortletA').then(hub => {
+		return register('PortletA').then((hub) => {
 			expect(() => {
 				hub.dispatchClientEvent('portlet.clientEvent');
 			}).toThrowErrorMatchingSnapshot();
@@ -97,7 +97,7 @@ describe('PortletHub', () => {
 	});
 
 	it('throws error if removeEventListener is called with invalid args', () => {
-		return register('PortletA').then(hub => {
+		return register('PortletA').then((hub) => {
 			expect(() => {
 				hub.removeEventListener(1, 2);
 			}).toThrow('Too many arguments passed to removeEventListener');
@@ -117,7 +117,7 @@ describe('PortletHub', () => {
 	it('calls listener with matching wildcard event types', () => {
 		const stub = jest.fn();
 
-		return register('PortletA').then(hub => {
+		return register('PortletA').then((hub) => {
 			const handle = hub.addEventListener('awesome\\w+Event$', stub);
 
 			const total = hub.dispatchClientEvent('awesomeClientEvent', {
@@ -140,7 +140,7 @@ describe('PortletHub', () => {
 
 		beforeEach(() => {
 			return Promise.all([register(portletA), register(portletB)]).then(
-				values => {
+				(values) => {
 					hubA = values[0];
 				}
 			);
@@ -270,7 +270,7 @@ describe('PortletHub', () => {
 		let hubA;
 
 		beforeEach(() => {
-			return register(portletA).then(hub => {
+			return register(portletA).then((hub) => {
 				hubA = hub;
 			});
 		});
@@ -413,7 +413,7 @@ describe('PortletHub', () => {
 		});
 
 		beforeEach(() => {
-			return register(portletA).then(hub => {
+			return register(portletA).then((hub) => {
 				hubA = hub;
 				onStateChange.mockClear();
 				returnedRenderState = returnedRenderData = undefined;
@@ -428,7 +428,7 @@ describe('PortletHub', () => {
 			hubA.removeEventListener(handle);
 		});
 
-		it('is passed a type parameter with value "portlet.onStateChange"', done => {
+		it('is passed a type parameter with value "portlet.onStateChange"', (done) => {
 			const handle = hubA.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -441,7 +441,7 @@ describe('PortletHub', () => {
 			}, 200);
 		});
 
-		it('is not passed a RenderData object', done => {
+		it('is not passed a RenderData object', (done) => {
 			const handle = hubA.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -457,7 +457,7 @@ describe('PortletHub', () => {
 			}, 200);
 		});
 
-		it('is passed a RenderState parameter that has 3 properties', done => {
+		it('is passed a RenderState parameter that has 3 properties', (done) => {
 			const handle = hubA.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -476,7 +476,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderState object with a "parameters" property', done => {
+		it('is passed a RenderState object with a "parameters" property', (done) => {
 			const handle = hubA.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -496,7 +496,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderState object with a "portletMode" property', done => {
+		it('is passed a RenderState object with a "portletMode" property', (done) => {
 			const handle = hubA.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -516,7 +516,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderState object with a "windowState" property', done => {
+		it('is passed a RenderState object with a "windowState" property', (done) => {
 			const handle = hubA.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -536,7 +536,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('its RenderState "parameters" property is an object', done => {
+		it('its RenderState "parameters" property is an object', (done) => {
 			expect.assertions(3);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);
@@ -555,7 +555,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('its RenderState has 3 parameters', done => {
+		it('its RenderState has 3 parameters', (done) => {
 			expect.assertions(2);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);
@@ -579,7 +579,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('its RenderState "windowState" property is a string', done => {
+		it('its RenderState "windowState" property is a string', (done) => {
 			expect.assertions(6);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);
@@ -605,7 +605,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('its RenderState "portletMode" property is a string', done => {
+		it('its RenderState "portletMode" property is a string', (done) => {
 			expect.assertions(6);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);
@@ -631,7 +631,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it(`its RenderState has windowState=${pageState[portletA].state.windowState}`, done => {
+		it(`its RenderState has windowState=${pageState[portletA].state.windowState}`, (done) => {
 			expect.assertions(4);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);
@@ -657,7 +657,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it(`its RenderState has portletMode=${pageState[portletA].state.portletMode}`, done => {
+		it(`its RenderState has portletMode=${pageState[portletA].state.portletMode}`, (done) => {
 			expect.assertions(4);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);
@@ -683,7 +683,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('its RenderState parameter is not identical to the test state object"', done => {
+		it('its RenderState parameter is not identical to the test state object"', (done) => {
 			expect.assertions(4);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);
@@ -703,7 +703,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('its RenderState parameter equals the test state object"', done => {
+		it('its RenderState parameter equals the test state object"', (done) => {
 			expect.assertions(4);
 
 			const handle = hubA.addEventListener(eventType, onStateChange);
@@ -749,7 +749,7 @@ describe('PortletHub', () => {
 
 		beforeEach(() => {
 			return Promise.all([register(portletA), register(portletB)]).then(
-				values => {
+				(values) => {
 					hubA = values[0];
 					hubB = values[1];
 					onStateChange.mockClear();
@@ -773,7 +773,7 @@ describe('PortletHub', () => {
 			expect(onStateChange).not.toHaveBeenCalled();
 		});
 
-		it('is called asynchronously after an onStateChange handler is registered', done => {
+		it('is called asynchronously after an onStateChange handler is registered', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -784,7 +784,7 @@ describe('PortletHub', () => {
 			}, 100);
 		});
 
-		it('is passed a type parameter with value "portlet.onStateChange"', done => {
+		it('is passed a type parameter with value "portlet.onStateChange"', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -796,7 +796,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderState parameter that is an object', done => {
+		it('is passed a RenderState parameter that is an object', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -812,7 +812,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderState parameter that has 3 properties', done => {
+		it('is passed a RenderState parameter that has 3 properties', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -831,7 +831,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderState object with a "parameters" property', done => {
+		it('is passed a RenderState object with a "parameters" property', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -847,7 +847,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderState object with a "portletMode" property', done => {
+		it('is passed a RenderState object with a "portletMode" property', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -865,7 +865,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderState object with a "windowState" property', done => {
+		it('is passed a RenderState object with a "windowState" property', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -883,7 +883,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('its RenderState parameter is not identical to the test state object"', done => {
+		it('its RenderState parameter is not identical to the test state object"', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -898,7 +898,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('its RenderState parameter equals the test state object"', done => {
+		it('its RenderState parameter equals the test state object"', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			const testState = hubA.newState(pageState[portletB].state);
@@ -917,7 +917,7 @@ describe('PortletHub', () => {
 
 		// portletB (which is actually PortletD in the ) is set up to have render data
 
-		it('is passed a RenderData object', done => {
+		it('is passed a RenderData object', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -932,7 +932,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderData parameter that has 2 properties', done => {
+		it('is passed a RenderData parameter that has 2 properties', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -950,7 +950,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderData object with a "content" property', done => {
+		it('is passed a RenderData object with a "content" property', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -965,7 +965,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderData object with a "mimeType" property', done => {
+		it('is passed a RenderData object with a "mimeType" property', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -980,7 +980,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderData object with a "content" property of type string', done => {
+		it('is passed a RenderData object with a "content" property of type string', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -996,7 +996,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('is passed a RenderData object with a "mimeType" property of type string', done => {
+		it('is passed a RenderData object with a "mimeType" property of type string', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -1012,7 +1012,7 @@ describe('PortletHub', () => {
 			});
 		});
 
-		it('its RenderData parameter equals the test render data object"', done => {
+		it('its RenderData parameter equals the test render data object"', (done) => {
 			handle = hubB.addEventListener(eventType, onStateChange);
 
 			setTimeout(() => {
@@ -1048,7 +1048,7 @@ describe('PortletHub', () => {
 				register(portletB),
 				register(portletC),
 				register(portletD),
-			]).then(values => {
+			]).then((values) => {
 				hubA = values[0];
 				hubB = values[1];
 				hubC = values[2];

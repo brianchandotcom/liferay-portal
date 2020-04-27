@@ -74,7 +74,7 @@ const resolveBackURL = (backURL, url) => {
 	return backURL;
 };
 
-const setDocumentTitle = title => {
+const setDocumentTitle = (title) => {
 	if (title) {
 		const titles = document.title.split(' - ');
 		titles[0] = title;
@@ -153,7 +153,7 @@ export const PortalControlMenu = ({backURL, title, url}) => {
 	return <>{backURL && <BackButton backURL={backURL} />}</>;
 };
 
-export const ControlMenuBase = props => {
+export const ControlMenuBase = (props) => {
 	useEffect(() => {
 		setDocumentTitle(props.title);
 	}, [props.title]);

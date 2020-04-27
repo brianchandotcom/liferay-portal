@@ -18,7 +18,7 @@ import {config} from '../config/index';
 
 const KEY_ENTER = 13;
 
-const defaultGetEditorWrapper = element => {
+const defaultGetEditorWrapper = (element) => {
 	const wrapper = document.createElement('div');
 
 	wrapper.innerHTML = element.innerHTML;
@@ -88,7 +88,7 @@ export default function getAlloyEditorProcessor(
 
 					itemSelectorDialog.open();
 
-					itemSelectorDialog.on('selectedItemChange', event => {
+					itemSelectorDialog.on('selectedItemChange', (event) => {
 						const selectedItem = event.selectedItem;
 
 						if (selectedItem) {
@@ -118,7 +118,7 @@ export default function getAlloyEditorProcessor(
 			const nativeEditor = _editor.get('nativeEditor');
 
 			_eventHandlers = [
-				nativeEditor.on('key', event => {
+				nativeEditor.on('key', (event) => {
 					if (
 						event.data.keyCode === KEY_ENTER &&
 						_element &&
@@ -170,7 +170,7 @@ export default function getAlloyEditorProcessor(
 
 				_editor.destroy();
 
-				_eventHandlers.forEach(handler => {
+				_eventHandlers.forEach((handler) => {
 					handler.removeListener();
 				});
 
@@ -202,7 +202,7 @@ export default function getAlloyEditorProcessor(
  * @param {string} eventName
  */
 function _stopEventPropagation(element, eventName) {
-	const handler = event => event.stopPropagation();
+	const handler = (event) => event.stopPropagation();
 
 	element.addEventListener(eventName, handler);
 

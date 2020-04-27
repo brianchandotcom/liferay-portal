@@ -35,8 +35,8 @@ const useFilter = ({
 	const prefixedKeys = useMemo(() => {
 		const newKeys = [];
 
-		keys.forEach(key =>
-			prefixKeys.forEach(prefix => {
+		keys.forEach((key) =>
+			prefixKeys.forEach((prefix) => {
 				newKeys.push(getCapitalizedFilterKey(prefix, key));
 			})
 		);
@@ -51,7 +51,7 @@ const useFilter = ({
 	);
 
 	const hasFilterError = useCallback(
-		filterKey => {
+		(filterKey) => {
 			const {errors = []} = filterState;
 
 			return errors.includes(filterKey);

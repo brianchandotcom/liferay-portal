@@ -125,7 +125,7 @@ renderResponse.setTitle(title);
 	);
 
 	if (typeNode && typeSettingsContainer) {
-		var loadTypeFields = function() {
+		var loadTypeFields = function () {
 			Liferay.Util.fetch(
 				'<%= editorURL %>' +
 					'&<portlet:namespace />type=' +
@@ -133,10 +133,10 @@ renderResponse.setTitle(title);
 					'&<portlet:namespace />type=' +
 					<%= ruleId %>
 			)
-				.then(function(response) {
+				.then(function (response) {
 					return response.text();
 				})
-				.then(function(response) {
+				.then(function (response) {
 					typeSettingsContainer.innerHTML = response;
 				});
 		};

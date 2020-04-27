@@ -163,7 +163,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		layoutPageTemplateEntries,
 		'click',
 		'.add-layout-action-option',
-		function(event) {
+		function (event) {
 			var actionElement = event.delegateTarget;
 
 			Liferay.Util.openWindow({

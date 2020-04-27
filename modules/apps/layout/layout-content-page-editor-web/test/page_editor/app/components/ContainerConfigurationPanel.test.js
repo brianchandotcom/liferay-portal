@@ -106,7 +106,7 @@ jest.mock(
 describe('ContainerConfigurationPanel', () => {
 	afterEach(cleanup);
 
-	['top', 'bottom', 'horizontal'].forEach(paddingDirection => {
+	['top', 'bottom', 'horizontal'].forEach((paddingDirection) => {
 		const paddingLabel = `padding-${paddingDirection}`;
 		const paddingPropName = `padding${paddingDirection
 			.charAt(0)

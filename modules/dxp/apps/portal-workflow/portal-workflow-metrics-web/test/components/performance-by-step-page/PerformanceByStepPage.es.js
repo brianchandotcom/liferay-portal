@@ -63,10 +63,7 @@ describe('The PerformanceByStepPage component having data should', () => {
 	};
 
 	const clientMock = {
-		get: jest
-			.fn()
-			.mockResolvedValue({data})
-			.mockResolvedValueOnce({data}),
+		get: jest.fn().mockResolvedValue({data}).mockResolvedValueOnce({data}),
 	};
 
 	const wrapper = ({children}) => (

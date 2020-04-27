@@ -60,8 +60,8 @@ function ContextualSidebar({
 				body: objectToFormData(Liferay.Util.ns(namespace, requestBody)),
 				method: 'POST',
 			})
-				.then(response => response.text())
-				.then(responseContent => {
+				.then((response) => response.text())
+				.then((responseContent) => {
 					if (isMounted()) {
 						setBody(responseContent);
 						setChanged(false);
@@ -82,7 +82,7 @@ function ContextualSidebar({
 
 		const handle = siteNavigationMenuEditorRef.current.on(
 			'selectedMenuItemChanged',
-			event => {
+			(event) => {
 				const {siteNavigationMenuItemId, title} = event.newVal.dataset;
 
 				openSidebar(title, editSiteNavigationMenuItemURL, {

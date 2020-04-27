@@ -162,7 +162,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 <aui:script>
 	Liferay.on(
 		'<portlet:namespace />chooseDefinition',
-		function(event) {
+		function (event) {
 			var A = AUI();
 
 			var ddmStructureId = event.ddmStructureId;
@@ -194,7 +194,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	Liferay.provide(
 		window,
 		'<portlet:namespace />editStructure',
-		function(title, uri) {
+		function (title, uri) {
 			var A = AUI();
 
 			var WIN = A.config.win;
@@ -216,7 +216,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		height: 600,
 		namespace: '<portlet:namespace />',
 		on: {
-			choose: function(event) {
+			choose: function (event) {
 				Liferay.fire('<portlet:namespace />chooseDefinition', {
 					ddmStructureId: event.definitionId,
 					name: event.definitionName,
@@ -228,7 +228,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 
 	A.one('#p_p_id<portlet:namespace />').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var definitionId = event.target.attr('data-definition-id');
 
 			kaleoDefinitionPreview.select(definitionId);

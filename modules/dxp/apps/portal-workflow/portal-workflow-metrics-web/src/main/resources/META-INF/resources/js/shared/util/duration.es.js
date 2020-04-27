@@ -39,7 +39,7 @@ export function formatDuration(millisecondsDuration) {
 			label: Liferay.Language.get('minutes-abbreviation'),
 			value: duration.minutes,
 		},
-	].filter(part => part.value > 0);
+	].filter((part) => part.value > 0);
 
 	if (!durationParts.length) {
 		return `${duration.seconds ? 1 : 0}${Liferay.Language.get(
@@ -47,11 +47,11 @@ export function formatDuration(millisecondsDuration) {
 		)}`;
 	}
 
-	return durationParts.map(part => `${part.value}${part.label}`).join(' ');
+	return durationParts.map((part) => `${part.value}${part.label}`).join(' ');
 }
 
 export function formatHours(hours, minutes) {
-	const padHours = value =>
+	const padHours = (value) =>
 		(value && value.toString().padStart(2, '0')) || '00';
 
 	if (hours || minutes) {

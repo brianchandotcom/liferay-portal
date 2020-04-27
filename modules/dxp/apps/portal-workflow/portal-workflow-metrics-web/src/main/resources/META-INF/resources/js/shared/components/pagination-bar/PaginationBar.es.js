@@ -32,7 +32,7 @@ const PaginationBar = ({
 		match: {params, path},
 	} = useRouter();
 
-	const deltas = useMemo(() => deltaValues.map(label => ({label})), [
+	const deltas = useMemo(() => deltaValues.map((label) => ({label})), [
 		deltaValues,
 	]);
 
@@ -48,7 +48,7 @@ const PaginationBar = ({
 	);
 
 	const handleChangePageSize = useCallback(
-		newPageSize => {
+		(newPageSize) => {
 			if (!withoutRouting) {
 				const pathname = pathToRegexp.compile(path)({
 					...params,
@@ -68,7 +68,7 @@ const PaginationBar = ({
 	);
 
 	const handleChangePage = useCallback(
-		newPage => {
+		(newPage) => {
 			if (!withoutRouting) {
 				const pathname = pathToRegexp.compile(path)({
 					...params,

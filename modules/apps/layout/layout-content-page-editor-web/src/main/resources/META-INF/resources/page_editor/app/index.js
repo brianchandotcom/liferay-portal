@@ -48,7 +48,7 @@ function Container({state}) {
  * We should define contexts here instead of Container component, as Container
  * is re-rendered when hooks change.
  */
-export default function(data) {
+export default function (data) {
 	initializeConfig(data.config);
 
 	return (

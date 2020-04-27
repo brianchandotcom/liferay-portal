@@ -29,7 +29,7 @@ describe('PagesVisitor', () => {
 	});
 
 	it('does not multate the fields of the original array', () => {
-		const newPages = visitor.mapFields(field => {
+		const newPages = visitor.mapFields((field) => {
 			if (field.fieldName == 'radio') {
 				field.fieldName = 'liferay';
 			}
@@ -51,7 +51,7 @@ describe('PagesVisitor', () => {
 
 	it('is able to change rows', () => {
 		expect(
-			visitor.mapRows(row => ({
+			visitor.mapRows((row) => ({
 				...row,
 				columns: [],
 			}))
@@ -60,7 +60,7 @@ describe('PagesVisitor', () => {
 
 	it('is able to change columns', () => {
 		expect(
-			visitor.mapColumns(column => ({
+			visitor.mapColumns((column) => ({
 				...column,
 				size: 6,
 			}))

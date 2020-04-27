@@ -269,7 +269,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 	var form = document.getElementById('<portlet:namespace />fm');
 
 	if (form) {
-		var <portlet:namespace />modified = function(panel) {
+		var <portlet:namespace />modified = function (panel) {
 			var modifiedNotice = panel.querySelector(
 				'.panel-heading .sheet-subtitle .modified-notice'
 			);
@@ -293,7 +293,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 		if (customizeAnnouncementsDisplayedCheckbox) {
 			customizeAnnouncementsDisplayedCheckbox.addEventListener(
 				'change',
-				function() {
+				function () {
 					<portlet:namespace />modified(
 						document.getElementById(
 							'<portlet:namespace />announcementsDisplayedPanel'
@@ -327,7 +327,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 			selectedHTML = selectedHTML.concat(selected[i].innerHTML);
 		}
 
-		Liferay.on('inputmoveboxes:moveItem', function(event) {
+		Liferay.on('inputmoveboxes:moveItem', function (event) {
 			var currSelectedHTML = '';
 
 			for (var i = selected.length - 1; i >= 0; --i) {
@@ -350,7 +350,7 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 		);
 
 		if (pageDeltaInput) {
-			pageDeltaInput.addEventListener('change', function(event) {
+			pageDeltaInput.addEventListener('change', function (event) {
 				var displaySettingsPanel = document.getElementById(
 					'<portlet:namespace />displaySettingsPanel'
 				);

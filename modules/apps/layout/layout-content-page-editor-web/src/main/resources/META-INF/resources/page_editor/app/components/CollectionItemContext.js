@@ -16,8 +16,8 @@ import React, {useCallback, useContext} from 'react';
 
 import InfoItemService from '../services/InfoItemService';
 
-const defaultFromControlsId = itemId => itemId;
-const defaultToControlsId = controlId => controlId;
+const defaultFromControlsId = (itemId) => itemId;
+const defaultToControlsId = (controlId) => controlId;
 
 const INITIAL_STATE = {
 	canElevate: null,
@@ -66,7 +66,7 @@ const useGetFieldValue = () => {
 				fieldId,
 				languageId,
 				onNetworkStatus: () => {},
-			}).then(response => {
+			}).then((response) => {
 				const {fieldValue = ''} = response;
 
 				return fieldValue;

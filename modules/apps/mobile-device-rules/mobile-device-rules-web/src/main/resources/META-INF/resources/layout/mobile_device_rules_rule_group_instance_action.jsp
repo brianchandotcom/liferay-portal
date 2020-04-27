@@ -73,13 +73,13 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 
 		A.one('#<portlet:namespace /><%= row.getRowId() %>manageActions').on(
 			'click',
-			function(event) {
+			function (event) {
 				var currentTarget = event.currentTarget;
 
 				Liferay.Util.openWindow({
 					dialog: {
 						on: {
-							visibleChange: function(event) {
+							visibleChange: function (event) {
 								<portlet:namespace />updateRuleGroupInstances();
 							},
 						},

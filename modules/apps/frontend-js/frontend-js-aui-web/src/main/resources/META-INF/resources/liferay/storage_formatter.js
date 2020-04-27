@@ -21,10 +21,10 @@
 
 AUI.add(
 	'liferay-storage-formatter',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
-		var StorageFormatter = function() {};
+		var StorageFormatter = function () {};
 
 		StorageFormatter.NAME = 'storageformatter';
 

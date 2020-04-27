@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-menu',
-	A => {
+	(A) => {
 		var Util = Liferay.Util;
 
 		var ARIA_ATTR_ROLE = 'role';
@@ -93,7 +93,7 @@ AUI.add(
 
 		var TPL_MENU = '<div class="open" />';
 
-		var Menu = function() {
+		var Menu = function () {
 			var instance = this;
 
 			instance._handles = [];
@@ -142,7 +142,7 @@ AUI.add(
 				}
 			},
 
-			_getAlignPoints: A.cached(cssClass => {
+			_getAlignPoints: A.cached((cssClass) => {
 				var alignPoints = DEFAULT_ALIGN_POINTS;
 
 				var defaultOverlayHorizontalAlign = STR_RIGHT;
@@ -274,7 +274,7 @@ AUI.add(
 					if (trigger.hasClass('select')) {
 						listContainer.delegate(
 							'click',
-							event => {
+							(event) => {
 								var selectedListItem = event.currentTarget;
 
 								var selectedListItemIcon = selectedListItem.one(
@@ -457,7 +457,7 @@ AUI.add(
 			},
 		};
 
-		Menu.handleFocus = function(id) {
+		Menu.handleFocus = function (id) {
 			var node = A.one(id);
 
 			if (node) {
@@ -476,7 +476,7 @@ AUI.add(
 
 		var buffer = [];
 
-		Menu.register = function(id) {
+		Menu.register = function (id) {
 			var menuNode = document.getElementById(id);
 
 			if (menuNode) {
@@ -500,7 +500,7 @@ AUI.add(
 			}
 		}, 100);
 
-		Menu._targetLink = function(event, action) {
+		Menu._targetLink = function (event, action) {
 			var anchor = event.currentTarget.one(SELECTOR_ANCHOR);
 
 			if (anchor) {
@@ -547,7 +547,7 @@ AUI.add(
 
 					bodyNode.delegate(
 						'mouseenter',
-						event => {
+						(event) => {
 							if (focusManager.get('focused')) {
 								focusManager.focus(
 									event.currentTarget.one(SELECTOR_ANCHOR)
@@ -557,7 +557,7 @@ AUI.add(
 						SELECTOR_LIST_ITEM
 					);
 
-					focusManager.after('activeDescendantChange', event => {
+					focusManager.after('activeDescendantChange', (event) => {
 						var descendants = focusManager.get('descendants');
 
 						var selectedItem = descendants.item(event.newVal);
@@ -596,12 +596,9 @@ AUI.add(
 
 					var results = [];
 
-					listNode.all('li').each(node => {
+					listNode.all('li').each((node) => {
 						results.push({
-							name: node
-								.one('.taglib-text-icon')
-								.text()
-								.trim(),
+							name: node.one('.taglib-text-icon').text().trim(),
 							node,
 						});
 					});
@@ -627,7 +624,7 @@ AUI.add(
 		Liferay.provide(
 			Menu,
 			'_registerMenu',
-			event => {
+			(event) => {
 				var menuInstance = Menu._INSTANCE;
 
 				var handles = menuInstance._handles;
@@ -684,14 +681,14 @@ AUI.add(
 							),
 							listContainer.on(
 								'touchendoutside',
-								event => {
+								(event) => {
 									event.preventDefault();
 
 									menuInstance._closeActiveMenu();
 								},
 								menuInstance
 							),
-							Liferay.on('dropdownShow', event => {
+							Liferay.on('dropdownShow', (event) => {
 								if (event.src !== 'LiferayMenu') {
 									menuInstance._closeActiveMenu();
 								}

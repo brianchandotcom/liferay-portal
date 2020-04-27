@@ -105,7 +105,7 @@ const useSLAFormState = ({errors, id, processId, setErrors}) => {
 			data.pauseNodeKeys,
 			data.startNodeKeys,
 			data.stopNodeKeys,
-		].map(node => {
+		].map((node) => {
 			if (!node || !node.nodeKeys) {
 				return {nodeKeys: []};
 			}
@@ -154,7 +154,7 @@ const useSLAFormState = ({errors, id, processId, setErrors}) => {
 
 	const updateSLA = usePut({body, url: `/slas/${id}`});
 
-	const changeNodesKeys = (type, nodeKeys, callback) => selectedNodes => {
+	const changeNodesKeys = (type, nodeKeys, callback) => (selectedNodes) => {
 		const selectedNodeKeys = getNodeKeys(selectedNodes);
 
 		const filteredNodeKeys = nodeKeys.filter(({compositeId}) =>
@@ -167,7 +167,7 @@ const useSLAFormState = ({errors, id, processId, setErrors}) => {
 		callback(filteredNodeKeys);
 	};
 
-	const changePauseNodes = (pauseNodeKeys, callback) => nodes => {
+	const changePauseNodes = (pauseNodeKeys, callback) => (nodes) => {
 		const nodeKeys = getNodeKeys(nodes);
 
 		const filteredPauseNodeKeys = pauseNodeKeys.filter(({compositeId}) =>
@@ -183,24 +183,24 @@ const useSLAFormState = ({errors, id, processId, setErrors}) => {
 			value = 0;
 		}
 
-		setSLA(oldSla => ({...oldSla, ...{[name]: value}}));
+		setSLA((oldSla) => ({...oldSla, ...{[name]: value}}));
 	};
 
 	const getNodeTags = (nodes, nodeKeys = []) => {
 		return nodes.filter(({compositeId}) =>
 			nodeKeys.find(
-				node => `${node.id}:${node.executionType}` === compositeId
+				(node) => `${node.id}:${node.executionType}` === compositeId
 			)
 		);
 	};
 
-	const getNodeKeys = nodes => nodes.map(({compositeId}) => compositeId);
+	const getNodeKeys = (nodes) => nodes.map(({compositeId}) => compositeId);
 
 	const getPauseNodeTags = (pauseNodes, pauseNodeKeys) => {
 		const nodeKeys = pauseNodeKeys || [];
 
 		return pauseNodes.filter(({id}) =>
-			nodeKeys.find(node => node.id == id)
+			nodeKeys.find((node) => node.id == id)
 		);
 	};
 

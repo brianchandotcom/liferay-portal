@@ -11,7 +11,7 @@
 
 import {useEffect} from 'react';
 
-const useBeforeUnload = callback => {
+const useBeforeUnload = (callback) => {
 	useEffect(() => {
 		window.addEventListener('beforeunload', callback);
 

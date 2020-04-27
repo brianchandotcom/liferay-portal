@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var A = AUI().use('oop');
 
 	var usedModules = {};
@@ -87,7 +87,7 @@
 				delete obj._yuiaop[methodName];
 			}
 
-			var proxy = function() {
+			var proxy = function () {
 				var args = arguments;
 
 				var context = obj;
@@ -143,7 +143,7 @@
 				}
 			};
 
-			proxy.toString = function() {
+			proxy.toString = function () {
 				return methodFn.toString();
 			};
 

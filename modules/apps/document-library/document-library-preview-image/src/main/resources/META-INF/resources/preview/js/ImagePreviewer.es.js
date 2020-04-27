@@ -55,7 +55,7 @@ const ImagePreviewer = ({imageURL}) => {
 
 	const isMounted = useIsMounted();
 
-	const applyZoom = zoom => {
+	const applyZoom = (zoom) => {
 		const imageElement = image.current;
 
 		setImageHeight(imageElement.naturalHeight * zoom);
@@ -108,7 +108,7 @@ const ImagePreviewer = ({imageURL}) => {
 		}
 	}, 250);
 
-	const updateToolbar = zoom => {
+	const updateToolbar = (zoom) => {
 		setCurrentZoom(zoom);
 		setZoomInDisabled(ZOOM_LEVELS_REVERSED[0] === zoom);
 		setZoomOutDisabled(ZOOM_LEVELS[0] >= zoom);
@@ -184,7 +184,7 @@ const ImagePreviewer = ({imageURL}) => {
 						onClick={() => {
 							applyZoom(
 								ZOOM_LEVELS_REVERSED.find(
-									zoom => zoom < currentZoom
+									(zoom) => zoom < currentZoom
 								)
 							);
 						}}
@@ -213,7 +213,7 @@ const ImagePreviewer = ({imageURL}) => {
 						monospaced
 						onClick={() => {
 							applyZoom(
-								ZOOM_LEVELS.find(zoom => zoom > currentZoom)
+								ZOOM_LEVELS.find((zoom) => zoom > currentZoom)
 							);
 						}}
 						title={Liferay.Language.get('zoom-in')}

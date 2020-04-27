@@ -50,7 +50,7 @@ const SidebarSearchInput = ({onSearch}) => (
 	<div className="autofit-row sidebar-section">
 		<div className="autofit-col autofit-col-expand">
 			{onSearch && (
-				<SearchInput onChange={searchText => onSearch(searchText)} />
+				<SearchInput onChange={(searchText) => onSearch(searchText)} />
 			)}
 		</div>
 	</div>
@@ -87,7 +87,7 @@ const SidebarTab = ({onTabClick, selectedTab, tabs}) => {
 									}
 								)}
 								data-senna-off
-								onClick={event => {
+								onClick={(event) => {
 									event.preventDefault();
 									onTabClick(index);
 								}}

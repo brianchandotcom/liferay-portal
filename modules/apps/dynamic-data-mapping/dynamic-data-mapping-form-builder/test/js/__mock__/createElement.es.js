@@ -18,7 +18,7 @@ const setAttribute = (node, attributes) => {
 	return node;
 };
 
-const createElement = object => {
+const createElement = (object) => {
 	const {attributes, tagname} = object;
 
 	return setAttribute(document.createElement(tagname), attributes);

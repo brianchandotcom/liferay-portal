@@ -21,7 +21,7 @@
 
 AUI().add(
 	'liferay-token-list',
-	A => {
+	(A) => {
 		var TPL_TOKEN = A.Template(
 			'<tpl for=".">',
 			'<span class="lfr-token" data-fieldValues="{fieldValues}" data-clearFields="{clearFields}">',

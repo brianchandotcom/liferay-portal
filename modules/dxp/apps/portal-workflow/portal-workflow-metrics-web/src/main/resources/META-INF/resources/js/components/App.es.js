@@ -23,7 +23,7 @@ import ProcessMetricsContainer from './process-metrics/ProcessMetricsContainer.e
 import SLAContainer from './sla/SLAContainer.es';
 import WorkloadByAssigneePage from './workload-by-assignee-page/WorkloadByAssigneePage.es';
 
-const App = props => {
+const App = (props) => {
 	return (
 		<Router>
 			<AppContextProvider {...props}>

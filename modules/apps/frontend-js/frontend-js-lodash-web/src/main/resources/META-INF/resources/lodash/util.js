@@ -30,7 +30,7 @@ _.mixin({
 	},
 
 	cached(fn) {
-		return _.memoize(fn, function() {
+		return _.memoize(fn, function () {
 			return arguments.length > 1
 				? Array.prototype.join.call(arguments, '_')
 				: String(arguments[0]);

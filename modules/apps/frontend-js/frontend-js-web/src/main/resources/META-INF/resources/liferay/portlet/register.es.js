@@ -24,7 +24,7 @@ import {validateArguments, validatePortletId} from './portlet_util.es';
  * @review
  */
 
-const register = function(portletId) {
+const register = function (portletId) {
 	validateArguments(arguments, 1, 1, ['string']);
 
 	const pageRenderState = global.portlet.data.pageRenderState;

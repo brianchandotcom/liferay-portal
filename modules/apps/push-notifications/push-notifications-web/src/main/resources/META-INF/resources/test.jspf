@@ -41,7 +41,7 @@
 </aui:form>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-	var onSendPushNotification = function(result) {
+	var onSendPushNotification = function (result) {
 		var success = document.getElementById('<portlet:namespace />success');
 
 		if (success) {
@@ -79,7 +79,7 @@
 	var form = document.getElementById('<portlet:namespace />fm');
 
 	if (form) {
-		form.addEventListener('submit', function(event) {
+		form.addEventListener('submit', function (event) {
 			event.preventDefault();
 
 			var message = form.querySelector('#<portlet:namespace />message');

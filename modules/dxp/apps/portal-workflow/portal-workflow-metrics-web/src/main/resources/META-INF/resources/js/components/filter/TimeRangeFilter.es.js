@@ -87,7 +87,7 @@ const TimeRangeFilter = ({
 	});
 
 	const defaultItem = useMemo(
-		() => items.find(timeRange => timeRange.defaultTimeRange),
+		() => items.find((timeRange) => timeRange.defaultTimeRange),
 		[items]
 	);
 
@@ -103,7 +103,7 @@ const TimeRangeFilter = ({
 	);
 
 	const handleSelectFilter = useCallback(
-		filter => {
+		(filter) => {
 			const filterValue = {[prefixedFilterKey]: [filter.key]};
 			const query = parse(routerProps.location.search);
 

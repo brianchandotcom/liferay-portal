@@ -24,7 +24,7 @@ const {withKnobs} = StorybookAddonKnobs;
 
 addDecorator(withKnobs);
 
-addDecorator(storyFn => {
+addDecorator((storyFn) => {
 	const context = {
 		namespace:
 			'_com_liferay_portal_search_synonyms_web_portlet_SynonymsPortlet_',
@@ -38,7 +38,7 @@ addDecorator(storyFn => {
 	);
 });
 
-const withSheet = storyFn => (
+const withSheet = (storyFn) => (
 	<div className="sheet sheet-lg" style={{marginTop: '24px'}}>
 		{storyFn()}
 	</div>

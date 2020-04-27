@@ -98,7 +98,7 @@ const item = {
 	type: '',
 };
 
-const renderFragmentContent = fragmentEntryLink => {
+const renderFragmentContent = (fragmentEntryLink) => {
 	const state = {
 		fragmentEntryLinks: {
 			[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink,

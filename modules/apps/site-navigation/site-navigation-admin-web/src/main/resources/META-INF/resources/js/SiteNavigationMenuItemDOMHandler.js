@@ -40,10 +40,10 @@ const MENU_ITEM_SELECTED_CLASSNAME = `${MENU_ITEM_CLASSNAME}--selected`;
  * @param {HTMLElement} menuItem The menu item to return children for.
  * @return {Array<HTMLElement>}
  */
-const getChildren = function(menuItem) {
+const getChildren = function (menuItem) {
 	return Array.prototype.slice
 		.call(menuItem.children)
-		.filter(child => hasClass(child, MENU_ITEM_CLASSNAME));
+		.filter((child) => hasClass(child, MENU_ITEM_CLASSNAME));
 };
 
 /**
@@ -53,7 +53,7 @@ const getChildren = function(menuItem) {
  * parent menu item for.
  * @return {HTMLElement|null}
  */
-const getFromContentElement = function(menuItemContent) {
+const getFromContentElement = function (menuItemContent) {
 	return closest(menuItemContent, `.${MENU_ITEM_CLASSNAME}`);
 };
 
@@ -63,7 +63,7 @@ const getFromContentElement = function(menuItemContent) {
  * @param {number|string} menuItemId The menu item's ID.
  * @return {HTMLElement|null}
  */
-const getFromId = function(menuItemId) {
+const getFromId = function (menuItemId) {
 	return document.querySelector(
 		`.${MENU_ITEM_CLASSNAME}[data-site-navigation-menu-item-id="${menuItemId}"]`
 	);
@@ -75,7 +75,7 @@ const getFromId = function(menuItemId) {
  * @param {HTMLElement} menuItem The menu item
  * @return {number}
  */
-const getId = function(menuItem) {
+const getId = function (menuItem) {
 	return parseInt(menuItem.dataset.siteNavigationMenuItemId, 10) || 0;
 };
 
@@ -85,7 +85,7 @@ const getId = function(menuItem) {
  * @param {HTMLElement} menuItem The menu item.
  * @return {HTMLElement|null}
  */
-const getNextSibling = function(menuItem) {
+const getNextSibling = function (menuItem) {
 	next(menuItem, `.${MENU_ITEM_CLASSNAME}`);
 };
 
@@ -95,7 +95,7 @@ const getNextSibling = function(menuItem) {
  * @param {HTMLElement} menuItem The menu item.
  * @return {HTMLElement|null}
  */
-const getParent = function(menuItem) {
+const getParent = function (menuItem) {
 	return menuItem.parentElement;
 };
 
@@ -105,7 +105,7 @@ const getParent = function(menuItem) {
  * @param {HTMLElement} menuItem The menu item.
  * @return {Array<HTMLElement>}
  */
-const getSiblings = function(menuItem) {
+const getSiblings = function (menuItem) {
 	const parentElement = menuItem.parentElement;
 	let siblings = [];
 
@@ -124,7 +124,7 @@ const getSiblings = function(menuItem) {
  * @param {HTMLElement} parentMenuItem The parent menu item.
  * @return {boolean} Whether the menu item is a child of the parent menu item.
  */
-const isChildOf = function(menuItem, parentMenuItem) {
+const isChildOf = function (menuItem, parentMenuItem) {
 	return contains(parentMenuItem, menuItem);
 };
 
@@ -133,7 +133,7 @@ const isChildOf = function(menuItem, parentMenuItem) {
  * @param {HTMLElement} htmlElement The HTML element to check.
  * @return {boolean} Whether the HTML element is a menu item.
  */
-const isMenuItem = function(htmlElement) {
+const isMenuItem = function (htmlElement) {
 	return hasClass(htmlElement, MENU_ITEM_CLASSNAME);
 };
 
@@ -143,7 +143,7 @@ const isMenuItem = function(htmlElement) {
  * @param {HTMLElement} menuItem The menu item to check.
  * @return {boolean} Whether the menu item is selected.
  */
-const isSelected = function(menuItem) {
+const isSelected = function (menuItem) {
 	return hasClass(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
 };
 
@@ -152,7 +152,7 @@ const isSelected = function(menuItem) {
  * dragging or not dragging.
  * @param {HTMLElement} menuItem The menu item.
  */
-const setDragging = function(menuItem, dragging = false) {
+const setDragging = function (menuItem, dragging = false) {
 	if (dragging) {
 		addClasses(menuItem, MENU_ITEM_DRAGGING_CLASSNAME);
 	}
@@ -168,7 +168,7 @@ const setDragging = function(menuItem, dragging = false) {
  *
  * @param {!HTMLElement} menuItem The menu item.
  */
-const setSelected = function(menuItem) {
+const setSelected = function (menuItem) {
 	unselectAll();
 	addClasses(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
 };
@@ -176,7 +176,7 @@ const setSelected = function(menuItem) {
 /**
  * Mutates all selected menu items and sets their status to unselected.
  */
-const unselectAll = function() {
+const unselectAll = function () {
 	const selectedMenuItem = toElement(`.${MENU_ITEM_SELECTED_CLASSNAME}`);
 
 	if (selectedMenuItem) {

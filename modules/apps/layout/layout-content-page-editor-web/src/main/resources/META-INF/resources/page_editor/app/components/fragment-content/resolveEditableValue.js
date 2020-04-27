@@ -15,7 +15,7 @@
 import {config} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 
-export default function(
+export default function (
 	editableValues,
 	editableId,
 	processorType,
@@ -53,7 +53,7 @@ export default function(
 			fieldId: editableValue.config.fieldId,
 			languageId,
 		})
-			.then(href => {
+			.then((href) => {
 				return {...editableValue.config, href};
 			})
 			.catch(() => {

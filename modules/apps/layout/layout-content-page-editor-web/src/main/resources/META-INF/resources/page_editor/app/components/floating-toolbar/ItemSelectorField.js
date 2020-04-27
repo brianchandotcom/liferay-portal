@@ -31,7 +31,7 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 				<ItemSelector
 					itemSelectorURL={typeOptions.infoItemSelectorURL}
 					label={field.label}
-					onItemSelect={item => {
+					onItemSelect={(item) => {
 						onValueSelect(field.name, {
 							className: item.className,
 							classNameId: item.classNameId,
@@ -47,7 +47,7 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 				<ClayForm.Group small>
 					<TemplateSelector
 						item={value}
-						onTemplateSelect={template => {
+						onTemplateSelect={(template) => {
 							onValueSelect(field.name, {...value, template});
 						}}
 						selectedTemplate={value.template}
@@ -80,7 +80,7 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 				className: item.className,
 				classPK: item.classPK,
 				onNetworkStatus: dispatch,
-			}).then(response => {
+			}).then((response) => {
 				setAvailableTemplates(response);
 			});
 		}
@@ -96,18 +96,18 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 				<select
 					className="form-control"
 					id="itemSelectorTemplateSelect"
-					onChange={event => {
+					onChange={(event) => {
 						onTemplateSelect(
 							event.target.options[event.target.selectedIndex]
 								.dataset
 						);
 					}}
 				>
-					{availableTemplates.map(entry => {
+					{availableTemplates.map((entry) => {
 						if (entry.templates) {
 							return (
 								<optgroup key={entry.label} label={entry.label}>
-									{entry.templates.map(template => (
+									{entry.templates.map((template) => (
 										<option
 											data-info-item-renderer-key={
 												template.infoItemRendererKey

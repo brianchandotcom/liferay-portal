@@ -38,8 +38,8 @@ const PermissionsContextProvider = ({children, dataDefinitionId}) => {
 					`/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/permissions/by-current-user`
 				)
 			)
-			.then(actionIds => setActionIds(actionIds))
-			.catch(_ => setActionIds([]));
+			.then((actionIds) => setActionIds(actionIds))
+			.catch((_) => setActionIds([]));
 	}, [dataDefinitionId]);
 
 	return (

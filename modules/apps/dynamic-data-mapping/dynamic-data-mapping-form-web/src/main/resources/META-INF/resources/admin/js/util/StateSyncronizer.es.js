@@ -57,7 +57,9 @@ class StateSyncronizer extends Component {
 		this._eventHandler.removeAllListeners();
 
 		if (this._translationManagerHandles) {
-			this._translationManagerHandles.forEach(handle => handle.detach());
+			this._translationManagerHandles.forEach((handle) =>
+				handle.detach()
+			);
 		}
 	}
 
@@ -165,11 +167,11 @@ class StateSyncronizer extends Component {
 		const state = this.getState();
 		const {description, name} = state;
 
-		Object.keys(state.name).forEach(key => {
+		Object.keys(state.name).forEach((key) => {
 			state.name[key] = Liferay.Util.unescape(state.name[key]);
 		});
 
-		Object.keys(state.description).forEach(key => {
+		Object.keys(state.description).forEach((key) => {
 			state.description[key] = Liferay.Util.unescape(
 				state.description[key]
 			);
@@ -199,7 +201,7 @@ class StateSyncronizer extends Component {
 
 		const visitor = new PagesVisitor(state.pages);
 
-		const pages = visitor.mapPages(page => {
+		const pages = visitor.mapPages((page) => {
 			return {
 				...page,
 				description: page.localizedDescription,
@@ -211,7 +213,7 @@ class StateSyncronizer extends Component {
 
 		return JSON.stringify({
 			...state,
-			pages: visitor.mapFields(field => {
+			pages: visitor.mapFields((field) => {
 				return {
 					...field,
 					settingsContext: {
@@ -231,12 +233,12 @@ class StateSyncronizer extends Component {
 		const defaultLanguageId = this.getDefaultLanguageId();
 		const visitor = new PagesVisitor(pages);
 
-		return visitor.mapFields(field => {
+		return visitor.mapFields((field) => {
 			if (field.type === 'options') {
 				const {value} = field;
 				const newValue = {};
 
-				Object.keys(value).forEach(locale => {
+				Object.keys(value).forEach((locale) => {
 					newValue[locale] = value[locale].filter(
 						({value}) => value !== ''
 					);

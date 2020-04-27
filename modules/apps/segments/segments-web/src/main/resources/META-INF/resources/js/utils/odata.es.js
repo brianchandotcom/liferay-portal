@@ -91,7 +91,7 @@ const getTypeByPropertyName = (propertyName, properties) => {
 
 	if (propertyName && properties) {
 		const property = properties.find(
-			property => property.name === propertyName
+			(property) => property.name === propertyName
 		);
 
 		type = property ? property.type : null;
@@ -289,7 +289,7 @@ function getFunctionName(oDataASTNode) {
  * @param {object} oDataASTNode
  * @returns String value of the internal name of the next expression.
  */
-const getNextNonGroupExpression = oDataASTNode => {
+const getNextNonGroupExpression = (oDataASTNode) => {
 	let returnValue;
 
 	if (oDataASTNode.value.type === EXPRESSION_TYPES.BOOL_PAREN) {
@@ -312,7 +312,7 @@ const getNextNonGroupExpression = oDataASTNode => {
  * @param {object} oDataASTNode
  * @returns String value of the internal name of the next expression.
  */
-const getNextOperatorExpression = oDataASTNode => {
+const getNextOperatorExpression = (oDataASTNode) => {
 	let returnValue;
 
 	const nextNode = oDataASTNode.value.left

@@ -158,7 +158,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 			url: '<%= selectUsersURL %>',
 		});
 
-		itemSelectorDialog.on('selectedItemChange', function(event) {
+		itemSelectorDialog.on('selectedItemChange', function (event) {
 			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
@@ -188,7 +188,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	}
 
 	Liferay.componentReady('editUserGroupAssignmentsManagementToolbar').then(
-		function(managementToolbar) {
+		function (managementToolbar) {
 			managementToolbar.on(
 				'actionItemClicked',
 				<portlet:namespace />removeUsers

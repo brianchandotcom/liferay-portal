@@ -23,10 +23,10 @@ import NoCommentsMessage from './NoCommentsMessage';
 import ResolvedCommentsToggle from './ResolvedCommentsToggle';
 
 export default function FragmentEntryLinksWithComments() {
-	const itemsWithComments = useSelector(state =>
+	const itemsWithComments = useSelector((state) =>
 		Object.values(state.layoutData.items)
-			.filter(item => item.type === LAYOUT_DATA_ITEM_TYPES.fragment)
-			.map(item => [
+			.filter((item) => item.type === LAYOUT_DATA_ITEM_TYPES.fragment)
+			.map((item) => [
 				item,
 				state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
 			])

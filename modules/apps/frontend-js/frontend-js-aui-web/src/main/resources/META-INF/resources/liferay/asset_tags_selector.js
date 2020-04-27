@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-asset-tags-selector',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var AArray = A.Array;
@@ -186,7 +186,7 @@ AUI.add(
 						if (text.indexOf(',') > -1) {
 							var items = text.split(',');
 
-							items.forEach(item => {
+							items.forEach((item) => {
 								instance.entries.add(item, {});
 							});
 						}
@@ -340,7 +340,7 @@ AUI.add(
 									'fieldset'
 								);
 
-								fieldsets.each(item => {
+								fieldsets.each((item) => {
 									var visibleEntries = item.one(
 										'label:not(.hide)'
 									);
@@ -501,7 +501,7 @@ AUI.add(
 						Liferay.Language.get('tags')
 					);
 
-					instance._getEntries(entries => {
+					instance._getEntries((entries) => {
 						instance._updateSelectList(entries);
 					});
 				},

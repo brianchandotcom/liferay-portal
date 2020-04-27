@@ -203,10 +203,10 @@ describe('PageStructureSidebar', () => {
 			rootItemChildren: ['01-container', '02-row', '03-column'],
 		});
 
-		['container', 'row', 'column'].forEach(itemLabel =>
+		['container', 'row', 'column'].forEach((itemLabel) =>
 			getAllByText(
 				LAYOUT_DATA_ITEM_TYPE_LABELS[itemLabel]
-			).forEach(element => expect(element).toBeInTheDocument())
+			).forEach((element) => expect(element).toBeInTheDocument())
 		);
 	});
 

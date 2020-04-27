@@ -52,7 +52,7 @@ const useFetchTasks = (options = {}) => {
 
 		const assignees = !unassigned ? [userId] : [];
 		const assigneeIds = userIds.length
-			? userIds.filter(id => id !== '-1')
+			? userIds.filter((id) => id !== '-1')
 			: assignees;
 
 		const body = {

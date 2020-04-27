@@ -102,7 +102,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"),
 	);
 
 	if (selectCategoryButton) {
-		selectCategoryButton.addEventListener('click', function(event) {
+		selectCategoryButton.addEventListener('click', function (event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -122,7 +122,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"),
 
 					uri: '<%= selectCategoryURL %>',
 				},
-				function(event) {
+				function (event) {
 					var form = document.<portlet:namespace />fm;
 
 					Liferay.Util.setFormValues(form, {

@@ -38,7 +38,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 		</aui:field-wrapper>
 
 		<aui:script sandbox="<%= true %>">
-			var onFilePick = function(fields) {
+			var onFilePick = function (fields) {
 				var documentIconURL = fields['<%= dlFilePicker.getIconFieldName() %>'];
 
 				var pickButtonIcon = document.getElementById(
@@ -80,7 +80,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 					'#<portlet:namespace />fm .lfr-ddm-container .field-wrapper'
 				);
 
-				Array.prototype.forEach.call(ddmFieldWrappers, function(ddmFieldWrapper) {
+				Array.prototype.forEach.call(ddmFieldWrappers, function (ddmFieldWrapper) {
 					var fieldName = ddmFieldWrapper.dataset.fieldname;
 
 					var input = ddmFieldWrapper.querySelector('input');
@@ -97,7 +97,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 
 			if (customizedFileButton) {
 				var filePicker = new <%= dlFilePicker.getJavaScriptModuleName() %>(
-					function() {
+					function () {
 						Liferay.Util.toggleDisabled(customizedFileButton, false);
 					}
 				);

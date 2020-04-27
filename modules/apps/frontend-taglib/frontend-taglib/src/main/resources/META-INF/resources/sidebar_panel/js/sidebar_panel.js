@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-sidebar-panel',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var SidebarPanel = A.Component.create({
@@ -82,8 +82,8 @@ AUI.add(
 						),
 						method: 'POST',
 					})
-						.then(response => response.text())
-						.then(response =>
+						.then((response) => response.text())
+						.then((response) =>
 							instance.get('targetNode').setContent(response)
 						);
 				},

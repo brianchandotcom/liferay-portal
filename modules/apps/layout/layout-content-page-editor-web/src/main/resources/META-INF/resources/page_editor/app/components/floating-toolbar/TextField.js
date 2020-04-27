@@ -29,7 +29,7 @@ export const TextField = ({field, onValueSelect, value}) => {
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		setCurrentValue(currentValue => {
+		setCurrentValue((currentValue) => {
 			if (!currentValue || !value) {
 				return value || field.defaultValue || '';
 			}
@@ -56,12 +56,12 @@ export const TextField = ({field, onValueSelect, value}) => {
 
 			<ClayInput
 				id={field.name}
-				onBlur={event => {
+				onBlur={(event) => {
 					if (event.target.checkValidity()) {
 						setErrorMessage('');
 					}
 				}}
-				onChange={event => {
+				onChange={(event) => {
 					if (event.target.validity.valid) {
 						setErrorMessage('');
 					}

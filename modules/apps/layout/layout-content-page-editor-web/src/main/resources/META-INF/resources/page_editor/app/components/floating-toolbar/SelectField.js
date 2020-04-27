@@ -25,7 +25,7 @@ export const SelectField = ({field, onValueSelect, value}) => (
 		<ClaySelectWithOption
 			aria-label={field.label}
 			id={field.name}
-			onChange={event => {
+			onChange={(event) => {
 				onValueSelect(
 					field.name,
 					event.target.options[event.target.selectedIndex].value

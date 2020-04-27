@@ -30,4 +30,4 @@ export const getRetryDelay = (attemptNumber, maxAttempts) => {
  * @param {Number} n - The position in Fibonnaci sequence.
  * @returns {Number} - Fibonnaci value at nth position.
  */
-export const fib = n => (n <= 1 ? 1 : fib(n - 1) + fib(n - 2));
+export const fib = (n) => (n <= 1 ? 1 : fib(n - 1) + fib(n - 2));

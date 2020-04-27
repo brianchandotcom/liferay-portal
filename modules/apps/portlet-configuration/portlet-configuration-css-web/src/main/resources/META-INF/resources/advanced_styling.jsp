@@ -64,7 +64,7 @@
 	);
 
 	if (<portlet:namespace />addId) {
-		<portlet:namespace />addId.addEventListener('click', function() {
+		<portlet:namespace />addId.addEventListener('click', function () {
 			<portlet:namespace />insertCustomCSSValue(
 				'#portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>'
 			);
@@ -76,7 +76,7 @@
 	);
 
 	if (<portlet:namespace />addClass) {
-		<portlet:namespace />addClass.addEventListener('click', function() {
+		<portlet:namespace />addClass.addEventListener('click', function () {
 			<portlet:namespace />insertCustomCSSValue(portletClasses);
 		});
 	}
@@ -107,7 +107,7 @@
 
 			portletContent
 				.getAttribute('class')
-				.replace(/(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g, function(
+				.replace(/(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g, function (
 					match,
 					subMatch1,
 					subMatch2

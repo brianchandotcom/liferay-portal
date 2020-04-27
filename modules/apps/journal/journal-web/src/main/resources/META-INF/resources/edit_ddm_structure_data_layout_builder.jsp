@@ -118,7 +118,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				.get('translatedLanguages')
 				.values();
 
-			translatedLanguages.forEach(function(languageId) {
+			translatedLanguages.forEach(function (languageId) {
 				localizedValues[languageId] = inputLocalized.getValue(languageId);
 			});
 		}
@@ -128,7 +128,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 
 	function <portlet:namespace />saveDDMStructure() {
 		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
-			function(dataLayoutBuilder) {
+			function (dataLayoutBuilder) {
 				var name = <portlet:namespace />getInputLocalizedValues('name');
 				var formData = dataLayoutBuilder.getFormData();
 

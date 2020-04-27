@@ -20,7 +20,7 @@ import ListEntries from './ListEntries.es';
 import {PermissionsContextProvider} from './PermissionsContext.es';
 import ViewEntry from './ViewEntry.es';
 
-export default function(props) {
+export default function (props) {
 	return (
 		<div className="app-builder-root">
 			<AppContextProvider {...props}>

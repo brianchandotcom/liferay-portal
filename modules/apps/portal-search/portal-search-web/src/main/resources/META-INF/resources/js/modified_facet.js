@@ -14,14 +14,14 @@
 
 AUI.add(
 	'liferay-search-modified-facet',
-	A => {
+	(A) => {
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		var FacetUtil = Liferay.Search.FacetUtil;
 		var Language = Liferay.Language;
 		var Util = Liferay.Util;
 
-		var ModifiedFacetFilter = function(config) {
+		var ModifiedFacetFilter = function (config) {
 			var instance = this;
 
 			instance.form = config.form;
@@ -109,7 +109,7 @@ AUI.add(
 					},
 				});
 
-				var onRangeSelectionChange = function() {
+				var onRangeSelectionChange = function () {
 					customRangeValidator.validate();
 				};
 

@@ -288,7 +288,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 	function <portlet:namespace />mapValues(fields, fieldValues) {
 		var form = document.<portlet:namespace />fm;
 
-		return fields.reduce(function(prev, item, index) {
+		return fields.reduce(function (prev, item, index) {
 			var mappingElement = Liferay.Util.getFormElement(
 				form,
 				fieldValues[index]
@@ -506,7 +506,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 	Liferay.provide(
 		window,
 		'<portlet:namespace />testSettings',
-		function(type) {
+		function (type) {
 			var A = AUI();
 
 			var url = null;

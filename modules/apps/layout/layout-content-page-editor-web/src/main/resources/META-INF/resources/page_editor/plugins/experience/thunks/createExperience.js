@@ -17,7 +17,7 @@ import createExperienceAction from '../actions/createExperience';
 import selectExperienceAction from '../actions/selectExperience';
 
 export default function createExperience({name, segmentsEntryId}) {
-	return dispatch => {
+	return (dispatch) => {
 		return ExperienceService.createExperience({
 			body: {
 				name,
@@ -32,7 +32,7 @@ export default function createExperience({name, segmentsEntryId}) {
 				},
 				dispatch,
 			})
-				.then(portletIds => {
+				.then((portletIds) => {
 					return dispatch(
 						selectExperienceAction({
 							portletIds,
@@ -41,7 +41,7 @@ export default function createExperience({name, segmentsEntryId}) {
 						})
 					);
 				})
-				.catch(error => {
+				.catch((error) => {
 					return error;
 				});
 

@@ -29,7 +29,7 @@ const Item = ({
 	const {reassignedTasks, reassigning, useSameAssignee} = bulkReassign;
 
 	const {assigneeId} = useMemo(
-		() => reassignedTasks.find(task => task.workflowTaskId === id) || {},
+		() => reassignedTasks.find((task) => task.workflowTaskId === id) || {},
 		[id, reassignedTasks]
 	);
 
@@ -38,7 +38,7 @@ const Item = ({
 
 		if (users && users.length) {
 			const {assignableUsers = []} =
-				users.find(item => item.workflowTaskId === id) || {};
+				users.find((item) => item.workflowTaskId === id) || {};
 
 			return assignableUsers;
 		}
@@ -48,14 +48,14 @@ const Item = ({
 	}, [id, data]);
 
 	const {name: assigneeName} = useMemo(
-		() => assignees.find(assignee => assignee.id === assigneeId) || {},
+		() => assignees.find((assignee) => assignee.id === assigneeId) || {},
 		[assigneeId, assignees]
 	);
 
 	const handleSelect = useCallback(
-		newAssignee => {
+		(newAssignee) => {
 			const filteredTasks = reassignedTasks.filter(
-				task => task.workflowTaskId !== id
+				(task) => task.workflowTaskId !== id
 			);
 
 			if (newAssignee) {
@@ -175,7 +175,7 @@ const Table = ({data, items}) => {
 			<ClayTable.Body>
 				{items &&
 					items.length > 0 &&
-					items.map(item => (
+					items.map((item) => (
 						<Table.Item data={data} {...item} key={item.id} />
 					))}
 			</ClayTable.Body>

@@ -12,7 +12,7 @@
 import getClassName from 'classnames';
 import React, {useEffect, useMemo, useState} from 'react';
 
-const FilterItem = properties => {
+const FilterItem = (properties) => {
 	const [checked, setChecked] = useState(active);
 
 	const {
@@ -44,7 +44,7 @@ const FilterItem = properties => {
 		[active, description, hideControl, multiple]
 	);
 
-	const handleChange = event => {
+	const handleChange = (event) => {
 		setChecked(event.target.checked);
 		onChange(event);
 	};

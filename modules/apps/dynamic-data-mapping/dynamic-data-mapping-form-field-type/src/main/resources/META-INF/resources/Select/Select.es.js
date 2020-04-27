@@ -64,7 +64,7 @@ function appendValue({value, valueToBeAppended}) {
 function removeValue({value, valueToBeRemoved}) {
 	const currentValue = toArray(value);
 
-	return currentValue.filter(v => v !== valueToBeRemoved);
+	return currentValue.filter((v) => v !== valueToBeRemoved);
 }
 
 /**
@@ -93,8 +93,8 @@ function normalizeValue({
 		return multiple ? true : index === 0;
 	});
 
-	return valueWithoutMultiple.filter(value =>
-		normalizedOptions.some(option => value === option.value)
+	return valueWithoutMultiple.filter((value) =>
+		normalizedOptions.some((option) => value === option.value)
 	);
 }
 
@@ -128,7 +128,7 @@ function normalizeOptions({fixedOptions, multiple, options, valueArray}) {
 				fixedOptions.length > 0 &&
 				index === options.length - 1,
 		})),
-		...fixedOptions.map(option =>
+		...fixedOptions.map((option) =>
 			assertOptionParameters({multiple, option, valueArray})
 		),
 	].filter(({value}) => value !== '');
@@ -180,7 +180,7 @@ const DropdownItem = ({
 			active={expand && currentValue === option.label}
 			data-testid={`dropdownItem-${index}`}
 			label={option.label}
-			onClick={event => {
+			onClick={(event) => {
 				event.preventDefault();
 				event.stopPropagation();
 
@@ -199,7 +199,7 @@ const DropdownItem = ({
 					checked={currentValue.includes(option.value)}
 					data-testid={`labelItem-${option.value}`}
 					label={option.label}
-					onChange={event => {
+					onChange={(event) => {
 						onSelect({
 							currentValue,
 							event,
@@ -271,7 +271,7 @@ const Select = ({
 			'button'
 		);
 		const targetIndex = [...focusabledElements].findIndex(
-			current => current === target
+			(current) => current === target
 		);
 
 		let nextElement;
@@ -327,7 +327,7 @@ const Select = ({
 
 					onCloseButtonClicked({event, value: newValue});
 				}}
-				onTriggerClicked={event => {
+				onTriggerClicked={(event) => {
 					if (readOnly) {
 						return;
 					}
@@ -335,7 +335,7 @@ const Select = ({
 					setExpand(!expand);
 					onExpand({event, expand: !expand});
 				}}
-				onTriggerKeyDown={event => {
+				onTriggerKeyDown={(event) => {
 					if (
 						(event.keyCode === KEYCODES.TAB ||
 							event.keyCode === KEYCODES.ARROW_DOWN) &&
@@ -375,7 +375,7 @@ const Select = ({
 				active={expand}
 				alignElementRef={triggerElementRef}
 				className="ddm-btn-full ddm-select-dropdown"
-				onKeyDown={event => {
+				onKeyDown={(event) => {
 					switch (event.keyCode) {
 						case KEYCODES.ARROW_DOWN:
 							handleFocus(event, false);

@@ -25,7 +25,7 @@ export default function addFragment({
 	store,
 	type,
 }) {
-	return dispatch => {
+	return (dispatch) => {
 		const {segmentsExperienceId} = store;
 
 		const params = {

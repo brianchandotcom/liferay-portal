@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-alert',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var Alert = A.Component.create({

@@ -35,7 +35,7 @@ const Body = ({
 	const completed = status === 'Completed';
 	const SLAs = {open: [], resolved: []};
 
-	slaResults.forEach(result => {
+	slaResults.forEach((result) => {
 		SLAs[result.status === 'Stopped' ? 'resolved' : 'open'].push(result);
 	});
 
@@ -43,7 +43,9 @@ const Body = ({
 		() => ({
 			errorProps: {
 				actionButton: (
-					<RetryButton onClick={() => setRetry(retry => retry + 1)} />
+					<RetryButton
+						onClick={() => setRetry((retry) => retry + 1)}
+					/>
 				),
 				className: 'py-8',
 				hideAnimation: true,
@@ -80,7 +82,7 @@ const Body = ({
 					</Body.SectionSubTitle>
 				)}
 
-				{SLAs.open.map(item => (
+				{SLAs.open.map((item) => (
 					<Body.Item key={item.id} {...item} />
 				))}
 
@@ -92,7 +94,7 @@ const Body = ({
 					</Body.SectionSubTitle>
 				)}
 
-				{SLAs.resolved.map(item => (
+				{SLAs.resolved.map((item) => (
 					<Body.Item key={item.id} {...item} />
 				))}
 
@@ -148,7 +150,7 @@ const Body = ({
 				{!completed && (
 					<Body.SectionAttribute
 						description={Liferay.Language.get('current-assignee')}
-						detail={assignees.map(user => user.name).join(', ')}
+						detail={assignees.map((user) => user.name).join(', ')}
 					/>
 				)}
 

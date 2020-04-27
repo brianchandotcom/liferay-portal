@@ -58,7 +58,7 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 		roles: [],
 	});
 
-	const onChangeRuleName = useCallback(value => {
+	const onChangeRuleName = useCallback((value) => {
 		setRuleName(value);
 	}, []);
 
@@ -81,13 +81,13 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 				actions: [],
 				conditions: [],
 				events: {
-					ruleAdded: rule => {
+					ruleAdded: (rule) => {
 						dataLayoutBuilder.dispatch('ruleAdded', rule);
 						onClose();
 					},
 					ruleCancelled: () => {},
 					ruleDeleted: () => {},
-					ruleEdited: rule => {
+					ruleEdited: (rule) => {
 						dataLayoutBuilder.dispatch('ruleEdited', rule);
 						onClose();
 					},
@@ -130,7 +130,7 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 					value: `${id}`,
 				}));
 
-				setState(prevState => ({
+				setState((prevState) => ({
 					...prevState,
 					isLoading: false,
 					roles,

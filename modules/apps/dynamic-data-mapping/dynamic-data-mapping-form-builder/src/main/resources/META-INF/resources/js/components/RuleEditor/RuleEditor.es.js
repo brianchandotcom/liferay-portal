@@ -135,12 +135,12 @@ class RuleEditor extends Component {
 								? {
 										...action,
 										ddmDataProviderInstanceUUID: this.dataProvider.find(
-											data => {
+											(data) => {
 												return data.id == id;
 											}
 										).uuid,
 										hasRequiredInputs: inputs.some(
-											input => input.required
+											(input) => input.required
 										),
 										inputs: this.formatDataProviderInputParameter(
 											action.inputs,
@@ -159,7 +159,7 @@ class RuleEditor extends Component {
 
 					return actions[index];
 				})
-				.catch(error => {
+				.catch((error) => {
 					throw new Error(error);
 				});
 		}
@@ -174,7 +174,7 @@ class RuleEditor extends Component {
 		let options = [];
 		const visitor = new PagesVisitor(this.pages);
 
-		const field = visitor.findField(field => {
+		const field = visitor.findField((field) => {
 			return field.fieldName === fieldName;
 		});
 
@@ -184,8 +184,8 @@ class RuleEditor extends Component {
 	}
 
 	getFieldsByTypes(fields, types) {
-		return fields.filter(field =>
-			types.some(fieldType => field.type == fieldType)
+		return fields.filter((field) =>
+			types.some((fieldType) => field.type == fieldType)
 		);
 	}
 
@@ -233,7 +233,7 @@ class RuleEditor extends Component {
 		actions[index].label = id;
 
 		if (actions[index].action == 'jump-to-page') {
-			const selectedOption = pageOptions.find(option => {
+			const selectedOption = pageOptions.find((option) => {
 				return option.value == id;
 			});
 
@@ -270,7 +270,7 @@ class RuleEditor extends Component {
 		actions[index].label = id;
 
 		this.getDataProviderOptions(id, index)
-			.then(actionData => {
+			.then((actionData) => {
 				if (!this.isDisposed()) {
 					this.setState({
 						actions: actions.map((action, currentIndex) => {
@@ -279,7 +279,7 @@ class RuleEditor extends Component {
 					});
 				}
 			})
-			.catch(error => {
+			.catch((error) => {
 				throw new Error(error);
 			});
 	}
@@ -288,7 +288,7 @@ class RuleEditor extends Component {
 		const {pages} = this;
 		const actions = state.loadingDataProviderOptions
 			? []
-			: state.actions.map(action => ({
+			: state.actions.map((action) => ({
 					...action,
 					inputs: action.inputs
 						? this.convertAutoFillDataToArray(action, 'inputs')
@@ -298,7 +298,7 @@ class RuleEditor extends Component {
 						: [],
 			  }));
 
-		const conditions = state.conditions.map(condition => {
+		const conditions = state.conditions.map((condition) => {
 			const fieldName = condition.operands[0].value;
 			let firstOperandOptions = [];
 			let operators = [];
@@ -341,7 +341,7 @@ class RuleEditor extends Component {
 		let {actionTypes} = this;
 
 		if (pages.length < 3) {
-			actionTypes = this.actionTypes.filter(obj => {
+			actionTypes = this.actionTypes.filter((obj) => {
 				return obj.value !== 'jump-to-page';
 			});
 		}
@@ -422,7 +422,7 @@ class RuleEditor extends Component {
 		const fields = [];
 		const visitor = new PagesVisitor(pages);
 
-		visitor.mapFields(field => {
+		visitor.mapFields((field) => {
 			if (field.type == 'numeric') {
 				fields.push({
 					...field,
@@ -504,7 +504,7 @@ class RuleEditor extends Component {
 		return makeFetch({
 			method: 'GET',
 			url: `${dataProviderInstanceParameterSettingsURL}?ddmDataProviderInstanceId=${id}`,
-		}).catch(error => {
+		}).catch((error) => {
 			throw new Error(error);
 		});
 	}
@@ -516,14 +516,14 @@ class RuleEditor extends Component {
 			method: 'GET',
 			url: functionsURL,
 		})
-			.then(responseData => {
+			.then((responseData) => {
 				if (!this.isDisposed()) {
 					this.setState({
 						calculatorFunctions: responseData,
 					});
 				}
 			})
-			.catch(error => {
+			.catch((error) => {
 				throw new Error(error);
 			});
 	}
@@ -541,7 +541,7 @@ class RuleEditor extends Component {
 		const {actionsFieldOptions} = this;
 		let deletedFields = [];
 
-		actionsFieldOptions.forEach(field => {
+		actionsFieldOptions.forEach((field) => {
 			visitor.mapFields(({fieldName}) => {
 				if (field.fieldName === fieldName) {
 					existentFields.push(fieldName);
@@ -549,9 +549,9 @@ class RuleEditor extends Component {
 			});
 		});
 
-		const oldFields = actionsFieldOptions.map(field => field.fieldName);
+		const oldFields = actionsFieldOptions.map((field) => field.fieldName);
 
-		deletedFields = oldFields.filter(field => {
+		deletedFields = oldFields.filter((field) => {
 			return existentFields.indexOf(field) > -1 ? false : field;
 		});
 
@@ -563,7 +563,7 @@ class RuleEditor extends Component {
 		const fields = [];
 		const visitor = new PagesVisitor(pages);
 
-		visitor.visitFields(field => {
+		visitor.visitFields((field) => {
 			if (omittedFieldsList.indexOf(field.type) < 0) {
 				fields.push({
 					...field,
@@ -621,7 +621,7 @@ class RuleEditor extends Component {
 		}
 		else {
 			const selectedField = this.actionsFieldOptions.find(
-				field => field.value === fieldName
+				(field) => field.value === fieldName
 			);
 
 			if (selectedField) {
@@ -653,7 +653,7 @@ class RuleEditor extends Component {
 			fieldType = 'text';
 		}
 
-		return this.functionsMetadata[fieldType].map(metadata => {
+		return this.functionsMetadata[fieldType].map((metadata) => {
 			return {
 				...metadata,
 				value: metadata.name,
@@ -871,7 +871,7 @@ class RuleEditor extends Component {
 		}
 
 		if (actions && actions[0].action != '') {
-			actions.map(action => {
+			actions.map((action) => {
 				if (action.action == 'jump-to-page') {
 					action.source = conditions[index].operands[0].source;
 				}
@@ -1142,7 +1142,7 @@ class RuleEditor extends Component {
 
 	_prepareAutofillOutputs(action) {
 		if (Array.isArray(action.outputs)) {
-			action.outputs.forEach(output => {
+			action.outputs.forEach((output) => {
 				delete output.actionsFieldOptions;
 				delete output.name;
 				delete output.type;
@@ -1157,7 +1157,7 @@ class RuleEditor extends Component {
 
 		const newRule = rule;
 
-		let newActions = rule.actions.map(action => {
+		let newActions = rule.actions.map((action) => {
 			const newAction = {...action};
 
 			if (action.action == 'jump-to-page') {
@@ -1182,7 +1182,7 @@ class RuleEditor extends Component {
 	_removeActionInternalProperties() {
 		const {actions} = this;
 
-		return actions.map(action => {
+		return actions.map((action) => {
 			const {
 				action: actionType,
 				ddmDataProviderInstanceUUID,
@@ -1229,7 +1229,7 @@ class RuleEditor extends Component {
 	_removeConditionInternalProperties() {
 		const {conditions} = this;
 
-		conditions.forEach(condition => {
+		conditions.forEach((condition) => {
 			if (condition.operands[0].type == 'user') {
 				condition.operands[0].label = condition.operands[0].value;
 				condition.operands[1].type = 'list';
@@ -1246,7 +1246,7 @@ class RuleEditor extends Component {
 	_rolesValueFn() {
 		const {roles} = this;
 
-		return roles.map(role => {
+		return roles.map((role) => {
 			return {
 				...role,
 				value: role.label,
@@ -1284,7 +1284,7 @@ class RuleEditor extends Component {
 					let newAction = {...action};
 
 					if (action.ddmDataProviderInstanceUUID) {
-						const {id} = this.dataProvider.find(dataProvider => {
+						const {id} = this.dataProvider.find((dataProvider) => {
 							let dataProviderId;
 
 							if (
@@ -1308,13 +1308,13 @@ class RuleEditor extends Component {
 					return newAction;
 				})
 			)
-				.then(actions => {
+				.then((actions) => {
 					this.setState({
 						actions,
 						loadingDataProviderOptions: false,
 					});
 				})
-				.catch(error => {
+				.catch((error) => {
 					throw new Error(error);
 				});
 		}
@@ -1344,7 +1344,7 @@ class RuleEditor extends Component {
 		}
 
 		this.setState({
-			actions: rule.actions.map(action => {
+			actions: rule.actions.map((action) => {
 				if (action.action == 'auto-fill') {
 					const {id} = dataProvider.find(
 						({uuid}) => uuid === action.ddmDataProviderInstanceUUID
@@ -1363,7 +1363,7 @@ class RuleEditor extends Component {
 
 		const visitor = new PagesVisitor(pages);
 
-		actions.forEach(action => {
+		actions.forEach((action) => {
 			let targetFieldExists = false;
 
 			visitor.mapFields(({fieldName}) => {
@@ -1413,10 +1413,10 @@ class RuleEditor extends Component {
 	}
 
 	_validateActionsAutoFill(autoFillActions, type) {
-		return autoFillActions.every(action => {
+		return autoFillActions.every((action) => {
 			const parameterKeys = Object.keys(action[type]);
 
-			let validation = parameterKeys.every(key => action[type][key]);
+			let validation = parameterKeys.every((key) => action[type][key]);
 
 			if (type === 'inputs' && !parameterKeys.length) {
 				validation = Object.keys(action.outputs).length;
@@ -1443,16 +1443,16 @@ class RuleEditor extends Component {
 
 		let allFieldsFilled = true;
 
-		const autofillActions = actions.filter(action => {
+		const autofillActions = actions.filter((action) => {
 			return action.action == 'auto-fill';
 		});
 
-		const calculateActions = actions.filter(action => {
+		const calculateActions = actions.filter((action) => {
 			return action.action == 'calculate';
 		});
 
 		if (actions) {
-			actions.forEach(currentAction => {
+			actions.forEach((currentAction) => {
 				const {action, target} = currentAction;
 
 				if (action == '') {
@@ -1701,9 +1701,7 @@ RuleEditor.STATE = {
 
 	loadingDataProviderOptions: Config.bool(),
 
-	logicalOperator: Config.string()
-		.internal()
-		.value('or'),
+	logicalOperator: Config.string().internal().value('or'),
 
 	pageOptions: Config.arrayOf(
 		Config.shapeOf({

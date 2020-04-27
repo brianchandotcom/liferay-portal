@@ -173,7 +173,7 @@ else {
 
 		var changeMasterLayoutButtonEventListener = changeMasterLayoutButton.addEventListener(
 			'click',
-			function(event) {
+			function (event) {
 				var itemSelectorDialog = new ItemSelectorDialog.default({
 					buttonAddLabel: '<liferay-ui:message key="done" />',
 					eventName: '<portlet:namespace />selectMasterLayout',
@@ -184,7 +184,7 @@ else {
 
 				itemSelectorDialog.open();
 
-				itemSelectorDialog.on('selectedItemChange', function(event) {
+				itemSelectorDialog.on('selectedItemChange', function (event) {
 					var selectedItem = event.selectedItem;
 
 					if (selectedItem) {
@@ -233,7 +233,7 @@ else {
 
 		var editMasterLayoutButtonEventListener = editMasterLayoutButton.addEventListener(
 			'click',
-			function(event) {
+			function (event) {
 				Liferay.Util.navigate('<%= editMasterLayoutURL %>');
 			}
 		);

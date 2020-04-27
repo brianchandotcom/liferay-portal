@@ -32,7 +32,7 @@ const RESULTS_LIST_ID = 'add-result-items';
 
 const START_ID = 100;
 
-const AddResultModalWithModalMock = props => {
+const AddResultModalWithModalMock = (props) => {
 	const {observer, onClose} = useModal({
 		onClose: jest.fn(),
 	});

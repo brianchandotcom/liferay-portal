@@ -251,7 +251,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 					dialog: {
 						destroyOnHide: true,
 						on: {
-							destroy: function() {
+							destroy: function () {
 								Liferay.Portlet.refresh(
 									'#p_p_id<portlet:namespace />'
 								);

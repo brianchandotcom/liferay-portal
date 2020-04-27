@@ -29,7 +29,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 		<div
 			className={classNames(className, 'row', {
 				empty: !item.children.some(
-					childId => layoutData.items[childId].children.length
+					(childId) => layoutData.items[childId].children.length
 				),
 				'no-gutters': !(typeof item.config.gutters === 'boolean'
 					? item.config.gutters
@@ -41,7 +41,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 		</div>
 	);
 
-	const masterLayoutData = useSelector(state => state.masterLayoutData);
+	const masterLayoutData = useSelector((state) => state.masterLayoutData);
 
 	const masterParent = useMemo(() => {
 		const dropZone =
@@ -52,7 +52,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	}, [masterLayoutData]);
 
 	const shouldAddContainer = useSelector(
-		state => !getItemParent(item, state.layoutData) && !masterParent
+		(state) => !getItemParent(item, state.layoutData) && !masterParent
 	);
 
 	return shouldAddContainer ? (

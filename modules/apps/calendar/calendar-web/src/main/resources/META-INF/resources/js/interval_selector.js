@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-interval-selector',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 
 		var EVENT_SELECTION_CHANGE = 'selectionChange';

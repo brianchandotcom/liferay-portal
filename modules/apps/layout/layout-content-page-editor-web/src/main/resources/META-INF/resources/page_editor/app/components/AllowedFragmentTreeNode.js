@@ -17,7 +17,7 @@ import React from 'react';
 
 function hasSomeChildrenSelected(node) {
 	return node.children.some(
-		children => children.selected || hasSomeChildrenSelected(children)
+		(children) => children.selected || hasSomeChildrenSelected(children)
 	);
 }
 
@@ -30,7 +30,7 @@ export default function AllowedFragmentTreeNode({node}) {
 				indeterminate={!node.selected && hasSomeChildrenSelected(node)}
 				label={node.name}
 				onChange={() => {}}
-				onDoubleClick={event => {
+				onDoubleClick={(event) => {
 					event.stopPropagation();
 				}}
 			/>

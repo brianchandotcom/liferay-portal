@@ -19,7 +19,7 @@ export default function collectionsReducer(collections = [], action) {
 		case ADD_FRAGMENT_COMPOSITION: {
 			const composition = action.fragmentComposition;
 			const existingCollection = collections.find(
-				collection =>
+				(collection) =>
 					collection.fragmentCollectionId ===
 					composition.fragmentCollectionId
 			);

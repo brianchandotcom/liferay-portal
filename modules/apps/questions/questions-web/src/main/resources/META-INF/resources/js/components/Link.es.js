@@ -17,6 +17,6 @@ import {Link} from 'react-router-dom';
 
 import {stringToSlug} from '../utils/utils.es';
 
-export default props => {
+export default (props) => {
 	return <Link {...props} to={stringToSlug(props.to)} />;
 };

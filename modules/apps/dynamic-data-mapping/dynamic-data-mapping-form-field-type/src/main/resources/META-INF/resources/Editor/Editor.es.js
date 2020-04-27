@@ -24,7 +24,7 @@ import templates from './Editor.soy';
 
 class Editor extends Component {
 	attached() {
-		AUI().use('liferay-alloy-editor', A => {
+		AUI().use('liferay-alloy-editor', (A) => {
 			this.A = A;
 
 			this._createEditor(A);

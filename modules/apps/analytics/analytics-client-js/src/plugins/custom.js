@@ -84,8 +84,8 @@ function trackCustomAssetScroll(analytics, customAssetElements) {
 	const scrollTracker = new ScrollTracker();
 
 	const onScroll = debounce(() => {
-		customAssetElements.forEach(element => {
-			scrollTracker.onDepthReached(depth => {
+		customAssetElements.forEach((element) => {
+			scrollTracker.onDepthReached((depth) => {
 				analytics.send('assetDepthReached', applicationId, {
 					...getCustomAssetPayload(element),
 					depth,
@@ -108,7 +108,7 @@ function trackCustomAssetScroll(analytics, customAssetElements) {
  * @param {Object} analytics The Analytics client instance
  */
 function trackCustomAssetSubmitted(analytics) {
-	const onSubmit = event => {
+	const onSubmit = (event) => {
 		const {target} = event;
 		const customAssetElement = getClosestAssetElement(target, 'custom');
 
@@ -145,8 +145,8 @@ function trackCustomAssetViewed(analytics) {
 					'[data-analytics-asset-type="custom"]'
 				)
 			)
-			.filter(element => isTrackableCustomAsset(element))
-			.forEach(element => {
+			.filter((element) => isTrackableCustomAsset(element))
+			.forEach((element) => {
 				const formEnabled =
 					element.getElementsByTagName('form').length > 0;
 				const payload = {

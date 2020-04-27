@@ -34,7 +34,7 @@ const handleFieldClicked = (props, state, event) => {
 		...fieldProperties,
 		settingsContext: {
 			...settingsContext,
-			pages: visitor.mapFields(field => {
+			pages: visitor.mapFields((field) => {
 				const {fieldName} = field;
 				const {defaultLanguageId, editingLanguageId} = props;
 

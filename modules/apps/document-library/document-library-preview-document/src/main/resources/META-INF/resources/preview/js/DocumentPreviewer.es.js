@@ -93,7 +93,7 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 
 	const isMounted = useIsMounted();
 
-	const goToPage = page => {
+	const goToPage = (page) => {
 		setNextPageDisabled(page === totalPages);
 		setPreviousPageDisabled(page === 1);
 
@@ -108,13 +108,13 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 		setCurrentPage(page);
 	};
 
-	const handleBlurPageInput = event => {
+	const handleBlurPageInput = (event) => {
 		processPageInput(event.currentTarget.value);
 
 		hidePageInput(false);
 	};
 
-	const handleKeyDownPageInput = event => {
+	const handleKeyDownPageInput = (event) => {
 		const code = event.keyCode || event.charCode;
 
 		if (code === KEY_CODE_ENTER) {
@@ -142,7 +142,7 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 		}
 	};
 
-	const loadPage = page => {
+	const loadPage = (page) => {
 		let pagePromise = loadedPages[page] && loadedPages[page].pagePromise;
 
 		if (!pagePromise) {
@@ -171,7 +171,7 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 		}
 	};
 
-	const loadCurrentPage = debounce(page => {
+	const loadCurrentPage = debounce((page) => {
 		loadPage(page)
 			.then(() => {
 				loadAdjacentPages(page);
@@ -183,7 +183,7 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 			});
 	}, WAIT_BETWEEN_GO_TO_PAGE);
 
-	const processPageInput = value => {
+	const processPageInput = (value) => {
 		let pageNumber = Number.parseInt(value, 10);
 
 		pageNumber = pageNumber
@@ -209,8 +209,9 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 					<ClayLoadingIndicator />
 				) : (
 					<img
-						className={`preview-file-document ${!expanded &&
-							'preview-file-document-fit'}`}
+						className={`preview-file-document ${
+							!expanded && 'preview-file-document-fit'
+						}`}
 						src={`${baseImageURL}${currentPage}`}
 					/>
 				)}

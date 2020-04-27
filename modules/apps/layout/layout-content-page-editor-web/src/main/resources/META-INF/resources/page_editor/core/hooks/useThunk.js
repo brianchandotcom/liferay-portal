@@ -27,10 +27,10 @@ export default function useThunk([state, dispatch]) {
 
 	// Use a ref to ensure our `dispatch` is stable across renders, just
 	// like the React-provided `dispatch` that we're wrapping.
-	const thunkDispatch = useRef(action => {
+	const thunkDispatch = useRef((action) => {
 		if (isMounted()) {
 			if (typeof action === 'function') {
-				return action(payload => {
+				return action((payload) => {
 					if (isMounted()) {
 						dispatch(payload);
 					}

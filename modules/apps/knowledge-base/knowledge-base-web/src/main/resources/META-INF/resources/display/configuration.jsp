@@ -136,7 +136,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 	if (<portlet:namespace />form) {
 		document
 			.getElementById('<portlet:namespace />selectKBObjectButton')
-			.addEventListener('click', function(event) {
+			.addEventListener('click', function (event) {
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
@@ -158,7 +158,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>',
 					},
-					function(event) {
+					function (event) {
 						document.getElementById(
 							'<portlet:namespace />resourceClassNameId'
 						).value = event.resourceclassnameid;

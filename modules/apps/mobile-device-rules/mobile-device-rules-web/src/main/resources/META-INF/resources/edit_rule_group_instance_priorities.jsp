@@ -91,7 +91,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 				ruleGroupInstanceNodes
 			);
 
-			var ruleGroupInstances = ruleGroupInstanceNodesArray.map(function(
+			var ruleGroupInstances = ruleGroupInstanceNodesArray.map(function (
 				item,
 				index
 			) {
@@ -119,7 +119,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 			handles: ['.rule-group-handle'],
 			nodes: '.list-group-item',
 			on: {
-				moved: function(event) {
+				moved: function (event) {
 					var instance = this;
 
 					var delegate = instance.delegate;
@@ -145,13 +145,13 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 		var sortableDD = sortable.delegate.dd;
 
 		sortableDD.after({
-			'drag:end': function(event) {
+			'drag:end': function (event) {
 				var drag = event.target;
 				var dragNode = drag.get('dragNode');
 
 				var nodes = container.all('.list-group-item');
 
-				nodes.each(function(item, index, collection) {
+				nodes.each(function (item, index, collection) {
 					var priorityNode = item.one(
 						'.rule-group-instance-priority-value'
 					);
@@ -161,7 +161,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 
 				dragNode.removeClass('rule-group-instance-dragging');
 			},
-			'drag:start': function(event) {
+			'drag:start': function (event) {
 				var drag = event.target;
 				var dragNode = drag.get('dragNode');
 

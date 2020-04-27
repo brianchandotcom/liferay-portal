@@ -13,7 +13,7 @@ import React from 'react';
 
 import SynonymSetsForm from './components/SynonymSetsForm.es';
 
-export default function(props) {
+export default function (props) {
 	return (
 		<div className="synonym-sets-root">
 			<SynonymSetsForm {...props} />

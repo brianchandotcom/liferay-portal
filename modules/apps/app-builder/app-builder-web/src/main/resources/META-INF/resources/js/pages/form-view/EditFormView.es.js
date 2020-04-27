@@ -41,7 +41,7 @@ const FormViewControlMenu = ({backURL, dataLayoutId}) => {
 	);
 };
 
-const EditFormView = props => {
+const EditFormView = (props) => {
 	const {
 		customObjectSidebarElementId,
 		dataDefinitionId,

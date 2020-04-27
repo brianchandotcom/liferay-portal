@@ -92,7 +92,7 @@ const ManageLanguages = ({
 			<ClayModal.Body scrollable>
 				<ClayTable borderless headVerticalAlignment="middle">
 					<ClayTable.Body>
-						{availableLocales.map(locale => {
+						{availableLocales.map((locale) => {
 							return (
 								<Language
 									{...locale}
@@ -150,6 +150,6 @@ ManageLanguages.propTypes = {
 	onModalDone: PropTypes.func,
 };
 
-export default function(props) {
+export default function (props) {
 	return <ManageLanguages {...props} />;
 }

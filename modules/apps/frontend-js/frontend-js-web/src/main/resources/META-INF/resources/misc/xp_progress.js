@@ -83,10 +83,10 @@ function createBar(w, h, bgc, brdW, brdC, blkC, speed, blocks, count, action) {
 		bA.count = count;
 		bA.action = action;
 		bA.togglePause = togglePause;
-		bA.showBar = function() {
+		bA.showBar = function () {
 			this.bar.style.visibility = 'visible';
 		};
-		bA.hideBar = function() {
+		bA.hideBar = function () {
 			this.bar.style.visibility = 'hidden';
 		};
 		bA.tid = setInterval('startBar(' + N + ')', speed);

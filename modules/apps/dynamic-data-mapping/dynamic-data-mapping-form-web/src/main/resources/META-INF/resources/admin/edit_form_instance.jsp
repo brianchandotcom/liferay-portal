@@ -159,13 +159,13 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	};
 
 	Liferay.Forms.App = {
-		dispose: function() {
+		dispose: function () {
 			if (Liferay.Forms.instance) {
 				Liferay.Forms.instance.dispose();
 				Liferay.Forms.instance = null;
 			}
 		},
-		reset: function() {
+		reset: function () {
 			var pages;
 
 			if (Liferay.Forms.instance) {
@@ -175,10 +175,10 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			this.dispose();
 			this.start(pages);
 		},
-		start: function(initialPages) {
+		start: function (initialPages) {
 			Liferay.Loader.require(
 				'<%= mainRequire %>',
-				function(packageName) {
+				function (packageName) {
 					var context = <%= serializedFormBuilderContext %>;
 
 					if (context.pages.length === 0 && initialPages) {
@@ -217,14 +217,14 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 						'#<portlet:namespace />-container'
 					);
 				},
-				function(error) {
+				function (error) {
 					throw error;
 				}
 			);
 		},
 	};
 
-	var clearPortletHandlers = function(event) {
+	var clearPortletHandlers = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			Liferay.Forms.App.dispose();
 
@@ -232,7 +232,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 				'<portlet:namespace />translationManager'
 			);
 
-			Liferay.destroyComponents(function(component) {
+			Liferay.destroyComponents(function (component) {
 				var destroy = false;
 
 				if (component === translationManager) {
@@ -252,14 +252,14 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		Liferay.Forms.App.start();
 	}
 	else {
-		Liferay.onceAfter('DMMFieldTypesReady', function() {
+		Liferay.onceAfter('DMMFieldTypesReady', function () {
 			Liferay.Forms.App.start();
 		});
 	}
 </aui:script>
 
 <aui:script use="aui-base">
-	Liferay.namespace('FormPortlet').destroySettings = function() {
+	Liferay.namespace('FormPortlet').destroySettings = function () {
 		var settingsNode = A.one('#<portlet:namespace />settingsModal');
 
 		if (settingsNode) {
@@ -267,7 +267,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		}
 	};
 
-	Liferay.namespace('DDM').openSettings = function() {
+	Liferay.namespace('DDM').openSettings = function () {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
@@ -279,7 +279,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							cssClass: 'btn-link',
 							label: '<liferay-ui:message key="cancel" />',
 							on: {
-								click: function() {
+								click: function () {
 									Liferay.Util.getWindow(
 										'<portlet:namespace />settingsModal'
 									).hide();
@@ -290,7 +290,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							cssClass: 'btn-primary',
 							label: '<liferay-ui:message key="done" />',
 							on: {
-								click: function() {
+								click: function () {
 									Liferay.Util.getWindow(
 										'<portlet:namespace />settingsModal'
 									).hide();
@@ -304,7 +304,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 				stack: false,
 				title: '<liferay-ui:message key="form-settings" />',
 			},
-			function(dialogWindow) {
+			function (dialogWindow) {
 				var bodyNode = dialogWindow.bodyNode;
 
 				var settingsNode = A.one('#<portlet:namespace />settings');
@@ -316,7 +316,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		);
 	};
 
-	var clearPortletHandlers = function(event) {
+	var clearPortletHandlers = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			Liferay.namespace('FormPortlet').destroySettings();
 

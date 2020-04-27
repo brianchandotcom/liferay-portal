@@ -158,7 +158,7 @@ else {
 			<aui:script require="metal-dom/src/dom as dom">
 				var form = document.<portlet:namespace />selectOrganizationRoleFm;
 
-				dom.delegate(form, 'click', '.organization-selector-button', function(event) {
+				dom.delegate(form, 'click', '.organization-selector-button', function (event) {
 					Liferay.Util.postForm(form, {
 						data: {
 							organizationId: event.delegateTarget.dataset.organizationid,

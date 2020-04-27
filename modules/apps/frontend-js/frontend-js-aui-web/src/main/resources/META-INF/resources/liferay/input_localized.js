@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-input-localized',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var STR_BLANK = '';

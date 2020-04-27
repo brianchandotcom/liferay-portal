@@ -61,7 +61,7 @@ const Validation = ({
 			: Numeric;
 
 	const handleChange = (key, newValue) => {
-		setState(prevState => {
+		setState((prevState) => {
 			const newState = {
 				...prevState,
 				[key]: newValue,
@@ -141,7 +141,7 @@ const Validation = ({
 							dataType={dataType}
 							label={Liferay.Language.get('the-value')}
 							name={`${name}_parameter`}
-							onChange={event =>
+							onChange={(event) =>
 								handleChange('parameter', event.target.value)
 							}
 							placeholder={selectedValidation.parameterMessage}
@@ -156,7 +156,7 @@ const Validation = ({
 						{...otherProps}
 						label={Liferay.Language.get('show-error-message')}
 						name={`${name}_errorMessage`}
-						onChange={event =>
+						onChange={(event) =>
 							handleChange('errorMessage', event.target.value)
 						}
 						placeholder={Liferay.Language.get('show-error-message')}
@@ -204,7 +204,7 @@ const ValidationProxy = connectStore(
 				editingLanguageId={editingLanguageId}
 				label={label}
 				name={name}
-				onChange={value => emit('fieldEdited', {}, value)}
+				onChange={(value) => emit('fieldEdited', {}, value)}
 				readOnly={readOnly}
 				spritemap={spritemap}
 				store={store}

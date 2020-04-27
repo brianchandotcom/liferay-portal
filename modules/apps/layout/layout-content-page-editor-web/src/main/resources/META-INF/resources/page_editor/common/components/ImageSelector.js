@@ -42,7 +42,7 @@ export function ImageSelector({
 					<ClayButton
 						displayType="secondary"
 						onClick={() =>
-							openImageSelector(image => {
+							openImageSelector((image) => {
 								onImageSelected(image);
 							})
 						}

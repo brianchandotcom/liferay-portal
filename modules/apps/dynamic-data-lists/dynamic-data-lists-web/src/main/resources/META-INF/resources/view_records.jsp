@@ -161,7 +161,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 <%@ include file="/export_record_set.jspf" %>
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
-	var deleteRecords = function() {
+	var deleteRecords = function () {
 		if (
 			confirm(
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
@@ -196,10 +196,10 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 		deleteRecords: deleteRecords,
 	};
 
-	Liferay.componentReady('ddlViewRecordsManagementToolbar').then(function(
+	Liferay.componentReady('ddlViewRecordsManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

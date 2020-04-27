@@ -35,7 +35,7 @@ export default withRouter(
 		const [tags, setTags] = useState({});
 
 		useEffect(() => {
-			getTags(page, context.siteKey).then(data => setTags(data || []));
+			getTags(page, context.siteKey).then((data) => setTags(data || []));
 		}, [page, context.siteKey]);
 
 		return (
@@ -43,7 +43,7 @@ export default withRouter(
 				<div className="container">
 					<div className="row">
 						{tags.items &&
-							tags.items.map(tag => (
+							tags.items.map((tag) => (
 								<div
 									className="col-md-3 question-tags"
 									key={tag.id}

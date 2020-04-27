@@ -80,7 +80,7 @@ class RotateComponent extends Component {
 	 * rotated.
 	 */
 	rotate_(imageData, rotationAngle) {
-		const cancellablePromise = new Promise(resolve => {
+		const cancellablePromise = new Promise((resolve) => {
 			const imageWidth = imageData.width;
 			const imageHeight = imageData.height;
 

@@ -36,8 +36,8 @@ export const makeFetch = ({
 	}
 
 	return fetch(url, fetchData)
-		.then(response => response.json())
-		.catch(error => {
+		.then((response) => response.json())
+		.catch((error) => {
 			const sessionStatus = Liferay.Session.get('sessionState');
 
 			if (sessionStatus === 'expired' || error.status === 401) {
@@ -49,7 +49,7 @@ export const makeFetch = ({
 		});
 };
 
-export const convertToFormData = body => {
+export const convertToFormData = (body) => {
 	let requestBody = body;
 
 	if (body instanceof FormData) {

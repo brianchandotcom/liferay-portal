@@ -42,7 +42,7 @@ export default withRouter(
 
 		useEffect(() => {
 			getUserActivity(siteKey, creatorId)
-				.then(questions => {
+				.then((questions) => {
 					const creatorBasicInfo = questions.items[0].creator;
 					const creatorStatistics =
 						questions.items[0].creatorStatistics;
@@ -57,14 +57,14 @@ export default withRouter(
 					setQuestions(questions);
 					setLoading(false);
 				})
-				.catch(_ => {
+				.catch((_) => {
 					setLoading(false);
 					setCreatorInfo(getCreatorDefaultInfo(creatorId));
 				});
 		}, [creatorId, getCreatorDefaultInfo, siteKey]);
 
 		const getCreatorDefaultInfo = useCallback(
-			creatorId => ({
+			(creatorId) => ({
 				id: creatorId,
 				image: null,
 				name: decodeURI(
@@ -135,7 +135,7 @@ export default withRouter(
 						<ClayLoadingIndicator />
 					) : (
 						questions.items &&
-						questions.items.map(question => (
+						questions.items.map((question) => (
 							<QuestionRow
 								key={question.id}
 								question={question}

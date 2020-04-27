@@ -157,7 +157,7 @@
 		document.body,
 		'click',
 		'.asset-selector a',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			var delegateTarget = event.delegateTarget;
@@ -170,13 +170,13 @@
 
 			itemSelectorDialog.open();
 
-			itemSelectorDialog.on('selectedItemChange', function(event) {
+			itemSelectorDialog.on('selectedItemChange', function (event) {
 				var selectedItems = event.selectedItem;
 
 				if (selectedItems) {
 					var assetEntryIds = [];
 
-					Array.prototype.forEach.call(selectedItems, function(
+					Array.prototype.forEach.call(selectedItems, function (
 						assetEntry
 					) {
 						assetEntryIds.push(assetEntry.entityid);
@@ -192,7 +192,7 @@
 		}
 	);
 
-	var onDestroyPortlet = function() {
+	var onDestroyPortlet = function () {
 		delegateHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', onDestroyPortlet);

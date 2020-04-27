@@ -436,7 +436,7 @@
 		</table>
 
 		<script>
-			(function() {
+			(function () {
 				var tables = document.querySelectorAll(
 					'#<portlet:namespace />recurrenceTypeDailyTable, #<portlet:namespace />recurrenceTypeMonthlyTable, #<portlet:namespace />recurrenceTypeNeverTable, #<portlet:namespace />recurrenceTypeWeeklyTable, #<portlet:namespace />recurrenceTypeYearlyTable'
 				);
@@ -445,13 +445,13 @@
 				);
 
 				if (recurrenceTypeSelect) {
-					recurrenceTypeSelect.addEventListener('change', function(event) {
+					recurrenceTypeSelect.addEventListener('change', function (event) {
 						var selectedTableId =
 							'<portlet:namespace />' +
 							recurrenceTypeSelect[recurrenceTypeSelect.selectedIndex].id +
 							'Table';
 
-						Array.prototype.forEach.call(tables, function(table) {
+						Array.prototype.forEach.call(tables, function (table) {
 							if (table.id !== selectedTableId) {
 								table.classList.add('hide');
 							}

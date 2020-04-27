@@ -113,7 +113,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 </div>
 
 <aui:script>
-	var deleteKBTemplates = function() {
+	var deleteKBTemplates = function () {
 		if (
 			confirm(
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-templates" />'
@@ -143,10 +143,10 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 		deleteKBTemplates: deleteKBTemplates,
 	};
 
-	Liferay.componentReady('kbTemplatesManagementToolbar').then(function(
+	Liferay.componentReady('kbTemplatesManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

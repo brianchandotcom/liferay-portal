@@ -117,7 +117,7 @@ const EditTagsModal = ({
 			};
 
 			return fetch(`${pathModule}${url}`, init)
-				.then(response => response.json())
+				.then((response) => response.json())
 				.catch(() => {
 					onModalClose();
 				});
@@ -125,7 +125,7 @@ const EditTagsModal = ({
 		[onModalClose, pathModule]
 	);
 
-	const getDescription = size => {
+	const getDescription = (size) => {
 		if (size === 1) {
 			return Liferay.Language.get(
 				'you-are-editing-the-tags-for-the-selected-item'
@@ -140,28 +140,28 @@ const EditTagsModal = ({
 		);
 	};
 
-	const handleMultipleSelectedOptionChange = value => {
+	const handleMultipleSelectedOptionChange = (value) => {
 		setAppend(value === 'add');
 		setSelectedRadioGroupValue(value);
 	};
 
-	const handleSubmit = event => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 
 		const addedLabels = !append
 			? selectedItems
 			: selectedItems.filter(
-					selectedItem =>
+					(selectedItem) =>
 						!initialSelectedItems.find(
-							initialSelectedItem =>
+							(initialSelectedItem) =>
 								initialSelectedItem.value === selectedItem.value
 						)
 			  );
 
 		const removedLabels = initialSelectedItems.filter(
-			initialSelectedItem =>
+			(initialSelectedItem) =>
 				!selectedItems.find(
-					selectedItem =>
+					(selectedItem) =>
 						selectedItem.value === initialSelectedItem.value
 				)
 		);
@@ -175,9 +175,9 @@ const EditTagsModal = ({
 					selectAll,
 				},
 			},
-			keywordsToAdd: addedLabels.map(addedLabel => addedLabel.value),
+			keywordsToAdd: addedLabels.map((addedLabel) => addedLabel.value),
 			keywordsToRemove: removedLabels.map(
-				removedLabel => removedLabel.value
+				(removedLabel) => removedLabel.value
 			),
 		}).then(() => {
 			const bulkStatusComponent = Liferay.component(

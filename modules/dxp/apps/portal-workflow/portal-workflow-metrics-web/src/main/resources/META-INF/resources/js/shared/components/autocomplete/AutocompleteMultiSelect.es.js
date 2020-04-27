@@ -49,7 +49,7 @@ const AutocompleteMultiSelect = ({
 	};
 
 	const handleChange = useCallback(
-		newSelectedItems => {
+		(newSelectedItems) => {
 			if (onChange) {
 				onChange(newSelectedItems);
 			}
@@ -94,9 +94,9 @@ const AutocompleteMultiSelect = ({
 	);
 
 	const handleRemove = useCallback(
-		id => {
+		(id) => {
 			const newSelectedItems = selectedItems.filter(
-				item => id !== item[fieldId]
+				(item) => id !== item[fieldId]
 			);
 
 			handleChange(newSelectedItems);
@@ -106,7 +106,7 @@ const AutocompleteMultiSelect = ({
 	);
 
 	const handleSelect = useCallback(
-		item => {
+		(item) => {
 			const newSelectedItems = [...selectedItems, item];
 
 			handleChange(newSelectedItems);
@@ -120,9 +120,9 @@ const AutocompleteMultiSelect = ({
 		setFilteredItems(
 			items
 				.filter(
-					item =>
+					(item) =>
 						!selectedItems.find(
-							selectedItem =>
+							(selectedItem) =>
 								item[fieldId] === selectedItem[fieldId]
 						)
 				)
@@ -134,7 +134,7 @@ const AutocompleteMultiSelect = ({
 	}, [fieldId, fieldName, items, search, selectedItems]);
 
 	useEffect(() => {
-		const listener = handleClickOutside(event => {
+		const listener = handleClickOutside((event) => {
 			const listenerCallback = handleClickOutside(
 				handleBlur,
 				document.getElementById(`dropDownList${id}`)
@@ -186,7 +186,7 @@ const AutocompleteMultiSelect = ({
 					active={active}
 					activeItem={currentIndex}
 					id={id}
-					items={filteredItems.map(item => ({
+					items={filteredItems.map((item) => ({
 						...item,
 						name: item[fieldName],
 					}))}

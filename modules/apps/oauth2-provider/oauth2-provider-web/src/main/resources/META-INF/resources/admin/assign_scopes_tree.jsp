@@ -142,19 +142,21 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 </div>
 
 <aui:script require="metal-dom/src/dom as dom">
-	AUI().use('node', 'aui-modal', function(A) {
-		A.all('input[name="<portlet:namespace />scopeAliases"]').each(function() {
-			this.on('click', function() {
+	AUI().use('node', 'aui-modal', function (A) {
+		A.all('input[name="<portlet:namespace />scopeAliases"]').each(function () {
+			this.on('click', function () {
 				<portlet:namespace />recalculateScopeChildrens(this);
 				<portlet:namespace />recalculateScopeParents(this);
 			});
 		});
 
-		<portlet:namespace />recalculateScopeChildrens = function(checkboxElement) {
+		<portlet:namespace />recalculateScopeChildrens = function (
+			checkboxElement
+		) {
 			var valueId = checkboxElement.val();
 			var isChecked = checkboxElement.attr('checked');
 
-			A.all('input[data-parent=' + valueId + ']').each(function() {
+			A.all('input[data-parent=' + valueId + ']').each(function () {
 				this.attr('checked', isChecked);
 				var hasChildrens = checkboxElement.attr('data-has-childrens');
 				if (hasChildrens) {
@@ -163,7 +165,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 			});
 		};
 
-		<portlet:namespace />recalculateScopeParents = function(checkboxElement) {
+		<portlet:namespace />recalculateScopeParents = function (checkboxElement) {
 			var parent = checkboxElement.attr('data-parent');
 			var isChecked = checkboxElement.attr('checked');
 
@@ -174,12 +176,12 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 			}
 		};
 
-		<portlet:namespace />checkNewScopesInCheckedParents = function() {
-			A.all('input[data-has-childrens="true"]').each(function() {
+		<portlet:namespace />checkNewScopesInCheckedParents = function () {
+			A.all('input[data-has-childrens="true"]').each(function () {
 				if (this.attr('checked')) {
 					var parentValue = this.attr('value');
 					A.all('input[data-parent=' + parentValue + ']').each(
-						function() {
+						function () {
 							if (!this.attr('checked')) {
 								this.attr('checked', true);
 								var elementId = this.attr('value');

@@ -182,7 +182,7 @@ if (organization != null) {
 		<portlet:namespace />deleteOrganizations(organizationsRedirect);
 	}
 
-	<portlet:namespace />doDeleteOrganizations = function(
+	<portlet:namespace />doDeleteOrganizations = function (
 		organizationIds,
 		organizationsRedirect
 	) {
@@ -233,7 +233,7 @@ if (organization != null) {
 		});
 	}
 
-	var selectUsers = function(organizationId) {
+	var selectUsers = function (organizationId) {
 		<portlet:namespace />openSelectUsersDialog(organizationId);
 	};
 
@@ -241,10 +241,10 @@ if (organization != null) {
 		selectUsers: selectUsers,
 	};
 
-	Liferay.componentReady('viewTreeManagementToolbar').then(function(
+	Liferay.componentReady('viewTreeManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('creationMenuItemClicked', function(event) {
+		managementToolbar.on('creationMenuItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

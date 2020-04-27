@@ -143,10 +143,10 @@ const GridProxy = connectStore(
 					columns={columns}
 					disabled={readOnly}
 					name={name}
-					onBlur={event =>
+					onBlur={(event) =>
 						emit('fieldBlurred', event, event.target.value)
 					}
-					onChange={event => {
+					onChange={(event) => {
 						const {target} = event;
 						const value = {
 							[target.name]: target.value,
@@ -158,7 +158,7 @@ const GridProxy = connectStore(
 
 						emit('fieldEdited', event, newState);
 					}}
-					onFocus={event =>
+					onFocus={(event) =>
 						emit('fieldFocused', event, event.target.value)
 					}
 					rows={rows}

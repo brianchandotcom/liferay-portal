@@ -130,7 +130,7 @@ class DataLayoutBuilder extends React.Component {
 		const fieldDefinitions = [];
 		const pagesVisitor = new PagesVisitor(pages);
 
-		const newPages = pagesVisitor.mapFields(field => {
+		const newPages = pagesVisitor.mapFields((field) => {
 			fieldDefinitions.push(this.getDataDefinitionField(field));
 
 			return field.fieldName;
@@ -143,9 +143,9 @@ class DataLayoutBuilder extends React.Component {
 				defaultLanguageId,
 			},
 			layout: {
-				dataLayoutPages: newPages.map(page => {
-					const rows = page.rows.map(row => {
-						const columns = row.columns.map(column => {
+				dataLayoutPages: newPages.map((page) => {
+					const rows = page.rows.map((row) => {
+						const columns = row.columns.map((column) => {
 							return {
 								columnSize: column.size,
 								fieldNames: column.fields,
@@ -171,7 +171,7 @@ class DataLayoutBuilder extends React.Component {
 	getDataDefinitionField({nestedFields = [], settingsContext}) {
 		const fieldConfig = {
 			customProperties: {},
-			nestedDataDefinitionFields: nestedFields.map(nestedField =>
+			nestedDataDefinitionFields: nestedFields.map((nestedField) =>
 				this.getDataDefinitionField(nestedField)
 			),
 		};
@@ -240,11 +240,11 @@ class DataLayoutBuilder extends React.Component {
 			id: dataDefinition.id,
 			localizedDescription: dataDefinition.description,
 			localizedTitle: dataDefinition.name,
-			pages: dataLayout.dataLayoutPages.map(dataLayoutPage => ({
-				rows: dataLayoutPage.dataLayoutRows.map(dataLayoutRow => ({
+			pages: dataLayout.dataLayoutPages.map((dataLayoutPage) => ({
+				rows: dataLayoutPage.dataLayoutRows.map((dataLayoutRow) => ({
 					columns: dataLayoutRow.dataLayoutColumns.map(
 						({columnSize, fieldNames}) => ({
-							fields: fieldNames.map(fieldName =>
+							fields: fieldNames.map((fieldName) =>
 								this.getDDMFormField(dataDefinition, fieldName)
 							),
 							size: columnSize,
@@ -274,7 +274,7 @@ class DataLayoutBuilder extends React.Component {
 		const ddmFormField = {settingsContext};
 		const visitor = new PagesVisitor(settingsContext.pages);
 
-		visitor.mapFields(field => {
+		visitor.mapFields((field) => {
 			const {fieldName} = field;
 			let {value} = field;
 
@@ -301,7 +301,7 @@ class DataLayoutBuilder extends React.Component {
 
 		return {
 			...settingsContext,
-			pages: visitor.mapFields(field => {
+			pages: visitor.mapFields((field) => {
 				const {fieldName, localizable} = field;
 				const propertyValue = this._getDataDefinitionfieldPropertyValue(
 					dataDefinitionField,
@@ -548,7 +548,7 @@ class DataLayoutBuilder extends React.Component {
 
 		return {
 			...context,
-			pages: context.pages.map(page => {
+			pages: context.pages.map((page) => {
 				let {
 					description,
 					localizedDescription,

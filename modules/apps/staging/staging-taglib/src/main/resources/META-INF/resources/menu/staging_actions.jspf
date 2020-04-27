@@ -28,7 +28,7 @@
 			);
 
 			if (publishGlobalLink) {
-				publishGlobalLink.addEventListener('click', function(event) {
+				publishGlobalLink.addEventListener('click', function (event) {
 					event.preventDefault();
 
 					Liferay.Util.openWindow({
@@ -36,7 +36,7 @@
 							constrain: true,
 							modal: true,
 							on: {
-								visibleChange: function(event) {
+								visibleChange: function (event) {
 									var instance = this;
 
 									if (!event.newVal) {
@@ -225,7 +225,7 @@
 				);
 
 				if (publishLink) {
-					publishLink.addEventListener('click', function(event) {
+					publishLink.addEventListener('click', function (event) {
 						event.preventDefault();
 
 						Liferay.Util.openWindow({
@@ -233,7 +233,7 @@
 								constrain: true,
 								modal: true,
 								on: {
-									visibleChange: function(event) {
+									visibleChange: function (event) {
 										var instance = this;
 
 										if (!event.newVal) {
@@ -253,13 +253,13 @@
 				);
 
 				if (publishToLiveLink) {
-					publishToLiveLink.addEventListener('click', function(event) {
+					publishToLiveLink.addEventListener('click', function (event) {
 						event.preventDefault();
 
 						Liferay.Util.openWindow({
 							dialog: {
 								after: {
-									destroy: function(event) {
+									destroy: function (event) {
 										window.location.reload();
 									},
 								},
@@ -310,7 +310,7 @@
 				);
 
 				if (layoutSetBranchesLink) {
-					layoutSetBranchesLink.addEventListener('click', function(event) {
+					layoutSetBranchesLink.addEventListener('click', function (event) {
 						event.preventDefault();
 
 						Liferay.Util.openWindow({

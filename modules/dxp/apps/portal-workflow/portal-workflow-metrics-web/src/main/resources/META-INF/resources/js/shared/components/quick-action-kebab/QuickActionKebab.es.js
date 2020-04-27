@@ -40,7 +40,7 @@ const QuickActionKebab = ({
 		iconItems = items.filter(({icon}) => icon);
 	}
 
-	dropDownItems = dropDownItems.map(item => ({
+	dropDownItems = dropDownItems.map((item) => ({
 		...item,
 		['data-testid']: 'kebabDropItems',
 	}));

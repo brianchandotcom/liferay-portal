@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-form-placeholders',
-	A => {
+	(A) => {
 		var ANode = A.Node;
 
 		var CSS_PLACEHOLDER = 'text-placeholder';
@@ -97,7 +97,7 @@ AUI.add(
 						SELECTOR_PLACEHOLDER_INPUTS
 					);
 
-					placeholderInputs.each(item => {
+					placeholderInputs.each((item) => {
 						if (item.val() == item.attr(STR_PLACEHOLDER)) {
 							item.val(STR_BLANK);
 						}
@@ -214,7 +214,7 @@ AUI.add(
 							SELECTOR_PLACEHOLDER_INPUTS
 						);
 
-						placeholderInputs.each(item => {
+						placeholderInputs.each((item) => {
 							if (!item.val()) {
 								if (item.attr(STR_TYPE) === STR_PASSWORD) {
 									instance._initializePasswordNode(item);

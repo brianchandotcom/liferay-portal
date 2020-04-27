@@ -76,7 +76,7 @@ describe('useInterval()', () => {
 
 		let cancel;
 
-		const onSchedule = handle => {
+		const onSchedule = (handle) => {
 			cancel = handle;
 		};
 
@@ -133,7 +133,7 @@ describe('useInterval()', () => {
 		const functions = [];
 
 		const {getByText} = render(
-			<Component onRender={schedule => functions.push(schedule)} />
+			<Component onRender={(schedule) => functions.push(schedule)} />
 		);
 
 		expect(functions.length).toBe(1);

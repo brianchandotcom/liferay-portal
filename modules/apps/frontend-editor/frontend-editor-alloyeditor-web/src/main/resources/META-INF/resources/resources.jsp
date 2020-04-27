@@ -46,7 +46,7 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 		var alloyEditorDisposeResources = false;
 		var alloyEditorInstances = 0;
 
-		var cleanupAlloyEditorResources = function() {
+		var cleanupAlloyEditorResources = function () {
 			if (!alloyEditorInstances && alloyEditorDisposeResources) {
 				window.AlloyEditor = undefined;
 
@@ -60,27 +60,27 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 		};
 
 		Liferay.namespace('EDITORS').alloyEditor = {
-			addInstance: function() {
+			addInstance: function () {
 				alloyEditorInstances++;
 			},
-			removeInstance: function() {
+			removeInstance: function () {
 				alloyEditorInstances--;
 
 				cleanupAlloyEditorResources();
 			},
 		};
 
-		CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
+		CKEDITOR.scriptLoader.loadScripts = function (scripts, success, failure) {
 			CKEDITOR.scriptLoader.load(scripts, success, failure);
 		};
 
-		CKEDITOR.getNextZIndex = function() {
+		CKEDITOR.getNextZIndex = function () {
 			return CKEDITOR.dialog._.currentZIndex
 				? CKEDITOR.dialog._.currentZIndex + 10
 				: Liferay.zIndex.WINDOW + 10;
 		};
 
-		var destroyGlobalAlloyEditor = function() {
+		var destroyGlobalAlloyEditor = function () {
 			alloyEditorDisposeResources = true;
 
 			cleanupAlloyEditorResources();

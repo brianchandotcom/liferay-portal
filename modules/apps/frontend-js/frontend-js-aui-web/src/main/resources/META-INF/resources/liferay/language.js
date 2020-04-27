@@ -12,14 +12,14 @@
  * details.
  */
 
-(function(A, Liferay) {
+(function (A, Liferay) {
 	var Language = {};
 
-	Language.get = function(key) {
+	Language.get = function (key) {
 		return key;
 	};
 
-	A.use('io-base', A => {
+	A.use('io-base', (A) => {
 		Language.get = A.cached((key, extraParams) => {
 			var url =
 				themeDisplay.getPathContext() +

@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-hudcrumbs',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var NAME = 'hudcrumbs';

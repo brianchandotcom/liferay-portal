@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	AUI().applyConfig({
 		groups: {
 			contactscenter: {

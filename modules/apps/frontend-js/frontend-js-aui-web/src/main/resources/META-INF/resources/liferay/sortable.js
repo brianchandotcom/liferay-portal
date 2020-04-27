@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-sortable',
-	A => {
+	(A) => {
 		var Sortable = A.Sortable;
 
 		var STR_CONT = 'container';

@@ -40,7 +40,7 @@ export const getEvents = (dispatchEvent, settingsContext) => {
 		}
 	};
 
-	const handleFormAttached = function() {
+	const handleFormAttached = function () {
 		this.evaluate();
 	};
 
@@ -55,7 +55,7 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 	const unsupportedTabs = [...config.disabledTabs];
 
 	const pages = settingsContext.pages.filter(
-		page => !unsupportedTabs.includes(page.title)
+		(page) => !unsupportedTabs.includes(page.title)
 	);
 
 	const visitor = new PagesVisitor(pages);
@@ -67,7 +67,7 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 
 	return {
 		...settingsContext,
-		pages: visitor.mapColumns(column => {
+		pages: visitor.mapColumns((column) => {
 			return {
 				...column,
 				fields: column.fields
@@ -75,7 +75,7 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 						({fieldName}) =>
 							!unsupportedProperties.includes(fieldName)
 					)
-					.map(field => {
+					.map((field) => {
 						if (field.fieldName === 'dataSourceType') {
 							field = {
 								...field,

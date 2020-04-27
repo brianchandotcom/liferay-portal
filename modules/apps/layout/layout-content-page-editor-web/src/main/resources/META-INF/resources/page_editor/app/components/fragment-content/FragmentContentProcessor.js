@@ -37,7 +37,7 @@ export default function FragmentContentProcessor({
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const isProcessorEnabled = useIsProcessorEnabled();
 	const languageId = useSelector(
-		state => state.languageId || config.defaultLanguageId
+		(state) => state.languageId || config.defaultLanguageId
 	);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
@@ -51,7 +51,7 @@ export default function FragmentContentProcessor({
 
 		if (editables) {
 			enabledEditable =
-				editables.find(editable =>
+				editables.find((editable) =>
 					isProcessorEnabled(
 						getEditableUniqueId(
 							fragmentEntryLinkId,
@@ -65,7 +65,7 @@ export default function FragmentContentProcessor({
 	}, [editables, isProcessorEnabled, fragmentEntryLinkId]);
 
 	const editableValues = useSelector(
-		state =>
+		(state) =>
 			state.fragmentEntryLinks[fragmentEntryLinkId] &&
 			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
 	);
@@ -82,7 +82,7 @@ export default function FragmentContentProcessor({
 
 		editable.processor.createEditor(
 			editable.element,
-			value => {
+			(value) => {
 				let nextEditableValue = {
 					...editableValue,
 				};

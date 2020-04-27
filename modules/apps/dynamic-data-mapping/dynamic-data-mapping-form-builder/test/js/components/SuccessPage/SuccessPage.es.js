@@ -21,7 +21,7 @@ import SuccessPageSettings from '../../__mock__/mockSuccessPage.es';
 let component;
 let successPageSettings;
 
-const withStore = context => {
+const withStore = (context) => {
 	return class WithContext extends JSXComponent {
 		getChildContext() {
 			return {

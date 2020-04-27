@@ -189,7 +189,7 @@ if (portletTitleBasedNavigation) {
 	);
 
 	if (compareVersionsButton) {
-		compareVersionsButton.addEventListener('click', function(event) {
+		compareVersionsButton.addEventListener('click', function (event) {
 			var rowIds = document.querySelectorAll(
 				'input[name="<portlet:namespace />rowIds"]:checked'
 			);
@@ -222,7 +222,7 @@ if (portletTitleBasedNavigation) {
 	function <portlet:namespace />initRowsChecked() {
 		Array.from(
 			document.querySelectorAll('input[name=<portlet:namespace />rowIds]')
-		).forEach(function(item, index, collection) {
+		).forEach(function (item, index, collection) {
 			if (index >= 2) {
 				item.checked = false;
 			}
@@ -253,7 +253,7 @@ if (portletTitleBasedNavigation) {
 		document.body,
 		'click',
 		'input[name=<portlet:namespace />rowIds]',
-		function(event) {
+		function (event) {
 			<portlet:namespace />updateRowsChecked(event.delegateTarget);
 		}
 	);

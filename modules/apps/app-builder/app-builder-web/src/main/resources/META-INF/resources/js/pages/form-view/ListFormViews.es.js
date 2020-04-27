@@ -27,14 +27,14 @@ export default ({
 }) => {
 	const {basePortletURL} = useContext(AppContext);
 
-	const getItemURL = item =>
+	const getItemURL = (item) =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
 			dataDefinitionId,
 			dataLayoutId: item.id,
 			mvcRenderCommandName: '/edit_form_view',
 		});
 
-	const handleEditItem = item => {
+	const handleEditItem = (item) => {
 		const itemURL = getItemURL(item);
 
 		Liferay.Util.navigate(itemURL);
@@ -68,7 +68,7 @@ export default ({
 		<ListView
 			actions={[
 				{
-					action: item => Promise.resolve(handleEditItem(item)),
+					action: (item) => Promise.resolve(handleEditItem(item)),
 					name: Liferay.Language.get('edit'),
 				},
 				{
@@ -101,7 +101,7 @@ export default ({
 			}}
 			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`}
 		>
-			{item => ({
+			{(item) => ({
 				dataDefinitionId,
 				dateCreated: fromNow(item.dateCreated),
 				dateModified: fromNow(item.dateModified),

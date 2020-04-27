@@ -69,7 +69,7 @@ pageContext.setAttribute("portletURL", portletURL);
 	</aui:fieldset>
 
 	<aui:script>
-		window.<portlet:namespace />search = function() {
+		window.<portlet:namespace />search = function () {
 			var keywords =
 				document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
 

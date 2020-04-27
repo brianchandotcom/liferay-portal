@@ -62,7 +62,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			document.body,
 			'click',
 			'.add-site-action-option',
-			function(event) {
+			function (event) {
 				var data = event.delegateTarget.dataset;
 
 				openSimpleInputModal.default({

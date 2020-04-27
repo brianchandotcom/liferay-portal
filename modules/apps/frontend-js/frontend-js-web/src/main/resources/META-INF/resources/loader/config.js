@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var LiferayAUI = Liferay.AUI;
 
 	var combine = LiferayAUI.getCombine();

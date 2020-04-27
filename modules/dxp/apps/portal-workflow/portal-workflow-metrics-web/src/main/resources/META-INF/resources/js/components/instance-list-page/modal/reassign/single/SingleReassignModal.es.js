@@ -93,7 +93,7 @@ const SingleReassignModal = () => {
 
 		if (selectedInstance.id && visibleModal === 'singleReassign') {
 			return [
-				fetchData().catch(err => {
+				fetchData().catch((err) => {
 					setErrorToast(true);
 
 					return Promise.reject(err);
@@ -109,7 +109,9 @@ const SingleReassignModal = () => {
 		() => ({
 			errorProps: {
 				actionButton: (
-					<RetryButton onClick={() => setRetry(retry => retry + 1)} />
+					<RetryButton
+						onClick={() => setRetry((retry) => retry + 1)}
+					/>
 				),
 				className: 'py-7',
 				hideAnimation: true,

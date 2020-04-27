@@ -103,7 +103,7 @@ const GeolocationProxy = connectStore(
 				instanceId={instanceId}
 				mapProviderKey={mapProviderKey}
 				name={name}
-				onChange={value => emit('fieldEdited', {}, value)}
+				onChange={(value) => emit('fieldEdited', {}, value)}
 				value={value}
 				viewMode={viewMode}
 			/>

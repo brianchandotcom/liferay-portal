@@ -40,7 +40,7 @@ export default function NodeList({
 					onBlur();
 				}
 			}}
-			onFocus={event => {
+			onFocus={(event) => {
 				if (onFocus) {
 					onFocus(event);
 				}
@@ -48,7 +48,7 @@ export default function NodeList({
 			role={role}
 			tabIndex={tabIndex}
 		>
-			{nodes.map(node => (
+			{nodes.map((node) => (
 				<NodeListItem
 					key={node.id}
 					node={node}

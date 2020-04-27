@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-poller',
-	A => {
+	(A) => {
 		var AObject = A.Object;
 
 		var _browserKey = Math.ceil(Math.random() * Number.MAX_SAFE_INTEGER);
@@ -26,7 +26,7 @@ AUI.add(
 		var _delayIndex = 0;
 		var _delays = [1, 2, 3, 4, 5, 7, 10];
 
-		var _getEncryptedUserId = function() {
+		var _getEncryptedUserId = function () {
 			return _encryptedUserId;
 		};
 
@@ -62,13 +62,13 @@ AUI.add(
 		var _escapedCloseCurlyBrace = '[$CLOSE_CURLY_BRACE$]';
 		var _escapedOpenCurlyBrace = '[$OPEN_CURLY_BRACE$]';
 
-		var _cancelRequestTimer = function() {
+		var _cancelRequestTimer = function () {
 			clearTimeout(_timerId);
 
 			_timerId = null;
 		};
 
-		var _createRequestTimer = function() {
+		var _createRequestTimer = function () {
 			_cancelRequestTimer();
 
 			if (_enabled) {
@@ -81,21 +81,21 @@ AUI.add(
 			}
 		};
 
-		var _freezeConnection = function() {
+		var _freezeConnection = function () {
 			_frozen = true;
 
 			_cancelRequestTimer();
 		};
 
-		var _getReceiveUrl = function() {
+		var _getReceiveUrl = function () {
 			return _receiveChannel;
 		};
 
-		var _getSendUrl = function() {
+		var _getSendUrl = function () {
 			return _sendChannel;
 		};
 
-		var _processResponse = function(id, obj) {
+		var _processResponse = function (id, obj) {
 			var response = JSON.parse(obj.responseText);
 			var send = false;
 
@@ -154,7 +154,7 @@ AUI.add(
 			}
 		};
 
-		var _receive = function() {
+		var _receive = function () {
 			if (!_suspended && !_frozen) {
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = new Date().getTime();
@@ -170,25 +170,25 @@ AUI.add(
 					body,
 					method: 'POST',
 				})
-					.then(response => {
+					.then((response) => {
 						return response.text();
 					})
-					.then(responseText => {
+					.then((responseText) => {
 						_processResponse(null, {responseText});
 					});
 			}
 		};
 
-		var _releaseLock = function() {
+		var _releaseLock = function () {
 			_locked = false;
 		};
 
-		var _sendComplete = function() {
+		var _sendComplete = function () {
 			_releaseLock();
 			_send();
 		};
 
-		var _send = function() {
+		var _send = function () {
 			if (
 				_enabled &&
 				!_locked &&
@@ -214,20 +214,20 @@ AUI.add(
 					body,
 					method: 'POST',
 				})
-					.then(response => {
+					.then((response) => {
 						return response.text();
 					})
 					.then(_sendComplete);
 			}
 		};
 
-		var _thawConnection = function() {
+		var _thawConnection = function () {
 			_frozen = false;
 
 			_createRequestTimer();
 		};
 
-		var _updatePortletIdsMap = function(item, index) {
+		var _updatePortletIdsMap = function (item, index) {
 			_portletIdsMap[index] = item.initialRequest;
 		};
 

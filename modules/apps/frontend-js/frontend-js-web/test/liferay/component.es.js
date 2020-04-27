@@ -42,7 +42,7 @@ describe('Liferay', () => {
 		it('warns through console when a component is registered twice', () => {
 			let msg = '';
 
-			console.warn = function() {
+			console.warn = function () {
 				for (let i = 0; i < arguments.length; i++) {
 					msg += arguments[i].toString();
 					msg += ' ';
@@ -62,7 +62,7 @@ describe('Liferay', () => {
 		it('returns a single component if called before it is registered', () => {
 			const myButton = {myButton: 'myButton'};
 
-			const promise = componentReady('myButton').then(component => {
+			const promise = componentReady('myButton').then((component) => {
 				expect(component).toBe(myButton);
 			});
 
@@ -76,7 +76,7 @@ describe('Liferay', () => {
 
 			component('myButton', myButton);
 
-			return componentReady('myButton').then(component => {
+			return componentReady('myButton').then((component) => {
 				expect(component).toBe(myButton);
 			});
 		});

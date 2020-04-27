@@ -123,7 +123,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 
 		searchContainerContentBox.delegate(
 			'click',
-			function(event) {
+			function (event) {
 				var link = event.currentTarget;
 				var tr = link.ancestor('tr');
 
@@ -196,8 +196,8 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 
 		Liferay.on(
 			'<%= depotAdminRolesDisplayContext.getDepotRoleSyncEntitiesEventName() %>',
-			function(event) {
-				event.selectors.each(function(item, index, collection) {
+			function (event) {
+				event.selectors.each(function (item, index, collection) {
 					var groupId = item.attr('data-groupid');
 					var roleId = item.attr('data-roleid');
 
@@ -237,7 +237,9 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 			}
 		);
 
-		A.one('#<portlet:namespace />selectDepotRoleLink').on('click', function(event) {
+		A.one('#<portlet:namespace />selectDepotRoleLink').on('click', function (
+			event
+		) {
 			Util.selectEntity(
 				{
 					dialog: {
@@ -252,7 +254,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 					uri:
 						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesURL() %>',
 				},
-				function(event) {
+				function (event) {
 					var A = AUI();
 					var LString = A.Lang.String;
 

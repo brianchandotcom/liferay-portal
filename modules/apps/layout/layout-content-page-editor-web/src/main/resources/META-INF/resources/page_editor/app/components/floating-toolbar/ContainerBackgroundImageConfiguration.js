@@ -77,7 +77,7 @@ export const ContainerBackgroundImageConfiguration = ({
 							},
 						})
 					}
-					onImageSelected={image =>
+					onImageSelected={(image) =>
 						onValueChange({
 							backgroundImage: {
 								title: image.title,
@@ -90,7 +90,7 @@ export const ContainerBackgroundImageConfiguration = ({
 				<MappingSelector
 					fieldType={EDITABLE_TYPES.image}
 					mappedItem={backgroundImage}
-					onMappingSelect={mappedItem => {
+					onMappingSelect={(mappedItem) => {
 						onValueChange({
 							backgroundImage: mappedItem,
 						});

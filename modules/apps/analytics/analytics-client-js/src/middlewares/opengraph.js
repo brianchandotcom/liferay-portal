@@ -34,7 +34,7 @@ function isOpenGraphElement(element) {
 		const property = element.getAttribute('property');
 
 		if (property) {
-			openGraphMetaTag = openGraphTagPatterns.some(regExp =>
+			openGraphMetaTag = openGraphTagPatterns.some((regExp) =>
 				property.match(regExp)
 			);
 		}

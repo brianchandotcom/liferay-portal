@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var IE9AndLater = AUI.Env.UA.ie >= 9;
 
 	var STR_FILE_ENTRY_RETURN_TYPE =
@@ -46,8 +46,8 @@
 				var browseButton = tab.get('browse');
 
 				if (browseButton) {
-					browseButton.onClick = function() {
-						editor.execCommand(commandName, newVal => {
+					browseButton.onClick = function () {
+						editor.execCommand(commandName, (newVal) => {
 							dialogDefinition.dialog.setValueOf(
 								tabName,
 								targetField,
@@ -155,7 +155,7 @@
 		_getCommitMediaValueFn(value, editor, type) {
 			var instance = this;
 
-			var commitValueFn = function(node, extraStyles) {
+			var commitValueFn = function (node, extraStyles) {
 				var mediaScript;
 
 				if (type === 'audio') {
@@ -200,7 +200,7 @@
 			else {
 				Liferay.Loader.require(
 					'frontend-js-web/liferay/ItemSelectorDialog.es',
-					ItemSelectorDialog => {
+					(ItemSelectorDialog) => {
 						itemSelectorDialog = new ItemSelectorDialog.default({
 							eventName,
 							singleSelect: true,
@@ -385,7 +385,7 @@
 					instance._getItemSelectorDialog(
 						editor,
 						editor.config.filebrowserAudioBrowseUrl,
-						itemSelectorDialog => {
+						(itemSelectorDialog) => {
 							itemSelectorDialog.once(
 								'selectedItemChange',
 								onSelectedAudioChangeFn
@@ -409,7 +409,7 @@
 					instance._getItemSelectorDialog(
 						editor,
 						editor.config.filebrowserImageBrowseUrl,
-						itemSelectorDialog => {
+						(itemSelectorDialog) => {
 							itemSelectorDialog.once(
 								'selectedItemChange',
 								onSelectedImageChangeFn
@@ -433,7 +433,7 @@
 					instance._getItemSelectorDialog(
 						editor,
 						editor.config.filebrowserBrowseUrl,
-						itemSelectorDialog => {
+						(itemSelectorDialog) => {
 							itemSelectorDialog.once(
 								'selectedItemChange',
 								onSelectedLinkChangeFn
@@ -457,7 +457,7 @@
 					instance._getItemSelectorDialog(
 						editor,
 						editor.config.filebrowserVideoBrowseUrl,
-						itemSelectorDialog => {
+						(itemSelectorDialog) => {
 							itemSelectorDialog.once(
 								'selectedItemChange',
 								onSelectedVideoChangeFn
@@ -488,7 +488,7 @@
 				});
 			}
 
-			CKEDITOR.on('dialogDefinition', event => {
+			CKEDITOR.on('dialogDefinition', (event) => {
 				var dialogName = event.data.name;
 
 				var dialogDefinition = event.data.definition;
@@ -513,7 +513,7 @@
 
 					dialogDefinition.getContents('info').remove('browse');
 
-					dialogDefinition.onLoad = function() {
+					dialogDefinition.onLoad = function () {
 						this.getContentElement('info', 'txtUrl')
 							.getInputElement()
 							.setAttribute('readOnly', true);

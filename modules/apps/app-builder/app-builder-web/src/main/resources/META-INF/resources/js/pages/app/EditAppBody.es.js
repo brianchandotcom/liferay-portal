@@ -26,7 +26,7 @@ export default ({endpoint, title, ...restProps}) => {
 		isLoading,
 	} = useRequest(endpoint);
 
-	const filteredItems = items.filter(item =>
+	const filteredItems = items.filter((item) =>
 		new RegExp(searchText, 'ig').test(item.name.en_US)
 	);
 
@@ -41,7 +41,7 @@ export default ({endpoint, title, ...restProps}) => {
 			<div className="autofit-row mb-4 pl-4 pr-4">
 				<div className="autofit-col-expand">
 					<SearchInput
-						onChange={searchText => setSearchText(searchText)}
+						onChange={(searchText) => setSearchText(searchText)}
 					/>
 				</div>
 			</div>

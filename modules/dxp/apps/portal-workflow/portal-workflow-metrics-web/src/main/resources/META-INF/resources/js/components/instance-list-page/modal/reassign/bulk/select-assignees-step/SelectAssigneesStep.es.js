@@ -27,7 +27,7 @@ const SelectAssigneesStep = ({setErrorToast}) => {
 	const {data, postData} = usePost({
 		admin: true,
 		body: {
-			workflowTaskIds: tasks.map(task => task.id),
+			workflowTaskIds: tasks.map((task) => task.id),
 		},
 		url: '/workflow-tasks/assignable-users',
 	});
@@ -37,7 +37,7 @@ const SelectAssigneesStep = ({setErrorToast}) => {
 
 		if (tasks.length) {
 			return [
-				postData().catch(err => {
+				postData().catch((err) => {
 					setErrorToast(
 						Liferay.Language.get('your-request-has-failed')
 					);

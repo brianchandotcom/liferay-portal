@@ -35,7 +35,7 @@ const SelectorButtonList = ({
 	selectedSize,
 	setActive,
 }) => {
-	return Object.values(availableViewportSizes).map(viewportSize => {
+	return Object.values(availableViewportSizes).map((viewportSize) => {
 		const {icon, label, sizeId} = viewportSize;
 		const active = selectedSize === sizeId;
 

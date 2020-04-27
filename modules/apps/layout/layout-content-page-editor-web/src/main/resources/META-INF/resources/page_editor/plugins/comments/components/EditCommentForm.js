@@ -65,7 +65,7 @@ export default function EditCommentForm({
 			loading={editingComment}
 			onCancelButtonClick={() => onCloseForm()}
 			onSubmitButtonClick={_handleCommentButtonClick}
-			onTextareaChange={content => setTextareaContent(content)}
+			onTextareaChange={(content) => setTextareaContent(content)}
 			showButtons
 			submitButtonLabel={Liferay.Language.get('update')}
 			textareaContent={textareaContent}

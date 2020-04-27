@@ -224,7 +224,7 @@ class AOP {
 		if (!aopObj[fnName]) {
 			aopObj[fnName] = new AOP(obj, fnName);
 
-			obj[fnName] = function(...args) {
+			obj[fnName] = function (...args) {
 				return aopObj[fnName].exec(...args);
 			};
 		}

@@ -15,7 +15,7 @@
 AUI.add(
 	'liferay-product-navigation-control-menu-add-content-search',
 	() => {
-		var AddContentSearch = function() {};
+		var AddContentSearch = function () {};
 
 		AddContentSearch.prototype = {
 			_bindUISearch() {

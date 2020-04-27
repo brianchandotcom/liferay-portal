@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-image-selector',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var CHANGE_IMAGE_CONTROLS_DELAY = 5000;
@@ -233,7 +233,7 @@ AUI.add(
 
 					Liferay.Loader.require(
 						'frontend-js-web/liferay/ItemSelectorDialog.es',
-						ItemSelectorDialog => {
+						(ItemSelectorDialog) => {
 							var itemSelectorDialog = new ItemSelectorDialog.default(
 								{
 									eventName: instance.get(
@@ -248,7 +248,7 @@ AUI.add(
 
 							itemSelectorDialog.on(
 								'selectedItemChange',
-								event => {
+								(event) => {
 									var selectedItem = event.selectedItem;
 
 									if (selectedItem) {
@@ -575,7 +575,7 @@ AUI.add(
 						'.browse-image-controls'
 					);
 
-					errorNodeAlert.on('visibleChange', event => {
+					errorNodeAlert.on('visibleChange', (event) => {
 						if (!event.newVal) {
 							browseImageControls.show();
 						}

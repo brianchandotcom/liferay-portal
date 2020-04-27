@@ -33,7 +33,7 @@
 />
 
 <aui:script>
-	var deleteQuestions = function() {
+	var deleteQuestions = function () {
 		if (
 			confirm(
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
@@ -67,10 +67,10 @@
 		deleteQuestions: deleteQuestions,
 	};
 
-	Liferay.componentReady('pollsManagementToolbar').then(function(
+	Liferay.componentReady('pollsManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on(['actionItemClicked'], function(event) {
+		managementToolbar.on(['actionItemClicked'], function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

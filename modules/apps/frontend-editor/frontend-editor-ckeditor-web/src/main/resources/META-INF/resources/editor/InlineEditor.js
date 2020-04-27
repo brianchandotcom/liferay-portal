@@ -17,7 +17,7 @@ import React from 'react';
 
 const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
 
-const InlineEditor = props => {
+const InlineEditor = (props) => {
 	return <CKEditor {...props} type="inline" />;
 };
 

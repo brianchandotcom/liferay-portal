@@ -226,13 +226,13 @@
 
 	Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
 
-	var clickHandler = function(event) {
+	var clickHandler = function (event) {
 		var dataValue = event.target.ancestor('li').attr('data-value');
 
 		processDataValue(dataValue);
 	};
 
-	var processDataValue = function(dataValue) {
+	var processDataValue = function (dataValue) {
 		var customConfiguration = A.one(
 			'#<portlet:namespace />customConfiguration'
 		);

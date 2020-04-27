@@ -23,7 +23,7 @@ const DropDownWithState = ({children}) => {
 		<ClayDropDown
 			active={isDropdownOpen}
 			alignmentPosition={Align.BottomCenter}
-			onActiveChange={isActive => setIsDropdownOpen(isActive)}
+			onActiveChange={(isActive) => setIsDropdownOpen(isActive)}
 			trigger={
 				<ClayButtonWithIcon
 					borderless
@@ -42,7 +42,7 @@ export default function LocaleSelector({locales, onItemClick}) {
 		<DropDownWithState>
 			{({setActive}) => (
 				<ClayDropDown.ItemList>
-					{locales.map(locale => (
+					{locales.map((locale) => (
 						<ClayDropDown.Item
 							id={locale.id}
 							key={locale.id}

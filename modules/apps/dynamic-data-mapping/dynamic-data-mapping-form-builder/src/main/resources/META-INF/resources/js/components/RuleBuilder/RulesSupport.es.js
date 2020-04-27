@@ -22,7 +22,7 @@ const clearTargetValue = (actions, index) => {
 	return actions;
 };
 
-const clearFirstOperandValue = condition => {
+const clearFirstOperandValue = (condition) => {
 	if (condition && condition.operands[0]) {
 		condition.operands[0].type = '';
 		condition.operands[0].value = '';
@@ -31,7 +31,7 @@ const clearFirstOperandValue = condition => {
 	return condition;
 };
 
-const clearOperatorValue = condition => {
+const clearOperatorValue = (condition) => {
 	if (condition) {
 		condition.operator = '';
 	}
@@ -39,7 +39,7 @@ const clearOperatorValue = condition => {
 	return condition;
 };
 
-const clearSecondOperandValue = condition => {
+const clearSecondOperandValue = (condition) => {
 	if (condition && condition.operands[1]) {
 		condition.operands[1].type = '';
 		condition.operands[1].value = '';
@@ -48,7 +48,7 @@ const clearSecondOperandValue = condition => {
 	return condition;
 };
 
-const clearAllConditionFieldValues = condition => {
+const clearAllConditionFieldValues = (condition) => {
 	condition = clearFirstOperandValue(condition);
 	condition = clearOperatorValue(condition);
 	condition = clearSecondOperandValue(condition);

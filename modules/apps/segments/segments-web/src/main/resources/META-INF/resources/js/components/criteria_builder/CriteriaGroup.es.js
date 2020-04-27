@@ -100,7 +100,7 @@ class CriteriaGroup extends Component {
 		this.NestedCriteriaGroupWithDrag = withDragSource(CriteriaGroup);
 	}
 
-	_handleConjunctionSelect = conjunctionName => {
+	_handleConjunctionSelect = (conjunctionName) => {
 		const {criteria, onChange} = this.props;
 
 		onChange({
@@ -164,7 +164,7 @@ class CriteriaGroup extends Component {
 		}
 	};
 
-	_handleCriterionChange = index => newCriterion => {
+	_handleCriterionChange = (index) => (newCriterion) => {
 		const {criteria, onChange} = this.props;
 
 		onChange({
@@ -173,7 +173,7 @@ class CriteriaGroup extends Component {
 		});
 	};
 
-	_handleCriterionDelete = index => {
+	_handleCriterionDelete = (index) => {
 		const {criteria, onChange} = this.props;
 
 		onChange({
@@ -188,7 +188,7 @@ class CriteriaGroup extends Component {
 		return criteria ? !criteria.items.length : true;
 	};
 
-	_renderConjunction = index => {
+	_renderConjunction = (index) => {
 		const {
 			criteria,
 			editing,

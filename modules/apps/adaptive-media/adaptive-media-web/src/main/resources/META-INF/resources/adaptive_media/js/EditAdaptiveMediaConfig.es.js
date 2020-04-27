@@ -54,7 +54,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 		const idOptions = this.one('#idOptions');
 
 		if (idOptions) {
-			dom.delegate(idOptions, 'change', 'input[type="radio"]', event =>
+			dom.delegate(idOptions, 'change', 'input[type="radio"]', (event) =>
 				this.onChangeUuidOptions_(event.delegateTarget)
 			);
 		}
@@ -71,7 +71,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 		const maxWidthInput = this.one('#maxWidth');
 
 		if (maxWidthInput) {
-			maxWidthInput.addEventListener('keydown', event => {
+			maxWidthInput.addEventListener('keydown', (event) => {
 				this.handleKeyDown_(event);
 			});
 
@@ -81,7 +81,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 		}
 
 		if (maxHeightInput) {
-			maxHeightInput.addEventListener('keydown', event =>
+			maxHeightInput.addEventListener('keydown', (event) =>
 				this.handleKeyDown_(event)
 			);
 
@@ -98,7 +98,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
 
 		const saveButton = this.one('button[type=submit]');
 
-		saveButton.addEventListener('click', event =>
+		saveButton.addEventListener('click', (event) =>
 			this.onSubmitForm_(event)
 		);
 	}

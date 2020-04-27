@@ -31,14 +31,14 @@ const getFields = () => [
 	),
 ];
 
-const getColumnKey = node => {
+const getColumnKey = (node) => {
 	const {columnIndex, pageIndex, rowIndex} = getIndexes(node.parentElement);
 	const placeholder = !!dom.closest(node, '.placeholder');
 
 	return `column_${pageIndex}_${rowIndex}_${columnIndex}_${placeholder}`;
 };
 
-const getFieldKey = node => {
+const getFieldKey = (node) => {
 	return node.dataset.fieldName;
 };
 

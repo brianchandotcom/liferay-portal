@@ -20,7 +20,7 @@ import Link from '../components/Link.es';
 
 export default withRouter(({tags = [], match: {params: {sectionTitle}}}) => (
 	<ul className="c-mb-0 d-flex flex-wrap list-unstyled stretched-link-layer">
-		{tags.map(tag => (
+		{tags.map((tag) => (
 			<li key={tag}>
 				<ClayLabel displayType="secondary">
 					<Link

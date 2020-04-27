@@ -15,7 +15,7 @@ import ThemeContext from './ThemeContext.es';
 import ResultRankingsForm from './components/ResultRankingsForm.es';
 import ErrorBoundary from './components/shared/ErrorBoundary.es';
 
-export default function({context, props}) {
+export default function ({context, props}) {
 	return (
 		<ThemeContext.Provider value={context}>
 			<div className="result-rankings-root">

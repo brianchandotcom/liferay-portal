@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-forms-components',
-	A => {
+	(A) => {
 		var KeyMap = A.Event.KeyMap;
 
 		var Lang = A.Lang;
@@ -193,7 +193,7 @@ AUI.add(
 
 		Liferay.KaleoFormWizard = KaleoFormWizard;
 
-		var ReadOnlyFormBuilderSupport = function() {};
+		var ReadOnlyFormBuilderSupport = function () {};
 
 		ReadOnlyFormBuilderSupport.ATTRS = {
 			formBuilder: {
@@ -439,7 +439,7 @@ AUI.add(
 
 					var definition;
 
-					availableDefinitions.forEach(item => {
+					availableDefinitions.forEach((item) => {
 						if (
 							Lang.toInt(item.definitionId) ===
 							Lang.toInt(definitionId)
@@ -494,7 +494,7 @@ AUI.add(
 
 					var selectedDefinitionId = -1;
 
-					availableDefinitions.forEach(item => {
+					availableDefinitions.forEach((item) => {
 						if (
 							Lang.toInt(item.definitionId) ===
 							Lang.toInt(definitionId)

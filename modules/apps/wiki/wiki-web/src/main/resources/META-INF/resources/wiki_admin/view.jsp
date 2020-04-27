@@ -228,7 +228,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 </div>
 
 <script>
-	var deleteNodes = function() {
+	var deleteNodes = function () {
 		if (
 			<%= trashHelper.isTrashEnabled(scopeGroupId) %> ||
 			confirm(
@@ -251,10 +251,10 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 		deleteNodes: deleteNodes,
 	};
 
-	Liferay.componentReady('wikiNodesManagementToolbar').then(function(
+	Liferay.componentReady('wikiNodesManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

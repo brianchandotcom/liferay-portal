@@ -26,7 +26,7 @@ describe('ManagementToolbar', () => {
 		global.Liferay = {
 			componentReady() {
 				return {
-					then: jest.fn(cb => cb(searchContainer)),
+					then: jest.fn((cb) => cb(searchContainer)),
 				};
 			},
 		};
@@ -37,10 +37,10 @@ describe('ManagementToolbar', () => {
 		searchContainerHandle = {detach: jest.fn()};
 
 		searchContainer = {
-			fire: jest.fn(eventName =>
+			fire: jest.fn((eventName) =>
 				searchContainerCallbacks[eventName].apply(this)
 			),
-			on: jest.fn(eventName => {
+			on: jest.fn((eventName) => {
 				searchContainerCallbacks[eventName] = jest.fn();
 
 				return searchContainerHandle;

@@ -40,7 +40,7 @@ const toasterReducer = ({toasts = []}, {type, value}) => {
 const ToasterProvider = ({children}) => {
 	const [{toasts}, dispatch] = useReducer(toasterReducer, {toasts: []});
 
-	const addToast = newToast => {
+	const addToast = (newToast) => {
 		dispatch({type: ACTION_TYPES.ADD, value: newToast});
 	};
 
@@ -48,7 +48,7 @@ const ToasterProvider = ({children}) => {
 		dispatch({type: ACTION_TYPES.CLEAR_ALL});
 	};
 
-	const removeToast = removeIndex => {
+	const removeToast = (removeIndex) => {
 		dispatch({type: ACTION_TYPES.REMOVE, value: removeIndex});
 	};
 

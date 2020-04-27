@@ -124,7 +124,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			NAME: 'searchpermissioNnavigation',
 
 			prototype: {
-				initializer: function() {
+				initializer: function () {
 					var instance = this;
 
 					instance._bindUIACBase();
@@ -133,10 +133,10 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			},
 		});
 
-		var getItems = function() {
+		var getItems = function () {
 			var results = [];
 
-			permissionNavigationItems.each(function(item, index, collection) {
+			permissionNavigationItems.each(function (item, index, collection) {
 				results.push({
 					data: item.text().trim(),
 					node: item,
@@ -146,7 +146,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			return results;
 		};
 
-		var getNoResultsNode = function() {
+		var getNoResultsNode = function () {
 			if (!noResultsNode) {
 				noResultsNode = A.Node.create(
 					'<div class="alert"><liferay-ui:message key="there-are-no-results" /></div>'
@@ -175,7 +175,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			source: getItems(),
 		});
 
-		permissionNavigationSearch.on('query', function(event) {
+		permissionNavigationSearch.on('query', function (event) {
 			if (event.query) {
 				togglerDelegate.expandAll();
 			}
@@ -184,18 +184,18 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			}
 		});
 
-		permissionNavigationSearch.on('results', function(event) {
-			permissionNavigationItems.each(function(item, index, collection) {
+		permissionNavigationSearch.on('results', function (event) {
+			permissionNavigationItems.each(function (item, index, collection) {
 				item.addClass('hide');
 			});
 
-			event.results.forEach(function(item, index) {
+			event.results.forEach(function (item, index) {
 				item.raw.node.removeClass('hide');
 			});
 
 			var foundVisibleSection;
 
-			permissionNavigationSectionsNode.each(function(
+			permissionNavigationSectionsNode.each(function (
 				item,
 				index,
 				collection
@@ -239,7 +239,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 		permissionContainerNode.delegate(
 			'click',
-			function(event) {
+			function (event) {
 				event.preventDefault();
 
 				var href = event.currentTarget.attr('data-resource-href');
@@ -253,7 +253,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 				permissionContentContainerNode.unplug(AParseContent);
 
 				Liferay.Util.fetch(href)
-					.then(function(response) {
+					.then(function (response) {
 						if (response.status === 401) {
 							window.location.reload();
 						}
@@ -266,7 +266,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 							);
 						}
 					})
-					.then(function(response) {
+					.then(function (response) {
 						permissionContentContainerNode.loadingmask.hide();
 
 						permissionContentContainerNode.unplug(A.LoadingMask);
@@ -287,7 +287,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 						event.currentTarget.addClass('active');
 					})
-					.catch(function(error) {
+					.catch(function (error) {
 						permissionContentContainerNode.loadingmask.hide();
 
 						permissionContentContainerNode.unplug(A.LoadingMask);
@@ -317,7 +317,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 		permissionContainerNode.delegate(
 			'change',
-			function(event) {
+			function (event) {
 				var unselectedTargetsNode = permissionContainerNode.one(
 					'#<portlet:namespace />unselectedTargets'
 				);
@@ -326,7 +326,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 				var form = A.one(document.<portlet:namespace />fm);
 
-				form.all('input[type=checkbox]').each(function(item, index) {
+				form.all('input[type=checkbox]').each(function (item, index) {
 					var checkbox = A.one(item);
 
 					var value = checkbox.val();
@@ -351,7 +351,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		);
 	}
 
-	A.on('domready', function(event) {
+	A.on('domready', function (event) {
 		togglerDelegate = new A.TogglerDelegate({
 			container: <portlet:namespace />permissionNavigationDataContainer,
 			content: '.permission-navigation-item-content',

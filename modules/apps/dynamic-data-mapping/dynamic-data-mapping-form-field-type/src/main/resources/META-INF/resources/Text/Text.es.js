@@ -45,7 +45,7 @@ const Text = ({
 			id={id}
 			name={name}
 			onBlur={onBlur}
-			onChange={event => {
+			onChange={(event) => {
 				if (fieldName === 'name') {
 					event.target.value = normalizeFieldName(event.target.value);
 				}
@@ -81,7 +81,7 @@ const Textarea = ({
 			id={id}
 			name={name}
 			onBlur={onBlur}
-			onChange={event => {
+			onChange={(event) => {
 				setValue(event.target.value);
 				onChange(event);
 			}}
@@ -110,7 +110,7 @@ const Autocomplete = ({
 	const inputRef = useRef(null);
 	const itemListRef = useRef(null);
 
-	const filteredItems = options.filter(item => item && item.match(value));
+	const filteredItems = options.filter((item) => item && item.match(value));
 
 	useEffect(() => {
 		if (filteredItems.length === 1 && filteredItems.includes(value)) {
@@ -127,7 +127,7 @@ const Autocomplete = ({
 			'button'
 		);
 		const targetIndex = [...focusabledElements].findIndex(
-			current => current === target
+			(current) => current === target
 		);
 
 		let nextElement;
@@ -158,12 +158,12 @@ const Autocomplete = ({
 				id={id}
 				name={name}
 				onBlur={onBlur}
-				onChange={event => {
+				onChange={(event) => {
 					setValue(event.target.value);
 					onChange(event);
 				}}
 				onFocus={onFocus}
-				onKeyDown={event => {
+				onKeyDown={(event) => {
 					if (
 						(event.key === 'Tab' || event.key === 'ArrowDown') &&
 						!event.shiftKey &&
@@ -190,7 +190,7 @@ const Autocomplete = ({
 			>
 				<ul
 					className="list-unstyled"
-					onKeyDown={event => {
+					onKeyDown={(event) => {
 						switch (event.key) {
 							case 'ArrowDown':
 								handleFocus(event, false);
@@ -212,7 +212,7 @@ const Autocomplete = ({
 							{Liferay.Language.get('no-results-were-found')}
 						</ClayDropDown.Item>
 					)}
-					{filteredItems.map(label => (
+					{filteredItems.map((label) => (
 						<ClayAutocomplete.Item
 							key={label}
 							match={value}
@@ -253,7 +253,7 @@ const Main = ({
 	value,
 	...otherProps
 }) => {
-	const optionsMemo = useMemo(() => options.map(option => option.label), [
+	const optionsMemo = useMemo(() => options.map((option) => option.label), [
 		options,
 	]);
 	const Component =
@@ -285,9 +285,9 @@ Main.displayName = 'Text';
 const TextProxy = connectStore(({emit, ...otherProps}) => (
 	<Main
 		{...otherProps}
-		onBlur={event => emit('fieldBlurred', event, event.target.value)}
-		onChange={event => emit('fieldEdited', event, event.target.value)}
-		onFocus={event => emit('fieldFocused', event, event.target.value)}
+		onBlur={(event) => emit('fieldBlurred', event, event.target.value)}
+		onChange={(event) => emit('fieldEdited', event, event.target.value)}
+		onFocus={(event) => emit('fieldFocused', event, event.target.value)}
 	/>
 ));
 

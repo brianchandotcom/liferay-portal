@@ -22,7 +22,7 @@ export default function Textarea({autoFocus = false, value = '', ...props}) {
 			className={classNames('form-control', 'page-editor__textarea', {
 				'page-editor__textarea--empty': !value,
 			})}
-			ref={textarea => autoFocus && textarea && textarea.focus()}
+			ref={(textarea) => autoFocus && textarea && textarea.focus()}
 			{...props}
 		/>
 	);

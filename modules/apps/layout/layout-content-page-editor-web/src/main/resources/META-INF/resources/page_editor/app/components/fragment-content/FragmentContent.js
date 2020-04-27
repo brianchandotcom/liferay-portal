@@ -55,12 +55,12 @@ const FragmentContent = React.forwardRef(
 		const [editables, setEditables] = useState([]);
 
 		const editableElements = useMemo(
-			() => editables.map(editable => editable.element),
+			() => editables.map((editable) => editable.element),
 			[editables]
 		);
 
 		const updateEditables = useCallback(
-			parent => {
+			(parent) => {
 				let updatedEditableValues = [];
 				if (isMounted()) {
 					updatedEditableValues = parent
@@ -74,17 +74,17 @@ const FragmentContent = React.forwardRef(
 			[isMounted]
 		);
 
-		const languageId = useSelector(state => state.languageId);
+		const languageId = useSelector((state) => state.languageId);
 
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-		const defaultContent = useSelector(state =>
+		const defaultContent = useSelector((state) =>
 			state.fragmentEntryLinks[fragmentEntryLinkId]
 				? state.fragmentEntryLinks[fragmentEntryLinkId].content
 				: ''
 		);
 
-		const editableValues = useSelector(state =>
+		const editableValues = useSelector((state) =>
 			state.fragmentEntryLinks[fragmentEntryLinkId]
 				? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
 				: {}
@@ -126,7 +126,7 @@ const FragmentContent = React.forwardRef(
 			if (!editableProcessorUniqueId) {
 				const updatedEditables = updateEditables(element);
 
-				updatedEditables.forEach(editable => {
+				updatedEditables.forEach((editable) => {
 					resolveEditableValue(
 						editableValues,
 						editable.editableId,
@@ -163,9 +163,9 @@ const FragmentContent = React.forwardRef(
 		]);
 
 		const getPortals = useCallback(
-			element =>
+			(element) =>
 				Array.from(element.querySelectorAll('lfr-drop-zone')).map(
-					dropZoneElement => {
+					(dropZoneElement) => {
 						const mainItemId =
 							dropZoneElement.getAttribute('uuid') || '';
 

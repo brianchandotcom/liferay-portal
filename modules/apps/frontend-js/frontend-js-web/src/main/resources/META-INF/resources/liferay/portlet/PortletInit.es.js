@@ -115,7 +115,7 @@ class PortletInit {
 	_executeAction(parameters, element) {
 		return new Promise((resolve, reject) => {
 			getUrl(pageRenderState, 'ACTION', this._portletId, parameters).then(
-				url => {
+				(url) => {
 					const options = generateActionUrl(
 						this._portletId,
 						url,
@@ -123,8 +123,8 @@ class PortletInit {
 					);
 
 					fetch(options.url, options)
-						.then(res => res.text())
-						.then(text => {
+						.then((res) => res.text())
+						.then((text) => {
 							const updatedIds = this._updatePageStateFromString(
 								text,
 								this._portletId
@@ -132,7 +132,7 @@ class PortletInit {
 
 							resolve(updatedIds);
 						})
-						.catch(err => {
+						.catch((err) => {
 							reject(err);
 						});
 				}
@@ -151,7 +151,7 @@ class PortletInit {
 
 	_hasListener(portletId) {
 		const eventListenerPortletIds = Object.keys(eventListeners).map(
-			key => eventListeners[key].id
+			(key) => eventListeners[key].id
 		);
 
 		return eventListenerPortletIds.includes(portletId);
@@ -168,7 +168,7 @@ class PortletInit {
 	 */
 
 	_reportError(portletId, err) {
-		Object.keys(eventListeners).map(key => {
+		Object.keys(eventListeners).map((key) => {
 			const listener = eventListeners[key];
 
 			if (
@@ -207,10 +207,10 @@ class PortletInit {
 		}
 
 		this._updatePageState(updateString, portletId).then(
-			updatedIds => {
+			(updatedIds) => {
 				this._updatePortletStates(updatedIds);
 			},
-			err => {
+			(err) => {
 				busy = false;
 
 				this._reportError(portletId, err);
@@ -240,14 +240,14 @@ class PortletInit {
 
 		const parameterKeys = Object.keys(publicRenderParameters);
 
-		parameterKeys.forEach(parameterKey => {
+		parameterKeys.forEach((parameterKey) => {
 			const newValue = publicRenderParameters[parameterKey];
 
 			const groupMap = pageRenderState.prpMap[parameterKey];
 
 			const groupKeys = Object.keys(groupMap);
 
-			groupKeys.forEach(groupKey => {
+			groupKeys.forEach((groupKey) => {
 				if (groupKey !== this._portletId) {
 					const parts = groupMap[groupKey].split('|');
 
@@ -280,7 +280,7 @@ class PortletInit {
 		// Delete render data for all affected portlets in order to avoid dispatching
 		// stale render data
 
-		updatedIds.forEach(updatedId => {
+		updatedIds.forEach((updatedId) => {
 			pageRenderState.portlets[updatedId].renderData.content = null;
 		});
 
@@ -321,16 +321,16 @@ class PortletInit {
 		busy = true;
 
 		return this._executeAction(parameters, element).then(
-			updatedIds => {
+			(updatedIds) => {
 				return this._updatePortletStates(updatedIds).then(
-					updatedIds => {
+					(updatedIds) => {
 						busy = false;
 
 						return updatedIds;
 					}
 				);
 			},
-			err => {
+			(err) => {
 				busy = false;
 
 				this._reportError(this._portletId, err);
@@ -349,7 +349,7 @@ class PortletInit {
 
 	_updateHistory(replace) {
 		if (doHistory) {
-			getUrl(pageRenderState, 'RENDER', null, {}).then(url => {
+			getUrl(pageRenderState, 'RENDER', null, {}).then((url) => {
 				const token = JSON.stringify(pageRenderState);
 
 				if (replace) {
@@ -443,12 +443,12 @@ class PortletInit {
 	 */
 
 	_updatePortletStates(updatedIds) {
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			if (updatedIds.length === 0) {
 				busy = false;
 			}
 			else {
-				updatedIds.forEach(updatedId => {
+				updatedIds.forEach((updatedId) => {
 					this._updateStateForPortlet(updatedId);
 				});
 			}
@@ -483,10 +483,10 @@ class PortletInit {
 		busy = true;
 
 		this._setState(state)
-			.then(updatedIds => {
+			.then((updatedIds) => {
 				this._updatePortletStates(updatedIds);
 			})
-			.catch(err => {
+			.catch((err) => {
 				busy = false;
 				this._reportError(this._portletId, err);
 			});
@@ -504,7 +504,7 @@ class PortletInit {
 	 */
 
 	_updateStateForPortlet(portletId) {
-		const updateQueueIds = eventListenersQueue.map(item => item.handle);
+		const updateQueueIds = eventListenersQueue.map((item) => item.handle);
 
 		const entries = Object.entries(eventListeners);
 
@@ -572,7 +572,7 @@ class PortletInit {
 		let argCount = 0;
 		let el = null;
 
-		args.forEach(arg => {
+		args.forEach((arg) => {
 			if (arg instanceof HTMLFormElement) {
 				if (el !== null) {
 					throw new TypeError(
@@ -595,8 +595,9 @@ class PortletInit {
 				const type = Object.prototype.toString.call(arg);
 
 				throw new TypeError(
-					`Invalid argument type. Argument ${argCount +
-						1} is of type ${type}`
+					`Invalid argument type. Argument ${
+						argCount + 1
+					} is of type ${type}`
 				);
 			}
 			argCount++;
@@ -607,10 +608,10 @@ class PortletInit {
 		}
 
 		return this._setupAction(actionParameters, el)
-			.then(val => {
+			.then((val) => {
 				Promise.resolve(val);
 			})
-			.catch(err => {
+			.catch((err) => {
 				Promise.reject(err);
 			});
 	}
@@ -795,7 +796,7 @@ class PortletInit {
 	newParameters(optParameters = {}) {
 		const newParameters = {};
 
-		Object.keys(optParameters).forEach(key => {
+		Object.keys(optParameters).forEach((key) => {
 			if (Array.isArray(optParameters[key])) {
 				newParameters[key] = [...optParameters[key]];
 			}
@@ -957,7 +958,7 @@ class PortletInit {
 			'PARTIAL_ACTION',
 			this._portletId,
 			parameters
-		).then(url => {
+		).then((url) => {
 			partialActionInitObject.url = url;
 
 			return partialActionInitObject;

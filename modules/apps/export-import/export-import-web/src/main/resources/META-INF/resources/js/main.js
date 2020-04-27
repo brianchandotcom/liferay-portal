@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-export-import-export-import',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var ADate = A.Date;
@@ -72,7 +72,7 @@ AUI.add(
 					if (form) {
 						form.delegate(
 							STR_CLICK,
-							event => {
+							(event) => {
 								var portletId = event.currentTarget.attr(
 									'data-portletid'
 								);
@@ -99,7 +99,7 @@ AUI.add(
 
 						form.delegate(
 							STR_CLICK,
-							event => {
+							(event) => {
 								var portletId = event.currentTarget.attr(
 									'data-portletid'
 								);
@@ -131,7 +131,7 @@ AUI.add(
 
 					Array.prototype.forEach.call(
 						portletConfigurationNodes,
-						portletConfigurationNode => {
+						(portletConfigurationNode) => {
 							portletConfigurationNode.addEventListener(
 								STR_CLICK,
 								() => {
@@ -148,7 +148,7 @@ AUI.add(
 
 										Array.prototype.forEach.call(
 											controlCheckboxes,
-											controlCheckbox => {
+											(controlCheckbox) => {
 												if (!controlCheckbox.checked) {
 													controlCheckbox.click();
 												}
@@ -175,7 +175,7 @@ AUI.add(
 
 					Array.prototype.forEach.call(
 						portletDataNodes,
-						portletDataNode => {
+						(portletDataNode) => {
 							portletDataNode.addEventListener(STR_CLICK, () => {
 								if (portletDataNode.checked) {
 									var id = portletDataNode.id;
@@ -190,7 +190,7 @@ AUI.add(
 
 									Array.prototype.forEach.call(
 										controlCheckboxes,
-										controlCheckbox => {
+										(controlCheckbox) => {
 											if (!controlCheckbox.checked) {
 												controlCheckbox.click();
 											}
@@ -695,13 +695,13 @@ AUI.add(
 				_initLabels() {
 					var instance = this;
 
-					instance.all('.configuration-link').each(item => {
+					instance.all('.configuration-link').each((item) => {
 						instance._setConfigurationLabels(
 							item.attr('data-portletid')
 						);
 					});
 
-					instance.all('.content-link').each(item => {
+					instance.all('.content-link').each((item) => {
 						instance._setContentLabels(item.attr('data-portletid'));
 					});
 
@@ -799,12 +799,12 @@ AUI.add(
 					var instance = this;
 
 					if (instance._isChecked('deletionsNode')) {
-						instance.all('.deletions').each(item => {
+						instance.all('.deletions').each((item) => {
 							item.show();
 						});
 					}
 					else {
-						instance.all('.deletions').each(item => {
+						instance.all('.deletions').each((item) => {
 							item.hide();
 						});
 					}
@@ -903,8 +903,8 @@ AUI.add(
 
 					if (processesNode && instance._processesResourceURL) {
 						Liferay.Util.fetch(instance._processesResourceURL)
-							.then(response => response.text())
-							.then(response => {
+							.then((response) => response.text())
+							.then((response) => {
 								processesNode.plug(A.Plugin.ParseContent);
 
 								processesNode.setContent(response);
@@ -949,14 +949,14 @@ AUI.add(
 				_restoreNodeHiddenState(node, state) {
 					var hiddenList = node.ancestorsByClassName(STR_HIDE);
 
-					hiddenList.each(hiddenNode => {
+					hiddenList.each((hiddenNode) => {
 						hiddenNode.removeClass(STR_HIDE);
 					});
 
 					hiddenList = state.hiddenList;
 
 					if (hiddenList !== null) {
-						hiddenList.each(node => {
+						hiddenList.each((node) => {
 							node.addClass(STR_HIDE);
 						});
 					}
@@ -973,7 +973,7 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					inputNodes.each(node => {
+					inputNodes.each((node) => {
 						var id = node.get('id');
 
 						var state = inputStates[id];
@@ -1012,7 +1012,7 @@ AUI.add(
 
 					var selectedConfiguration = [];
 
-					inputs.each(item => {
+					inputs.each((item) => {
 						var checked = item.attr(STR_CHECKED);
 
 						if (checked) {
@@ -1051,7 +1051,7 @@ AUI.add(
 
 					var selectedContent = [];
 
-					inputs.each(item => {
+					inputs.each((item) => {
 						var checked = item.attr(STR_CHECKED);
 
 						if (checked) {
@@ -1115,7 +1115,7 @@ AUI.add(
 
 					Array.prototype.forEach.call(
 						portletDataNodes,
-						portletDataNode => {
+						(portletDataNode) => {
 							if (portletDataNode.type === 'checkbox') {
 								var id = portletDataNode.id;
 
@@ -1129,7 +1129,7 @@ AUI.add(
 
 								Array.prototype.forEach.call(
 									controlCheckboxes,
-									controlCheckbox => {
+									(controlCheckbox) => {
 										if (
 											controlCheckbox.disabled &&
 											controlCheckbox.checked
@@ -1224,7 +1224,7 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					inputNodes.each(node => {
+					inputNodes.each((node) => {
 						var hiddenList = node.ancestorsByClassName(STR_HIDE);
 
 						var id = node.get('id');

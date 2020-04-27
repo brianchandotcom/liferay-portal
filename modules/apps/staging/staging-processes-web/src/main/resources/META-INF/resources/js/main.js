@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-staging-processes-export-import',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var ADate = A.Date;
@@ -72,7 +72,7 @@ AUI.add(
 					if (form) {
 						form.delegate(
 							STR_CLICK,
-							event => {
+							(event) => {
 								var portletId = event.currentTarget.attr(
 									'data-portletid'
 								);
@@ -103,7 +103,7 @@ AUI.add(
 					);
 
 					if (checkboxes.length > 0) {
-						document.body.addEventListener('click', event => {
+						document.body.addEventListener('click', (event) => {
 							const {id} = event.target;
 
 							if (id.includes(instance.ns('PORTLET_DATA'))) {
@@ -113,7 +113,7 @@ AUI.add(
 
 								if (controlCheckboxes.length > 0) {
 									controlCheckboxes.forEach(
-										controlCheckbox => {
+										(controlCheckbox) => {
 											if (!controlCheckbox.checked) {
 												controlCheckbox.click();
 											}
@@ -552,7 +552,7 @@ AUI.add(
 				_initLabels() {
 					var instance = this;
 
-					instance.all('.content-link').each(item => {
+					instance.all('.content-link').each((item) => {
 						instance._setContentLabels(item.attr('data-portletid'));
 					});
 
@@ -650,12 +650,12 @@ AUI.add(
 					var instance = this;
 
 					if (instance._isChecked('deletionsNode')) {
-						instance.all('.deletions').each(item => {
+						instance.all('.deletions').each((item) => {
 							item.show();
 						});
 					}
 					else {
-						instance.all('.deletions').each(item => {
+						instance.all('.deletions').each((item) => {
 							item.hide();
 						});
 					}
@@ -756,8 +756,8 @@ AUI.add(
 
 					if (processesNode && instance._processesResourceURL) {
 						Liferay.Util.fetch(instance._processesResourceURL)
-							.then(response => response.text())
-							.then(response => {
+							.then((response) => response.text())
+							.then((response) => {
 								processesNode.empty();
 
 								processesNode.plug(A.Plugin.ParseContent);
@@ -802,14 +802,14 @@ AUI.add(
 				_restoreNodeHiddenState(node, state) {
 					var hiddenList = node.ancestorsByClassName(STR_HIDE);
 
-					hiddenList.each(hiddenNode => {
+					hiddenList.each((hiddenNode) => {
 						hiddenNode.removeClass(STR_HIDE);
 					});
 
 					hiddenList = state.hiddenList;
 
 					if (hiddenList !== null) {
-						hiddenList.each(node => {
+						hiddenList.each((node) => {
 							node.addClass(STR_HIDE);
 						});
 					}
@@ -826,7 +826,7 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					inputNodes.each(node => {
+					inputNodes.each((node) => {
 						var id = node.get('id');
 
 						var state = inputStates[id];
@@ -863,7 +863,7 @@ AUI.add(
 
 					var selectedContent = [];
 
-					inputs.each(item => {
+					inputs.each((item) => {
 						var checked = item.attr(STR_CHECKED);
 
 						if (checked) {
@@ -992,7 +992,7 @@ AUI.add(
 						inputNodes = node.getElementsByTagName('input');
 					}
 
-					inputNodes.each(node => {
+					inputNodes.each((node) => {
 						var hiddenList = node.ancestorsByClassName(STR_HIDE);
 
 						var id = node.get('id');

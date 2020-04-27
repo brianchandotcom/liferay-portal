@@ -243,10 +243,10 @@ if (comment) {
 
 <aui:script use="aui-base,aui-event-input,aui-form-textarea-deprecated,aui-template-deprecated,autocomplete,autocomplete-filters">
 	var MAP_MATCHED_USERS = {
-		screenName: function(str, match) {
+		screenName: function (str, match) {
 			return '[@' + MAP_USERS[str] + ']';
 		},
-		userName: function(str, match) {
+		userName: function (str, match) {
 			return '<span>' + str + '</span>';
 		},
 	};
@@ -274,7 +274,7 @@ if (comment) {
 	var form = A.one('#<portlet:namespace /><%= formName %>');
 
 	<c:if test="<%= !repost %>">
-		var countContent = function(event) {
+		var countContent = function (event) {
 			var content = event.currentTarget.val();
 
 			var countdown = form.one('.microblogs-countdown');
@@ -293,7 +293,7 @@ if (comment) {
 			countdown.toggleClass('microblogs-countdown-warned', disabled);
 		};
 
-		var createTextarea = function(divId) {
+		var createTextarea = function (divId) {
 			var autocomplete = A.one('#<portlet:namespace />autocomplete<%= formId %>');
 			var autocompleteContent = A.one(
 				'#<portlet:namespace />autocompleteContent<%= formId %>'
@@ -312,7 +312,7 @@ if (comment) {
 
 			var contentTextarea = autocompleteContent.one('textarea');
 
-			contentTextarea.on('focus', function(contentTextarea) {
+			contentTextarea.on('focus', function (contentTextarea) {
 				autocomplete.removeClass('inactive');
 
 				var buttonContainer = form.one('.button-holder');
@@ -334,7 +334,7 @@ if (comment) {
 				contextCountEvent = ['input', 'keydown'];
 			}
 
-			contentTextarea.on(contextCountEvent, function(contentTextarea) {
+			contentTextarea.on(contextCountEvent, function (contentTextarea) {
 				updateHighlightDivSize(contentTextarea);
 
 				countContent(contentTextarea);
@@ -349,7 +349,7 @@ if (comment) {
 			return contentTextarea;
 		};
 
-		var replaceName = function(inputText, returnType) {
+		var replaceName = function (inputText, returnType) {
 			var matchedUsers = {};
 
 			var updatedText = inputText;
@@ -359,7 +359,7 @@ if (comment) {
 			var findNames = new RegExp('(' + users.join('|') + ')', 'g');
 
 			if (users.length > 0) {
-				updatedText = updatedText.replace(findNames, function(userName) {
+				updatedText = updatedText.replace(findNames, function (userName) {
 					if (userName !== '') {
 						matchedUsers[userName] = MAP_USERS[userName];
 
@@ -376,15 +376,15 @@ if (comment) {
 			return updatedText;
 		};
 
-		var resultFormatter = function(query, results) {
-			return results.map(function(result) {
+		var resultFormatter = function (query, results) {
+			return results.map(function (result) {
 				var userData = result.raw;
 
 				return A.Lang.sub(TPL_SEARCH_RESULTS, userData);
 			});
 		};
 
-		var updateHighlightDivContent = function(event) {
+		var updateHighlightDivContent = function (event) {
 			var inputValue = event.inputValue;
 
 			var highlighterContent = A.one(
@@ -408,7 +408,7 @@ if (comment) {
 			highlighterContent.html('<div>' + updatedText + '</div>');
 		};
 
-		var updateHighlightDivSize = function(event) {
+		var updateHighlightDivSize = function (event) {
 			var contentInput = event.currentTarget;
 
 			var autocomplete = A.one('#<portlet:namespace />autocomplete<%= formId %>');
@@ -419,7 +419,7 @@ if (comment) {
 			var contentInputHeight = contentInput.height();
 		};
 
-		var updateContentTextbox = function(event) {
+		var updateContentTextbox = function (event) {
 			event.preventDefault();
 
 			var rawResult = event.result.raw;
@@ -442,19 +442,19 @@ if (comment) {
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/microblogs/autocomplete_user_mentions" var="userIdURL" />
 
-		var createAutocomplete = function(contentTextarea) {
+		var createAutocomplete = function (contentTextarea) {
 			Liferay.Util.fetch(
 				'<%= userIdURL.toString() %>&userId=<%= user.getUserId() %>'
 			)
-				.then(function(response) {
+				.then(function (response) {
 					return response.json();
 				})
-				.then(function(response) {
+				.then(function (response) {
 					autocompleteDiv = new A.AutoComplete({
 						inputNode: contentTextarea,
 						maxResults: 5,
 						on: {
-							clear: function() {
+							clear: function () {
 								var highlighterContent = A.one(
 									'#<portlet:namespace />highlighterContent<%= formId %>'
 								);
@@ -476,7 +476,7 @@ if (comment) {
 			<c:when test="<%= !edit %>">
 				var autocomplete = A.one('#<portlet:namespace />autocomplete<%= formId %>');
 
-				autocomplete.on('click', function(event) {
+				autocomplete.on('click', function (event) {
 					var contentInput = A.one(
 						'#<portlet:namespace />autocompleteContent<%= formId %> textarea'
 					);
@@ -500,7 +500,7 @@ if (comment) {
 		</c:choose>
 	</c:if>
 
-	form.on('submit', function(event) {
+	form.on('submit', function (event) {
 		event.halt(true);
 
 		<c:if test="<%= !repost %>">

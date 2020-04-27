@@ -144,8 +144,8 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 		document.<portlet:namespace />fm,
 		'click',
 		'#<portlet:namespace />advancedMode, #<portlet:namespace />friendlyMode',
-		function(event) {
-			Array.prototype.forEach.call(alternatingElements, function(element) {
+		function (event) {
+			Array.prototype.forEach.call(alternatingElements, function (element) {
 				dom.toggleClasses(element, 'hide');
 			});
 		}
@@ -167,7 +167,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 
 	var serviceClassNamesToContextNames = <%= request.getAttribute(SAPWebKeys.SERVICE_CLASS_NAMES_TO_CONTEXT_NAMES) %>;
 
-	var getActionMethodNames = function(contextName, serviceClassName, callback) {
+	var getActionMethodNames = function (contextName, serviceClassName, callback) {
 		if (contextName && serviceClassName && callback) {
 			var namespace =
 				contextName.replace(REGEX_DOT, '_') +
@@ -190,10 +190,10 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 				);
 
 				Liferay.Util.fetch(getActionMethodNamesURL.toString())
-					.then(function(response) {
+					.then(function (response) {
 						return response.json();
 					})
-					.then(function(data) {
+					.then(function (data) {
 						methodObj.actionMethodNames = data;
 						callback(actionMethodNames);
 					});
@@ -204,10 +204,10 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 		}
 	};
 
-	var getContextName = function(serviceClassName) {
+	var getContextName = function (serviceClassName) {
 		var serviceClassNameToContextName = A.Array.find(
 			serviceClassNamesToContextNames,
-			function(item, index) {
+			function (item, index) {
 				return item.serviceClassName === serviceClassName;
 			}
 		);
@@ -219,14 +219,14 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 		);
 	};
 
-	var initAutoCompleteRow = function(rowNode) {
+	var initAutoCompleteRow = function (rowNode) {
 		var actionMethodNameInput = rowNode.one('.action-method-name');
 		var serviceClassNameInput = rowNode.one('.service-class-name');
 
 		new A.AutoComplete({
 			inputNode: serviceClassNameInput,
 			on: {
-				select: function(event) {
+				select: function (event) {
 					var result = event.result.raw;
 
 					serviceClassNameInput.attr(
@@ -250,7 +250,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 			inputNode: actionMethodNameInput,
 			resultFilters: 'phraseMatch',
 			resultTextLocator: 'actionMethodName',
-			source: function(query, callback) {
+			source: function (query, callback) {
 				var contextName = serviceClassNameInput.attr('data-context-name');
 				var serviceClassName = serviceClassNameInput.attr(
 					'data-service-class-name'
@@ -267,12 +267,12 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 		}).render();
 	};
 
-	var updateAdvancedModeTextarea = function() {
+	var updateAdvancedModeTextarea = function () {
 		var updatedInput = '';
 
 		A.all(
 			'#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox .lfr-form-row:not(.hide)'
-		).each(function(item, index) {
+		).each(function (item, index) {
 			var actionMethodName = item.one('.action-method-name').val();
 			var serviceClassName = item.one('.service-class-name').val();
 
@@ -288,7 +288,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 		A.one('#<portlet:namespace />allowedServiceSignatures').val(updatedInput);
 	};
 
-	var updateFriendlyModeInputs = function() {
+	var updateFriendlyModeInputs = function () {
 		var contentBox = A.one(
 			'#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox'
 		);
@@ -303,7 +303,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 
 		entries = A.Array.dedupe(entries);
 
-		entries.forEach(function(item, index) {
+		entries.forEach(function (item, index) {
 			var row = rowTemplate.clone();
 
 			var actionMethodNameInput = row.one('.action-method-name');
@@ -334,7 +334,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 			'#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox',
 		namespace: '<portlet:namespace />',
 		on: {
-			clone: function(event) {
+			clone: function (event) {
 				var rowNode = event.row;
 
 				var actionMethodNameInput = rowNode.one('.action-method-name');

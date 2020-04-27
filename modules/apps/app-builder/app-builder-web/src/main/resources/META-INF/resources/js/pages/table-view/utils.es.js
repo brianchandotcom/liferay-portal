@@ -14,7 +14,7 @@
 
 import dom from 'metal-dom';
 
-export const getColumnIndex = node => {
+export const getColumnIndex = (node) => {
 	const rowNode = dom.closest(node, 'tr');
 
 	if (!rowNode) {
@@ -46,7 +46,7 @@ export const getColumnNode = (container, index) => {
 	);
 };
 
-export const getColumns = container => {
+export const getColumns = (container) => {
 	return container.querySelectorAll(`table tbody > tr:first-of-type > td`);
 };
 

@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-xml-util',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 		var LString = Lang.String;
 
@@ -99,7 +99,7 @@ AUI.add(
 					)
 					.split(/\r?\n/g);
 
-				lines.forEach(item => {
+				lines.forEach((item) => {
 					var indent = 0;
 
 					if (!inCDATA) {

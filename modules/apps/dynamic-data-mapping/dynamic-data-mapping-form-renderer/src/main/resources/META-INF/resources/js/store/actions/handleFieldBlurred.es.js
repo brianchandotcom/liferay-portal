@@ -19,7 +19,7 @@ export default (pages, properties) => {
 	const pageVisitor = new PagesVisitor(pages);
 
 	return Promise.resolve(
-		pageVisitor.mapFields(field => {
+		pageVisitor.mapFields((field) => {
 			const matches =
 				field.name === fieldInstance.name &&
 				field.required &&

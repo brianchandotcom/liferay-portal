@@ -25,7 +25,7 @@ import Collapse from '../../../common/components/Collapse';
 
 const CollectionDisplayCard = () => {
 	const dispatch = useDispatch();
-	const store = useSelector(state => state);
+	const store = useSelector((state) => state);
 	const selectItem = useSelectItem();
 
 	const dragRef = useItemDrag({

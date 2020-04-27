@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-asset-categories-selector',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var LString = Lang.String;
@@ -195,7 +195,7 @@ AUI.add(
 						type = 'radio';
 					}
 
-					json.forEach(item => {
+					json.forEach((item) => {
 						var checked = false;
 						var treeId = 'category' + item.categoryId;
 
@@ -385,7 +385,7 @@ AUI.add(
 							instance
 						);
 
-						popup.searchField.on('keyup', event => {
+						popup.searchField.on('keyup', (event) => {
 							if (!event.isNavKey()) {
 								searchCategoriesTask(
 									event,
@@ -524,7 +524,7 @@ AUI.add(
 
 						var inputName = A.guid();
 
-						categories.forEach(item => {
+						categories.forEach((item) => {
 							item.checked =
 								instance.entries.findIndexBy(
 									'categoryId',
@@ -614,7 +614,7 @@ AUI.add(
 
 					var treeViews = instance.TREEVIEWS;
 
-					AObject.each(treeViews, item => {
+					AObject.each(treeViews, (item) => {
 						item.toggle(!searchValue);
 					});
 				},
@@ -622,9 +622,7 @@ AUI.add(
 				_showPopup() {
 					var instance = this;
 
-					Liferay.Util.getTop()
-						.AUI()
-						.use('aui-tree');
+					Liferay.Util.getTop().AUI().use('aui-tree');
 
 					AssetCategoriesSelector.superclass._showPopup.apply(
 						instance,
@@ -645,7 +643,7 @@ AUI.add(
 
 					var className = instance.get('className');
 
-					instance._getEntries(className, entries => {
+					instance._getEntries(className, (entries) => {
 						var searchResults = instance._searchResultsNode;
 						var searchValue = instance._searchValue;
 
@@ -664,7 +662,7 @@ AUI.add(
 							instance
 						);
 
-						A.each(instance.TREEVIEWS, item => {
+						A.each(instance.TREEVIEWS, (item) => {
 							item.toggle(!searchValue);
 
 							item.expandAll();
@@ -786,7 +784,7 @@ AUI.add(
 
 					var matchKey = instance.get('matchKey');
 
-					instance.entries.getKey = function(obj) {
+					instance.entries.getKey = function (obj) {
 						return obj.categoryId;
 					};
 

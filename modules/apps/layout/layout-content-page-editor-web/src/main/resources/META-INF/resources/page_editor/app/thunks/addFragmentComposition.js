@@ -25,7 +25,7 @@ export default function addFragment({
 	saveMappingConfiguration,
 	store,
 }) {
-	return dispatch => {
+	return (dispatch) => {
 		const {segmentsExperienceId} = store;
 
 		return FragmentService.addFragmentComposition({
@@ -38,7 +38,7 @@ export default function addFragment({
 			saveInlineContent,
 			saveMappingConfiguration,
 			segmentsExperienceId,
-		}).then(fragmentComposition => {
+		}).then((fragmentComposition) => {
 			dispatch(
 				addFragmentComposition({
 					fragmentCollectionId,

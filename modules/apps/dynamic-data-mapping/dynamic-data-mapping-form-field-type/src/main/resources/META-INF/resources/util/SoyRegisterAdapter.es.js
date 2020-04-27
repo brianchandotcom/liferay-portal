@@ -22,7 +22,7 @@ import Soy from 'metal-soy';
  */
 const FakeSoyTemplate = (ComponentAdapter, variant) => {
 	let templates;
-	goog.loadModule(exports => {
+	goog.loadModule((exports) => {
 		goog.require('soy');
 		goog.module(`${variant}Adapter.incrementaldom`);
 		goog.require('soydata');
@@ -48,7 +48,7 @@ const FakeSoyTemplate = (ComponentAdapter, variant) => {
  */
 export const SoyRegisterAdapter = (ComponentAdapter, variant) => {
 	FakeSoyTemplate(ComponentAdapter, variant);
-	goog.loadModule(exports => {
+	goog.loadModule((exports) => {
 		const soy = goog.require('soy');
 
 		goog.module(`${variant}Register.incrementaldom`);

@@ -105,7 +105,7 @@ const SingleUpdateDueDateModal = () => {
 
 		if (selectedInstance.id && visibleModal === 'updateDueDate') {
 			return [
-				fetchData().catch(err => {
+				fetchData().catch((err) => {
 					setErrorToast(
 						Liferay.Language.get('your-request-has-failed')
 					);
@@ -123,7 +123,9 @@ const SingleUpdateDueDateModal = () => {
 		() => ({
 			errorProps: {
 				actionButton: (
-					<RetryButton onClick={() => setRetry(retry => retry + 1)} />
+					<RetryButton
+						onClick={() => setRetry((retry) => retry + 1)}
+					/>
 				),
 				className: 'mt-5 py-5',
 				hideAnimation: true,

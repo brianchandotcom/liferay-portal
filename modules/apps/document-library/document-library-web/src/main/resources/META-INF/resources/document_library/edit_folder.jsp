@@ -362,7 +362,7 @@ renderResponse.setTitle(headerTitle);
 				uri:
 					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>',
 			},
-			function(event) {
+			function (event) {
 				<portlet:namespace />selectFileEntryType(
 					event.entityid,
 					event.entityname
@@ -391,7 +391,7 @@ renderResponse.setTitle(headerTitle);
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectFileEntryType',
-		function(fileEntryTypeId, fileEntryTypeName) {
+		function (fileEntryTypeId, fileEntryTypeName) {
 			var A = AUI();
 
 			var searchContainer = Liferay.SearchContainer.get(
@@ -487,7 +487,7 @@ renderResponse.setTitle(headerTitle);
 
 	searchContainer.get('contentBox').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var A = AUI();
 
 			var link = event.currentTarget;

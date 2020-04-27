@@ -65,7 +65,7 @@ AssetTagsSelectorTag.propTypes = {
 	removeCallback: PropTypes.string,
 };
 
-export default function(props) {
+export default function (props) {
 	return (
 		<AssetTagsSelectorTag
 			{...props}

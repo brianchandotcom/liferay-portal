@@ -38,7 +38,7 @@ const PIE_CHART_SIZES = {
  */
 const FALLBACK_COLOR = '#e92563';
 
-const getColorByName = name => COLORS_MAP[name] || FALLBACK_COLOR;
+const getColorByName = (name) => COLORS_MAP[name] || FALLBACK_COLOR;
 
 export default function TrafficSources({
 	languageTag,
@@ -49,10 +49,10 @@ export default function TrafficSources({
 
 	const [, addWarning] = useWarning();
 
-	const fullPieChart = trafficSources.some(source => !!source.value);
+	const fullPieChart = trafficSources.some((source) => !!source.value);
 
 	const missingTrafficSourceValue = trafficSources.some(
-		trafficSource => trafficSource.value === undefined
+		(trafficSource) => trafficSource.value === undefined
 	);
 
 	useEffect(() => {
@@ -82,7 +82,7 @@ export default function TrafficSources({
 				<div className="pie-chart-wrapper--legend">
 					<table>
 						<tbody>
-							{trafficSources.map(entry => {
+							{trafficSources.map((entry) => {
 								return (
 									<tr key={entry.name}>
 										<td
@@ -228,7 +228,7 @@ function TrafficSourcesCustomTooltip(props) {
 
 			<ul className="list-unstyled mb-0">
 				<>
-					{payload.map(item => {
+					{payload.map((item) => {
 						// eslint-disable-next-line no-unused-vars
 						const [value, _name, iconType] = formatter
 							? formatter(item.value, item.name, item.iconType)

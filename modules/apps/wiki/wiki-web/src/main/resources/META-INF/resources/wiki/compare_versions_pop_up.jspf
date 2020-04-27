@@ -15,7 +15,7 @@
 --%>
 
 <aui:script require="metal-dom/src/dom as dom">
-	dom.delegate(document.body, 'click', '.compare-to-link > a', function(event) {
+	dom.delegate(document.body, 'click', '.compare-to-link > a', function (event) {
 		var currentTarget = event.delegateTarget;
 
 		Liferay.Util.selectEntity(
@@ -30,7 +30,7 @@
 				title: '<liferay-ui:message key="compare-versions" />',
 				uri: currentTarget.dataset.uri,
 			},
-			function(event) {
+			function (event) {
 				<portlet:renderURL var="compareVersionURL">
 					<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />

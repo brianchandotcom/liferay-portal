@@ -127,7 +127,7 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 		<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicyId) %>" />
 	</portlet:renderURL>
 
-	var addAssignees = function(event) {
+	var addAssignees = function (event) {
 		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<portlet:namespace />selectMember',
 			title:
@@ -135,7 +135,7 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 			url: '<%= selectMembersURL %>',
 		});
 
-		itemSelectorDialog.on('selectedItemChange', function(event) {
+		itemSelectorDialog.on('selectedItemChange', function (event) {
 			var result = event.selectedItem;
 
 			if (result && result.item) {
@@ -173,7 +173,7 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 	};
 
 	Liferay.componentReady('editPasswordPolicyAssignmentsManagementToolbar').then(
-		function(managementToolbar) {
+		function (managementToolbar) {
 			managementToolbar.on('creationButtonClicked', addAssignees);
 		}
 	);

@@ -140,7 +140,7 @@ portletDisplay.setURLBack(backURL);
 
 	searchContainerContentBox.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');
@@ -178,7 +178,7 @@ portletDisplay.setURLBack(backURL);
 	var selectAccountLink = A.one('#<portlet:namespace />selectAccountLink');
 
 	if (selectAccountLink) {
-		selectAccountLink.on('click', function(event) {
+		selectAccountLink.on('click', function (event) {
 			var searchContainerData = searchContainer.getData();
 
 			if (!searchContainerData.length) {
@@ -203,7 +203,7 @@ portletDisplay.setURLBack(backURL);
 					uri:
 						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" /><portlet:param name="userId" value="<%= String.valueOf(selUser.getUserId()) %>" /></portlet:renderURL>',
 				},
-				function(event) {
+				function (event) {
 					var entityId = event.entityid;
 
 					var rowColumns = [];

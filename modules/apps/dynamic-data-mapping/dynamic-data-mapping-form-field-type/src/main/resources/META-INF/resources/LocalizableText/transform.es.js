@@ -32,7 +32,7 @@ export const getInitialInternalValue = ({editingLocale, value}) => {
 	return valueJSON[editingLocale.localeId] || '';
 };
 
-const convertValueToString = value => {
+const convertValueToString = (value) => {
 	if (value && typeof value === 'object') {
 		return JSON.stringify(value);
 	}
@@ -40,7 +40,7 @@ const convertValueToString = value => {
 	return value;
 };
 
-export const convertValueToJSON = value => {
+export const convertValueToJSON = (value) => {
 	if (value && typeof value === 'string') {
 		try {
 			return JSON.parse(value);
@@ -67,7 +67,7 @@ const isDefaultLocale = ({defaultLocale, localeId}) => {
 	return defaultLocale.localeId === localeId;
 };
 
-export const normalizeLocaleId = localeId => {
+export const normalizeLocaleId = (localeId) => {
 	if (!localeId || localeId === '') {
 		throw new Error(`localeId ${localeId} is invalid`);
 	}
@@ -80,7 +80,7 @@ export const transformAvailableLocalesAndValue = ({
 	defaultLocale,
 	value,
 }) => ({
-	availableLocales: availableLocales.map(availableLocale => ({
+	availableLocales: availableLocales.map((availableLocale) => ({
 		...availableLocale,
 		icon: normalizeLocaleId(availableLocale.localeId),
 		isDefault: isDefaultLocale({

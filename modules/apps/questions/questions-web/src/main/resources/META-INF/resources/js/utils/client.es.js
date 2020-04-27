@@ -42,14 +42,14 @@ function gql(strings, ...values) {
 		.replace(/"/g, '\\"');
 }
 
-export const request = query =>
+export const request = (query) =>
 	fetch(getURL(), {
 		body: `{"query": "${query}"}`,
 		headers: HEADERS,
 		method: 'POST',
 	})
-		.then(response => response.json())
-		.then(json => {
+		.then((response) => response.json())
+		.then((json) => {
 			const data = json.data;
 
 			if (!data) {
@@ -59,7 +59,7 @@ export const request = query =>
 			return data[Object.keys(data)[0]];
 		});
 
-export const getURL = params => {
+export const getURL = (params) => {
 	params = {
 		['p_auth']: Liferay.authToken,
 		t: Date.now(),
@@ -69,7 +69,7 @@ export const getURL = params => {
 	const uri = new URL(`${window.location.origin}/o/graphql`);
 	const keys = Object.keys(params);
 
-	keys.forEach(key => uri.searchParams.set(key, params[key]));
+	keys.forEach((key) => uri.searchParams.set(key, params[key]));
 
 	return uri.toString();
 };
@@ -129,14 +129,14 @@ export const createVoteThread = (id, rating) =>
           }
         }`);
 
-export const deleteMessage = messageBoardMessage =>
+export const deleteMessage = (messageBoardMessage) =>
 	request(gql`
         mutation {
             deleteMessageBoardMessage(messageBoardMessageId: ${messageBoardMessage.id})
-        }`).then(data => {
+        }`).then((data) => {
 		if (messageBoardMessage.messageBoardMessages) {
 			return Promise.all(
-				messageBoardMessage.messageBoardMessages.items.map(x =>
+				messageBoardMessage.messageBoardMessages.items.map((x) =>
 					deleteMessage(x)
 				)
 			);
@@ -145,7 +145,7 @@ export const deleteMessage = messageBoardMessage =>
 		return data;
 	});
 
-export const deleteMessageBoardThread = messageBoardThreadId =>
+export const deleteMessageBoardThread = (messageBoardThreadId) =>
 	request(gql`
 		mutation {
 			deleteMessageBoardThread(messageBoardThreadId: ${messageBoardThreadId})
@@ -169,7 +169,7 @@ export const getTags = (page = 1, siteKey) =>
             }
         }`);
 
-export const getAllTags = siteKey =>
+export const getAllTags = (siteKey) =>
 	request(gql`
 	query {
 		keywords(siteKey:${siteKey}) {
@@ -284,8 +284,9 @@ export const getMessages = (
 ) =>
 	request(gql`
         query {
-              messageBoardThreadMessageBoardMessages(messageBoardThreadId: ${parentMessageBoardMessageId}, page: ${page}, pageSize: ${pageSize}, sort: ${'showAsAnswer:desc,' +
-		sort}){
+              messageBoardThreadMessageBoardMessages(messageBoardThreadId: ${parentMessageBoardMessageId}, page: ${page}, pageSize: ${pageSize}, sort: ${
+		'showAsAnswer:desc,' + sort
+	}){
                 items {
                 	actions
                     aggregateRating {
@@ -328,7 +329,7 @@ export const getMessages = (
                 pageSize
                 totalCount
             }
-        }`).then(x => x.items);
+        }`).then((x) => x.items);
 
 export const getThreadContent = (friendlyUrlPath, siteKey) =>
 	request(gql`
@@ -347,7 +348,7 @@ export const hasListPermissions = (permission, siteKey) =>
 				messageBoardThreads(siteKey: ${siteKey}) {
 					actions
 				}
-			}`).then(data => Boolean(data.actions[permission]));
+			}`).then((data) => Boolean(data.actions[permission]));
 
 export const getThreads = ({
 	creatorId = '',
@@ -434,7 +435,7 @@ export const getSection = (title, siteKey) => {
 				}
 			}
 		}
-	`).then(data => data.items[0]);
+	`).then((data) => data.items[0]);
 };
 
 export const getRankedThreads = (
@@ -511,7 +512,7 @@ export const getRelatedThreads = (search = '', siteKey) =>
             }
         }`);
 
-export const getSections = siteKey =>
+export const getSections = (siteKey) =>
 	request(gql`
 		query {
 			messageBoardSections(siteKey: ${siteKey}, sort: "title:desc") {
@@ -610,28 +611,28 @@ export const updateThread = (
             }
         }`);
 
-export const subscribe = messageBoardThreadId =>
+export const subscribe = (messageBoardThreadId) =>
 	request(gql`
         mutation {
             updateMessageBoardThreadSubscribe(messageBoardThreadId: ${messageBoardThreadId})
         }
     `);
 
-export const unsubscribe = messageBoardThreadId =>
+export const unsubscribe = (messageBoardThreadId) =>
 	request(gql`
         mutation {
             updateMessageBoardThreadUnsubscribe(messageBoardThreadId: ${messageBoardThreadId})
         }
     `);
 
-export const subscribeSection = messageBoardSectionId =>
+export const subscribeSection = (messageBoardSectionId) =>
 	request(gql`
         mutation {
             updateMessageBoardSectionSubscribe(messageBoardSectionId: ${messageBoardSectionId})
         }
     `);
 
-export const unsubscribeSection = messageBoardSectionId =>
+export const unsubscribeSection = (messageBoardSectionId) =>
 	request(gql`
         mutation {
             updateMessageBoardSectionUnsubscribe(messageBoardSectionId: ${messageBoardSectionId})

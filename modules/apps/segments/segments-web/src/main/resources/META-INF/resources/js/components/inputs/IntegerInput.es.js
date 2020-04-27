@@ -22,7 +22,7 @@ class IntegerInput extends React.Component {
 		value: propTypes.oneOfType([propTypes.string, propTypes.number]),
 	};
 
-	_handleIntegerChange = event => {
+	_handleIntegerChange = (event) => {
 		const value = parseInt(event.target.value, 10);
 
 		if (!isNaN(value)) {

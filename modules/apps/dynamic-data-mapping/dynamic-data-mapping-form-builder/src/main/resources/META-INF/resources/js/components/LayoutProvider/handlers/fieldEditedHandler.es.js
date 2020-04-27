@@ -46,14 +46,14 @@ export const updatePages = (props, pages, previousFieldName, newField) => {
 		visitor.setPages(newPages);
 
 		newPages = visitor.mapFields(
-			field => {
+			(field) => {
 				if (parentFieldName === field.fieldName) {
 					const visitor = new PagesVisitor([{rows: field.rows}]);
 
-					const layout = visitor.mapColumns(column => {
+					const layout = visitor.mapColumns((column) => {
 						return {
 							...column,
-							fields: column.fields.map(fieldName => {
+							fields: column.fields.map((fieldName) => {
 								if (fieldName === previousFieldName) {
 									return newFieldName;
 								}

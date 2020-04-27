@@ -87,7 +87,7 @@ const AppContent = ({
 	);
 };
 
-const App = props => {
+const App = (props) => {
 	const {
 		config,
 		contentType,

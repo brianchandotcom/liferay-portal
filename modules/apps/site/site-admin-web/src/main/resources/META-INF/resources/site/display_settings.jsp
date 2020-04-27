@@ -213,7 +213,7 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 	if (languageSelectInput) {
 		var nameInput = Liferay.component('<portlet:namespace />name');
 
-		languageSelectInput.on('change', function(event) {
+		languageSelectInput.on('change', function (event) {
 			var select = event.currentTarget.getDOMNode();
 
 			var selectedOption = select.options[select.selectedIndex];

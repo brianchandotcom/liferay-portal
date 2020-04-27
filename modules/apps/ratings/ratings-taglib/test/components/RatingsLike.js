@@ -28,7 +28,8 @@ const baseProps = {
 	url: 'http://url',
 };
 
-const renderComponent = props => render(<Ratings {...baseProps} {...props} />);
+const renderComponent = (props) =>
+	render(<Ratings {...baseProps} {...props} />);
 
 describe('RatingsLike', () => {
 	afterEach(cleanup);

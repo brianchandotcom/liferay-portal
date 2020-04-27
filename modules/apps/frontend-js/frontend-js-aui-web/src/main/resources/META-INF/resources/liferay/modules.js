@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var LiferayAUI = Liferay.AUI;
 
 	var COMBINE = LiferayAUI.getCombine();
@@ -29,7 +29,7 @@
 		typeof INPUT_EL.selectionStart === 'number' &&
 		typeof INPUT_EL.selectionEnd === 'number';
 
-	var testHistory = function(A) {
+	var testHistory = function (A) {
 		var WIN = A.config.win;
 
 		var HISTORY = WIN.history;

@@ -22,7 +22,7 @@ export default () => {
 			document.body,
 			'click',
 			'[data-dismiss="liferay-alert"]',
-			event => {
+			(event) => {
 				event.preventDefault();
 
 				const container = dom.closest(event.delegateTarget, '.alert');

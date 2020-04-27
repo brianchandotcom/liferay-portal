@@ -115,7 +115,7 @@ if (portletTitleBasedNavigation) {
 	);
 
 	if (selectKBObjectButton) {
-		selectKBObjectButton.addEventListener('click', function(event) {
+		selectKBObjectButton.addEventListener('click', function (event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -141,7 +141,7 @@ if (portletTitleBasedNavigation) {
 
 					uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>',
 				},
-				function(event) {
+				function (event) {
 					Liferay.Util.setFormValues(document.<portlet:namespace />fm, {
 						parentPriority: event.priority,
 						parentResourceClassNameId: event.resourceclassnameid,

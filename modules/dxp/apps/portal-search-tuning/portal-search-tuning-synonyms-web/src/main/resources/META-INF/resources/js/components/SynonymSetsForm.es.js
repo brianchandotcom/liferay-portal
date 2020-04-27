@@ -26,7 +26,7 @@ function filterDuplicates(list) {
 	return cleanedList.filter(
 		(item, index) =>
 			cleanedList.findIndex(
-				newVal =>
+				(newVal) =>
 					newVal.label.toLowerCase() === item.label.toLowerCase() &&
 					newVal.value.toLowerCase() === item.value.toLowerCase()
 			) === index
@@ -73,7 +73,7 @@ class SynonymSetsForm extends Component {
 		super(props);
 
 		if (props.synonymSets.length > 0) {
-			props.synonymSets.split(',').forEach(synonym => {
+			props.synonymSets.split(',').forEach((synonym) => {
 				this.state.synonyms.push({
 					label: synonym,
 					value: synonym,
@@ -86,17 +86,17 @@ class SynonymSetsForm extends Component {
 		window.history.back();
 	};
 
-	_handleInputChange = value => {
+	_handleInputChange = (value) => {
 		this.setState({inputValue: value});
 	};
 
-	_handleSubmit = event => {
+	_handleSubmit = (event) => {
 		event.preventDefault();
 
 		const form = document.forms[this.props.formName];
 
 		const synonymSetsString = this.state.synonyms.map(
-			synonym => synonym.value
+			(synonym) => synonym.value
 		);
 
 		form.elements[this.props.inputName].value = synonymSetsString;
@@ -104,7 +104,7 @@ class SynonymSetsForm extends Component {
 		submitForm(form);
 	};
 
-	_handleItemsChange = values => {
+	_handleItemsChange = (values) => {
 		this.setState({
 			synonyms: filterDuplicates(values),
 		});

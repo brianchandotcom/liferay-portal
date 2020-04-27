@@ -21,7 +21,7 @@ const getLocaleDateFormat = (format = 'L') => {
 	return moment.localeData().longDateFormat(format);
 };
 
-const getMaskByDateFormat = format => {
+const getMaskByDateFormat = (format) => {
 	const mask = [];
 
 	for (let i = 0; i < format.length; i++) {

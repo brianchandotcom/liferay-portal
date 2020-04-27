@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-pagination',
-	A => {
+	(A) => {
 		var ANode = A.Node;
 		var Lang = A.Lang;
 

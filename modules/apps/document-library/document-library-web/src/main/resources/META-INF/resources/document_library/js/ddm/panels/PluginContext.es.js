@@ -24,7 +24,7 @@ const PluginContext = React.createContext({});
  * Convenience function that returns a component that provides the passed
  * `value` as context.
  */
-export const Component = value => ({children}) => (
+export const Component = (value) => ({children}) => (
 	<PluginContext.Provider value={value}>{children}</PluginContext.Provider>
 );
 

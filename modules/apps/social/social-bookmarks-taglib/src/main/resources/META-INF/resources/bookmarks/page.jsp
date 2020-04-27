@@ -131,10 +131,10 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 	</liferay-util:html-bottom>
 
 	<aui:script sandbox="<%= true %>">
-		Liferay.componentReady('<%= dropdownMenuComponentId %>').then(function(
+		Liferay.componentReady('<%= dropdownMenuComponentId %>').then(function (
 			dropdownMenu
 		) {
-			dropdownMenu.on(['itemClicked'], function(event) {
+			dropdownMenu.on(['itemClicked'], function (event) {
 				event.preventDefault();
 
 				var data = event.data.item.data;

@@ -128,11 +128,11 @@ portletURL.setParameter("eventName", eventName);
 
 	var fieldSubtypeForms = structureFormContainer.all('form');
 
-	var toggleDisabledFormFields = function(form, state) {
+	var toggleDisabledFormFields = function (form, state) {
 		Util.toggleDisabled(form.all('input, select, textarea'), state);
 	};
 
-	var submitForm = function(applyButton) {
+	var submitForm = function (applyButton) {
 		var result = Util.getAttributes(applyButton, 'data-');
 
 		var fieldsnamespace = result.fieldsnamespace;
@@ -149,10 +149,10 @@ portletURL.setParameter("eventName", eventName);
 			body: new FormData(form),
 			method: 'POST',
 		})
-			.then(function(response) {
+			.then(function (response) {
 				return response.json();
 			})
-			.then(function(response) {
+			.then(function (response) {
 				var message = A.one('#<portlet:namespace />message');
 
 				if (response.success) {
@@ -178,7 +178,7 @@ portletURL.setParameter("eventName", eventName);
 
 	structureFormContainer.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			submitForm(event.currentTarget);
 		},
 		'.selector-button'
@@ -186,7 +186,7 @@ portletURL.setParameter("eventName", eventName);
 
 	structureFormContainer.delegate(
 		'submit',
-		function(event) {
+		function (event) {
 			var buttonId = event.currentTarget
 				.one('#<portlet:namespace />buttonId')
 				.attr('value');
@@ -198,7 +198,7 @@ portletURL.setParameter("eventName", eventName);
 
 	A.one('#<portlet:namespace />classTypeFieldsSearchContainer').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var target = event.currentTarget;
 
 			var buttonId = target.attr('data-button-id');

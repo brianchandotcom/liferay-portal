@@ -47,7 +47,7 @@ export default function FragmentCard({
 	type,
 }) {
 	const dispatch = useDispatch();
-	const store = useSelector(state => state);
+	const store = useSelector((state) => state);
 	const selectItem = useSelectItem();
 
 	const dragRef = useItemDrag({

@@ -27,7 +27,7 @@ axios.defaults.params = {
 	['p_auth']: Liferay.authToken,
 };
 
-axios.defaults.paramsSerializer = params =>
+axios.defaults.paramsSerializer = (params) =>
 	qs.stringify(params, {arrayFormat: 'repeat'});
 
 const adminClient = axios.create({
@@ -38,7 +38,7 @@ const metricsClient = axios.create({
 	baseURL: '/o/portal-workflow-metrics/v1.0',
 });
 
-const getClient = admin => {
+const getClient = (admin) => {
 	return admin ? adminClient : metricsClient;
 };
 

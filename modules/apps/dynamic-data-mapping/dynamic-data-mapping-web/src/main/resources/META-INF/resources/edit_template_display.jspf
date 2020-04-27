@@ -176,7 +176,7 @@ if (Validator.isNotNull(scriptContent)) {
 				NAME: 'searchpalette',
 
 				prototype: {
-					initializer: function() {
+					initializer: function () {
 						var instance = this;
 
 						instance._bindUIACBase();
@@ -185,10 +185,10 @@ if (Validator.isNotNull(scriptContent)) {
 				},
 			});
 
-			var getItems = function() {
+			var getItems = function () {
 				var results = [];
 
-				paletteItems.each(function(item, index) {
+				paletteItems.each(function (item, index) {
 					results.push({
 						data: item.text().trim(),
 						node: item.ancestor(),
@@ -198,7 +198,7 @@ if (Validator.isNotNull(scriptContent)) {
 				return results;
 			};
 
-			var getNoResultsNode = function() {
+			var getNoResultsNode = function () {
 				if (!noResultsNode) {
 					noResultsNode = A.Node.create(
 						'<div class="alert"><%= UnicodeLanguageUtil.get(request, "there-are-no-results") %></div>'
@@ -222,18 +222,18 @@ if (Validator.isNotNull(scriptContent)) {
 				source: getItems(),
 			});
 
-			paletteSearch.on('results', function(event) {
-				paletteItems.each(function(item, index) {
+			paletteSearch.on('results', function (event) {
+				paletteItems.each(function (item, index) {
 					item.ancestor().addClass('hide');
 				});
 
-				event.results.forEach(function(item, index) {
+				event.results.forEach(function (item, index) {
 					item.raw.node.removeClass('hide');
 				});
 
 				var foundVisibleSection;
 
-				paletteSectionsNode.each(function(item, index) {
+				paletteSectionsNode.each(function (item, index) {
 					var visibleItem = item.one('.palette-item-container:not(.hide)');
 
 					if (visibleItem) {
@@ -270,7 +270,7 @@ if (Validator.isNotNull(scriptContent)) {
 			var cursorPos;
 			var processed;
 
-			AObject.each(fragments, function(item, index) {
+			AObject.each(fragments, function (item, index) {
 				if (processed) {
 					cursorPos = editor.getCursorPosition();
 				}
@@ -363,7 +363,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 	A.on(
 		'domready',
-		function(event) {
+		function (event) {
 			richEditor = new A.AceEditor({
 				boundingBox: editorNode,
 				height: 400,
@@ -383,11 +383,11 @@ if (Validator.isNotNull(scriptContent)) {
 				setEditorContent(editorContentElement.val());
 			}
 
-			Liferay.on('<portlet:namespace />saveTemplate', function(event) {
+			Liferay.on('<portlet:namespace />saveTemplate', function (event) {
 				editorContentElement.val(getEditorContent());
 			});
 
-			selectLanguageNode.on('change', function(event) {
+			selectLanguageNode.on('change', function (event) {
 				Liferay.fire('<portlet:namespace />refreshEditor');
 			});
 
@@ -426,7 +426,7 @@ if (Validator.isNotNull(scriptContent)) {
 		'#<portlet:namespace />richEditor'
 	);
 
-	Liferay.on('<portlet:namespace />refreshEditor', function(event) {
+	Liferay.on('<portlet:namespace />refreshEditor', function (event) {
 		var form = A.one('#<portlet:namespace />fm');
 
 		<portlet:renderURL var="refreshTemplateURL">
@@ -435,13 +435,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 		form.attr('action', '<%= refreshTemplateURL %>');
 
-		if (
-			richEditor
-				.getEditor()
-				.getSession()
-				.getUndoManager()
-				.hasUndo()
-		) {
+		if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
 			Liferay.fire('<portlet:namespace />saveTemplate');
 		}
 		<c:if test="<%= template == null %>">

@@ -27,7 +27,7 @@ import {
 	RESPONSES,
 } from '../../constants.es';
 
-const BODY = item => ({
+const BODY = (item) => ({
 	...item,
 	name: item.name.en_US,
 });

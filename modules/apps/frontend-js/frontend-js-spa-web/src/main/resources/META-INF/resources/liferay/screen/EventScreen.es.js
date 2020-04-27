@@ -227,7 +227,7 @@ class EventScreen extends HtmlScreen {
 	 */
 
 	load(path) {
-		return super.load(path).then(content => {
+		return super.load(path).then((content) => {
 			const redirectPath = this.beforeUpdateHistoryPath(path);
 
 			this.checkRedirectPath(redirectPath);
@@ -257,13 +257,13 @@ class EventScreen extends HtmlScreen {
 			.concat(
 				HtmlScreen.selectors.stylesPermanent
 					.split(',')
-					.map(item => `${item}[href*="${currentLanguageId}"]`)
+					.map((item) => `${item}[href*="${currentLanguageId}"]`)
 			)
 			.join();
 
 		HtmlScreen.selectors.stylesPermanent = HtmlScreen.selectors.stylesPermanent
 			.split(',')
-			.map(item => `${item}[href*="${languageId}"]`)
+			.map((item) => `${item}[href*="${languageId}"]`)
 			.join();
 	}
 
@@ -304,7 +304,7 @@ class EventScreen extends HtmlScreen {
 
 	runFaviconInElement_(elements) {
 		return super.runFaviconInElement_(elements).then(() => {
-			elements.forEach(element => {
+			elements.forEach((element) => {
 				if (!element.type && element.href.indexOf('.ico') !== -1) {
 					element.type = 'image/x-icon';
 				}

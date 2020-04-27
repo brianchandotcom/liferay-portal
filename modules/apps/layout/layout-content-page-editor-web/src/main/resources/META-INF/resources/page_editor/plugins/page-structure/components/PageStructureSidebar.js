@@ -30,9 +30,9 @@ import StructureTreeNode from './StructureTreeNode';
 
 export default function PageStructureSidebar() {
 	const activeItemId = useActiveItemId();
-	const layoutData = useSelector(state => state.layoutData);
-	const masterLayoutData = useSelector(state => state.masterLayoutData);
-	const state = useSelector(state => state);
+	const layoutData = useSelector((state) => state.layoutData);
+	const masterLayoutData = useSelector((state) => state.masterLayoutData);
+	const state = useSelector((state) => state);
 
 	const isMasterPage = config.pageType === PAGE_TYPES.master;
 
@@ -129,7 +129,7 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 				EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 			] || {};
 
-		Object.keys(fragmentChildren).forEach(editableId => {
+		Object.keys(fragmentChildren).forEach((editableId) => {
 			const childId = `${item.config.fragmentEntryLinkId}-${editableId}`;
 
 			children.push({
@@ -145,7 +145,7 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 		});
 	}
 	else {
-		item.children.forEach(childId => {
+		item.children.forEach((childId) => {
 			const childItem = items[childId];
 
 			if (

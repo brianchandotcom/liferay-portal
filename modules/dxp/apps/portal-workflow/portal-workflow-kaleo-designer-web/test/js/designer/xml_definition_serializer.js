@@ -24,7 +24,7 @@ const XML_NAMESPACE = {
 describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 	let serializeDefinition;
 
-	beforeEach(done => {
+	beforeEach((done) => {
 		require('../../../src/main/resources/META-INF/resources/designer/js/xml_definition_serializer');
 		require('../../../src/main/resources/META-INF/resources/designer/js/utils');
 		require('../../../src/main/resources/META-INF/resources/designer/js/xml_util');
@@ -32,11 +32,11 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 
 		AUI().use(
 			['liferay-kaleo-designer-xml-util', 'liferay-kaleo-designer-utils'],
-			A => {
+			(A) => {
 				// Stub for "aui-component", which refuses to load in test env.
 				A.Component = {
 					create({ATTRS, prototype, ...properties}) {
-						const constructor = function() {};
+						const constructor = function () {};
 
 						Object.assign(
 							constructor.prototype,

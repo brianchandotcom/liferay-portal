@@ -43,8 +43,8 @@ function BulkStatus({
 			fetch(
 				`${Liferay.ThemeDisplay.getPortalURL()}${pathModule}${bulkStatusUrl}`
 			)
-				.then(response => response.json())
-				.then(response => {
+				.then((response) => response.json())
+				.then((response) => {
 					if (response.actionInProgress) {
 						dispatch({type: 'check'});
 					}

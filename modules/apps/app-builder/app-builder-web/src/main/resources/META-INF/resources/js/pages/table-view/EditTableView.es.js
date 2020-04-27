@@ -42,7 +42,7 @@ const EditTableView = withRouter(({history}) => {
 		title = Liferay.Language.get('edit-table-view');
 	}
 
-	const onError = error => {
+	const onError = (error) => {
 		const {title = ''} = error;
 		errorToast(`${title}.`);
 	};
@@ -54,7 +54,7 @@ const EditTableView = withRouter(({history}) => {
 		history.goBack();
 	};
 
-	const onInput = event => {
+	const onInput = (event) => {
 		const name = event.target.value;
 
 		dispatch({payload: {name}, type: UPDATE_DATA_LIST_VIEW_NAME});
@@ -88,7 +88,7 @@ const EditTableView = withRouter(({history}) => {
 				dataListView
 			)
 				.then(onSuccess)
-				.catch(error => {
+				.catch((error) => {
 					onError(error);
 				});
 		}
@@ -98,7 +98,7 @@ const EditTableView = withRouter(({history}) => {
 				dataListView
 			)
 				.then(onSuccess)
-				.catch(error => {
+				.catch((error) => {
 					onError(error);
 				});
 		}
@@ -120,9 +120,9 @@ const EditTableView = withRouter(({history}) => {
 		});
 	};
 
-	const onCloseSidebar = closed => setSidebarClosed(closed);
+	const onCloseSidebar = (closed) => setSidebarClosed(closed);
 
-	const onRemoveFieldName = fieldName => {
+	const onRemoveFieldName = (fieldName) => {
 		dispatch({payload: {fieldName}, type: REMOVE_DATA_LIST_VIEW_FIELD});
 	};
 
@@ -134,7 +134,7 @@ const EditTableView = withRouter(({history}) => {
 				<DragLayer />
 
 				<form
-					onSubmit={event => {
+					onSubmit={(event) => {
 						event.preventDefault();
 
 						handleSubmit();
@@ -181,7 +181,7 @@ const EditTableView = withRouter(({history}) => {
 				>
 					<div className="container table-view-container">
 						<DropZone
-							fields={fieldNames.map(fieldName => ({
+							fields={fieldNames.map((fieldName) => ({
 								...dataDefinitionFields.find(
 									({name}) => name === fieldName
 								),
@@ -196,7 +196,7 @@ const EditTableView = withRouter(({history}) => {
 	);
 });
 
-export default props => {
+export default (props) => {
 	return (
 		<EditTableViewContextProvider>
 			<EditTableView {...props} />

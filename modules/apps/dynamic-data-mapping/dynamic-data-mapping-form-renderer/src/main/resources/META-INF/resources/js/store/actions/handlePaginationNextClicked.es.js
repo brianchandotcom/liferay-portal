@@ -18,7 +18,7 @@ import {PagesVisitor} from '../../util/visitors.es';
 export default (evaluatorContext, dispatch) => {
 	const {activePage, formId, pages} = evaluatorContext;
 
-	return evaluate(null, evaluatorContext).then(evaluatedPages => {
+	return evaluate(null, evaluatorContext).then((evaluatedPages) => {
 		let validPage = true;
 		const visitor = new PagesVisitor(evaluatedPages);
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-const identity = value => value;
+const identity = (value) => value;
 
 class PagesVisitor {
 	constructor(pages) {
@@ -24,13 +24,13 @@ class PagesVisitor {
 	}
 
 	containsField(fieldName) {
-		return !!this.findField(field => field.fieldName === fieldName);
+		return !!this.findField((field) => field.fieldName === fieldName);
 	}
 
 	findField(condition) {
 		let conditionField;
 
-		this.visitFields(field => {
+		this.visitFields((field) => {
 			if (condition(field)) {
 				conditionField = field;
 
@@ -63,11 +63,11 @@ class PagesVisitor {
 				}
 
 				if (includeNestedFields && mappedField.nestedFields) {
-					const mapNestedFields = field => {
+					const mapNestedFields = (field) => {
 						return {
 							...field,
 							nestedFields: (field.nestedFields || []).map(
-								nestedField => {
+								(nestedField) => {
 									let mappedNestedField = mapper(
 										nestedField,
 										fieldIndex,
@@ -109,10 +109,10 @@ class PagesVisitor {
 	}
 
 	visitFields(fn) {
-		const isFieldNode = node =>
+		const isFieldNode = (node) =>
 			Object.prototype.hasOwnProperty.call(node, 'fieldName');
 
-		const getChildren = node => {
+		const getChildren = (node) => {
 			if (isFieldNode(node)) {
 				return node.nestedFields || [];
 			}
@@ -186,12 +186,12 @@ class RulesVisitor {
 	}
 
 	containsField(fieldName) {
-		return this._rules.some(rule => {
+		return this._rules.some((rule) => {
 			const actionsResult = rule.actions.some(({target}) => {
 				return target === fieldName;
 			});
 
-			const conditionsResult = rule.conditions.some(condition => {
+			const conditionsResult = rule.conditions.some((condition) => {
 				return condition.operands.some(({type, value}) => {
 					return type === 'field' && value === fieldName;
 				});
@@ -202,7 +202,7 @@ class RulesVisitor {
 	}
 
 	containsFieldExpression(fieldName) {
-		return this._rules.some(rule => {
+		return this._rules.some((rule) => {
 			return rule.actions.some(({action, expression}) => {
 				return action === 'calculate' && expression.includes(fieldName);
 			});
@@ -214,7 +214,7 @@ class RulesVisitor {
 	}
 
 	mapActions(actionMapper) {
-		return this._rules.map(rule => {
+		return this._rules.map((rule) => {
 			return {
 				...rule,
 				actions: rule.actions.map(actionMapper),
@@ -223,7 +223,7 @@ class RulesVisitor {
 	}
 
 	mapConditions(conditionMapper) {
-		return this._rules.map(rule => {
+		return this._rules.map((rule) => {
 			return {
 				...rule,
 				conditions: rule.conditions.map(conditionMapper),

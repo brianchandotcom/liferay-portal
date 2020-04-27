@@ -41,7 +41,7 @@ export default class LocalizedInput extends React.Component {
 
 		const {availableLanguages, initialLanguageId, initialValues} = props;
 		this.state = {
-			availableLanguages: Object.keys(availableLanguages).map(key => {
+			availableLanguages: Object.keys(availableLanguages).map((key) => {
 				const value = availableLanguages[key];
 
 				return {
@@ -56,8 +56,8 @@ export default class LocalizedInput extends React.Component {
 		};
 	}
 
-	_handleLanguageChange = langKey => {
-		this.setState(prevState => ({
+	_handleLanguageChange = (langKey) => {
+		this.setState((prevState) => ({
 			currentLang: langKey,
 			currentValue: prevState.values[langKey] || '',
 		}));
@@ -67,7 +67,7 @@ export default class LocalizedInput extends React.Component {
 		this.props.onChange(event, this.state.values, hasError);
 	};
 
-	_handleInputChange = event => {
+	_handleInputChange = (event) => {
 		event.persist();
 
 		let hasError = false;
@@ -75,7 +75,7 @@ export default class LocalizedInput extends React.Component {
 		const value = event.target.value;
 
 		this.setState(
-			prevState => {
+			(prevState) => {
 				const newValues = {
 					...prevState.values,
 					[prevState.currentLang]: value,
@@ -85,7 +85,7 @@ export default class LocalizedInput extends React.Component {
 
 				return {
 					availableLanguages: prevState.availableLanguages.map(
-						lang => {
+						(lang) => {
 							let newLang = lang;
 							if (lang.key === prevState.currentLang) {
 								newLang = {

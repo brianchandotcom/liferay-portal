@@ -19,7 +19,7 @@
  *                      - imageData: The ImageData to transform
  *                      - contrastValue: The contrast value to apply
  */
-onmessage = function(event) {
+onmessage = function (event) {
 	var contrastValue = event.data.contrastValue;
 	var imageData = event.data.imageData;
 

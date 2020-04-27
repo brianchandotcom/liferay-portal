@@ -44,7 +44,7 @@ const CustomTimeRangeForm = ({
 	const dateMask = getMaskByDateFormat(dateFormat);
 
 	const activeCustomFilter = () => {
-		items.forEach(item => {
+		items.forEach((item) => {
 			item.active = item.key === 'custom';
 		});
 	};
@@ -57,7 +57,7 @@ const CustomTimeRangeForm = ({
 		setFormVisible(false);
 	};
 
-	const onChange = setter => ({target: {value}}) => {
+	const onChange = (setter) => ({target: {value}}) => {
 		setter(value);
 	};
 

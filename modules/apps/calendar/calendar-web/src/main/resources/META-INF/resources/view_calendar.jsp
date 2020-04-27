@@ -28,7 +28,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 %>
 
 <aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
-	Liferay.component('<portlet:namespace />calendarContainer', function() {
+	Liferay.component('<portlet:namespace />calendarContainer', function () {
 		var calendarContainer = new Liferay.CalendarContainer({
 			groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
 
@@ -39,7 +39,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			namespace: '<portlet:namespace />',
 		});
 
-		var destroyInstance = function(event) {
+		var destroyInstance = function (event) {
 			if (event.portletId === '<%= portletDisplay.getId() %>') {
 				calendarContainer.destroy();
 
@@ -54,7 +54,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 		return calendarContainer;
 	});
 
-	Liferay.component('<portlet:namespace />remoteServices', function() {
+	Liferay.component('<portlet:namespace />remoteServices', function () {
 		var remoteServices = new Liferay.CalendarRemoteServices({
 			baseActionURL:
 				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
@@ -65,7 +65,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			userId: themeDisplay.getUserId(),
 		});
 
-		var destroyInstance = function(event) {
+		var destroyInstance = function (event) {
 			if (event.portletId === '<%= portletDisplay.getId() %>') {
 				remoteServices.destroy();
 
@@ -219,7 +219,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 		'<portlet:namespace />calendarContainer'
 	);
 
-	var syncCalendarsMap = function() {
+	var syncCalendarsMap = function () {
 		var calendarLists = [];
 
 		<c:if test="<%= themeDisplay.isSignedIn() || (groupCalendarResource != null) %>">
@@ -245,7 +245,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 		window.<portlet:namespace />myCalendarList = new Liferay.CalendarList({
 			after: {
 				calendarsChange: syncCalendarsMap,
-				'scheduler-calendar:visibleChange': function(event) {
+				'scheduler-calendar:visibleChange': function (event) {
 					syncCalendarsMap();
 
 					<portlet:namespace />refreshVisibleCalendarRenderingRules();
@@ -274,7 +274,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
 		window.<portlet:namespace />otherCalendarList = new Liferay.CalendarList({
 			after: {
-				calendarsChange: function(event) {
+				calendarsChange: function (event) {
 					syncCalendarsMap();
 
 					<portlet:namespace />scheduler.load();
@@ -286,7 +286,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 						calendarIds.join()
 					);
 				},
-				'scheduler-calendar:visibleChange': function(event) {
+				'scheduler-calendar:visibleChange': function (event) {
 					syncCalendarsMap();
 
 					<portlet:namespace />refreshVisibleCalendarRenderingRules();
@@ -309,7 +309,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 		window.<portlet:namespace />siteCalendarList = new Liferay.CalendarList({
 			after: {
 				calendarsChange: syncCalendarsMap,
-				'scheduler-calendar:visibleChange': function(event) {
+				'scheduler-calendar:visibleChange': function (event) {
 					syncCalendarsMap();
 
 					<portlet:namespace />refreshVisibleCalendarRenderingRules();
@@ -335,9 +335,9 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 	syncCalendarsMap();
 
-	A.each(calendarContainer.get('availableCalendars'), function(item, index) {
+	A.each(calendarContainer.get('availableCalendars'), function (item, index) {
 		item.on({
-			visibleChange: function(event) {
+			visibleChange: function (event) {
 				var instance = this;
 
 				var calendar = event.currentTarget;
@@ -354,7 +354,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 </aui:script>
 
 <aui:script use="aui-base,aui-datatype,liferay-calendar-session-listener">
-	window.<portlet:namespace />refreshSchedulerEventTooltipTitle = function(
+	window.<portlet:namespace />refreshSchedulerEventTooltipTitle = function (
 		schedulerEvent
 	) {
 		schedulerEvent
@@ -365,7 +365,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			);
 	};
 
-	<portlet:namespace />scheduler.after(['scheduler-events:load'], function(
+	<portlet:namespace />scheduler.after(['scheduler-events:load'], function (
 		event
 	) {
 		event.currentTarget.eachEvent(
@@ -386,7 +386,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 </aui:script>
 
 <aui:script>
-	var destroyMenus = function(event) {
+	var destroyMenus = function (event) {
 		if (window.<portlet:namespace />calendarListsMenu) {
 			window.<portlet:namespace />calendarListsMenu.destroy();
 		}

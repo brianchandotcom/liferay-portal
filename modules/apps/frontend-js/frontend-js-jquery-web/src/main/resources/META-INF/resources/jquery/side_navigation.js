@@ -12,7 +12,7 @@
  * details.
  */
 
-+(function($) {
++(function ($) {
 	var doc = $(document);
 
 	var listenerAdded = false;
@@ -20,11 +20,11 @@
 	// Make sure we only add one resize listener to the page,
 	// no matter how many components we have
 
-	var addResizeListener = function() {
+	var addResizeListener = function () {
 		if (!listenerAdded) {
 			$(window).on(
 				'resize',
-				debounce(function() {
+				debounce(function () {
 					doc.trigger('screenChange.lexicon.sidenav');
 				}, 150)
 			);
@@ -33,15 +33,15 @@
 		}
 	};
 
-	var debounce = function(fn, delay) {
+	var debounce = function (fn, delay) {
 		var id;
 
-		return function() {
+		return function () {
 			var instance = this;
 
 			var args = arguments;
 
-			var later = function() {
+			var later = function () {
 				id = null;
 
 				fn.apply(instance, args);
@@ -53,7 +53,7 @@
 		};
 	};
 
-	var getBreakpointRegion = function() {
+	var getBreakpointRegion = function () {
 		var screenXs = 480;
 		var screenSm = 768;
 		var screenMd = 992;
@@ -81,10 +81,10 @@
 		return region;
 	};
 
-	var guid = (function() {
+	var guid = (function () {
 		var counter = 0;
 
-		return function(toggler, ns) {
+		return function (toggler, ns) {
 			var strId = toggler.attr('id');
 
 			if (!strId) {
@@ -97,11 +97,11 @@
 		};
 	})();
 
-	var toInt = function(str) {
+	var toInt = function (str) {
 		return parseInt(str, 10) || 0;
 	};
 
-	var SideNavigation = function(toggler, options) {
+	var SideNavigation = function (toggler, options) {
 		this.init(toggler, options);
 	};
 
@@ -215,7 +215,7 @@
 						'</div>'
 				);
 
-				urlLoaded = $.ajax(url).done(function(response) {
+				urlLoaded = $.ajax(url).done(function (response) {
 					sidebarBody.append(response);
 
 					eventTarget.trigger('urlLoaded.lexicon.sidenav');
@@ -249,7 +249,7 @@
 				doc.on(
 					'click.close.lexicon.sidenav',
 					closeButtonSelector,
-					function(event) {
+					function (event) {
 						event.preventDefault();
 
 						instance.toggle();
@@ -266,7 +266,7 @@
 
 			var el = instance.toggler;
 
-			el.on('click.lexicon.sidenav', function() {
+			el.on('click.lexicon.sidenav', function () {
 				instance.toggle();
 			});
 		},
@@ -284,7 +284,7 @@
 			if (!doc.data(dataTogglerSelector)) {
 				doc.data(dataTogglerSelector, 'true');
 
-				doc.on('click.lexicon.sidenav', togglerSelector, function(
+				doc.on('click.lexicon.sidenav', togglerSelector, function (
 					event
 				) {
 					instance.toggle();
@@ -306,7 +306,7 @@
 
 			var screenStartDesktop = instance._setScreenSize();
 
-			doc.on('screenChange.lexicon.sidenav', function() {
+			doc.on('screenChange.lexicon.sidenav', function () {
 				var desktop = instance._setScreenSize();
 				var sidenavRight = instance._isSidenavRight();
 				var type = desktop ? options.type : options.typeMobile;
@@ -382,7 +382,7 @@
 
 			var transitionEnd = 'bsTransitionEnd';
 
-			var complete = function() {
+			var complete = function () {
 				el.removeClass('sidenav-transition');
 
 				if (fn) {
@@ -394,7 +394,7 @@
 				complete.call(instance);
 			}
 			else {
-				el.one(transitionEnd, function() {
+				el.one(transitionEnd, function () {
 					complete();
 				}).emulateTransitionEnd(SideNavigation.TRANSITION_DURATION);
 			}
@@ -591,7 +591,7 @@
 					type: 'closedStart.lexicon.sidenav',
 				});
 
-				instance._onSidenavTransitionEnd(content, function() {
+				instance._onSidenavTransitionEnd(content, function () {
 					sidenav.removeClass('sidenav-transition');
 					toggler.removeClass('sidenav-transition');
 
@@ -784,7 +784,7 @@
 			var url = options.url;
 
 			if (url) {
-				container.one('urlLoaded.lexicon.sidenav', function() {
+				container.one('urlLoaded.lexicon.sidenav', function () {
 					instance.setHeight();
 				});
 
@@ -872,7 +872,7 @@
 					type: 'openStart.lexicon.sidenav',
 				});
 
-				instance._onSidenavTransitionEnd(content, function() {
+				instance._onSidenavTransitionEnd(content, function () {
 					sidenav.removeClass('sidenav-transition');
 					toggler.removeClass('sidenav-transition');
 
@@ -936,7 +936,7 @@
 				});
 			}
 
-			instance._onSidenavTransitionEnd(container, function() {
+			instance._onSidenavTransitionEnd(container, function () {
 				var menu = container.find('.sidenav-menu').first();
 
 				if (container.hasClass('closed')) {
@@ -1023,7 +1023,7 @@
 
 	var old = $.fn.sideNavigation;
 
-	var initialize = function(toggler, options, selector) {
+	var initialize = function (toggler, options, selector) {
 		var data = toggler.data('lexicon.sidenav');
 
 		if (!data) {
@@ -1041,7 +1041,7 @@
 		return data;
 	};
 
-	var Plugin = function(options) {
+	var Plugin = function (options) {
 		var instance = this;
 
 		var selector = instance.selector;
@@ -1052,7 +1052,7 @@
 		var args = $.makeArray(arguments).slice(1);
 
 		if (methodCall) {
-			this.each(function() {
+			this.each(function () {
 				var $this = $(this);
 
 				var data = $this.data('lexicon.sidenav');
@@ -1092,7 +1092,7 @@
 			});
 		}
 		else {
-			this.each(function() {
+			this.each(function () {
 				initialize($(this), options, selector);
 			});
 		}
@@ -1100,7 +1100,7 @@
 		return retVal;
 	};
 
-	Plugin.noConflict = function() {
+	Plugin.noConflict = function () {
 		$.fn.sideNavigation = old;
 
 		return this;
@@ -1144,7 +1144,7 @@
 
 	$.fn.sideNavigation = Plugin;
 
-	$(function() {
+	$(function () {
 		var sidenav = $('[data-toggle="sidenav"]');
 
 		Plugin.call(sidenav);

@@ -26,7 +26,7 @@ export default function throttle(fn, interval) {
 	let timeout = null;
 	let last;
 
-	return function(...args) {
+	return function (...args) {
 		const context = this;
 		const now = Date.now();
 

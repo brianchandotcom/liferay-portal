@@ -34,7 +34,7 @@ class ItemDropdown extends Component {
 		show: false,
 	};
 
-	_handleDropdownAction = actionFn => event => {
+	_handleDropdownAction = (actionFn) => (event) => {
 		event.preventDefault();
 
 		actionFn(event);
@@ -42,7 +42,7 @@ class ItemDropdown extends Component {
 		this.setState({show: false});
 	};
 
-	_handleSetShow = value => {
+	_handleSetShow = (value) => {
 		this.setState({show: value});
 	};
 

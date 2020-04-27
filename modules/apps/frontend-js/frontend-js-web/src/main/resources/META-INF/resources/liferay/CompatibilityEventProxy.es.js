@@ -67,7 +67,7 @@ class CompatibilityEventProxy extends State {
 	 * @private
 	 */
 	emitCompatibleEvents_(eventName, event) {
-		this.eventTargets_.forEach(target => {
+		this.eventTargets_.forEach((target) => {
 			if (target.fire) {
 				const prefixedEventName = this.namespace
 					? this.namespace + ':' + eventName

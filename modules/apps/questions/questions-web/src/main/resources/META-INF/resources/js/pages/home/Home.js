@@ -26,7 +26,7 @@ export default () => {
 	const [sections, setSections] = useState([]);
 
 	useEffect(() => {
-		getSections(context.siteKey).then(sections =>
+		getSections(context.siteKey).then((sections) =>
 			setSections(sections.items || [])
 		);
 	}, [context.siteKey]);
@@ -41,7 +41,7 @@ export default () => {
 		<section className="questions-section questions-section-cards">
 			<div className="questions-container">
 				<div className="row">
-					{sections.map(section => (
+					{sections.map((section) => (
 						<div
 							className="c-mb-4 col-lg-4 col-md-6 col-xl-3"
 							key={section.id}

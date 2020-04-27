@@ -180,7 +180,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						{
 							label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
 							on: {
-								click: function(event) {
+								click: function (event) {
 									event.domEvent.preventDefault();
 
 									window.location.href = '<%= viewHistoryURL %>';
@@ -350,7 +350,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 			var types = container.all('.lfr-ddm-small-image-type');
 			var values = container.all('.lfr-ddm-small-image-value');
 
-			var selectSmallImageType = function(index) {
+			var selectSmallImageType = function (index) {
 				types.attr('checked', false);
 
 				types.item(index).attr('checked', true);
@@ -362,7 +362,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 			container.delegate(
 				'change',
-				function(event) {
+				function (event) {
 					var index = types.indexOf(event.currentTarget);
 
 					selectSmallImageType(index);
@@ -378,7 +378,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 				header:
 					'#<portlet:namespace />smallImageContainer .lfr-ddm-small-image-header',
 				on: {
-					animatingChange: function(event) {
+					animatingChange: function (event) {
 						var instance = this;
 
 						var expanded = !instance.get('expanded');
@@ -386,7 +386,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						A.one('#<portlet:namespace />smallImage').attr('checked', expanded);
 
 						if (expanded) {
-							types.each(function(item, index) {
+							types.each(function (item, index) {
 								if (item.get('checked')) {
 									values.item(index).attr('disabled', false);
 								}
@@ -421,7 +421,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						showAncestorScopes: true,
 						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
 					},
-					function(event) {
+					function (event) {
 						if (
 							document.<portlet:namespace />fm.<portlet:namespace />classPK
 								.value != event.ddmstructureid
@@ -439,7 +439,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 	<aui:button-row>
 		<aui:script>
-			Liferay.after('<portlet:namespace />saveTemplate', function() {
+			Liferay.after('<portlet:namespace />saveTemplate', function () {
 				submitForm(document.<portlet:namespace />fm);
 			});
 
@@ -464,7 +464,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 				Liferay.fire('<portlet:namespace />saveTemplate');
 			}
 
-			var onDestroyPortlet = function(event) {
+			var onDestroyPortlet = function (event) {
 				Liferay.detach('destroyPortlet', onDestroyPortlet);
 				Liferay.detach('<portlet:namespace />saveTemplate');
 			};

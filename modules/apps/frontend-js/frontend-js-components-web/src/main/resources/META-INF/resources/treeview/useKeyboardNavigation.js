@@ -59,7 +59,7 @@ export default function useKeyboardNavigation(nodeId) {
 	const {focusedNodeId} = state;
 
 	const handleKeyDown = useCallback(
-		event => {
+		(event) => {
 			const {keyCode} = event;
 
 			if (focusedNodeId === nodeId && HANDLED_KEY_CODES.has(keyCode)) {

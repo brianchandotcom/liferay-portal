@@ -81,7 +81,7 @@ function AddResultModal({
 			[`${namespace}keywords`]: searchQuery,
 			[`${namespace}size`]: delta,
 		}),
-		onNetworkStatusChange: status =>
+		onNetworkStatusChange: (status) =>
 			setResourceState({
 				error: status === 5,
 				loading: status < 4,
@@ -103,7 +103,7 @@ function AddResultModal({
 	function _deselectAll() {
 		setSelectedIds(
 			selectedIds.filter(
-				resultId => !_getCurrentResultIds().includes(resultId)
+				(resultId) => !_getCurrentResultIds().includes(resultId)
 			)
 		);
 	}
@@ -113,7 +113,7 @@ function AddResultModal({
 	 * @returns {Array} List of ids
 	 */
 	function _getCurrentResultIds() {
-		return resource.documents.map(result => result.id);
+		return resource.documents.map((result) => result.id);
 	}
 
 	/**
@@ -123,7 +123,7 @@ function AddResultModal({
 	 * @returns {Array} List of ids
 	 */
 	function _getCurrentResultSelectedIds() {
-		return selectedIds.filter(resultId =>
+		return selectedIds.filter((resultId) =>
 			_getCurrentResultIds().includes(resultId)
 		);
 	}
@@ -234,7 +234,7 @@ function AddResultModal({
 	function _handleSubmit(event) {
 		event.preventDefault();
 
-		onAddResultSubmit(selectedIds.map(id => dataMap[id]));
+		onAddResultSubmit(selectedIds.map((id) => dataMap[id]));
 
 		onClose();
 	}

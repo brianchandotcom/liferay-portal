@@ -29,7 +29,7 @@ export const addField = (
 		const visitor = new PagesVisitor(pages);
 
 		newPages = visitor.mapFields(
-			field => {
+			(field) => {
 				if (field.fieldName === parentFieldName) {
 					const nestedFields = field.nestedFields
 						? [...field.nestedFields, newField]

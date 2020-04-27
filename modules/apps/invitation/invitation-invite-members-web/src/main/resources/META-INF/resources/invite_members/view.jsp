@@ -36,7 +36,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 				'<portlet:namespace />inviteMembersButton'
 			);
 
-			<portlet:namespace />inviteMembersButton.addEventListener('click', function(
+			<portlet:namespace />inviteMembersButton.addEventListener('click', function (
 				event
 			) {
 				Liferay.Util.openWindow({

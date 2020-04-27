@@ -29,7 +29,7 @@ function isInputNode(node) {
  * @review
  */
 function isSubsetOf(superset) {
-	return subset => {
+	return (subset) => {
 		const subsetLength = subset.length;
 
 		for (let i = 0; i < subsetLength; i++) {

@@ -97,7 +97,7 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 	}
 
 	var tooltip = {
-		markerLabelFunction: function(
+		markerLabelFunction: function (
 			categoryItem,
 			valueItem,
 			itemIndex,
@@ -121,7 +121,7 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 		'#groupStatisticsChart<%= displayActivityCounterNameIndex %>'
 	);
 
-	var getContainerWidth = function(container) {
+	var getContainerWidth = function (container) {
 		return container.width() * 0.7;
 	};
 
@@ -155,7 +155,7 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 		width: containerWidth,
 	}).render(chartContainer);
 
-	Liferay.after(['portletMoved', 'liferaypanel:collapse'], function(event) {
+	Liferay.after(['portletMoved', 'liferaypanel:collapse'], function (event) {
 		var width = getContainerWidth(chartContainer);
 
 		if (

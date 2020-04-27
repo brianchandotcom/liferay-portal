@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-const hasErrors = errors => {
-	return Object.keys(errors).some(key => errors[key]);
+const hasErrors = (errors) => {
+	return Object.keys(errors).some((key) => errors[key]);
 };
 
 const validateDuration = (days, hours) => {
@@ -21,7 +21,7 @@ const validateDuration = (days, hours) => {
 	return '';
 };
 
-const validateHours = hours => {
+const validateHours = (hours) => {
 	const hoursRegex = /([01][0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?/;
 
 	if (hours && hours.trim().length && hours.match(hoursRegex)) {
@@ -31,7 +31,7 @@ const validateHours = hours => {
 	return Liferay.Language.get('value-must-be-an-hour-below');
 };
 
-const validateName = name => {
+const validateName = (name) => {
 	if (!name || !name.trim()) {
 		return Liferay.Language.get('a-name-is-required');
 	}
@@ -39,7 +39,7 @@ const validateName = name => {
 	return '';
 };
 
-const validateNodeKeys = nodeKeys => {
+const validateNodeKeys = (nodeKeys) => {
 	if (!nodeKeys || !nodeKeys.length) {
 		return Liferay.Language.get('at-least-one-parameter-is-required');
 	}

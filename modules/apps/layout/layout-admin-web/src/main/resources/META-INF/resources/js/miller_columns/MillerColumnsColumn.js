@@ -48,7 +48,7 @@ const MillerColumnsColumn = ({
 				monitor.isOver({shallow: true}) && isValidTarget(source, parent)
 			);
 		},
-		collect: monitor => ({
+		collect: (monitor) => ({
 			canDrop: !!monitor.canDrop(),
 		}),
 		drop(source) {

@@ -28,20 +28,20 @@ function LayoutFinder(props) {
 	const [loading, setLoading] = useState(false);
 	const [totalCount, setTotalCount] = useState(0);
 
-	const handleFormSubmit = useCallback(event => {
+	const handleFormSubmit = useCallback((event) => {
 		event.preventDefault();
 		event.stopPropagation();
 	}, []);
 
 	const [updatePageResults, cancelUpdatePageResults] = useDebounceCallback(
-		newKeywords => {
+		(newKeywords) => {
 			fetch(props.findLayoutsURL, {
 				body: objectToFormData({
 					[`${props.namespace}keywords`]: newKeywords,
 				}),
 				method: 'post',
 			})
-				.then(response => {
+				.then((response) => {
 					return response.ok
 						? response.json()
 						: {
@@ -49,7 +49,7 @@ function LayoutFinder(props) {
 								totalCount: 0,
 						  };
 				})
-				.then(response => {
+				.then((response) => {
 					setLoading(false);
 					setLayouts(response.layouts);
 					setTotalCount(response.totalCount);
@@ -59,7 +59,7 @@ function LayoutFinder(props) {
 	);
 
 	const handleOnChange = useCallback(
-		event => {
+		(event) => {
 			const newKeywords = event.target.value;
 
 			setKeywords(newKeywords);
@@ -136,16 +136,18 @@ function LayoutFinder(props) {
 									<>
 										{layout.path && layout.path.length > 0 && (
 											<ol className="breadcrumb">
-												{layout.path.map(layoutPath => (
-													<li
-														className="breadcrumb-item"
-														key={layoutPath}
-													>
-														<span className="breadcrumb-text-truncate">
-															{layoutPath}
-														</span>
-													</li>
-												))}
+												{layout.path.map(
+													(layoutPath) => (
+														<li
+															className="breadcrumb-item"
+															key={layoutPath}
+														>
+															<span className="breadcrumb-text-truncate">
+																{layoutPath}
+															</span>
+														</li>
+													)
+												)}
 											</ol>
 										)}
 

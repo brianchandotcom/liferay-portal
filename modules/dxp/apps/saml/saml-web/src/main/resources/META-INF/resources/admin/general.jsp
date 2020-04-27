@@ -103,7 +103,7 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 	Liferay.provide(
 		window,
 		'<portlet:namespace />showCertificateDialog',
-		function(uri) {
+		function (uri) {
 			var dialog = Liferay.Util.Window.getWindow({
 				id: '<portlet:namespace />certificateDialog',
 				title:
@@ -126,7 +126,7 @@ String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProvide
 	Liferay.provide(
 		window,
 		'<portlet:namespace />closeDialog',
-		function(dialogId, stateChange) {
+		function (dialogId, stateChange) {
 			var namespace = window.parent.namespace;
 			var dialog = Liferay.Util.getWindow(dialogId);
 			dialog.destroy();

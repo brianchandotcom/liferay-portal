@@ -58,7 +58,7 @@ const SelectTasksStep = ({setErrorToast, withoutUnassigned}) => {
 		setErrorToast(false);
 
 		return [
-			fetchTasks().catch(err => {
+			fetchTasks().catch((err) => {
 				setSelectTasks({selectAll: false, tasks: []});
 				setErrorToast(Liferay.Language.get('your-request-has-failed'));
 

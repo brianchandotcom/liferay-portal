@@ -54,7 +54,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 		signal: controller && controller.signal,
 		url: EVALUATOR_URL,
 	})
-		.then(newPages => {
+		.then((newPages) => {
 			const mergedPages = mergePages(
 				defaultLanguageId,
 				editingLanguageId,
@@ -65,7 +65,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 
 			callback(null, mergedPages);
 		})
-		.catch(error => callback(error));
+		.catch((error) => callback(error));
 }, 600);
 
 export const evaluate = (fieldName, evaluatorContext) => {
@@ -83,10 +83,10 @@ export const evaluate = (fieldName, evaluatorContext) => {
 export const mergeFieldOptions = (field, newField) => {
 	let newValue = {...newField.value};
 
-	Object.keys(newValue).forEach(languageId => {
+	Object.keys(newValue).forEach((languageId) => {
 		newValue = {
 			...newValue,
-			[languageId]: newValue[languageId].map(option => {
+			[languageId]: newValue[languageId].map((option) => {
 				const existingOption =
 					field.value &&
 					field.value[languageId] &&
@@ -116,7 +116,7 @@ export const mergePages = (
 	const sourcePagesVisitor = new PagesVisitor(sourcePages);
 
 	return newPagesVisitor.mapFields(
-		field => {
+		(field) => {
 			const sourceField =
 				sourcePagesVisitor.findField(({name}) => name === field.name) ||
 				{};

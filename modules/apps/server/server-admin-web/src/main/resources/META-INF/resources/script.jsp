@@ -80,7 +80,7 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 	);
 
 	if (<portlet:namespace />selectLanguage && <portlet:namespace />textArea) {
-		<portlet:namespace />selectLanguage.addEventListener('change', function() {
+		<portlet:namespace />selectLanguage.addEventListener('change', function () {
 			<portlet:namespace />textArea.value = '';
 		});
 	}

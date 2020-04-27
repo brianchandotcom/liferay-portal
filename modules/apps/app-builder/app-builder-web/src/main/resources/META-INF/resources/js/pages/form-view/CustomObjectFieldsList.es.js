@@ -109,7 +109,7 @@ export default ({keywords}) => {
 
 	const deleteField = useDeleteDefinitionField({dataLayoutBuilder});
 
-	const onDeleteDefinitionField = useDeleteDefinitionFieldModal(fieldName =>
+	const onDeleteDefinitionField = useDeleteDefinitionFieldModal((fieldName) =>
 		deleteField(fieldName)
 	);
 

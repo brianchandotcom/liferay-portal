@@ -203,7 +203,7 @@ if (parentOrganization != null) {
 	if (selectOrganizationLink) {
 		searchContainer.get('contentBox').delegate(
 			'click',
-			function(event) {
+			function (event) {
 				var link = event.currentTarget;
 				var tr = link.ancestor('tr');
 
@@ -216,7 +216,7 @@ if (parentOrganization != null) {
 			'.modify-link'
 		);
 
-		selectOrganizationLink.on('click', function(event) {
+		selectOrganizationLink.on('click', function (event) {
 			var searchContainerData = searchContainer.getData();
 
 			Liferay.Util.selectEntity(
@@ -231,7 +231,7 @@ if (parentOrganization != null) {
 						'<liferay-ui:message arguments="parent-organization" key="select-x" />',
 					uri: '<%= selectOrganizationRenderURL %>',
 				},
-				function(event) {
+				function (event) {
 					var rowColumns = [];
 
 					var href =

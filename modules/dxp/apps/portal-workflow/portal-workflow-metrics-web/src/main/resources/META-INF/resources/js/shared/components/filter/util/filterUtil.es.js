@@ -21,7 +21,7 @@ const asFilterObject = (items, key, name, pinned) => ({
 	pinned,
 });
 
-const buildFilterItem = data => {
+const buildFilterItem = (data) => {
 	if (typeof data === 'string') {
 		return {
 			active: true,
@@ -50,7 +50,7 @@ const buildFilterItems = ({items, propertyKey = 'key', selectedKeys}) => {
 
 const getFilterKeys = (items = []) => items.map(({key}) => key);
 
-const getFiltersParam = queryString => {
+const getFiltersParam = (queryString) => {
 	const queryParams = parse(queryString);
 
 	return queryParams.filters || {};
@@ -79,10 +79,10 @@ const getFilterResults = (prefixedKeys, pinnedValues, titles, values) => {
 	return filterResults;
 };
 
-const getFilterValues = filterState => {
+const getFilterValues = (filterState) => {
 	const filterValues = {};
 
-	Object.keys(filterState).forEach(key => {
+	Object.keys(filterState).forEach((key) => {
 		if (filterState[key]) {
 			filterValues[key] = getFilterKeys(filterState[key]);
 		}
@@ -98,16 +98,16 @@ const getSelectedItemsQuery = (items, key, queryString) => {
 
 	queryParams.filters = {
 		...filtersParam,
-		[key]: items.filter(item => item.active).map(item => item.key),
+		[key]: items.filter((item) => item.active).map((item) => item.key),
 	};
 
 	return stringify(queryParams);
 };
 
-const getSelectedItems = filterResults => {
-	return filterResults.filter(filter => {
+const getSelectedItems = (filterResults) => {
+	return filterResults.filter((filter) => {
 		filter.items = filter.items
-			? filter.items.filter(item => item.active)
+			? filter.items.filter((item) => item.active)
 			: [];
 
 		return filter.items.length > 0;
@@ -115,7 +115,7 @@ const getSelectedItems = filterResults => {
 };
 
 const mergeItemsArray = (baseItems = [], ...items) => {
-	items = items.filter(value => value !== undefined && value !== null);
+	items = items.filter((value) => value !== undefined && value !== null);
 
 	return baseItems.concat(...items);
 };
@@ -144,7 +144,7 @@ const reduceFilters = (filterItems, paramKey) => {
 	);
 };
 
-const removeFilters = queryString => {
+const removeFilters = (queryString) => {
 	const queryParams = parse(queryString);
 
 	queryParams.filters = null;
@@ -161,7 +161,7 @@ const removeItem = (filterKey, itemToRemove, queryString) => {
 	const filterValues = filtersParam[filterKey] || [];
 
 	filtersParam[filterKey] = filterValues.filter(
-		filterValue => filterValue !== itemToRemove.key
+		(filterValue) => filterValue !== itemToRemove.key
 	);
 
 	queryParams.filters = filtersParam;

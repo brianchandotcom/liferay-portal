@@ -120,20 +120,20 @@ const useIsActive = () => {
 	const [state] = useContext(ControlsContext);
 	const toControlsId = useToControlsId();
 
-	return useCallback(itemId => state.activeItemId === toControlsId(itemId), [
-		state.activeItemId,
-		toControlsId,
-	]);
+	return useCallback(
+		(itemId) => state.activeItemId === toControlsId(itemId),
+		[state.activeItemId, toControlsId]
+	);
 };
 
 const useIsHovered = () => {
 	const [state] = useContext(ControlsContext);
 	const toControlsId = useToControlsId();
 
-	return useCallback(itemId => state.hoveredItemId === toControlsId(itemId), [
-		state.hoveredItemId,
-		toControlsId,
-	]);
+	return useCallback(
+		(itemId) => state.hoveredItemId === toControlsId(itemId),
+		[state.hoveredItemId, toControlsId]
+	);
 };
 
 const useSelectItem = () => {

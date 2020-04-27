@@ -31,13 +31,13 @@ const Collaborators = ({
 	const [data, setData] = useState(initialData);
 
 	useEffect(() => {
-		Liferay.on('sharing:changed', event => {
+		Liferay.on('sharing:changed', (event) => {
 			if (
 				classNameId === event.classNameId &&
 				event.classPK === classPK
 			) {
 				fetch(collaboratorsResourceURL)
-					.then(res => res.json())
+					.then((res) => res.json())
 					.then(setData);
 			}
 		});
@@ -94,7 +94,7 @@ const Collaborators = ({
 
 				<div className="autofit-col autofit-col-expand">
 					<div className="autofit-row">
-						{collaborators.map(collaborator => (
+						{collaborators.map((collaborator) => (
 							<div
 								className="autofit-col collaborators-collaborator"
 								key={collaborator.userId}

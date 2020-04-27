@@ -70,7 +70,7 @@ export default ({
 			.then(({items: roles = []}) => {
 				roles = roles.filter(rolesFilter);
 
-				setState(prevState => ({
+				setState((prevState) => ({
 					...prevState,
 					roles,
 				}));
@@ -80,14 +80,14 @@ export default ({
 				return getItem(endpoint, {roleNames});
 			})
 			.then(({items: permissions = []}) => {
-				setState(prevState => ({
+				setState((prevState) => ({
 					...prevState,
 					isLoading: false,
 					permissions,
 				}));
 			})
-			.catch(_ =>
-				setState(prevState => ({
+			.catch((_) =>
+				setState((prevState) => ({
 					...prevState,
 					isLoading: false,
 				}))
@@ -121,7 +121,7 @@ export default ({
 			? permissions
 			: permissions.concat({actionIds: [], roleName});
 
-		newPermissions = newPermissions.map(permission => {
+		newPermissions = newPermissions.map((permission) => {
 			if (permission.roleName !== roleName) {
 				return permission;
 			}
@@ -131,12 +131,12 @@ export default ({
 			return {
 				...permission,
 				actionIds: actionIds.includes(actionId)
-					? actionIds.filter(id => id !== actionId)
+					? actionIds.filter((id) => id !== actionId)
 					: actionIds.concat(actionId),
 			};
 		});
 
-		setState(prevState => ({
+		setState((prevState) => ({
 			...prevState,
 			permissions: newPermissions,
 		}));
@@ -180,8 +180,8 @@ export default ({
 			<ClayModal.Body>
 				<ClayManagementToolbar>
 					<SearchInput
-						onChange={searchText =>
-							setState(prevState => ({
+						onChange={(searchText) =>
+							setState((prevState) => ({
 								...prevState,
 								searchText,
 							}))

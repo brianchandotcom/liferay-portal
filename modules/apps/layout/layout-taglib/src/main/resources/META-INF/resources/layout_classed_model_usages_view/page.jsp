@@ -91,7 +91,7 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 			),
 			'click',
 			'.preview-layout-classed-model-usage',
-			function(event) {
+			function (event) {
 				var delegateTarget = event.delegateTarget;
 
 				Liferay.Util.openWindow({

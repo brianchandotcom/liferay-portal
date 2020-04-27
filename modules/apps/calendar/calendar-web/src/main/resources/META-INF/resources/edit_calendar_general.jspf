@@ -90,7 +90,7 @@
 		color:
 			'<%= ColorUtil.toHexString((calendar != null) ? calendar.getColor() : CalendarServiceConfigurationValues.CALENDAR_COLOR_DEFAULT) %>',
 		on: {
-			colorChange: function(event) {
+			colorChange: function (event) {
 				A.one('#<portlet:namespace />color').val(
 					parseInt(event.newVal.substring(1), 16)
 				);

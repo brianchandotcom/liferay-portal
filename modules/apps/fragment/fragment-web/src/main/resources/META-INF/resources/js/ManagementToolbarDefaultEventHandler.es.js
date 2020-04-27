@@ -62,7 +62,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('select-collection'),
 				uri: this.selectFragmentCollectionURL,
 			},
-			selectedItem => {
+			(selectedItem) => {
 				if (selectedItem) {
 					this.one('#fragmentCollectionId').value = selectedItem.id;
 					this.one('#fragmentEntryKeys').value = fragmentEntryKeys;
@@ -127,7 +127,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('select-collection'),
 				uri: this.selectFragmentCollectionURL,
 			},
-			selectedItem => {
+			(selectedItem) => {
 				if (selectedItem) {
 					const form = this.one('#fragmentEntryFm');
 

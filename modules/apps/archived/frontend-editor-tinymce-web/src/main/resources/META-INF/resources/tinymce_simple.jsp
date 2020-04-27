@@ -72,7 +72,7 @@ name = HtmlUtil.escapeJS(name);
 %>
 
 <aui:script use="aui-node-base">
-	var getInitialContent = function() {
+	var getInitialContent = function () {
 		var data;
 
 		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
@@ -87,7 +87,7 @@ name = HtmlUtil.escapeJS(name);
 	};
 
 	window['<%= name %>'] = {
-		init: function(value) {
+		init: function (value) {
 			if (typeof value != 'string') {
 				value = '';
 			}
@@ -95,7 +95,7 @@ name = HtmlUtil.escapeJS(name);
 			window['<%= name %>'].setHTML(value);
 		},
 
-		create: function() {
+		create: function () {
 			if (!window['<%= name %>'].instanceReady) {
 				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
@@ -107,7 +107,7 @@ name = HtmlUtil.escapeJS(name);
 			}
 		},
 
-		destroy: function() {
+		destroy: function () {
 			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
@@ -115,7 +115,7 @@ name = HtmlUtil.escapeJS(name);
 			Liferay.namespace('EDITORS').tinymce.removeInstance();
 		},
 
-		dispose: function() {
+		dispose: function () {
 			var editorNode = A.one('textarea#<%= name %>');
 
 			if (editorNode) {
@@ -133,9 +133,9 @@ name = HtmlUtil.escapeJS(name);
 			}
 		},
 
-		fileBrowserCallback: function(field_name, url, type) {},
+		fileBrowserCallback: function (field_name, url, type) {},
 
-		focus: function() {
+		focus: function () {
 			if (window['<%= name %>'].instanceReady) {
 				tinyMCE.editors['<%= name %>'].focus();
 			}
@@ -144,7 +144,7 @@ name = HtmlUtil.escapeJS(name);
 			}
 		},
 
-		getHTML: function() {
+		getHTML: function () {
 			var data;
 
 			if (!window['<%= name %>'].instanceReady) {
@@ -157,11 +157,11 @@ name = HtmlUtil.escapeJS(name);
 			return data;
 		},
 
-		getNativeEditor: function() {
+		getNativeEditor: function () {
 			return tinyMCE.editors['<%= name %>'];
 		},
 
-		getText: function() {
+		getText: function () {
 			var data;
 
 			if (!window['<%= name %>'].instanceReady) {
@@ -176,7 +176,7 @@ name = HtmlUtil.escapeJS(name);
 			return data;
 		},
 
-		initEditor: function() {
+		initEditor: function () {
 
 			<%
 			JSONObject editorConfigJSONObject = null;
@@ -194,8 +194,8 @@ name = HtmlUtil.escapeJS(name);
 			};
 
 			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-				defaultConfig.setup = function(editor) {
-					editor.on('keyup', function() {
+				defaultConfig.setup = function (editor) {
+					editor.on('keyup', function () {
 						<%= HtmlUtil.escapeJS(onChangeMethod) %>(
 							window['<%= name %>'].getHTML()
 						);
@@ -220,7 +220,7 @@ name = HtmlUtil.escapeJS(name);
 			);
 		},
 
-		initInstanceCallback: function() {
+		initInstanceCallback: function () {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
 				window['<%= name %>'].init(
 					<%= HtmlUtil.escapeJS(namespace + initMethod) %>()
@@ -258,7 +258,7 @@ name = HtmlUtil.escapeJS(name);
 
 		instanceReady: false,
 
-		setHTML: function(value) {
+		setHTML: function (value) {
 			if (window['<%= name %>'].instanceReady) {
 				tinyMCE.editors['<%= name %>'].setContent(value);
 			}
@@ -267,7 +267,7 @@ name = HtmlUtil.escapeJS(name);
 			}
 		},
 
-		_onLocaleChangedHandler: function(event) {
+		_onLocaleChangedHandler: function (event) {
 			var instance = this;
 
 			var contentsLanguage = event.item.getAttribute('data-value');

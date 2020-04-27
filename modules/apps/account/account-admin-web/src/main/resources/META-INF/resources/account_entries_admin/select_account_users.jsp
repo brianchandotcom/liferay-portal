@@ -74,7 +74,7 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 		'<portlet:namespace />accountUsers'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		var selectedItems = event.elements.allSelectedElements;
 
 		var result = {};

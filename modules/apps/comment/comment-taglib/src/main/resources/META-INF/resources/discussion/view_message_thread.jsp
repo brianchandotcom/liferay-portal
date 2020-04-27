@@ -220,7 +220,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							</aui:button-row>
 
 							<aui:script>
-								window['<%= namespace + index %>EditOnChange'] = function(html) {
+								window['<%= namespace + index %>EditOnChange'] = function (html) {
 									Liferay.Util.toggleDisabled(
 										'#<%= namespace %>editReplyButton<%= index %>',
 										html.trim() === ''
@@ -290,7 +290,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						</aui:button-row>
 
 						<aui:script>
-							window['<%= namespace + index %>ReplyOnChange'] = function(html) {
+							window['<%= namespace + index %>ReplyOnChange'] = function (html) {
 								Liferay.Util.toggleDisabled(
 									'#<%= namespace %>postReplyButton<%= index %>',
 									html.trim() === ''

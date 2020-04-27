@@ -60,12 +60,12 @@ function createEditor(element, changeCallback, destroyCallback) {
 									.getAnnotations();
 
 								const errorAnnotations = annotations.filter(
-									annotation => annotation.type === 'error'
+									(annotation) => annotation.type === 'error'
 								);
 
 								if (errorAnnotations.length) {
 									const errorMessage = errorAnnotations
-										.map(annotation => annotation.text)
+										.map((annotation) => annotation.text)
 										.join('\n');
 
 									openToast({
@@ -85,12 +85,12 @@ function createEditor(element, changeCallback, destroyCallback) {
 			},
 			title: Liferay.Language.get('edit-content'),
 		},
-		_dialog => {
+		(_dialog) => {
 			dialog = _dialog;
 
 			Liferay.Util.getTop()
 				.AUI()
-				.use('liferay-fullscreen-source-editor', A => {
+				.use('liferay-fullscreen-source-editor', (A) => {
 					editor = new A.LiferayFullScreenSourceEditor({
 						boundingBox: dialog
 							.getStdModNode(A.WidgetStdMod.BODY)

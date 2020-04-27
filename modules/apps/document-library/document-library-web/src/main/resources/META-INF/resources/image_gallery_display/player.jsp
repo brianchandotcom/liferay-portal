@@ -73,11 +73,11 @@ for (String previewFileURL : previewFileURLs) {
 			if (audio._audio) {
 				var audioNode = audio._audio.getDOMNode();
 
-				audioNode.addEventListener('pause', function() {
+				audioNode.addEventListener('pause', function () {
 					playing = false;
 				});
 
-				audioNode.addEventListener('play', function() {
+				audioNode.addEventListener('play', function () {
 					window.parent.Liferay.fire(
 						'<portlet:namespace /><%= randomNamespace %>Audio:play'
 					);
@@ -88,7 +88,7 @@ for (String previewFileURL : previewFileURLs) {
 
 			window.parent.Liferay.on(
 				'<portlet:namespace /><%= randomNamespace %>ImageViewer:currentIndexChange',
-				function() {
+				function () {
 					if (playing) {
 						audio.pause();
 					}
@@ -97,7 +97,7 @@ for (String previewFileURL : previewFileURLs) {
 
 			window.parent.Liferay.on(
 				'<portlet:namespace /><%= randomNamespace %>ImageViewer:close',
-				function() {
+				function () {
 					audio.load();
 				}
 			);
@@ -117,10 +117,10 @@ for (String previewFileURL : previewFileURLs) {
 				},
 
 				on: {
-					pause: function() {
+					pause: function () {
 						playing = false;
 					},
-					play: function() {
+					play: function () {
 						window.parent.Liferay.fire(
 							'<portlet:namespace /><%= randomNamespace %>Video:play'
 						);
@@ -142,7 +142,7 @@ for (String previewFileURL : previewFileURLs) {
 
 			window.parent.Liferay.on(
 				'<portlet:namespace /><%= randomNamespace %>ImageViewer:currentIndexChange',
-				function() {
+				function () {
 					if (playing) {
 						video.pause();
 					}
@@ -151,7 +151,7 @@ for (String previewFileURL : previewFileURLs) {
 
 			window.parent.Liferay.on(
 				'<portlet:namespace /><%= randomNamespace %>ImageViewer:close',
-				function() {
+				function () {
 					video.load();
 				}
 			);

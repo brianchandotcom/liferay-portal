@@ -49,7 +49,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			this.ns('selectAccountEntries'),
 			Liferay.Language.get(itemData.dialogTitle),
 			itemData.accountEntriesSelectorURL,
-			selectedItems => {
+			(selectedItems) => {
 				var redirectURL = Liferay.Util.PortletURL.createPortletURL(
 					itemData.redirectURL,
 					{
@@ -75,7 +75,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get(itemData.dialogTitle),
 				uri: itemData.accountEntrySelectorURL,
 			},
-			event => {
+			(event) => {
 				var addAccountUserURL = Liferay.Util.PortletURL.createPortletURL(
 					itemData.addAccountUserURL,
 					{
@@ -102,7 +102,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 			url: accountEntrySelectorURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			if (event.selectedItem) {
 				callback(event.selectedItem);
 			}

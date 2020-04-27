@@ -198,7 +198,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				uri:
 					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /><portlet:param name="classPK" value="<%= String.valueOf(journalEditDDMStructuresDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>',
 			},
-			function(event) {
+			function (event) {
 				var form = document.<portlet:namespace />fm;
 
 				Liferay.Util.setFormValues(form, {
@@ -246,7 +246,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 			.values();
 		var localizedValues = {};
 
-		translatedLanguages.forEach(function(languageId) {
+		translatedLanguages.forEach(function (languageId) {
 			localizedValues[languageId] = inputLocalized.getValue(languageId);
 		});
 
@@ -276,7 +276,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	}
 
 	if (contextualSidebarButton) {
-		contextualSidebarButton.addEventListener('click', function(event) {
+		contextualSidebarButton.addEventListener('click', function (event) {
 			if (
 				contextualSidebarContainer.classList.contains(
 					'contextual-sidebar-visible'

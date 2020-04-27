@@ -63,7 +63,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 		document.body,
 		'click',
 		'.add-master-page-action-option',
-		function(event) {
+		function (event) {
 			var data = event.delegateTarget.dataset;
 
 			event.preventDefault();

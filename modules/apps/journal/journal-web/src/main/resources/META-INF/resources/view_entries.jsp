@@ -412,7 +412,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 		searchContainerId: 'articles',
 	});
 
-	var clearJournalNavigationHandles = function(event) {
+	var clearJournalNavigationHandles = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			journalNavigation.destroy();
 

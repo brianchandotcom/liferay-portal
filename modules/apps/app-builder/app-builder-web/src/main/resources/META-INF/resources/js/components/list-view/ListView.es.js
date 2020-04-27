@@ -43,7 +43,7 @@ export default withRouter(
 		});
 
 		const dispatch = useCallback(
-			action => setQuery(reducer(query, action)),
+			(action) => setQuery(reducer(query, action)),
 			[query, setQuery]
 		);
 
@@ -54,7 +54,7 @@ export default withRouter(
 				method: 'GET',
 			},
 			link: getURL(endpoint),
-			onNetworkStatusChange: status => setLoading(status < 4),
+			onNetworkStatusChange: (status) => setLoading(status < 4),
 			variables: {...query},
 		});
 
@@ -75,15 +75,15 @@ export default withRouter(
 		let refetchOnActions;
 
 		if (actions && actions.length > 0) {
-			refetchOnActions = actions.map(action => {
+			refetchOnActions = actions.map((action) => {
 				if (!action.action) {
 					return action;
 				}
 
 				return {
 					...action,
-					action: item => {
-						action.action(item).then(isRefetch => {
+					action: (item) => {
+						action.action(item).then((isRefetch) => {
 							if (!isRefetch) {
 								return;
 							}

@@ -39,7 +39,9 @@ export default class EventEmitter {
 
 	emit(event, ...args) {
 		if (typeof this.events[event] === 'object') {
-			this.events[event].forEach(listener => listener.apply(this, args));
+			this.events[event].forEach((listener) =>
+				listener.apply(this, args)
+			);
 		}
 	}
 

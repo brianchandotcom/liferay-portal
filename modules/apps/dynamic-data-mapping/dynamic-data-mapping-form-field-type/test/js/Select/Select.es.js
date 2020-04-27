@@ -26,7 +26,7 @@ const SelectWithContextMock = withContextMock(Select);
 
 describe('Select', () => {
 	beforeAll(() => {
-		ReactDOM.createPortal = jest.fn(element => {
+		ReactDOM.createPortal = jest.fn((element) => {
 			return element;
 		});
 	});
@@ -198,7 +198,7 @@ describe('Select', () => {
 	});
 
 	it('emits a field edit event when an item is selected', async () => {
-		const handleFieldEdited = data => {
+		const handleFieldEdited = (data) => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					fieldInstance: expect.any(Object),
@@ -240,7 +240,7 @@ describe('Select', () => {
 	});
 
 	it('emits a field edit event when an item is selected using multiselect', async () => {
-		const handleFieldEdited = data => {
+		const handleFieldEdited = (data) => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					fieldInstance: expect.any(Object),
@@ -311,8 +311,8 @@ describe('Select', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('emits a field edit event when an item is selected using multiselect', async done => {
-		const handleFieldEdited = data => {
+	it('emits a field edit event when an item is selected using multiselect', async (done) => {
+		const handleFieldEdited = (data) => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					fieldInstance: expect.any(Object),

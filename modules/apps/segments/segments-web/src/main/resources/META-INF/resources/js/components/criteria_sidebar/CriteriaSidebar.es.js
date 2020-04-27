@@ -30,7 +30,7 @@ class CriteriaSidebar extends Component {
 		searchValue: '',
 	};
 
-	_handleOnSearchChange = value => {
+	_handleOnSearchChange = (value) => {
 		this.setState({searchValue: value});
 	};
 

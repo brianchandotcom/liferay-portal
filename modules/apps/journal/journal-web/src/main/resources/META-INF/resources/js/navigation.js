@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-journal-navigation',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var JournalNavigation = A.Component.create({

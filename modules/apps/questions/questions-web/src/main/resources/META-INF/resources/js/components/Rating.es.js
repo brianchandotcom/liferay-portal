@@ -31,7 +31,7 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 		setUserRating(myRating === null ? 0 : normalize(myRating));
 	}, [myRating]);
 
-	const voteChange = value => {
+	const voteChange = (value) => {
 		if (userRating === value) {
 			return;
 		}

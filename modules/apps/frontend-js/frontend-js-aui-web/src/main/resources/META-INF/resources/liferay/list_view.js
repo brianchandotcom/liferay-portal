@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-list-view',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var isString = Lang.isString;

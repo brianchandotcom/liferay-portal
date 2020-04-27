@@ -41,7 +41,7 @@ const DEPLOYMENT_TYPES = {
 	widget: Liferay.Language.get('widget'),
 };
 
-const concatTypes = types => {
+const concatTypes = (types) => {
 	return types.reduce((acc, cur, index) => {
 		if (index < types.length - 2) {
 			return `${acc + DEPLOYMENT_TYPES[cur]}, `;
@@ -64,10 +64,10 @@ const deploy = (item, deploy, resolve, reject) => {
 		{deploymentAction: deploy ? 'deploy' : 'undeploy'}
 	)
 		.then(() => resolve(true))
-		.catch(error => reject(error));
+		.catch((error) => reject(error));
 };
 
-const isDeployed = status => status === 'deployed';
+const isDeployed = (status) => status === 'deployed';
 
 const showUndeployModal = (item, resolve, reject, undeployModalContext) => {
 	const [state, dispatch] = undeployModalContext;
@@ -93,7 +93,7 @@ const showUndeployModal = (item, resolve, reject, undeployModalContext) => {
 									</b>{' '}
 									{concatTypes(
 										item.appDeployments.map(
-											deployment => deployment.type
+											(deployment) => deployment.type
 										)
 									)}
 								</span>
@@ -176,7 +176,7 @@ export default ({
 
 	const ACTIONS = [
 		{
-			action: item =>
+			action: (item) =>
 				new Promise((resolve, reject) => {
 					if (isDeployed(item.statusText)) {
 						showUndeployModal(
@@ -190,20 +190,20 @@ export default ({
 						deploy(item, true, resolve, reject);
 					}
 				}),
-			name: item =>
+			name: (item) =>
 				isDeployed(item.statusText)
 					? DEPLOYMENT_ACTION.undeploy
 					: DEPLOYMENT_ACTION.deploy,
 		},
 		{
-			action: item =>
+			action: (item) =>
 				Promise.resolve(
 					window.open(getStandaloneURL(item.id), '_blank')
 				),
 			name: Liferay.Language.get('open-standalone-app'),
-			show: item =>
+			show: (item) =>
 				item.appDeployments.some(
-					deployment => deployment.type === 'standalone'
+					(deployment) => deployment.type === 'standalone'
 				),
 		},
 		{
@@ -239,7 +239,7 @@ export default ({
 			emptyState={EMPTY_STATE}
 			endpoint={`/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps`}
 		>
-			{item => ({
+			{(item) => ({
 				...item,
 				dateCreated: fromNow(item.dateCreated),
 				dateModified: fromNow(item.dateModified),
@@ -264,7 +264,7 @@ export default ({
 				),
 				statusText: item.status.toLowerCase(),
 				type: concatTypes(
-					item.appDeployments.map(deployment => deployment.type)
+					item.appDeployments.map((deployment) => deployment.type)
 				),
 			})}
 		</ListView>

@@ -33,7 +33,7 @@ class CollectionInput extends React.Component {
 	 * Updates the left-side of the '=' character in the value.
 	 * @param {SyntheticEvent} event Input change event.
 	 */
-	_handleKeyChange = event => {
+	_handleKeyChange = (event) => {
 		const {value} = this._stringToKeyValueObject(this.props.value);
 
 		this.props.onChange({value: `${event.target.value}=${value}`});
@@ -43,7 +43,7 @@ class CollectionInput extends React.Component {
 	 * Updates the right-side of the '=' character in the value.
 	 * @param {SyntheticEvent} event Input change event.
 	 */
-	_handleValueChange = event => {
+	_handleValueChange = (event) => {
 		const {key} = this._stringToKeyValueObject(this.props.value);
 
 		this.props.onChange({value: `${key}=${event.target.value}`});
@@ -53,7 +53,7 @@ class CollectionInput extends React.Component {
 	 * Prevents an '=' character from being entered into the input.
 	 * @param {SyntheticEvent} event Input keydown event.
 	 */
-	_handleKeyDown = event => {
+	_handleKeyDown = (event) => {
 		if (event.key === '=') {
 			event.preventDefault();
 		}
@@ -65,7 +65,7 @@ class CollectionInput extends React.Component {
 	 * @param {string} value A string with an '=' character.
 	 * @returns {Object} Object with key and value properties.
 	 */
-	_stringToKeyValueObject = stringValue => {
+	_stringToKeyValueObject = (stringValue) => {
 		const [key = '', value = ''] =
 			typeof stringValue == 'string' ? stringValue.split('=') : [];
 

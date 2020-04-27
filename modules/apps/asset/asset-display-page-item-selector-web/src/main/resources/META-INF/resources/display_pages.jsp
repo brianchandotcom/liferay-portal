@@ -58,7 +58,7 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 		document.querySelector('#<portlet:namespace/>fm'),
 		'click',
 		'.layout-page-template-entry',
-		function(event) {
+		function (event) {
 			dom.removeClasses(
 				document.querySelectorAll('.form-check-card.active'),
 				'active'

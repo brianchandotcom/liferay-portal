@@ -50,7 +50,7 @@ export default ({
 		<ListView
 			actions={[
 				{
-					action: item =>
+					action: (item) =>
 						Promise.resolve(history.push(`${url}/${item.id}`)),
 					name: Liferay.Language.get('edit'),
 				},
@@ -83,7 +83,7 @@ export default ({
 			}}
 			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-list-views`}
 		>
-			{item => ({
+			{(item) => ({
 				...item,
 				dateCreated: fromNow(item.dateCreated),
 				dateModified: fromNow(item.dateModified),

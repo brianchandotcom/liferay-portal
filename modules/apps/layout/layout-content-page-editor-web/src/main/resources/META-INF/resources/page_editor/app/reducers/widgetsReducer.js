@@ -21,7 +21,7 @@ export default function widgetsReducer(widgets, action) {
 
 			let nextWidgets = widgets;
 
-			fragmentEntryLinks.forEach(fragmentEntryLink => {
+			fragmentEntryLinks.forEach((fragmentEntryLink) => {
 				if (
 					fragmentEntryLink.editableValues &&
 					fragmentEntryLink.editableValues.portletId &&
@@ -44,7 +44,7 @@ export default function widgetsReducer(widgets, action) {
 		case DELETE_WIDGETS: {
 			let nextWidgets = widgets;
 
-			action.fragmentEntryLinks.forEach(fragmentEntryLink => {
+			action.fragmentEntryLinks.forEach((fragmentEntryLink) => {
 				if (
 					fragmentEntryLink.editableValues &&
 					fragmentEntryLink.editableValues.portletId &&
@@ -83,7 +83,7 @@ function getWidgetPath(widgets, portletId, path = []) {
 		const {categories = [], portlets = []} = widgets[categoryIndex];
 
 		const categoryPortletIndex = portlets.findIndex(
-			_portlet => _portlet.portletId === portletId
+			(_portlet) => _portlet.portletId === portletId
 		);
 
 		const subCategoryPortletPath = getWidgetPath(categories, portletId, [

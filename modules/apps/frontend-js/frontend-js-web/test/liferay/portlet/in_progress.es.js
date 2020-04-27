@@ -46,7 +46,7 @@ describe('PortletHub', () => {
 				register(portletB),
 				register(portletC),
 				register(portletD),
-			]).then(values => {
+			]).then((values) => {
 				hubA = values[0];
 
 				handleA = hubA.addEventListener(
@@ -136,7 +136,7 @@ describe('PortletHub', () => {
 
 			return hubB
 				.startPartialAction(parameters)
-				.then(partialActionInitObject => {
+				.then((partialActionInitObject) => {
 					expect(hubB.isInProgress()).toBeTruthy();
 
 					partialActionInitObject.setPageState(JSON.stringify({}));
@@ -152,7 +152,7 @@ describe('PortletHub', () => {
 
 			return hubB
 				.startPartialAction(parameters)
-				.then(partialActionInitObject => {
+				.then((partialActionInitObject) => {
 					expect(hubB.isInProgress()).toBeTruthy();
 					expect(hubD.isInProgress()).toBeTruthy();
 
@@ -168,7 +168,7 @@ describe('PortletHub', () => {
 			const parameters = {};
 
 			hubB.startPartialAction(parameters).then(
-				partialActionInitObject => {
+				(partialActionInitObject) => {
 					partialActionInitObject.setPageState(JSON.stringify({}));
 
 					expect(hubB.isInProgress()).toBeTruthy();
@@ -185,7 +185,7 @@ describe('PortletHub', () => {
 
 			return hubB
 				.startPartialAction(parameters)
-				.then(partialActionInitObject => {
+				.then((partialActionInitObject) => {
 					partialActionInitObject.setPageState(JSON.stringify({}));
 					expect(hubD.isInProgress()).toBeTruthy();
 
@@ -200,7 +200,7 @@ describe('PortletHub', () => {
 			const parameters = {ap1: ['actionVal']};
 
 			hubB.startPartialAction(parameters).then(
-				partialActionInitObject => {
+				(partialActionInitObject) => {
 					partialActionInitObject.setPageState(JSON.stringify({}));
 
 					expect(hubB.isInProgress()).toBeTruthy();

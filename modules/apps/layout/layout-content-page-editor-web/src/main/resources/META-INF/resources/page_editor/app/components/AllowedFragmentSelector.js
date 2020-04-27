@@ -21,7 +21,7 @@ import {useSelector} from '../store/index';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
 const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
-	const fragments = useSelector(state => state.fragments);
+	const fragments = useSelector((state) => state.fragments);
 
 	const fragmentEntryKeysArray = useMemo(
 		() => toFragmentEntryKeysArray(fragments),
@@ -74,7 +74,7 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 			<div className="px-4">
 				<ClayInput
 					className="mb-4"
-					onChange={event => setFilter(event.target.value)}
+					onChange={(event) => setFilter(event.target.value)}
 					placeholder={`${Liferay.Language.get('search')}...`}
 					sizing="sm"
 					type="text"
@@ -101,7 +101,7 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 					label={Liferay.Language.get(
 						'select-new-fragments-automatically'
 					)}
-					onChange={event => {
+					onChange={(event) => {
 						setAllowNewFragmentEntries(event.target.checked);
 					}}
 				/>
@@ -128,18 +128,18 @@ const getSelectedNodeIds = (
 ) => {
 	return allowNewFragmentEntries
 		? fragmentEntryKeysArray.filter(
-				fragmentEntryKey =>
+				(fragmentEntryKey) =>
 					!fragmentEntryKeys.includes(fragmentEntryKey)
 		  )
 		: fragmentEntryKeys;
 };
 
-const toNodes = collections => {
+const toNodes = (collections) => {
 	return [
 		{
-			children: collections.map(collection => {
+			children: collections.map((collection) => {
 				const children = collection.fragmentEntries.map(
-					fragmentEntry => ({
+					(fragmentEntry) => ({
 						id: fragmentEntry.fragmentEntryKey,
 						name: fragmentEntry.name,
 					})
@@ -159,11 +159,11 @@ const toNodes = collections => {
 	];
 };
 
-const toFragmentEntryKeysArray = collections => {
+const toFragmentEntryKeysArray = (collections) => {
 	const fragmentEntryKeysArray = [];
 
-	collections.forEach(collection => {
-		collection.fragmentEntries.forEach(fragmentEntry =>
+	collections.forEach((collection) => {
+		collection.fragmentEntries.forEach((fragmentEntry) =>
 			fragmentEntryKeysArray.push(fragmentEntry.fragmentEntryKey)
 		);
 

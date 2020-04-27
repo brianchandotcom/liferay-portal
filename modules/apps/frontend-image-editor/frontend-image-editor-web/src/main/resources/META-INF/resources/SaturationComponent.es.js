@@ -97,11 +97,11 @@ class SaturationComponent extends Component {
 	 * finishes processing the image.
 	 */
 	spawnWorker_(message) {
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			const workerURI = this.modulePath + '/SaturationWorker.js';
 			const processWorker = new Worker(workerURI);
 
-			processWorker.onmessage = event => resolve(event.data);
+			processWorker.onmessage = (event) => resolve(event.data);
 			processWorker.postMessage(message);
 		});
 	}

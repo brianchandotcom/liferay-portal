@@ -34,7 +34,7 @@ export default function Selector({
 				<div>
 					<ClayDropDown
 						active={active}
-						onActiveChange={newVal => setActive(newVal)}
+						onActiveChange={(newVal) => setActive(newVal)}
 						trigger={
 							<ClayButton displayType="unstyled">
 								<span className="management-bar-item-title">
@@ -46,7 +46,7 @@ export default function Selector({
 						}
 					>
 						<ClayDropDown.ItemList>
-							{versions.map(version => (
+							{versions.map((version) => (
 								<ClayDropDown.Item
 									href={version[urlSelector]}
 									key={version.version}

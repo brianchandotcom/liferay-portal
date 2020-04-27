@@ -60,7 +60,7 @@ String version = openSSOConfiguration.version();
 	Liferay.provide(
 		window,
 		'<portlet:namespace />testOpenSSOSettings',
-		function() {
+		function () {
 			var A = AUI();
 
 			var data = {};

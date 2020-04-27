@@ -56,7 +56,7 @@ else {
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
-	A.one('#<portlet:namespace />changeTheme').on('click', function(event) {
+	A.one('#<portlet:namespace />changeTheme').on('click', function (event) {
 		event.preventDefault();
 
 		Util.selectEntity(
@@ -73,7 +73,7 @@ else {
 					'<%= selectThemeURL %>'
 				),
 			},
-			function(event) {
+			function (event) {
 				var selectedItem = event.themeid;
 
 				if (selectedItem && selThemeId != selectedItem) {
@@ -90,10 +90,10 @@ else {
 							method: 'POST',
 						}
 					)
-						.then(function(response) {
+						.then(function (response) {
 							return response.text();
 						})
-						.then(function(responseData) {
+						.then(function (responseData) {
 							themeContainer.plug(A.Plugin.ParseContent);
 
 							themeContainer.setContent(responseData);

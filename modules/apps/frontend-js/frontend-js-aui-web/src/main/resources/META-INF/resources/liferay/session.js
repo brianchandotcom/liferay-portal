@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-session',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var BUFFER_TIME = [];
@@ -115,7 +115,7 @@ AUI.add(
 					var instance = this;
 
 					Liferay.Util.fetch(URL_BASE + 'expire_session').then(
-						response => {
+						(response) => {
 							if (response.ok) {
 								Liferay.fire('sessionExpired');
 
@@ -653,10 +653,7 @@ AUI.add(
 						);
 
 						if (bannerFocused) {
-							banner.bodyNode
-								.all('a')
-								.item(0)
-								.focus();
+							banner.bodyNode.all('a').item(0).focus();
 						}
 					}
 

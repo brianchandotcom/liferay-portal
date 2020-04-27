@@ -113,7 +113,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 						cssClass: 'btn-primary',
 						label: '<liferay-ui:message key="save" />',
 						on: {
-							click: function() {
+							click: function () {
 								document.<portlet:namespace />fm.submit();
 							},
 						},
@@ -122,7 +122,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 						cssClass: 'btn-link',
 						label: '<liferay-ui:message key="cancel" />',
 						on: {
-							click: function() {
+							click: function () {
 								location.href = '<%= viewDataProviderURL.toString() %>';
 							},
 						},

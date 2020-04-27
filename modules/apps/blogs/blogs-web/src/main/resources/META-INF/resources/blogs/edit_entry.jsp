@@ -472,7 +472,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 		})
 	);
 
-	var clearSaveDraftHandle = function(event) {
+	var clearSaveDraftHandle = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			blogs.destroy();
 

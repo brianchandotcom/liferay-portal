@@ -20,20 +20,20 @@ import RuleEditorModal from '../../../components/rules/RuleEditorModal.es';
 import RuleList from '../../../components/rules/RuleList.es';
 import Sidebar from '../../../components/sidebar/Sidebar.es';
 
-export default function({title}) {
+export default function ({title}) {
 	const [rulesEditorState, setRulesEditorState] = useState({
 		isVisible: false,
 		rule: null,
 	});
 	const [keywords, setKeywords] = useState('');
 
-	const toggleRulesEditorVisibility = rule => {
+	const toggleRulesEditorVisibility = (rule) => {
 		if (rule) {
 			rule['logical-operator'] = rule['logicalOperator'];
 			delete rule.logicalOperator;
 		}
 
-		setRulesEditorState(prevState => ({
+		setRulesEditorState((prevState) => ({
 			isVisible: !prevState.isVisible,
 			rule,
 		}));
@@ -46,9 +46,9 @@ export default function({title}) {
 
 				<div className="autofit-row sidebar-section">
 					<div className="autofit-col autofit-col-expand">
-						<ClayForm onSubmit={event => event.preventDefault()}>
+						<ClayForm onSubmit={(event) => event.preventDefault()}>
 							<Sidebar.SearchInput
-								onSearch={keywords => setKeywords(keywords)}
+								onSearch={(keywords) => setKeywords(keywords)}
 							/>
 						</ClayForm>
 					</div>

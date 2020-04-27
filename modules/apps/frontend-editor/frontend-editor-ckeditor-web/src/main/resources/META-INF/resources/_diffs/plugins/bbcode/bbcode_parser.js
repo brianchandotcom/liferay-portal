@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var A = AUI();
 
 	var LString = A.Lang.String;
@@ -29,11 +29,11 @@
 	BBCodeUtil.escape = A.rbind('escapeHTML', LString, true, entities);
 	BBCodeUtil.unescape = A.rbind('unescapeHTML', LString, entities);
 })();
-(function() {
+(function () {
 	// eslint-disable-next-line no-control-regex
 	var REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'<>[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/gi;
 
-	var Lexer = function(data) {
+	var Lexer = function (data) {
 		var instance = this;
 
 		instance._data = data;
@@ -55,10 +55,10 @@
 
 	Liferay.BBCodeLexer = Lexer;
 })();
-(function() {
+(function () {
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-	var isString = function(val) {
+	var isString = function (val) {
 		return typeof val == 'string';
 	};
 
@@ -99,7 +99,7 @@
 
 	var STR_TAG_CODE = 'code';
 
-	var Parser = function(config) {
+	var Parser = function (config) {
 		var instance = this;
 
 		config = config || {};
@@ -243,7 +243,7 @@
 
 			stack.last =
 				stack.last ||
-				function() {
+				function () {
 					var instance = this;
 
 					return instance[instance.length - 1];
@@ -312,7 +312,7 @@
 
 	Liferay.BBCodeParser = Parser;
 })();
-(function() {
+(function () {
 	var A = AUI();
 
 	var BBCodeUtil = Liferay.BBCodeUtil;
@@ -466,7 +466,7 @@
 		'<img src="{imageSrc}" {attributes} />'
 	);
 
-	var Converter = function(config) {
+	var Converter = function (config) {
 		var instance = this;
 
 		config = config || {};

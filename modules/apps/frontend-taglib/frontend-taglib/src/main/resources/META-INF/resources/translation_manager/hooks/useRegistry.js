@@ -22,7 +22,7 @@ export default function useRegistry({componentId, states}) {
 	const detach = (stateName, callback) => {
 		if (eventsRef.current) {
 			const refIndex = eventsRef.current.findIndex(
-				event =>
+				(event) =>
 					stateName === event.stateName && callback === event.callback
 			);
 
@@ -32,7 +32,7 @@ export default function useRegistry({componentId, states}) {
 		}
 	};
 
-	const get = stateName => {
+	const get = (stateName) => {
 		const stateValue = currentState.current[stateName];
 
 		if (stateValue) {

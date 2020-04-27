@@ -48,7 +48,7 @@ export default withRouter(
 					setId(id);
 					if (keywords) {
 						setTags(
-							keywords.map(keyword => ({
+							keywords.map((keyword) => ({
 								label: keyword,
 								value: keyword,
 							}))
@@ -62,7 +62,7 @@ export default withRouter(
 				articleBody,
 				headline,
 				id,
-				tags.map(tag => tag.value)
+				tags.map((tag) => tag.value)
 			).then(() => history.goBack());
 
 		return (
@@ -83,7 +83,7 @@ export default withRouter(
 									</label>
 
 									<ClayInput
-										onChange={event =>
+										onChange={(event) =>
 											setHeadline(event.target.value)
 										}
 										placeholder={Liferay.Language.get(
@@ -118,7 +118,7 @@ export default withRouter(
 										config={getCKEditorConfig()}
 										data={articleBody}
 										onBeforeLoad={onBeforeLoadCKEditor}
-										onChange={event =>
+										onChange={(event) =>
 											setArticleBody(
 												event.editor.getData()
 											)
@@ -143,7 +143,7 @@ export default withRouter(
 								<ClayForm.Group className="c-mt-4">
 									<TagSelector
 										tags={tags}
-										tagsChange={tags => setTags(tags)}
+										tagsChange={(tags) => setTags(tags)}
 										tagsLoaded={setTagsLoaded}
 									/>
 								</ClayForm.Group>

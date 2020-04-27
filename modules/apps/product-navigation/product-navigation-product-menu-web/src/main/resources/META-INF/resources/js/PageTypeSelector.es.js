@@ -22,7 +22,7 @@ function PageTypeSelector(props) {
 	const [active, setActive] = useState(false);
 
 	const handleOnChange = useCallback(
-		event => {
+		(event) => {
 			const pageType = event.target.value;
 
 			Liferay.Util.Session.set(

@@ -46,7 +46,7 @@ function getItemStyles(props) {
 		  };
 }
 
-const ItemDragLayer = props => {
+const ItemDragLayer = (props) => {
 	const {dragging, item, itemType} = props;
 
 	function renderItem() {
@@ -62,7 +62,7 @@ const ItemDragLayer = props => {
 	) : null;
 };
 
-export default DndDragLayer(monitor => ({
+export default DndDragLayer((monitor) => ({
 	currentOffset: monitor.getSourceClientOffset(),
 	dragging: monitor.isDragging(),
 	initialOffset: monitor.getInitialSourceClientOffset(),

@@ -44,7 +44,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 		...item.config,
 	};
 
-	const handleConfigurationValueChanged = itemConfig => {
+	const handleConfigurationValueChanged = (itemConfig) => {
 		dispatch(
 			updateItemConfig({
 				itemConfig,

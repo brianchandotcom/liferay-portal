@@ -21,7 +21,7 @@ const withParamsMock = (...components) => ({
 	location: {search: query},
 	match: {params: routeParams},
 }) => {
-	return components.map(component => {
+	return components.map((component) => {
 		if (routeParams.sort) {
 			routeParams.sort = decodeURIComponent(routeParams.sort);
 		}

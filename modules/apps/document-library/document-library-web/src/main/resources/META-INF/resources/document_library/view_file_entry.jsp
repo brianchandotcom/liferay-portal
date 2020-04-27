@@ -267,7 +267,7 @@ if (portletTitleBasedNavigation) {
 					'<liferay-ui:message arguments="<%= 1 %>" key="select-destination-folder-for-x-items" translateArguments="<%= false %>" />',
 				uri: '<%= selectFolderURL.toString() %>',
 			},
-			function(event) {
+			function (event) {
 				var form = document.getElementById(namespace + 'fm');
 
 				if (parameterName && parameterValue) {
@@ -303,7 +303,7 @@ if (addPortletBreadcrumbEntries) {
 		);
 
 		if (openContextualSidebarButton) {
-			openContextualSidebarButton.addEventListener('click', function(event) {
+			openContextualSidebarButton.addEventListener('click', function (event) {
 				event.currentTarget.classList.toggle('active');
 
 				document

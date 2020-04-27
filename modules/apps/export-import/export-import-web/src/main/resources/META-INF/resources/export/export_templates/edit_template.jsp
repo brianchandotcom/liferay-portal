@@ -176,7 +176,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 
 	var form = A.one('#<portlet:namespace />fm1');
 
-	form.on('submit', function(event) {
+	form.on('submit', function (event) {
 		event.halt();
 
 		var exportImport = Liferay.component(

@@ -16,7 +16,7 @@ import ExperienceService from '../../../app/services/ExperienceService';
 import updateExperiencePriorityAction from '../actions/updateExperiencePriority';
 
 export default function updateExperiencePriority({subtarget, target}) {
-	return dispatch => {
+	return (dispatch) => {
 		return ExperienceService.updateExperiencePriority({
 			body: {
 				newPriority: target.priority,

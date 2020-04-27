@@ -36,7 +36,7 @@ const layoutElements = [
 
 const LayoutElementCard = ({label, layoutColumns, type}) => {
 	const dispatch = useDispatch();
-	const store = useSelector(state => state);
+	const store = useSelector((state) => state);
 	const selectItem = useSelectItem();
 
 	const dragRef = useItemDrag({
@@ -92,7 +92,7 @@ export default function LayoutElements() {
 				open={false}
 			>
 				<div className="d-flex flex-wrap justify-content-between">
-					{layoutElements.map(layoutElement => {
+					{layoutElements.map((layoutElement) => {
 						return (
 							<LayoutElementCard
 								key={layoutElement.columns.join()}

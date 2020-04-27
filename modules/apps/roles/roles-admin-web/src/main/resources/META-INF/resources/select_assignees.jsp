@@ -98,10 +98,10 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 		'<portlet:namespace />assigneesSearch'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		var nodes = event.elements.currentPageSelectedElements.getDOMNodes();
 
-		var <portlet:namespace />assigneeIds = nodes.map(function(node) {
+		var <portlet:namespace />assigneeIds = nodes.map(function (node) {
 			return node.value;
 		});
 

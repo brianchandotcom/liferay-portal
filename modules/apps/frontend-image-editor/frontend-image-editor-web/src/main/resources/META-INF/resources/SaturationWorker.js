@@ -19,7 +19,7 @@
  *                      - imageData: The ImageData to transform
  *                      - saturationValue: The saturation value to apply
  */
-onmessage = function(event) {
+onmessage = function (event) {
 	var saturationValue = event.data.saturationValue;
 	var imageData = event.data.imageData;
 

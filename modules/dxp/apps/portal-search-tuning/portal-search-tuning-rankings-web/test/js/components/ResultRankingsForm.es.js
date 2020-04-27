@@ -78,7 +78,7 @@ describe('ResultRankingsForm', () => {
 
 			await waitForElement(() => getByTestId(expected[0]));
 
-			expected.forEach(id => {
+			expected.forEach((id) => {
 				expect(getByTestId(id)).toBeInTheDocument();
 			});
 		}
@@ -99,7 +99,7 @@ describe('ResultRankingsForm', () => {
 
 		const input = container.querySelector('.form-control-inset');
 
-		addedAliases.forEach(alias => {
+		addedAliases.forEach((alias) => {
 			fireEvent.change(input, {target: {value: alias}});
 
 			fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});

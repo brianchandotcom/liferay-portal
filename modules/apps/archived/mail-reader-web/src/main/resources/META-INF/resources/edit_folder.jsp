@@ -39,7 +39,7 @@ Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 
 	var form = A.one('#<portlet:namespace />dialogFm');
 
-	form.on('submit', function(event) {
+	form.on('submit', function (event) {
 		event.preventDefault();
 
 		Liferay.Mail.setStatus(
@@ -54,13 +54,13 @@ Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 				id: form.getDOMNode(),
 			},
 			on: {
-				failure: function(event, id, obj) {
+				failure: function (event, id, obj) {
 					Liferay.Mail.setStatus(
 						'error',
 						'<liferay-ui:message key="unable-to-connect-with-mail-server" />'
 					);
 				},
-				success: function(event, id, obj) {
+				success: function (event, id, obj) {
 					var responseData = this.get('responseData');
 
 					Liferay.Mail.setStatus(

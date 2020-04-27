@@ -783,7 +783,7 @@ describe('Rule Editor', () => {
 				jest.runAllTimers();
 
 				const formBuilderFields = component.fieldOptions.map(
-					a => a.fieldName
+					(a) => a.fieldName
 				);
 
 				component.pages = [];
@@ -791,7 +791,7 @@ describe('Rule Editor', () => {
 				jest.runAllTimers();
 
 				const notEquals = formBuilderFields.some(
-					item => component.deletedFields.indexOf(item) == -1
+					(item) => component.deletedFields.indexOf(item) == -1
 				);
 
 				expect(notEquals).toEqual(false);

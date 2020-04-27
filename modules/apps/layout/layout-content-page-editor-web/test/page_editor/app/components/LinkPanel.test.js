@@ -47,7 +47,7 @@ jest.mock(
 	() => jest.fn()
 );
 
-const getEditableConfig = editableValues => {
+const getEditableConfig = (editableValues) => {
 	return editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]['editable-id-0']
 		.config;
 };

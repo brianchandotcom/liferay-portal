@@ -69,7 +69,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		url: '<%= journalContentDisplayContext.getItemSelectorURL() %>',
 	});
 
-	itemSelectorDialog.on('selectedItemChange', function(event) {
+	itemSelectorDialog.on('selectedItemChange', function (event) {
 		var selectedItem = event.selectedItem;
 
 		if (!selectedItem) {
@@ -79,12 +79,14 @@ String redirect = ParamUtil.getString(request, "redirect");
 		retrieveWebContent(selectedItem.assetclasspk);
 	});
 
-	dom.delegate(articlePreview, 'click', '.web-content-selector', function(event) {
+	dom.delegate(articlePreview, 'click', '.web-content-selector', function (
+		event
+	) {
 		event.preventDefault();
 		itemSelectorDialog.open();
 	});
 
-	dom.delegate(articlePreview, 'click', '.selector-button', function(event) {
+	dom.delegate(articlePreview, 'click', '.selector-button', function (event) {
 		event.preventDefault();
 		retrieveWebContent(-1);
 	});

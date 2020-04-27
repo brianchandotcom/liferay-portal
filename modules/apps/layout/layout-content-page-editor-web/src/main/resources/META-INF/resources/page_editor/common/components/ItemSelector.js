@@ -30,7 +30,7 @@ export default function ItemSelector({
 	selectedItemTitle,
 	showMappedItems = true,
 }) {
-	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
+	const mappedInfoItems = useSelector((state) => state.mappedInfoItems);
 	const [active, setActive] = useState(false);
 
 	const defaultEventName = `${config.portletNamespace}selectInfoItem`;
@@ -66,7 +66,7 @@ export default function ItemSelector({
 						}
 					>
 						<ClayDropDown.ItemList>
-							{mappedInfoItems.map(item => (
+							{mappedInfoItems.map((item) => (
 								<ClayDropDown.Item
 									key={item.classNameId}
 									onClick={() => {

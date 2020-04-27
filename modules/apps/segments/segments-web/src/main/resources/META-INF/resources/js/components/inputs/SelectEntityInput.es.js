@@ -52,11 +52,11 @@ class SelectEntityInput extends React.Component {
 
 			itemSelectorDialog.open();
 
-			itemSelectorDialog.on('selectedItemChange', event => {
+			itemSelectorDialog.on('selectedItemChange', (event) => {
 				const selectedItems = event.selectedItem;
 
 				if (selectedItems) {
-					const selectedValues = selectedItems.map(item => ({
+					const selectedValues = selectedItems.map((item) => ({
 						displayValue: item.name,
 						value: item.id,
 					}));
@@ -77,7 +77,7 @@ class SelectEntityInput extends React.Component {
 					title,
 					uri,
 				},
-				event => {
+				(event) => {
 					onChange({
 						displayValue: event.entityname,
 						value: event.entityid,

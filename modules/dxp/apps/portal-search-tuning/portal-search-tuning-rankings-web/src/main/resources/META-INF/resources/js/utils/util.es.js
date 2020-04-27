@@ -21,7 +21,9 @@ export function buildUrl(baseUrl, params) {
 	const searchParams = url.searchParams;
 
 	if (params) {
-		Object.keys(params).forEach(key => searchParams.set(key, params[key]));
+		Object.keys(params).forEach((key) =>
+			searchParams.set(key, params[key])
+		);
 	}
 
 	return url.href;
@@ -91,7 +93,7 @@ export function move(list, from, to) {
  * @param {Array|number|string} toRemove The id or ids to remove.
  */
 export function removeIdFromList(list = [], toRemove) {
-	return list.filter(curId => {
+	return list.filter((curId) => {
 		return isArray(toRemove)
 			? !toRemove.includes(curId)
 			: curId !== toRemove;
@@ -125,7 +127,7 @@ export function resultsDataToMap(resultsData, initialMap = {}) {
  */
 export function toggleListItem(list, id) {
 	return list.includes(id)
-		? list.filter(value => value !== id)
+		? list.filter((value) => value !== id)
 		: [...list, id];
 }
 

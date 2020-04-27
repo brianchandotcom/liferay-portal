@@ -36,7 +36,7 @@ jest.mock(
 	}
 );
 
-const renderForm = props =>
+const renderForm = (props) =>
 	render(
 		<StoreContextProvider
 			initialState={[

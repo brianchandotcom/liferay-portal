@@ -49,7 +49,7 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 	Liferay.provide(
 		Sharing,
 		'share',
-		function(classNameId, classPK, title) {
+		function (classNameId, classPK, title) {
 			var sharingParameters = {
 				classNameId: classNameId,
 				classPK: classPK,
@@ -68,7 +68,7 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 	Liferay.provide(
 		Sharing,
 		'manageCollaborators',
-		function(classNameId, classPK) {
+		function (classNameId, classPK) {
 			var manageCollaboratorsParameters = {
 				classNameId: classNameId,
 				classPK: classPK,

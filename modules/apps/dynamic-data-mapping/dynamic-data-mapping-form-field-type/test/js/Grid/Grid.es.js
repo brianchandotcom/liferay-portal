@@ -138,8 +138,8 @@ describe('Grid', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('emits a fieldBlurred event when blurring the radio input', done => {
-		const handleFieldBlurred = data => {
+	it('emits a fieldBlurred event when blurring the radio input', (done) => {
+		const handleFieldBlurred = (data) => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					value: 'colFieldId1',
@@ -186,8 +186,8 @@ describe('Grid', () => {
 	// This test needs to be investigated further, it is failing at metal-events because it
 	// has no events adding, strange that we are adding but only this one is failing.
 	// This is not reproducible in manual tests.
-	it.skip('emits a fieldEdited event when changing the state of radio input', done => {
-		const handleFieldEdited = data => {
+	it.skip('emits a fieldEdited event when changing the state of radio input', (done) => {
+		const handleFieldEdited = (data) => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					fieldInstance: expect.any(Object),
@@ -235,8 +235,8 @@ describe('Grid', () => {
 		fireEvent.click(radioInputElement);
 	});
 
-	it('emits a fieldFocused event when focusing a radio input', done => {
-		const handleFieldFocused = data => {
+	it('emits a fieldFocused event when focusing a radio input', (done) => {
+		const handleFieldFocused = (data) => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					fieldInstance: expect.any(Object),

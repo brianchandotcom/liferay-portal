@@ -12,13 +12,13 @@
  * details.
  */
 
-(function($) {
+(function ($) {
 	$.ajaxSetup({
 		data: {},
 		type: 'POST',
 	});
 
-	$.ajaxPrefilter(options => {
+	$.ajaxPrefilter((options) => {
 		if (options.crossDomain) {
 			options.contents.script = false;
 		}

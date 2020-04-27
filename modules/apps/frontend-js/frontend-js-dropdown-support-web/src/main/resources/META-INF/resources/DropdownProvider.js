@@ -106,7 +106,7 @@ class DropdownProvider {
 		return menu.parentElement.querySelector('.dropdown-toggle');
 	}
 
-	_onTriggerClick = event => {
+	_onTriggerClick = (event) => {
 		const trigger = event.delegateTarget;
 
 		if (trigger.tagName === 'A') {

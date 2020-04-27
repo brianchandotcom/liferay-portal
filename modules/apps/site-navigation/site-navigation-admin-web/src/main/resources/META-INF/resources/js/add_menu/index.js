@@ -21,7 +21,7 @@ function AddMenu({dropdownItems, portletId}) {
 	const [active, setActive] = useState(false);
 
 	const handleItemClick = useCallback(
-		event => {
+		(event) => {
 			event.currentTarget = event.target.element || event.target;
 
 			const uri = event.data
@@ -64,7 +64,7 @@ function AddMenu({dropdownItems, portletId}) {
 	return (
 		<ClayDropDown
 			active={active}
-			onActiveChange={newVal => setActive(newVal)}
+			onActiveChange={(newVal) => setActive(newVal)}
 			trigger={
 				<ClayButton
 					className={

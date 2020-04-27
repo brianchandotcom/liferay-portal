@@ -17,7 +17,7 @@ const parse = (query = '') => {
 	return query.length ? qs.parse(query.substr(1), options) : {};
 };
 
-const stringify = query => {
+const stringify = (query) => {
 	return query ? `?${qs.stringify(query, options)}` : '';
 };
 

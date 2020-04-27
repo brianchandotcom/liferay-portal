@@ -12,7 +12,7 @@
  * details.
  */
 
-export default Component => {
+export default (Component) => {
 	return class withDispatch extends Component {
 		dispatch(...args) {
 			const {dispatch} = this.context;

@@ -146,7 +146,7 @@ class MessageQueue {
 
 		return queue.map(({attemptNumber, item}) => {
 			return {
-				done: success => {
+				done: (success) => {
 					self._dequeue(item.id);
 
 					if (!success) {
@@ -184,7 +184,7 @@ class MessageQueue {
 		if (!this.processing && messages.length) {
 			const lock = new ProcessLock();
 
-			lock.acquireLock(this.name).then(success => {
+			lock.acquireLock(this.name).then((success) => {
 				if (success) {
 					this.processing = true;
 					const now = Date.now();

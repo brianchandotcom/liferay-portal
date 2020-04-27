@@ -25,10 +25,10 @@ const HEADERS = {
 const parseJSON = (response, resolve, reject) =>
 	response
 		.text()
-		.then(text => resolve(text ? JSON.parse(text) : {}))
-		.catch(error => reject(error));
+		.then((text) => resolve(text ? JSON.parse(text) : {}))
+		.catch((error) => reject(error));
 
-const parseResponse = response =>
+const parseResponse = (response) =>
 	new Promise((resolve, reject) => {
 		if (response.ok) {
 			parseJSON(response, resolve, reject);
@@ -43,9 +43,9 @@ export const addItem = (endpoint, item) =>
 		body: JSON.stringify(item),
 		headers: HEADERS,
 		method: 'POST',
-	}).then(response => parseResponse(response));
+	}).then((response) => parseResponse(response));
 
-export const confirmDelete = endpoint => item =>
+export const confirmDelete = (endpoint) => (item) =>
 	new Promise((resolve, reject) => {
 		const confirmed = confirm(
 			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
@@ -61,7 +61,7 @@ export const confirmDelete = endpoint => item =>
 						)
 					)
 				)
-				.catch(error => {
+				.catch((error) => {
 					errorToast(
 						Liferay.Language.get('the-item-could-not-be-deleted')
 					);
@@ -73,17 +73,17 @@ export const confirmDelete = endpoint => item =>
 		}
 	});
 
-export const deleteItem = endpoint =>
+export const deleteItem = (endpoint) =>
 	fetch(getURL(endpoint), {
 		headers: HEADERS,
 		method: 'DELETE',
-	}).then(response => parseResponse(response));
+	}).then((response) => parseResponse(response));
 
 export const getItem = (endpoint, params) =>
 	fetch(getURL(endpoint, params), {
 		headers: HEADERS,
 		method: 'GET',
-	}).then(response => parseResponse(response));
+	}).then((response) => parseResponse(response));
 
 export const getURL = (path, params) => {
 	params = {
@@ -95,7 +95,7 @@ export const getURL = (path, params) => {
 	const uri = new URL(`${window.location.origin}${path}`);
 	const keys = Object.keys(params);
 
-	keys.forEach(key => uri.searchParams.set(key, params[key]));
+	keys.forEach((key) => uri.searchParams.set(key, params[key]));
 
 	return uri.toString();
 };
@@ -104,11 +104,11 @@ export const request = (endpoint, method = 'GET') =>
 	fetch(getURL(endpoint), {
 		headers: HEADERS,
 		method,
-	}).then(response => parseResponse(response));
+	}).then((response) => parseResponse(response));
 
 export const updateItem = (endpoint, item, params) =>
 	fetch(getURL(endpoint, params), {
 		body: JSON.stringify(item),
 		headers: HEADERS,
 		method: 'PUT',
-	}).then(response => parseResponse(response));
+	}).then((response) => parseResponse(response));

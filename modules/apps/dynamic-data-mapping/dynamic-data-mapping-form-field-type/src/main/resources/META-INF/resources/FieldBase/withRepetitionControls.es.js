@@ -12,7 +12,7 @@
  * details.
  */
 
-export default Component => {
+export default (Component) => {
 	return class withRepeatableFields extends Component {
 		remove() {
 			this.dispatch('fieldRemoved', this.name);

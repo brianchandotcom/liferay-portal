@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var STR_DIV = 'div';
 
 	CKEDITOR.plugins.add('media', {
@@ -300,7 +300,7 @@
 				});
 			}
 
-			editor.on('doubleclick', event => {
+			editor.on('doubleclick', (event) => {
 				var element = event.data.element;
 
 				var type;
@@ -318,7 +318,7 @@
 			});
 
 			if (editor.contextMenu) {
-				editor.contextMenu.addListener(element => {
+				editor.contextMenu.addListener((element) => {
 					var value = {};
 
 					if (!element.isReadOnly()) {
@@ -427,7 +427,7 @@
 
 				divNode.getChild(1).remove();
 
-				AUI().use('aui-node', A => {
+				AUI().use('aui-node', (A) => {
 					var scriptNode = A.Node.create(
 						'<script type="text/javascript">' +
 							scriptContent +

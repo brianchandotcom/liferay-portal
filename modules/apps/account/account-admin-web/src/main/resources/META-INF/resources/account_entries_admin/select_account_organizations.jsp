@@ -61,7 +61,7 @@ SelectAccountOrganizationsManagementToolbarDisplayContext selectAccountOrganizat
 		'<portlet:namespace />organizations'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		var selectedItems = event.elements.allSelectedElements;
 
 		var result = {};

@@ -66,7 +66,7 @@ class AutoSave extends Component {
 			body: this._getFormData(saveAsDraft),
 			url: this.props.url,
 		})
-			.then(responseData => {
+			.then((responseData) => {
 				this._pendingRequest = null;
 
 				this._defineIds(responseData);
@@ -80,7 +80,7 @@ class AutoSave extends Component {
 
 				return responseData;
 			})
-			.catch(reason => {
+			.catch((reason) => {
 				this._pendingRequest = null;
 
 				throw reason;

@@ -167,7 +167,7 @@ portletURL.setParameter("tabs1", tabs1);
 </div>
 
 <aui:script use="aui-base,aui-io-deprecated">
-	AUI().ready(function() {
+	AUI().ready(function () {
 		Liferay.Microblogs.init({
 			baseActionURL:
 				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
@@ -182,7 +182,7 @@ portletURL.setParameter("tabs1", tabs1);
 		'#p_p_id<portlet:namespace /> .microblogs-container'
 	);
 
-	var showComments = function(microblogsEntryId) {
+	var showComments = function (microblogsEntryId) {
 		var uri =
 			'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/microblogs/view_comments.jsp" /></portlet:renderURL>';
 
@@ -222,7 +222,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 	microblogsContainer.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			showComments(
@@ -234,7 +234,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 	microblogsContainer.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			var uri = event.currentTarget.getAttribute('href');
@@ -277,13 +277,13 @@ portletURL.setParameter("tabs1", tabs1);
 
 	microblogsContainer.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			if (confirm('Are you sure you want to delete this post?')) {
 				Liferay.Util.fetch(event.currentTarget.getAttribute('href'), {
 					method: 'POST',
-				}).then(function() {
+				}).then(function () {
 					var updateContainer = A.one(
 						'#p_p_id<portlet:namespace /> .portlet-body'
 					);

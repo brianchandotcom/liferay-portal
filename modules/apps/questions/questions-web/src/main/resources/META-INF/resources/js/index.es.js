@@ -16,7 +16,7 @@ import React from 'react';
 
 import App from './App.es';
 
-export default function(props) {
+export default function (props) {
 	return (
 		<div className="questions-root">
 			<App {...props} />

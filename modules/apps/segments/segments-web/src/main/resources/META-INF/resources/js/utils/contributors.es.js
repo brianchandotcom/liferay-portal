@@ -58,13 +58,13 @@ export function initialContributorsToContributors(
 ) {
 	const DEFAULT_CONTRIBUTOR = {conjunctionId: CONJUNCTIONS.AND};
 	const {conjunctionId: initialConjunction} =
-		initialContributors.find(c => c.conjunctionId) || DEFAULT_CONTRIBUTOR;
+		initialContributors.find((c) => c.conjunctionId) || DEFAULT_CONTRIBUTOR;
 
-	return initialContributors.map(initialContributor => {
+	return initialContributors.map((initialContributor) => {
 		const propertyGroup =
 			propertyGroups &&
 			propertyGroups.find(
-				propertyGroup =>
+				(propertyGroup) =>
 					initialContributor.propertyKey === propertyGroup.propertyKey
 			);
 
@@ -96,7 +96,7 @@ export function initialContributorsToContributors(
  * @return {Contributor[]} contributors
  */
 export function applyCriteriaChangeToContributors(contributors, change) {
-	return contributors.map(contributor => {
+	return contributors.map((contributor) => {
 		const {conjunctionId, properties, propertyKey} = contributor;
 
 		return change.propertyKey === propertyKey
@@ -125,14 +125,14 @@ export function applyConjunctionChangeToContributor(
 	conjunctionName
 ) {
 	const conjunctionIndex = SUPPORTED_CONJUNCTIONS.findIndex(
-		item => item.name === conjunctionName
+		(item) => item.name === conjunctionName
 	);
 
 	if (conjunctionIndex === -1) {
 		return contributors;
 	}
 
-	const nextContributors = contributors.map(contributor => ({
+	const nextContributors = contributors.map((contributor) => ({
 		...contributor,
 		conjunctionId: conjunctionName,
 	}));

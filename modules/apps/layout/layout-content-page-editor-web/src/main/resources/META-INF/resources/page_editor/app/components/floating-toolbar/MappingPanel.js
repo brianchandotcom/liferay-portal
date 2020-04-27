@@ -28,7 +28,7 @@ export function MappingPanel({item}) {
 	const {editableId, editableType, fragmentEntryLinkId} = item;
 
 	const dispatch = useDispatch();
-	const state = useSelector(state => state);
+	const state = useSelector((state) => state);
 
 	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
 
@@ -44,7 +44,7 @@ export function MappingPanel({item}) {
 		processoryKey
 	);
 
-	const updateEditableValue = newEditableValue => {
+	const updateEditableValue = (newEditableValue) => {
 		const nextEditableValues = {
 			...fragmentEntryLink.editableValues,
 			[processoryKey]: {

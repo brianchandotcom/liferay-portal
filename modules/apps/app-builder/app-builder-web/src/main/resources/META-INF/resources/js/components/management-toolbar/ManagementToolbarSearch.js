@@ -32,7 +32,7 @@ export default ({
 
 	return (
 		<ClayManagementToolbar.Search
-			onSubmit={event => {
+			onSubmit={(event) => {
 				event.preventDefault();
 				onSubmit(value.trim());
 			}}

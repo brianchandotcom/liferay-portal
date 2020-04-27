@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var A = AUI();
 
 	var AArray = A.Array;
@@ -28,7 +28,7 @@
 	var TPL_REPLACE_HTML =
 		'<span class="' + CSS_LFR_AC_CONTENT + '">{html}</span>';
 
-	var AutoCompleteCKEditor = function() {};
+	var AutoCompleteCKEditor = function () {};
 
 	AutoCompleteCKEditor.ATTRS = {
 		editor: {
@@ -56,7 +56,7 @@
 				editor.on('key', A.bind('_onEditorKey', instance)),
 			];
 
-			editor.once('instanceReady', event => {
+			editor.once('instanceReady', (event) => {
 				var editorBody = A.one(event.editor.element.$);
 
 				instance._eventHandles.push(
@@ -71,9 +71,7 @@
 		_getACPositionBase() {
 			var instance = this;
 
-			var inline = this.get(STR_EDITOR)
-				.editable()
-				.isInline();
+			var inline = this.get(STR_EDITOR).editable().isInline();
 
 			if (!instance._contentsContainer) {
 				var inputElement = instance._getInputElement();
@@ -176,7 +174,7 @@
 
 			var triggers = instance._getTriggers();
 
-			AArray.each(triggers, item => {
+			AArray.each(triggers, (item) => {
 				var triggerPosition = query.lastIndexOf(item);
 
 				if (triggerPosition !== -1 && triggerPosition > triggerIndex) {
@@ -188,7 +186,7 @@
 			if (triggerIndex === -1) {
 				var triggerWalker = instance._getWalker(triggerContainer);
 
-				triggerWalker.guard = function(node) {
+				triggerWalker.guard = function (node) {
 					var hasTrigger = false;
 
 					if (
@@ -197,7 +195,7 @@
 					) {
 						var nodeText = node.getText();
 
-						AArray.each(triggers, item => {
+						AArray.each(triggers, (item) => {
 							var triggerPosition = nodeText.lastIndexOf(item);
 
 							if (

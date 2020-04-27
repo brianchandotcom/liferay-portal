@@ -134,7 +134,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	var deleteSegmentsEntries = function() {
+	var deleteSegmentsEntries = function () {
 		if (
 			confirm(
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
@@ -150,10 +150,10 @@ request.setAttribute("view.jsp-eventName", eventName);
 		deleteSegmentsEntries: deleteSegmentsEntries,
 	};
 
-	Liferay.componentReady('segmentsEntriesManagementToolbar').then(function(
+	Liferay.componentReady('segmentsEntriesManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {
@@ -177,7 +177,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 		'<portlet:namespace/>updateSegmentsEntrySiteRolesFm'
 	);
 
-	dom.delegate(document, 'click', '.assign-site-roles-link', function(event) {
+	dom.delegate(document, 'click', '.assign-site-roles-link', function (event) {
 		var link = dom.closest(event.target, '.assign-site-roles-link');
 
 		var itemSelectorURL = link.dataset.itemselectorurl;
@@ -189,7 +189,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 			url: itemSelectorURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', function(event) {
+		itemSelectorDialog.on('selectedItemChange', function (event) {
 			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {

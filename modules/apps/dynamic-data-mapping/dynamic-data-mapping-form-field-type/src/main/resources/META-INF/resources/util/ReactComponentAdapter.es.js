@@ -100,7 +100,7 @@ function getConnectedReactComponentAdapter(ReactComponent, variant) {
 			const props = {};
 			Object.keys(config)
 				.concat(CONFIG_DEFAULT)
-				.forEach(key => {
+				.forEach((key) => {
 					if (!CONFIG_BLACKLIST.includes(key)) {
 						props[key] = Config.any();
 					}
@@ -134,7 +134,7 @@ function getConnectedReactComponentAdapter(ReactComponent, variant) {
 				const newValues = {};
 				const keys = Object.keys(changes);
 
-				keys.forEach(key => {
+				keys.forEach((key) => {
 					if (!CONFIG_BLACKLIST.includes(key)) {
 						newValues[key] = changes[key].newVal;
 					}
@@ -206,7 +206,7 @@ const ObserverSubscribe = ({children, observer}) => {
 	const [state, setState] = useState({});
 
 	useEffect(() => {
-		const change = value => setState({...state, ...value});
+		const change = (value) => setState({...state, ...value});
 
 		observer.subscribe(change);
 

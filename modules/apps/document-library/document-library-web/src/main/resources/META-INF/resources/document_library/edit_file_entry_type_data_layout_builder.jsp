@@ -101,7 +101,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	function <portlet:namespace />saveStructure() {
 		Liferay.componentReady(
 			'<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
-		).then(function(dataLayoutBuilder) {
+		).then(function (dataLayoutBuilder) {
 			var name =
 				document.<portlet:namespace />fm[
 					'<portlet:namespace />name_' + themeDisplay.getLanguageId()
@@ -130,7 +130,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 						},
 					},
 				})
-				.then(function(dataLayout) {
+				.then(function (dataLayout) {
 					document.<portlet:namespace />fm[
 						'<portlet:namespace />ddmStructureId'
 					].value = dataLayout.id;

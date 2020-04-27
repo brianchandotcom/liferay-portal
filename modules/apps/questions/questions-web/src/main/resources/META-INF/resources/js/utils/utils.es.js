@@ -154,5 +154,5 @@ export function slugToText(slug) {
 }
 
 export function historyPushWithSlug(push) {
-	return url => push(stringToSlug(url));
+	return (url) => push(stringToSlug(url));
 }

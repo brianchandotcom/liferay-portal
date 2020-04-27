@@ -104,7 +104,7 @@ SearchContainer searchContainer = editUserGroupAssignmentsManagementToolbarDispl
 		'<portlet:namespace />selectUsers'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		var selectedItems = event.elements.allSelectedElements;
 
 		var data = [];

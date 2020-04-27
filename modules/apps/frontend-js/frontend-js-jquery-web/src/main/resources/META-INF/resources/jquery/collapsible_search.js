@@ -12,8 +12,8 @@
  * details.
  */
 
-+(function($) {
-	var CollapsibleSearch = function(element) {
++(function ($) {
+	var CollapsibleSearch = function (element) {
 		var instance = this;
 
 		instance.$element = $(element);
@@ -57,7 +57,7 @@
 			var basicSearchSlider = basicSearch.find('.basic-search-slider');
 			var basicSearchSubmit = basicSearch.find('[type="submit"]');
 
-			var complete = function() {
+			var complete = function () {
 				basicSearch.removeClass('basic-search-transition');
 
 				basicSearch.trigger('closed.lexicon.collapsible.search');
@@ -93,9 +93,7 @@
 		},
 
 		focus(event) {
-			$(event.currentTarget)
-				.closest('.basic-search')
-				.addClass('focus');
+			$(event.currentTarget).closest('.basic-search').addClass('focus');
 		},
 
 		submit(event) {
@@ -111,7 +109,7 @@
 					'.basic-search-slider'
 				);
 
-				var complete = function() {
+				var complete = function () {
 					basicSearch.removeClass('basic-search-transition');
 					basicSearchInput.focus();
 
@@ -143,8 +141,8 @@
 		},
 	};
 
-	var Plugin = function(option) {
-		return this.each(function() {
+	var Plugin = function (option) {
+		return this.each(function () {
 			var $this = $(this);
 
 			var data = $this.data('lexicon.collapsible-search');
@@ -166,7 +164,7 @@
 	$.fn.collapsibleSearch = Plugin;
 	$.fn.collapsibleSearch.Constructor = CollapsibleSearch;
 
-	$.fn.collapsibleSearch.noConflict = function() {
+	$.fn.collapsibleSearch.noConflict = function () {
 		$.fn.collapsibleSearch = old;
 
 		return this;

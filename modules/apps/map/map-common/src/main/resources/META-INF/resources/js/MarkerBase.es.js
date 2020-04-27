@@ -48,7 +48,7 @@ class MarkerBase extends State {
 
 		this[functionName] =
 			this[functionName] ||
-			(nativeEvent => {
+			((nativeEvent) => {
 				this._handleNativeEvent(nativeEvent, externalEventType);
 			});
 

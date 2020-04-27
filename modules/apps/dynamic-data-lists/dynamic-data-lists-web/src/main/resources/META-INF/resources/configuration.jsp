@@ -243,7 +243,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	var submitButton = A.one('#<portlet:namespace />fm_submit');
 
 	if (submitButton) {
-		submitButton.on('click', function(event) {
+		submitButton.on('click', function (event) {
 			if (form) {
 				form.submit();
 			}
@@ -255,7 +255,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectRecordSet',
-		function(recordSetId, recordSetName) {
+		function (recordSetId, recordSetName) {
 			var A = AUI();
 
 			document.<portlet:namespace />fm.<portlet:namespace />recordSetId.value = recordSetId;

@@ -95,7 +95,7 @@ export function minimizePortlet(portletSelector, trigger, options) {
 				body: formData,
 				method: 'POST',
 			})
-				.then(response => {
+				.then((response) => {
 					if (response.ok && minimized) {
 						const params = {
 							doAsUserId: options.doAsUserId,
@@ -112,8 +112,8 @@ export function minimizePortlet(portletSelector, trigger, options) {
 								params
 							)
 						)
-							.then(response => response.text())
-							.then(response => {
+							.then((response) => response.text())
+							.then((response) => {
 								const range = document.createRange();
 
 								range.selectNode(portlet);
@@ -126,14 +126,14 @@ export function minimizePortlet(portletSelector, trigger, options) {
 
 								portlet.appendChild(fragment);
 							})
-							.catch(error => {
+							.catch((error) => {
 								if (process.env.NODE_ENV === 'development') {
 									console.error(error);
 								}
 							});
 					}
 				})
-				.catch(error => {
+				.catch((error) => {
 					if (process.env.NODE_ENV === 'development') {
 						console.error(error);
 					}

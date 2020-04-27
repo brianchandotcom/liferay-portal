@@ -62,7 +62,7 @@ const config = {
 	plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
 };
 
-module.exports = env => {
+module.exports = (env) => {
 	return env === 'development'
 		? {
 				...config,

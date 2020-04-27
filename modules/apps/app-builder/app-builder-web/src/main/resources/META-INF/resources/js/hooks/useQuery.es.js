@@ -45,7 +45,7 @@ export const toQuery = (string, defaultQuery = {}) => {
 export const toQueryString = (object, queryString = '') => {
 	const params = new URLSearchParams(queryString);
 
-	Object.keys(object).forEach(key => {
+	Object.keys(object).forEach((key) => {
 		if (object[key]) {
 			params.set(key, object[key]);
 		}
@@ -71,6 +71,6 @@ export default (history, defaultQuery = {}) => {
 
 	return [
 		query,
-		query => history.push(`${pathname}?${toQueryString(query, search)}`),
+		(query) => history.push(`${pathname}?${toQueryString(query, search)}`),
 	];
 };

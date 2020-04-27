@@ -31,7 +31,7 @@ const Item = ({totalCount, ...task}) => {
 	const [checked, setChecked] = useState(false);
 
 	useEffect(() => {
-		setChecked(!!tasks.find(item => item.id === id));
+		setChecked(!!tasks.find((item) => item.id === id));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tasks]);
 
@@ -41,7 +41,7 @@ const Item = ({totalCount, ...task}) => {
 
 			const updatedItems = target.checked
 				? [...tasks, task]
-				: tasks.filter(task => task.id !== id);
+				: tasks.filter((task) => task.id !== id);
 
 			setSelectTasks({
 				selectAll: totalCount > 0 && totalCount === updatedItems.length,

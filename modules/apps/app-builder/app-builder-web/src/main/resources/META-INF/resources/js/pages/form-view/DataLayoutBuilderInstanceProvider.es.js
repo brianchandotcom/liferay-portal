@@ -26,21 +26,23 @@ export default ({children, dataLayoutBuilder}) => {
 		FormViewContext
 	);
 	const deleteDefinitionField = useDeleteDefinitionField({dataLayoutBuilder});
-	const onDeleteDefinitionField = useDeleteDefinitionFieldModal(fieldName => {
-		deleteDefinitionField(fieldName);
-	});
+	const onDeleteDefinitionField = useDeleteDefinitionFieldModal(
+		(fieldName) => {
+			deleteDefinitionField(fieldName);
+		}
+	);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
 
 		provider.props.fieldActions = [
 			{
-				action: fieldName =>
+				action: (fieldName) =>
 					dataLayoutBuilder.dispatch('fieldDuplicated', {fieldName}),
 				label: Liferay.Language.get('duplicate'),
 			},
 			{
-				action: fieldName => {
+				action: (fieldName) => {
 					dispatch({
 						payload: {fieldName},
 						type: DataLayoutBuilderActions.DELETE_DATA_LAYOUT_FIELD,
@@ -52,7 +54,7 @@ export default ({children, dataLayoutBuilder}) => {
 				separator: true,
 			},
 			{
-				action: fieldName => {
+				action: (fieldName) => {
 					onDeleteDefinitionField(fieldName);
 				},
 				label: Liferay.Language.get('delete-from-object'),
@@ -66,7 +68,7 @@ export default ({children, dataLayoutBuilder}) => {
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
 
-		provider.props.fieldNameGenerator = desiredFieldName =>
+		provider.props.fieldNameGenerator = (desiredFieldName) =>
 			generateDataDefinitionFieldName(dataDefinition, desiredFieldName);
 	}, [dataDefinition, dataLayoutBuilder]);
 

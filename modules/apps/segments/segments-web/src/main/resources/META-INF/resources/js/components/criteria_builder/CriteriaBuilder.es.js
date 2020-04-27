@@ -73,7 +73,7 @@ class CriteriaBuilder extends Component {
 			.filter(({items}) => {
 				return items ? items.length : true;
 			})
-			.map(item => {
+			.map((item) => {
 				let cleanedItem = item;
 
 				if (item.items) {
@@ -111,7 +111,7 @@ class CriteriaBuilder extends Component {
 	 * Cleans and updates the criteria with the newer criteria.
 	 * @param {Object} newCriteria The criteria with the most recent changes.
 	 */
-	_handleCriteriaChange = newCriteria => {
+	_handleCriteriaChange = (newCriteria) => {
 		const items = this._cleanCriteriaMapItems([newCriteria], true);
 
 		this.props.onChange(items[items.length - 1], this.props.propertyKey);
@@ -195,7 +195,7 @@ class CriteriaBuilder extends Component {
 
 		return {
 			...criteria,
-			items: updatedCriteriaItems.map(item => {
+			items: updatedCriteriaItems.map((item) => {
 				return this._isGroupItem(item)
 					? this._searchAndUpdateCriteria(
 							item,

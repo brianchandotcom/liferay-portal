@@ -43,7 +43,7 @@ const NEST_THRESHOLD = 30;
  * @return {HTMLElement}
  */
 
-const getNearestMenuItem = function(originMenuItem, placeholder) {
+const getNearestMenuItem = function (originMenuItem, placeholder) {
 	const container = toElement(`.${MENU_CONTAINER_CLASSNAME}`);
 	const originMenuItemId = getId(originMenuItem);
 	const originMenuItemRegion = position.getRegion(placeholder);
@@ -51,13 +51,13 @@ const getNearestMenuItem = function(originMenuItem, placeholder) {
 	return Array.prototype.slice
 		.call(document.querySelectorAll(`.${MENU_ITEM_CLASSNAME}`))
 		.filter(
-			menuItem =>
+			(menuItem) =>
 				contains(container, menuItem) &&
 				!contains(originMenuItem, menuItem) &&
 				getId(menuItem) !== originMenuItemId &&
 				!hasClass(menuItem, MENU_ITEM_DRAGGING_CLASSNAME)
 		)
-		.map(menuItem => {
+		.map((menuItem) => {
 			const menuItemRegion = position.getRegion(menuItem);
 
 			const distance = Math.sqrt(
@@ -93,7 +93,7 @@ const getNearestMenuItem = function(originMenuItem, placeholder) {
  * @review
  */
 
-const insertAtPosition = function(parentMenuItem, menuItem, position) {
+const insertAtPosition = function (parentMenuItem, menuItem, position) {
 	const children = getChildren(parentMenuItem);
 
 	if (position >= children.length) {
@@ -109,7 +109,7 @@ const insertAtPosition = function(parentMenuItem, menuItem, position) {
  * @param {HTMLElement} menuItem
  */
 
-const insertAtTop = function(menuItem) {
+const insertAtTop = function (menuItem) {
 	const container = toElement(`.${MENU_CONTAINER_CLASSNAME}`);
 
 	const children = getChildren(container);
@@ -130,7 +130,7 @@ const insertAtTop = function(menuItem) {
  * @return {boolean}
  */
 
-const isOver = function(menuItemA, menuItemB) {
+const isOver = function (menuItemA, menuItemB) {
 	const menuItemARegion = position.getRegion(menuItemA);
 	const menuItemBRegion = position.getRegion(menuItemB);
 
@@ -157,7 +157,7 @@ const shouldBeNested = (menuItem, parentMenuItem) => {
 
 		const parentWithChildren =
 			getChildren(parentMenuItem).filter(
-				childMenuItem => getId(childMenuItem) !== getId(menuItem)
+				(childMenuItem) => getId(childMenuItem) !== getId(menuItem)
 			).length > 0;
 
 		nested = nestedInParent || parentWithChildren;

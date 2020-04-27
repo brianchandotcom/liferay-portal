@@ -132,12 +132,12 @@ if (groupIds.length == 1) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />setPermissions',
-		function(uri) {
+		function (uri) {
 			Liferay.Util.fetch(uri, {method: 'POST'})
-				.then(function(response) {
+				.then(function (response) {
 					return response.text();
 				})
-				.then(function() {
+				.then(function () {
 					Liferay.Util.getWindow(
 						'<portlet:namespace />editDefaultFilePermissionsDialog'
 					).destroy();

@@ -42,7 +42,7 @@ function AssetCategoriesSelector({
 						inputName={inputName}
 						key={vocabulary.id}
 						label={label}
-						onSelectedItemsChange={selectedItems => {
+						onSelectedItemsChange={(selectedItems) => {
 							const newVocabulary = {
 								...vocabulary,
 								selectedItems,

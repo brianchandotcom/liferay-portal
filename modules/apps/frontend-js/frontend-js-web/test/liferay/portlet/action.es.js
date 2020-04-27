@@ -37,7 +37,7 @@ describe('PortletHub', () => {
 			global.fetch.mockResponse(JSON.stringify([portletA]));
 
 			return Promise.all([register(portletA), register(portletB)]).then(
-				values => {
+				(values) => {
 					hubA = values[0];
 
 					listenerA = hubA.addEventListener(
@@ -209,7 +209,7 @@ describe('PortletHub', () => {
 				register(portletB),
 				register(portletC),
 				register(portletD),
-			]).then(values => {
+			]).then((values) => {
 				hubA = values[0];
 
 				listenerA = hubA.addEventListener(

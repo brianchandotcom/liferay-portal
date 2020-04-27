@@ -280,7 +280,7 @@ if (recurrence != null) {
 
 	recurrenceDialogController.saveState();
 
-	var getRecurrenceDialogTitle = function() {
+	var getRecurrenceDialogTitle = function () {
 		var summary = recurrenceDialogController.get('summary');
 
 		return (
@@ -289,12 +289,12 @@ if (recurrence != null) {
 		);
 	};
 
-	window.<portlet:namespace />openRecurrenceDialog = function(visible) {
+	window.<portlet:namespace />openRecurrenceDialog = function (visible) {
 		recurrenceContainerNode.toggle(visible);
 
 		editEventFormNode.once(
 			'key',
-			function(event) {
+			function (event) {
 				if (window.<portlet:namespace />recurrenceDialog.get('visible')) {
 					event.stopPropagation();
 				}
@@ -354,7 +354,7 @@ if (recurrence != null) {
 			'footer'
 		);
 
-		var destroyRecurrenceDialog = function(event) {
+		var destroyRecurrenceDialog = function (event) {
 			if (event.portletId === '<%= portletDisplay.getId() %>') {
 				window.<portlet:namespace />recurrenceDialog.destroy();
 
@@ -367,7 +367,7 @@ if (recurrence != null) {
 		Liferay.on('destroyPortlet', destroyRecurrenceDialog);
 	};
 
-	repeatCheckboxNode.on('change', function(event) {
+	repeatCheckboxNode.on('change', function (event) {
 		var checked = event.currentTarget.get('checked');
 
 		if (!checked) {
@@ -380,17 +380,17 @@ if (recurrence != null) {
 		<portlet:namespace />openRecurrenceDialog(checked);
 	});
 
-	summaryNode.on('click', function(event) {
+	summaryNode.on('click', function (event) {
 		<portlet:namespace />openRecurrenceDialog(true);
 
 		event.halt();
 	});
 
-	recurrenceDialogController.on('recurrenceChange', function(event) {
+	recurrenceDialogController.on('recurrenceChange', function (event) {
 		window.<portlet:namespace />updateSummaries();
 	});
 
-	window.<portlet:namespace />updateSummary = function(element) {
+	window.<portlet:namespace />updateSummary = function (element) {
 		var previewNode = A.one(element);
 
 		if (previewNode) {
@@ -398,7 +398,7 @@ if (recurrence != null) {
 		}
 	};
 
-	window.<portlet:namespace />updateSummaries = function() {
+	window.<portlet:namespace />updateSummaries = function () {
 		window.<portlet:namespace />updateSummary(summaryNode);
 		window.<portlet:namespace />updateSummary(
 			'#<portlet:namespace />summaryPreview'

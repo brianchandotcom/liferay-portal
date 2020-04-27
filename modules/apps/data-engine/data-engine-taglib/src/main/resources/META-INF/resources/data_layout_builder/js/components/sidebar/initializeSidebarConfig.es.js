@@ -54,7 +54,7 @@ const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
 };
 
 function augmentPanelData(sidebarPanels) {
-	return sidebarPanels.map(panel => {
+	return sidebarPanels.map((panel) => {
 		if (isSeparator(panel) || panel.isLink) {
 			return panel;
 		}

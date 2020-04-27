@@ -38,10 +38,10 @@ export default withRouter(
 				getRelatedThreads(
 					question.headline,
 					context.siteKey
-				).then(data =>
+				).then((data) =>
 					setRelatedQuestions(
 						data.items.filter(
-							otherQuestion => otherQuestion.id !== question.id
+							(otherQuestion) => otherQuestion.id !== question.id
 						)
 					)
 				);
@@ -59,7 +59,7 @@ export default withRouter(
 						<hr />
 
 						<div className="row">
-							{relatedQuestions.map(relatedQuestion => (
+							{relatedQuestions.map((relatedQuestion) => (
 								<div
 									className="col-lg-3 col-md-4 col-sm-6 p-3 position-relative"
 									key={relatedQuestion.id}

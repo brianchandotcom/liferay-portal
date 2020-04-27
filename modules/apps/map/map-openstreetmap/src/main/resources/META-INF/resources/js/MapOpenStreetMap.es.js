@@ -56,7 +56,7 @@ class MapOpenStreetMap extends MapBase {
 		if (this.data && this.data.features) {
 			const bounds = new L.LatLngBounds();
 
-			this.data.features.forEach(feature =>
+			this.data.features.forEach((feature) =>
 				bounds.extend(
 					new L.LatLng(
 						feature.geometry.coordinates[1],

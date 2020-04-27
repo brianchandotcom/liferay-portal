@@ -25,7 +25,7 @@ const AssigneeInput = ({setAssigneeId, taskId}) => {
 	});
 
 	const handleSelect = useCallback(
-		newAssignee => {
+		(newAssignee) => {
 			const assigneeId = newAssignee ? newAssignee.id : undefined;
 
 			setAssigneeId(assigneeId);

@@ -88,17 +88,17 @@ if (selLayout != null) {
 	var layoutUuid = A.one('#<portlet:namespace />layoutUuid');
 	var privateLayout = A.one('#<portlet:namespace />privateLayout');
 
-	A.one('#<portlet:namespace />chooseLayout').on('click', function(event) {
+	A.one('#<portlet:namespace />chooseLayout').on('click', function (event) {
 		Liferay.Loader.require(
 			'frontend-js-web/liferay/ItemSelectorDialog.es',
-			function(ItemSelectorDialog) {
+			function (ItemSelectorDialog) {
 				var itemSelectorDialog = new ItemSelectorDialog.default({
 					eventName: '<%= eventName %>',
 					title: '<liferay-ui:message key="select-layout" />',
 					url: '<%= itemSelectorURL.toString() %>',
 				});
 
-				itemSelectorDialog.on('selectedItemChange', function(event) {
+				itemSelectorDialog.on('selectedItemChange', function (event) {
 					var selectedItem = event.selectedItem;
 
 					if (selectedItem) {
@@ -120,7 +120,7 @@ if (selLayout != null) {
 		);
 	});
 
-	layoutItemRemove.on('click', function(event) {
+	layoutItemRemove.on('click', function (event) {
 		layoutNameInput.html('<liferay-ui:message key="none" />');
 
 		layoutUuid.val('');

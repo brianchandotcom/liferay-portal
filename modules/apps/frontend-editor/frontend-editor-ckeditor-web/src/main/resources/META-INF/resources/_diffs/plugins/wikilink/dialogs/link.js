@@ -12,14 +12,14 @@
  * details.
  */
 
-CKEDITOR.dialog.add('link', editor => {
+CKEDITOR.dialog.add('link', (editor) => {
 	var LANG_COMMON = editor.lang.common;
 
 	var LANG_LINK = editor.lang.link;
 
 	var PLUGIN = CKEDITOR.plugins.link;
 
-	var parseLink = function(editor, element) {
+	var parseLink = function (editor, element) {
 		var instance = this;
 
 		var data = {

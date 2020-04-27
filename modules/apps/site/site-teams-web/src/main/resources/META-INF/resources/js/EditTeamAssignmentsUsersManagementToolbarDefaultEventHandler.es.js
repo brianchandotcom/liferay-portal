@@ -23,13 +23,13 @@ class EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler extends Defau
 			url: itemData.selectUserURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				const addTeamUsersFm = this.one('#addTeamUsersFm');
 
-				selectedItem.forEach(item => {
+				selectedItem.forEach((item) => {
 					dom.append(addTeamUsersFm, item);
 				});
 

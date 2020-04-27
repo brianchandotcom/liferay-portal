@@ -32,9 +32,9 @@ const VelocityChart = ({timeRange, velocityData = {}, velocityUnit}) => {
 
 	const {histograms = []} = velocityData;
 
-	const keys = histograms.map(item => moment.utc(item.key).toDate());
+	const keys = histograms.map((item) => moment.utc(item.key).toDate());
 
-	const dataValues = [[...histograms.map(item => item.value)]];
+	const dataValues = [[...histograms.map((item) => item.value)]];
 
 	const {intervals, maxValue} = getAxisMeasuresFromData(dataValues);
 
@@ -43,7 +43,7 @@ const VelocityChart = ({timeRange, velocityData = {}, velocityUnit}) => {
 	const data = {
 		columns: [
 			['x', ...keys],
-			[CHART_DATA_ID_1, ...histograms.map(item => item.value)],
+			[CHART_DATA_ID_1, ...histograms.map((item) => item.value)],
 		],
 		x: 'x',
 	};
@@ -67,7 +67,7 @@ const VelocityChart = ({timeRange, velocityData = {}, velocityUnit}) => {
 							tick: {
 								centered: false,
 								fit: true,
-								format: date =>
+								format: (date) =>
 									formatXAxisDate(
 										date,
 										isAmPm,
@@ -101,7 +101,7 @@ const VelocityChart = ({timeRange, velocityData = {}, velocityUnit}) => {
 							front: false,
 						},
 						x: {
-							lines: dataX.map(key => ({value: key})),
+							lines: dataX.map((key) => ({value: key})),
 						},
 					}}
 					height={190}
@@ -135,8 +135,8 @@ const VelocityChart = ({timeRange, velocityData = {}, velocityUnit}) => {
 	);
 };
 
-const Tooltip = (isAmPm, timeRange, unitKey, unitName) => dataPoints => {
-	const isValidDate = date => {
+const Tooltip = (isAmPm, timeRange, unitKey, unitName) => (dataPoints) => {
+	const isValidDate = (date) => {
 		if (date instanceof Date && !isNaN(date.getTime())) {
 			return true;
 		}

@@ -29,7 +29,7 @@ const useFilterState = (prefixedKey, withoutRouteParams) => {
 		let selectedItems = buildFallbackItems(selectedKeys) || [];
 
 		if (items.length && selectedKeys) {
-			selectedItems = items.filter(item =>
+			selectedItems = items.filter((item) =>
 				selectedKeys.includes(item.key)
 			);
 		}

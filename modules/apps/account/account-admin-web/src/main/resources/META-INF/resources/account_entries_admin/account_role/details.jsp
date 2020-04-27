@@ -111,7 +111,7 @@ if (accountRole != null) {
 			if (nameInput && titleInput) {
 				var debounce = debounceModule.default;
 
-				var handleOnTitleInput = function(event) {
+				var handleOnTitleInput = function (event) {
 					var value = event.target.value;
 
 					if (nameInput.hasAttribute('maxLength')) {

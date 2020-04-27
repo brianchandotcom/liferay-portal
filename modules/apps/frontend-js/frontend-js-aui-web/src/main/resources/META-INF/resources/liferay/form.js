@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-form',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 
 		var Lang = A.Lang;
@@ -29,7 +29,7 @@ AUI.add(
 
 		var REGEX_URL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
-		var acceptFiles = function(val, node, ruleValue) {
+		var acceptFiles = function (val, node, ruleValue) {
 			if (ruleValue && ruleValue.split(',').includes('*')) {
 				return true;
 			}
@@ -37,7 +37,7 @@ AUI.add(
 			return defaultAcceptFiles(val, node, ruleValue);
 		};
 
-		var maxFileSize = function(_val, node, ruleValue) {
+		var maxFileSize = function (_val, node, ruleValue) {
 			var nodeType = node.get('type').toLowerCase();
 
 			if (nodeType === 'file') {
@@ -47,11 +47,11 @@ AUI.add(
 			return true;
 		};
 
-		var number = function(val, _node, _ruleValue) {
+		var number = function (val, _node, _ruleValue) {
 			return REGEX_NUMBER && REGEX_NUMBER.test(val);
 		};
 
-		var url = function(val, _node, _ruleValue) {
+		var url = function (val, _node, _ruleValue) {
 			return REGEX_URL && REGEX_URL.test(val);
 		};
 
@@ -251,7 +251,7 @@ AUI.add(
 								'data-tabs-namespace'
 							);
 
-							var tabNames = AArray.map(tabs._nodes, tab => {
+							var tabNames = AArray.map(tabs._nodes, (tab) => {
 								return tab.getAttribute('data-tab-name');
 							});
 
@@ -259,7 +259,7 @@ AUI.add(
 								.getAttribute('id')
 								.slice(0, -TABS_SECTION_STR.length);
 
-							var fieldTabId = AArray.find(tabs._nodes, tab => {
+							var fieldTabId = AArray.find(tabs._nodes, (tab) => {
 								return (
 									tab
 										.getAttribute('id')
@@ -312,7 +312,7 @@ AUI.add(
 						'.panel-collapse'
 					);
 
-					collapsiblePanels.each(panel => {
+					collapsiblePanels.each((panel) => {
 						var errorFields = panel
 							.get('children')
 							.all('.has-error');

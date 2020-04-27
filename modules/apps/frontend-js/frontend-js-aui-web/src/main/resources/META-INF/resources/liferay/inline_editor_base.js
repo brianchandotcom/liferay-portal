@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-inline-editor-base',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var isNumber = Lang.isNumber;
@@ -246,8 +246,8 @@ AUI.add(
 					body: Liferay.Util.objectToFormData(namespacedData),
 					method: 'POST',
 				})
-					.then(response => response.json())
-					.then(response => {
+					.then((response) => response.json())
+					.then((response) => {
 						if (response) {
 							instance.fire('saveSuccess', autosaved);
 						}

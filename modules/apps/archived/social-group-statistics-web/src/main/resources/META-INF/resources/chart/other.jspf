@@ -115,7 +115,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 	}
 
 	var tooltip = {
-		markerLabelFunction: function(
+		markerLabelFunction: function (
 			categoryItem,
 			valueItem,
 			itemIndex,
@@ -210,7 +210,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 
 	var chart = new A.Chart(defaultConfig).render(chartContainer);
 
-	Liferay.after(['portletMoved', 'liferaypanel:collapse'], function(event) {
+	Liferay.after(['portletMoved', 'liferaypanel:collapse'], function (event) {
 		var width = chartContainer.width();
 
 		if (

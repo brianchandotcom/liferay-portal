@@ -23,7 +23,7 @@ export default function updateEditableValues({
 	isUndo = false,
 	segmentsExperienceId,
 }) {
-	return dispatch => {
+	return (dispatch) => {
 		FragmentService.updateEditableValues({
 			editableValues,
 			fragmentEntryLinkId,
@@ -42,7 +42,7 @@ export default function updateEditableValues({
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
-				}).then(pageContents => {
+				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({
 							pageContents,

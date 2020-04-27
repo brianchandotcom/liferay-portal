@@ -17,7 +17,7 @@ import React from 'react';
 
 import CriteriaSidebarItem from '../../../../src/main/resources/META-INF/resources/js/components/criteria_sidebar/CriteriaSidebarItem.es';
 
-const connectDnd = jest.fn(el => el);
+const connectDnd = jest.fn((el) => el);
 
 describe('CriteriaSidebarItem', () => {
 	afterEach(cleanup);

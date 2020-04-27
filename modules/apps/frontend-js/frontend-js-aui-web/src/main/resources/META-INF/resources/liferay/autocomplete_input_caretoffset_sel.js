@@ -21,12 +21,12 @@
 
 AUI.add(
 	'liferay-autocomplete-input-caretoffset-sel',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var DOC = A.config.doc;
 
-		var AutcompleteInputCaretOffset = function() {};
+		var AutcompleteInputCaretOffset = function () {};
 
 		AutcompleteInputCaretOffset.prototype = {
 			_getCaretOffset(node) {

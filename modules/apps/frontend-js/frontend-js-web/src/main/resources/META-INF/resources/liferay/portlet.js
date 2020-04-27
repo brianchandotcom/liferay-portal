@@ -12,7 +12,7 @@
  * details.
  */
 
-(function(A, Liferay) {
+(function (A, Liferay) {
 	var Lang = A.Lang;
 
 	var Util = Liferay.Util;
@@ -43,7 +43,7 @@
 						body: formData,
 						method: 'POST',
 					}
-				).then(response => {
+				).then((response) => {
 					if (response.ok) {
 						Liferay.fire('updatedLayout');
 					}
@@ -155,7 +155,7 @@
 	Liferay.provide(
 		Portlet,
 		'add',
-		function(options) {
+		function (options) {
 			var instance = this;
 
 			Liferay.fire('initLayout');
@@ -181,7 +181,7 @@
 			var beforePortletLoaded = options.beforePortletLoaded;
 			var onCompleteFn = options.onComplete;
 
-			var onComplete = function(portlet, portletId) {
+			var onComplete = function (portlet, portletId) {
 				if (onCompleteFn) {
 					onCompleteFn(portlet, portletId);
 				}
@@ -227,7 +227,7 @@
 
 				var nestedPortletOffset = 0;
 
-				nestedPortlets.some(nestedPortlet => {
+				nestedPortlets.some((nestedPortlet) => {
 					var nestedPortletIndex = columnPortlets.indexOf(
 						nestedPortlet
 					);
@@ -295,7 +295,7 @@
 	Liferay.provide(
 		Portlet,
 		'addHTML',
-		function(options) {
+		function (options) {
 			var instance = this;
 
 			var portletBoundary = null;
@@ -313,7 +313,7 @@
 
 			dataType = dataType.toUpperCase();
 
-			var addPortletReturn = function(html) {
+			var addPortletReturn = function (html) {
 				var container = placeHolder.get('parentNode');
 
 				var portletBound = A.Node.create('<div></div>');
@@ -378,7 +378,7 @@
 				body: Liferay.Util.objectToURLSearchParams(data),
 				method: 'POST',
 			})
-				.then(response => {
+				.then((response) => {
 					if (dataType === 'JSON') {
 						return response.json();
 					}
@@ -386,7 +386,7 @@
 						return response.text();
 					}
 				})
-				.then(response => {
+				.then((response) => {
 					if (dataType === 'HTML') {
 						addPortletReturn(response);
 					}
@@ -402,7 +402,7 @@
 						Liferay.fire('updatedLayout');
 					}
 				})
-				.catch(error => {
+				.catch((error) => {
 					var message =
 						typeof error === 'string'
 							? error
@@ -423,7 +423,7 @@
 	Liferay.provide(
 		Portlet,
 		'close',
-		function(portlet, skipConfirm, options) {
+		function (portlet, skipConfirm, options) {
 			var instance = this;
 
 			portlet = A.one(portlet);
@@ -484,7 +484,7 @@
 	Liferay.provide(
 		Portlet,
 		'onLoad',
-		function(options) {
+		function (options) {
 			var instance = this;
 
 			var canEditTitle = options.canEditTitle;
@@ -552,7 +552,7 @@
 	Liferay.provide(
 		Portlet,
 		'refresh',
-		function(portlet, data) {
+		function (portlet, data) {
 			var instance = this;
 
 			portlet = A.one(portlet);
@@ -640,7 +640,7 @@
 	Liferay.provide(
 		Portlet,
 		'registerStatic',
-		function(portletId) {
+		function (portletId) {
 			var instance = this;
 
 			var Node = A.Node;
@@ -662,7 +662,7 @@
 	Liferay.provide(
 		Portlet,
 		'openWindow',
-		options => {
+		(options) => {
 			var bodyCssClass = options.bodyCssClass;
 			var destroyOnHide = options.destroyOnHide;
 			var namespace = options.namespace;
@@ -716,7 +716,7 @@
 						title: titleHtml,
 						uri,
 					},
-					dialog => {
+					(dialog) => {
 						dialog.once('drag:init', () => {
 							dialog.dd.addInvalid(
 								'.portlet-configuration-subtitle-text'
@@ -739,8 +739,8 @@
 
 	// Backwards compatability
 
-	Portlet.ready = function(fn) {
-		Liferay.on('portletReady', event => {
+	Portlet.ready = function (fn) {
+		Liferay.on('portletReady', (event) => {
 			fn(event.portletId, event.portlet);
 		});
 	};

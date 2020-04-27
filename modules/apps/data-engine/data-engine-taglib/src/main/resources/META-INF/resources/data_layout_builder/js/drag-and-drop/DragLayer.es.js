@@ -44,7 +44,7 @@ function getItemStyles(initialOffset, currentOffset) {
 
 export default () => {
 	const {currentOffset, initialOffset, isDragging, item} = useDragLayer(
-		monitor => ({
+		(monitor) => ({
 			currentOffset: monitor.getSourceClientOffset(),
 			initialOffset: monitor.getInitialSourceClientOffset(),
 			isDragging: monitor.isDragging(),

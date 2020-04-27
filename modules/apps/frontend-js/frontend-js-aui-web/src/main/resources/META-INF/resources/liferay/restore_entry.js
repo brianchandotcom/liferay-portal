@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-restore-entry',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var isString = Lang.isString;
@@ -134,8 +134,8 @@ AUI.add(
 						body: Liferay.Util.objectToFormData(instance.ns(data)),
 						method: 'POST',
 					})
-						.then(response => response.json())
-						.then(response => {
+						.then((response) => response.json())
+						.then((response) => {
 							instance._afterCheckEntrySuccess(response, uri);
 						})
 						.catch(() => {
@@ -234,8 +234,8 @@ AUI.add(
 							),
 							method: 'POST',
 						})
-							.then(response => response.json())
-							.then(response => {
+							.then((response) => response.json())
+							.then((response) => {
 								instance._afterPopupCheckEntrySuccess(
 									response,
 									form

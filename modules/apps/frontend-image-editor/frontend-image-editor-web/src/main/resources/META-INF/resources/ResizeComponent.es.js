@@ -28,7 +28,7 @@ class ResizeComponent extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		this.getImageEditorImageData().then(imageData => {
+		this.getImageEditorImageData().then((imageData) => {
 			this.imageWidth = imageData.width;
 			this.imageHeight = imageData.height;
 

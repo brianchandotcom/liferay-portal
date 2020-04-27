@@ -27,7 +27,7 @@ describe('PortletHub', () => {
 
 		beforeEach(() => {
 			return Promise.all([register(portletA), register(portletB)]).then(
-				values => {
+				(values) => {
 					hubA = values[0];
 
 					listenerA = hubA.addEventListener(
@@ -104,7 +104,7 @@ describe('PortletHub', () => {
 			expect(testFn).toThrow(TypeError);
 		});
 
-		it('does not throw if both arguments are valid', done => {
+		it('does not throw if both arguments are valid', (done) => {
 			const parameters = {
 				param1: ['paramValue1'],
 			};
@@ -123,7 +123,7 @@ describe('PortletHub', () => {
 
 			return hubA
 				.createResourceUrl(parameters, 'cacheLevelFull')
-				.then(url => {
+				.then((url) => {
 					expect(typeof url).toEqual('string');
 				});
 		});
@@ -143,7 +143,7 @@ describe('PortletHub', () => {
 		it('returns a string if only cacheability present', () => {
 			return hubA
 				.createResourceUrl(null, 'cacheLevelPortlet')
-				.then(url => {
+				.then((url) => {
 					expect(typeof url).toEqual('string');
 				});
 		});
@@ -154,13 +154,13 @@ describe('PortletHub', () => {
 				param2: ['paramValue2'],
 			};
 
-			return hubA.createResourceUrl(parameters).then(url => {
+			return hubA.createResourceUrl(parameters).then((url) => {
 				expect(typeof url).toEqual('string');
 			});
 		});
 
 		it('returns a string if no parameters present', () => {
-			return hubA.createResourceUrl().then(url => {
+			return hubA.createResourceUrl().then((url) => {
 				expect(typeof url).toEqual('string');
 			});
 		});
@@ -173,7 +173,7 @@ describe('PortletHub', () => {
 
 			return hubA
 				.createResourceUrl(parameters, 'cacheLevelPage')
-				.then(url => {
+				.then((url) => {
 					expect(typeof url).toEqual('string');
 				});
 		});
@@ -187,7 +187,7 @@ describe('PortletHub', () => {
 
 			return hubB
 				.createResourceUrl(parameters, cache, 'myResourceId')
-				.then(url => {
+				.then((url) => {
 					expect(
 						global.portlet.resource.isResourceUrl(url)
 					).toBeTruthy();
@@ -201,7 +201,7 @@ describe('PortletHub', () => {
 				param2: ['paramValue2'],
 			};
 
-			return hubB.createResourceUrl(parameters, cache).then(url => {
+			return hubB.createResourceUrl(parameters, cache).then((url) => {
 				const str = global.portlet.resource.getCacheability(url);
 
 				expect(str).toEqual(cache);

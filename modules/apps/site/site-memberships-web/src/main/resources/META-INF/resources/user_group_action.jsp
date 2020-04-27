@@ -96,7 +96,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	);
 
 	if (assignRolesLink) {
-		assignRolesLink.addEventListener('click', function(event) {
+		assignRolesLink.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			var target = event.target;
@@ -119,11 +119,11 @@ UserGroup userGroup = (UserGroup)row.getObject();
 				url: target.dataset.href,
 			});
 
-			itemSelectorDialog.on('selectedItemChange', function(event) {
+			itemSelectorDialog.on('selectedItemChange', function (event) {
 				var selectedItems = event.selectedItem;
 
 				if (selectedItems) {
-					Array.prototype.forEach.call(selectedItems, function(
+					Array.prototype.forEach.call(selectedItems, function (
 						selectedItem,
 						index
 					) {
@@ -143,7 +143,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	);
 
 	if (unassignRolesLink) {
-		unassignRolesLink.addEventListener('click', function(event) {
+		unassignRolesLink.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			var target = event.target;
@@ -166,11 +166,11 @@ UserGroup userGroup = (UserGroup)row.getObject();
 				url: target.dataset.href,
 			});
 
-			itemSelectorDialog.on('selectedItemChange', function(event) {
+			itemSelectorDialog.on('selectedItemChange', function (event) {
 				var selectedItems = event.selectedItem;
 
 				if (selectedItems) {
-					Array.prototype.forEach.call(selectedItems, function(
+					Array.prototype.forEach.call(selectedItems, function (
 						selectedItem,
 						index
 					) {

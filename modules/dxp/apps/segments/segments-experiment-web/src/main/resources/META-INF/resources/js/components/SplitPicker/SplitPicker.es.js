@@ -25,12 +25,12 @@ function SplitPicker({onChange, variants}) {
 
 	return (
 		<div>
-			{splitVariants.map(variant => {
+			{splitVariants.map((variant) => {
 				return (
 					<SliderWithLabel
 						key={variant.segmentsExperimentRelId}
 						label={variant.name}
-						onValueChange={value =>
+						onValueChange={(value) =>
 							dispatch({
 								type: 'change',
 								value,

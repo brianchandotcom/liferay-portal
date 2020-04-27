@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-AUI().use('escape', 'aui-lang', A => {
+AUI().use('escape', 'aui-lang', (A) => {
 	var AEscape = A.Escape;
 	var ALang = A.Lang;
 
@@ -170,7 +170,7 @@ AUI().use('escape', 'aui-lang', A => {
 
 			reportTags.delegate(
 				'click',
-				event => {
+				(event) => {
 					var currentTarget = event.currentTarget;
 
 					var parameterKey = currentTarget.getData('parameterKey');
@@ -352,7 +352,7 @@ AUI().use('escape', 'aui-lang', A => {
 				);
 			});
 
-			A.one('.parameters-input-type').on('change', event => {
+			A.one('.parameters-input-type').on('change', (event) => {
 				var currentTarget = event.currentTarget;
 
 				var parametersInputDate = A.one('.parameters-input-date');

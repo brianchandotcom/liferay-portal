@@ -51,7 +51,7 @@ const InstanceListPage = ({routeParams}) => {
 	} = useFilter({filterKeys});
 
 	const completedStatus = statuses.some(
-		status => status === processStatusConstants.completed
+		(status) => status === processStatusConstants.completed
 	);
 
 	const timeRange = useMemo(

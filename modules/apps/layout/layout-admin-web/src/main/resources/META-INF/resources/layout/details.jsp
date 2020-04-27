@@ -181,7 +181,7 @@ String friendlyURLBase = StringPool.BLANK;
 	);
 
 	if (layoutPrototypeLinkEnabled) {
-		layoutPrototypeLinkEnabled.addEventListener('change', function(event) {
+		layoutPrototypeLinkEnabled.addEventListener('change', function (event) {
 			var layoutPrototypeLinkChecked = event.currentTarget.checked;
 
 			var layoutPrototypeInfoMessage = document.querySelector(
@@ -209,7 +209,7 @@ String friendlyURLBase = StringPool.BLANK;
 				'#<portlet:namespace />editLayoutFm .propagatable-field'
 			);
 
-			Array.prototype.forEach.call(propagatableFields, function(
+			Array.prototype.forEach.call(propagatableFields, function (
 				field,
 				index
 			) {

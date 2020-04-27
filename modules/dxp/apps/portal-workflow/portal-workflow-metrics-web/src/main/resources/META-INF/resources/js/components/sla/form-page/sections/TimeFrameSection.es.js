@@ -42,7 +42,7 @@ const TimeFrameSection = () => {
 		},
 	} = useContext(SLAFormContext);
 
-	const checkNodeErrors = type => filteredNodeKeys => {
+	const checkNodeErrors = (type) => (filteredNodeKeys) => {
 		if (type !== PAUSE_NODE_KEYS) {
 			errors[type] = validateNodeKeys(filteredNodeKeys);
 		}

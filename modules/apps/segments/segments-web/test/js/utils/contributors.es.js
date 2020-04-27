@@ -31,7 +31,7 @@ describe('applyConjunctionChangeToContributor', () => {
 			newConjunctionName
 		);
 
-		updatedContributors.map(c =>
+		updatedContributors.map((c) =>
 			expect(c).toEqual(
 				expect.objectContaining({conjunctionId: newConjunctionName})
 			)
@@ -54,7 +54,7 @@ describe('applyConjunctionChangeToContributor', () => {
 			newConjunctionName
 		);
 
-		updatedContributors.map(c =>
+		updatedContributors.map((c) =>
 			expect(c).toEqual(expect.objectContaining({conjunctionId: 'and'}))
 		);
 	});
@@ -75,7 +75,7 @@ describe('applyConjunctionChangeToContributor', () => {
 			newConjunctionName
 		);
 
-		updatedContributors.map(c =>
+		updatedContributors.map((c) =>
 			expect(c).toEqual(expect.objectContaining({conjunctionId: 'and'}))
 		);
 	});

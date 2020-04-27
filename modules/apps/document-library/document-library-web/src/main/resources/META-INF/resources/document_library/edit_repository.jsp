@@ -210,7 +210,7 @@ renderResponse.setTitle(headerTitle);
 	);
 
 	if (repositoryTypesSelect) {
-		repositoryTypesSelect.addEventListener('change', function(event) {
+		repositoryTypesSelect.addEventListener('change', function (event) {
 			showConfiguration(repositoryTypesSelect);
 		});
 

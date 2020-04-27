@@ -72,7 +72,7 @@ export default withRouter(
 
 		const loadThread = useCallback(
 			() =>
-				getThread(questionId, context.siteKey, page).then(data => {
+				getThread(questionId, context.siteKey, page).then((data) => {
 					setQuestion(data);
 					setAnswers(data.messageBoardMessages.items);
 					setSectionTitle(data.messageBoardSection.title);
@@ -89,9 +89,9 @@ export default withRouter(
 		};
 
 		const updateMarkAsAnswer = useCallback(
-			answerId => {
+			(answerId) => {
 				setAnswers([
-					...answers.map(otherAnswer => {
+					...answers.map((otherAnswer) => {
 						otherAnswer.showAsAnswer = otherAnswer.id === answerId;
 
 						return otherAnswer;
@@ -106,10 +106,10 @@ export default withRouter(
 		};
 
 		const deleteAnswer = useCallback(
-			answer => {
+			(answer) => {
 				setAnswers([
 					...answers.filter(
-						otherAnswer => answer.id !== otherAnswer.id
+						(otherAnswer) => answer.id !== otherAnswer.id
 					),
 				]);
 			},
@@ -117,9 +117,9 @@ export default withRouter(
 		);
 
 		const answerChange = useCallback(
-			answerId => {
+			(answerId) => {
 				const answer = answers.find(
-					answer => answer.showAsAnswer && answer.id !== answerId
+					(answer) => answer.showAsAnswer && answer.id !== answerId
 				);
 
 				if (answer) {
@@ -136,7 +136,7 @@ export default withRouter(
 			[answers, updateMarkAsAnswer]
 		);
 
-		const filterBy = filterBy => {
+		const filterBy = (filterBy) => {
 			let promise;
 			if (filterBy === 'votes') {
 				promise = getMessages(
@@ -144,7 +144,7 @@ export default withRouter(
 					'dateModified:desc',
 					1,
 					100
-				).then(answers =>
+				).then((answers) =>
 					answers.sort((answer1, answer2) => {
 						if (answer2.showAsAnswer) {
 							return 1;
@@ -173,7 +173,7 @@ export default withRouter(
 				promise = getMessages(question.id, 'dateModified:asc');
 			}
 
-			promise.then(x => {
+			promise.then((x) => {
 				setFilter(filterBy);
 				setAnswers(x);
 			});
@@ -240,7 +240,9 @@ export default withRouter(
 										>
 											{question.actions.subscribe && (
 												<Subscription
-													onSubscription={subscribed =>
+													onSubscription={(
+														subscribed
+													) =>
 														setQuestion({
 															...question,
 															subscribed,
@@ -371,7 +373,7 @@ export default withRouter(
 								)}
 
 								<div className="c-mt-3">
-									{answers.map(answer => (
+									{answers.map((answer) => (
 										<Answer
 											answer={answer}
 											answerChange={answerChange}
@@ -417,7 +419,7 @@ export default withRouter(
 															onBeforeLoad={
 																onBeforeLoadCKEditor
 															}
-															onChange={event =>
+															onChange={(event) =>
 																setArticleBody(
 																	event.editor.getData()
 																)

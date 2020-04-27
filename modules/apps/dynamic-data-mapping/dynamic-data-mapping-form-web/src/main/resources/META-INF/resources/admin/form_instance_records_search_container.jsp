@@ -124,7 +124,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 <%@ include file="/admin/export_form_instance.jspf" %>
 
 <aui:script sandbox="<%= true %>">
-	var deleteRecords = function() {
+	var deleteRecords = function () {
 		if (
 			confirm(
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
@@ -161,15 +161,15 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 		deleteRecords: deleteRecords,
 	};
 
-	Liferay.componentReady('ddmFormInstanceRecordsManagementToolbar').then(function(
-		managementToolbar
-	) {
-		managementToolbar.on(['actionItemClicked'], function(event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('ddmFormInstanceRecordsManagementToolbar').then(
+		function (managementToolbar) {
+			managementToolbar.on(['actionItemClicked'], function (event) {
+				var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			});
+		}
+	);
 </aui:script>

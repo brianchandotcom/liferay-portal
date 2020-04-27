@@ -14,7 +14,7 @@
 
 AUI.add(
 	'document-library-upload',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var ANode = A.Node;
 		var Lang = A.Lang;
@@ -261,7 +261,7 @@ AUI.add(
 
 					var queue = instance._getUploader().queue;
 
-					files.forEach(item => {
+					files.forEach((item) => {
 						queue.addToQueueBottom(item);
 					});
 				},
@@ -350,42 +350,46 @@ AUI.add(
 						docElement.removeClass('upload-drop-active');
 					}, 500);
 
-					var onDragOverHandle = docElement.on('dragover', event => {
-						var dataTransfer = event._event.dataTransfer;
+					var onDragOverHandle = docElement.on(
+						'dragover',
+						(event) => {
+							var dataTransfer = event._event.dataTransfer;
 
-						if (dataTransfer && dataTransfer.types) {
-							var dataTransferTypes = dataTransfer.types || [];
+							if (dataTransfer && dataTransfer.types) {
+								var dataTransferTypes =
+									dataTransfer.types || [];
 
-							if (
-								AArray.indexOf(dataTransferTypes, 'Files') >
-									-1 &&
-								AArray.indexOf(
-									dataTransferTypes,
-									'text/html'
-								) === -1
-							) {
-								event.halt();
+								if (
+									AArray.indexOf(dataTransferTypes, 'Files') >
+										-1 &&
+									AArray.indexOf(
+										dataTransferTypes,
+										'text/html'
+									) === -1
+								) {
+									event.halt();
 
-								dataTransfer.dropEffect = 'copy';
+									dataTransfer.dropEffect = 'copy';
 
-								docElement.addClass('upload-drop-intent');
+									docElement.addClass('upload-drop-intent');
 
-								var target = event.target;
+									var target = event.target;
 
-								docElement.toggleClass(
-									'upload-drop-active',
-									target.compareTo(entriesContainer) ||
-										entriesContainer.contains(target)
-								);
+									docElement.toggleClass(
+										'upload-drop-active',
+										target.compareTo(entriesContainer) ||
+											entriesContainer.contains(target)
+									);
 
-								removeCssClassTask();
+									removeCssClassTask();
+								}
 							}
 						}
-					});
+					);
 
 					var onDropHandle = docElement.delegate(
 						'drop',
-						event => {
+						(event) => {
 							var dataTransfer = event._event.dataTransfer;
 
 							if (dataTransfer) {
@@ -406,9 +410,11 @@ AUI.add(
 										dataTransfer.files
 									);
 
-									event.fileList = dragDropFiles.map(item => {
-										return new A.FileHTML5(item);
-									});
+									event.fileList = dragDropFiles.map(
+										(item) => {
+											return new A.FileHTML5(item);
+										}
+									);
 
 									var uploader = instance._getUploader();
 
@@ -421,7 +427,7 @@ AUI.add(
 
 					var entriesDragDelegateHandle = entriesContainer.delegate(
 						['dragleave', 'dragover'],
-						event => {
+						(event) => {
 							var dataTransfer = event._event.dataTransfer;
 
 							var dataTransferTypes = dataTransfer.types;
@@ -453,7 +459,7 @@ AUI.add(
 
 					var entriesClickDelegateHandle = entriesContainer.delegate(
 						'click',
-						event => {
+						(event) => {
 							event.preventDefault();
 						},
 						STR_DOT +
@@ -472,7 +478,7 @@ AUI.add(
 				},
 
 				_combineFileLists(fileList, queuedFiles) {
-					queuedFiles.forEach(item => {
+					queuedFiles.forEach((item) => {
 						fileList.push(item);
 					});
 				},
@@ -705,7 +711,7 @@ AUI.add(
 					var fileList = currentUploadData.fileList;
 
 					if (!currentUploadData.folder) {
-						fileList.forEach(item => {
+						fileList.forEach((item) => {
 							item.overlay.destroy();
 
 							item.progressBar.destroy();
@@ -937,7 +943,7 @@ AUI.add(
 					if (!navigationOverlays) {
 						navigationOverlays = [];
 
-						var createNavigationOverlay = function(target) {
+						var createNavigationOverlay = function (target) {
 							if (target) {
 								var overlay = instance._createOverlay(
 									target,
@@ -1441,7 +1447,7 @@ AUI.add(
 					else {
 						var displayStyle = instance._getDisplayStyle();
 
-						filesPartition.matches.map(file => {
+						filesPartition.matches.map((file) => {
 							var entryNode = instance._createEntryNode(
 								file.name,
 								file.size,
@@ -1451,7 +1457,7 @@ AUI.add(
 							instance._createUploadStatus(entryNode, file);
 						});
 
-						filesPartition.rejects.map(file => {
+						filesPartition.rejects.map((file) => {
 							var entryNode = instance._createEntryNode(
 								file.name,
 								file.size,
@@ -1493,7 +1499,7 @@ AUI.add(
 
 					var maxFileSize = instance._maxFileSize;
 
-					return AArray.partition(data, item => {
+					return AArray.partition(data, (item) => {
 						var errorMessage;
 
 						var size = item.get(STR_SIZE) || 0;

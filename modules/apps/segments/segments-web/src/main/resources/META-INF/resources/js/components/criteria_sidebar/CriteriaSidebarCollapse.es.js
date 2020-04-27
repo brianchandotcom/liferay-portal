@@ -66,7 +66,7 @@ function getDefaultValue(property) {
  * Filters properties by label
  */
 function filterProperties(properties, searchValue) {
-	return properties.filter(property => {
+	return properties.filter((property) => {
 		const propertyLabel = property.label.toLowerCase();
 
 		return propertyLabel.indexOf(searchValue.toLowerCase()) !== -1;
@@ -83,7 +83,7 @@ const CriteriaSidebarCollapse = ({
 
 	return (
 		<ul className="list-unstyled sidebar-collapse-groups">
-			{propertyGroups.map(propertyGroup => {
+			{propertyGroups.map((propertyGroup) => {
 				const key = propertyGroup.propertyKey;
 
 				const active = key === propertyKey;

@@ -151,7 +151,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 		searchContainerContentBox.delegate(
 			'click',
-			function(event) {
+			function (event) {
 				var link = event.currentTarget;
 
 				var rowId = link.attr('data-rowId');
@@ -186,8 +186,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 			'.modify-link'
 		);
 
-		Liferay.on('<portlet:namespace />enableRemovedOrganizations', function(event) {
-			event.selectors.each(function(item, index, collection) {
+		Liferay.on('<portlet:namespace />enableRemovedOrganizations', function (event) {
+			event.selectors.each(function (item, index, collection) {
 				var organizationId = item.attr('data-entityid');
 
 				if (deleteOrganizationIds.indexOf(organizationId) != -1) {
@@ -201,7 +201,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 		);
 
 		if (selectOrganizationLink) {
-			selectOrganizationLink.on('click', function(event) {
+			selectOrganizationLink.on('click', function (event) {
 				var searchContainerData = searchContainer.getData();
 
 				if (!searchContainerData.length) {
@@ -224,7 +224,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 						uri:
 							'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organization.jsp" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>',
 					},
-					function(event) {
+					function (event) {
 						var entityId = event.entityid;
 
 						var rowColumns = [];

@@ -85,7 +85,7 @@ class ImageEditor extends PortletBase {
 
 		// Load the first entry imageData and render it on the app.
 
-		this.history_[0].getImageData().then(imageData => {
+		this.history_[0].getImageData().then((imageData) => {
 			async.nextTick(() => {
 				this.imageEditorReady = true;
 
@@ -105,8 +105,8 @@ class ImageEditor extends PortletBase {
 
 		this.history_[this.historyIndex_]
 			.getImageData()
-			.then(imageData => selectedControl.process(imageData))
-			.then(imageData => this.createHistoryEntry_(imageData))
+			.then((imageData) => selectedControl.process(imageData))
+			.then((imageData) => this.createHistoryEntry_(imageData))
 			.then(() => this.syncHistory_())
 			.then(() => {
 				this.selectedControl = null;
@@ -167,8 +167,8 @@ class ImageEditor extends PortletBase {
 	 * @return {Promise} A promise that resolves with the image blob.
 	 */
 	getImageEditorImageBlob() {
-		return new Promise(resolve => {
-			this.getImageEditorImageData().then(imageData => {
+		return new Promise((resolve) => {
+			this.getImageEditorImageData().then((imageData) => {
 				const canvas = document.createElement('canvas');
 				canvas.width = imageData.width;
 				canvas.height = imageData.height;
@@ -275,7 +275,7 @@ class ImageEditor extends PortletBase {
 
 		this.syncHistory_().then(() => {
 			this.selectedControl = controls.filter(
-				tool => tool.variant === targetControl
+				(tool) => tool.variant === targetControl
 			)[0];
 			this.selectedTool = targetTool;
 		});
@@ -295,7 +295,7 @@ class ImageEditor extends PortletBase {
 
 		this.syncHistory_().then(() => {
 			this.selectedControl = controls.filter(
-				tool => tool.variant === targetControl
+				(tool) => tool.variant === targetControl
 			)[0];
 			this.selectedTool = targetTool;
 		});
@@ -312,8 +312,8 @@ class ImageEditor extends PortletBase {
 
 		this.history_[this.historyIndex_]
 			.getImageData()
-			.then(imageData => selectedControl.preview(imageData))
-			.then(imageData => this.syncImageData_(imageData));
+			.then((imageData) => selectedControl.preview(imageData))
+			.then((imageData) => this.syncImageData_(imageData));
 
 		this.components.loading.show = true;
 	}
@@ -338,9 +338,9 @@ class ImageEditor extends PortletBase {
 	save_(event) {
 		if (!event.delegateTarget.disabled) {
 			this.getImageEditorImageBlob()
-				.then(imageBlob => this.submitBlob_(imageBlob))
-				.then(result => this.notifySaveResult_(result))
-				.catch(error => this.showError_(error));
+				.then((imageBlob) => this.submitBlob_(imageBlob))
+				.then((result) => this.notifySaveResult_(result))
+				.catch((error) => this.showError_(error));
 		}
 	}
 
@@ -402,9 +402,9 @@ class ImageEditor extends PortletBase {
 			formData.append('fileEntryId', saveFileEntryId);
 
 			this.fetch(this.saveURL, formData)
-				.then(response => response.json())
+				.then((response) => response.json())
 				.then(resolve)
-				.catch(error => reject(error));
+				.catch((error) => reject(error));
 		});
 
 		this.components.loading.show = true;
@@ -417,18 +417,20 @@ class ImageEditor extends PortletBase {
 	 * @protected
 	 */
 	syncHistory_() {
-		return new Promise(resolve => {
-			this.history_[this.historyIndex_].getImageData().then(imageData => {
-				this.syncImageData_(imageData);
+		return new Promise((resolve) => {
+			this.history_[this.historyIndex_]
+				.getImageData()
+				.then((imageData) => {
+					this.syncImageData_(imageData);
 
-				this.history = {
-					canRedo: this.historyIndex_ < this.history_.length - 1,
-					canReset: this.history_.length > 1,
-					canUndo: this.historyIndex_ > 0,
-				};
+					this.history = {
+						canRedo: this.historyIndex_ < this.history_.length - 1,
+						canReset: this.history_.length > 1,
+						canUndo: this.historyIndex_ > 0,
+					};
 
-				resolve();
-			});
+					resolve();
+				});
 		});
 	}
 

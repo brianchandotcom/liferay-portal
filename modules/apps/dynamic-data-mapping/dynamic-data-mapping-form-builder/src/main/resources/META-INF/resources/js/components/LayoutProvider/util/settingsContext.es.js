@@ -23,7 +23,7 @@ export const getSettingsContextProperty = (settingsContext, propertyName) => {
 	let propertyValue;
 	const visitor = new PagesVisitor(settingsContext.pages);
 
-	visitor.mapFields(field => {
+	visitor.mapFields((field) => {
 		if (propertyName === field.fieldName) {
 			propertyValue = field.value;
 		}
@@ -42,7 +42,7 @@ export const updateSettingsContextProperty = (
 
 	return {
 		...settingsContext,
-		pages: visitor.mapFields(field => {
+		pages: visitor.mapFields((field) => {
 			if (propertyName === field.fieldName) {
 				field = {
 					...field,

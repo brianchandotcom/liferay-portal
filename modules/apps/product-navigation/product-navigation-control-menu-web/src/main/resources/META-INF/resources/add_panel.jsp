@@ -89,7 +89,7 @@
 
 						<c:if test="<%= hasAddApplicationsPermission && hasAddContentPermission %>">
 							<aui:script>
-								Liferay.on('liferay.collapse.show', function(event) {
+								Liferay.on('liferay.collapse.show', function (event) {
 									var panelId = event.panel.getAttribute('id');
 
 									if (panelId === '#<portlet:namespace />Accordion') {

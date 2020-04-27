@@ -182,7 +182,7 @@ describe('SegmentEdit', () => {
 		expect(mockConfirm).toHaveBeenCalledTimes(0);
 	});
 
-	it('redirects when cancelling after title edition', done => {
+	it('redirects when cancelling after title edition', (done) => {
 		const mockConfirm = jest.fn();
 		const mockNavigate = jest.fn();
 		window.Liferay.Util.navigate = mockNavigate;

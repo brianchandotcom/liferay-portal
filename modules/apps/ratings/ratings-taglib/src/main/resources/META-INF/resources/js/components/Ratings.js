@@ -53,7 +53,7 @@ const Ratings = ({
 	};
 
 	const sendVoteRequest = useCallback(
-		score => {
+		(score) => {
 			Liferay.fire('ratings:vote', {
 				className,
 				classPK,
@@ -73,7 +73,7 @@ const Ratings = ({
 				body,
 				method: 'POST',
 			})
-				.then(response => response.json())
+				.then((response) => response.json())
 				.catch(() => {
 					errorToast();
 				});

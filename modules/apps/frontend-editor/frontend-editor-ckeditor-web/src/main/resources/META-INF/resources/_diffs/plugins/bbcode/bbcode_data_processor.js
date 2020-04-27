@@ -12,8 +12,8 @@
  * details.
  */
 
-(function() {
-	var toHex = function(val) {
+(function () {
+	var toHex = function (val) {
 		val = parseInt(val, 10).toString(16);
 
 		if (val.length === 1) {
@@ -123,7 +123,7 @@
 
 	var TAG_TD = 'td';
 
-	var BBCodeDataProcessor = function(editor) {
+	var BBCodeDataProcessor = function (editor) {
 		this._editor = editor;
 	};
 

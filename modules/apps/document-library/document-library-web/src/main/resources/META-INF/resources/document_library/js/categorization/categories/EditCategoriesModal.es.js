@@ -62,7 +62,7 @@ const EditCategoriesModal = ({
 
 	const bulkStatusComponent = Liferay.component(`${namespace}BulkStatus`);
 
-	const getDescription = size => {
+	const getDescription = (size) => {
 		if (size === 1) {
 			return Liferay.Language.get(
 				'you-are-editing-the-categories-for-the-selected-item'
@@ -89,20 +89,20 @@ const EditCategoriesModal = ({
 		return Array.from(categories);
 	};
 
-	const handleMultiSelectOptionChange = value => {
+	const handleMultiSelectOptionChange = (value) => {
 		setAppend(value === 'add');
 		setSelectedRadioGroupValue(value);
 	};
 
-	const handleVocabulariesChange = newVocabularies => {
+	const handleVocabulariesChange = (newVocabularies) => {
 		const requiredVocabularies = newVocabularies.filter(
-			vocabulary =>
+			(vocabulary) =>
 				vocabulary.required && !vocabulary.selectedItems.length
 		);
 
 		const isInvalid = requiredVocabularies.length
 			? requiredVocabularies.some(
-					item => item.required && !item.selectedItems.length
+					(item) => item.required && !item.selectedItems.length
 			  )
 			: false;
 
@@ -110,7 +110,7 @@ const EditCategoriesModal = ({
 		setVocabularies(newVocabularies);
 	};
 
-	const handleSubmit = event => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 
 		const finalCategories = getFinalCategories();
@@ -122,12 +122,12 @@ const EditCategoriesModal = ({
 		}
 		else {
 			addedCategories = finalCategories.filter(
-				categoryId => initialCategories.indexOf(categoryId) == -1
+				(categoryId) => initialCategories.indexOf(categoryId) == -1
 			);
 		}
 
 		const removedCategories = initialCategories.filter(
-			category => finalCategories.indexOf(category) == -1
+			(category) => finalCategories.indexOf(category) == -1
 		);
 
 		fetchCategories(URL_UPDATE_CATEGORIES, append ? 'PATCH' : 'PUT', {
@@ -152,8 +152,8 @@ const EditCategoriesModal = ({
 
 	const isMounted = useIsMounted();
 
-	const parseCategories = categories => {
-		return categories.map(item => {
+	const parseCategories = (categories) => {
+		return categories.map((item) => {
 			return {
 				label: item.taxonomyCategoryName,
 				value: item.taxonomyCategoryId,
@@ -161,17 +161,17 @@ const EditCategoriesModal = ({
 		});
 	};
 
-	const parseVocabularies = useCallback(vocabularies => {
+	const parseVocabularies = useCallback((vocabularies) => {
 		let initialCategories = [];
 		const requiredVocabularies = [];
 		const vocabulariesList = [];
 
-		vocabularies.forEach(vocabulary => {
+		vocabularies.forEach((vocabulary) => {
 			const categories = parseCategories(
 				vocabulary.taxonomyCategories || []
 			);
 
-			const categoryIds = categories.map(item => item.value);
+			const categoryIds = categories.map((item) => item.value);
 
 			const obj = {
 				id: vocabulary.taxonomyVocabularyId.toString(),
@@ -246,7 +246,7 @@ const EditCategoriesModal = ({
 			};
 
 			return fetch(`${pathModule}${url}`, init)
-				.then(response => response.json())
+				.then((response) => response.json())
 				.catch(() => {
 					onModalClose();
 				});

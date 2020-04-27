@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-const buildFallbackItems = fallbackKeys => {
+const buildFallbackItems = (fallbackKeys) => {
 	if (fallbackKeys) {
-		return fallbackKeys.map(key => ({
+		return fallbackKeys.map((key) => ({
 			active: true,
 			key,
 		}));
@@ -20,7 +20,7 @@ const buildFallbackItems = fallbackKeys => {
 	return null;
 };
 
-const handleClickOutside = (callback, wrapperRef) => event => {
+const handleClickOutside = (callback, wrapperRef) => (event) => {
 	const clickOutside = wrapperRef && !wrapperRef.contains(event.target);
 
 	if (clickOutside) {
@@ -28,11 +28,11 @@ const handleClickOutside = (callback, wrapperRef) => event => {
 	}
 };
 
-const addClickOutsideListener = listener => {
+const addClickOutsideListener = (listener) => {
 	document.addEventListener('mousedown', listener);
 };
 
-const removeClickOutsideListener = listener => {
+const removeClickOutsideListener = (listener) => {
 	document.removeEventListener('mousedown', listener);
 };
 

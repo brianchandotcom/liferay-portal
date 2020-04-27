@@ -63,7 +63,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 </div>
 
 <aui:script require="metal-dom/src/all/dom as domAll">
-	Liferay.provide(window, '<portlet:namespace />addReplyToMessage', function(
+	Liferay.provide(window, '<portlet:namespace />addReplyToMessage', function (
 		messageId,
 		quote
 	) {
@@ -98,10 +98,10 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 			addQuickReplyLoadingMask.classList.remove('hide');
 
 			Liferay.Util.fetch(editMessageQuickURL)
-				.then(function(response) {
+				.then(function (response) {
 					return response.text();
 				})
-				.then(function(response) {
+				.then(function (response) {
 					var editorName =
 						'<portlet:namespace />replyMessageBody' + messageId;
 
@@ -125,7 +125,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 						parentMessageIdInput.value = messageId;
 					}
 
-					Liferay.componentReady(editorName).then(function(editor) {
+					Liferay.componentReady(editorName).then(function (editor) {
 						editor.focus();
 					});
 

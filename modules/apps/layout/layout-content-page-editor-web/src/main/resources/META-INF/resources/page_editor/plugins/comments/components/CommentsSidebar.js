@@ -40,8 +40,8 @@ function getActiveFragmentEntryLink(itemId, fragmentEntryLinks, layoutData) {
 }
 
 export default function CommentsSidebar() {
-	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
-	const layoutData = useSelector(state => state.layoutData);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const layoutData = useSelector((state) => state.layoutData);
 
 	const activeItemId = useActiveItemId();
 
@@ -53,7 +53,9 @@ export default function CommentsSidebar() {
 
 	return (
 		<div
-			onMouseDown={event => event.nativeEvent.stopImmediatePropagation()}
+			onMouseDown={(event) =>
+				event.nativeEvent.stopImmediatePropagation()
+			}
 		>
 			{activeFragmentEntryLink ? (
 				<FragmentComments fragmentEntryLink={activeFragmentEntryLink} />

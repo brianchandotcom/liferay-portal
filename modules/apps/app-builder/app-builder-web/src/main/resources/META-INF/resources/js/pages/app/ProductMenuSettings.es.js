@@ -55,7 +55,7 @@ export default () => {
 	const [active, setActive] = useState(false);
 	const [searchText, setSearchText] = useState('');
 
-	const filteredSites = sites.filter(item => {
+	const filteredSites = sites.filter((item) => {
 		if (!searchText) {
 			return true;
 		}
@@ -71,7 +71,7 @@ export default () => {
 		).then(({items: sites = []}) => setSites(sites));
 	}, []);
 
-	const onScopeChange = event => {
+	const onScopeChange = (event) => {
 		const scope = event.target.value;
 
 		dispatch({
@@ -80,7 +80,7 @@ export default () => {
 		});
 	};
 
-	const onSiteIdsChange = siteId => {
+	const onSiteIdsChange = (siteId) => {
 		dispatch({
 			siteId: parseInt(siteId, 10),
 			type: TOGGLE_SETTINGS_SITE_ID,
@@ -90,16 +90,16 @@ export default () => {
 	const {
 		settings: {scope, siteIds = []},
 	} = appDeployments.find(
-		appDeployment => appDeployment.type === PRODUCT_MENU
+		(appDeployment) => appDeployment.type === PRODUCT_MENU
 	);
 
 	const sitesNames = siteIds
-		.map(siteId => {
+		.map((siteId) => {
 			if (siteId === SITE_ID_ALL) {
 				return Liferay.Language.get('all-sites');
 			}
 
-			const site = sites.find(site => site.id === siteId);
+			const site = sites.find((site) => site.id === siteId);
 
 			if (site) {
 				return site.name;
@@ -142,7 +142,7 @@ export default () => {
 						<ClayDropDown
 							active={active}
 							alignmentPosition={Align.BottomLeft}
-							onActiveChange={newVal => setActive(newVal)}
+							onActiveChange={(newVal) => setActive(newVal)}
 							trigger={
 								<button
 									aria-label={Liferay.Language.get(
@@ -167,7 +167,7 @@ export default () => {
 							<ItemList>
 								<Item key={'search'}>
 									<SearchInput
-										onChange={searchText =>
+										onChange={(searchText) =>
 											setSearchText(searchText)
 										}
 									/>

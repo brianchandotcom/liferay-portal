@@ -92,14 +92,14 @@ class TabsProvider {
 
 		const panels = Array.from(panel.parentElement.children);
 
-		const activePanels = panels.filter(item => {
+		const activePanels = panels.filter((item) => {
 			return item.classList.contains(CssClass.SHOW);
 		});
 
 		if (activePanels.length) {
 			const activePanel = activePanels[0];
 
-			Liferay.on(this.EVENT_HIDDEN, event => {
+			Liferay.on(this.EVENT_HIDDEN, (event) => {
 				if (event.panel === activePanel) {
 					this.show({panel, trigger});
 				}
@@ -128,7 +128,7 @@ class TabsProvider {
 		return document.querySelector(`[href="#${panel.getAttribute('id')}"]`);
 	}
 
-	_onTriggerClick = event => {
+	_onTriggerClick = (event) => {
 		const trigger = event.delegateTarget;
 
 		if (trigger.tagName === 'A') {
@@ -154,7 +154,7 @@ class TabsProvider {
 
 		let eventName = false;
 
-		Object.keys(transitionEndEvents).some(name => {
+		Object.keys(transitionEndEvents).some((name) => {
 			if (sampleElement.style[name] !== undefined) {
 				eventName = transitionEndEvents[name];
 

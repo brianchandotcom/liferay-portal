@@ -30,7 +30,7 @@ jest.mock(
 describe('ImageProcessor', () => {
 	describe('createEditor', () => {
 		it('calls changeCallback when an image is selected', () => {
-			openImageSelector.mockImplementation(changeCallback =>
+			openImageSelector.mockImplementation((changeCallback) =>
 				changeCallback({url: 'sample-image.jpg'})
 			);
 
@@ -41,7 +41,7 @@ describe('ImageProcessor', () => {
 		});
 
 		it('calls changeCallback with an empty string if the image url is not found', () => {
-			openImageSelector.mockImplementation(changeCallback =>
+			openImageSelector.mockImplementation((changeCallback) =>
 				changeCallback({thisIsNotAnImage: 'victor.profile'})
 			);
 

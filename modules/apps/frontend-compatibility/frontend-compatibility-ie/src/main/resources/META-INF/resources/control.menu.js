@@ -12,7 +12,7 @@
  * details.
  */
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
 	var hasControlMenu = document.querySelector('.has-control-menu');
 	if (hasControlMenu) {
 		var controlMenu = document.querySelector('.control-menu-container');

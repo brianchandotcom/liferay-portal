@@ -46,10 +46,10 @@ describe('Validation', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('enables validation after click on toogle', done => {
+	it('enables validation after click on toogle', (done) => {
 		jest.useFakeTimers();
 
-		const handleFieldEdited = data => {
+		const handleFieldEdited = (data) => {
 			expect(data.value).toEqual({
 				enableValidation: true,
 				errorMessage: {
@@ -94,10 +94,10 @@ describe('Validation', () => {
 		});
 	});
 
-	it('renders parameter field with Numeric element', done => {
+	it('renders parameter field with Numeric element', (done) => {
 		jest.useFakeTimers();
 
-		const handleFieldEdited = data => {
+		const handleFieldEdited = (data) => {
 			expect(data.value).toEqual({
 				enableValidation: true,
 				errorMessage: {

@@ -24,14 +24,14 @@ import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/bac
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {TRANSLATION_STATUS_TYPE} from '../config/constants/translationStatusType';
 
-const getEditableValues = fragmentEntryLinks =>
+const getEditableValues = (fragmentEntryLinks) =>
 	Object.values(fragmentEntryLinks)
 		.filter(
-			fragmentEntryLink =>
+			(fragmentEntryLink) =>
 				!fragmentEntryLink.masterLayout &&
 				fragmentEntryLink.editableValues
 		)
-		.map(fragmentEntryLink => [
+		.map((fragmentEntryLink) => [
 			...Object.values(
 				fragmentEntryLink.editableValues[
 					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
@@ -143,9 +143,9 @@ export default function Translation({
 		return Object.keys({
 			[defaultLanguageId]: defaultLanguage,
 			...availableLanguagesMut,
-		}).map(languageId => ({
+		}).map((languageId) => ({
 			languageId,
-			values: editableValues.filter(editableValue =>
+			values: editableValues.filter((editableValue) =>
 				isTranslated(editableValue, languageId)
 			),
 		}));
@@ -174,7 +174,7 @@ export default function Translation({
 			}
 		>
 			<ClayDropDown.ItemList>
-				{languageValues.map(language => (
+				{languageValues.map((language) => (
 					<TranslationItem
 						editableValuesLength={editableValues.length}
 						isDefault={language.languageId === defaultLanguageId}

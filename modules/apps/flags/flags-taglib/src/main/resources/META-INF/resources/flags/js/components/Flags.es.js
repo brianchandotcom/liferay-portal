@@ -75,7 +75,7 @@ const Flags = ({
 		setReportDialogOpen(false);
 	};
 
-	const handleInputChange = event => {
+	const handleInputChange = (event) => {
 		const target = event.target;
 		const value =
 			target.type === 'checkbox' ? target.checked : target.value.trim();
@@ -94,7 +94,7 @@ const Flags = ({
 
 	const isMounted = useIsMounted();
 
-	const handleSubmitReport = event => {
+	const handleSubmitReport = (event) => {
 		event.preventDefault();
 
 		setIsSending(true);
@@ -114,7 +114,7 @@ const Flags = ({
 			body: objectToFormData(formDataObj, new FormData(event.target)),
 			method: 'post',
 		})
-			.then(res => res.json())
+			.then((res) => res.json())
 			.then(({error}) => {
 				if (isMounted()) {
 					setError(error);

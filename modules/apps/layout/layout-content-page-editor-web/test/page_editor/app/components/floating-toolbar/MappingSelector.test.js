@@ -271,7 +271,7 @@ describe('MappingSelector', () => {
 
 		expect(getByText(document.body, 'field')).toBeInTheDocument();
 
-		collectionFields.forEach(field =>
+		collectionFields.forEach((field) =>
 			expect(getByText(document.body, field.label)).toBeInTheDocument()
 		);
 	});

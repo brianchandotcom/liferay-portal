@@ -54,7 +54,7 @@ const PREVIEW_SIZES = [
 	'full-size',
 ];
 
-const stopEventPropagation = event => {
+const stopEventPropagation = (event) => {
 	event.preventDefault();
 	event.stopPropagation();
 };
@@ -92,8 +92,8 @@ const FragmentPreview = ({
 					body: formData,
 					method: 'POST',
 				})
-					.then(response => response.text())
-					.then(response => {
+					.then((response) => response.text())
+					.then((response) => {
 						if (isMounted()) {
 							setLoading(false);
 						}
@@ -161,7 +161,7 @@ const FragmentPreview = ({
 	return (
 		<div className="fragment-preview" ref={ref}>
 			<div className="btn-group fragment-preview__toolbar">
-				{PREVIEW_SIZES.map(previewSize => (
+				{PREVIEW_SIZES.map((previewSize) => (
 					<ClayButtonWithIcon
 						borderless={true}
 						className={classNames({

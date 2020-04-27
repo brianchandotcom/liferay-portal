@@ -118,7 +118,7 @@ class Flags extends PortletBase {
 			body: formData,
 			method: 'POST',
 		})
-			.then(response => {
+			.then((response) => {
 				if (response.status === Liferay.STATUS_CODE.OK) {
 					this._showConfirmationMessage = true;
 				}
@@ -145,9 +145,7 @@ Flags.STATE = {
 	 * @type {Boolean}
 	 */
 
-	_reportDialogOpen: Config.bool()
-		.internal()
-		.value(false),
+	_reportDialogOpen: Config.bool().internal().value(false),
 
 	/**
 	 * Selected reason to flag.
@@ -166,9 +164,7 @@ Flags.STATE = {
 	 * @type {Boolean}
 	 */
 
-	_showConfirmationMessage: Config.bool()
-		.internal()
-		.value(false),
+	_showConfirmationMessage: Config.bool().internal().value(false),
 
 	/**
 	 * Flag to indicate if dialog should show the error message.
@@ -178,9 +174,7 @@ Flags.STATE = {
 	 * @type {Boolean}
 	 */
 
-	_showErrorMessage: Config.bool()
-		.internal()
-		.value(false),
+	_showErrorMessage: Config.bool().internal().value(false),
 
 	/**
 	 * Company name.

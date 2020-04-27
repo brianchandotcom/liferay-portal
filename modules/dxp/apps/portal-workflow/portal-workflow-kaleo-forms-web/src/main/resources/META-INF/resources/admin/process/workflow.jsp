@@ -229,7 +229,7 @@ if (tabs1.equals("published")) {
 <aui:script>
 	Liferay.on(
 		'<portlet:namespace />chooseWorkflow',
-		function(event) {
+		function (event) {
 			var A = AUI();
 
 			var workflowDefinition = event.name + '@' + event.version;
@@ -260,7 +260,7 @@ if (tabs1.equals("published")) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />editWorkflow',
-		function(uri) {
+		function (uri) {
 			var A = AUI();
 
 			var WIN = A.config.win;

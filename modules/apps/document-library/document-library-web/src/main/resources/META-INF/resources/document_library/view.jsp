@@ -284,7 +284,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 				}
 			);
 
-			var changeScopeHandles = function(event) {
+			var changeScopeHandles = function (event) {
 				documentLibrary.destroy();
 
 				Liferay.detach('changeScope', changeScopeHandles);
@@ -301,7 +301,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 			</portlet:renderURL>
 
-			var editFileEntryHandler = function(event) {
+			var editFileEntryHandler = function (event) {
 				var uri = '<%= addFileEntryURL %>';
 
 				location.href = Liferay.Util.addParams(

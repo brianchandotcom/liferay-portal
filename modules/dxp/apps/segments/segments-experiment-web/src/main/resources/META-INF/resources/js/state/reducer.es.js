@@ -51,7 +51,7 @@ export function reducer(state, action) {
 			return {
 				...state,
 				experimentHistory: state.experimentHistory.filter(
-					experiment => {
+					(experiment) => {
 						return (
 							experiment.segmentsExperimentId !==
 							action.payload.experimentId
@@ -103,7 +103,7 @@ export function reducer(state, action) {
 		case 'UPDATE_VARIANT':
 			return {
 				...state,
-				variants: state.variants.map(variant => {
+				variants: state.variants.map((variant) => {
 					if (
 						action.payload.variantId ===
 						variant.segmentsExperimentRelId
@@ -256,7 +256,7 @@ function _reviewVariants(state) {
 }
 
 function _runExperiment(state, {experiment, splitVariantsMap}) {
-	const variants = state.variants.map(variant => ({
+	const variants = state.variants.map((variant) => ({
 		...variant,
 		split: splitVariantsMap[variant.segmentsExperimentRelId],
 	}));

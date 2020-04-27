@@ -34,10 +34,10 @@ export default function LayoutViewport({
 	const [resizing, setResizing] = useState(false);
 	const selectItem = useSelectItem();
 	const selectedViewportSize = useSelector(
-		state => state.selectedViewportSize
+		(state) => state.selectedViewportSize
 	);
 	const sidebarOpen = useSelector(
-		state => state.sidebar.panelId && state.sidebar.open
+		(state) => state.sidebar.panelId && state.sidebar.open
 	);
 
 	useEffect(() => {
@@ -48,7 +48,7 @@ export default function LayoutViewport({
 
 		setLayoutWidth(undefined);
 
-		const onDrag = debounceRAF(event => {
+		const onDrag = debounceRAF((event) => {
 			const {maxWidth, minWidth} = config.availableViewportSizes[
 				selectedViewportSize
 			];
@@ -71,7 +71,7 @@ export default function LayoutViewport({
 			document.removeEventListener('mouseup', stopDrag);
 		};
 
-		const initDrag = event => {
+		const initDrag = (event) => {
 			if (element) {
 				setResizing(true);
 				selectItem(null);

@@ -29,7 +29,7 @@ import {
 	DRAG_FIELD_TYPE,
 } from './dragTypes.es';
 
-const replaceColumn = node => {
+const replaceColumn = (node) => {
 	if (node.parentNode) {
 		node.parentNode.replaceChild(node.cloneNode(true), node);
 	}
@@ -117,7 +117,7 @@ export default ({dataLayoutBuilder, node}) => {
 	);
 	const [{canDrop, overTarget}, dropColumn] = useDrop({
 		accept: [DRAG_DATA_DEFINITION_FIELD, DRAG_FIELDSET, DRAG_FIELD_TYPE],
-		collect: monitor => ({
+		collect: (monitor) => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver(),
 		}),

@@ -80,7 +80,7 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 
 	const successAnimationPath = `${assetsPath}${SUCCESS_ANIMATION_FILE_NAME}`;
 
-	const [getEstimation] = useDebounceCallback(body => {
+	const [getEstimation] = useDebounceCallback((body) => {
 		APIService.getEstimatedTime(body)
 			.then(({segmentsExperimentEstimatedDaysDuration}) => {
 				if (mounted.current) {
@@ -90,7 +90,7 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 					});
 				}
 			})
-			.catch(_error => {
+			.catch((_error) => {
 				if (mounted.current) {
 					setEstimation({
 						error: true,
@@ -119,7 +119,7 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 	const [height, setHeight] = useState(0);
 
 	const measureHeight = useCallback(
-		node => {
+		(node) => {
 			if (node !== null && !success) {
 				setHeight(node.getBoundingClientRect().height);
 			}
@@ -155,7 +155,7 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 						</h3>
 
 						<SplitPicker
-							onChange={variants => {
+							onChange={(variants) => {
 								setDraftVariants(variants);
 							}}
 							variants={draftVariants}

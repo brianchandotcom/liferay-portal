@@ -52,7 +52,7 @@ long mfaEmailOTPSetAtTime = (Long)request.getAttribute(MFAEmailOTPWebKeys.MFA_EM
 	var elapsedTime = Math.floor((Date.now() - previousSetTime) / 1000);
 
 	function <portlet:namespace />createCountdown(f, countdown, interval) {
-		return setInterval(function() {
+		return setInterval(function () {
 			--countdown;
 			f(countdown);
 		}, interval);
@@ -87,7 +87,7 @@ long mfaEmailOTPSetAtTime = (Long)request.getAttribute(MFAEmailOTPWebKeys.MFA_EM
 		);
 	}
 
-	A.one('#<portlet:namespace />sendEmailButton').on('click', function(event) {
+	A.one('#<portlet:namespace />sendEmailButton').on('click', function (event) {
 		sendEmailButton.setAttribute('disabled', 'disabled');
 
 		var resendDuration = <%= mfaEmailOTPConfiguration.resendEmailTimeout() %>;
@@ -115,7 +115,7 @@ long mfaEmailOTPSetAtTime = (Long)request.getAttribute(MFAEmailOTPWebKeys.MFA_EM
 			data: data,
 			method: 'POST',
 			on: {
-				failure: function(event, id, obj) {
+				failure: function (event, id, obj) {
 					var messageContainer = A.one(
 						'#<portlet:namespace />messageContainer'
 					);
@@ -129,7 +129,7 @@ long mfaEmailOTPSetAtTime = (Long)request.getAttribute(MFAEmailOTPWebKeys.MFA_EM
 
 					clearInterval(interval);
 				},
-				success: function(event, id, obj) {
+				success: function (event, id, obj) {
 					var messageContainer = A.one(
 						'#<portlet:namespace />messageContainer'
 					);

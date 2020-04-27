@@ -40,7 +40,7 @@ const Header = ({items = [], totalCount, withoutUnassigned}) => {
 	});
 
 	const selectedOnPage = useMemo(
-		() => tasks.filter(item => items.find(({id}) => id === item.id)),
+		() => tasks.filter((item) => items.find(({id}) => id === item.id)),
 		[items, tasks]
 	);
 
@@ -54,7 +54,7 @@ const Header = ({items = [], totalCount, withoutUnassigned}) => {
 	};
 
 	const remainingItems = useMemo(() => {
-		return items.filter(item => !tasks.find(({id}) => item.id === id));
+		return items.filter((item) => !tasks.find(({id}) => item.id === id));
 	}, [items, tasks]);
 	const toolbarActive = useMemo(() => tasks.length > 0, [tasks]);
 
@@ -70,7 +70,7 @@ const Header = ({items = [], totalCount, withoutUnassigned}) => {
 	}, [items]);
 
 	useEffect(() => {
-		setSelectTasks(selectTasks => ({
+		setSelectTasks((selectTasks) => ({
 			...selectTasks,
 			selectAll: totalCount > 0 && totalCount === tasks.length,
 		}));
@@ -82,10 +82,10 @@ const Header = ({items = [], totalCount, withoutUnassigned}) => {
 	};
 
 	const handleCheck = useCallback(
-		checked => () => {
+		(checked) => () => {
 			const updatedItems = checked
 				? [...tasks, ...remainingItems]
-				: tasks.filter(item => !items.find(({id}) => item.id === id));
+				: tasks.filter((item) => !items.find(({id}) => item.id === id));
 
 			setSelectTasks({
 				selectAll: totalCount > 0 && totalCount === updatedItems.length,

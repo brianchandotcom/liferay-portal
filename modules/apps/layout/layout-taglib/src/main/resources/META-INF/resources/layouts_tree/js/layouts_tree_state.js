@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layouts-tree-state',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 
 		var Lang = A.Lang;
@@ -71,8 +71,8 @@ AUI.add(
 							method: 'POST',
 						}
 					)
-						.then(response => response.text())
-						.then(text => {
+						.then((response) => response.text())
+						.then((text) => {
 							if (callback && text) {
 								callback(text);
 							}
@@ -161,7 +161,7 @@ AUI.add(
 
 					var paginationMap = {};
 
-					var updatePaginationMap = function(map, curNode) {
+					var updatePaginationMap = function (map, curNode) {
 						if (A.instanceOf(curNode, A.TreeNodeIO)) {
 							var paginationLimit = host.get('maxChildren');
 
@@ -196,7 +196,7 @@ AUI.add(
 							cmd: 'get',
 							key,
 						},
-						responseData => {
+						(responseData) => {
 							try {
 								paginationMap = JSON.parse(responseData);
 							}
@@ -204,7 +204,7 @@ AUI.add(
 
 							updatePaginationMap(paginationMap, target);
 
-							target.eachParent(parent => {
+							target.eachParent((parent) => {
 								updatePaginationMap(paginationMap, parent);
 							});
 
@@ -361,7 +361,7 @@ AUI.add(
 							? undefined
 							: checked;
 
-						A.each(children, child => {
+						A.each(children, (child) => {
 							instance._updateCheckedNodes({
 								checked: childrenChecked,
 								forceChildrenState,
@@ -407,8 +407,8 @@ AUI.add(
 							method: 'POST',
 						}
 					)
-						.then(response => response.json())
-						.then(checkedNodes => {
+						.then((response) => response.json())
+						.then((checkedNodes) => {
 							if (checkedNodes) {
 								instance.set(STR_CHECKED_NODES, checkedNodes);
 							}

@@ -135,7 +135,7 @@ function APIService({endpoints, namespace, page}) {
 
 	function getTrafficSourceDetails(name) {
 		// TODO remove frontend mock
-		return new Promise(resolve =>
+		return new Promise((resolve) =>
 			setTimeout(() => {
 				resolve(MOCK_TRAFFIC_SOURCES_DETAILS[name]);
 			}, 900)
@@ -175,8 +175,8 @@ export function _getFormDataRequest(body, prefix, formData = new FormData()) {
  */
 function _fetchWithError(url, options = {}) {
 	return fetch(url, options)
-		.then(response => response.json())
-		.then(objectResponse => {
+		.then((response) => response.json())
+		.then((objectResponse) => {
 			if (objectResponse.error) {
 				throw objectResponse.error;
 			}

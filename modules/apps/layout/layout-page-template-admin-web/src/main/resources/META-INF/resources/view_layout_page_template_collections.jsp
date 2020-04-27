@@ -151,7 +151,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 </aui:form>
 
 <aui:script require="metal-dom/src/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
-	var deleteCollections = function() {
+	var deleteCollections = function () {
 		var layoutPageTemplateCollectionsFm =
 			document.<portlet:namespace />layoutPageTemplateCollectionsFm;
 
@@ -164,7 +164,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/layout_page_template/select_layout_page_template_collections" /></portlet:renderURL>',
 			});
 
-			itemSelectorDialog.on('selectedItemChange', function(event) {
+			itemSelectorDialog.on('selectedItemChange', function (event) {
 				var selectedItems = event.selectedItem;
 
 				if (selectedItems) {
@@ -173,7 +173,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 							'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
 						)
 					) {
-						Array.prototype.forEach.call(selectedItems, function(
+						Array.prototype.forEach.call(selectedItems, function (
 							item,
 							index
 						) {
@@ -204,8 +204,8 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 		deleteCollections: deleteCollections,
 	};
 
-	Liferay.componentReady('actionsComponent').then(function(actionsComponent) {
-		actionsComponent.on(['click', 'itemClicked'], function(event, facade) {
+	Liferay.componentReady('actionsComponent').then(function (actionsComponent) {
+		actionsComponent.on(['click', 'itemClicked'], function (event, facade) {
 			var itemData;
 
 			if (event.data && event.data.item) {

@@ -207,7 +207,7 @@ else {
 	</div>
 
 	<aui:script use="liferay-search-container">
-		A.one('#<portlet:namespace />selectParentSiteLink').on('click', function(
+		A.one('#<portlet:namespace />selectParentSiteLink').on('click', function (
 			event
 		) {
 			Liferay.Util.selectEntity(
@@ -230,7 +230,7 @@ else {
 
 					uri: '<%= groupSelectorURL.toString() %>',
 				},
-				function(event) {
+				function (event) {
 					var searchContainer = Liferay.SearchContainer.get(
 						'<portlet:namespace />parentGroupSearchContainer'
 					);
@@ -266,7 +266,7 @@ else {
 
 		searchContainer.get('contentBox').delegate(
 			'click',
-			function(event) {
+			function (event) {
 				var link = event.currentTarget;
 
 				var tr = link.ancestor('tr');

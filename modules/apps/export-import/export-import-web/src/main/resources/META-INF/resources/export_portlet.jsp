@@ -467,7 +467,7 @@ portletURL.setParameter("portletResource", portletResource);
 
 		var form = liferayForm.formNode;
 
-		form.on('submit', function(event) {
+		form.on('submit', function (event) {
 			event.halt();
 
 			var exportImport = Liferay.component(
@@ -488,7 +488,7 @@ portletURL.setParameter("portletResource", portletResource);
 
 		var fieldRules = [
 			{
-				body: function(val, fieldNode, ruleValue) {
+				body: function (val, fieldNode, ruleValue) {
 
 					<%
 					JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
@@ -560,7 +560,7 @@ portletURL.setParameter("portletResource", portletResource);
 
 	Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
 
-	Liferay.once('destroyPortlet', function() {
+	Liferay.once('destroyPortlet', function () {
 		exportImport.destroy();
 	});
 </aui:script>

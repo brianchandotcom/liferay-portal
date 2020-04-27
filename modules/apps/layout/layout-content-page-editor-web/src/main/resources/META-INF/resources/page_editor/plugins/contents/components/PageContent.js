@@ -30,7 +30,7 @@ export default function PageContent(props) {
 	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
-	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [isHovered, setIsHovered] = useState(false);
 
 	useEffect(() => {

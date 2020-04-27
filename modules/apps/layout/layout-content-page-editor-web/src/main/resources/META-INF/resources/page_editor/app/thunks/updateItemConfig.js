@@ -22,20 +22,20 @@ export default function updateItemConfig({
 	itemId,
 	segmentsExperienceId,
 }) {
-	return dispatch =>
+	return (dispatch) =>
 		LayoutService.updateItemConfig({
 			itemConfig,
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
 		})
-			.then(layoutData => {
+			.then((layoutData) => {
 				dispatch(updateItemConfigAction({layoutData}));
 			})
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
-				}).then(pageContents => {
+				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({
 							pageContents,

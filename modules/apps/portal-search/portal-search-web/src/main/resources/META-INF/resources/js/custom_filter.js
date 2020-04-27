@@ -14,10 +14,10 @@
 
 AUI.add(
 	'liferay-search-custom-filter',
-	A => {
+	(A) => {
 		var FacetUtil = Liferay.Search.FacetUtil;
 
-		var CustomFilter = function(form) {
+		var CustomFilter = function (form) {
 			if (!form) {
 				return;
 			}

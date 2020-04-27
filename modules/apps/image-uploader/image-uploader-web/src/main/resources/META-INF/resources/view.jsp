@@ -125,13 +125,13 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		</aui:form>
 
 		<script>
-			(function() {
+			(function () {
 				var uploadImageButton = document.getElementById(
 					'<portlet:namespace />uploadImage'
 				);
 
 				if (uploadImageButton) {
-					uploadImageButton.addEventListener('keydown', function(event) {
+					uploadImageButton.addEventListener('keydown', function (event) {
 						event.preventDefault();
 
 						if (event.key == 'Enter' || event.key == ' ') {

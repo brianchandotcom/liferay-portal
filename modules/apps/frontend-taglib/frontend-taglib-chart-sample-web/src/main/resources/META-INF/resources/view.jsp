@@ -168,8 +168,8 @@
 </div>
 
 <aui:script>
-	Liferay.componentReady('polling-interval-line-chart').then(function(chart) {
-		chart.data = function() {
+	Liferay.componentReady('polling-interval-line-chart').then(function (chart) {
+		chart.data = function () {
 			return Promise.resolve([
 				{
 					data: [
@@ -191,10 +191,10 @@
 		};
 	});
 
-	Liferay.componentReady('predictive-chart').then(function(chart) {
+	Liferay.componentReady('predictive-chart').then(function (chart) {
 		var oldData = chart.data.slice();
 
-		setTimeout(function() {
+		setTimeout(function () {
 			var newData = {
 				data: [
 					[230, 230, 230],
@@ -213,7 +213,7 @@
 				id: 'data3',
 			};
 
-			chart.data = new Promise(function(resolve, reject) {
+			chart.data = new Promise(function (resolve, reject) {
 				oldData.push(newData);
 				resolve(oldData);
 			});

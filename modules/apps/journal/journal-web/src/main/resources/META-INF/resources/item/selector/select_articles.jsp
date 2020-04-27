@@ -289,7 +289,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		document.querySelector('#<portlet:namespace/>articlesContainer'),
 		'click',
 		'.articles',
-		function(event) {
+		function (event) {
 			<c:choose>
 				<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
 					dom.removeClasses(

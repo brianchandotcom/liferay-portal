@@ -30,7 +30,7 @@ const Item = ({
 	const {defaultDelta} = useContext(AppContext);
 
 	const getFiltersQuery = useCallback(
-		slaStatus => ({
+		(slaStatus) => ({
 			[filterConstants.assignee.key]: [id],
 			[filterConstants.processStatus.key]: [
 				processStatusConstants.pending,

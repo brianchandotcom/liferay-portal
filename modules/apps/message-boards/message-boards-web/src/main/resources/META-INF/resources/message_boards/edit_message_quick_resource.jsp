@@ -228,7 +228,7 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 <aui:script>
 	window[
 		'<portlet:namespace />replyMessageOnChange' + <%= parentMessageId %>
-	] = function(html) {
+	] = function (html) {
 		Liferay.Util.toggleDisabled(
 			'#<portlet:namespace />replyMessageButton<%= parentMessageId %>',
 			html === ''

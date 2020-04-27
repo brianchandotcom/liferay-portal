@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var Lang = AUI().Lang;
 
 	var IE9AndLater = AUI.Env.UA.ie >= 9;
@@ -32,7 +32,7 @@
 		_bindEvent(editor) {
 			var instance = this;
 
-			editor.on('beforeCommandExec', event => {
+			editor.on('beforeCommandExec', (event) => {
 				if (event.data.name === 'imageselector') {
 					event.removeListener();
 
@@ -83,7 +83,7 @@
 
 				var sources = '';
 
-				itemValue.sources.forEach(source => {
+				itemValue.sources.forEach((source) => {
 					var propertyNames = Object.getOwnPropertyNames(
 						source.attributes
 					);

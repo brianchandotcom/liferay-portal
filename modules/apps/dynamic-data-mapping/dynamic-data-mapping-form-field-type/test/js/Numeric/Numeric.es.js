@@ -173,8 +173,8 @@ describe('Field Numeric', () => {
 	 * This test needs to be revised, it is strange to wait for the
 	 * decimal value when the dataType is an integer.
 	 */
-	it.skip('check if event is sent when decimal is being writen', done => {
-		const handleFieldEdited = data => {
+	it.skip('check if event is sent when decimal is being writen', (done) => {
+		const handleFieldEdited = (data) => {
 			expect(data).toEqual(
 				expect.objectContaining({
 					fieldInstance: component,
@@ -204,8 +204,8 @@ describe('Field Numeric', () => {
 		jest.runAllTimers();
 	});
 
-	it('check field value is rounded when fieldType is integer but it receives a double', done => {
-		const handleFieldEdited = event => {
+	it('check field value is rounded when fieldType is integer but it receives a double', (done) => {
+		const handleFieldEdited = (event) => {
 			expect(event.value).toBe('4');
 			done();
 		};

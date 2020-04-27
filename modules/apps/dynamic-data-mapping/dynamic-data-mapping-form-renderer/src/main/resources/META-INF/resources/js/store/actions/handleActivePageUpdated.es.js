@@ -12,7 +12,7 @@
  * details.
  */
 
-export default activePage => {
+export default (activePage) => {
 	return {
 		activePage,
 	};

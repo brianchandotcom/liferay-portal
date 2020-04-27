@@ -46,7 +46,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 	</div>
 
 	<aui:script sandbox="<%= true %>">
-		var showStatusMessage = Liferay.lazyLoad('metal-dom/src/dom', function(
+		var showStatusMessage = Liferay.lazyLoad('metal-dom/src/dom', function (
 			dom,
 			type,
 			message
@@ -69,7 +69,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 		window.<portlet:namespace />activateAccount = Liferay.lazyLoad(
 			'metal-dom/src/dom',
-			function(dom) {
+			function (dom) {
 				var form = document.getElementById('<portlet:namespace />fm');
 
 				function onError() {
@@ -94,13 +94,13 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 					}),
 					method: 'POST',
 				})
-					.then(function(response) {
+					.then(function (response) {
 						return response.ok ? response.json() : Promise.reject();
 					})
-					.then(function(data) {
+					.then(function (data) {
 						return !data.exception ? data.userStatus : Promise.reject();
 					})
-					.then(function(userStatus) {
+					.then(function (userStatus) {
 						var message = '';
 
 						if (userStatus == 'user_added') {
@@ -131,7 +131,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	window.<portlet:namespace />closeDialog = function(namespace) {
+	window.<portlet:namespace />closeDialog = function (namespace) {
 		Liferay.fire('closeWindow', {
 			id: namespace + 'signInDialog',
 		});

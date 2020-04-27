@@ -181,7 +181,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 	var imageViewer = new A.ImageViewer({
 		after: {
 			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
-				load: function(event) {
+				load: function (event) {
 					var instance = this;
 
 					var currentLink = instance.getCurrentLink();
@@ -211,7 +211,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 		maxHeight: maxHeight,
 		maxWidth: maxWidth,
 		on: {
-			currentIndexChange: function() {
+			currentIndexChange: function () {
 				if (playingMediaIndex != -1) {
 					Liferay.fire(
 						'<portlet:namespace />ImageViewer:currentIndexChange'
@@ -220,7 +220,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 					playingMediaIndex = -1;
 				}
 			},
-			visibleChange: function(event) {
+			visibleChange: function (event) {
 				if (!event.newVal && playingMediaIndex != -1) {
 					Liferay.fire('<portlet:namespace />ImageViewer:close');
 
@@ -264,7 +264,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 
 	imageViewer.TPL_PLAYER = TPL_PLAYER_PLAY;
 
-	imageViewer._syncPlaying = function() {
+	imageViewer._syncPlaying = function () {
 		if (this.get('playing')) {
 			this._player.setHTML(TPL_PLAYER_PAUSE);
 		}
@@ -275,13 +275,13 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 
 	imageViewer.render();
 
-	Liferay.on('<portlet:namespace />Video:play', function() {
+	Liferay.on('<portlet:namespace />Video:play', function () {
 		imageViewer.pause();
 
 		playingMediaIndex = this.get('currentIndex');
 	});
 
-	Liferay.on('<portlet:namespace />Audio:play', function() {
+	Liferay.on('<portlet:namespace />Audio:play', function () {
 		imageViewer.pause();
 
 		playingMediaIndex = this.get('currentIndex');
@@ -289,7 +289,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 
 	var onClickLinksDefaultFn = imageViewer._onClickLinks;
 
-	imageViewer._onClickLinks = function(event) {
+	imageViewer._onClickLinks = function (event) {
 		if (!event.target.ancestor('.dropdown')) {
 			onClickLinksDefaultFn.call(this, event);
 		}

@@ -19,7 +19,7 @@
  *                      - imageData: The ImageData to transform
  *                      - brightnessValue: The brightness value to apply
  */
-onmessage = function(event) {
+onmessage = function (event) {
 	var brightnessValue = event.data.brightnessValue;
 	var imageData = event.data.imageData;
 

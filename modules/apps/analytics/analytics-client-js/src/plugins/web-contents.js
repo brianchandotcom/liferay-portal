@@ -75,8 +75,8 @@ function trackWebContentViewed(analytics) {
 					'[data-analytics-asset-type="web-content"]'
 				)
 			)
-			.filter(element => isTrackableWebContent(element))
-			.forEach(element => {
+			.filter((element) => isTrackableWebContent(element))
+			.forEach((element) => {
 				const numberOfWords = getNumberOfWords(element);
 
 				let payload = getWebContentPayload(element);

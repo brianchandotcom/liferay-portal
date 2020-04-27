@@ -116,7 +116,7 @@ describe('Forms Plugin', () => {
 
 			document.body.appendChild(form);
 
-			form.addEventListener('submit', event => event.preventDefault());
+			form.addEventListener('submit', (event) => event.preventDefault());
 
 			const event = new Event('submit', {
 				cancelable: true,

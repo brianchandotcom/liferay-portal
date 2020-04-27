@@ -102,7 +102,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 		'<portlet:namespace />addMenuItemFm'
 	);
 
-	dom.delegate(addMenuItemFm, 'click', '.selector-button', function(event) {
+	dom.delegate(addMenuItemFm, 'click', '.selector-button', function (event) {
 		Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(journalViewMoreMenuItemsDisplayContext.getEventName()) %>',
 			{

@@ -12,11 +12,11 @@
  * details.
  */
 
-(function(A, Liferay) {
+(function (A, Liferay) {
 	var CLICK_EVENTS = {};
 	var Util = Liferay.Util;
 
-	A.use('attribute', 'oop', A => {
+	A.use('attribute', 'oop', (A) => {
 		A.augment(Liferay, A.Attribute, true);
 	});
 
@@ -30,9 +30,7 @@
 				return;
 			}
 
-			var guid = A.one(el)
-				.addClass('lfr-delegate-click')
-				.guid();
+			var guid = A.one(el).addClass('lfr-delegate-click').guid();
 
 			CLICK_EVENTS[guid] = fn;
 
@@ -47,7 +45,7 @@
 		['aui-base']
 	);
 
-	Liferay._baseDelegate = function(event) {
+	Liferay._baseDelegate = function (event) {
 		var id = event.currentTarget.attr('id');
 
 		var fn = CLICK_EVENTS[id];
@@ -170,7 +168,7 @@
 		},
 	});
 
-	Liferay.after('closeWindow', event => {
+	Liferay.after('closeWindow', (event) => {
 		var id = event.id;
 
 		var dialog = Util.getTop().Liferay.Util.Window.getById(id);

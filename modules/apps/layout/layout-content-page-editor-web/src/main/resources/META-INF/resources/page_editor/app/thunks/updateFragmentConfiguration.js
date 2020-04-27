@@ -28,7 +28,7 @@ export default function updateFragmentConfiguration({
 		[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: configurationValues,
 	};
 
-	return dispatch => {
+	return (dispatch) => {
 		return FragmentService.updateConfigurationValues({
 			configurationValues: nextEditableValues,
 			fragmentEntryLinkId,

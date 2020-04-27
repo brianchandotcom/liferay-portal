@@ -143,10 +143,10 @@ class RuleBuilder extends Component {
 			method: 'GET',
 			url: `${dataProviderInstancesURL}?languageId=${themeDisplay.getLanguageId()}&scopeGroupId=${themeDisplay.getScopeGroupId()}`,
 		})
-			.then(responseData => {
+			.then((responseData) => {
 				if (!this.isDisposed()) {
 					this.setState({
-						dataProvider: responseData.map(data => {
+						dataProvider: responseData.map((data) => {
 							return {
 								...data,
 								label: data.name,
@@ -156,7 +156,7 @@ class RuleBuilder extends Component {
 					});
 				}
 			})
-			.catch(error => {
+			.catch((error) => {
 				throw new Error(error);
 			});
 	}
@@ -168,10 +168,10 @@ class RuleBuilder extends Component {
 			method: 'GET',
 			url: rolesURL,
 		})
-			.then(responseData => {
+			.then((responseData) => {
 				if (!this.isDisposed()) {
 					this.setState({
-						roles: responseData.map(data => {
+						roles: responseData.map((data) => {
 							return {
 								...data,
 								label: data.name,
@@ -181,7 +181,7 @@ class RuleBuilder extends Component {
 					});
 				}
 			})
-			.catch(error => {
+			.catch((error) => {
 				throw new Error(error);
 			});
 	}

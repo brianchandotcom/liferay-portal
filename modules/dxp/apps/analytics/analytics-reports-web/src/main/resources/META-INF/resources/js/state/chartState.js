@@ -31,13 +31,13 @@ export const useChartState = ({defaultTimeSpanOption, publishDate}) => {
 	});
 
 	const actions = {
-		addDataSetItem: payload =>
+		addDataSetItem: (payload) =>
 			dispatch({
 				payload,
 				type: ADD_DATA_SET_ITEM,
 				validAnalyticsConnection,
 			}),
-		changeTimeSpanOption: payload =>
+		changeTimeSpanOption: (payload) =>
 			dispatch({payload, type: CHANGE_TIME_SPAN_OPTION}),
 		nextTimeSpan: () => dispatch({type: NEXT_TIME_SPAN}),
 		previousTimeSpan: () => dispatch({type: PREV_TIME_SPAN}),
@@ -125,7 +125,7 @@ function setLoadingState(state) {
 		return {...state, loading: true};
 	}
 
-	const histogram = state.dataSet.histogram.map(set => {
+	const histogram = state.dataSet.histogram.map((set) => {
 		const newSet = {};
 
 		const setArray = Object.entries(set);
@@ -185,7 +185,7 @@ function mergeDataSets({
 
 	const publishDateObject = new Date(publishDate);
 
-	const newFormattedHistogram = newData.histogram.map(h => {
+	const newFormattedHistogram = newData.histogram.map((h) => {
 		const valueDataObject = new Date(h.key);
 
 		if (

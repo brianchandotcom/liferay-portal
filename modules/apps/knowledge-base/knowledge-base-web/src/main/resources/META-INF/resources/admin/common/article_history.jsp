@@ -118,7 +118,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 </portlet:renderURL>
 
 <aui:script require="metal-dom/src/dom as dom">
-	dom.delegate(document.body, 'click', '.compare-to-link > a', function(event) {
+	dom.delegate(document.body, 'click', '.compare-to-link > a', function (event) {
 		var currentTarget = event.delegateTarget;
 
 		Liferay.Util.selectEntity(
@@ -133,7 +133,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 				title: '<liferay-ui:message key="compare-versions" />',
 				uri: currentTarget.dataset.uri,
 			},
-			function(event) {
+			function (event) {
 				var uri = '<%= HtmlUtil.escapeJS(compareVersionURL) %>';
 
 				uri = Liferay.Util.addParams(

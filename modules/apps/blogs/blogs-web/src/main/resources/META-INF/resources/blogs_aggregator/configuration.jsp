@@ -69,7 +69,7 @@ if (organizationId > 0) {
 					if (<portlet:namespace />selectOrganizationButton) {
 						<portlet:namespace />selectOrganizationButton.addEventListener(
 							'click',
-							function(event) {
+							function (event) {
 								Liferay.Util.selectEntity(
 									{
 										dialog: {
@@ -96,7 +96,7 @@ if (organizationId > 0) {
 
 										uri: '<%= selectOrganizationURL.toString() %>',
 									},
-									function(event) {
+									function (event) {
 										var form = document.getElementById(
 											'<portlet:namespace />fm'
 										);
@@ -144,7 +144,7 @@ if (organizationId > 0) {
 					);
 
 					if (<portlet:namespace />selectionMethod) {
-						<portlet:namespace />selectionMethod.addEventListener('change', function(
+						<portlet:namespace />selectionMethod.addEventListener('change', function (
 							event
 						) {
 							var usersSelectionOptions = document.getElementById(

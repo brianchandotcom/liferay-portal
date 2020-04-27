@@ -21,10 +21,10 @@
 
 AUI.add(
 	'liferay-crop-region',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
-		var CropRegion = function() {};
+		var CropRegion = function () {};
 
 		CropRegion.prototype = {
 			_getCropRegion(imagePreview, region) {

@@ -13,7 +13,7 @@
  */
 
 describe('liferay-search-facet-util', () => {
-	beforeEach(done => {
+	beforeEach((done) => {
 		require('../../src/main/resources/META-INF/resources/js/facet_util');
 
 		AUI().use(['liferay-search-facet-util'], () => done());

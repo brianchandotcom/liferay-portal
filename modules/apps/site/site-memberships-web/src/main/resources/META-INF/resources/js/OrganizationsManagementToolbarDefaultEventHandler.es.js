@@ -37,7 +37,7 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 			url: itemData.selectOrganizationsURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
@@ -45,7 +45,7 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 					'#addGroupOrganizationsFm'
 				);
 
-				selectedItem.forEach(item => {
+				selectedItem.forEach((item) => {
 					dom.append(addGroupOrganizationsFm, item);
 				});
 

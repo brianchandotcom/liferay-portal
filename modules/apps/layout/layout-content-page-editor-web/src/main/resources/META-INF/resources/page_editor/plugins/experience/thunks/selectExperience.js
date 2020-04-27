@@ -16,14 +16,14 @@ import ExperienceService from '../../../app/services/ExperienceService';
 import selectExperienceAction from '../actions/selectExperience';
 
 export default function selectExperience(id) {
-	return dispatch => {
+	return (dispatch) => {
 		return ExperienceService.selectExperience({
 			body: {
 				segmentsExperienceId: id,
 			},
 			dispatch,
 		})
-			.then(portletIds => {
+			.then((portletIds) => {
 				return dispatch(
 					selectExperienceAction({
 						portletIds,
@@ -31,7 +31,7 @@ export default function selectExperience(id) {
 					})
 				);
 			})
-			.catch(error => {
+			.catch((error) => {
 				return error;
 			});
 	};

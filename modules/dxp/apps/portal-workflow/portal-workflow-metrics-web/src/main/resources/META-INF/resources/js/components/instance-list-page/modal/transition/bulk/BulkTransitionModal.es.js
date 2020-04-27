@@ -71,7 +71,7 @@ const BulkTransitionModal = () => {
 			transitionTasks,
 		});
 
-		if (!Object.values(errors).some(error => error)) {
+		if (!Object.values(errors).some((error) => error)) {
 			setTransitioning(true);
 
 			patchData()
@@ -141,7 +141,7 @@ const BulkTransitionModal = () => {
 	}, [clearContext, setErrorToast, setCurrentStep]);
 
 	const getStep = useCallback(
-		step => {
+		(step) => {
 			const steps = {
 				selectTasks: {
 					cancelBtn: {

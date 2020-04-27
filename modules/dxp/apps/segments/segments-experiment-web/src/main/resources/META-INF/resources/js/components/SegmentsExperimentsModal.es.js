@@ -93,7 +93,7 @@ function SegmentsExperimentsModal({
 									defaultValue={inputGoal}
 									onChange={_handleGoalChange}
 								>
-									{goals.map(goal => (
+									{goals.map((goal) => (
 										<ClaySelect.Option
 											key={goal.value}
 											label={goal.label}

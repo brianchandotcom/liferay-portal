@@ -79,7 +79,7 @@ describe('throttle()', () => {
 	it('uses the last-employed context when throttling multiple calls', () => {
 		let context;
 
-		const throttled = throttle(function() {
+		const throttled = throttle(function () {
 			context = this;
 		}, 100);
 

@@ -235,7 +235,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		views: views,
 	});
 
-	var destroySchedulers = function(event) {
+	var destroySchedulers = function (event) {
 		if (event.portletId === '<%= portletDisplay.getId() %>') {
 			window.<portlet:namespace />scheduler.destroy();
 

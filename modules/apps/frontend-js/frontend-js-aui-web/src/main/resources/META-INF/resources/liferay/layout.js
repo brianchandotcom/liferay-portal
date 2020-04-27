@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layout',
-	A => {
+	(A) => {
 		var Util = Liferay.Util;
 
 		var BODY = A.getBody();
@@ -32,7 +32,7 @@ AUI.add(
 				}
 			},
 
-			_getPortletTitle: A.cached(id => {
+			_getPortletTitle: A.cached((id) => {
 				var portletBoundary = A.one('#' + id);
 
 				var portletTitle = portletBoundary.one('.portlet-title');
@@ -129,7 +129,7 @@ AUI.add(
 			closeNestedPortlets(portlet) {
 				var nestedPortlets = portlet.all('.portlet-boundary');
 
-				nestedPortlets.each(portlet => {
+				nestedPortlets.each((portlet) => {
 					Liferay.Portlet.close(portlet, true, {
 						nestedPortlet: true,
 					});
@@ -160,7 +160,7 @@ AUI.add(
 						referencePortlet = firstPortlet;
 					}
 					else {
-						portlets.each(item => {
+						portlets.each((item) => {
 							var isStatic = item.isStatic;
 
 							if (
@@ -208,7 +208,7 @@ AUI.add(
 
 				var dropNodes = [];
 
-				A.all(options.dropContainer).each(dropContainer => {
+				A.all(options.dropContainer).each((dropContainer) => {
 					if (
 						!dropContainer.hasClass(
 							options.disabledDropContainerClass
@@ -382,7 +382,7 @@ AUI.add(
 			updateEmptyColumnsInfo() {
 				var options = Layout.options;
 
-				A.all(options.dropNodes).each(item => {
+				A.all(options.dropNodes).each((item) => {
 					var columnId = item.get('id');
 
 					Layout.EMPTY_COLUMNS[columnId] = !Layout.hasPortlets(item);
@@ -395,13 +395,13 @@ AUI.add(
 
 				var layoutHandler = Layout.getLayoutHandler();
 
-				portletDropNodes.each(item => {
+				portletDropNodes.each((item) => {
 					layoutHandler.addDropNode(item);
 				});
 			},
 		};
 
-		Layout.init = function(options) {
+		Layout.init = function (options) {
 			options = options || Layout.options;
 
 			options.handles = A.Array(options.handles);
@@ -440,7 +440,7 @@ AUI.add(
 				eventHandles.push(
 					BODY.delegate(
 						'mouseenter',
-						event => {
+						(event) => {
 							event.currentTarget.addClass('focus');
 						},
 						'.portlet'
@@ -450,7 +450,7 @@ AUI.add(
 				eventHandles.push(
 					BODY.delegate(
 						'mouseleave',
-						event => {
+						(event) => {
 							event.currentTarget.removeClass('focus');
 						},
 						'.portlet'
@@ -483,7 +483,7 @@ AUI.add(
 		Liferay.provide(
 			Layout,
 			'saveLayout',
-			options => {
+			(options) => {
 				var data = {
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					p_auth: Liferay.authToken,
@@ -498,7 +498,7 @@ AUI.add(
 						body: Liferay.Util.objectToFormData(data),
 						method: 'POST',
 					}
-				).then(response => {
+				).then((response) => {
 					if (response.ok) {
 						Liferay.fire('updatedLayout');
 					}

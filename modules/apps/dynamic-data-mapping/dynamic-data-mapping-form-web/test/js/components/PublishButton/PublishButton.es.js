@@ -24,7 +24,7 @@ const props = {
 	namespace,
 	published: true,
 	resolvePublishURL: () =>
-		new Promise(resolve =>
+		new Promise((resolve) =>
 			resolve({
 				formInstanceId,
 				publishURL: 'published/form',

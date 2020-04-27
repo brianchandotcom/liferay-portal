@@ -22,7 +22,7 @@ import Table from './Table.es';
 
 const TableWithPagination = ({actions, columns, items, totalCount}) => {
 	const [{page, pageSize}, dispatch] = useContext(SearchContext);
-	const deltas = [5, 10, 20, 30, 50, 75].map(size => ({label: size}));
+	const deltas = [5, 10, 20, 30, 50, 75].map((size) => ({label: size}));
 
 	return (
 		<div className="container-fluid container-fluid-max-xl">
@@ -35,10 +35,10 @@ const TableWithPagination = ({actions, columns, items, totalCount}) => {
 						activePage={page}
 						deltas={deltas}
 						ellipsisBuffer={3}
-						onDeltaChange={pageSize =>
+						onDeltaChange={(pageSize) =>
 							dispatch({pageSize, type: 'CHANGE_PAGE_SIZE'})
 						}
-						onPageChange={page =>
+						onPageChange={(page) =>
 							dispatch({page, type: 'CHANGE_PAGE'})
 						}
 						totalItems={totalCount}

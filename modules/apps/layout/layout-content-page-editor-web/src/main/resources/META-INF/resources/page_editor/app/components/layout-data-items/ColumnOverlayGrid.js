@@ -46,7 +46,7 @@ export default function ColumnOverlayGrid({
 						'no-gutters': !columnSpacing,
 					})}
 				>
-					{[...Array(12).keys()].map(column => (
+					{[...Array(12).keys()].map((column) => (
 						<div
 							className={classNames(
 								'col page-editor__column-overlay-grid__column',

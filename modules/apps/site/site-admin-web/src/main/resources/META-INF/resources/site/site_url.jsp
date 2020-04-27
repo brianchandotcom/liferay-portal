@@ -350,14 +350,14 @@ if (privateVirtualHostnames.isEmpty()) {
 	);
 
 	if (friendlyURL) {
-		friendlyURL.addEventListener('change', function(event) {
+		friendlyURL.addEventListener('change', function (event) {
 			var value = friendlyURL.value.trim();
 
 			if (value == '/') {
 				value = '';
 			}
 			else {
-				value = value.replace(/^[^\/]|\/$/g, function(match, index) {
+				value = value.replace(/^[^\/]|\/$/g, function (match, index) {
 					var str = '';
 
 					if (index == 0) {

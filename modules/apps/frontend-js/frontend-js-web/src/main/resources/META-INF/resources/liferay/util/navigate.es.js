@@ -22,12 +22,12 @@
  * @review
  */
 
-export default function(url, listeners) {
+export default function (url, listeners) {
 	if (Liferay.SPA && Liferay.SPA.app && Liferay.SPA.app.canNavigate(url)) {
 		Liferay.SPA.app.navigate(url);
 
 		if (listeners) {
-			Object.keys(listeners).forEach(key => {
+			Object.keys(listeners).forEach((key) => {
 				Liferay.once(key, listeners[key]);
 			});
 		}

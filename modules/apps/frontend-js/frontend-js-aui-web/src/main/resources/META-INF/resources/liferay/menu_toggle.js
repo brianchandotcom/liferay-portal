@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-menu-toggle',
-	A => {
+	(A) => {
 		var AEvent = A.Event;
 		var Lang = A.Lang;
 
@@ -98,7 +98,7 @@ AUI.add(
 					var instance = this;
 
 					if (instance._triggerNode) {
-						instance._triggerNode.on(['keyup', 'tap'], event => {
+						instance._triggerNode.on(['keyup', 'tap'], (event) => {
 							if (
 								event.type == 'tap' ||
 								event.isKeyInSet('ENTER', 'SPACE')
@@ -117,12 +117,9 @@ AUI.add(
 
 					var results = [];
 
-					menuItems.each(node => {
+					menuItems.each((node) => {
 						results.push({
-							name: node
-								.one('.nav-item-label')
-								.text()
-								.trim(),
+							name: node.one('.nav-item-label').text().trim(),
 							node,
 						});
 					});
@@ -159,7 +156,7 @@ AUI.add(
 				_isContent(target) {
 					var instance = this;
 
-					return instance._content.some(item => {
+					return instance._content.some((item) => {
 						return item.contains(target);
 					});
 				},
@@ -210,7 +207,7 @@ AUI.add(
 						if (open && !handle) {
 							handle = target.on(
 								instance._getEventOutside(event),
-								event => {
+								(event) => {
 									if (toggleTouch) {
 										toggleTouch = instance._isTouchEvent(
 											event

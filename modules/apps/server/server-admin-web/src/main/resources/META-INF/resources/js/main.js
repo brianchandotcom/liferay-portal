@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-admin',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var MAP_DATA_PARAMS = {

@@ -69,7 +69,7 @@ export const reducer = (state = initialState, action) => {
 				dataListView: {
 					...dataListView,
 					fieldNames: dataListView.fieldNames.filter(
-						name => name != fieldName
+						(name) => name != fieldName
 					),
 				},
 				focusedColumn: null,

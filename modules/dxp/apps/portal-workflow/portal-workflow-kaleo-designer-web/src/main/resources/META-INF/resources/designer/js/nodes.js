@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-nodes',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var DiagramBuilder = A.DiagramBuilder;
 		var Lang = A.Lang;
@@ -31,7 +31,7 @@ AUI.add(
 		var PropertyListFormatter =
 			Liferay.KaleoDesignerUtils.PropertyListFormatter;
 
-		var renderShapeBoundary = function() {
+		var renderShapeBoundary = function () {
 			var instance = this;
 
 			var boundary = (instance.boundary = instance
@@ -126,10 +126,7 @@ AUI.add(
 						)
 					);
 
-					instance
-						.get('contentBox')
-						.one('svg')
-						.prepend(icon);
+					instance.get('contentBox').one('svg').prepend(icon);
 
 					if (
 						A.instanceOf(
@@ -415,7 +412,7 @@ AUI.add(
 
 					var strings = instance.getStrings();
 
-					scriptLanguages.forEach(item => {
+					scriptLanguages.forEach((item) => {
 						if (item) {
 							scriptLanguageOptions[item] = strings[item];
 						}
@@ -425,8 +422,8 @@ AUI.add(
 				},
 
 				getScriptLanguages(scriptLanguages) {
-					KaleoDesignerRemoteServices.getScriptLanguages(data => {
-						AArray.each(data, item => {
+					KaleoDesignerRemoteServices.getScriptLanguages((data) => {
+						AArray.each(data, (item) => {
 							if (item) {
 								scriptLanguages.push(item.scriptLanguage);
 							}

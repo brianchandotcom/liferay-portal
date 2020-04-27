@@ -48,9 +48,9 @@ export default withRouter(
 			name: {en_US: appName},
 		} = app;
 
-		const getStandaloneLink = appId => {
+		const getStandaloneLink = (appId) => {
 			const isStandalone = appDeployments.some(
-				deployment => deployment.type === 'standalone'
+				(deployment) => deployment.type === 'standalone'
 			);
 
 			if (!isStandalone) {
@@ -67,7 +67,7 @@ export default withRouter(
 			);
 		};
 
-		const onSuccess = appId => {
+		const onSuccess = (appId) => {
 			successToast(
 				<>
 					{Liferay.Language.get('the-app-was-deployed-successfully')}{' '}
@@ -78,7 +78,7 @@ export default withRouter(
 			setDeploying(false);
 		};
 
-		const onError = error => {
+		const onError = (error) => {
 			const {title = ''} = error;
 			errorToast(`${title}.`);
 			setDeploying(false);
@@ -102,7 +102,7 @@ export default withRouter(
 					`/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps`,
 					app
 				)
-					.then(app => onSuccess(app.id))
+					.then((app) => onSuccess(app.id))
 					.then(onCancel)
 					.catch(onError);
 			}

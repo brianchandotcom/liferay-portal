@@ -23,7 +23,7 @@ const {useCallback, useRef} = React;
 export default function usePlugins() {
 	const plugins = useRef(new Map());
 
-	const getInstance = useCallback(key => {
+	const getInstance = useCallback((key) => {
 		return plugins.current.get(key) || Promise.resolve(null);
 	}, []);
 
@@ -32,8 +32,8 @@ export default function usePlugins() {
 			plugins.current.set(
 				key,
 				promise
-					.then(Plugin => new Plugin(init))
-					.catch(error => {
+					.then((Plugin) => new Plugin(init))
+					.catch((error) => {
 						if (process.env.NODE_ENV === 'development') {
 							console.error(error);
 

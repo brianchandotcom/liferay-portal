@@ -20,7 +20,7 @@ class FormRendererWithProvider extends FormRenderer {
 	_handleFieldEdited(properties) {
 		const pageVisitor = new PagesVisitor(this.pages);
 
-		const pages = pageVisitor.mapFields(field => {
+		const pages = pageVisitor.mapFields((field) => {
 			if (field.fieldName === properties.fieldInstance.fieldName) {
 				return {
 					...field,

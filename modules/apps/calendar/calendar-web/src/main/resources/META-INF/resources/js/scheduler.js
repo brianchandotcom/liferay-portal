@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-scheduler',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var DateMath = A.DataType.DateMath;
 		var Lang = A.Lang;
@@ -424,7 +424,7 @@ AUI.add(
 
 					var remoteServices = instance.get('remoteServices');
 
-					var success = function() {
+					var success = function () {
 						instance.load();
 						instance.get('eventRecorder').hidePopover();
 					};
@@ -537,7 +537,7 @@ AUI.add(
 
 					var currentTimeFn = instance.get('currentTimeFn');
 
-					currentTimeFn(time => {
+					currentTimeFn((time) => {
 						instance.set('currentTime', time);
 					});
 				},
@@ -548,7 +548,7 @@ AUI.add(
 					var currentTime = event.newVal;
 
 					var pastSchedulerEvents = instance.getEvents(
-						schedulerEvent => {
+						(schedulerEvent) => {
 							var endDate = schedulerEvent.get('endDate');
 
 							return endDate.getTime() <= currentTime;
@@ -556,7 +556,7 @@ AUI.add(
 						false
 					);
 
-					A.each(pastSchedulerEvents, schedulerEvent => {
+					A.each(pastSchedulerEvents, (schedulerEvent) => {
 						return schedulerEvent._uiSetPast(true);
 					});
 				},
@@ -629,7 +629,7 @@ AUI.add(
 
 					clearInterval(instance._currentTimeInterval);
 
-					instance.get('views').forEach(item => {
+					instance.get('views').forEach((item) => {
 						item.destroy();
 					});
 
@@ -642,7 +642,7 @@ AUI.add(
 				getEventsByCalendarBookingId(calendarBookingId) {
 					var instance = this;
 
-					return instance.getEvents(schedulerEvent => {
+					return instance.getEvents((schedulerEvent) => {
 						return (
 							schedulerEvent.get('calendarBookingId') ===
 							calendarBookingId
@@ -664,7 +664,7 @@ AUI.add(
 					var calendarEvents = {};
 					var events = [];
 
-					calendarBookings.forEach(item => {
+					calendarBookings.forEach((item) => {
 						var calendarId = item.calendarId;
 
 						if (!calendarEvents[calendarId]) {
@@ -1066,7 +1066,7 @@ AUI.add(
 
 			prototype: {
 				_getFormatter(mask) {
-					return function(date) {
+					return function (date) {
 						var instance = this;
 
 						var scheduler = instance.get('scheduler');

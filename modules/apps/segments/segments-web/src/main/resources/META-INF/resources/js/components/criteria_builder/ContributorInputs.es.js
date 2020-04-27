@@ -20,7 +20,7 @@ import {initialContributorShape} from '../../utils/types.es';
 
 function ContributorInputs({contributors}) {
 	return contributors
-		.filter(criteria => criteria.query)
+		.filter((criteria) => criteria.query)
 		.map((criteria, i) => {
 			/**
 			 * First criteria has to be preceded by a `AND` conjunction

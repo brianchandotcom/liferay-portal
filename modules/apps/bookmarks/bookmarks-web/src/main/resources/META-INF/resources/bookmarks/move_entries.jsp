@@ -284,7 +284,7 @@ if (portletTitleBasedNavigation) {
 	);
 
 	if (<portlet:namespace />selectFolderButton) {
-		<portlet:namespace />selectFolderButton.addEventListener('click', function(
+		<portlet:namespace />selectFolderButton.addEventListener('click', function (
 			event
 		) {
 			var folderName = document.getElementById(
@@ -312,7 +312,7 @@ if (portletTitleBasedNavigation) {
 
 						uri: '<%= selectFolderURL.toString() %>',
 					},
-					function(event) {
+					function (event) {
 						var folderData = {
 							idString: 'newFolderId',
 							idValue: event.entityid,

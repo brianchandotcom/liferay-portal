@@ -38,7 +38,7 @@ const PANELS = [
 	},
 	{
 		addressedToField: 'instanceCount',
-		getTitle: completed =>
+		getTitle: (completed) =>
 			completed
 				? Liferay.Language.get('total-completed')
 				: Liferay.Language.get('total-pending'),

@@ -210,7 +210,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 		colorSchemesContainer.delegate(
 			['click', 'keydown'],
-			function(event) {
+			function (event) {
 				if (!event.keyCode || event.keyCode === 13 || event.keyCode === 32) {
 					event.preventDefault();
 

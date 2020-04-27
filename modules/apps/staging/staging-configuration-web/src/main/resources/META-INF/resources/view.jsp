@@ -107,7 +107,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 							remoteStagingOptions &&
 							trashWarning
 						) {
-							dom.delegate(stagingTypes, 'click', 'input', function(event) {
+							dom.delegate(stagingTypes, 'click', 'input', function (event) {
 								var value = event.delegateTarget.value;
 
 								if (value != '<%= StagingConstants.TYPE_LOCAL_STAGING %>') {
@@ -215,7 +215,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		}
 	}
 
-	(function() {
+	(function () {
 		var allCheckboxes = document.querySelectorAll(
 			'#stagingConfigurationControls input[type=checkbox]'
 		);
@@ -224,8 +224,8 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		);
 
 		if (selectAllCheckbox) {
-			selectAllCheckbox.addEventListener('change', function() {
-				Array.prototype.forEach.call(allCheckboxes, function(checkbox) {
+			selectAllCheckbox.addEventListener('change', function () {
+				Array.prototype.forEach.call(allCheckboxes, function (checkbox) {
 					checkbox.checked = selectAllCheckbox.checked;
 				});
 			});

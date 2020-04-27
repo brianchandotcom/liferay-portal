@@ -71,7 +71,7 @@ export default function ReplyCommentForm({
 						setTextareaContent('');
 					}}
 					onSubmitButtonClick={handleReplyButtonClick}
-					onTextareaChange={content =>
+					onTextareaChange={(content) =>
 						content && setTextareaContent(content)
 					}
 					showButtons={true}

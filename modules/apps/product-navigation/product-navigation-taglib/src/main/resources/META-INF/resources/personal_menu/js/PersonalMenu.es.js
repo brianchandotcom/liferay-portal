@@ -34,8 +34,8 @@ function PersonalMenu({
 	function preloadItems() {
 		if (!preloadPromise.current) {
 			preloadPromise.current = fetch(itemsURL)
-				.then(response => response.json())
-				.then(items => setItems(items));
+				.then((response) => response.json())
+				.then((items) => setItems(items));
 		}
 	}
 

@@ -93,7 +93,7 @@
 		'<portlet:namespace />specificDisplayPageNameInput'
 	);
 
-	chooseSpecificDisplayPage.addEventListener('click', function(event) {
+	chooseSpecificDisplayPage.addEventListener('click', function (event) {
 		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<%= selectAssetDisplayPageDisplayContext.getEventName() %>',
 			singleSelect: true,
@@ -104,7 +104,7 @@
 
 		itemSelectorDialog.open();
 
-		itemSelectorDialog.on('selectedItemChange', function(event) {
+		itemSelectorDialog.on('selectedItemChange', function (event) {
 			var selectedItem = event.selectedItem;
 
 			assetDisplayPageIdInput.value = '';
@@ -133,7 +133,7 @@
 	);
 
 	if (previewDefaultDisplayPageButton) {
-		previewDefaultDisplayPageButton.addEventListener('click', function(event) {
+		previewDefaultDisplayPageButton.addEventListener('click', function (event) {
 			Liferay.Util.openWindow({
 				dialog: {
 					destroyOnHide: true,
@@ -149,7 +149,9 @@
 	}
 
 	if (previewSpecificDisplayPageButton) {
-		previewSpecificDisplayPageButton.addEventListener('click', function(event) {
+		previewSpecificDisplayPageButton.addEventListener('click', function (
+			event
+		) {
 			Liferay.Util.openWindow({
 				dialog: {
 					destroyOnHide: true,

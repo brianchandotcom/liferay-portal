@@ -65,7 +65,7 @@ class ContributorBuilder extends React.Component {
 		const {contributors, propertyGroups} = props;
 
 		const firstContributorNotEmpty = contributors.find(
-			contributor => contributor.query !== ''
+			(contributor) => contributor.query !== ''
 		);
 
 		const propertyKey = firstContributorNotEmpty
@@ -186,7 +186,7 @@ class ContributorBuilder extends React.Component {
 											)}
 
 										{contributors
-											.filter(criteria => {
+											.filter((criteria) => {
 												const editingCriteria =
 													editingId ===
 														criteria.propertyKey &&

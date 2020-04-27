@@ -78,7 +78,7 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 			url: '<%= dlEditFileShortcutDisplayContext.getItemSelectorURL() %>',
 		});
 
-		itemSelectorDialog.on('selectedItemChange', function(event) {
+		itemSelectorDialog.on('selectedItemChange', function (event) {
 			var selectedItem = event.selectedItem;
 
 			if (selectedItem) {
@@ -102,7 +102,7 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 			}
 		});
 
-		selectToFileEntryButton.addEventListener('click', function(event) {
+		selectToFileEntryButton.addEventListener('click', function (event) {
 			event.preventDefault();
 			itemSelectorDialog.open();
 		});

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-management-bar',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var ATTR_CHECKED = 'checked';
@@ -293,7 +293,7 @@ AUI.add(
 					if (searchContainerNode) {
 						var selectedElements = A.Array.partition(
 							state.data.elements,
-							item => {
+							(item) => {
 								var valueSelector =
 									'[value="' + item.value + '"]';
 

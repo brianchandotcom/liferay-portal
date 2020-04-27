@@ -54,7 +54,7 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 				classPK: backgroundImage.classPK,
 				fieldId: backgroundImage.fieldId,
 				onNetworkStatus: dispatch,
-			}).then(response => {
+			}).then((response) => {
 				const {fieldValue} = response;
 
 				if (fieldValue && fieldValue.url !== backgroundImageValue) {

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-portlet-dynamic-data-mapping',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
@@ -23,7 +23,7 @@ AUI.add(
 		var instanceOf = A.instanceOf;
 		var isArray = Array.isArray;
 
-		var isFormBuilderField = function(value) {
+		var isFormBuilderField = function (value) {
 			return value instanceof A.FormBuilderField;
 		};
 
@@ -69,7 +69,7 @@ AUI.add(
 			'please-enter-only-alphanumeric-characters'
 		);
 
-		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
+		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function (value) {
 			return /^[\w-]+$/.test(value);
 		};
 
@@ -100,7 +100,7 @@ AUI.add(
 			NAME: 'availableField',
 		});
 
-		var ReadOnlyFormBuilderSupport = function() {};
+		var ReadOnlyFormBuilderSupport = function () {};
 
 		ReadOnlyFormBuilderSupport.ATTRS = {
 			readOnly: {
@@ -115,7 +115,7 @@ AUI.add(
 				if (instanceOf(field, A.FormBuilderField)) {
 					var readOnlyAttributes = AArray.map(
 						field.getPropertyModel(),
-						item => {
+						(item) => {
 							return item.attributeName;
 						}
 					);
@@ -129,10 +129,7 @@ AUI.add(
 
 				instance.tabView.enableTab(1);
 				instance.openEditProperties(instance.get('fields').item(0));
-				instance.tabView
-					.getTabs()
-					.item(0)
-					.hide();
+				instance.tabView.getTabs().item(0).hide();
 			},
 
 			_onMouseOverFieldReadOnlyFormBuilder(event) {
@@ -373,7 +370,7 @@ AUI.add(
 					var fields = fieldJSON.fields;
 
 					if (isArray(fields)) {
-						fields.forEach(item => {
+						fields.forEach((item) => {
 							instance._deserializeField(
 								item,
 								availableLanguageIds
@@ -398,15 +395,17 @@ AUI.add(
 						'editingLocale'
 					);
 
-					LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS.forEach(item => {
-						var localizedValue = fieldJSON[item];
+					LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS.forEach(
+						(item) => {
+							var localizedValue = fieldJSON[item];
 
-						if (item !== 'options' && localizedValue) {
-							fieldJSON[item] =
-								localizedValue[editingLocale] ||
-								localizedValue[defaultLocale];
+							if (item !== 'options' && localizedValue) {
+								fieldJSON[item] =
+									localizedValue[editingLocale] ||
+									localizedValue[defaultLocale];
+							}
 						}
-					});
+					);
 				},
 
 				_deserializeFieldLocalizationMap(
@@ -415,13 +414,13 @@ AUI.add(
 				) {
 					var instance = this;
 
-					availableLanguageIds.forEach(languageId => {
+					availableLanguageIds.forEach((languageId) => {
 						fieldJSON.localizationMap =
 							fieldJSON.localizationMap || {};
 						fieldJSON.localizationMap[languageId] = {};
 
 						LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS.forEach(
-							attribute => {
+							(attribute) => {
 								var attributeMap = fieldJSON[attribute];
 
 								if (attributeMap && attributeMap[languageId]) {
@@ -456,7 +455,7 @@ AUI.add(
 						'editingLocale'
 					);
 
-					fieldJSON.options.forEach(item => {
+					fieldJSON.options.forEach((item) => {
 						labels = item.label;
 
 						item.label =
@@ -464,7 +463,7 @@ AUI.add(
 
 						item.localizationMap = {};
 
-						availableLanguageIds.forEach(languageId => {
+						availableLanguageIds.forEach((languageId) => {
 							item.localizationMap[languageId] = {
 								label: labels[languageId],
 							};
@@ -501,7 +500,7 @@ AUI.add(
 
 					var fields = [];
 
-					instance.get('fields').each(field => {
+					instance.get('fields').each((field) => {
 						fields.push(field.serialize());
 					});
 
@@ -624,7 +623,7 @@ AUI.add(
 								) {
 									var nameModel = instance.propertyList
 										.get('data')
-										.filter(item => {
+										.filter((item) => {
 											return (
 												item.get('attributeName') ===
 												'name'
@@ -665,7 +664,7 @@ AUI.add(
 
 					var defaultGetEditorFn = instance.propertyList.getEditor;
 
-					instance.propertyList.getEditor = function() {
+					instance.propertyList.getEditor = function () {
 						var editor = defaultGetEditorFn.apply(this, arguments);
 
 						if (editor) {
@@ -674,13 +673,13 @@ AUI.add(
 								editor
 							);
 
-							editor._setToolbar = function(val) {
+							editor._setToolbar = function (val) {
 								var toolbar = defaultSetToolbarFn(val);
 
 								if (toolbar && toolbar.children) {
 									toolbar.children = toolbar.children.map(
-										children => {
-											children = children.map(item => {
+										(children) => {
+											children = children.map((item) => {
 												delete item.icon;
 
 												return item;
@@ -700,7 +699,7 @@ AUI.add(
 				},
 
 				_setAvailableFields(val) {
-					var fields = val.map(item => {
+					var fields = val.map((item) => {
 						return instanceOf(item, A.PropertyBuilderAvailableField)
 							? item
 							: new A.LiferayAvailableField(item);
@@ -759,7 +758,7 @@ AUI.add(
 
 					var methodName = type + 'Invalid';
 
-					instance.eachParentField(field, parent => {
+					instance.eachParentField(field, (parent) => {
 						var parentBB = parent.get('boundingBox');
 
 						parentBB.dd[methodName]('#' + parentBB.attr('id'));
@@ -804,7 +803,7 @@ AUI.add(
 					var newVal = config.newVal;
 					var prevVal = config.prevVal;
 
-					fields._items.forEach(field => {
+					fields._items.forEach((field) => {
 						var childFields = field.get('fields');
 						var localizationMap = field.get('localizationMap');
 
@@ -887,13 +886,13 @@ AUI.add(
 						field
 					);
 
-					field._getToolbarItems = function() {
+					field._getToolbarItems = function () {
 						var toolbarItems = defaultGetToolbarItemsFn();
 
 						return (
 							toolbarItems &&
-							toolbarItems.map(toolbarItem => {
-								return toolbarItem.map(item => {
+							toolbarItems.map((toolbarItem) => {
+								return toolbarItem.map((item) => {
 									if (item.icon) {
 										item.icon = item.icon
 											.replace('glyphicon glyphicon-', '')
@@ -934,7 +933,7 @@ AUI.add(
 
 					var fields = content.fields;
 
-					fields.forEach(fieldJSON => {
+					fields.forEach((fieldJSON) => {
 						instance._deserializeField(
 							fieldJSON,
 							availableLanguageIds

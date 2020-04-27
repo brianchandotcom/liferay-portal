@@ -23,7 +23,7 @@ function Captcha({uri}) {
 
 	useEffect(() => {
 		fetch(uri)
-			.then(res => res.text())
+			.then((res) => res.text())
 			.then(setHtml);
 	}, [uri]);
 

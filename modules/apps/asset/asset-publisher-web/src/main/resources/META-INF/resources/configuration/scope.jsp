@@ -142,7 +142,7 @@ itemSelectorURL.setParameter("portletResource", assetPublisherDisplayContext.get
 	);
 
 	if (scopeSelect) {
-		scopeSelect.addEventListener('click', function(event) {
+		scopeSelect.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			var searchContainer = Liferay.SearchContainer.get(
@@ -171,7 +171,7 @@ itemSelectorURL.setParameter("portletResource", assetPublisherDisplayContext.get
 					title: '<liferay-ui:message key="scopes" />',
 					uri: '<%= itemSelectorURL.toString() %>',
 				},
-				function(event) {
+				function (event) {
 					Liferay.Util.postForm(form, {
 						data: {
 							cmd: 'add-scope',

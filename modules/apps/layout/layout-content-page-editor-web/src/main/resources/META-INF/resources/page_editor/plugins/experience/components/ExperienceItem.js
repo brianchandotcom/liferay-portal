@@ -70,7 +70,7 @@ const ExperienceItem = ({
 			onDeleteExperience(experience.segmentsExperienceId);
 		}
 	};
-	const handleExperimentNavigation = event => {
+	const handleExperimentNavigation = (event) => {
 		event.preventDefault();
 
 		Liferay.Util.Session.set(

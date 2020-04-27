@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var A = AUI();
 
 	var LString = A.Lang.String;

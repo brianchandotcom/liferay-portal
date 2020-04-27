@@ -37,7 +37,7 @@ const Password = ({
 			name={name}
 			onBlur={onBlur}
 			onFocus={onFocus}
-			onInput={event => {
+			onInput={(event) => {
 				onInput(event);
 				setValue(event.target.value);
 			}}
@@ -62,13 +62,13 @@ const PasswordProxy = connectStore(
 			<Password
 				disabled={readOnly}
 				name={name}
-				onBlur={event =>
+				onBlur={(event) =>
 					emit('fieldBlurred', event, event.target.value)
 				}
-				onFocus={event =>
+				onFocus={(event) =>
 					emit('fieldFocused', event, event.target.value)
 				}
-				onInput={event =>
+				onInput={(event) =>
 					emit('fieldEdited', event, event.target.value)
 				}
 				placeholder={placeholder}

@@ -165,7 +165,7 @@ class Sidebar extends Component {
 
 		return {
 			...settingsContext,
-			pages: visitor.mapFields(field => {
+			pages: visitor.mapFields((field) => {
 				const updatedField = {
 					...field,
 					defaultLanguageId,
@@ -345,7 +345,7 @@ class Sidebar extends Component {
 		if (evaluableForm) {
 			evaluableForm
 				.evaluate()
-				.then(pages => {
+				.then((pages) => {
 					dispatch('focusedFieldEvaluationEnded', {
 						...focusedField,
 						settingsContext: {
@@ -354,7 +354,7 @@ class Sidebar extends Component {
 						},
 					});
 				})
-				.catch(error => dispatch('evaluationError', error));
+				.catch((error) => dispatch('evaluationError', error));
 		}
 	}
 
@@ -414,7 +414,7 @@ class Sidebar extends Component {
 			.filter(({system}) => {
 				return !system;
 			})
-			.map(fieldType => {
+			.map((fieldType) => {
 				return {
 					...fieldType,
 					type: 'item',
@@ -441,7 +441,7 @@ class Sidebar extends Component {
 			url: `${fieldSetDefinitionURL}?ddmStructureId=${fieldSetId}&languageId=${editingLanguageId}&portletNamespace=${portletNamespace}&scopeGroupId=${groupId}`,
 		})
 			.then(({pages}) => pages)
-			.catch(error => {
+			.catch((error) => {
 				throw new Error(error);
 			});
 	}
@@ -496,7 +496,7 @@ class Sidebar extends Component {
 
 		let eventName = false;
 
-		Object.keys(transitionEndEvents).some(name => {
+		Object.keys(transitionEndEvents).some((name) => {
 			if (el.style[name] !== undefined) {
 				eventName = transitionEndEvents[name];
 
@@ -576,7 +576,7 @@ class Sidebar extends Component {
 		const indexes = FormSupport.getIndexes(columnNode);
 
 		if (fieldSetId) {
-			this._fetchElementSet(fieldSetId).then(pages => {
+			this._fetchElementSet(fieldSetId).then((pages) => {
 				dispatch('elementSetAdded', {
 					data,
 					fieldSetId,
@@ -821,7 +821,7 @@ class Sidebar extends Component {
 		const getPreviousField = ({fieldName, type}) => {
 			let field;
 
-			oldVisitor.findField(oldField => {
+			oldVisitor.findField((oldField) => {
 				if (
 					excludedFields.indexOf(fieldName) === -1 &&
 					oldField.fieldName === fieldName &&
@@ -838,7 +838,7 @@ class Sidebar extends Component {
 
 		return {
 			...newSettingsContext,
-			pages: newVisitor.mapFields(newField => {
+			pages: newVisitor.mapFields((newField) => {
 				if (newField.visible) {
 					const previousField = getPreviousField(newField);
 
@@ -871,7 +871,7 @@ class Sidebar extends Component {
 	}
 
 	_getPredefinedOptions(visitor) {
-		const options = visitor.findField(field => {
+		const options = visitor.findField((field) => {
 			return field.fieldName == 'options';
 		});
 
@@ -910,7 +910,7 @@ class Sidebar extends Component {
 				id="accordion03"
 				role="tablist"
 			>
-				{groups.map(key => (
+				{groups.map((key) => (
 					<div
 						aria-labelledby={`#ddm-field-types-${key}-header`}
 						class="panel-collapse show"
@@ -1050,13 +1050,15 @@ class Sidebar extends Component {
 							role="tabpanel"
 						>
 							<div class="panel-body p-0 m-0 list-group">
-								{fieldTypesGroup[key].fields.map(fieldType => (
-									<FieldTypeBox
-										fieldType={fieldType}
-										key={fieldType.name}
-										spritemap={spritemap}
-									/>
-								))}
+								{fieldTypesGroup[key].fields.map(
+									(fieldType) => (
+										<FieldTypeBox
+											fieldType={fieldType}
+											key={fieldType.name}
+											spritemap={spritemap}
+										/>
+									)
+								)}
 							</div>
 						</div>
 					</div>
@@ -1247,9 +1249,7 @@ Sidebar.STATE = {
 	 * @type {?number}
 	 */
 
-	activeTab: Config.number()
-		.value(0)
-		.internal(),
+	activeTab: Config.number().value(0).internal(),
 
 	/**
 	 * @default _dropdownFieldTypesValueFn
@@ -1275,9 +1275,7 @@ Sidebar.STATE = {
 	 * @type {?bool}
 	 */
 
-	open: Config.bool()
-		.internal()
-		.value(false),
+	open: Config.bool().internal().value(false),
 
 	/**
 	 * @default object

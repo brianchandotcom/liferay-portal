@@ -88,7 +88,7 @@ class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
 			url: itemData.itemSelectorURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {

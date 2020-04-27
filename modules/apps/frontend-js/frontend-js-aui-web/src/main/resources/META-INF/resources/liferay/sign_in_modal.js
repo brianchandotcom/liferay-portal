@@ -19,7 +19,7 @@
 
 AUI.add(
 	'liferay-sign-in-modal',
-	A => {
+	(A) => {
 		var NAME = 'signinmodal';
 
 		var WIN = A.config.win;
@@ -49,7 +49,7 @@ AUI.add(
 
 					instance._host.on('click', A.bind('_load', instance));
 
-					var destroyModal = function() {
+					var destroyModal = function () {
 						instance.destroy();
 
 						Liferay.detach('screenLoad', destroyModal);
@@ -99,8 +99,8 @@ AUI.add(
 					);
 
 					Liferay.Util.fetch(modalSignInURL)
-						.then(response => response.text())
-						.then(response => {
+						.then((response) => response.text())
+						.then((response) => {
 							if (response) {
 								instance._setModalContent(response);
 							}
@@ -164,7 +164,7 @@ AUI.add(
 								id: NAME,
 								title: Liferay.Language.get('sign-in'),
 							},
-							dialogWindow => {
+							(dialogWindow) => {
 								var bodyNode = dialogWindow.bodyNode;
 
 								bodyNode.plug(A.Plugin.ParseContent);

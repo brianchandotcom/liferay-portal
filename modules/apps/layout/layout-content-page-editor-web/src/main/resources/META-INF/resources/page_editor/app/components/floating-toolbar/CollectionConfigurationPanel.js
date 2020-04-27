@@ -47,7 +47,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 		...item.config,
 	};
 
-	const handleConfigurationChanged = itemConfig => {
+	const handleConfigurationChanged = (itemConfig) => {
 		dispatch(
 			updateItemConfig({
 				itemConfig,
@@ -64,7 +64,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 					collectionTitle={collectionConfig.collection.title}
 					itemSelectorURL={config.collectionSelectorURL}
 					label={Liferay.Language.get('collection')}
-					onCollectionSelect={collection =>
+					onCollectionSelect={(collection) =>
 						handleConfigurationChanged({
 							collection,
 						})

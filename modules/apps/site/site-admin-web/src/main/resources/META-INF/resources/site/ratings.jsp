@@ -101,7 +101,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 
 	ratingsSettingsContainer.delegate(
 		'change',
-		function(event) {
+		function (event) {
 			ratingsTypeChanged = true;
 		},
 		'select'
@@ -109,7 +109,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 
 	var form = A.one('#<portlet:namespace />fm');
 
-	form.on('submit', function(event) {
+	form.on('submit', function (event) {
 		if (
 			ratingsTypeChanged &&
 			!confirm(

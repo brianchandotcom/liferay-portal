@@ -42,10 +42,10 @@ const useStorage = (storageType, key) => {
 		);
 	};
 
-	return [value, newValue => updater(newValue), () => updater({}, true)];
+	return [value, (newValue) => updater(newValue), () => updater({}, true)];
 };
 
-const setStorage = storage => key => useStorage(storage, key);
+const setStorage = (storage) => (key) => useStorage(storage, key);
 
 const useLocalStorage = setStorage(localStorage);
 const useSessionStorage = setStorage(sessionStorage);

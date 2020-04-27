@@ -113,7 +113,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectFormTemplate',
-		function(classPK, mode, sessionParamName) {
+		function (classPK, mode, sessionParamName) {
 			Liferay.Util.openDDMPortlet(
 				{
 					basePortletURL:
@@ -138,7 +138,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 						'<%= renderResponse.getNamespace() + "getAvailableFields" %>',
 					title: '<liferay-ui:message key="form" />',
 				},
-				function(event) {
+				function (event) {
 					var A = AUI();
 
 					var data = {};
@@ -149,7 +149,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 						'<portlet:resourceURL id="saveInPortletSession" />',
 						{
 							after: {
-								success: function() {
+								success: function () {
 									window.location = decodeURIComponent(
 										'<%= HtmlUtil.escapeURL(backURL) %>'
 									);
@@ -167,7 +167,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 	Liferay.provide(
 		window,
 		'<portlet:namespace />editFormTemplate',
-		function(uri) {
+		function (uri) {
 			var A = AUI();
 
 			var WIN = A.config.win;
@@ -185,7 +185,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 	Liferay.provide(
 		window,
 		'<portlet:namespace />unassignForm',
-		function(event) {
+		function (event) {
 			var A = AUI();
 
 			var taskFormPairsParamName = event.taskFormPairsParamName;
@@ -196,7 +196,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 
 			A.io.request('<portlet:resourceURL id="saveInPortletSession" />', {
 				after: {
-					success: function() {
+					success: function () {
 						window.location = decodeURIComponent(
 							'<%= HtmlUtil.escapeURL(backURL) %>'
 						);

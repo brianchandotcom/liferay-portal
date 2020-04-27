@@ -66,7 +66,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleD
 		if (ControlMenu.PortletDragDrop) {
 			addContent.plug(ControlMenu.PortletDragDrop, {
 				on: {
-					dragEnd: function(event) {
+					dragEnd: function (event) {
 						addContent.addPortlet(event.portletNode, {
 							item: event.appendNode,
 						});

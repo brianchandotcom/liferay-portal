@@ -19,7 +19,7 @@
 
 AUI.add(
 	'liferay-item-viewer',
-	A => {
+	(A) => {
 		var Do = A.Do;
 
 		var Lang = A.Lang;
@@ -568,7 +568,7 @@ AUI.add(
 
 					var sources = [];
 
-					links.each(item => {
+					links.each((item) => {
 						sources.push(
 							item.attr('href') || item.attr('data-href')
 						);
@@ -687,7 +687,7 @@ AUI.add(
 					newLink.setAttribute('data-value', imageData.file.url);
 					newLink.setAttribute('data-url', imageData.file.url);
 
-					newLink.all('[style]').each(node => {
+					newLink.all('[style]').each((node) => {
 						var styleAttr = node.getAttribute('style');
 
 						if (styleAttr) {

@@ -24,7 +24,7 @@ const Item = ({
 	processId,
 }) => {
 	const {defaultDelta} = useContext(AppContext);
-	const getFiltersQuery = slaStatusFilter => {
+	const getFiltersQuery = (slaStatusFilter) => {
 		return {
 			[filterConstants.processStatus.key]: [
 				processStatusConstants.pending,

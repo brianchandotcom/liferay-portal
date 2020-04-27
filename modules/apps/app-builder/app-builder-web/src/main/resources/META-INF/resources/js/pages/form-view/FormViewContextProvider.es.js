@@ -32,7 +32,7 @@ export default ({children, dataLayoutBuilder}) => {
 	}, [dataLayoutBuilder]);
 
 	const dispatch = useCallback(
-		action => {
+		(action) => {
 			dataLayoutBuilder.dispatchAction(action);
 		},
 		[dataLayoutBuilder]

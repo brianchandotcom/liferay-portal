@@ -29,7 +29,7 @@ function filterDuplicates(list) {
 	return cleanedList.filter(
 		(item, index) =>
 			cleanedList.findIndex(
-				newVal =>
+				(newVal) =>
 					newVal.label.toLowerCase() === item.label.toLowerCase() &&
 					newVal.value.toLowerCase() === item.value.toLowerCase()
 			) === index
@@ -52,7 +52,7 @@ function filterEmptyStrings(list) {
  * @returns {Array} A list of label-value objects.
  */
 function transformListOfStringsToObjects(list) {
-	return list.map(string => ({label: string, value: string}));
+	return list.map((string) => ({label: string, value: string}));
 }
 
 /**
@@ -76,11 +76,11 @@ class Alias extends Component {
 		inputValue: '',
 	};
 
-	_handleInputChange = value => {
+	_handleInputChange = (value) => {
 		this.setState({inputValue: value});
 	};
 
-	_handleItemsChange = values => {
+	_handleItemsChange = (values) => {
 		this.props.onChange(filterDuplicates(values));
 	};
 

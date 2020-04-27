@@ -44,7 +44,7 @@ export default function FragmentContentFloatingToolbar({
 
 		if (editables) {
 			activeEditable =
-				editables.find(editable =>
+				editables.find((editable) =>
 					isActive(
 						getEditableUniqueId(
 							fragmentEntryLinkId,
@@ -57,7 +57,7 @@ export default function FragmentContentFloatingToolbar({
 		return activeEditable;
 	}, [editables, fragmentEntryLinkId, isActive]);
 
-	const state = useSelector(state => state);
+	const state = useSelector((state) => state);
 
 	const editableValue = selectEditableValue(
 		state,
@@ -130,7 +130,7 @@ export default function FragmentContentFloatingToolbar({
 					),
 				}}
 				itemRef={{current: editable.element}}
-				onButtonClick={buttonId =>
+				onButtonClick={(buttonId) =>
 					onButtonClick(buttonId, editable.editableId)
 				}
 			/>

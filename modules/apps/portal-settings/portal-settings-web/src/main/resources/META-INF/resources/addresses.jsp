@@ -132,7 +132,7 @@
 				fieldIndexes: '<portlet:namespace />addressesIndexes',
 				namespace: '<portlet:namespace />',
 				on: {
-					clone: function(event) {
+					clone: function (event) {
 						var guid = event.guid;
 						var row = event.row;
 

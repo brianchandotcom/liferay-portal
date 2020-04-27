@@ -234,7 +234,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 </aui:form>
 
 <script>
-	(function() {
+	(function () {
 		var deleteSelectedDeviceFamiliesButton = document.getElementById(
 			'<portlet:namespace />deleteSelectedDeviceFamilies'
 		);
@@ -242,7 +242,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 		if (deleteSelectedDeviceFamiliesButton) {
 			deleteSelectedDeviceFamiliesButton.addEventListener(
 				'click',
-				function() {
+				function () {
 					if (
 						confirm(
 							'<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>'

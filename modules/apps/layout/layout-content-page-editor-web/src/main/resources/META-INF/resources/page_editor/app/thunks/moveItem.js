@@ -16,7 +16,7 @@ import moveItemAction from '../actions/moveItem';
 import LayoutService from '../services/LayoutService';
 
 export default function moveItem({itemId, parentItemId, position, store}) {
-	return dispatch => {
+	return (dispatch) => {
 		const {segmentsExperienceId} = store;
 
 		LayoutService.moveItem({
@@ -25,7 +25,7 @@ export default function moveItem({itemId, parentItemId, position, store}) {
 			parentItemId,
 			position,
 			segmentsExperienceId,
-		}).then(layoutData => {
+		}).then((layoutData) => {
 			dispatch(moveItemAction({layoutData}));
 		});
 	};

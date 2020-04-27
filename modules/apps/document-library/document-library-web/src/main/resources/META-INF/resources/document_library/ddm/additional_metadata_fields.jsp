@@ -97,7 +97,7 @@ if (fileEntryType != null) {
 				uri:
 					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" /></portlet:renderURL>',
 			},
-			function(event) {
+			function (event) {
 				var searchContainer = Liferay.SearchContainer.get(
 					'<portlet:namespace />ddmStructuresSearchContainer'
 				);
@@ -129,7 +129,7 @@ if (fileEntryType != null) {
 
 	searchContainer.get('contentBox').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var tr = link.ancestor('tr');

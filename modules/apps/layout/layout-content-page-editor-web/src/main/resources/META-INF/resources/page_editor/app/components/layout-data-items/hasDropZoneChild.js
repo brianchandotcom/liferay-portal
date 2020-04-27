@@ -15,7 +15,7 @@
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 
 export default function hasDropZoneChild(item, layoutData) {
-	return item.children.some(childrenId => {
+	return item.children.some((childrenId) => {
 		const children = layoutData.items[childrenId];
 
 		return children.type === LAYOUT_DATA_ITEM_TYPES.dropZone

@@ -72,7 +72,7 @@ describe('useTimeout()', () => {
 
 		let cancel;
 
-		const onDelay = handle => {
+		const onDelay = (handle) => {
 			cancel = handle;
 		};
 
@@ -125,7 +125,7 @@ describe('useTimeout()', () => {
 		const functions = [];
 
 		const {getByText} = render(
-			<Component onRender={delay => functions.push(delay)} />
+			<Component onRender={(delay) => functions.push(delay)} />
 		);
 
 		expect(functions.length).toBe(1);

@@ -133,7 +133,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				);
 
 				if (selectFolderButton) {
-					selectFolderButton.addEventListener('click', function(event) {
+					selectFolderButton.addEventListener('click', function (event) {
 						Liferay.Util.selectEntity(
 							{
 								dialog: {
@@ -156,7 +156,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 								uri: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
 							},
-							function(event) {
+							function (event) {
 								var folderData = {
 									idString: 'rootFolderId',
 									idValue: event.folderid,
@@ -175,7 +175,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				);
 
 				if (showActionsInput) {
-					showActionsInput.addEventListener('change', function(event) {
+					showActionsInput.addEventListener('change', function (event) {
 						var currentColumnsElement = document.getElementById(
 							'<portlet:namespace />currentEntryColumns'
 						);
@@ -192,7 +192,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 									'#<portlet:namespace />currentEntryColumns option[value="action"], #<portlet:namespace />availableEntryColumns option[value="action"]'
 								);
 
-								Array.prototype.forEach.call(options, function(option) {
+								Array.prototype.forEach.call(options, function (option) {
 									dom.exitDocument(option);
 								});
 							}

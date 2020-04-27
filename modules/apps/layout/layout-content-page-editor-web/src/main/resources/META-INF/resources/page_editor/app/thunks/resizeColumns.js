@@ -15,7 +15,7 @@
 import LayoutService from '../services/LayoutService';
 
 export default function resizeColumns({layoutData, store}) {
-	return dispatch => {
+	return (dispatch) => {
 		const {segmentsExperienceId} = store;
 
 		return LayoutService.updateLayoutData({

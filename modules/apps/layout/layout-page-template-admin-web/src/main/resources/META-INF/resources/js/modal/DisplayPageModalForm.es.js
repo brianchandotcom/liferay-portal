@@ -33,7 +33,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 	}, [props.error]);
 
 	const onChange = useCallback(
-		event => {
+		(event) => {
 			setError({...error, classNameId: null, classTypeId: null});
 
 			const select = event.target;
@@ -41,7 +41,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 				select.options[select.selectedIndex].value;
 
 			const mappingType = props.mappingTypes.find(
-				mappingType => mappingType.id === selectedMappingId
+				(mappingType) => mappingType.id === selectedMappingId
 			);
 
 			if (mappingType) {
@@ -89,7 +89,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 										'not-selected'
 									)} --`}
 								</option>
-								{props.mappingTypes.map(mappingType => (
+								{props.mappingTypes.map((mappingType) => (
 									<option
 										key={mappingType.id}
 										value={mappingType.id}
@@ -118,7 +118,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 											'not-selected'
 										)} --`}
 									</option>
-									{subtypes.map(subtype => (
+									{subtypes.map((subtype) => (
 										<option
 											key={subtype.id}
 											value={subtype.id}

@@ -20,7 +20,7 @@ import React from 'react';
  * and isolate connection to the Metal store.
  * @param {MetalComponentInstance} object.instance
  */
-export const connectStore = Component => {
+export const connectStore = (Component) => {
 	return function WithDispatch({instance, ...otherProps}) {
 		const {context} = instance;
 

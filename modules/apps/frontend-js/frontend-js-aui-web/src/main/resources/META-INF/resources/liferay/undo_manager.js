@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-undo-manager',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var CSS_ACTION_CLEAR = 'lfr-action-clear';

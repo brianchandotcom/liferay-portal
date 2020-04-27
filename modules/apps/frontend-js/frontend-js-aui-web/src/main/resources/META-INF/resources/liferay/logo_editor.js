@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-logo-editor',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var LogoEditor = A.Component.create({
@@ -170,8 +170,8 @@ AUI.add(
 							body: new FormData(form),
 							method: 'POST',
 						})
-							.then(response => response.json())
-							.then(response => {
+							.then((response) => response.json())
+							.then((response) => {
 								instance.fire('uploadComplete', {
 									response,
 								});

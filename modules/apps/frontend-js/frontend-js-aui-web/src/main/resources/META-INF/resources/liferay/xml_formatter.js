@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-xml-formatter',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var XMLFormatter = A.Component.create({

@@ -32,7 +32,7 @@ const getStatus = (isOnline, status, lastSaveDate) => {
 	return null;
 };
 
-const parseDate = date => {
+const parseDate = (date) => {
 	if (!date) {
 		return null;
 	}

@@ -60,7 +60,7 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 
 						contactsToolbarChildren.push({
 							on: {
-								click: function(event) {
+								click: function (event) {
 									Liferay.component('contactsCenter').showPopup(
 										'<%= UnicodeLanguageUtil.get(request, "update-contact") %>',
 										'<%= viewEntryURL %>'
@@ -74,7 +74,7 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 
 						contactsToolbarChildren.push({
 							on: {
-								click: function(event) {
+								click: function (event) {
 									var confirmMessage =
 										'<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-from-your-contacts", entry.getFullName(), false) %>';
 
@@ -86,13 +86,13 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 											body: data,
 											method: 'POST',
 										})
-											.then(function(response) {
+											.then(function (response) {
 												return response.text();
 											})
-											.then(function(data) {
+											.then(function (data) {
 												location.href = '<%= HtmlUtil.escape(redirect) %>';
 											})
-											.catch(function() {
+											.catch(function () {
 												Liferay.component('contactsCenter').showMessage(false);
 											});
 									}
@@ -154,7 +154,7 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 								id: '<portlet:namespace />backSelection',
 								label: '<%= UnicodeLanguageUtil.get(request, "back-to-selection") %>',
 								on: {
-									click: function(event) {
+									click: function (event) {
 										Liferay.component('contactsCenter')._setVisibleSelectedUsersView();
 									},
 								},

@@ -20,7 +20,7 @@ const getColumn = (pages, nestedIndexes = []) => {
 	let column;
 	let context = pages;
 
-	nestedIndexes.forEach(indexes => {
+	nestedIndexes.forEach((indexes) => {
 		const {columnIndex, pageIndex, rowIndex} = indexes;
 
 		column = FormSupport.getColumn(
@@ -31,7 +31,7 @@ const getColumn = (pages, nestedIndexes = []) => {
 		);
 
 		if (column && context[0].nestedFields) {
-			context = context[0].nestedFields.filter(nestedField =>
+			context = context[0].nestedFields.filter((nestedField) =>
 				column.fields.includes(nestedField.fieldName)
 			);
 		}
@@ -54,9 +54,9 @@ const getContext = (context, nestedIndexes = []) => {
 				].fields;
 
 			if (context[0].nestedFields) {
-				fields = fields.map(field =>
+				fields = fields.map((field) =>
 					context[0].nestedFields.find(
-						nestedField => nestedField.fieldName === field
+						(nestedField) => nestedField.fieldName === field
 					)
 				);
 			}

@@ -69,13 +69,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 	var addButton = document.getElementById('<portlet:namespace />addButton');
 
 	if (addButton) {
-		addButton.addEventListener('click', function() {
+		addButton.addEventListener('click', function () {
 			var form = document.getElementById('<portlet:namespace />fm');
 			var formData = new FormData();
 
 			Array.prototype.slice
 				.call(form.querySelectorAll('input'))
-				.forEach(function(input) {
+				.forEach(function (input) {
 					if (input.name && input.value) {
 						formData.append(input.name, input.value);
 					}
@@ -94,10 +94,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 				body: formData,
 				method: 'POST',
 			})
-				.then(function(response) {
+				.then(function (response) {
 					return response.json();
 				})
-				.then(function(response) {
+				.then(function (response) {
 					if (response.siteNavigationMenuItemId) {
 						Liferay.fire('closeWindow', {
 

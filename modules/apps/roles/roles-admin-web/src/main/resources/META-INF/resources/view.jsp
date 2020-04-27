@@ -100,7 +100,7 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	var deleteRoles = function(deleteRoleIds) {
+	var deleteRoles = function (deleteRoleIds) {
 		var form = document.<portlet:namespace />fm;
 
 		var p_p_lifecycle = form.p_p_lifecycle;
@@ -132,10 +132,10 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 		deleteRoles: deleteRoles,
 	};
 
-	Liferay.componentReady('viewRolesManagementToolbar').then(function(
+	Liferay.componentReady('viewRolesManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

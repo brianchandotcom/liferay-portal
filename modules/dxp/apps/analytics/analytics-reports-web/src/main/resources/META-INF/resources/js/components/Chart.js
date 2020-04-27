@@ -106,7 +106,7 @@ function legendFormatterGenerator(
 	languageTag,
 	validAnalyticsConnection
 ) {
-	return value => {
+	return (value) => {
 		const preformattedNumber = totals[value];
 
 		return (
@@ -164,15 +164,15 @@ export default function Chart({
 				: DAY_IN_MILLISECONDS;
 
 		if (validAnalyticsConnection) {
-			dataProviders.map(getter => {
+			dataProviders.map((getter) => {
 				getter({
 					timeSpanKey: chartState.timeSpanOption,
 					timeSpanOffset: chartState.timeSpanOffset,
 				})
-					.then(data => {
+					.then((data) => {
 						if (!gone) {
 							if (isMounted()) {
-								Object.keys(data).map(key => {
+								Object.keys(data).map((key) => {
 									actions.addDataSetItem({
 										dataSetItem: data[key],
 										key,
@@ -182,7 +182,7 @@ export default function Chart({
 							}
 						}
 					})
-					.catch(_error => {
+					.catch((_error) => {
 						let key = '';
 
 						if (getter.name === 'getHistoricalReads') {
@@ -270,7 +270,7 @@ export default function Chart({
 		}
 	}, [dateFormatters, defaultTimeRange, histogram]);
 
-	const handleTimeSpanChange = event => {
+	const handleTimeSpanChange = (event) => {
 		const {value} = event.target;
 
 		actions.changeTimeSpanOption({key: value});
@@ -376,7 +376,7 @@ export default function Chart({
 								}
 								interval="preserveStartEnd"
 								tickCount={7}
-								tickFormatter={value => {
+								tickFormatter={(value) => {
 									return validAnalyticsConnection
 										? xAxisFormatter(value)
 										: value;
@@ -453,7 +453,7 @@ export default function Chart({
 								}}
 							/>
 
-							{keyList.map(keyName => {
+							{keyList.map((keyName) => {
 								const color = keyToHexColor(keyName);
 								const shape = keyToIconType(keyName);
 

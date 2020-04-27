@@ -57,7 +57,7 @@ const Header = ({
 		[selectedItems, setVisibleModal]
 	);
 
-	const compareId = itemId => ({id}) => id === itemId;
+	const compareId = (itemId) => ({id}) => id === itemId;
 
 	const kebabItems = [
 		{
@@ -94,7 +94,7 @@ const Header = ({
 	};
 
 	const isRemainingItem = useCallback(
-		clear => ({assignees = [], id, status}) => {
+		(clear) => ({assignees = [], id, status}) => {
 			const assignedToUser = !!assignees.find(
 				({id}) => id === Number(userId)
 			);
@@ -141,7 +141,7 @@ const Header = ({
 	};
 
 	const handleCheck = useCallback(
-		checked => () => {
+		(checked) => () => {
 			const updatedItems = checked
 				? [...selectedItems, ...remainingItems]
 				: selectedItems.filter(({id}) => !items.find(compareId(id)));
@@ -154,7 +154,7 @@ const Header = ({
 	);
 
 	const statusesFilterItem = useMemo(
-		() => selectedFilters.find(filter => filter.key === 'statuses'),
+		() => selectedFilters.find((filter) => filter.key === 'statuses'),
 		[selectedFilters]
 	);
 	const {key} = statusesFilterItem ? statusesFilterItem.items[0] : {};
@@ -170,7 +170,7 @@ const Header = ({
 	const selectedFilterItems = useMemo(
 		() =>
 			selectedFilters.filter(
-				filter =>
+				(filter) =>
 					completedStatusSelected ||
 					filter.key !== filterConstants.timeRange.key
 			),

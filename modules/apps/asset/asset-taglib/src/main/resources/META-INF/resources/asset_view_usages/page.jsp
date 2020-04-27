@@ -87,7 +87,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 			document.querySelector('#<portlet:namespace/>assetEntryUsagesList'),
 			'click',
 			'.preview-asset-entry-usage',
-			function(event) {
+			function (event) {
 				var delegateTarget = event.delegateTarget;
 
 				Liferay.Util.openWindow({

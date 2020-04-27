@@ -36,7 +36,7 @@ const MAP_CONFIG = {
 	position: {location: {lat: 0, lng: 0}},
 };
 
-const setupMapOpenStreetMaps = callback => {
+const setupMapOpenStreetMaps = (callback) => {
 	Leaflet.Icon.Default.imagePath =
 		'https://npmcdn.com/leaflet@1.2.0/dist/images/';
 
@@ -57,7 +57,7 @@ const setupGoogleMaps = (googleMapsAPIKey, callback) => {
 		callback();
 	}
 	else {
-		Liferay.namespace('Maps').onGMapsReady = function() {
+		Liferay.namespace('Maps').onGMapsReady = function () {
 			Liferay.Maps.gmapsReady = true;
 			Liferay.fire('gmapsReady');
 		};
@@ -92,7 +92,7 @@ export const useGeolocation = ({
 }) => {
 	const componentInstance = useRef(null);
 
-	const eventHandlerPositionChanged = event => {
+	const eventHandlerPositionChanged = (event) => {
 		const {
 			newVal: {location},
 		} = event;

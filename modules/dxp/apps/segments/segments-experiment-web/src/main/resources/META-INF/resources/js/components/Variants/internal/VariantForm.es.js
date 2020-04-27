@@ -59,7 +59,7 @@ export default function VariantForm({
 							'variant-name-is-required'
 						)}
 						label={Liferay.Language.get('name')}
-						onChange={event => setInputName(event.target.value)}
+						onChange={(event) => setInputName(event.target.value)}
 						onValidationChange={setInvalidForm}
 						value={inputName}
 					/>

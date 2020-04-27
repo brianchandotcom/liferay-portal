@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-alloy-editor-source',
-	A => {
+	(A) => {
 		var CSS_SHOW_SOURCE = 'show-source';
 
 		var MAP_TOGGLE_STATE = {
@@ -172,14 +172,14 @@ AUI.add(
 								},
 								title: strings.editContent,
 							},
-							dialog => {
+							(dialog) => {
 								fullScreenDialog = dialog;
 
 								Liferay.Util.getTop()
 									.AUI()
 									.use(
 										'liferay-fullscreen-source-editor',
-										A => {
+										(A) => {
 											fullScreenEditor = new A.LiferayFullScreenSourceEditor(
 												{
 													boundingBox: dialog

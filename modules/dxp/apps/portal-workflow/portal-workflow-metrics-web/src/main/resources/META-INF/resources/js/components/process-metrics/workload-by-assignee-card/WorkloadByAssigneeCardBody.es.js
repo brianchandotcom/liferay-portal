@@ -20,7 +20,7 @@ import {AppContext} from '../../AppContext.es';
 import {Table} from './WorkloadByAssigneeCardTable.es';
 
 const Body = ({currentTab, items, processId, processStepKey, totalCount}) => {
-	const getEmptyMessage = tab => {
+	const getEmptyMessage = (tab) => {
 		switch (tab) {
 			case 'onTime':
 				return Liferay.Language.get(

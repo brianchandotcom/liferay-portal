@@ -33,7 +33,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 		items: [
 			{
 				caption: '<liferay-ui:message key="add-calendar" />',
-				fn: function(event) {
+				fn: function (event) {
 					var instance = this;
 
 					var calendarResourceId = instance.calendarResourceId;
@@ -42,10 +42,10 @@ String backURL = PortalUtil.getCurrentURL(request);
 						Liferay.Util.openWindow({
 							dialog: {
 								after: {
-									destroy: function(event) {
+									destroy: function (event) {
 										remoteServices.getResourceCalendars(
 											calendarResourceId,
-											function(calendars) {
+											function (calendars) {
 												var calendarList =
 													window
 														.<portlet:namespace />calendarLists[
@@ -88,7 +88,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			},
 			{
 				caption: '<liferay-ui:message key="manage-calendars" />',
-				fn: function(event) {
+				fn: function (event) {
 					var instance = this;
 
 					var calendarResourceId = instance.calendarResourceId;
@@ -112,7 +112,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			},
 			{
 				caption: '<liferay-ui:message key="permissions" />',
-				fn: function(event) {
+				fn: function (event) {
 					var instance = this;
 
 					<liferay-security:permissionsURL
@@ -140,7 +140,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			},
 		],
 		on: {
-			visibleChange: function(event) {
+			visibleChange: function (event) {
 				var instance = this;
 
 				var hiddenItems = [];
@@ -167,7 +167,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 		items: [
 			{
 				caption: '<liferay-ui:message key="add-calendar-booking" />',
-				fn: function(event) {
+				fn: function (event) {
 					var instance = this;
 
 					var calendarList = instance.get('host');
@@ -183,7 +183,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 					Liferay.Util.openWindow({
 						dialog: {
 							after: {
-								destroy: function(event) {
+								destroy: function (event) {
 									<portlet:namespace />scheduler.load();
 								},
 							},
@@ -204,7 +204,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			},
 			{
 				caption: '<liferay-ui:message key="hide-calendar" />',
-				fn: function(event) {
+				fn: function (event) {
 					var instance = this;
 
 					var calendarList = instance.get('host');
@@ -219,7 +219,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			},
 			{
 				caption: '<liferay-ui:message key="calendar-settings" />',
-				fn: function(event) {
+				fn: function (event) {
 					var instance = this;
 
 					var calendarList = instance.get('host');
@@ -229,17 +229,17 @@ String backURL = PortalUtil.getCurrentURL(request);
 					Liferay.Util.openWindow({
 						dialog: {
 							after: {
-								destroy: function(event) {
+								destroy: function (event) {
 									remoteServices.getCalendar(
 										activeCalendar.get('calendarId'),
-										function(calendar) {
+										function (calendar) {
 											var activeCalendarId = activeCalendar.get(
 												'calendarId'
 											);
 
 											var calendars = calendarList
 												.get('calendars')
-												.map(function(item) {
+												.map(function (item) {
 													if (
 														activeCalendarId ===
 														item.get('calendarId')
@@ -288,7 +288,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			},
 			{
 				caption: '<liferay-ui:message key="permissions" />',
-				fn: function(event) {
+				fn: function (event) {
 					var instance = this;
 
 					var calendarList = instance.get('host');
@@ -298,7 +298,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 					Liferay.Util.openWindow({
 						dialog: {
 							after: {
-								destroy: function(event) {
+								destroy: function (event) {
 									<portlet:namespace />scheduler.load();
 								},
 							},
@@ -336,7 +336,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			},
 			{
 				caption: '<liferay-ui:message key="delete" />',
-				fn: function(event) {
+				fn: function (event) {
 					var instance = this;
 
 					var calendarList = instance.get('host');
@@ -354,10 +354,10 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 						remoteServices.deleteCalendar(
 							activeCalendar.get('calendarId'),
-							function() {
+							function () {
 								remoteServices.getResourceCalendars(
 									activeCalendar.get('calendarResourceId'),
-									function(calendars) {
+									function (calendars) {
 										calendarList.set('calendars', calendars);
 
 										<portlet:namespace />syncCalendarsMap();
@@ -380,7 +380,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			<c:if test="<%= enableRSS %>">
 				{
 					caption: '<liferay-ui:message key="rss" />',
-					fn: function(event) {
+					fn: function (event) {
 						var instance = this;
 
 						var calendarList = instance.get('host');
@@ -416,7 +416,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			},
 		],
 		on: {
-			visibleChange: function(event) {
+			visibleChange: function (event) {
 				var instance = this;
 
 				var calendarList = instance.get('host');
@@ -479,7 +479,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 	<portlet:namespace />colorPicker = new Liferay.SimpleColorPicker({
 		on: {
-			colorChange: function(event) {
+			colorChange: function (event) {
 				var instance = this;
 
 				var simpleMenu = instance.get('host');
@@ -500,7 +500,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 	A.one('#<portlet:namespace />calendarListContainer').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var currentTarget = event.currentTarget;
 
 			window.<portlet:namespace />calendarListsMenu.calendarResourceId = currentTarget.getAttribute(
@@ -533,7 +533,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 		calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',
 			addOtherCalendarInput,
-			function(event) {
+			function (event) {
 				window.<portlet:namespace />otherCalendarList.add(event.result.raw);
 
 				<portlet:namespace />refreshVisibleCalendarRenderingRules();
@@ -543,7 +543,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 		);
 	</c:if>
 
-	A.one('#<portlet:namespace />columnToggler').on('click', function(event) {
+	A.one('#<portlet:namespace />columnToggler').on('click', function (event) {
 		var columnTogglerIconId = '<portlet:namespace />columnTogglerIcon';
 		var columnGrid = A.one('#<portlet:namespace />columnGrid');
 		var columnOptions = A.one('#<portlet:namespace />columnOptions');
@@ -573,7 +573,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 		columnTogglerIcon.replace(newIcon);
 	});
 
-	window.<portlet:namespace />refreshMiniCalendarSelectedDates = function() {
+	window.<portlet:namespace />refreshMiniCalendarSelectedDates = function () {
 		<portlet:namespace />miniCalendar._clearSelection();
 
 		var activeView = <portlet:namespace />scheduler.get('activeView');
@@ -608,7 +608,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 	var DateMath = A.DataType.DateMath;
 
-	window.<portlet:namespace />refreshVisibleCalendarRenderingRules = function() {
+	window.<portlet:namespace />refreshVisibleCalendarRenderingRules = function () {
 		var miniCalendarStartDate = DateMath.subtract(
 			DateMath.toMidnight(
 				window.<portlet:namespace />miniCalendar.get('date')
@@ -634,11 +634,11 @@ String backURL = PortalUtil.getCurrentURL(request);
 			Liferay.CalendarUtil.toUTC(miniCalendarStartDate),
 			Liferay.CalendarUtil.toUTC(miniCalendarEndDate),
 			'busy',
-			function(rulesDefinition) {
+			function (rulesDefinition) {
 				var selectedDates = <portlet:namespace />miniCalendar._getSelectedDatesList();
 
 				window.<portlet:namespace />miniCalendar.set('customRenderer', {
-					filterFunction: function(date, node, rules) {
+					filterFunction: function (date, node, rules) {
 						node.addClass('lfr-busy-day');
 
 						DateMath.toMidnight(date);
@@ -668,7 +668,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 	window.<portlet:namespace />miniCalendar = new A.Calendar({
 		after: {
 			dateChange: <portlet:namespace />refreshVisibleCalendarRenderingRules,
-			dateClick: function(event) {
+			dateClick: function (event) {
 				<portlet:namespace />scheduler.setAttrs({
 					date: event.date,
 				});

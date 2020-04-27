@@ -25,7 +25,7 @@ export const addItem = (endpoint, item) =>
 		body: JSON.stringify(item),
 		headers: HEADERS,
 		method: 'POST',
-	}).then(response => response.json());
+	}).then((response) => response.json());
 
 export const getURL = (path, params) => {
 	params = {
@@ -37,7 +37,7 @@ export const getURL = (path, params) => {
 	const uri = new URL(`${window.location.origin}${path}`);
 	const keys = Object.keys(params);
 
-	keys.forEach(key => uri.searchParams.set(key, params[key]));
+	keys.forEach((key) => uri.searchParams.set(key, params[key]));
 
 	return uri.toString();
 };
@@ -48,8 +48,8 @@ export const updateItem = (endpoint, item, params) =>
 		headers: HEADERS,
 		method: 'PUT',
 	})
-		.then(response => response.text())
-		.then(text => (text ? JSON.parse(text) : {}));
+		.then((response) => response.text())
+		.then((text) => (text ? JSON.parse(text) : {}));
 
 export default ({
 	contentType,
@@ -61,14 +61,14 @@ export default ({
 }) => {
 	const normalizedDataLayout = {
 		...dataLayout,
-		dataLayoutPages: dataLayout.dataLayoutPages.map(dataLayoutPage => ({
+		dataLayoutPages: dataLayout.dataLayoutPages.map((dataLayoutPage) => ({
 			...dataLayoutPage,
 			dataLayoutRows: (dataLayoutPage.dataLayoutRows || []).map(
-				dataLayoutRow => ({
+				(dataLayoutRow) => ({
 					...dataLayoutRow,
 					dataLayoutColumns: (
 						dataLayoutRow.dataLayoutColumns || []
-					).map(dataLayoutColumn => ({
+					).map((dataLayoutColumn) => ({
 						...dataLayoutColumn,
 						fieldNames: dataLayoutColumn.fieldNames || [],
 					})),

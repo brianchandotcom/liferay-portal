@@ -25,8 +25,8 @@ export default function createDNDBackend(manager, mainContext) {
 	 */
 	const connections = new Map();
 
-	const handleDragAndDropEvent = methodName => (itemId, node, options) => {
-		contexts.forEach(context => {
+	const handleDragAndDropEvent = (methodName) => (itemId, node, options) => {
+		contexts.forEach((context) => {
 			if (context.document.body && context.document.body.contains(node)) {
 				const connection = connections.get(context);
 
@@ -47,14 +47,14 @@ export default function createDNDBackend(manager, mainContext) {
 			contexts.add(mainContext);
 
 			Array.from(mainContext.document.querySelectorAll('iframe')).forEach(
-				iframe => {
+				(iframe) => {
 					if (iframe.contentWindow) {
 						contexts.add(iframe.contentWindow);
 					}
 				}
 			);
 
-			contexts.forEach(context => {
+			contexts.forEach((context) => {
 				if (!connections.has(context)) {
 					const backend = createBackend(manager, context);
 
@@ -69,7 +69,7 @@ export default function createDNDBackend(manager, mainContext) {
 		},
 
 		teardown() {
-			contexts.forEach(context => {
+			contexts.forEach((context) => {
 				const connection = connections.get(context);
 
 				if (connection) {

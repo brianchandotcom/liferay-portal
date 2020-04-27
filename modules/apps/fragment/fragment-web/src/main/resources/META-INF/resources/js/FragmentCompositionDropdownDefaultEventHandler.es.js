@@ -66,7 +66,7 @@ class FragmentCompositionDropdownDefaultEventHandler extends DefaultEventHandler
 
 		itemSelectorDialog.open();
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
@@ -99,7 +99,7 @@ class FragmentCompositionDropdownDefaultEventHandler extends DefaultEventHandler
 				title: Liferay.Language.get('select-collection'),
 				uri: selectFragmentCollectionURL,
 			},
-			selectedItem => {
+			(selectedItem) => {
 				if (selectedItem) {
 					const form = this.one('#fragmentEntryFm');
 

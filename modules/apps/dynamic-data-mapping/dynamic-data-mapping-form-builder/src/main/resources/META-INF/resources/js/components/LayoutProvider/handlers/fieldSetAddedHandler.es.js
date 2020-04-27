@@ -25,7 +25,7 @@ const handleFieldSetAdded = (props, state, event) => {
 
 	const nestedFields = [];
 
-	visitor.mapFields(nestedField => {
+	visitor.mapFields((nestedField) => {
 		nestedFields.push(nestedField);
 	});
 

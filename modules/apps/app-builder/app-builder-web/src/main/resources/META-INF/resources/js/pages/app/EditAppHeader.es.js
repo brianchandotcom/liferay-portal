@@ -27,7 +27,7 @@ export default () => {
 		},
 	} = useContext(EditAppContext);
 
-	const onAppNameChange = event => {
+	const onAppNameChange = (event) => {
 		const appName = event.target.value;
 
 		dispatch({

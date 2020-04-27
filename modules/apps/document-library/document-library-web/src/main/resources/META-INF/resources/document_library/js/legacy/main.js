@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-document-library',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var WIN = A.config.win;
@@ -175,7 +175,7 @@ AUI.add(
 					Liferay.Util.openDocument(
 						event.webDavUrl,
 						null,
-						exception => {
+						(exception) => {
 							var errorMessage = Lang.sub(
 								Liferay.Language.get(
 									'cannot-open-the-requested-document-due-to-the-following-reason'
@@ -201,7 +201,7 @@ AUI.add(
 
 					Liferay.componentReady(
 						instance.NS + 'EditCategoriesComponent'
-					).then(editCategoriesComponent => {
+					).then((editCategoriesComponent) => {
 						var bulkSelection =
 							instance._searchContainer.select &&
 							instance._searchContainer.select.get(
@@ -236,7 +236,7 @@ AUI.add(
 
 					Liferay.componentReady(
 						instance.NS + 'EditTagsComponent'
-					).then(editTagsComponent => {
+					).then((editTagsComponent) => {
 						var bulkSelection =
 							instance._searchContainer.select &&
 							instance._searchContainer.select.get(
@@ -355,7 +355,7 @@ AUI.add(
 					else if (action === 'checkin') {
 						Liferay.componentReady(
 							instance.ns('DocumentLibraryCheckinModal')
-						).then(documentLibraryCheckinModal => {
+						).then((documentLibraryCheckinModal) => {
 							documentLibraryCheckinModal.open(
 								(versionIncrease, changeLog) => {
 									var form = instance.get('form').node;
@@ -403,7 +403,7 @@ AUI.add(
 					if (itemData.action === 'openDocumentTypesSelector') {
 						Liferay.Loader.require(
 							'frontend-js-web/liferay/ItemSelectorDialog.es',
-							ItemSelectorDialog => {
+							(ItemSelectorDialog) => {
 								var itemSelectorDialog = new ItemSelectorDialog.default(
 									{
 										eventName: instance.ns(
@@ -423,7 +423,7 @@ AUI.add(
 
 								itemSelectorDialog.on(
 									'selectedItemChange',
-									event => {
+									(event) => {
 										var selectedItem = event.selectedItem;
 
 										if (selectedItem) {
@@ -546,7 +546,7 @@ AUI.add(
 							title: Lang.sub(dialogTitle, [selectedItems]),
 							uri: instance.get('selectFolderURL'),
 						},
-						event => {
+						(event) => {
 							if (parameterName && parameterValue) {
 								instance._moveSingleElement(
 									event.folderid,

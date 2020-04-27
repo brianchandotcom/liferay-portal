@@ -84,7 +84,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 							namespace: '<%= portletNamespace %>',
 						});
 
-						Liferay.once('screenLoad', function() {
+						Liferay.once('screenLoad', function () {
 							layoutCustomizationSettings.destroy();
 						});
 					</aui:script>
@@ -165,7 +165,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 					);
 
 					if (closeCustomizationOptions && controlMenu) {
-						closeCustomizationOptions.addEventListener('click', function(event) {
+						closeCustomizationOptions.addEventListener('click', function (event) {
 							dom.toggleClasses(controlMenu, 'open');
 						});
 					}
@@ -175,7 +175,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 					);
 
 					if (customizationButton && controlMenu) {
-						customizationButton.addEventListener('click', function(event) {
+						customizationButton.addEventListener('click', function (event) {
 							dom.toggleClasses(controlMenu, 'open');
 						});
 					}

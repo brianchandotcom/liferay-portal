@@ -38,7 +38,7 @@ function Checkin({
 		Liferay.component(
 			bridgeComponentId,
 			{
-				open: callback => {
+				open: (callback) => {
 					setCallback(() => callback);
 					setShowModal(true);
 				},
@@ -66,7 +66,7 @@ function Checkin({
 	);
 }
 
-export default function(props) {
+export default function (props) {
 	return (
 		<Checkin {...props} portletNamespace={`_${props.portletNamespace}_`} />
 	);

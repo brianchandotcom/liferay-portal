@@ -21,10 +21,10 @@
 
 AUI.add(
 	'liferay-portlet-url',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
-		var PortletURL = function(lifecycle, params, basePortletURL) {
+		var PortletURL = function (lifecycle, params, basePortletURL) {
 			var instance = this;
 
 			instance.params = {};

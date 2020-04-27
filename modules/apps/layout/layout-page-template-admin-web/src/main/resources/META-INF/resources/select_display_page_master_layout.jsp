@@ -62,7 +62,7 @@ sb.append("/js/modal/openDisplayPageModal.es as openDisplayPageModal");
 		document.body,
 		'click',
 		'.add-master-page-action-option',
-		function(event) {
+		function (event) {
 			var data = event.delegateTarget.dataset;
 
 			event.preventDefault();

@@ -116,7 +116,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 		searchContainerContentBox.delegate(
 			'click',
-			function(event) {
+			function (event) {
 				var link = event.currentTarget;
 
 				var rowId = link.attr('data-rowId');
@@ -151,8 +151,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 			'.modify-link'
 		);
 
-		Liferay.on('<portlet:namespace />enableRemovedUserGroups', function(event) {
-			event.selectors.each(function(item, index, collection) {
+		Liferay.on('<portlet:namespace />enableRemovedUserGroups', function (event) {
+			event.selectors.each(function (item, index, collection) {
 				var userGroupId = item.attr('data-usergroupid');
 
 				if (deleteUserGroupIds.indexOf(userGroupId) != -1) {
@@ -161,7 +161,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 			});
 		});
 
-		A.one('#<portlet:namespace />openUserGroupsLink').on('click', function(event) {
+		A.one('#<portlet:namespace />openUserGroupsLink').on('click', function (event) {
 			var searchContainerData = searchContainer.getData();
 
 			if (!searchContainerData.length) {
@@ -198,7 +198,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 					uri: '<%= selectUserGroupURL.toString() %>',
 				},
-				function(event) {
+				function (event) {
 					var A = AUI();
 
 					var entityId = event.entityid;

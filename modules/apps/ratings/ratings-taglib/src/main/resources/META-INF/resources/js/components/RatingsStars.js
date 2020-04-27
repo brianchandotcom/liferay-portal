@@ -40,7 +40,7 @@ const RatingsStars = ({
 	});
 
 	const getLabelScore = useCallback(
-		score => {
+		(score) => {
 			const starScore = starScores.find(({value}) => score === value);
 
 			return (starScore && starScore.label) || 0;
@@ -49,7 +49,7 @@ const RatingsStars = ({
 	);
 
 	const formatAverageScore = useCallback(
-		averageScore => (averageScore * numberOfStars).toFixed(1),
+		(averageScore) => (averageScore * numberOfStars).toFixed(1),
 		[numberOfStars]
 	);
 
@@ -61,7 +61,7 @@ const RatingsStars = ({
 	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
 	const isMounted = useIsMounted();
 
-	const handleOnClick = index => {
+	const handleOnClick = (index) => {
 		const {label, value} = starScores[index];
 
 		setScore(label);
@@ -70,7 +70,7 @@ const RatingsStars = ({
 	};
 
 	const handleSendVoteRequest = useCallback(
-		score => {
+		(score) => {
 			sendVoteRequest(score).then(
 				({averageScore, score, totalEntries} = {}) => {
 					if (isMounted() && averageScore && score && totalEntries) {
@@ -126,7 +126,7 @@ const RatingsStars = ({
 					menuElementAttrs={{
 						className: 'ratings-stars-dropdown',
 					}}
-					onActiveChange={isActive => setIsDropdownOpen(isActive)}
+					onActiveChange={(isActive) => setIsDropdownOpen(isActive)}
 					trigger={
 						<ClayButton
 							aria-pressed={!!score}

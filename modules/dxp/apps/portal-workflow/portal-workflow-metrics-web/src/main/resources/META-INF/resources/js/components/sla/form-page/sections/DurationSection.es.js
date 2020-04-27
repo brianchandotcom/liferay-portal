@@ -47,7 +47,7 @@ const DurationSection = ({onChangeHandler}) => {
 	);
 
 	const onDurationChanged = useCallback(
-		newDays => {
+		(newDays) => {
 			setErrors({
 				...errors,
 				[ALERT_MESSAGE]: '',

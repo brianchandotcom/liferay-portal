@@ -33,11 +33,11 @@ const CheckinModal = ({
 		checkedOut ? MAJOR : MINOR
 	);
 
-	const handleChangeChangeLog = event => {
+	const handleChangeChangeLog = (event) => {
 		setChangeLog(event.target.value);
 	};
 
-	const handleSubmit = event => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 		callback(versionIncrease, changeLog);
 	};

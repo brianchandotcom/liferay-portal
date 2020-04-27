@@ -28,7 +28,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 	</portlet:resourceURL>
 
 	<aui:script>
-		(function() {
+		(function () {
 			var TIME_POLLING = 500;
 			var TIME_SHOW_MSG = 2000;
 
@@ -42,7 +42,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 
 			showStatusMessage = Liferay.lazyLoad(
 				'frontend-js-web/liferay/toast/commands/OpenToast.es',
-				function(toastCommands, data) {
+				function (toastCommands, data) {
 					toastCommands.openToast(data);
 				}
 			);
@@ -57,14 +57,14 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 				Liferay.Util.fetch('<%= googleDriveBackgroundTaskStatusURL %>', {
 					method: 'POST',
 				})
-					.then(function(response) {
+					.then(function (response) {
 						if (!response.ok) {
 							throw defaultError;
 						}
 
 						return response.json();
 					})
-					.then(function(response) {
+					.then(function (response) {
 						if (response.complete) {
 							url = response.googleDocsEditURL;
 
@@ -77,7 +77,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 							setTimeout(polling, TIME_POLLING);
 						}
 					})
-					.catch(function(error) {
+					.catch(function (error) {
 						showError(error);
 
 						Liferay.Util.getWindow(dialogId).hide();
@@ -116,10 +116,10 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 						width: 320,
 					},
 				},
-				function() {
+				function () {
 					setTimeout(polling, TIME_POLLING);
 
-					setTimeout(function() {
+					setTimeout(function () {
 						isTimeConsumed = true;
 
 						navigate();

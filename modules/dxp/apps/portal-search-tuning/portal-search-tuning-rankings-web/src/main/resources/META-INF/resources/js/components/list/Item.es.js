@@ -265,9 +265,9 @@ class Item extends PureComponent {
 
 	static defaultProps = {
 		author: '',
-		connectDragPreview: val => val,
-		connectDragSource: val => val,
-		connectDropTarget: val => val,
+		connectDragPreview: (val) => val,
+		connectDragSource: (val) => val,
+		connectDropTarget: (val) => val,
 		date: '',
 		onBlur: () => {},
 		onFocus: () => {},
@@ -320,7 +320,7 @@ class Item extends PureComponent {
 		this.props.onBlur();
 	};
 
-	_handleFocus = event => {
+	_handleFocus = (event) => {
 		if (event.target.classList.contains(ROOT_CLASS)) {
 			const {index, onFocus} = this.props;
 
@@ -340,7 +340,7 @@ class Item extends PureComponent {
 		}
 	};
 
-	_handleKeyDown = event => {
+	_handleKeyDown = (event) => {
 		const {focus} = this.props;
 
 		if (focus) {

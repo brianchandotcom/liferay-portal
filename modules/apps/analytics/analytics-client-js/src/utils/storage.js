@@ -14,7 +14,7 @@
 
 import ProcessLock from 'browser-tabs-lock';
 
-const getItem = key => {
+const getItem = (key) => {
 	let data;
 	const item = localStorage.getItem(key);
 	try {
@@ -42,7 +42,7 @@ const setItem = (key, value) => {
  * @param {String} val - Stringifiable value.
  * @returns {Number} - Storage size in of value.
  */
-const getStorageSizeInKb = val => {
+const getStorageSizeInKb = (val) => {
 	return Number((JSON.stringify(val).length * 2) / 1024);
 };
 
@@ -66,7 +66,7 @@ const verifyStorageLimitForKey = (storageKey, limit) => {
 
 	const lock = new ProcessLock();
 
-	return lock.acquireLock(storageKey).then(success => {
+	return lock.acquireLock(storageKey).then((success) => {
 		if (success) {
 			const totalSize = getStorageSizeInKb(storedValue);
 

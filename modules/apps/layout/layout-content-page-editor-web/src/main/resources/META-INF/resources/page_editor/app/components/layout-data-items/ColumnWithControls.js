@@ -44,20 +44,20 @@ const ColumnWithControls = React.forwardRef(
 			layoutData,
 		]);
 
-		const onWindowMouseMove = event => {
+		const onWindowMouseMove = (event) => {
 			event.preventDefault();
 
 			onResizing(event, columnInfo);
 		};
 
-		const onWindowMouseUp = event => {
+		const onWindowMouseUp = (event) => {
 			onResizeEnd(event);
 
 			window.removeEventListener('mouseup', onWindowMouseUp);
 			window.removeEventListener('mousemove', onWindowMouseMove);
 		};
 
-		const onResizeButtonMouseDown = event => {
+		const onResizeButtonMouseDown = (event) => {
 			onResizeStart(event);
 
 			window.addEventListener('mouseup', onWindowMouseUp);

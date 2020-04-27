@@ -31,7 +31,7 @@ export const ContainerBackgroundColorConfiguration = ({
 					[CONTAINER_BACKGROUND_COLOR_IDENTIFIER]: '',
 				})
 			}
-			onColorSelect={value =>
+			onColorSelect={(value) =>
 				onValueChange({[CONTAINER_BACKGROUND_COLOR_IDENTIFIER]: value})
 			}
 			selectedColor={backgroundColor}

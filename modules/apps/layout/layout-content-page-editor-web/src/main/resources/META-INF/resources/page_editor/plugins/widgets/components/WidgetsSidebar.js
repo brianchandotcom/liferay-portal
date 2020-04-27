@@ -22,25 +22,25 @@ import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import Widget from './Widget';
 
 export default function WidgetsSidebar() {
-	const widgets = useSelector(state => state.widgets);
+	const widgets = useSelector((state) => state.widgets);
 	const [searchValue, setSearchValue] = useState('');
 
 	const filteredWidgets = useMemo(() => {
 		const searchValueLowerCase = searchValue.toLowerCase();
 
 		return widgets
-			.map(category => {
+			.map((category) => {
 				return {
 					...category,
 					portlets: category.portlets.filter(
-						widget =>
+						(widget) =>
 							widget.title
 								.toLowerCase()
 								.indexOf(searchValueLowerCase) !== -1
 					),
 				};
 			})
-			.filter(category => {
+			.filter((category) => {
 				return category.portlets.length > 0;
 			});
 	}, [searchValue, widgets]);
@@ -54,13 +54,13 @@ export default function WidgetsSidebar() {
 			<SidebarPanelContent>
 				<SearchForm onChange={setSearchValue} value={searchValue} />
 
-				{filteredWidgets.map(category => (
+				{filteredWidgets.map((category) => (
 					<div key={category.title}>
 						<Collapse
 							label={category.title}
 							open={searchValue.length > 0}
 						>
-							{category.portlets.map(widget => (
+							{category.portlets.map((widget) => (
 								<Widget key={widget.portletId} {...widget} />
 							))}
 						</Collapse>

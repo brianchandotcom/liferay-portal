@@ -31,7 +31,7 @@ const Radio = ({
 	value,
 }) => (
 	<div className="ddm-radio" onBlur={onBlur} onFocus={onFocus}>
-		{options.map(option => (
+		{options.map((option) => (
 			<ClayRadio
 				checked={value === option.value}
 				disabled={disabled}
@@ -77,11 +77,11 @@ const RadioProxy = connectStore(
 					disabled={readOnly}
 					inline={inline}
 					name={name}
-					onBlur={event =>
+					onBlur={(event) =>
 						emit('fieldBlurred', event, event.target.value)
 					}
-					onChange={event => emit('fieldFocused', event)}
-					onFocus={event =>
+					onChange={(event) => emit('fieldFocused', event)}
+					onFocus={(event) =>
 						emit('fieldEdited', event, event.target.value)
 					}
 					options={options}

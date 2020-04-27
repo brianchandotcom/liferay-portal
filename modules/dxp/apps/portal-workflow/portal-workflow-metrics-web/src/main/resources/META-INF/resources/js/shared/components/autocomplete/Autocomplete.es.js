@@ -87,7 +87,7 @@ const Autocomplete = ({
 	);
 
 	const handleSelect = useCallback(
-		item => {
+		(item) => {
 			onSelect(item);
 			setActiveItem(-1);
 			setDropDownVisible(false);
@@ -106,7 +106,7 @@ const Autocomplete = ({
 			const regExpValue = formatRegExp(value);
 			const match = new RegExp(regExpValue, 'gi');
 			setDropDownItems(
-				items ? items.filter(item => item.name.match(match)) : []
+				items ? items.filter((item) => item.name.match(match)) : []
 			);
 		}
 		else {
@@ -161,7 +161,7 @@ const Autocomplete = ({
 	);
 };
 
-const formatRegExp = value => {
+const formatRegExp = (value) => {
 	return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 

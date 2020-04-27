@@ -213,7 +213,7 @@ const DocumentLibraryProxy = connectStore(
 	}) => {
 		const [currentValue, setCurrentValue] = useState(value);
 
-		const handleVisibleChange = event => {
+		const handleVisibleChange = (event) => {
 			if (event.selectedItem) {
 				emit('fieldFocused', event, event.selectedItem);
 			}
@@ -241,7 +241,7 @@ const DocumentLibraryProxy = connectStore(
 			itemSelectorDialog.open();
 		};
 
-		const handleFieldChanged = event => {
+		const handleFieldChanged = (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
@@ -266,7 +266,7 @@ const DocumentLibraryProxy = connectStore(
 					fileEntryURL={fileEntryURL}
 					id={id}
 					name={name}
-					onClearButtonClicked={event => {
+					onClearButtonClicked={(event) => {
 						setCurrentValue(null);
 
 						emit('fieldEdited', event, '{}');

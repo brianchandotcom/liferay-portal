@@ -67,7 +67,7 @@ function EditCategories(props) {
 	);
 }
 
-export default function({context, props}) {
+export default function ({context, props}) {
 	return (
 		<EditCategoriesContext.Provider value={context}>
 			<EditCategories {...props} />

@@ -160,13 +160,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 		}
 	}
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		return <portlet:namespace />handleSubmitButton(
 			event.elements.allSelectedElements
 		);
 	});
 
-	Liferay.componentReady('<portlet:namespace />selectGroups').then(function(
+	Liferay.componentReady('<portlet:namespace />selectGroups').then(function (
 		searchContainer
 	) {
 		return <portlet:namespace />handleSubmitButton(

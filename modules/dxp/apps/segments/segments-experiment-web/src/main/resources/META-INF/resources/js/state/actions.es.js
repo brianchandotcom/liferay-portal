@@ -9,17 +9,17 @@
  * distribution rights of the Software.
  */
 
-export const addSegmentsExperiment = payload => ({
+export const addSegmentsExperiment = (payload) => ({
 	payload,
 	type: 'ADD_EXPERIMENT',
 });
 
-export const addVariant = payload => ({
+export const addVariant = (payload) => ({
 	payload,
 	type: 'ADD_VARIANT',
 });
 
-export const archiveExperiment = payload => ({
+export const archiveExperiment = (payload) => ({
 	payload,
 	type: 'ARCHIVE_EXPERIMENT',
 });
@@ -36,24 +36,24 @@ export const closeReviewAndRunExperiment = () => ({
 	type: 'REVIEW_AND_RUN_EXPERIMENT_FINISH',
 });
 
-export const deleteArchivedExperiment = experimentId => ({
+export const deleteArchivedExperiment = (experimentId) => ({
 	payload: {
 		experimentId,
 	},
 	type: 'DELETE_ARCHIVED_EXPERIMENT',
 });
 
-export const editSegmentsExperiment = payload => ({
+export const editSegmentsExperiment = (payload) => ({
 	payload,
 	type: 'EDIT_EXPERIMENT',
 });
 
-export const openCreationModal = payload => ({
+export const openCreationModal = (payload) => ({
 	payload,
 	type: 'CREATE_EXPERIMENT_START',
 });
 
-export const openEditionModal = payload => ({
+export const openEditionModal = (payload) => ({
 	payload,
 	type: 'EDIT_EXPERIMENT_START',
 });
@@ -78,22 +78,22 @@ export const runExperiment = ({experiment, splitVariantsMap}) => ({
 	type: 'RUN_EXPERIMENT',
 });
 
-export const updateSegmentsExperimentTarget = payload => ({
+export const updateSegmentsExperimentTarget = (payload) => ({
 	payload,
 	type: 'UPDATE_SEGMENTS_EXPERIMENT_TARGET',
 });
 
-export const updateSegmentsExperimentStatus = payload => ({
+export const updateSegmentsExperimentStatus = (payload) => ({
 	payload,
 	type: 'UPDATE_EXPERIMENT_STATUS',
 });
 
-export const updateVariant = payload => ({
+export const updateVariant = (payload) => ({
 	payload,
 	type: 'UPDATE_VARIANT',
 });
 
-export const updateVariants = payload => ({
+export const updateVariants = (payload) => ({
 	payload,
 	type: 'UPDATE_VARIANTS',
 });

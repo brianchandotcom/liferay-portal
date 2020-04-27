@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-widget-size-animation-plugin',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var NAME = 'sizeanim';

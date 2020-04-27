@@ -21,12 +21,12 @@
 
 AUI.add(
 	'liferay-node',
-	A => {
+	(A) => {
 		var getRegExp = A.DOM._getRegExp;
 
 		var prefix = A.Lang.String.prefix;
 
-		var formatSelectorNS = function(ns, selector) {
+		var formatSelectorNS = function (ns, selector) {
 			return selector.replace(
 				getRegExp('(#|\\[id=(\\"|\\\'))(?!' + ns + ')', 'g'),
 				'$1' + ns
@@ -49,17 +49,17 @@ AUI.add(
 
 		A.Node.formatSelectorNS = formatSelectorNS;
 
-		A.queryNS = function(ns, selector, methodName) {
+		A.queryNS = function (ns, selector, methodName) {
 			return A[methodName || 'one'](formatSelectorNS(ns, selector));
 		};
 
 		A.oneNS = A.queryNS;
 
-		A.allNS = function(ns, selector) {
+		A.allNS = function (ns, selector) {
 			return A.queryNS(ns, selector, 'all');
 		};
 
-		A.byIdNS = function(ns, id) {
+		A.byIdNS = function (ns, id) {
 			return A.one('#' + prefix(ns, id));
 		};
 	},

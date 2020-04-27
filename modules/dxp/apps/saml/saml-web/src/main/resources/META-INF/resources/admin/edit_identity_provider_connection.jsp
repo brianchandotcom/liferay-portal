@@ -105,7 +105,7 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 	Liferay.provide(
 		window,
 		'<portlet:namespace />uploadMetadataXml',
-		function() {
+		function () {
 			var A = AUI();
 
 			var uploadMetadataXmlForm = A.one(

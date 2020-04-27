@@ -83,7 +83,7 @@ DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLView
 
 	A.one('#<portlet:namespace />addMenuItemFm').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(dlViewMoreMenuItemsDisplayContext.getEventName()) %>',
 				{

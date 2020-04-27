@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-util-window',
-	A => {
+	(A) => {
 		var DOM = A.DOM;
 		var Lang = A.Lang;
 		var UA = A.UA;
@@ -28,7 +28,7 @@ AUI.add(
 
 		var IE11 = IE == 11;
 
-		var setWidth = function(modal, width) {
+		var setWidth = function (modal, width) {
 			if (IE9) {
 				modal.set('width', width + 1);
 				modal.set('width', width);
@@ -141,13 +141,13 @@ AUI.add(
 				var liferayHandles = modal._liferayHandles;
 
 				liferayHandles.push(
-					Liferay.after('hashChange', event => {
+					Liferay.after('hashChange', (event) => {
 						modal.iframe.set('uri', event.uri);
 					})
 				);
 
 				liferayHandles.push(
-					Liferay.after('popupReady', event => {
+					Liferay.after('popupReady', (event) => {
 						var iframeId = id + instance.IFRAME_SUFFIX;
 
 						if (event.windowName === iframeId) {
@@ -241,7 +241,7 @@ AUI.add(
 								var liferayHandles = modal._liferayHandles;
 
 								liferayHandles.push(
-									Liferay.on('popupReady', event => {
+									Liferay.on('popupReady', (event) => {
 										instance.fire('load', event);
 
 										popupReady = true;
@@ -337,7 +337,7 @@ AUI.add(
 
 					var originalFn = modal.iframe._onLoadIframe;
 
-					modal.iframe._onLoadIframe = function() {
+					modal.iframe._onLoadIframe = function () {
 						try {
 							originalFn.call(this);
 						}
@@ -466,7 +466,7 @@ AUI.add(
 
 				var modals = instance._map;
 
-				A.each(modals, modal => {
+				A.each(modals, (modal) => {
 					if (modal.get('visible')) {
 						instance._setWindowDefaultSizeIfNeeded(modal);
 

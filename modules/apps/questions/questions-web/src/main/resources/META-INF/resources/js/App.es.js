@@ -27,7 +27,7 @@ import Question from './pages/questions/Question.es';
 import Questions from './pages/questions/Questions.es';
 import Tags from './pages/tags/Tags.es';
 
-export default props => (
+export default (props) => (
 	<AppContextProvider {...props}>
 		<Router>
 			<ErrorBoundary>

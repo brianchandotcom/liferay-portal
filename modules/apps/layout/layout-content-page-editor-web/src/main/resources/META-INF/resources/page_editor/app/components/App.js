@@ -24,9 +24,9 @@ import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 
 export default function App() {
-	const mainItemId = useSelector(state => state.layoutData.rootItems.main);
-	const masterLayoutData = useSelector(state => state.masterLayoutData);
-	const languageId = useSelector(state => state.languageId);
+	const mainItemId = useSelector((state) => state.layoutData.rootItems.main);
+	const masterLayoutData = useSelector((state) => state.masterLayoutData);
+	const languageId = useSelector((state) => state.languageId);
 
 	useEffect(() => {
 		const currentLanguageDirection = config.languageDirection[languageId];

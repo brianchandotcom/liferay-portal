@@ -27,7 +27,9 @@ const Body = ({filtered, items, pagination, setRetry, totalCount}) => {
 			},
 			errorProps: {
 				actionButton: (
-					<RetryButton onClick={() => setRetry(retry => retry + 1)} />
+					<RetryButton
+						onClick={() => setRetry((retry) => retry + 1)}
+					/>
 				),
 				className: 'mt-5 py-8',
 				hideAnimation: true,

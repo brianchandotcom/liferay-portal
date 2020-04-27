@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-input-move-boxes-touch',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var STR_DOT = '.';
@@ -202,7 +202,7 @@ AUI.add(
 
 					var data = [];
 
-					options.each(item => {
+					options.each((item) => {
 						data.push({
 							name: item.html(),
 							selected: item.attr('data-selected') === STR_TRUE,
@@ -287,7 +287,7 @@ AUI.add(
 
 					instance._contentBox.delegate(
 						STR_CLICK,
-						event => {
+						(event) => {
 							event.preventDefault();
 						},
 						SELECTOR_SORT_LIST_ACTIVE + ' ' + SELECTOR_TITLE

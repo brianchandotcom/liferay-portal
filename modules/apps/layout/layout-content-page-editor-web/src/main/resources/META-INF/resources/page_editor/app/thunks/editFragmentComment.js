@@ -22,13 +22,13 @@ export default function editFragmentComment({
 	parentCommentId,
 	resolved = false,
 }) {
-	return dispatch => {
+	return (dispatch) => {
 		return FragmentService.editComment({
 			body,
 			commentId,
 			onNetworkStatus: dispatch,
 			resolved,
-		}).then(fragmentEntryLinkComment => {
+		}).then((fragmentEntryLinkComment) => {
 			dispatch(
 				editFragmentEntryLinkComment({
 					fragmentEntryLinkComment,

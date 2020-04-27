@@ -15,8 +15,8 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
-export const withLoading = Component => {
-	const Wrapper = props => {
+export const withLoading = (Component) => {
+	const Wrapper = (props) => {
 		const {isLoading, ...restProps} = props;
 
 		if (isLoading) {

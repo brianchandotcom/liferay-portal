@@ -12,7 +12,7 @@
  * details.
  */
 
-(function($) {
+(function ($) {
 	/*!
 	 * jQuery fm Plugin
 	 * version: 0.1
@@ -20,13 +20,13 @@
 	 * Dual licensed under the MIT and GPL licenses.
 	 */
 
-	$.fn.fm = function(name, value) {
+	$.fn.fm = function (name, value) {
 		var instance = this;
 
 		var retVal = instance;
 
 		if (arguments.length === 1) {
-			var nodes = instance.map(function(index, item) {
+			var nodes = instance.map(function (index, item) {
 				var formEl = item.form || item;
 
 				if (formEl && $.nodeName(formEl, 'form')) {

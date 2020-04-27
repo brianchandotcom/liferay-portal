@@ -25,7 +25,7 @@ const SelectTransitionStep = ({setErrorToast}) => {
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {
-			workflowTaskIds: tasks.map(task => task.id),
+			workflowTaskIds: tasks.map((task) => task.id),
 		},
 		url: '/workflow-tasks/next-transitions',
 	});
@@ -34,7 +34,7 @@ const SelectTransitionStep = ({setErrorToast}) => {
 		setErrorToast(false);
 
 		if (tasks.length > 0) {
-			const promise = fetchData().catch(err => {
+			const promise = fetchData().catch((err) => {
 				setErrorToast(Liferay.Language.get('your-request-has-failed'));
 
 				return Promise.reject(err);

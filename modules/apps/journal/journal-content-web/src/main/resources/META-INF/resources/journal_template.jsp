@@ -93,7 +93,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 
 	A.one('#<%= refererPortletName + "selectDDMTemplateButton" %>').on(
 		'click',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			var instance = this;
@@ -118,7 +118,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 					title: '<liferay-ui:message key="templates" />',
 					uri: '<%= selectDDMTemplateURL %>',
 				},
-				function(event) {
+				function (event) {
 					templateKeyInput.setAttribute('value', event.ddmtemplatekey);
 
 					templatePreview.html('<div class="loading-animation"></div>');
@@ -139,15 +139,15 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 							method: 'POST',
 						}
 					)
-						.then(function(response) {
+						.then(function (response) {
 							return response.text();
 						})
-						.then(function(response) {
+						.then(function (response) {
 							templatePreview.plug(A.Plugin.ParseContent);
 
 							templatePreview.setContent(response);
 						})
-						.catch(function() {
+						.catch(function () {
 							templatePreview.html(
 								'<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>'
 							);
@@ -176,14 +176,14 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 
 	A.one('#<%= refererPortletName + "ddmTemplateTypeDefault" %>').on(
 		'click',
-		function(event) {
+		function (event) {
 			templateKeyInput.setAttribute('value', '');
 		}
 	);
 
 	A.one('#<%= refererPortletName + "clearddmTemplateButton" %>').on(
 		'click',
-		function(event) {
+		function (event) {
 			templateKeyInput.setAttribute('value', '');
 
 			templatePreview.html(

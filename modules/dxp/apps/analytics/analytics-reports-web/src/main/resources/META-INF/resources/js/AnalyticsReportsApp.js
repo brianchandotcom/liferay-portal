@@ -19,7 +19,7 @@ import {StoreContextProvider, useWarning} from './context/store';
 import APIService from './utils/APIService';
 import {numberFormat} from './utils/numberFormat';
 
-export default function({context, props}) {
+export default function ({context, props}) {
 	const {languageTag, namespace, page} = context;
 	const {defaultTimeRange, defaultTimeSpanKey, timeSpans} = context;
 	const {validAnalyticsConnection} = context;
@@ -93,7 +93,7 @@ function Navigation({
 	}
 
 	function handleTotalReads() {
-		return api.getTotalReads().then(response => {
+		return api.getTotalReads().then((response) => {
 			return numberFormat(
 				languageTag,
 				response.analyticsReportsTotalReads
@@ -102,7 +102,7 @@ function Navigation({
 	}
 
 	function handleTotalViews() {
-		return api.getTotalViews().then(response => {
+		return api.getTotalViews().then((response) => {
 			return numberFormat(
 				languageTag,
 				response.analyticsReportsTotalViews
@@ -111,7 +111,7 @@ function Navigation({
 	}
 
 	function handleTrafficShare() {
-		const trafficSource = trafficSources.find(trafficSource => {
+		const trafficSource = trafficSources.find((trafficSource) => {
 			return trafficSource['name'] === trafficSourceName;
 		});
 
@@ -122,7 +122,7 @@ function Navigation({
 		setTrafficSourceName(trafficSourceName);
 
 		api.getTrafficSourceDetails(trafficSourceName).then(
-			trafficSourceData => {
+			(trafficSourceData) => {
 				setCurrentPage({
 					data: trafficSourceData,
 					view: 'traffic-source-detail',
@@ -136,7 +136,7 @@ function Navigation({
 	}
 
 	function handleTrafficVolume() {
-		const trafficSource = trafficSources.find(trafficSource => {
+		const trafficSource = trafficSources.find((trafficSource) => {
 			return trafficSource['name'] === trafficSourceName;
 		});
 

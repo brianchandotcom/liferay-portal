@@ -23,13 +23,13 @@ class EditTeamAssignmentsUserGroupsManagementToolbarDefaultEventHandler extends 
 			url: itemData.selectUserGroupURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				const addTeamUserGroupsFm = this.one('#addTeamUserGroupsFm');
 
-				selectedItem.forEach(item => {
+				selectedItem.forEach((item) => {
 					dom.append(addTeamUserGroupsFm, item);
 				});
 

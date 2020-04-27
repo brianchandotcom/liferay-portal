@@ -24,7 +24,7 @@ describe('Liferay.Util.navigate', () => {
 		beforeEach(() => {
 			Liferay.SPA = {
 				app: {
-					canNavigate: jest.fn(url => url.includes('internal')),
+					canNavigate: jest.fn((url) => url.includes('internal')),
 					navigate: jest.fn(),
 				},
 			};

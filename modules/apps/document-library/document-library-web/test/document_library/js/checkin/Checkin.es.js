@@ -49,7 +49,7 @@ describe('Checkin', () => {
 	Liferay.component = (id, component) => {
 		components[id] = component;
 	};
-	Liferay.componentReady = id => Promise.resolve(components[id]);
+	Liferay.componentReady = (id) => Promise.resolve(components[id]);
 	afterEach(cleanup);
 
 	describe('when the file is checked out', () => {

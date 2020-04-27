@@ -43,7 +43,7 @@ function FieldBase({
 	const localizedValueArray = useMemo(() => {
 		const languageValues = [];
 
-		Object.keys(localizedValue).forEach(key => {
+		Object.keys(localizedValue).forEach((key) => {
 			if (key !== editingLanguageId && localizedValue[key] !== '') {
 				languageValues.push({
 					name: name.replace(editingLanguageId, key),
@@ -133,7 +133,7 @@ function FieldBase({
 					{children}
 
 					{localizedValueArray.length > 0 &&
-						localizedValueArray.map(language => (
+						localizedValueArray.map((language) => (
 							<input
 								key={language.name}
 								name={language.name}

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-ddm-form',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 
 		var AObject = A.Object;
@@ -95,15 +95,15 @@ AUI.add(
 
 		var FieldTypes = Liferay.namespace('DDM.FieldTypes');
 
-		var getFieldClass = function(type) {
+		var getFieldClass = function (type) {
 			return FieldTypes[type] || FieldTypes.field;
 		};
 
-		var isNode = function(node) {
+		var isNode = function (node) {
 			return node && (node._node || node.nodeType);
 		};
 
-		var DDMPortletSupport = function() {};
+		var DDMPortletSupport = function () {};
 
 		DDMPortletSupport.ATTRS = {
 			doAsGroupId: {},
@@ -115,7 +115,7 @@ AUI.add(
 			portletNamespace: {},
 		};
 
-		var FieldsSupport = function() {};
+		var FieldsSupport = function () {};
 
 		FieldsSupport.ATTRS = {
 			container: {
@@ -199,10 +199,10 @@ AUI.add(
 					body: data,
 					method: 'POST',
 				})
-					.then(response => {
+					.then((response) => {
 						return response.text();
 					})
-					.then(response => {
+					.then((response) => {
 						if (callback) {
 							callback.call(instance, response);
 						}
@@ -260,7 +260,7 @@ AUI.add(
 
 				var fields = [];
 
-				instance.getFieldNodes().each(item => {
+				instance.getFieldNodes().each((item) => {
 					fields.push(instance._getField(item));
 				});
 
@@ -302,7 +302,7 @@ AUI.add(
 			getFieldInfo(tree, key, value) {
 				var queue = new A.Queue(tree);
 
-				var addToQueue = function(item) {
+				var addToQueue = function (item) {
 					if (queue._q.indexOf(item) === -1) {
 						queue.add(item);
 					}
@@ -343,7 +343,7 @@ AUI.add(
 
 				var root;
 
-				instance.eachParent(parent => {
+				instance.eachParent((parent) => {
 					root = parent;
 				});
 
@@ -435,7 +435,7 @@ AUI.add(
 						originalField,
 					});
 
-					newField.get('fields').forEach(item => {
+					newField.get('fields').forEach((item) => {
 						var name = item.get('name');
 
 						var originalChildField = originalField.getFirstFieldByName(
@@ -539,7 +539,7 @@ AUI.add(
 				_removeFieldValidation(field) {
 					var instance = this;
 
-					field.get('fields').forEach(item => {
+					field.get('fields').forEach((item) => {
 						instance._removeFieldValidation(item);
 					});
 
@@ -617,7 +617,7 @@ AUI.add(
 								fieldName,
 								'integerRange_custom',
 								errorMessage,
-								val => {
+								(val) => {
 									return (
 										val >= INTEGER_MIN_VALUE &&
 										val <= INTEGER_MAX_VALUE
@@ -726,7 +726,7 @@ AUI.add(
 						fields = definition.fields;
 					}
 
-					return AArray.find(fields, item => {
+					return AArray.find(fields, (item) => {
 						return item.name === name;
 					});
 				},
@@ -744,7 +744,7 @@ AUI.add(
 				getFirstFieldByName(name) {
 					var instance = this;
 
-					return AArray.find(instance.get('fields'), item => {
+					return AArray.find(instance.get('fields'), (item) => {
 						return item.get('name') === name;
 					});
 				},
@@ -814,7 +814,7 @@ AUI.add(
 				getRepeatedSiblings() {
 					var instance = this;
 
-					return instance.getSiblings().filter(item => {
+					return instance.getSiblings().filter((item) => {
 						return item.get('name') === instance.get('name');
 					});
 				},
@@ -944,7 +944,7 @@ AUI.add(
 						field.options.shift();
 					}
 
-					instance._getTemplate(fieldTemplate => {
+					instance._getTemplate((fieldTemplate) => {
 						var field = instance.createField(fieldTemplate);
 
 						var displayLocale = instance.get('displayLocale');
@@ -1254,7 +1254,7 @@ AUI.add(
 						zIndex: 65535,
 					}).render();
 
-					colorPicker.on('select', event => {
+					colorPicker.on('select', (event) => {
 						selectorInput.setStyle('backgroundColor', event.color);
 
 						valueField.val(event.color);
@@ -1262,7 +1262,7 @@ AUI.add(
 						instance.validateField(valueField);
 					});
 
-					colorPicker.after('visibleChange', event => {
+					colorPicker.after('visibleChange', (event) => {
 						if (!event.newVal) {
 							instance.validateField(valueField);
 						}
@@ -1351,7 +1351,7 @@ AUI.add(
 				repeat() {
 					var instance = this;
 
-					instance._getTemplate(fieldTemplate => {
+					instance._getTemplate((fieldTemplate) => {
 						var field = instance.createField(fieldTemplate);
 
 						var inputNode = field.getInputNode();
@@ -1444,7 +1444,7 @@ AUI.add(
 
 					Liferay.Loader.require(
 						'frontend-js-web/liferay/ItemSelectorDialog.es',
-						ItemSelectorDialog => {
+						(ItemSelectorDialog) => {
 							var itemSelectorDialog = new ItemSelectorDialog.default(
 								{
 									eventName:
@@ -1457,7 +1457,7 @@ AUI.add(
 
 							itemSelectorDialog.on(
 								'selectedItemChange',
-								event => {
+								(event) => {
 									var selectedItem = event.selectedItem;
 
 									if (selectedItem) {
@@ -1760,7 +1760,7 @@ AUI.add(
 
 					Liferay.Loader.require(
 						'frontend-js-web/liferay/ItemSelectorDialog.es',
-						ItemSelectorDialog => {
+						(ItemSelectorDialog) => {
 							var itemSelectorDialog = new ItemSelectorDialog.default(
 								{
 									eventName:
@@ -1775,7 +1775,7 @@ AUI.add(
 
 							itemSelectorDialog.on(
 								'selectedItemChange',
-								event => {
+								(event) => {
 									var selectedItem = event.selectedItem;
 
 									if (selectedItem) {
@@ -2637,7 +2637,7 @@ AUI.add(
 
 					listNode.empty();
 
-					layouts.forEach(layout => {
+					layouts.forEach((layout) => {
 						var selected =
 							selectedLayout &&
 							layout.layoutId === selectedLayout.layoutId;
@@ -2720,7 +2720,7 @@ AUI.add(
 						instance._requestSiblingLayouts(
 							groupId,
 							privateLayout,
-							layouts => {
+							(layouts) => {
 								var key = [
 									instance._currentParentLayoutId,
 									groupId,
@@ -2849,10 +2849,10 @@ AUI.add(
 									method: 'POST',
 								}
 							)
-								.then(response => {
+								.then((response) => {
 									return response.json();
 								})
-								.then(response => {
+								.then((response) => {
 									var layouts = response && response.layouts;
 
 									if (layouts) {
@@ -2919,10 +2919,10 @@ AUI.add(
 								method: 'POST',
 							}
 						)
-							.then(response => {
+							.then((response) => {
 								return response.json();
 							})
-							.then(response => {
+							.then((response) => {
 								var layouts = response && response.layouts;
 
 								if (layouts) {
@@ -3314,7 +3314,7 @@ AUI.add(
 
 						instance.viewer.TPL_PLAYER = TPL_PLAYER_PLAY;
 
-						instance.viewer._syncPlaying = function() {
+						instance.viewer._syncPlaying = function () {
 							if (this.get('playing')) {
 								this._player.setHTML(TPL_PLAYER_PAUSE);
 							}
@@ -3551,7 +3551,7 @@ AUI.add(
 					var instance = this;
 
 					Liferay.componentReady(instance.getInputName()).then(
-						map => {
+						(map) => {
 							map.on(
 								'positionChange',
 								instance.onPositionChange,
@@ -3634,7 +3634,7 @@ AUI.add(
 					var editorComponentName =
 						instance.getInputName() + 'Editor';
 
-					Liferay.componentReady(editorComponentName).then(function(
+					Liferay.componentReady(editorComponentName).then(function (
 						editor
 					) {
 						if (isNode(editor)) {
@@ -3753,7 +3753,7 @@ AUI.add(
 
 					radioNodes.set('checked', false);
 
-					radioNodes.each(radioNode => {
+					radioNodes.each((radioNode) => {
 						if (radioNode.get('value') === value) {
 							radioNode.set('checked', true);
 						}
@@ -3883,7 +3883,7 @@ AUI.add(
 					instance
 						.getInputNode()
 						.all('option')
-						.each(item => {
+						.each((item) => {
 							item.set(
 								'selected',
 								value.indexOf(item.val()) > -1
@@ -4105,7 +4105,7 @@ AUI.add(
 						'availableLanguageIds'
 					);
 
-					availableLanguageIds.forEach(item => {
+					availableLanguageIds.forEach((item) => {
 						if (currentAvailableLanguageIds.indexOf(item) == -1) {
 							currentAvailableLanguageIds.push(item);
 						}
@@ -4170,7 +4170,7 @@ AUI.add(
 
 					instance.eventHandlers = null;
 
-					A.each(instance.repeatableInstances, item => {
+					A.each(instance.repeatableInstances, (item) => {
 						item.destroy();
 					});
 
@@ -4178,13 +4178,13 @@ AUI.add(
 				},
 
 				fillEmptyLocales(instance, fields, availableLanguageIds) {
-					fields.forEach(field => {
+					fields.forEach((field) => {
 						if (field.get('localizable')) {
 							var localizationMap = field.get('localizationMap');
 
 							var defaultLocale = field.getDefaultLocale();
 
-							availableLanguageIds.forEach(locale => {
+							availableLanguageIds.forEach((locale) => {
 								if (!localizationMap[locale]) {
 									localizationMap[locale] =
 										localizationMap[defaultLocale];
@@ -4207,24 +4207,26 @@ AUI.add(
 
 					var defaultLocale = instance.getDefaultLocale();
 
-					Object.keys(instance.newRepeatableInstances).forEach(x => {
-						var field = instance.newRepeatableInstances[x];
+					Object.keys(instance.newRepeatableInstances).forEach(
+						(x) => {
+							var field = instance.newRepeatableInstances[x];
 
-						if (!field.get('localizable')) {
-							return;
+							if (!field.get('localizable')) {
+								return;
+							}
+
+							instance.populateBlankLocalizationMap(
+								defaultLocale,
+								field.originalField,
+								field
+							);
+							instance.populateBlankLocalizationMap(
+								defaultLocale,
+								field,
+								field.originalField
+							);
 						}
-
-						instance.populateBlankLocalizationMap(
-							defaultLocale,
-							field.originalField,
-							field
-						);
-						instance.populateBlankLocalizationMap(
-							defaultLocale,
-							field,
-							field.originalField
-						);
-					});
+					);
 				},
 
 				initializer() {
@@ -4273,7 +4275,7 @@ AUI.add(
 
 					localizations.push(currentLocale);
 
-					localizations.forEach(localization => {
+					localizations.forEach((localization) => {
 						if (!newFieldLocalizations[localization]) {
 							var localizationValue = '';
 
@@ -4360,7 +4362,7 @@ AUI.add(
 							return;
 						}
 
-						nestedFields.forEach(nestedField => {
+						nestedFields.forEach((nestedField) => {
 							instance.recreateEditors(nestedField);
 						});
 					}

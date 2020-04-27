@@ -17,7 +17,7 @@ import React from 'react';
 import ThemeContext from './ThemeContext.es';
 import Flags from './components/Flags.es';
 
-export default function({context, props}) {
+export default function ({context, props}) {
 	return (
 		<ThemeContext.Provider value={context}>
 			<Flags {...props} />

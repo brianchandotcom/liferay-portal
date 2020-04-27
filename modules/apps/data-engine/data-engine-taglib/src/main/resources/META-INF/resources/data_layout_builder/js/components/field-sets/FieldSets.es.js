@@ -24,7 +24,7 @@ export default function FieldSets() {
 
 	return (
 		<>
-			{fieldSets.map(fieldSet => (
+			{fieldSets.map((fieldSet) => (
 				<FieldType
 					description={`${
 						fieldSet.dataDefinitionFields.length

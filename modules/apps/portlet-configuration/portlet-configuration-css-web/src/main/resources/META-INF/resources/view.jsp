@@ -49,7 +49,7 @@
 				document.getElementById('<portlet:namespace />fm'),
 				'change',
 				'input[type=checkbox]',
-				function(event) {
+				function (event) {
 					var toggle = event.delegateTarget;
 
 					var disableOnChecked = toggle.dataset.disableonchecked;

@@ -30,7 +30,7 @@ export default function Keywords({currentPage, languageTag}) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 	const [keywordValueType, setKeywordValueType] = useState(
-		KEYWORD_VALUE_TYPE.find(keywordValueType => {
+		KEYWORD_VALUE_TYPE.find((keywordValueType) => {
 			return keywordValueType.name === 'traffic';
 		})
 	);
@@ -56,7 +56,9 @@ export default function Keywords({currentPage, languageTag}) {
 				<ClayList.ItemField>
 					<ClayDropDown
 						active={isDropdownOpen}
-						onActiveChange={isActive => setIsDropdownOpen(isActive)}
+						onActiveChange={(isActive) =>
+							setIsDropdownOpen(isActive)
+						}
 						trigger={
 							<ClayButton
 								className="px-0 text-body"
@@ -82,7 +84,7 @@ export default function Keywords({currentPage, languageTag}) {
 									onClick={() => {
 										setKeywordValueType(
 											KEYWORD_VALUE_TYPE.find(
-												keywordValueType => {
+												(keywordValueType) => {
 													return (
 														keywordValueType.name ===
 														valueType.name
@@ -100,7 +102,7 @@ export default function Keywords({currentPage, languageTag}) {
 					</ClayDropDown>
 				</ClayList.ItemField>
 			</ClayList.Item>
-			{currentPage.data.keywords.map(keyword => {
+			{currentPage.data.keywords.map((keyword) => {
 				return (
 					<ClayList.Item flex key={keyword.title}>
 						<ClayList.ItemField expand>

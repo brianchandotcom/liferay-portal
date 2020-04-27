@@ -99,7 +99,7 @@ export default function renderApp({
 /*
  * A default mock of the APIService createVariant service.
  */
-const _createVariantMock = variant =>
+const _createVariantMock = (variant) =>
 	Promise.resolve({
 		segmentsExperimentRel: {
 			name: variant.name,
@@ -115,7 +115,7 @@ const _getEstimatedTimeMock = () =>
 		segmentsExperimentEstimatedDaysDuration: DEFAULT_ESTIMATED_DAYS.value,
 	});
 
-const _publishExperienceMockGenerator = experiment => ({
+const _publishExperienceMockGenerator = (experiment) => ({
 	status,
 	winnerSegmentsExperienceId,
 }) =>
@@ -130,7 +130,7 @@ const _publishExperienceMockGenerator = experiment => ({
 		winnerSegmentsExperienceId,
 	});
 
-const _runExperimentMockGenerator = segmentsExperiment => ({status}) =>
+const _runExperimentMockGenerator = (segmentsExperiment) => ({status}) =>
 	Promise.resolve({
 		segmentsExperiment: {
 			...segmentsExperiment,
@@ -139,7 +139,7 @@ const _runExperimentMockGenerator = segmentsExperiment => ({status}) =>
 		},
 	});
 
-const _editExperimentStatusMockGenerator = experiment => ({status}) => {
+const _editExperimentStatusMockGenerator = (experiment) => ({status}) => {
 	return Promise.resolve({
 		segmentsExperiment: {
 			...experiment,

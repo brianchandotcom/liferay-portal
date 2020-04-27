@@ -121,7 +121,7 @@ refererURL.setParameter("updateLayout", "true");
 		if (ControlMenu.PortletDragDrop) {
 			addApplication.plug(ControlMenu.PortletDragDrop, {
 				on: {
-					dragEnd: function(event) {
+					dragEnd: function (event) {
 						addApplication.addPortlet(event.portletNode, {
 							item: event.appendNode,
 						});

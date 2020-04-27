@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-calendar-container',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var isObject = Lang.isObject;
@@ -74,14 +74,14 @@ AUI.add(
 							instance.get('namespace') +
 							'keywords={query}',
 						resultFilters(_query, results) {
-							return results.filter(item => {
+							return results.filter((item) => {
 								return !instance.getCalendar(
 									item.raw.calendarId
 								);
 							});
 						},
 						resultFormatter(query, results) {
-							return results.map(result => {
+							return results.map((result) => {
 								var calendar = result.raw;
 								var calendarResourceName =
 									calendar.calendarResourceName;
@@ -146,7 +146,7 @@ AUI.add(
 							fn() {
 								var instance = this;
 
-								A.each(availableCalendars, item => {
+								A.each(availableCalendars, (item) => {
 									item.set('visible', false);
 								});
 
@@ -218,10 +218,10 @@ AUI.add(
 
 					var visibleCalendars = {};
 
-					calendarLists.forEach(calendarList => {
+					calendarLists.forEach((calendarList) => {
 						var calendars = calendarList.get('calendars');
 
-						A.each(calendars, item => {
+						A.each(calendars, (item) => {
 							var calendarId = item.get('calendarId');
 
 							availableCalendars[calendarId] = item;

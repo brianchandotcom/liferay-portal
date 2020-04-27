@@ -14,7 +14,7 @@ import React from 'react';
 import {Body} from './SLAFormPageBody.es';
 import SLAFormPageProvider from './SLAFormPageProvider.es';
 
-const SLAFormPage = props => {
+const SLAFormPage = (props) => {
 	return (
 		<div className="sla-form">
 			<SLAFormPageProvider {...props}>

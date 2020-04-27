@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-facet-util',
-	A => {
+	(A) => {
 		const FACET_TERM_CLASS = 'facet-term';
 
 		const FACET_TERM_SELECTED_CLASS = 'facet-term-selected';
@@ -39,7 +39,7 @@ AUI.add(
 		function _transformNodeListToArray(nodeList) {
 			const nodeArray = [];
 
-			nodeList.forEach(node => nodeArray.push(node));
+			nodeList.forEach((node) => nodeArray.push(node));
 
 			return nodeArray;
 		}
@@ -70,7 +70,7 @@ AUI.add(
 				);
 
 				const selectedTerms = _transformNodeListToArray(facetTerms)
-					.filter(term => {
+					.filter((term) => {
 						if (term.type === 'checkbox') {
 							return term.checked;
 						}
@@ -85,7 +85,7 @@ AUI.add(
 
 						return isCurrentTarget ? !isSelected : isSelected;
 					})
-					.map(term => _getTermId(term));
+					.map((term) => _getTermId(term));
 
 				FacetUtil.selectTerms(form, selectedTerms);
 			},
@@ -103,7 +103,7 @@ AUI.add(
 			},
 
 			enableInputs(inputs) {
-				inputs.forEach(term => {
+				inputs.forEach((term) => {
 					Liferay.Util.toggleDisabled(term, false);
 				});
 			},
@@ -111,7 +111,7 @@ AUI.add(
 			removeURLParameters(key, parameterArray) {
 				key = encodeURIComponent(key);
 
-				return parameterArray.filter(item => {
+				return parameterArray.filter((item) => {
 					var itemSplit = item.split('=');
 
 					return !(itemSplit && itemSplit[0] === key);
@@ -166,7 +166,7 @@ AUI.add(
 					newParameters
 				);
 
-				selections.forEach(item => {
+				selections.forEach((item) => {
 					newParameters = FacetUtil.addURLParameter(
 						key,
 						item,
@@ -186,7 +186,7 @@ AUI.add(
 					search = search.substr(1);
 				}
 
-				var parameterArray = search.split('&').filter(item => {
+				var parameterArray = search.split('&').filter((item) => {
 					return item.trim() !== '';
 				});
 

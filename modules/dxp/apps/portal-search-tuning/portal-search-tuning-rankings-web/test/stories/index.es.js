@@ -43,7 +43,7 @@ const {array, boolean, select, text, withKnobs} = StorybookAddonKnobs;
 
 addDecorator(withKnobs);
 
-addDecorator(storyFn => {
+addDecorator((storyFn) => {
 	const context = {
 		constants: {
 			WORKFLOW_ACTION_PUBLISH: '1',
@@ -63,7 +63,7 @@ addDecorator(storyFn => {
 	);
 });
 
-const withSheet = storyFn => (
+const withSheet = (storyFn) => (
 	<div className="sheet sheet-lg" style={{marginTop: '24px'}}>
 		{storyFn()}
 	</div>

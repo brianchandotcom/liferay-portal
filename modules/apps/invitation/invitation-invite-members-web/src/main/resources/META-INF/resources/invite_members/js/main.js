@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-portlet-invite-members',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var Language = Liferay.Language;
@@ -242,10 +242,10 @@ AUI.add(
 						body,
 						method: 'POST',
 					})
-						.then(response => {
+						.then((response) => {
 							return response.json();
 						})
-						.then(responseData => {
+						.then((responseData) => {
 							var moreResults = instance._membersList.one(
 								'.more-results'
 							);
@@ -311,7 +311,7 @@ AUI.add(
 					}
 					else {
 						buffer.push(
-							A.Array.map(results, result => {
+							A.Array.map(results, (result) => {
 								var cssClass = 'user';
 
 								if (result.hasPendingMemberRequest) {
@@ -405,7 +405,7 @@ AUI.add(
 
 					var invitedEmailList = instance.one('#invitedEmailList');
 
-					invitedEmailList.all('.user').each(item => {
+					invitedEmailList.all('.user').each((item) => {
 						emailAddresses.push(item.attr('data-emailAddress'));
 					});
 
@@ -422,7 +422,7 @@ AUI.add(
 
 					var userIds = [];
 
-					instance._invitedMembersList.all('.user').each(item => {
+					instance._invitedMembersList.all('.user').each((item) => {
 						userIds.push(item.attr('data-userId'));
 					});
 

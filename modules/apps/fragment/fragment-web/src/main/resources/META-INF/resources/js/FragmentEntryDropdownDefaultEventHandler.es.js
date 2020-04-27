@@ -40,7 +40,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('select-collection'),
 				uri: itemData.selectFragmentCollectionURL,
 			},
-			selectedItem => {
+			(selectedItem) => {
 				if (selectedItem) {
 					this.one('#fragmentCollectionId').value = selectedItem.id;
 					this.one('#fragmentEntryKeys').value =
@@ -110,7 +110,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 
 		itemSelectorDialog.open();
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
@@ -141,7 +141,7 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 				title: Liferay.Language.get('select-collection'),
 				uri: selectFragmentCollectionURL,
 			},
-			selectedItem => {
+			(selectedItem) => {
 				if (selectedItem) {
 					const form = this.one('#fragmentEntryFm');
 

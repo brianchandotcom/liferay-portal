@@ -128,7 +128,9 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 								);
 
 								if (allowedAuthorizationTypeCheckbox) {
-									allowedAuthorizationTypeCheckbox.addEventListener('click', function(event) {
+									allowedAuthorizationTypeCheckbox.addEventListener('click', function (
+										event
+									) {
 										<portlet:namespace />requiredRedirectURIs();
 									});
 								}
@@ -174,7 +176,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 					);
 
 					if (useSignedInUserButton) {
-						useSignedInUserButton.addEventListener('click', function(event) {
+						useSignedInUserButton.addEventListener('click', function (event) {
 							A.one('#<portlet:namespace />clientCredentialUserId').val(
 								'<%= user.getUserId() %>'
 							);
@@ -189,7 +191,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 					);
 
 					if (selectUserButton) {
-						selectUserButton.addEventListener('click', function(event) {
+						selectUserButton.addEventListener('click', function (event) {
 							Liferay.Util.selectEntity(
 								{
 									dialog: {
@@ -210,7 +212,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 									uri:
 										'<%= HtmlUtil.escapeJS(String.valueOf(selectUsersDisplayContext.getPortletURL())) %>',
 								},
-								function(event) {
+								function (event) {
 									A.one('#<portlet:namespace />clientCredentialUserId').val(
 										event.userid
 									);

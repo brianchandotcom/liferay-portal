@@ -98,7 +98,7 @@ const mockFieldTypes = [
 			],
 		},
 	},
-].map(fieldType => ({
+].map((fieldType) => ({
 	...mockFieldType,
 	...fieldType,
 }));
@@ -106,7 +106,7 @@ const mockFieldTypes = [
 const changeField = ({settingsContext}, fieldName, value, visible = true) => {
 	const visitor = new PagesVisitor(settingsContext.pages);
 
-	return visitor.mapFields(field => {
+	return visitor.mapFields((field) => {
 		if (field.fieldName === fieldName) {
 			field = {
 				...field,
@@ -123,7 +123,7 @@ const getFieldValue = (pages, fieldName) => {
 	const visitor = new PagesVisitor(pages);
 	let fieldValue;
 
-	visitor.mapFields(field => {
+	visitor.mapFields((field) => {
 		if (field.fieldName === fieldName) {
 			fieldValue = field.value;
 		}
@@ -479,7 +479,7 @@ describe('Sidebar', () => {
 										columns: [
 											{
 												fields: changedFieldType.settingsContext.pages[0].rows[0].columns[0].fields.map(
-													field => ({
+													(field) => ({
 														...field,
 														instanceId: expect.any(
 															String
@@ -575,7 +575,7 @@ describe('Sidebar', () => {
 										columns: [
 											{
 												fields: changedFieldType.settingsContext.pages[0].rows[0].columns[0].fields.map(
-													field => ({
+													(field) => ({
 														...field,
 														instanceId: expect.any(
 															String

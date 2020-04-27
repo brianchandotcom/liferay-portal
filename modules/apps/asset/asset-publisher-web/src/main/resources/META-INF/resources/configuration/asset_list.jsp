@@ -52,7 +52,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 	);
 
 	if (selectAssetListButton) {
-		selectAssetListButton.addEventListener('click', function(event) {
+		selectAssetListButton.addEventListener('click', function (event) {
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName:
 					'<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
@@ -62,7 +62,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 					'<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>',
 			});
 
-			itemSelectorDialog.on('selectedItemChange', function(event) {
+			itemSelectorDialog.on('selectedItemChange', function (event) {
 				if (event.selectedItem) {
 					var itemValue = JSON.parse(event.selectedItem.value);
 
@@ -81,7 +81,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 	);
 
 	if (clearAssetListButton) {
-		clearAssetListButton.addEventListener('click', function(event) {
+		clearAssetListButton.addEventListener('click', function (event) {
 			assetListTitle.innerHTML = '<liferay-ui:message key="none" />';
 
 			assetListEntryId.value = '';

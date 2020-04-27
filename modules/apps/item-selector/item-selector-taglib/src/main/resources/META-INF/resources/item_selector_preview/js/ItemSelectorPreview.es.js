@@ -142,7 +142,7 @@ const ItemSelectorPreview = ({
 
 	const handleClickNext = useCallback(() => {
 		if (itemList.length > 1) {
-			setCurrentItemIndex(index => {
+			setCurrentItemIndex((index) => {
 				const lastIndex = itemList.length - 1;
 				const shouldResetIndex = index === lastIndex;
 
@@ -153,7 +153,7 @@ const ItemSelectorPreview = ({
 
 	const handleClickPrevious = useCallback(() => {
 		if (itemList.length > 1) {
-			setCurrentItemIndex(index => {
+			setCurrentItemIndex((index) => {
 				const lastIndex = itemList.length - 1;
 				const shouldResetIndex = index === 0;
 
@@ -163,7 +163,7 @@ const ItemSelectorPreview = ({
 	}, [itemList.length]);
 
 	const handleOnKeyDown = useCallback(
-		e => {
+		(e) => {
 			if (!isMounted()) {
 				return;
 			}
@@ -187,12 +187,12 @@ const ItemSelectorPreview = ({
 		[close, handleClickNext, handleClickPrevious, isMounted]
 	);
 
-	const updateItemList = newItemList => {
+	const updateItemList = (newItemList) => {
 		setItemList(newItemList);
 		setReloadOnHide(true);
 	};
 
-	const handleSaveEdit = e => {
+	const handleSaveEdit = (e) => {
 		const itemData = e.data.file;
 
 		const editedItemMetadata = {

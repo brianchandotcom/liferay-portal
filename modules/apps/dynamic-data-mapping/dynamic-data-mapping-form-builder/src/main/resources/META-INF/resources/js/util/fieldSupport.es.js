@@ -82,7 +82,7 @@ export const formatFieldName = (instanceId, languageId, value) => {
 	return `ddm$$${value}$${instanceId}$0$$${languageId}`;
 };
 
-export const generateInstanceId = length => {
+export const generateInstanceId = (length) => {
 	let text = '';
 
 	const possible =
@@ -98,7 +98,7 @@ export const generateInstanceId = length => {
 export const getField = (pages, fieldName) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.findField(field => field.fieldName === fieldName);
+	return visitor.findField((field) => field.fieldName === fieldName);
 };
 
 export const getFieldProperties = (
@@ -138,7 +138,7 @@ export const getParentField = (pages, fieldName) => {
 	let parentField = null;
 	const visitor = new PagesVisitor(pages);
 
-	visitor.visitFields(field => {
+	visitor.visitFields((field) => {
 		const nestedFieldsVisitor = new PagesVisitor(field.nestedFields || []);
 
 		if (nestedFieldsVisitor.containsField(fieldName)) {
@@ -165,7 +165,7 @@ export const getParentFieldSet = (pages, fieldName) => {
 	return null;
 };
 
-export const isFieldSet = field =>
+export const isFieldSet = (field) =>
 	field.type === FIELD_TYPE_FIELDSET && field.dataDefinitionId;
 
 export const isFieldSetChild = (pages, fieldName) => {
@@ -221,7 +221,7 @@ export const normalizeSettingsContextPages = (
 	const visitor = new PagesVisitor(pages);
 
 	return visitor.mapFields(
-		field => {
+		(field) => {
 			const {fieldName} = field;
 
 			if (fieldName === 'name') {

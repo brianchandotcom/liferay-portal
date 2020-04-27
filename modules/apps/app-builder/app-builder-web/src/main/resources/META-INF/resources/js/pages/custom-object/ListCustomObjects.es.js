@@ -122,7 +122,7 @@ export default ({history}) => {
 		getItem(
 			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-record-collection`
 		).then(({id: dataRecordCollectionId}) => {
-			setCustomObjectPermissionsModalState(prevState => ({
+			setCustomObjectPermissionsModalState((prevState) => ({
 				...prevState,
 				endpoint: `/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/permissions`,
 			}));
@@ -192,7 +192,7 @@ export default ({history}) => {
 						action: ({id}) =>
 							Promise.resolve(
 								setCustomObjectPermissionsModalState(
-									prevState => ({
+									(prevState) => ({
 										...prevState,
 										dataDefinitionId: id,
 									})
@@ -240,7 +240,7 @@ export default ({history}) => {
 				}}
 				endpoint={`/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`}
 			>
-				{item => ({
+				{(item) => ({
 					...item,
 					dateCreated: fromNow(item.dateCreated),
 					dateModified: fromNow(item.dateModified),
@@ -291,7 +291,7 @@ export default ({history}) => {
 						endpoint: null,
 					})
 				}
-				onSave={permissions => {
+				onSave={(permissions) => {
 					const dataDefinitionPermissions = [];
 
 					Object.values(permissions).forEach(

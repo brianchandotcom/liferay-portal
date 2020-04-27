@@ -27,13 +27,13 @@ class FilterInput extends Component {
 		disableSearch: false,
 	};
 
-	_handleChange = event => {
+	_handleChange = (event) => {
 		event.preventDefault();
 
 		this.props.onChange(event.target.value);
 	};
 
-	_handleKeyDown = event => {
+	_handleKeyDown = (event) => {
 		if (event.key === 'Enter' && event.currentTarget.value.trim()) {
 			this.props.onSubmit();
 		}

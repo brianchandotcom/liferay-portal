@@ -22,7 +22,7 @@ describe('Event Utils', () => {
 			'2020-04-20',
 			'2020-04-07',
 			'2017-07-15',
-		].map(dateStr => {
+		].map((dateStr) => {
 			const date = new Date(dateStr);
 
 			return {

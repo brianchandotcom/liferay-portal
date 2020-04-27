@@ -35,7 +35,7 @@ name = namespace + name;
 	outputKey="js_maps_google_skip_map_loading"
 >
 	<script>
-		Liferay.namespace('Maps').onGMapsReady = function(event) {
+		Liferay.namespace('Maps').onGMapsReady = function (event) {
 			Liferay.Maps.gmapsReady = true;
 
 			Liferay.fire('gmapsReady');
@@ -92,7 +92,7 @@ name = namespace + name;
 		</c:if>
 	};
 
-	var createMap = function() {
+	var createMap = function () {
 		var map = new MapGoogleMaps.default(mapConfig);
 
 		Liferay.MapBase.register(

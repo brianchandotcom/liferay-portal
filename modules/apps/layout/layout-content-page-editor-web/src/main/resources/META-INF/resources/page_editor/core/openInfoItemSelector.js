@@ -27,7 +27,7 @@ export function openInfoItemSelector(
 		url: itemSelectorURL,
 	});
 
-	itemSelectorDialog.on('selectedItemChange', event => {
+	itemSelectorDialog.on('selectedItemChange', (event) => {
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem && selectedItem.value) {
@@ -40,7 +40,7 @@ export function openInfoItemSelector(
 		}
 	});
 
-	itemSelectorDialog.on('visibleChange', event => {
+	itemSelectorDialog.on('visibleChange', (event) => {
 		if (
 			!event.newVal &&
 			destroyedCallback &&

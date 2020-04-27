@@ -86,7 +86,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 	var STR_VALUE = 'value';
 
-	var displayWarning = function(message) {
+	var displayWarning = function (message) {
 		new Liferay.Notification({
 			closeable: true,
 			delay: {
@@ -102,7 +102,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 	var formEditor;
 
-	var getContentValue = function() {
+	var getContentValue = function () {
 		var content;
 
 		if (formEditor && !checkViewTabActive()) {
@@ -115,7 +115,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 		return content;
 	};
 
-	var getFormEditor = function() {
+	var getFormEditor = function () {
 		if (!formEditor) {
 			formEditor = new A.AceEditor({
 				boundingBox: '#<portlet:namespace />formBuilderEditor',
@@ -129,7 +129,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 		return formEditor;
 	};
 
-	var checkViewTabActive = function() {
+	var checkViewTabActive = function () {
 		var formBuilderTab = A.one('#<portlet:namespace />formBuilderTab');
 
 		var viewTabActive = false;
@@ -143,7 +143,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 		return viewTabActive;
 	};
 
-	var reloadFormBuilderData = function(content) {
+	var reloadFormBuilderData = function (content) {
 		if (!Lang.isValue(content)) {
 			content = window.<portlet:namespace />getContentDefinition();
 		}
@@ -182,7 +182,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 		}
 	};
 
-	var setEditorSize = function() {
+	var setEditorSize = function () {
 		if (!checkViewTabActive()) {
 			getFormEditor().set(
 				'width',
@@ -193,7 +193,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 		}
 	};
 
-	var switchToSource = function() {
+	var switchToSource = function () {
 		setEditorSize();
 
 		var content = formBuilder.getContent();
@@ -201,7 +201,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 		getFormEditor().set(STR_VALUE, content);
 	};
 
-	var switchToView = function() {
+	var switchToView = function () {
 		if (formEditor) {
 			reloadFormBuilderData(formEditor.get(STR_VALUE));
 		}
@@ -256,7 +256,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 		dialog.after('widthChange', setEditorSize);
 	}
 
-	var afterShowTab = function(event) {
+	var afterShowTab = function (event) {
 		if (checkViewTabActive()) {
 			switchToView();
 		}
@@ -267,7 +267,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 	Liferay.after('showTab', afterShowTab);
 
-	var onDestroyPortlet = function(event) {
+	var onDestroyPortlet = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			Liferay.detach('showTab', afterShowTab);
 			Liferay.detach('destroyPortlet', onDestroyPortlet);
@@ -275,7 +275,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 			var propertyList = formBuilder.propertyList;
 
 			if (propertyList) {
-				propertyList.get('data').each(function(model) {
+				propertyList.get('data').each(function (model) {
 					var editor = model.get('editor');
 
 					if (editor) {
@@ -294,7 +294,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 	window.<portlet:namespace />getContentValue = getContentValue;
 
-	Liferay.on('<portlet:namespace />saveTemplate', function(event) {
+	Liferay.on('<portlet:namespace />saveTemplate', function (event) {
 		A.one('#<portlet:namespace />scriptContent').val(getContentValue());
 	});
 

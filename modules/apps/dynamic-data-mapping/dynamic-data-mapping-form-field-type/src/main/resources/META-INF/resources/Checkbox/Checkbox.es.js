@@ -39,7 +39,7 @@ const Switcher = ({
 				className="toggle-switch-check"
 				disabled={disabled}
 				name={name}
-				onChange={event => {
+				onChange={(event) => {
 					setChecked(event.target.checked);
 					onChange(event, event.target.checked);
 				}}
@@ -86,7 +86,7 @@ const Checkbox = ({
 			disabled={disabled}
 			label={showLabel && label}
 			name={name}
-			onChange={event => {
+			onChange={(event) => {
 				setChecked(event.target.checked);
 				onChange(event, event.target.checked);
 			}}

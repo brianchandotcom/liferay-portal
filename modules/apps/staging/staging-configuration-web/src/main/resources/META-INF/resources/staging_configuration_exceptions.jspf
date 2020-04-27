@@ -59,13 +59,13 @@
 	</liferay-staging:alert>
 
 	<script>
-		(function() {
+		(function () {
 			var publishProcessesLink = document.getElementById(
 				'<portlet:namespace />publishProcessesLink'
 			);
 
 			if (publishProcessesLink) {
-				publishProcessesLink.addEventListener('click', function(event) {
+				publishProcessesLink.addEventListener('click', function (event) {
 					Liferay.Util.openWindow({
 						id: 'publishProcesses',
 						title: '<liferay-ui:message key="initial-publication" />',

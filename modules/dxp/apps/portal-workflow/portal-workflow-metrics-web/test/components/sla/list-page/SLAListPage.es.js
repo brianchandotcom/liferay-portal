@@ -81,10 +81,7 @@ describe('The SLAListPage component should', () => {
 		};
 
 		const clientMock = {
-			delete: jest
-				.fn()
-				.mockRejectedValueOnce({})
-				.mockResolvedValue({}),
+			delete: jest.fn().mockRejectedValueOnce({}).mockResolvedValue({}),
 			get: jest.fn().mockResolvedValue({data}),
 		};
 

@@ -138,7 +138,7 @@ const BulkUpdateDueDateModal = () => {
 	}, [clearContext]);
 
 	const getStep = useCallback(
-		step => {
+		(step) => {
 			const steps = {
 				selectDueDate: {
 					cancelBtn: {

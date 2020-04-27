@@ -128,7 +128,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 	);
 
 	if (deleteButtonElement) {
-		deleteButtonElement.addEventListener('click', function(event) {
+		deleteButtonElement.addEventListener('click', function (event) {
 			if (
 				!confirm(
 					'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'

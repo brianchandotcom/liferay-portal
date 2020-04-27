@@ -67,11 +67,11 @@ export default function FragmentContentInteractionsFilter({
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 	const canUpdate = useSelector(selectCanUpdate);
-	const languageId = useSelector(state => state.languageId);
+	const languageId = useSelector((state) => state.languageId);
 
 	const canOnlyUpdateInlineContent = !canUpdate && canUpdateLayoutContent;
 
-	const editableValues = useSelector(state =>
+	const editableValues = useSelector((state) =>
 		state.fragmentEntryLinks[fragmentEntryLinkId]
 			? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues[
 					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
@@ -82,7 +82,7 @@ export default function FragmentContentInteractionsFilter({
 	const siblingIds = useMemo(
 		() => [
 			itemId,
-			...editableElements.map(editableElement =>
+			...editableElements.map((editableElement) =>
 				getEditableUniqueId(
 					fragmentEntryLinkId,
 					getEditableElementId(editableElement)
@@ -93,7 +93,7 @@ export default function FragmentContentInteractionsFilter({
 	);
 
 	useEffect(() => {
-		editableElements.forEach(editableElement => {
+		editableElements.forEach((editableElement) => {
 			if (editableValues) {
 				const editableValue =
 					editableValues[getEditableElementId(editableElement)];
@@ -125,7 +125,7 @@ export default function FragmentContentInteractionsFilter({
 	}, [editableElements, editableValues, languageId]);
 
 	useEffect(() => {
-		editableElements.forEach(editableElement => {
+		editableElements.forEach((editableElement) => {
 			const editableUniqueId = getEditableUniqueId(
 				fragmentEntryLinkId,
 				getEditableElementId(editableElement)
@@ -141,7 +141,7 @@ export default function FragmentContentInteractionsFilter({
 	}, [activeItemId, editableElements, fragmentEntryLinkId, isActive]);
 
 	useEffect(() => {
-		editableElements.forEach(editableElement => {
+		editableElements.forEach((editableElement) => {
 			if (editableValues) {
 				const editableValue =
 					editableValues[getEditableElementId(editableElement)];
@@ -192,7 +192,7 @@ export default function FragmentContentInteractionsFilter({
 	useEffect(() => {
 		let activeEditableElement;
 
-		const enableProcessor = event => {
+		const enableProcessor = (event) => {
 			const editableElement = getEditableElement(event.target);
 
 			if (editableElement) {
@@ -221,7 +221,7 @@ export default function FragmentContentInteractionsFilter({
 		};
 
 		if (activeItemId && activeItemType === ITEM_TYPES.editable) {
-			activeEditableElement = editableElements.find(editableElement =>
+			activeEditableElement = editableElements.find((editableElement) =>
 				isActive(
 					getEditableUniqueId(
 						fragmentEntryLinkId,
@@ -273,7 +273,7 @@ export default function FragmentContentInteractionsFilter({
 		setEditableProcessorUniqueId,
 	]);
 
-	const hoverEditable = event => {
+	const hoverEditable = (event) => {
 		const editableElement = getEditableElement(event.target);
 
 		if (editableElement) {
@@ -289,7 +289,7 @@ export default function FragmentContentInteractionsFilter({
 		}
 	};
 
-	const selectEditable = event => {
+	const selectEditable = (event) => {
 		const editableElement = getEditableElement(event.target);
 
 		if (editableElement) {

@@ -22,19 +22,19 @@ import ExperienceSelector from './ExperienceSelector';
 // TODO: show how to colocate CSS with plugins (may use loaders)
 export default function ExperienceToolbarSection({selectId}) {
 	const availableSegmentsExperiences = useSelector(
-		state => state.availableSegmentsExperiences
+		(state) => state.availableSegmentsExperiences
 	);
 	const dispatch = useDispatch();
 
 	const segmentsExperienceId = useSelector(
-		state => state.segmentsExperienceId
+		(state) => state.segmentsExperienceId
 	);
 
 	const experiences = useMemo(
 		() =>
 			Object.values(availableSegmentsExperiences)
 				.sort((a, b) => b.priority - a.priority)
-				.map(experience => {
+				.map((experience) => {
 					const segmentsEntryName =
 						config.availableSegmentsEntries[
 							experience.segmentsEntryId
@@ -51,7 +51,7 @@ export default function ExperienceToolbarSection({selectId}) {
 		() => Object.values(config.availableSegmentsEntries),
 		[]
 	).filter(
-		segment => segment.segmentsEntryId !== config.defaultSegmentsEntryId
+		(segment) => segment.segmentsEntryId !== config.defaultSegmentsEntryId
 	);
 
 	const selectedExperience =

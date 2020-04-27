@@ -66,7 +66,7 @@ export default withRouter(
 
 		const [active, setActive] = useState(false);
 
-		const [debounceCallback] = useDebounceCallback(value => {
+		const [debounceCallback] = useDebounceCallback((value) => {
 			searchChange(value);
 		}, 500);
 
@@ -124,10 +124,12 @@ export default withRouter(
 						}
 					>
 						<Link
-							to={`/questions/${(section &&
-								section.parentSection &&
-								section.parentSection.title) ||
-								sectionTitle}`}
+							to={`/questions/${
+								(section &&
+									section.parentSection &&
+									section.parentSection.title) ||
+								sectionTitle
+							}`}
 						>
 							<ClayDropDown.Help>
 								{Liferay.Language.get('all')}
@@ -169,11 +171,11 @@ export default withRouter(
 							<ClaySelect
 								className="bg-transparent border-0"
 								id="questionsFilter"
-								onChange={event =>
+								onChange={(event) =>
 									filterChange(event.target.value)
 								}
 							>
-								{filterOptions.map(option => (
+								{filterOptions.map((option) => (
 									<ClaySelect.Option
 										key={option.value}
 										label={option.label}
@@ -188,7 +190,7 @@ export default withRouter(
 						<ClayInput.GroupItem>
 							<ClayInput
 								className="bg-transparent form-control input-group-inset input-group-inset-after"
-								onChange={event =>
+								onChange={(event) =>
 									debounceCallback(event.target.value)
 								}
 								placeholder={Liferay.Language.get('search')}

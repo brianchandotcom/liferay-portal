@@ -23,9 +23,9 @@ import TagList from './TagList.es';
 import UserIcon from './UserIcon.es';
 
 export default ({question}) => {
-	const hasValidAnswer = question =>
+	const hasValidAnswer = (question) =>
 		question.messageBoardMessages.items.filter(
-			message => message.showAsAnswer
+			(message) => message.showAsAnswer
 		).length > 0;
 
 	const sectionTitle = question.messageBoardSection.title;

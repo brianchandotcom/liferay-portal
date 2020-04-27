@@ -48,7 +48,7 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 				title: Liferay.Language.get('select-role'),
 				uri: itemData.selectRolesURL,
 			},
-			event => {
+			(event) => {
 				location.href = addParams(
 					`${this.ns('roleId')}=${event.id}`,
 					itemData.viewRoleURL
@@ -65,13 +65,13 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 			url: itemData.selectRoleURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				const fm = this.one('#fm');
 
-				selectedItem.forEach(item => {
+				selectedItem.forEach((item) => {
 					dom.append(fm, item);
 				});
 
@@ -93,13 +93,13 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 			url: itemData.selectUserGroupsURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {
 				const addGroupUserGroupsFm = this.one('#addGroupUserGroupsFm');
 
-				selectedItem.forEach(item => {
+				selectedItem.forEach((item) => {
 					dom.append(addGroupUserGroupsFm, item);
 				});
 

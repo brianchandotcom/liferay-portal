@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-upload',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 		var UploaderQueue = A.Uploader.Queue;
@@ -366,7 +366,7 @@ AUI.add(
 
 					queue.pauseUpload();
 
-					queue.queuedFiles.forEach(item => {
+					queue.queuedFiles.forEach((item) => {
 						var li = A.one('#' + item.id);
 
 						if (li && !li.hasClass('upload-complete')) {
@@ -419,7 +419,7 @@ AUI.add(
 							metadataExplanationContainer.show();
 						}
 
-						var files = fileNames.map(item => {
+						var files = fileNames.map((item) => {
 							var title = item;
 
 							var tempTitle = title;
@@ -473,7 +473,7 @@ AUI.add(
 						Liferay.PropsValues
 							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
-					return data.filter(item => {
+					return data.filter((item) => {
 						var id = item.get('id') || A.guid();
 						var name = item.get('name');
 						var size = item.get('size') || 0;
@@ -562,7 +562,7 @@ AUI.add(
 						(target === uploaderBoundingBox ||
 							uploaderBoundingBox.contains(target))
 					) {
-						event.fileList = dragDropFiles.map(item => {
+						event.fileList = dragDropFiles.map((item) => {
 							return new A.FileHTML5(item);
 						});
 
@@ -699,7 +699,7 @@ AUI.add(
 
 							var file =
 								queue.currentFiles[fileId] ||
-								AArray.find(queue.queuedFiles, item => {
+								AArray.find(queue.queuedFiles, (item) => {
 									return item.id === fileId;
 								});
 
@@ -751,8 +751,8 @@ AUI.add(
 							),
 							method: 'POST',
 						})
-							.then(response => response.json())
-							.then(response => {
+							.then((response) => response.json())
+							.then((response) => {
 								instance._handleDeleteResponse(response, li);
 							})
 							.catch(() => {
@@ -1029,7 +1029,7 @@ AUI.add(
 
 					if (A.UA.ie) {
 						instance._fileListTPL.tpls = instance._fileListTPL.tpls.map(
-							tpl => {
+							(tpl) => {
 								if (tpl.tplFn) {
 									var tplBodyRegex = /function anonymous\(values,parent\s*\) \{\s*(.*)\s*\}/;
 									var tplFn = tpl.tplFn.toString();
@@ -1104,8 +1104,8 @@ AUI.add(
 					if (tempFileURL && instance.get('restoreState')) {
 						if (Lang.isString(tempFileURL)) {
 							Liferay.Util.fetch(tempFileURL)
-								.then(response => response.json())
-								.then(response =>
+								.then((response) => response.json())
+								.then((response) =>
 									instance._formatTempFiles(response)
 								);
 						}
@@ -1418,7 +1418,7 @@ AUI.add(
 						docElement.removeClass('upload-drop-active');
 					}, 500);
 
-					docElement.on('dragover', event => {
+					docElement.on('dragover', (event) => {
 						var originalEvent = event._event;
 
 						var dataTransfer = originalEvent.dataTransfer;
@@ -1487,7 +1487,7 @@ AUI.add(
 
 						instance._preventRenderHandle = instance.on(
 							'render',
-							event => {
+							(event) => {
 								event.preventDefault();
 							}
 						);

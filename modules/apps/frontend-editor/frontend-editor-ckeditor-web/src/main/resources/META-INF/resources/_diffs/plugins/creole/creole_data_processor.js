@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var CKTools = CKEDITOR.tools;
 
 	var NEW_LINE = '\n';
@@ -73,7 +73,7 @@
 		3: ['<div>' + brFiller + '</div>'],
 	};
 
-	var CreoleDataProcessor = function(editor) {
+	var CreoleDataProcessor = function (editor) {
 		var instance = this;
 
 		instance._editor = editor;

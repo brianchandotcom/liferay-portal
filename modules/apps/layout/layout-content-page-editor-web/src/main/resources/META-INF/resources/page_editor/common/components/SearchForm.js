@@ -28,7 +28,7 @@ export default function SearchForm({onChange, value}) {
 			</label>
 			<ClayInput
 				id={id}
-				onChange={event => {
+				onChange={(event) => {
 					onChange(event.target.value);
 				}}
 				placeholder={`${Liferay.Language.get('search')}...`}

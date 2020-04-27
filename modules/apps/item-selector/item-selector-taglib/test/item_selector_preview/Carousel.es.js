@@ -50,7 +50,7 @@ const carouselProps = {
 	handleClickPrevious: jest.fn(),
 };
 
-const renderCarouselComponent = props => render(<Carousel {...props} />);
+const renderCarouselComponent = (props) => render(<Carousel {...props} />);
 
 describe('Carousel', () => {
 	afterEach(cleanup);

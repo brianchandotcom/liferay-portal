@@ -46,11 +46,7 @@ const validateDate = (dateEndMoment, dateStartMoment) => {
 };
 
 const validateEarlierDate = (dateEndMoment, dateStartMoment) => {
-	const earlierDate = moment
-		.utc()
-		.date(1)
-		.month(1)
-		.year(1970);
+	const earlierDate = moment.utc().date(1).month(1).year(1970);
 	let errors;
 
 	if (dateEndMoment.isBefore(earlierDate)) {
@@ -123,7 +119,7 @@ const useCustomTimeRange = (prefixKey, withoutRouteParams) => {
 		convertQueryDate(values[dateStartKey], dateFormat)
 	);
 
-	const applyCustomFilter = handleApply => {
+	const applyCustomFilter = (handleApply) => {
 		const {dateEnd: dateEndError, dateStart: dateStartError} = errors || {};
 
 		if (!dateEndError && !dateStartError) {

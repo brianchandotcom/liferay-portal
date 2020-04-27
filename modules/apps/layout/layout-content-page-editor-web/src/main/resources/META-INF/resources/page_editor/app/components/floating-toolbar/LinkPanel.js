@@ -66,8 +66,8 @@ export default function LinkPanel({item}) {
 	const {editableId, editableType, fragmentEntryLinkId} = item;
 
 	const dispatch = useDispatch();
-	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
-	const languageId = useSelector(state => state.languageId);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const languageId = useSelector((state) => state.languageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const editableValue =
@@ -103,7 +103,7 @@ export default function LinkPanel({item}) {
 	]);
 
 	const updateRowConfig = useCallback(
-		newConfig => {
+		(newConfig) => {
 			const editableValues =
 				fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 			const editableProcessorValues =
@@ -162,7 +162,7 @@ export default function LinkPanel({item}) {
 				fieldId,
 				languageId,
 				onNetworkStatus: () => {},
-			}).then(fieldValue => {
+			}).then((fieldValue) => {
 				setHref(fieldValue);
 			});
 		},
@@ -177,7 +177,7 @@ export default function LinkPanel({item}) {
 				</label>
 				<ClaySelectWithOption
 					id="floatingToolbarLinkSourceOption"
-					onChange={event => {
+					onChange={(event) => {
 						updateRowConfig({});
 						setHref('');
 						setSourceType(event.target.value);
@@ -192,7 +192,7 @@ export default function LinkPanel({item}) {
 				<MappingSelector
 					fieldType={EDITABLE_TYPES.text}
 					mappedItem={editableConfig}
-					onMappingSelect={mappedItem => {
+					onMappingSelect={(mappedItem) => {
 						updateRowConfig({
 							...mappedItem,
 							target: editableConfig.target,
@@ -214,7 +214,7 @@ export default function LinkPanel({item}) {
 					</label>
 					<ClayInput
 						id="floatingToolbarLinkHrefOption"
-						onChange={event => {
+						onChange={(event) => {
 							setHref(event.target.value);
 
 							debounceUpdateRowConfig({href: event.target.value});
@@ -233,7 +233,7 @@ export default function LinkPanel({item}) {
 				</label>
 				<ClaySelectWithOption
 					id="floatingToolbarLinkTargetOption"
-					onChange={event => {
+					onChange={(event) => {
 						updateRowConfig({
 							...editableConfig,
 							target: event.target.value,

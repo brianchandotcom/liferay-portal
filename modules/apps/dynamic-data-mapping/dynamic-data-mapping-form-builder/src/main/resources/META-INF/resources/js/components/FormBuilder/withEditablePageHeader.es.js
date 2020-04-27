@@ -21,7 +21,7 @@ import Component from 'metal-jsx';
 import {sub} from '../../util/strings.es';
 import formBuilderProps from './props.es';
 
-const withEditablePageHeader = ChildComponent => {
+const withEditablePageHeader = (ChildComponent) => {
 	class EditablePageHeader extends Component {
 		attached() {
 			this._eventHandler = new EventHandler();

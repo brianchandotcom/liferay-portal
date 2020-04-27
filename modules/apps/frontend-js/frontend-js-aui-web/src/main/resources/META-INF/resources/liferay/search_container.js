@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-container',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var CSS_TEMPLATE = 'lfr-template';

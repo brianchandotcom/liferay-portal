@@ -36,7 +36,7 @@ String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUT
 		var tinymceInstances = 0;
 		var disposeResources = false;
 
-		var cleanupGlobals = function() {
+		var cleanupGlobals = function () {
 			if (!tinymceInstances && disposeResources) {
 				window.tinyMCE = undefined;
 
@@ -46,17 +46,17 @@ String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUT
 		};
 
 		Liferay.namespace('EDITORS').tinymce = {
-			addInstance: function() {
+			addInstance: function () {
 				tinymceInstances++;
 			},
-			removeInstance: function() {
+			removeInstance: function () {
 				tinymceInstances--;
 
 				cleanupGlobals();
 			},
 		};
 
-		var destroyGlobalEditors = function() {
+		var destroyGlobalEditors = function () {
 			disposeResources = true;
 
 			cleanupGlobals();

@@ -21,14 +21,14 @@ export default function selectAvailableSidebarPanels(sidebarPanels) {
 	/**
 	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
 	 */
-	return function({permissions}) {
+	return function ({permissions}) {
 		if (
 			permissions.LOCKED_SEGMENTS_EXPERIMENT ||
 			!permissions.UPDATE_LAYOUT_CONTENT
 		) {
 			const availableSidebarPanels = {};
 
-			AVAILABLE_PANELS.forEach(panelId => {
+			AVAILABLE_PANELS.forEach((panelId) => {
 				availableSidebarPanels[panelId] = sidebarPanels[panelId];
 			});
 

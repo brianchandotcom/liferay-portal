@@ -32,7 +32,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 	);
 
 	if (viewResourcesButton) {
-		viewResourcesButton.addEventListener('click', function(event) {
+		viewResourcesButton.addEventListener('click', function (event) {
 			Liferay.Util.openWindow({
 				dialog: {
 					destroyOnHide: true,

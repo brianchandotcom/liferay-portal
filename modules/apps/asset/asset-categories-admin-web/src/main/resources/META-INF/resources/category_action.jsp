@@ -99,7 +99,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 		);
 
 		if (moveCategoryIcon) {
-			moveCategoryIcon.addEventListener('click', function(event) {
+			moveCategoryIcon.addEventListener('click', function (event) {
 				var itemSelectorDialog = new ItemSelectorDialog.default({
 					eventName: '<portlet:namespace />selectCategory',
 					title:
@@ -109,7 +109,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 
 				itemSelectorDialog.open();
 
-				itemSelectorDialog.on('selectedItemChange', function(event) {
+				itemSelectorDialog.on('selectedItemChange', function (event) {
 					var selectedItem = event.selectedItem;
 
 					if (selectedItem) {

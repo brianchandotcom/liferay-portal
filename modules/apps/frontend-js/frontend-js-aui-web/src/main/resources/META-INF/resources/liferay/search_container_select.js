@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-search-container-select',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
@@ -122,7 +122,7 @@ AUI.add(
 
 					var selectedElements = instance.getAllSelectedElements();
 
-					selectedElements.each(item => {
+					selectedElements.each((item) => {
 						elements.push({
 							name: item.attr('name'),
 							value: item.val(),
@@ -147,12 +147,12 @@ AUI.add(
 
 					var actions = elements
 						.getDOMNodes()
-						.map(node => {
+						.map((node) => {
 							return A.one(node).ancestor(
 								instance.get(STR_ROW_SELECTOR)
 							);
 						})
-						.filter(item => {
+						.filter((item) => {
 							var itemActions;
 
 							if (item) {
@@ -164,12 +164,12 @@ AUI.add(
 								itemActions !== STR_ACTIONS_WILDCARD
 							);
 						})
-						.map(item => {
+						.map((item) => {
 							return item.getData('actions').split(',');
 						});
 
 					return actions.reduce((commonActions, elementActions) => {
-						return commonActions.filter(action => {
+						return commonActions.filter((action) => {
 							return elementActions.indexOf(action) != -1;
 						});
 					}, actions[0]);
@@ -376,7 +376,7 @@ AUI.add(
 				container.setData('bulkSelection', state.data.bulkSelection);
 
 				if (state.data.bulkSelection) {
-					container.all(state.data.selector).each(input => {
+					container.all(state.data.selector).each((input) => {
 						input.attr(STR_CHECKED, true);
 						input
 							.ancestor(params.rowSelector)
@@ -386,7 +386,7 @@ AUI.add(
 				else {
 					var offScreenElementsHtml = '';
 
-					AArray.each(state.data.elements, item => {
+					AArray.each(state.data.elements, (item) => {
 						var input = container.one(
 							Lang.sub(TPL_INPUT_SELECTOR, item)
 						);

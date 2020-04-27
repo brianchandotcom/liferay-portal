@@ -26,7 +26,7 @@ describe('PortletHub', () => {
 		});
 
 		it('returns an instance of PortletInit', () => {
-			return register('PortletA').then(hub => {
+			return register('PortletA').then((hub) => {
 				expect(hub).toBeInstanceOf(PortletInit);
 			});
 		});

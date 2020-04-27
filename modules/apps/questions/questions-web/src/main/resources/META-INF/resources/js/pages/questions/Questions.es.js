@@ -60,11 +60,11 @@ export default ({
 		loadThreads,
 	]);
 
-	const renderQuestions = questions => {
+	const renderQuestions = (questions) => {
 		questions
-			.then(data => setQuestions(data || []))
+			.then((data) => setQuestions(data || []))
 			.then(() => setLoading(false))
-			.catch(error => {
+			.catch((error) => {
 				if (process.env.NODE_ENV === 'development') {
 					console.error(error);
 				}
@@ -74,7 +74,7 @@ export default ({
 	};
 
 	const loadThreads = useCallback(
-		sort =>
+		(sort) =>
 			getThreads({
 				creatorId,
 				keywords: currentTag,
@@ -88,7 +88,7 @@ export default ({
 		[creatorId, currentTag, page, pageSize, search, section, siteKey]
 	);
 
-	const filterChange = type => {
+	const filterChange = (type) => {
 		if (type === 'latest-edited') {
 			renderQuestions(loadThreads('dateModified:desc'));
 		}
@@ -116,8 +116,8 @@ export default ({
 					<div className="c-mt-3 col col-xl-12">
 						<QuestionsNavigationBar
 							filterChange={filterChange}
-							searchChange={search => setSearch(search)}
-							sectionChange={section => setSection(section)}
+							searchChange={(search) => setSearch(search)}
+							sectionChange={(section) => setSection(section)}
 						/>
 					</div>
 
@@ -126,7 +126,7 @@ export default ({
 							<ClayLoadingIndicator />
 						) : (
 							questions.items &&
-							questions.items.map(question => (
+							questions.items.map((question) => (
 								<QuestionRow
 									key={question.id}
 									question={question}

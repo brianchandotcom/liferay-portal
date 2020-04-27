@@ -110,7 +110,7 @@ const LocalesDropdown = ({
 								className="autofit-row custom-dropdown-item-row"
 								data-testid={`availableLocalesDropdown${localeId}`}
 								key={localeId}
-								onClick={event => {
+								onClick={(event) => {
 									onLanguageClicked({event, localeId});
 									setDropdownActive(false);
 								}}
@@ -176,7 +176,7 @@ const LocalizableText = ({
 				inputValue={inputValue}
 				name={name}
 				onFieldBlurred={onFieldBlurred}
-				onFieldChanged={event => {
+				onFieldChanged={(event) => {
 					const {target} = event;
 					const valueJSON = convertValueToJSON(currentValue);
 
@@ -211,7 +211,7 @@ const LocalizableText = ({
 					editingLocale={currentEditingLocale}
 					onLanguageClicked={({localeId}) => {
 						const newEditingLocale = availableLocales.find(
-							availableLocale =>
+							(availableLocale) =>
 								availableLocale.localeId === localeId
 						);
 
@@ -274,11 +274,11 @@ const Main = ({
 const LocalizableTextProxy = connectStore(({emit, ...otherProps}) => (
 	<Main
 		{...otherProps}
-		onFieldBlurred={event =>
+		onFieldBlurred={(event) =>
 			emit('fieldBlurred', event, event.target.value)
 		}
 		onFieldChanged={({event, value}) => emit('fieldEdited', event, value)}
-		onFieldFocused={event =>
+		onFieldFocused={(event) =>
 			emit('fieldFocused', event, event.target.value)
 		}
 	/>

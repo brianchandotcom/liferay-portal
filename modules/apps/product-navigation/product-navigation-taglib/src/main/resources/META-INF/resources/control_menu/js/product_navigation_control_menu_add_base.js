@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-product-navigation-control-menu-add-base',
-	A => {
+	(A) => {
 		var DDM = A.DD.DDM;
 		var Lang = A.Lang;
 
@@ -84,14 +84,14 @@ AUI.add(
 
 					var eventType = EVENT_SHOWN_COLLAPSE;
 
-					Liferay.on(eventType, event => {
+					Liferay.on(eventType, (event) => {
 						var panelId = event.panel.getAttribute('id');
 
 						if (panelId === panelBody.getAttribute('id')) {
 							instance._focusOnItem.call(instance);
 						}
 
-						listGroupPanel.forEach(element => {
+						listGroupPanel.forEach((element) => {
 							if (panelId === element.getAttribute('id')) {
 								event.stopPropagation();
 							}
@@ -102,7 +102,7 @@ AUI.add(
 				_disablePortletEntry(portletId) {
 					var instance = this;
 
-					instance._eachPortletEntry(portletId, item => {
+					instance._eachPortletEntry(portletId, (item) => {
 						item.addClass(CSS_LFR_PORTLET_USED);
 					});
 				},
@@ -116,7 +116,7 @@ AUI.add(
 				_enablePortletEntry(portletId) {
 					var instance = this;
 
-					instance._eachPortletEntry(portletId, item => {
+					instance._eachPortletEntry(portletId, (item) => {
 						item.removeClass(CSS_LFR_PORTLET_USED);
 					});
 				},

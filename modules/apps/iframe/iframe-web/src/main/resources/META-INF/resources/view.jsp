@@ -36,7 +36,7 @@
 		Liferay.provide(
 			window,
 			'<portlet:namespace />init',
-			function() {
+			function () {
 				var A = AUI();
 
 				var hash = document.location.hash.replace('#', '');
@@ -73,7 +73,7 @@
 		Liferay.provide(
 			window,
 			'<portlet:namespace />monitorIframe',
-			function() {
+			function () {
 				var A = AUI();
 
 				var url = null;
@@ -116,7 +116,7 @@
 		Liferay.provide(
 			window,
 			'<portlet:namespace />updateHash',
-			function(url) {
+			function (url) {
 				var A = AUI();
 
 				var hash = document.location.hash.replace('#', '');
@@ -171,7 +171,7 @@
 			monitorHeight: <%= iFramePortletInstanceConfiguration.resizeAutomatically() %>,
 		});
 
-		iframe.on('load', function() {
+		iframe.on('load', function () {
 			var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
 			if (height == null) {

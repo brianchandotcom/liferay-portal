@@ -106,7 +106,7 @@ if (accountEntryDisplay != null) {
 
 	searchContainerContentBox.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');
@@ -125,7 +125,7 @@ if (accountEntryDisplay != null) {
 	);
 
 	if (selectParentAccountEntryIcon) {
-		selectParentAccountEntryIcon.addEventListener('click', function(event) {
+		selectParentAccountEntryIcon.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			Liferay.Util.selectEntity(
@@ -157,7 +157,7 @@ if (accountEntryDisplay != null) {
 
 					uri: '<%= selectParentAccountEntryURL.toString() %>',
 				},
-				function(event) {
+				function (event) {
 					parentAccountEntryInput.value = event.accountentryid;
 
 					var rowColumns = [];

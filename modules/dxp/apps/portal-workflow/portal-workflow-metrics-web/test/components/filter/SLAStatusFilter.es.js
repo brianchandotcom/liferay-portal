@@ -45,7 +45,7 @@ describe('The sla status filter component should', () => {
 	test('Be rendered with active option "Overdue"', async () => {
 		const filterItems = getAllByTestId('filterItem');
 
-		const activeItem = filterItems.find(item =>
+		const activeItem = filterItems.find((item) =>
 			item.className.includes('active')
 		);
 		const activeItemName = await findByTestId(activeItem, 'filterItemName');

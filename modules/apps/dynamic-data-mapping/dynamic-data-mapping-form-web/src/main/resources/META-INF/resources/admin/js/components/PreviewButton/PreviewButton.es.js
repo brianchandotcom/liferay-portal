@@ -23,7 +23,7 @@ class PreviewButton extends Component {
 		const {resolvePreviewURL} = this.props;
 
 		return resolvePreviewURL()
-			.then(previewURL => {
+			.then((previewURL) => {
 				window.open(previewURL, '_blank');
 
 				return previewURL;

@@ -39,8 +39,8 @@ const getMockMessage = (id = 0, data = {}, itemData = {}) => {
 	};
 };
 
-const getProcessFn = outcome => (_, done) =>
-	new Promise(resolve => setTimeout(resolve, PROCESS_FN_TIMEOUT)).then(() =>
+const getProcessFn = (outcome) => (_, done) =>
+	new Promise((resolve) => setTimeout(resolve, PROCESS_FN_TIMEOUT)).then(() =>
 		done(outcome)
 	);
 

@@ -64,12 +64,12 @@ function ChangeDefaultLanguage(props) {
 				}
 			>
 				<ClayDropDown.ItemList>
-					{props.languages.map(item => (
+					{props.languages.map((item) => (
 						<ClayDropDown.Item
 							className="autofit-row"
 							data-value={item.label}
 							key={item.label}
-							onClick={event => onItemClick(event, item.label)}
+							onClick={(event) => onItemClick(event, item.label)}
 							title={item.label}
 						>
 							<span className="autofit-col autofit-col-expand">

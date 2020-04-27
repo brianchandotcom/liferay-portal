@@ -261,7 +261,7 @@ else {
 		Liferay.Util.openWindow({
 			dialog: {
 				after: {
-					destroy: function(event) {
+					destroy: function (event) {
 						window.location.reload();
 					},
 				},
@@ -284,7 +284,7 @@ else {
 		Liferay.Util.openWindow({
 			dialog: {
 				after: {
-					destroy: function(event) {
+					destroy: function (event) {
 						window.location.reload();
 					},
 				},

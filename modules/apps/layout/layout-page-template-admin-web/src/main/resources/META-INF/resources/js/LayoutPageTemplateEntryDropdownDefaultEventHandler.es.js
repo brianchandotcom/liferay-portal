@@ -71,7 +71,7 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHan
 			url: itemData.itemSelectorURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {

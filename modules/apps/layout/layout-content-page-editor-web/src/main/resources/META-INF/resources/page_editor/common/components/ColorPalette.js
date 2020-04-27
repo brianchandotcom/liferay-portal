@@ -31,7 +31,7 @@ export default function ColorPalette({
 
 			<div className="palette-container" id="colorPalette">
 				<ul className="list-unstyled palette-items-container">
-					{config.themeColorsCssClasses.map(color => (
+					{config.themeColorsCssClasses.map((color) => (
 						<li
 							className={classNames('palette-item', {
 								'palette-item-selected':
@@ -48,7 +48,7 @@ export default function ColorPalette({
 									'rounded-circle'
 								)}
 								displayType="unstyled"
-								onClick={event => onColorSelect(color, event)}
+								onClick={(event) => onColorSelect(color, event)}
 								small
 							/>
 						</li>

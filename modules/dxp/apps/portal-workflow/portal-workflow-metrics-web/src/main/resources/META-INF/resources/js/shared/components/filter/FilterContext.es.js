@@ -18,7 +18,7 @@ const FilterContext = createContext();
 const filterReducer = (state, {error, filterKey, removeError, ...newState}) => {
 	if (error) {
 		newState.errors = removeError
-			? state.errors.filter(key => key !== filterKey)
+			? state.errors.filter((key) => key !== filterKey)
 			: [...state.errors, filterKey];
 	}
 

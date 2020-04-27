@@ -92,7 +92,7 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 
 		maxChildren: <%= PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN %>,
 		on: {
-			'*:select': function(event) {
+			'*:select': function (event) {
 				Liferay.fire('<%= namespace + treeId %>:selectedNode', {
 					selectedNode: event.target,
 				});
@@ -121,7 +121,7 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 
 	Liferay.component('<%= namespace + treeId %>', treeview);
 
-	Liferay.once('screenLoad', function() {
+	Liferay.once('screenLoad', function () {
 		treeview.destroy();
 	});
 </aui:script>

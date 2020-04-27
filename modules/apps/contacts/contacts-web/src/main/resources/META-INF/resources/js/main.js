@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-contacts-center',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 
 		var Lang = A.Lang;
@@ -308,7 +308,7 @@ AUI.add(
 						);
 
 						Liferay.Util.fetch(url)
-							.then(response => {
+							.then((response) => {
 								return response.text();
 							})
 							.then(() => {
@@ -370,7 +370,7 @@ AUI.add(
 				_getRequestTemplate(filterBy) {
 					var instance = this;
 
-					return function(query) {
+					return function (query) {
 						var data = {};
 
 						data[instance._namespace + 'end'] =
@@ -413,10 +413,10 @@ AUI.add(
 								) || uri;
 
 							Liferay.Util.fetch(uri)
-								.then(response => {
+								.then((response) => {
 									return response.json();
 								})
-								.then(data => {
+								.then((data) => {
 									instance.addContactResults(data);
 								})
 								.catch(() => {
@@ -539,7 +539,7 @@ AUI.add(
 
 						buffer.push(
 							results
-								.map(result => {
+								.map((result) => {
 									var displayLastNameAnchor = false;
 
 									var nameAnchor;
@@ -1036,7 +1036,7 @@ AUI.add(
 
 					var contacts = data.contacts;
 
-					contacts.map(contact => {
+					contacts.map((contact) => {
 						instance.addContactResult(contact);
 					});
 				},
@@ -1076,7 +1076,7 @@ AUI.add(
 				deleteContactResults(userIds) {
 					var instance = this;
 
-					userIds.map(userId => {
+					userIds.map((userId) => {
 						instance.deleteContactResult(userId);
 					});
 				},
@@ -1226,7 +1226,7 @@ AUI.add(
 						else {
 							instance._clearContactResult();
 
-							contacts.map(contact => {
+							contacts.map((contact) => {
 								instance.addContactResult(contact);
 							});
 						}

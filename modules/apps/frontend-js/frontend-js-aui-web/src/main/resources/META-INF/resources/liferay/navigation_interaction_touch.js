@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-navigation-interaction-touch',
-	A => {
+	(A) => {
 		var ANDROID = A.UA.android;
 
 		var ANDROID_LEGACY = ANDROID && ANDROID < 4.4;
@@ -85,7 +85,7 @@ AUI.add(
 						if (ANDROID_LEGACY) {
 							navigation.delegate(
 								'click',
-								event => {
+								(event) => {
 									event.preventDefault();
 								},
 								'.lfr-nav-child-toggle'

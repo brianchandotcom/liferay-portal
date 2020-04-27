@@ -27,12 +27,12 @@ String selectEventName = ParamUtil.getString(request, "selectEventName");
 		'<portlet:namespace /><%= HtmlUtil.escape(searchContainerId) %>'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		var allSelectedElements = event.elements.allSelectedElements;
 
 		var selectedData = [];
 
-		allSelectedElements.each(function() {
+		allSelectedElements.each(function () {
 			<c:choose>
 				<c:when test='<%= Objects.equals(displayStyle, "list") %>'>
 					var row = this.ancestor('tr');

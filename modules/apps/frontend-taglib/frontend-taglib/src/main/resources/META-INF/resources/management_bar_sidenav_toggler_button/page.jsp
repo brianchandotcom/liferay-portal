@@ -39,14 +39,14 @@
 			width: '<%= width %>',
 		});
 
-		sidenavInstance.on('closed.lexicon.sidenav', function(event) {
+		sidenavInstance.on('closed.lexicon.sidenav', function (event) {
 			Liferay.Util.Session.set(
 				'com.liferay.info.panel_<%= sidenavId %>',
 				'closed'
 			);
 		});
 
-		sidenavInstance.on('open.lexicon.sidenav', function(event) {
+		sidenavInstance.on('open.lexicon.sidenav', function (event) {
 			Liferay.Util.Session.set(
 				'com.liferay.info.panel_<%= sidenavId %>',
 				'open'

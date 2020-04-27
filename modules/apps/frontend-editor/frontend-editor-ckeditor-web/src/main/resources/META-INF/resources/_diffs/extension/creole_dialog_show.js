@@ -12,7 +12,7 @@
  * details.
  */
 
-ckEditor.on('dialogShow', event => {
+ckEditor.on('dialogShow', (event) => {
 	var A = AUI();
 
 	var MODIFIED = 'modified';

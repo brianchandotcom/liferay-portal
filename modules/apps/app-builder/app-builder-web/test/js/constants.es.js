@@ -12,7 +12,7 @@
  * details.
  */
 
-const createItems = size => {
+const createItems = (size) => {
 	const items = [];
 
 	for (let i = 0; i < size; i++) {

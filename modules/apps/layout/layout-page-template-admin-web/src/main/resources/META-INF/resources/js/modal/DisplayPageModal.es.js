@@ -21,7 +21,7 @@ import React, {useCallback, useRef, useState} from 'react';
 
 import DisplayPageModalForm from './DisplayPageModalForm.es';
 
-const DisplayPageModal = props => {
+const DisplayPageModal = (props) => {
 	const {formSubmitURL, onClose} = props;
 
 	const form = useRef();
@@ -30,7 +30,7 @@ const DisplayPageModal = props => {
 	const {observer} = useModal({onClose});
 
 	const validateForm = useCallback(
-		form => {
+		(form) => {
 			const {elements} = form;
 			const error = {};
 
@@ -60,7 +60,7 @@ const DisplayPageModal = props => {
 	);
 
 	const handleSubmit = useCallback(
-		event => {
+		(event) => {
 			event.preventDefault();
 
 			const error = validateForm(form.current);
@@ -77,8 +77,8 @@ const DisplayPageModal = props => {
 				body: new FormData(form.current),
 				method: 'POST',
 			})
-				.then(response => response.json())
-				.then(responseContent => {
+				.then((response) => response.json())
+				.then((responseContent) => {
 					if (responseContent.error) {
 						setLoading(false);
 						setError(responseContent.error);

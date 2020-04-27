@@ -173,7 +173,7 @@ function SegmentsExperimentsSidebar({
 					dispatch(deleteArchivedExperiment(experimentId));
 				}
 			})
-			.catch(_error => {
+			.catch((_error) => {
 				openErrorToast();
 			});
 	}
@@ -381,7 +381,7 @@ function SegmentsExperimentsSidebar({
 				);
 				dispatch(reviewClickTargetElement());
 			})
-			.catch(_error => {
+			.catch((_error) => {
 				openErrorToast();
 			});
 	}

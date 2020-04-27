@@ -72,7 +72,7 @@ class MoveEntries extends PortletBase {
 			url: this.selectFolderURL,
 		});
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const selectedItem = event.selectedItem;
 
 			if (selectedItem) {

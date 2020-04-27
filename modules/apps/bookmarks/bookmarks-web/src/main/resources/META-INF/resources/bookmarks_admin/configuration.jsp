@@ -184,7 +184,7 @@ catch (NoSuchFolderException nsfe) {
 					);
 
 					if (<portlet:namespace />selectFolderButton) {
-						<portlet:namespace />selectFolderButton.addEventListener('click', function(
+						<portlet:namespace />selectFolderButton.addEventListener('click', function (
 							event
 						) {
 							Liferay.Util.selectEntity(
@@ -202,7 +202,7 @@ catch (NoSuchFolderException nsfe) {
 									uri:
 										'<liferay-portlet:renderURL portletName="<%= portletResource %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>',
 								},
-								function(event) {
+								function (event) {
 									var folderData = {
 										idString: 'rootFolderId',
 										idValue: event.entityid,

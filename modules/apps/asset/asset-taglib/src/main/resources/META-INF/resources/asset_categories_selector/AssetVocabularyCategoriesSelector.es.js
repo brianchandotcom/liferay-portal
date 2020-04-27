@@ -77,21 +77,21 @@ function AssetVocabulariesCategoriesSelector({
 
 	const getUnique = (arr, property) => {
 		return arr
-			.map(element => element[property])
+			.map((element) => element[property])
 			.map(
 				(element, index, array) =>
 					array.indexOf(element) === index && index
 			)
-			.filter(element => arr[element])
-			.map(element => arr[element]);
+			.filter((element) => arr[element])
+			.map((element) => arr[element]);
 	};
 
-	const handleItemsChange = items => {
+	const handleItemsChange = (items) => {
 		const addedItems = getUnique(
 			items.filter(
-				item =>
+				(item) =>
 					!selectedItems.find(
-						selectedItem => selectedItem.value === item.value
+						(selectedItem) => selectedItem.value === item.value
 					)
 			),
 			'label'
@@ -101,10 +101,10 @@ function AssetVocabulariesCategoriesSelector({
 
 		const validAddedItems = [];
 
-		addedItems.map(item => {
+		addedItems.map((item) => {
 			if (
 				resource.find(
-					sourceItem => sourceItem.titleCurrentValue === item.label
+					(sourceItem) => sourceItem.titleCurrentValue === item.label
 				)
 			) {
 				validAddedItems.push(item);
@@ -115,14 +115,14 @@ function AssetVocabulariesCategoriesSelector({
 		});
 
 		const removedItems = selectedItems.filter(
-			selectedItem =>
-				!items.find(item => item.value === selectedItem.value)
+			(selectedItem) =>
+				!items.find((item) => item.value === selectedItem.value)
 		);
 
 		const current = [...selectedItems, ...validAddedItems].filter(
-			item =>
+			(item) =>
 				!removedItems.find(
-					removedItem => removedItem.value === item.value
+					(removedItem) => removedItem.value === item.value
 				)
 		);
 
@@ -135,7 +135,7 @@ function AssetVocabulariesCategoriesSelector({
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
 		const url = sub(decodeURIComponent(portletURL), {
-			selectedCategoryIds: selectedItems.map(item => item.value).join(),
+			selectedCategoryIds: selectedItems.map((item) => item.value).join(),
 			singleSelect,
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
 		});
@@ -148,7 +148,7 @@ function AssetVocabulariesCategoriesSelector({
 
 		itemSelectorDialog.open();
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const dialogSelectedItems = event.selectedItem;
 
 			if (dialogSelectedItems) {
@@ -185,7 +185,7 @@ function AssetVocabulariesCategoriesSelector({
 					<input
 						name={inputName}
 						type="hidden"
-						value={selectedItems.map(item => item.value).join()}
+						value={selectedItems.map((item) => item.value).join()}
 					/>
 				)}
 
@@ -215,7 +215,7 @@ function AssetVocabulariesCategoriesSelector({
 							onItemsChange={handleItemsChange}
 							sourceItems={
 								resource
-									? resource.map(category => {
+									? resource.map((category) => {
 											return {
 												label:
 													category.titleCurrentValue,
@@ -237,7 +237,7 @@ function AssetVocabulariesCategoriesSelector({
 										),
 										[
 											invalidItems
-												.map(item => item.label)
+												.map((item) => item.label)
 												.join(','),
 										]
 									)}

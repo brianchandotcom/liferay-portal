@@ -21,7 +21,7 @@ import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
 
 export default function ContentsSidebar() {
-	const pageContents = useSelector(state => state.pageContents);
+	const pageContents = useSelector((state) => state.pageContents);
 	let view = <NoPageContents />;
 
 	if (pageContents.length) {

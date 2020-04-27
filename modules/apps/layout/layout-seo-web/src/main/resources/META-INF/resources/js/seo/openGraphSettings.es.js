@@ -14,7 +14,7 @@
 
 import {ItemSelectorDialog} from 'frontend-js-web';
 
-export default function({namespace, uploadOpenGraphImageURL}) {
+export default function ({namespace, uploadOpenGraphImageURL}) {
 	const openGraphImageButton = document.getElementById(
 		`${namespace}openGraphImageButton`
 	);
@@ -47,7 +47,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		`[for="${namespace}openGraphImageAlt"`
 	);
 
-	itemSelectorDialog.on('selectedItemChange', event => {
+	itemSelectorDialog.on('selectedItemChange', (event) => {
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem) {
@@ -68,7 +68,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		}
 	});
 
-	openGraphImageButton.addEventListener('click', event => {
+	openGraphImageButton.addEventListener('click', (event) => {
 		event.preventDefault();
 		itemSelectorDialog.open();
 	});
@@ -96,7 +96,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		`${namespace}openGraphSettings`
 	);
 
-	openGraphEnabledCheck.addEventListener('click', event => {
+	openGraphEnabledCheck.addEventListener('click', (event) => {
 		const disabled = !event.target.checked;
 		const openGraphImageAltDisabled =
 			disabled || !openGraphImageTitle.value;

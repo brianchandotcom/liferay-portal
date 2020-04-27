@@ -16,7 +16,7 @@
 
 AUI.add(
 	'liferay-alloy-editor',
-	A => {
+	(A) => {
 		var Do = A.Do;
 		var Lang = A.Lang;
 

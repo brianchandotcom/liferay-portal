@@ -549,7 +549,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 		</c:if>
 	});
 
-	itemSelector.on('selectedItem', function(event) {
+	itemSelector.on('selectedItem', function (event) {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= itemSelectedEventName %>',
 			event

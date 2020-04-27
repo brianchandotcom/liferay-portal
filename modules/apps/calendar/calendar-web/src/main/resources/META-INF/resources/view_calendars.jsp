@@ -127,7 +127,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 	Liferay.provide(
 		window,
 		'<portlet:namespace />importCalendar',
-		function(url) {
+		function (url) {
 			var A = AUI();
 
 			if (!<portlet:namespace />importDialog) {
@@ -139,7 +139,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 					{
 						label: '<liferay-ui:message key="import" />',
 						on: {
-							click: function() {
+							click: function () {
 								var form = document.getElementById(
 									'<portlet:namespace />importFm'
 								);
@@ -148,10 +148,10 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 									body: new FormData(form),
 									method: 'POST',
 								})
-									.then(function(response) {
+									.then(function (response) {
 										return response.text();
 									})
-									.then(function(data) {
+									.then(function (data) {
 										var responseData = {};
 
 										try {
@@ -191,7 +191,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 						cssClass: 'close',
 						label: '\u00D7',
 						on: {
-							click: function() {
+							click: function () {
 								<portlet:namespace />importDialog.hide();
 							},
 						},
@@ -204,7 +204,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 						bodyContent: importCalendarContainer.html(),
 						modal: true,
 						on: {
-							visibleChange: function(event) {
+							visibleChange: function (event) {
 								A.one('#<portlet:namespace />importFm').reset();
 								A.one(
 									'#<portlet:namespace />portletErrorMessage'

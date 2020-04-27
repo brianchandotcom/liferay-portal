@@ -21,7 +21,7 @@ import {deleteDefinitionField} from './actions.es';
 export default ({dataLayoutBuilder}) => {
 	const [, dispatch] = useContext(FormViewContext);
 
-	return fieldName => {
+	return (fieldName) => {
 		const {pages} = dataLayoutBuilder.getStore();
 		const visitor = new PagesVisitor(pages);
 

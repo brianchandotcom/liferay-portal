@@ -63,7 +63,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
 
 	const fragmentEntryLink = useSelector(
-		state => state.fragmentEntryLinks[item.config.fragmentEntryLinkId]
+		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId]
 	);
 
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);

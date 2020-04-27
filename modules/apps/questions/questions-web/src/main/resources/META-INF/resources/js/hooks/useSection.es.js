@@ -21,7 +21,7 @@ export default function useSection(sectionTitle, siteKey) {
 
 	useEffect(() => {
 		getSection(sectionTitle, siteKey)
-			.then(section => {
+			.then((section) => {
 				if (section.parentMessageBoardSectionId) {
 					return Promise.all([
 						section,

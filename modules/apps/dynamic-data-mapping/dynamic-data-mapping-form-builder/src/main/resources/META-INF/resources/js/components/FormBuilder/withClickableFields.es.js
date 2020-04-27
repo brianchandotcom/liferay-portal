@@ -17,7 +17,7 @@ import Component from 'metal-jsx';
 
 import formBuilderProps from './props.es';
 
-const withClickableFields = ChildComponent => {
+const withClickableFields = (ChildComponent) => {
 	class ClickableFields extends Component {
 		attached() {
 			this._eventHandler = new EventHandler();

@@ -292,7 +292,7 @@ if (portletTitleBasedNavigation) {
 		var titleInput = document.getElementById('<portlet:namespace />title');
 		var urlTitleInput = document.getElementById('<portlet:namespace />urlTitle');
 
-		titleInput.addEventListener('input', function(event) {
+		titleInput.addEventListener('input', function (event) {
 			var customUrl = urlTitleInput.dataset.customUrl;
 
 			if (customUrl === 'false') {
@@ -302,14 +302,14 @@ if (portletTitleBasedNavigation) {
 			}
 		});
 
-		urlTitleInput.addEventListener('input', function(event) {
+		urlTitleInput.addEventListener('input', function (event) {
 			event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
 		});
 	</c:if>
 
 	document
 		.getElementById('<portlet:namespace />publishButton')
-		.addEventListener('click', function() {
+		.addEventListener('click', function () {
 			var workflowActionInput = document.getElementById(
 				'<portlet:namespace />workflowAction'
 			);
@@ -330,7 +330,7 @@ if (portletTitleBasedNavigation) {
 
 	var form = document.getElementById('<portlet:namespace />fm');
 
-	var updateMultipleKBArticleAttachments = function() {
+	var updateMultipleKBArticleAttachments = function () {
 		var selectedFileNameContainer = document.getElementById(
 			'<portlet:namespace />selectedFileNameContainer'
 		);
@@ -352,7 +352,7 @@ if (portletTitleBasedNavigation) {
 		selectedFileNameContainer.innerHTML = buffer.join('');
 	};
 
-	form.addEventListener('submit', function() {
+	form.addEventListener('submit', function () {
 		document.getElementById(
 			'<portlet:namespace />content'
 		).value = window.<portlet:namespace />contentEditor.getHTML();

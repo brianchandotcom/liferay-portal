@@ -73,7 +73,7 @@ describe('Field Color Picker', () => {
 		expect(component.element.querySelector('input').value).toBe(color);
 	});
 
-	it.skip('emits field edit event on field change', done => {
+	it.skip('emits field edit event on field change', (done) => {
 		const handleFieldEdited = () => {
 			const inputEl = component.element.querySelector('input');
 			expect(inputEl.value).toBe('ffffff');

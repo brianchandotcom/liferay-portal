@@ -56,7 +56,7 @@ const AdaptiveMediaProgress = ({
 	};
 
 	const startProgress = useCallback(
-		backgroundTaskUrl => {
+		(backgroundTaskUrl) => {
 			fetch(backgroundTaskUrl);
 
 			if (isMounted()) {
@@ -80,7 +80,7 @@ const AdaptiveMediaProgress = ({
 
 	const updateProgress = useCallback(() => {
 		fetch(percentageUrl)
-			.then(res => res.json())
+			.then((res) => res.json())
 			.then(({adaptedImages, errors, totalImages}) => {
 				if (isMounted()) {
 					setImagesFailed(errors);

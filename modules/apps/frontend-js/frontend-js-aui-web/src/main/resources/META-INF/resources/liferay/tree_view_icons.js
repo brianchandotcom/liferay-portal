@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-tree-view-icons',
-	A => {
+	(A) => {
 		var ICON_DEPRECATED_CLASSES = [
 			'glyphicon',
 			'glyphicon-check',
@@ -29,15 +29,15 @@ AUI.add(
 			'icon-plus',
 		];
 
-		var clearIconClasses = function(element) {
-			ICON_DEPRECATED_CLASSES.forEach(className =>
+		var clearIconClasses = function (element) {
+			ICON_DEPRECATED_CLASSES.forEach((className) =>
 				element.removeClass(className)
 			);
 		};
 
 		var originalSyncIconUIFn = A.TreeNode.prototype._syncIconUI;
 
-		A.TreeNode.prototype._syncIconUI = function(args) {
+		A.TreeNode.prototype._syncIconUI = function (args) {
 			originalSyncIconUIFn.call(this, args);
 
 			var hasChildren = this.childrenLength > 0;
@@ -64,7 +64,7 @@ AUI.add(
 		var originalSyncIconCheckUIFn =
 			A.TreeNodeCheck.prototype._syncIconCheckUI;
 
-		A.TreeNodeCheck.prototype._syncIconCheckUI = function(args) {
+		A.TreeNodeCheck.prototype._syncIconCheckUI = function (args) {
 			originalSyncIconCheckUIFn.call(this, args);
 
 			var checked = this.isChecked();

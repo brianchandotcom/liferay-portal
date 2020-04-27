@@ -45,7 +45,7 @@ const getItemStyles = (currentOffset, ref) => {
 export default function DragPreview({children, component: Component}) {
 	const ref = useRef();
 
-	const {currentOffset, isDragging, item} = useDragLayer(monitor => ({
+	const {currentOffset, isDragging, item} = useDragLayer((monitor) => ({
 		currentOffset: monitor.getClientOffset(),
 		isDragging: monitor.isDragging(),
 		item: monitor.getItem(),

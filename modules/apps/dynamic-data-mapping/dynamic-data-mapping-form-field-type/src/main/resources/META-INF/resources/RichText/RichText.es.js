@@ -82,7 +82,7 @@ const RichText = ({data, id, name, onChange, readOnly}) => {
 		editorProps.style = {pointerEvents: 'none'};
 	}
 	else {
-		editorProps.onChange = event => {
+		editorProps.onChange = (event) => {
 			const newValue = event.editor.getData();
 
 			setCurrentValue(newValue);

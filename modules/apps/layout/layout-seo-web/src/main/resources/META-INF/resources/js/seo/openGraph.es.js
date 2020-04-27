@@ -16,7 +16,7 @@ import {ItemSelectorDialog} from 'frontend-js-web';
 
 import {previewSeoFireChange} from './PreviewSeoEvents.es';
 
-export default function({namespace, uploadOpenGraphImageURL}) {
+export default function ({namespace, uploadOpenGraphImageURL}) {
 	const openGraphImageButton = document.getElementById(
 		`${namespace}openGraphImageButton`
 	);
@@ -46,7 +46,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		`[for="${namespace}openGraphImageAlt"`
 	);
 
-	itemSelectorDialog.on('selectedItemChange', event => {
+	itemSelectorDialog.on('selectedItemChange', (event) => {
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem) {
@@ -101,7 +101,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		`${namespace}openGraphTitle_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
 
-	openGraphTitleEnabledCheck.addEventListener('click', event => {
+	openGraphTitleEnabledCheck.addEventListener('click', (event) => {
 		const disabled = !event.target.checked;
 
 		Liferay.Util.toggleDisabled(openGraphTitleField, disabled);
@@ -124,7 +124,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		`${namespace}openGraphDescription_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
 
-	openGraphDescriptionEnabledCheck.addEventListener('click', event => {
+	openGraphDescriptionEnabledCheck.addEventListener('click', (event) => {
 		const disabled = !event.target.checked;
 
 		Liferay.Util.toggleDisabled(openGraphDescriptionField, disabled);

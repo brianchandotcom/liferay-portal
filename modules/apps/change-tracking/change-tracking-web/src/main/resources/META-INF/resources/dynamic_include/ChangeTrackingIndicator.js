@@ -27,14 +27,14 @@ const Component = ({
 	selectURL,
 	title,
 }) => {
-	const onDestroyPortlet = function() {
+	const onDestroyPortlet = function () {
 		Liferay.detach('destroyPortlet', onDestroyPortlet);
 		Liferay.detach(namespace + 'openDialog', onSelectChangeList);
 	};
 
 	Liferay.on('destroyPortlet', onDestroyPortlet);
 
-	const onSelectChangeList = function() {
+	const onSelectChangeList = function () {
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
@@ -46,7 +46,7 @@ const Component = ({
 				title: Liferay.Language.get('select-a-publication'),
 				uri: selectURL,
 			},
-			event => {
+			(event) => {
 				const portletURL = createPortletURL(checkoutURL, {
 					ctCollectionId: event.ctcollectionid,
 				});
@@ -86,6 +86,6 @@ Component.propTypes = {
 	title: PropTypes.string,
 };
 
-export default function(props) {
+export default function (props) {
 	return <Component {...props} />;
 }

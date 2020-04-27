@@ -108,7 +108,7 @@ const MODES = {
 					token.type === 'attribute' &&
 					token.string.startsWith('data')
 				) {
-					customDataAttributes.forEach(item => {
+					customDataAttributes.forEach((item) => {
 						let attributeName = `data-${item}`;
 						let attributeValue = '';
 
@@ -137,7 +137,7 @@ const MODES = {
 					});
 				}
 				else {
-					customTags.forEach(item => {
+					customTags.forEach((item) => {
 						if (
 							item.name.startsWith(content) &&
 							!resultSet.has(item.content)
@@ -167,16 +167,19 @@ const MODES = {
 					return;
 				}
 
-				const customEntity = customEntities.find(entity =>
+				const customEntity = customEntities.find((entity) =>
 					match.startsWith(entity.start)
 				);
 
 				const content = match.slice(customEntity.start.length);
 
 				const results = customEntity.content
-					.filter(entityContent => entityContent.startsWith(content))
+					.filter((entityContent) =>
+						entityContent.startsWith(content)
+					)
 					.map(
-						entityContent => `${customEntity.start}${entityContent}`
+						(entityContent) =>
+							`${customEntity.start}${entityContent}`
 					);
 
 				return {
@@ -199,7 +202,7 @@ const MODES = {
 	},
 };
 
-const escapeChars = string => string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+const escapeChars = (string) => string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
 
 const noop = () => {};
 
@@ -244,7 +247,7 @@ const CodeMirrorEditor = ({
 		}
 
 		return `${customEntities
-			.map(entity => {
+			.map((entity) => {
 				const start = escapeChars(entity.start);
 				const end = escapeChars(entity.end);
 
@@ -283,7 +286,7 @@ const CodeMirrorEditor = ({
 				viewportMargin: Infinity,
 			});
 
-			codeMirror.on('change', cm => {
+			codeMirror.on('change', (cm) => {
 				onChange(cm.getValue());
 			});
 

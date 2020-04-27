@@ -102,7 +102,7 @@ Layout curLayout = (Layout)row.getObject();
 		document.body,
 		'click',
 		'.<portlet:namespace />copy-layout-action-option',
-		function(event) {
+		function (event) {
 			Liferay.Util.openWindow({
 				dialog: {
 					destroyOnHide: true,

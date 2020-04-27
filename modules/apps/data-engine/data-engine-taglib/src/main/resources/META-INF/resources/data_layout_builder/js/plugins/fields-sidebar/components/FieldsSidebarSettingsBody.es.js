@@ -29,7 +29,7 @@ import renderSettingsForm, {
 	getFilteredSettingsContext,
 } from '../../../utils/renderSettingsForm.es';
 
-export default function() {
+export default function () {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [state, dispatch] = useContext(AppContext);
 	const {focusedCustomObjectField, focusedField} = state;
@@ -96,14 +96,14 @@ export default function() {
 
 				if (evaluableForm) {
 					form.evaluate()
-						.then(pages => {
+						.then((pages) => {
 							if (form.isDisposed()) {
 								return;
 							}
 
 							form.setState({pages});
 						})
-						.catch(error => dispatch(EVALUATION_ERROR, error));
+						.catch((error) => dispatch(EVALUATION_ERROR, error));
 				}
 			});
 		}
@@ -143,6 +143,6 @@ export default function() {
 	}, [focusedFieldName, form]);
 
 	return (
-		<form onSubmit={event => event.preventDefault()} ref={formRef}></form>
+		<form onSubmit={(event) => event.preventDefault()} ref={formRef}></form>
 	);
 }

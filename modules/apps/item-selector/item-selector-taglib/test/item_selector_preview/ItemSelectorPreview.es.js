@@ -63,7 +63,7 @@ const previewProps = {
 	items,
 };
 
-const renderPreviewComponent = props =>
+const renderPreviewComponent = (props) =>
 	render(<ItemSelectorPreview {...props} />);
 
 describe('ItemSelectorPreview', () => {

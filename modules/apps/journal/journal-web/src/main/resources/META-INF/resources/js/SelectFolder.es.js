@@ -36,13 +36,13 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 		return result;
 	}, [nodes]);
 
-	const handleQueryChange = useCallback(event => {
+	const handleQueryChange = useCallback((event) => {
 		const value = event.target.value;
 
 		setFilterQuery(value);
 	}, []);
 
-	const handleSelectionChange = selectedNodeIds => {
+	const handleSelectionChange = (selectedNodeIds) => {
 		const node = nodesById[[...selectedNodeIds][0]];
 
 		if (node) {

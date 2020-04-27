@@ -23,7 +23,7 @@ import {useItemDrag} from '../../../app/utils/useItemDrag';
 
 export default function Widget({instanceable, portletId, title, used}) {
 	const dispatch = useDispatch();
-	const store = useSelector(state => state);
+	const store = useSelector((state) => state);
 
 	const disabled = used && !instanceable;
 

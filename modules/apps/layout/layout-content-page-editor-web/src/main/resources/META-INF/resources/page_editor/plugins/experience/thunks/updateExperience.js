@@ -20,7 +20,7 @@ export default function updateExperience({
 	segmentsEntryId,
 	segmentsExperienceId,
 }) {
-	return dispatch => {
+	return (dispatch) => {
 		return ExperienceService.updateExperience({
 			body: {
 				active: true,

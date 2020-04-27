@@ -76,7 +76,7 @@ export default ({children, dataLayoutBuilder}) => {
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
 
-		const ruleAddedEventHandler = provider.on('ruleAdded', dataRule => {
+		const ruleAddedEventHandler = provider.on('ruleAdded', (dataRule) => {
 			provider.once('rendered', () => {
 				dispatch({
 					payload: {dataRule},
@@ -85,7 +85,7 @@ export default ({children, dataLayoutBuilder}) => {
 			});
 		});
 
-		const ruleEditedEventHandler = provider.on('ruleEdited', dataRule => {
+		const ruleEditedEventHandler = provider.on('ruleEdited', (dataRule) => {
 			provider.once('rendered', () => {
 				dispatch({
 					payload: {dataRule},

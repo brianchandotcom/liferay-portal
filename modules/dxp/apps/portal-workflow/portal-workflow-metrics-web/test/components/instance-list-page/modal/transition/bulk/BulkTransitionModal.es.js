@@ -20,7 +20,7 @@ import {MockRouter} from '../../../../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const tasks = range =>
+const tasks = (range) =>
 	new Array(range).fill({}).map((_, id) => ({
 		assigneePerson: {
 			additionalName: '',

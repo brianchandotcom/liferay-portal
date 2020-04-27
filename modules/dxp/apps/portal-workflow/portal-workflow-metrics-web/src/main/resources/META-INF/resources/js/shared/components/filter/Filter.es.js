@@ -76,7 +76,7 @@ const Filter = ({
 
 	const filteredItems = useMemo(() => {
 		return searchTerm
-			? items.filter(item =>
+			? items.filter((item) =>
 					item[labelPropertyName]
 						.toLowerCase()
 						.includes(searchTerm.toLowerCase())
@@ -105,21 +105,21 @@ const Filter = ({
 		setSearchTerm('');
 	};
 
-	const getSelectedItems = items => items.filter(item => item.active);
+	const getSelectedItems = (items) => items.filter((item) => item.active);
 
-	const onClickHandler = item => () =>
+	const onClickHandler = (item) => () =>
 		onClickFilter ? onClickFilter(item) : true;
 
 	const onInputChange = useCallback(
 		({target}) => {
 			const index = items.findIndex(
-				item => item.key === target.dataset.key
+				(item) => item.key === target.dataset.key
 			);
 			const current = items[index];
 
 			if (!preventClick) {
 				if (!multiple) {
-					items.forEach(item => {
+					items.forEach((item) => {
 						item.active = false;
 					});
 				}
@@ -145,7 +145,7 @@ const Filter = ({
 
 			if (!selectedItems.length) {
 				const index = items.findIndex(
-					item => item.key === defaultItem.key
+					(item) => item.key === defaultItem.key
 				);
 
 				items[index].active = true;

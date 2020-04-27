@@ -24,7 +24,7 @@ let component;
 const changeField = ({settingsContext}, fieldName, value) => {
 	const visitor = new PagesVisitor(settingsContext.pages);
 
-	return visitor.mapFields(field => {
+	return visitor.mapFields((field) => {
 		if (field.fieldName === fieldName) {
 			field = {
 				...field,

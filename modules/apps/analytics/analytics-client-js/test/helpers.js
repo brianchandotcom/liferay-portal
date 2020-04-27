@@ -24,7 +24,7 @@ export const INITIAL_ANALYTICS_CONFIG = {
  * Flush the current Promise queue.
  */
 export const flushPromises = () =>
-	new Promise(resolve => setImmediate(resolve));
+	new Promise((resolve) => setImmediate(resolve));
 
 /**
  * Sends dummy events to test the Analytics API
@@ -35,7 +35,7 @@ export const flushPromises = () =>
 export const sendDummyEvents = (analyticsInstance, eventsNumber) => {
 	const events = getDummyEvents(eventsNumber);
 
-	events.forEach(event => {
+	events.forEach((event) => {
 		analyticsInstance.send(
 			event.eventId,
 			event.applicationId,
@@ -83,8 +83,8 @@ export const getDummyEvents = (eventsNumber = 5) => {
  *
  * @param {Number} msToWait
  */
-export const wait = msToWait => {
-	return new Promise(resolve => {
+export const wait = (msToWait) => {
+	return new Promise((resolve) => {
 		setTimeout(resolve, msToWait);
 	});
 };

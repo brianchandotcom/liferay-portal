@@ -34,7 +34,7 @@ const generateItems = (columns, rows = 10) => {
 	return items;
 };
 
-const generateItem = columns =>
+const generateItem = (columns) =>
 	columns.reduce(
 		(acc, column) => ({
 			...acc,
@@ -46,7 +46,7 @@ const generateItem = columns =>
 const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 	const [{canDrop, overTarget}, drop] = useDrop({
 		accept: DragTypes.DRAG_FIELD_TYPE,
-		collect: monitor => ({
+		collect: (monitor) => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver(),
 		}),

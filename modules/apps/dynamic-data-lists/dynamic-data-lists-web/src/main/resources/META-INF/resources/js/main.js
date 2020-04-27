@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-portlet-dynamic-data-lists',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 
 		var DateMath = A.DataType.DateMath;
@@ -109,7 +109,7 @@ AUI.add(
 			buildDataTableColumns(columns, locale, structure, editable) {
 				var instance = this;
 
-				columns.forEach(item => {
+				columns.forEach((item) => {
 					var dataType = item.dataType;
 					var label = item.label;
 					var name = item.name;
@@ -149,7 +149,7 @@ AUI.add(
 							true: Liferay.Language.get('true'),
 						};
 
-						config.inputFormatter = function(value) {
+						config.inputFormatter = function (value) {
 							if (Array.isArray(value) && value.length > 0) {
 								value = value[0];
 							}
@@ -163,7 +163,7 @@ AUI.add(
 							return checkedValue;
 						};
 
-						item.formatter = function(obj) {
+						item.formatter = function (obj) {
 							var data = obj.data;
 
 							var value = data[name];
@@ -179,14 +179,14 @@ AUI.add(
 						};
 					}
 					else if (type === 'ddm-date') {
-						config.inputFormatter = function(val) {
-							return val.map(item => {
+						config.inputFormatter = function (val) {
+							return val.map((item) => {
 								return A.DataType.Date.format(item);
 							});
 						};
 
-						config.outputFormatter = function(val) {
-							return val.map(item => {
+						config.outputFormatter = function (val) {
+							return val.map((item) => {
 								var date;
 
 								if (item !== STR_EMPTY) {
@@ -206,7 +206,7 @@ AUI.add(
 							});
 						};
 
-						item.formatter = function(obj) {
+						item.formatter = function (obj) {
 							var data = obj.data;
 
 							var value = data[name];
@@ -223,7 +223,7 @@ AUI.add(
 						type === 'ddm-integer' ||
 						type === 'ddm-number'
 					) {
-						config.outputFormatter = function(value) {
+						config.outputFormatter = function (value) {
 							var number = A.DataType.Number.parse(value);
 
 							var numberValue = STR_EMPTY;
@@ -235,7 +235,7 @@ AUI.add(
 							return numberValue;
 						};
 
-						item.formatter = function(obj) {
+						item.formatter = function (obj) {
 							var data = obj.data;
 
 							var value = A.DataType.Number.parse(data[name]);
@@ -248,7 +248,7 @@ AUI.add(
 						};
 					}
 					else if (type === 'ddm-documentlibrary') {
-						item.formatter = function(obj) {
+						item.formatter = function (obj) {
 							var data = obj.data;
 
 							var label = STR_EMPTY;
@@ -268,7 +268,7 @@ AUI.add(
 						};
 					}
 					else if (type === 'ddm-link-to-page') {
-						item.formatter = function(obj) {
+						item.formatter = function (obj) {
 							var data = obj.data;
 
 							var label = STR_EMPTY;
@@ -315,14 +315,14 @@ AUI.add(
 							locale
 						);
 
-						item.formatter = function(obj) {
+						item.formatter = function (obj) {
 							var data = obj.data;
 
 							var label = [];
 							var value = data[name];
 
 							if (isArray(value)) {
-								value.forEach(item1 => {
+								value.forEach((item1) => {
 									label.push(options[item1]);
 								});
 							}
@@ -337,7 +337,7 @@ AUI.add(
 					else if (type === 'textarea') {
 						item.allowHTML = true;
 
-						item.formatter = function(obj) {
+						item.formatter = function (obj) {
 							var data = obj.data;
 
 							var value = data[name];
@@ -395,7 +395,7 @@ AUI.add(
 
 				var structureField;
 
-				AArray.some(fieldsArray, item => {
+				AArray.some(fieldsArray, (item) => {
 					var nestedFieldsArray = item.fields;
 
 					if (item[attributeName] === attributeValue) {
@@ -418,7 +418,7 @@ AUI.add(
 			getCellEditorOptions(options, locale) {
 				var normalized = {};
 
-				options.forEach(item => {
+				options.forEach((item) => {
 					normalized[item.value] = item.label;
 
 					var localizationMap = item.localizationMap;
@@ -434,7 +434,7 @@ AUI.add(
 			getRecordModel(keys) {
 				var recordModel = {};
 
-				keys.forEach(item => {
+				keys.forEach((item) => {
 					recordModel[item] = STR_EMPTY;
 				});
 
@@ -535,7 +535,7 @@ AUI.add(
 					);
 
 					if (isArray(item.fields)) {
-						item.fields.forEach(item => {
+						item.fields.forEach((item) => {
 							instance._normalizeFieldData(
 								item,
 								record,
@@ -554,7 +554,7 @@ AUI.add(
 					var fieldsDisplayValues = [];
 					var normalized = {};
 
-					structure.forEach(item => {
+					structure.forEach((item) => {
 						instance._normalizeFieldData(
 							item,
 							record,
@@ -650,7 +650,7 @@ AUI.add(
 								recordsetId,
 								recordIndex,
 								fieldsMap,
-								json => {
+								(json) => {
 									if (json.recordId > 0) {
 										record.set('recordId', json.recordId, {
 											silent: true,
@@ -671,7 +671,7 @@ AUI.add(
 				},
 
 				_setDataStableSort(data) {
-					data.sort = function(options) {
+					data.sort = function (options) {
 						if (this.comparator) {
 							options = options || {};
 
@@ -705,7 +705,7 @@ AUI.add(
 					var columns = instance.get('columns');
 					var data = instance.get('data');
 
-					var keys = columns.map(item => {
+					var keys = columns.map((item) => {
 						return item.key;
 					});
 

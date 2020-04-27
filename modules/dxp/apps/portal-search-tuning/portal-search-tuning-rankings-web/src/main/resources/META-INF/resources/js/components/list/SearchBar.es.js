@@ -71,15 +71,15 @@ class SearchBar extends Component {
 	_handleClickPin = () => {
 		const {dataMap, onClickPin, onRemoveSelect, selectedIds} = this.props;
 
-		const unpinnedIds = selectedIds.filter(id => !dataMap[id].pinned);
+		const unpinnedIds = selectedIds.filter((id) => !dataMap[id].pinned);
 
 		if (unpinnedIds.length) {
-			onRemoveSelect(selectedIds.filter(id => dataMap[id].hidden));
+			onRemoveSelect(selectedIds.filter((id) => dataMap[id].hidden));
 
 			onClickPin(unpinnedIds, true);
 		}
 		else {
-			onRemoveSelect(selectedIds.filter(id => dataMap[id].addedResult));
+			onRemoveSelect(selectedIds.filter((id) => dataMap[id].addedResult));
 
 			onClickPin(selectedIds, false);
 		}
@@ -98,7 +98,7 @@ class SearchBar extends Component {
 	_isAnyHidden = () => {
 		const {dataMap, selectedIds} = this.props;
 
-		return selectedIds.some(id => dataMap[id].hidden);
+		return selectedIds.some((id) => dataMap[id].hidden);
 	};
 
 	/**
@@ -108,7 +108,7 @@ class SearchBar extends Component {
 	_isAnyUnpinned = () => {
 		const {dataMap, selectedIds} = this.props;
 
-		return selectedIds.some(id => !dataMap[id].pinned);
+		return selectedIds.some((id) => !dataMap[id].pinned);
 	};
 
 	render() {

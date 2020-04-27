@@ -82,7 +82,7 @@ const EmptyState = ({emptyState, keywords = '', small = false}) => {
 	);
 };
 
-export const withEmpty = Component => {
+export const withEmpty = (Component) => {
 	const Wrapper = ({emptyState, isEmpty, keywords, ...restProps}) => {
 		if (isEmpty) {
 			return <EmptyState emptyState={emptyState} keywords={keywords} />;

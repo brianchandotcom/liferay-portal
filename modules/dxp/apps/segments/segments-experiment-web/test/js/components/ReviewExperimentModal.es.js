@@ -131,7 +131,7 @@ const renderReviewExperimentModal = ({
 	);
 };
 
-const getEstimatedTimeMockFactory = days => () => {
+const getEstimatedTimeMockFactory = (days) => () => {
 	return Promise.resolve({segmentsExperimentEstimatedDaysDuration: days});
 };
 

@@ -38,7 +38,7 @@ class TestComponent extends Component {
 		};
 	}
 
-	_handleChange = value => this.setState({value});
+	_handleChange = (value) => this.setState({value});
 
 	render() {
 		return (

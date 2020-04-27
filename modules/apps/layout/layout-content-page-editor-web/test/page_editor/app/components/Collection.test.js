@@ -148,7 +148,7 @@ describe('Collection', () => {
 			});
 		});
 
-		items.forEach(item =>
+		items.forEach((item) =>
 			expect(getByText(document.body, item.title)).toBeInTheDocument()
 		);
 	});

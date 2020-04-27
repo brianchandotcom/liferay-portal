@@ -156,7 +156,7 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 </liferay-ui:tabs>
 
 <aui:script use="aui-io-deprecated">
-	A.all('.mail-dialog form.account-form').on('submit', function(event) {
+	A.all('.mail-dialog form.account-form').on('submit', function (event) {
 		event.preventDefault();
 
 		Liferay.Mail.setStatus(
@@ -174,14 +174,14 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 			},
 			method: 'POST',
 			on: {
-				failure: function(event, id, obj) {
+				failure: function (event, id, obj) {
 					Liferay.Mail.setStatus(
 						'error',
 						'<liferay-ui:message key="unable-to-connect-with-mail-server" />'
 					);
 				},
 
-				success: function(event, id, obj) {
+				success: function (event, id, obj) {
 					var responseData = this.get('responseData');
 
 					Liferay.Mail.setStatus(

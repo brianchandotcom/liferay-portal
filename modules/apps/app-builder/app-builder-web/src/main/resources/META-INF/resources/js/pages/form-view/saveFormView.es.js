@@ -22,14 +22,14 @@ export default ({
 }) => {
 	const normalizedDataLayout = {
 		...dataLayout,
-		dataLayoutPages: dataLayout.dataLayoutPages.map(dataLayoutPage => ({
+		dataLayoutPages: dataLayout.dataLayoutPages.map((dataLayoutPage) => ({
 			...dataLayoutPage,
 			dataLayoutRows: (dataLayoutPage.dataLayoutRows || []).map(
-				dataLayoutRow => ({
+				(dataLayoutRow) => ({
 					...dataLayoutRow,
 					dataLayoutColumns: (
 						dataLayoutRow.dataLayoutColumns || []
-					).map(dataLayoutColumn => ({
+					).map((dataLayoutColumn) => ({
 						...dataLayoutColumn,
 						fieldNames: dataLayoutColumn.fieldNames || [],
 					})),

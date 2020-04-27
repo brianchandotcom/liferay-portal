@@ -20,7 +20,7 @@ export default function updateRowColumns({
 	numberOfColumns,
 	segmentsExperienceId,
 }) {
-	return dispatch =>
+	return (dispatch) =>
 		LayoutService.updateRowColumns({
 			itemId,
 			numberOfColumns,

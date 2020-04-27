@@ -75,11 +75,11 @@ function AssetTagsSelector({
 	};
 
 	const handleInputBlur = () => {
-		const filteredItems = resource && resource.map(tag => tag.value);
+		const filteredItems = resource && resource.map((tag) => tag.value);
 
 		if (!filteredItems || !filteredItems.length) {
 			if (inputValue) {
-				if (!selectedItems.find(item => item.label === inputValue)) {
+				if (!selectedItems.find((item) => item.label === inputValue)) {
 					onSelectedItemsChange(
 						selectedItems.concat({
 							label: inputValue,
@@ -92,38 +92,40 @@ function AssetTagsSelector({
 		}
 	};
 
-	const handleItemsChange = items => {
+	const handleItemsChange = (items) => {
 		const addedItems = items.filter(
-			item =>
+			(item) =>
 				!selectedItems.find(
-					selectedItem => selectedItem.value === item.value
+					(selectedItem) => selectedItem.value === item.value
 				)
 		);
 
 		const removedItems = selectedItems.filter(
-			selectedItem =>
-				!items.find(item => item.value === selectedItem.value)
+			(selectedItem) =>
+				!items.find((item) => item.value === selectedItem.value)
 		);
 
 		const current = [...selectedItems, ...addedItems].filter(
-			item =>
+			(item) =>
 				!removedItems.find(
-					removedItem => removedItem.value === item.value
+					(removedItem) => removedItem.value === item.value
 				)
 		);
 
 		onSelectedItemsChange(current);
 
-		addedItems.forEach(item => callGlobalCallback(addCallback, item));
+		addedItems.forEach((item) => callGlobalCallback(addCallback, item));
 
-		removedItems.forEach(item => callGlobalCallback(removeCallback, item));
+		removedItems.forEach((item) =>
+			callGlobalCallback(removeCallback, item)
+		);
 	};
 
 	const handleSelectButtonClick = () => {
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
 		const url = sub(decodeURIComponent(portletURL), {
-			selectedTagNames: selectedItems.map(item => item.value).join(),
+			selectedTagNames: selectedItems.map((item) => item.value).join(),
 		});
 
 		const itemSelectorDialog = new ItemSelectorDialog({
@@ -135,13 +137,13 @@ function AssetTagsSelector({
 
 		itemSelectorDialog.open();
 
-		itemSelectorDialog.on('selectedItemChange', event => {
+		itemSelectorDialog.on('selectedItemChange', (event) => {
 			const dialogSelectedItems = event.selectedItem;
 
 			if (dialogSelectedItems && dialogSelectedItems.items.length) {
 				const newValues = dialogSelectedItems.items
 					.split(',')
-					.map(value => {
+					.map((value) => {
 						return {
 							label: value,
 							value,
@@ -149,27 +151,27 @@ function AssetTagsSelector({
 					});
 
 				const addedItems = newValues.filter(
-					newValue =>
+					(newValue) =>
 						!selectedItems.find(
-							selectedItem =>
+							(selectedItem) =>
 								selectedItem.label === newValue.label
 						)
 				);
 
 				const removedItems = selectedItems.filter(
-					selectedItem =>
+					(selectedItem) =>
 						!newValues.find(
-							newValue => newValue.label === selectedItem.label
+							(newValue) => newValue.label === selectedItem.label
 						)
 				);
 
 				onSelectedItemsChange(newValues);
 
-				addedItems.forEach(item =>
+				addedItems.forEach((item) =>
 					callGlobalCallback(addCallback, item)
 				);
 
-				removedItems.forEach(item =>
+				removedItems.forEach((item) =>
 					callGlobalCallback(removeCallback, item)
 				);
 			}
@@ -192,7 +194,7 @@ function AssetTagsSelector({
 							onItemsChange={handleItemsChange}
 							sourceItems={
 								resource
-									? resource.map(tag => {
+									? resource.map((tag) => {
 											return {
 												label: tag.text,
 												value: tag.value,

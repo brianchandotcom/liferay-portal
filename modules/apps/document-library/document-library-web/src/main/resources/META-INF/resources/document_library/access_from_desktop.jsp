@@ -74,7 +74,7 @@ else {
 	var webdavAction = A.one('.<%= randomNamespace %>-webdav-action');
 
 	if (webdavAction) {
-		webdavAction.on('click', function(event) {
+		webdavAction.on('click', function (event) {
 			event.preventDefault();
 
 			var webdavDialog = Liferay.Util.Window.getWindow({
@@ -86,7 +86,7 @@ else {
 					'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
 			});
 
-			webdavDialog.after('render', function(event) {
+			webdavDialog.after('render', function (event) {
 				var webdavURLInput = webdavDialog
 					.get('boundingBox')
 					.one('#<portlet:namespace />webDavURL');

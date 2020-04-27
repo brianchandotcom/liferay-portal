@@ -107,11 +107,11 @@ renderResponse.setTitle(title);
 	/>
 
 	<aui:script use="liferay-component,liferay-form,liferay-kaleo-forms-admin">
-		var afterFormRegistered = function(event) {
+		var afterFormRegistered = function (event) {
 			var form = Liferay.Form.get('<portlet:namespace />fm');
 
 			if (form === event.form) {
-				Liferay.component('<portlet:namespace/>KaleoFormsAdmin', function() {
+				Liferay.component('<portlet:namespace/>KaleoFormsAdmin', function () {
 					return new Liferay.KaleoFormsAdmin({
 						currentURL: '<%= currentURL %>',
 						form: form,
@@ -130,7 +130,7 @@ renderResponse.setTitle(title);
 
 		Liferay.after('form:registered', afterFormRegistered);
 
-		var clearAfterFormRegistered = function(event) {
+		var clearAfterFormRegistered = function (event) {
 			Liferay.detach('form:registered', afterFormRegistered);
 		};
 

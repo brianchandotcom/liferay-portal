@@ -53,7 +53,7 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 	Liferay.provide(
 		window,
 		'<portlet:namespace />exportRecordSet',
-		function(url) {
+		function (url) {
 			var A = AUI();
 
 			var form = A.Node.create('<form />');
@@ -64,7 +64,7 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 
 			var fileExtensionSelect = A.one('#<portlet:namespace />fileExtension');
 
-			var showCSVWarning = function() {
+			var showCSVWarning = function () {
 				var csvWarning = A.one('#<portlet:namespace />csvWarning');
 
 				if (fileExtensionSelect.val() === 'csv' && <%= showCSVWarning %>) {
@@ -98,7 +98,7 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 								cssClass: 'btn-secondary',
 								label: '<liferay-ui:message key="cancel" />',
 								on: {
-									click: function() {
+									click: function () {
 										dialog.hide();
 									},
 								},
@@ -107,7 +107,7 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 								cssClass: 'btn-primary',
 								label: '<liferay-ui:message key="ok" />',
 								on: {
-									click: function() {
+									click: function () {
 										submitForm(form, url, false);
 
 										dialog.hide();

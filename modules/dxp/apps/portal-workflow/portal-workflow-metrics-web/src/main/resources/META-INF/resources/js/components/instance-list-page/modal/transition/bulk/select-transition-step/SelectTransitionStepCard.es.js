@@ -173,7 +173,7 @@ const Card = ({cardIndex, nextTransitions = [], tasks}) => {
 					>
 						<ClaySelect.Option label="" value="" />
 
-						{nextTransitions.map(nextTransition => (
+						{nextTransitions.map((nextTransition) => (
 							<ClaySelect.Option
 								key={nextTransition.name}
 								label={nextTransition.label}

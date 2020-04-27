@@ -16,7 +16,7 @@ import {useEffect, useState} from 'react';
 
 import {request} from '../utils/client.es';
 
-export default endpoint => {
+export default (endpoint) => {
 	const [state, setState] = useState({
 		error: null,
 		isLoading: true,
@@ -25,15 +25,15 @@ export default endpoint => {
 
 	useEffect(() => {
 		request(endpoint)
-			.then(response => response.json())
-			.then(response => {
+			.then((response) => response.json())
+			.then((response) => {
 				setState({
 					error: null,
 					isLoading: false,
 					response,
 				});
 			})
-			.catch(error => {
+			.catch((error) => {
 				setState({
 					error,
 					isLoading: false,

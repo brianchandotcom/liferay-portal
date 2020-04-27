@@ -17,7 +17,7 @@ import React from 'react';
 
 const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
 
-const Editor = props => {
+const Editor = (props) => {
 	return <CKEditor {...props} />;
 };
 

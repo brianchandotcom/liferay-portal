@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-blogs',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var CSS_INVISIBLE = 'invisible';
@@ -84,9 +84,8 @@ AUI.add(
 			prototype: {
 				_automaticURL() {
 					return (
-						this.one('#urlOptions')
-							.one('input:checked')
-							.val() === 'true'
+						this.one('#urlOptions').one('input:checked').val() ===
+						'true'
 					);
 				},
 
@@ -210,7 +209,7 @@ AUI.add(
 								instance.get('strings').confirmDiscardImages
 							)
 						) {
-							instance._getTempImages().each(node => {
+							instance._getTempImages().each((node) => {
 								node.ancestor().remove();
 							});
 
@@ -455,7 +454,7 @@ AUI.add(
 								'[name^=' + instance.NS + 'ExpandoAttribute]'
 							);
 
-							customAttributes.each(item => {
+							customAttributes.each((item) => {
 								data[item.attr('name')] = item.val();
 							});
 
@@ -472,10 +471,10 @@ AUI.add(
 								body,
 								method: 'POST',
 							})
-								.then(response => {
+								.then((response) => {
 									return response.json();
 								})
-								.then(data => {
+								.then((data) => {
 									instance._oldContent = content;
 									instance._oldSubtitle = subtitle;
 									instance._oldTitle = title;

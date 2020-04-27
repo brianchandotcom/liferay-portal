@@ -42,7 +42,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 	 * @review
 	 */
 	destructor() {
-		this._eventHandlers.forEach(item => {
+		this._eventHandlers.forEach((item) => {
 			google.maps.event.removeListener(item);
 		});
 	}

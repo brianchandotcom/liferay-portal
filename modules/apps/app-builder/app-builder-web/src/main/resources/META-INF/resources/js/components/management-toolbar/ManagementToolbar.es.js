@@ -31,7 +31,7 @@ export default ({addButton, columns, totalCount}) => {
 
 			<ManagementToolbarSearch
 				disabled={disabled}
-				onSubmit={searchText =>
+				onSubmit={(searchText) =>
 					dispatch({keywords: searchText, type: 'SEARCH'})
 				}
 				searchText={keywords}

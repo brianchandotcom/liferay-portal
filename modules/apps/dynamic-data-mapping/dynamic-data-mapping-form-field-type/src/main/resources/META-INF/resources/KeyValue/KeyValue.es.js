@@ -30,7 +30,7 @@ const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
 		<input
 			{...otherProps}
 			className="key-value-input"
-			onChange={event => {
+			onChange={(event) => {
 				const value = normalizeFieldName(event.target.value);
 				onChange({target: {value}});
 			}}
@@ -80,7 +80,7 @@ const Main = ({
 				dispatch={dispatch}
 				name={`keyValueLabel${name}`}
 				onBlur={onTextBlur}
-				onChange={event => {
+				onChange={(event) => {
 					const {value} = event.target;
 
 					onTextChange(event);
@@ -104,7 +104,7 @@ const Main = ({
 			<KeyValue
 				disabled={keywordReadOnly}
 				onBlur={onKeywordBlur}
-				onChange={event => {
+				onChange={(event) => {
 					const {value} = event.target;
 
 					generateKeywordRef.current = false;
@@ -126,20 +126,20 @@ const KeyValueProxy = connectStore(
 			<Main
 				{...otherProps}
 				keyword={keyword}
-				onKeywordBlur={event =>
+				onKeywordBlur={(event) =>
 					emit('fieldKeywordBlurred', event, event.target.value)
 				}
 				onKeywordChange={(event, value) => {
 					setKeyword(value);
 					emit('fieldKeywordEdited', event, value);
 				}}
-				onTextBlur={event =>
+				onTextBlur={(event) =>
 					emit('fieldBlurred', event, event.target.value)
 				}
-				onTextChange={event =>
+				onTextChange={(event) =>
 					emit('fieldEdited', event, event.target.value)
 				}
-				onTextFocus={event =>
+				onTextFocus={(event) =>
 					emit('fieldFocused', event, event.target.value)
 				}
 			/>

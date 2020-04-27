@@ -151,7 +151,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 			status: STATUS_RUNNING,
 		};
 
-		return APIService.runExperiment(body).then(response => {
+		return APIService.runExperiment(body).then((response) => {
 			const {segmentsExperiment} = response;
 
 			dispatch(

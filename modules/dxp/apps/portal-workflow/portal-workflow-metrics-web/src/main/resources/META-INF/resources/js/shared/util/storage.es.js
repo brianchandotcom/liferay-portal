@@ -36,10 +36,10 @@ const setJsonItem = (storage, key, json = {}) => {
 	storage.setItem(key, jsonString);
 };
 
-const jsonStorage = storage => {
+const jsonStorage = (storage) => {
 	return {
-		get: key => getJsonItem(storage, key),
-		remove: key => storage.removeItem(key),
+		get: (key) => getJsonItem(storage, key),
+		remove: (key) => storage.removeItem(key),
 		set: (key, value) => setJsonItem(storage, key, value),
 	};
 };

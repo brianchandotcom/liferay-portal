@@ -25,9 +25,9 @@ const {Group, Item, ItemList} = ClayDropDown;
 
 export default ({columns, disabled}) => {
 	const [, dispatch] = useContext(SearchContext);
-	columns = columns.filter(column => column.sortable);
+	columns = columns.filter((column) => column.sortable);
 
-	let defaultColumn = columns.find(column =>
+	let defaultColumn = columns.find((column) =>
 		Object.hasOwnProperty.call(column, 'asc')
 	);
 
@@ -62,8 +62,8 @@ export default ({columns, disabled}) => {
 				<ClayDropDown
 					active={active}
 					alignmentPosition={Align.BottomLeft}
-					onActiveChange={newActive =>
-						setState(prevState => ({
+					onActiveChange={(newActive) =>
+						setState((prevState) => ({
 							...prevState,
 							active: newActive,
 						}))
@@ -98,7 +98,7 @@ export default ({columns, disabled}) => {
 									active={column === columnObject.key}
 									href=""
 									key={index}
-									onClick={event => {
+									onClick={(event) => {
 										event.preventDefault();
 
 										sort(asc, columnObject.key);

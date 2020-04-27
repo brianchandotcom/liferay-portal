@@ -60,7 +60,7 @@ export default ({
 	useEffect(() => {
 		if (dataLayoutId) {
 			getItem(`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`).then(
-				dataLayout =>
+				(dataLayout) =>
 					dispatch({
 						payload: {dataLayout},
 						type: UPDATE_DATA_LAYOUT,
@@ -73,7 +73,7 @@ export default ({
 		if (dataDefinitionId) {
 			getItem(
 				`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-			).then(dataDefinition =>
+			).then((dataDefinition) =>
 				dispatch({
 					payload: {dataDefinition},
 					type: UPDATE_DATA_DEFINITION,
@@ -109,7 +109,7 @@ export default ({
 						});
 					}
 				)
-				.catch(error => {
+				.catch((error) => {
 					if (process.env.NODE_ENV === 'development') {
 						console.warn(
 							`AppContextProvider: promise rejected: ${error}`

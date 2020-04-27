@@ -12,11 +12,11 @@
  * details.
  */
 
-(function(Liferay) {
-	Liferay.lazyLoad = function() {
+(function (Liferay) {
+	Liferay.lazyLoad = function () {
 		var failureCallback;
 
-		var isFunction = function(val) {
+		var isFunction = function (val) {
 			return typeof val === 'function';
 		};
 
@@ -46,7 +46,7 @@
 			}
 		}
 
-		return function() {
+		return function () {
 			var args = [];
 
 			for (var i = 0; i < arguments.length; ++i) {
@@ -55,7 +55,7 @@
 
 			Liferay.Loader.require(
 				modules,
-				function() {
+				function () {
 					for (var i = 0; i < arguments.length; ++i) {
 						args.splice(i, 0, arguments[i]);
 					}

@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-field-normalizer',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var AObject = A.Object;
 		var Lang = A.Lang;
@@ -34,9 +34,9 @@ AUI.add(
 			'userId',
 		];
 
-		var populateRole = function(assignments) {
-			KaleoDesignerRemoteServices.getRole(assignments.roleId, data => {
-				AArray.each(data, item => {
+		var populateRole = function (assignments) {
+			KaleoDesignerRemoteServices.getRole(assignments.roleId, (data) => {
+				AArray.each(data, (item) => {
 					if (item) {
 						var index = assignments.roleId.indexOf(item.roleId);
 
@@ -46,12 +46,12 @@ AUI.add(
 			});
 		};
 
-		var populateUser = function(assignments) {
+		var populateUser = function (assignments) {
 			if (isValue(assignments.userId)) {
 				KaleoDesignerRemoteServices.getUser(
 					assignments.userId,
-					data => {
-						AArray.each(data, item => {
+					(data) => {
+						AArray.each(data, (item) => {
 							if (item) {
 								var index = assignments.userId.indexOf(
 									item.userId
@@ -68,7 +68,7 @@ AUI.add(
 			}
 		};
 
-		var _put = function(obj, key, value, index) {
+		var _put = function (obj, key, value, index) {
 			obj[key] = obj[key] || [];
 
 			if (index === undefined) {
@@ -104,7 +104,7 @@ AUI.add(
 				var assignments = {};
 
 				if (data && data.length) {
-					COL_TYPES_ASSIGNMENT.forEach(item1 => {
+					COL_TYPES_ASSIGNMENT.forEach((item1) => {
 						var value = data[0][item1];
 
 						if (!isValue(value)) {
@@ -128,7 +128,7 @@ AUI.add(
 
 						if (
 							item1 !== 'receptionType' &&
-							AArray.some(assignmentValue, item2 => {
+							AArray.some(assignmentValue, (item2) => {
 								var valid = isValue(item2);
 
 								if (

@@ -12,7 +12,7 @@
  * details.
  */
 
-export const formDataToObj = formData =>
+export const formDataToObj = (formData) =>
 	Array.from(formData.entries()).reduce((accumulator, [key, value]) => {
 		accumulator[key] = value;
 

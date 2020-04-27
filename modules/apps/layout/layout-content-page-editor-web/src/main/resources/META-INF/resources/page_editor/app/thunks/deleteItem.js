@@ -19,7 +19,7 @@ import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 
 export default function deleteItem({itemId, store}) {
-	return dispatch => {
+	return (dispatch) => {
 		const {segmentsExperienceId} = store;
 
 		return LayoutService.deleteItem({
@@ -30,11 +30,11 @@ export default function deleteItem({itemId, store}) {
 			.then(({deletedFragmentEntryLinkIds = [], layoutData}) => {
 				const deletedWidgets = deletedFragmentEntryLinkIds
 					.map(
-						fragmentEntryLinkId =>
+						(fragmentEntryLinkId) =>
 							store.fragmentEntryLinks[fragmentEntryLinkId]
 					)
 					.filter(
-						fragmentEntryLink =>
+						(fragmentEntryLink) =>
 							fragmentEntryLink.editableValues.portletId
 					);
 
@@ -49,7 +49,7 @@ export default function deleteItem({itemId, store}) {
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
-				}).then(pageContents => {
+				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({
 							pageContents,

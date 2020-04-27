@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-staging',
-	A => {
+	(A) => {
 		var StagingBar = {
 			init(config) {
 				var instance = this;

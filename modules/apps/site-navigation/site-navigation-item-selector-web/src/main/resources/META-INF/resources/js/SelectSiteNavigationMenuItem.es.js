@@ -20,18 +20,18 @@ import React, {useCallback, useState} from 'react';
 const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 	const [filterQuery, setFilterQuery] = useState('');
 
-	const handleQueryChange = useCallback(event => {
+	const handleQueryChange = useCallback((event) => {
 		const value = event.target.value;
 
 		setFilterQuery(value);
 	}, []);
 
-	const handleSelectionChange = selectedNodeIds => {
+	const handleSelectionChange = (selectedNodeIds) => {
 		const selectedNodeId = [...selectedNodeIds][0];
 
 		if (selectedNodeId) {
 			const {id, name} = nodes[0].children.find(
-				node => node.id === selectedNodeId
+				(node) => node.id === selectedNodeId
 			);
 
 			const data = {

@@ -26,7 +26,7 @@
  *
  * https://gist.github.com/maccesch/995144
  */
-var Lagrange = function(x1, y1, x2, y2) {
+var Lagrange = function (x1, y1, x2, y2) {
 	this.xs = [x1, x2];
 	this.ys = [y1, y2];
 	this.ws = [];
@@ -37,7 +37,7 @@ var Lagrange = function(x1, y1, x2, y2) {
  * Adds a new point to the polynomial. L(x) = y
  * @return {Number} The index of the added point. Used for changing the point. See changePoint.
  */
-Lagrange.prototype.addPoint = function(x, y) {
+Lagrange.prototype.addPoint = function (x, y) {
 	this.xs.push(x);
 	this.ys.push(y);
 	this._updateWeights();
@@ -48,7 +48,7 @@ Lagrange.prototype.addPoint = function(x, y) {
 /**
  * Changes a previously added point.
  */
-Lagrange.prototype.changePoint = function(index, x, y) {
+Lagrange.prototype.changePoint = function (index, x, y) {
 	this.xs[index] = x;
 	this.ys[index] = y;
 	this._updateWeights();
@@ -57,7 +57,7 @@ Lagrange.prototype.changePoint = function(index, x, y) {
 /**
  * Recalculate barycentric weights.
  */
-Lagrange.prototype._updateWeights = function() {
+Lagrange.prototype._updateWeights = function () {
 	var k = this.xs.length;
 	var w;
 
@@ -77,7 +77,7 @@ Lagrange.prototype._updateWeights = function() {
 /**
  * Calculate L(x)
  */
-Lagrange.prototype.valueOf = function(x) {
+Lagrange.prototype.valueOf = function (x) {
 	var a = 0;
 	var b = 0;
 	var c = 0;
@@ -96,7 +96,7 @@ Lagrange.prototype.valueOf = function(x) {
 	return b / c;
 };
 
-Lagrange.prototype.addMultiPoints = function(arr) {
+Lagrange.prototype.addMultiPoints = function (arr) {
 	for (var i = 0, n = arr.length; i < n; i++) {
 		if (i !== 0 && i !== 1) {
 			this.addPoint(arr[i][1], arr[i][2]);

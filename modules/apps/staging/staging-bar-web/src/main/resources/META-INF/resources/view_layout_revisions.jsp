@@ -189,14 +189,14 @@ function <portlet:namespace />selectRevision(
 	Liferay.Util.fetch(themeDisplay.getPathMain() + '/portal/update_layout', {
 		body: Liferay.Util.objectToFormData(updateLayoutData),
 		method: 'POST',
-	}).then(function() {
+	}).then(function () {
 		var parentWindow = Liferay.Util.getOpener();
 
 		parentWindow.location = parentWindow.location.href.split('?')[0];
 	});
 }
 
-(function() {
+(function () {
 	var layoutBranchesContainers = document.querySelectorAll(
 		'.layout-variation-container'
 	);
@@ -205,22 +205,24 @@ function <portlet:namespace />selectRevision(
 	);
 
 	if (layoutBranchesContainers && variationsSelector) {
-		variationsSelector.addEventListener('change', function() {
+		variationsSelector.addEventListener('change', function () {
 			var variation = variationsSelector.value;
 
 			if (variation === 'all') {
-				Array.prototype.forEach.call(layoutBranchesContainers, function(
-					layoutBranchesContainer
-				) {
-					layoutBranchesContainer.classList.remove('hide');
-				});
+				Array.prototype.forEach.call(
+					layoutBranchesContainers,
+					function (layoutBranchesContainer) {
+						layoutBranchesContainer.classList.remove('hide');
+					}
+				);
 			}
 			else {
-				Array.prototype.forEach.call(layoutBranchesContainers, function(
-					layoutBranchesContainer
-				) {
-					layoutBranchesContainer.classList.add('hide');
-				});
+				Array.prototype.forEach.call(
+					layoutBranchesContainers,
+					function (layoutBranchesContainer) {
+						layoutBranchesContainer.classList.add('hide');
+					}
+				);
 
 				var variationElement = document.getElementById(
 					'<portlet:namespace />' + variation

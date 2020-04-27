@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-toggler-key-filter',
-	A => {
+	(A) => {
 		var KeyMap = A.Event.KeyMap;
 
 		var NAME = 'togglerkeyfilter';

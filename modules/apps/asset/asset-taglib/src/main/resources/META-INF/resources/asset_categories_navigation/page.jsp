@@ -98,7 +98,7 @@ if (categoryId > 0) {
 		'#<%= namespace %>taglibAssetCategoriesNavigationPanel .lfr-asset-category-list-container'
 	);
 
-	treeViews.each(function(item, index, collection) {
+	treeViews.each(function (item, index, collection) {
 		var assetCategoryList = item.one('.lfr-asset-category-list');
 
 		var treeView = new A.TreeView({
@@ -114,7 +114,7 @@ if (categoryId > 0) {
 
 			selectedChild.expand();
 
-			selectedChild.eachParent(function(node) {
+			selectedChild.eachParent(function (node) {
 				if (node instanceof A.TreeNode) {
 					node.expand();
 				}

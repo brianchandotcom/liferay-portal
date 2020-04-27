@@ -12,8 +12,8 @@
  * details.
  */
 
-(function() {
-	var adjustScrollTop = function() {
+(function () {
+	var adjustScrollTop = function () {
 		var controlMenu;
 		var controlMenuId;
 		var controlMenuScroll;
@@ -42,7 +42,7 @@
 		}
 	};
 
-	var handleFormRegistered = function(event) {
+	var handleFormRegistered = function (event) {
 		if (event.form && event.form.formValidator) {
 			AUI().Do.after(
 				adjustScrollTop,

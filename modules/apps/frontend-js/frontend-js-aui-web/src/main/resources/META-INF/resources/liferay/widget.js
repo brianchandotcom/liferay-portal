@@ -14,7 +14,7 @@
 
 window.Liferay = window.Liferay || {};
 
-Liferay.Widget = function(options) {
+Liferay.Widget = function (options) {
 	options = options || {};
 
 	var height = options.height || '100%';

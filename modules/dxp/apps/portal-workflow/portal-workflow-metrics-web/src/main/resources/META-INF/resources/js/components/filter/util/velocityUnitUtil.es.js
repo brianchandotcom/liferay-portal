@@ -12,7 +12,7 @@
 
 import moment from 'moment';
 
-const asDefault = velocityUnit => {
+const asDefault = (velocityUnit) => {
 	return {
 		...velocityUnit,
 		active: true,
@@ -55,7 +55,7 @@ const velocityUnitsMap = {
 	730: [asDefault(monthsUnit), yearsUnit],
 };
 
-const getVelocityUnits = timeRange => {
+const getVelocityUnits = (timeRange) => {
 	if (!timeRange.dateEnd || !timeRange.dateStart) {
 		return [];
 	}
@@ -71,8 +71,8 @@ const getVelocityUnits = timeRange => {
 
 	return (
 		Object.keys(velocityUnitsMap)
-			.filter(key => daysDiff < key)
-			.map(key => velocityUnitsMap[key])[0] || [asDefault(yearsUnit)]
+			.filter((key) => daysDiff < key)
+			.map((key) => velocityUnitsMap[key])[0] || [asDefault(yearsUnit)]
 	);
 };
 

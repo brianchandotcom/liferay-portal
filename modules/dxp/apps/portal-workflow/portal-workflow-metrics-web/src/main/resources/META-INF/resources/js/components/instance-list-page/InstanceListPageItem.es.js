@@ -22,7 +22,7 @@ import {processStatusConstants} from '../filter/ProcessStatusFilter.es';
 import {InstanceListContext} from './InstanceListPageProvider.es';
 import {ModalContext} from './modal/ModalProvider.es';
 
-const getSLAStatusIcon = slaStatus => {
+const getSLAStatusIcon = (slaStatus) => {
 	const items = {
 		OnTime: {
 			bgColor: 'bg-success-light',
@@ -69,12 +69,12 @@ const Item = ({totalCount, ...instance}) => {
 	} = instance;
 
 	useEffect(() => {
-		setChecked(!!selectedItems.find(item => item.id === id));
+		setChecked(!!selectedItems.find((item) => item.id === id));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedItems]);
 
 	const assignedToUser = !!assignees.find(({id}) => id === Number(userId));
-	const assigneeNames = assignees.map(user => user.name).join(', ');
+	const assigneeNames = assignees.map((user) => user.name).join(', ');
 	const completed = status === processStatusConstants.completed;
 	const {reviewer} = assignees.find(({id}) => id === -1) || {};
 
@@ -94,7 +94,7 @@ const Item = ({totalCount, ...instance}) => {
 
 		const updatedItems = target.checked
 			? [...selectedItems, instance]
-			: selectedItems.filter(item => item.id !== id);
+			: selectedItems.filter((item) => item.id !== id);
 
 		setSelectAll(totalCount > 0 && totalCount === updatedItems.length);
 		setSelectedItems(updatedItems);

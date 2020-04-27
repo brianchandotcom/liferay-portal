@@ -76,7 +76,7 @@ String groupId = String.valueOf(group.getGroupId());
 			dialog: {
 				destroyOnHide: true,
 				on: {
-					destroy: function() {
+					destroy: function () {
 						Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 					},
 				},

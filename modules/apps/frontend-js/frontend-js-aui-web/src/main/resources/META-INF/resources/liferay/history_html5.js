@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-history-html5',
-	A => {
+	(A) => {
 		var AObject = A.Object;
 		var History = Liferay.History;
 		var Lang = A.Lang;
@@ -95,12 +95,14 @@ AUI.add(
 							state = hashMap;
 
 							A.each(state, (value1, key1) => {
-								instance.PROTECTED_HASH_KEYS.forEach(value2 => {
-									if (value2.test(key1)) {
-										delete state[key1];
-										protectedHashMap[key1] = value1;
+								instance.PROTECTED_HASH_KEYS.forEach(
+									(value2) => {
+										if (value2.test(key1)) {
+											delete state[key1];
+											protectedHashMap[key1] = value1;
+										}
 									}
-								});
+								);
 							});
 
 							uriData.pop();

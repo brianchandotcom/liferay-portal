@@ -94,7 +94,7 @@
 			secondaryBar: '#actionButtons',
 		});
 
-		var clearManagementBarHandles = function(event) {
+		var clearManagementBarHandles = function (event) {
 			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 				managementBar.destroy();
 

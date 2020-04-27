@@ -23,7 +23,7 @@ const OPTIONS_TYPES = {
 
 export default function DnD({children, index, onDragEnd = () => {}, option}) {
 	const [{isDragging}, drag, preview] = useDrag({
-		collect: monitor => ({
+		collect: (monitor) => ({
 			isDragging: monitor.isDragging(),
 		}),
 		end: (item, monitor) => {
@@ -42,11 +42,11 @@ export default function DnD({children, index, onDragEnd = () => {}, option}) {
 
 	const [{canDrop, isOver}, drop] = useDrop({
 		accept: OPTIONS_TYPES.OPTION,
-		collect: monitor => ({
+		collect: (monitor) => ({
 			canDrop: monitor.canDrop(),
 			isOver: monitor.isOver(),
 		}),
-		drop: item => ({
+		drop: (item) => ({
 			itemPosition: item.position,
 			targetPosition: index,
 		}),

@@ -24,7 +24,7 @@ import {act} from 'react-dom/test-utils';
 
 import Flags from '../../../src/main/resources/META-INF/resources/flags/js/components/Flags.es';
 
-const formDataToObject = formData =>
+const formDataToObject = (formData) =>
 	Array.from(formData).reduce(
 		(memo, [key, val]) => ({
 			...memo,
@@ -89,7 +89,7 @@ describe('Flags', () => {
 
 			const form = await waitForElement(() => getByRole('form'));
 
-			[...form.elements].forEach(element => {
+			[...form.elements].forEach((element) => {
 				element.value = 'someValue';
 			});
 

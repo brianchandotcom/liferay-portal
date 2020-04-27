@@ -37,7 +37,7 @@ const ListItems = ({itemType, items}) => {
 
 	const itemId = itemType === 'DATA_LAYOUT' ? dataLayoutId : dataListViewId;
 
-	const onItemIdChange = id => {
+	const onItemIdChange = (id) => {
 		const type =
 			itemType === 'DATA_LAYOUT'
 				? UPDATE_DATA_LAYOUT_ID

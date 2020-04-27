@@ -96,14 +96,14 @@ function switchLayoutData(state, {currentExperienceId, targetExperienceId}) {
 	const {layoutData: prevLayoutData, layoutDataList} = nextState;
 
 	const layoutDataItem = state.layoutDataList.find(
-		layoutDataItem =>
+		(layoutDataItem) =>
 			layoutDataItem.segmentsExperienceId === targetExperienceId
 	);
 
 	nextState = {
 		...nextState,
 		layoutData: layoutDataItem.layoutData,
-		layoutDataList: layoutDataList.map(layoutDataItem => {
+		layoutDataList: layoutDataList.map((layoutDataItem) => {
 			if (currentExperienceId === layoutDataItem.segmentsExperienceId) {
 				return {
 					...layoutDataItem,
@@ -133,7 +133,7 @@ function removeLayoutDataItemById(state, segmentsExperienceId) {
 	const layoutDataList = state.layoutDataList;
 
 	const updatedLayoutDataList = layoutDataList.filter(
-		layoutDataItem =>
+		(layoutDataItem) =>
 			layoutDataItem.segmentsExperienceId !== segmentsExperienceId
 	);
 
@@ -153,11 +153,11 @@ function removeLayoutDataItemById(state, segmentsExperienceId) {
 function updateUsedWidgets(widgets, portletIds) {
 	const filteredWidgets = [...widgets];
 
-	filteredWidgets.forEach(widgetCategory => {
+	filteredWidgets.forEach((widgetCategory) => {
 		const {categories = [], portlets = []} = widgetCategory;
 
 		widgetCategory.categories = updateUsedWidgets(categories, portletIds);
-		widgetCategory.portlets = portlets.map(portlet => {
+		widgetCategory.portlets = portlets.map((portlet) => {
 			if (
 				portletIds.indexOf(portlet.portletId) !== -1 &&
 				!portlet.instanceable

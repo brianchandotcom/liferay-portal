@@ -107,7 +107,7 @@ describe('The completion velocity card component should', () => {
 			timeRangeFilter,
 			'filterItem'
 		);
-		const activeItem = filterItems.find(item =>
+		const activeItem = filterItems.find((item) =>
 			item.className.includes('active')
 		);
 		const activeItemName = await findByTestId(activeItem, 'filterItemName');
@@ -123,7 +123,7 @@ describe('The completion velocity card component should', () => {
 			'filterItem'
 		);
 
-		const activeItem = filterItems.find(item =>
+		const activeItem = filterItems.find((item) =>
 			item.className.includes('active')
 		);
 		const activeItemName = await findByTestId(activeItem, 'filterItemName');

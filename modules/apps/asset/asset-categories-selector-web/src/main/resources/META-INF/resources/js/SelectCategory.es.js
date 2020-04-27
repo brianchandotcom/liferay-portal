@@ -17,7 +17,7 @@ import {Treeview} from 'frontend-js-components-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 function visit(nodes, callback) {
-	nodes.forEach(node => {
+	nodes.forEach((node) => {
 		callback(node);
 
 		if (node.children) {
@@ -36,17 +36,17 @@ function SelectCategory({
 
 	const selectedNodesRef = useRef(null);
 
-	const handleQueryChange = useCallback(event => {
+	const handleQueryChange = useCallback((event) => {
 		const value = event.target.value;
 
 		setFilterQuery(value);
 	}, []);
 
-	const handleSelectionChange = selectedNodes => {
+	const handleSelectionChange = (selectedNodes) => {
 		const data = {};
 
 		// Mark newly selected nodes as selected.
-		visit(nodes, node => {
+		visit(nodes, (node) => {
 			if (selectedNodes.has(node.id)) {
 				data[node.id] = {
 					categoryId: node.vocabulary ? 0 : node.id,
@@ -76,7 +76,7 @@ function SelectCategory({
 
 	const initialSelectedNodeIds = [];
 
-	visit(nodes, node => {
+	visit(nodes, (node) => {
 		if (node.selected) {
 			initialSelectedNodeIds.push(node.id);
 		}

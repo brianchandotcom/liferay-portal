@@ -40,7 +40,7 @@ function ToolbarBody() {
 	const isMounted = useIsMounted();
 	const load = useLoad();
 	const selectItem = useSelectItem();
-	const store = useSelector(state => state);
+	const store = useSelector((state) => state);
 
 	const {
 		layoutData,
@@ -59,7 +59,7 @@ function ToolbarBody() {
 
 	const loading = useRef(() => {
 		Promise.all(
-			config.toolbarPlugins.map(toolbarPlugin => {
+			config.toolbarPlugins.map((toolbarPlugin) => {
 				const {pluginEntryPoint} = toolbarPlugin;
 				const promise = load(pluginEntryPoint, pluginEntryPoint);
 
@@ -73,7 +73,7 @@ function ToolbarBody() {
 				return register(pluginEntryPoint, promise, {
 					app,
 					toolbarPlugin,
-				}).then(plugin => {
+				}).then((plugin) => {
 					if (!plugin) {
 						throw new Error(
 							`Failed to get instance from ${pluginEntryPoint}`
@@ -86,7 +86,7 @@ function ToolbarBody() {
 					}
 				});
 			})
-		).catch(error => {
+		).catch((error) => {
 			if (process.env.NODE_ENV === 'development') {
 				console.error(error);
 			}
@@ -110,7 +110,7 @@ function ToolbarBody() {
 		}, [])
 	);
 
-	const handleDiscardDraft = event => {
+	const handleDiscardDraft = (event) => {
 		if (
 			!confirm(
 				Liferay.Language.get(
@@ -122,7 +122,7 @@ function ToolbarBody() {
 		}
 	};
 
-	const handleSubmit = event => {
+	const handleSubmit = (event) => {
 		if (
 			config.masterUsed &&
 			!confirm(
@@ -139,7 +139,7 @@ function ToolbarBody() {
 		dispatch(undo({store}));
 	};
 
-	const deselectItem = event => {
+	const deselectItem = (event) => {
 		if (event.target === event.currentTarget) {
 			selectItem(null);
 		}

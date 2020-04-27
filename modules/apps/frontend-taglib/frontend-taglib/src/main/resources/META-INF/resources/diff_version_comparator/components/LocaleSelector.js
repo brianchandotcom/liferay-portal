@@ -28,7 +28,7 @@ export default function LocaleSelector({
 				onChange={onChange}
 				value={selectedLanguageId}
 			>
-				{locales.map(locale => (
+				{locales.map((locale) => (
 					<ClaySelect.Option
 						key={locale.languageId}
 						label={locale.displayName}

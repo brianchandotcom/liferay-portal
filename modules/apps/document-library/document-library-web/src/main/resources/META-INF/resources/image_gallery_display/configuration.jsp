@@ -104,7 +104,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	);
 
 	if (openFolderSelectorButton) {
-		openFolderSelectorButton.addEventListener('click', function(event) {
+		openFolderSelectorButton.addEventListener('click', function (event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -126,7 +126,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 					uri: '<%= HtmlUtil.escapeJS(selectFolderURL.toString()) %>',
 				},
-				function(event) {
+				function (event) {
 					var folderData = {
 						idString: 'rootFolderId',
 						idValue: event.folderid,

@@ -25,7 +25,7 @@ function PromisesResolver({children, promises}) {
 			.then(() => {
 				setLoading(() => false);
 			})
-			.catch(error => {
+			.catch((error) => {
 				setError(() => error);
 			});
 	}, [promises]);

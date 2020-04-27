@@ -176,7 +176,7 @@ export const formatYearDate = (date, timeRange) => {
 	)}-${lastDayOfYear.format(Liferay.Language.get('mmm-dd-yyyy'))}`;
 };
 
-export const getAxisMeasures = value => {
+export const getAxisMeasures = (value) => {
 	const numChars = Math.floor(value).toString().length;
 	const decOrder = Math.pow(10, numChars - 1);
 	let maxValue = decOrder * Math.floor(value / decOrder) + decOrder;
@@ -216,16 +216,16 @@ export const getAxisMeasures = value => {
 	};
 };
 
-export const getAxisMeasuresFromData = data =>
+export const getAxisMeasuresFromData = (data) =>
 	getAxisMeasures(
 		Math.max(
 			...data
 				.reduce((prev, next) => prev.concat(next), [])
-				.filter(value => typeof value === 'number')
+				.filter((value) => typeof value === 'number')
 		)
 	);
 
-export const getRangeKey = timeRange => {
+export const getRangeKey = (timeRange) => {
 	const endDate = moment.utc(timeRange.dateEnd);
 	const startDate = moment.utc(timeRange.dateStart);
 
@@ -241,7 +241,7 @@ export const getRangeKey = timeRange => {
 		LAST_YEAR,
 	];
 
-	const diffItem = diffList.find(key => key >= diff);
+	const diffItem = diffList.find((key) => key >= diff);
 	if (typeof diffItem !== 'undefined') {
 		return diffItem;
 	}
@@ -292,7 +292,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				padRight: 0,
 			};
 		},
-		[LAST_30_DAYS]: type => {
+		[LAST_30_DAYS]: (type) => {
 			if (type === DAYS) {
 				return {
 					offset: 6,
@@ -307,7 +307,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				padRight: 0,
 			};
 		},
-		[LAST_90_DAYS]: type => {
+		[LAST_90_DAYS]: (type) => {
 			if (type === DAYS) {
 				return {
 					offset: 11,
@@ -331,7 +331,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				padRight: 0,
 			};
 		},
-		[LAST_180_DAYS]: type => {
+		[LAST_180_DAYS]: (type) => {
 			if (type === WEEKS) {
 				return {
 					offset: 4,
@@ -346,7 +346,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				padRight: 0,
 			};
 		},
-		[LAST_YEAR]: type => {
+		[LAST_YEAR]: (type) => {
 			if (type === WEEKS) {
 				const lengthWeek = lengthKeys === 52 ? 5 : 6;
 

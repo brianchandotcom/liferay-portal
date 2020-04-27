@@ -31,10 +31,10 @@ function getFormTemplate(keywords, emptySearchEnabled) {
 describe('liferay-search-bar', () => {
 	let A;
 
-	beforeEach(done => {
+	beforeEach((done) => {
 		require('../../src/main/resources/META-INF/resources/js/search_bar');
 
-		AUI().use(['aui-base', 'aui-node', 'liferay-search-bar'], Alloy => {
+		AUI().use(['aui-base', 'aui-node', 'liferay-search-bar'], (Alloy) => {
 			A = Alloy;
 
 			done();

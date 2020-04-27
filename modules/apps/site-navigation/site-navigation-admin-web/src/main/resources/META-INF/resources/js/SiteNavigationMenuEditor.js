@@ -375,9 +375,7 @@ SiteNavigationMenuEditor.STATE = {
 	 * @private
 	 * @type {number}
 	 */
-	_controlMenuHeight: Config.number()
-		.internal()
-		.value(0),
+	_controlMenuHeight: Config.number().internal().value(0),
 
 	/**
 	 * @default -1
@@ -386,9 +384,7 @@ SiteNavigationMenuEditor.STATE = {
 	 * @private
 	 * @type {number}
 	 */
-	_currentYPosition: Config.number()
-		.internal()
-		.value(-1),
+	_currentYPosition: Config.number().internal().value(-1),
 
 	/**
 	 * Internal <code>DragDrop</code> instance.
@@ -420,9 +416,7 @@ SiteNavigationMenuEditor.STATE = {
 	 * @private
 	 * @type {number}
 	 */
-	_managementBarHeight: Config.number()
-		.internal()
-		.value(0),
+	_managementBarHeight: Config.number().internal().value(0),
 
 	/**
 	 * URL for the edit site navigation menu item parent action.

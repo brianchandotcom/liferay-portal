@@ -140,7 +140,7 @@ if (vocabulary != null) {
 		minimumRows: 1,
 		namespace: '<portlet:namespace />',
 		on: {
-			clone: function(event) {
+			clone: function (event) {
 				event.row.all('.subtype-select').hide();
 			},
 		},
@@ -152,7 +152,7 @@ if (vocabulary != null) {
 
 	form.delegate(
 		'change',
-		function(event) {
+		function (event) {
 			var target = event.currentTarget;
 
 			var row = target.ancestor('.lfr-form-row');

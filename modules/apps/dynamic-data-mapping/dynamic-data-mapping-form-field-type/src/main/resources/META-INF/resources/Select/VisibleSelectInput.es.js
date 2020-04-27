@@ -23,7 +23,7 @@ const LabelOptionListItem = ({onCloseButtonClicked, option}) => (
 			className="ddm-select-option-label"
 			closeButtonProps={{
 				'data-testid': `closeButton${option.value}`,
-				onClick: event => {
+				onClick: (event) => {
 					event.preventDefault();
 					event.stopPropagation();
 
@@ -72,7 +72,7 @@ const VisibleSelectInput = forwardRef(
 			() =>
 				isValueEmpty
 					? triggerPlaceholder
-					: options.find(option => option.value === value[0]).label,
+					: options.find((option) => option.value === value[0]).label,
 			[isValueEmpty, options, triggerPlaceholder, value]
 		);
 
@@ -104,9 +104,9 @@ const VisibleSelectInput = forwardRef(
 							label={selectedLabel}
 						/>
 					) : (
-						value.map(item => {
+						value.map((item) => {
 							const option = options.find(
-								option => option.value === item
+								(option) => option.value === item
 							);
 
 							return (

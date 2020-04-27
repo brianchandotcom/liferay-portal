@@ -43,7 +43,7 @@ function getUpdateExperiencePriorityTargets(
 	direction
 ) {
 	const targetIndex = orderedExperiences.findIndex(
-		experience => experience.segmentsExperienceId === targetExperienceId
+		(experience) => experience.segmentsExperienceId === targetExperienceId
 	);
 
 	let subtargetIndex;
@@ -97,7 +97,7 @@ const ExperienceSelector = ({
 		},
 	});
 
-	const [debouncedSetOpen] = useDebounceCallback(value => {
+	const [debouncedSetOpen] = useDebounceCallback((value) => {
 		if (isMounted()) {
 			setOpen(value);
 		}
@@ -197,7 +197,7 @@ const ExperienceSelector = ({
 						type: 'success',
 					});
 				})
-				.catch(_error => {
+				.catch((_error) => {
 					if (isMounted()) {
 						setEditingExperience({
 							error: Liferay.Language.get(
@@ -214,7 +214,7 @@ const ExperienceSelector = ({
 
 	const handleOnNewExperiecneClick = () => setOpenModal(true);
 
-	const handleEditExperienceClick = experienceData => {
+	const handleEditExperienceClick = (experienceData) => {
 		const {name, segmentsEntryId, segmentsExperienceId} = experienceData;
 
 		setOpenModal(true);
@@ -226,18 +226,18 @@ const ExperienceSelector = ({
 		});
 	};
 
-	const deleteExperience = id => {
+	const deleteExperience = (id) => {
 		dispatch(
 			removeExperience({
 				segmentsExperienceId: id,
 				selectedExperienceId: selectedExperience.segmentsExperienceId,
 			})
-		).catch(_error => {
+		).catch((_error) => {
 			// TODO handle error
 		});
 	};
 
-	const decreasePriority = id => {
+	const decreasePriority = (id) => {
 		const {subtarget, target} = getUpdateExperiencePriorityTargets(
 			experiences,
 			id,
@@ -251,7 +251,7 @@ const ExperienceSelector = ({
 			})
 		);
 	};
-	const increasePriority = id => {
+	const increasePriority = (id) => {
 		const {subtarget, target} = getUpdateExperiencePriorityTargets(
 			experiences,
 			id,

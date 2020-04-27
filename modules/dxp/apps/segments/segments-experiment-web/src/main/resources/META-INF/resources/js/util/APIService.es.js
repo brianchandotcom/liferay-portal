@@ -164,8 +164,8 @@ export function _getFormDataRequest(body, prefix, formData = new FormData()) {
  */
 function _fetchWithError(url, options = {}) {
 	return fetch(url, options)
-		.then(response => response.json())
-		.then(objectResponse => {
+		.then((response) => response.json())
+		.then((objectResponse) => {
 			if (objectResponse.error) {
 				throw objectResponse.error;
 			}

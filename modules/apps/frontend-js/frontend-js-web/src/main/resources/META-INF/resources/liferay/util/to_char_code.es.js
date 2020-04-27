@@ -14,10 +14,10 @@
 
 import memoize from 'lodash.memoize';
 
-const toCharCode = memoize(name =>
+const toCharCode = memoize((name) =>
 	name
 		.split('')
-		.map(val => val.charCodeAt())
+		.map((val) => val.charCodeAt())
 		.join('')
 );
 

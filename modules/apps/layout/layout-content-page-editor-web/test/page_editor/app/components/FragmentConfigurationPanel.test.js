@@ -95,7 +95,7 @@ const item = {
 	type: '',
 };
 
-const mockDispatch = jest.fn(a => {
+const mockDispatch = jest.fn((a) => {
 	if (typeof a === 'function') {
 		return a(mockDispatch);
 	}

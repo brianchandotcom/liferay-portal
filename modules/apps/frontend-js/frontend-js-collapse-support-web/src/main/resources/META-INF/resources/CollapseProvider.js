@@ -122,7 +122,7 @@ class CollapseProvider {
 					Selector.TRIGGER + ':not(.' + CssClass.COLLAPSED + ')'
 				);
 
-				expandedTriggers.forEach(expandedTrigger => {
+				expandedTriggers.forEach((expandedTrigger) => {
 					if (
 						expandedTrigger !== trigger &&
 						expandedTrigger.dataset.parent === parentId
@@ -178,7 +178,7 @@ class CollapseProvider {
 		return document.querySelector(`[href="#${panel.getAttribute('id')}"]`);
 	}
 
-	_onTriggerClick = event => {
+	_onTriggerClick = (event) => {
 		const trigger = event.delegateTarget;
 
 		if (trigger.tagName === 'A') {
@@ -209,7 +209,7 @@ class CollapseProvider {
 
 		let eventName = false;
 
-		Object.keys(transitionEndEvents).some(name => {
+		Object.keys(transitionEndEvents).some((name) => {
 			if (sampleElement.style[name] !== undefined) {
 				eventName = transitionEndEvents[name];
 

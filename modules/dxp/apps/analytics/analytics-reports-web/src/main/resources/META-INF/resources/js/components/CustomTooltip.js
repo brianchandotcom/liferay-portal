@@ -45,7 +45,7 @@ export default function CustomTooltip(props) {
 				</span>
 			)}
 			<ul className="list-unstyled mb-0">
-				{payload.map(item => {
+				{payload.map((item) => {
 					const [value, name, iconType] = formatter
 						? formatter(item.value, item.name, item.iconType)
 						: [item.value, item.name, item.iconType];

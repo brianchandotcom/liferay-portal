@@ -97,11 +97,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="exportImport"><portlet:param name="mvcRenderCommandName" value="exportImport" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="plid" value="<%= String.valueOf(plid) %>" /> <portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" /><portlet:param name="portletResource" value="<%= portletResource %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 		});
 
-		liferayUpload._uploader.on('alluploadscomplete', function(event) {
+		liferayUpload._uploader.on('alluploadscomplete', function (event) {
 			toggleContinueButton();
 		});
 
-		Liferay.on('tempFileRemoved', function(event) {
+		Liferay.on('tempFileRemoved', function (event) {
 			toggleContinueButton();
 		});
 
@@ -134,14 +134,14 @@ String redirect = ParamUtil.getString(request, "redirect");
 	if (continueButton && exportImportOptions) {
 		var form = document.<portlet:namespace />fm1;
 
-		continueButton.addEventListener('click', function(event) {
+		continueButton.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			Liferay.Util.fetch(form.action)
-				.then(function(response) {
+				.then(function (response) {
 					return response.text();
 				})
-				.then(function(response) {
+				.then(function (response) {
 					exportImportOptions.innerHTML = response;
 
 					dom.globalEval.runScriptsInElement(exportImportOptions);

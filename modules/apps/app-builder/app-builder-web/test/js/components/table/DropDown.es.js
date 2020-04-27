@@ -114,7 +114,7 @@ describe('DropDown', () => {
 			<DropDown
 				actions={[
 					{
-						name: item => item.name,
+						name: (item) => item.name,
 					},
 				]}
 				item={{name: 'action'}}

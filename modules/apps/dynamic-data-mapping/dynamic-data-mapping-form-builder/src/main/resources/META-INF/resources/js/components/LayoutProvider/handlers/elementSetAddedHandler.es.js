@@ -23,7 +23,7 @@ const handleElementSetAdded = (props, state, event) => {
 
 	const visitor = new PagesVisitor(fieldSetPages);
 
-	const newFieldsetPages = visitor.mapFields(field => {
+	const newFieldsetPages = visitor.mapFields((field) => {
 		const name = generateFieldName(pages, field.fieldName);
 
 		const settingsContextVisitor = new PagesVisitor(
@@ -36,7 +36,7 @@ const handleElementSetAdded = (props, state, event) => {
 			settingsContext: {
 				...field.settingsContext,
 				pages: settingsContextVisitor.mapFields(
-					settingsContextField => {
+					(settingsContextField) => {
 						if (settingsContextField.fieldName === 'name') {
 							settingsContextField = {
 								...settingsContextField,

@@ -22,7 +22,7 @@ const DRAG_PREVIEW_STYLES = {
 	maxWidth: '800px',
 };
 
-const ItemDragPreview = props => (
+const ItemDragPreview = (props) => (
 	<div className="list-group">
 		<Item.DecoratedComponent style={DRAG_PREVIEW_STYLES} {...props} />
 	</div>

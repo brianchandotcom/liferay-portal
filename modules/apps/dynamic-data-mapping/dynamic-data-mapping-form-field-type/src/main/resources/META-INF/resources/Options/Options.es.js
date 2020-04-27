@@ -77,7 +77,7 @@ const Options = ({
 	const normalizedValue = useMemo(() => {
 		const formattedValue = {...value};
 
-		Object.keys(value).forEach(languageId => {
+		Object.keys(value).forEach((languageId) => {
 			if (defaultLanguageId !== languageId) {
 				formattedValue[languageId] = formattedValue[languageId].filter(
 					({value}) => !!value
@@ -95,7 +95,7 @@ const Options = ({
 			[];
 
 		return [
-			...options.map(option => ({
+			...options.map((option) => ({
 				...option,
 				generateKeyword: isOptionValueGenerated(
 					defaultLanguageId,
@@ -117,7 +117,7 @@ const Options = ({
 				Liferay.Language.get('option').toLowerCase()
 	);
 
-	const fieldsFilter = fields => {
+	const fieldsFilter = (fields) => {
 		const _fields = [...fields];
 
 		if (defaultLanguageId === editingLanguageId) {
@@ -145,7 +145,7 @@ const Options = ({
 		return [fields, index, property, value];
 	};
 
-	const set = fields => {
+	const set = (fields) => {
 		setFields(fields);
 		onChange(fieldsFilter(fields));
 	};
@@ -174,7 +174,7 @@ const Options = ({
 		return [fields, index, property, value];
 	};
 
-	const normalize = fields => {
+	const normalize = (fields) => {
 		return [normalizeFields(fields)];
 	};
 
@@ -266,7 +266,7 @@ const OptionsProxy = connectStore(
 					defaultLanguageId={defaultLanguageId}
 					disabled={readOnly}
 					editingLanguageId={editingLanguageId}
-					onChange={value => emit('fieldEdited', {}, value)}
+					onChange={(value) => emit('fieldEdited', {}, value)}
 					value={value}
 				>
 					{({
@@ -290,7 +290,7 @@ const OptionsProxy = connectStore(
 								handleField('value', value);
 							}}
 							onTextBlur={handleBlur}
-							onTextChange={event =>
+							onTextChange={(event) =>
 								handleField('label', event.target.value)
 							}
 							onTextFocus={() => {

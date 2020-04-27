@@ -15,7 +15,9 @@
 const SPLIT_REGEX = /({\d+})/g;
 
 export function sub(langKey, args, join = true) {
-	const keyArray = langKey.split(SPLIT_REGEX).filter(val => val.length !== 0);
+	const keyArray = langKey
+		.split(SPLIT_REGEX)
+		.filter((val) => val.length !== 0);
 
 	for (let i = 0; i < args.length; i++) {
 		const arg = args[i];

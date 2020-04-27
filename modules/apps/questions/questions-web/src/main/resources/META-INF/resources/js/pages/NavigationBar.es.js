@@ -28,7 +28,7 @@ export default withRouter(
 			params: {sectionTitle},
 		},
 	}) => {
-		const isActive = value => location.pathname.includes(value);
+		const isActive = (value) => location.pathname.includes(value);
 
 		const context = useContext(AppContext);
 

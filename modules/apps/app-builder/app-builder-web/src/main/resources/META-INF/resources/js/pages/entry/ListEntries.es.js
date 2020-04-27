@@ -52,7 +52,7 @@ const ListEntries = withRouter(({history, location}) => {
 			getItem(`/o/data-engine/v2.0/data-list-views/${dataListViewId}`),
 		])
 			.then(([dataDefinition, dataListView]) => {
-				setState(prevState => ({
+				setState((prevState) => ({
 					...prevState,
 					dataDefinition: {
 						...prevState.dataDefinition,
@@ -66,7 +66,7 @@ const ListEntries = withRouter(({history, location}) => {
 				}));
 			})
 			.catch(() => {
-				setState(prevState => ({
+				setState((prevState) => ({
 					...prevState,
 					isLoading: false,
 				}));
@@ -86,7 +86,7 @@ const ListEntries = withRouter(({history, location}) => {
 			mvcPath: '/edit_entry.jsp',
 		});
 
-	const handleEditItem = dataRecordId => {
+	const handleEditItem = (dataRecordId) => {
 		Liferay.Util.navigate(getEditURL(dataRecordId));
 	};
 
@@ -109,10 +109,10 @@ const ListEntries = withRouter(({history, location}) => {
 
 		if (actionIds.includes(ACTIONS.DELETE_DATA_RECORD)) {
 			actions.push({
-				action: item =>
+				action: (item) =>
 					confirmDelete('/o/data-engine/v2.0/data-records/')(
 						item
-					).then(confirmed => {
+					).then((confirmed) => {
 						if (confirmed) {
 							successToast(
 								Liferay.Language.get('an-entry-was-deleted')
@@ -141,7 +141,7 @@ const ListEntries = withRouter(({history, location}) => {
 						/>
 					)
 				}
-				columns={columns.map(column => ({
+				columns={columns.map((column) => ({
 					key: 'dataRecordValues/' + column,
 					sortable: true,
 					value: DataDefinitionUtils.getFieldLabel(

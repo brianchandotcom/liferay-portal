@@ -21,7 +21,7 @@ const getEditedPages = ({editingLanguageId, name, pages, value}) => {
 	const pageVisitor = new PagesVisitor(pages);
 
 	return pageVisitor.mapFields(
-		field => {
+		(field) => {
 			if (field.name === name) {
 				return {
 					...field,
@@ -60,11 +60,11 @@ export default (evaluatorContext, properties, updateState) => {
 		promise = evaluate(fieldName, {
 			...evaluatorContext,
 			pages: editedPages,
-		}).then(evaluatedPages => {
+		}).then((evaluatedPages) => {
 			if (REVALIDATE_UPDATES.length > 0) {
 				// All non-evaluable operations that were performed after the request
 				// was sent are used here to revalidate the new data.
-				REVALIDATE_UPDATES.forEach(item => {
+				REVALIDATE_UPDATES.forEach((item) => {
 					evaluatedPages = getEditedPages({
 						...item,
 						pages: evaluatedPages,

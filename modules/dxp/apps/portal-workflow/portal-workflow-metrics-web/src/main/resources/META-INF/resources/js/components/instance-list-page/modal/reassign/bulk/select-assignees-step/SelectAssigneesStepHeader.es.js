@@ -39,7 +39,7 @@ const Header = ({data}) => {
 
 		if (users && users.length) {
 			const {assignableUsers = []} =
-				users.find(item => item.workflowTaskId === 0) || {};
+				users.find((item) => item.workflowTaskId === 0) || {};
 
 			setAssignees(assignableUsers);
 		}
@@ -65,11 +65,11 @@ const Header = ({data}) => {
 	};
 
 	const handleSelect = useCallback(
-		newAssignee => {
+		(newAssignee) => {
 			const reassignedTasks = [];
 
 			if (newAssignee) {
-				tasks.forEach(task => {
+				tasks.forEach((task) => {
 					reassignedTasks.push({
 						assigneeId: newAssignee.id,
 						workflowTaskId: task.id,

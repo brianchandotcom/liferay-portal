@@ -88,7 +88,9 @@ const FieldsTabContent = ({keywords, onAddFieldName}) => {
 			fieldTypes={dataDefinitionFields.map(
 				({fieldType, label: {en_US: label}, name}) => ({
 					description: getFieldTypeLabel(fieldTypes, fieldType),
-					disabled: fieldNames.some(fieldName => fieldName === name),
+					disabled: fieldNames.some(
+						(fieldName) => fieldName === name
+					),
 					icon: fieldType,
 					label,
 					name,
@@ -118,9 +120,9 @@ export default ({onAddFieldName}) => {
 			) : (
 				<>
 					<Sidebar.Header>
-						<ClayForm onSubmit={event => event.preventDefault()}>
+						<ClayForm onSubmit={(event) => event.preventDefault()}>
 							<Sidebar.SearchInput
-								onSearch={keywords => setKeywords(keywords)}
+								onSearch={(keywords) => setKeywords(keywords)}
 							/>
 						</ClayForm>
 					</Sidebar.Header>

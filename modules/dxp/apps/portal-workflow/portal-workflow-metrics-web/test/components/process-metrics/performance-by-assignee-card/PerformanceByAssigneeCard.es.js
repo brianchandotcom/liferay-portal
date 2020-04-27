@@ -141,7 +141,7 @@ describe('The performance by assignee card component should', () => {
 				processStepFilter,
 				'filterItem'
 			);
-			const activeItem = filterItems.find(item =>
+			const activeItem = filterItems.find((item) =>
 				item.className.includes('active')
 			);
 			const activeItemName = await findByTestId(
@@ -159,7 +159,7 @@ describe('The performance by assignee card component should', () => {
 				timeRangeFilter,
 				'filterItem'
 			);
-			const activeItem = filterItems.find(item =>
+			const activeItem = filterItems.find((item) =>
 				item.className.includes('active')
 			);
 			const activeItemName = await findByTestId(

@@ -28,7 +28,7 @@ class StringInput extends React.Component {
 		options: [],
 	};
 
-	_handleChange = event => {
+	_handleChange = (event) => {
 		this.props.onChange({value: event.target.value});
 	};
 
@@ -50,7 +50,7 @@ class StringInput extends React.Component {
 				data-testid="options-string"
 				disabled={disabled}
 				onChange={this._handleChange}
-				options={options.map(o => ({
+				options={options.map((o) => ({
 					disabled: o.disabled,
 					label: o.label,
 					value: o.value,

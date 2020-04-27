@@ -39,7 +39,7 @@ describe('Session API', () => {
 		it('deserializes session serialized objects', () => {
 			fetch.mockResponse('serialize://{"key1":"value1","key2":"value2"}');
 
-			getSessionValue('key').then(value => {
+			getSessionValue('key').then((value) => {
 				expect(value).toEqual({
 					key1: 'value1',
 					key2: 'value2',

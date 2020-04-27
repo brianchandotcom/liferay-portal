@@ -67,11 +67,11 @@ name = HtmlUtil.escapeJS(name);
 <aui:script use="<%= modules %>">
 	var onInputHandle;
 
-	var onInput = function(event) {
+	var onInput = function (event) {
 		<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
 	};
 
-	var getInitialContent = function() {
+	var getInitialContent = function () {
 		var data;
 
 		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
@@ -86,7 +86,7 @@ name = HtmlUtil.escapeJS(name);
 	};
 
 	window['<%= name %>'] = {
-		create: function() {
+		create: function () {
 			if (!window['<%= name %>'].instanceReady) {
 				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
 
@@ -98,13 +98,13 @@ name = HtmlUtil.escapeJS(name);
 			}
 		},
 
-		destroy: function() {
+		destroy: function () {
 			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
 		},
 
-		dispose: function() {
+		dispose: function () {
 			var editorEl = document.getElementById('<%= name %>Container');
 
 			if (editorEl) {
@@ -118,7 +118,7 @@ name = HtmlUtil.escapeJS(name);
 			}
 		},
 
-		focus: function() {
+		focus: function () {
 			var focus;
 
 			if (window['<%= name %>'].instanceReady) {
@@ -128,15 +128,15 @@ name = HtmlUtil.escapeJS(name);
 			return focus;
 		},
 
-		getHTML: function() {
+		getHTML: function () {
 			return window['<%= name %>'].getText();
 		},
 
-		getNativeEditor: function() {
+		getNativeEditor: function () {
 			return document.getElementById('<%= name %>');
 		},
 
-		getText: function() {
+		getText: function () {
 			var value;
 
 			var textArea = document.getElementById('<%= name %>');
@@ -154,7 +154,7 @@ name = HtmlUtil.escapeJS(name);
 			return value;
 		},
 
-		initEditor: function() {
+		initEditor: function () {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
 
 				var initEditorFunction =
@@ -173,7 +173,7 @@ name = HtmlUtil.escapeJS(name);
 			</c:if>
 
 			<c:if test="<%= resizable && BrowserSnifferUtil.isIe(request) %>">
-				setTimeout(function() {
+				setTimeout(function () {
 					new A.Resize({
 						handles: 'br',
 						node: '#<%= name %>Container',
@@ -199,13 +199,13 @@ name = HtmlUtil.escapeJS(name);
 
 		instanceReady: false,
 
-		setHTML: function(value) {
+		setHTML: function (value) {
 			if (window['<%= name %>'].instanceReady) {
 				document.getElementById('<%= name %>').value = value || '';
 			}
 		},
 
-		_onLocaleChangedHandler: function(event) {
+		_onLocaleChangedHandler: function (event) {
 			var instance = this;
 
 			var contentsLanguage = event.item.getAttribute('data-value');
@@ -227,7 +227,7 @@ name = HtmlUtil.escapeJS(name);
 		window['<%= name %>'].initEditor();
 	</c:if>
 
-	var destroyInstance = function(event) {
+	var destroyInstance = function (event) {
 		if (event.portletId === '<%= portletId %>') {
 			try {
 				window['<%= name %>'].destroy();

@@ -22,7 +22,7 @@ AUI.add(
 
 		var DEFAULT_LANGUAGE = 'groovy';
 
-		var DefinitionDiagramController = function(content, canvas) {
+		var DefinitionDiagramController = function (content, canvas) {
 			var instance = this;
 
 			instance.definition = new XMLDefinition({
@@ -50,8 +50,8 @@ AUI.add(
 				var connectors = [];
 
 				instance.definition.forEachField((tagName, fieldData) => {
-					fieldData.results.forEach(item1 => {
-						item1.transitions.forEach(item2 => {
+					fieldData.results.forEach((item1) => {
+						item1.transitions.forEach((item2) => {
 							connectors.push({
 								connector: {
 									default: item2.default,
@@ -73,7 +73,7 @@ AUI.add(
 				var fields = [];
 
 				instance.definition.forEachField((tagName, fieldData) => {
-					fieldData.results.forEach(item => {
+					fieldData.results.forEach((item) => {
 						var type = tagName;
 
 						if (item.initial) {

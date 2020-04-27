@@ -32,21 +32,21 @@ function GroupLabels({itemSelectorURL, portletNamespace, target}) {
 				`${portletNamespace}groupNames${target}`
 			].value
 				.split('@@')
-				.filter(name => !!name)
+				.filter((name) => !!name)
 		);
 	}, [portletNamespace, target]);
 
 	useEffect(() => {
 		const selectGroupHandle = Liferay.on(
 			`${portletNamespace}selectGroup`,
-			event => {
+			(event) => {
 				if (event.grouptarget === target) {
-					setGroupIds(groupIds =>
+					setGroupIds((groupIds) =>
 						groupIds.indexOf(event.groupid) == -1
 							? [...groupIds, event.groupid]
 							: groupIds
 					);
-					setGroupNames(groupNames =>
+					setGroupNames((groupNames) =>
 						groupNames.indexOf(event.groupdescriptivename) == -1
 							? [...groupNames, event.groupdescriptivename]
 							: groupNames
@@ -83,12 +83,12 @@ function GroupLabels({itemSelectorURL, portletNamespace, target}) {
 								onClick: () => {
 									setGroupNames(
 										groupNames.filter(
-											name => name !== groupNames[i]
+											(name) => name !== groupNames[i]
 										)
 									);
 									setGroupIds(
 										groupIds.filter(
-											id => id !== groupIds[i]
+											(id) => id !== groupIds[i]
 										)
 									);
 								},
@@ -127,6 +127,6 @@ function GroupLabels({itemSelectorURL, portletNamespace, target}) {
 	);
 }
 
-export default props => (
+export default (props) => (
 	<GroupLabels {...props} portletNamespace={`_${props.portletNamespace}_`} />
 );

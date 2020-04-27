@@ -64,10 +64,10 @@ function loadFields({
 	}
 
 	if (promise) {
-		return promise.then(response => {
+		return promise.then((response) => {
 			if (Array.isArray(response)) {
 				return response.filter(
-					field =>
+					(field) =>
 						COMPATIBLE_TYPES[fieldType].indexOf(field.type) !== -1
 				);
 			}
@@ -79,7 +79,7 @@ function loadFields({
 	return Promise.resolve([]);
 }
 
-export default function({fieldType, mappedItem, onMappingSelect}) {
+export default function ({fieldType, mappedItem, onMappingSelect}) {
 	const collectionFields = useCollectionFields();
 
 	return collectionFields ? (
@@ -105,7 +105,7 @@ function CollectionMappingSelector({
 	onMappingSelect,
 }) {
 	const fields = collectionFields.filter(
-		field => COMPATIBLE_TYPES[fieldType].indexOf(field.type) !== -1
+		(field) => COMPATIBLE_TYPES[fieldType].indexOf(field.type) !== -1
 	);
 
 	return (
@@ -116,7 +116,7 @@ function CollectionMappingSelector({
 			<ClaySelectWithOption
 				aria-label={Liferay.Language.get('field')}
 				id="mappingSelectorFieldSelect"
-				onChange={event => {
+				onChange={(event) => {
 					if (event.target.value === UNMAPPED_OPTION.value) {
 						onMappingSelect({collectionFieldId: ''});
 					}
@@ -145,7 +145,7 @@ function CollectionMappingSelector({
 
 function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const dispatch = useDispatch();
-	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
+	const mappedInfoItems = useSelector((state) => state.mappedInfoItems);
 
 	const {selectedMappingTypes} = config;
 
@@ -157,7 +157,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 			: MAPPING_SOURCE_TYPE_IDS.content
 	);
 
-	const onInfoItemSelect = selectedInfoItem => {
+	const onInfoItemSelect = (selectedInfoItem) => {
 		setSelectedItem(selectedInfoItem);
 
 		onMappingSelect({
@@ -168,7 +168,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 		});
 	};
 
-	const onFieldSelect = event => {
+	const onFieldSelect = (event) => {
 		const fieldValue = event.target.value;
 
 		const data =
@@ -189,7 +189,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 		if (selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
 			const mappedInfoItem = mappedInfoItems.find(
-				item =>
+				(item) =>
 					item.classNameId === selectedItem.classNameId &&
 					item.classPK === selectedItem.classPK
 			);
@@ -200,13 +200,13 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 				);
 			}
 
-			setSelectedItem(selectedItem => ({
+			setSelectedItem((selectedItem) => ({
 				...selectedItem,
 				fieldId: fieldValue,
 			}));
 		}
 		else {
-			setSelectedItem(selectedItem => ({
+			setSelectedItem((selectedItem) => ({
 				...selectedItem,
 				mappedField: fieldValue,
 			}));
@@ -217,12 +217,12 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 	useEffect(() => {
 		const infoItem = mappedInfoItems.find(
-			infoItem =>
+			(infoItem) =>
 				infoItem.classNameId === mappedItem.classNameId &&
 				infoItem.classPK === mappedItem.classPK
 		);
 
-		setSelectedItem(selectedItem => ({
+		setSelectedItem((selectedItem) => ({
 			...infoItem,
 			...mappedItem,
 			...selectedItem,
@@ -245,7 +245,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 						selectedSourceTypeId,
 				  };
 
-		loadFields(data).then(newFields => {
+		loadFields(data).then((newFields) => {
 			setFields(newFields);
 		});
 	}, [
@@ -266,7 +266,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('source')}
 						id="mappingSelectorSourceSelect"
-						onChange={event => {
+						onChange={(event) => {
 							setSelectedSourceTypeId(event.target.value);
 
 							setSelectedItem({});

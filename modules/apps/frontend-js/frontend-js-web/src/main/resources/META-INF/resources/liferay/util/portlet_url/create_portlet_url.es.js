@@ -98,7 +98,7 @@ export default function createPortletURL(basePortletURL, parameters = {}) {
 		namespace = getPortletNamespace(portletID);
 	}
 
-	Object.keys(parameters).forEach(key => {
+	Object.keys(parameters).forEach((key) => {
 		let param;
 
 		if (reservedParameters.has(key)) {

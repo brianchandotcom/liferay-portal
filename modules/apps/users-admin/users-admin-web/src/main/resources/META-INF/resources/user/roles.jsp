@@ -138,7 +138,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			);
 
 			if (selectRegularRoleLink) {
-				selectRegularRoleLink.addEventListener('click', function(event) {
+				selectRegularRoleLink.addEventListener('click', function (event) {
 					var searchContainerName = '<portlet:namespace />rolesSearchContainer';
 
 					var searchContainer = Liferay.SearchContainer.get(searchContainerName);
@@ -179,7 +179,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 							uri: '<%= selectRegularRoleURL.toString() %>',
 						},
-						function(event) {
+						function (event) {
 							<portlet:namespace />selectRole(
 								event.entityid,
 								event.entityname,
@@ -348,7 +348,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 				searchContainerContentBox.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var link = event.currentTarget;
 						var tr = link.ancestor('tr');
 
@@ -380,8 +380,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 					'.modify-link'
 				);
 
-				Liferay.on('<%= organizationRoleSyncEntitiesEventName %>', function(event) {
-					event.selectors.each(function(item, index, collection) {
+				Liferay.on('<%= organizationRoleSyncEntitiesEventName %>', function (event) {
+					event.selectors.each(function (item, index, collection) {
 						var groupId = item.attr('data-groupid');
 						var roleId = item.attr('data-entityid');
 
@@ -427,7 +427,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			);
 
 			if (selectOrganizationRoleLink) {
-				selectOrganizationRoleLink.addEventListener('click', function(event) {
+				selectOrganizationRoleLink.addEventListener('click', function (event) {
 					Liferay.Util.selectEntity(
 						{
 							dialog: {
@@ -458,7 +458,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 							uri: '<%= selectOrganizationRoleURL.toString() %>',
 						},
-						function(event) {
+						function (event) {
 							<portlet:namespace />selectRole(
 								event.entityid,
 								event.entityname,
@@ -581,7 +581,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 				searchContainerContentBox.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var link = event.currentTarget;
 						var tr = link.ancestor('tr');
 
@@ -613,8 +613,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 					'.modify-link'
 				);
 
-				Liferay.on('<%= siteRoleSyncEntitiesEventName %>', function(event) {
-					event.selectors.each(function(item, index, collection) {
+				Liferay.on('<%= siteRoleSyncEntitiesEventName %>', function (event) {
+					event.selectors.each(function (item, index, collection) {
 						var groupId = item.attr('data-groupid');
 						var roleId = item.attr('data-entityid');
 
@@ -650,7 +650,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 					});
 				});
 
-				A.one('#<portlet:namespace />selectSiteRoleLink').on('click', function(event) {
+				A.one('#<portlet:namespace />selectSiteRoleLink').on('click', function (event) {
 					Util.selectEntity(
 						{
 							dialog: {
@@ -680,7 +680,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 							uri: '<%= selectSiteRoleURL.toString() %>',
 						},
-						function(event) {
+						function (event) {
 							<portlet:namespace />selectRole(
 								event.entityid,
 								event.entityname,
@@ -807,7 +807,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			Liferay.provide(
 				window,
 				'<portlet:namespace />selectRole',
-				function(roleId, name, searchContainer, groupName, groupId, iconCssClass) {
+				function (roleId, name, searchContainer, groupName, groupId, iconCssClass) {
 					var A = AUI();
 					var LString = A.Lang.String;
 
@@ -906,7 +906,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 			searchContainerContentBox.delegate(
 				'click',
-				function(event) {
+				function (event) {
 					var link = event.currentTarget;
 
 					var rowId = link.attr('data-rowId');
@@ -932,8 +932,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				'.modify-link'
 			);
 
-			Liferay.on('<%= regularRoleSyncEntitiesEventName %>', function(event) {
-				event.selectors.each(function(item, index, collection) {
+			Liferay.on('<%= regularRoleSyncEntitiesEventName %>', function (event) {
+				event.selectors.each(function (item, index, collection) {
 					var roleId = item.attr('data-entityid');
 
 					if (<portlet:namespace />deleteRoleIds.indexOf(roleId) != -1) {

@@ -24,7 +24,7 @@ const Body = ({data, setRetry, tasks}) => {
 	const taskSteps = useMemo(() => {
 		const versions = {};
 
-		tasks.forEach(task => {
+		tasks.forEach((task) => {
 			if (
 				versions[task.workflowDefinitionVersion] &&
 				versions[task.workflowDefinitionVersion][task.name]
@@ -47,7 +47,8 @@ const Body = ({data, setRetry, tasks}) => {
 	}, [tasks]);
 
 	const versionedCards = useMemo(
-		() => Object.entries(taskSteps).map(array => Object.entries(array[1])),
+		() =>
+			Object.entries(taskSteps).map((array) => Object.entries(array[1])),
 		[taskSteps]
 	);
 
@@ -69,14 +70,16 @@ const Body = ({data, setRetry, tasks}) => {
 			}
 		);
 
-		return Object.entries(taskTransitions).map(array => array[1]);
+		return Object.entries(taskTransitions).map((array) => array[1]);
 	}, [workflowTaskTransitions]);
 
 	const statesProps = useMemo(
 		() => ({
 			errorProps: {
 				actionButton: (
-					<RetryButton onClick={() => setRetry(retry => retry + 1)} />
+					<RetryButton
+						onClick={() => setRetry((retry) => retry + 1)}
+					/>
 				),
 				className: 'pb-7 pt-8',
 				hideAnimation: true,

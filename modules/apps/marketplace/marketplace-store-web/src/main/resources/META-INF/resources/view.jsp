@@ -57,7 +57,7 @@ viewURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	});
 
 	Liferay.MarketplaceMessenger.receiveMessage(
-		function(event) {
+		function (event) {
 			var response = event.responseData;
 
 			if (response.cmd) {
@@ -100,7 +100,7 @@ viewURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 				}
 			}
 		},
-		function() {
+		function () {
 			return true;
 		}
 	);

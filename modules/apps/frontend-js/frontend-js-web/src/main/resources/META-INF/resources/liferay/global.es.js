@@ -151,15 +151,18 @@ Liferay.Util.setFormValues = setFormValues;
 Liferay.Util.toCharCode = toCharCode;
 
 Liferay.Util.openModal = (...args) => {
-	Liferay.Loader.require('frontend-js-web/liferay/modal/Modal', commands => {
-		commands.openModal(...args);
-	});
+	Liferay.Loader.require(
+		'frontend-js-web/liferay/modal/Modal',
+		(commands) => {
+			commands.openModal(...args);
+		}
+	);
 };
 
 Liferay.Util.openToast = (...args) => {
 	Liferay.Loader.require(
 		'frontend-js-web/liferay/toast/commands/OpenToast.es',
-		commands => {
+		(commands) => {
 			commands.openToast(...args);
 		}
 	);

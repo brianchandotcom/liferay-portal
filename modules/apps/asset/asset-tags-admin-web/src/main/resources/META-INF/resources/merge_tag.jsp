@@ -88,7 +88,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	);
 
 	if (targetTagNameSelect) {
-		window['<portlet:namespace />onAddTag'] = function(item) {
+		window['<portlet:namespace />onAddTag'] = function (item) {
 			var value = item.value;
 
 			if (value !== undefined) {
@@ -103,7 +103,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 			}
 		};
 
-		window['<portlet:namespace />onRemoveTag'] = function(item) {
+		window['<portlet:namespace />onRemoveTag'] = function (item) {
 			var value = item.value;
 
 			if (value !== undefined) {
@@ -122,8 +122,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	);
 
 	if (form && mergeTagNamesInputs && targetTagNameSelect) {
-		form.addEventListener('submit', function(event) {
-			var mergeTagNames = Array.from(mergeTagNamesInputs).map(function(
+		form.addEventListener('submit', function (event) {
+			var mergeTagNames = Array.from(mergeTagNamesInputs).map(function (
 				mergeTagNamesInput
 			) {
 				return mergeTagNamesInput.value;

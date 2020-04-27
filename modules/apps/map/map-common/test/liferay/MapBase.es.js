@@ -40,12 +40,12 @@ describe('MapBase', () => {
 		setCenter() {}
 	}
 
-	const MarkerImpl = jest.fn().mockImplementation(function(location) {
+	const MarkerImpl = jest.fn().mockImplementation(function (location) {
 		this.location = location;
 
 		this.on = jest.fn();
 
-		this.setPosition = function(location) {
+		this.setPosition = function (location) {
 			this.location = location;
 		};
 	});

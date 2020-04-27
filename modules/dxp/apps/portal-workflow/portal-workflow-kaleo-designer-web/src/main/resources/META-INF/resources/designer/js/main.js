@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-portlet-kaleo-designer',
-	A => {
+	(A) => {
 		var DiagramBuilder = A.DiagramBuilder;
 		var Lang = A.Lang;
 
@@ -153,7 +153,7 @@ AUI.add(
 
 					var defaultGetEditorFn = dataTable.getEditor;
 
-					dataTable.getEditor = function() {
+					dataTable.getEditor = function () {
 						var editor = defaultGetEditorFn.apply(this, arguments);
 
 						if (editor) {
@@ -162,13 +162,13 @@ AUI.add(
 								editor
 							);
 
-							editor._setToolbar = function(val) {
+							editor._setToolbar = function (val) {
 								var toolbar = defaultSetToolbarFn(val);
 
 								if (toolbar && toolbar.children) {
 									toolbar.children = toolbar.children.map(
-										children => {
-											children = children.map(item => {
+										(children) => {
+											children = children.map((item) => {
 												item.cssClass = 'btn-secondary';
 
 												delete item.icon;

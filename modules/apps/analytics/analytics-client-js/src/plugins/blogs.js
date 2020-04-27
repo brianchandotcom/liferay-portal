@@ -60,8 +60,8 @@ function trackBlogsScroll(analytics, blogElements) {
 	const scrollTracker = new ScrollTracker();
 
 	const onScroll = debounce(() => {
-		blogElements.forEach(element => {
-			scrollTracker.onDepthReached(depth => {
+		blogElements.forEach((element) => {
+			scrollTracker.onDepthReached((depth) => {
 				analytics.send('blogDepthReached', applicationId, {
 					...getBlogPayload(element),
 					depth,
@@ -89,8 +89,8 @@ function trackBlogViewed(analytics) {
 			.call(
 				document.querySelectorAll('[data-analytics-asset-type="blog"]')
 			)
-			.filter(element => isTrackableBlog(element))
-			.forEach(element => {
+			.filter((element) => isTrackableBlog(element))
+			.forEach((element) => {
 				const numberOfWords = getNumberOfWords(element);
 
 				let payload = getBlogPayload(element);

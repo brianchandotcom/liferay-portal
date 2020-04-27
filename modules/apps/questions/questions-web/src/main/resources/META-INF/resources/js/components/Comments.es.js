@@ -32,7 +32,7 @@ export default ({
 	const [comment, setComment] = useState('');
 
 	const postComment = () => {
-		return createComment(comment, entityId).then(data => {
+		return createComment(comment, entityId).then((data) => {
 			setComment('');
 			showNewCommentChange(false);
 			commentsChange([...comments, data]);
@@ -40,10 +40,10 @@ export default ({
 	};
 
 	const _commentChange = useCallback(
-		comment => {
+		(comment) => {
 			if (commentsChange) {
 				return commentsChange([
-					...comments.filter(o => o.id !== comment.id),
+					...comments.filter((o) => o.id !== comment.id),
 				]);
 			}
 
@@ -54,7 +54,7 @@ export default ({
 
 	return (
 		<div>
-			{comments.map(comment => (
+			{comments.map((comment) => (
 				<Comment
 					comment={comment}
 					commentChange={_commentChange}
@@ -69,7 +69,7 @@ export default ({
 							config={getCKEditorConfig()}
 							data={comment}
 							onBeforeLoad={onBeforeLoadCKEditor}
-							onChange={event =>
+							onChange={(event) =>
 								setComment(event.editor.getData())
 							}
 						/>

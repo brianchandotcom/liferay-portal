@@ -84,15 +84,15 @@ catch (Exception e) {
 
 	parentNode.plug(A.Plugin.ParseContent);
 
-	form.on('submit', function(event) {
+	form.on('submit', function (event) {
 		Liferay.Util.fetch(form.getAttribute('action'), {
 			body: new FormData(form.getDOM()),
 			method: 'POST',
 		})
-			.then(function(response) {
+			.then(function (response) {
 				return response.text();
 			})
-			.then(function(response) {
+			.then(function (response) {
 				parentNode.setContent(response);
 			});
 

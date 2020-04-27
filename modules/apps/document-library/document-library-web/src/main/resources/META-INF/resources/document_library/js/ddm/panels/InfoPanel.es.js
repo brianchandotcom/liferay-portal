@@ -25,14 +25,14 @@ export default function InfoPanel({title, url}) {
 
 	useEffect(() => {
 		fetch(url)
-			.then(response => response.text())
-			.then(content => {
+			.then((response) => response.text())
+			.then((content) => {
 				if (isMounted()) {
 					setContent(content);
 					setLoading(false);
 				}
 			})
-			.catch(error => {
+			.catch((error) => {
 				if (process.env.NODE_ENV === 'development') {
 					console.error(error);
 				}

@@ -41,7 +41,7 @@ const LayoutSelector = ({
 		onChange('');
 	};
 
-	const handleFieldChanged = event => {
+	const handleFieldChanged = (event) => {
 		const selectedItem = event.selectedItem;
 
 		if (selectedItem && selectedItem.layoutId) {
@@ -50,7 +50,7 @@ const LayoutSelector = ({
 		}
 	};
 
-	const handleItemSelectorTriggerClick = event => {
+	const handleItemSelectorTriggerClick = (event) => {
 		event.preventDefault();
 
 		const itemSelectorDialog = new ItemSelectorDialog({
@@ -130,7 +130,7 @@ const LayoutSelectorProxy = connectStore(
 				inputValue={value && value !== '' ? value : predefinedValue}
 				itemSelectorURL={itemSelectorURL}
 				name={name}
-				onChange={value => emit('fieldEdited', {}, value)}
+				onChange={(value) => emit('fieldEdited', {}, value)}
 				portletNamespace={portletNamespace}
 			/>
 		</FieldBaseProxy>

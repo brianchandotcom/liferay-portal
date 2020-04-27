@@ -40,7 +40,7 @@ const DropDown = () => {
 	const [{fieldTypes}, dispatch] = useContext(FormViewContext);
 	const [active, setActive] = useState(false);
 
-	const onClickFieldType = fieldTypeName => {
+	const onClickFieldType = (fieldTypeName) => {
 		setActive(false);
 		dispatch({
 			payload: {fieldTypeName},
@@ -69,7 +69,7 @@ const DropDown = () => {
 			active={active}
 			alignmentPosition={Align.BottomRight}
 			className="custom-object-dropdown"
-			onActiveChange={newVal => setActive(newVal)}
+			onActiveChange={(newVal) => setActive(newVal)}
 			trigger={
 				<ClayButtonWithIcon displayType="unstyled" symbol="plus" />
 			}
@@ -120,7 +120,7 @@ const Header = ({onCloseSearch, onSearch, searchText}) => {
 	} = dataDefinition;
 
 	return (
-		<ClayForm onSubmit={event => event.preventDefault()}>
+		<ClayForm onSubmit={(event) => event.preventDefault()}>
 			<div
 				className={classNames(
 					'custom-object-sidebar-header',
@@ -133,7 +133,7 @@ const Header = ({onCloseSearch, onSearch, searchText}) => {
 							<div className="autofit-col autofit-col-expand">
 								<SearchInput
 									clearButton={false}
-									onChange={searchText =>
+									onChange={(searchText) =>
 										onSearch(searchText)
 									}
 									ref={searchInputRef}
@@ -223,7 +223,7 @@ export default () => {
 			<>
 				<Header
 					onCloseSearch={() => setSearchText('')}
-					onSearch={searchText => setSearchText(searchText)}
+					onSearch={(searchText) => setSearchText(searchText)}
 					searchText={searchText}
 				/>
 

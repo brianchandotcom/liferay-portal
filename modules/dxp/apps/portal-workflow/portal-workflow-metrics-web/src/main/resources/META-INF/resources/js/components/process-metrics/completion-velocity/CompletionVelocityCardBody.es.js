@@ -17,7 +17,7 @@ import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import {formatNumber} from '../../../shared/util/numeral.es';
 import VelocityChart from './VelocityChart.es';
 
-const Body = props => {
+const Body = (props) => {
 	const statesProps = {
 		errorProps: {
 			actionButton: <ReloadButton />,

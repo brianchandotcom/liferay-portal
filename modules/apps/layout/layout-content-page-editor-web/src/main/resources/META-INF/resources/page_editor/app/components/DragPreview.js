@@ -42,9 +42,9 @@ const getItemStyles = (currentOffset, ref, rtl) => {
 export default function DragPreview() {
 	const ref = useRef();
 
-	const languageId = useSelector(state => state.languageId);
+	const languageId = useSelector((state) => state.languageId);
 
-	const {currentOffset, isDragging, item} = useDragLayer(monitor => ({
+	const {currentOffset, isDragging, item} = useDragLayer((monitor) => ({
 		currentOffset: monitor.getClientOffset(),
 		isDragging: monitor.isDragging(),
 		item: monitor.getItem(),

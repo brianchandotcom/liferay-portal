@@ -11,7 +11,7 @@
 
 const REGEX_SUB = /\x$/g;
 
-window.Liferay.Util.sub = function(string, data) {
+window.Liferay.Util.sub = function (string, data) {
 	if (
 		arguments.length > 2 ||
 		(typeof data !== 'object' && typeof data !== 'function')

@@ -29,7 +29,7 @@ export function ImagePropertiesPanel({item}) {
 	const {editableId, editableType, fragmentEntryLinkId} = item;
 
 	const dispatch = useDispatch();
-	const state = useSelector(state => state);
+	const state = useSelector((state) => state);
 
 	const processorKey =
 		editableType === EDITABLE_TYPES.backgroundImage
@@ -47,7 +47,7 @@ export function ImagePropertiesPanel({item}) {
 		editableConfig.alt
 	);
 
-	const imageUrl = useSelector(state => {
+	const imageUrl = useSelector((state) => {
 		const url = selectEditableValueContent(
 			state,
 			fragmentEntryLinkId,
@@ -151,7 +151,9 @@ export function ImagePropertiesPanel({item}) {
 				imageTitle={editableConfig.imageTitle || imageUrl}
 				label={Liferay.Language.get('image')}
 				onClearButtonPressed={() => onImageChange('', '')}
-				onImageSelected={image => onImageChange(image.title, image.url)}
+				onImageSelected={(image) =>
+					onImageChange(image.title, image.url)
+				}
 			/>
 
 			{editableType === EDITABLE_TYPES.image && (
@@ -161,7 +163,7 @@ export function ImagePropertiesPanel({item}) {
 					</label>
 					<ClayInput
 						id="imageDescription"
-						onChange={event => {
+						onChange={(event) => {
 							setImageDescription(event.target.value);
 
 							debounceUpdateEditableValues(

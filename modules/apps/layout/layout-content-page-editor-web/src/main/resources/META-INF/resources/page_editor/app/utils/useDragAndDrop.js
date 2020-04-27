@@ -162,7 +162,7 @@ export default function useDragAndDrop({
 	const toControlsId = useToControlsId();
 
 	const [dragOptions, drag, preview] = useDrag({
-		collect: _monitor => {
+		collect: (_monitor) => {
 			return {
 				isDragging: _monitor.isDragging(),
 			};
@@ -552,7 +552,7 @@ function droppingInSamePosition({
 	dropTargetItem,
 	targetPositionWithoutMiddle,
 }) {
-	const itemIndex = children.findIndex(id => id === dropItem.itemId);
+	const itemIndex = children.findIndex((id) => id === dropItem.itemId);
 	const hoverId = dropTargetItem.itemId;
 
 	return (

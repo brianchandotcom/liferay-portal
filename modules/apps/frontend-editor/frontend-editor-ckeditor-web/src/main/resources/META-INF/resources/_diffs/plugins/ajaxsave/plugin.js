@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var pluginName = 'ajaxsave';
 
 	CKEDITOR.plugins.add(pluginName, {

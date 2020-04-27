@@ -22,7 +22,7 @@ export default function addItem({
 	selectItem = () => {},
 	store,
 }) {
-	return dispatch => {
+	return (dispatch) => {
 		const {segmentsExperienceId} = store;
 
 		LayoutService.addItem({

@@ -37,7 +37,7 @@ export default function TimeSpanSelector({
 				onChange={onTimeSpanChange}
 				value={timeSpanOption}
 			>
-				{timeSpanOptions.map(option => {
+				{timeSpanOptions.map((option) => {
 					return (
 						<ClaySelect.Option
 							key={option.key}

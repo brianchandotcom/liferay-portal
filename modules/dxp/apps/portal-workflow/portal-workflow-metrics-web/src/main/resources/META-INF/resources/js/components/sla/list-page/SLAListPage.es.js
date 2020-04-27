@@ -37,7 +37,7 @@ const SLAListPage = ({page, pageSize, processId}) => {
 	const slaContextState = {
 		itemToRemove,
 		setVisible,
-		showDeleteModal: id => {
+		showDeleteModal: (id) => {
 			setVisible(true);
 			setItemToRemove(id);
 		},

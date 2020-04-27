@@ -240,7 +240,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			Liferay.provide(
 				window,
 				'<%= namespace + randomNamespace %>0ReplyOnChange',
-				function(html) {
+				function (html) {
 					Util.toggleDisabled(
 						'#<%= namespace + randomNamespace %>postReplyButton0',
 						html.trim() === ''
@@ -253,7 +253,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					'<%= namespace + randomNamespace + HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>'
 				];
 
-			Liferay.provide(window, '<%= randomNamespace %>afterLogin', function(
+			Liferay.provide(window, '<%= randomNamespace %>afterLogin', function (
 				emailAddress,
 				anonymousAccount
 			) {
@@ -264,7 +264,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				<%= namespace + randomNamespace %>sendMessage(form, !anonymousAccount);
 			});
 
-			Liferay.provide(window, '<%= randomNamespace %>deleteMessage', function(i) {
+			Liferay.provide(window, '<%= randomNamespace %>deleteMessage', function (i) {
 				var commentIdElement = Util.getFormElement(form, 'commentId' + i);
 
 				if (commentIdElement) {
@@ -277,7 +277,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				}
 			});
 
-			Liferay.provide(window, '<%= randomNamespace %>hideEl', function(elementId) {
+			Liferay.provide(window, '<%= randomNamespace %>hideEl', function (elementId) {
 				var element = document.getElementById(elementId);
 
 				if (element) {
@@ -285,7 +285,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				}
 			});
 
-			Liferay.provide(window, '<%= randomNamespace %>hideEditor', function(
+			Liferay.provide(window, '<%= randomNamespace %>hideEditor', function (
 				editorName,
 				formId
 			) {
@@ -298,7 +298,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				<%= randomNamespace %>hideEl(formId);
 			});
 
-			Liferay.provide(window, '<%= randomNamespace %>postReply', function(i) {
+			Liferay.provide(window, '<%= randomNamespace %>postReply', function (i) {
 				var editorInstance =
 					window['<%= namespace + randomNamespace %>postReplyBody' + i];
 
@@ -336,7 +336,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				}
 			});
 
-			Liferay.provide(window, '<%= randomNamespace %>scrollIntoView', function(
+			Liferay.provide(window, '<%= randomNamespace %>scrollIntoView', function (
 				commentId
 			) {
 				document
@@ -347,7 +347,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			Liferay.provide(
 				window,
 				'<%= namespace + randomNamespace %>sendMessage',
-				function(form, refreshPage) {
+				function (form, refreshPage) {
 					var commentButtons = form.querySelectorAll('.btn-comment');
 
 					Util.toggleDisabled(commentButtons, true);
@@ -360,7 +360,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						body: formData,
 						method: 'POST',
 					})
-						.then(function(response) {
+						.then(function (response) {
 							var promise;
 
 							var contentType = response.headers.get('content-type');
@@ -377,13 +377,13 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 							return promise;
 						})
-						.then(function(response) {
+						.then(function (response) {
 							var exception = response.exception;
 
 							if (!exception) {
 								Liferay.onceAfter(
 									'<%= portletDisplay.getId() %>:messagePosted',
-									function(event) {
+									function (event) {
 										<%= randomNamespace %>onMessagePosted(
 											response,
 											refreshPage
@@ -438,7 +438,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 							Util.toggleDisabled(commentButtons, false);
 						})
-						.catch(function() {
+						.catch(function () {
 							<%= randomNamespace %>showStatusMessage({
 								id: '<%= randomNamespace %>',
 								message:
@@ -453,7 +453,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				}
 			);
 
-			Liferay.provide(window, '<%= randomNamespace %>showEl', function(elementId) {
+			Liferay.provide(window, '<%= randomNamespace %>showEl', function (elementId) {
 				var element = document.getElementById(elementId);
 
 				if (element) {
@@ -461,7 +461,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				}
 			});
 
-			Liferay.provide(window, '<%= randomNamespace %>showEditor', function(
+			Liferay.provide(window, '<%= randomNamespace %>showEditor', function (
 				formId,
 				options
 			) {
@@ -481,10 +481,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						body: Util.objectToFormData(Util.ns('<%= namespace %>', options)),
 						method: 'POST',
 					})
-						.then(function(response) {
+						.then(function (response) {
 							return response.text();
 						})
-						.then(function(response) {
+						.then(function (response) {
 							var editorWrapper = document.querySelector(
 								'#' + formId + ' .editor-wrapper'
 							);
@@ -502,7 +502,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 							<%= randomNamespace %>showEl(formId);
 						})
-						.catch(function() {
+						.catch(function () {
 							<%= randomNamespace %>showStatusMessage({
 								id: '<%= randomNamespace %>',
 								message:
@@ -513,7 +513,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				}
 			});
 
-			Liferay.provide(window, '<%= randomNamespace %>showPostReplyEditor', function(
+			Liferay.provide(window, '<%= randomNamespace %>showPostReplyEditor', function (
 				index
 			) {
 				<%= randomNamespace %>showEditor(
@@ -537,12 +537,12 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 			window.<%= randomNamespace %>showStatusMessage = Liferay.lazyLoad(
 				'frontend-js-web/liferay/toast/commands/OpenToast.es',
-				function(toastCommands, data) {
+				function (toastCommands, data) {
 					toastCommands.openToast(data);
 				}
 			);
 
-			Liferay.provide(window, '<%= randomNamespace %>showEditReplyEditor', function(
+			Liferay.provide(window, '<%= randomNamespace %>showEditReplyEditor', function (
 				index
 			) {
 				var discussionId =
@@ -570,7 +570,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				}
 			});
 
-			Liferay.provide(window, '<%= randomNamespace %>subscribeToComments', function(
+			Liferay.provide(window, '<%= randomNamespace %>subscribeToComments', function (
 				subscribe
 			) {
 				Util.setFormValues(form, {
@@ -584,7 +584,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 				<%= namespace + randomNamespace %>sendMessage(form);
 			});
 
-			Liferay.provide(window, '<%= randomNamespace %>updateMessage', function(
+			Liferay.provide(window, '<%= randomNamespace %>updateMessage', function (
 				i,
 				pending
 			) {
@@ -628,7 +628,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			var rootIndexPageElement = Util.getFormElement(form, 'rootIndexPage');
 
 			if (moreCommentsTrigger && indexElement && rootIndexPageElement) {
-				moreCommentsTrigger.addEventListener('click', function(event) {
+				moreCommentsTrigger.addEventListener('click', function (event) {
 					var data = Util.ns('<%= namespace %>', {
 						className: '<%= discussionTaglibHelper.getClassName() %>',
 						classPK: '<%= discussionTaglibHelper.getClassPK() %>',
@@ -650,10 +650,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						body: Util.objectToFormData(data),
 						method: 'POST',
 					})
-						.then(function(response) {
+						.then(function (response) {
 							return response.text();
 						})
-						.then(function(response) {
+						.then(function (response) {
 							var moreCommentsContainer = document.getElementById(
 								'<%= namespace %>moreCommentsContainer'
 							);
@@ -669,7 +669,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 								);
 							}
 						})
-						.catch(function() {
+						.catch(function () {
 							<%= randomNamespace %>showStatusMessage({
 								id: '<%= randomNamespace %>',
 								message:
@@ -684,18 +684,18 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 		</aui:script>
 
 		<aui:script use="aui-popover,event-outside">
-			Liferay.provide(window, '<%= randomNamespace %>onMessagePosted', function(
+			Liferay.provide(window, '<%= randomNamespace %>onMessagePosted', function (
 				response,
 				refreshPage
 			) {
 				Liferay.onceAfter(
 					'<%= portletDisplay.getId() %>:portletRefreshed',
-					function(event) {
+					function (event) {
 						var randomNamespaceNodes = document.querySelectorAll(
 							'input[id^="<%= namespace %>"][id$="randomNamespace"]'
 						);
 
-						Array.prototype.forEach.call(randomNamespaceNodes, function(
+						Array.prototype.forEach.call(randomNamespaceNodes, function (
 							node,
 							index
 						) {
@@ -780,7 +780,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 			discussionContainer.delegate(
 				'click',
-				function(event) {
+				function (event) {
 					event.preventDefault();
 					event.stopPropagation();
 

@@ -15,7 +15,7 @@
 export const containsFieldSet = (dataDefinition, dataDefinitionId) => {
 	let hasFieldSet = false;
 
-	forEachDataDefinitionField(dataDefinition, dataDefinitionField => {
+	forEachDataDefinitionField(dataDefinition, (dataDefinitionField) => {
 		const {customProperties, fieldType} = dataDefinitionField;
 
 		if (
@@ -67,7 +67,7 @@ export const getDataDefinitionField = (
 ) => {
 	let field = null;
 
-	forEachDataDefinitionField(dataDefinition, currentField => {
+	forEachDataDefinitionField(dataDefinition, (currentField) => {
 		if (currentField.name === fieldName) {
 			field = currentField;
 

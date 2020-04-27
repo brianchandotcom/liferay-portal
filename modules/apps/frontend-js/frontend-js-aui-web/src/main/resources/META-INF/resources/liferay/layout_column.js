@@ -14,14 +14,14 @@
 
 AUI.add(
 	'liferay-layout-column',
-	A => {
+	(A) => {
 		var DDM = A.DD.DDM;
 
 		var Layout = Liferay.Layout;
 
 		var CSS_DRAGGING = 'dragging';
 
-		Layout.getLastPortletNode = function(column) {
+		Layout.getLastPortletNode = function (column) {
 			var portlets = column.all(Layout.options.portletBoundary);
 
 			var lastIndex = portlets.size() - 1;
@@ -29,7 +29,7 @@ AUI.add(
 			return portlets.item(lastIndex);
 		};
 
-		Layout.findSiblingPortlet = function(portletNode, siblingPos) {
+		Layout.findSiblingPortlet = function (portletNode, siblingPos) {
 			var dragNodes = Layout.options.dragNodes;
 			var sibling = portletNode.get(siblingPos);
 

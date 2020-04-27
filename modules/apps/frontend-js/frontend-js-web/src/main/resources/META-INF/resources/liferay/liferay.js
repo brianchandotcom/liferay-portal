@@ -14,12 +14,12 @@
 
 Liferay = window.Liferay || {};
 
-(function(Liferay) {
-	var isFunction = function(val) {
+(function (Liferay) {
+	var isFunction = function (val) {
 		return typeof val === 'function';
 	};
 
-	var isNode = function(node) {
+	var isNode = function (node) {
 		return node && (node._node || node.jquery || node.nodeType);
 	};
 
@@ -60,7 +60,7 @@ Liferay = window.Liferay || {};
 	 * exceptionCallback {function}: A function to execute when the response from the server contains a service exception. It receives a the exception message as it's first parameter.
 	 */
 
-	var Service = function() {
+	var Service = function () {
 		var args = Service.parseInvokeArgs(
 			Array.prototype.slice.call(arguments, 0)
 		);
@@ -70,17 +70,17 @@ Liferay = window.Liferay || {};
 
 	Service.URL_INVOKE = themeDisplay.getPathContext() + '/api/jsonws/invoke';
 
-	Service.bind = function() {
+	Service.bind = function () {
 		var args = Array.prototype.slice.call(arguments, 0);
 
-		return function() {
+		return function () {
 			var newArgs = Array.prototype.slice.call(arguments, 0);
 
 			return Service.apply(Service, args.concat(newArgs));
 		};
 	};
 
-	Service.parseInvokeArgs = function(args) {
+	Service.parseInvokeArgs = function (args) {
 		var instance = this;
 
 		var payload = args[0];
@@ -102,7 +102,7 @@ Liferay = window.Liferay || {};
 		return [payload, ioConfig];
 	};
 
-	Service.parseIOConfig = function(args) {
+	Service.parseIOConfig = function (args) {
 		var payload = args[0];
 
 		var ioConfig = payload.io || {};
@@ -121,7 +121,7 @@ Liferay = window.Liferay || {};
 
 			ioConfig.error = callbackException;
 
-			ioConfig.complete = function(response) {
+			ioConfig.complete = function (response) {
 				if (
 					response !== null &&
 					!Object.prototype.hasOwnProperty.call(response, 'exception')
@@ -154,7 +154,7 @@ Liferay = window.Liferay || {};
 		return ioConfig;
 	};
 
-	Service.parseIOFormConfig = function(ioConfig, args) {
+	Service.parseIOFormConfig = function (ioConfig, args) {
 		var form = args[1];
 
 		if (isNode(form)) {
@@ -166,7 +166,7 @@ Liferay = window.Liferay || {};
 		}
 	};
 
-	Service.parseStringPayload = function(args) {
+	Service.parseStringPayload = function (args) {
 		var params = {};
 		var payload = {};
 
@@ -181,7 +181,7 @@ Liferay = window.Liferay || {};
 		return payload;
 	};
 
-	Service.invoke = function(payload, ioConfig) {
+	Service.invoke = function (payload, ioConfig) {
 		var instance = this;
 
 		var cmd = JSON.stringify(payload);
@@ -200,13 +200,13 @@ Liferay = window.Liferay || {};
 			},
 			method: 'POST',
 		})
-			.then(response => response.json())
+			.then((response) => response.json())
 			.then(ioConfig.complete)
 			.catch(ioConfig.error);
 	};
 
 	function getHttpMethodFunction(httpMethodName) {
-		return function() {
+		return function () {
 			var args = Array.prototype.slice.call(arguments, 0);
 
 			var method = {method: httpMethodName};

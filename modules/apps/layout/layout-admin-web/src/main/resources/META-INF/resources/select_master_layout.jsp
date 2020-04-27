@@ -49,7 +49,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 		document.body,
 		'click',
 		'.select-master-layout-option',
-		function(event) {
+		function (event) {
 			dom.removeClasses(
 				document.querySelectorAll('.form-check-card.active'),
 				'active'
@@ -68,7 +68,7 @@ List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPage
 		}
 	);
 
-	var onDestroyPortlet = function() {
+	var onDestroyPortlet = function () {
 		delegateHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', onDestroyPortlet);

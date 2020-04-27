@@ -27,7 +27,7 @@ export default function useStateSafe(initialValue) {
 	const [state, setState] = useState(initialValue);
 
 	const setStateSafe = useCallback(
-		newValue => {
+		(newValue) => {
 			if (isMounted()) {
 				setState(newValue);
 			}

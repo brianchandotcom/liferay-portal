@@ -39,7 +39,7 @@ export default function NodeListItem({NodeComponent, node}) {
 
 	const symbol = node.expanded ? 'hr' : 'plus';
 
-	const toggleExpanded = event => {
+	const toggleExpanded = (event) => {
 		if (node.children.length) {
 			event.stopPropagation();
 

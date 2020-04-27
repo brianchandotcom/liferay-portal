@@ -62,7 +62,7 @@ export default function AddCommentForm({fragmentEntryLinkId}) {
 			});
 	};
 
-	const _handleTextareaChange = content => {
+	const _handleTextareaChange = (content) => {
 		if (content) {
 			setTextareaContent(content);
 		}

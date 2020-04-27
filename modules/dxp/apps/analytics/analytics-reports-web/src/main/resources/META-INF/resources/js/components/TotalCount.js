@@ -38,7 +38,7 @@ function TotalCount({
 	useEffect(() => {
 		if (validAnalyticsConnection) {
 			dataProvider()
-				.then(value => {
+				.then((value) => {
 					if (isMounted()) {
 						setValue(value);
 					}

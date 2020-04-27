@@ -214,7 +214,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 					{
 						label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
 						on: {
-							click: function(event) {
+							click: function (event) {
 								event.domEvent.preventDefault();
 
 								window.location.href = '<%= viewHistoryURL %>';
@@ -358,7 +358,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 				showManageTemplates: false,
 				title: '<%= HtmlUtil.escapeJS(scopeTitle) %>',
 			},
-			function(event) {
+			function (event) {
 				var form = document.<portlet:namespace />fm;
 
 				Liferay.Util.setFormValues(form, {

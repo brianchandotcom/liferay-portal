@@ -110,7 +110,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 	if (<portlet:namespace />form) {
 		document
 			.getElementById('<portlet:namespace />selectKBArticleButton')
-			.addEventListener('click', function(event) {
+			.addEventListener('click', function (event) {
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
@@ -133,7 +133,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 
 						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>',
 					},
-					function(event) {
+					function (event) {
 						var kbArticleData = {
 							idString: 'resourcePrimKey',
 							idValue: event.resourceprimkey,

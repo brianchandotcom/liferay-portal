@@ -14,8 +14,8 @@
 
 AUI.add(
 	'liferay-portlet-base',
-	A => {
-		var PortletBase = function(config) {
+	(A) => {
+		var PortletBase = function (config) {
 			var instance = this;
 
 			var namespace;

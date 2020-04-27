@@ -24,7 +24,7 @@ import {pageStructure} from '../../util/config.es';
 import {CSS_DDM_FIELDSET} from '../../util/cssClasses.es';
 import {getField, isFieldSet} from '../../util/fieldSupport.es';
 
-const getFieldContainer = fieldName => {
+const getFieldContainer = (fieldName) => {
 	return document.querySelector(
 		`.ddm-field-container[data-field-name="${fieldName}"]`
 	);
@@ -80,7 +80,7 @@ class FieldActionsDropDown extends Component {
 
 		return (
 			field &&
-			fieldTypes.find(fieldType => {
+			fieldTypes.find((fieldType) => {
 				return fieldType.name === field.type;
 			}).label
 		);

@@ -156,7 +156,7 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 
 				let variantExperienceId = null;
 
-				const newVariants = variants.filter(variant => {
+				const newVariants = variants.filter((variant) => {
 					if (variant.segmentsExperimentRelId !== variantId) {
 						return true;
 					}
@@ -174,7 +174,7 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 					dispatch(reviewVariants());
 				}
 			})
-			.catch(_error => {
+			.catch((_error) => {
 				openErrorToast();
 			});
 	}
@@ -240,7 +240,7 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 					})
 				);
 			})
-			.catch(_error => {
+			.catch((_error) => {
 				openErrorToast();
 			});
 	}

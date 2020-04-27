@@ -129,8 +129,8 @@ class SegmentEdit extends Component {
 			body: formData,
 			method: 'POST',
 		})
-			.then(response => response.json())
-			.then(membersCount => {
+			.then((response) => response.json())
+			.then((membersCount) => {
 				this.setState({
 					membersCount,
 					membersCountLoading: false,
@@ -150,7 +150,7 @@ class SegmentEdit extends Component {
 	};
 
 	_handleQueryChange = (criteriaChange, index) => {
-		this.setState(prevState => {
+		this.setState((prevState) => {
 			const contributors = applyCriteriaChangeToContributors(
 				prevState.contributors,
 				{
@@ -168,14 +168,14 @@ class SegmentEdit extends Component {
 		}, this._debouncedFetchMembersCount);
 	};
 
-	_handleSegmentNameBlur = event => {
+	_handleSegmentNameBlur = (event) => {
 		const {handleBlur} = this.props;
 
 		handleBlur(event);
 	};
 
-	_handleConjunctionChange = conjunctionName => {
-		this.setState(prevState => {
+	_handleConjunctionChange = (conjunctionName) => {
+		this.setState((prevState) => {
 			const contributors = applyConjunctionChangeToContributor(
 				prevState.contributors,
 				conjunctionName
@@ -193,8 +193,8 @@ class SegmentEdit extends Component {
 	 * Checks if every query in each contributor has a value.
 	 * @return {boolean} True if none of the contributor's queries have a value.
 	 */
-	_isQueryEmpty = contributors =>
-		contributors.every(contributor => !contributor.query);
+	_isQueryEmpty = (contributors) =>
+		contributors.every((contributor) => !contributor.query);
 
 	_renderContributors = () => {
 		const {
@@ -297,18 +297,18 @@ class SegmentEdit extends Component {
 	 * from being called.
 	 * @param {Class} event Event to prevent a form submission from occurring.
 	 */
-	_handleValidate = event => {
+	_handleValidate = (event) => {
 		const {validateForm} = this.props;
 
 		event.persist();
 
-		validateForm().then(errors => {
+		validateForm().then((errors) => {
 			const errorMessages = Object.values(errors);
 
 			if (errorMessages.length) {
 				event.preventDefault();
 
-				errorMessages.forEach(message => {
+				errorMessages.forEach((message) => {
 					Liferay.Util.openToast({
 						message,
 						title: Liferay.Language.get('error'),
@@ -324,7 +324,7 @@ class SegmentEdit extends Component {
 
 		const langs = Object.keys(values.name);
 
-		return langs.map(key => {
+		return langs.map((key) => {
 			let returnVal;
 			const value = values.name[key];
 
@@ -488,12 +488,12 @@ class SegmentEdit extends Component {
 }
 
 export default withFormik({
-	mapPropsToValues: props => ({
+	mapPropsToValues: (props) => ({
 		active: props.initialSegmentActive || true,
 		contributors: props.contributors || [],
 		name: props.initialSegmentName || {},
 	}),
-	validate: values => {
+	validate: (values) => {
 		const errors = {};
 
 		if (!values.name) {

@@ -20,7 +20,7 @@ import formBuilderProps from './props.es';
 
 const MAX_COLUMNS = 12;
 
-const withResizeableColumns = ChildComponent => {
+const withResizeableColumns = (ChildComponent) => {
 	class ResizeableColumns extends Component {
 		attached() {
 			this._createResizeDrag();

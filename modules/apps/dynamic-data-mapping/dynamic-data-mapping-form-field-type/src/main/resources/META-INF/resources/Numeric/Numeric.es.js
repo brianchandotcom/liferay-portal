@@ -93,7 +93,7 @@ const Numeric = ({
 			{...otherProps}
 			aria-label="numeric"
 			disabled={disabled}
-			onChange={event => {
+			onChange={(event) => {
 				const {value: newValue} = event.target;
 
 				if (newValue.substr(-1) === symbols.decimalSymbol) {
@@ -145,9 +145,9 @@ Main.displayName = 'Numeric';
 const NumericProxy = connectStore(({emit, ...otherProps}) => (
 	<Main
 		{...otherProps}
-		onBlur={event => emit('fieldBlurred', event, event.target.value)}
-		onChange={event => emit('fieldEdited', event, event.target.value)}
-		onFocus={event => emit('fieldFocused', event, event.target.value)}
+		onBlur={(event) => emit('fieldBlurred', event, event.target.value)}
+		onChange={(event) => emit('fieldEdited', event, event.target.value)}
+		onFocus={(event) => emit('fieldFocused', event, event.target.value)}
 	/>
 ));
 

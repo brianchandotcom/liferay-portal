@@ -39,10 +39,10 @@ class ItemSelectorDialog extends Component {
 
 		const dialogEvents = {
 			on: {
-				click: event => {
+				click: (event) => {
 					event.domEvent.preventDefault();
 				},
-				visibleChange: event => {
+				visibleChange: (event) => {
 					if (!event.newVal) {
 						this.selectedItem = this._selectedItem;
 

@@ -27,8 +27,8 @@ import {toUppercase} from '../../../../shared/util/util.es';
 import {AppContext} from '../../../AppContext.es';
 import {ModalContext} from '../ModalProvider.es';
 
-const getTimeOptions = isAmPm => {
-	const parse = number => (number < 10 ? `0${number}` : number);
+const getTimeOptions = (isAmPm) => {
+	const parse = (number) => (number < 10 ? `0${number}` : number);
 
 	if (isAmPm) {
 		const times = {
@@ -36,7 +36,7 @@ const getTimeOptions = isAmPm => {
 			PM: ['12:00 PM', '12:30 PM'],
 		};
 
-		Object.keys(times).forEach(type => {
+		Object.keys(times).forEach((type) => {
 			for (let i = 1; i < 12; i++) {
 				times[type].push(`${parse(i)}:00 ${type}`);
 				times[type].push(`${parse(i)}:30 ${type}`);
@@ -96,7 +96,7 @@ const UpdateDueDateStep = ({className, dueDate = new Date()}) => {
 	}, [date, time]);
 
 	useEffect(() => {
-		setUpdateDueDate(currentState => ({...currentState, comment}));
+		setUpdateDueDate((currentState) => ({...currentState, comment}));
 	}, [comment, setUpdateDueDate]);
 
 	return (
@@ -104,8 +104,9 @@ const UpdateDueDateStep = ({className, dueDate = new Date()}) => {
 			<ClayModal.Body>
 				<div className="form-group-autofit">
 					<div
-						className={`form-group-item ${invalidDate &&
-							'has-error'}`}
+						className={`form-group-item ${
+							invalidDate && 'has-error'
+						}`}
 					>
 						<label htmlFor="dateInput">
 							{Liferay.Language.get('new-due-date')}{' '}

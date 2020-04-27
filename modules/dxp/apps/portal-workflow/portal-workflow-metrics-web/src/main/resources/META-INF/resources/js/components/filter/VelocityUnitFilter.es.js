@@ -47,7 +47,7 @@ const VelocityUnitFilter = ({
 	});
 
 	const defaultItem = useMemo(
-		() => items.find(item => item.defaultVelocityUnit) || items[0],
+		() => items.find((item) => item.defaultVelocityUnit) || items[0],
 		[items]
 	);
 

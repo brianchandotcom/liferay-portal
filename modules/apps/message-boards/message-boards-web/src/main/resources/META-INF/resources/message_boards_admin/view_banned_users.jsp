@@ -138,7 +138,7 @@ PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
 %>
 
 <aui:script>
-	var unbanUser = function() {
+	var unbanUser = function () {
 		Liferay.Util.postForm(document.<portlet:namespace />fm, {
 			data: {
 				<%= Constants.CMD %>: 'unban',
@@ -151,10 +151,10 @@ PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
 		unbanUser: unbanUser,
 	};
 
-	Liferay.componentReady('mbBannedUsersManagementToolbar').then(function(
+	Liferay.componentReady('mbBannedUsersManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

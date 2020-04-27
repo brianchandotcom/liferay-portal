@@ -12,7 +12,7 @@
  * details.
  */
 
-SVGElement.prototype.contains = function(el) {
+SVGElement.prototype.contains = function (el) {
 	while ((el = el.parentNode)) {
 		if (el === this) {
 			return true;

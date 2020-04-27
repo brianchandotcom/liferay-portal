@@ -143,7 +143,7 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 		document.querySelector('#<portlet:namespace/>entriesContainer'),
 		'click',
 		'.entry',
-		function(event) {
+		function (event) {
 			dom.removeClasses(
 				document.querySelectorAll('.form-check-card.active'),
 				'active'

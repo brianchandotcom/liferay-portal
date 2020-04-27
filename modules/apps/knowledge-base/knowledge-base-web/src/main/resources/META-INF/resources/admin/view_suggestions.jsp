@@ -90,7 +90,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 </div>
 
 <aui:script>
-	var deleteKBComments = function() {
+	var deleteKBComments = function () {
 		if (
 			confirm(
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
@@ -108,10 +108,10 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 		deleteKBComments: deleteKBComments,
 	};
 
-	Liferay.componentReady('kbSuggestionListManagementToolbar').then(function(
+	Liferay.componentReady('kbSuggestionListManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

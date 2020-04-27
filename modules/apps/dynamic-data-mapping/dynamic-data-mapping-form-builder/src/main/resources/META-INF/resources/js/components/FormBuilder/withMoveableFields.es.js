@@ -25,7 +25,7 @@ import {
 import {getParentFieldSet} from '../../util/fieldSupport.es';
 import formBuilderProps from './props.es';
 
-const withMoveableFields = ChildComponent => {
+const withMoveableFields = (ChildComponent) => {
 	class MoveableFields extends Component {
 		createDragAndDrop() {
 			this._dragAndDrop = new DragDrop({
@@ -86,7 +86,7 @@ const withMoveableFields = ChildComponent => {
 			const {pages} = this.props;
 			const visitor = new PagesVisitor(pages);
 
-			visitor.visitFields(field => {
+			visitor.visitFields((field) => {
 				const parentFieldSet = getParentFieldSet(
 					pages,
 					field.fieldName

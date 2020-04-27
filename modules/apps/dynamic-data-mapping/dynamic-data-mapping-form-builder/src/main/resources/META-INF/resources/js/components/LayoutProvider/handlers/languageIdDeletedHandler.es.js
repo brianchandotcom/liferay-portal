@@ -17,7 +17,7 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 const deleteLanguageId = (languageId, pages) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.mapFields(field => {
+	return visitor.mapFields((field) => {
 		const {localizedValue} = field;
 		const newLocalizedValue = {...localizedValue};
 
@@ -46,7 +46,7 @@ export const handleLanguageIdDeleted = (focusedField, pages, languageId) => {
 
 	const visitor = new PagesVisitor(pages);
 
-	pages = visitor.mapPages(page => {
+	pages = visitor.mapPages((page) => {
 		const {localizedDescription, localizedTitle} = page;
 
 		delete localizedDescription[languageId];
@@ -61,7 +61,7 @@ export const handleLanguageIdDeleted = (focusedField, pages, languageId) => {
 
 	visitor.setPages(pages);
 
-	pages = visitor.mapFields(field => {
+	pages = visitor.mapFields((field) => {
 		const {settingsContext} = field;
 
 		return {

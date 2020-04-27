@@ -34,7 +34,7 @@ export default function TreeviewLabel({node}) {
 					node.selected ? 'font-weight-bold' : 'font-weight-normal'
 				}
 				htmlFor={inputId}
-				onClick={event => event.preventDefault()}
+				onClick={(event) => event.preventDefault()}
 			>
 				{node.name}
 			</label>

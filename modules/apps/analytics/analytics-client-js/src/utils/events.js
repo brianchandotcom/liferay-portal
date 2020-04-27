@@ -15,7 +15,7 @@
 import {getClosestAssetElement} from '../utils/assets';
 import {convertUTCDateToLocalDate} from './date';
 
-const onReady = fn => {
+const onReady = (fn) => {
 	if (
 		document.readyState === 'interactive' ||
 		document.readyState === 'complete' ||

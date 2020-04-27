@@ -88,8 +88,8 @@ function trackDocumentPreviewed(analytics) {
 					'[data-analytics-asset-action="preview"]'
 				)
 			)
-			.filter(element => isTrackableDocument(element))
-			.forEach(element => {
+			.filter((element) => isTrackableDocument(element))
+			.forEach((element) => {
 				const payload = getDocumentPayload(element);
 
 				analytics.send('documentPreviewed', applicationId, payload);

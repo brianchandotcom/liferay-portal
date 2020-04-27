@@ -14,8 +14,8 @@
 
 AUI.add(
 	'liferay-dynamic-select',
-	A => {
-		var sortByValue = function(a, b) {
+	(A) => {
+		var sortByValue = function (a, b) {
 			var pos = a.indexOf('">');
 
 			var nameA = a.substring(pos);
@@ -53,7 +53,7 @@ AUI.add(
 		 * array[i].selectData {function}: Returns a JSON array to populate the next select box.
 		 */
 
-		var DynamicSelect = function(array) {
+		var DynamicSelect = function (array) {
 			var instance = this;
 
 			instance.array = array;
@@ -72,7 +72,7 @@ AUI.add(
 						prevSelectVal = array[index - 1].selectVal;
 					}
 
-					selectData(list => {
+					selectData((list) => {
 						instance._updateSelect(index, list);
 					}, prevSelectVal);
 
@@ -97,7 +97,7 @@ AUI.add(
 					var curSelect = A.one('#' + array[i].select);
 					var nextSelectData = array[i + 1].selectData;
 
-					nextSelectData(list => {
+					nextSelectData((list) => {
 						instance._updateSelect(i + 1, list);
 					}, curSelect && curSelect.val());
 				}
@@ -123,7 +123,7 @@ AUI.add(
 					selectOptions.push('<option selected value="0"></option>');
 				}
 
-				list.forEach(item => {
+				list.forEach((item) => {
 					var key = item[selectId];
 					var value = item[selectDesc];
 

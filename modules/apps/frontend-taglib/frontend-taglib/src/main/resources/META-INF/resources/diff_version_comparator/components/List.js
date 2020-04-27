@@ -21,7 +21,7 @@ export default function List({onChange, selected, versions}) {
 		<>
 			{versions.length ? (
 				<ClayList>
-					{versions.map(version => {
+					{versions.map((version) => {
 						return (
 							<ClayList.Item
 								active={

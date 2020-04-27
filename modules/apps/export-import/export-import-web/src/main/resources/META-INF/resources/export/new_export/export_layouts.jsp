@@ -213,7 +213,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 
 	var form = liferayForm.formNode;
 
-	form.on('submit', function(event) {
+	form.on('submit', function (event) {
 		event.halt();
 
 		var exportImport = Liferay.component(
@@ -234,7 +234,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 
 	var fieldRules = [
 		{
-			body: function(val, fieldNode, ruleValue) {
+			body: function (val, fieldNode, ruleValue) {
 
 				<%
 				JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();

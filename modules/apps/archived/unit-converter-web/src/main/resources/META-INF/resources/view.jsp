@@ -251,10 +251,10 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		temperatureArray,
 	];
 
-	var changeUnitType = function(unitTypeSelect, newUnitTypes) {
+	var changeUnitType = function (unitTypeSelect, newUnitTypes) {
 		var newUnitTypesList = Array.prototype.slice.call(newUnitTypes);
 
-		var newUnitTypesOptions = newUnitTypesList.map(function(unitType, index) {
+		var newUnitTypesOptions = newUnitTypesList.map(function (unitType, index) {
 			return '<option value="' + index + '">' + unitType + '</option>';
 		});
 
@@ -272,7 +272,7 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 			unitConverterPortlet,
 			'change',
 			'#<portlet:namespace />type',
-			function(event) {
+			function (event) {
 				var fromUnit = Liferay.Util.getFormElement(form, 'fromUnit');
 				var toUnit = Liferay.Util.getFormElement(form, 'toUnit');
 				var typeSelect = Liferay.Util.getFormElement(form, 'type');
@@ -294,17 +294,17 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 			unitConverterPortlet,
 			'click',
 			'#<portlet:namespace />convertButton',
-			function(event) {
+			function (event) {
 				event.preventDefault();
 
 				Liferay.Util.fetch('<%= unitURL.toString() %>', {
 					body: new FormData(form),
 					method: 'POST',
 				})
-					.then(function(response) {
+					.then(function (response) {
 						return response.text();
 					})
-					.then(function(response) {
+					.then(function (response) {
 						form.innerHTML = response;
 					});
 			}

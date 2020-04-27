@@ -67,7 +67,7 @@ function EditTags(props) {
 	);
 }
 
-export default function({context, props}) {
+export default function ({context, props}) {
 	return (
 		<EditTagsContext.Provider value={context}>
 			<EditTags {...props} />

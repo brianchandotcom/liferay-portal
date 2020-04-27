@@ -20,7 +20,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 import PageContent from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/contents/components/PageContent';
 
-const renderPageContent = props =>
+const renderPageContent = (props) =>
 	render(
 		<StoreContextProvider initialState={[{}, {}]}>
 			<PageContent

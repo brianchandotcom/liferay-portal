@@ -25,14 +25,14 @@ export default function getAllEditables(fragmentElement) {
 
 	Array.from(
 		cleanedFragmentElement.querySelectorAll('lfr-drop-zone')
-	).forEach(dropZoneElement => {
+	).forEach((dropZoneElement) => {
 		dropZoneElement.parentElement.removeChild(dropZoneElement);
 	});
 
 	return [
 		...Array.from(
 			cleanedFragmentElement.querySelectorAll('lfr-editable')
-		).map(editableElement => {
+		).map((editableElement) => {
 			const editableId = editableElement.getAttribute('id');
 			const type = editableElement.getAttribute('type');
 
@@ -49,7 +49,7 @@ export default function getAllEditables(fragmentElement) {
 
 		...Array.from(
 			cleanedFragmentElement.querySelectorAll('[data-lfr-editable-id]')
-		).map(editableElement => {
+		).map((editableElement) => {
 			const editableId = editableElement.dataset.lfrEditableId;
 			const type = editableElement.dataset.lfrEditableType;
 
@@ -68,7 +68,7 @@ export default function getAllEditables(fragmentElement) {
 			cleanedFragmentElement.querySelectorAll(
 				'[data-lfr-background-image-id]'
 			)
-		).map(editableElement => {
+		).map((editableElement) => {
 			const editableId = editableElement.dataset.lfrBackgroundImageId;
 
 			return {

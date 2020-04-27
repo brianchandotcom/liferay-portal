@@ -45,7 +45,7 @@ export const getFieldProperty = (pages, fieldName, propertyName) => {
 	const visitor = new PagesVisitor(pages);
 	let propertyValue;
 
-	visitor.mapFields(field => {
+	visitor.mapFields((field) => {
 		if (field.fieldName === fieldName) {
 			propertyValue = field[propertyName];
 		}
@@ -58,7 +58,7 @@ export const getField = (pages, fieldName) => {
 	const visitor = new PagesVisitor(pages);
 	let field;
 
-	visitor.mapFields(currentField => {
+	visitor.mapFields((currentField) => {
 		if (currentField.fieldName === fieldName) {
 			field = currentField;
 		}
@@ -85,7 +85,7 @@ export const updateFieldValidationProperty = (
 ) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.mapFields(field => {
+	return visitor.mapFields((field) => {
 		if (field.fieldName === 'validation' && field.value) {
 			const expression = field.value.expression;
 

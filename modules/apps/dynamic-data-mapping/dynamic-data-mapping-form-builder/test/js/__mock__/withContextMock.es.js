@@ -12,7 +12,7 @@
  * details.
  */
 
-const withContextMock = Component => {
+const withContextMock = (Component) => {
 	return class WithContextMock extends Component {
 		context = {
 			dispatch: jest.fn(),

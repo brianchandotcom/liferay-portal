@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-marketplace-messenger',
-	A => {
+	(A) => {
 		var NATIVE_MSG = !!window.postMessage;
 
 		var MarketplaceMessenger = {
@@ -73,7 +73,7 @@ AUI.add(
 					A.receiveMessage(callback, validator);
 				}
 				else {
-					var wrappedCallback = function(event) {
+					var wrappedCallback = function (event) {
 						var response = event.responseData;
 
 						callback(event);
@@ -123,14 +123,14 @@ AUI.add(
 
 AUI.add(
 	'liferay-marketplace-util',
-	A => {
+	(A) => {
 		var MarketplaceUtil = {
 			namespaceObject(namespace, object) {
 				var returnObject = {};
 
 				var keys = A.Object.keys(object);
 
-				A.Array.each(keys, key => {
+				A.Array.each(keys, (key) => {
 					returnObject[namespace + key] = object[key];
 				});
 

@@ -21,7 +21,7 @@ import React, {useContext} from 'react';
 import AppContext from '../../../AppContext.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 
-export default function() {
+export default function () {
 	const [{fieldTypes, focusedCustomObjectField, focusedField}] = useContext(
 		AppContext
 	);
@@ -32,7 +32,7 @@ export default function() {
 	}
 
 	const visitor = new PagesVisitor(settingsContext.pages);
-	const typeField = visitor.findField(field => field.fieldName === 'type');
+	const typeField = visitor.findField((field) => field.fieldName === 'type');
 
 	const fieldType = fieldTypes.find(({name}) => {
 		return name === typeField.value;

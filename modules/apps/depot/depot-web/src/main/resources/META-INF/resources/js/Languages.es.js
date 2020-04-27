@@ -23,7 +23,8 @@ import ManageLanguages from './ManageLanguages.es';
 
 import '../css/Languages.scss';
 
-const getLocalesInputValue = arr => arr.map(({localeId}) => localeId).join(',');
+const getLocalesInputValue = (arr) =>
+	arr.map(({localeId}) => localeId).join(',');
 
 function move(arr, from, to) {
 	const clonedArr = [...arr];
@@ -72,7 +73,7 @@ const Languages = ({
 		onClose: handleOnModalClose,
 	});
 
-	const handleOnModalDone = selectedLocales => {
+	const handleOnModalDone = (selectedLocales) => {
 		setCustomLocales(selectedLocales);
 		onClose();
 	};
@@ -94,7 +95,9 @@ const Languages = ({
 	};
 
 	const moveItem = (currentIndex, newIndex) => {
-		setCustomLocales(languages => move(languages, currentIndex, newIndex));
+		setCustomLocales((languages) =>
+			move(languages, currentIndex, newIndex)
+		);
 	};
 
 	useEffect(() => {

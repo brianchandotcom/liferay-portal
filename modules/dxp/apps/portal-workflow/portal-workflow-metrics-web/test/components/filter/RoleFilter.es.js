@@ -57,11 +57,11 @@ describe('The role filter component should', () => {
 	test('Be rendered with active option "User"', () => {
 		const filterItems = getAllByTestId('filterItem');
 
-		const activeItem = filterItems.find(item =>
+		const activeItem = filterItems.find((item) =>
 			item.className.includes('active')
 		);
 
-		findByTestId(activeItem, 'filterItemName').then(activeItemName => {
+		findByTestId(activeItem, 'filterItemName').then((activeItemName) => {
 			expect(activeItemName.innerHTML).toBe('User');
 		});
 	});

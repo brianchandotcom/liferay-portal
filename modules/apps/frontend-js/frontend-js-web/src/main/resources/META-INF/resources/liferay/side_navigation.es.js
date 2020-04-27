@@ -81,7 +81,7 @@ function getUniqueSelector(element) {
 
 	const attributes = Array.from(element.attributes)
 		.map(({name, value}) => {
-			const isIdentifying = IDENTITY_ATTRIBUTES.some(regExp => {
+			const isIdentifying = IDENTITY_ATTRIBUTES.some((regExp) => {
 				return regExp.test(name);
 			});
 
@@ -118,7 +118,7 @@ function setClasses(element, classes) {
 			// Some callers use multiple space-separated classNames for
 			// `openClass`/`data-open-class`. (Looking at you,
 			// product-navigation-simulation-web...)
-			className.split(/\s+/).forEach(name => {
+			className.split(/\s+/).forEach((name) => {
 				if (present) {
 					element.classList.add(name);
 				}
@@ -134,7 +134,7 @@ function hasClass(element, className) {
 	element = getElement(element);
 
 	// Again, product-navigation-simulation-web passes multiple classNames.
-	return className.split(/\s+/).every(name => {
+	return className.split(/\s+/).every((name) => {
 		return element.classList.contains(name);
 	});
 }
@@ -187,7 +187,7 @@ function offsetLeft(element) {
 const eventNamesToSelectors = {};
 
 function handleEvent(eventName, event) {
-	Object.keys(eventNamesToSelectors[eventName]).forEach(selector => {
+	Object.keys(eventNamesToSelectors[eventName]).forEach((selector) => {
 		let matches = false;
 		let target = event.target;
 
@@ -224,7 +224,7 @@ function subscribe(elementOrSelector, eventName, handler) {
 		if (!eventNamesToSelectors[eventName]) {
 			eventNamesToSelectors[eventName] = {};
 
-			document.body.addEventListener(eventName, event =>
+			document.body.addEventListener(eventName, (event) =>
 				handleEvent(eventName, event)
 			);
 		}
@@ -240,7 +240,7 @@ function subscribe(elementOrSelector, eventName, handler) {
 		}
 
 		const emitter = emitters[selector];
-		const subscription = emitter.on(eventName, event => {
+		const subscription = emitter.on(eventName, (event) => {
 			if (!event.defaultPrevented) {
 				handler(event);
 			}
@@ -359,14 +359,14 @@ SideNavigation.prototype = {
 			instance._fetchPromise = Liferay.Util.fetch(url);
 
 			instance._fetchPromise
-				.then(response => {
+				.then((response) => {
 					if (!response.ok) {
 						throw new Error(`Failed to fetch ${url}`);
 					}
 
 					return response.text();
 				})
-				.then(text => {
+				.then((text) => {
 					const range = document.createRange();
 
 					range.selectNode(sidebar);
@@ -380,7 +380,7 @@ SideNavigation.prototype = {
 
 					instance.setHeight();
 				})
-				.catch(err => {
+				.catch((err) => {
 					console.error(err);
 				});
 		}
@@ -514,7 +514,7 @@ SideNavigation.prototype = {
 			const navigation = container.querySelector(options.navigation);
 			const menu = container.querySelector('.sidenav-menu');
 
-			[content, navigation, menu].forEach(element => {
+			[content, navigation, menu].forEach((element) => {
 				setStyles(element, {
 					height: '',
 					'min-height': '',
@@ -636,7 +636,7 @@ SideNavigation.prototype = {
 				`[data-target="${target}"], [href="${target}"]`
 			);
 
-			Array.from(nodes).forEach(node => {
+			Array.from(nodes).forEach((node) => {
 				setClasses(node, {
 					active: false,
 					[openClass]: false,

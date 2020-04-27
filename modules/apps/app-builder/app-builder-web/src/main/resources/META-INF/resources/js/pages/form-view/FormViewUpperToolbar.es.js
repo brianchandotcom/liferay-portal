@@ -37,7 +37,7 @@ export default ({newCustomObject}) => {
 		}
 	};
 
-	const onError = error => {
+	const onError = (error) => {
 		const {title = ''} = error;
 		errorToast(`${title}.`);
 	};
@@ -58,7 +58,7 @@ export default ({newCustomObject}) => {
 		});
 	};
 
-	const onKeyDown = event => {
+	const onKeyDown = (event) => {
 		if (event.keyCode === 13) {
 			event.preventDefault();
 
@@ -72,7 +72,7 @@ export default ({newCustomObject}) => {
 			...state,
 			dataLayout: {
 				...dataLayout,
-				dataRules: dataLayout.dataRules.map(rule => {
+				dataRules: dataLayout.dataRules.map((rule) => {
 					delete rule.ruleEditedIndex;
 
 					return rule;
@@ -81,7 +81,7 @@ export default ({newCustomObject}) => {
 		};
 		saveFormView(newState)
 			.then(onSuccess)
-			.catch(error => {
+			.catch((error) => {
 				onError(error);
 			});
 	};

@@ -12,13 +12,13 @@
  * details.
  */
 
-CKEDITOR.on('dialogDefinition', event => {
+CKEDITOR.on('dialogDefinition', (event) => {
 	if (event.editor === ckEditor) {
 		var dialogDefinition = event.data.definition;
 
 		var onShow = dialogDefinition.onShow;
 
-		dialogDefinition.onShow = function() {
+		dialogDefinition.onShow = function () {
 			if (typeof onShow === 'function') {
 				onShow.apply(this, arguments);
 			}

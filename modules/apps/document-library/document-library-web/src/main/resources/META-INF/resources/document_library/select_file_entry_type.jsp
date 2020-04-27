@@ -95,7 +95,7 @@ portletURL.setParameter("eventName", eventName);
 
 	form.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			var currentTarget = event.currentTarget;

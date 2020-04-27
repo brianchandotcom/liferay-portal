@@ -288,7 +288,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 			if (removeOrderBySubtype) {
 				Array.prototype.forEach.call(
 					orderingPanel.querySelectorAll('.order-by-subtype'),
-					function(option) {
+					function (option) {
 						dom.exitDocument(option);
 					}
 				);
@@ -388,13 +388,13 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 					'#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper'
 				);
 
-				Array.prototype.forEach.call(subtypeFieldsWrappers, function(
+				Array.prototype.forEach.call(subtypeFieldsWrappers, function (
 					subtypeFieldsWrapper
 				) {
 					if (selectedSubtype != 'false' && selectedSubtype != 'true') {
 						Array.prototype.forEach.call(
 							orderingPanel.querySelectorAll('.order-by-subtype'),
-							function(option) {
+							function (option) {
 								dom.exitDocument(option);
 							}
 						);
@@ -436,7 +436,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 			<%= className %>toggleSubclassesFields(false);
 
-			<%= className %>SubtypeSelector.addEventListener('change', function(event) {
+			<%= className %>SubtypeSelector.addEventListener('change', function (event) {
 				setDDMFields('<%= className %>', '', '', '', '');
 
 				var subtypeFieldsFilterEnabledCheckbox = document.getElementById(
@@ -451,7 +451,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 					'.asset-subtypefields'
 				);
 
-				Array.prototype.forEach.call(assetSubtypeFields, function(
+				Array.prototype.forEach.call(assetSubtypeFields, function (
 					assetSubtypeField
 				) {
 					assetSubtypeField.classList.add('hide');
@@ -494,7 +494,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 		ddmStructureFieldNameInput &&
 		ddmStructureFieldValueInput
 	) {
-		assetSelector.addEventListener('change', function(event) {
+		assetSelector.addEventListener('change', function (event) {
 			ddmStructureFieldNameInput.value = '';
 			ddmStructureFieldValueInput.value = '';
 
@@ -506,7 +506,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 		sourcePanel,
 		'click',
 		'.asset-subtypefields-wrapper-enable label',
-		function(event) {
+		function (event) {
 			var subtypeFieldsFilterEnabledInput = event.delegateTarget.querySelector(
 				'input'
 			);
@@ -518,7 +518,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 			if (subtypeFieldsFilterEnabledInput) {
 				Array.prototype.forEach.call(
 					assetSubtypefieldsPopupButtons,
-					function(assetSubtypefieldsPopupButton) {
+					function (assetSubtypefieldsPopupButton) {
 						Util.toggleDisabled(
 							assetSubtypefieldsPopupButton,
 							!subtypeFieldsFilterEnabledInput.checked
@@ -529,7 +529,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 		}
 	);
 
-	Liferay.after('inputmoveboxes:moveItem', function(event) {
+	Liferay.after('inputmoveboxes:moveItem', function (event) {
 		if (
 			event.fromBox.attr('id') ==
 				'<portlet:namespace />currentClassNameIds' ||
@@ -543,7 +543,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 		'<portlet:namespace />ddmStructureDisplayFieldValue'
 	);
 
-	dom.delegate(sourcePanel, 'click', '.asset-subtypefields-popup', function(
+	dom.delegate(sourcePanel, 'click', '.asset-subtypefields-popup', function (
 		event
 	) {
 		var delegateTarget = event.delegateTarget;
@@ -580,7 +580,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 					'<liferay-ui:message arguments="structure-field" key="select-x" />',
 				uri: uri,
 			},
-			function(event) {
+			function (event) {
 				setDDMFields(
 					event.className,
 					event.name,

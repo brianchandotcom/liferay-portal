@@ -39,7 +39,7 @@ export default withRouter(
 		const _deleteAnswer = () =>
 			deleteMessage(answer).then(() => deleteAnswer(answer));
 
-		const _commentsChange = useCallback(comments => {
+		const _commentsChange = useCallback((comments) => {
 			setComments([...comments]);
 		}, []);
 
@@ -54,7 +54,7 @@ export default withRouter(
 			);
 
 		const _ratingChange = useCallback(
-			ratingValue => {
+			(ratingValue) => {
 				answer.aggregateRating = {
 					...answer.aggregateRating,
 					ratingValue,
@@ -174,7 +174,7 @@ export default withRouter(
 							commentsChange={_commentsChange}
 							entityId={answer.id}
 							showNewComment={showNewComment}
-							showNewCommentChange={value =>
+							showNewCommentChange={(value) =>
 								setShowNewComment(value)
 							}
 						/>

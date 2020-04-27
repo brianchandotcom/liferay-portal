@@ -71,7 +71,7 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 			<aui:script require="metal-dom/src/dom as dom">
 				var form = document.<portlet:namespace />selectDepotRoleFm;
 
-				dom.delegate(form, 'click', '.group-selector-button', function(event) {
+				dom.delegate(form, 'click', '.group-selector-button', function (event) {
 					Liferay.Util.postForm(form, {
 						data: {
 							groupId: event.delegateTarget.dataset.groupid,

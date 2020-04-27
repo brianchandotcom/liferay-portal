@@ -44,7 +44,7 @@ import hasDropZoneChild from './layout-data-items/hasDropZoneChild';
 
 const TOPPER_BAR_HEIGHT = 24;
 
-const itemIsMappedCollection = item =>
+const itemIsMappedCollection = (item) =>
 	item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
 	'collection' in item.config;
 
@@ -71,7 +71,7 @@ TopperListItem.propTypes = {
 	expand: PropTypes.bool,
 };
 
-export default function({children, ...props}) {
+export default function ({children, ...props}) {
 	const canUpdate = useSelector(selectCanUpdate);
 
 	return canUpdate ? <Topper {...props}>{children}</Topper> : children;
@@ -80,7 +80,7 @@ export default function({children, ...props}) {
 function Topper({children, item, itemRef, layoutData}) {
 	const containerRef = useRef(null);
 	const dispatch = useDispatch();
-	const store = useSelector(state => state);
+	const store = useSelector((state) => state);
 	const activeItemId = useActiveItemId();
 	const hoveredItemId = useHoveredItemId();
 	const hoverItem = useHoverItem();
@@ -104,7 +104,7 @@ function Topper({children, item, itemRef, layoutData}) {
 		containerRef,
 		dropTargetItem: item,
 		layoutData,
-		onDragEnd: data =>
+		onDragEnd: (data) =>
 			dispatch(
 				moveItem({
 					...data,
@@ -184,7 +184,7 @@ function Topper({children, item, itemRef, layoutData}) {
 		}
 	}, [itemRef, layoutData, windowScrollPosition]);
 
-	const isDraggableInPosition = position =>
+	const isDraggableInPosition = (position) =>
 		targetPosition === position &&
 		dropTargetItemId === toControlsId(item.itemId);
 
@@ -216,7 +216,7 @@ function Topper({children, item, itemRef, layoutData}) {
 					!droppable && isDraggableInPosition(TARGET_POSITION.MIDDLE),
 				'page-editor__topper--mapped': itemIsMappedCollection(item),
 			})}
-			onClick={event => {
+			onClick={(event) => {
 				event.stopPropagation();
 
 				if (isDragging) {
@@ -225,7 +225,7 @@ function Topper({children, item, itemRef, layoutData}) {
 
 				selectItem(item.itemId);
 			}}
-			onMouseLeave={event => {
+			onMouseLeave={(event) => {
 				event.stopPropagation();
 
 				if (isDragging) {
@@ -236,7 +236,7 @@ function Topper({children, item, itemRef, layoutData}) {
 					hoverItem(null);
 				}
 			}}
-			onMouseOver={event => {
+			onMouseOver={(event) => {
 				event.stopPropagation();
 
 				if (isDragging) {
@@ -298,7 +298,7 @@ function Topper({children, item, itemRef, layoutData}) {
 						<TopperListItem>
 							<ClayButton
 								displayType="unstyled"
-								onClick={event => {
+								onClick={(event) => {
 									event.stopPropagation();
 
 									dispatch(

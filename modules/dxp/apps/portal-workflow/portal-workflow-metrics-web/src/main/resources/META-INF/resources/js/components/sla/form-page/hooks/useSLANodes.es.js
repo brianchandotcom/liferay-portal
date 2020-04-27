@@ -13,7 +13,7 @@ import {useState} from 'react';
 
 import {useFetch} from '../../../../shared/hooks/useFetch.es';
 
-const useSLANodes = processId => {
+const useSLANodes = (processId) => {
 	const [nodes, setNodes] = useState([]);
 
 	const parseNodes = ({items}) => {
@@ -22,7 +22,7 @@ const useSLANodes = processId => {
 		const nodeEnters = [];
 		const nodeLeaves = [];
 
-		items.forEach(node => {
+		items.forEach((node) => {
 			if (node.type === 'STATE') {
 				const newNode = {
 					...node,
@@ -71,7 +71,7 @@ const useSLANodes = processId => {
 			...nodeEnters,
 			...nodeLeaves,
 			...nodeEnds,
-		].map(node => ({
+		].map((node) => ({
 			...node,
 			compositeId: `${node.id}:${node.executionType}`,
 		}));
@@ -98,7 +98,7 @@ const useSLANodes = processId => {
 				(node, index, self) =>
 					self.findIndex(({id}) => id == node.id) === index
 			)
-			.map(node => ({
+			.map((node) => ({
 				...node,
 				compositeId: `${node.id}:on`,
 				desc: `${onTaskString} ${node.label}`,

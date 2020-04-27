@@ -145,7 +145,7 @@ if (portletTitleBasedNavigation) {
 	);
 
 	if (selectCategoryButton) {
-		selectCategoryButton.addEventListener('click', function(event) {
+		selectCategoryButton.addEventListener('click', function (event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -164,7 +164,7 @@ if (portletTitleBasedNavigation) {
 
 					uri: '<%= selectCategoryURL %>',
 				},
-				function(event) {
+				function (event) {
 					Liferay.Util.setFormValues(form, {
 						categoryName: Liferay.Util.unescape(event.name),
 						mbCategoryId: event.categoryid,

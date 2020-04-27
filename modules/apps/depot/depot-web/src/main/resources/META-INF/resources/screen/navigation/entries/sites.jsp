@@ -102,7 +102,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			'#<portlet:namespace />addConnectedSiteButton'
 		);
 
-		addConnectedSiteButton.addEventListener('click', function(event) {
+		addConnectedSiteButton.addEventListener('click', function (event) {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -117,7 +117,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 					uri:
 						'<%= String.valueOf(depotAdminSitesDisplayContext.getItemSelectorURL()) %>',
 				},
-				function(event) {
+				function (event) {
 					var toGroupIdInput = document.querySelector(
 						'#<portlet:namespace />toGroupId'
 					);

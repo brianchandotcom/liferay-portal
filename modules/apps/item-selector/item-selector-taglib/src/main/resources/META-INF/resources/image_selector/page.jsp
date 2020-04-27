@@ -162,7 +162,7 @@ if (!draggableImage.equals("none")) {
 		});
 	</c:if>
 
-	var destroyInstance = function(event) {
+	var destroyInstance = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			imageSelector.destroy();
 

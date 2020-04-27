@@ -30,7 +30,7 @@ import FragmentContent from '../fragment-content/FragmentContent';
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const dispatch = useDispatch();
 	const selectItem = useSelectItem();
-	const state = useSelector(state => state);
+	const state = useSelector((state) => state);
 	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 
 	const {fragmentEntryLinks} = state;
@@ -38,7 +38,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
-	const handleButtonClick = id => {
+	const handleButtonClick = (id) => {
 		if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
 			dispatch(
 				duplicateItem({
@@ -110,7 +110,7 @@ function getWidget(widgets, portletId) {
 	for (let i = 0; i < widgetsLength; i++) {
 		const {categories = [], portlets = []} = widgets[i];
 		const categoryPortlet = portlets.find(
-			_portlet => _portlet.portletId === portletId
+			(_portlet) => _portlet.portletId === portletId
 		);
 		const subCategoryPortlet = getWidget(categories, portletId);
 

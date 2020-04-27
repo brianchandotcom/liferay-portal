@@ -21,7 +21,7 @@ import FieldTypeList from '../../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../../components/sidebar/Sidebar.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 
-export default function({keywords}) {
+export default function ({keywords}) {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 
 	const [

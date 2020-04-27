@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-progress',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var STR_EMPTY = '';

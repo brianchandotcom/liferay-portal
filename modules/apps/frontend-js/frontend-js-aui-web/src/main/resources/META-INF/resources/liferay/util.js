@@ -12,7 +12,7 @@
  * details.
  */
 
-(function(A, Liferay) {
+(function (A, Liferay) {
 	A.use('aui-base-lang');
 
 	var AArray = A.Array;
@@ -106,7 +106,7 @@
 
 							instance._titleListener = title.on(
 								'mouseupoutside',
-								event => {
+								(event) => {
 									var editable = Util._getEditableInstance(
 										title
 									);
@@ -147,14 +147,14 @@
 		},
 
 		addInputCancel() {
-			A.use('aui-button-search-cancel', A => {
+			A.use('aui-button-search-cancel', (A) => {
 				new A.ButtonSearchCancel({
 					trigger:
 						'input[type=password], input[type=search], input.clearable, input.search-query',
 				});
 			});
 
-			Util.addInputCancel = function() {};
+			Util.addInputCancel = function () {};
 		},
 
 		checkAll(form, name, allBox, selectClassName) {
@@ -189,7 +189,7 @@
 					form.querySelectorAll(selector)
 				);
 
-				uploadedItems.forEach(item => {
+				uploadedItems.forEach((item) => {
 					if (!item.disabled) {
 						item.checked = allBoxChecked;
 					}
@@ -236,7 +236,7 @@
 
 				let totalBoxes = 0;
 
-				inputs.forEach(input => {
+				inputs.forEach((input) => {
 					if (
 						input.id !== allBox.id ||
 						(input.id !== allBox.name &&
@@ -272,7 +272,7 @@
 			if (currentElement) {
 				var children = currentElement.getElementsByTagName('*');
 
-				var emptyFnFalse = function() {
+				var emptyFnFalse = function () {
 					return false;
 				};
 
@@ -311,7 +311,7 @@
 				});
 			}
 			else if (A.UA.safari) {
-				A.use('node-event-html5', A => {
+				A.use('node-event-html5', (A) => {
 					A.getWin().on('pagehide', () => {
 						Util.enableFormButtons(inputs, form);
 					});
@@ -342,7 +342,7 @@
 		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 		 */
 		escapeCDATA(str) {
-			return str.replace(/<!\[CDATA\[|\]\]>/gi, match => {
+			return str.replace(/<!\[CDATA\[|\]\]>/gi, (match) => {
 				var str = '';
 
 				if (match == ']]>') {
@@ -370,7 +370,7 @@
 			document.body.addEventListener('click', handler);
 
 			if (!interacting && Util.inBrowserView(el)) {
-				const getDisabledParents = function(el) {
+				const getDisabledParents = function (el) {
 					let result = [];
 
 					if (el.parentElement) {
@@ -405,7 +405,7 @@
 
 					const formReadyEventName = portletName + 'formReady';
 
-					const formReadyHandler = event => {
+					const formReadyHandler = (event) => {
 						const elFormName = form.getAttribute('name');
 
 						const formName = event.formName;
@@ -519,7 +519,7 @@
 		getGeolocation(success, fallback, options) {
 			if (success && navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(
-					position => {
+					(position) => {
 						success(
 							position.coords.latitude,
 							position.coords.longitude,
@@ -910,7 +910,7 @@
 					const items = Array.from(box.querySelectorAll('option'));
 
 					if (down) {
-						selectedItems.reverse().forEach(item => {
+						selectedItems.reverse().forEach((item) => {
 							const itemIndex = items.indexOf(item);
 
 							const lastIndex = items.length - 1;
@@ -927,7 +927,7 @@
 						});
 					}
 					else {
-						selectedItems.forEach(item => {
+						selectedItems.forEach((item) => {
 							const itemIndex = items.indexOf(item);
 
 							if (itemIndex === 0) {
@@ -1137,7 +1137,7 @@
 							'input[type=checkbox]'
 						);
 
-						childCheckboxes.forEach(childCheckbox => {
+						childCheckboxes.forEach((childCheckbox) => {
 							childCheckbox.checked = checkBox.checked;
 						});
 					}
@@ -1159,7 +1159,7 @@
 				nodes = [nodes];
 			}
 
-			nodes.forEach(node => {
+			nodes.forEach((node) => {
 				node.disabled = state;
 
 				if (state) {
@@ -1184,7 +1184,7 @@
 
 					showBoxes = document.querySelectorAll('#' + showBoxIds);
 
-					showBoxes.forEach(showBox => {
+					showBoxes.forEach((showBox) => {
 						if (radioButton.checked) {
 							showBox.classList.remove('hide');
 						}
@@ -1196,7 +1196,7 @@
 
 				radioButton.addEventListener('change', () => {
 					if (showBoxes) {
-						showBoxes.forEach(showBox => {
+						showBoxes.forEach((showBox) => {
 							showBox.classList.remove('hide');
 						});
 					}
@@ -1210,7 +1210,7 @@
 							'#' + hideBoxIds
 						);
 
-						hideBoxes.forEach(hideBox => {
+						hideBoxes.forEach((hideBox) => {
 							hideBox.classList.add('hide');
 						});
 					}
@@ -1246,7 +1246,7 @@
 			if (selectBox && toggleBox) {
 				var dynamicValue = typeof value === 'function';
 
-				var toggle = function() {
+				var toggle = function () {
 					var currentValue = selectBox.value;
 
 					var visible = value == currentValue;
@@ -1273,7 +1273,7 @@
 	Liferay.provide(
 		Util,
 		'afterIframeLoaded',
-		event => {
+		(event) => {
 			var nodeInstances = A.Node._instances;
 
 			var docEl = event.doc;
@@ -1315,7 +1315,7 @@
 
 			event.win.focus();
 
-			var detachEventHandles = function() {
+			var detachEventHandles = function () {
 				AArray.invoke(eventHandles, 'detach');
 
 				iframeDocument.purge(true);
@@ -1326,7 +1326,7 @@
 
 				iframeBody.delegate(
 					EVENT_CLICK,
-					event => {
+					(event) => {
 						dialog.set(
 							'visible',
 							false,
@@ -1439,7 +1439,7 @@
 				eventHandles.push(Liferay.once(config.eventName, callback));
 			}
 
-			var detachSelectionOnHideFn = function(event) {
+			var detachSelectionOnHideFn = function (event) {
 				Liferay.fire(config.eventName);
 
 				if (!event.newVal) {
@@ -1447,7 +1447,7 @@
 				}
 			};
 
-			Util.openWindow(config, dialogWindow => {
+			Util.openWindow(config, (dialogWindow) => {
 				eventHandles.push(
 					dialogWindow.after(
 						['destroy', 'visibleChange'],
@@ -1503,7 +1503,7 @@
 
 			container.delegate(
 				EVENT_CLICK,
-				event => {
+				(event) => {
 					const currentTarget = event.currentTarget.getDOM();
 
 					if (
@@ -1523,7 +1523,7 @@
 						)
 					) {
 						if (disableButton) {
-							selectorButtons.forEach(selectorButton => {
+							selectorButtons.forEach((selectorButton) => {
 								selectorButton.disabled = false;
 							});
 
@@ -1544,7 +1544,7 @@
 			);
 
 			openingLiferay.on('entitySelectionRemoved', () => {
-				selectorButtons.forEach(selectorButton => {
+				selectorButtons.forEach((selectorButton) => {
 					selectorButton.disabled = false;
 				});
 			});
@@ -1555,7 +1555,7 @@
 	Liferay.provide(
 		Util,
 		'portletTitleEdit',
-		options => {
+		(options) => {
 			var obj = options.obj;
 
 			A.Event.defineOutside('mouseup');
@@ -1566,7 +1566,7 @@
 				if (title && !title.hasClass('not-editable')) {
 					title.addClass('portlet-title-editable');
 
-					title.on(EVENT_CLICK, event => {
+					title.on(EVENT_CLICK, (event) => {
 						var editable = Util._getEditableInstance(title);
 
 						var rendered = editable.get('rendered');
@@ -1615,7 +1615,7 @@
 
 			var eventHandles = [Liferay.on(eventName, callback)];
 
-			var detachSelectionOnHideFn = function(event) {
+			var detachSelectionOnHideFn = function (event) {
 				if (!event.newVal) {
 					new A.EventHandle(eventHandles).detach();
 				}
@@ -1632,7 +1632,7 @@
 				dialog.show();
 			}
 			else {
-				var destroyDialog = function(event) {
+				var destroyDialog = function (event) {
 					var dialogId = config.id;
 
 					var dialogWindow = Util.getWindow(dialogId);
@@ -1666,7 +1666,7 @@
 					config.dialogIframe || {}
 				);
 
-				Util.openWindow(config, dialogWindow => {
+				Util.openWindow(config, (dialogWindow) => {
 					eventHandles.push(
 						dialogWindow.after(
 							['destroy', 'visibleChange'],
@@ -1697,13 +1697,13 @@
 				config.dialog.destroyOnHide = true;
 			}
 
-			var detachSelectionOnHideFn = function(event) {
+			var detachSelectionOnHideFn = function (event) {
 				if (!event.newVal) {
 					new A.EventHandle(eventHandles).detach();
 				}
 			};
 
-			var disableSelectedAssets = function(event) {
+			var disableSelectedAssets = function (event) {
 				if (selectedData && selectedData.length) {
 					var currentWindow = event.currentTarget.node.get(
 						'contentWindow.document'
@@ -1713,7 +1713,7 @@
 						'.lfr-search-container-wrapper .selector-button'
 					);
 
-					A.some(selectorButtons, item => {
+					A.some(selectorButtons, (item) => {
 						var assetEntryId =
 							item.attr('data-entityid') ||
 							item.attr('data-entityname');
@@ -1745,7 +1745,7 @@
 				dialog.show();
 			}
 			else {
-				var destroyDialog = function(event) {
+				var destroyDialog = function (event) {
 					var dialogId = config.id;
 
 					var dialogWindow = Util.getWindow(dialogId);
@@ -1760,7 +1760,7 @@
 					}
 				};
 
-				Util.openWindow(config, dialogWindow => {
+				Util.openWindow(config, (dialogWindow) => {
 					eventHandles.push(
 						dialogWindow.after(
 							['destroy', 'visibleChange'],
@@ -1782,7 +1782,7 @@
 	Liferay.provide(
 		Util,
 		'toggleControls',
-		node => {
+		(node) => {
 			var docBody = A.getBody();
 
 			node = node || docBody;

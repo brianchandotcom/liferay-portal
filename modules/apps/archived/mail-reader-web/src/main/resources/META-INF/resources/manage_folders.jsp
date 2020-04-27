@@ -79,7 +79,7 @@ long accountId = ParamUtil.getLong(request, "accountId");
 		Liferay.provide(
 			window,
 			'<portlet:namespace />addFolder',
-			function(event) {
+			function (event) {
 				var A = AUI();
 
 				Liferay.Mail.setStatus(
@@ -111,7 +111,7 @@ long accountId = ParamUtil.getLong(request, "accountId");
 		Liferay.provide(
 			window,
 			'<portlet:namespace />deleteFolder',
-			function(id) {
+			function (id) {
 				var A = AUI();
 
 				if (
@@ -146,7 +146,7 @@ long accountId = ParamUtil.getLong(request, "accountId");
 		Liferay.provide(
 			window,
 			'<portlet:namespace />renameFolder',
-			function(id) {
+			function (id) {
 				var A = AUI();
 
 				Liferay.Util.Window.getWindow({

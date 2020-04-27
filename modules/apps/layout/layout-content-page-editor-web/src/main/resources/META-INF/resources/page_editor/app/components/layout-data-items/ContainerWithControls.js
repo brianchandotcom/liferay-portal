@@ -51,7 +51,7 @@ const ContainerWithControls = React.forwardRef(
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 		const selectItem = useSelectItem();
 
-		const handleButtonClick = id => {
+		const handleButtonClick = (id) => {
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
 				dispatch(
 					duplicateItem({

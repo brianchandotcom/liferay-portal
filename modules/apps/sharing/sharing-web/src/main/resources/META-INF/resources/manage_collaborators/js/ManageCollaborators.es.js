@@ -61,7 +61,7 @@ const ManageCollaborators = ({
 
 	const delay = useTimeout();
 
-	const checkExpirationDate = expirationDate => {
+	const checkExpirationDate = (expirationDate) => {
 		const date = new Date(expirationDate);
 
 		return date >= new Date(tomorrowDate);
@@ -75,7 +75,7 @@ const ManageCollaborators = ({
 		}
 	};
 
-	const objectToPairArray = object => {
+	const objectToPairArray = (object) => {
 		const entries = Object.entries(object);
 		const result = [];
 
@@ -88,24 +88,24 @@ const ManageCollaborators = ({
 
 	const findExpirationDateError = () => {
 		const collaborator = currentCollaborators.find(
-			collaborator =>
+			(collaborator) =>
 				collaborator.sharingEntryExpirationDateError === true
 		);
 
 		setExpirationDateError(!!collaborator);
 	};
 
-	const getCollaborator = collaboratorId => {
+	const getCollaborator = (collaboratorId) => {
 		const collaboratorIdNumber = Number(collaboratorId);
 
 		const collaborator = currentCollaborators.find(
-			collaborator => collaborator.userId === collaboratorIdNumber
+			(collaborator) => collaborator.userId === collaboratorIdNumber
 		);
 
 		return collaborator;
 	};
 
-	const getTooltipDate = expirationDate => {
+	const getTooltipDate = (expirationDate) => {
 		return Liferay.Util.sub(
 			Liferay.Language.get('until-x'),
 			new Date(expirationDate).toLocaleDateString(
@@ -114,7 +114,7 @@ const ManageCollaborators = ({
 		);
 	};
 
-	const handleCollaboratorClick = event => {
+	const handleCollaboratorClick = (event) => {
 		const eventTarget = event.target;
 		const invalidElements = 'select,option,button';
 
@@ -132,7 +132,7 @@ const ManageCollaborators = ({
 		}
 	};
 
-	const handleDeleteCollaboratorButtonClick = event => {
+	const handleDeleteCollaboratorButtonClick = (event) => {
 		const button = event.currentTarget;
 
 		const collaboratorId = Number(button.dataset.collaboratorId);
@@ -142,7 +142,7 @@ const ManageCollaborators = ({
 
 		setCurrentCollaborators(
 			currentCollaborators.filter(
-				collaborator => collaborator.userId != collaboratorId
+				(collaborator) => collaborator.userId != collaboratorId
 			)
 		);
 
@@ -151,7 +151,7 @@ const ManageCollaborators = ({
 		setDeleteSharingEntryIds(deleteSharingEntryIds);
 	};
 
-	const handleExpirationDateCheckboxChange = event => {
+	const handleExpirationDateCheckboxChange = (event) => {
 		const checkbox = event.target;
 
 		const collaboratorId = checkbox.dataset.collaboratorId;
@@ -182,7 +182,7 @@ const ManageCollaborators = ({
 		});
 	};
 
-	const handleExpirationDateInputBlur = event => {
+	const handleExpirationDateInputBlur = (event) => {
 		const input = event.target;
 
 		const collaboratorId = input.dataset.collaboratorId;
@@ -236,19 +236,19 @@ const ManageCollaborators = ({
 			body: objectToFormData(data),
 			method: 'POST',
 		})
-			.then(response => {
+			.then((response) => {
 				const jsonResponse = response.json();
 
 				return response.ok
 					? jsonResponse
-					: jsonResponse.then(json => {
+					: jsonResponse.then((json) => {
 							const error = new Error(
 								json.errorMessage || response.statusText
 							);
 							throw Object.assign(error, {response});
 					  });
 			})
-			.then(json => {
+			.then((json) => {
 				parent.Liferay.fire('sharing:changed', {
 					classNameId,
 					classPK,
@@ -258,14 +258,14 @@ const ManageCollaborators = ({
 
 				setLoadingResponse(false);
 			})
-			.catch(error => {
+			.catch((error) => {
 				showNotification(error.message, true);
 
 				setLoadingResponse(false);
 			});
 	};
 
-	const handleShareableCheckboxChange = event => {
+	const handleShareableCheckboxChange = (event) => {
 		const checkbox = event.target;
 
 		const collaboratorId = checkbox.dataset.collaboratorId;
@@ -284,9 +284,9 @@ const ManageCollaborators = ({
 		});
 	};
 
-	const setCollaborator = updatedCollaborator => {
+	const setCollaborator = (updatedCollaborator) => {
 		setCurrentCollaborators(
-			currentCollaborators.map(collaborator => {
+			currentCollaborators.map((collaborator) => {
 				if (collaborator.userId === updatedCollaborator.userId) {
 					return {
 						...collaborator,
@@ -400,7 +400,7 @@ const ManageCollaborators = ({
 						<div className="autofit-col">
 							<ClaySelectWithOption
 								name={sharingEntryId}
-								onChange={event => {
+								onChange={(event) => {
 									setSharingEntryIdsAndPermissions({
 										...sharingEntryIdsAndPermissions,
 										[event.target.name]: event.target.value,
@@ -522,7 +522,7 @@ const ManageCollaborators = ({
 							</ClayAlert>
 						)}
 						<ul className="list-group">
-							{currentCollaborators.map(collaborator => {
+							{currentCollaborators.map((collaborator) => {
 								return (
 									<Collaborator
 										{...collaborator}

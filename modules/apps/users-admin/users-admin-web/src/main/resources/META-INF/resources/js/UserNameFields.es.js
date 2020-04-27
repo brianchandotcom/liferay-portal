@@ -67,7 +67,7 @@ class UserNameFields extends PortletBase {
 
 		this._getURL(languageId)
 			.then(fetch)
-			.then(response => response.text())
+			.then((response) => response.text())
 			.then(this._insertUserNameFields.bind(this))
 			.then(this._cleanUp.bind(this))
 			.catch(this._handleError.bind(this));
@@ -131,7 +131,7 @@ class UserNameFields extends PortletBase {
 	 * @return {Promise} A promise to be resolved with the constructed URL
 	 */
 	_getURL(languageId) {
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			const url = createPortletURL(this.baseURL, {
 				languageId,
 			});
@@ -240,9 +240,7 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	baseURL: Config.required()
-		.string()
-		.writeOnce(),
+	baseURL: Config.required().string().writeOnce(),
 
 	/**
 	 * Form node.
@@ -250,9 +248,7 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	formNode: Config.required()
-		.setter(dom.toElement)
-		.writeOnce(),
+	formNode: Config.required().setter(dom.toElement).writeOnce(),
 
 	/**
 	 * Language id select field.
@@ -260,9 +256,7 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	languageIdSelectNode: Config.required()
-		.setter(dom.toElement)
-		.writeOnce(),
+	languageIdSelectNode: Config.required().setter(dom.toElement).writeOnce(),
 
 	/**
 	 * HTML element containing the user name fields.
@@ -270,9 +264,7 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	userNameFieldsNode: Config.required()
-		.setter(dom.toElement)
-		.writeOnce(),
+	userNameFieldsNode: Config.required().setter(dom.toElement).writeOnce(),
 };
 
 export default UserNameFields;

@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-editors',
-	A => {
+	(A) => {
 		var AArray = A.Array;
 		var AObject = A.Object;
 		var getClassName = A.getClassName;
@@ -349,7 +349,7 @@ AUI.add(
 								item2.test('select[multiple]') &&
 								Lang.isArray(value)
 							) {
-								value.forEach(option => {
+								value.forEach((option) => {
 									for (var key in option) {
 										item2
 											.one(
@@ -454,7 +454,7 @@ AUI.add(
 
 					var strings = instance.getStrings();
 
-					scriptLanguages.forEach(item => {
+					scriptLanguages.forEach((item) => {
 						if (item) {
 							scriptLanguagesJSONArray.push({
 								label: strings[item],
@@ -485,8 +485,8 @@ AUI.add(
 				},
 
 				getScriptLanguages(scriptLanguages) {
-					KaleoDesignerRemoteServices.getScriptLanguages(data => {
-						AArray.each(data, item => {
+					KaleoDesignerRemoteServices.getScriptLanguages((data) => {
+						AArray.each(data, (item) => {
 							if (item) {
 								scriptLanguages.push(item.scriptLanguage);
 							}
@@ -546,7 +546,7 @@ AUI.add(
 			},
 		});
 
-		var CompositeEditorFormBase = function() {};
+		var CompositeEditorFormBase = function () {};
 
 		CompositeEditorFormBase.prototype = {
 			getEmbeddedEditorForm(editorFormClass, container, config) {
@@ -1180,7 +1180,7 @@ AUI.add(
 			NAME: 'forms-cell-editor',
 		});
 
-		var ExecutionTypesEditorFormBase = function() {};
+		var ExecutionTypesEditorFormBase = function () {};
 
 		ExecutionTypesEditorFormBase.prototype = {
 			_executionTypesSetter(val) {
@@ -1398,7 +1398,7 @@ AUI.add(
 			NotificationRecipientsEditorFormConfig
 		);
 
-		NotificationRecipientsEditorFormConfig.prototype._valueAssignmentsType = function() {
+		NotificationRecipientsEditorFormConfig.prototype._valueAssignmentsType = function () {
 			var instance = this;
 
 			var strings = instance.getStrings();
@@ -1786,7 +1786,7 @@ AUI.add(
 			NAME: 'notifications-cell-editor',
 		});
 
-		NotificationsEditorFormConfig.prototype.addNotificationView = function(
+		NotificationsEditorFormConfig.prototype.addNotificationView = function (
 			num
 		) {
 			var instance = this;
@@ -1866,7 +1866,7 @@ AUI.add(
 			instance.appendToDynamicView(buffer.join(STR_BLANK));
 		};
 
-		NotificationsEditorFormConfig.prototype.getValue = function() {
+		NotificationsEditorFormConfig.prototype.getValue = function () {
 			var instance = this;
 
 			var localRecipients = instance.get('recipients');
@@ -1901,7 +1901,7 @@ AUI.add(
 			);
 		};
 
-		NotificationsEditorFormConfig.prototype._showRecipientsEditor = function(
+		NotificationsEditorFormConfig.prototype._showRecipientsEditor = function (
 			bodyContentNode,
 			index
 		) {
@@ -2122,7 +2122,7 @@ AUI.add(
 			NAME: 'actions-cell-editor',
 		});
 
-		ActionsEditorFormConfig.prototype.addActionView = function(num) {
+		ActionsEditorFormConfig.prototype.addActionView = function (num) {
 			var instance = this;
 
 			num = num || 1;
@@ -2433,7 +2433,7 @@ AUI.add(
 
 					var dynamicViews = instance.getDynamicViews();
 
-					dynamicViews.each(item => {
+					dynamicViews.each((item) => {
 						var actionTypeSelect = item.one('.select-action-type');
 
 						var actionType = actionTypeSelect.val();
@@ -2979,7 +2979,7 @@ AUI.add(
 						'.task-timers-cell-editor-input'
 					);
 
-					taskTimerInputs.each(item => {
+					taskTimerInputs.each((item) => {
 						if (
 							item.get('type') &&
 							item.get('type') === 'checkbox'

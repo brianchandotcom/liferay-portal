@@ -23,11 +23,11 @@ class CriteriaSidebarSearchBar extends Component {
 		searchValue: PropTypes.string,
 	};
 
-	_handleChange = event => {
+	_handleChange = (event) => {
 		this.props.onChange(event.target.value);
 	};
 
-	_handleClear = event => {
+	_handleClear = (event) => {
 		event.preventDefault();
 
 		this.props.onChange('');

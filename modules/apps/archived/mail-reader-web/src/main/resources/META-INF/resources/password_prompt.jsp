@@ -40,7 +40,7 @@ long inboxFolderId = ParamUtil.getLong(request, "inboxFolderId");
 <aui:script use="aui-io-deprecated">
 	var form = A.one('#<portlet:namespace />dialogFm');
 
-	A.one('#<portlet:namespace />login').on('click', function(event) {
+	A.one('#<portlet:namespace />login').on('click', function (event) {
 		event.preventDefault();
 
 		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/store_password', {
@@ -50,13 +50,13 @@ long inboxFolderId = ParamUtil.getLong(request, "inboxFolderId");
 			},
 			method: 'POST',
 			on: {
-				failure: function(event, id, obj) {
+				failure: function (event, id, obj) {
 					Liferay.Mail.setStatus(
 						'error',
 						'<liferay-ui:message key="unable-to-connect-with-mail-server" />'
 					);
 				},
-				success: function(event, id, obj) {
+				success: function (event, id, obj) {
 					var responseData = this.get('responseData');
 
 					Liferay.Mail.setStatus(

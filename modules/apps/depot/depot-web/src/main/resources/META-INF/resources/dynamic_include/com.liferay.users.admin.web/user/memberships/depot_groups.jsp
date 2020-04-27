@@ -112,7 +112,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 
 <c:if test="<%= depotAdminMembershipsDisplayContext.isSelectable() %>">
 	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
-		AUI().use('liferay-search-container', function(A) {
+		AUI().use('liferay-search-container', function (A) {
 			var AArray = A.Array;
 
 			var addDepotGroupIds = [];
@@ -133,7 +133,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 				url: '<%= depotAdminMembershipsDisplayContext.getItemSelectorURL() %>',
 			});
 
-			itemSelectorDialog.on('selectedItemChange', function(event) {
+			itemSelectorDialog.on('selectedItemChange', function (event) {
 				var selectedItem = event.selectedItem;
 
 				if (selectedItem) {
@@ -176,14 +176,14 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 				'<portlet:namespace />selectDepotGroupLink'
 			);
 
-			selectDepotGroupLink.addEventListener('click', function(event) {
+			selectDepotGroupLink.addEventListener('click', function (event) {
 				event.preventDefault();
 				itemSelectorDialog.open();
 			});
 
 			var handleOnModifyLink = searchContainerContentBox.delegate(
 				'click',
-				function(event) {
+				function (event) {
 					var link = event.currentTarget;
 
 					var rowId = link.attr('data-rowId');
@@ -217,7 +217,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 				'.modify-link'
 			);
 
-			var onDestroyPortlet = function(event) {
+			var onDestroyPortlet = function (event) {
 				if (event.portletId === '<%= portletDisplay.getId() %>') {
 					Liferay.detach(handleOnModifyLink);
 

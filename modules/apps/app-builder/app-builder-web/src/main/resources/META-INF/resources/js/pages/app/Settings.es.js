@@ -29,7 +29,7 @@ export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 	} = useContext(EditAppContext);
 
 	const checked = appDeployments.some(
-		appDeployment => appDeployment.type === deploymentType
+		(appDeployment) => appDeployment.type === deploymentType
 	);
 
 	return (
@@ -47,7 +47,7 @@ export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 				<div className="autofit-col right">
 					<ToggleSwitch
 						checked={checked}
-						onChange={checked => {
+						onChange={(checked) => {
 							if (checked) {
 								dispatch({
 									deploymentType,

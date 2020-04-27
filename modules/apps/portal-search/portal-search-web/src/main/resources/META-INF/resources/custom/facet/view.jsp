@@ -129,7 +129,7 @@ List<CustomFacetTermDisplayContext> customFacetTermDisplayContexts = customFacet
 		'#<portlet:namespace />fm .facet-term'
 	);
 
-	facetTerms.forEach(function(term) {
+	facetTerms.forEach(function (term) {
 		Liferay.Util.toggleDisabled(term, false);
 	});
 </aui:script>

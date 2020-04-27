@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-admin',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var IN_PROGRESS_SELECTOR = '.background-task-status-in-progress';
@@ -139,10 +139,10 @@ AUI.add(
 						Liferay.Util.fetch(instance.get(STR_URL), {
 							method: 'POST',
 						})
-							.then(response => {
+							.then((response) => {
 								return response.text();
 							})
-							.then(response => {
+							.then((response) => {
 								var responseDataNode = A.Node.create(response);
 
 								// Replace each progress bar

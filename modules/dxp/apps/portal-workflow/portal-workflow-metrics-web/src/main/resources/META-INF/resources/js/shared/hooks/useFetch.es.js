@@ -15,7 +15,7 @@ import {AppContext} from '../../components/AppContext.es';
 
 const useFetch = ({
 	admin = false,
-	callback = data => data,
+	callback = (data) => data,
 	params = {},
 	url,
 }) => {

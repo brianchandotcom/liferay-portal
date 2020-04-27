@@ -184,7 +184,7 @@ export const isEmptyPage = (pages, pageIndex) => {
 	);
 };
 
-export const isEmpty = pages => {
+export const isEmpty = (pages) => {
 	return pages.every((page, pageIndex) => isEmptyPage(pages, pageIndex));
 };
 
@@ -273,7 +273,7 @@ export const removeRow = (pages, pageIndex, rowIndex) => {
 
 export const visitNestedFields = ({nestedFields}, fn) => {
 	if (Array.isArray(nestedFields)) {
-		nestedFields.forEach(nestedField => {
+		nestedFields.forEach((nestedField) => {
 			fn(nestedField);
 
 			visitNestedFields(nestedField, fn);
@@ -288,11 +288,11 @@ export const findField = (pages, predicate) => {
 };
 
 export const findFieldByFieldName = (pages, fieldName) => {
-	return findField(pages, field => field.fieldName === fieldName);
+	return findField(pages, (field) => field.fieldName === fieldName);
 };
 
 export const findFieldByName = (pages, name) => {
-	return findField(pages, field => field.name === name);
+	return findField(pages, (field) => field.name === name);
 };
 
 export const getColumn = (pages, pageIndex, rowIndex, columnIndex) => {
@@ -334,7 +334,7 @@ export const getField = (context, pageIndex, rowIndex, columnIndex) => {
 
 	if (context[pageIndex].nestedFields) {
 		field = context[pageIndex].nestedFields.find(
-			nestedField => nestedField.fieldName === field
+			(nestedField) => nestedField.fieldName === field
 		);
 	}
 
@@ -355,14 +355,14 @@ export const rowHasFields = (pages, pageIndex, rowIndex) => {
 		const row = page.rows[Number(rowIndex)];
 
 		if (row) {
-			hasFields = row.columns.some(column => column.fields.length);
+			hasFields = row.columns.some((column) => column.fields.length);
 		}
 	}
 
 	return hasFields;
 };
 
-export const getIndexes = node => {
+export const getIndexes = (node) => {
 	const {ddmFieldColumn, ddmFieldPage, ddmFieldRow} = node.dataset;
 
 	return {
@@ -372,7 +372,7 @@ export const getIndexes = node => {
 	};
 };
 
-export const getNestedIndexes = node => {
+export const getNestedIndexes = (node) => {
 	let indexes = [];
 
 	if (node.dataset.ddmFieldRow) {
@@ -390,7 +390,7 @@ export const updateField = (pages, fieldName, properties) => {
 	const visitor = new PagesVisitor(pages);
 
 	return visitor.mapFields(
-		field => {
+		(field) => {
 			if (fieldName === field.fieldName) {
 				return {
 					...field,

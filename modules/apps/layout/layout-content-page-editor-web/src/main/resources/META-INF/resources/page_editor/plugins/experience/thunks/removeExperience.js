@@ -21,14 +21,14 @@ export default function removeExperience({
 	segmentsExperienceId,
 	selectedExperienceId,
 }) {
-	return dispatch => {
+	return (dispatch) => {
 		if (segmentsExperienceId === selectedExperienceId) {
 			return ExperienceService.selectExperience({
 				body: {
 					segmentsExperienceId: config.defaultSegmentsExperienceId,
 				},
 				dispatch,
-			}).then(portletIds => {
+			}).then((portletIds) => {
 				dispatch(
 					selectExperienceAction({
 						portletIds,

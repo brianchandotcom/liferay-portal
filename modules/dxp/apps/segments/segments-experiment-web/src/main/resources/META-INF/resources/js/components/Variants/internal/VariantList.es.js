@@ -27,7 +27,7 @@ function VariantList({
 }) {
 	return (
 		<ClayList>
-			{variants.map(variant => {
+			{variants.map((variant) => {
 				const publishableVariant =
 					publishable && !!(!variant.control || variant.winner);
 

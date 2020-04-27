@@ -11,13 +11,13 @@
 
 import {useCallback, useState} from 'react';
 
-const isCustomFilter = filter => filter.key === 'custom';
+const isCustomFilter = (filter) => filter.key === 'custom';
 
 const useCustomFormState = () => {
 	const [formVisible, setFormVisible] = useState(false);
 
 	const onClickFilter = useCallback(
-		handleClick => currentItem => {
+		(handleClick) => (currentItem) => {
 			if (isCustomFilter(currentItem)) {
 				setFormVisible(true);
 			}

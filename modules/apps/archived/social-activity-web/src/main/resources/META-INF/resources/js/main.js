@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-social-activity-admin',
-	function(A) {
+	function (A) {
 		var Lang = A.Lang;
 
 		var Node = A.Node;
@@ -228,7 +228,7 @@ AUI.add(
 			NAME: 'socialactivityadmin',
 
 			prototype: {
-				initializer: function(config) {
+				initializer: function (config) {
 					var instance = this;
 
 					instance._originalConfig = config;
@@ -264,7 +264,7 @@ AUI.add(
 
 					instance._settingsInput = settingsInput;
 
-					var getSocialActivitySettingMappingCallback = function(
+					var getSocialActivitySettingMappingCallback = function (
 						result,
 						modelName
 					) {
@@ -278,7 +278,7 @@ AUI.add(
 
 					settings.delegate(
 						'click',
-						A.throttle(function(event) {
+						A.throttle(function (event) {
 							var currentTarget = event.currentTarget;
 
 							if (
@@ -301,7 +301,7 @@ AUI.add(
 
 					var lastIndex = socialActivityItems.size() - 1;
 
-					A.some(socialActivityItems, function(
+					A.some(socialActivityItems, function (
 						item,
 						index,
 						collection
@@ -321,7 +321,7 @@ AUI.add(
 							instance._getSocialActivitySettingMapping(
 								themeDisplay.getScopeGroupIdOrLiveGroupId(),
 								modelName,
-								function(result) {
+								function (result) {
 									getSocialActivitySettingMappingCallback(
 										result,
 										modelName
@@ -336,7 +336,7 @@ AUI.add(
 					});
 				},
 
-				_addSettingsDisplay: function(config) {
+				_addSettingsDisplay: function (config) {
 					var instance = this;
 
 					instance.settingsDisplay = new SettingsDisplay(
@@ -344,7 +344,7 @@ AUI.add(
 					).render(instance._contentBox.empty());
 				},
 
-				_getItemByName: function(currentForm, name, ignoreNamespace) {
+				_getItemByName: function (currentForm, name, ignoreNamespace) {
 					var instance = this;
 
 					var inputName = name;
@@ -356,7 +356,7 @@ AUI.add(
 					return currentForm.one('[name=' + inputName + ']');
 				},
 
-				_getJsonSettings: function(settingsDisplay) {
+				_getJsonSettings: function (settingsDisplay) {
 					var instance = this;
 
 					return {
@@ -365,7 +365,7 @@ AUI.add(
 					};
 				},
 
-				_getSocialActivitySettingMapping: function(
+				_getSocialActivitySettingMapping: function (
 					groupId,
 					modelName,
 					callback
@@ -382,7 +382,7 @@ AUI.add(
 					);
 				},
 
-				_onSocialActivityFormSubmit: function(event) {
+				_onSocialActivityFormSubmit: function (event) {
 					var instance = this;
 
 					var form = event.currentTarget;
@@ -394,7 +394,7 @@ AUI.add(
 					submitForm(form);
 				},
 
-				_revealSection: function(
+				_revealSection: function (
 					menuItem,
 					getSocialActivitySettingMappingCallback
 				) {
@@ -407,7 +407,7 @@ AUI.add(
 					instance._getSocialActivitySettingMapping(
 						themeDisplay.getScopeGroupIdOrLiveGroupId(),
 						modelName,
-						function(result) {
+						function (result) {
 							getSocialActivitySettingMappingCallback(
 								result,
 								modelName
@@ -416,7 +416,7 @@ AUI.add(
 					);
 				},
 
-				_updateCheckboxStatus: function(event) {
+				_updateCheckboxStatus: function (event) {
 					var instance = this;
 
 					var currentTarget = event.currentTarget;
@@ -435,7 +435,7 @@ AUI.add(
 					);
 				},
 
-				_updateSocialActivitySettings: function(form) {
+				_updateSocialActivitySettings: function (form) {
 					var instance = this;
 
 					instance._settingsInput.val(
@@ -450,7 +450,7 @@ AUI.add(
 		var SettingsDisplay = A.Component.create({
 			ATTRS: {
 				buttonsNode: {
-					valueFn: function() {
+					valueFn: function () {
 						return Node.create(TPL_BUTTON_HOLDER);
 					},
 				},
@@ -467,13 +467,13 @@ AUI.add(
 			NAME: STR_SETTINGS_DISPLAY,
 
 			prototype: {
-				initializer: function(config) {
+				initializer: function (config) {
 					var instance = this;
 
 					instance._settingsFields = {};
 				},
 
-				renderUI: function() {
+				renderUI: function () {
 					var instance = this;
 
 					var contentBox = instance.get(STR_CONTENT_BOX);
@@ -501,7 +501,7 @@ AUI.add(
 
 					var actionsNode = headerNode.one('.settings-actions');
 
-					originalConfig.dataSet.forEach(function(item, index) {
+					originalConfig.dataSet.forEach(function (item, index) {
 						item.localizedName =
 							activityDefinitionLanguageKeys[
 								item.modelName + '.' + item.languageKey
@@ -536,7 +536,7 @@ AUI.add(
 					contentBox.append(settingsNode);
 				},
 
-				bindUI: function() {
+				bindUI: function () {
 					var instance = this;
 
 					instance.actionsNode.delegate(
@@ -562,7 +562,7 @@ AUI.add(
 					);
 				},
 
-				getSettingsJSON: function() {
+				getSettingsJSON: function () {
 					var instance = this;
 
 					var settingsJSON = [];
@@ -576,7 +576,7 @@ AUI.add(
 					return settingsJSON;
 				},
 
-				_afterSettingsFieldCollapsed: function(event) {
+				_afterSettingsFieldCollapsed: function (event) {
 					var instance = this;
 
 					var collapsed = event.newVal;
@@ -595,7 +595,7 @@ AUI.add(
 					node.append(item);
 				},
 
-				_handleConjunction: function() {
+				_handleConjunction: function () {
 					var instance = this;
 
 					var actionsNode = instance.actionsNode;
@@ -626,7 +626,7 @@ AUI.add(
 					}
 				},
 
-				_onBodyNodeClick: function(event) {
+				_onBodyNodeClick: function (event) {
 					var instance = this;
 
 					var currentTarget = event.currentTarget;
@@ -646,7 +646,7 @@ AUI.add(
 					}
 				},
 
-				_toggleField: function(event, collapsed) {
+				_toggleField: function (event, collapsed) {
 					var instance = this;
 
 					var field = Widget.getByNode(event.currentTarget);
@@ -658,7 +658,7 @@ AUI.add(
 					instance._handleConjunction();
 				},
 
-				_toggleLimitFields: function(item, collapsed) {
+				_toggleLimitFields: function (item, collapsed) {
 					var instance = this;
 
 					item.one(SELECTOR_SETTINGS_LIMIT).toggle(collapsed);
@@ -748,7 +748,7 @@ AUI.add(
 			prototype: {
 				BOUNDING_TEMPLATE: TPL_BOUNDING_BOX_SETTINGS_FIELD,
 
-				initializer: function(config) {
+				initializer: function (config) {
 					var instance = this;
 
 					var counters = config.counters;
@@ -794,7 +794,7 @@ AUI.add(
 					instance.setAttrs(attrs);
 				},
 
-				renderUI: function() {
+				renderUI: function () {
 					var instance = this;
 
 					var contentBox = instance.get(STR_CONTENT_BOX);
@@ -896,13 +896,13 @@ AUI.add(
 					contentBox.append(limitNode);
 				},
 
-				syncUI: function() {
+				syncUI: function () {
 					var instance = this;
 
 					instance.set('collapsed', !instance.get(STR_ACTIVE));
 				},
 
-				getSettingsJSON: function() {
+				getSettingsJSON: function () {
 					var instance = this;
 
 					return instance.getAttrs([
@@ -920,7 +920,7 @@ AUI.add(
 					]);
 				},
 
-				_selectOnChange: function(event) {
+				_selectOnChange: function (event) {
 					var instance = this;
 
 					var selectId = event.currentTarget.attr('id');
@@ -932,7 +932,7 @@ AUI.add(
 					instance.set(selectId, event.currentTarget.val(), SRC_UI);
 				},
 
-				_setToDefaultValue: function() {
+				_setToDefaultValue: function () {
 					var instance = this;
 
 					instance.reset(STR_CONTRIBUTION_INCREMENT);
@@ -943,7 +943,7 @@ AUI.add(
 					instance.reset(STR_PARTICIPATION_LIMIT_VALUE);
 				},
 
-				_uiSetCollapsed: function(value) {
+				_uiSetCollapsed: function (value) {
 					var instance = this;
 
 					var boundingBox = instance.get(STR_BOUNDING_BOX);
@@ -952,7 +952,7 @@ AUI.add(
 					boundingBox.toggleClass(CSS_TOKEN, value);
 				},
 
-				_uiSetContributionIncrement: function(value, src) {
+				_uiSetContributionIncrement: function (value, src) {
 					var instance = this;
 
 					var contributionIncrementNode = instance

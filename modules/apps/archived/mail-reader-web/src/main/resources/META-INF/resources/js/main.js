@@ -14,9 +14,9 @@
 
 AUI.add(
 	'liferay-plugin-mail',
-	function(A) {
+	function (A) {
 		Liferay.Mail = {
-			init: function(params) {
+			init: function (params) {
 				var instance = this;
 
 				instance.namespace = params.namespace;
@@ -51,7 +51,7 @@ AUI.add(
 				);
 			},
 
-			addAccount: function() {
+			addAccount: function () {
 				var instance = this;
 
 				instance.dialog = Liferay.Util.Window.getWindow({
@@ -71,7 +71,7 @@ AUI.add(
 					.render();
 			},
 
-			checkMessages: function(folderId) {
+			checkMessages: function (folderId) {
 				var instance = this;
 
 				if (instance.accountId <= 0) {
@@ -88,7 +88,7 @@ AUI.add(
 						dataType: 'JSON',
 						method: 'POST',
 						on: {
-							success: function(event, id, obj) {
+							success: function (event, id, obj) {
 								var responseData = this.get('responseData');
 
 								if (
@@ -116,7 +116,7 @@ AUI.add(
 				);
 			},
 
-			deleteMessages: function(messageIds) {
+			deleteMessages: function (messageIds) {
 				var instance = this;
 
 				instance.setStatus(
@@ -133,7 +133,7 @@ AUI.add(
 						dataType: 'JSON',
 						method: 'POST',
 						on: {
-							failure: function(event, id, obj) {
+							failure: function (event, id, obj) {
 								instance.setStatus(
 									'error',
 									Liferay.Language.get(
@@ -141,7 +141,7 @@ AUI.add(
 									)
 								);
 							},
-							success: function(event, id, obj) {
+							success: function (event, id, obj) {
 								var responseData = this.get('responseData');
 
 								instance.setStatus(
@@ -164,7 +164,7 @@ AUI.add(
 				);
 			},
 
-			editAccount: function(accountId) {
+			editAccount: function (accountId) {
 				var instance = this;
 
 				instance.dialog = Liferay.Util.Window.getWindow({
@@ -188,7 +188,7 @@ AUI.add(
 					.render();
 			},
 
-			flagMessages: function(flag, value, messageIds) {
+			flagMessages: function (flag, value, messageIds) {
 				var instance = this;
 
 				instance.setStatus(
@@ -207,7 +207,7 @@ AUI.add(
 						dataType: 'JSON',
 						method: 'POST',
 						on: {
-							failure: function(event, id, obj) {
+							failure: function (event, id, obj) {
 								instance.setStatus(
 									'error',
 									Liferay.Language.get(
@@ -215,7 +215,7 @@ AUI.add(
 									)
 								);
 							},
-							success: function(event, id, obj) {
+							success: function (event, id, obj) {
 								var responseData = this.get('responseData');
 
 								instance.setStatus(
@@ -236,7 +236,7 @@ AUI.add(
 				);
 			},
 
-			loadAccount: function(accountId, inboxFolderId) {
+			loadAccount: function (accountId, inboxFolderId) {
 				var instance = this;
 
 				instance._displayContainer(instance.messagesContainer);
@@ -250,7 +250,7 @@ AUI.add(
 						}),
 						method: 'POST',
 						on: {
-							failure: function(event, id, obj) {
+							failure: function (event, id, obj) {
 								instance.setStatus(
 									'error',
 									Liferay.Language.get(
@@ -258,7 +258,7 @@ AUI.add(
 									)
 								);
 							},
-							success: function(event, id, obj) {
+							success: function (event, id, obj) {
 								var responseData = this.get('responseData');
 
 								if (A.DataType.Boolean.parse(responseData)) {
@@ -288,7 +288,7 @@ AUI.add(
 				instance._hideWindow();
 			},
 
-			loadAccounts: function(accountId) {
+			loadAccounts: function (accountId) {
 				var instance = this;
 
 				instance.accountsContainer.io.set(
@@ -301,7 +301,7 @@ AUI.add(
 				instance.accountsContainer.io.start();
 			},
 
-			loadCompose: function(
+			loadCompose: function (
 				accountId,
 				messageId,
 				messageType,
@@ -324,7 +324,7 @@ AUI.add(
 				instance.composeContainer.io.start();
 			},
 
-			loadFolders: function(accountId) {
+			loadFolders: function (accountId) {
 				var instance = this;
 
 				if (accountId > 0) {
@@ -343,7 +343,7 @@ AUI.add(
 				instance._hideWindow();
 			},
 
-			loadManageFolders: function(accountId) {
+			loadManageFolders: function (accountId) {
 				var instance = this;
 
 				instance._displayContainer(instance.manageFoldersContainer);
@@ -358,7 +358,7 @@ AUI.add(
 				instance.manageFoldersContainer.io.start();
 			},
 
-			loadMessage: function(
+			loadMessage: function (
 				folderId,
 				messageNumber,
 				orderByField,
@@ -388,7 +388,7 @@ AUI.add(
 				instance.messageContainer.io.start();
 			},
 
-			loadMessages: function(
+			loadMessages: function (
 				folderId,
 				pageNumber,
 				orderByField,
@@ -431,7 +431,7 @@ AUI.add(
 				instance.messagesContainer.io.set('showLoading', true);
 			},
 
-			moveMessages: function(folderId, messageIds) {
+			moveMessages: function (folderId, messageIds) {
 				var instance = this;
 
 				instance.setStatus(
@@ -449,7 +449,7 @@ AUI.add(
 						dataType: 'JSON',
 						method: 'POST',
 						on: {
-							failure: function(event, id, obj) {
+							failure: function (event, id, obj) {
 								instance.setStatus(
 									'error',
 									Liferay.Language.get(
@@ -457,7 +457,7 @@ AUI.add(
 									)
 								);
 							},
-							success: function(event, id, obj) {
+							success: function (event, id, obj) {
 								var responseData = this.get('responseData');
 
 								instance.setStatus(
@@ -479,7 +479,7 @@ AUI.add(
 				);
 			},
 
-			passwordPrompt: function(accountId, inboxFolderId) {
+			passwordPrompt: function (accountId, inboxFolderId) {
 				var instance = this;
 
 				instance.dialog = Liferay.Util.Window.getWindow({
@@ -504,7 +504,7 @@ AUI.add(
 					.render();
 			},
 
-			reset: function() {
+			reset: function () {
 				var instance = this;
 
 				instance.accountId = null;
@@ -529,7 +529,7 @@ AUI.add(
 				instance._hideWindow();
 			},
 
-			setStatus: function(type, message, indefinite) {
+			setStatus: function (type, message, indefinite) {
 				var instance = this;
 
 				var statusContainers = A.all('.mail-status').html(
@@ -543,13 +543,13 @@ AUI.add(
 				var status = statusContainers.all('table');
 
 				if (!indefinite) {
-					setTimeout(function() {
+					setTimeout(function () {
 						status.remove();
 					}, 5000);
 				}
 			},
 
-			_assignEvents: function() {
+			_assignEvents: function () {
 				var instance = this;
 
 				instance.accountsContainer.plug(A.Plugin.IO, {
@@ -566,7 +566,7 @@ AUI.add(
 					autoLoad: false,
 					method: 'POST',
 					on: {
-						success: function(event) {
+						success: function (event) {
 							try {
 								window[instance.namespace + 'editor'] = null;
 
@@ -587,7 +587,7 @@ AUI.add(
 
 				instance.messageContainer.plug(A.Plugin.IO, {
 					after: {
-						success: function() {
+						success: function () {
 							instance.loadFolders(instance.accountId);
 						},
 					},
@@ -598,10 +598,10 @@ AUI.add(
 
 				instance.messagesContainer.plug(A.Plugin.IO, {
 					after: {
-						success: function() {
+						success: function () {
 							instance.messagesContainer
 								.all('.flag-messages')
-								.on('click', function(event) {
+								.on('click', function (event) {
 									var messageIds = instance._getSelectedMessageIds();
 
 									var currentTarget = event.currentTarget;
@@ -622,7 +622,7 @@ AUI.add(
 
 							instance.messagesContainer
 								.all('.move-messages')
-								.on('click', function(event) {
+								.on('click', function (event) {
 									var folderId = event.currentTarget.getData(
 										'folderId'
 									);
@@ -640,7 +640,7 @@ AUI.add(
 
 				instance.accountsContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var link = event.currentTarget;
 
 						var accountId = link.getData('accountId');
@@ -654,7 +654,7 @@ AUI.add(
 
 				instance.composeContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var messageId = event.currentTarget.getData(
 							'messageId'
 						);
@@ -666,7 +666,7 @@ AUI.add(
 
 				instance.contentContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var link = event.currentTarget;
 
 						var li = link.ancestor('li');
@@ -692,7 +692,7 @@ AUI.add(
 
 				instance.contentContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var link = event.currentTarget;
 
 						var messageId = link.getData('messageId');
@@ -709,7 +709,7 @@ AUI.add(
 
 				instance.foldersContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						instance.editAccount(instance.accountId);
 					},
 					'.edit-account'
@@ -717,7 +717,7 @@ AUI.add(
 
 				instance.foldersContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						instance.loadManageFolders(instance.accountId);
 					},
 					'.manage-folders'
@@ -725,7 +725,7 @@ AUI.add(
 
 				instance.mailContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var link = event.currentTarget;
 
 						var li = link.ancestor('li');
@@ -751,7 +751,7 @@ AUI.add(
 
 				instance.mailContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var link = event.currentTarget;
 
 						if (!link.hasAttribute('data-messageType')) {
@@ -780,7 +780,7 @@ AUI.add(
 
 				instance.messageContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var messageId = event.currentTarget.getData(
 							'messageId'
 						);
@@ -792,7 +792,7 @@ AUI.add(
 
 				instance.messagesContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var messageIds = instance._getSelectedMessageIds();
 
 						instance.deleteMessages(messageIds);
@@ -802,7 +802,7 @@ AUI.add(
 
 				instance.messagesContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						var keywords = event.currentTarget
 							.ancestor('.search-messages')
 							.one('input')
@@ -821,7 +821,7 @@ AUI.add(
 
 				instance.messagesContainer.delegate(
 					'keyup',
-					function(event) {
+					function (event) {
 						if (event.keyCode != 13) {
 							return;
 						}
@@ -841,10 +841,10 @@ AUI.add(
 
 				instance.messagesContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						instance.messagesContainer
 							.all('input[type=checkbox]')
-							.each(function(item, index, collection) {
+							.each(function (item, index, collection) {
 								item.set('checked', true);
 							});
 					},
@@ -853,10 +853,10 @@ AUI.add(
 
 				instance.messagesContainer.delegate(
 					'click',
-					function(event) {
+					function (event) {
 						instance.messagesContainer
 							.all('input[type=checkbox]')
-							.each(function(item, index, collection) {
+							.each(function (item, index, collection) {
 								item.set('checked', false);
 							});
 					},
@@ -866,7 +866,7 @@ AUI.add(
 				instance._pollCheckMessages();
 			},
 
-			_displayContainer: function(container) {
+			_displayContainer: function (container) {
 				var instance = this;
 
 				instance.composeContainer.hide();
@@ -877,14 +877,14 @@ AUI.add(
 				container.show();
 			},
 
-			_getSelectedMessageIds: function() {
+			_getSelectedMessageIds: function () {
 				var instance = this;
 
 				var messageIds = [];
 
 				instance.messagesContainer
 					.all('input[type=checkbox]')
-					.each(function(item, index, collection) {
+					.each(function (item, index, collection) {
 						var messageId = item.getAttribute('messageId');
 
 						if (messageId && item.get('checked')) {
@@ -895,7 +895,7 @@ AUI.add(
 				return messageIds;
 			},
 
-			_hideWindow: function() {
+			_hideWindow: function () {
 				var instance = this;
 
 				var dialog = instance.dialog;
@@ -905,7 +905,7 @@ AUI.add(
 				}
 			},
 
-			_pollCheckMessages: function() {
+			_pollCheckMessages: function () {
 				var instance = this;
 
 				if (instance.inboxFolderId) {
@@ -922,7 +922,7 @@ AUI.add(
 				);
 			},
 
-			_pollStopMessages: function() {
+			_pollStopMessages: function () {
 				var instance = this;
 
 				clearTimeout(instance.timeoutMessages);

@@ -21,7 +21,7 @@
 
 AUI.add(
 	'liferay-history-manager',
-	A => {
+	(A) => {
 		var HistoryBase = A.HistoryBase;
 		var HistoryManager = new Liferay.History();
 
@@ -46,7 +46,7 @@ AUI.add(
 			broadcast: 2,
 		});
 
-		HistoryManager.after('change', event => {
+		HistoryManager.after('change', (event) => {
 			if (
 				event.newVal.liferay &&
 				(event.src === HistoryManager.SRC_HASH ||

@@ -198,7 +198,7 @@
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	var deleteLayoutSetPrototypes = function() {
+	var deleteLayoutSetPrototypes = function () {
 		if (
 			confirm(
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
@@ -212,10 +212,10 @@
 		deleteLayoutSetPrototypes: deleteLayoutSetPrototypes,
 	};
 
-	Liferay.componentReady('layoutSetPrototypeWebManagementToolbar').then(function(
+	Liferay.componentReady('layoutSetPrototypeWebManagementToolbar').then(function (
 		managementToolbar
 	) {
-		managementToolbar.on('actionItemClicked', function(event) {
+		managementToolbar.on('actionItemClicked', function (event) {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

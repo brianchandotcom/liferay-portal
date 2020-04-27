@@ -18,7 +18,7 @@ export const STATUS_RUNNING = 1;
 export const STATUS_SCHEDULED = 7;
 export const STATUS_TERMINATED = 6;
 
-export const statusToLabelDisplayType = status => STATUS_TO_TYPE[status];
+export const statusToLabelDisplayType = (status) => STATUS_TO_TYPE[status];
 
 const STATUS_TO_TYPE = {
 	[STATUS_COMPLETED]: 'success',

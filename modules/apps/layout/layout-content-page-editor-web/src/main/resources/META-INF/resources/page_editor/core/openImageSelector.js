@@ -24,7 +24,7 @@ export function openImageSelector(callback, destroyedCallback = null) {
 		url: config.imageSelectorURL,
 	});
 
-	itemSelectorDialog.on('selectedItemChange', event => {
+	itemSelectorDialog.on('selectedItemChange', (event) => {
 		const selectedItem = event.selectedItem || {};
 
 		const {returnType, value} = selectedItem;

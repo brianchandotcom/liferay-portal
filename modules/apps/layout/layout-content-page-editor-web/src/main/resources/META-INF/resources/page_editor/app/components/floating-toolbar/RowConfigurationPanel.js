@@ -38,7 +38,7 @@ const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
 		<ClayCheckbox
 			checked={value}
 			onChange={({target: {checked}}) => {
-				setValue(val => !val);
+				setValue((val) => !val);
 				onValueChange(checked);
 			}}
 			{...otherProps}
@@ -107,7 +107,7 @@ export const RowConfigurationPanel = ({item}) => {
 							Number(value)
 						);
 					}}
-					options={NUMBER_OF_COLUMNS_OPTIONS.map(value => ({
+					options={NUMBER_OF_COLUMNS_OPTIONS.map((value) => ({
 						label: value,
 						value,
 					}))}
@@ -120,7 +120,7 @@ export const RowConfigurationPanel = ({item}) => {
 						aria-label={Liferay.Language.get('columns-gutter')}
 						checked={rowConfig.gutters}
 						label={Liferay.Language.get('columns-gutter')}
-						onValueChange={value =>
+						onValueChange={(value) =>
 							handleConfigurationValueChanged(
 								ROW_CONFIGURATION_IDENTIFIERS.gutters,
 								value

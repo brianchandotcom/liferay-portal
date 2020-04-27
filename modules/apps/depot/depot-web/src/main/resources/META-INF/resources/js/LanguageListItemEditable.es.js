@@ -82,7 +82,7 @@ const LanguageListItem = ({
 	const itemRef = useRef();
 
 	const [{isDragging}, drag] = useDrag({
-		collect: monitor => ({
+		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
 		item: {
@@ -99,7 +99,7 @@ const LanguageListItem = ({
 
 			return isValidTarget(source, {id: localeId, index}, dropZone);
 		},
-		collect: monitor => ({
+		collect: (monitor) => ({
 			isOver: !!monitor.isOver(),
 		}),
 		drop(source, monitor) {
@@ -132,7 +132,7 @@ const LanguageListItem = ({
 		drag(drop(itemRef));
 	}, [drag, drop]);
 
-	const makeDefault = event => {
+	const makeDefault = (event) => {
 		setActive(false);
 		onMakeDefault({localeId});
 		Liferay.fire('inputLocalized:defaultLocaleChanged', {

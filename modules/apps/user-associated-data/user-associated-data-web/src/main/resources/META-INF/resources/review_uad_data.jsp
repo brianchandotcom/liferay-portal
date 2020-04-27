@@ -223,13 +223,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 	var clickListeners = [];
 
-	var registerClickHandler = function(element, clickHandlerFn) {
+	var registerClickHandler = function (element, clickHandlerFn) {
 		clickListeners.push(
 			dom.delegate(element, 'click', 'input', clickHandlerFn)
 		);
 	};
 
-	registerClickHandler(<portlet:namespace />applicationPanelBody, function(
+	registerClickHandler(<portlet:namespace />applicationPanelBody, function (
 		event
 	) {
 		var url = new URL(baseURL, window.location.origin);
@@ -243,7 +243,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	});
 
 	<c:if test="<%= !Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
-		registerClickHandler(<portlet:namespace />entitiesTypePanelBody, function(
+		registerClickHandler(<portlet:namespace />entitiesTypePanelBody, function (
 			event
 		) {
 			var url = new URL(baseURL, window.location.origin);
@@ -257,7 +257,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		});
 	</c:if>
 
-	registerClickHandler(<portlet:namespace />scopePanelBody, function(event) {
+	registerClickHandler(<portlet:namespace />scopePanelBody, function (event) {
 		var url = new URL(baseURL, window.location.origin);
 
 		url.searchParams.set('<portlet:namespace />applicationKey', '');

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-layouts-tree',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var LString = Lang.String;
@@ -50,7 +50,7 @@ AUI.add(
 			'<span class="icon icon-loading lfr-tree-loading-icon"></span>' +
 			'</div>';
 
-		var LayoutsTreeBase = function() {};
+		var LayoutsTreeBase = function () {};
 
 		LayoutsTreeBase.ATTRS = {
 			incomplete: {
@@ -147,7 +147,7 @@ AUI.add(
 
 				var urls = instance.get('urls');
 
-				urls.forEach(item => {
+				urls.forEach((item) => {
 					data[item.name] = A.Lang.sub(item.value, {
 						selPlid: data.plid,
 					});
@@ -193,7 +193,7 @@ AUI.add(
 			_formatJSONResults(json) {
 				var instance = this;
 
-				var output = json.layouts.map(node => {
+				var output = json.layouts.map((node) => {
 					return instance._formatNode(node);
 				});
 
@@ -574,8 +574,8 @@ AUI.add(
 						method: 'POST',
 					}
 				)
-					.then(response => response.json())
-					.then(response => {
+					.then((response) => response.json())
+					.then((response) => {
 						if (
 							response.status === Liferay.STATUS_CODE.BAD_REQUEST
 						) {

@@ -149,7 +149,7 @@ if (portletTitleBasedNavigation) {
 							<aui:script>
 								print();
 
-								setTimeout(function() {
+								setTimeout(function () {
 									window.close();
 								}, 100);
 							</aui:script>

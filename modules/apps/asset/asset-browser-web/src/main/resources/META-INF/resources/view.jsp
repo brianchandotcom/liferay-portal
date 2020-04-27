@@ -199,12 +199,12 @@
 				'<portlet:namespace />selectAssetEntries'
 			);
 
-			searchContainer.on('rowToggled', function(event) {
+			searchContainer.on('rowToggled', function (event) {
 				var selectedItems = event.elements.allSelectedElements;
 
 				var arr = [];
 
-				selectedItems.each(function() {
+				selectedItems.each(function () {
 					var domElement = this.ancestor('tr');
 
 					if (domElement == null) {
@@ -241,7 +241,7 @@
 				document.querySelector('#<portlet:namespace/>selectAssetFm'),
 				'click',
 				'.selector-button',
-				function(event) {
+				function (event) {
 					event.preventDefault();
 
 					Liferay.Util.getOpener().Liferay.fire(
@@ -253,7 +253,7 @@
 				}
 			);
 
-			var onDestroyPortlet = function() {
+			var onDestroyPortlet = function () {
 				delegateHandler.removeListener();
 
 				Liferay.detach('destroyPortlet', onDestroyPortlet);

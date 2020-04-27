@@ -140,7 +140,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 		var handleOnSelect = A.one('#<portlet:namespace />selectSiteLink').on(
 			'click',
-			function(event) {
+			function (event) {
 				var searchContainerData = searchContainer.getData();
 
 				if (!searchContainerData.length) {
@@ -178,7 +178,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 						uri: '<%= groupSelectorURL.toString() %>',
 					},
-					function(event) {
+					function (event) {
 						var entityId = event.entityid;
 
 						var rowColumns = [];
@@ -212,7 +212,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 		var handleOnModifyLink = searchContainerContentBox.delegate(
 			'click',
-			function(event) {
+			function (event) {
 				var link = event.currentTarget;
 
 				var rowId = link.attr('data-rowId');
@@ -246,8 +246,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 		var handleEnableRemoveSite = Liferay.on(
 			'<portlet:namespace />enableRemovedSites',
-			function(event) {
-				event.selectors.each(function(item, index, collection) {
+			function (event) {
+				event.selectors.each(function (item, index, collection) {
 					var groupId = item.attr('data-entityid');
 
 					if (deleteGroupIds.indexOf(groupId) != -1) {
@@ -257,7 +257,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			}
 		);
 
-		var onDestroyPortlet = function(event) {
+		var onDestroyPortlet = function (event) {
 			if (event.portletId === '<%= portletDisplay.getId() %>') {
 				Liferay.detach(handleOnSelect);
 				Liferay.detach(handleOnModifyLink);

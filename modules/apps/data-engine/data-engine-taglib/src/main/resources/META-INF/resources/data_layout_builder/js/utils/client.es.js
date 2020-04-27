@@ -25,10 +25,10 @@ export const addItem = (endpoint, item) => {
 		body: JSON.stringify(item),
 		headers: HEADERS,
 		method: 'POST',
-	}).then(response => response.json());
+	}).then((response) => response.json());
 };
 
-export const confirmDelete = endpoint => item =>
+export const confirmDelete = (endpoint) => (item) =>
 	new Promise((resolve, reject) => {
 		const confirmed = confirm(
 			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
@@ -37,14 +37,14 @@ export const confirmDelete = endpoint => item =>
 		if (confirmed) {
 			deleteItem(endpoint + item.id)
 				.then(() => resolve(true))
-				.catch(error => reject(error));
+				.catch((error) => reject(error));
 		}
 		else {
 			resolve(false);
 		}
 	});
 
-export const deleteItem = endpoint => {
+export const deleteItem = (endpoint) => {
 	return fetch(getURL(endpoint), {
 		method: 'DELETE',
 	});
@@ -56,11 +56,11 @@ export const request = (endpoint, method = 'GET') =>
 		method,
 	});
 
-export const getItem = endpoint => {
+export const getItem = (endpoint) => {
 	return fetch(getURL(endpoint), {
 		headers: HEADERS,
 		method: 'GET',
-	}).then(response => response.json());
+	}).then((response) => response.json());
 };
 
 export const getURL = (path, params) => {
@@ -73,7 +73,7 @@ export const getURL = (path, params) => {
 	const uri = new URL(`${window.location.origin}${path}`);
 	const keys = Object.keys(params);
 
-	keys.forEach(key => uri.searchParams.set(key, params[key]));
+	keys.forEach((key) => uri.searchParams.set(key, params[key]));
 
 	return uri.toString();
 };
@@ -84,6 +84,6 @@ export const updateItem = (endpoint, item, params) => {
 		headers: HEADERS,
 		method: 'PUT',
 	})
-		.then(response => response.text())
-		.then(text => (text ? JSON.parse(text) : {}));
+		.then((response) => response.text())
+		.then((text) => (text ? JSON.parse(text) : {}));
 };

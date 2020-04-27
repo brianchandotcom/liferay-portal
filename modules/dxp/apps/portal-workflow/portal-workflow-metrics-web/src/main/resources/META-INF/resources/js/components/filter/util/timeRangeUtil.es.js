@@ -29,7 +29,7 @@ const formatDateTime = (date, format, isEndDate) => {
 	return dateTime.format(defaultDateFormat);
 };
 
-const formatDescriptionDate = date => {
+const formatDescriptionDate = (date) => {
 	return formatDate(
 		decodeURIComponent(date),
 		getLocaleDateFormat('ll'),
@@ -125,8 +125,8 @@ const parseDateMoment = (date, format = 'L') => {
 	return moment.utc(date, format, 'en');
 };
 
-const parseDateItems = isAmPm => items => {
-	return items.map(item => {
+const parseDateItems = (isAmPm) => (items) => {
+	return items.map((item) => {
 		const parsedItem = {
 			...item,
 			dateEnd: item.dateEnd,

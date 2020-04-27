@@ -64,11 +64,11 @@ PortletURL portletURL = currentURLObj;
 	var layoutUuid = document.getElementById('<portlet:namespace />layoutUuid');
 
 	if (layoutUuid) {
-		Liferay.on('<portlet:namespace />selectLayout', function(event) {
+		Liferay.on('<portlet:namespace />selectLayout', function (event) {
 			var selectedItems = event.data;
 
 			if (selectedItems) {
-				var layoutUuids = selectedItems.reduce(function(
+				var layoutUuids = selectedItems.reduce(function (
 					previousValue,
 					currentValue
 				) {

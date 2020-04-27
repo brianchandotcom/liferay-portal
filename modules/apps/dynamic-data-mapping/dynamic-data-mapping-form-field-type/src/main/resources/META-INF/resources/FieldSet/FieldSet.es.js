@@ -121,7 +121,7 @@ const FieldSet = ({
 	</>
 );
 
-const getRowsArray = rows => {
+const getRowsArray = (rows) => {
 	if (typeof rows === 'string') {
 		try {
 			return JSON.parse(rows);
@@ -137,13 +137,13 @@ const getRowsArray = rows => {
 const getRows = (rows, nestedFields) => {
 	const normalizedRows = getRowsArray(rows);
 
-	return normalizedRows.map(row => ({
+	return normalizedRows.map((row) => ({
 		...row,
-		columns: row.columns.map(column => ({
+		columns: row.columns.map((column) => ({
 			...column,
-			fields: column.fields.map(fieldName => {
+			fields: column.fields.map((fieldName) => {
 				return nestedFields.find(
-					nestedField => nestedField.fieldName === fieldName
+					(nestedField) => nestedField.fieldName === fieldName
 				);
 			}),
 		})),
@@ -170,9 +170,9 @@ const FieldSetProxy = connectStore(
 				context={context}
 				editable={editable}
 				label={label}
-				onBlur={event => propagate('fieldBlurred', event)}
-				onChange={event => propagate('fieldEdited', event)}
-				onFocus={event => propagate('fieldFocused', event)}
+				onBlur={(event) => propagate('fieldBlurred', event)}
+				onChange={(event) => propagate('fieldEdited', event)}
+				onFocus={(event) => propagate('fieldFocused', event)}
 				pageIndex={pageIndex}
 				rows={getRows(rows, nestedFields)}
 				showLabel={showLabel}

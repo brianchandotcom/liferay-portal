@@ -28,7 +28,7 @@ export const createRepeatedField = (sourceField, repeatedIndex) => {
 		instanceId,
 		localizedValue: {},
 		name: generateName(sourceField.name, {instanceId, repeatedIndex}),
-		nestedFields: (sourceField.nestedFields || []).map(nestedField => ({
+		nestedFields: (sourceField.nestedFields || []).map((nestedField) => ({
 			...nestedField,
 			localizedValue: {},
 			value: undefined,
@@ -38,7 +38,7 @@ export const createRepeatedField = (sourceField, repeatedIndex) => {
 };
 
 export const updateNestedFieldNames = (parentFieldName, nestedFields) => {
-	return (nestedFields || []).map(nestedField => {
+	return (nestedFields || []).map((nestedField) => {
 		const newNestedFieldName = generateNestedFieldName(
 			nestedField.name,
 			parentFieldName
@@ -59,7 +59,7 @@ export const updateNestedFieldNames = (parentFieldName, nestedFields) => {
 export default (pages, name) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.mapColumns(column => {
+	return visitor.mapColumns((column) => {
 		const {fields} = column;
 		const sourceFieldIndex = fields.reduce(
 			(sourceFieldIndex = -1, field, index) => {
@@ -87,7 +87,7 @@ export default (pages, name) => {
 					...fields.slice(0, newFieldIndex),
 					newField,
 					...fields.slice(newFieldIndex),
-				].map(currentField => {
+				].map((currentField) => {
 					if (currentField.fieldName === newField.fieldName) {
 						const name = generateName(currentField.name, {
 							repeatedIndex: currentRepeatedIndex++,

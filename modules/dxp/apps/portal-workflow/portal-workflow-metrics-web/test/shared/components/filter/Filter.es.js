@@ -50,7 +50,7 @@ describe('The filter component should', () => {
 		expect(filterItemsNames[1]).toHaveTextContent('OnTime');
 		expect(filterItemsNames[2]).toHaveTextContent('Untracked');
 
-		const activeItem = filterItems.find(item =>
+		const activeItem = filterItems.find((item) =>
 			item.className.includes('active')
 		);
 
@@ -76,7 +76,7 @@ describe('The filter component should', () => {
 
 		const filterItems = getAllByTestId('filterItem');
 
-		const activeItem = filterItems.find(item =>
+		const activeItem = filterItems.find((item) =>
 			item.className.includes('active')
 		);
 
@@ -142,7 +142,7 @@ describe('The filter component should', () => {
 	});
 
 	test('Be rendered with multiple options', async () => {
-		items.forEach(item => {
+		items.forEach((item) => {
 			item.active = true;
 		});
 

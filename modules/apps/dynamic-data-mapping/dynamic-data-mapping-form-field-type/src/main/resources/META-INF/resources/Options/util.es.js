@@ -14,7 +14,7 @@
 
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 
-export const random = a => {
+export const random = (a) => {
 	return a
 		? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
 		: ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, random);
@@ -80,7 +80,7 @@ export const dedupValue = (fields, value, id) => {
 	let counter = 0;
 
 	const recursive = (fields, currentValue) => {
-		const field = fields.find(field => field.value === currentValue);
+		const field = fields.find((field) => field.value === currentValue);
 
 		if (field && field.id !== id) {
 			counter += 1;
@@ -118,7 +118,7 @@ export const normalizeValue = (fields, currentField) => {
 	return normalizeFieldName(value);
 };
 
-export const normalizeFields = fields => {
+export const normalizeFields = (fields) => {
 	return fields.map((field, index) => {
 		if (fields.length - 1 === index) {
 			return field;

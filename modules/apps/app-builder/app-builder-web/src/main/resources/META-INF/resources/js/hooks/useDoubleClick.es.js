@@ -17,18 +17,18 @@ import {useRef} from 'react';
 const useCancellablePromises = () => {
 	const pendingPromises = useRef([]);
 
-	const append = promise => {
+	const append = (promise) => {
 		pendingPromises.current = [...pendingPromises.current, promise];
 	};
 
-	const remove = promise => {
+	const remove = (promise) => {
 		pendingPromises.current = pendingPromises.current.filter(
-			p => p !== promise
+			(p) => p !== promise
 		);
 	};
 
 	const clear = () => {
-		pendingPromises.current.map(p => p.cancel());
+		pendingPromises.current.map((p) => p.cancel());
 	};
 
 	return {
@@ -38,14 +38,14 @@ const useCancellablePromises = () => {
 	};
 };
 
-const cancellablePromise = promise => {
+const cancellablePromise = (promise) => {
 	let isCanceled = false;
 
 	const wrappedPromise = new Promise((resolve, reject) => {
 		promise.then(
-			value =>
+			(value) =>
 				isCanceled ? reject({isCanceled, value}) : resolve(value),
-			error => reject({error, isCanceled})
+			(error) => reject({error, isCanceled})
 		);
 	});
 
@@ -60,11 +60,11 @@ const cancellablePromise = promise => {
 export default (onClick, onDoubleClick) => {
 	const promises = useCancellablePromises();
 
-	const handleOnClick = event => {
+	const handleOnClick = (event) => {
 		promises.clear();
 
 		const waitForClick = cancellablePromise(
-			new Promise(resolve => setTimeout(resolve, 300))
+			new Promise((resolve) => setTimeout(resolve, 300))
 		);
 
 		promises.append(waitForClick);
@@ -74,7 +74,7 @@ export default (onClick, onDoubleClick) => {
 				promises.remove(waitForClick);
 				onClick(event);
 			})
-			.catch(e => {
+			.catch((e) => {
 				promises.remove(waitForClick);
 
 				if (!e.isCanceled) {
@@ -83,7 +83,7 @@ export default (onClick, onDoubleClick) => {
 			});
 	};
 
-	const handleOnDoubleClick = event => {
+	const handleOnDoubleClick = (event) => {
 		promises.clear();
 		onDoubleClick(event);
 	};

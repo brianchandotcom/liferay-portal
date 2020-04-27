@@ -78,7 +78,7 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 	);
 	var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';
 
-	var updateRedirectField = function(event) {
+	var updateRedirectField = function (event) {
 		var redirectURL = new URL(redirectField.value, window.location.origin);
 
 		redirectURL.searchParams.set(tabs1Param, event.id);
@@ -88,7 +88,7 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 		Liferay.Util.Session.set('<portlet:namespace /><%= id %>', event.id);
 	};
 
-	var clearFormNavigatorHandles = function(event) {
+	var clearFormNavigatorHandles = function (event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			Liferay.detach('showTab', updateRedirectField);
 			Liferay.detach('destroyPortlet', clearFormNavigatorHandles);

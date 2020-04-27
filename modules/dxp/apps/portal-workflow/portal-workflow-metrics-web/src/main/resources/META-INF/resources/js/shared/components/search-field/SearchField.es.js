@@ -33,11 +33,11 @@ const SearchField = ({
 		setSearchValue(search);
 	}, [search]);
 
-	const handleChange = event => {
+	const handleChange = (event) => {
 		setSearchValue(event.target.value);
 	};
 
-	const handleSubmit = event => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 
 		query.search = searchValue;

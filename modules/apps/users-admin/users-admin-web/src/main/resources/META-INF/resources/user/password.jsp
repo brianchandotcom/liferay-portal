@@ -180,7 +180,7 @@ else {
 		);
 
 		if (reminderQueryQuestionSelect) {
-			reminderQueryQuestionSelect.addEventListener('change', function(event) {
+			reminderQueryQuestionSelect.addEventListener('change', function (event) {
 				var customQuestion =
 					event.currentTarget.value === '<%= UsersAdmin.CUSTOM_QUESTION %>';
 

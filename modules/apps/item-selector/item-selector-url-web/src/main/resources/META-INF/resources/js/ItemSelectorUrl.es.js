@@ -48,7 +48,7 @@ const ItemSelectorUrl = ({eventName}) => {
 		}
 	};
 
-	const handleSubmit = event => {
+	const handleSubmit = (event) => {
 		event.preventDefault();
 
 		if (!loaded) {
@@ -65,7 +65,7 @@ const ItemSelectorUrl = ({eventName}) => {
 		Liferay.Util.getOpener().Liferay.fire(eventName, eventData);
 	};
 
-	const handleUrlChange = event => {
+	const handleUrlChange = (event) => {
 		const value = event.target.value.trim();
 		setUrl(value);
 		setLoaded(false);

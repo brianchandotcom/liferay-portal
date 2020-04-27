@@ -23,7 +23,7 @@ const AppContextProvider = ({children, ...context}) => {
 	const [section, setSection] = useState({});
 
 	useEffect(() => {
-		hasListPermissions('create', context.siteKey).then(value =>
+		hasListPermissions('create', context.siteKey).then((value) =>
 			setCanCreateThread(value)
 		);
 	}, [context.siteKey]);

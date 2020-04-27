@@ -97,7 +97,7 @@ describe('The completed items card component should', () => {
 			timeRangeFilter,
 			'filterItem'
 		);
-		const activeItem = filterItems.find(item =>
+		const activeItem = filterItems.find((item) =>
 			item.className.includes('active')
 		);
 		const activeItemName = await findByTestId(activeItem, 'filterItemName');

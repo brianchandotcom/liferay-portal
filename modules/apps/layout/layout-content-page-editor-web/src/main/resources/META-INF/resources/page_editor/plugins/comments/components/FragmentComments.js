@@ -33,7 +33,7 @@ export default function FragmentComments({fragmentEntryLink}) {
 
 	const dispatch = useDispatch();
 	const showResolvedComments = useSelector(
-		state => state.showResolvedComments
+		(state) => state.showResolvedComments
 	);
 
 	const fragmentEntryLinkComments = showResolvedComments
@@ -76,7 +76,7 @@ export default function FragmentComments({fragmentEntryLink}) {
 								comment={comment}
 								fragmentEntryLinkId={fragmentEntryLinkId}
 								key={comment.commentId}
-								onEdit={fragmentEntryLinkComment =>
+								onEdit={(fragmentEntryLinkComment) =>
 									dispatch(
 										editFragmentEntryComment({
 											fragmentEntryLinkComment,

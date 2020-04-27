@@ -47,13 +47,13 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 			'<portlet:namespace />pagesTreeSidenavToggleId'
 		);
 
-		pagesTreeToggle.addEventListener('click', function(event) {
+		pagesTreeToggle.addEventListener('click', function (event) {
 			Liferay.Util.Session.set(
 				'com.liferay.product.navigation.product.menu.web_pagesTreeState',
 				'open'
-			).then(function() {
+			).then(function () {
 				Liferay.Util.fetch('<%= portletURL.toString() %>')
-					.then(function(response) {
+					.then(function (response) {
 						if (!response.ok) {
 							throw new Error(
 								'<liferay-ui:message key="an-unexpected-error-occurred" />'
@@ -62,7 +62,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 						return response.text();
 					})
-					.then(function(response) {
+					.then(function (response) {
 						var sidebar = document.querySelector(
 							'.lfr-product-menu-sidebar .sidebar-body'
 						);
@@ -112,13 +112,13 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	%>
 
 	<script>
-		(function() {
+		(function () {
 			var manageSitesLink = document.getElementById(
 				'<portlet:namespace />manageSitesLink'
 			);
 
 			if (manageSitesLink) {
-				manageSitesLink.addEventListener('click', function(event) {
+				manageSitesLink.addEventListener('click', function (event) {
 					Liferay.Util.selectEntity(
 						{
 							dialog: {
@@ -132,7 +132,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 								'<liferay-ui:message key="select-site-or-asset-library" />',
 							uri: '<%= itemSelectorURL.toString() %>',
 						},
-						function(event) {
+						function (event) {
 							location.href = event.url;
 						}
 					);

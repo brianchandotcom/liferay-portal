@@ -107,7 +107,7 @@ if (accountEntryDisplay != null) {
 
 	searchContainerContentBox.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');
@@ -126,7 +126,7 @@ if (accountEntryDisplay != null) {
 	var addDomainsIcon = document.getElementById('<portlet:namespace />addDomains');
 
 	if (addDomainsIcon) {
-		addDomainsIcon.addEventListener('click', function(event) {
+		addDomainsIcon.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			Liferay.Util.selectEntity(
@@ -154,10 +154,10 @@ if (accountEntryDisplay != null) {
 
 					uri: '<%= addDomainsURL.toString() %>',
 				},
-				function(event) {
+				function (event) {
 					var newDomains = event.data.split(',');
 
-					newDomains.forEach(function(domain) {
+					newDomains.forEach(function (domain) {
 						if (!domains.includes(domain)) {
 							addRow(domain.trim());
 						}
@@ -171,7 +171,7 @@ if (accountEntryDisplay != null) {
 		});
 	}
 
-	Liferay.provide(window, 'addRow', function(domain) {
+	Liferay.provide(window, 'addRow', function (domain) {
 		var rowColumns = [];
 
 		rowColumns.push(Liferay.Util.escape(domain));

@@ -41,7 +41,7 @@ function Conjunction({
 	const [activeLabel, setActiveLabel] = useState(null);
 	useEffect(() => {
 		const selectedConjunction = supportedConjunctions.find(
-			c => c.name === conjunctionName
+			(c) => c.name === conjunctionName
 		);
 
 		setActiveLabel(selectedConjunction.label);
@@ -70,7 +70,7 @@ function Conjunction({
 			}
 		>
 			<ClayDropdown.ItemList>
-				{supportedConjunctions.map(conjunction => {
+				{supportedConjunctions.map((conjunction) => {
 					return (
 						<ClayDropdown.Item
 							className="text-capitalize"

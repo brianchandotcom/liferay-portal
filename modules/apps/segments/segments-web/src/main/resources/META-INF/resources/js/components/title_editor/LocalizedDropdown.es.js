@@ -40,7 +40,7 @@ class LocalizedDropdown extends React.Component {
 	}
 
 	_handleButtonClick = () => {
-		this.setState(prevState => ({
+		this.setState((prevState) => ({
 			open: !prevState.open,
 		}));
 	};
@@ -55,7 +55,7 @@ class LocalizedDropdown extends React.Component {
 		}
 	};
 
-	_changeLanguage = langKey => {
+	_changeLanguage = (langKey) => {
 		this.setState(
 			{
 				currentLangKey: keyLangToLanguageTag(langKey),
@@ -70,9 +70,9 @@ class LocalizedDropdown extends React.Component {
 		clearTimeout(this.timer);
 	};
 
-	_handleLanguageClick = langKey => () => this._changeLanguage(langKey);
+	_handleLanguageClick = (langKey) => () => this._changeLanguage(langKey);
 
-	_handleLanguageKeyboard = langKey => e => {
+	_handleLanguageKeyboard = (langKey) => (e) => {
 		if (e.keyCode === ENTER) {
 			this._changeLanguage(langKey);
 		}
@@ -110,7 +110,7 @@ class LocalizedDropdown extends React.Component {
 
 				{open && (
 					<ul className="d-block dropdown-menu" role="menu">
-						{availableLanguages.map(entry => {
+						{availableLanguages.map((entry) => {
 							const {hasValue, key} = entry;
 
 							return (

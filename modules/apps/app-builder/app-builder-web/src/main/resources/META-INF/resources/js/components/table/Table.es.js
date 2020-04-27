@@ -51,7 +51,7 @@ const Table = ({
 					</Row>
 				</Head>
 				<Body>
-					{items.map(item => (
+					{items.map((item) => (
 						<Row key={item.id}>
 							{checkable && (
 								<Cell>

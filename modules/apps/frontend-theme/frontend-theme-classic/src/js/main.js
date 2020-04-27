@@ -13,11 +13,11 @@
  */
 
 /* eslint-disable prefer-arrow-callback */
-(function() {
+(function () {
 	var signInLink = document.querySelector('.sign-in > a');
 
 	if (signInLink && signInLink.dataset.redirect === 'false') {
-		signInLink.addEventListener('click', function(event) {
+		signInLink.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			var modalSignInURL = Liferay.Util.addParams(
@@ -26,8 +26,8 @@
 			);
 
 			Liferay.Util.fetch(modalSignInURL)
-				.then(response => response.text())
-				.then(response => {
+				.then((response) => response.text())
+				.then((response) => {
 					if (response) {
 						Liferay.Util.openModal({
 							bodyHTML: response,

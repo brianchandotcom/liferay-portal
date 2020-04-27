@@ -49,7 +49,7 @@ function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
 		</div>
 	) : (
 		<ClayList>
-			{experimentHistory.map(experiment => {
+			{experimentHistory.map((experiment) => {
 				return (
 					<ClayList.Item
 						className="py-3"

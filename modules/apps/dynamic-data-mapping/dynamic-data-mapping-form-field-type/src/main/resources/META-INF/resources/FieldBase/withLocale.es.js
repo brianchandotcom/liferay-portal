@@ -14,13 +14,13 @@
 
 import {Config} from 'metal-state';
 
-export default Component => {
+export default (Component) => {
 	class WithLocale extends Component {
 		prepareStateForRender(states) {
 			const {editingLanguageId} = this.context.store;
 			const languageValues = [];
 
-			Object.keys(this.localizedValue).forEach(key => {
+			Object.keys(this.localizedValue).forEach((key) => {
 				if (key !== editingLanguageId) {
 					languageValues.push({
 						name: this.name.replace(editingLanguageId, key),

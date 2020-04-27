@@ -230,7 +230,7 @@ if (liveLayout != null) {
 			var stagingToggle = document.querySelector('.staging-toggle');
 
 			if (stagingToggle) {
-				stagingToggle.addEventListener('click', function(event) {
+				stagingToggle.addEventListener('click', function (event) {
 					event.preventDefault();
 
 					staging.classList.toggle('staging-show');
@@ -243,7 +243,7 @@ if (liveLayout != null) {
 			'<portlet:namespace />warningMessage'
 		);
 
-		var checkBackgroundTasks = function() {
+		var checkBackgroundTasks = function () {
 			Liferay.Service(
 				'/backgroundtask.backgroundtask/get-background-tasks-count',
 				{
@@ -252,7 +252,7 @@ if (liveLayout != null) {
 					taskExecutorClassName:
 						'<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>',
 				},
-				function(obj) {
+				function (obj) {
 					var incomplete = obj > 0;
 
 					if (incomplete) {

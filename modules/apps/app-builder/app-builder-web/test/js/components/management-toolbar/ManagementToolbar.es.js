@@ -18,7 +18,7 @@ import React from 'react';
 import ManagementToolbar from '../../../../src/main/resources/META-INF/resources/js/components/management-toolbar/ManagementToolbar.es';
 import SearchContext from '../../../../src/main/resources/META-INF/resources/js/components/management-toolbar/SearchContext.es';
 
-const addButton = onClick => <button onClick={onClick}>add</button>;
+const addButton = (onClick) => <button onClick={onClick}>add</button>;
 
 describe('ManagementToolbar', () => {
 	afterEach(() => {

@@ -19,7 +19,7 @@ import {config} from '../../config/index';
 import {canUndoAction} from './undoActions';
 
 export default function useUndo([state, dispatch]) {
-	const ref = useRef(action => {
+	const ref = useRef((action) => {
 		if (config.undoEnabled && canUndoAction(action)) {
 			dispatch({
 				...action,

@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	var A = AUI();
 
 	var BBCodeUtil = Liferay.BBCodeUtil;
@@ -165,7 +165,7 @@
 		'<img src="{imageSrc}" {attributes} />'
 	);
 
-	var Converter = function(config) {
+	var Converter = function (config) {
 		var instance = this;
 
 		config = config || {};

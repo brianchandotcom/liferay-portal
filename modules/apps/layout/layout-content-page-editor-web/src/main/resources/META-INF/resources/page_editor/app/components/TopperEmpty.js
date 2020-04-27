@@ -26,7 +26,7 @@ import useDragAndDrop, {TARGET_POSITION} from '../utils/useDragAndDrop';
 import {useToControlsId} from './CollectionItemContext';
 import getLabelName from './layout-data-items/getLabelName';
 
-export default function({children, ...props}) {
+export default function ({children, ...props}) {
 	const canUpdate = useSelector(selectCanUpdate);
 
 	return canUpdate ? (
@@ -38,7 +38,7 @@ export default function({children, ...props}) {
 
 function TopperEmpty({children, item, layoutData}) {
 	const containerRef = useRef(null);
-	const store = useSelector(state => state);
+	const store = useSelector((state) => state);
 	const fragmentEntryLinks = store.fragmentEntryLinks;
 
 	const toControlsId = useToControlsId();
@@ -68,7 +68,7 @@ function TopperEmpty({children, item, layoutData}) {
 	const isFragment = children.type === React.Fragment;
 	const realChildren = isFragment ? children.props.children : children;
 
-	const isDraggableInPosition = position =>
+	const isDraggableInPosition = (position) =>
 		targetPosition === position &&
 		dropTargetItemId === toControlsId(item.itemId);
 
@@ -83,7 +83,7 @@ function TopperEmpty({children, item, layoutData}) {
 			  )
 			: null;
 
-	return React.Children.map(realChildren, child => {
+	return React.Children.map(realChildren, (child) => {
 		if (!child) {
 			return child;
 		}
@@ -109,7 +109,7 @@ function TopperEmpty({children, item, layoutData}) {
 						'page-editor__topper': true,
 					}),
 					'data-advice': dataAdvice,
-					ref: node => {
+					ref: (node) => {
 						containerRef.current = node;
 						drop(node);
 

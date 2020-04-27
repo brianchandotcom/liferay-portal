@@ -73,7 +73,9 @@ const Item = ({dateOverdue, name, onTime, remainingTime, status}) => {
 				</span>
 			</span>
 
-			<span className="font-weight-medium small text-secondary">{`${name}`}</span>
+			<span className="font-weight-medium small text-secondary">
+				{`${name}`}{' '}
+			</span>
 
 			<span className="small" data-testid="resultStatus">
 				{statusText}

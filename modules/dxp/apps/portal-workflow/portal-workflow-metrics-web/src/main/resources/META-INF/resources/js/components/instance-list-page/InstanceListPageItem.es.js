@@ -18,7 +18,6 @@ import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickAc
 import moment from '../../shared/util/moment.es';
 import {capitalize} from '../../shared/util/util.es';
 import {AppContext} from '../AppContext.es';
-import {processStatusConstants} from '../filter/ProcessStatusFilter.es';
 import {InstanceListContext} from './InstanceListPageProvider.es';
 import {ModalContext} from './modal/ModalProvider.es';
 
@@ -60,10 +59,10 @@ const Item = ({totalCount, ...instance}) => {
 		assetTitle,
 		assetType,
 		assignees = [],
+		completed,
 		creator,
 		dateCreated,
 		id,
-		status,
 		slaStatus,
 		taskNames = [Liferay.Language.get('not-available')],
 	} = instance;
@@ -75,7 +74,6 @@ const Item = ({totalCount, ...instance}) => {
 
 	const assignedToUser = !!assignees.find(({id}) => id === Number(userId));
 	const assigneeNames = assignees.map((user) => user.name).join(', ');
-	const completed = status === processStatusConstants.completed;
 	const {reviewer} = assignees.find(({id}) => id === -1) || {};
 
 	const disableCheckbox = (!assignedToUser && !reviewer) || completed;

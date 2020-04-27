@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
@@ -142,9 +143,22 @@ public class MasterLayoutVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			_layoutPageTemplateEntry.getPlid());
+
+		if (layout == null) {
+			return Collections.emptyList();
+		}
+
+		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+		if (draftLayout == null) {
+			return Collections.emptyList();
+		}
+
 		return LabelItemListBuilder.add(
-			labelItem -> labelItem.setStatus(
-				_layoutPageTemplateEntry.getStatus())
+			labelItem -> labelItem.setStatus(draftLayout.getStatus())
 		).build();
 	}
 

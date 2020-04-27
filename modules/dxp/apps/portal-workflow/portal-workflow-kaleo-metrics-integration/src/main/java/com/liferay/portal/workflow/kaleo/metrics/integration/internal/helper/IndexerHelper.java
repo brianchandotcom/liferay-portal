@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,14 +39,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = InstanceIndexerHelper.class)
-public class InstanceIndexerHelper {
+@Component(immediate = true, service = IndexerHelper.class)
+public class IndexerHelper {
 
 	public Map<Locale, String> createAssetTitleLocalizationMap(
-		KaleoInstance kaleoInstance) {
+		String className, long classPK, long groupId) {
 
-		AssetRenderer<?> assetRenderer = _getAssetRenderer(
-			kaleoInstance.getClassName(), kaleoInstance.getClassPK());
+		AssetRenderer<?> assetRenderer = _getAssetRenderer(className, classPK);
 
 		if (assetRenderer != null) {
 			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
@@ -61,20 +59,17 @@ public class InstanceIndexerHelper {
 		}
 
 		WorkflowHandler<?> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				kaleoInstance.getClassName());
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
 
 		if (workflowHandler != null) {
 			Map<Locale, String> localizationMap = new HashMap<>();
 
 			for (Locale availableLocale :
-					LanguageUtil.getAvailableLocales(
-						kaleoInstance.getGroupId())) {
+					LanguageUtil.getAvailableLocales(groupId)) {
 
 				localizationMap.put(
 					availableLocale,
-					workflowHandler.getTitle(
-						kaleoInstance.getClassPK(), availableLocale));
+					workflowHandler.getTitle(classPK, availableLocale));
 			}
 
 			return localizationMap;
@@ -84,17 +79,17 @@ public class InstanceIndexerHelper {
 	}
 
 	public Map<Locale, String> createAssetTypeLocalizationMap(
-		KaleoInstance kaleoInstance) {
+		String className, long groupId) {
 
 		Map<Locale, String> localizationMap = new HashMap<>();
 
 		for (Locale availableLocale :
-				LanguageUtil.getAvailableLocales(kaleoInstance.getGroupId())) {
+				LanguageUtil.getAvailableLocales(groupId)) {
 
 			localizationMap.put(
 				availableLocale,
 				ResourceActionsUtil.getModelResource(
-					availableLocale, kaleoInstance.getClassName()));
+					availableLocale, className));
 		}
 
 		return localizationMap;
@@ -119,8 +114,7 @@ public class InstanceIndexerHelper {
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		InstanceIndexerHelper.class);
+	private static final Log _log = LogFactoryUtil.getLog(IndexerHelper.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.InstanceIndexerHelper;
+import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.IndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -72,10 +72,12 @@ public class InstanceWorkflowMetricsReindexer
 				}
 
 				_instanceWorkflowMetricsIndexer.addInstance(
-					_instanceIndexerHelper.createAssetTitleLocalizationMap(
-						kaleoInstance),
-					_instanceIndexerHelper.createAssetTypeLocalizationMap(
-						kaleoInstance),
+					_indexerHelper.createAssetTitleLocalizationMap(
+						kaleoInstance.getClassName(),
+						kaleoInstance.getClassPK(), kaleoInstance.getGroupId()),
+					_indexerHelper.createAssetTypeLocalizationMap(
+						kaleoInstance.getClassName(),
+						kaleoInstance.getGroupId()),
 					kaleoInstance.getClassName(), kaleoInstance.getClassPK(),
 					companyId, kaleoInstance.getCompletionDate(),
 					kaleoInstance.getCreateDate(),
@@ -93,7 +95,7 @@ public class InstanceWorkflowMetricsReindexer
 	}
 
 	@Reference
-	private InstanceIndexerHelper _instanceIndexerHelper;
+	private IndexerHelper _indexerHelper;
 
 	@Reference
 	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;

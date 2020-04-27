@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.IndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
@@ -91,11 +92,18 @@ public class KaleoTaskInstanceTokenModelListener
 				);
 
 				_taskWorkflowMetricsIndexer.addTask(
+					_indexerHelper.createAssetTitleLocalizationMap(
+						kaleoTaskInstanceToken.getClassName(),
+						kaleoTaskInstanceToken.getClassPK(),
+						kaleoTaskInstanceToken.getGroupId()),
+					_indexerHelper.createAssetTypeLocalizationMap(
+						kaleoTaskInstanceToken.getClassName(),
+						kaleoTaskInstanceToken.getGroupId()),
 					assigneeIds, assigneeType,
 					kaleoTaskInstanceToken.getClassName(),
 					kaleoTaskInstanceToken.getClassPK(),
 					kaleoTaskInstanceToken.getCompanyId(), false, null, null,
-					kaleoTaskInstanceToken.getCreateDate(), false,
+					kaleoTaskInstanceToken.getCreateDate(), false, null,
 					kaleoTaskInstanceToken.getKaleoInstanceId(),
 					kaleoTaskInstanceToken.getModifiedDate(),
 					kaleoTaskInstanceToken.getKaleoTaskName(),
@@ -144,6 +152,13 @@ public class KaleoTaskInstanceTokenModelListener
 					);
 
 					_taskWorkflowMetricsIndexer.updateTask(
+						_indexerHelper.createAssetTitleLocalizationMap(
+							kaleoTaskInstanceToken.getClassName(),
+							kaleoTaskInstanceToken.getClassPK(),
+							kaleoTaskInstanceToken.getGroupId()),
+						_indexerHelper.createAssetTypeLocalizationMap(
+							kaleoTaskInstanceToken.getClassName(),
+							kaleoTaskInstanceToken.getGroupId()),
 						assigneeIds, assigneeType,
 						kaleoTaskInstanceToken.getCompanyId(),
 						kaleoTaskInstanceToken.getModifiedDate(),
@@ -191,6 +206,9 @@ public class KaleoTaskInstanceTokenModelListener
 			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
 			kaleoTaskInstanceToken.getUserId());
 	}
+
+	@Reference
+	private IndexerHelper _indexerHelper;
 
 	@Reference
 	private KaleoTaskAssignmentInstanceLocalService

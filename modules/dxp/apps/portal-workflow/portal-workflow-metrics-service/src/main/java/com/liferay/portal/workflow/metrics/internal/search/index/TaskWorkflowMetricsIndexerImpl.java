@@ -26,6 +26,8 @@ import com.liferay.portal.workflow.metrics.search.index.TaskWorkflowMetricsIndex
 import java.time.Duration;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,11 +42,13 @@ public class TaskWorkflowMetricsIndexerImpl
 
 	@Override
 	public Document addTask(
+		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		Long[] assigneeIds, String assigneeType, String className, long classPK,
 		long companyId, boolean completed, Date completionDate,
 		Long completionUserId, Date createDate, boolean instanceCompleted,
-		long instanceId, Date modifiedDate, String name, long nodeId,
-		long processId, String processVersion, long taskId, long userId) {
+		Date instanceCompletionDate, long instanceId, Date modifiedDate,
+		String name, long nodeId, long processId, String processVersion,
+		long taskId, long userId) {
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
@@ -89,6 +93,8 @@ public class TaskWorkflowMetricsIndexerImpl
 
 		documentBuilder.setValue(
 			"instanceCompleted", instanceCompleted
+		).setDate(
+			"instanceCompletionDate", getDate(instanceCompletionDate)
 		).setLong(
 			"instanceId", instanceId
 		).setDate(
@@ -108,6 +114,9 @@ public class TaskWorkflowMetricsIndexerImpl
 		).setString(
 			"version", processVersion
 		);
+
+		setLocalizedField(documentBuilder, "assetTitle", assetTitleMap);
+		setLocalizedField(documentBuilder, "assetType", assetTypeMap);
 
 		Document document = documentBuilder.build();
 
@@ -196,6 +205,7 @@ public class TaskWorkflowMetricsIndexerImpl
 
 	@Override
 	public Document updateTask(
+		Map<Locale, String> assetTitleMap, Map<Locale, String> assetTypeMap,
 		Long[] assigneeIds, String assigneeType, long companyId,
 		Date modifiedDate, long taskId, long userId) {
 
@@ -217,6 +227,9 @@ public class TaskWorkflowMetricsIndexerImpl
 		).setLong(
 			"userId", userId
 		);
+
+		setLocalizedField(documentBuilder, "assetTitle", assetTitleMap);
+		setLocalizedField(documentBuilder, "assetType", assetTypeMap);
 
 		Document document = documentBuilder.build();
 

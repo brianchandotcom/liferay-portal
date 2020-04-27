@@ -1,5 +1,21 @@
 definition {
 
+	macro configureOTP {
+		if ("${enableOTP}" == "true") {
+			FormFields.enableCheckbox(fieldName = "enabled");
+		}
+		else if ("${enableOTP}" == "false") {
+			FormFields.disableCheckbox(fieldName = "enabled");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
 	macro configureOTPEmailSender {
 		Type(
 			locator1 = "MultiFactorAuthentication#OTP_EMAIL_SENDER_ADDRESS_FIELD",

@@ -1873,7 +1873,8 @@ components:
                         $ref: "#/components/schemas/PageElement"
                     type: array
                 type:
-                    enum: [Collection, CollectionItem, Column, DropZone, Fragment, Root, Row, Section, Widget]
+                    enum: [Collection, CollectionItem, Column, DropZone, Fragment, FragmentDropZone, Root, Row, Section,
+                        Widget]
                     type: string
         PageFragmentInstanceDefinition:
             properties:

@@ -99,7 +99,7 @@ public class ExportImportMasterLayoutsTest {
 				_serviceContext1.getScopeGroupId(), 0,
 				StringUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_DRAFT, _serviceContext1);
+				WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
 		Layout layout1 = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry1.getPlid());

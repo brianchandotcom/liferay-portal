@@ -133,7 +133,9 @@ const FragmentContent = React.memo(function FragmentContent({
 				event.preventDefault();
 			}
 
-			selectItem(null);
+			if (!closest(event.target, '.page-editor')) {
+				selectItem(null);
+			}
 		};
 
 		element.addEventListener('click', handler);

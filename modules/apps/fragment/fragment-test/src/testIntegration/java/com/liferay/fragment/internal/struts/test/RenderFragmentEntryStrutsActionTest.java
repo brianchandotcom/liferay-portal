@@ -112,8 +112,7 @@ public class RenderFragmentEntryStrutsActionTest {
 		mockHttpServletRequest.setParameter(
 			"js", StringUtil.read(jsUrl.openStream()));
 
-		_processEvents(
-			mockHttpServletRequest, mockHttpServletResponse, _user);
+		_processEvents(mockHttpServletRequest, mockHttpServletResponse, _user);
 
 		_renderFragmentEntryStrutsAction.execute(
 			mockHttpServletRequest, pipingServletResponse);
@@ -142,8 +141,7 @@ public class RenderFragmentEntryStrutsActionTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_processEvents(
-			mockHttpServletRequest, mockHttpServletResponse, _user);
+		_processEvents(mockHttpServletRequest, mockHttpServletResponse, _user);
 
 		mockHttpServletRequest.setParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
@@ -179,14 +177,6 @@ public class RenderFragmentEntryStrutsActionTest {
 		return _removeSpacingCharactersBetweenTags(bodyElement);
 	}
 
-	private String _removeSpacingCharactersBetweenTags(Element bodyElement) {
-		String htmlString = bodyElement.html();
-
-		htmlString = htmlString.replaceAll(">\\s+", ">");
-
-		return htmlString.replaceAll("\\s+<", "<");
-	}
-
 	private void _processEvents(
 			MockHttpServletRequest mockHttpServletRequest,
 			MockHttpServletResponse mockHttpServletResponse, User user)
@@ -201,6 +191,14 @@ public class RenderFragmentEntryStrutsActionTest {
 			PropsKeys.SERVLET_SERVICE_EVENTS_PRE,
 			PropsValues.SERVLET_SERVICE_EVENTS_PRE, mockHttpServletRequest,
 			mockHttpServletResponse);
+	}
+
+	private String _removeSpacingCharactersBetweenTags(Element bodyElement) {
+		String htmlString = bodyElement.html();
+
+		htmlString = htmlString.replaceAll(">\\s+", ">");
+
+		return htmlString.replaceAll("\\s+<", "<");
 	}
 
 	private static final String _RESOURCES_PATH =

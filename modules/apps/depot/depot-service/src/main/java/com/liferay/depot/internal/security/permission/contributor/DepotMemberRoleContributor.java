@@ -24,11 +24,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.contributor.RoleCollection;
 import com.liferay.portal.kernel.security.permission.contributor.RoleContributor;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 
 import java.util.List;
 import java.util.Objects;
@@ -59,11 +62,47 @@ public class DepotMemberRoleContributor implements RoleContributor {
 			UserBag userBag = roleCollection.getUserBag();
 
 			if (userBag.hasUserGroup(group)) {
-				Role role = _roleLocalService.getRole(
-					group.getCompanyId(),
-					DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+				roleCollection.addRoleId(
+					_getRoleId(
+						group.getCompanyId(),
+						DepotRolesConstants.ASSET_LIBRARY_MEMBER));
 
-				roleCollection.addRoleId(role.getRoleId());
+				roleCollection.addRoleId(
+					_getRoleId(
+						group.getCompanyId(), RoleConstants.SITE_MEMBER));
+			}
+
+			User user = roleCollection.getUser();
+
+			if (_userGroupRoleLocalService.hasUserGroupRole(
+					user.getUserId(), group.getGroupId(),
+					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
+
+				roleCollection.addRoleId(
+					_getRoleId(
+						group.getCompanyId(),
+						RoleConstants.SITE_CONTENT_REVIEWER));
+			}
+
+			boolean assetLibraryOwner =
+				_userGroupRoleLocalService.hasUserGroupRole(
+					user.getUserId(), group.getGroupId(),
+					DepotRolesConstants.ASSET_LIBRARY_OWNER, true);
+
+			if (assetLibraryOwner ||
+				_userGroupRoleLocalService.hasUserGroupRole(
+					user.getUserId(), group.getGroupId(),
+					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true)) {
+
+				roleCollection.addRoleId(
+					_getRoleId(
+						group.getCompanyId(),
+						RoleConstants.SITE_ADMINISTRATOR));
+			}
+
+			if (assetLibraryOwner) {
+				roleCollection.addRoleId(
+					_getRoleId(group.getCompanyId(), RoleConstants.SITE_OWNER));
 			}
 
 			List<DepotEntryGroupRel> depotEntryGroupRels =
@@ -76,12 +115,11 @@ public class DepotMemberRoleContributor implements RoleContributor {
 						_groupLocalService.getGroup(
 							depotEntryGroupRel.getToGroupId()))) {
 
-					Role role = _roleLocalService.getRole(
-						group.getCompanyId(),
-						DepotRolesConstants.
-							ASSET_LIBRARY_CONNECTED_SITE_MEMBER);
-
-					roleCollection.addRoleId(role.getRoleId());
+					roleCollection.addRoleId(
+						_getRoleId(
+							group.getCompanyId(),
+							DepotRolesConstants.
+								ASSET_LIBRARY_CONNECTED_SITE_MEMBER));
 
 					break;
 				}
@@ -90,6 +128,14 @@ public class DepotMemberRoleContributor implements RoleContributor {
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
 		}
+	}
+
+	private long _getRoleId(long companyId, String roleName)
+		throws PortalException {
+
+		Role role = _roleLocalService.getRole(companyId, roleName);
+
+		return role.getRoleId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -106,5 +152,8 @@ public class DepotMemberRoleContributor implements RoleContributor {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

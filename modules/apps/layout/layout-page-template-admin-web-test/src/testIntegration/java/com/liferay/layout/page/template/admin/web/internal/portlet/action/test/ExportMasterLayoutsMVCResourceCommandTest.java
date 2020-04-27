@@ -139,6 +139,28 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testGetFileDraft() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				0, StringUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		long[] layoutPageTemplateEntryIds = {
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		};
+
+		File file = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
+			layoutPageTemplateEntryIds);
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Assert.assertEquals(0, zipFile.size());
+		}
+	}
+
+	@Test
 	public void testGetFileNameMultipleMasterPages() {
 		long[] layoutPageTemplateEntryIds = {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()

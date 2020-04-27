@@ -100,6 +100,7 @@ export const RowConfigurationPanel = ({item}) => {
 						itemId: item.itemId,
 						numberOfColumns: newNumberOfColumns,
 						segmentsExperienceId,
+						viewportSizeId: selectedViewportSize,
 					})
 				);
 			}

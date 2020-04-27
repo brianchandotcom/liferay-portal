@@ -19,6 +19,7 @@ export default function updateRowColumns({
 	itemId,
 	numberOfColumns,
 	segmentsExperienceId,
+	viewportSizeId,
 }) {
 	return (dispatch) =>
 		LayoutService.updateRowColumns({
@@ -26,6 +27,7 @@ export default function updateRowColumns({
 			numberOfColumns,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
+			viewportSizeId,
 		}).then(({layoutData}) => {
 			dispatch(updateItemConfig({layoutData}));
 		});

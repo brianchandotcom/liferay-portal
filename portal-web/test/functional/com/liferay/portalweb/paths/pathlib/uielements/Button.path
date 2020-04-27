@@ -460,7 +460,7 @@
 </tr>
 <tr>
 	<td>PLUS_IE</td>
-	<td>//a[contains(@class,'nav-btn-monospaced')] | //button[@data-title='New' or @title='New' or @title='Add']</td>
+	<td>//a[contains(@class,'nav-btn-monospaced')] | //button[contains(@class,'nav-btn-monospaced')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -254,12 +254,12 @@ definition {
 	macro viewEntry {
 		AssertTextEquals.assertPartialText(
 			key_rowEntry = "${sourceURL}",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
 			value1 = "${sourceURL}");
 
 		AssertTextEquals.assertPartialText(
 			key_rowEntry = "${destinationURL}",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
 			value1 = "${destinationURL}");
 
 		if (isSet(redirectType)) {

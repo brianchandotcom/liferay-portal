@@ -45,7 +45,7 @@ export default function Navigation({
 	}
 
 	function handleTotalReads() {
-		return api.getTotalReads().then(response => {
+		return api.getTotalReads().then((response) => {
 			return numberFormat(
 				languageTag,
 				response.analyticsReportsTotalReads
@@ -54,7 +54,7 @@ export default function Navigation({
 	}
 
 	function handleTotalViews() {
-		return api.getTotalViews().then(response => {
+		return api.getTotalViews().then((response) => {
 			return numberFormat(
 				languageTag,
 				response.analyticsReportsTotalViews
@@ -63,7 +63,7 @@ export default function Navigation({
 	}
 
 	function handleTrafficShare() {
-		const trafficSource = trafficSources.find(trafficSource => {
+		const trafficSource = trafficSources.find((trafficSource) => {
 			return trafficSource['name'] === trafficSourceName;
 		});
 
@@ -74,7 +74,7 @@ export default function Navigation({
 		setTrafficSourceName(trafficSourceName);
 
 		api.getTrafficSourceDetails(trafficSourceName).then(
-			trafficSourceData => {
+			(trafficSourceData) => {
 				setCurrentPage({
 					data: trafficSourceData,
 					view: 'traffic-source-detail',
@@ -88,7 +88,7 @@ export default function Navigation({
 	}
 
 	function handleTrafficVolume() {
-		const trafficSource = trafficSources.find(trafficSource => {
+		const trafficSource = trafficSources.find((trafficSource) => {
 			return trafficSource['name'] === trafficSourceName;
 		});
 

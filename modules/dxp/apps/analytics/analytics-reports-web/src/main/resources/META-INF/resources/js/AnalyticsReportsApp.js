@@ -16,7 +16,7 @@ import ConnectionContext from './context/ConnectionContext';
 import {StoreContextProvider} from './context/store';
 import APIService from './utils/APIService';
 
-export default function({context, props}) {
+export default function ({context, props}) {
 	const {languageTag, namespace, page} = context;
 	const {defaultTimeRange, defaultTimeSpanKey, timeSpans} = context;
 	const {validAnalyticsConnection} = context;

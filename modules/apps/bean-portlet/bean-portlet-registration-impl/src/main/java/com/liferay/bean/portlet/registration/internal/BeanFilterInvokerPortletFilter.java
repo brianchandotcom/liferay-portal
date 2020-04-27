@@ -158,14 +158,14 @@ public class BeanFilterInvokerPortletFilter
 		_invokeMethod(_initMethod, filterConfig);
 	}
 
-	private void _invokeMethod(Method method, Object... args)
+	private void _invokeMethod(Method method, Object... arguments)
 		throws PortletException {
 
 		BeanFilterMethod beanFilterMethod = _beanFilterMethodFactory.create(
 			_filterClass, method);
 
 		try {
-			beanFilterMethod.invoke(args);
+			beanFilterMethod.invoke(arguments);
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			Throwable cause = reflectiveOperationException.getCause();

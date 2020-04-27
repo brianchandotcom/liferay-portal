@@ -220,7 +220,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 	}
 
 	private void _invokeBeanMethods(
-			List<BeanPortletMethod> beanPortletMethods, Object... args)
+			List<BeanPortletMethod> beanPortletMethods, Object... arguments)
 		throws PortletException {
 
 		if ((beanPortletMethods == null) || beanPortletMethods.isEmpty()) {
@@ -229,7 +229,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 
 		for (BeanPortletMethod beanPortletMethod : beanPortletMethods) {
 			try {
-				beanPortletMethod.invoke(args);
+				beanPortletMethod.invoke(arguments);
 			}
 			catch (ReflectiveOperationException reflectiveOperationException) {
 				Throwable cause = reflectiveOperationException.getCause();

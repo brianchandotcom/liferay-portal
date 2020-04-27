@@ -25,11 +25,11 @@ import javax.portlet.annotations.PortletQName;
 public class PortletQNameUtil {
 
 	public static javax.xml.namespace.QName getQName(
-		String defaultNamespace, Element qNameEl, Element nameEl) {
+		String defaultNamespace, Element qNameElement, Element nameElement) {
 
 		QName qName =
 			com.liferay.portal.kernel.portlet.PortletQNameUtil.getQName(
-				qNameEl, nameEl, defaultNamespace);
+				qNameElement, nameElement, defaultNamespace);
 
 		return new javax.xml.namespace.QName(
 			qName.getNamespaceURI(), qName.getLocalPart(),

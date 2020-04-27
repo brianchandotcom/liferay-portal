@@ -114,6 +114,23 @@ public class MasterLayoutsImporterTest {
 	}
 
 	@Test
+	public void testImportMasterLayoutDropZone() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_importLayoutPageTemplateEntry("master-page-drop-zone");
+
+		Assert.assertEquals(
+			"Master Page Drop Zone", layoutPageTemplateEntry.getName());
+
+		_validateLayoutPageTemplateStructureDropZone(
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layoutPageTemplateEntry.getPlid()),
+			new ArrayList<>(), true);
+	}
+
+	@Test
 	public void testImportMasterLayoutDropZoneAllowedFragments()
 		throws Exception {
 
@@ -233,23 +250,6 @@ public class MasterLayoutsImporterTest {
 		Assert.assertArrayEquals(
 			new String[] {"Master Page One", "Master Page Two"},
 			actualLayoutPageTemplateEntryNames.toArray(new String[0]));
-	}
-
-	@Test
-	public void testImportMasterLayoutsDropZone() throws Exception {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_importLayoutPageTemplateEntry("master-page-drop-zone");
-
-		Assert.assertEquals(
-			"Master Page Drop Zone", layoutPageTemplateEntry.getName());
-
-		_validateLayoutPageTemplateStructureDropZone(
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid()),
-			new ArrayList<>(), true);
 	}
 
 	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)

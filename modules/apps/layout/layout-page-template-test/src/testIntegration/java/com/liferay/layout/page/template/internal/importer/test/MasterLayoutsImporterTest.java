@@ -233,8 +233,36 @@ public class MasterLayoutsImporterTest {
 		}
 	}
 
-	private LayoutPageTemplateEntry _importLayoutPageTemplateEntry(
-			String testCaseName)
+	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries,
+		int index) {
+
+		LayoutPageTemplatesImporterResultEntry
+			layoutPageTemplatesImporterResultEntry =
+				layoutPageTemplatesImporterResultEntries.get(index);
+
+		Assert.assertEquals(
+			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED,
+			layoutPageTemplatesImporterResultEntry.getStatus());
+
+		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
+			layoutPageTemplatesImporterResultEntry.getName());
+
+		layoutPageTemplateEntryKey = StringUtil.replace(
+			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(), layoutPageTemplateEntryKey);
+
+		Assert.assertNotNull(layoutPageTemplateEntry);
+
+		return layoutPageTemplateEntry;
+	}
+
+	private List<LayoutPageTemplatesImporterResultEntry>
+			_getLayoutPageTemplatesImporterResultEntries(String testCaseName)
 		throws Exception {
 
 		File file = _generateZipFile(testCaseName);
@@ -258,31 +286,23 @@ public class MasterLayoutsImporterTest {
 
 		Assert.assertNotNull(layoutPageTemplatesImporterResultEntries);
 
+		return layoutPageTemplatesImporterResultEntries;
+	}
+
+	private LayoutPageTemplateEntry _importLayoutPageTemplateEntry(
+			String testCaseName)
+		throws Exception {
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries =
+				_getLayoutPageTemplatesImporterResultEntries(testCaseName);
+
 		Assert.assertEquals(
 			layoutPageTemplatesImporterResultEntries.toString(), 1,
 			layoutPageTemplatesImporterResultEntries.size());
 
-		LayoutPageTemplatesImporterResultEntry
-			layoutPageTemplatesImporterResultEntry =
-				layoutPageTemplatesImporterResultEntries.get(0);
-
-		Assert.assertEquals(
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED,
-			layoutPageTemplatesImporterResultEntry.getStatus());
-
-		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
-			layoutPageTemplatesImporterResultEntry.getName());
-
-		layoutPageTemplateEntryKey = StringUtil.replace(
-			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_group.getGroupId(), layoutPageTemplateEntryKey);
-
-		Assert.assertNotNull(layoutPageTemplateEntry);
-
-		return layoutPageTemplateEntry;
+		return _getLayoutPageTemplateEntry(
+			layoutPageTemplatesImporterResultEntries, 0);
 	}
 
 	private void _populateZipWriter(ZipWriter zipWriter, URL url)

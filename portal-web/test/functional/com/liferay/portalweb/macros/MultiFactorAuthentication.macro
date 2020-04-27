@@ -1,0 +1,15 @@
+definition {
+
+	macro configureOTPEmailSender {
+		Type(
+			locator1 = "MultiFactorAuthentication#OTP_EMAIL_SENDER_ADDRESS_FIELD",
+			value1 = "${emailAddress}");
+
+		Type(
+			locator1 = "MultiFactorAuthentication#OTP_EMAIL_SENDER_NAME_FIELD",
+			value1 = "${emailSenderName}");
+
+		PortletEntry.save();
+	}
+
+}

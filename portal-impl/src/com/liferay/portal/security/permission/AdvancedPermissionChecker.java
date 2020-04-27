@@ -786,6 +786,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
+		if (_hasGroupRole(group, RoleConstants.SITE_CONTENT_REVIEWER)) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -959,6 +963,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				organization = parentOrganization;
 			}
 		}
+		else if (_hasGroupRole(group, RoleConstants.SITE_ADMINISTRATOR) ||
+				 _hasGroupRole(group, RoleConstants.SITE_OWNER)) {
+
+			return true;
+		}
 
 		return false;
 	}
@@ -972,14 +981,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return false;
 		}
 
-		long[] roleIds = getRoleIds(getUserId(), groupId);
-
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Role role = RoleLocalServiceUtil.getRole(
-			group.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		if (Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) {
+		if (_hasGroupRole(group, RoleConstants.SITE_MEMBER)) {
 			return true;
 		}
 
@@ -1043,6 +1047,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			if (getUserId() == groupUserId) {
 				return true;
 			}
+		}
+		else if (_hasGroupRole(group, RoleConstants.SITE_OWNER)) {
+			return true;
 		}
 
 		return false;
@@ -1274,6 +1281,21 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					return ReflectionUtil.throwException(portalException);
 				}
 			});
+	}
+
+	private boolean _hasGroupRole(Group group, String roleName)
+		throws PortalException {
+
+		long[] roleIds = getRoleIds(getUserId(), group.getGroupId());
+
+		Role role = RoleLocalServiceUtil.getRole(
+			group.getCompanyId(), roleName);
+
+		if (Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _hasGuestPermission(

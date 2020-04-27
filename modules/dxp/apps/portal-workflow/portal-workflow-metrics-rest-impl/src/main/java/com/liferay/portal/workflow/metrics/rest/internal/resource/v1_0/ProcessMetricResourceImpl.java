@@ -398,9 +398,8 @@ public class ProcessMetricResourceImpl
 		termsAggregation.addChildrenAggregations(
 			onTimeFilterAggregation, overdueFilterAggregation,
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				Collections.emptyList(), dateEnd, dateStart,
-				Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList()));
+				Collections.emptyList(), null, dateEnd, dateStart,
+				Collections.emptyList(), Collections.emptyList()));
 
 		termsAggregation.addPipelineAggregations(
 			_createBucketSelectorPipelineAggregation());

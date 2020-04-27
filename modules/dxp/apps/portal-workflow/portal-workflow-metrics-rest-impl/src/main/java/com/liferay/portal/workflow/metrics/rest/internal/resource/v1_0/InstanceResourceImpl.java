@@ -174,7 +174,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _createBooleanQuery(
-			new Long[0], processId, new String[0]);
+			new Long[0], null, processId);
 
 		searchSearchRequest.setQuery(
 			booleanQuery.addMustQueryClauses(
@@ -233,13 +233,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Override
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, Long[] assigneeIds, Date dateEnd, Date dateStart,
-			String[] slaStatuses, String[] statuses, String[] taskNames,
+			Long processId, Long[] assigneeIds, Boolean completed, Date dateEnd,
+			Date dateStart, String[] slaStatuses, String[] taskNames,
 			Pagination pagination)
 		throws Exception {
 
 		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(
-			assigneeIds, dateEnd, dateStart, processId, slaStatuses, statuses,
+			assigneeIds, completed, dateEnd, dateStart, processId, slaStatuses,
 			taskNames);
 
 		int instanceCount = _getInstanceCount(searchSearchResponse);
@@ -247,9 +247,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		if (instanceCount > 0) {
 			return Page.of(
 				_getInstances(
-					assigneeIds, dateEnd, dateStart,
+					assigneeIds, completed, dateEnd, dateStart,
 					searchSearchResponse.getCount(), pagination, processId,
-					slaStatuses, statuses, taskNames),
+					slaStatuses, taskNames),
 				pagination, instanceCount);
 		}
 
@@ -383,7 +383,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private BooleanQuery _createBooleanQuery(
-		Long[] assigneeIds, long processId, String[] statuses) {
+		Long[] assigneeIds, Boolean completed, long processId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -397,7 +397,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
 		instancesBooleanQuery.addMustQueryClauses(
-			_createInstancesBooleanQuery(processId, statuses));
+			_createInstancesBooleanQuery(completed, processId));
 
 		BooleanQuery slaInstanceResultsBooleanQuery = _queries.booleanQuery();
 
@@ -455,23 +455,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return bucketSortPipelineAggregation;
 	}
 
-	private TermsQuery _createCompletedTermsQuery(String[] statuses) {
-		TermsQuery termsQuery = _queries.terms("completed");
-
-		for (String status : statuses) {
-			if (Objects.equals(Instance.Status.COMPLETED.getValue(), status)) {
-				termsQuery.addValue(Boolean.TRUE.toString());
-			}
-			else if (Objects.equals(
-						Instance.Status.PENDING.getValue(), status)) {
-
-				termsQuery.addValue(Boolean.FALSE.toString());
-			}
-		}
-
-		return termsQuery;
-	}
-
 	private BooleanQuery _createCountFilterBooleanQuery() {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -488,14 +471,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				assetTitle = document.getString(
 					_getLocalizedName("assetTitle"));
 				assetType = document.getString(_getLocalizedName("assetType"));
+				completed = document.getBoolean("completed");
 				creator = _toCreator(document.getLong("userId"));
 				dateCompletion = _parseDate(document.getDate("completionDate"));
 				dateCreated = _parseDate(document.getDate("createDate"));
 				dateModified = _parseDate(document.getDate("modifiedDate"));
 				id = document.getLong("instanceId");
 				processId = document.getLong("processId");
-				status = _getStatus(
-					GetterUtil.getBoolean(document.getString("completed")));
 			}
 		};
 	}
@@ -507,6 +489,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					sourcesMap.get(_getLocalizedName("assetTitle")));
 				assetType = GetterUtil.getString(
 					sourcesMap.get(_getLocalizedName("assetType")));
+				completed = GetterUtil.getBoolean(sourcesMap.get("completed"));
 				creator = _toCreator(
 					GetterUtil.getLong(sourcesMap.get("userId")));
 				dateCompletion = _parseDate(
@@ -517,22 +500,20 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					GetterUtil.getString(sourcesMap.get("modifiedDate")));
 				id = GetterUtil.getLong(sourcesMap.get("instanceId"));
 				processId = GetterUtil.getLong(sourcesMap.get("processId"));
-				status = _getStatus(
-					GetterUtil.getBoolean(sourcesMap.get("completed")));
 			}
 		};
 	}
 
 	private BooleanQuery _createInstancesBooleanQuery(
-		long processId, String[] statuses) {
+		Boolean completed, long processId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", 0));
 
-		if (statuses.length > 0) {
+		if (completed != null) {
 			booleanQuery.addMustQueryClauses(
-				_createCompletedTermsQuery(statuses));
+				_queries.term("completed", completed));
 		}
 
 		return booleanQuery.addMustQueryClauses(
@@ -695,9 +676,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private List<Instance> _getInstances(
-		Long[] assigneeIds, Date dateEnd, Date dateStart, long instanceCount,
-		Pagination pagination, long processId, String[] slaStatuses,
-		String[] statuses, String[] taskNames) {
+		Long[] assigneeIds, Boolean completed, Date dateEnd, Date dateStart,
+		long instanceCount, Pagination pagination, long processId,
+		String[] slaStatuses, String[] taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -758,8 +739,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			overdueFilterAggregation, taskNameTermsAggregation,
 			tasksIndexFilterAggregation, _aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.fromArray(assigneeIds), dateEnd, dateStart,
-				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
+				ListUtil.fromArray(assigneeIds), completed, dateEnd, dateStart,
+				ListUtil.fromArray(slaStatuses),
 				ListUtil.fromArray(taskNames)));
 
 		termsAggregation.addOrders(Order.key(true));
@@ -780,7 +761,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				contextCompany.getCompanyId()));
 
 		searchSearchRequest.setQuery(
-			_createBooleanQuery(assigneeIds, processId, statuses));
+			_createBooleanQuery(assigneeIds, completed, processId));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -919,15 +900,15 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private SearchSearchResponse _getSearchSearchResponse(
-		Long[] assigneeIds, Date dateEnd, Date dateStart, long processId,
-		String[] slaStatuses, String[] statuses, String[] taskNames) {
+		Long[] assigneeIds, Boolean completed, Date dateEnd, Date dateStart,
+		long processId, String[] slaStatuses, String[] taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addAggregation(
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				ListUtil.fromArray(assigneeIds), dateEnd, dateStart,
-				ListUtil.fromArray(slaStatuses), ListUtil.fromArray(statuses),
+				ListUtil.fromArray(assigneeIds), completed, dateEnd, dateStart,
+				ListUtil.fromArray(slaStatuses),
 				ListUtil.fromArray(taskNames)));
 		searchSearchRequest.setIndexNames(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
@@ -937,7 +918,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(
-			_createBooleanQuery(assigneeIds, processId, statuses));
+			_createBooleanQuery(assigneeIds, completed, processId));
 
 		return _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 	}
@@ -972,14 +953,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		}
 
 		return SLAResult.Status.RUNNING;
-	}
-
-	private Instance.Status _getStatus(Boolean completed) {
-		if (completed) {
-			return Instance.Status.COMPLETED;
-		}
-
-		return Instance.Status.PENDING;
 	}
 
 	private List<String> _getTaskNames(Bucket bucket) {

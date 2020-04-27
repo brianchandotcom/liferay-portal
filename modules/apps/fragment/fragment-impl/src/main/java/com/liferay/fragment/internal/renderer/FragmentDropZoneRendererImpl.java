@@ -14,8 +14,10 @@
 
 package com.liferay.fragment.internal.renderer;
 
+import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.renderer.FragmentDropZoneRenderer;
+import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.taglib.servlet.taglib.RenderFragmentLayoutTag;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -46,6 +49,10 @@ public class FragmentDropZoneRendererImpl implements FragmentDropZoneRenderer {
 
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
 			httpServletResponse, unsyncStringWriter);
+
+		httpServletRequest.setAttribute(
+			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
+			_fragmentRendererController);
 
 		try {
 			RenderFragmentLayoutTag renderFragmentLayoutTag =
@@ -67,5 +74,8 @@ public class FragmentDropZoneRendererImpl implements FragmentDropZoneRenderer {
 
 		return unsyncStringWriter.toString();
 	}
+
+	@Reference
+	private FragmentRendererController _fragmentRendererController;
 
 }

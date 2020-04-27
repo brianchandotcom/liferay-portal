@@ -195,7 +195,7 @@ definition {
 
 		Click(locator1 = "Portlet#SPECIFIC_TITLE");
 
-		Type.sendKeys(
+		Type.typePause(
 			locator1 = "TextInput#PORTLET_TITLE",
 			value1 = "${portletTitleName} Custom");
 

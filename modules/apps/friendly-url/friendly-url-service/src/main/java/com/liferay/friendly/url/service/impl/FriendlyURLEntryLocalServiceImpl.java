@@ -208,7 +208,14 @@ public class FriendlyURLEntryLocalServiceImpl
 			long groupId, Class<?> clazz, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(clazz);
+		deleteFriendlyURLEntry(
+			groupId, classNameLocalService.getClassNameId(clazz), classPK);
+	}
+
+	@Override
+	public void deleteFriendlyURLEntry(
+			long groupId, long classNameId, long classPK)
+		throws PortalException {
 
 		List<FriendlyURLEntry> friendlyURLEntries =
 			friendlyURLEntryPersistence.findByG_C_C(

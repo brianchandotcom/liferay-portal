@@ -18,11 +18,15 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,13 +45,34 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 	public DDMDataProviderResponse getData(
 		DDMDataProviderRequest ddmDataProviderRequest) {
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+		Optional<HttpServletRequest> httpServletRequestOptional =
+			ddmDataProviderRequest.getParameterOptional(
+				"httpServletRequest", HttpServletRequest.class);
 
 		Set<String> storageTypes =
 			ddmStorageAdapterTracker.getDDMStorageAdapterTypes();
 
+		HttpServletRequest httpServletRequest =
+			httpServletRequestOptional.orElse(null);
+
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
 		for (String storageType : storageTypes) {
-			keyValuePairs.add(new KeyValuePair(storageType, storageType));
+			if (httpServletRequest == null) {
+				keyValuePairs.add(new KeyValuePair(storageType, storageType));
+
+				continue;
+			}
+
+			String defaultValue = LanguageUtil.get(
+				httpServletRequest, storageType);
+
+			keyValuePairs.add(
+				new KeyValuePair(
+					storageType,
+					LanguageUtil.get(
+						httpServletRequest, storageType + "[stands-for]",
+						defaultValue)));
 		}
 
 		DDMDataProviderResponse.Builder builder =

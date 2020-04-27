@@ -209,7 +209,7 @@ public class DDMFormFieldTemplateContextFactory {
 					},
 					new HashMap<>(), index++, parentDDMFormFieldParameterName));
 		}
-		else if (_ddmFormRenderingContext.isReturnFullContext()) {
+		else {
 			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 				Map<String, Object> changedProperties = getChangedProperties(
 					ddmFormFieldValue);
@@ -217,7 +217,9 @@ public class DDMFormFieldTemplateContextFactory {
 				DDMFormField ddmFormField = _ddmFormFieldsMap.get(
 					ddmFormFieldValue.getName());
 
-				if (changedProperties.isEmpty() && !ddmFormField.isRequired()) {
+				if (!_ddmFormRenderingContext.isReturnFullContext() &&
+					changedProperties.isEmpty() && !ddmFormField.isRequired()) {
+
 					continue;
 				}
 

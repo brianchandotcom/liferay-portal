@@ -64,6 +64,16 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountEntry> search(
+			String keywords, java.util.LinkedHashMap<String, Object> params,
+			int cur, int delta, String orderByField, boolean reverse) {
+
+		return _accountEntryService.search(
+			keywords, params, cur, delta, orderByField, reverse);
+	}
+
+	@Override
 	public AccountEntryService getWrappedService() {
 		return _accountEntryService;
 	}

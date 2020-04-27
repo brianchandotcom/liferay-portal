@@ -67,6 +67,15 @@ public class AccountEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountEntry> search(
+			String keywords, java.util.LinkedHashMap<String, Object> params,
+			int cur, int delta, String orderByField, boolean reverse) {
+
+		return getService().search(
+			keywords, params, cur, delta, orderByField, reverse);
+	}
+
 	public static AccountEntryService getService() {
 		return _serviceTracker.getService();
 	}

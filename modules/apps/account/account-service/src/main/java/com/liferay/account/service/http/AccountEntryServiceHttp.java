@@ -139,6 +139,42 @@ public class AccountEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountEntry> search(
+			HttpPrincipal httpPrincipal, String keywords,
+			java.util.LinkedHashMap<String, Object> params, int cur, int delta,
+			String orderByField, boolean reverse) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryServiceUtil.class, "search",
+				_searchParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, keywords, params, cur, delta, orderByField, reverse);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.search.BaseModelSearchResult
+				<com.liferay.account.model.AccountEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AccountEntryServiceHttp.class);
 
@@ -152,5 +188,9 @@ public class AccountEntryServiceHttp {
 			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
+	private static final Class<?>[] _searchParameterTypes2 = new Class[] {
+		String.class, java.util.LinkedHashMap.class, int.class, int.class,
+		String.class, boolean.class
+	};
 
 }

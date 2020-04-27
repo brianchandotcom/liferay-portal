@@ -67,24 +67,23 @@ export default ({
 				render={() => (
 					<>
 						<ControlMenu backURL="/" title={title} />
-						<NavigationBar tabs={[
-							{
-								active: true,
-								label: Liferay.Language.get('form-views'),
-								path: url => `${url}/form-views`,
-
-							},
-							{
-								label: Liferay.Language.get('table-views'),
-								path: url => `${url}/table-views`,
-								
-							},
-							{
-								label: Liferay.Language.get('apps'),
-								path: url => `${url}/apps`,
-								
-							}
-						]} />
+						<NavigationBar
+							tabs={[
+								{
+									active: true,
+									label: Liferay.Language.get('form-views'),
+									path: (url) => `${url}/form-views`,
+								},
+								{
+									label: Liferay.Language.get('table-views'),
+									path: (url) => `${url}/table-views`,
+								},
+								{
+									label: Liferay.Language.get('apps'),
+									path: (url) => `${url}/apps`,
+								},
+							]}
+						/>
 
 						<Switch>
 							<Route

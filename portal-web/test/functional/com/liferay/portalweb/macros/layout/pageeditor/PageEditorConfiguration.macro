@@ -67,9 +67,9 @@ definition {
 	macro checkConfigCheckbox {
 		var key_fragmentName = "${fragmentName}";
 
-		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
-		}
+		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
+
+		Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 
 		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
@@ -79,13 +79,13 @@ definition {
 			locator1 = "Button#RESTORE_VALUES",
 			value1 = "Restore Values");
 
-		Check.checkToggleSwitchAndPause(
-			checkboxName = "${checkboxName}",
-			locator1 = "Fragment#FRAGMENT_CHECKBOX");
+		while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "${checkboxName}", locator1 = "Checkbox#ANY_CHECKBOX")) {
+			Click.clickAtNotVisible(
+				checkboxName = "${checkboxName}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
 
-		Click.clickNoMouseOver(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		PageEditor.waitForAutoSave();
 	}
 
 	macro restoreConfigValues {

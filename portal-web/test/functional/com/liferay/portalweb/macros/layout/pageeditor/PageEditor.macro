@@ -687,15 +687,19 @@ definition {
 		}
 
 		if ("${spaceBetweenColumns}" == "true") {
-			Check.checkToggleSwitch(
-				checkboxName = "Columns Gutter",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Columns Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click.clickAtNotVisible(
+					checkboxName = "Columns Gutter",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
 		}
 
 		if ("${spaceBetweenColumns}" == "false") {
-			Uncheck.uncheckToggleSwitchAndPause(
-				checkboxName = "Columns Gutter",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			while (IsChecked(checkboxName = "Columns Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click.clickAtNotVisible(
+					checkboxName = "Columns Gutter",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
 		}
 
 		PageEditor.waitForAutoSave();

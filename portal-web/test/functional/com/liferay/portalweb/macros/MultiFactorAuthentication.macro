@@ -12,4 +12,14 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro viewOTPEmailSenderCP {
+		AssertTextEquals(
+			locator1 = "MultiFactorAuthentication#OTP_EMAIL_SENDER_ADDRESS_FIELD",
+			value1 = "${emailAddress}");
+
+		AssertTextEquals(
+			locator1 = "MultiFactorAuthentication#OTP_EMAIL_SENDER_NAME_FIELD",
+			value1 = "${emailSenderName}");
+	}
+
 }

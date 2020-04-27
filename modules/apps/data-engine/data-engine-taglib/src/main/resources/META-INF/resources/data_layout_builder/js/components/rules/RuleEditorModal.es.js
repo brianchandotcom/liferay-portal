@@ -175,8 +175,8 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 							disabled={!ruleName}
 							onClick={() =>
 								rule
-									? ruleEditor.handleRuleEdited(ruleName)
-									: ruleEditor.handleRuleAdded(ruleName)
+									? ruleEditor.handleRuleEdited({ruleName})
+									: ruleEditor.handleRuleAdded({ruleName})
 							}
 						>
 							{Liferay.Language.get('save')}

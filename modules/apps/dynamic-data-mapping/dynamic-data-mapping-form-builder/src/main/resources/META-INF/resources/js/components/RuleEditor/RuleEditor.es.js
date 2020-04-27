@@ -212,12 +212,12 @@ class RuleEditor extends Component {
 		return list;
 	}
 
-	handleRuleAdded(name) {
-		this._handleRuleSaved('ruleAdded', name);
+	handleRuleAdded({ruleName}) {
+		this._handleRuleSaved('ruleAdded', ruleName);
 	}
 
-	handleRuleEdited(name) {
-		this._handleRuleSaved('ruleEdited', name);
+	handleRuleEdited({ruleName}) {
+		this._handleRuleSaved('ruleEdited', ruleName);
 	}
 
 	isValueOperand({type}) {
@@ -962,7 +962,7 @@ class RuleEditor extends Component {
 		});
 	}
 
-	_handleRuleSaved(event, name) {
+	_handleRuleSaved(eventName, ruleName) {
 		const actions = this._removeActionInternalProperties();
 		const conditions = this._removeConditionInternalProperties();
 		const {logicalOperator, ruleEditedIndex} = this;
@@ -974,11 +974,11 @@ class RuleEditor extends Component {
 			ruleEditedIndex,
 		};
 
-		if (name) {
-			rule.name = name;
+		if (ruleName) {
+			rule.name = ruleName;
 		}
 
-		this.emit(event, rule);
+		this.emit(eventName, rule);
 	}
 
 	_handleRuleCancelled() {

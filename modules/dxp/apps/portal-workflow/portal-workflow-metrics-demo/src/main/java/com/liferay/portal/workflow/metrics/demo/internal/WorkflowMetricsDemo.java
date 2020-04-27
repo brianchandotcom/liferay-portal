@@ -42,6 +42,7 @@ import com.liferay.portal.workflow.kaleo.demo.data.creator.WorkflowDefinitionLin
 import com.liferay.portal.workflow.kaleo.demo.data.creator.WorkflowInstanceDemoDataCreator;
 import com.liferay.portal.workflow.kaleo.demo.data.creator.WorkflowTaskDemoDataCreator;
 import com.liferay.portal.workflow.metrics.demo.data.creator.WorkflowMetricsSLADefinitionDemoDataCreator;
+import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsBackgroundTaskExecutorNames;
 import com.liferay.users.admin.demo.data.creator.OmniAdminUserDemoDataCreator;
 import com.liferay.users.admin.demo.data.creator.SiteMemberUserDemoDataCreator;
 
@@ -239,8 +240,10 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 		_backgroundTaskLocalService.addBackgroundTask(
 			omniAdminUser.getUserId(), group.getGroupId(),
-			_REINDEX_TASK_EXECUTOR_CLASS_NAME,
-			_REINDEX_TASK_EXECUTOR_CLASS_NAME,
+			WorkflowMetricsBackgroundTaskExecutorNames.
+				WORKFLOW_METRICS_REINDEX_BACKGROUND_TASK_EXECUTOR,
+			WorkflowMetricsBackgroundTaskExecutorNames.
+				WORKFLOW_METRICS_REINDEX_BACKGROUND_TASK_EXECUTOR,
 			HashMapBuilder.<String, Serializable>put(
 				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
 			).put(
@@ -366,10 +369,6 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 		_workflowTaskDemoDataCreator.updateCreateDate(
 			workflowTask.getWorkflowTaskId(), createDate);
 	}
-
-	private static final String _REINDEX_TASK_EXECUTOR_CLASS_NAME =
-		"com.liferay.portal.workflow.metrics.internal.background.task." +
-			"WorkflowMetricsReindexBackgroundTaskExecutor";
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

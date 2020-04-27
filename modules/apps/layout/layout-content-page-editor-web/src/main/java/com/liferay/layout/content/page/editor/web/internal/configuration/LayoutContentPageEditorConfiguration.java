@@ -28,6 +28,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface LayoutContentPageEditorConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
+	public boolean responsiveEnabled();
+
+	@Meta.AD(deflt = "false", required = false)
 	public boolean undoEnabled();
 
 }

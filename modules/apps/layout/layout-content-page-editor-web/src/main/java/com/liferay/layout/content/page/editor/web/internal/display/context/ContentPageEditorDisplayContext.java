@@ -353,6 +353,9 @@ public class ContentPageEditorDisplayContext {
 				"renderFragmentEntryURL",
 				getResourceURL("/content_layout/get_fragment_entry_link")
 			).put(
+				"responsiveEnabled",
+				_layoutContentPageEditorConfiguration.responsiveEnabled()
+			).put(
 				"sidebarPanels", getSidebarPanels()
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()

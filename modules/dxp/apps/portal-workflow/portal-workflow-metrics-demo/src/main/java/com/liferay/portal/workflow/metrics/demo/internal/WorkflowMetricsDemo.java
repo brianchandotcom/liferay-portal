@@ -239,7 +239,8 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 		_backgroundTaskLocalService.addBackgroundTask(
 			omniAdminUser.getUserId(), group.getGroupId(),
-			_REINDEX_TASK_EXECUTOR_CLASSNAME, _REINDEX_TASK_EXECUTOR_CLASSNAME,
+			_REINDEX_TASK_EXECUTOR_CLASS_NAME,
+			_REINDEX_TASK_EXECUTOR_CLASS_NAME,
 			HashMapBuilder.<String, Serializable>put(
 				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
 			).put(
@@ -366,7 +367,7 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 			workflowTask.getWorkflowTaskId(), createDate);
 	}
 
-	private static final String _REINDEX_TASK_EXECUTOR_CLASSNAME =
+	private static final String _REINDEX_TASK_EXECUTOR_CLASS_NAME =
 		"com.liferay.portal.workflow.metrics.internal.background.task." +
 			"WorkflowMetricsReindexBackgroundTaskExecutor";
 

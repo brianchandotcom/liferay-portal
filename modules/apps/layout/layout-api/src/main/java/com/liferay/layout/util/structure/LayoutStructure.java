@@ -156,6 +156,18 @@ public class LayoutStructure {
 		return dropZoneLayoutStructureItem;
 	}
 
+	public LayoutStructureItem addFragmentDropZoneLayoutStructureItem(
+		String parentItemId, int position) {
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem =
+				new FragmentDropZoneLayoutStructureItem(parentItemId);
+
+		_updateLayoutStructure(fragmentDropZoneLayoutStructureItem, position);
+
+		return fragmentDropZoneLayoutStructureItem;
+	}
+
 	public LayoutStructureItem addFragmentLayoutStructureItem(
 		long fragmentEntryLinkId, String parentItemId, int position) {
 

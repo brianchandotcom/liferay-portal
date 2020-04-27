@@ -60,6 +60,13 @@ public class LayoutStructureItemUtil {
 			return new FragmentLayoutStructureItem(parentItemId);
 		}
 
+		if (Objects.equals(
+				itemType,
+				LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE)) {
+
+			return new FragmentDropZoneLayoutStructureItem(parentItemId);
+		}
+
 		if (Objects.equals(itemType, LayoutDataItemTypeConstants.TYPE_ROOT)) {
 			return new RootLayoutStructureItem();
 		}

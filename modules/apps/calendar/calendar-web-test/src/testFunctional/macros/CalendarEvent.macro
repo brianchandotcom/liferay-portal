@@ -1471,7 +1471,7 @@ definition {
 	macro viewInvitedEventWithWorkflow {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "${eventTitle}");
 
 		AssertTextEquals(
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
@@ -1516,6 +1516,23 @@ definition {
 
 	macro viewNotPresentViaAgendaView {
 		AssertElementNotPresent(locator1 = "xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${eventNumber}]");
+	}
+
+	macro viewNotVisibleUserInviteWithUnapprovedWorkflow {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		var key_siteCalendarName = "${siteCalendarName}";
+		var key_siteName = "${siteName}";
+
+		AssertClick(
+			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
+			value1 = "${siteCalendarName}");
+
+		CalendarScheduler.viewSpecificEventNotVisible(eventTitle = "${eventTitle}");
+
+		AssertClick(
+			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
+			value1 = "${siteCalendarName}");
 	}
 
 	macro viewNoUserInviteWithUnapprovedWorkflow {
@@ -1713,7 +1730,7 @@ definition {
 	}
 
 	macro viewSiteRSVPWithUnapprovedWorkflow {
-		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "${eventTitle}");
 
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR");
 

@@ -298,6 +298,8 @@ definition {
 	}
 
 	macro configureWCWorkflowViaFolderInfo {
+		Pause(locator1 = "5000");
+
 		Click.pauseClickAt(locator1 = "Icon#INFO");
 
 		if (IsElementNotPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON")) {

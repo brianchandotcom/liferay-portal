@@ -203,7 +203,7 @@ public class DDMExpressionEvaluatorVisitor
 				_ddmExpressionFieldAccessor);
 		}
 
-		Optional<Method> methodOptional = _getExpressionFunctionApplyMethod(
+		Optional<Method> methodOptional = _getApplyMethodOptional(
 			ddmExpressionFunction);
 
 		if (!methodOptional.isPresent()) {
@@ -548,7 +548,7 @@ public class DDMExpressionEvaluatorVisitor
 		return (T)parseTree.accept(this);
 	}
 
-	private Optional<Method> _getExpressionFunctionApplyMethod(
+	private Optional<Method> _getApplyMethodOptional(
 		DDMExpressionFunction ddmExpressionFunction) {
 
 		List<Method> methods = Stream.of(

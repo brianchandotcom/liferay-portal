@@ -16,7 +16,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -184,10 +184,41 @@ const FragmentContent = React.memo(function FragmentContent({
 		getFieldValue,
 	]);
 
+	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const masterLayoutData = useSelector(state => state.masterLayoutData);
+
+	const getPortals = useCallback(
+		element =>
+			Array.from(element.querySelectorAll('lfr-drop-zone')).map(
+				dropZoneElement => {
+					const mainItemId =
+						dropZoneElement.getAttribute('uuid') || '';
+
+					const Component = () =>
+						mainItemId ? (
+							<MasterLayoutDataItem
+								fragmentEntryLinks={fragmentEntryLinks}
+								item={masterLayoutData.items[mainItemId]}
+								layoutData={masterLayoutData}
+							/>
+						) : null;
+
+					Component.displayName = `DropZone(${mainItemId})`;
+
+					return {
+						Component,
+						element: dropZoneElement,
+					};
+				}
+			),
+		[fragmentEntryLinks, masterLayoutData]
+	);
+
 	return (
 		<UnsafeHTML
 			className="page-editor__fragment-content page-editor__fragment-content--master"
 			contentRef={ref}
+			getPortals={getPortals}
 			markup={content}
 		/>
 	);

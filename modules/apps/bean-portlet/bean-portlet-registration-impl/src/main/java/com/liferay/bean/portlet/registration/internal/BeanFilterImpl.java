@@ -80,8 +80,6 @@ public class BeanFilterImpl implements BeanFilter {
 			dictionary.put("filter.lifecycles", lifecycles);
 		}
 
-		dictionary.put("service.ranking:Integer", getOrdinal());
-
 		Map<String, String> initParams = getInitParams();
 
 		for (Map.Entry<String, String> entry : initParams.entrySet()) {
@@ -92,6 +90,8 @@ public class BeanFilterImpl implements BeanFilter {
 					"javax.portlet.init-param.".concat(entry.getKey()), value);
 			}
 		}
+
+		dictionary.put("service.ranking:Integer", getOrdinal());
 
 		return dictionary;
 	}

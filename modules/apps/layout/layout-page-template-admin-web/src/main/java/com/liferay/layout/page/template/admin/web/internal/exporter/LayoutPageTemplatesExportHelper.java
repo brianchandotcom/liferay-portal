@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.portlet.helper;
+package com.liferay.layout.page.template.admin.web.internal.exporter;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -61,8 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rubén Pulido
  */
-@Component(immediate = true, service = ExportHelper.class)
-public class ExportHelper {
+@Component(immediate = true, service = LayoutPageTemplatesExportHelper.class)
+public class LayoutPageTemplatesExportHelper {
 
 	public File exportDisplayPages(
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
@@ -344,7 +344,8 @@ public class ExportHelper {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ExportHelper.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplatesExportHelper.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{

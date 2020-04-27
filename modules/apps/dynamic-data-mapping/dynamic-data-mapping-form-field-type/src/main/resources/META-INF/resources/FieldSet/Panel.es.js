@@ -87,7 +87,7 @@ const Panel = ({
 										<ClayButton
 											className="ddm-form-field-repeatable-delete-button lfr-portal-tooltip p-0"
 											disabled={readOnly}
-											onClick={event => {
+											onClick={(event) => {
 												event.stopPropagation();
 
 												onRemoveButton(event);
@@ -107,7 +107,7 @@ const Panel = ({
 									<ClayButton
 										className="ddm-form-field-repeatable-add-button lfr-portal-tooltip p-0"
 										disabled={readOnly}
-										onClick={event => {
+										onClick={(event) => {
 											event.stopPropagation();
 
 											onRepeatButton(event);

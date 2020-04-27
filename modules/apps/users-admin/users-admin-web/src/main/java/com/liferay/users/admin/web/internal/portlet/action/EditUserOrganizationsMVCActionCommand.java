@@ -75,6 +75,9 @@ public class EditUserOrganizationsMVCActionCommand
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				User.class.getName(), actionRequest);
 
+			serviceContext.setAssetCategoryIds(null);
+			serviceContext.setAssetTagNames(null);
+
 			_userService.updateUser(
 				user.getUserId(), user.getPassword(), null, null,
 				user.isPasswordReset(), null, null, user.getScreenName(),

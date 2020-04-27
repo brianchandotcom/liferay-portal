@@ -271,4 +271,13 @@ definition {
 			value1 = "${entry2}");
 	}
 
+	macro viewResultEntryTitle {
+		Search.searchCP(searchTerm = "${searchTerm}");
+
+		AssertTextEquals(
+			key_rowEntry = "${searchEntryTitle}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			value1 = "${searchEntryTitle}");
+	}
+
 }

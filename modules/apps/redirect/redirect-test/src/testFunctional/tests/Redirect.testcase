@@ -748,6 +748,25 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
+	@description = "This test covers LPS-110773. It ensures that a redirect entry can be found by search."
+	@priority = "3"
+	test SearchEntry {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		for (var searchTerm : list "source,destination") {
+			Redirect.viewResultEntryTitle(
+				searchEntryTitle = "${portalURL}/web/test-site-name/test-source-page",
+				searchTerm = "${searchTerm}");
+		}
+	}
+
 	@description = "This ensures that the redirect can be set."
 	@priority = "5"
 	test Smoke {

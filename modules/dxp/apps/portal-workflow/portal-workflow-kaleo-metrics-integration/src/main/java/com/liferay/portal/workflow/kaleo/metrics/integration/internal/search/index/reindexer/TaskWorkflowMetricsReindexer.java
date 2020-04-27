@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.IndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
@@ -120,6 +121,13 @@ public class TaskWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
 				);
 
 				_taskWorkflowMetricsIndexer.addTask(
+					_indexerHelper.createAssetTitleLocalizationMap(
+						kaleoTaskInstanceToken.getClassName(),
+						kaleoTaskInstanceToken.getClassPK(),
+						kaleoTaskInstanceToken.getGroupId()),
+					_indexerHelper.createAssetTypeLocalizationMap(
+						kaleoTaskInstanceToken.getClassName(),
+						kaleoTaskInstanceToken.getGroupId()),
 					assigneeIds, assigneeType,
 					kaleoTaskInstanceToken.getClassName(),
 					kaleoTaskInstanceToken.getClassPK(),
@@ -129,6 +137,7 @@ public class TaskWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
 					kaleoTaskInstanceToken.getCompletionUserId(),
 					kaleoTaskInstanceToken.getCreateDate(),
 					kaleoInstance.isCompleted(),
+					kaleoInstance.getCompletionDate(),
 					kaleoTaskInstanceToken.getKaleoInstanceId(),
 					kaleoTaskInstanceToken.getModifiedDate(),
 					kaleoTaskInstanceToken.getKaleoTaskName(),
@@ -144,6 +153,9 @@ public class TaskWorkflowMetricsReindexer implements WorkflowMetricsReindexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	private IndexerHelper _indexerHelper;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService

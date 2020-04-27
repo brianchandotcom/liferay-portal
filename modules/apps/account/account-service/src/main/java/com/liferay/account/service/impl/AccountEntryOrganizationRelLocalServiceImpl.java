@@ -15,6 +15,7 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.exception.DuplicateAccountEntryOrganizationRelException;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.base.AccountEntryOrganizationRelLocalServiceBaseImpl;
@@ -65,6 +66,7 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 		accountEntryOrganizationRel = updateAccountEntryOrganizationRel(
 			accountEntryOrganizationRel);
 
+		_reindexAccountEntry(accountEntryId);
 		_reindexOrganization(organizationId);
 
 		return accountEntryOrganizationRel;
@@ -88,6 +90,7 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 		accountEntryOrganizationRelPersistence.removeByA_O(
 			accountEntryId, organizationId);
 
+		_reindexAccountEntry(accountEntryId);
 		_reindexOrganization(organizationId);
 	}
 
@@ -181,6 +184,15 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 
 	@Reference
 	protected AccountEntryLocalService accountEntryLocalService;
+
+	private void _reindexAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		Indexer<AccountEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AccountEntry.class);
+
+		indexer.reindex(AccountEntry.class.getName(), accountEntryId);
+	}
 
 	private void _reindexOrganization(long organizationId)
 		throws PortalException {

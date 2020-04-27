@@ -374,7 +374,7 @@
 		<reference entity="ListType" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="Group" remote-service="true" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="Group" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -565,7 +565,7 @@
 		<reference entity="SocialActivitySetting" package-path="com.liferay.portlet.social" />
 		<reference entity="SocialRequest" package-path="com.liferay.portlet.social" />
 	</entity>
-	<entity local-service="true" name="Image" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" name="Image" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -1034,7 +1034,7 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutSet" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" name="LayoutSet" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -1292,7 +1292,7 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="Organization" remote-service="true" uuid="true">
+	<entity change-tracking-enabled="true" external-reference-code="true" local-service="true" name="Organization" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2256,7 +2256,7 @@
 		<reference entity="ResourceAction" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="Role" remote-service="true" uad-application-name="Roles" uad-dir-path="../modules/apps/roles/roles-uad/src/main/java" uad-package-path="com.liferay.roles" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="Role" remote-service="true" uad-application-name="Roles" uad-dir-path="../modules/apps/roles/roles-uad/src/main/java" uad-package-path="com.liferay.roles" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2488,7 +2488,7 @@
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="Team" remote-service="true" uad-application-name="Site Teams" uad-dir-path="../modules/apps/site/site-teams-uad/src/main/java" uad-package-path="com.liferay.site.teams" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="Team" remote-service="true" uad-application-name="Site Teams" uad-dir-path="../modules/apps/site/site-teams-uad/src/main/java" uad-package-path="com.liferay.site.teams" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2592,7 +2592,7 @@
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="User" remote-service="true" uuid="true">
+	<entity change-tracking-enabled="true" external-reference-code="true" local-service="true" name="User" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2752,7 +2752,7 @@
 		<reference entity="SocialRelation" package-path="com.liferay.portlet.social" />
 		<reference entity="SocialRequest" package-path="com.liferay.portlet.social" />
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="UserGroup" remote-service="true" uad-application-name="User Groups Admin" uad-dir-path="../modules/apps/user-groups-admin/user-groups-admin-uad/src/main/java" uad-package-path="com.liferay.user.groups.admin" uuid="true">
+	<entity change-tracking-enabled="true" external-reference-code="true" local-service="true" name="UserGroup" remote-service="true" uad-application-name="User Groups Admin" uad-dir-path="../modules/apps/user-groups-admin/user-groups-admin-uad/src/main/java" uad-package-path="com.liferay.user.groups.admin" uuid="true">
 
 		<!-- PK fields -->
 
@@ -2819,7 +2819,7 @@
 		<reference entity="ExportImport" package-path="com.liferay.portlet.exportimport" />
 		<reference entity="ExportImportConfiguration" package-path="com.liferay.portlet.exportimport" />
 	</entity>
-	<entity local-service="true" name="UserGroupGroupRole" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" name="UserGroupGroupRole" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -2865,7 +2865,7 @@
 		<reference entity="Role" package-path="com.liferay.portal" />
 		<reference entity="UserGroup" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="UserGroupRole" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" name="UserGroupRole" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -3158,7 +3158,7 @@
 			<finder-column name="userTrackerId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="VirtualHost" remote-service="false">
+	<entity change-tracking-enabled="true" local-service="true" name="VirtualHost" remote-service="false">
 
 		<!-- PK fields -->
 

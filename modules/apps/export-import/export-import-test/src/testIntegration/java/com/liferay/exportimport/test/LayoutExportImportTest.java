@@ -46,6 +46,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -403,6 +404,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertNotNull(importedLayout);
 	}
 
+	@Ignore
 	@Test
 	public void testFriendlyURLCollision() throws Exception {
 		String defaultLanguageId = LocaleUtil.toLanguageId(

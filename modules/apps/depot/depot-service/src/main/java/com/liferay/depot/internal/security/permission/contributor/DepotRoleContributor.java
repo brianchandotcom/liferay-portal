@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(service = RoleContributor.class)
-public class DepotMemberRoleContributor implements RoleContributor {
+public class DepotRoleContributor implements RoleContributor {
 
 	@Override
 	public void contribute(RoleCollection roleCollection) {
@@ -139,7 +139,7 @@ public class DepotMemberRoleContributor implements RoleContributor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DepotMemberRoleContributor.class);
+		DepotRoleContributor.class);
 
 	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;

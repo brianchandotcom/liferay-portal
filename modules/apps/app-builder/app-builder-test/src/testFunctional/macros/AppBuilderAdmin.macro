@@ -339,7 +339,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		Pause(locator1 = "2000");
 

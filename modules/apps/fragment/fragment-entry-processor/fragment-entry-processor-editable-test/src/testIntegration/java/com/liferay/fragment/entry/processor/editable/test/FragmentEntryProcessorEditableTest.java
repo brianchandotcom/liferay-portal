@@ -141,7 +141,7 @@ public class FragmentEntryProcessorEditableTest {
 	@Test
 	public void testFragmentEntryLinkPortletPreferences() throws Exception {
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_widget_tag.html");
+			"fragment_entry_with_instanceable_widget_tag.html");
 
 		ServiceContext serviceContext = new MockServiceContext(
 			_layout, _getThemeDisplay());
@@ -168,7 +168,7 @@ public class FragmentEntryProcessorEditableTest {
 
 					return portletId.startsWith(
 						FragmentEntryLinkPortletKeys.
-							FRAGMENT_ENTRY_LINK_TEST_PORTLET);
+							FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET);
 				});
 
 		Assert.assertEquals(
@@ -503,6 +503,11 @@ public class FragmentEntryProcessorEditableTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject(
+		filter = "javax.portlet.name=" + FragmentEntryLinkPortletKeys.FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET
+	)
+	private final Portlet _instanceablePortlet = null;
+
 	private Layout _layout;
 
 	@Inject
@@ -520,11 +525,6 @@ public class FragmentEntryProcessorEditableTest {
 
 	@Inject
 	private Portal _portal;
-
-	@Inject(
-		filter = "javax.portlet.name=" + FragmentEntryLinkPortletKeys.FRAGMENT_ENTRY_LINK_TEST_PORTLET
-	)
-	private final Portlet _portlet = null;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

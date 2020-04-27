@@ -27,15 +27,15 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.fragment.entry.processor.portlet.alias=fragment-entry-link",
+		"com.liferay.fragment.entry.processor.portlet.alias=fragment-entry-link-instanceable",
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Test",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.name=" + FragmentEntryLinkPortletKeys.FRAGMENT_ENTRY_LINK_TEST_PORTLET
+		"javax.portlet.name=" + FragmentEntryLinkPortletKeys.FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET
 	},
 	service = Portlet.class
 )
-public class FragmentEntryLinkTestPortlet extends MVCPortlet {
+public class FragmentEntryLinkInstanceableTestPortlet extends MVCPortlet {
 }

@@ -151,6 +151,13 @@ public class FriendlyURLEntryLocalServiceUtil {
 		getService().deleteFriendlyURLEntry(groupId, clazz, classPK);
 	}
 
+	public static void deleteFriendlyURLEntry(
+			long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteFriendlyURLEntry(groupId, classNameId, classPK);
+	}
+
 	public static void deleteGroupFriendlyURLEntries(
 		long groupId, long classNameId) {
 

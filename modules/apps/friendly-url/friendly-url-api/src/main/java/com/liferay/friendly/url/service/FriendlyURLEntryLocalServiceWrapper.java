@@ -157,6 +157,15 @@ public class FriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteFriendlyURLEntry(
+			long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+			groupId, classNameId, classPK);
+	}
+
+	@Override
 	public void deleteGroupFriendlyURLEntries(long groupId, long classNameId) {
 		_friendlyURLEntryLocalService.deleteGroupFriendlyURLEntries(
 			groupId, classNameId);

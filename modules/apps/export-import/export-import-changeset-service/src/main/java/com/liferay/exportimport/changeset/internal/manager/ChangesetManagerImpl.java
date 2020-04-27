@@ -68,6 +68,7 @@ public class ChangesetManagerImpl
 		_changesets.put(changesetUuid, changeset);
 	}
 
+	@Clusterable(onMaster = true)
 	@Override
 	public void clearChangesets() {
 		_changesets = new HashMap<>();
@@ -78,16 +79,19 @@ public class ChangesetManagerImpl
 		return ChangesetManager.class.getName();
 	}
 
+	@Clusterable(onMaster = true)
 	@Override
 	public boolean hasChangeset(String changesetUuid) {
 		return _changesets.containsKey(changesetUuid);
 	}
 
+	@Clusterable(onMaster = true)
 	@Override
 	public Optional<Changeset> peekChangeset(String changesetUuid) {
 		return Optional.ofNullable(_changesets.get(changesetUuid));
 	}
 
+	@Clusterable(onMaster = true)
 	@Override
 	public Optional<Changeset> popChangeset(String changesetUuid) {
 		Changeset changeset = _changesets.remove(changesetUuid);
@@ -95,6 +99,7 @@ public class ChangesetManagerImpl
 		return Optional.ofNullable(changeset);
 	}
 
+	@Clusterable(onMaster = true)
 	@Override
 	public long publishChangeset(
 		Changeset changeset, ChangesetEnvironment changesetEnvironment) {

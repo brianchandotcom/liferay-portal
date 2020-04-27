@@ -23,16 +23,15 @@ const Body = ({
 	assetTitle,
 	assetType,
 	assignees = [{name: Liferay.Language.get('unassigned')}],
+	completed,
 	creator,
 	dateCompletion,
 	dateCreated,
 	setRetry,
 	id,
 	slaResults = [],
-	status,
 	taskNames = [],
 }) => {
-	const completed = status === 'Completed';
 	const SLAs = {open: [], resolved: []};
 
 	slaResults.forEach((result) => {
@@ -104,7 +103,11 @@ const Body = ({
 
 				<Body.SectionAttribute
 					description={Liferay.Language.get('process-status')}
-					detail={status}
+					detail={
+						completed
+							? Liferay.Language.get('completed')
+							: Liferay.Language.get('pending')
+					}
 				/>
 
 				<Body.SectionAttribute

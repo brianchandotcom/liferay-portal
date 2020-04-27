@@ -52,7 +52,7 @@ public class RegistrationUtil {
 		BeanFilterMethodFactory beanFilterMethodFactory,
 		BeanFilterMethodInvoker beanFilterMethodInvoker,
 		BundleContext bundleContext, String portletName,
-		List<ServiceRegistration<?>> registrations,
+		List<ServiceRegistration<?>> serviceRegistrations,
 		ServletContext servletContext) {
 
 		if (Objects.equals(portletName, "*")) {
@@ -60,7 +60,7 @@ public class RegistrationUtil {
 				String portletId = _getPortletId(
 					curPortletName, servletContext.getServletContextName());
 
-				registrations.add(
+				serviceRegistrations.add(
 					_registerBeanFilter(
 						beanFilter, beanFilterMethodFactory,
 						beanFilterMethodInvoker, bundleContext, portletId));
@@ -78,7 +78,7 @@ public class RegistrationUtil {
 				String portletId = _getPortletId(
 					portletName, servletContext.getServletContextName());
 
-				registrations.add(
+				serviceRegistrations.add(
 					_registerBeanFilter(
 						beanFilter, beanFilterMethodFactory,
 						beanFilterMethodInvoker, bundleContext, portletId));

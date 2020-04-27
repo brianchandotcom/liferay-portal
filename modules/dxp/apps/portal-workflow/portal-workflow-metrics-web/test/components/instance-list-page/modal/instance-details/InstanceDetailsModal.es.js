@@ -42,6 +42,7 @@ describe('The InstanceDetailsModal component should', () => {
 	const data = {
 		assetTitle: 'Blog 01',
 		assetType: 'Blogs Entry',
+		completed: true,
 		creator: {
 			id: 1,
 			name: 'Test Test',
@@ -69,7 +70,6 @@ describe('The InstanceDetailsModal component should', () => {
 			},
 		],
 		slaStatus: 'Overdue',
-		status: 'Completed',
 	};
 
 	const clientMock = {
@@ -122,7 +122,7 @@ describe('The InstanceDetailsModal component should', () => {
 		const instanceDetailSpan = getAllByTestId('instanceDetailSpan');
 
 		expect(instanceDetailSpan.length).toBe(6);
-		expect(instanceDetailSpan[0]).toHaveTextContent('Completed');
+		expect(instanceDetailSpan[0]).toHaveTextContent('completed');
 		expect(instanceDetailSpan[1]).toHaveTextContent('Test Test');
 		expect(instanceDetailSpan[2]).toHaveTextContent(
 			'Jan 20, 2020, 11:08 AM'
@@ -147,6 +147,7 @@ describe('The InstanceDetailsModal component should', () => {
 	const data = {
 		assetTitle: 'Blog 01',
 		assetType: 'Blogs Entry',
+		completed: false,
 		creator: {
 			id: 1,
 			name: 'Test Test',
@@ -173,7 +174,6 @@ describe('The InstanceDetailsModal component should', () => {
 			},
 		],
 		slaStatus: 'Overdue',
-		status: 'Pending',
 		taskNames: ['Review'],
 	};
 
@@ -199,7 +199,7 @@ describe('The InstanceDetailsModal component should', () => {
 		const instanceDetailSpan = getAllByTestId('instanceDetailSpan');
 
 		expect(instanceDetailSpan.length).toBe(7);
-		expect(instanceDetailSpan[0]).toHaveTextContent('Pending');
+		expect(instanceDetailSpan[0]).toHaveTextContent('pending');
 		expect(instanceDetailSpan[5]).toHaveTextContent('Review');
 		expect(instanceDetailSpan[6]).toHaveTextContent('unassigned');
 	});

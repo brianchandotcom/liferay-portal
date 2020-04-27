@@ -9,17 +9,14 @@
  * distribution rights of the Software.
  */
 
-import ClayAlert from '@clayui/alert';
-import React, {useContext, useState} from 'react';
+import React from 'react';
 
-import Detail from './components/Detail';
-import Main from './components/Main';
+import Navigation from './components/Navigation';
 import ConnectionContext from './context/ConnectionContext';
-import {StoreContextProvider, useWarning} from './context/store';
+import {StoreContextProvider} from './context/store';
 import APIService from './utils/APIService';
-import {numberFormat} from './utils/numberFormat';
 
-export default function ({context, props}) {
+export default function({context, props}) {
 	const {languageTag, namespace, page} = context;
 	const {defaultTimeRange, defaultTimeSpanKey, timeSpans} = context;
 	const {validAnalyticsConnection} = context;
@@ -64,141 +61,5 @@ export default function ({context, props}) {
 				/>
 			</StoreContextProvider>
 		</ConnectionContext.Provider>
-	);
-}
-
-function Navigation({
-	api,
-	authorName,
-	defaultTimeRange,
-	defaultTimeSpanKey,
-	languageTag,
-	pagePublishDate,
-	pageTitle,
-	timeSpanOptions,
-	trafficSources,
-}) {
-	const [currentPage, setCurrentPage] = useState({view: 'main'});
-
-	const [trafficSourceName, setTrafficSourceName] = useState('');
-
-	const {validAnalyticsConnection} = useContext(ConnectionContext);
-
-	const [hasWarning] = useWarning();
-
-	const {getHistoricalReads, getHistoricalViews} = api;
-
-	function handleCurrentPage(currentPage) {
-		setCurrentPage({view: currentPage.view});
-	}
-
-	function handleTotalReads() {
-		return api.getTotalReads().then((response) => {
-			return numberFormat(
-				languageTag,
-				response.analyticsReportsTotalReads
-			);
-		});
-	}
-
-	function handleTotalViews() {
-		return api.getTotalViews().then((response) => {
-			return numberFormat(
-				languageTag,
-				response.analyticsReportsTotalViews
-			);
-		});
-	}
-
-	function handleTrafficShare() {
-		const trafficSource = trafficSources.find((trafficSource) => {
-			return trafficSource['name'] === trafficSourceName;
-		});
-
-		return Promise.resolve(trafficSource ? trafficSource.share : '-');
-	}
-
-	function handleTrafficSourceClick(trafficSourceName) {
-		setTrafficSourceName(trafficSourceName);
-
-		api.getTrafficSourceDetails(trafficSourceName).then(
-			(trafficSourceData) => {
-				setCurrentPage({
-					data: trafficSourceData,
-					view: 'traffic-source-detail',
-				});
-			}
-		);
-	}
-
-	function handleTrafficSourceName(trafficSourceName) {
-		setTrafficSourceName(trafficSourceName);
-	}
-
-	function handleTrafficVolume() {
-		const trafficSource = trafficSources.find((trafficSource) => {
-			return trafficSource['name'] === trafficSourceName;
-		});
-
-		return Promise.resolve(trafficSource ? trafficSource.value : '-');
-	}
-
-	return (
-		<>
-			{!validAnalyticsConnection && (
-				<ClayAlert
-					className="p-0"
-					displayType="danger"
-					variant="stripe"
-				>
-					{Liferay.Language.get('an-unexpected-error-occurred')}
-				</ClayAlert>
-			)}
-
-			{validAnalyticsConnection && hasWarning && (
-				<ClayAlert
-					className="p-0"
-					displayType="warning"
-					variant="stripe"
-				>
-					{Liferay.Language.get(
-						'some-data-is-temporarily-unavailable'
-					)}
-				</ClayAlert>
-			)}
-
-			{currentPage.view === 'main' && (
-				<div className="p-3">
-					<Main
-						authorName={authorName}
-						chartDataProviders={[
-							getHistoricalViews,
-							getHistoricalReads,
-						]}
-						defaultTimeRange={defaultTimeRange}
-						defaultTimeSpanOption={defaultTimeSpanKey}
-						languageTag={languageTag}
-						onTrafficSourceClick={handleTrafficSourceClick}
-						pagePublishDate={pagePublishDate}
-						pageTitle={pageTitle}
-						timeSpanOptions={timeSpanOptions}
-						totalReadsDataProvider={handleTotalReads}
-						totalViewsDataProvider={handleTotalViews}
-						trafficSources={trafficSources}
-					/>
-				</div>
-			)}
-
-			{currentPage.view === 'traffic-source-detail' && (
-				<Detail
-					currentPage={currentPage}
-					languageTag={languageTag}
-					onCurrentPageChange={handleCurrentPage}
-					onTrafficSourceNameChange={handleTrafficSourceName}
-					trafficShareDataProvider={handleTrafficShare}
-					trafficVolumeDataProvider={handleTrafficVolume}
-				/>
-			)}
-		</>
 	);
 }

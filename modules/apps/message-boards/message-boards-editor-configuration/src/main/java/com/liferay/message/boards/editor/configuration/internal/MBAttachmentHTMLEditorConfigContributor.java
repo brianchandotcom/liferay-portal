@@ -71,9 +71,7 @@ public class MBAttachmentHTMLEditorConfigContributor
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString()
 		).put(
 			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
-		);
-
-		jsonObject.put(
+		).put(
 			"toolbar", "mb"
 		).put(
 			"toolbar_mb", getToolbarMBJSONArray(inputEditorTaglibAttributes)

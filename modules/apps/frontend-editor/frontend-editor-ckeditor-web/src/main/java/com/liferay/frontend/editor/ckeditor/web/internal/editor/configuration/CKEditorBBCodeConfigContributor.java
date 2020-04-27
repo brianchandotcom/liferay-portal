@@ -16,7 +16,6 @@ package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
 import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -98,4 +97,5 @@ public class CKEditorBBCodeConfigContributor
 			LanguageUtil.get(
 				getContentsLocale(inputEditorTaglibAttributes), "code"));
 	}
+
 }

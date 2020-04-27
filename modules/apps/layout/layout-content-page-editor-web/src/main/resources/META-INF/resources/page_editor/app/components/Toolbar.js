@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
@@ -30,6 +31,7 @@ import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
+import ViewportSizeSelector from './ViewportSizeSelector';
 import Undo from './undo/Undo';
 
 const {Suspense, useCallback, useRef} = React;
@@ -47,6 +49,7 @@ function ToolbarBody() {
 		network,
 		segmentsExperienceId,
 		segmentsExperimentStatus,
+		selectedViewportSize,
 	} = store;
 
 	const [enableDiscard, setEnableDiscard] = useState(false);
@@ -171,7 +174,12 @@ function ToolbarBody() {
 			className="container-fluid container-fluid-max-xl"
 			onClick={deselectItem}
 		>
-			<ul className="navbar-nav" onClick={deselectItem}>
+			<ul
+				className={classNames('navbar-nav', {
+					'responsive-mode': config.responsiveEnabled,
+				})}
+				onClick={deselectItem}
+			>
 				{config.toolbarPlugins.map(
 					({loadingPlaceholder, pluginEntryPoint}) => {
 						return (
@@ -204,6 +212,13 @@ function ToolbarBody() {
 						segmentsExperienceId={segmentsExperienceId}
 					/>
 				</li>
+				{config.responsiveEnabled && (
+					<li className="nav-item">
+						<ViewportSizeSelector
+							selectedSize={selectedViewportSize}
+						/>
+					</li>
+				)}
 				{!config.singleSegmentsExperienceMode &&
 					segmentsExperimentStatus && (
 						<li className="nav-item pl-2">

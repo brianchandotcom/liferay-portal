@@ -14,21 +14,27 @@
 
 package com.liferay.fragment.entry.processor.drop.zone.listener;
 
-import com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Iterator;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,6 +84,18 @@ public class DropZoneContentPageEditorListener
 		}
 	}
 
+	private Document _getDocument(String html) {
+		Document document = Jsoup.parseBodyFragment(html);
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		return document;
+	}
+
 	private LayoutStructure _getLayoutStructure(
 		FragmentEntryLink fragmentEntryLink) {
 
@@ -106,16 +124,23 @@ public class DropZoneContentPageEditorListener
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		JSONObject dropZoneProcessorJSONObject =
-			editableValuesJSONObject.getJSONObject(
-				DropZoneFragmentEntryProcessor.class.getName());
+		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
 
-		if ((dropZoneProcessorJSONObject == null) ||
-			(dropZoneProcessorJSONObject.length() <= 0)) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
+		String processedHTML = _fragmentRendererController.render(
+			defaultFragmentRendererContext, serviceContext.getRequest(),
+			serviceContext.getResponse());
+
+		Document document = _getDocument(processedHTML);
+
+		Elements elements = document.select("lfr-drop-zone");
+
+		if (elements.size() <= 0) {
 			return;
 		}
 
@@ -134,29 +159,17 @@ public class DropZoneContentPageEditorListener
 			return;
 		}
 
-		Iterator<String> keys = dropZoneProcessorJSONObject.keys();
+		List<String> childrenItemIds =
+			parentLayoutStructureItem.getChildrenItemIds();
 
-		while (keys.hasNext()) {
-			String key = keys.next();
-
-			String uuid = dropZoneProcessorJSONObject.getString(key);
-
-			if (Validator.isNotNull(uuid)) {
-				continue;
-			}
-
-			LayoutStructureItem fragmentDropZoneLayoutStructureItem =
-				layoutStructure.addFragmentDropZoneLayoutStructureItem(
-					parentLayoutStructureItem.getItemId(), 0);
-
-			dropZoneProcessorJSONObject.put(
-				key, fragmentDropZoneLayoutStructureItem.getItemId());
+		if (childrenItemIds.size() >= elements.size()) {
+			return;
 		}
 
-		fragmentEntryLink.setEditableValues(
-			editableValuesJSONObject.toString());
-
-		JSONObject dataJSONObject = layoutStructure.toJSONObject();
+		for (int i = childrenItemIds.size(); i < elements.size(); i++) {
+			layoutStructure.addFragmentDropZoneLayoutStructureItem(
+				parentLayoutStructureItem.getItemId(), 0);
+		}
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(
@@ -164,11 +177,14 @@ public class DropZoneContentPageEditorListener
 				fragmentEntryLink.getClassNameId(),
 				fragmentEntryLink.getClassPK(),
 				fragmentEntryLink.getSegmentsExperienceId(),
-				dataJSONObject.toString());
+				layoutStructure.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DropZoneContentPageEditorListener.class);
+
+	@Reference
+	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

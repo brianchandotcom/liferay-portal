@@ -5151,6 +5151,12 @@ log.sanitizer.enabled=false</echo>
 		<run-modules-integration-test database.type="postgresql" database.version="12.1" />
 	</target>
 
+	<target name="modules-integration-project-templates-jdk8">
+		<antcall target="modules-unit-jdk8">
+			<param name="project.templates.test.builds" value="true" />
+		</antcall>
+	</target>
+
 	<target name="modules-integration-sqlserver2017-jdk8">
 		<run-modules-integration-test database.type="sqlserver" database.version="2017" />
 	</target>
@@ -5302,6 +5308,7 @@ log.sanitizer.enabled=false</echo>
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
 					<arg if:set="com.liferay.portal.search.solr7.test.unit.started" value="-Dcom.liferay.portal.search.solr7.test.unit.started=${com.liferay.portal.search.solr7.test.unit.started}" />
 					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
+					<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
 					<arg value="-Dtest.class.group.index=${axis.variable}" />
 				</gradle-execute>
 			</test-action>
@@ -5332,7 +5339,9 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="modules-unit-project-templates-jdk8">
-		<antcall target="modules-unit-jdk8" />
+		<antcall target="modules-unit-jdk8">
+			<param name="project.templates.test.builds" value="false" />
+		</antcall>
 	</target>
 
 	<target name="oracle-service-start">

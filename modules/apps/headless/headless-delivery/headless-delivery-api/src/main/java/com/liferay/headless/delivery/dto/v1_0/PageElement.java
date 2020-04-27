@@ -53,7 +53,8 @@ public class PageElement {
 
 		COLLECTION("Collection"), COLLECTION_ITEM("CollectionItem"),
 		COLUMN("Column"), DROP_ZONE("DropZone"), FRAGMENT("Fragment"),
-		ROOT("Root"), ROW("Row"), SECTION("Section"), WIDGET("Widget");
+		FRAGMENT_DROP_ZONE("FragmentDropZone"), ROOT("Root"), ROW("Row"),
+		SECTION("Section"), WIDGET("Widget");
 
 		@JsonCreator
 		public static Type create(String value) {

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -201,6 +202,37 @@ public class MasterLayoutsImporterTest {
 					"master page with the same key already exists.",
 				testCaseName, testCaseName),
 			layoutPageTemplatesImporterResultEntry.getErrorMessage());
+	}
+
+	@Test
+	public void testImportMasterLayouts() throws Exception {
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries =
+				_getLayoutPageTemplatesImporterResultEntries(
+					"master-page-multiple");
+
+		Assert.assertEquals(
+			layoutPageTemplatesImporterResultEntries.toString(), 2,
+			layoutPageTemplatesImporterResultEntries.size());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
+			_getLayoutPageTemplateEntry(
+				layoutPageTemplatesImporterResultEntries, 0);
+		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
+			_getLayoutPageTemplateEntry(
+				layoutPageTemplatesImporterResultEntries, 1);
+
+		List<String> actualLayoutPageTemplateEntryNames = ListUtil.sort(
+			new ArrayList() {
+				{
+					add(layoutPageTemplateEntry1.getName());
+					add(layoutPageTemplateEntry2.getName());
+				}
+			});
+
+		Assert.assertArrayEquals(
+			new String[] {"Master Page One", "Master Page Two"},
+			actualLayoutPageTemplateEntryNames.toArray(new String[0]));
 	}
 
 	@Test

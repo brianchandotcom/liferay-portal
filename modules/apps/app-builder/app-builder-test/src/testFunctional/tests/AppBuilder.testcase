@@ -21,7 +21,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 	}
 
 	tearDown {
@@ -1360,7 +1360,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
 		AppBuilderAdmin.openItem(itemName = "Table Filtered");
@@ -1394,7 +1394,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
 		AppBuilderAdmin.openItem(itemName = "Table Filtered");
@@ -1435,7 +1435,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
 		AppBuilderAdmin.openItem(itemName = "Table Filtered");
@@ -1506,7 +1506,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.deleteEntry(itemName = "my custom object");
 	}
@@ -1876,7 +1876,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "Custom Object Title");
 
@@ -1899,7 +1899,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "Custom Object Title");
 
@@ -2474,7 +2474,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
 
@@ -2505,7 +2505,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
 
@@ -2578,7 +2578,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object 1");
 
@@ -3328,7 +3328,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Admin object",
@@ -3362,7 +3362,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Admin object");
 
@@ -3459,7 +3459,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -3528,7 +3528,7 @@ definition {
 				ProductMenu.gotoPortlet(
 					category = "App Builder",
 					panel = "Control Panel",
-					portlet = "Custom Objects");
+					portlet = "Objects");
 
 				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
 
@@ -3729,7 +3729,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 
@@ -3746,7 +3746,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 
@@ -3759,7 +3759,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 
@@ -3781,7 +3781,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 
@@ -3803,7 +3803,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 
@@ -3825,7 +3825,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 
@@ -3922,7 +3922,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 
@@ -3981,7 +3981,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 
@@ -4008,7 +4008,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
-			portlet = "Custom Objects");
+			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 

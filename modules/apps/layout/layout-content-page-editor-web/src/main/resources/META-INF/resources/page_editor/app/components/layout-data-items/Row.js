@@ -25,14 +25,22 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {useSelector} from '../../store/index';
 
 const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
+	const selectedViewportSize = useSelector(
+		state => state.selectedViewportSize
+	);
+
+	const itemConfig = item.config[selectedViewportSize]
+		? item.config[selectedViewportSize]
+		: item.config;
+
 	const rowContent = (
 		<div
 			className={classNames(className, 'row', {
 				empty: !item.children.some(
 					(childId) => layoutData.items[childId].children.length
 				),
-				'no-gutters': !(typeof item.config.gutters === 'boolean'
-					? item.config.gutters
+				'no-gutters': !(typeof itemConfig.gutters === 'boolean'
+					? itemConfig.gutters
 					: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[item.type]),
 			})}
 			ref={ref}

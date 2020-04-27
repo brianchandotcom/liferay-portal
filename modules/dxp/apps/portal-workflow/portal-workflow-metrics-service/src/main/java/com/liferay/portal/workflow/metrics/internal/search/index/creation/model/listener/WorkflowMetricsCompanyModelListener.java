@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.workflow.metrics.internal.search.index.creation.helper.WorkflowMetricsIndexHelper;
+import com.liferay.portal.workflow.metrics.internal.search.index.creation.helper.WorkflowMetricsIndexCreator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,7 +36,7 @@ public class WorkflowMetricsCompanyModelListener
 	@Override
 	public void onAfterCreate(Company company) throws ModelListenerException {
 		try {
-			_workflowMetricsIndexHelper.createIndex(company);
+			_workflowMetricsIndexCreator.createIndex(company);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -47,6 +47,6 @@ public class WorkflowMetricsCompanyModelListener
 		WorkflowMetricsCompanyModelListener.class);
 
 	@Reference
-	private WorkflowMetricsIndexHelper _workflowMetricsIndexHelper;
+	private WorkflowMetricsIndexCreator _workflowMetricsIndexCreator;
 
 }

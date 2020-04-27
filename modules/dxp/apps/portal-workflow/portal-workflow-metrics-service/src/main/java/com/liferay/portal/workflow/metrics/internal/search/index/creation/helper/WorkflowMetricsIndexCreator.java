@@ -39,8 +39,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = WorkflowMetricsIndexHelper.class)
-public class WorkflowMetricsIndexHelper {
+@Component(immediate = true, service = WorkflowMetricsIndexCreator.class)
+public class WorkflowMetricsIndexCreator {
 
 	public void createIndex(Company company) throws PortalException {
 		if (Objects.isNull(_searchEngineAdapter)) {

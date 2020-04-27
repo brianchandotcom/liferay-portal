@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index.creation.insta
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.workflow.metrics.internal.search.index.creation.helper.WorkflowMetricsIndexHelper;
+import com.liferay.portal.workflow.metrics.internal.search.index.creation.helper.WorkflowMetricsIndexCreator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,15 +31,15 @@ public class WorkflowMetricsPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_workflowMetricsIndexHelper.createIndex(company);
+		_workflowMetricsIndexCreator.createIndex(company);
 	}
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
-		_workflowMetricsIndexHelper.removeIndex(company);
+		_workflowMetricsIndexCreator.removeIndex(company);
 	}
 
 	@Reference
-	private WorkflowMetricsIndexHelper _workflowMetricsIndexHelper;
+	private WorkflowMetricsIndexCreator _workflowMetricsIndexCreator;
 
 }

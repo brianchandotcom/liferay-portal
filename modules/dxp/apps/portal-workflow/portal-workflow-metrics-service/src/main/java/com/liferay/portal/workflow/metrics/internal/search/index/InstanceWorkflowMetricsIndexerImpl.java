@@ -166,6 +166,9 @@ public class InstanceWorkflowMetricsIndexerImpl
 					companyId,
 					HashMapBuilder.<String, Object>put(
 						"instanceCompleted", Boolean.TRUE
+					).put(
+						"instanceCompletionDate",
+						document.getDate("completionDate")
 					).build(),
 					booleanQuery);
 
@@ -176,6 +179,9 @@ public class InstanceWorkflowMetricsIndexerImpl
 					companyId,
 					HashMapBuilder.<String, Object>put(
 						"instanceCompleted", Boolean.TRUE
+					).put(
+						"instanceCompletionDate",
+						document.getDate("completionDate")
 					).build(),
 					booleanQuery);
 			});

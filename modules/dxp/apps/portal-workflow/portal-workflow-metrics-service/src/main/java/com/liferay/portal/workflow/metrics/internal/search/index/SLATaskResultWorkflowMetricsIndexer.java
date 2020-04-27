@@ -81,9 +81,20 @@ public class SLATaskResultWorkflowMetricsIndexer
 		).setValue(
 			"instanceCompleted",
 			workflowMetricsSLATaskResult.isInstanceCompleted()
-		).setLong(
-			"instanceId", workflowMetricsSLATaskResult.getInstanceId()
 		);
+
+		if (workflowMetricsSLATaskResult.getInstanceCompletionLocalDateTime() !=
+				null) {
+
+			documentBuilder.setDate(
+				"instanceCompletionDate",
+				formatLocalDateTime(
+					workflowMetricsSLATaskResult.
+						getInstanceCompletionLocalDateTime()));
+		}
+
+		documentBuilder.setLong(
+			"instanceId", workflowMetricsSLATaskResult.getInstanceId());
 
 		if (workflowMetricsSLATaskResult.getLastCheckLocalDateTime() != null) {
 			documentBuilder.setDate(

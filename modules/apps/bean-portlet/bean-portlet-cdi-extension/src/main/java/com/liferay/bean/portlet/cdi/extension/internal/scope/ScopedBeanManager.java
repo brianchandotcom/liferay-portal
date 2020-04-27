@@ -14,6 +14,8 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
+import com.liferay.bean.portlet.extension.ScopedBean;
+
 import java.util.Enumeration;
 
 import javax.enterprise.context.spi.CreationalContext;
@@ -37,12 +39,12 @@ import javax.portlet.annotations.RenderStateScoped;
 public class ScopedBeanManager {
 
 	public ScopedBeanManager(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		PortletConfig portletConfig) {
+		PortletConfig portletConfig, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
 
+		_portletConfig = portletConfig;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
-		_portletConfig = portletConfig;
 	}
 
 	public void destroyScopedBeans() {
@@ -69,7 +71,7 @@ public class ScopedBeanManager {
 
 				ScopedBean<?> scopedBean = (ScopedBean<?>)attributeValue;
 
-				Object beanInstance = scopedBean.getBeanInstance();
+				Object beanInstance = scopedBean.getContainerCreatedInstance();
 
 				if (!(beanInstance instanceof PortletSerializable)) {
 					continue;
@@ -105,7 +107,7 @@ public class ScopedBeanManager {
 				Object value = _portletRequest.getAttribute(name);
 
 				if ((value != null) && (value instanceof ScopedBean)) {
-					ScopedBean scopedBean = (ScopedBean)value;
+					ScopedBean<?> scopedBean = (ScopedBean)value;
 
 					scopedBean.destroy();
 				}
@@ -137,14 +139,14 @@ public class ScopedBeanManager {
 				return null;
 			}
 
-			scopedBean = new ScopedBean<>(
-				name, bean, creationalContext,
+			scopedBean = new CDIScopedBean<>(
+				bean, creationalContext, name,
 				PortletRequestScoped.class.getSimpleName());
 
 			_portletRequest.setAttribute(name, scopedBean);
 		}
 
-		return scopedBean.getBeanInstance();
+		return scopedBean.getContainerCreatedInstance();
 	}
 
 	public PortletResponse getPortletResponse() {
@@ -167,14 +169,14 @@ public class ScopedBeanManager {
 				return null;
 			}
 
-			scopedBean = new ScopedBean<>(
-				name, bean, creationalContext,
+			scopedBean = new CDIScopedBean<>(
+				bean, creationalContext, name,
 				PortletSessionScoped.class.getSimpleName());
 
 			portletSession.setAttribute(name, scopedBean, subscope);
 		}
 
-		return scopedBean.getBeanInstance();
+		return scopedBean.getContainerCreatedInstance();
 	}
 
 	public <T> T getRenderStateScopedBean(
@@ -191,12 +193,12 @@ public class ScopedBeanManager {
 				return null;
 			}
 
-			scopedBean = new ScopedBean<>(
-				name, bean, creationalContext,
+			scopedBean = new CDIScopedBean<>(
+				bean, creationalContext, name,
 				RenderStateScoped.class.getSimpleName());
 
 			PortletSerializable portletSerializable =
-				(PortletSerializable)scopedBean.getBeanInstance();
+				(PortletSerializable)scopedBean.getContainerCreatedInstance();
 
 			String parameterName = _getParameterName(portletSerializable);
 
@@ -215,7 +217,7 @@ public class ScopedBeanManager {
 			_portletRequest.setAttribute(name, scopedBean);
 		}
 
-		return scopedBean.getBeanInstance();
+		return scopedBean.getContainerCreatedInstance();
 	}
 
 	private static String _getAttributeName(Bean<?> bean) {

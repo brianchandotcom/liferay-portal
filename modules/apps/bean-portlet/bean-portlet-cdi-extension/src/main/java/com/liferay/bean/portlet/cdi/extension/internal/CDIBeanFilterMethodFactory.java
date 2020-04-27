@@ -14,27 +14,27 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import java.util.List;
+import com.liferay.bean.portlet.extension.BeanFilterMethod;
+import com.liferay.bean.portlet.extension.BeanFilterMethodFactory;
+
+import java.lang.reflect.Method;
+
+import javax.enterprise.inject.spi.BeanManager;
 
 /**
  * @author Neil Griffin
  */
-public class Preference {
+public class CDIBeanFilterMethodFactory implements BeanFilterMethodFactory {
 
-	public Preference(List<String> values, boolean readOnly) {
-		_values = values;
-		_readOnly = readOnly;
+	public CDIBeanFilterMethodFactory(BeanManager beanManager) {
+		_beanManager = beanManager;
 	}
 
-	public List<String> getValues() {
-		return _values;
+	@Override
+	public BeanFilterMethod create(Class<?> beanClass, Method method) {
+		return new CDIBeanFilterMethod(beanClass, _beanManager, method);
 	}
 
-	public boolean isReadOnly() {
-		return _readOnly;
-	}
-
-	private final boolean _readOnly;
-	private final List<String> _values;
+	private final BeanManager _beanManager;
 
 }

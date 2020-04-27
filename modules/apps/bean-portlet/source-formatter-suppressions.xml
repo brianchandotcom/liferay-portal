@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaModuleServiceProxyFactoryCheck" files="bean-portlet-cdi-extension/src/main/java/com/liferay/bean/portlet/cdi/extension/internal/CDIBeanPortletExtension\.java" />
+	</source-check>
+</suppressions>

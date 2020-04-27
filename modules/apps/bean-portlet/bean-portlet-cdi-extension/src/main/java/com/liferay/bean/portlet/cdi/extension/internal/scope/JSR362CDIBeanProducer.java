@@ -67,7 +67,7 @@ import javax.servlet.http.Cookie;
 /**
  * @author Neil Griffin
  */
-public class JSR362BeanProducer {
+public class JSR362CDIBeanProducer {
 
 	@Named("actionParams")
 	@PortletRequestScoped
@@ -532,6 +532,6 @@ public class JSR362BeanProducer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JSR362BeanProducer.class);
+		JSR362CDIBeanProducer.class);
 
 }

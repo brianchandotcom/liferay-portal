@@ -54,7 +54,7 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
 		_closeable = ScopedBeanManagerThreadLocal.install(
 			new ScopedBeanManager(
-				resourceRequest, resourceResponse, portletConfig));
+				portletConfig, resourceRequest, resourceResponse));
 	}
 
 	@Override

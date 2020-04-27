@@ -14,6 +14,7 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
+import com.liferay.bean.portlet.extension.ScopedBean;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,20 +27,21 @@ import javax.enterprise.context.spi.CreationalContext;
 /**
  * @author Neil Griffin
  */
-public class ScopedBean<T> implements Serializable {
+public class CDIScopedBean<T> implements ScopedBean<T>, Serializable {
 
-	public ScopedBean(
-		String name, Contextual<T> bean, CreationalContext<T> creationalContext,
+	public CDIScopedBean(
+		Contextual<T> bean, CreationalContext<T> creationalContext, String name,
 		String scopeName) {
 
-		_name = name;
 		_bean = bean;
 		_creationalContext = creationalContext;
+		_name = name;
 		_scopeName = scopeName;
 
-		_beanInstance = bean.create(creationalContext);
+		_containerCreatedInstance = bean.create(creationalContext);
 	}
 
+	@Override
 	public void destroy() {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -49,19 +51,24 @@ public class ScopedBean<T> implements Serializable {
 
 		_creationalContext.release();
 
-		_bean.destroy(_beanInstance, _creationalContext);
+		_bean.destroy(_containerCreatedInstance, _creationalContext);
 	}
 
-	public T getBeanInstance() {
-		return _beanInstance;
+	@Override
+	public T getContainerCreatedInstance() {
+		return _containerCreatedInstance;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ScopedBean.class);
+	public String getScopeName() {
+		return _scopeName;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(CDIScopedBean.class);
 
 	private static final long serialVersionUID = 2388556996969921221L;
 
 	private final Contextual<T> _bean;
-	private final T _beanInstance;
+	private final T _containerCreatedInstance;
 	private final CreationalContext<T> _creationalContext;
 	private final String _name;
 	private final String _scopeName;

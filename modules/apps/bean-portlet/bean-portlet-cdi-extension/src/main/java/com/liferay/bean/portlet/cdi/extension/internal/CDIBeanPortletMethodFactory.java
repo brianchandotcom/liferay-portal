@@ -14,38 +14,32 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import java.util.List;
+import com.liferay.bean.portlet.extension.BeanPortletMethod;
+import com.liferay.bean.portlet.extension.BeanPortletMethodFactory;
+import com.liferay.bean.portlet.extension.BeanPortletMethodType;
 
-import javax.xml.namespace.QName;
+import java.lang.reflect.Method;
+
+import javax.enterprise.inject.spi.BeanManager;
 
 /**
  * @author Neil Griffin
  */
-public class EventImpl implements Event {
+public class CDIBeanPortletMethodFactory implements BeanPortletMethodFactory {
 
-	public EventImpl(QName qName, String valueType, List<QName> aliasQNames) {
-		_qName = qName;
-		_valueType = valueType;
-		_aliasQNames = aliasQNames;
+	public CDIBeanPortletMethodFactory(BeanManager beanManager) {
+		_beanManager = beanManager;
 	}
 
 	@Override
-	public List<QName> getAliasQNames() {
-		return _aliasQNames;
+	public BeanPortletMethod create(
+		Class<?> beanClass, BeanPortletMethodType beanPortletMethodType,
+		Method method) {
+
+		return new CDIBeanPortletMethod(
+			beanClass, _beanManager, beanPortletMethodType, method);
 	}
 
-	@Override
-	public QName getQName() {
-		return _qName;
-	}
-
-	@Override
-	public String getValueType() {
-		return _valueType;
-	}
-
-	private final List<QName> _aliasQNames;
-	private final QName _qName;
-	private final String _valueType;
+	private final BeanManager _beanManager;
 
 }

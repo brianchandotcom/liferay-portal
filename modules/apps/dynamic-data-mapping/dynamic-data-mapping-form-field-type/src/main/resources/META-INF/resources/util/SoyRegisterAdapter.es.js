@@ -24,7 +24,7 @@ const FakeSoyTemplate = (ComponentAdapter, variant) => {
 	let templates;
 	goog.loadModule(exports => {
 		goog.require('soy');
-		goog.module(`${variant}Adapter.incrementaldom`);
+		goog.module(variant + 'Adapter.incrementaldom');
 		goog.require('soydata');
 		goog.require('soy.idom');
 
@@ -51,14 +51,14 @@ export const SoyRegisterAdapter = (ComponentAdapter, variant) => {
 	goog.loadModule(exports => {
 		const soy = goog.require('soy');
 
-		goog.module(`${variant}Register.incrementaldom`);
+		goog.module(variant + 'Register.incrementaldom');
 		goog.require('soydata');
 		goog.require('soy.idom');
 
 		// We call the template created above so that Metal
 		// can take care of the rest.
 		const templateAlias = Soy.getTemplate(
-			`${variant}Adapter.incrementaldom`,
+			variant + 'Adapter.incrementaldom',
 			'render'
 		);
 

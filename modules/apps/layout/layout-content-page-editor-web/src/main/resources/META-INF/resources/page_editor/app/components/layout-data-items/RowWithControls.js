@@ -35,6 +35,7 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
+import {UPDATE_COL_SIZE_START} from '../../actions/types';
 import updateColSize from '../../actions/updateColSize';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
@@ -106,6 +107,7 @@ const RowWithControls = React.forwardRef(
 		};
 
 		const onResizeStart = ({clientX}) => {
+			dispatch({type: UPDATE_COL_SIZE_START});
 			setHighLightedColumn(getHighlightedColumnIndex(clientX));
 			setShowOverlay(true);
 		};

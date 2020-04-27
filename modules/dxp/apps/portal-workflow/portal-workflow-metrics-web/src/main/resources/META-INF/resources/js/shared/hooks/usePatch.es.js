@@ -19,7 +19,7 @@ const usePatch = ({body = {}, admin = false, url}) => {
 	const client = getClient(admin);
 	const queryBodyStr = JSON.stringify(body);
 	const patchData = useCallback(
-		patchBody => client.patch(url, patchBody || body),
+		(patchBody) => client.patch(url, patchBody || body),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[queryBodyStr, url, admin]
 	);

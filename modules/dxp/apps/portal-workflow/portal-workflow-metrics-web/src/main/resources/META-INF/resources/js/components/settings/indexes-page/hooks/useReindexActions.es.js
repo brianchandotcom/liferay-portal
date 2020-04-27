@@ -30,7 +30,7 @@ const useReindexActions = () => {
 	const {patchData} = usePatch({url: '/indexes/reindex'});
 
 	const getReindexStatus = useCallback(
-		key => reindexStatuses.find(item => key === item.key) || {},
+		(key) => reindexStatuses.find((item) => key === item.key) || {},
 		[reindexStatuses]
 	);
 
@@ -76,7 +76,7 @@ const useReindexActions = () => {
 	);
 
 	const isReindexing = useCallback(
-		key => reindexStatuses.findIndex(item => key === item.key) > -1,
+		(key) => reindexStatuses.findIndex((item) => key === item.key) > -1,
 		[reindexStatuses]
 	);
 

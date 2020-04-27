@@ -52,10 +52,7 @@ describe('The IndexesPage component should', () => {
 				.fn()
 				.mockResolvedValueOnce({data: {items}})
 				.mockResolvedValue({data: {items: [], totalCount: 0}}),
-			patch: jest
-				.fn()
-				.mockRejectedValueOnce()
-				.mockResolvedValue(),
+			patch: jest.fn().mockRejectedValueOnce().mockResolvedValue(),
 		};
 
 		beforeAll(() => {

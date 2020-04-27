@@ -12,7 +12,7 @@
 import {useIsMounted} from 'frontend-js-react-web';
 import {useCallback} from 'react';
 
-const useInterval = cancelOnDestroy => {
+const useInterval = (cancelOnDestroy) => {
 	const isMounted = useIsMounted();
 
 	return useCallback(

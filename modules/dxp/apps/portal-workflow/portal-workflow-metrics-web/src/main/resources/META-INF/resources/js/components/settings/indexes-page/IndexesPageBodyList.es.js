@@ -50,7 +50,7 @@ const List = ({
 	...otherProps
 }) => {
 	const items = useMemo(() => {
-		return indexes.map(item => {
+		return indexes.map((item) => {
 			const status = getReindexStatus(item.key);
 
 			return {

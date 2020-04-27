@@ -18,11 +18,11 @@ definition {
 
 	macro configureOTPEmailSender {
 		Type(
-			locator1 = "MultiFactorAuthentication#OTP_EMAIL_SENDER_ADDRESS_FIELD",
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_ADDRESS_FIELD",
 			value1 = "${emailAddress}");
 
 		Type(
-			locator1 = "MultiFactorAuthentication#OTP_EMAIL_SENDER_NAME_FIELD",
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_NAME_FIELD",
 			value1 = "${emailSenderName}");
 
 		PortletEntry.save();
@@ -30,11 +30,11 @@ definition {
 
 	macro viewOTPEmailSenderCP {
 		AssertTextEquals(
-			locator1 = "MultiFactorAuthentication#OTP_EMAIL_SENDER_ADDRESS_FIELD",
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_ADDRESS_FIELD",
 			value1 = "${emailAddress}");
 
 		AssertTextEquals(
-			locator1 = "MultiFactorAuthentication#OTP_EMAIL_SENDER_NAME_FIELD",
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_NAME_FIELD",
 			value1 = "${emailSenderName}");
 	}
 

@@ -8,19 +8,31 @@
 <tr><td rowspan="1" colspan="3">MultiFactorAuthentication</td></tr>
 </thead>
 <tbody>
+<!--EMAIL_OTP_SENDER-->
 <tr>
-	<td>OTP_EMAIL_SENDER_ADDRESS_FIELD</td>
+	<td>EMAIL_OTP_SENDER_ADDRESS_FIELD</td>
 	<td>//textarea[contains(@name,'emailFromAddress')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>OTP_EMAIL_SENDER_NAME_FIELD</td>
+	<td>EMAIL_OTP_SENDER_NAME_FIELD</td>
 	<td>//textarea[contains(@name,'emailFromName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--EMAIL_OTP_VERIFY-->
+<tr>
+	<td>EMAIL_OTP_VERIFY_INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_OTP_VERIFY_SEND_EMAIL_BUTTON</td>
+	<td>//button[contains(@id,'sendEmailButton')]//span[contains(.,'Send')]</td>
 	<td></td>
 </tr>
 </tbody>

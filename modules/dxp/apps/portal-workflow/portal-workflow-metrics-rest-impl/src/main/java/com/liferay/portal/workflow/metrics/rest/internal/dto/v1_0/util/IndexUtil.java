@@ -56,13 +56,13 @@ public class IndexUtil {
 		).put(
 			"process", "workflow-metrics-processes"
 		).put(
-			"task", "workflow-metrics-tasks"
-		).put(
-			"transition", "workflow-metrics-transitions"
-		).put(
 			"sla-instance-result", "workflow-sla-instance-results"
 		).put(
 			"sla-task-result", "workflow-sla-task-results"
+		).put(
+			"task", "workflow-metrics-tasks"
+		).put(
+			"transition", "workflow-metrics-transitions"
 		).build();
 
 }

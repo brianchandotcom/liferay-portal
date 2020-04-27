@@ -223,9 +223,8 @@ public class ResourceHelper {
 
 	public ScriptedMetricAggregation
 		creatInstanceCountScriptedMetricAggregation(
-			List<Long> assigneeIds, Date dateEnd, Date dateStart,
-			List<String> slaStatuses, List<String> statuses,
-			List<String> taskNames) {
+			List<Long> assigneeIds, Boolean completed, Date dateEnd,
+			Date dateStart, List<String> slaStatuses, List<String> taskNames) {
 
 		ScriptedMetricAggregation scriptedMetricAggregation =
 			_aggregations.scriptedMetric("instanceCount");
@@ -255,6 +254,8 @@ public class ResourceHelper {
 					() -> null
 				)
 			).put(
+				"completed", () -> completed
+			).put(
 				"endDate",
 				() -> Optional.ofNullable(
 					dateEnd
@@ -282,9 +283,9 @@ public class ResourceHelper {
 					() -> null
 				)
 			).put(
-				"statuses",
+				"taskNames",
 				() -> Optional.ofNullable(
-					statuses
+					taskNames
 				).filter(
 					ListUtil::isNotEmpty
 				).orElseGet(

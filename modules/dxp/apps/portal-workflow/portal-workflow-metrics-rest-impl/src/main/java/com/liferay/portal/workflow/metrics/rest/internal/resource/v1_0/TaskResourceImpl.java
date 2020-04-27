@@ -16,10 +16,10 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
-import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -30,6 +30,8 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.TaskUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.NoSuchTaskException;
@@ -40,7 +42,6 @@ import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsInde
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -93,10 +94,12 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		).findFirst(
 		).map(
 			document -> TaskUtil.toTask(
-				document, _language,
+				document, _language, contextAcceptLanguage.getPreferredLocale(),
+				_portal,
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
 					contextAcceptLanguage.getPreferredLocale(),
-					TaskResourceImpl.class))
+					TaskResourceImpl.class),
+				_userLocalService::fetchUser)
 		).orElseThrow(
 			() -> new NoSuchTaskException(
 				"No task exists with the task ID " + taskId)
@@ -114,10 +117,21 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 		getProcessTask(processId, taskId);
 
+		Assignee assignee = task.getAssignee();
+
+		Long[] assigneeIds = null;
+		String assigneeType = null;
+
+		if ((assignee != null) && (assignee.getId() != null)) {
+			assigneeIds = new Long[] {assignee.getId()};
+			assigneeType = User.class.getName();
+		}
+
 		_taskWorkflowMetricsIndexer.updateTask(
-			new Long[] {task.getAssigneeId()}, User.class.getName(),
-			contextCompany.getCompanyId(), task.getDateModified(), task.getId(),
-			contextUser.getUserId());
+			LocalizedMapUtil.getLocalizedMap(task.getAssetTitle_i18n()),
+			LocalizedMapUtil.getLocalizedMap(task.getAssetType_i18n()),
+			assigneeIds, assigneeType, contextCompany.getCompanyId(),
+			task.getDateModified(), task.getId(), contextUser.getUserId());
 	}
 
 	@Override
@@ -134,19 +148,31 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 	@Override
 	public Task postProcessTask(Long processId, Task task) throws Exception {
+		Assignee assignee = task.getAssignee();
+
+		Long[] assigneeIds = null;
+		String assigneeType = null;
+
+		if ((assignee != null) && (assignee.getId() != null)) {
+			assigneeIds = new Long[] {assignee.getId()};
+			assigneeType = User.class.getName();
+		}
+
 		return TaskUtil.toTask(
 			_taskWorkflowMetricsIndexer.addTask(
-				new Long[] {task.getAssigneeId()}, User.class.getName(),
-				task.getClassName(), task.getClassPK(),
-				contextCompany.getCompanyId(), false, null, null,
-				task.getDateCreated(), false, task.getInstanceId(),
+				LocalizedMapUtil.getLocalizedMap(task.getAssetTitle_i18n()),
+				LocalizedMapUtil.getLocalizedMap(task.getAssetType_i18n()),
+				assigneeIds, assigneeType, task.getClassName(),
+				task.getClassPK(), contextCompany.getCompanyId(), false, null,
+				null, task.getDateCreated(), false, null, task.getInstanceId(),
 				task.getDateModified(), task.getName(), task.getNodeId(),
 				processId, task.getProcessVersion(), task.getId(),
 				contextUser.getUserId()),
-			_language,
+			_language, contextAcceptLanguage.getPreferredLocale(), _portal,
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				contextAcceptLanguage.getPreferredLocale(),
-				TaskResourceImpl.class));
+				TaskResourceImpl.class),
+			_userLocalService::fetchUser);
 	}
 
 	private BooleanQuery _createBooleanQuery(long processId) {
@@ -155,7 +181,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
 
 		return booleanQuery.addMustQueryClauses(
-			_queries.term("completed", false),
+			_queries.term("completed", Boolean.FALSE),
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId));
 	}
@@ -223,25 +249,23 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 				_resourceHelper.getLatestProcessVersion(
 					contextCompany.getCompanyId(), processId)));
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
-
-		Map<String, AggregationResult> aggregationResultsMap =
-			searchSearchResponse.getAggregationResultsMap();
-
-		TermsAggregationResult termsAggregationResult =
-			(TermsAggregationResult)aggregationResultsMap.get("name");
-
-		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
-
-		Stream<Bucket> stream = buckets.stream();
-
-		return stream.map(
+		return Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getAggregationResultsMap
+		).map(
+			aggregationResultsMap ->
+				(TermsAggregationResult)aggregationResultsMap.get("name")
+		).map(
+			TermsAggregationResult::getBuckets
+		).flatMap(
+			Collection::stream
+		).map(
 			bucket -> TaskUtil.toTask(
 				_language, bucket.getKey(),
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
 					contextAcceptLanguage.getPreferredLocale(),
-					InstanceResourceImpl.class))
+					TaskResourceImpl.class))
 		).collect(
 			Collectors.toList()
 		);
@@ -252,6 +276,9 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Queries _queries;
@@ -268,5 +295,8 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	@Reference(target = "(workflow.metrics.index.entity.name=task)")
 	private WorkflowMetricsIndexNameBuilder
 		_taskWorkflowMetricsIndexNameBuilder;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

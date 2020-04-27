@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.friendly.url.internal.layout.service.test;
+package com.liferay.friendly.url.internal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;

@@ -36,8 +36,17 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -49,6 +58,7 @@ import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -133,6 +143,121 @@ public class StructuredContentResourceTest
 			structuredContent.getId());
 
 		Assert.assertEquals(title, structuredContent.getTitle());
+	}
+
+	@Override
+	@Test
+	public void testGetStructuredContent() throws Exception {
+
+		// Get Structured Content
+
+		super.testGetStructuredContent();
+
+		// Get StructuredContent and verify actions for an admin user
+
+		StructuredContent postStructuredContent =
+			testGetStructuredContent_addStructuredContent();
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Map<String, Map<String, String>> actions =
+			getStructuredContent.getActions();
+
+		Assert.assertTrue(actions.containsKey("delete"));
+		Assert.assertTrue(actions.containsKey("get"));
+		Assert.assertTrue(actions.containsKey("get-rendered-content"));
+		Assert.assertTrue(actions.containsKey("replace"));
+		Assert.assertTrue(actions.containsKey("subscribe"));
+		Assert.assertTrue(actions.containsKey("unsubscribe"));
+		Assert.assertTrue(actions.containsKey("update"));
+
+		// Get StructuredContent and verify actions for a view-only user
+
+		Role role = RoleTestUtil.addRole(
+			"viewArticleRole", RoleConstants.TYPE_SITE);
+
+		RoleTestUtil.addResourcePermission(
+			role.getName(), JournalArticle.class.getName(),
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(testGroup.getGroupId()), ActionKeys.VIEW);
+
+		User user = UserTestUtil.addGroupUser(testGroup, role.getName());
+
+		StructuredContentResource.Builder builder =
+			StructuredContentResource.builder();
+
+		StructuredContentResource newUserStructuredContentResource =
+			builder.locale(
+				LocaleUtil.getDefault()
+			).authentication(
+				user.getLogin(), user.getPasswordUnencrypted()
+			).build();
+
+		getStructuredContent =
+			newUserStructuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		try {
+			actions = getStructuredContent.getActions();
+
+			Assert.assertFalse(actions.containsKey("delete"));
+			Assert.assertTrue(actions.containsKey("get"));
+			Assert.assertTrue(actions.containsKey("get-rendered-content"));
+			Assert.assertFalse(actions.containsKey("replace"));
+			Assert.assertFalse(actions.containsKey("subscribe"));
+			Assert.assertFalse(actions.containsKey("unsubscribe"));
+			Assert.assertFalse(actions.containsKey("update"));
+		}
+		finally {
+			_roleLocalService.deleteRole(role);
+			_userLocalService.deleteUser(user);
+		}
+
+		// Get StructuredContent and verify actions for the owner
+
+		role = RoleTestUtil.addRole("addArticleRole", RoleConstants.TYPE_SITE);
+
+		RoleTestUtil.addResourcePermission(
+			role.getName(), "com.liferay.journal",
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(testGroup.getGroupId()), ActionKeys.ADD_ARTICLE);
+
+		user = UserTestUtil.addGroupUser(testGroup, role.getName());
+
+		builder = StructuredContentResource.builder();
+
+		StructuredContentResource ownedStructuredContentResource =
+			builder.locale(
+				LocaleUtil.getDefault()
+			).authentication(
+				user.getLogin(), user.getPasswordUnencrypted()
+			).build();
+
+		postStructuredContent =
+			ownedStructuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(), randomStructuredContent());
+
+		getStructuredContent =
+			ownedStructuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		try {
+			actions = getStructuredContent.getActions();
+
+			Assert.assertTrue(actions.containsKey("delete"));
+			Assert.assertTrue(actions.containsKey("get"));
+			Assert.assertTrue(actions.containsKey("get-rendered-content"));
+			Assert.assertTrue(actions.containsKey("replace"));
+			Assert.assertTrue(actions.containsKey("subscribe"));
+			Assert.assertTrue(actions.containsKey("unsubscribe"));
+			Assert.assertTrue(actions.containsKey("update"));
+		}
+		finally {
+			_roleLocalService.deleteRole(role);
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Override
@@ -399,5 +524,11 @@ public class StructuredContentResourceTest
 	private DDMStructure _irrelevantDDMStructure;
 	private JournalFolder _irrelevantJournalFolder;
 	private JournalFolder _journalFolder;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

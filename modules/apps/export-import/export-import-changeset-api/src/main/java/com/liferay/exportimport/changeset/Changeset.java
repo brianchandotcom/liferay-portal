@@ -23,13 +23,10 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -50,57 +47,7 @@ public class Changeset implements Serializable {
 	}
 
 	public Stream<StagedModel> stream() {
-		if (_rawMode) {
-			return _rawModels.stream();
-		}
-
-		Stream<Supplier<Collection<? extends StagedModel>>>
-			multiSupplierStream = _multiSuppliers.stream();
-
-		List<StagedModel> multiStagedModels = multiSupplierStream.flatMap(
-			s -> {
-				Collection<? extends StagedModel> collection = s.get();
-
-				return collection.stream();
-			}
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
-
-		Stream<Supplier<StagedModel>> supplierStream = _suppliers.stream();
-
-		List<StagedModel> stagedModels = supplierStream.map(
-			Supplier::get
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
-
-		List<StagedModel> hierarchyStagedModels = new ArrayList<>();
-
-		for (Map.Entry
-				<Supplier<? extends StagedModel>,
-				 Function<StagedModel, Collection<?>>> entry :
-					_hierarchySuppliers.entrySet()) {
-
-			Supplier<? extends StagedModel> supplier = entry.getKey();
-
-			StagedModel stagedModel = supplier.get();
-
-			String stagedModelClassName =
-				ExportImportClassedModelUtil.getClassName(stagedModel);
-
-			hierarchyStagedModels.addAll(
-				_getChildrenStagedModels(
-					stagedModel, stagedModelClassName, entry.getValue()));
-		}
-
-		return Stream.concat(
-			hierarchyStagedModels.stream(),
-			Stream.concat(stagedModels.stream(), multiStagedModels.stream()));
+		return _stagedModels.stream();
 	}
 
 	public static class Builder {
@@ -108,10 +55,7 @@ public class Changeset implements Serializable {
 		public Builder(Changeset changeset) {
 			_changeset = changeset;
 
-			_changeset._hierarchySuppliers = new HashMap<>();
-			_changeset._multiSuppliers = new ArrayList<>();
-			_changeset._rawMode = false;
-			_changeset._suppliers = new ArrayList<>();
+			_changeset._stagedModels = new ArrayList<>();
 		}
 
 		public Builder addModel(
@@ -124,7 +68,7 @@ public class Changeset implements Serializable {
 				return adapterFunction.apply(classedModel);
 			};
 
-			_changeset._suppliers.add(stagedModelSupplier);
+			_changeset._stagedModels.add(stagedModelSupplier.get());
 
 			return this;
 		}
@@ -132,13 +76,21 @@ public class Changeset implements Serializable {
 		public Builder addMultipleStagedModel(
 			Supplier<Collection<? extends StagedModel>> supplier) {
 
-			_changeset._multiSuppliers.add(supplier);
+			Collection<? extends StagedModel> stagedModels = supplier.get();
+
+			Stream<? extends StagedModel> stream = stagedModels.stream();
+
+			stream.filter(
+				Objects::nonNull
+			).forEach(
+				stagedModel -> _changeset._stagedModels.add(stagedModel)
+			);
 
 			return this;
 		}
 
 		public Builder addStagedModel(Supplier<StagedModel> supplier) {
-			_changeset._suppliers.add(supplier);
+			_changeset._stagedModels.add(supplier.get());
 
 			return this;
 		}
@@ -151,7 +103,14 @@ public class Changeset implements Serializable {
 			Function<StagedModel, Collection<?>> function =
 				(Function<StagedModel, Collection<?>>)hierarchyFunction;
 
-			_changeset._hierarchySuppliers.put(supplier, function);
+			StagedModel stagedModel = supplier.get();
+
+			String stagedModelClassName =
+				ExportImportClassedModelUtil.getClassName(stagedModel);
+
+			_changeset._stagedModels.addAll(
+				_getChildrenStagedModels(
+					stagedModel, stagedModelClassName, function));
 
 			return this;
 		}
@@ -169,8 +128,7 @@ public class Changeset implements Serializable {
 		public RawBuilder(Changeset changeset) {
 			_changeset = changeset;
 
-			_changeset._rawMode = true;
-			_changeset._rawModels = new ArrayList<>();
+			_changeset._stagedModels = new ArrayList<>();
 		}
 
 		public RawBuilder addMultipleStagedModel(
@@ -181,14 +139,14 @@ public class Changeset implements Serializable {
 			stream.filter(
 				Objects::nonNull
 			).forEach(
-				stagedModel -> _changeset._rawModels.add(stagedModel)
+				stagedModel -> _changeset._stagedModels.add(stagedModel)
 			);
 
 			return this;
 		}
 
 		public RawBuilder addStagedModel(StagedModel stagedModel) {
-			_changeset._rawModels.add(stagedModel);
+			_changeset._stagedModels.add(stagedModel);
 
 			return this;
 		}
@@ -201,10 +159,7 @@ public class Changeset implements Serializable {
 
 	}
 
-	private Changeset() {
-	}
-
-	private List<StagedModel> _getChildrenStagedModels(
+	private static List<StagedModel> _getChildrenStagedModels(
 		final StagedModel parentStagedModel, final String parentClassName,
 		Function<StagedModel, Collection<?>> hierarchyFunction) {
 
@@ -227,13 +182,10 @@ public class Changeset implements Serializable {
 		return stagedModels;
 	}
 
-	private Map
-		<Supplier<? extends StagedModel>, Function<StagedModel, Collection<?>>>
-			_hierarchySuppliers;
-	private List<Supplier<Collection<? extends StagedModel>>> _multiSuppliers;
-	private boolean _rawMode;
-	private List<StagedModel> _rawModels;
-	private List<Supplier<StagedModel>> _suppliers;
+	private Changeset() {
+	}
+
+	private List<StagedModel> _stagedModels;
 	private String _uuid = PortalUUIDUtil.generate();
 
 }

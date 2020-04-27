@@ -24,11 +24,6 @@ import TagList from './TagList.es';
 import UserIcon from './UserIcon.es';
 
 export default ({question}) => {
-	const hasValidAnswer = (question) =>
-		question.messageBoardMessages.items.filter(
-			(message) => message.showAsAnswer
-		).length > 0;
-
 	const context = useContext(AppContext);
 
 	const sectionTitle = context.section;
@@ -60,16 +55,16 @@ export default ({question}) => {
 					<li>
 						<QuestionBadge
 							className={
-								hasValidAnswer(question)
+								question.hasValidAnswer
 									? 'alert-success border-0'
 									: ''
 							}
 							symbol={
-								hasValidAnswer(question)
+								question.hasValidAnswer
 									? 'check-circle-full'
 									: 'message'
 							}
-							value={question.messageBoardMessages.items.length}
+							value={question.numberOfMessageBoardMessages}
 						/>
 					</li>
 				</ul>

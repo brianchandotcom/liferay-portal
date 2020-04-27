@@ -398,16 +398,13 @@ export const getThreads = ({
 					}
 					dateModified
 					friendlyUrlPath
+					hasValidAnswer
 					headline
 					id
-					messageBoardMessages {
-						items {
-							showAsAnswer
-						}
-					}
 					messageBoardSection {
 						title
 					}
+					numberOfMessageBoardMessages
 					keywords
 					viewCount
 				}
@@ -468,16 +465,13 @@ export const getRankedThreads = (
 						name
 					} 
 					dateModified
+					hasValidAnswer
 					headline
 					id  
-					messageBoardMessages {
-						items {
-							showAsAnswer
-						}
-					}
 					messageBoardSection {
 						title
 					}
+					numberOfMessageBoardMessages
 					taxonomyCategoryBriefs {
 						taxonomyCategoryId
 						taxonomyCategoryName
@@ -558,19 +552,16 @@ export const getUserActivity = (siteKey, userId = '') => {
 					}
 					dateModified
 					friendlyUrlPath
+					hasValidAnswer
 					headline
 					id
 					messageBoardSection {
 						title
 					}
-					messageBoardMessages {
-						items {
-						showAsAnswer
-						}
-					}
 					messageBoardSection {
 						title
 					}
+					numberOfMessageBoardMessages
 					taxonomyCategoryBriefs{
 						taxonomyCategoryId
 						taxonomyCategoryName

@@ -250,6 +250,14 @@ public class FragmentEntryLinkModelListener
 			return;
 		}
 
+		LayoutStructureItem parentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+		if (parentLayoutStructureItem == null) {
+			return;
+		}
+
 		Iterator<String> keys = dropZoneProcessorJSONObject.keys();
 
 		while (keys.hasNext()) {
@@ -261,11 +269,12 @@ public class FragmentEntryLinkModelListener
 				continue;
 			}
 
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.addRootLayoutStructureItem();
+			LayoutStructureItem fragmentDropZoneLayoutStructureItem =
+				layoutStructure.addFragmentDropZoneLayoutStructureItem(
+					parentLayoutStructureItem.getItemId(), 0);
 
 			dropZoneProcessorJSONObject.put(
-				key, layoutStructureItem.getItemId());
+				key, fragmentDropZoneLayoutStructureItem.getItemId());
 		}
 
 		fragmentEntryLink.setEditableValues(

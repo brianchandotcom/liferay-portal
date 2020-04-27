@@ -30,15 +30,14 @@ if (doc.uid.value.startsWith("WorkflowMetricsSLAInstanceResult")) {
 }
 
 if (doc.uid.value.startsWith("WorkflowMetricsInstance") &&
-	((state.statuses == null) ||
-	 (state.statuses.contains("Completed") && doc.completed.value) ||
-	 (state.statuses.contains("Pending") && !doc.completed.value)) &&
+	((state.completed == null) ||
+	 (state.completed == doc.completed.value)) &&
 	(((state.endDate == null) && (state.startDate == null)) ||
 	 (doc.completed.value &&
 	  (doc.completionDate.value.getMillis() <= state.endDate) &&
 	  (doc.completionDate.value.getMillis() >= state.startDate)))) {
 
-	state.statusInstanceIds.add(instanceId);
+	state.completedInstanceIds.add(instanceId);
 
 	state.slaStatusMap.compute(
 		instanceId,

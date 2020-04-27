@@ -18,14 +18,18 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 /**
  * @author Rafael Praxedes
@@ -33,10 +37,15 @@ import java.util.ResourceBundle;
 public class TaskUtil {
 
 	public static Task toTask(
-		Document document, Language language, ResourceBundle resourceBundle) {
+		Document document, Language language, Locale locale, Portal portal,
+		ResourceBundle resourceBundle, Function<Long, User> userFunction) {
 
 		return new Task() {
 			{
+				assetTitle = document.getString(
+					_getLocalizedName(locale, "assetTitle"));
+				assetType = document.getString(
+					_getLocalizedName(locale, "assetType"));
 				className = document.getString("className");
 				classPK = document.getLong("classPK");
 				completed = document.getBoolean("completed");
@@ -54,7 +63,7 @@ public class TaskUtil {
 				processId = document.getLong("processId");
 				processVersion = document.getString("version");
 
-				setAssigneeId(
+				setAssignee(
 					() -> {
 						String assigneeType = document.getString(
 							"assigneeType");
@@ -62,7 +71,9 @@ public class TaskUtil {
 						if (Objects.deepEquals(
 								assigneeType, User.class.getName())) {
 
-							return document.getLong("assigneeIds");
+							return AssigneeUtil.toAssignee(
+								language, portal, resourceBundle,
+								document.getLong("assigneeIds"), userFunction);
 						}
 
 						return null;
@@ -80,6 +91,10 @@ public class TaskUtil {
 				name = taskName;
 			}
 		};
+	}
+
+	private static String _getLocalizedName(Locale locale, String name) {
+		return Field.getLocalizedName(locale, name);
 	}
 
 	private static Date _parseDate(String dateString) {

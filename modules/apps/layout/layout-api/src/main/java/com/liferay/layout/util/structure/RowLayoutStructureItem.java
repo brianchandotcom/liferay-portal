@@ -132,6 +132,10 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 		return _verticalAlignment;
 	}
 
+	public Map<String, JSONObject> getViewportSizeConfigurations() {
+		return _viewportSizeConfigurations;
+	}
+
 	@Override
 	public int hashCode() {
 		return HashUtil.hash(0, getItemId());

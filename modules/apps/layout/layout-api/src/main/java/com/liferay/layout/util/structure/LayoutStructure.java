@@ -14,6 +14,7 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.layout.constants.ViewportSize;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
@@ -428,6 +429,12 @@ public class LayoutStructure {
 		RowLayoutStructureItem rowLayoutStructureItem =
 			(RowLayoutStructureItem)_layoutStructureItems.get(itemId);
 
+		for (ViewportSize viewportSize : ViewportSize.values()) {
+			_updateNumberOfColumns(
+				rowLayoutStructureItem, viewportSize.getViewportSizeId(),
+				numberOfColumns);
+		}
+
 		int oldNumberOfColumns = rowLayoutStructureItem.getNumberOfColumns();
 
 		if (oldNumberOfColumns == numberOfColumns) {
@@ -556,6 +563,21 @@ public class LayoutStructure {
 			parentLayoutStructureItem.addChildrenItem(
 				layoutStructureItem.getItemId());
 		}
+	}
+
+	private void _updateNumberOfColumns(
+		RowLayoutStructureItem rowLayoutStructureItem, String viewportSizeId,
+		int numberOfColumns) {
+
+		Map<String, JSONObject> viewportSizeConfigurations =
+			rowLayoutStructureItem.getViewportSizeConfigurations();
+
+		JSONObject viewportSizeConfigurationJSONObject =
+			viewportSizeConfigurations.getOrDefault(
+				viewportSizeId, JSONFactoryUtil.createJSONObject());
+
+		viewportSizeConfigurationJSONObject.put(
+			"numberOfColumns", numberOfColumns);
 	}
 
 	private static final int[][] _COLUMN_SIZES = {

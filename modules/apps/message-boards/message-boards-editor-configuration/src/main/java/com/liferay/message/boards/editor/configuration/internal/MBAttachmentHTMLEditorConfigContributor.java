@@ -23,7 +23,9 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -70,6 +72,12 @@ public class MBAttachmentHTMLEditorConfigContributor
 		).put(
 			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
 		);
+
+		jsonObject.put(
+			"toolbar", "mb"
+		).put(
+			"toolbar_mb", getToolbarMBJSONArray(inputEditorTaglibAttributes)
+		);
 	}
 
 	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
@@ -81,6 +89,25 @@ public class MBAttachmentHTMLEditorConfigContributor
 			new URLItemSelectorReturnType());
 
 		return itemSelectorCriterion;
+	}
+
+	protected JSONArray getToolbarMBJSONArray(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		JSONArray jsonArray = JSONUtil.putAll(
+			super.toJSONArray("['Bold', 'Italic', 'Underline']"),
+			super.toJSONArray("['NumberedList', 'BulletedList']"),
+			super.toJSONArray("['Styles']"),
+			super.toJSONArray("['Link', 'Unlink']"),
+			super.toJSONArray("['Blockquote', 'ImageSelector']"));
+
+		if (_isShowSource(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Source']"));
+		}
+
+		jsonArray.put(toJSONArray("['A11YBtn']"));
+
+		return jsonArray;
 	}
 
 	protected ItemSelectorCriterion getURLItemSelectorCriterion() {
@@ -96,6 +123,14 @@ public class MBAttachmentHTMLEditorConfigContributor
 	@Reference(unbind = "-")
 	protected void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
+	}
+
+	private boolean _isShowSource(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		return GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:showSource"));
 	}
 
 	private ItemSelector _itemSelector;

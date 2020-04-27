@@ -187,8 +187,8 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 				beanApp = PortletDescriptorParser.parse(
 					beanFilters, beanPortletMethodFactory, beanPortlets, bundle,
 					descriptorDisplayCategories,
-					descriptorLiferayConfigurations, portletDescriptorURL,
-					portletBeanMethodsFunction, preferencesValidatorFunction);
+					descriptorLiferayConfigurations, portletBeanMethodsFunction,
+					portletDescriptorURL, preferencesValidatorFunction);
 			}
 			catch (Exception exception) {
 				_log.error(exception, exception);
@@ -205,17 +205,18 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 		_addBeanFiltersFromDiscoveredClasses(beanFilters, discoveredClasses);
 
 		_addBeanPortletsFromDiscoveredClasses(
-			beanApp, beanPortlets, discoveredClasses, beanPortletMethodFactory,
-			portletBeanMethodsFunction, preferencesValidatorFunction,
-			descriptorDisplayCategories, descriptorLiferayConfigurations);
+			beanApp, beanPortletMethodFactory, beanPortlets,
+			descriptorDisplayCategories, descriptorLiferayConfigurations,
+			discoveredClasses, portletBeanMethodsFunction,
+			preferencesValidatorFunction);
 
 		_addBeanPortletsFromScannedMethods(
-			beanPortlets, portletBeanMethodsFunction, discoveredBeanMethods,
-			descriptorDisplayCategories, descriptorLiferayConfigurations);
+			beanPortlets, discoveredBeanMethods, descriptorDisplayCategories,
+			descriptorLiferayConfigurations, portletBeanMethodsFunction);
 
 		_addBeanPortletsFromLiferayDescriptor(
-			beanPortlets, portletBeanMethodsFunction,
-			descriptorDisplayCategories, descriptorLiferayConfigurations);
+			beanPortlets, descriptorDisplayCategories,
+			descriptorLiferayConfigurations, portletBeanMethodsFunction);
 
 		@SuppressWarnings("unchecked")
 		List<String> beanPortletIds = (List<String>)servletContext.getAttribute(
@@ -424,29 +425,30 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 	}
 
 	private void _addBeanPortlet(
-		BeanApp beanApp, Map<String, BeanPortlet> beanPortlets,
-		Set<Class<?>> discoveredClasses, Class<?> beanPortletClass,
+		BeanApp beanApp,
 		Map<BeanPortletMethodType, List<BeanPortletMethod>> beanMethodMap,
-		PortletConfiguration portletConfiguration,
-		Function<String, String> preferencesValidatorFunction,
+		Map<String, BeanPortlet> beanPortlets,
 		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations,
+		Class<?> discoveredClass, Set<Class<?>> discoveredClasses,
+		PortletConfiguration portletConfiguration,
+		Function<String, String> preferencesValidatorFunction) {
 
 		String configuredPortletName = portletConfiguration.portletName();
 
 		if (Validator.isNull(configuredPortletName)) {
 			_log.error(
 				"Invalid portlet name attribute for " +
-					beanPortletClass.getName());
+					discoveredClass.getName());
 
 			return;
 		}
 
 		PortletApplication portletApplication = null;
 
-		for (Class<?> discoveredClass : discoveredClasses) {
+		for (Class<?> clazz : discoveredClasses) {
 			PortletApplication discoveredPortletApplication =
-				discoveredClass.getAnnotation(PortletApplication.class);
+				clazz.getAnnotation(PortletApplication.class);
 
 			if (discoveredPortletApplication != null) {
 				if (portletApplication == null) {
@@ -544,8 +546,8 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 		List<Map.Entry<Integer, String>> portletListeners = new ArrayList<>();
 
-		for (Class<?> discoveredClass : discoveredClasses) {
-			PortletListener portletListener = discoveredClass.getAnnotation(
+		for (Class<?> clazz : discoveredClasses) {
+			PortletListener portletListener = clazz.getAnnotation(
 				PortletListener.class);
 
 			if (portletListener == null) {
@@ -554,7 +556,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 			portletListeners.add(
 				new AbstractMap.SimpleImmutableEntry<>(
-					portletListener.ordinal(), discoveredClass.getName()));
+					portletListener.ordinal(), clazz.getName()));
 		}
 
 		portletListeners.addAll(beanApp.getPortletListeners());
@@ -749,7 +751,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 				containerRuntimeOptions, descriptions, displayCategory,
 				displayNames, portletConfiguration.cacheExpirationTime(),
 				initParams, keywords, liferayConfiguration, multipartConfig,
-				beanPortletClass.getName(), portletDependencies,
+				discoveredClass.getName(), portletDependencies,
 				portletConfiguration.portletName(), preferences,
 				preferencesValidator, portletConfiguration.resourceBundle(),
 				securityRoleRefs, shortTitles, supportedLocales,
@@ -797,7 +799,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 		String portletClassName = descriptorBeanPortlet.getPortletClassName();
 
 		if (Validator.isNull(portletClassName)) {
-			portletClassName = beanPortletClass.getName();
+			portletClassName = discoveredClass.getName();
 		}
 
 		initParams.putAll(descriptorBeanPortlet.getInitParams());
@@ -909,13 +911,13 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 	}
 
 	private void _addBeanPortletsFromDiscoveredClasses(
-		BeanApp beanApp, Map<String, BeanPortlet> beanPortlets,
-		Set<Class<?>> discoveredClasses,
-		BeanPortletMethodFactory beanPortletMethodFactory,
-		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
-		Function<String, String> preferencesValidatorFunction,
+		BeanApp beanApp, BeanPortletMethodFactory beanPortletMethodFactory,
+		Map<String, BeanPortlet> beanPortlets,
 		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations,
+		Set<Class<?>> discoveredClasses,
+		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
+		Function<String, String> preferencesValidatorFunction) {
 
 		for (Class<?> discoveredClass : discoveredClasses) {
 			PortletConfigurations portletConfigurations =
@@ -941,10 +943,11 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 						beanPortletMethods);
 
 				_addBeanPortlet(
-					beanApp, beanPortlets, discoveredClasses, discoveredClass,
-					beanMethodMap, portletConfiguration,
-					preferencesValidatorFunction, descriptorDisplayCategories,
-					descriptorLiferayConfigurations);
+					beanApp, beanMethodMap, beanPortlets,
+					descriptorDisplayCategories,
+					descriptorLiferayConfigurations, discoveredClass,
+					discoveredClasses, portletConfiguration,
+					preferencesValidatorFunction);
 			}
 		}
 
@@ -967,18 +970,18 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 				BeanMethodIndexUtil.indexBeanMethods(beanPortletMethods);
 
 			_addBeanPortlet(
-				beanApp, beanPortlets, discoveredClasses, discoveredClass,
-				beanMethodMap, portletConfiguration,
-				preferencesValidatorFunction, descriptorDisplayCategories,
-				descriptorLiferayConfigurations);
+				beanApp, beanMethodMap, beanPortlets,
+				descriptorDisplayCategories, descriptorLiferayConfigurations,
+				discoveredClass, discoveredClasses, portletConfiguration,
+				preferencesValidatorFunction);
 		}
 	}
 
 	private void _addBeanPortletsFromLiferayDescriptor(
 		Map<String, BeanPortlet> beanPortlets,
-		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
 		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations,
+		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction) {
 
 		for (Map.Entry<String, Map<String, Set<String>>> entry :
 				descriptorLiferayConfigurations.entrySet()) {
@@ -1011,10 +1014,10 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 	private void _addBeanPortletsFromScannedMethods(
 		Map<String, BeanPortlet> beanPortlets,
-		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
 		List<DiscoveredBeanMethod> discoveredBeanMethods,
 		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations,
+		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction) {
 
 		Set<String> portletNames = new HashSet<>();
 

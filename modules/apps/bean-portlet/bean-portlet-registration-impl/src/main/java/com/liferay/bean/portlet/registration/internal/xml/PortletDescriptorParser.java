@@ -79,8 +79,8 @@ public class PortletDescriptorParser {
 			Map<String, BeanPortlet> beanPortlets, Bundle bundle,
 			Map<String, String> displayDescriptorCategories,
 			Map<String, Map<String, Set<String>>> liferayConfigurations,
-			URL portletDescriptorURL,
 			Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
+			URL portletDescriptorURL,
 			Function<String, String> preferencesValidatorFunction)
 		throws DocumentException {
 
@@ -94,10 +94,10 @@ public class PortletDescriptorParser {
 		_populateBeanFilters(beanFilters, bundle, rootElement);
 
 		_populateBeanPortlets(
-			beanPortlets, bundle, rootElement, beanApp,
-			beanPortletMethodFactory, portletBeanMethodsFunction,
-			preferencesValidatorFunction, displayDescriptorCategories,
-			liferayConfigurations);
+			beanApp, beanPortlets, bundle, beanPortletMethodFactory,
+			displayDescriptorCategories, liferayConfigurations,
+			portletBeanMethodsFunction, preferencesValidatorFunction,
+			rootElement);
 
 		return beanApp;
 	}
@@ -159,19 +159,19 @@ public class PortletDescriptorParser {
 			beanFilters.put(
 				filterName,
 				_readBeanFilter(
-					filterElement, filterName,
-					filterClass.asSubclass(PortletFilter.class), portletNames));
+					filterClass.asSubclass(PortletFilter.class), filterElement,
+					filterName, portletNames));
 		}
 	}
 
 	private static void _populateBeanPortlets(
-		Map<String, BeanPortlet> beanPortlets, Bundle bundle,
-		Element rootElement, BeanApp beanApp,
+		BeanApp beanApp, Map<String, BeanPortlet> beanPortlets, Bundle bundle,
 		BeanPortletMethodFactory beanPortletMethodFactory,
+		Map<String, String> displayDescriptorCategories,
+		Map<String, Map<String, Set<String>>> liferayConfigurations,
 		Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
 		Function<String, String> preferencesValidatorFunction,
-		Map<String, String> displayDescriptorCategories,
-		Map<String, Map<String, Set<String>>> liferayConfigurations) {
+		Element rootElement) {
 
 		for (Element portletElement : rootElement.elements("portlet")) {
 			String portletClassName = GetterUtil.getString(
@@ -210,9 +210,9 @@ public class PortletDescriptorParser {
 			beanPortlets.put(
 				portletName,
 				_readBeanPortlet(
-					portletElement, portletClassName, portletName, beanApp,
-					beanMethodMap, preferencesValidator, categoryName,
-					liferayConfiguration));
+					beanApp, beanMethodMap, categoryName, liferayConfiguration,
+					portletClassName, portletElement, portletName,
+					preferencesValidator));
 		}
 	}
 
@@ -326,8 +326,8 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanFilter _readBeanFilter(
-		Element filterElement, String filterName,
-		Class<? extends PortletFilter> filterClass, Set<String> portletNames) {
+		Class<? extends PortletFilter> filterClass, Element filterElement,
+		String filterName, Set<String> portletNames) {
 
 		int ordinal = GetterUtil.getInteger(
 			filterElement.elementText("ordinal"));
@@ -352,11 +352,11 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanPortlet _readBeanPortlet(
-		Element portletElement, String portletClassName, String portletName,
 		BeanApp beanApp,
 		Map<BeanPortletMethodType, List<BeanPortletMethod>> beanMethodMap,
-		String preferencesValidator, String categoryName,
-		Map<String, Set<String>> liferayConfiguration) {
+		String categoryName, Map<String, Set<String>> liferayConfiguration,
+		String portletClassName, Element portletElement, String portletName,
+		String preferencesValidator) {
 
 		Map<String, String> displayNames = _toLocaleMap(
 			portletElement.elements("display-name"));

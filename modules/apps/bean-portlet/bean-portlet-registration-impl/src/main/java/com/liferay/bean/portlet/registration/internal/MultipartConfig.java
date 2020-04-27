@@ -20,13 +20,13 @@ package com.liferay.bean.portlet.registration.internal;
 public class MultipartConfig {
 
 	public static final MultipartConfig UNSUPPORTED = new MultipartConfig(
-		false, 0, null, -1, -1);
+		0, null, -1, -1, false);
 
 	public MultipartConfig(
 		int fileSizeThreshold, String location, long maxFileSize,
 		long maxRequestSize) {
 
-		this(true, fileSizeThreshold, location, maxFileSize, maxRequestSize);
+		this(fileSizeThreshold, location, maxFileSize, maxRequestSize, true);
 	}
 
 	public int getFileSizeThreshold() {
@@ -83,14 +83,14 @@ public class MultipartConfig {
 	}
 
 	private MultipartConfig(
-		boolean supported, int fileSizeThreshold, String location,
-		long maxFileSize, long maxRequestSize) {
+		int fileSizeThreshold, String location, long maxFileSize,
+		long maxRequestSize, boolean supported) {
 
-		_supported = supported;
 		_fileSizeThreshold = fileSizeThreshold;
 		_location = location;
 		_maxFileSize = maxFileSize;
 		_maxRequestSize = maxRequestSize;
+		_supported = supported;
 	}
 
 	private final int _fileSizeThreshold;

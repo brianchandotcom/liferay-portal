@@ -1,33 +1,32 @@
 .component-tabs .navigation-bar-light .navbar-toggler {
-    color: #272833;
+	color: #272833;
 }
 
 .component-tabs .navigation-bar-light .icon-caret-bottom {
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #272833;
-    border-radius: 4px;
-    height: 0;
-    margin-left: 4px;
-    margin-top: 4px;
-    width: 0;
+	border-left: 5px solid transparent;
+	border-radius: 4px;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #272833;
+	height: 0;
+	margin-left: 4px;
+	margin-top: 4px;
+	width: 0;
 }
 
 .component-tabs .navigation-bar-light .nav-link {
-    color: #6B6C7E;
-    background: none;
-    border: none;
+	background: none;
+	border: none;
+	color: #6b6c7e;
 }
 
 .component-tabs .navigation-bar-light .nav-link.active {
-    color: #272833;
+	color: #272833;
 }
 
 .component-tabs .navigation-bar-light .nav-link span:focus {
-    box-shadow: none;
-    outline: none;
+	outline: none;
 }
 
 .component-tabs img {
-    width: 100%;
+	width: 100%;
 }

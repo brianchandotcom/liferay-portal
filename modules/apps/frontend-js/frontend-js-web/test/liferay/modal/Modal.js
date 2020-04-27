@@ -89,4 +89,16 @@ describe('Modal', () => {
 
 		expect(document.getElementById(sampleId)).toBeTruthy();
 	});
+
+	it('renders given header HTML', () => {
+		const sampleId = 'sampleId';
+
+		render(<Modal headerHTML={`<div id='${sampleId}' />`} />);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(document.getElementById(sampleId)).toBeTruthy();
+	});
 });

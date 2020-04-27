@@ -50,7 +50,12 @@ exports[`Modal renders markup based on given configuration 1`] = `
             <div
               class="modal-body modal-body-iframe"
             >
+              <span
+                aria-hidden="true"
+                class="loading-animation"
+              />
               <iframe
+                class="hide"
                 src="https://www.sample.url/?p_p_id=com_liferay_MyPortlet&_com_liferay_MyPortlet_bodyCssClass=dialog-iframe-popup"
                 title="https://www.sample.url/?p_p_id=com_liferay_MyPortlet&_com_liferay_MyPortlet_bodyCssClass=dialog-iframe-popup"
               />

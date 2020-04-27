@@ -22,4 +22,9 @@ public class FragmentEntryLinkPortletKeys {
 	public static final String FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET =
 		"com_liferay_test_portlet_FragmentEntryLinkInstanceableTestPortlet";
 
+	public static final String
+		FRAGMENT_ENTRY_LINK_NONINSTANCEABLE_TEST_PORTLET =
+			"com_liferay_test_portlet_" +
+				"FragmentEntryLinkNoninstanceableTestPortlet";
+
 }

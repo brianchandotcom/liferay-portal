@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,44 +45,43 @@ public class PageDefinitionResourceTest
 
 					@Override
 					public PageElement getPageElement() {
+						return _getRowPageElement();
+					}
+
+				});
+
+		Assert.assertThat(
+			httpResponse.getContent(),
+			CoreMatchers.containsString("Hello, World!"));
+
+		httpResponse =
+			pageDefinitionResource.postSitePageDefinitionPreviewHttpResponse(
+				testGroup.getGroupId(), randomPageDefinition());
+
+		Assert.assertEquals(
+			httpResponse.getStatusCode(),
+			HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	}
+
+	@Test
+	public void testPostSitePageDefinitionWithRootPreview() throws Exception {
+		HttpInvoker.HttpResponse httpResponse =
+			pageDefinitionResource.postSitePageDefinitionPreviewHttpResponse(
+				testGroup.getGroupId(),
+				new PageDefinition() {
+
+					@Override
+					public PageElement getPageElement() {
 						return new PageElement() {
 
 							@Override
-							public Object getDefinition() {
-								return JSONUtil.put(
-									"gutters", true
-								).put(
-									"numberOfColumns", 1
-								);
-							}
-
-							@Override
 							public PageElement[] getPageElements() {
-								return new PageElement[] {
-									new PageElement() {
-
-										@Override
-										public Object getDefinition() {
-											return JSONUtil.put("size", 12);
-										}
-
-										@Override
-										public PageElement[] getPageElements() {
-											return _getChildrenPageElements();
-										}
-
-										@Override
-										public Type getType() {
-											return Type.COLUMN;
-										}
-
-									}
-								};
+								return new PageElement[] {_getRowPageElement()};
 							}
 
 							@Override
 							public Type getType() {
-								return Type.ROW;
+								return Type.ROOT;
 							}
 
 						};
@@ -152,6 +152,50 @@ public class PageDefinitionResourceTest
 				}
 
 			}
+		};
+	}
+
+	private PageElement _getRowPageElement() {
+		return new PageElement() {
+
+			@Override
+			public Object getDefinition() {
+				return JSONUtil.put(
+					"gutters", true
+				).put(
+					"numberOfColumns", 1
+				);
+			}
+
+			@Override
+			public PageElement[] getPageElements() {
+				return new PageElement[] {
+					new PageElement() {
+
+						@Override
+						public Object getDefinition() {
+							return JSONUtil.put("size", 12);
+						}
+
+						@Override
+						public PageElement[] getPageElements() {
+							return _getChildrenPageElements();
+						}
+
+						@Override
+						public Type getType() {
+							return Type.COLUMN;
+						}
+
+					}
+				};
+			}
+
+			@Override
+			public Type getType() {
+				return Type.ROW;
+			}
+
 		};
 	}
 

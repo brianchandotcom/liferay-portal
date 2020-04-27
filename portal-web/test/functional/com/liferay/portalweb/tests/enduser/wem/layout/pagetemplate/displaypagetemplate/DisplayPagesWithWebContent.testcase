@@ -744,7 +744,6 @@ definition {
 	@priority = "5"
 	test ViewDisplayPageViaAssetPublisher {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add a web content article that uses the display page") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

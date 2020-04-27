@@ -255,8 +255,6 @@ definition {
 
 	@priority = "3"
 	test RecycleBinMBAttachment {
-		property portal.upstream = "quarantine";
-
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.addCP(
@@ -329,10 +327,6 @@ definition {
 
 	@priority = "3"
 	test RecycleBinSearchBlogsEntries {
-		property portal.upstream = "quarantine";
-
-		// Quarantine for LPS-109573
-
 		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
@@ -529,10 +523,6 @@ definition {
 
 	@priority = "3"
 	test RecycleBinWebContent {
-		property portal.upstream = "quarantine";
-
-		// Quarantine for LRQA-57155
-
 		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
 
 		WebContentStructures.addCP(

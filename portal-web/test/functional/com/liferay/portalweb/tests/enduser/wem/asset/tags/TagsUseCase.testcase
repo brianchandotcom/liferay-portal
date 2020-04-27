@@ -687,7 +687,6 @@ definition {
 	@priority = "5"
 	test ViewTagCloudIncrease {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Tags";
 
 		ProductMenu.gotoPortlet(

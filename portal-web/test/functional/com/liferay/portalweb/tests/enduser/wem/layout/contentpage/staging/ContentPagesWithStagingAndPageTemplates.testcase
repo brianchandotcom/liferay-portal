@@ -69,11 +69,7 @@ definition {
 	@description = "Content pages created from page templates can be published to live and will not appear in live until published."
 	@priority = "5"
 	test PublishContentPage {
-
-		// Quarantine test for LRQA-55174
-
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add a content page that uses the page template") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");

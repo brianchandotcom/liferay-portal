@@ -26,7 +26,6 @@ definition {
 
 	@priority = "4"
 	test AssertRelatedAssetsDisplayWithCategory {
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Categories,Staging,Related Assets,Web Content Administration";
 
 		JSONLayout.addPublicLayout(

@@ -63,7 +63,6 @@ definition {
 	@priority = "5"
 	test MapWebContentURLToLinkFragment {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		JSONWebcontent.addWebContent(
 			content = "Test Content",

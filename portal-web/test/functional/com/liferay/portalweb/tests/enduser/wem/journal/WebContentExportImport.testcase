@@ -532,7 +532,6 @@ definition {
 
 	@priority = "5"
 	test MoveImportedWebContentArticlesToFolders {
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Training,Web Content Administration";
 
 		JSONLayout.addPublicLayout(

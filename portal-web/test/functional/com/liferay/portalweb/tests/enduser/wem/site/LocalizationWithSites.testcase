@@ -650,7 +650,6 @@ definition {
 	@priority = "5"
 	test SiteTemplateLocalization {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "LocalizationWithSites#SiteTemplateLocalization";
 		property testray.component.names = "Site and Page Templates,Site Localization";
 

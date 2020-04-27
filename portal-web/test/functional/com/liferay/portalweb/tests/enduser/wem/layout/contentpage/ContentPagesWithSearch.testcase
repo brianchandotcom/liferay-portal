@@ -58,7 +58,6 @@ definition {
 	@priority = "5"
 	test FilterByPageFacet {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add a Static Text fragment to the content page") {
 			PageEditor.addFragment(

@@ -106,7 +106,6 @@ definition {
 	@priority = "5"
 	test CanDeleteVirtualInstanceScopedReadOnlyDeployedFragmentInGlobalSiteOfThatInstance {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteVirtualInstanceScopedReadOnlyDeployedFragmentInGlobalSiteOfThatInstance";
 
 		task ("Deploy fragments zip are available in Liferay.com intance") {

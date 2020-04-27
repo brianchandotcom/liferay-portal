@@ -46,8 +46,6 @@ definition {
 	@description = "This case ensures that a user can select content via content display in content page template editor."
 	@priority = "4"
 	test SelectWebContentViaContentDisplay {
-		property portal.upstream = "quarantine";
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",

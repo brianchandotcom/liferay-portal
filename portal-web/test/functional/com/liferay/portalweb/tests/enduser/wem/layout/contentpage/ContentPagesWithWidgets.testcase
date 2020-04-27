@@ -112,10 +112,6 @@ definition {
 	@description = "This is for LPS-106813. Widgets inherited from custom master will inherit permissions set in custom master."
 	@priority = "4"
 	test APWithPermissionsInheritedFromMasterPageTemplateTogether {
-		property portal.upstream = "quarantine";
-
-		// Quarantine for LRQA-57154
-
 		task ("Add a WC") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",

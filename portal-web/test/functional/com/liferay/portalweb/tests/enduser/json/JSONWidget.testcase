@@ -84,8 +84,6 @@ definition {
 
 	@priority = "5"
 	test UpdateLayoutTemplate {
-		property portal.upstream = "quarantine";
-
 		for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (30/70),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,2-2 Columns,3-2-3 Columns") {
 			JSONLayout.updateLayoutTemplateOfPublicLayout(
 				groupName = "Test Site Name",

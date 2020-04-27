@@ -614,8 +614,6 @@ definition {
 	@description = "This is a test for LPS-108376. Can check Cacheable for fragments when create them in portal and they are non-Cachable by default."
 	@priority = "5"
 	test MarkFragmentCreatedInPortalAsCacheable {
-		property portal.upstream = "quarantine";
-
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(
@@ -644,8 +642,6 @@ definition {
 	@description = "This is a test for LPS-108376. Can check Cacheable for fragments without Read-Only label imported to portal and they are non-Cachable by default."
 	@priority = "4"
 	test MarkFragmentWithoutReadOnlyImportedToPortalAsCacheable {
-		property portal.upstream = "quarantine";
-
 		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 
 		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");

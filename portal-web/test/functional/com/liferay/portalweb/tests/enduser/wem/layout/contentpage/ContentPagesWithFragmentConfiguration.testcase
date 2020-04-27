@@ -55,8 +55,6 @@ definition {
 	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
 	@priority = "5"
 	test AddCheckboxConfigurationFragmentToContentPage {
-		property portal.upstream = "quarantine";
-
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
 			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.json");
@@ -235,7 +233,6 @@ definition {
 	@priority = "5"
 	test AddTextConfigurationFragmentToContentPage {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");

@@ -548,7 +548,6 @@ definition {
 	@priority = "3"
 	test ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured {
 		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SitesUsecase#ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured";
 		property testray.component.names = "Site Administration";
 

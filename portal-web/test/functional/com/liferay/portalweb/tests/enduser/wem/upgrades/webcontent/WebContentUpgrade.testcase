@@ -106,10 +106,7 @@ definition {
 	test ViewWebContentArchive625 {
 		property data.archive.type = "data-archive-web-content-draft";
 		property database.types = "mariadb,mysql,postgresql";
-		property portal.upstream = "quarantine";
 		property portal.version = "6.2.5";
-
-		// Quarantine for LRQA-57152
 
 		Upgrade.addWCStructureAndTemplate();
 

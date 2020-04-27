@@ -462,7 +462,6 @@ definition {
 
 	@priority = "4"
 	test MoveMultipleWebContentToFolder {
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Web Content Administration";
 
 		JSONWebcontent.addFolder(

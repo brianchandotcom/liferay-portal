@@ -28,7 +28,6 @@ definition {
 	@priority = "5"
 	test ConvertBasicWidgetPageToContentPage {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -798,11 +797,7 @@ definition {
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
 	@priority = "5"
 	test EditConvertedContentPageWithDecorator {
-
-		// Quarantine test for LRQA-56526
-
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

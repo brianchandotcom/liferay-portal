@@ -389,10 +389,6 @@ definition {
 	@description = "This case ensures a user can map the layout of a fragment to an existing image content."
 	@priority = "5"
 	test MapWebContentImageToLayoutSection {
-		property portal.upstream = "quarantine";
-
-		// Quarantine for LRQA-57159
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();

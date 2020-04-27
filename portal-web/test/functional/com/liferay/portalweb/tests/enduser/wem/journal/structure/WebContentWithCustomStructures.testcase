@@ -423,7 +423,6 @@ definition {
 
 	@priority = "3"
 	test AddWebContentWithColorField {
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Web Content Administration";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1359,10 +1358,7 @@ definition {
 
 	@priority = "4"
 	test WebContentAdministrationDataValidation {
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Web Content Administration";
-
-		// Quarantine for LRQA-57161
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

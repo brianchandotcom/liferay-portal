@@ -198,7 +198,6 @@ definition {
 	@priority = "5"
 	test PublishDisplayPageMarkedAsDefault {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Mark the display page as default") {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");

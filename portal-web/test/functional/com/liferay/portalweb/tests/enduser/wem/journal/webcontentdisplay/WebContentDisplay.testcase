@@ -424,7 +424,6 @@ definition {
 
 	@priority = "5"
 	test AddWebContentViaAddContentPanel {
-		property portal.upstream = "quarantine";
 		property testray.component.names = "Web Content Display,Training";
 
 		JSONWebcontent.addWebContent(
@@ -862,7 +861,6 @@ definition {
 
 	@priority = "4"
 	test ViewAllSettingsEnabledWCDConfiguration {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WebContentDisplay#ViewAllSettingsEnabledWCDConfiguration";
 		property testray.component.names = "Web Content Display";
 

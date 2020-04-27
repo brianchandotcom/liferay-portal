@@ -66,6 +66,40 @@ public class FriendlyURLLayoutLocalServiceTest {
 	}
 
 	@Test
+	public void testExistingLayoutCanHaveTheSameFriendlyURLAsDeletedOne()
+		throws Exception {
+
+		String friendlyURL1 = "/friendly-url-1";
+
+		Layout layout1 = LayoutTestUtil.addLayout(
+			_group.getGroupId(), true,
+			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
+			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL1));
+
+		String friendlyURL2 = "/friendly-url-2";
+
+		Layout layout2 = LayoutTestUtil.addLayout(
+			_group.getGroupId(), true,
+			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
+			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL2));
+
+		_layoutLocalService.deleteLayout(layout1);
+
+		layout2 = _layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), layout2.getPlid(), friendlyURL1,
+			_group.getDefaultLanguageId());
+
+		Assert.assertEquals(
+			layout2,
+			_layoutLocalService.fetchLayoutByFriendlyURL(
+				_group.getGroupId(), true, friendlyURL1));
+		Assert.assertEquals(
+			layout2,
+			_layoutLocalService.getFriendlyURLLayout(
+				_group.getGroupId(), true, friendlyURL1));
+	}
+
+	@Test
 	public void testKeepsAHistoryOfOldFriendlyURLs() throws Exception {
 		String friendlyURL = "/friendly-url";
 
@@ -90,6 +124,34 @@ public class FriendlyURLLayoutLocalServiceTest {
 				_layoutLocalService.getFriendlyURLLayout(
 					_group.getGroupId(), false, "/friendly-url-" + i));
 		}
+	}
+
+	@Test
+	public void testNewLayoutCanHaveTheSameFriendlyURLAsDeletedOne()
+		throws Exception {
+
+		String friendlyURL = "/friendly-url";
+
+		Layout layout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), true,
+			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
+			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
+
+		_layoutLocalService.deleteLayout(layout);
+
+		layout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), true,
+			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
+			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
+
+		Assert.assertEquals(
+			layout,
+			_layoutLocalService.fetchLayoutByFriendlyURL(
+				_group.getGroupId(), true, friendlyURL));
+		Assert.assertEquals(
+			layout,
+			_layoutLocalService.getFriendlyURLLayout(
+				_group.getGroupId(), true, friendlyURL));
 	}
 
 	@Test

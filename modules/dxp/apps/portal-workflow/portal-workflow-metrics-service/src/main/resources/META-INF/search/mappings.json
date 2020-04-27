@@ -1164,6 +1164,11 @@
 				"store": true,
 				"type": "boolean"
 			},
+			"instanceCompletionDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
 			"instanceId": {
 				"store": true,
 				"type": "keyword"
@@ -1211,6 +1216,253 @@
 		"date_detection": false,
 		"dynamic_templates": [
 			{
+				"template_ar": {
+					"mapping": {
+						"analyzer": "arabic",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ar\\b|\\w+_ar_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_bg": {
+					"mapping": {
+						"analyzer": "bulgarian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_bg\\b|\\w+_bg_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ca": {
+					"mapping": {
+						"analyzer": "catalan",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ca\\b|\\w+_ca_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_cs": {
+					"mapping": {
+						"analyzer": "czech",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_cs\\b|\\w+_cs_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_da": {
+					"mapping": {
+						"analyzer": "danish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_da\\b|\\w+_da_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_de": {
+					"mapping": {
+						"analyzer": "german",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_de\\b|\\w+_de_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_el": {
+					"mapping": {
+						"analyzer": "greek",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_el\\b|\\w+_el_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_en": {
+					"mapping": {
+						"analyzer": "english",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_en\\b|\\w+_en_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_es": {
+					"mapping": {
+						"analyzer": "spanish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_es\\b|\\w+_es_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_eu": {
+					"mapping": {
+						"analyzer": "basque",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_eu\\b|\\w+_eu_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_fi": {
+					"mapping": {
+						"analyzer": "finnish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_fi\\b|\\w+_fi_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_fr": {
+					"mapping": {
+						"analyzer": "french",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_fr\\b|\\w+_fr_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_hi": {
+					"mapping": {
+						"analyzer": "hindi",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_hi\\b|\\w+_hi_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_hu": {
+					"mapping": {
+						"analyzer": "hungarian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_hu\\b|\\w+_hu_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_hy": {
+					"mapping": {
+						"analyzer": "armenian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_hy\\b|\\w+_hy_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_id": {
+					"mapping": {
+						"analyzer": "indonesian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_id\\b|\\w+_id_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_it": {
+					"mapping": {
+						"analyzer": "italian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_it\\b|\\w+_it_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ja": {
+					"mapping": {
+						"analyzer": "kuromoji",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ja\\b|\\w+_ja_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ko": {
+					"mapping": {
+						"analyzer": "cjk",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ko\\b|\\w+_ko_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
 				"template_long_sortable": {
 					"mapping": {
 						"store": true,
@@ -1219,9 +1471,172 @@
 					"match": "*_sortable",
 					"match_mapping_type": "long"
 				}
+			},
+			{
+				"template_nl": {
+					"mapping": {
+						"analyzer": "dutch",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_nl\\b|\\w+_nl_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_no": {
+					"mapping": {
+						"analyzer": "norwegian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_nb\\b|\\w+_nb_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pl": {
+					"mapping": {
+						"analyzer": "polish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_pl\\b|\\w+_pl_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pt": {
+					"mapping": {
+						"analyzer": "portuguese",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_pt\\b|\\w+_pt_PT\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pt_br": {
+					"mapping": {
+						"analyzer": "brazilian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "*_pt_BR",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_ro": {
+					"mapping": {
+						"analyzer": "romanian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ro\\b|\\w+_ro_RO\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ru": {
+					"mapping": {
+						"analyzer": "russian",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_ru\\b|\\w+_ru_RU\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_string_sortable": {
+					"mapping": {
+						"normalizer": "keyword_lowercase",
+						"store": true,
+						"type": "keyword"
+					},
+					"match": "*_sortable",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_sv": {
+					"mapping": {
+						"analyzer": "swedish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_sv\\b|\\w+_sv_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_th": {
+					"mapping": {
+						"analyzer": "thai",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_th\\b|\\w+_th_TH\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_tr": {
+					"mapping": {
+						"analyzer": "turkish",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_tr\\b|\\w+_tr_TR\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_zh": {
+					"mapping": {
+						"analyzer": "smartcn",
+						"store": true,
+						"term_vector": "with_positions_offsets",
+						"type": "text"
+					},
+					"match": "\\w+_zh\\b|\\w+_zh_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
+				}
 			}
 		],
 		"properties": {
+			"assetTitle": {
+				"store": true,
+				"term_vector": "with_positions_offsets",
+				"type": "text"
+			},
+			"assetType": {
+				"store": true,
+				"term_vector": "with_positions_offsets",
+				"type": "text"
+			},
 			"assigneeIds": {
 				"store": true,
 				"type": "keyword"
@@ -1275,6 +1690,11 @@
 			"instanceCompleted": {
 				"store": true,
 				"type": "boolean"
+			},
+			"instanceCompletionDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
 			},
 			"instanceId": {
 				"store": true,

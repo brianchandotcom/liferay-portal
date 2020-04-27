@@ -66,10 +66,8 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 			{typeOptions.enableSelectTemplate && className && (
 				<ClayForm.Group small>
 					<TemplateSelector
-						item={{
-							className,
-							classPK,
-						}}
+						className={className}
+						classPK={classPK}
 						onTemplateSelect={template => {
 							onValueSelect(field.name, {...value, template});
 						}}
@@ -92,7 +90,12 @@ ItemSelectorField.propTypes = {
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
-const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
+const TemplateSelector = ({
+	className,
+	classPK,
+	onTemplateSelect,
+	selectedTemplate,
+}) => {
 	const dispatch = useDispatch();
 	const [availableTemplates, setAvailableTemplates] = useState([]);
 	const isMounted = useIsMounted();
@@ -100,14 +103,14 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 	useEffect(() => {
 		if (isMounted()) {
 			InfoItemService.getAvailableTemplates({
-				className: item.className,
-				classPK: item.classPK,
+				className,
+				classPK,
 				onNetworkStatus: dispatch,
 			}).then((response) => {
 				setAvailableTemplates(response);
 			});
 		}
-	}, [dispatch, isMounted, item.className, item.classPK]);
+	}, [className, classPK, dispatch, isMounted]);
 
 	return (
 		<>
@@ -180,7 +183,8 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 };
 
 TemplateSelector.propTypes = {
-	item: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
+	className: PropTypes.string.isRequired,
+	classPK: PropTypes.string.isRequired,
 	onTemplateSelect: PropTypes.func.isRequired,
 	selectedTemplate: PropTypes.shape({
 		infoItemRendererKey: PropTypes.string,

@@ -2069,6 +2069,11 @@ jdbc.default.password=${database.password}</echo>
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">logExceptionsOnly=B"false"</echo>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">logExceptionsOnly=B"false"${line.separator}sidecarShutdownTimeout=L"20000"</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-portal-search-osgi-configuration">
+		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.internal.index.IndexStatusManagerInternalConfiguration.config">suppressIndexReadOnly=B"true"</echo>
 		</sequential>
 	</macrodef>
@@ -7660,6 +7665,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		</if>
 
 		<prepare-portal-elasticsearch-osgi-configuration />
+
+		<prepare-portal-search-osgi-configuration/>
 	</target>
 
 	<target name="prepare-patching-tool">

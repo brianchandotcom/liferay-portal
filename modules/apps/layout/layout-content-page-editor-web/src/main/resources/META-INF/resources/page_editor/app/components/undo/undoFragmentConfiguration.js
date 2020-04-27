@@ -36,13 +36,14 @@ function undoAction({action}) {
 }
 
 function getDerivedStateForUndo({action, state}) {
-	const {fragmentEntryLinkId} = action;
+	const {fragmentEntryLink} = action;
 
-	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+	const previousFragmentEntryLink =
+		state.fragmentEntryLinks[fragmentEntryLink.fragmentEntryLinkId];
 
 	return {
-		editableValues: fragmentEntryLink.editableValues,
-		fragmentEntryLinkId,
+		editableValues: previousFragmentEntryLink.editableValues,
+		fragmentEntryLinkId: fragmentEntryLink.fragmentEntryLinkId,
 	};
 }
 

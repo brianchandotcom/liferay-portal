@@ -149,7 +149,7 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 				editorName="<%= editorName %>"
 				name='<%= "replyMessageBody" + parentMessageId %>'
 				onChangeMethod='<%= "replyMessageOnChange" + parentMessageId %>'
-				placeholder='<%= LanguageUtil.get(request, "type-your-reply") %>'
+				placeholder="body"
 				showSource="<%= false %>"
 				skipEditorLoading="<%= true %>"
 			/>

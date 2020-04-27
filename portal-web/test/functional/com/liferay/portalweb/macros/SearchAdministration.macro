@@ -98,8 +98,6 @@ definition {
 					echo("Current Elasticsearch Tasks:");
 
 					elasticsearchTasks = JSONCurlUtil.get("${curl}");
-
-					Refresh();
 				}
 			}
 			else if (contains("${searchEngineVendor}", "Solr")) {
@@ -120,8 +118,6 @@ definition {
 					Pause.pauseNoSPARefresh(locator1 = "10000");
 
 					var reindexElapsedTime = ${reindexElapsedTime} + 10;
-
-					Refresh();
 				}
 			}
 

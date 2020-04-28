@@ -129,6 +129,15 @@ public class RedirectEntryLocalServiceImpl
 	}
 
 	@Override
+	public boolean checkRedirectEntriesByGroupAndDestinationURL(
+		long groupId, String destinationURL) {
+
+		return ListUtil.isNotEmpty(
+			getRedirectEntriesByGroupAndDestinationURL(
+				groupId, destinationURL));
+	}
+
+	@Override
 	public RedirectEntry fetchRedirectEntry(long groupId, String sourceURL) {
 		return redirectEntryLocalService.fetchRedirectEntry(
 			groupId, sourceURL, false);

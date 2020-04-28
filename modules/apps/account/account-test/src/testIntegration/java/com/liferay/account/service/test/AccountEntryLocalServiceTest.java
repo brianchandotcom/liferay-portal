@@ -18,6 +18,7 @@ import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.CharPool;
@@ -25,6 +26,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -326,6 +329,49 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchByOrganizations() throws Exception {
+		_addAccountEntries();
+
+		Organization parentOrganization =
+			OrganizationTestUtil.addOrganization();
+
+		Organization organization = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), false);
+
+		_organizations.add(organization);
+
+		_organizations.add(parentOrganization);
+
+		AccountEntry accountEntry1 = _addAccountEntryWithOrganization(
+			parentOrganization);
+
+		AccountEntry accountEntry2 = _addAccountEntryWithOrganization(
+			organization);
+
+		_assertSearchWithParams(
+			Arrays.asList(accountEntry1, accountEntry2),
+			_getLinkedHashMap(
+				"organizationIds",
+				new long[] {
+					parentOrganization.getOrganizationId(),
+					organization.getOrganizationId()
+				}));
+
+		_assertSearchWithParams(
+			Arrays.asList(accountEntry1),
+			_getLinkedHashMap(
+				"organizationIds",
+				new long[] {parentOrganization.getOrganizationId()}));
+
+		_assertSearchWithParams(
+			Arrays.asList(accountEntry2),
+			_getLinkedHashMap(
+				"organizationIds",
+				new long[] {organization.getOrganizationId()}));
+	}
+
+	@Test
 	public void testSearchByParentAccountEntryId() throws Exception {
 		_addAccountEntries();
 
@@ -516,6 +562,18 @@ public class AccountEntryLocalServiceTest {
 		return accountEntry;
 	}
 
+	private AccountEntry _addAccountEntryWithOrganization(
+			Organization organization)
+		throws Exception {
+
+		AccountEntry accountEntry = _addAccountEntry();
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry.getAccountEntryId(), organization.getOrganizationId());
+
+		return accountEntry;
+	}
+
 	private AccountEntry _addAccountEntryWithParentAccountEntryId(
 			long parentAccountEntryId)
 		throws Exception {
@@ -651,6 +709,10 @@ public class AccountEntryLocalServiceTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
+	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Inject
@@ -658,6 +720,9 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@DeleteAfterTestRun
+	private final List<Organization> _organizations = new ArrayList<>();
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

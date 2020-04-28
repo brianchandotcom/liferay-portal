@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "7.0.4"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "7.0.5"
 	}
 
 	repositories {

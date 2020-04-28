@@ -872,7 +872,13 @@ xpack.monitoring.collection.enabled: true</echo>
 			replace=","
 		/>
 
+		<echo></echo>
+		<echo>##</echo>
+		<echo>## Remote Cluster Indices</echo>
+		<echo>##</echo>
+		<echo></echo>
 		<echo>${indexList}</echo>
+		<echo></echo>
 
 		<property name="connect.cluster.request.body">
 			<![CDATA[
@@ -903,7 +909,11 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="-s" />
 		</exec>
 
+		<echo></echo>
+		<echo>Connecting local cluster to remote cluster.</echo>
+		<echo></echo>
 		<echo>${curl.output.connect.to.remote.cluster}</echo>
+		<echo></echo>
 
 		<for list="${indexList}" param="indexName">
 			<sequential>
@@ -934,7 +944,11 @@ xpack.monitoring.collection.enabled: true</echo>
 							<arg value="-s" />
 						</exec>
 
+						<echo></echo>
+						<echo>Creating follower index for @{indexName}.</echo>
+						<echo></echo>
 						<echo>${curl.output.create.follower.index}</echo>
+						<echo></echo>
 
 						<var name="create.follower.request.body" unset="true" />
 						<var name="curl.output.create.follower.index" unset="true" />
@@ -950,7 +964,13 @@ xpack.monitoring.collection.enabled: true</echo>
 			<arg value="-s" />
 		</exec>
 
+		<echo></echo>
+		<echo>##</echo>
+		<echo>## Local Cluster Indices</echo>
+		<echo>##</echo>
+		<echo></echo>
 		<echo>${curl.output.follower.indices}</echo>
+		<echo></echo>
 
 		<for list="${indexList}" param="indexName">
 			<sequential>

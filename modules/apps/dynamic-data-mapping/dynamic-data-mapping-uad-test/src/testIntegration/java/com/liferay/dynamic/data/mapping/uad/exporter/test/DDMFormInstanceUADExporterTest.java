@@ -57,13 +57,13 @@ public class DDMFormInstanceUADExporterTest
 	@Override
 	@Test
 	public void testExport() throws Exception {
-		DDMFormInstance baseModel = addBaseModel(user.getUserId());
+		DDMFormInstance ddmFormInstance = addBaseModel(user.getUserId());
 
-		Document document = getExportDocument(baseModel);
+		Document document = getExportDocument(ddmFormInstance);
 
 		assertColumnValue(
 			document, getPrimaryKeyName(),
-			String.valueOf(baseModel.getPrimaryKeyObj()));
+			String.valueOf(ddmFormInstance.getPrimaryKeyObj()));
 	}
 
 	@Override

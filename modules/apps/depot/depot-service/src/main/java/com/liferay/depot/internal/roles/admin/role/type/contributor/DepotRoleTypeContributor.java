@@ -106,6 +106,17 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 		return true;
 	}
 
+	@Override
+	public boolean isAutomaticallyAssigned(Role role) {
+		if (Objects.equals(
+				role.getName(), DepotRolesConstants.ASSET_LIBRARY_MEMBER)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	private Language _language;
 

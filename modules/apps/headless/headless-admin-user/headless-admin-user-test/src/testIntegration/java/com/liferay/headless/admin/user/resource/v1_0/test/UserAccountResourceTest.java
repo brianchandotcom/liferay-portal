@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,23 +78,23 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_organization = OrganizationTestUtil.addOrganization();
 
-		_testUser = UserLocalServiceUtil.getUserByEmailAddress(
+		_testUser = _userLocalService.getUserByEmailAddress(
 			testGroup.getCompanyId(), "test@liferay.com");
 
-		UserLocalServiceUtil.deleteGroupUser(
+		_userLocalService.deleteGroupUser(
 			testGroup.getGroupId(), _testUser.getUserId());
 
 		// See LPS-94496 for why we have to delete all users except for the
 		// test user
 
-		List<User> users = UserLocalServiceUtil.getUsers(
+		List<User> users = _userLocalService.getUsers(
 			PortalUtil.getDefaultCompanyId(), false,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
 		for (User user : users) {
 			if (user.getUserId() != _testUser.getUserId()) {
-				UserLocalServiceUtil.deleteUser(user);
+				_userLocalService.deleteUser(user);
 			}
 		}
 
@@ -361,7 +362,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		userAccount = _addUserAccount(
 			testGetSiteUserAccountsPage_getSiteId(), userAccount);
 
-		UserLocalServiceUtil.addOrganizationUser(
+		_userLocalService.addOrganizationUser(
 			GetterUtil.getLong(organizationId), userAccount.getId());
 
 		return userAccount;
@@ -420,9 +421,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		userAccount = userAccountResource.postUserAccount(userAccount);
 
-		_users.add(UserLocalServiceUtil.getUser(userAccount.getId()));
+		_users.add(_userLocalService.getUser(userAccount.getId()));
 
-		UserLocalServiceUtil.addGroupUser(siteId, userAccount.getId());
+		_userLocalService.addGroupUser(siteId, userAccount.getId());
 
 		return userAccount;
 	}
@@ -538,6 +539,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private Organization _organization;
 
 	private User _testUser;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

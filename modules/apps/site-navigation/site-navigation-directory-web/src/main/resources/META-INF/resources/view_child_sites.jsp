@@ -20,16 +20,9 @@
 int groupLevel = GetterUtil.getInteger(request.getAttribute("view.jsp-groupLevel"));
 long parentGroupId = GetterUtil.getLong(request.getAttribute("view.jsp-parentGroupId"));
 
-List<Group> childGroups = null;
+List<Group> childGroups = GroupLocalServiceUtil.getGroups(themeDisplay.getCompanyId(), parentGroupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-Group rootGroup = sitesDirectoryDisplayContext.getRootGroup();
-
-if (rootGroup != null) {
-	childGroups = rootGroup.getChildrenWithLayouts(true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
-}
-else {
-	childGroups = GroupLocalServiceUtil.getLayoutsGroups(themeDisplay.getCompanyId(), parentGroupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
-}
+childGroups = ListUtil.filter(childGroups, group -> group.hasPrivateLayouts() || group.hasPublicLayouts());
 %>
 
 <c:if test="<%= !childGroups.isEmpty() %>">

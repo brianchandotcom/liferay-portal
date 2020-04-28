@@ -101,16 +101,17 @@
 				<c:otherwise>
 
 					<%
-					List<Group> childGroups = null;
+					long parentGroupId = GroupConstants.DEFAULT_LIVE_GROUP_ID;
 
 					Group rootGroup = sitesDirectoryDisplayContext.getRootGroup();
 
 					if (rootGroup != null) {
-						childGroups = rootGroup.getChildrenWithLayouts(true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
+						parentGroupId = rootGroup.getGroupId();
 					}
-					else {
-						childGroups = GroupLocalServiceUtil.getLayoutsGroups(themeDisplay.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
-					}
+
+					List<Group> childGroups = GroupLocalServiceUtil.getGroups(themeDisplay.getCompanyId(), parentGroupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+					childGroups = ListUtil.filter(childGroups, group -> group.hasPrivateLayouts() || group.hasPublicLayouts());
 					%>
 
 					<c:choose>

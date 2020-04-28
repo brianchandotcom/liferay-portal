@@ -32,6 +32,8 @@ public class UserGroupRoleTable extends BaseTable<UserGroupRoleTable> {
 
 	public final Column<UserGroupRoleTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<UserGroupRoleTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<UserGroupRoleTable, Long> userGroupRoleId =
 		createColumn(
 			"userGroupRoleId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

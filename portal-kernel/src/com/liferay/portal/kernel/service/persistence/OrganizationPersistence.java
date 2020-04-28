@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface OrganizationPersistence extends BasePersistence<Organization> {
+public interface OrganizationPersistence
+	extends BasePersistence<Organization>, CTPersistence<Organization> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

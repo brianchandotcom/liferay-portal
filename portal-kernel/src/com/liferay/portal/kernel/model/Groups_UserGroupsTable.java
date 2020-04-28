@@ -39,6 +39,12 @@ public class Groups_UserGroupsTable extends BaseTable<Groups_UserGroupsTable> {
 	public final Column<Groups_UserGroupsTable, Long> userGroupId =
 		createColumn(
 			"userGroupId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<Groups_UserGroupsTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<Groups_UserGroupsTable, Boolean> ctChangeType =
+		createColumn(
+			"ctChangeType", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private Groups_UserGroupsTable() {
 		super("Groups_UserGroups", Groups_UserGroupsTable::new);

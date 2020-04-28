@@ -618,6 +618,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Group">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -656,6 +657,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Image">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="imageId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="modifiedDate" type="Date" />
@@ -832,6 +834,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.LayoutSet">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="layoutSetId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -927,6 +930,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Organization">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="organizationId" type="long" />
@@ -1264,6 +1268,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Role">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="roleId" type="long" />
 		<field name="companyId" type="long" />
@@ -1330,6 +1335,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Team">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="teamId" type="long" />
 		<field name="companyId" type="long" />
@@ -1365,6 +1371,7 @@
 			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="userId" type="long" />
@@ -1429,6 +1436,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroup">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="userGroupId" type="long" />
@@ -1450,6 +1458,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroupGroupRole">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="userGroupGroupRoleId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userGroupId" type="long" />
@@ -1458,6 +1467,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroupRole">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="userGroupRoleId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -1535,6 +1545,7 @@
 			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="virtualHostId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="layoutSetId" type="long" />

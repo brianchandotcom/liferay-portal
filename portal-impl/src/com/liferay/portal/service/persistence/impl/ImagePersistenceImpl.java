@@ -15,6 +15,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -37,7 +39,12 @@ import com.liferay.portal.model.impl.ImageModelImpl;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -143,6 +150,9 @@ public class ImagePersistenceImpl
 		int size, int start, int end,
 		OrderByComparator<Image> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Image.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -151,7 +161,7 @@ public class ImagePersistenceImpl
 
 		List<Image> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<Image>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -207,12 +217,12 @@ public class ImagePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -507,12 +517,22 @@ public class ImagePersistenceImpl
 	 */
 	@Override
 	public int countByLtSize(int size) {
-		FinderPath finderPath = _finderPathWithPaginationCountByLtSize;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Image.class);
 
-		Object[] finderArgs = new Object[] {size};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByLtSize;
+
+			finderArgs = new Object[] {size};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -536,10 +556,14 @@ public class ImagePersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -575,6 +599,12 @@ public class ImagePersistenceImpl
 	 */
 	@Override
 	public void cacheResult(Image image) {
+		if (image.getCtCollectionId() != 0) {
+			image.resetOriginalValues();
+
+			return;
+		}
+
 		EntityCacheUtil.putResult(
 			ImageModelImpl.ENTITY_CACHE_ENABLED, ImageImpl.class,
 			image.getPrimaryKey(), image);
@@ -590,6 +620,12 @@ public class ImagePersistenceImpl
 	@Override
 	public void cacheResult(List<Image> images) {
 		for (Image image : images) {
+			if (image.getCtCollectionId() != 0) {
+				image.resetOriginalValues();
+
+				continue;
+			}
+
 			if (EntityCacheUtil.getResult(
 					ImageModelImpl.ENTITY_CACHE_ENABLED, ImageImpl.class,
 					image.getPrimaryKey()) == null) {
@@ -730,6 +766,10 @@ public class ImagePersistenceImpl
 
 	@Override
 	protected Image removeImpl(Image image) {
+		if (!CTPersistenceHelperUtil.isRemove(image)) {
+			return image;
+		}
+
 		Session session = null;
 
 		try {
@@ -767,7 +807,16 @@ public class ImagePersistenceImpl
 		try {
 			session = openSession();
 
-			if (image.isNew()) {
+			if (CTPersistenceHelperUtil.isInsert(image)) {
+				if (!isNew) {
+					Image oldImage = (Image)session.get(
+						ImageImpl.class, image.getPrimaryKeyObj());
+
+					if (oldImage != null) {
+						session.evict(oldImage);
+					}
+				}
+
 				session.save(image);
 
 				image.setNew(false);
@@ -781,6 +830,12 @@ public class ImagePersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (image.getCtCollectionId() != 0) {
+			image.resetOriginalValues();
+
+			return image;
 		}
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -845,12 +900,117 @@ public class ImagePersistenceImpl
 	/**
 	 * Returns the image with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the image
+	 * @return the image, or <code>null</code> if a image with the primary key could not be found
+	 */
+	@Override
+	public Image fetchByPrimaryKey(Serializable primaryKey) {
+		if (CTPersistenceHelperUtil.isProductionMode(Image.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		Image image = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			image = (Image)session.get(ImageImpl.class, primaryKey);
+
+			if (image != null) {
+				cacheResult(image);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return image;
+	}
+
+	/**
+	 * Returns the image with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param imageId the primary key of the image
 	 * @return the image, or <code>null</code> if a image with the primary key could not be found
 	 */
 	@Override
 	public Image fetchByPrimaryKey(long imageId) {
 		return fetchByPrimaryKey((Serializable)imageId);
+	}
+
+	@Override
+	public Map<Serializable, Image> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (CTPersistenceHelperUtil.isProductionMode(Image.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, Image> map = new HashMap<Serializable, Image>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			Image image = fetchByPrimaryKey(primaryKey);
+
+			if (image != null) {
+				map.put(primaryKey, image);
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (Image image : (List<Image>)query.list()) {
+				map.put(image.getPrimaryKeyObj(), image);
+
+				cacheResult(image);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -916,25 +1076,28 @@ public class ImagePersistenceImpl
 		int start, int end, OrderByComparator<Image> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Image.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<Image> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<Image>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -972,12 +1135,12 @@ public class ImagePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1009,8 +1172,15 @@ public class ImagePersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Image.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -1022,12 +1192,16 @@ public class ImagePersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(exception);
 			}
@@ -1060,8 +1234,64 @@ public class ImagePersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return ImageModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "Image";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("companyId");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("type_");
+		ctStrictColumnNames.add("height");
+		ctStrictColumnNames.add("width");
+		ctStrictColumnNames.add("size_");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK, Collections.singleton("imageId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 	}
 
 	/**

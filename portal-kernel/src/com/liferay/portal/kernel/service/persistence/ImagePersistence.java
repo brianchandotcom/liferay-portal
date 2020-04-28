@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface ImagePersistence extends BasePersistence<Image> {
+public interface ImagePersistence
+	extends BasePersistence<Image>, CTPersistence<Image> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

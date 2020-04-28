@@ -16,6 +16,7 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.TeamPersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -57,10 +59,13 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -170,25 +175,28 @@ public class UserPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
 				finderArgs = new Object[] {uuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -255,12 +263,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -568,12 +576,22 @@ public class UserPersistenceImpl
 	public int countByUuid(String uuid) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {uuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid;
+
+			finderArgs = new Object[] {uuid};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -608,10 +626,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -710,18 +732,21 @@ public class UserPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
 				finderArgs = new Object[] {uuid, companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -730,7 +755,7 @@ public class UserPersistenceImpl
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -803,12 +828,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1142,12 +1167,22 @@ public class UserPersistenceImpl
 	public int countByUuid_C(String uuid, long companyId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid_C;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {uuid, companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid_C;
+
+			finderArgs = new Object[] {uuid, companyId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1186,10 +1221,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1283,18 +1322,21 @@ public class UserPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
 				finderArgs = new Object[] {companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -1303,7 +1345,7 @@ public class UserPersistenceImpl
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1359,12 +1401,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1660,12 +1702,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCompanyId;
+
+			finderArgs = new Object[] {companyId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1689,10 +1741,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1761,15 +1817,18 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public User fetchByContactId(long contactId, boolean useFinderCache) {
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {contactId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByContactId, finderArgs, this);
 		}
@@ -1805,7 +1864,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByContactId, finderArgs, list);
 					}
@@ -1819,7 +1878,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByContactId, finderArgs);
 				}
@@ -1860,12 +1919,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByContactId(long contactId) {
-		FinderPath finderPath = _finderPathCountByContactId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {contactId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByContactId;
+
+			finderArgs = new Object[] {contactId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1889,10 +1958,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1985,18 +2058,21 @@ public class UserPersistenceImpl
 
 		emailAddress = Objects.toString(emailAddress, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByEmailAddress;
 				finderArgs = new Object[] {emailAddress};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByEmailAddress;
 			finderArgs = new Object[] {
 				emailAddress, start, end, orderByComparator
@@ -2005,7 +2081,7 @@ public class UserPersistenceImpl
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2072,12 +2148,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -2389,12 +2465,22 @@ public class UserPersistenceImpl
 	public int countByEmailAddress(String emailAddress) {
 		emailAddress = Objects.toString(emailAddress, "");
 
-		FinderPath finderPath = _finderPathCountByEmailAddress;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {emailAddress};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByEmailAddress;
+
+			finderArgs = new Object[] {emailAddress};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2429,10 +2515,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2504,15 +2594,18 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public User fetchByPortraitId(long portraitId, boolean useFinderCache) {
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {portraitId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByPortraitId, finderArgs, this);
 		}
@@ -2548,7 +2641,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByPortraitId, finderArgs, list);
 					}
@@ -2558,7 +2651,7 @@ public class UserPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {portraitId};
 							}
 
@@ -2577,7 +2670,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByPortraitId, finderArgs);
 				}
@@ -2618,12 +2711,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByPortraitId(long portraitId) {
-		FinderPath finderPath = _finderPathCountByPortraitId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {portraitId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByPortraitId;
+
+			finderArgs = new Object[] {portraitId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2647,10 +2750,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2744,6 +2851,9 @@ public class UserPersistenceImpl
 		long userId, long companyId, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -2754,7 +2864,7 @@ public class UserPersistenceImpl
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2816,12 +2926,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -2984,12 +3094,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByU_C(long userId, long companyId) {
-		FinderPath finderPath = _finderPathWithPaginationCountByU_C;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {userId, companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByU_C;
+
+			finderArgs = new Object[] {userId, companyId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3017,10 +3137,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -3102,15 +3226,18 @@ public class UserPersistenceImpl
 	public User fetchByC_U(
 		long companyId, long userId, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {companyId, userId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_U, finderArgs, this);
 		}
@@ -3152,7 +3279,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByC_U, finderArgs, list);
 					}
@@ -3166,7 +3293,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByC_U, finderArgs);
 				}
@@ -3211,12 +3338,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByC_U(long companyId, long userId) {
-		FinderPath finderPath = _finderPathCountByC_U;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, userId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_U;
+
+			finderArgs = new Object[] {companyId, userId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3244,10 +3381,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -3344,18 +3485,21 @@ public class UserPersistenceImpl
 		long companyId, Date createDate, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_CD;
 				finderArgs = new Object[] {companyId, _getTime(createDate)};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_CD;
 			finderArgs = new Object[] {
 				companyId, _getTime(createDate), start, end, orderByComparator
@@ -3364,7 +3508,7 @@ public class UserPersistenceImpl
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -3437,12 +3581,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -3772,12 +3916,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByC_CD(long companyId, Date createDate) {
-		FinderPath finderPath = _finderPathCountByC_CD;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, _getTime(createDate)};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_CD;
+
+			finderArgs = new Object[] {companyId, _getTime(createDate)};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -3816,10 +3970,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -3921,18 +4079,21 @@ public class UserPersistenceImpl
 		long companyId, Date modifiedDate, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_MD;
 				finderArgs = new Object[] {companyId, _getTime(modifiedDate)};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_MD;
 			finderArgs = new Object[] {
 				companyId, _getTime(modifiedDate), start, end, orderByComparator
@@ -3941,7 +4102,7 @@ public class UserPersistenceImpl
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -4014,12 +4175,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -4353,12 +4514,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByC_MD(long companyId, Date modifiedDate) {
-		FinderPath finderPath = _finderPathCountByC_MD;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, _getTime(modifiedDate)};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_MD;
+
+			finderArgs = new Object[] {companyId, _getTime(modifiedDate)};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4397,10 +4568,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -4485,15 +4660,18 @@ public class UserPersistenceImpl
 	public User fetchByC_DU(
 		long companyId, boolean defaultUser, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {companyId, defaultUser};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_DU, finderArgs, this);
 		}
@@ -4535,7 +4713,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByC_DU, finderArgs, list);
 					}
@@ -4545,7 +4723,7 @@ public class UserPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									companyId, defaultUser
 								};
@@ -4566,7 +4744,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByC_DU, finderArgs);
 				}
@@ -4611,12 +4789,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByC_DU(long companyId, boolean defaultUser) {
-		FinderPath finderPath = _finderPathCountByC_DU;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, defaultUser};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_DU;
+
+			finderArgs = new Object[] {companyId, defaultUser};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4644,10 +4832,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -4731,15 +4923,18 @@ public class UserPersistenceImpl
 
 		screenName = Objects.toString(screenName, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {companyId, screenName};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_SN, finderArgs, this);
 		}
@@ -4792,7 +4987,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByC_SN, finderArgs, list);
 					}
@@ -4806,7 +5001,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByC_SN, finderArgs);
 				}
@@ -4853,12 +5048,22 @@ public class UserPersistenceImpl
 	public int countByC_SN(long companyId, String screenName) {
 		screenName = Objects.toString(screenName, "");
 
-		FinderPath finderPath = _finderPathCountByC_SN;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, screenName};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_SN;
+
+			finderArgs = new Object[] {companyId, screenName};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4897,10 +5102,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -4987,15 +5196,18 @@ public class UserPersistenceImpl
 
 		emailAddress = Objects.toString(emailAddress, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {companyId, emailAddress};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_EA, finderArgs, this);
 		}
@@ -5048,7 +5260,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByC_EA, finderArgs, list);
 					}
@@ -5062,7 +5274,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByC_EA, finderArgs);
 				}
@@ -5109,12 +5321,22 @@ public class UserPersistenceImpl
 	public int countByC_EA(long companyId, String emailAddress) {
 		emailAddress = Objects.toString(emailAddress, "");
 
-		FinderPath finderPath = _finderPathCountByC_EA;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, emailAddress};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_EA;
+
+			finderArgs = new Object[] {companyId, emailAddress};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5153,10 +5375,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -5241,15 +5467,18 @@ public class UserPersistenceImpl
 	public User fetchByC_FID(
 		long companyId, long facebookId, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {companyId, facebookId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_FID, finderArgs, this);
 		}
@@ -5291,7 +5520,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByC_FID, finderArgs, list);
 					}
@@ -5301,7 +5530,7 @@ public class UserPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									companyId, facebookId
 								};
@@ -5322,7 +5551,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByC_FID, finderArgs);
 				}
@@ -5367,12 +5596,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByC_FID(long companyId, long facebookId) {
-		FinderPath finderPath = _finderPathCountByC_FID;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, facebookId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_FID;
+
+			finderArgs = new Object[] {companyId, facebookId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5400,10 +5639,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -5487,15 +5730,18 @@ public class UserPersistenceImpl
 
 		googleUserId = Objects.toString(googleUserId, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {companyId, googleUserId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_GUID, finderArgs, this);
 		}
@@ -5548,7 +5794,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByC_GUID, finderArgs, list);
 					}
@@ -5558,7 +5804,7 @@ public class UserPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									companyId, googleUserId
 								};
@@ -5579,7 +5825,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByC_GUID, finderArgs);
 				}
@@ -5626,12 +5872,22 @@ public class UserPersistenceImpl
 	public int countByC_GUID(long companyId, String googleUserId) {
 		googleUserId = Objects.toString(googleUserId, "");
 
-		FinderPath finderPath = _finderPathCountByC_GUID;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, googleUserId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_GUID;
+
+			finderArgs = new Object[] {companyId, googleUserId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5670,10 +5926,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -5760,15 +6020,18 @@ public class UserPersistenceImpl
 
 		openId = Objects.toString(openId, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {companyId, openId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_O, finderArgs, this);
 		}
@@ -5821,7 +6084,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByC_O, finderArgs, list);
 					}
@@ -5831,7 +6094,7 @@ public class UserPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {companyId, openId};
 							}
 
@@ -5850,7 +6113,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByC_O, finderArgs);
 				}
@@ -5897,12 +6160,22 @@ public class UserPersistenceImpl
 	public int countByC_O(long companyId, String openId) {
 		openId = Objects.toString(openId, "");
 
-		FinderPath finderPath = _finderPathCountByC_O;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, openId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_O;
+
+			finderArgs = new Object[] {companyId, openId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5941,10 +6214,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -6044,18 +6321,21 @@ public class UserPersistenceImpl
 		long companyId, int status, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_S;
 				finderArgs = new Object[] {companyId, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				companyId, status, start, end, orderByComparator
@@ -6064,7 +6344,7 @@ public class UserPersistenceImpl
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -6126,12 +6406,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -6447,12 +6727,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByC_S(long companyId, int status) {
-		FinderPath finderPath = _finderPathCountByC_S;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_S;
+
+			finderArgs = new Object[] {companyId, status};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6480,10 +6770,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -6591,20 +6885,23 @@ public class UserPersistenceImpl
 		long companyId, Date createDate, Date modifiedDate, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_CD_MD;
 				finderArgs = new Object[] {
 					companyId, _getTime(createDate), _getTime(modifiedDate)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_CD_MD;
 			finderArgs = new Object[] {
 				companyId, _getTime(createDate), _getTime(modifiedDate), start,
@@ -6614,7 +6911,7 @@ public class UserPersistenceImpl
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -6703,12 +7000,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -7076,14 +7373,24 @@ public class UserPersistenceImpl
 	public int countByC_CD_MD(
 		long companyId, Date createDate, Date modifiedDate) {
 
-		FinderPath finderPath = _finderPathCountByC_CD_MD;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {
-			companyId, _getTime(createDate), _getTime(modifiedDate)
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_CD_MD;
+
+			finderArgs = new Object[] {
+				companyId, _getTime(createDate), _getTime(modifiedDate)
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -7137,10 +7444,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -7255,18 +7566,21 @@ public class UserPersistenceImpl
 		long companyId, boolean defaultUser, int status, int start, int end,
 		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_DU_S;
 				finderArgs = new Object[] {companyId, defaultUser, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_DU_S;
 			finderArgs = new Object[] {
 				companyId, defaultUser, status, start, end, orderByComparator
@@ -7275,7 +7589,7 @@ public class UserPersistenceImpl
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -7342,12 +7656,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -7691,12 +8005,22 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countByC_DU_S(long companyId, boolean defaultUser, int status) {
-		FinderPath finderPath = _finderPathCountByC_DU_S;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, defaultUser, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_DU_S;
+
+			finderArgs = new Object[] {companyId, defaultUser, status};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -7728,10 +8052,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -7818,15 +8146,18 @@ public class UserPersistenceImpl
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {companyId, externalReferenceCode};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_ERC, finderArgs, this);
 		}
@@ -7880,7 +8211,7 @@ public class UserPersistenceImpl
 				List<User> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByC_ERC, finderArgs, list);
 					}
@@ -7890,7 +8221,7 @@ public class UserPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									companyId, externalReferenceCode
 								};
@@ -7911,7 +8242,7 @@ public class UserPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByC_ERC, finderArgs);
 				}
@@ -7958,12 +8289,22 @@ public class UserPersistenceImpl
 	public int countByC_ERC(long companyId, String externalReferenceCode) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
 
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_ERC;
+
+			finderArgs = new Object[] {companyId, externalReferenceCode};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -8002,10 +8343,14 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -8049,6 +8394,12 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(User user) {
+		if (user.getCtCollectionId() != 0) {
+			user.resetOriginalValues();
+
+			return;
+		}
+
 		EntityCacheUtil.putResult(
 			UserModelImpl.ENTITY_CACHE_ENABLED, UserImpl.class,
 			user.getPrimaryKey(), user);
@@ -8105,6 +8456,12 @@ public class UserPersistenceImpl
 	@Override
 	public void cacheResult(List<User> users) {
 		for (User user : users) {
+			if (user.getCtCollectionId() != 0) {
+				user.resetOriginalValues();
+
+				continue;
+			}
+
 			if (EntityCacheUtil.getResult(
 					UserModelImpl.ENTITY_CACHE_ENABLED, UserImpl.class,
 					user.getPrimaryKey()) == null) {
@@ -8563,6 +8920,10 @@ public class UserPersistenceImpl
 		userToUserGroupTableMapper.deleteLeftPrimaryKeyTableMappings(
 			user.getPrimaryKey());
 
+		if (!CTPersistenceHelperUtil.isRemove(user)) {
+			return user;
+		}
+
 		Session session = null;
 
 		try {
@@ -8647,7 +9008,16 @@ public class UserPersistenceImpl
 		try {
 			session = openSession();
 
-			if (user.isNew()) {
+			if (CTPersistenceHelperUtil.isInsert(user)) {
+				if (!isNew) {
+					User oldUser = (User)session.get(
+						UserImpl.class, user.getPrimaryKeyObj());
+
+					if (oldUser != null) {
+						session.evict(oldUser);
+					}
+				}
+
 				session.save(user);
 
 				user.setNew(false);
@@ -8661,6 +9031,12 @@ public class UserPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (user.getCtCollectionId() != 0) {
+			user.resetOriginalValues();
+
+			return user;
 		}
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -8991,12 +9367,117 @@ public class UserPersistenceImpl
 	/**
 	 * Returns the user with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the user
+	 * @return the user, or <code>null</code> if a user with the primary key could not be found
+	 */
+	@Override
+	public User fetchByPrimaryKey(Serializable primaryKey) {
+		if (CTPersistenceHelperUtil.isProductionMode(User.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		User user = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			user = (User)session.get(UserImpl.class, primaryKey);
+
+			if (user != null) {
+				cacheResult(user);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return user;
+	}
+
+	/**
+	 * Returns the user with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param userId the primary key of the user
 	 * @return the user, or <code>null</code> if a user with the primary key could not be found
 	 */
 	@Override
 	public User fetchByPrimaryKey(long userId) {
 		return fetchByPrimaryKey((Serializable)userId);
+	}
+
+	@Override
+	public Map<Serializable, User> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (CTPersistenceHelperUtil.isProductionMode(User.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, User> map = new HashMap<Serializable, User>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			User user = fetchByPrimaryKey(primaryKey);
+
+			if (user != null) {
+				map.put(primaryKey, user);
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (User user : (List<User>)query.list()) {
+				map.put(user.getPrimaryKeyObj(), user);
+
+				cacheResult(user);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -9062,25 +9543,28 @@ public class UserPersistenceImpl
 		int start, int end, OrderByComparator<User> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<User> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<User>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -9118,12 +9602,12 @@ public class UserPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -9155,8 +9639,15 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			User.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -9168,12 +9659,16 @@ public class UserPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(exception);
 			}
@@ -10773,8 +11268,118 @@ public class UserPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return UserModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "User_";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("defaultUser");
+		ctStrictColumnNames.add("contactId");
+		ctStrictColumnNames.add("password_");
+		ctStrictColumnNames.add("passwordEncrypted");
+		ctStrictColumnNames.add("passwordReset");
+		ctStrictColumnNames.add("passwordModifiedDate");
+		ctStrictColumnNames.add("digest");
+		ctStrictColumnNames.add("reminderQueryQuestion");
+		ctStrictColumnNames.add("reminderQueryAnswer");
+		ctStrictColumnNames.add("graceLoginCount");
+		ctStrictColumnNames.add("screenName");
+		ctStrictColumnNames.add("emailAddress");
+		ctStrictColumnNames.add("facebookId");
+		ctStrictColumnNames.add("googleUserId");
+		ctStrictColumnNames.add("ldapServerId");
+		ctStrictColumnNames.add("openId");
+		ctStrictColumnNames.add("portraitId");
+		ctStrictColumnNames.add("languageId");
+		ctStrictColumnNames.add("timeZoneId");
+		ctStrictColumnNames.add("greeting");
+		ctStrictColumnNames.add("comments");
+		ctStrictColumnNames.add("firstName");
+		ctStrictColumnNames.add("middleName");
+		ctStrictColumnNames.add("lastName");
+		ctStrictColumnNames.add("jobTitle");
+		ctStrictColumnNames.add("loginDate");
+		ctStrictColumnNames.add("loginIP");
+		ctStrictColumnNames.add("lastLoginDate");
+		ctStrictColumnNames.add("lastLoginIP");
+		ctStrictColumnNames.add("lastFailedLoginDate");
+		ctStrictColumnNames.add("failedLoginAttempts");
+		ctStrictColumnNames.add("lockout");
+		ctStrictColumnNames.add("lockoutDate");
+		ctStrictColumnNames.add("agreedToTermsOfUse");
+		ctStrictColumnNames.add("emailAddressVerified");
+		ctStrictColumnNames.add("status");
+		ctStrictColumnNames.add("groups_");
+		ctStrictColumnNames.add("orgs");
+		ctStrictColumnNames.add("roles");
+		ctStrictColumnNames.add("teams");
+		ctStrictColumnNames.add("userGroups");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK, Collections.singleton("userId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_mappingTableNames.add("Users_Groups");
+		_mappingTableNames.add("Users_Orgs");
+		_mappingTableNames.add("Users_Roles");
+		_mappingTableNames.add("Users_Teams");
+		_mappingTableNames.add("Users_UserGroups");
+
+		_uniqueIndexColumnNames.add(new String[] {"contactId"});
+
+		_uniqueIndexColumnNames.add(new String[] {"companyId", "userId"});
+
+		_uniqueIndexColumnNames.add(new String[] {"companyId", "screenName"});
+
+		_uniqueIndexColumnNames.add(new String[] {"companyId", "emailAddress"});
 	}
 
 	/**

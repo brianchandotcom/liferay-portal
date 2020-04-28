@@ -72,12 +72,13 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public static final String TABLE_NAME = "User_";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR}, {"userId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"defaultUser", Types.BOOLEAN},
-		{"contactId", Types.BIGINT}, {"password_", Types.VARCHAR},
-		{"passwordEncrypted", Types.BOOLEAN}, {"passwordReset", Types.BOOLEAN},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"userId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"defaultUser", Types.BOOLEAN}, {"contactId", Types.BIGINT},
+		{"password_", Types.VARCHAR}, {"passwordEncrypted", Types.BOOLEAN},
+		{"passwordReset", Types.BOOLEAN},
 		{"passwordModifiedDate", Types.TIMESTAMP}, {"digest", Types.VARCHAR},
 		{"reminderQueryQuestion", Types.VARCHAR},
 		{"reminderQueryAnswer", Types.VARCHAR},
@@ -102,6 +103,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -147,7 +149,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table User_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(254) null,facebookId LONG,googleUserId VARCHAR(75) null,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER)";
+		"create table User_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userId LONG not null,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(254) null,facebookId LONG,googleUserId VARCHAR(75) null,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER,primary key (userId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table User_";
 
@@ -220,6 +222,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		User model = new UserImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setUserId(soapModel.getUserId());
@@ -294,7 +297,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE =
-		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,primary key (groupId, userId))";
+		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, userId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS =
 		GetterUtil.getBoolean(
@@ -310,7 +313,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_ORGS_SQL_CREATE =
-		"create table Users_Orgs (companyId LONG not null,organizationId LONG not null,userId LONG not null,primary key (organizationId, userId))";
+		"create table Users_Orgs (companyId LONG not null,organizationId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (organizationId, userId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_ORGS =
 		GetterUtil.getBoolean(
@@ -326,7 +329,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_ROLES_SQL_CREATE =
-		"create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,primary key (roleId, userId))";
+		"create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (roleId, userId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_ROLES =
 		GetterUtil.getBoolean(
@@ -342,7 +345,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE =
-		"create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,primary key (teamId, userId))";
+		"create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (teamId, userId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_TEAMS =
 		GetterUtil.getBoolean(
@@ -359,7 +362,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE =
-		"create table Users_UserGroups (companyId LONG not null,userId LONG not null,userGroupId LONG not null,primary key (userId, userGroupId))";
+		"create table Users_UserGroups (companyId LONG not null,userId LONG not null,userGroupId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (userId, userGroupId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_USERGROUPS =
 		GetterUtil.getBoolean(
@@ -495,6 +498,9 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		attributeGetterFunctions.put("mvccVersion", User::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion", (BiConsumer<User, Long>)User::setMvccVersion);
+		attributeGetterFunctions.put("ctCollectionId", User::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId", (BiConsumer<User, Long>)User::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", User::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<User, String>)User::setUuid);
@@ -657,6 +663,17 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1484,6 +1501,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		UserImpl userImpl = new UserImpl();
 
 		userImpl.setMvccVersion(getMvccVersion());
+		userImpl.setCtCollectionId(getCtCollectionId());
 		userImpl.setUuid(getUuid());
 		userImpl.setExternalReferenceCode(getExternalReferenceCode());
 		userImpl.setUserId(getUserId());
@@ -1643,6 +1661,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		UserCacheModel userCacheModel = new UserCacheModel();
 
 		userCacheModel.mvccVersion = getMvccVersion();
+
+		userCacheModel.ctCollectionId = getCtCollectionId();
 
 		userCacheModel.uuid = getUuid();
 
@@ -1976,6 +1996,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

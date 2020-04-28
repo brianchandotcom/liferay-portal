@@ -125,6 +125,8 @@ public class OrganizationPersistenceTest {
 
 		newOrganization.setMvccVersion(RandomTestUtil.nextLong());
 
+		newOrganization.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newOrganization.setUuid(RandomTestUtil.randomString());
 
 		newOrganization.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -167,6 +169,9 @@ public class OrganizationPersistenceTest {
 		Assert.assertEquals(
 			existingOrganization.getMvccVersion(),
 			newOrganization.getMvccVersion());
+		Assert.assertEquals(
+			existingOrganization.getCtCollectionId(),
+			newOrganization.getCtCollectionId());
 		Assert.assertEquals(
 			existingOrganization.getUuid(), newOrganization.getUuid());
 		Assert.assertEquals(
@@ -333,13 +338,13 @@ public class OrganizationPersistenceTest {
 
 	protected OrderByComparator<Organization> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"Organization_", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "organizationId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "parentOrganizationId", true, "treePath",
-			true, "name", true, "type", true, "recursable", true, "regionId",
-			true, "countryId", true, "statusId", true, "comments", true,
-			"logoId", true);
+			"Organization_", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "externalReferenceCode", true, "organizationId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "parentOrganizationId", true,
+			"treePath", true, "name", true, "type", true, "recursable", true,
+			"regionId", true, "countryId", true, "statusId", true, "comments",
+			true, "logoId", true);
 	}
 
 	@Test
@@ -592,6 +597,8 @@ public class OrganizationPersistenceTest {
 		Organization organization = _persistence.create(pk);
 
 		organization.setMvccVersion(RandomTestUtil.nextLong());
+
+		organization.setCtCollectionId(RandomTestUtil.nextLong());
 
 		organization.setUuid(RandomTestUtil.randomString());
 

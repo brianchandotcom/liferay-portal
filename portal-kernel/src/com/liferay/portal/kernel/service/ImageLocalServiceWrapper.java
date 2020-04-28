@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+
 /**
  * Provides a wrapper for {@link ImageLocalService}.
  *
@@ -35,9 +39,7 @@ public class ImageLocalServiceWrapper
 	 * @return the image that was added
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Image addImage(
-		com.liferay.portal.kernel.model.Image image) {
-
+	public Image addImage(Image image) {
 		return _imageLocalService.addImage(image);
 	}
 
@@ -48,7 +50,7 @@ public class ImageLocalServiceWrapper
 	 * @return the new image
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Image createImage(long imageId) {
+	public Image createImage(long imageId) {
 		return _imageLocalService.createImage(imageId);
 	}
 
@@ -70,9 +72,7 @@ public class ImageLocalServiceWrapper
 	 * @return the image that was removed
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Image deleteImage(
-		com.liferay.portal.kernel.model.Image image) {
-
+	public Image deleteImage(Image image) {
 		return _imageLocalService.deleteImage(image);
 	}
 
@@ -84,7 +84,7 @@ public class ImageLocalServiceWrapper
 	 * @throws PortalException if a image with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Image deleteImage(long imageId)
+	public Image deleteImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.deleteImage(imageId);
@@ -191,7 +191,7 @@ public class ImageLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image fetchImage(long imageId) {
+	public Image fetchImage(long imageId) {
 		return _imageLocalService.fetchImage(imageId);
 	}
 
@@ -203,7 +203,7 @@ public class ImageLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image getCompanyLogo(long imageId) {
+	public Image getCompanyLogo(long imageId) {
 		return _imageLocalService.getCompanyLogo(imageId);
 	}
 
@@ -215,21 +215,19 @@ public class ImageLocalServiceWrapper
 	 * @throws PortalException if a image with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Image getImage(long imageId)
+	public Image getImage(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.getImage(imageId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image getImageOrDefault(
-		long imageId) {
-
+	public Image getImageOrDefault(long imageId) {
 		return _imageLocalService.getImageOrDefault(imageId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Image> getImages() {
+	public java.util.List<Image> getImages() {
 		return _imageLocalService.getImages();
 	}
 
@@ -245,16 +243,12 @@ public class ImageLocalServiceWrapper
 	 * @return the range of images
 	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Image> getImages(
-		int start, int end) {
-
+	public java.util.List<Image> getImages(int start, int end) {
 		return _imageLocalService.getImages(start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Image>
-		getImagesBySize(int size) {
-
+	public java.util.List<Image> getImagesBySize(int size) {
 		return _imageLocalService.getImagesBySize(size);
 	}
 
@@ -281,7 +275,7 @@ public class ImageLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _imageLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -297,8 +291,7 @@ public class ImageLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image moveImage(
-			long imageId, byte[] bytes)
+	public Image moveImage(long imageId, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.moveImage(imageId, bytes);
@@ -311,24 +304,21 @@ public class ImageLocalServiceWrapper
 	 * @return the image that was updated
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(
-		com.liferay.portal.kernel.model.Image image) {
-
+	public Image updateImage(Image image) {
 		return _imageLocalService.updateImage(image);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(
-			long imageId, byte[] bytes)
+	public Image updateImage(long imageId, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.updateImage(imageId, bytes);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(
-			long imageId, byte[] bytes, java.lang.String type, int height,
-			int width, int size)
+	public Image updateImage(
+			long imageId, byte[] bytes, String type, int height, int width,
+			int size)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.updateImage(
@@ -336,27 +326,44 @@ public class ImageLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(
-			long imageId, java.io.File file)
+	public Image updateImage(long imageId, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.updateImage(imageId, file);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(
-			long imageId, java.io.InputStream is)
+	public Image updateImage(long imageId, java.io.InputStream is)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.updateImage(imageId, is);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image updateImage(
+	public Image updateImage(
 			long imageId, java.io.InputStream is, boolean cleanUpStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.updateImage(imageId, is, cleanUpStream);
+	}
+
+	@Override
+	public CTPersistence<Image> getCTPersistence() {
+		return _imageLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<Image> getModelClass() {
+		return _imageLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<Image>, R, E> updateUnsafeFunction)
+		throws E {
+
+		return _imageLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

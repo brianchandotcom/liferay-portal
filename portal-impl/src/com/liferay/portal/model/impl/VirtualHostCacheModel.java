@@ -75,10 +75,12 @@ public class VirtualHostCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", virtualHostId=");
 		sb.append(virtualHostId);
 		sb.append(", companyId=");
@@ -101,6 +103,7 @@ public class VirtualHostCacheModel
 		VirtualHostImpl virtualHostImpl = new VirtualHostImpl();
 
 		virtualHostImpl.setMvccVersion(mvccVersion);
+		virtualHostImpl.setCtCollectionId(ctCollectionId);
 		virtualHostImpl.setVirtualHostId(virtualHostId);
 		virtualHostImpl.setCompanyId(companyId);
 		virtualHostImpl.setLayoutSetId(layoutSetId);
@@ -130,6 +133,8 @@ public class VirtualHostCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		virtualHostId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -144,6 +149,8 @@ public class VirtualHostCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(virtualHostId);
 
@@ -169,6 +176,7 @@ public class VirtualHostCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long virtualHostId;
 	public long companyId;
 	public long layoutSetId;

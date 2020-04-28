@@ -37,6 +37,10 @@ public class Groups_RolesTable extends BaseTable<Groups_RolesTable> {
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<Groups_RolesTable, Long> roleId = createColumn(
 		"roleId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<Groups_RolesTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<Groups_RolesTable, Boolean> ctChangeType = createColumn(
+		"ctChangeType", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private Groups_RolesTable() {
 		super("Groups_Roles", Groups_RolesTable::new);

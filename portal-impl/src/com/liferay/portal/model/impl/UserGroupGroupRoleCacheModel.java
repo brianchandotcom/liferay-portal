@@ -76,10 +76,12 @@ public class UserGroupGroupRoleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", userGroupGroupRoleId=");
 		sb.append(userGroupGroupRoleId);
 		sb.append(", companyId=");
@@ -101,6 +103,7 @@ public class UserGroupGroupRoleCacheModel
 			new UserGroupGroupRoleImpl();
 
 		userGroupGroupRoleImpl.setMvccVersion(mvccVersion);
+		userGroupGroupRoleImpl.setCtCollectionId(ctCollectionId);
 		userGroupGroupRoleImpl.setUserGroupGroupRoleId(userGroupGroupRoleId);
 		userGroupGroupRoleImpl.setCompanyId(companyId);
 		userGroupGroupRoleImpl.setUserGroupId(userGroupId);
@@ -115,6 +118,8 @@ public class UserGroupGroupRoleCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 
 		userGroupGroupRoleId = objectInput.readLong();
 
@@ -131,6 +136,8 @@ public class UserGroupGroupRoleCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(userGroupGroupRoleId);
 
 		objectOutput.writeLong(companyId);
@@ -143,6 +150,7 @@ public class UserGroupGroupRoleCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long userGroupGroupRoleId;
 	public long companyId;
 	public long userGroupId;

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -41,6 +43,7 @@ public class ImageWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("imageId", getImageId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -58,6 +61,12 @@ public class ImageWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long imageId = (Long)attributes.get("imageId");
@@ -111,6 +120,16 @@ public class ImageWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this image.
+	 *
+	 * @return the ct collection ID of this image
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -214,6 +233,16 @@ public class ImageWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this image.
+	 *
+	 * @param ctCollectionId the ct collection ID of this image
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the height of this image.
 	 *
 	 * @param height the height of this image
@@ -296,6 +325,18 @@ public class ImageWrapper
 	@Override
 	public void setWidth(int width) {
 		model.setWidth(width);
+	}
+
+	@Override
+	public Map<String, Function<Image, Object>> getAttributeGetterFunctions() {
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<Image, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

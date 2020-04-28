@@ -63,10 +63,10 @@ public class VirtualHostModelImpl
 	public static final String TABLE_NAME = "VirtualHost";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"virtualHostId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"layoutSetId", Types.BIGINT},
-		{"hostname", Types.VARCHAR}, {"defaultVirtualHost", Types.BOOLEAN},
-		{"languageId", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"virtualHostId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"layoutSetId", Types.BIGINT}, {"hostname", Types.VARCHAR},
+		{"defaultVirtualHost", Types.BOOLEAN}, {"languageId", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -74,6 +74,7 @@ public class VirtualHostModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("virtualHostId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutSetId", Types.BIGINT);
@@ -83,7 +84,7 @@ public class VirtualHostModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table VirtualHost (mvccVersion LONG default 0 not null,virtualHostId LONG not null primary key,companyId LONG,layoutSetId LONG,hostname VARCHAR(200) null,defaultVirtualHost BOOLEAN,languageId VARCHAR(75) null)";
+		"create table VirtualHost (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,virtualHostId LONG not null,companyId LONG,layoutSetId LONG,hostname VARCHAR(200) null,defaultVirtualHost BOOLEAN,languageId VARCHAR(75) null,primary key (virtualHostId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table VirtualHost";
 
@@ -261,6 +262,11 @@ public class VirtualHostModelImpl
 			"mvccVersion",
 			(BiConsumer<VirtualHost, Long>)VirtualHost::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", VirtualHost::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<VirtualHost, Long>)VirtualHost::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"virtualHostId", VirtualHost::getVirtualHostId);
 		attributeSetterBiConsumers.put(
 			"virtualHostId",
@@ -303,6 +309,16 @@ public class VirtualHostModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -465,6 +481,7 @@ public class VirtualHostModelImpl
 		VirtualHostImpl virtualHostImpl = new VirtualHostImpl();
 
 		virtualHostImpl.setMvccVersion(getMvccVersion());
+		virtualHostImpl.setCtCollectionId(getCtCollectionId());
 		virtualHostImpl.setVirtualHostId(getVirtualHostId());
 		virtualHostImpl.setCompanyId(getCompanyId());
 		virtualHostImpl.setLayoutSetId(getLayoutSetId());
@@ -568,6 +585,8 @@ public class VirtualHostModelImpl
 
 		virtualHostCacheModel.mvccVersion = getMvccVersion();
 
+		virtualHostCacheModel.ctCollectionId = getCtCollectionId();
+
 		virtualHostCacheModel.virtualHostId = getVirtualHostId();
 
 		virtualHostCacheModel.companyId = getCompanyId();
@@ -666,6 +685,7 @@ public class VirtualHostModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _virtualHostId;
 	private long _companyId;
 	private long _originalCompanyId;

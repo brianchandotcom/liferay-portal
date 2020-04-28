@@ -124,6 +124,8 @@ public class VirtualHostPersistenceTest {
 
 		newVirtualHost.setMvccVersion(RandomTestUtil.nextLong());
 
+		newVirtualHost.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newVirtualHost.setCompanyId(RandomTestUtil.nextLong());
 
 		newVirtualHost.setLayoutSetId(RandomTestUtil.nextLong());
@@ -142,6 +144,9 @@ public class VirtualHostPersistenceTest {
 		Assert.assertEquals(
 			existingVirtualHost.getMvccVersion(),
 			newVirtualHost.getMvccVersion());
+		Assert.assertEquals(
+			existingVirtualHost.getCtCollectionId(),
+			newVirtualHost.getCtCollectionId());
 		Assert.assertEquals(
 			existingVirtualHost.getVirtualHostId(),
 			newVirtualHost.getVirtualHostId());
@@ -211,9 +216,9 @@ public class VirtualHostPersistenceTest {
 
 	protected OrderByComparator<VirtualHost> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"VirtualHost", "mvccVersion", true, "virtualHostId", true,
-			"companyId", true, "layoutSetId", true, "hostname", true,
-			"defaultVirtualHost", true, "languageId", true);
+			"VirtualHost", "mvccVersion", true, "ctCollectionId", true,
+			"virtualHostId", true, "companyId", true, "layoutSetId", true,
+			"hostname", true, "defaultVirtualHost", true, "languageId", true);
 	}
 
 	@Test
@@ -463,6 +468,8 @@ public class VirtualHostPersistenceTest {
 		VirtualHost virtualHost = _persistence.create(pk);
 
 		virtualHost.setMvccVersion(RandomTestUtil.nextLong());
+
+		virtualHost.setCtCollectionId(RandomTestUtil.nextLong());
 
 		virtualHost.setCompanyId(RandomTestUtil.nextLong());
 

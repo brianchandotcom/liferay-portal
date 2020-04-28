@@ -123,6 +123,8 @@ public class UserGroupRolePersistenceTest {
 
 		newUserGroupRole.setMvccVersion(RandomTestUtil.nextLong());
 
+		newUserGroupRole.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newUserGroupRole.setCompanyId(RandomTestUtil.nextLong());
 
 		newUserGroupRole.setUserId(RandomTestUtil.nextLong());
@@ -139,6 +141,9 @@ public class UserGroupRolePersistenceTest {
 		Assert.assertEquals(
 			existingUserGroupRole.getMvccVersion(),
 			newUserGroupRole.getMvccVersion());
+		Assert.assertEquals(
+			existingUserGroupRole.getCtCollectionId(),
+			newUserGroupRole.getCtCollectionId());
 		Assert.assertEquals(
 			existingUserGroupRole.getUserGroupRoleId(),
 			newUserGroupRole.getUserGroupRoleId());
@@ -224,8 +229,9 @@ public class UserGroupRolePersistenceTest {
 
 	protected OrderByComparator<UserGroupRole> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"UserGroupRole", "mvccVersion", true, "userGroupRoleId", true,
-			"companyId", true, "userId", true, "groupId", true, "roleId", true);
+			"UserGroupRole", "mvccVersion", true, "ctCollectionId", true,
+			"userGroupRoleId", true, "companyId", true, "userId", true,
+			"groupId", true, "roleId", true);
 	}
 
 	@Test
@@ -470,6 +476,8 @@ public class UserGroupRolePersistenceTest {
 		UserGroupRole userGroupRole = _persistence.create(pk);
 
 		userGroupRole.setMvccVersion(RandomTestUtil.nextLong());
+
+		userGroupRole.setCtCollectionId(RandomTestUtil.nextLong());
 
 		userGroupRole.setCompanyId(RandomTestUtil.nextLong());
 

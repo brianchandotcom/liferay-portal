@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
+public interface VirtualHostPersistence
+	extends BasePersistence<VirtualHost>, CTPersistence<VirtualHost> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

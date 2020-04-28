@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+
 /**
  * Provides a wrapper for {@link UserGroupLocalService}.
  *
@@ -36,16 +40,13 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public void addGroupUserGroup(
-		long groupId, com.liferay.portal.kernel.model.UserGroup userGroup) {
-
+	public void addGroupUserGroup(long groupId, UserGroup userGroup) {
 		_userGroupLocalService.addGroupUserGroup(groupId, userGroup);
 	}
 
 	@Override
 	public void addGroupUserGroups(
-		long groupId,
-		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+		long groupId, java.util.List<UserGroup> userGroups) {
 
 		_userGroupLocalService.addGroupUserGroups(groupId, userGroups);
 	}
@@ -61,16 +62,13 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public void addTeamUserGroup(
-		long teamId, com.liferay.portal.kernel.model.UserGroup userGroup) {
-
+	public void addTeamUserGroup(long teamId, UserGroup userGroup) {
 		_userGroupLocalService.addTeamUserGroup(teamId, userGroup);
 	}
 
 	@Override
 	public void addTeamUserGroups(
-		long teamId,
-		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+		long teamId, java.util.List<UserGroup> userGroups) {
 
 		_userGroupLocalService.addTeamUserGroups(teamId, userGroups);
 	}
@@ -100,9 +98,9 @@ public class UserGroupLocalServiceWrapper
 	 * @return the user group
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup addUserGroup(
-			long userId, long companyId, java.lang.String name,
-			java.lang.String description, ServiceContext serviceContext)
+	public UserGroup addUserGroup(
+			long userId, long companyId, String name, String description,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.addUserGroup(
@@ -116,9 +114,7 @@ public class UserGroupLocalServiceWrapper
 	 * @return the user group that was added
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup addUserGroup(
-		com.liferay.portal.kernel.model.UserGroup userGroup) {
-
+	public UserGroup addUserGroup(UserGroup userGroup) {
 		return _userGroupLocalService.addUserGroup(userGroup);
 	}
 
@@ -128,16 +124,13 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public void addUserUserGroup(
-		long userId, com.liferay.portal.kernel.model.UserGroup userGroup) {
-
+	public void addUserUserGroup(long userId, UserGroup userGroup) {
 		_userGroupLocalService.addUserUserGroup(userId, userGroup);
 	}
 
 	@Override
 	public void addUserUserGroups(
-		long userId,
-		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+		long userId, java.util.List<UserGroup> userGroups) {
 
 		_userGroupLocalService.addUserUserGroups(userId, userGroups);
 	}
@@ -180,9 +173,7 @@ public class UserGroupLocalServiceWrapper
 	 * @return the new user group
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup createUserGroup(
-		long userGroupId) {
-
+	public UserGroup createUserGroup(long userGroupId) {
 		return _userGroupLocalService.createUserGroup(userGroupId);
 	}
 
@@ -192,16 +183,13 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteGroupUserGroup(
-		long groupId, com.liferay.portal.kernel.model.UserGroup userGroup) {
-
+	public void deleteGroupUserGroup(long groupId, UserGroup userGroup) {
 		_userGroupLocalService.deleteGroupUserGroup(groupId, userGroup);
 	}
 
 	@Override
 	public void deleteGroupUserGroups(
-		long groupId,
-		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+		long groupId, java.util.List<UserGroup> userGroups) {
 
 		_userGroupLocalService.deleteGroupUserGroups(groupId, userGroups);
 	}
@@ -228,16 +216,13 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteTeamUserGroup(
-		long teamId, com.liferay.portal.kernel.model.UserGroup userGroup) {
-
+	public void deleteTeamUserGroup(long teamId, UserGroup userGroup) {
 		_userGroupLocalService.deleteTeamUserGroup(teamId, userGroup);
 	}
 
 	@Override
 	public void deleteTeamUserGroups(
-		long teamId,
-		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+		long teamId, java.util.List<UserGroup> userGroups) {
 
 		_userGroupLocalService.deleteTeamUserGroups(teamId, userGroups);
 	}
@@ -255,8 +240,7 @@ public class UserGroupLocalServiceWrapper
 	 * @throws PortalException if a user group with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup deleteUserGroup(
-			long userGroupId)
+	public UserGroup deleteUserGroup(long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.deleteUserGroup(userGroupId);
@@ -270,8 +254,7 @@ public class UserGroupLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup deleteUserGroup(
-			com.liferay.portal.kernel.model.UserGroup userGroup)
+	public UserGroup deleteUserGroup(UserGroup userGroup)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.deleteUserGroup(userGroup);
@@ -290,16 +273,13 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteUserUserGroup(
-		long userId, com.liferay.portal.kernel.model.UserGroup userGroup) {
-
+	public void deleteUserUserGroup(long userId, UserGroup userGroup) {
 		_userGroupLocalService.deleteUserUserGroup(userId, userGroup);
 	}
 
 	@Override
 	public void deleteUserUserGroups(
-		long userId,
-		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
+		long userId, java.util.List<UserGroup> userGroups) {
 
 		_userGroupLocalService.deleteUserUserGroups(userId, userGroups);
 	}
@@ -400,16 +380,12 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup fetchUserGroup(
-		long userGroupId) {
-
+	public UserGroup fetchUserGroup(long userGroupId) {
 		return _userGroupLocalService.fetchUserGroup(userGroupId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup fetchUserGroup(
-		long companyId, java.lang.String name) {
-
+	public UserGroup fetchUserGroup(long companyId, String name) {
 		return _userGroupLocalService.fetchUserGroup(companyId, name);
 	}
 
@@ -421,9 +397,8 @@ public class UserGroupLocalServiceWrapper
 	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup
-		fetchUserGroupByReferenceCode(
-			long companyId, java.lang.String externalReferenceCode) {
+	public UserGroup fetchUserGroupByReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return _userGroupLocalService.fetchUserGroupByReferenceCode(
 			companyId, externalReferenceCode);
@@ -437,9 +412,8 @@ public class UserGroupLocalServiceWrapper
 	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup
-		fetchUserGroupByUuidAndCompanyId(
-			java.lang.String uuid, long companyId) {
+	public UserGroup fetchUserGroupByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _userGroupLocalService.fetchUserGroupByUuidAndCompanyId(
 			uuid, companyId);
@@ -474,25 +448,22 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getGroupUserGroups(long groupId) {
-
+	public java.util.List<UserGroup> getGroupUserGroups(long groupId) {
 		return _userGroupLocalService.getGroupUserGroups(groupId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getGroupUserGroups(long groupId, int start, int end) {
+	public java.util.List<UserGroup> getGroupUserGroups(
+		long groupId, int start, int end) {
 
 		return _userGroupLocalService.getGroupUserGroups(groupId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getGroupUserGroups(
-			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.UserGroup> orderByComparator) {
+	public java.util.List<UserGroup> getGroupUserGroups(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator) {
 
 		return _userGroupLocalService.getGroupUserGroups(
 			groupId, start, end, orderByComparator);
@@ -504,8 +475,8 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-			getGroupUserUserGroups(long groupId, long userId)
+	public java.util.List<UserGroup> getGroupUserUserGroups(
+			long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.getGroupUserUserGroups(groupId, userId);
@@ -524,7 +495,7 @@ public class UserGroupLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _userGroupLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -551,25 +522,22 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getTeamUserGroups(long teamId) {
-
+	public java.util.List<UserGroup> getTeamUserGroups(long teamId) {
 		return _userGroupLocalService.getTeamUserGroups(teamId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getTeamUserGroups(long teamId, int start, int end) {
+	public java.util.List<UserGroup> getTeamUserGroups(
+		long teamId, int start, int end) {
 
 		return _userGroupLocalService.getTeamUserGroups(teamId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getTeamUserGroups(
-			long teamId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.UserGroup> orderByComparator) {
+	public java.util.List<UserGroup> getTeamUserGroups(
+		long teamId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator) {
 
 		return _userGroupLocalService.getTeamUserGroups(
 			teamId, start, end, orderByComparator);
@@ -588,8 +556,7 @@ public class UserGroupLocalServiceWrapper
 	 * @throws PortalException if a user group with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup getUserGroup(
-			long userGroupId)
+	public UserGroup getUserGroup(long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.getUserGroup(userGroupId);
@@ -603,8 +570,7 @@ public class UserGroupLocalServiceWrapper
 	 * @return Returns the user group with the name
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup getUserGroup(
-			long companyId, java.lang.String name)
+	public UserGroup getUserGroup(long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.getUserGroup(companyId, name);
@@ -619,9 +585,7 @@ public class UserGroupLocalServiceWrapper
 	 * @throws PortalException if a matching user group could not be found
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup
-			getUserGroupByUuidAndCompanyId(
-				java.lang.String uuid, long companyId)
+	public UserGroup getUserGroupByUuidAndCompanyId(String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.getUserGroupByUuidAndCompanyId(
@@ -640,9 +604,7 @@ public class UserGroupLocalServiceWrapper
 	 * @return the range of user groups
 	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getUserGroups(int start, int end) {
-
+	public java.util.List<UserGroup> getUserGroups(int start, int end) {
 		return _userGroupLocalService.getUserGroups(start, end);
 	}
 
@@ -653,16 +615,13 @@ public class UserGroupLocalServiceWrapper
 	 * @return the user groups belonging to the company
 	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getUserGroups(long companyId) {
-
+	public java.util.List<UserGroup> getUserGroups(long companyId) {
 		return _userGroupLocalService.getUserGroups(companyId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getUserGroups(
-			long companyId, java.lang.String name, int start, int end) {
+	public java.util.List<UserGroup> getUserGroups(
+		long companyId, String name, int start, int end) {
 
 		return _userGroupLocalService.getUserGroups(
 			companyId, name, start, end);
@@ -675,8 +634,7 @@ public class UserGroupLocalServiceWrapper
 	 * @return the user groups with the primary keys
 	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-			getUserGroups(long[] userGroupIds)
+	public java.util.List<UserGroup> getUserGroups(long[] userGroupIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.getUserGroups(userGroupIds);
@@ -693,7 +651,7 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public int getUserGroupsCount(long companyId, java.lang.String name) {
+	public int getUserGroupsCount(long companyId, String name) {
 		return _userGroupLocalService.getUserGroupsCount(companyId, name);
 	}
 
@@ -709,25 +667,22 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getUserUserGroups(long userId) {
-
+	public java.util.List<UserGroup> getUserUserGroups(long userId) {
 		return _userGroupLocalService.getUserUserGroups(userId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getUserUserGroups(long userId, int start, int end) {
+	public java.util.List<UserGroup> getUserUserGroups(
+		long userId, int start, int end) {
 
 		return _userGroupLocalService.getUserUserGroups(userId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getUserUserGroups(
-			long userId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.UserGroup> orderByComparator) {
+	public java.util.List<UserGroup> getUserUserGroups(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator) {
 
 		return _userGroupLocalService.getUserUserGroups(
 			userId, start, end, orderByComparator);
@@ -795,12 +750,10 @@ public class UserGroupLocalServiceWrapper
 	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> search(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.portal.kernel.model.UserGroup> obc) {
+	public java.util.List<UserGroup> search(
+		long companyId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> obc) {
 
 		return _userGroupLocalService.search(
 			companyId, keywords, params, start, end, obc);
@@ -836,9 +789,9 @@ public class UserGroupLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
+		long companyId, String keywords,
+		java.util.LinkedHashMap<String, Object> params, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort) {
 
 		return _userGroupLocalService.search(
 			companyId, keywords, params, start, end, sort);
@@ -875,12 +828,11 @@ public class UserGroupLocalServiceWrapper
 	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	 */
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> search(
-		long companyId, java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.portal.kernel.model.UserGroup> obc) {
+	public java.util.List<UserGroup> search(
+		long companyId, String name, String description,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup> obc) {
 
 		return _userGroupLocalService.search(
 			companyId, name, description, params, andOperator, start, end, obc);
@@ -919,10 +871,9 @@ public class UserGroupLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
-		long companyId, java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort) {
+		long companyId, String name, String description,
+		java.util.LinkedHashMap<String, Object> params, boolean andSearch,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
 
 		return _userGroupLocalService.search(
 			companyId, name, description, params, andSearch, start, end, sort);
@@ -942,8 +893,8 @@ public class UserGroupLocalServiceWrapper
 	 */
 	@Override
 	public int searchCount(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		long companyId, String keywords,
+		java.util.LinkedHashMap<String, Object> params) {
 
 		return _userGroupLocalService.searchCount(companyId, keywords, params);
 	}
@@ -965,37 +916,33 @@ public class UserGroupLocalServiceWrapper
 	 */
 	@Override
 	public int searchCount(
-		long companyId, java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator) {
+		long companyId, String name, String description,
+		java.util.LinkedHashMap<String, Object> params, boolean andOperator) {
 
 		return _userGroupLocalService.searchCount(
 			companyId, name, description, params, andOperator);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.portal.kernel.model.UserGroup> searchUserGroups(
-				long companyId, java.lang.String keywords,
-				java.util.LinkedHashMap<java.lang.String, java.lang.Object>
-					params,
-				int start, int end, com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<UserGroup>
+			searchUserGroups(
+				long companyId, String keywords,
+				java.util.LinkedHashMap<String, Object> params, int start,
+				int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.searchUserGroups(
 			companyId, keywords, params, start, end, sort);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.portal.kernel.model.UserGroup> searchUserGroups(
-				long companyId, java.lang.String name,
-				java.lang.String description,
-				java.util.LinkedHashMap<java.lang.String, java.lang.Object>
-					params,
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<UserGroup>
+			searchUserGroups(
+				long companyId, String name, String description,
+				java.util.LinkedHashMap<String, Object> params,
 				boolean andSearch, int start, int end,
 				com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.searchUserGroups(
 			companyId, name, description, params, andSearch, start, end, sort);
@@ -1056,9 +1003,9 @@ public class UserGroupLocalServiceWrapper
 	 * @return the user group
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup updateUserGroup(
-			long companyId, long userGroupId, java.lang.String name,
-			java.lang.String description, ServiceContext serviceContext)
+	public UserGroup updateUserGroup(
+			long companyId, long userGroupId, String name, String description,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupLocalService.updateUserGroup(
@@ -1072,10 +1019,27 @@ public class UserGroupLocalServiceWrapper
 	 * @return the user group that was updated
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup updateUserGroup(
-		com.liferay.portal.kernel.model.UserGroup userGroup) {
-
+	public UserGroup updateUserGroup(UserGroup userGroup) {
 		return _userGroupLocalService.updateUserGroup(userGroup);
+	}
+
+	@Override
+	public CTPersistence<UserGroup> getCTPersistence() {
+		return _userGroupLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<UserGroup> getModelClass() {
+		return _userGroupLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<UserGroup>, R, E> updateUnsafeFunction)
+		throws E {
+
+		return _userGroupLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

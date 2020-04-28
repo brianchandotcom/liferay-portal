@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -79,6 +80,7 @@ import com.liferay.portal.kernel.service.persistence.UserGroupRoleFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -2660,8 +2662,22 @@ public abstract class GroupLocalServiceBaseImpl
 		return GroupLocalService.class.getName();
 	}
 
-	protected Class<?> getModelClass() {
+	@Override
+	public CTPersistence<Group> getCTPersistence() {
+		return groupPersistence;
+	}
+
+	@Override
+	public Class<Group> getModelClass() {
 		return Group.class;
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<Group>, R, E> updateUnsafeFunction)
+		throws E {
+
+		return updateUnsafeFunction.apply(groupPersistence);
 	}
 
 	protected String getModelClassName() {

@@ -80,14 +80,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	public static final String TABLE_NAME = "Role_";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"roleId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"subtype", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"roleId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"type_", Types.INTEGER}, {"subtype", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,6 +95,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -112,7 +113,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Role_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,roleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null)";
+		"create table Role_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,roleId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null,primary key (roleId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Role_";
 
@@ -169,6 +170,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		Role model = new RoleImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setRoleId(soapModel.getRoleId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -215,7 +217,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE =
-		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
+		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, roleId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES =
 		GetterUtil.getBoolean(
@@ -231,7 +233,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_ROLES_SQL_CREATE =
-		"create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,primary key (roleId, userId))";
+		"create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (roleId, userId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_ROLES =
 		GetterUtil.getBoolean(
@@ -367,6 +369,9 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		attributeGetterFunctions.put("mvccVersion", Role::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion", (BiConsumer<Role, Long>)Role::setMvccVersion);
+		attributeGetterFunctions.put("ctCollectionId", Role::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId", (BiConsumer<Role, Long>)Role::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", Role::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<Role, String>)Role::setUuid);
@@ -425,6 +430,17 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1043,6 +1059,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		RoleImpl roleImpl = new RoleImpl();
 
 		roleImpl.setMvccVersion(getMvccVersion());
+		roleImpl.setCtCollectionId(getCtCollectionId());
 		roleImpl.setUuid(getUuid());
 		roleImpl.setRoleId(getRoleId());
 		roleImpl.setCompanyId(getCompanyId());
@@ -1149,6 +1166,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		RoleCacheModel roleCacheModel = new RoleCacheModel();
 
 		roleCacheModel.mvccVersion = getMvccVersion();
+
+		roleCacheModel.ctCollectionId = getCtCollectionId();
 
 		roleCacheModel.uuid = getUuid();
 
@@ -1300,6 +1319,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _roleId;

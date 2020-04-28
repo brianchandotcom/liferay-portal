@@ -125,6 +125,8 @@ public class RolePersistenceTest {
 
 		newRole.setMvccVersion(RandomTestUtil.nextLong());
 
+		newRole.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newRole.setUuid(RandomTestUtil.randomString());
 
 		newRole.setCompanyId(RandomTestUtil.nextLong());
@@ -158,6 +160,8 @@ public class RolePersistenceTest {
 
 		Assert.assertEquals(
 			existingRole.getMvccVersion(), newRole.getMvccVersion());
+		Assert.assertEquals(
+			existingRole.getCtCollectionId(), newRole.getCtCollectionId());
 		Assert.assertEquals(existingRole.getUuid(), newRole.getUuid());
 		Assert.assertEquals(existingRole.getRoleId(), newRole.getRoleId());
 		Assert.assertEquals(
@@ -321,11 +325,11 @@ public class RolePersistenceTest {
 
 	protected OrderByComparator<Role> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"Role_", "mvccVersion", true, "uuid", true, "roleId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"name", true, "title", true, "description", true, "type", true,
-			"subtype", true);
+			"Role_", "mvccVersion", true, "ctCollectionId", true, "uuid", true,
+			"roleId", true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "name", true, "title", true, "description", true,
+			"type", true, "subtype", true);
 	}
 
 	@Test
@@ -582,6 +586,8 @@ public class RolePersistenceTest {
 		Role role = _persistence.create(pk);
 
 		role.setMvccVersion(RandomTestUtil.nextLong());
+
+		role.setCtCollectionId(RandomTestUtil.nextLong());
 
 		role.setUuid(RandomTestUtil.randomString());
 

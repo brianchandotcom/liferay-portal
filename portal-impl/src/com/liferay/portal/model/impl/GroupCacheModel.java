@@ -74,10 +74,12 @@ public class GroupCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", groupId=");
@@ -130,6 +132,7 @@ public class GroupCacheModel
 		GroupImpl groupImpl = new GroupImpl();
 
 		groupImpl.setMvccVersion(mvccVersion);
+		groupImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			groupImpl.setUuid("");
@@ -208,6 +211,8 @@ public class GroupCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		groupId = objectInput.readLong();
@@ -248,6 +253,8 @@ public class GroupCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -328,6 +335,7 @@ public class GroupCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long groupId;
 	public long companyId;

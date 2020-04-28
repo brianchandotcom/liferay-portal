@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface VirtualHostModel
-	extends BaseModel<VirtualHost>, MVCCModel, ShardedModel {
+	extends BaseModel<VirtualHost>, CTModel<VirtualHost>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -44,6 +46,7 @@ public interface VirtualHostModel
 	 *
 	 * @return the primary key of this virtual host
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -51,6 +54,7 @@ public interface VirtualHostModel
 	 *
 	 * @param primaryKey the primary key of this virtual host
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -68,6 +72,22 @@ public interface VirtualHostModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this virtual host.
+	 *
+	 * @return the ct collection ID of this virtual host
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this virtual host.
+	 *
+	 * @param ctCollectionId the ct collection ID of this virtual host
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the virtual host ID of this virtual host.

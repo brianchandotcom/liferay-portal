@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface TeamPersistence extends BasePersistence<Team> {
+public interface TeamPersistence
+	extends BasePersistence<Team>, CTPersistence<Team> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

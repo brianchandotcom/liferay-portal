@@ -124,6 +124,8 @@ public class LayoutSetPersistenceTest {
 
 		newLayoutSet.setMvccVersion(RandomTestUtil.nextLong());
 
+		newLayoutSet.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newLayoutSet.setGroupId(RandomTestUtil.nextLong());
 
 		newLayoutSet.setCompanyId(RandomTestUtil.nextLong());
@@ -156,6 +158,9 @@ public class LayoutSetPersistenceTest {
 
 		Assert.assertEquals(
 			existingLayoutSet.getMvccVersion(), newLayoutSet.getMvccVersion());
+		Assert.assertEquals(
+			existingLayoutSet.getCtCollectionId(),
+			newLayoutSet.getCtCollectionId());
 		Assert.assertEquals(
 			existingLayoutSet.getLayoutSetId(), newLayoutSet.getLayoutSetId());
 		Assert.assertEquals(
@@ -255,11 +260,12 @@ public class LayoutSetPersistenceTest {
 
 	protected OrderByComparator<LayoutSet> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"LayoutSet", "mvccVersion", true, "layoutSetId", true, "groupId",
-			true, "companyId", true, "createDate", true, "modifiedDate", true,
-			"privateLayout", true, "logoId", true, "themeId", true,
-			"colorSchemeId", true, "layoutSetPrototypeUuid", true,
-			"layoutSetPrototypeLinkEnabled", true);
+			"LayoutSet", "mvccVersion", true, "ctCollectionId", true,
+			"layoutSetId", true, "groupId", true, "companyId", true,
+			"createDate", true, "modifiedDate", true, "privateLayout", true,
+			"logoId", true, "themeId", true, "colorSchemeId", true,
+			"layoutSetPrototypeUuid", true, "layoutSetPrototypeLinkEnabled",
+			true);
 	}
 
 	@Test
@@ -507,6 +513,8 @@ public class LayoutSetPersistenceTest {
 		LayoutSet layoutSet = _persistence.create(pk);
 
 		layoutSet.setMvccVersion(RandomTestUtil.nextLong());
+
+		layoutSet.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layoutSet.setGroupId(RandomTestUtil.nextLong());
 

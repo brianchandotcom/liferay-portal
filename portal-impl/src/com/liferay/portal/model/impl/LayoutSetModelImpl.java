@@ -69,13 +69,13 @@ public class LayoutSetModelImpl
 	public static final String TABLE_NAME = "LayoutSet";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"layoutSetId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"privateLayout", Types.BOOLEAN}, {"logoId", Types.BIGINT},
-		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
-		{"css", Types.CLOB}, {"settings_", Types.CLOB},
-		{"layoutSetPrototypeUuid", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"layoutSetId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"privateLayout", Types.BOOLEAN},
+		{"logoId", Types.BIGINT}, {"themeId", Types.VARCHAR},
+		{"colorSchemeId", Types.VARCHAR}, {"css", Types.CLOB},
+		{"settings_", Types.CLOB}, {"layoutSetPrototypeUuid", Types.VARCHAR},
 		{"layoutSetPrototypeLinkEnabled", Types.BOOLEAN}
 	};
 
@@ -84,6 +84,7 @@ public class LayoutSetModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutSetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -100,7 +101,7 @@ public class LayoutSetModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSet (mvccVersion LONG default 0 not null,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+		"create table LayoutSet (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,layoutSetId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN,primary key (layoutSetId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 
@@ -157,6 +158,7 @@ public class LayoutSetModelImpl
 		LayoutSet model = new LayoutSetImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setLayoutSetId(soapModel.getLayoutSetId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -329,6 +331,11 @@ public class LayoutSetModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<LayoutSet, Long>)LayoutSet::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", LayoutSet::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<LayoutSet, Long>)LayoutSet::setCtCollectionId);
 		attributeGetterFunctions.put("layoutSetId", LayoutSet::getLayoutSetId);
 		attributeSetterBiConsumers.put(
 			"layoutSetId",
@@ -399,6 +406,17 @@ public class LayoutSetModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -699,6 +717,7 @@ public class LayoutSetModelImpl
 		LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
 
 		layoutSetImpl.setMvccVersion(getMvccVersion());
+		layoutSetImpl.setCtCollectionId(getCtCollectionId());
 		layoutSetImpl.setLayoutSetId(getLayoutSetId());
 		layoutSetImpl.setGroupId(getGroupId());
 		layoutSetImpl.setCompanyId(getCompanyId());
@@ -809,6 +828,8 @@ public class LayoutSetModelImpl
 		LayoutSetCacheModel layoutSetCacheModel = new LayoutSetCacheModel();
 
 		layoutSetCacheModel.mvccVersion = getMvccVersion();
+
+		layoutSetCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutSetCacheModel.layoutSetId = getLayoutSetId();
 
@@ -964,6 +985,7 @@ public class LayoutSetModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _layoutSetId;
 	private long _groupId;
 	private long _originalGroupId;

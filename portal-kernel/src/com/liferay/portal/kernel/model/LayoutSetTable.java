@@ -35,6 +35,8 @@ public class LayoutSetTable extends BaseTable<LayoutSetTable> {
 
 	public final Column<LayoutSetTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<LayoutSetTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutSetTable, Long> layoutSetId = createColumn(
 		"layoutSetId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutSetTable, Long> groupId = createColumn(

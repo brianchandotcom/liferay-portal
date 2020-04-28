@@ -37,6 +37,10 @@ public class Groups_OrgsTable extends BaseTable<Groups_OrgsTable> {
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<Groups_OrgsTable, Long> organizationId = createColumn(
 		"organizationId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<Groups_OrgsTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<Groups_OrgsTable, Boolean> ctChangeType = createColumn(
+		"ctChangeType", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private Groups_OrgsTable() {
 		super("Groups_Orgs", Groups_OrgsTable::new);

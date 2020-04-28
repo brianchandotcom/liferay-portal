@@ -68,10 +68,11 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final String TABLE_NAME = "Image";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"imageId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"modifiedDate", Types.TIMESTAMP},
-		{"type_", Types.VARCHAR}, {"height", Types.INTEGER},
-		{"width", Types.INTEGER}, {"size_", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"imageId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"modifiedDate", Types.TIMESTAMP}, {"type_", Types.VARCHAR},
+		{"height", Types.INTEGER}, {"width", Types.INTEGER},
+		{"size_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,6 +80,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("imageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
@@ -89,7 +91,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Image (mvccVersion LONG default 0 not null,imageId LONG not null primary key,companyId LONG,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
+		"create table Image (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,imageId LONG not null,companyId LONG,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER,primary key (imageId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Image";
 
@@ -136,6 +138,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		Image model = new ImageImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setImageId(soapModel.getImageId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setModifiedDate(soapModel.getModifiedDate());
@@ -295,6 +298,11 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		attributeGetterFunctions.put("mvccVersion", Image::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion", (BiConsumer<Image, Long>)Image::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", Image::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<Image, Long>)Image::setCtCollectionId);
 		attributeGetterFunctions.put("imageId", Image::getImageId);
 		attributeSetterBiConsumers.put(
 			"imageId", (BiConsumer<Image, Long>)Image::setImageId);
@@ -332,6 +340,17 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -467,6 +486,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		ImageImpl imageImpl = new ImageImpl();
 
 		imageImpl.setMvccVersion(getMvccVersion());
+		imageImpl.setCtCollectionId(getCtCollectionId());
 		imageImpl.setImageId(getImageId());
 		imageImpl.setCompanyId(getCompanyId());
 		imageImpl.setModifiedDate(getModifiedDate());
@@ -554,6 +574,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		ImageCacheModel imageCacheModel = new ImageCacheModel();
 
 		imageCacheModel.mvccVersion = getMvccVersion();
+
+		imageCacheModel.ctCollectionId = getCtCollectionId();
 
 		imageCacheModel.imageId = getImageId();
 
@@ -654,6 +676,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _imageId;
 	private long _companyId;
 	private Date _modifiedDate;

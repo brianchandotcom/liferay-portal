@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -41,6 +43,7 @@ public class VirtualHostWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("virtualHostId", getVirtualHostId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("layoutSetId", getLayoutSetId());
@@ -57,6 +60,12 @@ public class VirtualHostWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long virtualHostId = (Long)attributes.get("virtualHostId");
@@ -105,6 +114,16 @@ public class VirtualHostWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this virtual host.
+	 *
+	 * @return the ct collection ID of this virtual host
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -203,6 +222,16 @@ public class VirtualHostWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this virtual host.
+	 *
+	 * @param ctCollectionId the ct collection ID of this virtual host
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets whether this virtual host is default virtual host.
 	 *
 	 * @param defaultVirtualHost the default virtual host of this virtual host
@@ -270,6 +299,20 @@ public class VirtualHostWrapper
 	@Override
 	public void setVirtualHostId(long virtualHostId) {
 		model.setVirtualHostId(virtualHostId);
+	}
+
+	@Override
+	public Map<String, Function<VirtualHost, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<VirtualHost, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

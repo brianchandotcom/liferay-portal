@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface UserGroupModel
-	extends BaseModel<UserGroup>, MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<UserGroup>, CTModel<UserGroup>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -46,6 +48,7 @@ public interface UserGroupModel
 	 *
 	 * @return the primary key of this user group
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -53,6 +56,7 @@ public interface UserGroupModel
 	 *
 	 * @param primaryKey the primary key of this user group
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -70,6 +74,22 @@ public interface UserGroupModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this user group.
+	 *
+	 * @return the ct collection ID of this user group
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this user group.
+	 *
+	 * @param ctCollectionId the ct collection ID of this user group
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this user group.

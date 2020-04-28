@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutSetModel
-	extends BaseModel<LayoutSet>, MVCCModel, ShardedModel {
+	extends BaseModel<LayoutSet>, CTModel<LayoutSet>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -46,6 +47,7 @@ public interface LayoutSetModel
 	 *
 	 * @return the primary key of this layout set
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -53,6 +55,7 @@ public interface LayoutSetModel
 	 *
 	 * @param primaryKey the primary key of this layout set
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -70,6 +73,22 @@ public interface LayoutSetModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this layout set.
+	 *
+	 * @return the ct collection ID of this layout set
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this layout set.
+	 *
+	 * @param ctCollectionId the ct collection ID of this layout set
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the layout set ID of this layout set.

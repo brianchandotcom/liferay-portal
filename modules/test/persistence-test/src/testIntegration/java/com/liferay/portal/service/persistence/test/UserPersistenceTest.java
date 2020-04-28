@@ -125,6 +125,8 @@ public class UserPersistenceTest {
 
 		newUser.setMvccVersion(RandomTestUtil.nextLong());
 
+		newUser.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newUser.setUuid(RandomTestUtil.randomString());
 
 		newUser.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -214,6 +216,8 @@ public class UserPersistenceTest {
 
 		Assert.assertEquals(
 			existingUser.getMvccVersion(), newUser.getMvccVersion());
+		Assert.assertEquals(
+			existingUser.getCtCollectionId(), newUser.getCtCollectionId());
 		Assert.assertEquals(existingUser.getUuid(), newUser.getUuid());
 		Assert.assertEquals(
 			existingUser.getExternalReferenceCode(),
@@ -494,11 +498,11 @@ public class UserPersistenceTest {
 
 	protected OrderByComparator<User> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"User_", "mvccVersion", true, "uuid", true, "externalReferenceCode",
-			true, "userId", true, "companyId", true, "createDate", true,
-			"modifiedDate", true, "defaultUser", true, "contactId", true,
-			"password", true, "passwordEncrypted", true, "passwordReset", true,
-			"passwordModifiedDate", true, "digest", true,
+			"User_", "mvccVersion", true, "ctCollectionId", true, "uuid", true,
+			"externalReferenceCode", true, "userId", true, "companyId", true,
+			"createDate", true, "modifiedDate", true, "defaultUser", true,
+			"contactId", true, "password", true, "passwordEncrypted", true,
+			"passwordReset", true, "passwordModifiedDate", true, "digest", true,
 			"reminderQueryQuestion", true, "reminderQueryAnswer", true,
 			"graceLoginCount", true, "screenName", true, "emailAddress", true,
 			"facebookId", true, "googleUserId", true, "ldapServerId", true,
@@ -814,6 +818,8 @@ public class UserPersistenceTest {
 		User user = _persistence.create(pk);
 
 		user.setMvccVersion(RandomTestUtil.nextLong());
+
+		user.setCtCollectionId(RandomTestUtil.nextLong());
 
 		user.setUuid(RandomTestUtil.randomString());
 

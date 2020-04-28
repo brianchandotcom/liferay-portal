@@ -69,9 +69,10 @@ public class UserGroupGroupRoleModelImpl
 	public static final String TABLE_NAME = "UserGroupGroupRole";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"userGroupGroupRoleId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userGroupId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"roleId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"userGroupGroupRoleId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userGroupId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"roleId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,6 +80,7 @@ public class UserGroupGroupRoleModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userGroupGroupRoleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userGroupId", Types.BIGINT);
@@ -87,7 +89,7 @@ public class UserGroupGroupRoleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table UserGroupGroupRole (mvccVersion LONG default 0 not null,userGroupGroupRoleId LONG not null primary key,companyId LONG,userGroupId LONG,groupId LONG,roleId LONG)";
+		"create table UserGroupGroupRole (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,userGroupGroupRoleId LONG not null,companyId LONG,userGroupId LONG,groupId LONG,roleId LONG,primary key (userGroupGroupRoleId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table UserGroupGroupRole";
 
@@ -140,6 +142,7 @@ public class UserGroupGroupRoleModelImpl
 		UserGroupGroupRole model = new UserGroupGroupRoleImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUserGroupGroupRoleId(soapModel.getUserGroupGroupRoleId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserGroupId(soapModel.getUserGroupId());
@@ -313,6 +316,12 @@ public class UserGroupGroupRoleModelImpl
 			(BiConsumer<UserGroupGroupRole, Long>)
 				UserGroupGroupRole::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", UserGroupGroupRole::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<UserGroupGroupRole, Long>)
+				UserGroupGroupRole::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"userGroupGroupRoleId",
 			UserGroupGroupRole::getUserGroupGroupRoleId);
 		attributeSetterBiConsumers.put(
@@ -357,6 +366,17 @@ public class UserGroupGroupRoleModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -489,6 +509,7 @@ public class UserGroupGroupRoleModelImpl
 			new UserGroupGroupRoleImpl();
 
 		userGroupGroupRoleImpl.setMvccVersion(getMvccVersion());
+		userGroupGroupRoleImpl.setCtCollectionId(getCtCollectionId());
 		userGroupGroupRoleImpl.setUserGroupGroupRoleId(
 			getUserGroupGroupRoleId());
 		userGroupGroupRoleImpl.setCompanyId(getCompanyId());
@@ -582,6 +603,8 @@ public class UserGroupGroupRoleModelImpl
 
 		userGroupGroupRoleCacheModel.mvccVersion = getMvccVersion();
 
+		userGroupGroupRoleCacheModel.ctCollectionId = getCtCollectionId();
+
 		userGroupGroupRoleCacheModel.userGroupGroupRoleId =
 			getUserGroupGroupRoleId();
 
@@ -667,6 +690,7 @@ public class UserGroupGroupRoleModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _userGroupGroupRoleId;
 	private long _companyId;
 	private long _userGroupId;

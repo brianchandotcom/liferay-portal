@@ -74,13 +74,13 @@ public class UserGroupModelImpl
 	public static final String TABLE_NAME = "UserGroup";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR}, {"userGroupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"parentUserGroupId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"addedByLDAPImport", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"userGroupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"parentUserGroupId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"addedByLDAPImport", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,6 +88,7 @@ public class UserGroupModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("userGroupId", Types.BIGINT);
@@ -103,7 +104,7 @@ public class UserGroupModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table UserGroup (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(255) null,description STRING null,addedByLDAPImport BOOLEAN)";
+		"create table UserGroup (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userGroupId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(255) null,description STRING null,addedByLDAPImport BOOLEAN,primary key (userGroupId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table UserGroup";
 
@@ -158,6 +159,7 @@ public class UserGroupModelImpl
 		UserGroup model = new UserGroupImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setUserGroupId(soapModel.getUserGroupId());
@@ -203,7 +205,7 @@ public class UserGroupModelImpl
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE =
-		"create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId))";
+		"create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, userGroupId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS =
 		GetterUtil.getBoolean(
@@ -220,7 +222,7 @@ public class UserGroupModelImpl
 	};
 
 	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE =
-		"create table UserGroups_Teams (companyId LONG not null,teamId LONG not null,userGroupId LONG not null,primary key (teamId, userGroupId))";
+		"create table UserGroups_Teams (companyId LONG not null,teamId LONG not null,userGroupId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (teamId, userGroupId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERGROUPS_TEAMS =
 		GetterUtil.getBoolean(
@@ -237,7 +239,7 @@ public class UserGroupModelImpl
 	};
 
 	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE =
-		"create table Users_UserGroups (companyId LONG not null,userId LONG not null,userGroupId LONG not null,primary key (userId, userGroupId))";
+		"create table Users_UserGroups (companyId LONG not null,userId LONG not null,userGroupId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (userId, userGroupId, ctCollectionId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_USERGROUPS =
 		GetterUtil.getBoolean(
@@ -379,6 +381,11 @@ public class UserGroupModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<UserGroup, Long>)UserGroup::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", UserGroup::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<UserGroup, Long>)UserGroup::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", UserGroup::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<UserGroup, String>)UserGroup::setUuid);
@@ -442,6 +449,17 @@ public class UserGroupModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -738,6 +756,7 @@ public class UserGroupModelImpl
 		UserGroupImpl userGroupImpl = new UserGroupImpl();
 
 		userGroupImpl.setMvccVersion(getMvccVersion());
+		userGroupImpl.setCtCollectionId(getCtCollectionId());
 		userGroupImpl.setUuid(getUuid());
 		userGroupImpl.setExternalReferenceCode(getExternalReferenceCode());
 		userGroupImpl.setUserGroupId(getUserGroupId());
@@ -841,6 +860,8 @@ public class UserGroupModelImpl
 		UserGroupCacheModel userGroupCacheModel = new UserGroupCacheModel();
 
 		userGroupCacheModel.mvccVersion = getMvccVersion();
+
+		userGroupCacheModel.ctCollectionId = getCtCollectionId();
 
 		userGroupCacheModel.uuid = getUuid();
 
@@ -987,6 +1008,7 @@ public class UserGroupModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

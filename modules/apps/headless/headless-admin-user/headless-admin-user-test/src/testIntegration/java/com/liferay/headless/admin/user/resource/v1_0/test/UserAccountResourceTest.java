@@ -417,25 +417,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private UserAccount _addUserAccount(long siteId, UserAccount userAccount)
 		throws Exception {
 
-		User user = UserLocalServiceUtil.addUser(
-			UserConstants.USER_ID_DEFAULT, PortalUtil.getDefaultCompanyId(),
-			true, null, null, Validator.isNull(userAccount.getAlternateName()),
-			userAccount.getAlternateName(), userAccount.getEmailAddress(), 0,
-			StringPool.BLANK, LocaleUtil.getDefault(),
-			userAccount.getGivenName(), StringPool.BLANK,
-			userAccount.getFamilyName(), 0, 0, true, 1, 1, 1970,
-			userAccount.getJobTitle(), null, null, null, null, false,
-			new ServiceContext() {
-				{
-					setCreateDate(userAccount.getDateCreated());
-					setModifiedDate(userAccount.getDateModified());
-				}
-			});
+		userAccount = userAccountResource.postUserAccount(userAccount);
 
-		userAccount.setDateModified(user.getModifiedDate());
-		userAccount.setId(user.getUserId());
-
-		_users.add(UserLocalServiceUtil.getUser(user.getUserId()));
+		_users.add(UserLocalServiceUtil.getUser(userAccount.getId()));
 
 		UserLocalServiceUtil.addGroupUser(siteId, userAccount.getId());
 

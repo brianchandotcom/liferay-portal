@@ -29,12 +29,10 @@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.GroupConstants" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -42,15 +40,12 @@ page import="com.liferay.portal.kernel.util.comparator.GroupNameComparator" %><%
 page import="com.liferay.site.navigation.directory.web.internal.display.context.SitesDirectoryDisplayContext" %><%@
 page import="com.liferay.taglib.ui.SitesDirectoryTag" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.LinkedHashSet" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Set" %>
-
-<%@ page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletURL" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.Objects" %>
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

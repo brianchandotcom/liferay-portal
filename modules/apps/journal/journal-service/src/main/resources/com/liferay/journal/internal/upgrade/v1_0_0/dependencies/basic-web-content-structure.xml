@@ -13,7 +13,7 @@
 					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
 					"fields": [
 						{
-							"dataType": "html",
+							"dataType": "string",
 							"fieldNamespace": "ddm",
 							"indexType": "text",
 							"label": {
@@ -22,8 +22,7 @@
 							"localizable": true,
 							"name": "content",
 							"showLabel": true,
-							"type": "ddm-text-html",
-							"width": "small"
+							"type": "rich_text"
 						}
 					]
 				}

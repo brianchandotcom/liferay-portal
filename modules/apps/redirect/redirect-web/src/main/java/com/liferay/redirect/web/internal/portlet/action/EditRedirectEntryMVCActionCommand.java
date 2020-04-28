@@ -81,7 +81,7 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			if (ParamUtil.getBoolean(actionRequest, "updateReferences")) {
-				_redirectEntryService.updateRedirectEntriesReferences(
+				_redirectEntryService.updateChainedRedirectEntries(
 					themeDisplay.getScopeGroupId(), destinationURL,
 					RedirectUtil.getGroupBaseURL(themeDisplay) +
 						StringPool.SLASH + sourceURL);

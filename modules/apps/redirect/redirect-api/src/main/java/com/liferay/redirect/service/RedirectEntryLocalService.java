@@ -89,7 +89,7 @@ public interface RedirectEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry addRedirectEntry(RedirectEntry redirectEntry);
 
-	public boolean checkRedirectEntriesByGroupAndDestinationURL(
+	public boolean checkRedirectionChain(
 		long groupId, String destinationURL);
 
 	/**

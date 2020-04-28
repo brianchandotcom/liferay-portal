@@ -116,7 +116,7 @@ public class RedirectEntryServiceTest {
 					String.valueOf(TestPropsValues.getCompanyId()),
 					ActionKeys.UPDATE);
 
-				_redirectEntryService.updateRedirectEntriesReferences(
+				_redirectEntryService.updateChainedRedirectEntries(
 					_group.getGroupId(), "finalDestinationURL",
 					"intermediateDestinationURL");
 
@@ -163,7 +163,7 @@ public class RedirectEntryServiceTest {
 					String.valueOf(TestPropsValues.getCompanyId()),
 					ActionKeys.VIEW);
 
-				_redirectEntryService.updateRedirectEntriesReferences(
+				_redirectEntryService.updateChainedRedirectEntries(
 					_group.getGroupId(), "finalDestinationURL",
 					"intermediateDestinationURL");
 			});

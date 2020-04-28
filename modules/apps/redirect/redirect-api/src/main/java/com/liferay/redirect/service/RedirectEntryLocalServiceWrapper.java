@@ -79,11 +79,11 @@ public class RedirectEntryLocalServiceWrapper
 	}
 
 	@Override
-	public boolean checkRedirectEntriesByGroupAndDestinationURL(
+	public boolean checkRedirectionChain(
 		long groupId, String destinationURL) {
 
 		return _redirectEntryLocalService.
-			checkRedirectEntriesByGroupAndDestinationURL(
+			checkRedirectionChain(
 				groupId, destinationURL);
 	}
 

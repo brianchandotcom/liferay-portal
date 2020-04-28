@@ -124,7 +124,7 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void updateRedirectEntriesReferences(
+	public void updateChainedRedirectEntries(
 			long groupId, String destinationURL, String sourceURL)
 		throws PortalException {
 

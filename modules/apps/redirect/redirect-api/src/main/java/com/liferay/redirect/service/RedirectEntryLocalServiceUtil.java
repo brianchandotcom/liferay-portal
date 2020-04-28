@@ -81,7 +81,7 @@ public class RedirectEntryLocalServiceUtil {
 	public static boolean checkRedirectEntriesByGroupAndDestinationURL(
 		long groupId, String destinationURL) {
 
-		return getService().checkRedirectEntriesByGroupAndDestinationURL(
+		return getService().checkRedirectionChain(
 			groupId, destinationURL);
 	}
 

@@ -82,7 +82,7 @@ public interface RedirectEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRedirectEntriesCount(long groupId) throws PortalException;
 
-	public void updateRedirectEntriesReferences(
+	public void updateChainedRedirectEntries(
 			long groupId, String destinationURL, String sourceURL)
 		throws PortalException;
 

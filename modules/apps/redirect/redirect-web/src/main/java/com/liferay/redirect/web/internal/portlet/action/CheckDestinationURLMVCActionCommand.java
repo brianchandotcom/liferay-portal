@@ -57,11 +57,10 @@ public class CheckDestinationURLMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
 
-		if (_redirectEntryLocalService.
-				checkRedirectEntriesByGroupAndDestinationURL(
-					themeDisplay.getScopeGroupId(),
-					RedirectUtil.getGroupBaseURL(themeDisplay) +
-						StringPool.FORWARD_SLASH + sourceURL)) {
+		if (_redirectEntryLocalService.checkRedirectionChain(
+				themeDisplay.getScopeGroupId(),
+				RedirectUtil.getGroupBaseURL(themeDisplay) +
+					StringPool.FORWARD_SLASH + sourceURL)) {
 
 			jsonObject = JSONUtil.put("success", Boolean.FALSE);
 		}

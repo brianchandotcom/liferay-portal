@@ -103,7 +103,7 @@
 					<%
 					StringBundler sb = new StringBundler();
 
-					_buildSitesList(sitesDirectoryDisplayContext.getRootGroup(), themeDisplay.getScopeGroup(), sitesDirectoryDisplayContext.getBranchGroups(), themeDisplay, 1, Objects.equals(sitesDirectoryDisplayContext.getDisplayStyle(), "list-hierarchy"), true, sb);
+					_buildSitesList(sitesDirectoryDisplayContext.getRootGroup(), themeDisplay.getScopeGroup(), themeDisplay, 1, Objects.equals(sitesDirectoryDisplayContext.getDisplayStyle(), "list-hierarchy"), true, sb);
 
 					String content = sb.toString();
 					%>
@@ -116,7 +116,7 @@
 </div>
 
 <%!
-private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branchGroups, ThemeDisplay themeDisplay, int groupLevel, boolean showHierarchy, boolean nestedChildren, StringBundler sb) throws Exception {
+private void _buildSitesList(Group rootGroup, Group curGroup, ThemeDisplay themeDisplay, int groupLevel, boolean showHierarchy, boolean nestedChildren, StringBundler sb) throws Exception {
 	List<Group> childGroups = null;
 
 	if (rootGroup != null) {
@@ -213,7 +213,7 @@ private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branch
 				childGroupSB = tailSB;
 			}
 
-			_buildSitesList(childGroup, curGroup, branchGroups, themeDisplay, groupLevel + 1, showHierarchy, nestedChildren, childGroupSB);
+			_buildSitesList(childGroup, curGroup, themeDisplay, groupLevel + 1, showHierarchy, nestedChildren, childGroupSB);
 		}
 
 		sb.append("</li>");

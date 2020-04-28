@@ -1,19 +1,4 @@
 .taglib-ratings {
-	&.stars {
-		.liferay-rating-score {
-			padding-left: 15px;
-		}
-
-		.liferay-rating-vote,
-		.liferay-rating-score {
-			display: inline-block;
-		}
-
-		.lexicon-icon {
-			pointer-events: none;
-		}
-	}
-
 	&.stacked-stars {
 		.rating-element {
 			color: $primary;
@@ -35,13 +20,6 @@
 		}
 
 		.lexicon-icon {
-			pointer-events: none;
-		}
-	}
-
-	&.like,
-	&.thumbs {
-		.rating-element * {
 			pointer-events: none;
 		}
 	}

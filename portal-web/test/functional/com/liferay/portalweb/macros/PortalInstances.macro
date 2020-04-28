@@ -89,9 +89,11 @@ definition {
 	}
 
 	macro tearDownCP {
-		SignOut.signOutOfSpecificURL(url = "http://localhost:8080/");
+		var defaultPortalURL = PropsUtil.get("default.portal.url");
 
-		SignIn.signInSpecificURL(url = "http://localhost:8080/");
+		SignOut.signOutOfSpecificURL(url = "${defaultPortalURL}");
+
+		SignIn.signInSpecificURL(url = "${defaultPortalURL}");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

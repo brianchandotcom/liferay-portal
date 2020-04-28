@@ -59,7 +59,9 @@ definition {
 	}
 
 	macro signInPortalInstanceSetUp {
-		SignIn.signInSpecificURL(url = "http://localhost:8080/");
+		var defaultPortalURL = PropsUtil.get("default.portal.url");
+
+		SignIn.signInSpecificURL(url = "${defaultPortalURL}");
 
 		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
 			SignIn.agreeToTermsOfUse();

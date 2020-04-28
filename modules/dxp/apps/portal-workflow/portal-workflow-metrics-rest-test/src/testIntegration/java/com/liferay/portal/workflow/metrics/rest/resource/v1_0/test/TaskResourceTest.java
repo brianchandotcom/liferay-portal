@@ -23,10 +23,18 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.TaskBulkSelection;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -63,6 +71,102 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteProcess(
 				testGroup.getCompanyId(), _process);
 		}
+	}
+
+	@Override
+	@Test
+	public void testPostProcessTasksPage() throws Exception {
+		Page<Task> page = taskResource.postProcessTasksPage(
+			Pagination.of(1, 10),
+			new TaskBulkSelection() {
+				{
+					processId = _process.getId();
+				}
+			});
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Task task1 = testGetProcessTask_addTask();
+
+		Task task2 = testGetProcessTask_addTask();
+
+		page = taskResource.postProcessTasksPage(
+			Pagination.of(1, 10),
+			new TaskBulkSelection() {
+				{
+					assigneeIds = new Long[] {_user.getUserId()};
+				}
+			});
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(task1, task2), (List<Task>)page.getItems());
+
+		page = taskResource.postProcessTasksPage(
+			Pagination.of(1, 10),
+			new TaskBulkSelection() {
+				{
+					instanceIds = new Long[] {_instance.getId()};
+				}
+			});
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(task1, task2), (List<Task>)page.getItems());
+
+		page = taskResource.postProcessTasksPage(
+			Pagination.of(1, 10),
+			new TaskBulkSelection() {
+				{
+					processId = _process.getId();
+				}
+			});
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(task1, task2), (List<Task>)page.getItems());
+
+		page = taskResource.postProcessTasksPage(
+			null,
+			new TaskBulkSelection() {
+				{
+					processId = _process.getId();
+				}
+			});
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(task1, task2), (List<Task>)page.getItems());
+
+		page = taskResource.postProcessTasksPage(
+			Pagination.of(1, 10),
+			new TaskBulkSelection() {
+				{
+					taskNames = new String[] {task1.getName()};
+				}
+			});
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(task1), (List<Task>)page.getItems());
+
+		page = taskResource.postProcessTasksPage(
+			Pagination.of(1, 10),
+			new TaskBulkSelection() {
+				{
+					taskNames = new String[] {task2.getName()};
+				}
+			});
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(task2), (List<Task>)page.getItems());
 	}
 
 	@Override

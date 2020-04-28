@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.graphql.servlet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -1725,12 +1726,9 @@ public class GraphQLServletExtender {
 			Stream<GraphQLError> stream = graphQLErrors.stream();
 
 			return stream.filter(
-				graphQLError -> {
-					String message = graphQLError.getMessage();
-
-					return !message.contains("NoSuchEntryException") ||
-						   _isRequiredFieldError(graphQLError);
-				}
+				graphQLError ->
+					!_isNoSuchModelError(graphQLError) ||
+					_isRequiredFieldError(graphQLError)
 			).map(
 				graphQLError -> {
 					String message = graphQLError.getMessage();
@@ -1739,7 +1737,7 @@ public class GraphQLServletExtender {
 						return _getExtendedGraphQLError(
 							graphQLError, Response.Status.UNAUTHORIZED);
 					}
-					else if (message.contains("NoSuchEntryException")) {
+					else if (_isNoSuchModelError(graphQLError)) {
 						return _getExtendedGraphQLError(
 							graphQLError, Response.Status.NOT_FOUND);
 					}
@@ -1790,6 +1788,25 @@ public class GraphQLServletExtender {
 
 			if (!(graphQLError instanceof Throwable) ||
 				message.contains("ClientErrorException")) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private boolean _isNoSuchModelError(GraphQLError graphQLError) {
+			if (!(graphQLError instanceof ExceptionWhileDataFetching)) {
+				return false;
+			}
+
+			ExceptionWhileDataFetching exceptionWhileDataFetching =
+				(ExceptionWhileDataFetching)graphQLError;
+
+			Throwable exception = exceptionWhileDataFetching.getException();
+
+			if ((exception != null) &&
+				(exception.getCause() instanceof NoSuchModelException)) {
 
 				return true;
 			}

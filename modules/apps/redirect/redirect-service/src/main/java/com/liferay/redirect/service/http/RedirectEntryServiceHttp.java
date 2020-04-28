@@ -259,7 +259,7 @@ public class RedirectEntryServiceHttp {
 
 	public static void updateRedirectEntriesReferences(
 			HttpPrincipal httpPrincipal, long groupId, String destinationURL,
-			String groupBaseURL, String sourceURL)
+			String sourceURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -269,7 +269,7 @@ public class RedirectEntryServiceHttp {
 				_updateRedirectEntriesReferencesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, destinationURL, groupBaseURL, sourceURL);
+				methodKey, groupId, destinationURL, sourceURL);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -359,7 +359,7 @@ public class RedirectEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_updateRedirectEntriesReferencesParameterTypes5 = new Class[] {
-			long.class, String.class, String.class, String.class
+			long.class, String.class, String.class
 		};
 	private static final Class<?>[] _updateRedirectEntryParameterTypes6 =
 		new Class[] {

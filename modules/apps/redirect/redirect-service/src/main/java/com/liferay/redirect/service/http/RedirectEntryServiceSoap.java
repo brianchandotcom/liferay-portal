@@ -158,13 +158,12 @@ public class RedirectEntryServiceSoap {
 	}
 
 	public static void updateRedirectEntriesReferences(
-			long groupId, String destinationURL, String groupBaseURL,
-			String sourceURL)
+			long groupId, String destinationURL, String sourceURL)
 		throws RemoteException {
 
 		try {
 			RedirectEntryServiceUtil.updateRedirectEntriesReferences(
-				groupId, destinationURL, groupBaseURL, sourceURL);
+				groupId, destinationURL, sourceURL);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

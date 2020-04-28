@@ -110,11 +110,6 @@ public class RedirectEntryServiceTest {
 					String.valueOf(TestPropsValues.getCompanyId()),
 					ActionKeys.VIEW);
 
-				Assert.assertEquals(
-					2,
-					_redirectEntryService.getRedirectEntriesCount(
-						_group.getGroupId()));
-
 				RoleTestUtil.addResourcePermission(
 					role, RedirectEntry.class.getName(),
 					ResourceConstants.SCOPE_COMPANY,
@@ -128,8 +123,6 @@ public class RedirectEntryServiceTest {
 				_redirectEntry = _redirectEntryService.fetchRedirectEntry(
 					_redirectEntry.getRedirectEntryId());
 
-				Assert.assertNotNull(_redirectEntry);
-
 				Assert.assertEquals("sourceURL", _redirectEntry.getSourceURL());
 
 				Assert.assertEquals(
@@ -138,8 +131,6 @@ public class RedirectEntryServiceTest {
 				_destinationRedirectEntry =
 					_redirectEntryService.fetchRedirectEntry(
 						_destinationRedirectEntry.getRedirectEntryId());
-
-				Assert.assertNotNull(_destinationRedirectEntry);
 
 				Assert.assertEquals(
 					"intermediateDestinationURL",
@@ -171,11 +162,6 @@ public class RedirectEntryServiceTest {
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(TestPropsValues.getCompanyId()),
 					ActionKeys.VIEW);
-
-				Assert.assertEquals(
-					2,
-					_redirectEntryService.getRedirectEntriesCount(
-						_group.getGroupId()));
 
 				_redirectEntryService.updateRedirectEntriesReferences(
 					_group.getGroupId(), "finalDestinationURL",

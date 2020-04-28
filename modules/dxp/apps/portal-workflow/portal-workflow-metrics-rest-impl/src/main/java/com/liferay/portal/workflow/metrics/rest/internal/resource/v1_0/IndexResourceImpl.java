@@ -133,10 +133,8 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 
 	private String _getBackgroundTaskName(Index index) {
 		return StringBundler.concat(
-			WorkflowMetricsBackgroundTaskExecutorNames.
-				WORKFLOW_METRICS_REINDEX_BACKGROUND_TASK_EXECUTOR,
-			StringPool.DASH, contextCompany.getCompanyId(), StringPool.DASH,
-			index.getKey());
+			IndexResourceImpl.class.getSimpleName(), StringPool.DASH,
+			contextCompany.getCompanyId(), StringPool.DASH, index.getKey());
 	}
 
 	private String[] _getIndexEntityNames(Index index) {

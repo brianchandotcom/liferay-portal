@@ -249,7 +249,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getModelResourceActions(String name) {
-		ModelResourceActionsBag modelResourceActionsBag =
+		ResourceActionsBag modelResourceActionsBag =
 			_getModelResourceActionsBag(name);
 
 		return new ArrayList<>(modelResourceActionsBag.getSupportsActions());
@@ -257,7 +257,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getModelResourceGroupDefaultActions(String name) {
-		ModelResourceActionsBag modelResourceActionsBag =
+		ResourceActionsBag modelResourceActionsBag =
 			_getModelResourceActionsBag(name);
 
 		return new ArrayList<>(
@@ -266,7 +266,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getModelResourceGuestDefaultActions(String name) {
-		ModelResourceActionsBag modelResourceActionsBag =
+		ResourceActionsBag modelResourceActionsBag =
 			_getModelResourceActionsBag(name);
 
 		return new ArrayList<>(
@@ -275,7 +275,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getModelResourceGuestUnsupportedActions(String name) {
-		ModelResourceActionsBag modelResourceActionsBag =
+		ResourceActionsBag modelResourceActionsBag =
 			_getModelResourceActionsBag(name);
 
 		return new ArrayList<>(
@@ -289,7 +289,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getModelResourceOwnerDefaultActions(String name) {
-		ModelResourceActionsBag modelResourceActionsBag =
+		ResourceActionsBag modelResourceActionsBag =
 			_getModelResourceActionsBag(name);
 
 		return new ArrayList<>(
@@ -388,7 +388,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		name = PortletIdCodec.decodePortletName(name);
 
-		PortletResourceActionsBag portletResourceActionsBag =
+		ResourceActionsBag portletResourceActionsBag =
 			_getPortletResourceActionsBag(name);
 
 		return new ArrayList<>(
@@ -399,7 +399,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	public List<String> getPortletResourceGuestDefaultActions(String name) {
 		name = PortletIdCodec.decodePortletName(name);
 
-		PortletResourceActionsBag portletResourceActionsBag =
+		ResourceActionsBag portletResourceActionsBag =
 			_getPortletResourceActionsBag(name);
 
 		return new ArrayList<>(
@@ -410,7 +410,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	public List<String> getPortletResourceGuestUnsupportedActions(String name) {
 		name = PortletIdCodec.decodePortletName(name);
 
-		PortletResourceActionsBag portletResourceActionsBag =
+		ResourceActionsBag portletResourceActionsBag =
 			_getPortletResourceActionsBag(name);
 
 		Set<String> actions =
@@ -426,7 +426,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	public List<String> getPortletResourceLayoutManagerActions(String name) {
 		name = PortletIdCodec.decodePortletName(name);
 
-		PortletResourceActionsBag portletResourceActionsBag =
+		ResourceActionsBag portletResourceActionsBag =
 			_getPortletResourceActionsBag(name);
 
 		Set<String> actions =
@@ -538,7 +538,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	@Deprecated
 	@Override
 	public boolean hasModelResourceActions(String name) {
-		ModelResourceActionsBag modelResourceActionsBag =
+		ResourceActionsBag modelResourceActionsBag =
 			_getModelResourceActionsBag(name);
 
 		Set<String> modelActions = modelResourceActionsBag.getSupportsActions();
@@ -623,7 +623,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	@Deprecated
 	@Override
 	public void removePortletResource(String portletName) {
-		PortletResourceActionsBag portletResourceActionsBag =
+		ResourceActionsBag portletResourceActionsBag =
 			_portletResourceActionsBags.remove(portletName);
 
 		if (portletResourceActionsBag != null) {
@@ -752,10 +752,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		return sb.toString();
 	}
 
-	private ModelResourceActionsBag _getModelResourceActionsBag(
-		String modelName) {
-
-		ModelResourceActionsBag modelResourceActionsBag =
+	private ResourceActionsBag _getModelResourceActionsBag(String modelName) {
+		ResourceActionsBag modelResourceActionsBag =
 			_modelResourceActionsBags.get(modelName);
 
 		if (modelResourceActionsBag != null) {
@@ -769,7 +767,7 @@ public class ResourceActionsImpl implements ResourceActions {
 				return modelResourceActionsBag;
 			}
 
-			modelResourceActionsBag = new ModelResourceActionsBag();
+			modelResourceActionsBag = new ResourceActionsBag();
 
 			_modelResourceActionsBags.put(modelName, modelResourceActionsBag);
 		}
@@ -830,7 +828,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	private List<String> _getPortletResourceActions(
 		String name, Portlet portlet) {
 
-		PortletResourceActionsBag portletResourceActionsBag =
+		ResourceActionsBag portletResourceActionsBag =
 			_getPortletResourceActionsBag(name);
 
 		Set<String> portletActions =
@@ -860,10 +858,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		return new ArrayList<>(portletActions);
 	}
 
-	private PortletResourceActionsBag _getPortletResourceActionsBag(
+	private ResourceActionsBag _getPortletResourceActionsBag(
 		String portletName) {
 
-		PortletResourceActionsBag portletResourceActionsBag =
+		ResourceActionsBag portletResourceActionsBag =
 			_portletResourceActionsBags.get(portletName);
 
 		if (portletResourceActionsBag != null) {
@@ -878,7 +876,7 @@ public class ResourceActionsImpl implements ResourceActions {
 				return portletResourceActionsBag;
 			}
 
-			portletResourceActionsBag = new PortletResourceActionsBag();
+			portletResourceActionsBag = new ResourceActionsBag();
 
 			_portletResourceActionsBags.put(
 				portletName, portletResourceActionsBag);
@@ -1173,7 +1171,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			_portalModelResources.add(name);
 		}
 
-		ModelResourceActionsBag modelResourceActionsBag =
+		ResourceActionsBag modelResourceActionsBag =
 			_getModelResourceActionsBag(name);
 
 		Element portletRefElement = modelResourceElement.element("portlet-ref");
@@ -1288,7 +1286,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		name = JS.getSafeName(name);
 
-		PortletResourceActionsBag portletResourceActionsBag =
+		ResourceActionsBag portletResourceActionsBag =
 			_getPortletResourceActionsBag(name);
 
 		Set<String> portletActions =
@@ -1352,26 +1350,20 @@ public class ResourceActionsImpl implements ResourceActions {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResourceActionsImpl.class);
 
-	private final Map<String, ModelResourceActionsBag>
-		_modelResourceActionsBags = new HashMap<>();
+	private final Map<String, ResourceActionsBag> _modelResourceActionsBags =
+		new HashMap<>();
 	private final Map<String, Set<String>>
 		_modelResourcePortletResourceMappings = new HashMap<>();
 	private final Map<String, Double> _modelResourceWeights = new HashMap<>();
 	private final Set<String> _organizationModelResources = new HashSet<>();
 	private final Set<String> _portalModelResources = new HashSet<>();
-	private final Map<String, PortletResourceActionsBag>
-		_portletResourceActionsBags = new HashMap<>();
+	private final Map<String, ResourceActionsBag> _portletResourceActionsBags =
+		new HashMap<>();
 	private final Map<String, Set<String>>
 		_portletResourceModelResourceMappings = new HashMap<>();
 	private final Map<String, String> _portletRootModelResources =
 		new HashMap<>();
 	private final Set<String> _rootModelResources = new HashSet<>();
-
-	private static class ModelResourceActionsBag extends ResourceActionsBag {
-	}
-
-	private static class PortletResourceActionsBag extends ResourceActionsBag {
-	}
 
 	private static class ResourceActionsBag {
 

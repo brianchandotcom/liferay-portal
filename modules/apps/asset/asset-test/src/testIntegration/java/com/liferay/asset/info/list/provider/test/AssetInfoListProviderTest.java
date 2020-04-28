@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -172,6 +173,49 @@ public class AssetInfoListProviderTest {
 			_CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
 	}
 
+	@Test
+	public void testRecentContentInfoListProvider() throws Exception {
+		InfoListProvider<AssetEntry> infoListProvider =
+			_infoListProviderTracker.getInfoListProvider(
+				_RECENT_CONTENT_INFO_LIST_PROVIDER_KEY);
+
+		JournalArticle article1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle article2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		List<AssetEntry> assetEntries = infoListProvider.getInfoList(
+			_infoListProviderContext);
+
+		int assetEntriesCount = infoListProvider.getInfoListCount(
+			_infoListProviderContext);
+
+		Assert.assertEquals(2, assetEntriesCount);
+
+		Assert.assertEquals(
+			Long.valueOf(article2.getResourcePrimKey()),
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
+
+		Assert.assertEquals(
+			Long.valueOf(article1.getResourcePrimKey()),
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
+
+		JournalTestUtil.updateArticle(article1, StringUtil.randomString());
+
+		assetEntries = infoListProvider.getInfoList(_infoListProviderContext);
+
+		Assert.assertEquals(
+			Long.valueOf(article1.getResourcePrimKey()),
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
+
+		Assert.assertEquals(
+			Long.valueOf(article2.getResourcePrimKey()),
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
+	}
+
 	private static final Accessor<AssetEntry, Long> _CLASS_PK_ACCESSOR =
 		new Accessor<AssetEntry, Long>() {
 
@@ -199,6 +243,10 @@ public class AssetInfoListProviderTest {
 	private static final String _MOST_VIEWED_ASSETS_INFO_LIST_PROVIDER_KEY =
 		"com.liferay.asset.internal.info.list.provider." +
 			"MostViewedAssetsInfoListProvider";
+
+	private static final String _RECENT_CONTENT_INFO_LIST_PROVIDER_KEY =
+		"com.liferay.asset.internal.info.list.provider." +
+			"RecentContentInfoListProvider";
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

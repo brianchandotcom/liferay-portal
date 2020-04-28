@@ -17,6 +17,10 @@ package com.liferay.gradle.util;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.BasePluginConvention;
 
+/**
+ * @author Damien Abos
+ * @author Peter Shin
+ */
 public class OsgiHelper {
 
     public static String getBundleSymbolicName(Project project) {

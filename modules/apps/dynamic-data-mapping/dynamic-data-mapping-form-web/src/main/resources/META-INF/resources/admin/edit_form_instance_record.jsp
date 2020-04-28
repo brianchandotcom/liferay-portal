@@ -29,17 +29,17 @@ String title = ParamUtil.getString(request, "title");
 renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-form")));
 %>
 
-<div class="portlet-forms">
-	<div class="ddm-form-basic-info ddm-form-success-page">
-		<div class="container-fluid-1280">
-			<h1 class="ddm-form-name"><%= ddmFormAdminDisplayContext.getFormName() %></h1>
+<div class="container-fluid-1280 ddm-form-builder-app editing-form-entry">
+	<div class="portlet-forms">
+		<div class="ddm-form-basic-info ddm-form-success-page">
+			<div class="container-fluid-1280">
+				<h1 class="ddm-form-name"><%= ddmFormAdminDisplayContext.getFormName() %></h1>
 
-			<h5 class="ddm-form-description"><%= ddmFormAdminDisplayContext.getFormDescription() %></h5>
+				<h5 class="ddm-form-description"><%= ddmFormAdminDisplayContext.getFormDescription() %></h5>
+			</div>
 		</div>
 	</div>
-</div>
 
-<div class="container-fluid-1280 ddm-form-builder-app editing-form-entry">
 	<portlet:actionURL name="addFormInstanceRecord" var="editFormInstanceRecordActionURL" />
 
 	<aui:form action="<%= editFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= ddmFormInstanceRecordVersion.getFormInstanceId() %>" data-senna-off="true" method="post" name="fm">
@@ -47,6 +47,6 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 		<aui:input name="formInstanceRecordId" type="hidden" value="<%= ddmFormInstanceRecordVersion.getFormInstanceRecordId() %>" />
 		<aui:input name="formInstanceId" type="hidden" value="<%= ddmFormInstanceRecordVersion.getFormInstanceId() %>" />
 
-		<%= ddmFormAdminDisplayContext.getDDMFormHTML(renderRequest) %>
+		<%= ddmFormAdminDisplayContext.getDDMFormHTML(renderRequest, false) %>
 	</aui:form>
 </div>

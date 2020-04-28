@@ -1368,23 +1368,9 @@ public class ResourceActionsImpl implements ResourceActions {
 	private final Set<String> _rootModelResources = new HashSet<>();
 
 	private static class ModelResourceActionsBag extends ResourceActionsBag {
-
-		public Set<String> getOwnerDefaultActions() {
-			return _ownerDefaultActions;
-		}
-
-		private final Set<String> _ownerDefaultActions = new HashSet<>();
-
 	}
 
 	private static class PortletResourceActionsBag extends ResourceActionsBag {
-
-		public Set<String> getLayoutManagerActions() {
-			return _layoutManagerActions;
-		}
-
-		private final Set<String> _layoutManagerActions = new HashSet<>();
-
 	}
 
 	private static class ResourceActionsBag {
@@ -1401,6 +1387,14 @@ public class ResourceActionsImpl implements ResourceActions {
 			return _guestUnsupportedActions;
 		}
 
+		public Set<String> getLayoutManagerActions() {
+			return _layoutManagerActions;
+		}
+
+		public Set<String> getOwnerDefaultActions() {
+			return _ownerDefaultActions;
+		}
+
 		public Set<String> getSupportsActions() {
 			return _supportsActions;
 		}
@@ -1408,6 +1402,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		private final Set<String> _groupDefaultActions = new HashSet<>();
 		private final Set<String> _guestDefaultActions = new HashSet<>();
 		private final Set<String> _guestUnsupportedActions = new HashSet<>();
+		private final Set<String> _layoutManagerActions = new HashSet<>();
+		private final Set<String> _ownerDefaultActions = new HashSet<>();
 		private final Set<String> _supportsActions = new HashSet<>();
 
 	}

@@ -98,6 +98,8 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		).put(
 			"pasteFromWordRemoveStyles", Boolean.FALSE
 		).put(
+			"removePlugins", "elementspath"
+		).put(
 			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale())
 		).put(
 			"title", false

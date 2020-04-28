@@ -29,6 +29,8 @@ class PagesTreeEventHandler extends Component {
 				this._handleLayoutActionClick.bind(this)
 			)
 		);
+
+		Liferay.on('liferay.dropdown.show', this._handleDropdownOpened);
 	}
 
 	disposed() {
@@ -53,6 +55,20 @@ class PagesTreeEventHandler extends Component {
 		const {action, plid} = delegateTarget.dataset;
 
 		this[action](plid);
+	}
+
+	_handleDropdownOpened({menu, trigger}) {
+		if (dom.closest(menu, '.pages-tree-dropdown')) {
+			const handler = (event) => {
+				if (!dom.closest(event.target, '.pages-tree-dropdown')) {
+					Liferay.DropdownProvider.hide({menu, trigger});
+
+					window.removeEventListener('click', handler);
+				}
+			};
+
+			window.addEventListener('click', handler);
+		}
 	}
 }
 

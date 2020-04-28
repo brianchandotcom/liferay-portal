@@ -396,14 +396,16 @@ definition {
 			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
 		}
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.xlsx",
+			groupName = "Guest",
+			mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+			sourceFileName = "Document_1.xlsx");
+
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.xlsx",
-			dmDocumentTitle = "Document_1.xlsx");
 
 		OneDrive.gotoEdit(dmDocumentTitle = "Document_1.xlsx");
 
@@ -437,14 +439,16 @@ definition {
 			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
 		}
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.pptx",
+			groupName = "Guest",
+			mimeType = "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+			sourceFileName = "Document_2.pptx");
+
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.pptx",
-			dmDocumentTitle = "Document_2.pptx");
 
 		OneDrive.gotoEdit(dmDocumentTitle = "Document_2.pptx");
 
@@ -477,14 +481,16 @@ definition {
 			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
 		}
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_3.docx",
+			groupName = "Guest",
+			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+			sourceFileName = "Document_3.docx");
+
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_3.docx",
-			dmDocumentTitle = "Document_3.docx");
 
 		OneDrive.gotoEdit(dmDocumentTitle = "Document_3.docx");
 

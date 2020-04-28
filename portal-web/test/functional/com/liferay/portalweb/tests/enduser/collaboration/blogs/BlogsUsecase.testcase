@@ -193,13 +193,13 @@ definition {
 
 	@priority = "3"
 	test ChangeBlogsEntryCoverImage {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
 		for (var entryCount : list "1,2") {
-			DMDocument.addCP(
+			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_${entryCount}.jpg",
-				dmDocumentTitle = "Document_${entryCount}.jpg");
+				dmDocumentTitle = "Document_${entryCount}.jpg",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
 		}
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -942,12 +942,13 @@ definition {
 			dmFolderDescription = "DM SubFolder 2 Description",
 			dmFolderName = "DM SubFolder 2 Name");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder 2 Name");
-
-		DMDocument.addPG(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "Document_2.jpg");
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM SubFolder 2 Name",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

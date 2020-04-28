@@ -38,10 +38,12 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		for (var documentNumber : list "_1,_2,_3") {
-			DMDocument.addCP(
+			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_4.jpg",
-				dmDocumentTitle = "DM Document JPG${documentNumber}");
+				dmDocumentTitle = "DM Document JPG${documentNumber}",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_4.jpg");
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -180,12 +182,12 @@ definition {
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Settings");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-enabled");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_4.jpg",
-			dmDocumentTitle = "DM Document JPG");
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Site AutoTag Enabled",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-enabled");
 
@@ -195,12 +197,12 @@ definition {
 
 		AutoTagging.assertAutoTagPresent(tagName = "carton");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-disabled");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_4.jpg",
-			dmDocumentTitle = "DM Document JPG");
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Site AutoTag Disabled",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-disabled");
 
@@ -220,12 +222,12 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
-			dmDocumentTitle = "DM Document DOCX");
+			dmDocumentTitle = "DM Document DOCX",
+			groupName = "Guest",
+			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+			sourceFileName = "Alice's Adventures in Wonderland.docx");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -301,12 +303,12 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
-			dmDocumentTitle = "DM Document DOCX");
+			dmDocumentTitle = "DM Document DOCX",
+			groupName = "Guest",
+			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+			sourceFileName = "Alice's Adventures in Wonderland.docx");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -338,14 +340,16 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "Auto Tagged Image Description",
+			dmDocumentTitle = "Auto Tagged Image",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "Auto Tagged Image Description",
-			dmDocumentFile = "Document_4.jpg",
-			dmDocumentTitle = "Auto Tagged Image");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Auto Tagged Image Description",
@@ -388,14 +392,16 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "Auto Tagged PDF Description",
+			dmDocumentTitle = "Auto Tagged PDF",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "Alice's Adventures in Wonderland.pdf");
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "Auto Tagged PDF Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			dmDocumentTitle = "Auto Tagged PDF");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Auto Tagged PDF Description",
@@ -432,12 +438,12 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMAutoTagging#Smoke";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_4.jpg",
-			dmDocumentTitle = "DM Document JPG");
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

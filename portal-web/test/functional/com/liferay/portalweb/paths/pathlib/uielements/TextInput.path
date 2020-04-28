@@ -249,6 +249,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GRACE_LIMIT</td>
+	<td>//div[label[contains(.,'Grace Limit')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMAGE_ID</td>
 	<td>//input[contains(@id,'newUuid')]</td>
 	<td></td>

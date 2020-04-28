@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINIMUM_AGE</td>
+	<td>//select[contains(@id,'maxAge')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MONDAY_CLOSE</td>
 	<td>//select[contains(@id,'monClose')]</td>
 	<td></td>
@@ -186,6 +191,11 @@
 <tr>
 	<td>TYPE</td>
 	<td>//div[label[contains(.,'Type')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WARNING_TIME</td>
+	<td>//select[contains(@id,'warningTime')]</td>
 	<td></td>
 </tr>
 <tr>

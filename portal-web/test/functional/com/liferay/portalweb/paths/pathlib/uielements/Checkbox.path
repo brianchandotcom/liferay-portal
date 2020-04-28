@@ -184,6 +184,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_EXPIRATION</td>
+	<td>//label[contains(.,'Enable Expiration')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_LOCKOUT</td>
 	<td>//label[contains(.,'Enable Lockout')]/input[@type='checkbox']</td>
 	<td></td>

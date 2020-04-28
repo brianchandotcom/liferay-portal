@@ -14,7 +14,7 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.38"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.39"
 	compile group: "org.zeroturnaround", name: "zt-exec", version: "1.9"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))

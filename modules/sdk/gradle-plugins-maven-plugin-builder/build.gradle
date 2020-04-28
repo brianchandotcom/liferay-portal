@@ -15,7 +15,7 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.38"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.39"
 	compile group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1"
 	compile group: "org.dom4j", name: "dom4j", version: "2.1.1"
 

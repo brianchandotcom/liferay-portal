@@ -258,11 +258,15 @@ components:
             properties:
                 actions:
                     items:
+                        additionalProperties:
+                            type: object
                         type: object
                     type:
                         array
                 conditions:
                     items:
+                        additionalProperties:
+                            type: object
                         type: object
                     type:
                         array

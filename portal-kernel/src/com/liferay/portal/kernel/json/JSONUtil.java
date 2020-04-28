@@ -736,9 +736,8 @@ public class JSONUtil {
 
 		for (String key : keys) {
 			sb.append(_getIndent(indent, level + 1));
-			sb.append(StringPool.QUOTE);
-			sb.append(key);
-			sb.append("\": ");
+			sb.append(_getString(key, indent, level + 1));
+			sb.append(": ");
 			sb.append(_getString(jsonObject.get(key), indent, level + 1));
 			sb.append(StringPool.COMMA);
 			sb.append("\n");

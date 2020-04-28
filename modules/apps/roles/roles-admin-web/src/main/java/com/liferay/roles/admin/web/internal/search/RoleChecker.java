@@ -22,7 +22,10 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
@@ -30,8 +33,12 @@ import javax.portlet.PortletResponse;
  */
 public class RoleChecker extends EmptyOnClickRowChecker {
 
-	public RoleChecker(PortletResponse portletResponse) {
+	public RoleChecker(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		super(portletResponse);
+
+		_portletRequest = portletRequest;
 	}
 
 	@Override
@@ -48,6 +55,17 @@ public class RoleChecker extends EmptyOnClickRowChecker {
 
 				return true;
 			}
+
+			RoleTypeContributor roleTypeContributor =
+				RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(
+					_portletRequest);
+
+			if ((roleTypeContributor != null) &&
+				(!roleTypeContributor.isAllowDelete(role) ||
+				 roleTypeContributor.isAutomaticallyAssigned(role))) {
+
+				return true;
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -57,5 +75,7 @@ public class RoleChecker extends EmptyOnClickRowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RoleChecker.class);
+
+	private final PortletRequest _portletRequest;
 
 }

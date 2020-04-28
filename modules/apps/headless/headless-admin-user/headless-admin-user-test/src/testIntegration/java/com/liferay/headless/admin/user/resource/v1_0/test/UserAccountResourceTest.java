@@ -268,16 +268,45 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	public void testPostUserAccount() throws Exception {
-		UserAccount randomUserAccount = randomUserAccount();
+	protected void assertEquals(
+		UserAccount userAccount1, UserAccount userAccount2) {
 
-		UserAccount postUserAccount = testPostUserAccount_addUserAccount(
-			randomUserAccount);
+		super.assertEquals(userAccount1, userAccount2);
 
-		assertEquals(randomUserAccount, postUserAccount);
-		assertValid(postUserAccount);
+		UserAccountContactInformation userAccountContactInformation1 =
+			userAccount1.getUserAccountContactInformation();
+		UserAccountContactInformation userAccountContactInformation2 =
+			userAccount2.getUserAccountContactInformation();
 
-		_assertUserContactInformation(randomUserAccount, postUserAccount);
+		_assertArrays(
+			userAccountContactInformation1.getEmailAddresses(),
+			userAccountContactInformation2.getEmailAddresses(), "emailAddress");
+		_assertArrays(
+			userAccountContactInformation1.getPostalAddresses(),
+			userAccountContactInformation2.getPostalAddresses(),
+			"streetAddressLine1");
+		_assertArrays(
+			userAccountContactInformation1.getTelephones(),
+			userAccountContactInformation2.getTelephones(), "phoneNumber");
+		_assertArrays(
+			userAccountContactInformation1.getWebUrls(),
+			userAccountContactInformation2.getWebUrls(), "url");
+
+		Assert.assertEquals(
+			userAccountContactInformation1.getFacebook(),
+			userAccountContactInformation2.getFacebook());
+		Assert.assertEquals(
+			userAccountContactInformation1.getJabber(),
+			userAccountContactInformation2.getJabber());
+		Assert.assertEquals(
+			userAccountContactInformation1.getSkype(),
+			userAccountContactInformation2.getSkype());
+		Assert.assertEquals(
+			userAccountContactInformation1.getSms(),
+			userAccountContactInformation2.getSms());
+		Assert.assertEquals(
+			userAccountContactInformation1.getTwitter(),
+			userAccountContactInformation2.getTwitter());
 	}
 
 	@Override
@@ -476,8 +505,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private <T> void _assertArrays(
-			Object[] arr1, Object[] arr2, String fieldName)
-		throws Exception {
+		Object[] arr1, Object[] arr2, String fieldName) {
 
 		Assert.assertEquals(Arrays.toString(arr2), arr1.length, arr2.length);
 
@@ -498,50 +526,15 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			Object bean1 = arr1[i];
 			Object bean2 = arr2[i];
 
-			Assert.assertEquals(
-				BeanUtils.getProperty(bean1, fieldName),
-				BeanUtils.getProperty(bean2, fieldName));
+			try {
+				Assert.assertEquals(
+					BeanUtils.getProperty(bean1, fieldName),
+					BeanUtils.getProperty(bean2, fieldName));
+			}
+			catch (Exception exception) {
+				Assert.fail(exception.getMessage());
+			}
 		}
-	}
-
-	private void _assertUserContactInformation(
-			UserAccount userAccount1, UserAccount userAccount2)
-		throws Exception {
-
-		UserAccountContactInformation userAccountContactInformation1 =
-			userAccount1.getUserAccountContactInformation();
-		UserAccountContactInformation userAccountContactInformation2 =
-			userAccount2.getUserAccountContactInformation();
-
-		_assertArrays(
-			userAccountContactInformation1.getEmailAddresses(),
-			userAccountContactInformation2.getEmailAddresses(), "emailAddress");
-		_assertArrays(
-			userAccountContactInformation1.getPostalAddresses(),
-			userAccountContactInformation2.getPostalAddresses(),
-			"streetAddressLine1");
-		_assertArrays(
-			userAccountContactInformation1.getTelephones(),
-			userAccountContactInformation2.getTelephones(), "phoneNumber");
-		_assertArrays(
-			userAccountContactInformation1.getWebUrls(),
-			userAccountContactInformation2.getWebUrls(), "url");
-
-		Assert.assertEquals(
-			userAccountContactInformation1.getFacebook(),
-			userAccountContactInformation2.getFacebook());
-		Assert.assertEquals(
-			userAccountContactInformation1.getJabber(),
-			userAccountContactInformation2.getJabber());
-		Assert.assertEquals(
-			userAccountContactInformation1.getSkype(),
-			userAccountContactInformation2.getSkype());
-		Assert.assertEquals(
-			userAccountContactInformation1.getSms(),
-			userAccountContactInformation2.getSms());
-		Assert.assertEquals(
-			userAccountContactInformation1.getTwitter(),
-			userAccountContactInformation2.getTwitter());
 	}
 
 	@DeleteAfterTestRun

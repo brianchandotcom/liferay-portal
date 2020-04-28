@@ -103,9 +103,18 @@ definition {
 			content = "${content}",
 			subject = "${subject}");
 
-		var bodyContent = selenium.getText("MockMock#MOCKMOCK_MESSAGE_BODY");
-		var bodyContent = StringUtil.extractLast("${bodyContent}", "${specificText}");
-		var bodySpecificText = StringUtil.extractFirst("${bodyContent}", "&");
+		if (isSet(enableOTP)) {
+			var bodyContent = selenium.getText("MockMock#MOCKMOCK_MESSAGE_BODY");
+			var bodyContent = StringUtil.extractLast("${bodyContent}", "${specificText}");
+			var bodySpecificText = StringUtil.extractFirst("${bodyContent}", "</pre>");
+
+			echo("Your one-time password is: ${bodySpecificText}");
+		}
+		else {
+			var bodyContent = selenium.getText("MockMock#MOCKMOCK_MESSAGE_BODY");
+			var bodyContent = StringUtil.extractLast("${bodyContent}", "${specificText}");
+			var bodySpecificText = StringUtil.extractFirst("${bodyContent}", "&");
+		}
 
 		return "${bodySpecificText}";
 

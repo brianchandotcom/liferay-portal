@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.document.Document;
@@ -27,6 +28,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.Function;
@@ -74,6 +76,61 @@ public class TaskUtil {
 							return AssigneeUtil.toAssignee(
 								language, portal, resourceBundle,
 								document.getLong("assigneeIds"), userFunction);
+						}
+
+						return null;
+					});
+			}
+		};
+	}
+
+	public static Task toTask(
+		Language language, Locale locale, Portal portal,
+		ResourceBundle resourceBundle, Map<String, Object> sourcesMap,
+		Function<Long, User> userFunction) {
+
+		return new Task() {
+			{
+				assetTitle = GetterUtil.getString(
+					sourcesMap.get(_getLocalizedName(locale, "assetTitle")));
+				assetType = GetterUtil.getString(
+					sourcesMap.get(_getLocalizedName(locale, "assetType")));
+				className = GetterUtil.getString(sourcesMap.get("className"));
+				classPK = GetterUtil.getLong(sourcesMap.get("classPK"));
+				completed = GetterUtil.getBoolean(sourcesMap.get("completed"));
+				completionUserId = GetterUtil.getLong(
+					sourcesMap.get("completionUserId"));
+				dateCompletion = _parseDate(
+					GetterUtil.getString(sourcesMap.get("completionDate")));
+				dateCreated = _parseDate(
+					GetterUtil.getString(sourcesMap.get("createDate")));
+				dateModified = _parseDate(
+					GetterUtil.getString(sourcesMap.get("modifiedDate")));
+				duration = GetterUtil.getLong(sourcesMap.get("duration"));
+				id = GetterUtil.getLong(sourcesMap.get("taskId"));
+				instanceId = GetterUtil.getLong(sourcesMap.get("instanceId"));
+				label = language.get(
+					resourceBundle,
+					GetterUtil.getString(sourcesMap.get("name")));
+				name = GetterUtil.getString(sourcesMap.get("name"));
+				nodeId = GetterUtil.getLong(sourcesMap.get("nodeId"));
+				processId = GetterUtil.getLong(sourcesMap.get("processId"));
+				processVersion = GetterUtil.getString(
+					sourcesMap.get("version"));
+
+				setAssignee(
+					() -> {
+						String assigneeType = GetterUtil.getString(
+							sourcesMap.get("assigneeType"));
+
+						if (Objects.deepEquals(
+								assigneeType, User.class.getName())) {
+
+							return AssigneeUtil.toAssignee(
+								language, portal, resourceBundle,
+								GetterUtil.getLong(
+									sourcesMap.get("assigneeIds")),
+								userFunction);
 						}
 
 						return null;

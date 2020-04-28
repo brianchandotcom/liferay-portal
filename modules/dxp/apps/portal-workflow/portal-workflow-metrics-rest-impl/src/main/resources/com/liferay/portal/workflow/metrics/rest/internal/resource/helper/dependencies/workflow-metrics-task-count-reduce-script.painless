@@ -1,0 +1,55 @@
+def slaStatuses;
+def slaStatusMap = new HashMap();
+def taskIds = new HashSet();
+
+for (state in states) {
+	if (state == null) {
+		continue;
+	}
+
+	slaStatuses = state.slaStatuses;
+
+	for (entry in state.slaStatusMap.entrySet()) {
+		slaStatusMap.merge(
+			entry.key, entry.value,
+			(slaStatus1, slaStatus2) -> {
+				if (slaStatus1.equals(slaStatus2)) {
+					return slaStatus1;
+				}
+				else if (slaStatus1.equals("overdue") ||
+						 slaStatus2.equals("overdue")) {
+
+					return "overdue";
+				}
+
+				return "onTime";
+			});
+	}
+
+	taskIds.addAll(state.taskIds);
+}
+
+def taskCount = 0;
+
+for (taskId in taskIds) {
+	if (slaStatuses == null) {
+		taskCount += 1;
+	}
+	else if (slaStatuses.contains("OnTime") &&
+			 slaStatusMap.get(taskId).equals("onTime")) {
+
+		taskCount += 1;
+	}
+	else if (slaStatuses.contains("Overdue") &&
+			 slaStatusMap.get(taskId).equals("overdue")) {
+
+		taskCount += 1;
+	}
+	else if (slaStatuses.contains("Untracked") &&
+			 slaStatusMap.get(taskId).equals("untracked")) {
+
+		taskCount += 1;
+	}	
+}
+
+return taskCount;

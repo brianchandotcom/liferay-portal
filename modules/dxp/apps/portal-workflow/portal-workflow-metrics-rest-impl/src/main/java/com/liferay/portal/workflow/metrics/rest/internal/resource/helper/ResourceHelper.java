@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.helper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -298,6 +299,64 @@ public class ResourceHelper {
 		return scriptedMetricAggregation;
 	}
 
+	public ScriptedMetricAggregation creatTaskCountScriptedMetricAggregation(
+		List<Long> assigneeIds, List<String> slaStatuses,
+		List<String> taskNames) {
+
+		ScriptedMetricAggregation scriptedMetricAggregation =
+			_aggregations.scriptedMetric("taskCount");
+
+		scriptedMetricAggregation.setCombineScript(
+			_workflowMetricsTaskCountCombineScript);
+		scriptedMetricAggregation.setInitScript(
+			_workflowMetricsTaskCountInitScript);
+		scriptedMetricAggregation.setMapScript(
+			_workflowMetricsTaskCountMapScript);
+		scriptedMetricAggregation.setParameters(
+			HashMapBuilder.<String, Object>put(
+				"assigneeIds",
+				() -> Optional.ofNullable(
+					assigneeIds
+				).filter(
+					ListUtil::isNotEmpty
+				).map(
+					List::parallelStream
+				).map(
+					stream -> stream.map(
+						String::valueOf
+					).collect(
+						Collectors.toList()
+					)
+				).orElseGet(
+					() -> null
+				)
+			).put(
+				"assigneeType", User.class.getName()
+			).put(
+				"slaStatuses",
+				() -> Optional.ofNullable(
+					slaStatuses
+				).filter(
+					ListUtil::isNotEmpty
+				).orElseGet(
+					() -> null
+				)
+			).put(
+				"taskNames",
+				() -> Optional.ofNullable(
+					taskNames
+				).filter(
+					ListUtil::isNotEmpty
+				).orElseGet(
+					() -> null
+				)
+			).build());
+		scriptedMetricAggregation.setReduceScript(
+			_workflowMetricsTaskCountReduceScript);
+
+		return scriptedMetricAggregation;
+	}
+
 	public long getBreachedInstanceCount(Bucket bucket) {
 		FilterAggregationResult filterAggregationResult =
 			(FilterAggregationResult)bucket.getChildAggregationResult(
@@ -465,6 +524,14 @@ public class ResourceHelper {
 		_workflowMetricsSlaTaskAssigneeOverdueReduceScript = createScript(
 			getClass(),
 			"workflow-metrics-sla-assignee-overdue-reduce-script.painless");
+		_workflowMetricsTaskCountCombineScript = createScript(
+			getClass(), "workflow-metrics-task-count-combine-script.painless");
+		_workflowMetricsTaskCountInitScript = createScript(
+			getClass(), "workflow-metrics-task-count-init-script.painless");
+		_workflowMetricsTaskCountMapScript = createScript(
+			getClass(), "workflow-metrics-task-count-map-script.painless");
+		_workflowMetricsTaskCountReduceScript = createScript(
+			getClass(), "workflow-metrics-task-count-reduce-script.painless");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ResourceHelper.class);
@@ -511,5 +578,9 @@ public class ResourceHelper {
 	private Script _workflowMetricsSlaTaskAssigneeMapScript;
 	private Script _workflowMetricsSlaTaskAssigneeOnTimeReduceScript;
 	private Script _workflowMetricsSlaTaskAssigneeOverdueReduceScript;
+	private Script _workflowMetricsTaskCountCombineScript;
+	private Script _workflowMetricsTaskCountInitScript;
+	private Script _workflowMetricsTaskCountMapScript;
+	private Script _workflowMetricsTaskCountReduceScript;
 
 }

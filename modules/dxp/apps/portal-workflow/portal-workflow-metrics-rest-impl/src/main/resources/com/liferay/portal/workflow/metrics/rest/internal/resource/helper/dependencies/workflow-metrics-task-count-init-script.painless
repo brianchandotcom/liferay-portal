@@ -1,0 +1,6 @@
+state.assigneeIds = params.assigneeIds;
+state.assigneeType = params.assigneeType;
+state.slaStatuses = params.slaStatuses;
+state.slaStatusMap = new HashMap();
+state.taskIds = new HashSet();
+state.taskNames = params.taskNames;

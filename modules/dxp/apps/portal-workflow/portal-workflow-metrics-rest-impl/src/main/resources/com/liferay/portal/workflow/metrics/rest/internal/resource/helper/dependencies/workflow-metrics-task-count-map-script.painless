@@ -1,0 +1,36 @@
+def taskId = doc.taskId.value;
+
+if (doc.uid.value.startsWith("WorkflowMetricsSLATaskResult")) {
+	state.slaStatusMap.compute(
+		taskId,
+		(key, oldSLAStatus) -> {
+			if (((oldSLAStatus == null) || oldSLAStatus.equals("untracked")) &&
+				(doc.status.value.equals("NEW"))) {
+
+				return "untracked";
+			}
+			else if (((oldSLAStatus == null) ||
+					  !oldSLAStatus.equals("overdue")) &&
+					 doc.onTime.value) {
+
+				return "onTime";
+			}
+
+			return "overdue";
+		});
+}
+
+if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
+	(doc.completed.value == false) &&
+	((state.assigneeIds == null) ||
+	 (((doc.assigneeIds.size() != 0) &&
+	  state.assigneeIds.contains(doc.assigneeIds.value)) || 
+	 (state.assigneeIds.contains("-1") && (doc.assigneeIds.size() == 0)))) &&
+	((state.taskNames == null) || state.taskNames.contains(doc.name.value))) {
+
+	state.taskIds.add(taskId);
+
+	state.slaStatusMap.compute(
+		taskId,
+		(key, slaStatus) -> (slaStatus == null) ? "untracked" : slaStatus);
+}

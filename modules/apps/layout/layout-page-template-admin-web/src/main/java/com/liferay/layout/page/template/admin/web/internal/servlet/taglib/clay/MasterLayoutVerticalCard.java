@@ -143,6 +143,13 @@ public class MasterLayoutVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
+		if (_isBlankMasterLayout()) {
+			return LabelItemListBuilder.add(
+				labelItem -> labelItem.setStatus(
+					WorkflowConstants.STATUS_APPROVED)
+			).build();
+		}
+
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			_layoutPageTemplateEntry.getPlid());
 
@@ -202,6 +209,14 @@ public class MasterLayoutVerticalCard
 	@Override
 	public boolean isSelectable() {
 		if (_layoutPageTemplateEntry.getLayoutPageTemplateEntryId() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isBlankMasterLayout() {
+		if (_layoutPageTemplateEntry.getLayoutPageTemplateEntryId() == 0L) {
 			return true;
 		}
 

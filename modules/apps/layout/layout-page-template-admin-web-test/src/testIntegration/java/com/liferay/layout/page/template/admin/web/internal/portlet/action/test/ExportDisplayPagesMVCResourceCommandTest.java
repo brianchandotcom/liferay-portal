@@ -178,6 +178,31 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testGetFileNameSingleDisplayPageTemplate() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				0, "Display Page Template One",
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		long[] layoutPageTemplateEntryIds = {
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		};
+
+		String fileName = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getFileName", new Class<?>[] {long[].class},
+			layoutPageTemplateEntryIds);
+
+		Assert.assertTrue(
+			fileName.startsWith(
+				"display-page-template-" +
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey() +
+						"-"));
+		Assert.assertTrue(fileName.endsWith(".zip"));
+	}
+
+	@Test
 	public void testGetLayoutPageTemplateEntryIdsSingleDisplayPageTemplate() {
 		long expectedLayoutPageTemplateEntryId = RandomTestUtil.randomLong();
 

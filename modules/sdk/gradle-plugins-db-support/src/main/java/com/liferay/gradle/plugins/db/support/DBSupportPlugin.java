@@ -17,7 +17,7 @@ package com.liferay.gradle.plugins.db.support;
 import com.liferay.gradle.plugins.db.support.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.db.support.tasks.BaseDBSupportTask;
 import com.liferay.gradle.plugins.db.support.tasks.CleanServiceBuilderTask;
-import com.liferay.gradle.util.OsgiHelper;
+import com.liferay.gradle.util.OSGiUtil;
 
 import java.util.concurrent.Callable;
 
@@ -117,7 +117,7 @@ public class DBSupportPlugin implements Plugin<Project> {
 					PluginContainer pluginContainer = project.getPlugins();
 
 					if (pluginContainer.hasPlugin(BasePlugin.class)) {
-						return _osgiHelper.getBundleSymbolicName(project);
+						return OSGiUtil.getBundleSymbolicName(project);
 					}
 
 					return null;
@@ -146,7 +146,5 @@ public class DBSupportPlugin implements Plugin<Project> {
 
 			});
 	}
-
-	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 }

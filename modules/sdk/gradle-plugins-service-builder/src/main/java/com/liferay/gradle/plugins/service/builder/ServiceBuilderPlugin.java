@@ -16,7 +16,7 @@ package com.liferay.gradle.plugins.service.builder;
 
 import com.liferay.gradle.plugins.service.builder.internal.util.GradleUtil;
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.OsgiHelper;
+import com.liferay.gradle.util.OSGiUtil;
 
 import java.io.File;
 
@@ -174,7 +174,7 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 				public String call() throws Exception {
 					if (buildServiceTask.isOsgiModule()) {
 						String bundleSymbolicName =
-							_osgiHelper.getBundleSymbolicName(project);
+							OSGiUtil.getBundleSymbolicName(project);
 
 						return bundleSymbolicName + ".util.ServiceProps";
 					}
@@ -413,7 +413,5 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 
 		return warPluginConvention.getWebAppDir();
 	}
-
-	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 }

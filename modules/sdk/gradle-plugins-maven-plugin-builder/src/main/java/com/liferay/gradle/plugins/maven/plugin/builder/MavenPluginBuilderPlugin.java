@@ -18,7 +18,7 @@ import com.liferay.gradle.plugins.maven.plugin.builder.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.maven.plugin.builder.tasks.BuildPluginDescriptorTask;
 import com.liferay.gradle.plugins.maven.plugin.builder.tasks.WriteMavenSettingsTask;
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.OsgiHelper;
+import com.liferay.gradle.util.OSGiUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -183,7 +183,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return _osgiHelper.getBundleSymbolicName(project);
+					return OSGiUtil.getBundleSymbolicName(project);
 				}
 
 			});
@@ -403,8 +403,6 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 		return iterator.next();
 	}
-
-	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 	private static class ProxyPropertyCallable extends SystemPropertyCallable {
 

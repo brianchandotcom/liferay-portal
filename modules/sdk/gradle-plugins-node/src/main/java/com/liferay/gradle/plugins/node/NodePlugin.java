@@ -26,7 +26,7 @@ import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTestTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
-import com.liferay.gradle.util.OsgiHelper;
+import com.liferay.gradle.util.OSGiUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonSlurper;
@@ -780,8 +780,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					String moduleName = _osgiHelper.getBundleSymbolicName(
-						project);
+					String moduleName = OSGiUtil.getBundleSymbolicName(project);
 
 					int pos = moduleName.indexOf('.');
 
@@ -1053,6 +1052,5 @@ public class NodePlugin implements Plugin<Project> {
 		VersionNumber.version(8);
 	private static final VersionNumber _npm5VersionNumber =
 		VersionNumber.version(5);
-	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 }

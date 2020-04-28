@@ -15,7 +15,7 @@
 package com.liferay.gradle.plugins.alloy.taglib;
 
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.OsgiHelper;
+import com.liferay.gradle.util.OSGiUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -89,7 +89,7 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return _osgiHelper.getBundleSymbolicName(
+					return OSGiUtil.getBundleSymbolicName(
 						buildTaglibsTask.getProject());
 				}
 
@@ -132,7 +132,5 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 		return iterator.next();
 	}
-
-	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 }

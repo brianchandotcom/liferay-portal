@@ -34,6 +34,10 @@ definition {
 	test AddContentPageWithVideoFragment {
 		property portal.acceptance = "false";
 
+		// Assert the Home page is a content page in the default site
+
+		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");

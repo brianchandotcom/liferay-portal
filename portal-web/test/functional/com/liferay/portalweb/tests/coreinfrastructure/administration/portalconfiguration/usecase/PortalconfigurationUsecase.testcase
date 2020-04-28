@@ -193,6 +193,10 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
+		// Assert the Home page is a content page in the new virtual instance
+
+		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",

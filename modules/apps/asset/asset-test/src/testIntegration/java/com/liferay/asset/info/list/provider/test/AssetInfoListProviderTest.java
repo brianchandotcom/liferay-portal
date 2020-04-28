@@ -16,6 +16,7 @@ package com.liferay.asset.info.list.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderContext;
@@ -51,26 +52,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class AssetInfoListProviderTest {
 
-	public static final Accessor<AssetEntry, Long> CLASS_PK_ACCESSOR =
-		new Accessor<AssetEntry, Long>() {
-
-			@Override
-			public Long get(AssetEntry assetEntry) {
-				return assetEntry.getClassPK();
-			}
-
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
-
-			@Override
-			public Class<AssetEntry> getTypeClass() {
-				return AssetEntry.class;
-			}
-
-		};
-
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
@@ -90,7 +71,7 @@ public class AssetInfoListProviderTest {
 	public void testHighestRatedAssetsInfoListProvider() throws Exception {
 		InfoListProvider<AssetEntry> infoListProvider =
 			_infoListProviderTracker.getInfoListProvider(
-				_HIGHEST_RATES_ASSETS_INFO_LIST_PROVIDER_KEY);
+				_HIGHEST_RATED_ASSETS_INFO_LIST_PROVIDER_KEY);
 
 		JournalArticle article1 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -117,11 +98,11 @@ public class AssetInfoListProviderTest {
 
 		Assert.assertEquals(
 			Long.valueOf(article2.getResourcePrimKey()),
-			CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
 
 		Assert.assertEquals(
 			Long.valueOf(article1.getResourcePrimKey()),
-			CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
 
 		_ratingsEntryLocalService.deleteEntry(
 			TestPropsValues.getUserId(), JournalArticle.class.getName(),
@@ -135,16 +116,92 @@ public class AssetInfoListProviderTest {
 
 		Assert.assertEquals(
 			Long.valueOf(article1.getResourcePrimKey()),
-			CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
 
 		Assert.assertEquals(
 			Long.valueOf(article2.getResourcePrimKey()),
-			CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
 	}
 
-	private static final String _HIGHEST_RATES_ASSETS_INFO_LIST_PROVIDER_KEY =
+	@Test
+	public void testMostViewedAssetsInfoListProvider() throws Exception {
+		InfoListProvider<AssetEntry> infoListProvider =
+			_infoListProviderTracker.getInfoListProvider(
+				_MOST_VIEWED_ASSETS_INFO_LIST_PROVIDER_KEY);
+
+		JournalArticle article1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle article2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_assetEntryLocalService.incrementViewCounter(
+			_group.getCompanyId(), TestPropsValues.getUserId(),
+			JournalArticle.class.getName(), article2.getResourcePrimKey());
+
+		List<AssetEntry> assetEntries = infoListProvider.getInfoList(
+			_infoListProviderContext);
+
+		int assetEntriesCount = infoListProvider.getInfoListCount(
+			_infoListProviderContext);
+
+		Assert.assertEquals(2, assetEntriesCount);
+
+		Assert.assertEquals(
+			Long.valueOf(article2.getResourcePrimKey()),
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
+
+		Assert.assertEquals(
+			Long.valueOf(article1.getResourcePrimKey()),
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
+
+		_assetEntryLocalService.incrementViewCounter(
+			_group.getCompanyId(), TestPropsValues.getUserId(),
+			JournalArticle.class.getName(), article1.getResourcePrimKey(), 2);
+
+		assetEntries = infoListProvider.getInfoList(_infoListProviderContext);
+
+		Assert.assertEquals(
+			Long.valueOf(article1.getResourcePrimKey()),
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
+
+		Assert.assertEquals(
+			Long.valueOf(article2.getResourcePrimKey()),
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
+	}
+
+	private static final Accessor<AssetEntry, Long> _CLASS_PK_ACCESSOR =
+		new Accessor<AssetEntry, Long>() {
+
+			@Override
+			public Long get(AssetEntry assetEntry) {
+				return assetEntry.getClassPK();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<AssetEntry> getTypeClass() {
+				return AssetEntry.class;
+			}
+
+		};
+
+	private static final String _HIGHEST_RATED_ASSETS_INFO_LIST_PROVIDER_KEY =
 		"com.liferay.asset.internal.info.list.provider." +
 			"HighestRatedAssetsInfoListProvider";
+
+	private static final String _MOST_VIEWED_ASSETS_INFO_LIST_PROVIDER_KEY =
+		"com.liferay.asset.internal.info.list.provider." +
+			"MostViewedAssetsInfoListProvider";
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

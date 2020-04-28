@@ -40,6 +40,8 @@ import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.web.internal.exportimport.data.handler.helper.LayoutPageTemplateStructureDataHandlerHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -76,6 +78,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
@@ -350,6 +353,18 @@ public class LayoutStagedModelDataHandler
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, layout, layoutFriendlyURL,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+
+		List<FriendlyURLEntry> friendlyURLEntries = _getFriendlyURLEntries(
+			layout);
+
+		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, friendlyURLEntry);
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, friendlyURLEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 
@@ -889,6 +904,7 @@ public class LayoutStagedModelDataHandler
 
 		importAssets(portletDataContext, layout, importedLayout);
 
+		importFriendlyURLEntries(portletDataContext, layout, importedLayout);
 		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
 		importLayoutPageTemplateStructures(
@@ -1415,6 +1431,52 @@ public class LayoutStagedModelDataHandler
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, fragmentEntryLink);
+		}
+	}
+
+	protected void importFriendlyURLEntries(
+			PortletDataContext portletDataContext, Layout layout,
+			Layout importedLayout)
+		throws PortalException {
+
+		List<Element> friendlyURLEntryElements =
+			portletDataContext.getReferenceDataElements(
+				layout, FriendlyURLEntry.class);
+
+		Map<Long, Long> layoutNewPrimaryKeys =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				_getLayoutClassName(layout));
+
+		layoutNewPrimaryKeys.put(
+			layout.getPrimaryKey(), importedLayout.getPrimaryKey());
+
+		for (Element friendlyURLEntryElement : friendlyURLEntryElements) {
+			String path = friendlyURLEntryElement.attributeValue("path");
+
+			FriendlyURLEntry friendlyURLEntry =
+				(FriendlyURLEntry)portletDataContext.getZipEntryAsObject(path);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, friendlyURLEntryElement);
+
+			Map<Long, Long> friendlyURLEntries =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					FriendlyURLEntry.class);
+
+			long friendlyURLEntryId = MapUtil.getLong(
+				friendlyURLEntries, friendlyURLEntry.getFriendlyURLEntryId(),
+				friendlyURLEntry.getFriendlyURLEntryId());
+
+			FriendlyURLEntry existingFriendlyURLEntry =
+				_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+					friendlyURLEntryId);
+
+			if (existingFriendlyURLEntry != null) {
+				existingFriendlyURLEntry.setClassPK(importedLayout.getPlid());
+
+				_friendlyURLEntryLocalService.updateFriendlyURLEntry(
+					existingFriendlyURLEntry);
+			}
 		}
 	}
 
@@ -2266,6 +2328,18 @@ public class LayoutStagedModelDataHandler
 			"master-layout-id", String.valueOf(masterLayout.getLayoutId()));
 	}
 
+	private List<FriendlyURLEntry> _getFriendlyURLEntries(Layout layout) {
+		return _friendlyURLEntryLocalService.getFriendlyURLEntries(
+			layout.getGroupId(),
+			_portal.getClassNameId(_getLayoutClassName(layout)),
+			layout.getPlid());
+	}
+
+	private String _getLayoutClassName(Layout layout) {
+		return _resourceActions.getCompositeModelName(
+			Layout.class.getName(), String.valueOf(layout.isPrivateLayout()));
+	}
+
 	private String _getLayoutPrototypeUuid(
 		long companyId, Layout layout, Element layoutElement) {
 
@@ -2331,6 +2405,9 @@ public class LayoutStagedModelDataHandler
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
 
@@ -2380,6 +2457,9 @@ public class LayoutStagedModelDataHandler
 
 	@Reference
 	private PortletRegistry _portletRegistry;
+
+	@Reference
+	private ResourceActions _resourceActions;
 
 	private ResourceLocalService _resourceLocalService;
 

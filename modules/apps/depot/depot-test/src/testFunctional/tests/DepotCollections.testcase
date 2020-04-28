@@ -45,11 +45,7 @@ definition {
 		}
 
 		for (var i : list "1,2") {
-			DepotNavigator.openDepotAdmin();
-
-			DepotNavigator.gotoDepot(
-				depotName = "Test Depot Name",
-				portlet = "Documents and Media");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
@@ -357,12 +353,12 @@ definition {
 	@description = "This ensures that the image is displayed by AP through Collections in a depot."
 	@priority = "5"
 	test DisplayImageInAP {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpeg",
-			dmDocumentTitle = "Document Title");
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
 
@@ -424,12 +420,12 @@ definition {
 	@description = "This ensures that tagged the web content is displayed by AP through dynamic selection in a depot."
 	@priority = "5"
 	test DisplayWebContentWithTagInAP {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.doc",
-			dmDocumentTitle = "Document Title");
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
@@ -504,17 +500,21 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
 
 		for (var i : list "1,2") {
-			DMDocument.addCP(
+			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_${i}.doc",
-				dmDocumentTitle = "Document Text Title ${i}");
+				dmDocumentTitle = "Document Text Title ${i}",
+				groupName = "Test Depot Name",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${i}.doc");
 		}
 
 		for (var i : list "1,2") {
-			DMDocument.addCP(
+			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_${i}.png",
-				dmDocumentTitle = "Document Image Title ${i}");
+				dmDocumentTitle = "Document Image Title ${i}",
+				groupName = "Test Depot Name",
+				mimeType = "image/png",
+				sourceFileName = "Document_${i}.png");
 		}
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
@@ -596,12 +596,12 @@ definition {
 	@description = "This ensures that only web contents configured to show with dynamic selection are displayed in a depot."
 	@priority = "4"
 	test SelectAllWebContentDynamically {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document Title");
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
 
@@ -676,12 +676,12 @@ definition {
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpeg",
-			dmDocumentTitle = "DM Image Title");
+			dmDocumentTitle = "DM Image Title",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
 

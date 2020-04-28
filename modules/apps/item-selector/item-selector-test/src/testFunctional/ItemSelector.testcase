@@ -79,10 +79,12 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMDocument.addPG(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.svg",
-			dmDocumentTitle = "Document_1.svg");
+			dmDocumentTitle = "Document_1.svg",
+			groupName = "Guest",
+			mimeType = "image/svg+xml",
+			sourceFileName = "Document_1.svg");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -136,12 +138,12 @@ definition {
 	test FragmentSmoke {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpeg",
-			dmDocumentTitle = "Document_1.jpeg");
+			dmDocumentTitle = "Document_1.jpeg",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpeg");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -211,12 +213,12 @@ definition {
 	@description = "This ensures that users can preview the SVG image in item selector."
 	@priority = "5"
 	test PreviewSVG {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.svg",
-			dmDocumentTitle = "Document_1.svg");
+			dmDocumentTitle = "Document_1.svg",
+			groupName = "Guest",
+			mimeType = "image/svg+xml",
+			sourceFileName = "Document_1.svg");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -243,14 +245,12 @@ definition {
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "Document_2.jpg");
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

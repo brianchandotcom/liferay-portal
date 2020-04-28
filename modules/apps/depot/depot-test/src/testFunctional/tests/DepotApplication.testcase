@@ -35,12 +35,12 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpeg",
-			dmDocumentTitle = "Document_2.jpeg");
+			dmDocumentTitle = "Document_2.jpeg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-depot-name");
 
@@ -327,12 +327,12 @@ definition {
 	test ViewDisabledImageViaBlogs {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg");
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
 		DepotNavigator.openDepotAdmin();
 

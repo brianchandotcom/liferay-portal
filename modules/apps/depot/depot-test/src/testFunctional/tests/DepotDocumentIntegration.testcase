@@ -37,12 +37,12 @@ definition {
 	test AddImageViaBlogs {
 		DepotNavigator.openDepotAdmin();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "Document_2.jpg");
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -88,12 +88,12 @@ definition {
 	@description = "This ensures that a depot image can be used through page creation on a connected site."
 	@priority = "5"
 	test AddImageViaContentPage {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpeg",
-			dmDocumentTitle = "Document_1.jpeg");
+			dmDocumentTitle = "Document_1.jpeg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpeg");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -139,12 +139,12 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "Document_2.jpg");
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -195,12 +195,12 @@ definition {
 	@description = "This ensures that a depot image can be used through web content on a connected site."
 	@priority = "5"
 	test AddImageViaWebContent {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpeg",
-			dmDocumentTitle = "Document_2.jpeg");
+			dmDocumentTitle = "Document_2.jpeg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
 
 		DepotNavigator.openDepotAdmin();
 

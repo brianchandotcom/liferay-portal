@@ -180,12 +180,12 @@ definition {
 
 	@priority = "4"
 	test RotateImageViaDMSiteAdmin {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.jpg",
-			dmDocumentTitle = "Document_2.jpg");
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -212,12 +212,12 @@ definition {
 	test ViewImageEditorControls {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg");
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

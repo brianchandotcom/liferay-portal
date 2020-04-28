@@ -84,7 +84,7 @@ public interface RedirectEntryService extends BaseService {
 
 	public void updateRedirectEntriesReferences(
 			long groupId, String destinationURL, String groupBaseURL,
-			boolean updateReferences, String sourceURL)
+			String sourceURL)
 		throws PortalException;
 
 	public RedirectEntry updateRedirectEntry(

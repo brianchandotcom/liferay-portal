@@ -89,11 +89,11 @@ public class RedirectEntryServiceUtil {
 
 	public static void updateRedirectEntriesReferences(
 			long groupId, String destinationURL, String groupBaseURL,
-			boolean updateReferences, String sourceURL)
+			String sourceURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().updateRedirectEntriesReferences(
-			groupId, destinationURL, groupBaseURL, updateReferences, sourceURL);
+			groupId, destinationURL, groupBaseURL, sourceURL);
 	}
 
 	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(

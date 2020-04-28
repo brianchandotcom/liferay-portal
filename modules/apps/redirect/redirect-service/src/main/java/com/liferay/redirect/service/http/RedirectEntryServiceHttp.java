@@ -257,6 +257,44 @@ public class RedirectEntryServiceHttp {
 		}
 	}
 
+	public static void updateRedirectEntriesReferences(
+			HttpPrincipal httpPrincipal, long groupId, String destinationURL,
+			String groupBaseURL, String sourceURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RedirectEntryServiceUtil.class,
+				"updateRedirectEntriesReferences",
+				_updateRedirectEntriesReferencesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, destinationURL, groupBaseURL, sourceURL);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
 			HttpPrincipal httpPrincipal, long redirectEntryId,
 			String destinationURL, java.util.Date expirationDate,
@@ -266,7 +304,7 @@ public class RedirectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RedirectEntryServiceUtil.class, "updateRedirectEntry",
-				_updateRedirectEntryParameterTypes5);
+				_updateRedirectEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, redirectEntryId, destinationURL, expirationDate,
@@ -300,45 +338,6 @@ public class RedirectEntryServiceHttp {
 		}
 	}
 
-	public static void updateRedirectEntriesReferences(
-			HttpPrincipal httpPrincipal, long groupId, String destinationURL,
-			String groupBaseURL, boolean updateReferences, String sourceURL)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				RedirectEntryServiceUtil.class,
-				"updateRedirectEntriesReferences",
-				_updateRedirectEntriesReferencesParameterTypes6);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, destinationURL, groupBaseURL,
-				updateReferences, sourceURL);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		RedirectEntryServiceHttp.class);
 
@@ -358,14 +357,14 @@ public class RedirectEntryServiceHttp {
 		};
 	private static final Class<?>[] _getRedirectEntriesCountParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateRedirectEntryParameterTypes5 =
+	private static final Class<?>[]
+		_updateRedirectEntriesReferencesParameterTypes5 = new Class[] {
+			long.class, String.class, String.class, String.class
+		};
+	private static final Class<?>[] _updateRedirectEntryParameterTypes6 =
 		new Class[] {
 			long.class, String.class, java.util.Date.class, boolean.class,
 			String.class
-		};
-	private static final Class<?>[]
-		_updateRedirectEntriesReferencesParameterTypes6 = new Class[] {
-			long.class, String.class, String.class, boolean.class, String.class
 		};
 
 }

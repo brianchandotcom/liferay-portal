@@ -79,11 +79,12 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 					sourceURL);
 			}
 
-			_redirectEntryService.updateRedirectEntriesReferences(
-				themeDisplay.getScopeGroupId(), destinationURL,
-				RedirectUtil.getGroupBaseURL(themeDisplay),
-				ParamUtil.getBoolean(actionRequest, "updateReferences"),
-				sourceURL);
+			if (ParamUtil.getBoolean(actionRequest, "updateReferences")) {
+				_redirectEntryService.updateRedirectEntriesReferences(
+					themeDisplay.getScopeGroupId(), destinationURL,
+					RedirectUtil.getGroupBaseURL(themeDisplay),
+					sourceURL);
+			}
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);

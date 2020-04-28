@@ -157,6 +157,22 @@ public class RedirectEntryServiceSoap {
 		}
 	}
 
+	public static void updateRedirectEntriesReferences(
+			long groupId, String destinationURL, String groupBaseURL,
+			String sourceURL)
+		throws RemoteException {
+
+		try {
+			RedirectEntryServiceUtil.updateRedirectEntriesReferences(
+				groupId, destinationURL, groupBaseURL, sourceURL);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.redirect.model.RedirectEntrySoap
 			updateRedirectEntry(
 				long redirectEntryId, String destinationURL,
@@ -172,23 +188,6 @@ public class RedirectEntryServiceSoap {
 
 			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModel(
 				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static void updateRedirectEntriesReferences(
-			long groupId, String destinationURL, String groupBaseURL,
-			boolean updateReferences, String sourceURL)
-		throws RemoteException {
-
-		try {
-			RedirectEntryServiceUtil.updateRedirectEntriesReferences(
-				groupId, destinationURL, groupBaseURL, updateReferences,
-				sourceURL);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

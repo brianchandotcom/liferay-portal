@@ -31,8 +31,7 @@ public class OsgiHelper {
         if (archivesBaseName.startsWith(groupId)) {
             return archivesBaseName;
         }
-        int i = groupId.lastIndexOf('.');
-        String lastSection = groupId.substring(++i);
+        String lastSection = groupId.substring(groupId.lastIndexOf('.') + 1);
         if (archivesBaseName.equals(lastSection)) {
             return groupId;
         }

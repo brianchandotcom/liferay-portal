@@ -98,9 +98,6 @@ public class DDMFormInstanceRecordUADDisplay
 				portletNamespace.concat("mvcPath"),
 				new String[] {"/admin/edit_form_instance_record.jsp"}
 			).put(
-				portletNamespace.concat("readOnly"),
-				new String[] {Boolean.FALSE.toString()}
-			).put(
 				portletNamespace.concat("redirect"),
 				new String[] {_portal.getCurrentURL(httpServletRequest)}
 			).put(

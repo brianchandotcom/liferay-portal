@@ -42,12 +42,13 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Override
 	public Role getRole(Long roleId) throws Exception {
-		com.liferay.portal.kernel.model.Role role =
-			_roleService.fetchRole(roleId);
+		com.liferay.portal.kernel.model.Role role = _roleService.fetchRole(
+			roleId);
 
 		if (role == null) {
 			throw new NoSuchRoleException("No Role exists with id " + roleId);
 		}
+
 		return _toRole(_roleService.getRole(roleId));
 	}
 

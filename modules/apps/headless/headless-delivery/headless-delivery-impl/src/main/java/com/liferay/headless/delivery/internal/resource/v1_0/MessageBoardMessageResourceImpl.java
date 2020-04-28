@@ -183,10 +183,13 @@ public class MessageBoardMessageResourceImpl
 			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
-		MBMessage mbMessage = _mbMessageService.fetchMBMessageByUrlSubject(siteId, friendlyUrlPath);
+		MBMessage mbMessage = _mbMessageService.fetchMBMessageByUrlSubject(
+			siteId, friendlyUrlPath);
 
 		if (mbMessage == null) {
-			throw new NoSuchMessageException("No such message exists with friendly URL path " + friendlyUrlPath);
+			throw new NoSuchMessageException(
+				"No such message exists with friendly URL path " +
+					friendlyUrlPath);
 		}
 
 		return _toMessageBoardMessage(mbMessage);

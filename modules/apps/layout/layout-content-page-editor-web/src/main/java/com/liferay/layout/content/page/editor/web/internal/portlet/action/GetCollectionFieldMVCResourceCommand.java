@@ -193,7 +193,11 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		displayObjectJSONObject.put(
-			"className", infoDisplayContributor.getClassName());
+			"className", infoDisplayContributor.getClassName()
+		).put(
+			"classPK",
+			infoDisplayContributor.getInfoDisplayObjectClassPK(object)
+		);
 
 		return displayObjectJSONObject;
 	}

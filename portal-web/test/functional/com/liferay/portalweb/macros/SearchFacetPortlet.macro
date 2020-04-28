@@ -217,4 +217,45 @@ definition {
 		return "${searchURL}";
 	}
 
+	macro updateFacetConfiguration {
+		Portlet.gotoPortletOptions(
+			portletName = "${portletName}",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(displayTemplate)) {
+			Select(
+				key_fieldLabel = "Display Template",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${displayTemplate}");
+		}
+
+		if (isSet(parameterName)) {
+			FormFields.editText(
+				fieldName = "parameterName",
+				fieldValue = "${parameterName}");
+		}
+
+		if (isSet(maxTerms)) {
+			FormFields.editText(
+				fieldName = "maxTerms",
+				fieldValue = "${maxTerms}");
+		}
+
+		if (isSet(frequencyThreshold)) {
+			FormFields.editText(
+				fieldName = "frequencyThreshold",
+				fieldValue = "${frequencyThreshold}");
+		}
+
+		if ("${displayFrequencies}" == "disable") {
+			FormFields.disableCheckbox(fieldName = "frequenciesVisible");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 }

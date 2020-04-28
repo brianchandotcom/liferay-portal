@@ -252,7 +252,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		ModelResourceActionsBag modelResourceActionsBag =
 			_getModelResourceActionsBag(name);
 
-		return new ArrayList<>(modelResourceActionsBag.getModelActions());
+		return new ArrayList<>(modelResourceActionsBag.getSupportsActions());
 	}
 
 	@Override
@@ -541,7 +541,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		ModelResourceActionsBag modelResourceActionsBag =
 			_getModelResourceActionsBag(name);
 
-		Set<String> modelActions = modelResourceActionsBag.getModelActions();
+		Set<String> modelActions = modelResourceActionsBag.getSupportsActions();
 
 		if ((modelActions != null) && !modelActions.isEmpty()) {
 			return true;
@@ -834,7 +834,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			_getPortletResourceActionsBag(name);
 
 		Set<String> portletActions =
-			portletResourceActionsBag.getPortletActions();
+			portletResourceActionsBag.getSupportsActions();
 
 		if (!portletActions.isEmpty()) {
 			return new ArrayList<>(portletActions);
@@ -1227,7 +1227,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		_modelResourceWeights.put(name, weight);
 
 		Set<String> modelResourceActions =
-			modelResourceActionsBag.getModelActions();
+			modelResourceActionsBag.getSupportsActions();
 
 		_readSupportsActions(modelResourceElement, modelResourceActions);
 
@@ -1292,7 +1292,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			_getPortletResourceActionsBag(name);
 
 		Set<String> portletActions =
-			portletResourceActionsBag.getPortletActions();
+			portletResourceActionsBag.getSupportsActions();
 
 		_readSupportsActions(portletResourceElement, portletActions);
 
@@ -1369,15 +1369,10 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	private static class ModelResourceActionsBag extends ResourceActionsBag {
 
-		public Set<String> getModelActions() {
-			return _modelActions;
-		}
-
 		public Set<String> getOwnerDefaultActions() {
 			return _ownerDefaultActions;
 		}
 
-		private final Set<String> _modelActions = new HashSet<>();
 		private final Set<String> _ownerDefaultActions = new HashSet<>();
 
 	}
@@ -1388,12 +1383,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			return _layoutManagerActions;
 		}
 
-		public Set<String> getPortletActions() {
-			return _portletResourceActions;
-		}
-
 		private final Set<String> _layoutManagerActions = new HashSet<>();
-		private final Set<String> _portletResourceActions = new HashSet<>();
 
 	}
 
@@ -1411,9 +1401,14 @@ public class ResourceActionsImpl implements ResourceActions {
 			return _guestUnsupportedActions;
 		}
 
+		public Set<String> getSupportsActions() {
+			return _supportsActions;
+		}
+
 		private final Set<String> _groupDefaultActions = new HashSet<>();
 		private final Set<String> _guestDefaultActions = new HashSet<>();
 		private final Set<String> _guestUnsupportedActions = new HashSet<>();
+		private final Set<String> _supportsActions = new HashSet<>();
 
 	}
 

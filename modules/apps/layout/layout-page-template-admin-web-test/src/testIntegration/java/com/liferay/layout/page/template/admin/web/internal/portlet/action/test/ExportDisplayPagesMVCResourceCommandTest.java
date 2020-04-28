@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -51,11 +52,14 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import javax.portlet.ResourceRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -171,6 +175,36 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 
 		Assert.assertTrue(fileName.startsWith("display-page-templates-"));
 		Assert.assertTrue(fileName.endsWith(".zip"));
+	}
+
+	@Test
+	public void testGetLayoutPageTemplateEntryIdsSingleDisplayPageTemplate() {
+		long expectedLayoutPageTemplateEntryId = RandomTestUtil.randomLong();
+
+		long[] actualLayoutPageTemplateEntryIds = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getLayoutPageTemplateEntryIds",
+			new Class<?>[] {ResourceRequest.class},
+			_getMockLiferayResourceRequest(expectedLayoutPageTemplateEntryId));
+
+		Assert.assertEquals(
+			Arrays.toString(actualLayoutPageTemplateEntryIds), 1,
+			actualLayoutPageTemplateEntryIds.length);
+		Assert.assertEquals(
+			expectedLayoutPageTemplateEntryId,
+			actualLayoutPageTemplateEntryIds[0]);
+	}
+
+	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
+		long layoutPageTemplateEntryId) {
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest();
+
+		mockLiferayResourceRequest.addParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(layoutPageTemplateEntryId));
+
+		return mockLiferayResourceRequest;
 	}
 
 	private boolean _isDisplayPageFile(String path) {

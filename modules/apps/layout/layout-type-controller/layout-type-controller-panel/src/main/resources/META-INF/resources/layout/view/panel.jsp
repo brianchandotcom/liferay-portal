@@ -18,7 +18,10 @@
 
 <c:choose>
 	<c:when test="<%= !themeDisplay.isStatePopUp() %>">
-		<aui:container class="lfr-panel-page" id="main-content">
+		<clay:container
+			className="lfr-panel-page"
+			id="main-content"
+		>
 			<aui:row>
 
 				<%
@@ -65,7 +68,7 @@
 					<%@ include file="/layout/view/panel_description.jspf" %>
 				</aui:col>
 			</aui:row>
-		</aui:container>
+		</clay:container>
 	</c:when>
 	<c:otherwise>
 		<%@ include file="/layout/view/panel_description.jspf" %>

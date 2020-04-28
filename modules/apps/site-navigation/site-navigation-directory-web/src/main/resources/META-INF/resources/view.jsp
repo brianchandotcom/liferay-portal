@@ -19,179 +19,174 @@
 <%
 String displayStyle = sitesDirectoryDisplayContext.getDisplayStyle();
 String sites = sitesDirectoryDisplayContext.getSites();
+
+Group rootGroup = null;
+boolean hidden = false;
+
+List<Group> branchGroups = new ArrayList<Group>();
+
+Group group = themeDisplay.getScopeGroup();
+
+branchGroups.add(group);
+branchGroups.addAll(group.getAncestors());
+
+if (sites.equals(SitesDirectoryTag.SITES_TOP_LEVEL)) {
+}
+else if (sites.equals(SitesDirectoryTag.SITES_CHILDREN) && (branchGroups.size() > 0)) {
+    rootGroup = branchGroups.get(0);
+}
+else if (sites.equals(SitesDirectoryTag.SITES_SIBLINGS) && (branchGroups.size() > 1)) {
+    rootGroup = branchGroups.get(1);
+}
+else if (sites.equals(SitesDirectoryTag.SITES_SIBLINGS) && group.isRoot()) {
+}
+else if (sites.equals(SitesDirectoryTag.SITES_PARENT_LEVEL) && (branchGroups.size() > 2)) {
+    rootGroup = branchGroups.get(2);
+}
+else if (sites.equals(SitesDirectoryTag.SITES_PARENT_LEVEL) && (branchGroups.size() == 2)) {
+}
+else {
+    hidden = true;
+}
 %>
 
-<c:if test="<%= layout != null %>">
+<div class="nav-menu sites-directory-taglib">
+	<c:choose>
+		<c:when test="<%= hidden %>">
+			<div class="alert alert-info">
+				<liferay-ui:message key="no-sites-were-found" />
+			</div>
+		</c:when>
+		<c:otherwise>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") || displayStyle.equals("icon") %>'>
+					<c:choose>
+						<c:when test="<%= Validator.isNull(portletDisplay.getId()) %>">
+							<div class="alert alert-info">
+								<liferay-ui:message arguments="<%= displayStyle %>" key="the-display-style-x-cannot-be-used-in-this-context" />
+							</div>
+						</c:when>
+						<c:otherwise>
 
-	<%
-	Group rootGroup = null;
-	boolean hidden = false;
+							<%
+							PortletURL portletURL = PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RENDER_PHASE);
+							%>
 
-	List<Group> branchGroups = new ArrayList<Group>();
-
-	Group group = themeDisplay.getScopeGroup();
-
-	branchGroups.add(group);
-	branchGroups.addAll(group.getAncestors());
-
-	if (sites.equals(SitesDirectoryTag.SITES_TOP_LEVEL)) {
-	}
-	else if (sites.equals(SitesDirectoryTag.SITES_CHILDREN) && (branchGroups.size() > 0)) {
-		rootGroup = branchGroups.get(0);
-	}
-	else if (sites.equals(SitesDirectoryTag.SITES_SIBLINGS) && (branchGroups.size() > 1)) {
-		rootGroup = branchGroups.get(1);
-	}
-	else if (sites.equals(SitesDirectoryTag.SITES_SIBLINGS) && group.isRoot()) {
-	}
-	else if (sites.equals(SitesDirectoryTag.SITES_PARENT_LEVEL) && (branchGroups.size() > 2)) {
-		rootGroup = branchGroups.get(2);
-	}
-	else if (sites.equals(SitesDirectoryTag.SITES_PARENT_LEVEL) && (branchGroups.size() == 2)) {
-	}
-	else {
-		hidden = true;
-	}
-	%>
-
-	<div class="nav-menu sites-directory-taglib">
-		<c:choose>
-			<c:when test="<%= hidden %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="no-sites-were-found" />
-				</div>
-			</c:when>
-			<c:otherwise>
-				<c:choose>
-					<c:when test='<%= displayStyle.equals("descriptive") || displayStyle.equals("icon") %>'>
-						<c:choose>
-							<c:when test="<%= Validator.isNull(portletDisplay.getId()) %>">
-								<div class="alert alert-info">
-									<liferay-ui:message arguments="<%= displayStyle %>" key="the-display-style-x-cannot-be-used-in-this-context" />
-								</div>
-							</c:when>
-							<c:otherwise>
+							<liferay-ui:search-container
+								emptyResultsMessage="no-sites-were-found"
+								iteratorURL="<%= portletURL %>"
+							>
 
 								<%
-								PortletURL portletURL = PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RENDER_PHASE);
+								List<Group> childGroups = null;
+
+								if (rootGroup != null) {
+									childGroups = rootGroup.getChildrenWithLayouts(true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true, locale));
+								}
+								else {
+									childGroups = GroupLocalServiceUtil.getLayoutsGroups(themeDisplay.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true, locale));
+								}
+
+								Set<Group> visibleGroups = new LinkedHashSet<Group>();
+
+								for (Group childGroup : childGroups) {
+									if (childGroup.hasPublicLayouts()) {
+										visibleGroups.add(childGroup);
+									}
+									else if (GroupLocalServiceUtil.hasUserGroup(user.getUserId(), childGroup.getGroupId())) {
+										visibleGroups.add(childGroup);
+									}
+								}
+
+								total = visibleGroups.size();
+
+								searchContainer.setTotal(total);
 								%>
 
-								<liferay-ui:search-container
-									emptyResultsMessage="no-sites-were-found"
-									iteratorURL="<%= portletURL %>"
+								<liferay-ui:search-container-results
+									results="<%= ListUtil.subList(new ArrayList<Group>(visibleGroups), searchContainer.getStart(), searchContainer.getEnd()) %>"
+								/>
+
+								<liferay-ui:search-container-row
+									className="com.liferay.portal.kernel.model.Group"
+									keyProperty="groupId"
+									modelVar="childGroup"
 								>
+									<c:choose>
+										<c:when test='<%= displayStyle.equals("icon") %>'>
+											<liferay-ui:app-view-entry
+												assetCategoryClassName="<%= Group.class.getName() %>"
+												assetCategoryClassPK="<%= childGroup.getGroupId() %>"
+												assetTagClassName="<%= Group.class.getName() %>"
+												assetTagClassPK="<%= childGroup.getGroupId() %>"
+												description="<%= childGroup.getDescription(locale) %>"
+												displayStyle="<%= displayStyle %>"
+												showCheckbox="<%= false %>"
+												thumbnailSrc="<%= childGroup.getLogoURL(themeDisplay, true) %>"
+												title="<%= childGroup.getDescriptiveName(locale) %>"
+												url="<%= (childGroup.getGroupId() != scopeGroupId) ? childGroup.getDisplayURL(themeDisplay) : null %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:search-container-column-image
+												src="<%= childGroup.getLogoURL(themeDisplay, true) %>"
+											/>
 
-									<%
-									List<Group> childGroups = null;
+											<liferay-ui:search-container-column-text
+												colspan="<%= 2 %>"
+											>
+												<h5>
+													<aui:a href="<%= (childGroup.getGroupId() != scopeGroupId) ? childGroup.getDisplayURL(themeDisplay) : null %>">
+														<%= childGroup.getDescriptiveName(locale) %>
+													</aui:a>
+												</h5>
 
-									if (rootGroup != null) {
-										childGroups = rootGroup.getChildrenWithLayouts(true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true, locale));
-									}
-									else {
-										childGroups = GroupLocalServiceUtil.getLayoutsGroups(themeDisplay.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true, locale));
-									}
+												<h6 class="text-default">
+													<%= HtmlUtil.escape(childGroup.getDescription(locale)) %>
+												</h6>
 
-									Set<Group> visibleGroups = new LinkedHashSet<Group>();
+												<h6 class="text-default">
+													<liferay-ui:asset-tags-summary
+														className="<%= Group.class.getName() %>"
+														classPK="<%= childGroup.getGroupId() %>"
+													/>
+												</h6>
 
-									for (Group childGroup : childGroups) {
-										if (childGroup.hasPublicLayouts()) {
-											visibleGroups.add(childGroup);
-										}
-										else if (GroupLocalServiceUtil.hasUserGroup(user.getUserId(), childGroup.getGroupId())) {
-											visibleGroups.add(childGroup);
-										}
-									}
+												<h6 class="text-default">
+													<liferay-ui:asset-categories-summary
+														className="<%= Group.class.getName() %>"
+														classPK="<%= childGroup.getGroupId() %>"
+													/>
+												</h6>
+											</liferay-ui:search-container-column-text>
+										</c:otherwise>
+									</c:choose>
+								</liferay-ui:search-container-row>
 
-									total = visibleGroups.size();
+								<liferay-ui:search-iterator
+									displayStyle="<%= displayStyle %>"
+									markupView="lexicon"
+								/>
+							</liferay-ui:search-container>
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
 
-									searchContainer.setTotal(total);
-									%>
+					<%
+					StringBundler sb = new StringBundler();
 
-									<liferay-ui:search-container-results
-										results="<%= ListUtil.subList(new ArrayList<Group>(visibleGroups), searchContainer.getStart(), searchContainer.getEnd()) %>"
-									/>
+					_buildSitesList(rootGroup, themeDisplay.getScopeGroup(), branchGroups, themeDisplay, 1, displayStyle.equals("list-hierarchy"), true, sb);
 
-									<liferay-ui:search-container-row
-										className="com.liferay.portal.kernel.model.Group"
-										keyProperty="groupId"
-										modelVar="childGroup"
-									>
-										<c:choose>
-											<c:when test='<%= displayStyle.equals("icon") %>'>
-												<liferay-ui:app-view-entry
-													assetCategoryClassName="<%= Group.class.getName() %>"
-													assetCategoryClassPK="<%= childGroup.getGroupId() %>"
-													assetTagClassName="<%= Group.class.getName() %>"
-													assetTagClassPK="<%= childGroup.getGroupId() %>"
-													description="<%= childGroup.getDescription(locale) %>"
-													displayStyle="<%= displayStyle %>"
-													showCheckbox="<%= false %>"
-													thumbnailSrc="<%= childGroup.getLogoURL(themeDisplay, true) %>"
-													title="<%= childGroup.getDescriptiveName(locale) %>"
-													url="<%= (childGroup.getGroupId() != scopeGroupId) ? childGroup.getDisplayURL(themeDisplay) : null %>"
-												/>
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:search-container-column-image
-													src="<%= childGroup.getLogoURL(themeDisplay, true) %>"
-												/>
+					String content = sb.toString();
+					%>
 
-												<liferay-ui:search-container-column-text
-													colspan="<%= 2 %>"
-												>
-													<h5>
-														<aui:a href="<%= (childGroup.getGroupId() != scopeGroupId) ? childGroup.getDisplayURL(themeDisplay) : null %>">
-															<%= childGroup.getDescriptiveName(locale) %>
-														</aui:a>
-													</h5>
-
-													<h6 class="text-default">
-														<%= HtmlUtil.escape(childGroup.getDescription(locale)) %>
-													</h6>
-
-													<h6 class="text-default">
-														<liferay-ui:asset-tags-summary
-															className="<%= Group.class.getName() %>"
-															classPK="<%= childGroup.getGroupId() %>"
-														/>
-													</h6>
-
-													<h6 class="text-default">
-														<liferay-ui:asset-categories-summary
-															className="<%= Group.class.getName() %>"
-															classPK="<%= childGroup.getGroupId() %>"
-														/>
-													</h6>
-												</liferay-ui:search-container-column-text>
-											</c:otherwise>
-										</c:choose>
-									</liferay-ui:search-container-row>
-
-									<liferay-ui:search-iterator
-										displayStyle="<%= displayStyle %>"
-										markupView="lexicon"
-									/>
-								</liferay-ui:search-container>
-							</c:otherwise>
-						</c:choose>
-					</c:when>
-					<c:otherwise>
-
-						<%
-						StringBundler sb = new StringBundler();
-
-						_buildSitesList(rootGroup, themeDisplay.getScopeGroup(), branchGroups, themeDisplay, 1, displayStyle.equals("list-hierarchy"), true, sb);
-
-						String content = sb.toString();
-						%>
-
-						<%= content %>
-					</c:otherwise>
-				</c:choose>
-			</c:otherwise>
-		</c:choose>
-	</div>
-</c:if>
+					<%= content %>
+				</c:otherwise>
+			</c:choose>
+		</c:otherwise>
+	</c:choose>
+</div>
 
 <%!
 private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branchGroups, ThemeDisplay themeDisplay, int groupLevel, boolean showHierarchy, boolean nestedChildren, StringBundler sb) throws Exception {

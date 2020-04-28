@@ -25,24 +25,25 @@ public class OsgiHelper {
         BasePluginConvention basePluginConvention = GradleUtil.getConvention(
             project, BasePluginConvention.class);
 
-        String archiveBaseName = basePluginConvention.getArchivesBaseName();
-        if (archiveBaseName.startsWith(group)) {
-            return archiveBaseName;
+        String archivesBaseName = basePluginConvention.getArchivesBaseName();
+        if (archivesBaseName.startsWith(group)) {
+            return archivesBaseName;
         }
         int i = group.lastIndexOf('.');
         String lastSection = group.substring(++i);
-        if (archiveBaseName.equals(lastSection)) {
+        if (archivesBaseName.equals(lastSection)) {
             return group;
         }
-        if (archiveBaseName.startsWith(lastSection)) {
-            String artifactId = archiveBaseName.substring(lastSection.length());
+        if (archivesBaseName.startsWith(lastSection)) {
+            String artifactId = archivesBaseName.substring(
+                lastSection.length());
             if (Character.isLetterOrDigit(artifactId.charAt(0))) {
                 return getBundleSymbolicName(group, artifactId);
             } else {
                 return getBundleSymbolicName(group, artifactId.substring(1));
             }
         }
-        return getBundleSymbolicName(group, archiveBaseName);
+        return getBundleSymbolicName(group, archivesBaseName);
     }
 
     private String getBundleSymbolicName(String groupId, String artifactId) {

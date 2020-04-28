@@ -198,6 +198,30 @@ definition {
 		return "${facetTypeValue}";
 	}
 
+	macro moveAssetTypesToAvailable {
+		Portlet.gotoPortletOptions(
+			portletName = "Type Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		for (var assetType : list "${assetType}") {
+			AssertClick(
+				locator1 = "Search#TYPE_FACET_CURRENT_ASSET_TYPE",
+				value1 = "${assetType}");
+
+			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Search#TYPE_FACET_AVAILABLE_ASSET_TYPE",
+				value1 = "${assetType}");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro uncheckFacet {
 		FormFields.disableCheckbox(fieldName = "${facetValueName}");
 	}

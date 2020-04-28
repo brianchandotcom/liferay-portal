@@ -133,6 +133,16 @@
 	<td>//ul[contains(@class,'tag-cloud')]//button[contains(.,'${tagName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TYPE_FACET_AVAILABLE_ASSET_TYPE</td>
+	<td>//select[contains(@id, "availableAssetTypes")]/option[contains(., "${assetType}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_FACET_CURRENT_ASSET_TYPE</td>
+	<td>//select[contains(@id, "currentAssetTypes")]/option[contains(., "${assetType}")]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

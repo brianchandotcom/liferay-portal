@@ -1856,6 +1856,55 @@ definition {
 	}
 
 	@priority = "4"
+	test SearchWithTypeFacet {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "Apple");
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description ${count}",
+			dmDocumentTitle = "Apple",
+			groupName = "Guest");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Apple");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Apple/Web Content Article,Apple/Document,Apple/Blogs Entry",
+			searchTerm = "Apple");
+
+		SearchFacetPortlet.moveAssetTypesToAvailable(assetType = "Document");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_fieldName = "Web Content Article",
+			locator1 = "FormFields#CHECKBOX_LABEL");
+
+		AssertElementPresent(
+			key_fieldName = "Blogs Entry",
+			locator1 = "FormFields#CHECKBOX_LABEL");
+
+		AssertElementNotPresent(
+			key_fieldName = "Document",
+			locator1 = "FormFields#CHECKBOX_LABEL");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Apple/Web Content Article,Apple/Blogs Entry",
+			searchTerm = "Apple");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document");
+	}
+
+	@priority = "4"
 	test SearchXSSAsset {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

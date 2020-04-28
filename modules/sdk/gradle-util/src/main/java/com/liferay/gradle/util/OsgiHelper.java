@@ -40,15 +40,15 @@ public class OsgiHelper {
             String artifactId = archivesBaseName.substring(
                 lastSection.length());
             if (Character.isLetterOrDigit(artifactId.charAt(0))) {
-                return getBundleSymbolicName(groupId, artifactId);
+                return _getBundleSymbolicName(groupId, artifactId);
             } else {
-                return getBundleSymbolicName(groupId, artifactId.substring(1));
+                return _getBundleSymbolicName(groupId, artifactId.substring(1));
             }
         }
-        return getBundleSymbolicName(groupId, archivesBaseName);
+        return _getBundleSymbolicName(groupId, archivesBaseName);
     }
 
-    private static String getBundleSymbolicName(
+    private static String _getBundleSymbolicName(
         String groupId, String artifactId) {
 
         return groupId + "." + artifactId;

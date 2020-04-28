@@ -12,8 +12,9 @@
  * details.
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 
+import {AppContext} from '../AppContext.es';
 import {dateToInternationalHuman, normalizeRating} from '../utils/utils.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Link from './Link.es';
@@ -28,7 +29,9 @@ export default ({question}) => {
 			(message) => message.showAsAnswer
 		).length > 0;
 
-	const sectionTitle = question.messageBoardSection.title;
+	const context = useContext(AppContext);
+
+	const sectionTitle = context.section;
 
 	return (
 		<div className="c-mt-4 c-p-3 position-relative question-row text-secondary">

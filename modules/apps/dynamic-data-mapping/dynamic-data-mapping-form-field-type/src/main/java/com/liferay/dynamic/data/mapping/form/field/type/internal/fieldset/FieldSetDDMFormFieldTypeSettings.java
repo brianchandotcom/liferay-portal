@@ -49,7 +49,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"collapsible", "label", "name", "repeatable",
+								"label", "name", "collapsible", "repeatable",
 								"rows", "type"
 							}
 						)

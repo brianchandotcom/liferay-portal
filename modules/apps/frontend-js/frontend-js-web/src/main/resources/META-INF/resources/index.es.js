@@ -72,7 +72,11 @@ export {default as throttle} from './liferay/throttle.es';
 
 export {default as addParams} from './liferay/util/add_params';
 export {default as fetch} from './liferay/util/fetch.es';
+export {default as getDOM} from './liferay/util/get_dom';
+export {default as getElement} from './liferay/util/get_element';
 export {default as getPortletId} from './liferay/util/get_portlet_id';
+export {default as focusFormField} from './liferay/util/focus_form_field';
+export {default as inBrowserView} from './liferay/util/in_browser_view';
 export {default as isPhone} from './liferay/util/is_phone';
 export {default as isTablet} from './liferay/util/is_tablet';
 export {default as navigate} from './liferay/util/navigate.es';

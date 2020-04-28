@@ -354,75 +354,6 @@
 			});
 		},
 
-		focusFormField(el) {
-			let interacting = false;
-
-			el = Util.getElement(el);
-
-			const handler = () => {
-				interacting = true;
-
-				document.body.removeEventListener('click', handler);
-			};
-
-			document.body.addEventListener('click', handler);
-
-			if (!interacting && Util.inBrowserView(el)) {
-				const getDisabledParents = function (el) {
-					let result = [];
-
-					if (el.parentElement) {
-						if (el.parentElement.getAttribute('disabled')) {
-							result = [el.parentElement];
-						}
-
-						result = [
-							...result,
-							...getDisabledParents(el.parentElement),
-						];
-					}
-
-					return result;
-				};
-
-				const disabledParents = getDisabledParents(el);
-
-				const focusable =
-					!el.getAttribute('disabled') &&
-					el.offsetWidth > 0 &&
-					el.offsetHeight > 0 &&
-					!disabledParents.length;
-
-				const form = el.closest('form');
-
-				if (!form || focusable) {
-					el.focus();
-				}
-				else if (form) {
-					const portletName = form.getAttribute('data-fm-namespace');
-
-					const formReadyEventName = portletName + 'formReady';
-
-					const formReadyHandler = (event) => {
-						const elFormName = form.getAttribute('name');
-
-						const formName = event.formName;
-
-						if (elFormName === formName) {
-							el.focus();
-
-							Liferay.detach(
-								formReadyEventName,
-								formReadyHandler
-							);
-						}
-					};
-
-					Liferay.on(formReadyEventName, formReadyHandler);
-				}
-			}
-		},
-
 		forcePost(link) {
 			const currentElement = Util.getElement(link);
 
@@ -494,24 +425,6 @@
 			var columnId = str.replace(/layout-column_/, '');
 
 			return columnId;
-		},
-
-		getDOM(el) {
-			if (el._node || el._nodes) {
-				el = el.getDOM();
-			}
-
-			return el;
-		},
-
-		getElement(el) {
-			const currentElement = Util.getDOM(el);
-
-			return typeof currentElement === 'string'
-				? document.querySelector(currentElement)
-				: currentElement.jquery
-				? currentElement[0]
-				: currentElement;
 		},
 
 		getGeolocation(success, fallback, options) {
@@ -669,77 +582,6 @@
 		 */
 		getWindowWidth() {
 			return window.innerWidth;
-		},
-
-		inBrowserView(node, win, nodeRegion) {
-			let viewable = false;
-
-			node = Util.getElement(node);
-
-			if (node) {
-				if (!nodeRegion) {
-					nodeRegion = node.getBoundingClientRect();
-
-					nodeRegion = {
-						left: nodeRegion.left + window.scrollX,
-						top: nodeRegion.top + window.scrollY,
-					};
-
-					nodeRegion.bottom = nodeRegion.top + node.offsetHeight;
-					nodeRegion.right = nodeRegion.left + node.offsetWidth;
-				}
-
-				if (!win) {
-					win = window;
-				}
-
-				win = Util.getElement(win);
-
-				const winRegion = {};
-
-				winRegion.left = win.scrollX;
-				winRegion.right = winRegion.left + win.innerWidth;
-
-				winRegion.top = win.scrollY;
-				winRegion.bottom = winRegion.top + win.innerHeight;
-
-				viewable =
-					nodeRegion.bottom <= winRegion.bottom &&
-					nodeRegion.left >= winRegion.left &&
-					nodeRegion.right <= winRegion.right &&
-					nodeRegion.top >= winRegion.top;
-
-				if (viewable) {
-					const frameEl = win.frameElement;
-
-					if (frameEl) {
-						let frameOffset = frameEl.getBoundingClientRect();
-
-						frameOffset = {
-							left: frameOffset.left + window.scrollX,
-							top: frameOffset.top + window.scrollY,
-						};
-
-						var xOffset = frameOffset.left - winRegion.left;
-
-						nodeRegion.left += xOffset;
-						nodeRegion.right += xOffset;
-
-						var yOffset = frameOffset.top - winRegion.top;
-
-						nodeRegion.top += yOffset;
-						nodeRegion.bottom += yOffset;
-
-						viewable = Util.inBrowserView(
-							node,
-							win.parent,
-							nodeRegion
-						);
-					}
-				}
-			}
-
-			return viewable;
 		},
 
 		/**

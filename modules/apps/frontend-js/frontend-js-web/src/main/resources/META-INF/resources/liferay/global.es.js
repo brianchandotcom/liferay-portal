@@ -43,6 +43,7 @@ import addParams from './util/add_params';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
 import fetch from './util/fetch.es';
+import focusFormField from './util/focus_form_field';
 import getFormElement from './util/form/get_form_element.es';
 import objectToFormData from './util/form/object_to_form_data.es';
 import postForm from './util/form/post_form.es';
@@ -50,8 +51,11 @@ import setFormValues from './util/form/set_form_values.es';
 import formatStorage from './util/format_storage.es';
 import formatXML from './util/format_xml.es';
 import getCropRegion from './util/get_crop_region.es';
+import getDOM from './util/get_dom';
+import getElement from './util/get_element';
 import getPortletId from './util/get_portlet_id';
 import getPortletNamespace from './util/get_portlet_namespace.es';
+import inBrowserView from './util/in_browser_view';
 import isPhone from './util/is_phone';
 import isTablet from './util/is_tablet';
 import navigate from './util/navigate.es';
@@ -117,9 +121,26 @@ Liferay.Util.addParams = addParams;
 
 Liferay.Util.escape = escape;
 Liferay.Util.fetch = fetch;
+
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `import {focusFormField} from 'frontend-js-web'`
+ */
+Liferay.Util.focusFormField = focusFormField;
+
 Liferay.Util.formatStorage = formatStorage;
 Liferay.Util.formatXML = formatXML;
 Liferay.Util.getCropRegion = getCropRegion;
+
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `import {getDOM} from 'frontend-js-web'`
+ */
+Liferay.Util.getDOM = getDOM;
+
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `import {getElement} from 'frontend-js-web'`
+ */
+Liferay.Util.getElement = getElement;
+
 Liferay.Util.getFormElement = getFormElement;
 
 /**
@@ -129,6 +150,12 @@ Liferay.Util.getPortletId = getPortletId;
 
 Liferay.Util.getPortletNamespace = getPortletNamespace;
 Liferay.Util.groupBy = groupBy;
+
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `import {inBrowserView} from 'frontend-js-web'`
+ */
+Liferay.Util.inBrowserView = inBrowserView;
+
 Liferay.Util.isEqual = isEqual;
 
 /**

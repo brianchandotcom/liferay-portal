@@ -15,6 +15,13 @@
 package com.liferay.fragment.entry.processor.editable.internal.parser;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ResourceBundle;
+
+import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,6 +33,20 @@ import org.osgi.service.component.annotations.Component;
 	service = EditableElementParser.class
 )
 public class HTMLEditableElementParser extends TextEditableElementParser {
+
+	@Override
+	public String getValue(Element element) {
+		String html = element.html();
+
+		if (Validator.isNull(html.trim())) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
+			return LanguageUtil.get(resourceBundle, "example-html");
+		}
+
+		return html;
+	}
 
 	protected String getEditableElementType() {
 		return "html";

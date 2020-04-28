@@ -19,7 +19,7 @@ import org.gradle.api.plugins.BasePluginConvention;
 
 public class OsgiHelper {
 
-    public String getBundleSymbolicName(Project project) {
+    public static String getBundleSymbolicName(Project project) {
         Object group = project.getGroup();
 
         String groupId = group.toString();
@@ -47,7 +47,9 @@ public class OsgiHelper {
         return getBundleSymbolicName(groupId, archivesBaseName);
     }
 
-    private String getBundleSymbolicName(String groupId, String artifactId) {
+    private static String getBundleSymbolicName(
+        String groupId, String artifactId) {
+
         return groupId + "." + artifactId;
     }
 

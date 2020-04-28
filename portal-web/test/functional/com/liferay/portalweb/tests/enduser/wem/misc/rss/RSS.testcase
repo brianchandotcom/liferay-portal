@@ -12,19 +12,11 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Site Page Name");
+		JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Site Page Name");
 	}
 
 	tearDown {
@@ -73,7 +65,7 @@ definition {
 		RSSPortlet.addFeed(
 			buttonRowIndexNumber = "1",
 			feedRowIndexNumber = "1",
-			feedTitle = "Latimes &gt; Technology News",
+			feedTitle = "Latimes : Technology News",
 			feedType = "file",
 			feedUrlLink = "rss2.0.xml");
 
@@ -90,7 +82,7 @@ definition {
 		RSSPortlet.addFeed(
 			buttonRowIndexNumber = "1",
 			feedRowIndexNumber = "2",
-			feedTitle = "Reuters &gt; Sports News",
+			feedTitle = "Reuters : Sports News",
 			feedType = "file",
 			feedUrlLink = "reuters_sports_news.xml");
 
@@ -100,7 +92,7 @@ definition {
 			pageName = "Site Page Name",
 			siteName = "Site Name");
 
-		for (var feedTitle : list "Technology,Reuters > Sports News,Latimes > Technology News") {
+		for (var feedTitle : list "Technology,Reuters : Sports News,Latimes : Technology News") {
 			RSSPortlet.viewDisplayFeedTitle(feedTitle = "${feedTitle}");
 		}
 	}
@@ -156,16 +148,9 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "RSS";
 
-		Navigator.gotoPage(pageName = "Home");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Page Name");
-
-		Navigator.gotoPage(pageName = "Page Name");
+		Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Site Name");
 
 		Portlet.addPG(portletName = "RSS Publisher");
 
@@ -177,15 +162,17 @@ definition {
 
 		RSSPortlet.addFeed(
 			feedRowIndexNumber = "0",
-			feedTitle = "Latimes &gt; Technology News",
+			feedTitle = "Latimes : Technology News",
 			feedType = "file",
 			feedUrlLink = "rss2.0.xml");
 
 		PortletEntry.save();
 
-		Navigator.gotoPage(pageName = "Page Name");
+		Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Site Name");
 
-		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes &gt; Technology News");
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes : Technology News");
 	}
 
 	@description = "This is a use case for LPS-107942. The input field of Entries Per Feed shouldn't allow 0 value, negative value, decimal value, letters and symbols."
@@ -459,7 +446,7 @@ definition {
 
 		RSSPortlet.addFeed(
 			feedRowIndexNumber = "0",
-			feedTitle = "Latimes &gt; Technology News",
+			feedTitle = "Latimes : Technology News",
 			feedType = "file",
 			feedUrlLink = "rss2.0.xml");
 
@@ -467,7 +454,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Page Name");
 
-		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes &gt; Technology News");
+		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes : Technology News");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
@@ -479,7 +466,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Page Name");
 
-		RSSPortlet.viewDeleteFeed(feedTitle = "Latimes &gt; Technology News");
+		RSSPortlet.viewDeleteFeed(feedTitle = "Latimes : Technology News");
 	}
 
 	@priority = "3"

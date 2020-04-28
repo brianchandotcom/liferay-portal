@@ -7,8 +7,6 @@ definition {
 
 		SelectFrame(locator1 = "RSSFeed#RSS_CONFIGURATION_IFRAME");
 
-		Panel.expandPanel(panel = "Feeds");
-
 		if (isSet(buttonRowIndexNumber)) {
 			Click(locator1 = "RSSFeed#FEEDS_ADD_ROW_BUTTON");
 		}
@@ -37,8 +35,6 @@ definition {
 		var key_fromRowNumber = "${fromRowNumber}";
 		var key_toRowNumber = "${toRowNumber}";
 
-		Panel.expandPanel(panel = "Feeds");
-
 		DragAndDrop(
 			locator1 = "RSSFeed#FEEDS_1",
 			locator2 = "RSSFeed#FEEDS_2",
@@ -47,6 +43,8 @@ definition {
 
 	macro changeNumberOfEntriesPerFeed {
 		SelectFrame(locator1 = "RSSFeed#RSS_CONFIGURATION_IFRAME");
+
+		Navigator.gotoNavTab(navTab = "Display Settings");
 
 		Type(
 			key_fieldLabel = "# of Entries Per Feed",
@@ -59,7 +57,7 @@ definition {
 
 		SelectFrame(locator1 = "RSSFeed#RSS_CONFIGURATION_IFRAME");
 
-		Panel.expandPanel(panel = "Feeds");
+		Navigator.gotoNavTab(navTab = "Display Settings");
 
 		Select(
 			locator1 = "Select#DISPLAY_TEMPLATE",
@@ -71,8 +69,6 @@ definition {
 
 		SelectFrame(locator1 = "RSSFeed#RSS_CONFIGURATION_IFRAME");
 
-		Panel.expandPanel(panel = "Feeds");
-
 		Click(locator1 = "RSSFeed#FEEDS_DELETE_ROW_BUTTON");
 
 		AssertTextEquals.assertPartialText(
@@ -83,7 +79,7 @@ definition {
 	macro disableShowFeedTitle {
 		SelectFrame(locator1 = "RSSFeed#RSS_CONFIGURATION_IFRAME");
 
-		Panel.expandPanel(panel = "Feeds");
+		Navigator.gotoNavTab(navTab = "Display Settings");
 
 		Uncheck.uncheckToggleSwitch(
 			locator1 = "RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_TITLE",
@@ -176,8 +172,6 @@ definition {
 
 		SelectFrame(locator1 = "RSSFeed#RSS_CONFIGURATION_IFRAME");
 
-		Panel.expandPanel(panel = "Feeds");
-
 		AssertElementPresent(locator1 = "RSSFeed#FEEDS_DEFAULT");
 
 		AssertTextEquals(
@@ -187,7 +181,7 @@ definition {
 
 	macro viewPortletConfigurationInfo {
 		AssertTextEquals(
-			locator1 = "Message#INFO",
+			locator1 = "Message#INFO_MAIN_CONTENT",
 			value1 = "This application is not visible to users yet. Select at least one valid rss feed to make it visible.");
 	}
 

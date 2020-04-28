@@ -162,6 +162,11 @@ public class JournalArticleInfoDisplayContributor
 	}
 
 	@Override
+	public long getInfoDisplayObjectClassPK(JournalArticle article) {
+		return article.getResourcePrimKey();
+	}
+
+	@Override
 	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(long classPK)
 		throws PortalException {
 

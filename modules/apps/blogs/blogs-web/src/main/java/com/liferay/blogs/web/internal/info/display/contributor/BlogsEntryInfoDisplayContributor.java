@@ -82,6 +82,11 @@ public class BlogsEntryInfoDisplayContributor
 	}
 
 	@Override
+	public long getInfoDisplayObjectClassPK(BlogsEntry blogsEntry) {
+		return blogsEntry.getEntryId();
+	}
+
+	@Override
 	public InfoDisplayObjectProvider<BlogsEntry> getInfoDisplayObjectProvider(
 			long classPK)
 		throws PortalException {

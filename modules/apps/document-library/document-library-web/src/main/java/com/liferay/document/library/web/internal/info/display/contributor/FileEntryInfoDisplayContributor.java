@@ -131,6 +131,11 @@ public class FileEntryInfoDisplayContributor
 	}
 
 	@Override
+	public long getInfoDisplayObjectClassPK(FileEntry fileEntry) {
+		return fileEntry.getFileEntryId();
+	}
+
+	@Override
 	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(long classPK)
 		throws PortalException {
 

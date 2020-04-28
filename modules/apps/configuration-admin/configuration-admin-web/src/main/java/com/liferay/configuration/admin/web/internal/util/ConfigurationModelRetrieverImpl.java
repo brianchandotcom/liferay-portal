@@ -198,14 +198,9 @@ public class ConfigurationModelRetrieverImpl
 			ExtendedObjectClassDefinition.Scope scope, Serializable scopePK)
 		throws IOException {
 
-		String factoryPid = factoryConfigurationModel.getFactoryPid();
-
-		if (!scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
-			factoryPid += ".scoped";
-		}
-
 		Configuration[] configurations = getFactoryConfigurations(
-			factoryPid, scope.getPropertyKey(), String.valueOf(scopePK));
+			factoryConfigurationModel.getFactoryPid(), scope.getPropertyKey(),
+			String.valueOf(scopePK));
 
 		if (configurations == null) {
 			return Collections.emptyList();
@@ -335,6 +330,11 @@ public class ConfigurationModelRetrieverImpl
 		return new ConfigurationModelComparator();
 	}
 
+	protected String getExcludedPropertyFilterString(String propertyName) {
+		return StringBundler.concat(
+			"(!", getPropertyFilterString(propertyName, "*"), ")");
+	}
+
 	protected Configuration[] getFactoryConfigurations(String factoryPid)
 		throws IOException {
 
@@ -355,6 +355,18 @@ public class ConfigurationModelRetrieverImpl
 		if (Validator.isNotNull(propertyFilterString)) {
 			filterString = getAndFilterString(
 				filterString, propertyFilterString);
+		}
+		else {
+			filterString = getAndFilterString(
+				filterString,
+				getExcludedPropertyFilterString(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey()),
+				getExcludedPropertyFilterString(
+					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey()),
+				getExcludedPropertyFilterString(
+					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+						getPropertyKey()));
 		}
 
 		try {

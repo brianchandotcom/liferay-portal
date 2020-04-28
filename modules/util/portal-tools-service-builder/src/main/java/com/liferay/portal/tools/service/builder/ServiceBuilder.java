@@ -4945,6 +4945,13 @@ public class ServiceBuilder {
 			sb.append("\tctCollectionId LONG default 0 not null,\n");
 			sb.append("\tctChangeType BOOLEAN,\n");
 		}
+		else if (entities[1].isChangeTrackingEnabled() ||
+				 entities[2].isChangeTrackingEnabled()) {
+
+			throw new ServiceBuilderException(
+				"Must enable change tracking for both sides of mapping table " +
+					tableName);
+		}
 
 		sb.append("\tprimary key (");
 

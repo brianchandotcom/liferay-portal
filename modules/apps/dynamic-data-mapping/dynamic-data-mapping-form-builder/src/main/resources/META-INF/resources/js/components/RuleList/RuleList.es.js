@@ -314,8 +314,8 @@ class RuleList extends Component {
 
 	_hasNestedCondition(rule) {
 		return (
-			rule.conditions.find(condition =>
-				condition.operands.find(operand =>
+			rule.conditions.find((condition) =>
+				condition.operands.find((operand) =>
 					operand.value.match(/[aA-zZ]+[(].*[,]+.*[)]/)
 				)
 			) !== undefined

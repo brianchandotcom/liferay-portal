@@ -77,10 +77,12 @@ public class DLFileShortcutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fileShortcutId=");
@@ -127,6 +129,7 @@ public class DLFileShortcutCacheModel
 		DLFileShortcutImpl dlFileShortcutImpl = new DLFileShortcutImpl();
 
 		dlFileShortcutImpl.setMvccVersion(mvccVersion);
+		dlFileShortcutImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			dlFileShortcutImpl.setUuid("");
@@ -206,6 +209,8 @@ public class DLFileShortcutCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		fileShortcutId = objectInput.readLong();
@@ -239,6 +244,8 @@ public class DLFileShortcutCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -296,6 +303,7 @@ public class DLFileShortcutCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long fileShortcutId;
 	public long groupId;

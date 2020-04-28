@@ -16,6 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -30,7 +31,9 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -59,7 +62,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface DLFileShortcutLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, CTService<DLFileShortcut>,
+			PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -389,5 +393,20 @@ public interface DLFileShortcutLocalService
 			long userId, long fileShortcutId, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
+
+	@Override
+	@Transactional(enabled = false)
+	public CTPersistence<DLFileShortcut> getCTPersistence();
+
+	@Override
+	@Transactional(enabled = false)
+	public Class<DLFileShortcut> getModelClass();
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<DLFileShortcut>, R, E>
+				updateUnsafeFunction)
+		throws E;
 
 }

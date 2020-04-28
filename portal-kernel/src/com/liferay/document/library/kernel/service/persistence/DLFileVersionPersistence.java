@@ -17,6 +17,7 @@ package com.liferay.document.library.kernel.service.persistence;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileVersionPersistence
-	extends BasePersistence<DLFileVersion> {
+	extends BasePersistence<DLFileVersion>, CTPersistence<DLFileVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

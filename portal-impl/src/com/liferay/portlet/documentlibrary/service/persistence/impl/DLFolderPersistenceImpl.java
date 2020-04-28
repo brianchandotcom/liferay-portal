@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePe
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -53,10 +55,13 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -166,25 +171,28 @@ public class DLFolderPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
 				finderArgs = new Object[] {uuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -251,12 +259,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -566,12 +574,22 @@ public class DLFolderPersistenceImpl
 	public int countByUuid(String uuid) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {uuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid;
+
+			finderArgs = new Object[] {uuid};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -606,10 +624,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -693,15 +715,18 @@ public class DLFolderPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -754,7 +779,7 @@ public class DLFolderPersistenceImpl
 				List<DLFolder> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByUUID_G, finderArgs, list);
 					}
@@ -768,7 +793,7 @@ public class DLFolderPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByUUID_G, finderArgs);
 				}
@@ -815,12 +840,22 @@ public class DLFolderPersistenceImpl
 	public int countByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUUID_G;
+
+			finderArgs = new Object[] {uuid, groupId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -859,10 +894,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -965,18 +1004,21 @@ public class DLFolderPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
 				finderArgs = new Object[] {uuid, companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -985,7 +1027,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1058,12 +1100,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1399,12 +1441,22 @@ public class DLFolderPersistenceImpl
 	public int countByUuid_C(String uuid, long companyId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid_C;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {uuid, companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid_C;
+
+			finderArgs = new Object[] {uuid, companyId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1443,10 +1495,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1540,25 +1596,28 @@ public class DLFolderPersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
 				finderArgs = new Object[] {groupId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1614,12 +1673,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -2239,12 +2298,22 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByGroupId;
+
+			finderArgs = new Object[] {groupId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2268,10 +2337,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2407,18 +2480,21 @@ public class DLFolderPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
 				finderArgs = new Object[] {companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -2427,7 +2503,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2483,12 +2559,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -2786,12 +2862,22 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCompanyId;
+
+			finderArgs = new Object[] {companyId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2815,10 +2901,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2909,18 +2999,21 @@ public class DLFolderPersistenceImpl
 		long repositoryId, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByRepositoryId;
 				finderArgs = new Object[] {repositoryId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByRepositoryId;
 			finderArgs = new Object[] {
 				repositoryId, start, end, orderByComparator
@@ -2929,7 +3022,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2985,12 +3078,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -3289,12 +3382,22 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public int countByRepositoryId(long repositoryId) {
-		FinderPath finderPath = _finderPathCountByRepositoryId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {repositoryId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByRepositoryId;
+
+			finderArgs = new Object[] {repositoryId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3318,10 +3421,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -3417,18 +3524,21 @@ public class DLFolderPersistenceImpl
 		long groupId, long parentFolderId, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_P;
 				finderArgs = new Object[] {groupId, parentFolderId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_P;
 			finderArgs = new Object[] {
 				groupId, parentFolderId, start, end, orderByComparator
@@ -3437,7 +3547,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -3499,12 +3609,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -4167,12 +4277,22 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public int countByG_P(long groupId, long parentFolderId) {
-		FinderPath finderPath = _finderPathCountByG_P;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {groupId, parentFolderId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_P;
+
+			finderArgs = new Object[] {groupId, parentFolderId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4200,10 +4320,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -4353,6 +4477,9 @@ public class DLFolderPersistenceImpl
 		long companyId, int status, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -4363,7 +4490,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -4425,12 +4552,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -4751,12 +4878,22 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public int countByC_NotS(long companyId, int status) {
-		FinderPath finderPath = _finderPathWithPaginationCountByC_NotS;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {companyId, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByC_NotS;
+
+			finderArgs = new Object[] {companyId, status};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -4784,10 +4921,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -4869,15 +5010,18 @@ public class DLFolderPersistenceImpl
 	public DLFolder fetchByR_M(
 		long repositoryId, boolean mountPoint, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {repositoryId, mountPoint};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByR_M, finderArgs, this);
 		}
@@ -4919,7 +5063,7 @@ public class DLFolderPersistenceImpl
 				List<DLFolder> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByR_M, finderArgs, list);
 					}
@@ -4929,7 +5073,7 @@ public class DLFolderPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									repositoryId, mountPoint
 								};
@@ -4950,7 +5094,7 @@ public class DLFolderPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByR_M, finderArgs);
 				}
@@ -4995,12 +5139,22 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public int countByR_M(long repositoryId, boolean mountPoint) {
-		FinderPath finderPath = _finderPathCountByR_M;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {repositoryId, mountPoint};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByR_M;
+
+			finderArgs = new Object[] {repositoryId, mountPoint};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5028,10 +5182,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -5130,18 +5288,21 @@ public class DLFolderPersistenceImpl
 		long repositoryId, long parentFolderId, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByR_P;
 				finderArgs = new Object[] {repositoryId, parentFolderId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByR_P;
 			finderArgs = new Object[] {
 				repositoryId, parentFolderId, start, end, orderByComparator
@@ -5150,7 +5311,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -5212,12 +5373,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -5541,12 +5702,22 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public int countByR_P(long repositoryId, long parentFolderId) {
-		FinderPath finderPath = _finderPathCountByR_P;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {repositoryId, parentFolderId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByR_P;
+
+			finderArgs = new Object[] {repositoryId, parentFolderId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -5574,10 +5745,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -5677,18 +5852,21 @@ public class DLFolderPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByP_N;
 				finderArgs = new Object[] {parentFolderId, name};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByP_N;
 			finderArgs = new Object[] {
 				parentFolderId, name, start, end, orderByComparator
@@ -5697,7 +5875,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -5770,12 +5948,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -6113,12 +6291,22 @@ public class DLFolderPersistenceImpl
 	public int countByP_N(long parentFolderId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByP_N;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {parentFolderId, name};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByP_N;
+
+			finderArgs = new Object[] {parentFolderId, name};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -6157,10 +6345,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -6271,18 +6463,21 @@ public class DLFolderPersistenceImpl
 		int end, OrderByComparator<DLFolder> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_M_P;
 				finderArgs = new Object[] {groupId, mountPoint, parentFolderId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_M_P;
 			finderArgs = new Object[] {
 				groupId, mountPoint, parentFolderId, start, end,
@@ -6292,7 +6487,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -6359,12 +6554,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -7069,14 +7264,22 @@ public class DLFolderPersistenceImpl
 	public int countByG_M_P(
 		long groupId, boolean mountPoint, long parentFolderId) {
 
-		FinderPath finderPath = _finderPathCountByG_M_P;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {
-			groupId, mountPoint, parentFolderId
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_M_P;
+
+			finderArgs = new Object[] {groupId, mountPoint, parentFolderId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -7108,10 +7311,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -7267,15 +7474,18 @@ public class DLFolderPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, parentFolderId, name};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByG_P_N, finderArgs, this);
 		}
@@ -7333,7 +7543,7 @@ public class DLFolderPersistenceImpl
 				List<DLFolder> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByG_P_N, finderArgs, list);
 					}
@@ -7347,7 +7557,7 @@ public class DLFolderPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByG_P_N, finderArgs);
 				}
@@ -7397,12 +7607,22 @@ public class DLFolderPersistenceImpl
 	public int countByG_P_N(long groupId, long parentFolderId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByG_P_N;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {groupId, parentFolderId, name};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_P_N;
+
+			finderArgs = new Object[] {groupId, parentFolderId, name};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -7445,10 +7665,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -7566,6 +7790,9 @@ public class DLFolderPersistenceImpl
 		int start, int end, OrderByComparator<DLFolder> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -7577,7 +7804,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -7649,12 +7876,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -7851,14 +8078,24 @@ public class DLFolderPersistenceImpl
 	public int countByF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status) {
 
-		FinderPath finderPath = _finderPathWithPaginationCountByF_C_P_NotS;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {
-			folderId, companyId, parentFolderId, status
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByF_C_P_NotS;
+
+			finderArgs = new Object[] {
+				folderId, companyId, parentFolderId, status
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -7894,10 +8131,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -8016,20 +8257,23 @@ public class DLFolderPersistenceImpl
 		int start, int end, OrderByComparator<DLFolder> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_M_P_H;
 				finderArgs = new Object[] {
 					groupId, mountPoint, parentFolderId, hidden
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_M_P_H;
 			finderArgs = new Object[] {
 				groupId, mountPoint, parentFolderId, hidden, start, end,
@@ -8039,7 +8283,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -8111,12 +8355,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -8853,14 +9097,24 @@ public class DLFolderPersistenceImpl
 	public int countByG_M_P_H(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden) {
 
-		FinderPath finderPath = _finderPathCountByG_M_P_H;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {
-			groupId, mountPoint, parentFolderId, hidden
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_M_P_H;
+
+			finderArgs = new Object[] {
+				groupId, mountPoint, parentFolderId, hidden
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -8896,10 +9150,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -9087,6 +9345,9 @@ public class DLFolderPersistenceImpl
 
 		treePath = Objects.toString(treePath, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -9097,7 +9358,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -9182,12 +9443,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -9962,14 +10223,22 @@ public class DLFolderPersistenceImpl
 
 		treePath = Objects.toString(treePath, "");
 
-		FinderPath finderPath = _finderPathWithPaginationCountByG_M_T_H;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {
-			groupId, mountPoint, treePath, hidden
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByG_M_T_H;
+
+			finderArgs = new Object[] {groupId, mountPoint, treePath, hidden};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -10016,10 +10285,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -10222,20 +10495,23 @@ public class DLFolderPersistenceImpl
 		int start, int end, OrderByComparator<DLFolder> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_P_H_S;
 				finderArgs = new Object[] {
 					groupId, parentFolderId, hidden, status
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_P_H_S;
 			finderArgs = new Object[] {
 				groupId, parentFolderId, hidden, status, start, end,
@@ -10245,7 +10521,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -10317,12 +10593,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -11056,14 +11332,22 @@ public class DLFolderPersistenceImpl
 	public int countByG_P_H_S(
 		long groupId, long parentFolderId, boolean hidden, int status) {
 
-		FinderPath finderPath = _finderPathCountByG_P_H_S;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {
-			groupId, parentFolderId, hidden, status
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_P_H_S;
+
+			finderArgs = new Object[] {groupId, parentFolderId, hidden, status};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -11099,10 +11383,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -11296,20 +11584,23 @@ public class DLFolderPersistenceImpl
 		int status, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_M_P_H_S;
 				finderArgs = new Object[] {
 					groupId, mountPoint, parentFolderId, hidden, status
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_M_P_H_S;
 			finderArgs = new Object[] {
 				groupId, mountPoint, parentFolderId, hidden, status, start, end,
@@ -11319,7 +11610,7 @@ public class DLFolderPersistenceImpl
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -11396,12 +11687,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -12177,14 +12468,24 @@ public class DLFolderPersistenceImpl
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		int status) {
 
-		FinderPath finderPath = _finderPathCountByG_M_P_H_S;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
 
-		Object[] finderArgs = new Object[] {
-			groupId, mountPoint, parentFolderId, hidden, status
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_M_P_H_S;
+
+			finderArgs = new Object[] {
+				groupId, mountPoint, parentFolderId, hidden, status
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(6);
@@ -12224,10 +12525,14 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -12351,6 +12656,12 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(DLFolder dlFolder) {
+		if (dlFolder.getCtCollectionId() != 0) {
+			dlFolder.resetOriginalValues();
+
+			return;
+		}
+
 		EntityCacheUtil.putResult(
 			DLFolderModelImpl.ENTITY_CACHE_ENABLED, DLFolderImpl.class,
 			dlFolder.getPrimaryKey(), dlFolder);
@@ -12383,6 +12694,12 @@ public class DLFolderPersistenceImpl
 	@Override
 	public void cacheResult(List<DLFolder> dlFolders) {
 		for (DLFolder dlFolder : dlFolders) {
+			if (dlFolder.getCtCollectionId() != 0) {
+				dlFolder.resetOriginalValues();
+
+				continue;
+			}
+
 			if (EntityCacheUtil.getResult(
 					DLFolderModelImpl.ENTITY_CACHE_ENABLED, DLFolderImpl.class,
 					dlFolder.getPrimaryKey()) == null) {
@@ -12641,6 +12958,10 @@ public class DLFolderPersistenceImpl
 		dlFolderToDLFileEntryTypeTableMapper.deleteLeftPrimaryKeyTableMappings(
 			dlFolder.getPrimaryKey());
 
+		if (!CTPersistenceHelperUtil.isRemove(dlFolder)) {
+			return dlFolder;
+		}
+
 		Session session = null;
 
 		try {
@@ -12725,7 +13046,16 @@ public class DLFolderPersistenceImpl
 		try {
 			session = openSession();
 
-			if (dlFolder.isNew()) {
+			if (CTPersistenceHelperUtil.isInsert(dlFolder)) {
+				if (!isNew) {
+					DLFolder oldDLFolder = (DLFolder)session.get(
+						DLFolderImpl.class, dlFolder.getPrimaryKeyObj());
+
+					if (oldDLFolder != null) {
+						session.evict(oldDLFolder);
+					}
+				}
+
 				session.save(dlFolder);
 
 				dlFolder.setNew(false);
@@ -12739,6 +13069,12 @@ public class DLFolderPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (dlFolder.getCtCollectionId() != 0) {
+			dlFolder.resetOriginalValues();
+
+			return dlFolder;
 		}
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -13186,12 +13522,117 @@ public class DLFolderPersistenceImpl
 	/**
 	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the document library folder
+	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
+	 */
+	@Override
+	public DLFolder fetchByPrimaryKey(Serializable primaryKey) {
+		if (CTPersistenceHelperUtil.isProductionMode(DLFolder.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		DLFolder dlFolder = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			dlFolder = (DLFolder)session.get(DLFolderImpl.class, primaryKey);
+
+			if (dlFolder != null) {
+				cacheResult(dlFolder);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return dlFolder;
+	}
+
+	/**
+	 * Returns the document library folder with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param folderId the primary key of the document library folder
 	 * @return the document library folder, or <code>null</code> if a document library folder with the primary key could not be found
 	 */
 	@Override
 	public DLFolder fetchByPrimaryKey(long folderId) {
 		return fetchByPrimaryKey((Serializable)folderId);
+	}
+
+	@Override
+	public Map<Serializable, DLFolder> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (CTPersistenceHelperUtil.isProductionMode(DLFolder.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, DLFolder> map = new HashMap<Serializable, DLFolder>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			DLFolder dlFolder = fetchByPrimaryKey(primaryKey);
+
+			if (dlFolder != null) {
+				map.put(primaryKey, dlFolder);
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (DLFolder dlFolder : (List<DLFolder>)query.list()) {
+				map.put(dlFolder.getPrimaryKeyObj(), dlFolder);
+
+				cacheResult(dlFolder);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -13257,25 +13698,28 @@ public class DLFolderPersistenceImpl
 		int start, int end, OrderByComparator<DLFolder> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<DLFolder> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFolder>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -13313,12 +13757,12 @@ public class DLFolderPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -13350,8 +13794,15 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFolder.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -13363,12 +13814,16 @@ public class DLFolderPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(exception);
 			}
@@ -13741,8 +14196,88 @@ public class DLFolderPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return DLFolderModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "DLFolder";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("groupId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("userId");
+		ctStrictColumnNames.add("userName");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("repositoryId");
+		ctStrictColumnNames.add("mountPoint");
+		ctStrictColumnNames.add("parentFolderId");
+		ctStrictColumnNames.add("treePath");
+		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("description");
+		ctStrictColumnNames.add("lastPostDate");
+		ctStrictColumnNames.add("defaultFileEntryTypeId");
+		ctStrictColumnNames.add("hidden_");
+		ctStrictColumnNames.add("restrictionType");
+		ctStrictColumnNames.add("lastPublishDate");
+		ctStrictColumnNames.add("status");
+		ctStrictColumnNames.add("statusByUserId");
+		ctStrictColumnNames.add("statusByUserName");
+		ctStrictColumnNames.add("statusDate");
+		ctStrictColumnNames.add("fileEntryTypes");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK, Collections.singleton("folderId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_mappingTableNames.add("DLFileEntryTypes_DLFolders");
+
+		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "parentFolderId", "name"});
 	}
 
 	/**

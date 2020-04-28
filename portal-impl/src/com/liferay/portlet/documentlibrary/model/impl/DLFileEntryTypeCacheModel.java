@@ -77,10 +77,12 @@ public class DLFileEntryTypeCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fileEntryTypeId=");
@@ -115,6 +117,7 @@ public class DLFileEntryTypeCacheModel
 		DLFileEntryTypeImpl dlFileEntryTypeImpl = new DLFileEntryTypeImpl();
 
 		dlFileEntryTypeImpl.setMvccVersion(mvccVersion);
+		dlFileEntryTypeImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			dlFileEntryTypeImpl.setUuid("");
@@ -185,6 +188,8 @@ public class DLFileEntryTypeCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		fileEntryTypeId = objectInput.readLong();
@@ -206,6 +211,8 @@ public class DLFileEntryTypeCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -257,6 +264,7 @@ public class DLFileEntryTypeCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long fileEntryTypeId;
 	public long groupId;

@@ -81,13 +81,13 @@ public class DLFileEntryTypeModelImpl
 	public static final String TABLE_NAME = "DLFileEntryType";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"fileEntryTypeId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"fileEntryTypeKey", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"fileEntryTypeId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"fileEntryTypeKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,6 +95,7 @@ public class DLFileEntryTypeModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileEntryTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -110,7 +111,7 @@ public class DLFileEntryTypeModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileEntryType (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null,lastPublishDate DATE null)";
+		"create table DLFileEntryType (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null,lastPublishDate DATE null,primary key (fileEntryTypeId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryType";
 
@@ -165,6 +166,7 @@ public class DLFileEntryTypeModelImpl
 		DLFileEntryType model = new DLFileEntryTypeImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setFileEntryTypeId(soapModel.getFileEntryTypeId());
 		model.setGroupId(soapModel.getGroupId());
@@ -215,7 +217,7 @@ public class DLFileEntryTypeModelImpl
 
 	public static final String
 		MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_SQL_CREATE =
-			"create table DLFileEntryTypes_DLFolders (companyId LONG not null,fileEntryTypeId LONG not null,folderId LONG not null,primary key (fileEntryTypeId, folderId))";
+			"create table DLFileEntryTypes_DLFolders (companyId LONG not null,fileEntryTypeId LONG not null,folderId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (fileEntryTypeId, folderId, ctCollectionId))";
 
 	public static final boolean
 		FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS = GetterUtil.getBoolean(
@@ -360,6 +362,12 @@ public class DLFileEntryTypeModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<DLFileEntryType, Long>)DLFileEntryType::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DLFileEntryType::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DLFileEntryType, Long>)
+				DLFileEntryType::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DLFileEntryType::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -436,6 +444,17 @@ public class DLFileEntryTypeModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -971,6 +990,7 @@ public class DLFileEntryTypeModelImpl
 		DLFileEntryTypeImpl dlFileEntryTypeImpl = new DLFileEntryTypeImpl();
 
 		dlFileEntryTypeImpl.setMvccVersion(getMvccVersion());
+		dlFileEntryTypeImpl.setCtCollectionId(getCtCollectionId());
 		dlFileEntryTypeImpl.setUuid(getUuid());
 		dlFileEntryTypeImpl.setFileEntryTypeId(getFileEntryTypeId());
 		dlFileEntryTypeImpl.setGroupId(getGroupId());
@@ -1071,6 +1091,8 @@ public class DLFileEntryTypeModelImpl
 			new DLFileEntryTypeCacheModel();
 
 		dlFileEntryTypeCacheModel.mvccVersion = getMvccVersion();
+
+		dlFileEntryTypeCacheModel.ctCollectionId = getCtCollectionId();
 
 		dlFileEntryTypeCacheModel.uuid = getUuid();
 
@@ -1222,6 +1244,7 @@ public class DLFileEntryTypeModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _fileEntryTypeId;

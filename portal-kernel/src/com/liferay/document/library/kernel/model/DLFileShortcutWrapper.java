@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class DLFileShortcutWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("fileShortcutId", getFileShortcutId());
 		attributes.put("groupId", getGroupId());
@@ -72,6 +75,12 @@ public class DLFileShortcutWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -218,6 +227,16 @@ public class DLFileShortcutWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this document library file shortcut.
+	 *
+	 * @return the ct collection ID of this document library file shortcut
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	@Override
@@ -632,6 +651,16 @@ public class DLFileShortcutWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this document library file shortcut.
+	 *
+	 * @param ctCollectionId the ct collection ID of this document library file shortcut
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the file shortcut ID of this document library file shortcut.
 	 *
 	 * @param fileShortcutId the file shortcut ID of this document library file shortcut
@@ -824,6 +853,20 @@ public class DLFileShortcutWrapper
 	@Override
 	public void updateTreePath(String treePath) {
 		model.updateTreePath(treePath);
+	}
+
+	@Override
+	public Map<String, Function<DLFileShortcut, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<DLFileShortcut, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

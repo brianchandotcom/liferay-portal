@@ -28,6 +28,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -1155,8 +1157,23 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 		return DLFileEntryTypeLocalService.class.getName();
 	}
 
-	protected Class<?> getModelClass() {
+	@Override
+	public CTPersistence<DLFileEntryType> getCTPersistence() {
+		return dlFileEntryTypePersistence;
+	}
+
+	@Override
+	public Class<DLFileEntryType> getModelClass() {
 		return DLFileEntryType.class;
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<DLFileEntryType>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return updateUnsafeFunction.apply(dlFileEntryTypePersistence);
 	}
 
 	protected String getModelClassName() {

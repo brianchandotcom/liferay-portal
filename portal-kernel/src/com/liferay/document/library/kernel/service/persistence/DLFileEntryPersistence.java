@@ -17,6 +17,7 @@ package com.liferay.document.library.kernel.service.persistence;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
+public interface DLFileEntryPersistence
+	extends BasePersistence<DLFileEntry>, CTPersistence<DLFileEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

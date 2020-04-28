@@ -14,7 +14,10 @@
 
 package com.liferay.document.library.kernel.service;
 
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DLFileEntryMetadataLocalService}.
@@ -40,10 +43,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	 * @return the document library file entry metadata that was added
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-		addDLFileEntryMetadata(
-			com.liferay.document.library.kernel.model.DLFileEntryMetadata
-				dlFileEntryMetadata) {
+	public DLFileEntryMetadata addDLFileEntryMetadata(
+		DLFileEntryMetadata dlFileEntryMetadata) {
 
 		return _dlFileEntryMetadataLocalService.addDLFileEntryMetadata(
 			dlFileEntryMetadata);
@@ -56,8 +57,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	 * @return the new document library file entry metadata
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-		createDLFileEntryMetadata(long fileEntryMetadataId) {
+	public DLFileEntryMetadata createDLFileEntryMetadata(
+		long fileEntryMetadataId) {
 
 		return _dlFileEntryMetadataLocalService.createDLFileEntryMetadata(
 			fileEntryMetadataId);
@@ -82,10 +83,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	 * @return the document library file entry metadata that was removed
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-		deleteDLFileEntryMetadata(
-			com.liferay.document.library.kernel.model.DLFileEntryMetadata
-				dlFileEntryMetadata) {
+	public DLFileEntryMetadata deleteDLFileEntryMetadata(
+		DLFileEntryMetadata dlFileEntryMetadata) {
 
 		return _dlFileEntryMetadataLocalService.deleteDLFileEntryMetadata(
 			dlFileEntryMetadata);
@@ -99,8 +98,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	 * @throws PortalException if a document library file entry metadata with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-			deleteDLFileEntryMetadata(long fileEntryMetadataId)
+	public DLFileEntryMetadata deleteDLFileEntryMetadata(
+			long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryMetadataLocalService.deleteDLFileEntryMetadata(
@@ -108,9 +107,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteFileEntryMetadata(
-			com.liferay.document.library.kernel.model.DLFileEntryMetadata
-				fileEntryMetadata)
+	public void deleteFileEntryMetadata(DLFileEntryMetadata fileEntryMetadata)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlFileEntryMetadataLocalService.deleteFileEntryMetadata(
@@ -236,8 +233,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-		fetchDLFileEntryMetadata(long fileEntryMetadataId) {
+	public DLFileEntryMetadata fetchDLFileEntryMetadata(
+		long fileEntryMetadataId) {
 
 		return _dlFileEntryMetadataLocalService.fetchDLFileEntryMetadata(
 			fileEntryMetadataId);
@@ -251,25 +248,24 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-		fetchDLFileEntryMetadataByUuidAndCompanyId(
-			String uuid, long companyId) {
+	public DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _dlFileEntryMetadataLocalService.
 			fetchDLFileEntryMetadataByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-		fetchFileEntryMetadata(long fileEntryMetadataId) {
+	public DLFileEntryMetadata fetchFileEntryMetadata(
+		long fileEntryMetadataId) {
 
 		return _dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
 			fileEntryMetadataId);
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-		fetchFileEntryMetadata(long ddmStructureId, long fileVersionId) {
+	public DLFileEntryMetadata fetchFileEntryMetadata(
+		long ddmStructureId, long fileVersionId) {
 
 		return _dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
 			ddmStructureId, fileVersionId);
@@ -290,8 +286,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	 * @throws PortalException if a document library file entry metadata with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-			getDLFileEntryMetadata(long fileEntryMetadataId)
+	public DLFileEntryMetadata getDLFileEntryMetadata(long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryMetadataLocalService.getDLFileEntryMetadata(
@@ -307,9 +302,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	 * @throws PortalException if a matching document library file entry metadata could not be found
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-			getDLFileEntryMetadataByUuidAndCompanyId(
-				String uuid, long companyId)
+	public DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryMetadataLocalService.
@@ -328,9 +322,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	 * @return the range of document library file entry metadatas
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.document.library.kernel.model.DLFileEntryMetadata>
-			getDLFileEntryMetadatas(int start, int end) {
+	public java.util.List<DLFileEntryMetadata> getDLFileEntryMetadatas(
+		int start, int end) {
 
 		return _dlFileEntryMetadataLocalService.getDLFileEntryMetadatas(
 			start, end);
@@ -347,8 +340,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-			getFileEntryMetadata(long fileEntryMetadataId)
+	public DLFileEntryMetadata getFileEntryMetadata(long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryMetadataLocalService.getFileEntryMetadata(
@@ -356,8 +348,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-			getFileEntryMetadata(long ddmStructureId, long fileVersionId)
+	public DLFileEntryMetadata getFileEntryMetadata(
+			long ddmStructureId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryMetadataLocalService.getFileEntryMetadata(
@@ -365,9 +357,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.document.library.kernel.model.DLFileEntryMetadata>
-			getFileVersionFileEntryMetadatas(long fileVersionId) {
+	public java.util.List<DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
+		long fileVersionId) {
 
 		return _dlFileEntryMetadataLocalService.
 			getFileVersionFileEntryMetadatas(fileVersionId);
@@ -388,18 +379,16 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.document.library.kernel.model.DLFileEntryMetadata>
-			getMismatchedCompanyIdFileEntryMetadatas() {
+	public java.util.List<DLFileEntryMetadata>
+		getMismatchedCompanyIdFileEntryMetadatas() {
 
 		return _dlFileEntryMetadataLocalService.
 			getMismatchedCompanyIdFileEntryMetadatas();
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.document.library.kernel.model.DLFileEntryMetadata>
-			getNoStructuresFileEntryMetadatas() {
+	public java.util.List<DLFileEntryMetadata>
+		getNoStructuresFileEntryMetadatas() {
 
 		return _dlFileEntryMetadataLocalService.
 			getNoStructuresFileEntryMetadatas();
@@ -434,10 +423,8 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	 * @return the document library file entry metadata that was updated
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata
-		updateDLFileEntryMetadata(
-			com.liferay.document.library.kernel.model.DLFileEntryMetadata
-				dlFileEntryMetadata) {
+	public DLFileEntryMetadata updateDLFileEntryMetadata(
+		DLFileEntryMetadata dlFileEntryMetadata) {
 
 		return _dlFileEntryMetadataLocalService.updateDLFileEntryMetadata(
 			dlFileEntryMetadata);
@@ -472,6 +459,26 @@ public class DLFileEntryMetadataLocalServiceWrapper
 		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
 			fileEntryTypeId, fileEntryId, fileVersionId, ddmFormValuesMap,
 			serviceContext);
+	}
+
+	@Override
+	public CTPersistence<DLFileEntryMetadata> getCTPersistence() {
+		return _dlFileEntryMetadataLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<DLFileEntryMetadata> getModelClass() {
+		return _dlFileEntryMetadataLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<DLFileEntryMetadata>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _dlFileEntryMetadataLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

@@ -34,6 +34,8 @@ public class DLFolderTable extends BaseTable<DLFolderTable> {
 
 	public final Column<DLFolderTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DLFolderTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFolderTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DLFolderTable, Long> folderId = createColumn(

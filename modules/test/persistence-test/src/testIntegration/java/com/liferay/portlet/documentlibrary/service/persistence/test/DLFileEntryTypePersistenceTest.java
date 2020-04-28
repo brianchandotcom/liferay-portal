@@ -125,6 +125,8 @@ public class DLFileEntryTypePersistenceTest {
 
 		newDLFileEntryType.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDLFileEntryType.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDLFileEntryType.setUuid(RandomTestUtil.randomString());
 
 		newDLFileEntryType.setGroupId(RandomTestUtil.nextLong());
@@ -155,6 +157,9 @@ public class DLFileEntryTypePersistenceTest {
 		Assert.assertEquals(
 			existingDLFileEntryType.getMvccVersion(),
 			newDLFileEntryType.getMvccVersion());
+		Assert.assertEquals(
+			existingDLFileEntryType.getCtCollectionId(),
+			newDLFileEntryType.getCtCollectionId());
 		Assert.assertEquals(
 			existingDLFileEntryType.getUuid(), newDLFileEntryType.getUuid());
 		Assert.assertEquals(
@@ -271,9 +276,9 @@ public class DLFileEntryTypePersistenceTest {
 
 	protected OrderByComparator<DLFileEntryType> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DLFileEntryType", "mvccVersion", true, "uuid", true,
-			"fileEntryTypeId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+			"DLFileEntryType", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "fileEntryTypeId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fileEntryTypeKey", true, "name", true,
 			"description", true, "lastPublishDate", true);
 	}
@@ -532,6 +537,8 @@ public class DLFileEntryTypePersistenceTest {
 		DLFileEntryType dlFileEntryType = _persistence.create(pk);
 
 		dlFileEntryType.setMvccVersion(RandomTestUtil.nextLong());
+
+		dlFileEntryType.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFileEntryType.setUuid(RandomTestUtil.randomString());
 

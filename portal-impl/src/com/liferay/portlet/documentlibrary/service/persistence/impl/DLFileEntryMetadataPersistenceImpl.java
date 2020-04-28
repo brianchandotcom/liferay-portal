@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataExce
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -42,7 +44,12 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -156,25 +163,28 @@ public class DLFileEntryMetadataPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
 				finderArgs = new Object[] {uuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<DLFileEntryMetadata> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryMetadata>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -241,12 +251,12 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -564,12 +574,22 @@ public class DLFileEntryMetadataPersistenceImpl
 	public int countByUuid(String uuid) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
 
-		Object[] finderArgs = new Object[] {uuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid;
+
+			finderArgs = new Object[] {uuid};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -604,10 +624,14 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -708,18 +732,21 @@ public class DLFileEntryMetadataPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
 				finderArgs = new Object[] {uuid, companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -728,7 +755,7 @@ public class DLFileEntryMetadataPersistenceImpl
 
 		List<DLFileEntryMetadata> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryMetadata>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -801,12 +828,12 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1148,12 +1175,22 @@ public class DLFileEntryMetadataPersistenceImpl
 	public int countByUuid_C(String uuid, long companyId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid_C;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
 
-		Object[] finderArgs = new Object[] {uuid, companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid_C;
+
+			finderArgs = new Object[] {uuid, companyId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1192,10 +1229,14 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1293,18 +1334,21 @@ public class DLFileEntryMetadataPersistenceImpl
 		OrderByComparator<DLFileEntryMetadata> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByFileEntryId;
 				finderArgs = new Object[] {fileEntryId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByFileEntryId;
 			finderArgs = new Object[] {
 				fileEntryId, start, end, orderByComparator
@@ -1313,7 +1357,7 @@ public class DLFileEntryMetadataPersistenceImpl
 
 		List<DLFileEntryMetadata> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryMetadata>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1369,12 +1413,12 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1683,12 +1727,22 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByFileEntryId(long fileEntryId) {
-		FinderPath finderPath = _finderPathCountByFileEntryId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
 
-		Object[] finderArgs = new Object[] {fileEntryId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByFileEntryId;
+
+			finderArgs = new Object[] {fileEntryId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1712,10 +1766,14 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1807,18 +1865,21 @@ public class DLFileEntryMetadataPersistenceImpl
 		OrderByComparator<DLFileEntryMetadata> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByFileVersionId;
 				finderArgs = new Object[] {fileVersionId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByFileVersionId;
 			finderArgs = new Object[] {
 				fileVersionId, start, end, orderByComparator
@@ -1827,7 +1888,7 @@ public class DLFileEntryMetadataPersistenceImpl
 
 		List<DLFileEntryMetadata> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryMetadata>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1885,12 +1946,12 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -2200,12 +2261,22 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByFileVersionId(long fileVersionId) {
-		FinderPath finderPath = _finderPathCountByFileVersionId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
 
-		Object[] finderArgs = new Object[] {fileVersionId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByFileVersionId;
+
+			finderArgs = new Object[] {fileVersionId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2229,10 +2300,14 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2315,15 +2390,18 @@ public class DLFileEntryMetadataPersistenceImpl
 	public DLFileEntryMetadata fetchByD_F(
 		long DDMStructureId, long fileVersionId, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {DDMStructureId, fileVersionId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByD_F, finderArgs, this);
 		}
@@ -2366,7 +2444,7 @@ public class DLFileEntryMetadataPersistenceImpl
 				List<DLFileEntryMetadata> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByD_F, finderArgs, list);
 					}
@@ -2380,7 +2458,7 @@ public class DLFileEntryMetadataPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByD_F, finderArgs);
 				}
@@ -2427,12 +2505,22 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByD_F(long DDMStructureId, long fileVersionId) {
-		FinderPath finderPath = _finderPathCountByD_F;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
 
-		Object[] finderArgs = new Object[] {DDMStructureId, fileVersionId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByD_F;
+
+			finderArgs = new Object[] {DDMStructureId, fileVersionId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -2460,10 +2548,14 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2503,6 +2595,12 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(DLFileEntryMetadata dlFileEntryMetadata) {
+		if (dlFileEntryMetadata.getCtCollectionId() != 0) {
+			dlFileEntryMetadata.resetOriginalValues();
+
+			return;
+		}
+
 		EntityCacheUtil.putResult(
 			DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryMetadataImpl.class, dlFileEntryMetadata.getPrimaryKey(),
@@ -2527,6 +2625,12 @@ public class DLFileEntryMetadataPersistenceImpl
 	@Override
 	public void cacheResult(List<DLFileEntryMetadata> dlFileEntryMetadatas) {
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
+			if (dlFileEntryMetadata.getCtCollectionId() != 0) {
+				dlFileEntryMetadata.resetOriginalValues();
+
+				continue;
+			}
+
 			if (EntityCacheUtil.getResult(
 					DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileEntryMetadataImpl.class,
@@ -2728,6 +2832,10 @@ public class DLFileEntryMetadataPersistenceImpl
 	protected DLFileEntryMetadata removeImpl(
 		DLFileEntryMetadata dlFileEntryMetadata) {
 
+		if (!CTPersistenceHelperUtil.isRemove(dlFileEntryMetadata)) {
+			return dlFileEntryMetadata;
+		}
+
 		Session session = null;
 
 		try {
@@ -2794,7 +2902,18 @@ public class DLFileEntryMetadataPersistenceImpl
 		try {
 			session = openSession();
 
-			if (dlFileEntryMetadata.isNew()) {
+			if (CTPersistenceHelperUtil.isInsert(dlFileEntryMetadata)) {
+				if (!isNew) {
+					DLFileEntryMetadata oldDLFileEntryMetadata =
+						(DLFileEntryMetadata)session.get(
+							DLFileEntryMetadataImpl.class,
+							dlFileEntryMetadata.getPrimaryKeyObj());
+
+					if (oldDLFileEntryMetadata != null) {
+						session.evict(oldDLFileEntryMetadata);
+					}
+				}
+
 				session.save(dlFileEntryMetadata);
 
 				dlFileEntryMetadata.setNew(false);
@@ -2809,6 +2928,12 @@ public class DLFileEntryMetadataPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (dlFileEntryMetadata.getCtCollectionId() != 0) {
+			dlFileEntryMetadata.resetOriginalValues();
+
+			return dlFileEntryMetadata;
 		}
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2999,12 +3124,128 @@ public class DLFileEntryMetadataPersistenceImpl
 	/**
 	 * Returns the document library file entry metadata with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the document library file entry metadata
+	 * @return the document library file entry metadata, or <code>null</code> if a document library file entry metadata with the primary key could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata fetchByPrimaryKey(Serializable primaryKey) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				DLFileEntryMetadata.class)) {
+
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		DLFileEntryMetadata dlFileEntryMetadata = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			dlFileEntryMetadata = (DLFileEntryMetadata)session.get(
+				DLFileEntryMetadataImpl.class, primaryKey);
+
+			if (dlFileEntryMetadata != null) {
+				cacheResult(dlFileEntryMetadata);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return dlFileEntryMetadata;
+	}
+
+	/**
+	 * Returns the document library file entry metadata with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param fileEntryMetadataId the primary key of the document library file entry metadata
 	 * @return the document library file entry metadata, or <code>null</code> if a document library file entry metadata with the primary key could not be found
 	 */
 	@Override
 	public DLFileEntryMetadata fetchByPrimaryKey(long fileEntryMetadataId) {
 		return fetchByPrimaryKey((Serializable)fileEntryMetadataId);
+	}
+
+	@Override
+	public Map<Serializable, DLFileEntryMetadata> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (CTPersistenceHelperUtil.isProductionMode(
+				DLFileEntryMetadata.class)) {
+
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, DLFileEntryMetadata> map =
+			new HashMap<Serializable, DLFileEntryMetadata>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			DLFileEntryMetadata dlFileEntryMetadata = fetchByPrimaryKey(
+				primaryKey);
+
+			if (dlFileEntryMetadata != null) {
+				map.put(primaryKey, dlFileEntryMetadata);
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (DLFileEntryMetadata dlFileEntryMetadata :
+					(List<DLFileEntryMetadata>)query.list()) {
+
+				map.put(
+					dlFileEntryMetadata.getPrimaryKeyObj(),
+					dlFileEntryMetadata);
+
+				cacheResult(dlFileEntryMetadata);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -3072,25 +3313,28 @@ public class DLFileEntryMetadataPersistenceImpl
 		OrderByComparator<DLFileEntryMetadata> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<DLFileEntryMetadata> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntryMetadata>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3128,12 +3372,12 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -3165,8 +3409,15 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntryMetadata.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -3179,12 +3430,16 @@ public class DLFileEntryMetadataPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(exception);
 			}
@@ -3217,8 +3472,68 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return DLFileEntryMetadataModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "DLFileEntryMetadata";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("DDMStorageId");
+		ctStrictColumnNames.add("DDMStructureId");
+		ctStrictColumnNames.add("fileEntryId");
+		ctStrictColumnNames.add("fileVersionId");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("fileEntryMetadataId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"DDMStructureId", "fileVersionId"});
 	}
 
 	/**

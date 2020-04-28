@@ -32,6 +32,7 @@ public class DLFileEntrySoap implements Serializable {
 		DLFileEntrySoap soapModel = new DLFileEntrySoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFileEntryId(model.getFileEntryId());
 		soapModel.setGroupId(model.getGroupId());
@@ -120,6 +121,14 @@ public class DLFileEntrySoap implements Serializable {
 
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	public String getUuid() {
@@ -359,6 +368,7 @@ public class DLFileEntrySoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _fileEntryId;
 	private long _groupId;

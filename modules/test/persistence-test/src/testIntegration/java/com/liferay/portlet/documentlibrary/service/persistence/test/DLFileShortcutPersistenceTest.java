@@ -125,6 +125,8 @@ public class DLFileShortcutPersistenceTest {
 
 		newDLFileShortcut.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDLFileShortcut.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDLFileShortcut.setUuid(RandomTestUtil.randomString());
 
 		newDLFileShortcut.setGroupId(RandomTestUtil.nextLong());
@@ -167,6 +169,9 @@ public class DLFileShortcutPersistenceTest {
 		Assert.assertEquals(
 			existingDLFileShortcut.getMvccVersion(),
 			newDLFileShortcut.getMvccVersion());
+		Assert.assertEquals(
+			existingDLFileShortcut.getCtCollectionId(),
+			newDLFileShortcut.getCtCollectionId());
 		Assert.assertEquals(
 			existingDLFileShortcut.getUuid(), newDLFileShortcut.getUuid());
 		Assert.assertEquals(
@@ -319,9 +324,9 @@ public class DLFileShortcutPersistenceTest {
 
 	protected OrderByComparator<DLFileShortcut> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DLFileShortcut", "mvccVersion", true, "uuid", true,
-			"fileShortcutId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+			"DLFileShortcut", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "fileShortcutId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "repositoryId", true, "folderId", true,
 			"toFileEntryId", true, "treePath", true, "active", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
@@ -569,6 +574,8 @@ public class DLFileShortcutPersistenceTest {
 		DLFileShortcut dlFileShortcut = _persistence.create(pk);
 
 		dlFileShortcut.setMvccVersion(RandomTestUtil.nextLong());
+
+		dlFileShortcut.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFileShortcut.setUuid(RandomTestUtil.randomString());
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -40,8 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileEntryModel
-	extends AttachedModel, BaseModel<DLFileEntry>, MVCCModel, ShardedModel,
-			StagedGroupedModel, TrashedModel {
+	extends AttachedModel, BaseModel<DLFileEntry>, CTModel<DLFileEntry>,
+			MVCCModel, ShardedModel, StagedGroupedModel, TrashedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +55,7 @@ public interface DLFileEntryModel
 	 *
 	 * @return the primary key of this document library file entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -61,6 +63,7 @@ public interface DLFileEntryModel
 	 *
 	 * @param primaryKey the primary key of this document library file entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -78,6 +81,22 @@ public interface DLFileEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this document library file entry.
+	 *
+	 * @return the ct collection ID of this document library file entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this document library file entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this document library file entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this document library file entry.

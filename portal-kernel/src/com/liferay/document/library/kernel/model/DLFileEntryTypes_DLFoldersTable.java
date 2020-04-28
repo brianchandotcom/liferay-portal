@@ -41,6 +41,12 @@ public class DLFileEntryTypes_DLFoldersTable
 			"fileEntryTypeId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFileEntryTypes_DLFoldersTable, Long> folderId =
 		createColumn("folderId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<DLFileEntryTypes_DLFoldersTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<DLFileEntryTypes_DLFoldersTable, Boolean> ctChangeType =
+		createColumn(
+			"ctChangeType", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private DLFileEntryTypes_DLFoldersTable() {
 		super(

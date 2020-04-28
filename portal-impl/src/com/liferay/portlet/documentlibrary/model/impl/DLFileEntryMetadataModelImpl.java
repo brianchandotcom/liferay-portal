@@ -64,10 +64,11 @@ public class DLFileEntryMetadataModelImpl
 	public static final String TABLE_NAME = "DLFileEntryMetadata";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"fileEntryMetadataId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"DDMStorageId", Types.BIGINT}, {"DDMStructureId", Types.BIGINT},
-		{"fileEntryId", Types.BIGINT}, {"fileVersionId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"fileEntryMetadataId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"DDMStorageId", Types.BIGINT},
+		{"DDMStructureId", Types.BIGINT}, {"fileEntryId", Types.BIGINT},
+		{"fileVersionId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -75,6 +76,7 @@ public class DLFileEntryMetadataModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileEntryMetadataId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -85,7 +87,7 @@ public class DLFileEntryMetadataModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileEntryMetadata (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryMetadataId LONG not null primary key,companyId LONG,DDMStorageId LONG,DDMStructureId LONG,fileEntryId LONG,fileVersionId LONG)";
+		"create table DLFileEntryMetadata (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryMetadataId LONG not null,companyId LONG,DDMStorageId LONG,DDMStructureId LONG,fileEntryId LONG,fileVersionId LONG,primary key (fileEntryMetadataId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DLFileEntryMetadata";
@@ -269,6 +271,12 @@ public class DLFileEntryMetadataModelImpl
 			"mvccVersion",
 			(BiConsumer<DLFileEntryMetadata, Long>)
 				DLFileEntryMetadata::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DLFileEntryMetadata::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DLFileEntryMetadata, Long>)
+				DLFileEntryMetadata::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DLFileEntryMetadata::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -325,6 +333,16 @@ public class DLFileEntryMetadataModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -499,6 +517,7 @@ public class DLFileEntryMetadataModelImpl
 			new DLFileEntryMetadataImpl();
 
 		dlFileEntryMetadataImpl.setMvccVersion(getMvccVersion());
+		dlFileEntryMetadataImpl.setCtCollectionId(getCtCollectionId());
 		dlFileEntryMetadataImpl.setUuid(getUuid());
 		dlFileEntryMetadataImpl.setFileEntryMetadataId(
 			getFileEntryMetadataId());
@@ -602,6 +621,8 @@ public class DLFileEntryMetadataModelImpl
 
 		dlFileEntryMetadataCacheModel.mvccVersion = getMvccVersion();
 
+		dlFileEntryMetadataCacheModel.ctCollectionId = getCtCollectionId();
+
 		dlFileEntryMetadataCacheModel.uuid = getUuid();
 
 		String uuid = dlFileEntryMetadataCacheModel.uuid;
@@ -697,6 +718,7 @@ public class DLFileEntryMetadataModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _fileEntryMetadataId;

@@ -14,7 +14,10 @@
 
 package com.liferay.document.library.kernel.service;
 
+import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DLFileShortcutLocalService}.
@@ -40,20 +43,15 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @return the document library file shortcut that was added
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-		addDLFileShortcut(
-			com.liferay.document.library.kernel.model.DLFileShortcut
-				dlFileShortcut) {
-
+	public DLFileShortcut addDLFileShortcut(DLFileShortcut dlFileShortcut) {
 		return _dlFileShortcutLocalService.addDLFileShortcut(dlFileShortcut);
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-			addFileShortcut(
-				long userId, long groupId, long repositoryId, long folderId,
-				long toFileEntryId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public DLFileShortcut addFileShortcut(
+			long userId, long groupId, long repositoryId, long folderId,
+			long toFileEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutLocalService.addFileShortcut(
@@ -63,9 +61,8 @@ public class DLFileShortcutLocalServiceWrapper
 
 	@Override
 	public void addFileShortcutResources(
-			com.liferay.document.library.kernel.model.DLFileShortcut
-				fileShortcut,
-			boolean addGroupPermissions, boolean addGuestPermissions)
+			DLFileShortcut fileShortcut, boolean addGroupPermissions,
+			boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlFileShortcutLocalService.addFileShortcutResources(
@@ -74,8 +71,7 @@ public class DLFileShortcutLocalServiceWrapper
 
 	@Override
 	public void addFileShortcutResources(
-			com.liferay.document.library.kernel.model.DLFileShortcut
-				fileShortcut,
+			DLFileShortcut fileShortcut,
 			com.liferay.portal.kernel.service.permission.ModelPermissions
 				modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -112,9 +108,7 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @return the new document library file shortcut
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-		createDLFileShortcut(long fileShortcutId) {
-
+	public DLFileShortcut createDLFileShortcut(long fileShortcutId) {
 		return _dlFileShortcutLocalService.createDLFileShortcut(fileShortcutId);
 	}
 
@@ -136,11 +130,7 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @return the document library file shortcut that was removed
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-		deleteDLFileShortcut(
-			com.liferay.document.library.kernel.model.DLFileShortcut
-				dlFileShortcut) {
-
+	public DLFileShortcut deleteDLFileShortcut(DLFileShortcut dlFileShortcut) {
 		return _dlFileShortcutLocalService.deleteDLFileShortcut(dlFileShortcut);
 	}
 
@@ -152,17 +142,14 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @throws PortalException if a document library file shortcut with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-			deleteDLFileShortcut(long fileShortcutId)
+	public DLFileShortcut deleteDLFileShortcut(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutLocalService.deleteDLFileShortcut(fileShortcutId);
 	}
 
 	@Override
-	public void deleteFileShortcut(
-			com.liferay.document.library.kernel.model.DLFileShortcut
-				fileShortcut)
+	public void deleteFileShortcut(DLFileShortcut fileShortcut)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlFileShortcutLocalService.deleteFileShortcut(fileShortcut);
@@ -318,9 +305,7 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-		fetchDLFileShortcut(long fileShortcutId) {
-
+	public DLFileShortcut fetchDLFileShortcut(long fileShortcutId) {
 		return _dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
 	}
 
@@ -332,8 +317,8 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-		fetchDLFileShortcutByUuidAndGroupId(String uuid, long groupId) {
+	public DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _dlFileShortcutLocalService.fetchDLFileShortcutByUuidAndGroupId(
 			uuid, groupId);
@@ -354,8 +339,7 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @throws PortalException if a document library file shortcut with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-			getDLFileShortcut(long fileShortcutId)
+	public DLFileShortcut getDLFileShortcut(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
@@ -370,8 +354,8 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @throws PortalException if a matching document library file shortcut could not be found
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-			getDLFileShortcutByUuidAndGroupId(String uuid, long groupId)
+	public DLFileShortcut getDLFileShortcutByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutLocalService.getDLFileShortcutByUuidAndGroupId(
@@ -390,9 +374,8 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @return the range of document library file shortcuts
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.document.library.kernel.model.DLFileShortcut>
-			getDLFileShortcuts(int start, int end) {
+	public java.util.List<DLFileShortcut> getDLFileShortcuts(
+		int start, int end) {
 
 		return _dlFileShortcutLocalService.getDLFileShortcuts(start, end);
 	}
@@ -405,9 +388,8 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @return the matching document library file shortcuts, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.document.library.kernel.model.DLFileShortcut>
-			getDLFileShortcutsByUuidAndCompanyId(String uuid, long companyId) {
+	public java.util.List<DLFileShortcut> getDLFileShortcutsByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _dlFileShortcutLocalService.getDLFileShortcutsByUuidAndCompanyId(
 			uuid, companyId);
@@ -424,13 +406,10 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @return the range of matching document library file shortcuts, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.document.library.kernel.model.DLFileShortcut>
-			getDLFileShortcutsByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.document.library.kernel.model.DLFileShortcut>
-						orderByComparator) {
+	public java.util.List<DLFileShortcut> getDLFileShortcutsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileShortcut>
+			orderByComparator) {
 
 		return _dlFileShortcutLocalService.getDLFileShortcutsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -457,27 +436,21 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-			getFileShortcut(long fileShortcutId)
+	public DLFileShortcut getFileShortcut(long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutLocalService.getFileShortcut(fileShortcutId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.document.library.kernel.model.DLFileShortcut>
-			getFileShortcuts(long toFileEntryId) {
-
+	public java.util.List<DLFileShortcut> getFileShortcuts(long toFileEntryId) {
 		return _dlFileShortcutLocalService.getFileShortcuts(toFileEntryId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.document.library.kernel.model.DLFileShortcut>
-			getFileShortcuts(
-				long groupId, long folderId, boolean active, int status,
-				int start, int end) {
+	public java.util.List<DLFileShortcut> getFileShortcuts(
+		long groupId, long folderId, boolean active, int status, int start,
+		int end) {
 
 		return _dlFileShortcutLocalService.getFileShortcuts(
 			groupId, folderId, active, status, start, end);
@@ -535,10 +508,8 @@ public class DLFileShortcutLocalServiceWrapper
 
 	@Override
 	public void updateAsset(
-			long userId,
-			com.liferay.document.library.kernel.model.DLFileShortcut
-				fileShortcut,
-			long[] assetCategoryIds, String[] assetTagNames)
+			long userId, DLFileShortcut fileShortcut, long[] assetCategoryIds,
+			String[] assetTagNames)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlFileShortcutLocalService.updateAsset(
@@ -552,20 +523,15 @@ public class DLFileShortcutLocalServiceWrapper
 	 * @return the document library file shortcut that was updated
 	 */
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-		updateDLFileShortcut(
-			com.liferay.document.library.kernel.model.DLFileShortcut
-				dlFileShortcut) {
-
+	public DLFileShortcut updateDLFileShortcut(DLFileShortcut dlFileShortcut) {
 		return _dlFileShortcutLocalService.updateDLFileShortcut(dlFileShortcut);
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-			updateFileShortcut(
-				long userId, long fileShortcutId, long repositoryId,
-				long folderId, long toFileEntryId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public DLFileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long repositoryId, long folderId,
+			long toFileEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutLocalService.updateFileShortcut(
@@ -588,14 +554,33 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut
-			updateStatus(
-				long userId, long fileShortcutId, int status,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public DLFileShortcut updateStatus(
+			long userId, long fileShortcutId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileShortcutLocalService.updateStatus(
 			userId, fileShortcutId, status, serviceContext);
+	}
+
+	@Override
+	public CTPersistence<DLFileShortcut> getCTPersistence() {
+		return _dlFileShortcutLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<DLFileShortcut> getModelClass() {
+		return _dlFileShortcutLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<DLFileShortcut>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _dlFileShortcutLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

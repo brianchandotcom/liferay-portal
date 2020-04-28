@@ -76,10 +76,12 @@ public class DLFileEntryMetadataCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", fileEntryMetadataId=");
@@ -105,6 +107,7 @@ public class DLFileEntryMetadataCacheModel
 			new DLFileEntryMetadataImpl();
 
 		dlFileEntryMetadataImpl.setMvccVersion(mvccVersion);
+		dlFileEntryMetadataImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			dlFileEntryMetadataImpl.setUuid("");
@@ -128,6 +131,8 @@ public class DLFileEntryMetadataCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		fileEntryMetadataId = objectInput.readLong();
@@ -146,6 +151,8 @@ public class DLFileEntryMetadataCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -168,6 +175,7 @@ public class DLFileEntryMetadataCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long fileEntryMetadataId;
 	public long companyId;

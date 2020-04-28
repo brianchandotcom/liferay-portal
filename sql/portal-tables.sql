@@ -292,8 +292,9 @@ create table Country (
 
 create table DLFileEntry (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	fileEntryId LONG not null primary key,
+	fileEntryId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -320,24 +321,28 @@ create table DLFileEntry (
 	custom1ImageId LONG,
 	custom2ImageId LONG,
 	manualCheckInRequired BOOLEAN,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (fileEntryId, ctCollectionId)
 );
 
 create table DLFileEntryMetadata (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	fileEntryMetadataId LONG not null primary key,
+	fileEntryMetadataId LONG not null,
 	companyId LONG,
 	DDMStorageId LONG,
 	DDMStructureId LONG,
 	fileEntryId LONG,
-	fileVersionId LONG
+	fileVersionId LONG,
+	primary key (fileEntryMetadataId, ctCollectionId)
 );
 
 create table DLFileEntryType (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	fileEntryTypeId LONG not null primary key,
+	fileEntryTypeId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -347,20 +352,24 @@ create table DLFileEntryType (
 	fileEntryTypeKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (fileEntryTypeId, ctCollectionId)
 );
 
 create table DLFileEntryTypes_DLFolders (
 	companyId LONG not null,
 	fileEntryTypeId LONG not null,
 	folderId LONG not null,
-	primary key (fileEntryTypeId, folderId)
+	ctCollectionId LONG default 0 not null,
+	ctChangeType BOOLEAN,
+	primary key (fileEntryTypeId, folderId, ctCollectionId)
 );
 
 create table DLFileShortcut (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	fileShortcutId LONG not null primary key,
+	fileShortcutId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -376,13 +385,15 @@ create table DLFileShortcut (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (fileShortcutId, ctCollectionId)
 );
 
 create table DLFileVersion (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	fileVersionId LONG not null primary key,
+	fileVersionId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -408,13 +419,15 @@ create table DLFileVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (fileVersionId, ctCollectionId)
 );
 
 create table DLFolder (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	folderId LONG not null primary key,
+	folderId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -435,7 +448,8 @@ create table DLFolder (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (folderId, ctCollectionId)
 );
 
 create table EmailAddress (

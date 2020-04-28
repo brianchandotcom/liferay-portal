@@ -125,6 +125,8 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDLFolder.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDLFolder.setUuid(RandomTestUtil.randomString());
 
 		newDLFolder.setGroupId(RandomTestUtil.nextLong());
@@ -176,6 +178,9 @@ public class DLFolderPersistenceTest {
 
 		Assert.assertEquals(
 			existingDLFolder.getMvccVersion(), newDLFolder.getMvccVersion());
+		Assert.assertEquals(
+			existingDLFolder.getCtCollectionId(),
+			newDLFolder.getCtCollectionId());
 		Assert.assertEquals(existingDLFolder.getUuid(), newDLFolder.getUuid());
 		Assert.assertEquals(
 			existingDLFolder.getFolderId(), newDLFolder.getFolderId());
@@ -427,14 +432,15 @@ public class DLFolderPersistenceTest {
 
 	protected OrderByComparator<DLFolder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DLFolder", "mvccVersion", true, "uuid", true, "folderId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "repositoryId",
-			true, "mountPoint", true, "parentFolderId", true, "treePath", true,
-			"name", true, "description", true, "lastPostDate", true,
-			"defaultFileEntryTypeId", true, "hidden", true, "restrictionType",
-			true, "lastPublishDate", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+			"DLFolder", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "folderId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "repositoryId", true, "mountPoint", true,
+			"parentFolderId", true, "treePath", true, "name", true,
+			"description", true, "lastPostDate", true, "defaultFileEntryTypeId",
+			true, "hidden", true, "restrictionType", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -689,6 +695,8 @@ public class DLFolderPersistenceTest {
 		DLFolder dlFolder = _persistence.create(pk);
 
 		dlFolder.setMvccVersion(RandomTestUtil.nextLong());
+
+		dlFolder.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFolder.setUuid(RandomTestUtil.randomString());
 

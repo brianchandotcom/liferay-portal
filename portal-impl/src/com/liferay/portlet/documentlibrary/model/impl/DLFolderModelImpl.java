@@ -79,14 +79,15 @@ public class DLFolderModelImpl
 	public static final String TABLE_NAME = "DLFolder";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"folderId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"repositoryId", Types.BIGINT},
-		{"mountPoint", Types.BOOLEAN}, {"parentFolderId", Types.BIGINT},
-		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"lastPostDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"folderId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"repositoryId", Types.BIGINT}, {"mountPoint", Types.BOOLEAN},
+		{"parentFolderId", Types.BIGINT}, {"treePath", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"lastPostDate", Types.TIMESTAMP},
 		{"defaultFileEntryTypeId", Types.BIGINT}, {"hidden_", Types.BOOLEAN},
 		{"restrictionType", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
@@ -99,6 +100,7 @@ public class DLFolderModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("folderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -125,7 +127,7 @@ public class DLFolderModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFolder (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table DLFolder (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,folderId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (folderId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 
@@ -192,6 +194,7 @@ public class DLFolderModelImpl
 		DLFolder model = new DLFolderImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setFolderId(soapModel.getFolderId());
 		model.setGroupId(soapModel.getGroupId());
@@ -250,7 +253,7 @@ public class DLFolderModelImpl
 
 	public static final String
 		MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_SQL_CREATE =
-			"create table DLFileEntryTypes_DLFolders (companyId LONG not null,fileEntryTypeId LONG not null,folderId LONG not null,primary key (fileEntryTypeId, folderId))";
+			"create table DLFileEntryTypes_DLFolders (companyId LONG not null,fileEntryTypeId LONG not null,folderId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (fileEntryTypeId, folderId, ctCollectionId))";
 
 	public static final boolean
 		FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS = GetterUtil.getBoolean(
@@ -392,6 +395,11 @@ public class DLFolderModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<DLFolder, Long>)DLFolder::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DLFolder::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DLFolder, Long>)DLFolder::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DLFolder::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<DLFolder, String>)DLFolder::setUuid);
@@ -494,6 +502,17 @@ public class DLFolderModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1248,6 +1267,7 @@ public class DLFolderModelImpl
 		DLFolderImpl dlFolderImpl = new DLFolderImpl();
 
 		dlFolderImpl.setMvccVersion(getMvccVersion());
+		dlFolderImpl.setCtCollectionId(getCtCollectionId());
 		dlFolderImpl.setUuid(getUuid());
 		dlFolderImpl.setFolderId(getFolderId());
 		dlFolderImpl.setGroupId(getGroupId());
@@ -1395,6 +1415,8 @@ public class DLFolderModelImpl
 		DLFolderCacheModel dlFolderCacheModel = new DLFolderCacheModel();
 
 		dlFolderCacheModel.mvccVersion = getMvccVersion();
+
+		dlFolderCacheModel.ctCollectionId = getCtCollectionId();
 
 		dlFolderCacheModel.uuid = getUuid();
 
@@ -1587,6 +1609,7 @@ public class DLFolderModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _folderId;

@@ -125,6 +125,8 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDLFileEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDLFileEntry.setUuid(RandomTestUtil.randomString());
 
 		newDLFileEntry.setGroupId(RandomTestUtil.nextLong());
@@ -189,6 +191,9 @@ public class DLFileEntryPersistenceTest {
 		Assert.assertEquals(
 			existingDLFileEntry.getMvccVersion(),
 			newDLFileEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingDLFileEntry.getCtCollectionId(),
+			newDLFileEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingDLFileEntry.getUuid(), newDLFileEntry.getUuid());
 		Assert.assertEquals(
@@ -498,16 +503,16 @@ public class DLFileEntryPersistenceTest {
 
 	protected OrderByComparator<DLFileEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DLFileEntry", "mvccVersion", true, "uuid", true, "fileEntryId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "repositoryId", true,
-			"folderId", true, "treePath", true, "name", true, "fileName", true,
-			"extension", true, "mimeType", true, "title", true, "description",
-			true, "fileEntryTypeId", true, "version", true, "size", true,
-			"smallImageId", true, "largeImageId", true, "custom1ImageId", true,
-			"custom2ImageId", true, "manualCheckInRequired", true,
-			"lastPublishDate", true);
+			"DLFileEntry", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "fileEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"repositoryId", true, "folderId", true, "treePath", true, "name",
+			true, "fileName", true, "extension", true, "mimeType", true,
+			"title", true, "description", true, "fileEntryTypeId", true,
+			"version", true, "size", true, "smallImageId", true, "largeImageId",
+			true, "custom1ImageId", true, "custom2ImageId", true,
+			"manualCheckInRequired", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -790,6 +795,8 @@ public class DLFileEntryPersistenceTest {
 		DLFileEntry dlFileEntry = _persistence.create(pk);
 
 		dlFileEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		dlFileEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFileEntry.setUuid(RandomTestUtil.randomString());
 

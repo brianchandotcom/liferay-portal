@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -45,6 +47,7 @@ public class DLFileEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("groupId", getGroupId());
@@ -84,6 +87,12 @@ public class DLFileEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -331,6 +340,16 @@ public class DLFileEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this document library file entry.
+	 *
+	 * @return the ct collection ID of this document library file entry
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -863,6 +882,16 @@ public class DLFileEntryWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this document library file entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this document library file entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the custom1 image ID of this document library file entry.
 	 *
 	 * @param custom1ImageId the custom1 image ID of this document library file entry
@@ -1153,6 +1182,20 @@ public class DLFileEntryWrapper
 	@Override
 	public void updateTreePath(String treePath) {
 		model.updateTreePath(treePath);
+	}
+
+	@Override
+	public Map<String, Function<DLFileEntry, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<DLFileEntry, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

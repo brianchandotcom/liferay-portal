@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -38,8 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileVersionModel
-	extends BaseModel<DLFileVersion>, MVCCModel, ShardedModel,
-			StagedGroupedModel, WorkflowedModel {
+	extends BaseModel<DLFileVersion>, CTModel<DLFileVersion>, MVCCModel,
+			ShardedModel, StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +53,7 @@ public interface DLFileVersionModel
 	 *
 	 * @return the primary key of this document library file version
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -59,6 +61,7 @@ public interface DLFileVersionModel
 	 *
 	 * @param primaryKey the primary key of this document library file version
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -76,6 +79,22 @@ public interface DLFileVersionModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this document library file version.
+	 *
+	 * @return the ct collection ID of this document library file version
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this document library file version.
+	 *
+	 * @param ctCollectionId the ct collection ID of this document library file version
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this document library file version.

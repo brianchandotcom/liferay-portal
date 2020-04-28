@@ -35,6 +35,8 @@ public class DLFileVersionTable extends BaseTable<DLFileVersionTable> {
 
 	public final Column<DLFileVersionTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DLFileVersionTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFileVersionTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DLFileVersionTable, Long> fileVersionId = createColumn(

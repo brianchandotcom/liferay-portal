@@ -35,6 +35,9 @@ public class DLFileShortcutTable extends BaseTable<DLFileShortcutTable> {
 
 	public final Column<DLFileShortcutTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DLFileShortcutTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFileShortcutTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DLFileShortcutTable, Long> fileShortcutId =

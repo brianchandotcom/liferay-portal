@@ -125,6 +125,8 @@ public class DLFileVersionPersistenceTest {
 
 		newDLFileVersion.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDLFileVersion.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDLFileVersion.setUuid(RandomTestUtil.randomString());
 
 		newDLFileVersion.setGroupId(RandomTestUtil.nextLong());
@@ -187,6 +189,9 @@ public class DLFileVersionPersistenceTest {
 		Assert.assertEquals(
 			existingDLFileVersion.getMvccVersion(),
 			newDLFileVersion.getMvccVersion());
+		Assert.assertEquals(
+			existingDLFileVersion.getCtCollectionId(),
+			newDLFileVersion.getCtCollectionId());
 		Assert.assertEquals(
 			existingDLFileVersion.getUuid(), newDLFileVersion.getUuid());
 		Assert.assertEquals(
@@ -385,15 +390,16 @@ public class DLFileVersionPersistenceTest {
 
 	protected OrderByComparator<DLFileVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DLFileVersion", "mvccVersion", true, "uuid", true, "fileVersionId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"repositoryId", true, "folderId", true, "fileEntryId", true,
-			"treePath", true, "fileName", true, "extension", true, "mimeType",
-			true, "title", true, "description", true, "changeLog", true,
-			"fileEntryTypeId", true, "version", true, "size", true, "checksum",
-			true, "lastPublishDate", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+			"DLFileVersion", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "fileVersionId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "repositoryId", true, "folderId", true,
+			"fileEntryId", true, "treePath", true, "fileName", true,
+			"extension", true, "mimeType", true, "title", true, "description",
+			true, "changeLog", true, "fileEntryTypeId", true, "version", true,
+			"size", true, "checksum", true, "lastPublishDate", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -648,6 +654,8 @@ public class DLFileVersionPersistenceTest {
 		DLFileVersion dlFileVersion = _persistence.create(pk);
 
 		dlFileVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		dlFileVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFileVersion.setUuid(RandomTestUtil.randomString());
 

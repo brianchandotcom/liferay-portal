@@ -17,6 +17,7 @@ package com.liferay.document.library.kernel.service.persistence;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileEntryMetadataPersistence
-	extends BasePersistence<DLFileEntryMetadata> {
+	extends BasePersistence<DLFileEntryMetadata>,
+			CTPersistence<DLFileEntryMetadata> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

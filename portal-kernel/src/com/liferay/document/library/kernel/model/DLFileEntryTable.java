@@ -35,6 +35,8 @@ public class DLFileEntryTable extends BaseTable<DLFileEntryTable> {
 
 	public final Column<DLFileEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DLFileEntryTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFileEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DLFileEntryTable, Long> fileEntryId = createColumn(

@@ -79,16 +79,16 @@ public class DLFileShortcutModelImpl
 	public static final String TABLE_NAME = "DLFileShortcut";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"fileShortcutId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"repositoryId", Types.BIGINT},
-		{"folderId", Types.BIGINT}, {"toFileEntryId", Types.BIGINT},
-		{"treePath", Types.VARCHAR}, {"active_", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"fileShortcutId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"repositoryId", Types.BIGINT}, {"folderId", Types.BIGINT},
+		{"toFileEntryId", Types.BIGINT}, {"treePath", Types.VARCHAR},
+		{"active_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -96,6 +96,7 @@ public class DLFileShortcutModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileShortcutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -117,7 +118,7 @@ public class DLFileShortcutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileShortcut (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileShortcutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,toFileEntryId LONG,treePath STRING null,active_ BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table DLFileShortcut (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileShortcutId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,toFileEntryId LONG,treePath STRING null,active_ BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fileShortcutId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileShortcut";
 
@@ -178,6 +179,7 @@ public class DLFileShortcutModelImpl
 		DLFileShortcut model = new DLFileShortcutImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setFileShortcutId(soapModel.getFileShortcutId());
 		model.setGroupId(soapModel.getGroupId());
@@ -359,6 +361,12 @@ public class DLFileShortcutModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DLFileShortcut::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DLFileShortcut, Long>)
+				DLFileShortcut::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DLFileShortcut::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -460,6 +468,17 @@ public class DLFileShortcutModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1074,6 +1093,7 @@ public class DLFileShortcutModelImpl
 		DLFileShortcutImpl dlFileShortcutImpl = new DLFileShortcutImpl();
 
 		dlFileShortcutImpl.setMvccVersion(getMvccVersion());
+		dlFileShortcutImpl.setCtCollectionId(getCtCollectionId());
 		dlFileShortcutImpl.setUuid(getUuid());
 		dlFileShortcutImpl.setFileShortcutId(getFileShortcutId());
 		dlFileShortcutImpl.setGroupId(getGroupId());
@@ -1197,6 +1217,8 @@ public class DLFileShortcutModelImpl
 			new DLFileShortcutCacheModel();
 
 		dlFileShortcutCacheModel.mvccVersion = getMvccVersion();
+
+		dlFileShortcutCacheModel.ctCollectionId = getCtCollectionId();
 
 		dlFileShortcutCacheModel.uuid = getUuid();
 
@@ -1361,6 +1383,7 @@ public class DLFileShortcutModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _fileShortcutId;

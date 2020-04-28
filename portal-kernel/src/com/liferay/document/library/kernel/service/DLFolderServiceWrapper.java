@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.kernel.service;
 
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -31,7 +32,7 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFolder addFolder(
+	public DLFolder addFolder(
 			long groupId, long repositoryId, boolean mountPoint,
 			long parentFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -106,16 +107,14 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFolder getFolder(
-			long folderId)
+	public DLFolder getFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFolderService.getFolder(folderId);
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFolder getFolder(
-			long groupId, long parentFolderId, String name)
+	public DLFolder getFolder(long groupId, long parentFolderId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFolderService.getFolder(groupId, parentFolderId, name);
@@ -129,12 +128,10 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFolder>
-			getFolders(
-				long groupId, long parentFolderId, boolean includeMountfolders,
-				int status, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.document.library.kernel.model.DLFolder> obc)
+	public java.util.List<DLFolder> getFolders(
+			long groupId, long parentFolderId, boolean includeMountfolders,
+			int status, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<DLFolder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFolderService.getFolders(
@@ -149,12 +146,10 @@ public class DLFolderServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFolder>
-			getFolders(
-				long groupId, long parentFolderId, int status,
-				boolean includeMountfolders, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.document.library.kernel.model.DLFolder> obc)
+	public java.util.List<DLFolder> getFolders(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<DLFolder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFolderService.getFolders(
@@ -163,11 +158,9 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFolder>
-			getFolders(
-				long groupId, long parentFolderId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.document.library.kernel.model.DLFolder> obc)
+	public java.util.List<DLFolder> getFolders(
+			long groupId, long parentFolderId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<DLFolder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFolderService.getFolders(
@@ -349,11 +342,9 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFolder>
-			getMountFolders(
-				long groupId, long parentFolderId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.document.library.kernel.model.DLFolder> obc)
+	public java.util.List<DLFolder> getMountFolders(
+			long groupId, long parentFolderId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<DLFolder> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFolderService.getMountFolders(
@@ -431,7 +422,7 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFolder moveFolder(
+	public DLFolder moveFolder(
 			long folderId, long parentFolderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -465,7 +456,7 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFolder updateFolder(
+	public DLFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			long defaultFileEntryTypeId, java.util.List<Long> fileEntryTypeIds,
 			int restrictionType,
@@ -478,7 +469,7 @@ public class DLFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFolder updateFolder(
+	public DLFolder updateFolder(
 			long folderId, String name, String description,
 			long defaultFileEntryTypeId, java.util.List<Long> fileEntryTypeIds,
 			int restrictionType,

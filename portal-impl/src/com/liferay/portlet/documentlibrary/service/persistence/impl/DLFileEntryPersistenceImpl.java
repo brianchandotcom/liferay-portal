@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -48,8 +50,13 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -160,25 +167,28 @@ public class DLFileEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
 				finderArgs = new Object[] {uuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -245,12 +255,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -560,12 +570,22 @@ public class DLFileEntryPersistenceImpl
 	public int countByUuid(String uuid) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {uuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid;
+
+			finderArgs = new Object[] {uuid};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -600,10 +620,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -687,15 +711,18 @@ public class DLFileEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -748,7 +775,7 @@ public class DLFileEntryPersistenceImpl
 				List<DLFileEntry> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByUUID_G, finderArgs, list);
 					}
@@ -762,7 +789,7 @@ public class DLFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByUUID_G, finderArgs);
 				}
@@ -809,12 +836,22 @@ public class DLFileEntryPersistenceImpl
 	public int countByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUUID_G;
+
+			finderArgs = new Object[] {uuid, groupId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -853,10 +890,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -960,18 +1001,21 @@ public class DLFileEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
 				finderArgs = new Object[] {uuid, companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -980,7 +1024,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1053,12 +1097,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1395,12 +1439,22 @@ public class DLFileEntryPersistenceImpl
 	public int countByUuid_C(String uuid, long companyId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid_C;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {uuid, companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid_C;
+
+			finderArgs = new Object[] {uuid, companyId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1439,10 +1493,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1537,25 +1595,28 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
 				finderArgs = new Object[] {groupId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1611,12 +1672,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -2243,12 +2304,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByGroupId;
+
+			finderArgs = new Object[] {groupId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2272,10 +2343,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2414,18 +2489,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
 				finderArgs = new Object[] {companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -2434,7 +2512,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2490,12 +2568,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -2794,12 +2872,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCompanyId;
+
+			finderArgs = new Object[] {companyId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -2823,10 +2911,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2918,18 +3010,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByRepositoryId;
 				finderArgs = new Object[] {repositoryId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByRepositoryId;
 			finderArgs = new Object[] {
 				repositoryId, start, end, orderByComparator
@@ -2938,7 +3033,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -2994,12 +3089,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -3298,12 +3393,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByRepositoryId(long repositoryId) {
-		FinderPath finderPath = _finderPathCountByRepositoryId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {repositoryId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByRepositoryId;
+
+			finderArgs = new Object[] {repositoryId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3327,10 +3432,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -3423,25 +3532,28 @@ public class DLFileEntryPersistenceImpl
 
 		mimeType = Objects.toString(mimeType, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByMimeType;
 				finderArgs = new Object[] {mimeType};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByMimeType;
 			finderArgs = new Object[] {mimeType, start, end, orderByComparator};
 		}
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -3508,12 +3620,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -3827,12 +3939,22 @@ public class DLFileEntryPersistenceImpl
 	public int countByMimeType(String mimeType) {
 		mimeType = Objects.toString(mimeType, "");
 
-		FinderPath finderPath = _finderPathCountByMimeType;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {mimeType};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByMimeType;
+
+			finderArgs = new Object[] {mimeType};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -3867,10 +3989,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -3965,18 +4091,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByFileEntryTypeId;
 				finderArgs = new Object[] {fileEntryTypeId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByFileEntryTypeId;
 			finderArgs = new Object[] {
 				fileEntryTypeId, start, end, orderByComparator
@@ -3985,7 +4114,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -4041,12 +4170,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -4351,12 +4480,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByFileEntryTypeId(long fileEntryTypeId) {
-		FinderPath finderPath = _finderPathCountByFileEntryTypeId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {fileEntryTypeId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByFileEntryTypeId;
+
+			finderArgs = new Object[] {fileEntryTypeId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -4380,10 +4519,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -4476,18 +4619,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindBySmallImageId;
 				finderArgs = new Object[] {smallImageId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindBySmallImageId;
 			finderArgs = new Object[] {
 				smallImageId, start, end, orderByComparator
@@ -4496,7 +4642,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -4552,12 +4698,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -4856,12 +5002,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countBySmallImageId(long smallImageId) {
-		FinderPath finderPath = _finderPathCountBySmallImageId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {smallImageId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountBySmallImageId;
+
+			finderArgs = new Object[] {smallImageId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -4885,10 +5041,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -4980,18 +5140,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByLargeImageId;
 				finderArgs = new Object[] {largeImageId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByLargeImageId;
 			finderArgs = new Object[] {
 				largeImageId, start, end, orderByComparator
@@ -5000,7 +5163,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -5056,12 +5219,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -5360,12 +5523,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByLargeImageId(long largeImageId) {
-		FinderPath finderPath = _finderPathCountByLargeImageId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {largeImageId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByLargeImageId;
+
+			finderArgs = new Object[] {largeImageId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -5389,10 +5562,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -5484,18 +5661,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCustom1ImageId;
 				finderArgs = new Object[] {custom1ImageId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCustom1ImageId;
 			finderArgs = new Object[] {
 				custom1ImageId, start, end, orderByComparator
@@ -5504,7 +5684,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -5560,12 +5740,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -5867,12 +6047,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCustom1ImageId(long custom1ImageId) {
-		FinderPath finderPath = _finderPathCountByCustom1ImageId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {custom1ImageId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCustom1ImageId;
+
+			finderArgs = new Object[] {custom1ImageId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -5896,10 +6086,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -5991,18 +6185,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCustom2ImageId;
 				finderArgs = new Object[] {custom2ImageId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCustom2ImageId;
 			finderArgs = new Object[] {
 				custom2ImageId, start, end, orderByComparator
@@ -6011,7 +6208,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -6067,12 +6264,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -6374,12 +6571,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCustom2ImageId(long custom2ImageId) {
-		FinderPath finderPath = _finderPathCountByCustom2ImageId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {custom2ImageId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCustom2ImageId;
+
+			finderArgs = new Object[] {custom2ImageId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -6403,10 +6610,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -6501,18 +6712,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_U;
 				finderArgs = new Object[] {groupId, userId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_U;
 			finderArgs = new Object[] {
 				groupId, userId, start, end, orderByComparator
@@ -6521,7 +6735,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -6583,12 +6797,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -7251,12 +7465,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_U(long groupId, long userId) {
-		FinderPath finderPath = _finderPathCountByG_U;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {groupId, userId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_U;
+
+			finderArgs = new Object[] {groupId, userId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -7284,10 +7508,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -7440,18 +7668,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_F;
 				finderArgs = new Object[] {groupId, folderId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_F;
 			finderArgs = new Object[] {
 				groupId, folderId, start, end, orderByComparator
@@ -7460,7 +7691,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -7522,12 +7753,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -8406,18 +8637,21 @@ public class DLFileEntryPersistenceImpl
 				groupId, folderIds[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					groupId, StringUtil.merge(folderIds)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				groupId, StringUtil.merge(folderIds), start, end,
 				orderByComparator
@@ -8426,7 +8660,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByG_F, finderArgs, this);
 
@@ -8492,13 +8726,13 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(
 						_finderPathWithPaginationFindByG_F, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathWithPaginationFindByG_F, finderArgs);
 				}
@@ -8539,12 +8773,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_F(long groupId, long folderId) {
-		FinderPath finderPath = _finderPathCountByG_F;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {groupId, folderId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_F;
+
+			finderArgs = new Object[] {groupId, folderId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -8572,10 +8816,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -8603,12 +8851,19 @@ public class DLFileEntryPersistenceImpl
 			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
-		Object[] finderArgs = new Object[] {
-			groupId, StringUtil.merge(folderIds)
-		};
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByG_F, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {groupId, StringUtil.merge(folderIds)};
+
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathWithPaginationCountByG_F, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -8647,12 +8902,16 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationCountByG_F, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationCountByG_F, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByG_F, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationCountByG_F, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -8878,18 +9137,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByR_F;
 				finderArgs = new Object[] {repositoryId, folderId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByR_F;
 			finderArgs = new Object[] {
 				repositoryId, folderId, start, end, orderByComparator
@@ -8898,7 +9160,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -8960,12 +9222,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -9289,12 +9551,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByR_F(long repositoryId, long folderId) {
-		FinderPath finderPath = _finderPathCountByR_F;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {repositoryId, folderId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByR_F;
+
+			finderArgs = new Object[] {repositoryId, folderId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -9322,10 +9594,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -9425,18 +9701,21 @@ public class DLFileEntryPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByF_N;
 				finderArgs = new Object[] {folderId, name};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByF_N;
 			finderArgs = new Object[] {
 				folderId, name, start, end, orderByComparator
@@ -9445,7 +9724,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -9518,12 +9797,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -9859,12 +10138,22 @@ public class DLFileEntryPersistenceImpl
 	public int countByF_N(long folderId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByF_N;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {folderId, name};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByF_N;
+
+			finderArgs = new Object[] {folderId, name};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -9903,10 +10192,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -10016,18 +10309,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_U_F;
 				finderArgs = new Object[] {groupId, userId, folderId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_U_F;
 			finderArgs = new Object[] {
 				groupId, userId, folderId, start, end, orderByComparator
@@ -10036,7 +10332,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -10103,12 +10399,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -11038,18 +11334,21 @@ public class DLFileEntryPersistenceImpl
 				groupId, userId, folderIds[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					groupId, userId, StringUtil.merge(folderIds)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				groupId, userId, StringUtil.merge(folderIds), start, end,
 				orderByComparator
@@ -11058,7 +11357,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByG_U_F, finderArgs, this);
 
@@ -11129,13 +11428,13 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(
 						_finderPathWithPaginationFindByG_U_F, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathWithPaginationFindByG_U_F, finderArgs);
 				}
@@ -11178,12 +11477,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_U_F(long groupId, long userId, long folderId) {
-		FinderPath finderPath = _finderPathCountByG_U_F;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {groupId, userId, folderId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_U_F;
+
+			finderArgs = new Object[] {groupId, userId, folderId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -11215,10 +11524,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -11247,12 +11560,21 @@ public class DLFileEntryPersistenceImpl
 			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
-		Object[] finderArgs = new Object[] {
-			groupId, userId, StringUtil.merge(folderIds)
-		};
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByG_U_F, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {
+				groupId, userId, StringUtil.merge(folderIds)
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathWithPaginationCountByG_U_F, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -11295,12 +11617,17 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationCountByG_U_F, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationCountByG_U_F, finderArgs,
+						count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByG_U_F, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationCountByG_U_F, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -11530,15 +11857,18 @@ public class DLFileEntryPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, folderId, name};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByG_F_N, finderArgs, this);
 		}
@@ -11596,7 +11926,7 @@ public class DLFileEntryPersistenceImpl
 				List<DLFileEntry> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByG_F_N, finderArgs, list);
 					}
@@ -11610,7 +11940,7 @@ public class DLFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByG_F_N, finderArgs);
 				}
@@ -11659,12 +11989,22 @@ public class DLFileEntryPersistenceImpl
 	public int countByG_F_N(long groupId, long folderId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByG_F_N;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {groupId, folderId, name};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_F_N;
+
+			finderArgs = new Object[] {groupId, folderId, name};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -11707,10 +12047,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -11809,15 +12153,18 @@ public class DLFileEntryPersistenceImpl
 
 		fileName = Objects.toString(fileName, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, folderId, fileName};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByG_F_FN, finderArgs, this);
 		}
@@ -11875,7 +12222,7 @@ public class DLFileEntryPersistenceImpl
 				List<DLFileEntry> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByG_F_FN, finderArgs, list);
 					}
@@ -11889,7 +12236,7 @@ public class DLFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByG_F_FN, finderArgs);
 				}
@@ -11939,12 +12286,22 @@ public class DLFileEntryPersistenceImpl
 	public int countByG_F_FN(long groupId, long folderId, String fileName) {
 		fileName = Objects.toString(fileName, "");
 
-		FinderPath finderPath = _finderPathCountByG_F_FN;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {groupId, folderId, fileName};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_F_FN;
+
+			finderArgs = new Object[] {groupId, folderId, fileName};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -11987,10 +12344,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -12086,15 +12447,18 @@ public class DLFileEntryPersistenceImpl
 
 		title = Objects.toString(title, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, folderId, title};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByG_F_T, finderArgs, this);
 		}
@@ -12152,7 +12516,7 @@ public class DLFileEntryPersistenceImpl
 				List<DLFileEntry> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByG_F_T, finderArgs, list);
 					}
@@ -12166,7 +12530,7 @@ public class DLFileEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByG_F_T, finderArgs);
 				}
@@ -12215,12 +12579,22 @@ public class DLFileEntryPersistenceImpl
 	public int countByG_F_T(long groupId, long folderId, String title) {
 		title = Objects.toString(title, "");
 
-		FinderPath finderPath = _finderPathCountByG_F_T;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {groupId, folderId, title};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_F_T;
+
+			finderArgs = new Object[] {groupId, folderId, title};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -12263,10 +12637,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -12381,18 +12759,21 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_F_F;
 				finderArgs = new Object[] {groupId, folderId, fileEntryTypeId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_F_F;
 			finderArgs = new Object[] {
 				groupId, folderId, fileEntryTypeId, start, end,
@@ -12402,7 +12783,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -12469,12 +12850,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -13417,18 +13798,21 @@ public class DLFileEntryPersistenceImpl
 				orderByComparator);
 		}
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					groupId, StringUtil.merge(folderIds), fileEntryTypeId
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				groupId, StringUtil.merge(folderIds), fileEntryTypeId, start,
 				end, orderByComparator
@@ -13437,7 +13821,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByG_F_F, finderArgs, this);
 
@@ -13510,13 +13894,13 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(
 						_finderPathWithPaginationFindByG_F_F, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathWithPaginationFindByG_F_F, finderArgs);
 				}
@@ -13561,12 +13945,22 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_F_F(long groupId, long folderId, long fileEntryTypeId) {
-		FinderPath finderPath = _finderPathCountByG_F_F;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {groupId, folderId, fileEntryTypeId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_F_F;
+
+			finderArgs = new Object[] {groupId, folderId, fileEntryTypeId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -13598,10 +13992,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -13632,12 +14030,21 @@ public class DLFileEntryPersistenceImpl
 			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
-		Object[] finderArgs = new Object[] {
-			groupId, StringUtil.merge(folderIds), fileEntryTypeId
-		};
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathWithPaginationCountByG_F_F, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(folderIds), fileEntryTypeId
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathWithPaginationCountByG_F_F, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
@@ -13682,12 +14089,17 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationCountByG_F_F, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationCountByG_F_F, finderArgs,
+						count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByG_F_F, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationCountByG_F_F, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -13950,20 +14362,23 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByS_L_C1_C2;
 				finderArgs = new Object[] {
 					smallImageId, largeImageId, custom1ImageId, custom2ImageId
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByS_L_C1_C2;
 			finderArgs = new Object[] {
 				smallImageId, largeImageId, custom1ImageId, custom2ImageId,
@@ -13973,7 +14388,7 @@ public class DLFileEntryPersistenceImpl
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -14045,12 +14460,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -14422,14 +14837,24 @@ public class DLFileEntryPersistenceImpl
 		long smallImageId, long largeImageId, long custom1ImageId,
 		long custom2ImageId) {
 
-		FinderPath finderPath = _finderPathCountByS_L_C1_C2;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
 
-		Object[] finderArgs = new Object[] {
-			smallImageId, largeImageId, custom1ImageId, custom2ImageId
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByS_L_C1_C2;
+
+			finderArgs = new Object[] {
+				smallImageId, largeImageId, custom1ImageId, custom2ImageId
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -14465,10 +14890,14 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -14514,6 +14943,12 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(DLFileEntry dlFileEntry) {
+		if (dlFileEntry.getCtCollectionId() != 0) {
+			dlFileEntry.resetOriginalValues();
+
+			return;
+		}
+
 		EntityCacheUtil.putResult(
 			DLFileEntryModelImpl.ENTITY_CACHE_ENABLED, DLFileEntryImpl.class,
 			dlFileEntry.getPrimaryKey(), dlFileEntry);
@@ -14558,6 +14993,12 @@ public class DLFileEntryPersistenceImpl
 	@Override
 	public void cacheResult(List<DLFileEntry> dlFileEntries) {
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			if (dlFileEntry.getCtCollectionId() != 0) {
+				dlFileEntry.resetOriginalValues();
+
+				continue;
+			}
+
 			if (EntityCacheUtil.getResult(
 					DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileEntryImpl.class, dlFileEntry.getPrimaryKey()) ==
@@ -14854,6 +15295,10 @@ public class DLFileEntryPersistenceImpl
 
 	@Override
 	protected DLFileEntry removeImpl(DLFileEntry dlFileEntry) {
+		if (!CTPersistenceHelperUtil.isRemove(dlFileEntry)) {
+			return dlFileEntry;
+		}
+
 		Session session = null;
 
 		try {
@@ -14940,7 +15385,16 @@ public class DLFileEntryPersistenceImpl
 		try {
 			session = openSession();
 
-			if (dlFileEntry.isNew()) {
+			if (CTPersistenceHelperUtil.isInsert(dlFileEntry)) {
+				if (!isNew) {
+					DLFileEntry oldDLFileEntry = (DLFileEntry)session.get(
+						DLFileEntryImpl.class, dlFileEntry.getPrimaryKeyObj());
+
+					if (oldDLFileEntry != null) {
+						session.evict(oldDLFileEntry);
+					}
+				}
+
 				session.save(dlFileEntry);
 
 				dlFileEntry.setNew(false);
@@ -14954,6 +15408,12 @@ public class DLFileEntryPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (dlFileEntry.getCtCollectionId() != 0) {
+			dlFileEntry.resetOriginalValues();
+
+			return dlFileEntry;
 		}
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -15557,12 +16017,119 @@ public class DLFileEntryPersistenceImpl
 	/**
 	 * Returns the document library file entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the document library file entry
+	 * @return the document library file entry, or <code>null</code> if a document library file entry with the primary key could not be found
+	 */
+	@Override
+	public DLFileEntry fetchByPrimaryKey(Serializable primaryKey) {
+		if (CTPersistenceHelperUtil.isProductionMode(DLFileEntry.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		DLFileEntry dlFileEntry = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			dlFileEntry = (DLFileEntry)session.get(
+				DLFileEntryImpl.class, primaryKey);
+
+			if (dlFileEntry != null) {
+				cacheResult(dlFileEntry);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return dlFileEntry;
+	}
+
+	/**
+	 * Returns the document library file entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param fileEntryId the primary key of the document library file entry
 	 * @return the document library file entry, or <code>null</code> if a document library file entry with the primary key could not be found
 	 */
 	@Override
 	public DLFileEntry fetchByPrimaryKey(long fileEntryId) {
 		return fetchByPrimaryKey((Serializable)fileEntryId);
+	}
+
+	@Override
+	public Map<Serializable, DLFileEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (CTPersistenceHelperUtil.isProductionMode(DLFileEntry.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, DLFileEntry> map =
+			new HashMap<Serializable, DLFileEntry>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			DLFileEntry dlFileEntry = fetchByPrimaryKey(primaryKey);
+
+			if (dlFileEntry != null) {
+				map.put(primaryKey, dlFileEntry);
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (DLFileEntry dlFileEntry : (List<DLFileEntry>)query.list()) {
+				map.put(dlFileEntry.getPrimaryKeyObj(), dlFileEntry);
+
+				cacheResult(dlFileEntry);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -15628,25 +16195,28 @@ public class DLFileEntryPersistenceImpl
 		int start, int end, OrderByComparator<DLFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<DLFileEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<DLFileEntry>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -15684,12 +16254,12 @@ public class DLFileEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -15721,8 +16291,15 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			DLFileEntry.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -15734,12 +16311,16 @@ public class DLFileEntryPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(exception);
 			}
@@ -15772,8 +16353,97 @@ public class DLFileEntryPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return DLFileEntryModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "DLFileEntry";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("groupId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("userId");
+		ctStrictColumnNames.add("userName");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("classNameId");
+		ctStrictColumnNames.add("classPK");
+		ctStrictColumnNames.add("repositoryId");
+		ctStrictColumnNames.add("folderId");
+		ctStrictColumnNames.add("treePath");
+		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("fileName");
+		ctStrictColumnNames.add("extension");
+		ctStrictColumnNames.add("mimeType");
+		ctStrictColumnNames.add("title");
+		ctStrictColumnNames.add("description");
+		ctStrictColumnNames.add("extraSettings");
+		ctStrictColumnNames.add("fileEntryTypeId");
+		ctMergeColumnNames.add("version");
+		ctStrictColumnNames.add("size_");
+		ctStrictColumnNames.add("smallImageId");
+		ctStrictColumnNames.add("largeImageId");
+		ctStrictColumnNames.add("custom1ImageId");
+		ctStrictColumnNames.add("custom2ImageId");
+		ctStrictColumnNames.add("manualCheckInRequired");
+		ctStrictColumnNames.add("lastPublishDate");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK, Collections.singleton("fileEntryId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "folderId", "name"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "folderId", "fileName"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "folderId", "title"});
 	}
 
 	/**

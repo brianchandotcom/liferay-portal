@@ -16,7 +16,9 @@ package com.liferay.asset.info.list.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderContext;
@@ -26,13 +28,16 @@ import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -46,6 +51,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Pavel Savinov
@@ -216,6 +223,75 @@ public class AssetInfoListProviderTest {
 			_CLASS_PK_ACCESSOR.get(assetEntries.get(1)));
 	}
 
+	@Test
+	public void testRelatedAssetsInfoListProvider() throws Exception {
+		InfoListProvider<AssetEntry> infoListProvider =
+			_infoListProviderTracker.getInfoListProvider(
+				_RELATED_ASSETS_INFO_LIST_PROVIDER_KEY);
+
+		JournalArticle article1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle article2 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalArticle article3 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(), article1.getResourcePrimKey());
+
+		AssetEntry assetEntry2 = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(), article2.getResourcePrimKey());
+
+		AssetEntry relatedAssetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(), article3.getResourcePrimKey());
+
+		_assetLinkLocalService.addLink(
+			TestPropsValues.getUserId(), assetEntry2.getEntryId(),
+			relatedAssetEntry.getEntryId(), AssetLinkConstants.TYPE_RELATED, 1);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		MockHttpServletRequest httpServletRequest =
+			new MockHttpServletRequest();
+
+		httpServletRequest.setAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY, assetEntry1);
+
+		serviceContext.setRequest(httpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		List<AssetEntry> assetEntries = infoListProvider.getInfoList(
+			_infoListProviderContext);
+
+		int assetEntriesCount = infoListProvider.getInfoListCount(
+			_infoListProviderContext);
+
+		Assert.assertEquals(0, assetEntriesCount);
+
+		Assert.assertTrue(ListUtil.isEmpty(assetEntries));
+
+		httpServletRequest.setAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY, assetEntry2);
+
+		assetEntriesCount = infoListProvider.getInfoListCount(
+			_infoListProviderContext);
+
+		Assert.assertEquals(1, assetEntriesCount);
+
+		assetEntries = infoListProvider.getInfoList(_infoListProviderContext);
+
+		Assert.assertEquals(
+			Long.valueOf(article3.getResourcePrimKey()),
+			_CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
+	}
+
 	private static final Accessor<AssetEntry, Long> _CLASS_PK_ACCESSOR =
 		new Accessor<AssetEntry, Long>() {
 
@@ -248,8 +324,15 @@ public class AssetInfoListProviderTest {
 		"com.liferay.asset.internal.info.list.provider." +
 			"RecentContentInfoListProvider";
 
+	private static final String _RELATED_ASSETS_INFO_LIST_PROVIDER_KEY =
+		"com.liferay.asset.internal.info.list.provider." +
+			"RelatedAssetsInfoListProvider";
+
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetLinkLocalService _assetLinkLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

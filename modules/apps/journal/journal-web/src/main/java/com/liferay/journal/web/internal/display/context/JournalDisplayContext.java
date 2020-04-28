@@ -518,6 +518,9 @@ public class JournalDisplayContext {
 			_displayStyle = displayViews[0];
 		}
 
+		portalPreferences.setValue(
+			JournalPortletKeys.JOURNAL, "display-style", _displayStyle);
+
 		return _displayStyle;
 	}
 

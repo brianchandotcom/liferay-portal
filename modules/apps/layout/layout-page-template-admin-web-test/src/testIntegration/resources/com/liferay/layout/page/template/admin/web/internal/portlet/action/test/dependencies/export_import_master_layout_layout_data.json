@@ -1,7 +1,8 @@
 {
 	"items": {
 		"DROP-ZONE-UUID": {
-			"children": [],
+			"children": [
+			],
 			"config": {
 				"allowNewFragmentEntries": true,
 				"fragmentEntryKeys": [
@@ -21,7 +22,8 @@
 			"children": [
 				"DROP-ZONE-UUID"
 			],
-			"config": {},
+			"config": {
+			},
 			"itemId": "MAIN-UUID",
 			"parentId": "",
 			"type": "root"

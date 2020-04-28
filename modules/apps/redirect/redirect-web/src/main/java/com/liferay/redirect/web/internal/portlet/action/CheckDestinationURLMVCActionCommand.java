@@ -55,15 +55,13 @@ public class CheckDestinationURLMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String completeSourceURL =
-			RedirectUtil.getGroupBaseURL(themeDisplay) +
-				StringPool.FORWARD_SLASH + sourceURL;
-
 		JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
 
 		if (_redirectEntryLocalService.
 				checkRedirectEntriesByGroupAndDestinationURL(
-					themeDisplay.getScopeGroupId(), completeSourceURL)) {
+					themeDisplay.getScopeGroupId(),
+					RedirectUtil.getGroupBaseURL(themeDisplay) +
+						StringPool.FORWARD_SLASH + sourceURL)) {
 
 			jsonObject = JSONUtil.put("success", Boolean.FALSE);
 		}

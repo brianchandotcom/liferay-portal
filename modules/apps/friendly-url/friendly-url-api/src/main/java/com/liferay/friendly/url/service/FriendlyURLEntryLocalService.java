@@ -134,12 +134,10 @@ public interface FriendlyURLEntryLocalService
 		throws PortalException;
 
 	public void deleteFriendlyURLEntry(
-			long groupId, Class<?> clazz, long classPK)
-		throws PortalException;
+		long groupId, Class<?> clazz, long classPK);
 
 	public void deleteFriendlyURLEntry(
-			long groupId, long classNameId, long classPK)
-		throws PortalException;
+		long groupId, long classNameId, long classPK);
 
 	public void deleteGroupFriendlyURLEntries(long groupId, long classNameId);
 

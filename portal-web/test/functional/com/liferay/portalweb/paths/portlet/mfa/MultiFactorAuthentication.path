@@ -35,6 +35,16 @@
 	<td>//button[contains(@id,'sendEmailButton')]//span[contains(.,'Send')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EMAIL_OTP_VERIFY_FIELD</td>
+	<td>//div[label[contains(.,'Please enter the one-time password from the email')]]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_OTP_VERIFY_SUCCESS_MESSAGE</td>
+	<td>//span[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -28,6 +28,52 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro sendOTPEmailPG {
+		AssertTextEquals(
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_INFO_MESSAGE",
+			value1 = "Your one-time password will be sent to your email address.");
+
+		AssertClick(
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_SEND_EMAIL_BUTTON",
+			value1 = "Send");
+
+		AssertTextEquals(
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_SUCCESS_MESSAGE",
+			value1 = "Your one-time password has been sent by email.");
+	}
+
+	macro verifyOTP {
+		var bodySpecificText = MockMock.getBodySpecificText(
+			asset = "${portalURL}: Your One-Time Password",
+			content = "Your one-time password is:",
+			enableOTP = "true",
+			recipient = "${recipient}",
+			sender = "Joe Bloggs",
+			specificText = "Your one-time password is: <pre>",
+			subject = "${portalURL}: Your One-Time Password");
+
+		if (isSet(specificURL)) {
+			Navigator.openSpecificURL(url = "${specificURL}");
+		}
+		else {
+			Navigator.openURL();
+		}
+
+		SignIn._signIn(
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
+
+		Type(
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD",
+			value1 = "${bodySpecificText}");
+
+		Button.click(button = "Submit");
+
+		AssertElementNotPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD");
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+	}
+
 	macro viewOTPEmailSenderCP {
 		AssertTextEquals(
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_ADDRESS_FIELD",

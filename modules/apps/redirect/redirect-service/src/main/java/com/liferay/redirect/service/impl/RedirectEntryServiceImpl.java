@@ -128,11 +128,11 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 			long groupId, String destinationURL, String sourceURL)
 		throws PortalException {
 
-		List<RedirectEntry> redirectEntriesDestinationURL =
+		List<RedirectEntry> redirectEntries =
 			redirectEntryLocalService.
 				getRedirectEntriesByGroupAndDestinationURL(groupId, sourceURL);
 
-		for (RedirectEntry redirectEntry : redirectEntriesDestinationURL) {
+		for (RedirectEntry redirectEntry : redirectEntries) {
 			updateRedirectEntry(
 				redirectEntry.getRedirectEntryId(), destinationURL,
 				redirectEntry.getExpirationDate(), redirectEntry.isPermanent(),

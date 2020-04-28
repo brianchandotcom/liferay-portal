@@ -97,7 +97,7 @@ public class RedirectEntryServiceTest {
 			_group.getGroupId(), "intermediateDestinationURL", null, false,
 			"sourceURL", ServiceContextTestUtil.getServiceContext());
 
-		_redirectEntryDestination = _redirectEntryService.addRedirectEntry(
+		_destinationRedirectEntry = _redirectEntryService.addRedirectEntry(
 			_group.getGroupId(), "finalDestinationURL", null, false,
 			"intermediateDestinationURL",
 			ServiceContextTestUtil.getServiceContext());
@@ -135,19 +135,19 @@ public class RedirectEntryServiceTest {
 				Assert.assertEquals(
 					"finalDestinationURL", _redirectEntry.getDestinationURL());
 
-				_redirectEntryDestination =
+				_destinationRedirectEntry =
 					_redirectEntryService.fetchRedirectEntry(
-						_redirectEntryDestination.getRedirectEntryId());
+						_destinationRedirectEntry.getRedirectEntryId());
 
-				Assert.assertNotNull(_redirectEntryDestination);
+				Assert.assertNotNull(_destinationRedirectEntry);
 
 				Assert.assertEquals(
 					"intermediateDestinationURL",
-					_redirectEntryDestination.getSourceURL());
+					_destinationRedirectEntry.getSourceURL());
 
 				Assert.assertEquals(
 					"finalDestinationURL",
-					_redirectEntryDestination.getDestinationURL());
+					_destinationRedirectEntry.getDestinationURL());
 			});
 	}
 
@@ -159,7 +159,7 @@ public class RedirectEntryServiceTest {
 			_group.getGroupId(), "intermediateDestinationURL", null, false,
 			"sourceURL", ServiceContextTestUtil.getServiceContext());
 
-		_redirectEntryDestination = _redirectEntryService.addRedirectEntry(
+		_destinationRedirectEntry = _redirectEntryService.addRedirectEntry(
 			_group.getGroupId(), "finalDestinationURL", null, false,
 			"intermediateDestinationURL",
 			ServiceContextTestUtil.getServiceContext());
@@ -357,13 +357,13 @@ public class RedirectEntryServiceTest {
 	}
 
 	@DeleteAfterTestRun
+	private RedirectEntry _destinationRedirectEntry;
+
+	@DeleteAfterTestRun
 	private Group _group;
 
 	@DeleteAfterTestRun
 	private RedirectEntry _redirectEntry;
-
-	@DeleteAfterTestRun
-	private RedirectEntry _redirectEntryDestination;
 
 	@Inject
 	private RedirectEntryService _redirectEntryService;

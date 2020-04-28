@@ -80,7 +80,16 @@ public class LinkEditableElementParser implements EditableElementParser {
 
 		Element replaceableElement = elements.get(0);
 
-		return replaceableElement.html();
+		String html = replaceableElement.html();
+
+		if (Validator.isNull(html.trim())) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
+			return LanguageUtil.get(resourceBundle, "example-link");
+		}
+
+		return html;
 	}
 
 	@Override

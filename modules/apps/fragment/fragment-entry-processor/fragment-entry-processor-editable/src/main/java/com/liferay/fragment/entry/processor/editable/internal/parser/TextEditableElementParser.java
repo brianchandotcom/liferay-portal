@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -47,7 +48,16 @@ public class TextEditableElementParser implements EditableElementParser {
 
 	@Override
 	public String getValue(Element element) {
-		return element.html();
+		String html = element.html();
+
+		if (Validator.isNull(html.trim())) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
+			return LanguageUtil.get(resourceBundle, "example-text");
+		}
+
+		return html;
 	}
 
 	@Override

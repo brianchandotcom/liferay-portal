@@ -89,86 +89,6 @@ public class RedirectEntryServiceTest {
 			});
 	}
 
-	@Test
-	public void testCreateRedirectEntriesWithUpdateReferences()
-		throws Exception {
-
-		_redirectEntry = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), "intermediateDestinationURL", null, false,
-			"sourceURL", ServiceContextTestUtil.getServiceContext());
-
-		_destinationRedirectEntry = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), "finalDestinationURL", null, false,
-			"intermediateDestinationURL",
-			ServiceContextTestUtil.getServiceContext());
-
-		RedirectTestUtil.withRegularUser(
-			(user, role) -> {
-				RoleTestUtil.addResourcePermission(
-					role, RedirectEntry.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(TestPropsValues.getCompanyId()),
-					ActionKeys.VIEW);
-
-				RoleTestUtil.addResourcePermission(
-					role, RedirectEntry.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(TestPropsValues.getCompanyId()),
-					ActionKeys.UPDATE);
-
-				_redirectEntryService.updateChainedRedirectEntries(
-					_group.getGroupId(), "finalDestinationURL",
-					"intermediateDestinationURL");
-
-				_redirectEntry = _redirectEntryService.fetchRedirectEntry(
-					_redirectEntry.getRedirectEntryId());
-
-				Assert.assertEquals("sourceURL", _redirectEntry.getSourceURL());
-
-				Assert.assertEquals(
-					"finalDestinationURL", _redirectEntry.getDestinationURL());
-
-				_destinationRedirectEntry =
-					_redirectEntryService.fetchRedirectEntry(
-						_destinationRedirectEntry.getRedirectEntryId());
-
-				Assert.assertEquals(
-					"intermediateDestinationURL",
-					_destinationRedirectEntry.getSourceURL());
-
-				Assert.assertEquals(
-					"finalDestinationURL",
-					_destinationRedirectEntry.getDestinationURL());
-			});
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testCreateRedirectEntriesWithUpdateReferencesNoUpdatePermission()
-		throws Exception {
-
-		_redirectEntry = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), "intermediateDestinationURL", null, false,
-			"sourceURL", ServiceContextTestUtil.getServiceContext());
-
-		_destinationRedirectEntry = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), "finalDestinationURL", null, false,
-			"intermediateDestinationURL",
-			ServiceContextTestUtil.getServiceContext());
-
-		RedirectTestUtil.withRegularUser(
-			(user, role) -> {
-				RoleTestUtil.addResourcePermission(
-					role, RedirectEntry.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(TestPropsValues.getCompanyId()),
-					ActionKeys.VIEW);
-
-				_redirectEntryService.updateChainedRedirectEntries(
-					_group.getGroupId(), "finalDestinationURL",
-					"intermediateDestinationURL");
-			});
-	}
-
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testDeleteRedirectEntryWithoutPermissions() throws Exception {
 		_redirectEntry = _redirectEntryService.addRedirectEntry(
@@ -300,6 +220,86 @@ public class RedirectEntryServiceTest {
 
 				Assert.assertEquals(
 					redirectEntries.toString(), 1, redirectEntries.size());
+			});
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testUpdateChainedRedirectEntriesWithoutPermissions()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryService.addRedirectEntry(
+			_group.getGroupId(), "intermediateDestinationURL", null, false,
+			"sourceURL", ServiceContextTestUtil.getServiceContext());
+
+		_destinationRedirectEntry = _redirectEntryService.addRedirectEntry(
+			_group.getGroupId(), "finalDestinationURL", null, false,
+			"intermediateDestinationURL",
+			ServiceContextTestUtil.getServiceContext());
+
+		RedirectTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role, RedirectEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.VIEW);
+
+				_redirectEntryService.updateChainedRedirectEntries(
+					_group.getGroupId(), "finalDestinationURL",
+					"intermediateDestinationURL");
+			});
+	}
+
+	@Test
+	public void testUpdateChainedRedirectEntriesWithPermissions()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryService.addRedirectEntry(
+			_group.getGroupId(), "intermediateDestinationURL", null, false,
+			"sourceURL", ServiceContextTestUtil.getServiceContext());
+
+		_destinationRedirectEntry = _redirectEntryService.addRedirectEntry(
+			_group.getGroupId(), "finalDestinationURL", null, false,
+			"intermediateDestinationURL",
+			ServiceContextTestUtil.getServiceContext());
+
+		RedirectTestUtil.withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role, RedirectEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.VIEW);
+
+				RoleTestUtil.addResourcePermission(
+					role, RedirectEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.UPDATE);
+
+				_redirectEntryService.updateChainedRedirectEntries(
+					_group.getGroupId(), "finalDestinationURL",
+					"intermediateDestinationURL");
+
+				_redirectEntry = _redirectEntryService.fetchRedirectEntry(
+					_redirectEntry.getRedirectEntryId());
+
+				Assert.assertEquals("sourceURL", _redirectEntry.getSourceURL());
+
+				Assert.assertEquals(
+					"finalDestinationURL", _redirectEntry.getDestinationURL());
+
+				_destinationRedirectEntry =
+					_redirectEntryService.fetchRedirectEntry(
+						_destinationRedirectEntry.getRedirectEntryId());
+
+				Assert.assertEquals(
+					"intermediateDestinationURL",
+					_destinationRedirectEntry.getSourceURL());
+
+				Assert.assertEquals(
+					"finalDestinationURL",
+					_destinationRedirectEntry.getDestinationURL());
 			});
 	}
 

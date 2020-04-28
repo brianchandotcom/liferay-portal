@@ -191,7 +191,8 @@ public class ViewRolesManagementToolbarDisplayContext {
 
 		RoleSearch roleSearch = new RoleSearch(_renderRequest, getPortletURL());
 
-		roleSearch.setRowChecker(new RoleChecker(_renderResponse));
+		roleSearch.setRowChecker(
+			new RoleChecker(_renderRequest, _renderResponse));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(

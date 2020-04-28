@@ -159,6 +159,20 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 		}
 	}
 
+	@Test
+	public void testGetFileNameMultipleDisplayPageTemplates() {
+		long[] layoutPageTemplateEntryIds = {
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
+		};
+
+		String fileName = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getFileName", new Class<?>[] {long[].class},
+			layoutPageTemplateEntryIds);
+
+		Assert.assertTrue(fileName.startsWith("display-page-templates-"));
+		Assert.assertTrue(fileName.endsWith(".zip"));
+	}
+
 	private boolean _isDisplayPageFile(String path) {
 		String[] pathParts = StringUtil.split(path, CharPool.SLASH);
 

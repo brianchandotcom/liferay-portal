@@ -36,6 +36,8 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
 
+		Upgrade.viewWelcomePage();
+
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
@@ -44,6 +46,8 @@ definition {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.6";
+
+		Upgrade.viewWelcomePage();
 
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}

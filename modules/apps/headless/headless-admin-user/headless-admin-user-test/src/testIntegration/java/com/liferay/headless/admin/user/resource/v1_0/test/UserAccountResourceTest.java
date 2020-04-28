@@ -319,43 +319,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return new String[] {"emailAddress"};
 	}
 
-	protected EmailAddress randomEmailAddress() throws Exception {
-		return new EmailAddress() {
-			{
-				setEmailAddress(RandomTestUtil.randomString() + "@liferay.com");
-				setPrimary(true);
-				setType("email-address");
-			}
-		};
-	}
-
-	protected Phone randomPhone() throws Exception {
-		return new Phone() {
-			{
-				setExtension(String.valueOf(RandomTestUtil.randomInt()));
-				setPhoneNumber(String.valueOf(RandomTestUtil.randomInt()));
-				setPhoneType("personal");
-				setPrimary(true);
-			}
-		};
-	}
-
-	protected PostalAddress randomPostalAddress() throws Exception {
-		return new PostalAddress() {
-			{
-				setAddressCountry("united-states");
-				setAddressLocality("Diamond Bar");
-				setAddressRegion("California");
-				setAddressType("personal");
-				setPostalCode("91765");
-				setPrimary(true);
-				setStreetAddressLine1(RandomTestUtil.randomString());
-				setStreetAddressLine2(RandomTestUtil.randomString());
-				setStreetAddressLine3(RandomTestUtil.randomString());
-			}
-		};
-	}
-
 	@Override
 	protected UserAccount randomUserAccount() throws Exception {
 		UserAccount userAccount = super.randomUserAccount();
@@ -373,38 +336,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				return calendar.getTime();
 			});
 		userAccount.setUserAccountContactInformation(
-			randomUserAccountContactInformation());
+			_randomUserAccountContactInformation());
 
 		return userAccount;
-	}
-
-	protected UserAccountContactInformation
-			randomUserAccountContactInformation()
-		throws Exception {
-
-		return new UserAccountContactInformation() {
-			{
-				setEmailAddresses(new EmailAddress[] {randomEmailAddress()});
-				setFacebook(RandomTestUtil.randomString());
-				setJabber(RandomTestUtil.randomString());
-				setPostalAddresses(new PostalAddress[] {randomPostalAddress()});
-				setSkype(RandomTestUtil.randomString());
-				setSms(RandomTestUtil.randomString());
-				setTelephones(new Phone[] {randomPhone()});
-				setTwitter(RandomTestUtil.randomString());
-				setWebUrls(new WebUrl[] {randomWebUrl()});
-			}
-		};
-	}
-
-	protected WebUrl randomWebUrl() throws Exception {
-		return new WebUrl() {
-			{
-				setPrimary(true);
-				setUrl("https://" + RandomTestUtil.randomString() + ".com");
-				setUrlType("personal");
-			}
-		};
 	}
 
 	@Override
@@ -535,6 +469,72 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				Assert.fail(exception.getMessage());
 			}
 		}
+	}
+
+	private EmailAddress _randomEmailAddress() throws Exception {
+		return new EmailAddress() {
+			{
+				setEmailAddress(RandomTestUtil.randomString() + "@liferay.com");
+				setPrimary(true);
+				setType("email-address");
+			}
+		};
+	}
+
+	private Phone _randomPhone() throws Exception {
+		return new Phone() {
+			{
+				setExtension(String.valueOf(RandomTestUtil.randomInt()));
+				setPhoneNumber(String.valueOf(RandomTestUtil.randomInt()));
+				setPhoneType("personal");
+				setPrimary(true);
+			}
+		};
+	}
+
+	private PostalAddress _randomPostalAddress() throws Exception {
+		return new PostalAddress() {
+			{
+				setAddressCountry("united-states");
+				setAddressLocality("Diamond Bar");
+				setAddressRegion("California");
+				setAddressType("personal");
+				setPostalCode("91765");
+				setPrimary(true);
+				setStreetAddressLine1(RandomTestUtil.randomString());
+				setStreetAddressLine2(RandomTestUtil.randomString());
+				setStreetAddressLine3(RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	private UserAccountContactInformation _randomUserAccountContactInformation()
+		throws Exception {
+
+		return new UserAccountContactInformation() {
+			{
+				setEmailAddresses(new EmailAddress[] {_randomEmailAddress()});
+				setFacebook(RandomTestUtil.randomString());
+				setJabber(RandomTestUtil.randomString());
+				setPostalAddresses(
+					new PostalAddress[] {_randomPostalAddress()});
+				setSkype(RandomTestUtil.randomString());
+				setSms(RandomTestUtil.randomString());
+				setTelephones(new Phone[] {_randomPhone()});
+				setTwitter(RandomTestUtil.randomString());
+				setWebUrls(new WebUrl[] {_randomWebUrl()});
+			}
+		};
+	}
+
+	private WebUrl _randomWebUrl() throws Exception {
+		return new WebUrl() {
+			{
+				setPrimary(true);
+				setUrl("https://" + RandomTestUtil.randomString() + ".com");
+				setUrlType("personal");
+			}
+		};
 	}
 
 	@DeleteAfterTestRun

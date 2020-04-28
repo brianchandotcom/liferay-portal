@@ -23,39 +23,44 @@ import org.gradle.api.plugins.BasePluginConvention;
  */
 public class OSGiUtil {
 
-    public static String getBundleSymbolicName(Project project) {
-        BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-            project, BasePluginConvention.class);
+	public static String getBundleSymbolicName(Project project) {
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
 
-        String archivesBaseName = basePluginConvention.getArchivesBaseName();
+		String archivesBaseName = basePluginConvention.getArchivesBaseName();
 
-        Object group = project.getGroup();
+		Object group = project.getGroup();
 
-        String groupId = group.toString();
+		String groupId = group.toString();
 
-        if (archivesBaseName.startsWith(groupId)) {
-            return archivesBaseName;
-        }
-        String lastSection = groupId.substring(groupId.lastIndexOf('.') + 1);
-        if (archivesBaseName.equals(lastSection)) {
-            return groupId;
-        }
-        if (archivesBaseName.startsWith(lastSection)) {
-            String artifactId = archivesBaseName.substring(
-                lastSection.length());
-            if (Character.isLetterOrDigit(artifactId.charAt(0))) {
-                return _getBundleSymbolicName(groupId, artifactId);
-            } else {
-                return _getBundleSymbolicName(groupId, artifactId.substring(1));
-            }
-        }
-        return _getBundleSymbolicName(groupId, archivesBaseName);
-    }
+		if (archivesBaseName.startsWith(groupId)) {
+			return archivesBaseName;
+		}
 
-    private static String _getBundleSymbolicName(
-        String groupId, String artifactId) {
+		String lastSection = groupId.substring(groupId.lastIndexOf('.') + 1);
 
-        return groupId + "." + artifactId;
-    }
+		if (archivesBaseName.equals(lastSection)) {
+			return groupId;
+		}
+
+		if (archivesBaseName.startsWith(lastSection)) {
+			String artifactId = archivesBaseName.substring(
+				lastSection.length());
+
+			if (Character.isLetterOrDigit(artifactId.charAt(0))) {
+				return _getBundleSymbolicName(groupId, artifactId);
+			}
+
+			return _getBundleSymbolicName(groupId, artifactId.substring(1));
+		}
+
+		return _getBundleSymbolicName(groupId, archivesBaseName);
+	}
+
+	private static String _getBundleSymbolicName(
+		String groupId, String artifactId) {
+
+		return groupId + "." + artifactId;
+	}
 
 }

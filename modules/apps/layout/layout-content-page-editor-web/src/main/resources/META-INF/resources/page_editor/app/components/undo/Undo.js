@@ -13,10 +13,27 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {useEventListener} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {Z_KEYCODE} from '../../config/constants/keycodes';
+
 export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
+	useEventListener(
+		'keydown',
+		(event) => {
+			if (
+				event.keyCode === Z_KEYCODE &&
+				(event.ctrlKey || event.metaKey)
+			) {
+				onUndo();
+			}
+		},
+		false,
+		window
+	);
+
 	return (
 		<ClayButton.Group className="d-block d-none mr-3">
 			<ClayButtonWithIcon

@@ -15,3 +15,5 @@
 export const ARROW_DOWN_KEYCODE = 40;
 
 export const ARROW_UP_KEYCODE = 38;
+
+export const Z_KEYCODE = 90;

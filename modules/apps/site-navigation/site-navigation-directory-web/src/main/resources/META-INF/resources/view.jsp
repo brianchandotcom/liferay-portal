@@ -43,18 +43,16 @@
 								>
 									<c:choose>
 										<c:when test='<%= Objects.equals(sitesDirectoryDisplayContext.getDisplayStyle(), "icon") %>'>
-											<liferay-ui:app-view-entry
-												assetCategoryClassName="<%= Group.class.getName() %>"
-												assetCategoryClassPK="<%= childGroup.getGroupId() %>"
-												assetTagClassName="<%= Group.class.getName() %>"
-												assetTagClassPK="<%= childGroup.getGroupId() %>"
-												description="<%= childGroup.getDescription(locale) %>"
-												displayStyle="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>"
-												showCheckbox="<%= false %>"
-												thumbnailSrc="<%= childGroup.getLogoURL(themeDisplay, true) %>"
-												title="<%= childGroup.getDescriptiveName(locale) %>"
-												url="<%= (childGroup.getGroupId() != scopeGroupId) ? childGroup.getDisplayURL(themeDisplay) : null %>"
-											/>
+
+											<%
+											row.setCssClass("entry-card lfr-asset-item");
+											%>
+
+											<liferay-ui:search-container-column-text>
+												<clay:vertical-card
+													verticalCard="<%= new GroupVerticalCard(childGroup, renderRequest) %>"
+												/>
+											</liferay-ui:search-container-column-text>
 										</c:when>
 										<c:otherwise>
 											<liferay-ui:search-container-column-image

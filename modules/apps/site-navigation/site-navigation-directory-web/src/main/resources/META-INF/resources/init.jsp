@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -38,6 +39,7 @@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.comparator.GroupNameComparator" %><%@
 page import="com.liferay.site.navigation.directory.web.internal.display.context.SitesDirectoryDisplayContext" %><%@
+page import="com.liferay.site.navigation.directory.web.internal.servlet.taglib.clay.GroupVerticalCard" %><%@
 page import="com.liferay.taglib.ui.SitesDirectoryTag" %>
 
 <%@ page import="java.util.List" %><%@

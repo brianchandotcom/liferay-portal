@@ -21,7 +21,11 @@ public class OsgiHelper {
 
     public String getBundleSymbolicName(Project project) {
         String group = project.getGroup().toString();
-        String archiveBaseName = project.getConvention().getPlugin(BasePluginConvention.class).getArchivesBaseName();
+
+        BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+            project, BasePluginConvention.class);
+
+        String archiveBaseName = basePluginConvention.getArchivesBaseName();
         if (archiveBaseName.startsWith(group)) {
             return archiveBaseName;
         }

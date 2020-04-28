@@ -63,11 +63,7 @@ public class DataRuleSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < dataRule.getActions().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(dataRule.getActions()[i]));
-
-				sb.append("\"");
+				sb.append(dataRule.getActions()[i]);
 
 				if ((i + 1) < dataRule.getActions().length) {
 					sb.append(", ");
@@ -87,11 +83,7 @@ public class DataRuleSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < dataRule.getConditions().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(dataRule.getConditions()[i]));
-
-				sb.append("\"");
+				sb.append(dataRule.getConditions()[i]);
 
 				if ((i + 1) < dataRule.getConditions().length) {
 					sb.append(", ");
@@ -195,12 +187,12 @@ public class DataRuleSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
-					dataRule.setActions((Object[])jsonParserFieldValue);
+					dataRule.setActions((Map[])jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "conditions")) {
 				if (jsonParserFieldValue != null) {
-					dataRule.setConditions((Object[])jsonParserFieldValue);
+					dataRule.setConditions((Map[])jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "logicalOperator")) {

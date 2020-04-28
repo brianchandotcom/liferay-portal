@@ -9,16 +9,6 @@
 
 	position: relative;
 
-	&__border:before {
-		box-shadow: inset 0 0 0 1px $primary-l2;
-		content: '';
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
-
 	&:before {
 		box-shadow: inset 0 0 0 $borderWidth fade_out($primary-l2, 1);
 		content: '';
@@ -73,10 +63,6 @@
 		&--mapped {
 			background-color: $purple;
 			box-shadow: 0 0 0 $borderWidth $purple;
-
-			+ .page-editor__topper__border:before {
-				box-shadow: inset 0 0 0 1px fade_out($purple, 0.7);
-			}
 		}
 	}
 
@@ -185,6 +171,11 @@
 	}
 
 	&--mapped {
+		&:before {
+			box-shadow: inset 0 0 0 1px #dfc9ff;
+			z-index: 1;
+		}
+
 		&.hovered:before {
 			box-shadow: inset 0 0 0 $borderWidth fade_out($purple, 0.5);
 		}

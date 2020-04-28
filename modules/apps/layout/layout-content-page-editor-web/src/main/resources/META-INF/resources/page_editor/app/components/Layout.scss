@@ -68,11 +68,6 @@
 		box-shadow: inset 0 0 0 1px $primary-l2;
 	}
 
-	&__col &__row:after,
-	&__container &__row:after {
-		box-shadow: none;
-	}
-
 	&__col,
 	&__container > .container,
 	&__container > .container-fluid,

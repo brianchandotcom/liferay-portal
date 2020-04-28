@@ -320,14 +320,7 @@ function Topper({children, item, itemRef, layoutData}) {
 					)}
 				</ul>
 			</div>
-			<div
-				className={classNames('page-editor__topper__content', {
-					'page-editor__topper__border':
-						item.type === LAYOUT_DATA_ITEM_TYPES.row ||
-						item.type === LAYOUT_DATA_ITEM_TYPES.collection,
-				})}
-				ref={drop}
-			>
+			<div className="page-editor__topper__content" ref={drop}>
 				{dataAdvice
 					? React.cloneElement(children, {
 							data: {'data-advice': dataAdvice},

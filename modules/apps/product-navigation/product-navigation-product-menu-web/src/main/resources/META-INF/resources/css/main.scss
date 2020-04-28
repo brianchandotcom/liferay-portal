@@ -102,6 +102,14 @@ $product-menu-pages-administration-link-height: 72px;
 			margin-left: 6px;
 			padding-left: 14px;
 
+			.dropdown-item {
+				color: $gray-600;
+
+				&:hover {
+					color: $dark;
+				}
+			}
+
 			.tree-node .tree-node-content {
 				align-items: center;
 				display: flex;

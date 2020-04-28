@@ -59,24 +59,24 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					<ul class="dropdown-menu dropdown-menu-left" role="menu">
 						<c:if test="<%= (stagingGroup == null) || Objects.equals(scopeGroupId, stagingGroupId) %>">
 							<li>
-								<button class="autofit-row dropdown-item layout-action" data-action="addChildPage" data-plid="{plid}">
+								<a class="autofit-row dropdown-item layout-action" href="<%= layoutsTreeDisplayContext.getAddChildURLTemplate() %>">
 									<span class="autofit-col autofit-col-expand">
 										<span class="autofit-section text-left">
 											<liferay-ui:message key="add-child-page" />
 										</span>
 									</span>
-								</button>
+								</a>
 							</li>
 						</c:if>
 
 						<li>
-							<button class="autofit-row dropdown-item layout-action" data-action="configure" data-plid="{plid}">
+							<a class="autofit-row dropdown-item layout-action" href="<%= layoutsTreeDisplayContext.getConfigureLayoutURLTemplate() %>">
 								<span class="autofit-col autofit-col-expand">
 									<span class="autofit-section text-left">
 										<liferay-ui:message key="configure" />
 									</span>
 								</span>
-							</button>
+							</a>
 						</li>
 					</ul>
 				</span>
@@ -105,7 +105,6 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 <liferay-frontend:component
 	componentId="<%= ProductNavigationProductMenuWebKeys.PAGES_TREE_EVENT_HANDLER %>"
-	context="<%= layoutsTreeDisplayContext.getEventHandlerContext() %>"
 	module="js/PagesTreeEventHandler.es"
 />
 

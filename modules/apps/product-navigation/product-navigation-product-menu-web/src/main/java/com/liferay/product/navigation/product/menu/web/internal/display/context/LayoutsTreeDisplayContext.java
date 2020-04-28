@@ -17,6 +17,7 @@ package com.liferay.product.navigation.product.menu.web.internal.display.context
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -51,6 +52,13 @@ public class LayoutsTreeDisplayContext {
 			ApplicationListWebKeys.GROUP_PROVIDER);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getAddChildURLTemplate() throws Exception {
+		return StringBundler.concat(
+			getAddLayoutURL(), "&",
+			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES),
+			"selPlid={plid}");
 	}
 
 	public String getAddLayoutURL() throws Exception {
@@ -132,15 +140,11 @@ public class LayoutsTreeDisplayContext {
 		return configureLayoutSetURL.toString();
 	}
 
-	public Map<String, Object> getEventHandlerContext() throws Exception {
-		return HashMapBuilder.<String, Object>put(
-			"addLayoutURL", getAddLayoutURL()
-		).put(
-			"configureLayoutURL", getConfigureLayoutURL()
-		).put(
-			"portletNamescape",
-			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES)
-		).build();
+	public String getConfigureLayoutURLTemplate() throws Exception {
+		return StringBundler.concat(
+			getConfigureLayoutURL(), "&",
+			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES),
+			"selPlid={plid}");
 	}
 
 	public long getGroupId() {

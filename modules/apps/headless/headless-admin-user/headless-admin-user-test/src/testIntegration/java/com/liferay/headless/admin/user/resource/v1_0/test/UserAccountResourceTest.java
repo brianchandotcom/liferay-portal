@@ -23,21 +23,22 @@ import com.liferay.headless.admin.user.client.dto.v1_0.UserAccountContactInforma
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
+import com.liferay.headless.admin.user.client.serdes.v1_0.EmailAddressSerDes;
+import com.liferay.headless.admin.user.client.serdes.v1_0.PhoneSerDes;
+import com.liferay.headless.admin.user.client.serdes.v1_0.PostalAddressSerDes;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
+import com.liferay.headless.admin.user.client.serdes.v1_0.WebUrlSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -45,9 +46,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 
@@ -56,6 +55,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -281,16 +281,17 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		try {
 			_assertUserAccountContactInformation(
 				userAccountContactInformation1, userAccountContactInformation2,
-				"emailAddresses", "emailAddress");
+				"emailAddresses", "emailAddress", EmailAddressSerDes::toDTO);
 			_assertUserAccountContactInformation(
 				userAccountContactInformation1, userAccountContactInformation2,
-				"postalAddresses", "streetAddressLine1");
+				"postalAddresses", "streetAddressLine1",
+				PostalAddressSerDes::toDTO);
 			_assertUserAccountContactInformation(
 				userAccountContactInformation1, userAccountContactInformation2,
-				"telephones", "phoneNumber");
+				"telephones", "phoneNumber", PhoneSerDes::toDTO);
 			_assertUserAccountContactInformation(
 				userAccountContactInformation1, userAccountContactInformation2,
-				"webUrls", "url");
+				"webUrls", "url", WebUrlSerDes::toDTO);
 		}
 		catch (Exception exception) {
 			Assert.fail(exception.getMessage());
@@ -429,21 +430,23 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private void _assertUserAccountContactInformation(
 			UserAccountContactInformation userAccountContactInformation1,
 			UserAccountContactInformation userAccountContactInformation2,
-			String fieldName, String subfieldName)
+			String fieldName, String subfieldName,
+			Function<String, ?> deserializerFunction)
 		throws Exception {
 
-		Object[] array1 = BeanUtils.getArrayProperty(
+		String[] array1 = BeanUtils.getArrayProperty(
 			userAccountContactInformation1, fieldName);
-		Object[] array2 = BeanUtils.getArrayProperty(
+		String[] array2 = BeanUtils.getArrayProperty(
 			userAccountContactInformation2, fieldName);
 
 		Assert.assertEquals(
 			Arrays.toString(array1), array1.length, array2.length);
 
-		Comparator<Object> comparator = Comparator.comparing(
-			object -> {
+		Comparator<String> comparator = Comparator.comparing(
+			s -> {
 				try {
-					return BeanUtils.getProperty(object, subfieldName);
+					return BeanUtils.getProperty(
+						deserializerFunction.apply(s), subfieldName);
 				}
 				catch (Exception exception) {
 					return null;
@@ -454,12 +457,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		Arrays.sort(array2, comparator);
 
 		for (int i = 0; i < array1.length; i++) {
-			Object bean1 = array1[i];
-			Object bean2 = array2[i];
+			String bean1 = array1[i];
+			String bean2 = array2[i];
 
 			Assert.assertEquals(
-				BeanUtils.getProperty(bean1, fieldName),
-				BeanUtils.getProperty(bean2, fieldName));
+				BeanUtils.getProperty(
+					deserializerFunction.apply(bean1), subfieldName),
+				BeanUtils.getProperty(
+					deserializerFunction.apply(bean2), subfieldName));
 		}
 	}
 

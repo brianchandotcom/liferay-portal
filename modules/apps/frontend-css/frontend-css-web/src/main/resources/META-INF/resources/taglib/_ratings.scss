@@ -14,18 +14,24 @@
 		}
 	}
 
-	&.stacked-stars .liferay-rating-score {
-		> div {
-			display: flex;
-		}
-
+	&.stacked-stars {
 		.rating-element {
-			color: #ffb900;
-			padding-top: 3px;
+			color: $primary;
 		}
 
-		.rating-label {
-			margin-left: 8px;
+		.liferay-rating-score {
+			> div {
+				display: flex;
+			}
+
+			.rating-element {
+				color: $yellow;
+				padding-top: 3px;
+			}
+
+			.rating-label {
+				margin-left: 8px;
+			}
 		}
 
 		.lexicon-icon {

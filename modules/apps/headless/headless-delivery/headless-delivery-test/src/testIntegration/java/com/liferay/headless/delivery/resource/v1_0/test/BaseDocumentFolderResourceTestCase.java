@@ -329,6 +329,39 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetDocumentFolderNotFound() throws Exception {
+		Long irrelevantDocumentFolderId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"documentFolder",
+				new HashMap<String, Object>() {
+					{
+						put("documentFolderId", irrelevantDocumentFolderId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPatchDocumentFolder() throws Exception {
 		DocumentFolder postDocumentFolder =
 			testPatchDocumentFolder_addDocumentFolder();

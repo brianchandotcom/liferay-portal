@@ -529,6 +529,39 @@ public abstract class BaseAppResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetAppNotFound() throws Exception {
+		Long irrelevantAppId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"app",
+				new HashMap<String, Object>() {
+					{
+						put("appId", irrelevantAppId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPutApp() throws Exception {
 		App postApp = testPutApp_addApp();
 

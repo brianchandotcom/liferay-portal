@@ -609,6 +609,39 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetAccountNotFound() throws Exception {
+		Long irrelevantAccountId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"account",
+				new HashMap<String, Object>() {
+					{
+						put("accountId", irrelevantAccountId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPatchAccount() throws Exception {
 		Account postAccount = testPatchAccount_addAccount();
 
@@ -654,6 +687,9 @@ public abstract class BaseAccountResourceTestCase {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Account testGraphQLAccount_addAccount() throws Exception {
 		throw new UnsupportedOperationException(
@@ -790,9 +826,6 @@ public abstract class BaseAccountResourceTestCase {
 
 		Assert.assertTrue(valid);
 	}
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];

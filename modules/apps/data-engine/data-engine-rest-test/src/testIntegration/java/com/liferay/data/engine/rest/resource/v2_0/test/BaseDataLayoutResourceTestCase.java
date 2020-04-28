@@ -605,6 +605,39 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetDataLayoutNotFound() throws Exception {
+		Long irrelevantDataLayoutId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataLayout",
+				new HashMap<String, Object>() {
+					{
+						put("dataLayoutId", irrelevantDataLayoutId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPutDataLayout() throws Exception {
 		DataLayout postDataLayout = testPutDataLayout_addDataLayout();
 
@@ -684,6 +717,48 @@ public abstract class BaseDataLayoutResourceTestCase {
 				DataLayoutSerDes.toDTO(
 					dataJSONObject.getString(
 						"dataLayoutByContentTypeByDataLayoutKey"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKeyNotFound()
+		throws Exception {
+
+		String irrelevantContentType =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantDataLayoutKey =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataLayoutByContentTypeByDataLayoutKey",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + irrelevantGroup.getGroupId() + "\"");
+						put("contentType", irrelevantContentType);
+						put("dataLayoutKey", irrelevantDataLayoutKey);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	protected DataLayout testGraphQLDataLayout_addDataLayout()

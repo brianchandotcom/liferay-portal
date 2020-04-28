@@ -567,6 +567,9 @@ public abstract class BaseAccountUserResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
+
 	protected AccountUser testGraphQLAccountUser_addAccountUser()
 		throws Exception {
 
@@ -714,9 +717,6 @@ public abstract class BaseAccountUserResourceTestCase {
 
 		Assert.assertTrue(valid);
 	}
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];

@@ -675,6 +675,39 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetWikiNodeNotFound() throws Exception {
+		Long irrelevantWikiNodeId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"wikiNode",
+				new HashMap<String, Object>() {
+					{
+						put("wikiNodeId", irrelevantWikiNodeId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPutWikiNode() throws Exception {
 		WikiNode postWikiNode = testPutWikiNode_addWikiNode();
 

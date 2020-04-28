@@ -379,6 +379,39 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetKeywordNotFound() throws Exception {
+		Long irrelevantKeywordId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"keyword",
+				new HashMap<String, Object>() {
+					{
+						put("keywordId", irrelevantKeywordId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPutKeyword() throws Exception {
 		Keyword postKeyword = testPutKeyword_addKeyword();
 

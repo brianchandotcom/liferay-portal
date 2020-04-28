@@ -344,6 +344,41 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetMessageBoardMessageNotFound() throws Exception {
+		Long irrelevantMessageBoardMessageId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"messageBoardMessage",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"messageBoardMessageId",
+							irrelevantMessageBoardMessageId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPatchMessageBoardMessage() throws Exception {
 		MessageBoardMessage postMessageBoardMessage =
 			testPatchMessageBoardMessage_addMessageBoardMessage();
@@ -1711,6 +1746,45 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				MessageBoardMessageSerDes.toDTO(
 					dataJSONObject.getString(
 						"messageBoardMessageByFriendlyUrlPath"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPathNotFound()
+		throws Exception {
+
+		String irrelevantFriendlyUrlPath =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"messageBoardMessageByFriendlyUrlPath",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + irrelevantGroup.getGroupId() + "\"");
+						put("friendlyUrlPath", irrelevantFriendlyUrlPath);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	@Rule

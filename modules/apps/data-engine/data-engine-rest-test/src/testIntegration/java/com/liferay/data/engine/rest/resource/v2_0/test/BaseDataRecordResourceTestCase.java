@@ -857,6 +857,39 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetDataRecordNotFound() throws Exception {
+		Long irrelevantDataRecordId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataRecord",
+				new HashMap<String, Object>() {
+					{
+						put("dataRecordId", irrelevantDataRecordId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPutDataRecord() throws Exception {
 		DataRecord postDataRecord = testPutDataRecord_addDataRecord();
 

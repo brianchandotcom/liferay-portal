@@ -489,6 +489,39 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetWorkflowInstanceNotFound() throws Exception {
+		Long irrelevantWorkflowInstanceId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"workflowInstance",
+				new HashMap<String, Object>() {
+					{
+						put("workflowInstanceId", irrelevantWorkflowInstanceId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPostWorkflowInstanceChangeTransition() throws Exception {
 		WorkflowInstance randomWorkflowInstance = randomWorkflowInstance();
 

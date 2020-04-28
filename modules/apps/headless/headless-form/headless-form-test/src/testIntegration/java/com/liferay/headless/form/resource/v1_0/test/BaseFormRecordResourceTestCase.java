@@ -30,6 +30,7 @@ import com.liferay.headless.form.client.resource.v1_0.FormRecordResource;
 import com.liferay.headless.form.client.serdes.v1_0.FormRecordSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -231,6 +232,39 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetFormRecordNotFound() throws Exception {
+		Long irrelevantFormRecordId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"formRecord",
+				new HashMap<String, Object>() {
+					{
+						put("formRecordId", irrelevantFormRecordId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPutFormRecord() throws Exception {
 		FormRecord postFormRecord = testPutFormRecord_addFormRecord();
 
@@ -419,6 +453,41 @@ public abstract class BaseFormRecordResourceTestCase {
 				formRecord,
 				FormRecordSerDes.toDTO(
 					dataJSONObject.getString("formFormRecordByLatestDraft"))));
+	}
+
+	@Test
+	public void testGraphQLGetFormFormRecordByLatestDraftNotFound()
+		throws Exception {
+
+		Long irrelevantFormId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"formFormRecordByLatestDraft",
+				new HashMap<String, Object>() {
+					{
+						put("formId", irrelevantFormId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	protected FormRecord testGraphQLFormRecord_addFormRecord()

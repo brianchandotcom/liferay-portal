@@ -1030,6 +1030,44 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSiteStructuredContentByKeyNotFound()
+		throws Exception {
+
+		String irrelevantKey = "\"" + RandomTestUtil.randomString() + "\"";
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"structuredContentByKey",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + irrelevantGroup.getGroupId() + "\"");
+						put("key", irrelevantKey);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testGetSiteStructuredContentByUuid() throws Exception {
 		StructuredContent postStructuredContent =
 			testGetSiteStructuredContentByUuid_addStructuredContent();
@@ -1082,6 +1120,44 @@ public abstract class BaseStructuredContentResourceTestCase {
 				structuredContent,
 				StructuredContentSerDes.toDTO(
 					dataJSONObject.getString("structuredContentByUuid"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteStructuredContentByUuidNotFound()
+		throws Exception {
+
+		String irrelevantUuid = "\"" + RandomTestUtil.randomString() + "\"";
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"structuredContentByUuid",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + irrelevantGroup.getGroupId() + "\"");
+						put("uuid", irrelevantUuid);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	@Test
@@ -1634,6 +1710,41 @@ public abstract class BaseStructuredContentResourceTestCase {
 				structuredContent,
 				StructuredContentSerDes.toDTO(
 					dataJSONObject.getString("structuredContent"))));
+	}
+
+	@Test
+	public void testGraphQLGetStructuredContentNotFound() throws Exception {
+		Long irrelevantStructuredContentId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"structuredContent",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"structuredContentId",
+							irrelevantStructuredContentId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	@Test

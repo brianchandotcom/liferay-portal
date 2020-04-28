@@ -334,6 +334,41 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetKnowledgeBaseFolderNotFound() throws Exception {
+		Long irrelevantKnowledgeBaseFolderId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"knowledgeBaseFolder",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"knowledgeBaseFolderId",
+							irrelevantKnowledgeBaseFolderId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPatchKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder postKnowledgeBaseFolder =
 			testPatchKnowledgeBaseFolder_addKnowledgeBaseFolder();

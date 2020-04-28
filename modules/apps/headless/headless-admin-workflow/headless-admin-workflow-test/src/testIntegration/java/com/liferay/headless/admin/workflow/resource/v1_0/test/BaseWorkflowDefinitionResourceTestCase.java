@@ -217,6 +217,13 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetWorkflowDefinitionByNameNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testPostWorkflowDefinitionDeploy() throws Exception {
 		WorkflowDefinition randomWorkflowDefinition =
 			randomWorkflowDefinition();

@@ -257,6 +257,41 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetDataDefinitionDataRecordCollectionNotFound()
+		throws Exception {
+
+		Long irrelevantDataDefinitionId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataDefinitionDataRecordCollection",
+				new HashMap<String, Object>() {
+					{
+						put("dataDefinitionId", irrelevantDataDefinitionId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testGetDataDefinitionDataRecordCollectionsPage()
 		throws Exception {
 
@@ -562,6 +597,41 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetDataRecordCollectionNotFound() throws Exception {
+		Long irrelevantDataRecordCollectionId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataRecordCollection",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"dataRecordCollectionId",
+							irrelevantDataRecordCollectionId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
+	@Test
 	public void testPutDataRecordCollection() throws Exception {
 		DataRecordCollection postDataRecordCollection =
 			testPutDataRecordCollection_addDataRecordCollection();
@@ -703,6 +773,47 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				DataRecordCollectionSerDes.toDTO(
 					dataJSONObject.getString(
 						"dataRecordCollectionByDataRecordCollectionKey"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKeyNotFound()
+		throws Exception {
+
+		String irrelevantDataRecordCollectionKey =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataRecordCollectionByDataRecordCollectionKey",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"siteKey",
+							"\"" + irrelevantGroup.getGroupId() + "\"");
+						put(
+							"dataRecordCollectionKey",
+							irrelevantDataRecordCollectionKey);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	protected DataRecordCollection

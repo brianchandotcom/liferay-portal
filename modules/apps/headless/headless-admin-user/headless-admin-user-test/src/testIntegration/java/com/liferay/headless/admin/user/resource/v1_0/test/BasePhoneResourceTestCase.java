@@ -29,6 +29,7 @@ import com.liferay.headless.admin.user.client.resource.v1_0.PhoneResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.PhoneSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -294,6 +295,39 @@ public abstract class BasePhoneResourceTestCase {
 		Assert.assertTrue(
 			equals(
 				phone, PhoneSerDes.toDTO(dataJSONObject.getString("phone"))));
+	}
+
+	@Test
+	public void testGraphQLGetPhoneNotFound() throws Exception {
+		Long irrelevantPhoneId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"phone",
+				new HashMap<String, Object>() {
+					{
+						put("phoneId", irrelevantPhoneId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	@Test

@@ -318,6 +318,39 @@ public abstract class BaseFormDocumentResourceTestCase {
 					dataJSONObject.getString("formDocument"))));
 	}
 
+	@Test
+	public void testGraphQLGetFormDocumentNotFound() throws Exception {
+		Long irrelevantFormDocumentId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"formDocument",
+				new HashMap<String, Object>() {
+					{
+						put("formDocumentId", irrelevantFormDocumentId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
+	}
+
 	protected FormDocument testGraphQLFormDocument_addFormDocument()
 		throws Exception {
 

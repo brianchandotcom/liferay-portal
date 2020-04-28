@@ -30,6 +30,7 @@ import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowLogResou
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowLogSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -357,6 +358,39 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				workflowLog,
 				WorkflowLogSerDes.toDTO(
 					dataJSONObject.getString("workflowLog"))));
+	}
+
+	@Test
+	public void testGraphQLGetWorkflowLogNotFound() throws Exception {
+		Long irrelevantWorkflowLogId = RandomTestUtil.randomLong();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"workflowLog",
+				new HashMap<String, Object>() {
+					{
+						put("workflowLogId", irrelevantWorkflowLogId);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	@Test

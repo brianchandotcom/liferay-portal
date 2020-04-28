@@ -214,17 +214,16 @@ definition {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
 		WebContent.addCP(
-				webContentContent = "${webContentContent}",
-				webContentTitle = "${webContentTitle}");
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
 
 		AssertClickNoError(
-				locator1 = "Button#PUBLISH",
-				value1 = "Publish");
+			locator1 = "Button#PUBLISH",
+			value1 = "Publish");
 
 		Pause(locator1 = "5000");
 
 		var key_assetTitle = "${webContentTitle}";
-
 	}
 
 	macro addPGViaWCD {

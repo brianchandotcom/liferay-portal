@@ -453,7 +453,9 @@
 		<check name="CompatClassImportsCheck" />
 	</source-processor>
 	<source-processor name="JSONSourceProcessor">
-		<check name="JSONStylingCheck" />
+		<check name="JSONStylingCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JSONValidationCheck" />
 
 		<!-- Liferay Source Checks -->

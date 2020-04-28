@@ -36,7 +36,7 @@ definition {
 		}
 
 		if (isSet(expirationDate)) {
-			Type.clickAtType(
+			Type.sendKeys(
 				locator1 = "TextInput#EXPIRATION_DATE",
 				value1 = "${expirationDate}");
 		}
@@ -115,7 +115,7 @@ definition {
 		}
 
 		if (isSet(expirationDate)) {
-			Type.clickAtType(
+			Type.sendKeys(
 				locator1 = "TextInput#EXPIRATION_DATE",
 				value1 = "${expirationDate}");
 		}
@@ -163,7 +163,7 @@ definition {
 		}
 
 		if (isSet(expirationDate)) {
-			Type.clickAtType(
+			Type.sendKeys(
 				locator1 = "TextInput#EXPIRATION_DATE",
 				value1 = "${expirationDate}");
 		}

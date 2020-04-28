@@ -4316,10 +4316,11 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-operating-system-property property.name="operating.system.docker.image" />
 			<get-operating-system-property property.name="operating.system.docker.run.options" />
 			<get-operating-system-property property.name="operating.system.host" />
+			<get-operating-system-property property.name="operating.system.host.alias" />
 
 			<local name="operating.system.docker.network.run.option" />
 
-			<condition else="" property="operating.system.docker.network.run.option" value="--network=${env.DOCKER_NETWORK_NAME}">
+			<condition else="" property="operating.system.docker.network.run.option" value="--network=${env.DOCKER_NETWORK_NAME} --network-alias=${operating.system.host.alias}">
 				<isset property="env.DOCKER_NETWORK_NAME" />
 			</condition>
 
@@ -4338,7 +4339,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<![CDATA[
 					docker run \
 						--detach \
-						--hostname=localhost \
+						--hostname=${operating.system.host} \
 						--interactive \
 						--mount type=bind,source=/data/slaves/${env.NODE_NAME}/git/liferay/${portal.dir.name},target=${portal.dir} \
 						--name=${operating.system.host} \
@@ -8593,6 +8594,26 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-sharepoint-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
+
+		<if>
+			<and>
+				<equals arg1="${operating.system.type}" arg2="centos" />
+				<equals arg1="${operating.system.centos.version}" arg2="8" />
+				<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+			</and>
+			<then>
+				<get-operating-system-property property.name="operating.system.host.alias" />
+
+				<echo append="true" file="${test.ext.properties.file}">
+					default.portal.url=${operating.system.host.alias}:8080
+				</echo>
+			</then>
+			<else>
+				<echo append="true" file="${test.ext.properties.file}">
+					default.portal.url=http://localhost:8080
+				</echo>
+			</else>
+		</if>
 
 		<if>
 			<isset property="legacy.theme.ids" />

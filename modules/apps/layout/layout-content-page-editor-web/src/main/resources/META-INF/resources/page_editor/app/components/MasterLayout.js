@@ -186,13 +186,13 @@ const FragmentContent = React.memo(function FragmentContent({
 		getFieldValue,
 	]);
 
-	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
-	const masterLayoutData = useSelector(state => state.masterLayoutData);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const masterLayoutData = useSelector((state) => state.masterLayoutData);
 
 	const getPortals = useCallback(
-		element =>
+		(element) =>
 			Array.from(element.querySelectorAll('lfr-drop-zone')).map(
-				dropZoneElement => {
+				(dropZoneElement) => {
 					const mainItemId =
 						dropZoneElement.getAttribute('uuid') || '';
 

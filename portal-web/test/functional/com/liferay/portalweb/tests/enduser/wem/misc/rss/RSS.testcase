@@ -28,7 +28,7 @@ definition {
 		else {
 			Page.tearDownCP(site = "Liferay");
 
-			Site.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 	}
 

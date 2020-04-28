@@ -21,7 +21,7 @@ import org.gradle.api.plugins.BasePluginConvention;
  * @author Damien Abos
  * @author Peter Shin
  */
-public class OsgiHelper {
+public class OSGiUtil {
 
     public static String getBundleSymbolicName(Project project) {
         BasePluginConvention basePluginConvention = GradleUtil.getConvention(

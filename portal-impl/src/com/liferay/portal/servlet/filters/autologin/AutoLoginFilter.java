@@ -167,7 +167,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 			httpServletRequest.getRequestURI());
 
 		if (!contextPath.equals(StringPool.SLASH) &&
-			path.contains(contextPath)) {
+			path.startsWith(contextPath)) {
 
 			path = path.substring(contextPath.length());
 		}

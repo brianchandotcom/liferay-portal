@@ -56,7 +56,7 @@ public class LayoutsTreeDisplayContext {
 
 	public String getAddChildURLTemplate() throws Exception {
 		return StringBundler.concat(
-			getAddLayoutURL(), "&",
+			getAddLayoutURL(), StringPool.AMPERSAND,
 			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES),
 			"selPlid={plid}");
 	}
@@ -142,7 +142,7 @@ public class LayoutsTreeDisplayContext {
 
 	public String getConfigureLayoutURLTemplate() throws Exception {
 		return StringBundler.concat(
-			getConfigureLayoutURL(), "&",
+			getConfigureLayoutURL(), StringPool.AMPERSAND,
 			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES),
 			"selPlid={plid}");
 	}

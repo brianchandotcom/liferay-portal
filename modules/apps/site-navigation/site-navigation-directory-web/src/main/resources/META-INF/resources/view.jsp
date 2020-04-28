@@ -101,128 +101,74 @@
 				<c:otherwise>
 
 					<%
-					StringBundler sb = new StringBundler();
+					List<Group> childGroups = null;
 
-					_buildSitesList(sitesDirectoryDisplayContext.getRootGroup(), themeDisplay.getScopeGroup(), themeDisplay, 1, Objects.equals(sitesDirectoryDisplayContext.getDisplayStyle(), "list-hierarchy"), true, sb);
+					Group rootGroup = sitesDirectoryDisplayContext.getRootGroup();
 
-					String content = sb.toString();
+					if (rootGroup != null) {
+						childGroups = rootGroup.getChildrenWithLayouts(true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
+					}
+					else {
+						childGroups = GroupLocalServiceUtil.getLayoutsGroups(themeDisplay.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
+					}
 					%>
 
-					<%= content %>
+					<c:choose>
+						<c:when test="<%= childGroups.isEmpty() %>">
+							<div class="alert alert-info">
+								<liferay-ui:message key="no-sites-were-found" />
+							</div>
+						</c:when>
+						<c:otherwise>
+							<ul class="level-1 sites">
+
+								<%
+								for (Group childGroup : childGroups) {
+									String className = StringPool.BLANK;
+
+									if (Objects.equals(sitesDirectoryDisplayContext.getDisplayStyle(), "list-hierarchy")) {
+										className += "open ";
+									}
+
+									if (scopeGroupId == childGroup.getGroupId()) {
+										className += "selected";
+									}
+								%>
+
+									<li class="<%= className %>">
+										<c:choose>
+											<c:when test="<%= childGroup.getGroupId() != themeDisplay.getScopeGroupId() %>">
+												<a class="<%= className %>" href="<%= HtmlUtil.escapeHREF(childGroup.getDisplayURL(themeDisplay, !childGroup.hasPublicLayouts())) %>">
+													<%= HtmlUtil.escape(childGroup.getDescriptiveName(themeDisplay.getLocale())) %>
+												</a>
+											</c:when>
+											<c:otherwise>
+												<span class="<%= className %>">
+													<%= HtmlUtil.escape(childGroup.getDescriptiveName(themeDisplay.getLocale())) %>
+												</span>
+											</c:otherwise>
+										</c:choose>
+
+										<c:if test='<%= Objects.equals(sitesDirectoryDisplayContext.getDisplayStyle(), "list-hierarchy") %>'>
+
+											<%
+											request.setAttribute("view.jsp-groupLevel", 2);
+											request.setAttribute("view.jsp-parentGroupId", childGroup.getGroupId());
+											%>
+
+											<liferay-util:include page="/view_child_sites.jsp" servletContext="<%= application %>" />
+										</c:if>
+									</li>
+
+								<%
+								}
+								%>
+
+							</ul>
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>
 		</c:otherwise>
 	</c:choose>
 </div>
-
-<%!
-private void _buildSitesList(Group rootGroup, Group curGroup, ThemeDisplay themeDisplay, int groupLevel, boolean showHierarchy, boolean nestedChildren, StringBundler sb) throws Exception {
-	List<Group> childGroups = null;
-
-	if (rootGroup != null) {
-		childGroups = rootGroup.getChildrenWithLayouts(true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
-	}
-	else {
-		childGroups = GroupLocalServiceUtil.getLayoutsGroups(curGroup.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
-	}
-
-	if (childGroups.isEmpty()) {
-		if (sb.length() == 0) {
-			sb.append("<div class=\"alert alert-info\">");
-			sb.append(LanguageUtil.get(themeDisplay.getLocale(), "no-sites-were-found"));
-			sb.append("</div>");
-		}
-
-		return;
-	}
-
-	StringBundler tailSB = null;
-
-	if (!nestedChildren) {
-		tailSB = new StringBundler();
-	}
-
-	sb.append("<ul class=\"sites level-");
-	sb.append(groupLevel);
-	sb.append("\">");
-
-	for (Group childGroup : childGroups) {
-		boolean open = false;
-
-		if (showHierarchy) {
-			open = true;
-		}
-
-		String className = StringPool.BLANK;
-
-		if (open) {
-			className += "open ";
-		}
-
-		if (curGroup.getGroupId() == childGroup.getGroupId()) {
-			className += "selected ";
-		}
-
-		sb.append("<li ");
-
-		if (Validator.isNotNull(className)) {
-			sb.append("class=\"");
-			sb.append(className);
-			sb.append("\" ");
-		}
-
-		sb.append(">");
-
-		if (childGroup.getGroupId() != themeDisplay.getScopeGroupId()) {
-			sb.append("<a ");
-		}
-		else {
-			sb.append("<span ");
-		}
-
-		if (Validator.isNotNull(className)) {
-			sb.append("class=\"");
-			sb.append(className);
-			sb.append("\" ");
-		}
-
-		if (childGroup.getGroupId() != themeDisplay.getScopeGroupId()) {
-			sb.append("href=\"");
-			sb.append(HtmlUtil.escapeHREF(childGroup.getDisplayURL(themeDisplay, !childGroup.hasPublicLayouts())));
-			sb.append("\"");
-		}
-
-		sb.append("> ");
-
-		sb.append(HtmlUtil.escape(childGroup.getDescriptiveName(themeDisplay.getLocale())));
-
-		if (childGroup.getGroupId() != themeDisplay.getScopeGroupId()) {
-			sb.append("</a>");
-		}
-		else {
-			sb.append("</span>");
-		}
-
-		if (open) {
-			StringBundler childGroupSB = null;
-
-			if (nestedChildren) {
-				childGroupSB = sb;
-			}
-			else {
-				childGroupSB = tailSB;
-			}
-
-			_buildSitesList(childGroup, curGroup, themeDisplay, groupLevel + 1, showHierarchy, nestedChildren, childGroupSB);
-		}
-
-		sb.append("</li>");
-	}
-
-	sb.append("</ul>");
-
-	if (!nestedChildren) {
-		sb.append(tailSB);
-	}
-}
-%>

@@ -18,6 +18,7 @@ import React, {useContext, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
+import {getSections} from '../utils/client.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 
 export default withRouter(
@@ -35,6 +36,11 @@ export default withRouter(
 		useEffect(() => {
 			if (sectionTitle) {
 				context.setSection(sectionTitle);
+			}
+			else {
+				getSections(context.siteKey).then((sections) =>
+					context.setSection(sections.items[0].title)
+				);
 			}
 		}, [context, sectionTitle]);
 

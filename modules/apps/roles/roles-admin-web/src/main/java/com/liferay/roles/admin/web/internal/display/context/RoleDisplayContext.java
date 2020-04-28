@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -157,6 +158,31 @@ public class RoleDisplayContext {
 		}
 
 		return navigationItemList;
+	}
+
+	public boolean isAutomaticallyAssigned(Role role) {
+		String name = role.getName();
+
+		if (name.equals(RoleConstants.GUEST) ||
+			name.equals(RoleConstants.ORGANIZATION_USER) ||
+			name.equals(RoleConstants.OWNER) ||
+			name.equals(RoleConstants.SITE_MEMBER) ||
+			name.equals(RoleConstants.USER)) {
+
+			return true;
+		}
+
+		List<RoleTypeContributor> roleTypeContributors =
+			RoleTypeContributorRetrieverUtil.getRoleTypeContributors(
+				_httpServletRequest);
+
+		for (RoleTypeContributor roleTypeContributor : roleTypeContributors) {
+			if (roleTypeContributor.isAutomaticallyAssigned(role)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private List<String> _getTabsNames() throws Exception {

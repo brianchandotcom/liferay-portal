@@ -144,17 +144,17 @@ public class RedirectEntryServiceTest {
 
 				_redirectEntryDestination =
 					_redirectEntryService.fetchRedirectEntry(
-						this._redirectEntryDestination.getRedirectEntryId());
+						_redirectEntryDestination.getRedirectEntryId());
 
 				Assert.assertNotNull(_redirectEntryDestination);
 
 				Assert.assertEquals(
 					"sourceAndDestinationURL",
-					this._redirectEntryDestination.getSourceURL());
+					_redirectEntryDestination.getSourceURL());
 
 				Assert.assertEquals(
 					completeDestinationURL,
-					this._redirectEntryDestination.getDestinationURL());
+					_redirectEntryDestination.getDestinationURL());
 			});
 	}
 

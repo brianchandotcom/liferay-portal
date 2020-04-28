@@ -48,13 +48,13 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 			</span>
 			<span class="autofit-col autofit-col-expand pages-tree-dropdown">
 				<span class="d-sm-block dropdown text-right">
-					<a class="dropdown-toggle ml-1 taglib-icon" data-toggle="liferay-dropdown" href="javascript:;">
+					<button class="btn btn-unstyled dropdown-toggle ml-1 taglib-icon" data-toggle="liferay-dropdown">
 						<aui:icon image="ellipsis-v" markupView="lexicon" />
 
 						<span class="sr-only">
 							<liferay-ui:message key="options" />
 						</span>
-					</a>
+					</button>
 
 					<ul class="dropdown-menu dropdown-menu-left" role="menu">
 						<c:if test="<%= (stagingGroup == null) || Objects.equals(scopeGroupId, stagingGroupId) %>">

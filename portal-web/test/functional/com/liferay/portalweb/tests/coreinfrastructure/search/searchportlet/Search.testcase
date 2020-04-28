@@ -1365,6 +1365,20 @@ definition {
 			searchAssetTitle = "userfn userln",
 			searchAssetType = "User");
 
+		SearchFacetPortlet.updateFacetConfiguration(
+			parameterName = "username",
+			portletName = "User Facet");
+
+		Refresh();
+
+		SearchFacetPortlet.checkFacet(facetValueName = "userfn userln");
+
+		var currentURL = selenium.getLocation();
+
+		if (!(contains("${currentURL}", "username"))) {
+			fail("User parameter name failed to change.");
+		}
+
 		SearchPortlets.searchEmbedded(searchTerm = "userfn");
 
 		SearchResultPortlet.viewSearchResults(

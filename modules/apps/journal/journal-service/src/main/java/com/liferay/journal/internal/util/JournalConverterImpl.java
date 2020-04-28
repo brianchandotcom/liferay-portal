@@ -529,6 +529,10 @@ public class JournalConverterImpl implements JournalConverter {
 
 		String name = dynamicElementElement.attributeValue("name");
 
+		if (!GetterUtil.getBoolean(ddmStructure.getFieldProperty(name, "localizable"))) {
+			availableLanguageIds = StringPool.EMPTY_ARRAY;
+		}
+
 		ddmField.setName(name);
 
 		String dataType = ddmStructure.getFieldDataType(name);

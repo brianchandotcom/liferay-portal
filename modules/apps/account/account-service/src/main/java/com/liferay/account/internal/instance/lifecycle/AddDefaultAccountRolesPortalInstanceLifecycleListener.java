@@ -16,6 +16,7 @@ package com.liferay.account.internal.instance.lifecycle;
 
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
@@ -25,6 +26,7 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -81,12 +83,17 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 		}
 
 		if (!_exists(AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER)) {
-			_roleLocalService.addRole(
+			Role role = _roleLocalService.addRole(
 				defaultUser.getUserId(), null, 0,
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, null,
 				_roleDescriptionsMaps.get(
 					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER),
 				RoleConstants.TYPE_ORGANIZATION, null, null);
+
+			_addResourcePermissions(
+				role.getRoleId(), _accountMemberResourceActionsMap);
+			_addResourcePermissions(
+				role.getRoleId(), _accountManagerResourceActionsMap);
 		}
 	}
 
@@ -159,6 +166,25 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 				ActionKeys.UPDATE, ActionKeys.MANAGE_USERS,
 				AccountActionKeys.VIEW_USERS
 			}
+		).build();
+	private static final Map<String, String[]>
+		_accountManagerResourceActionsMap = HashMapBuilder.put(
+			AccountEntry.class.getName(),
+			new String[] {
+				AccountActionKeys.MANAGE_ORGANIZATIONS,
+				AccountActionKeys.VIEW_ORGANIZATIONS,
+				AccountActionKeys.VIEW_USERS, ActionKeys.MANAGE_USERS,
+				ActionKeys.UPDATE
+			}
+		).put(
+			AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+			new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL}
+		).put(
+			AccountPortletKeys.ACCOUNT_USERS_ADMIN,
+			new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL}
+		).put(
+			Organization.class.getName(),
+			new String[] {AccountActionKeys.MANAGE_ACCOUNTS}
 		).build();
 	private static final Map<String, String[]>
 		_accountMemberResourceActionsMap = HashMapBuilder.put(

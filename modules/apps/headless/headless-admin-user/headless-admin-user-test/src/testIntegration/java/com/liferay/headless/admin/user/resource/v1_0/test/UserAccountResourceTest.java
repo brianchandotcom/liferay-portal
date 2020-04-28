@@ -278,19 +278,23 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		UserAccountContactInformation userAccountContactInformation2 =
 			userAccount2.getUserAccountContactInformation();
 
-		_assertArrays(
-			userAccountContactInformation1.getEmailAddresses(),
-			userAccountContactInformation2.getEmailAddresses(), "emailAddress");
-		_assertArrays(
-			userAccountContactInformation1.getPostalAddresses(),
-			userAccountContactInformation2.getPostalAddresses(),
-			"streetAddressLine1");
-		_assertArrays(
-			userAccountContactInformation1.getTelephones(),
-			userAccountContactInformation2.getTelephones(), "phoneNumber");
-		_assertArrays(
-			userAccountContactInformation1.getWebUrls(),
-			userAccountContactInformation2.getWebUrls(), "url");
+		try {
+			_assertUserAccountContactInformation(
+				userAccountContactInformation1, userAccountContactInformation2,
+				"emailAddresses", "emailAddress");
+			_assertUserAccountContactInformation(
+				userAccountContactInformation1, userAccountContactInformation2,
+				"postalAddresses", "streetAddressLine1");
+			_assertUserAccountContactInformation(
+				userAccountContactInformation1, userAccountContactInformation2,
+				"telephones", "phoneNumber");
+			_assertUserAccountContactInformation(
+				userAccountContactInformation1, userAccountContactInformation2,
+				"webUrls", "url");
+		}
+		catch (Exception exception) {
+			Assert.fail(exception.getMessage());
+		}
 
 		Assert.assertEquals(
 			userAccountContactInformation1.getFacebook(),
@@ -438,36 +442,40 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return userAccount;
 	}
 
-	private <T> void _assertArrays(
-		Object[] arr1, Object[] arr2, String fieldName) {
+	private void _assertUserAccountContactInformation(
+			UserAccountContactInformation userAccountContactInformation1,
+			UserAccountContactInformation userAccountContactInformation2,
+			String fieldName, String subfieldName)
+		throws Exception {
 
-		Assert.assertEquals(Arrays.toString(arr2), arr1.length, arr2.length);
+		Object[] array1 = BeanUtils.getArrayProperty(
+			userAccountContactInformation1, fieldName);
+		Object[] array2 = BeanUtils.getArrayProperty(
+			userAccountContactInformation2, fieldName);
+
+		Assert.assertEquals(
+			Arrays.toString(array1), array1.length, array2.length);
 
 		Comparator<Object> comparator = Comparator.comparing(
 			object -> {
 				try {
-					return BeanUtils.getProperty(object, fieldName);
+					return BeanUtils.getProperty(object, subfieldName);
 				}
 				catch (Exception exception) {
 					return null;
 				}
 			});
 
-		Arrays.sort(arr1, comparator);
-		Arrays.sort(arr2, comparator);
+		Arrays.sort(array1, comparator);
+		Arrays.sort(array2, comparator);
 
-		for (int i = 0; i < arr1.length; i++) {
-			Object bean1 = arr1[i];
-			Object bean2 = arr2[i];
+		for (int i = 0; i < array1.length; i++) {
+			Object bean1 = array1[i];
+			Object bean2 = array2[i];
 
-			try {
-				Assert.assertEquals(
-					BeanUtils.getProperty(bean1, fieldName),
-					BeanUtils.getProperty(bean2, fieldName));
-			}
-			catch (Exception exception) {
-				Assert.fail(exception.getMessage());
-			}
+			Assert.assertEquals(
+				BeanUtils.getProperty(bean1, fieldName),
+				BeanUtils.getProperty(bean2, fieldName));
 		}
 	}
 

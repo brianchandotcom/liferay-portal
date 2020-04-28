@@ -4,4 +4,11 @@
 	&.modal-full-screen {
 		position: absolute;
 	}
+
+	.modal-body-iframe .loading-animation {
+		margin-bottom: 0;
+		margin-top: 0;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }

@@ -32,15 +32,18 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserAccountEntityModel;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderAddressHelper;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderEmailAddressHelper;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderListTypeHelper;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderPhoneHelper;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderWebsiteHelper;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -58,8 +61,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.service.ListTypeLocalService;
-import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
@@ -233,8 +234,9 @@ public class UserAccountResourceImpl
 			postalAddresses -> ListUtil.filter(
 				transformToList(
 					postalAddresses,
-					_postalAddress -> _contactInformationHelper.toAddress(
-						_postalAddress, ListTypeConstants.CONTACT_ADDRESS)),
+					_postalAddress ->
+						_serviceBuilderAddressHelper.toServiceBuilderAddress(
+							_postalAddress, ListTypeConstants.CONTACT_ADDRESS)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -272,28 +274,12 @@ public class UserAccountResourceImpl
 		);
 	}
 
-	private long _getListTypeId(String value, String type) {
-		ListType listType = _listTypeLocalService.addListType(value, type);
-
-		return listType.getListTypeId();
-	}
-
-	private String _getListTypeMessage(long listTypeId) throws Exception {
-		if (listTypeId == 0) {
-			return null;
-		}
-
-		ListType listType = _listTypeService.getListType(listTypeId);
-
-		return LanguageUtil.get(
-			contextAcceptLanguage.getPreferredLocale(), listType.getName());
-	}
-
 	private long _getPrefixId(UserAccount userAccount) {
 		return Optional.ofNullable(
 			userAccount.getHonorificPrefix()
 		).map(
-			prefix -> _getListTypeId(prefix, ListTypeConstants.CONTACT_PREFIX)
+			prefix -> _serviceBuilderListTypeHelper.getServiceBuilderListTypeId(
+				prefix, ListTypeConstants.CONTACT_PREFIX)
 		).orElse(
 			0L
 		);
@@ -311,9 +297,10 @@ public class UserAccountResourceImpl
 				transformToList(
 					emailAddresses,
 					emailAddress ->
-						_contactInformationHelper.toServiceBuilderEmailAddress(
-							emailAddress,
-							ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
+						_serviceBuilderEmailAddressHelper.
+							toServiceBuilderEmailAddress(
+								emailAddress,
+								ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -332,7 +319,7 @@ public class UserAccountResourceImpl
 				transformToList(
 					telephones,
 					telephone ->
-						_contactInformationHelper.toServiceBuilderPhone(
+						_serviceBuilderPhoneHelper.toServiceBuilderPhone(
 							telephone, ListTypeConstants.CONTACT_PHONE)),
 				Objects::nonNull)
 		).orElse(
@@ -344,7 +331,8 @@ public class UserAccountResourceImpl
 		return Optional.ofNullable(
 			userAccount.getHonorificSuffix()
 		).map(
-			prefix -> _getListTypeId(prefix, ListTypeConstants.CONTACT_SUFFIX)
+			prefix -> _serviceBuilderListTypeHelper.getServiceBuilderListTypeId(
+				prefix, ListTypeConstants.CONTACT_SUFFIX)
 		).orElse(
 			0L
 		);
@@ -390,8 +378,9 @@ public class UserAccountResourceImpl
 			webUrls -> ListUtil.filter(
 				transformToList(
 					webUrls,
-					webUrl -> _contactInformationHelper.toWebsite(
-						webUrl, ListTypeConstants.CONTACT_WEBSITE)),
+					webUrl ->
+						_serviceBuilderWebsiteHelper.toServiceBuilderWebsite(
+							webUrl, ListTypeConstants.CONTACT_WEBSITE)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -450,8 +439,16 @@ public class UserAccountResourceImpl
 				emailAddress = user.getEmailAddress();
 				familyName = user.getLastName();
 				givenName = user.getFirstName();
-				honorificPrefix = _getListTypeMessage(contact.getPrefixId());
-				honorificSuffix = _getListTypeMessage(contact.getSuffixId());
+				honorificPrefix =
+					_serviceBuilderListTypeHelper.
+						getServiceBuilderListTypeMessage(
+							contact.getPrefixId(),
+							contextAcceptLanguage.getPreferredLocale());
+				honorificSuffix =
+					_serviceBuilderListTypeHelper.
+						getServiceBuilderListTypeMessage(
+							contact.getSuffixId(),
+							contextAcceptLanguage.getPreferredLocale());
 				id = user.getUserId();
 				jobTitle = user.getJobTitle();
 				keywords = ListUtil.toArray(
@@ -546,19 +543,10 @@ public class UserAccountResourceImpl
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
-	private ContactInformationHelper _contactInformationHelper;
-
-	@Reference
 	private ContactLocalService _contactLocalService;
 
 	@Reference
 	private GroupService _groupService;
-
-	@Reference
-	private ListTypeLocalService _listTypeLocalService;
-
-	@Reference
-	private ListTypeService _listTypeService;
 
 	@Reference
 	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
@@ -568,6 +556,21 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private RoleService _roleService;
+
+	@Reference
+	private ServiceBuilderAddressHelper _serviceBuilderAddressHelper;
+
+	@Reference
+	private ServiceBuilderEmailAddressHelper _serviceBuilderEmailAddressHelper;
+
+	@Reference
+	private ServiceBuilderListTypeHelper _serviceBuilderListTypeHelper;
+
+	@Reference
+	private ServiceBuilderPhoneHelper _serviceBuilderPhoneHelper;
+
+	@Reference
+	private ServiceBuilderWebsiteHelper _serviceBuilderWebsiteHelper;
 
 	@Reference
 	private UserService _userService;

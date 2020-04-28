@@ -7,23 +7,23 @@ $product-menu-pages-administration-link-height: 72px;
 
 .pages-tree {
 	.dropdown-toggle {
-		color: #a7a9bc !important;
+		color: $gray-500 !important;
 
 		&:active {
-			color: #fff;
+			color: $white;
 		}
 	}
 
 	.layout-finder {
-		border-bottom: 1px solid #272833;
+		border-bottom: 1px solid $dark;
 		padding: 24px 16px 0;
 
 		input {
-			background-color: #393a4a;
+			background-color: $gray-800;
 		}
 
 		.back-to-menu {
-			color: #a7a9bc;
+			color: $gray-500;
 		}
 
 		.breadcrumb {
@@ -67,8 +67,8 @@ $product-menu-pages-administration-link-height: 72px;
 
 	.pages-administration-link {
 		align-items: center;
-		background-color: #272833;
-		border-top: 1px solid #393a4a;
+		background-color: $dark;
+		border-top: 1px solid $gray-800;
 		bottom: 0;
 		display: flex;
 		font-size: 14px;
@@ -78,26 +78,26 @@ $product-menu-pages-administration-link-height: 72px;
 		width: $product-menu-item-fixed-width;
 
 		a {
-			color: #a7a9bc;
+			color: $secondary-l1;
 		}
 	}
 
 	.page-type-selector {
-		border-top: 1px solid #393a4a;
+		border-top: 1px solid $gray-800;
 		font-size: 14px;
 		margin-top: 20px;
 		padding-top: 16px;
 
 		.form-control {
-			background-color: #272833;
-			border-color: #393a4a;
-			color: #a7a9bc;
+			background-color: $dark;
+			border-color: $gray-800;
+			color: $gray-500;
 		}
 	}
 
 	.tree-view {
 		.tree-container {
-			border-left: 1px solid #393a4a;
+			border-left: 1px solid $gray-800;
 			cursor: pointer;
 			margin-left: 6px;
 			padding-left: 14px;
@@ -110,7 +110,7 @@ $product-menu-pages-administration-link-height: 72px;
 					border-top: none;
 
 					.autofit-row {
-						box-shadow: 0 -2px 0 0 #80acff;
+						box-shadow: 0 -2px 0 0 $primary-l1;
 					}
 				}
 
@@ -118,7 +118,7 @@ $product-menu-pages-administration-link-height: 72px;
 					border-bottom: none;
 
 					.autofit-row {
-						box-shadow: 0 2px 0 0 #80acff;
+						box-shadow: 0 2px 0 0 $primary-l1;
 					}
 				}
 
@@ -128,7 +128,7 @@ $product-menu-pages-administration-link-height: 72px;
 
 					.autofit-row {
 						border-radius: 4px;
-						box-shadow: 0 0 0 2px #80acff;
+						box-shadow: 0 0 0 2px $primary-l1;
 					}
 				}
 			}
@@ -136,8 +136,8 @@ $product-menu-pages-administration-link-height: 72px;
 
 		.tree-node {
 			.tree-hitarea {
-				background-color: #393a4a;
-				border: 1px solid #393a4a;
+				background-color: $gray-800;
+				border: 1px solid $gray-800;
 				border-radius: 2px;
 				font-size: 6px;
 				margin-right: 0;
@@ -149,11 +149,11 @@ $product-menu-pages-administration-link-height: 72px;
 				}
 			}
 
-			.tree-label a {
-				color: #a7a9bc;
+			.tree-label a.layout-tree {
+				color: $gray-500;
 
 				&:hover {
-					color: #fff;
+					color: $white;
 				}
 			}
 
@@ -170,7 +170,7 @@ $product-menu-pages-administration-link-height: 72px;
 					visibility: visible;
 				}
 
-				color: #a7a9bc !important;
+				color: $gray-500 !important;
 				display: inline-block;
 				flex-grow: 1;
 				margin-left: 8px;
@@ -213,7 +213,7 @@ $product-menu-pages-administration-link-height: 72px;
 
 .tree-drag-helper {
 	.tree-drag-helper-content {
-		background: #80acff;
+		background: $primary-l1;
 		border: none;
 		border-radius: 4px;
 		box-shadow: none;
@@ -281,7 +281,7 @@ $product-menu-pages-administration-link-height: 72px;
 
 		.panel-app-root {
 			&.active {
-				border-left: 4px solid #fff;
+				border-left: 4px solid $white;
 			}
 
 			li {
@@ -343,7 +343,7 @@ $product-menu-pages-administration-link-height: 72px;
 	}
 
 	&.popover {
-		background-color: #fff;
+		background-color: $white;
 	}
 
 	.impersonation-message {

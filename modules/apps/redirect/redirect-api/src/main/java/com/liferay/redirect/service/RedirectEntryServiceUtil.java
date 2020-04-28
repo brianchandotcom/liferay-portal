@@ -87,7 +87,7 @@ public class RedirectEntryServiceUtil {
 		return getService().getRedirectEntriesCount(groupId);
 	}
 
-	public static void updateRedirectEntriesReferences(
+	public static void updateChainedRedirectEntries(
 			long groupId, String destinationURL, String sourceURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

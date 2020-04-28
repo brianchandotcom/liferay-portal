@@ -89,8 +89,7 @@ public interface RedirectEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry addRedirectEntry(RedirectEntry redirectEntry);
 
-	public boolean checkRedirectionChain(
-		long groupId, String destinationURL);
+	public boolean checkRedirectionChain(long groupId, String destinationURL);
 
 	/**
 	 * @throws PortalException

@@ -257,16 +257,15 @@ public class RedirectEntryServiceHttp {
 		}
 	}
 
-	public static void updateRedirectEntriesReferences(
+	public static void updateChainedRedirectEntries(
 			HttpPrincipal httpPrincipal, long groupId, String destinationURL,
 			String sourceURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				RedirectEntryServiceUtil.class,
-				"updateRedirectEntriesReferences",
-				_updateRedirectEntriesReferencesParameterTypes5);
+				RedirectEntryServiceUtil.class, "updateChainedRedirectEntries",
+				_updateChainedRedirectEntriesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, destinationURL, sourceURL);
@@ -358,7 +357,7 @@ public class RedirectEntryServiceHttp {
 	private static final Class<?>[] _getRedirectEntriesCountParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_updateRedirectEntriesReferencesParameterTypes5 = new Class[] {
+		_updateChainedRedirectEntriesParameterTypes5 = new Class[] {
 			long.class, String.class, String.class
 		};
 	private static final Class<?>[] _updateRedirectEntryParameterTypes6 =

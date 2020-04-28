@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.friendly.url.internal.util;
+package com.liferay.layout.internal.util;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 /**
  * @author Alejandro Tardín
  */
-public class FriendlyURLLayoutUtil {
+public class LayoutFriendlyURLUtil {
 
 	public static long getLayoutClassNameId(boolean privateLayout) {
 		return PortalUtil.getClassNameId(

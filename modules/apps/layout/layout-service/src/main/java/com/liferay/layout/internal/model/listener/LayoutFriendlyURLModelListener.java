@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.friendly.url.internal.model.listener;
+package com.liferay.layout.internal.model.listener;
 
-import com.liferay.friendly.url.internal.util.FriendlyURLLayoutUtil;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.layout.internal.util.LayoutFriendlyURLUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = ModelListener.class)
-public class FriendlyURLLayoutFriendlyURLModelListener
+public class LayoutFriendlyURLModelListener
 	extends BaseModelListener<LayoutFriendlyURL> {
 
 	@Override
@@ -53,7 +53,7 @@ public class FriendlyURLLayoutFriendlyURLModelListener
 		try {
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
 				layoutFriendlyURL.getGroupId(),
-				FriendlyURLLayoutUtil.getLayoutClassNameId(
+				LayoutFriendlyURLUtil.getLayoutClassNameId(
 					layoutFriendlyURL.isPrivateLayout()),
 				layoutFriendlyURL.getPlid(),
 				Collections.singletonMap(

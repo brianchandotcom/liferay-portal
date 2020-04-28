@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.friendly.url.internal.service;
+package com.liferay.layout.internal.service;
 
-import com.liferay.friendly.url.internal.util.FriendlyURLLayoutUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.layout.internal.util.LayoutFriendlyURLUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,16 +30,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = ServiceWrapper.class)
-public class FriendlyURLLayoutLocalServiceWrapper
-	extends LayoutLocalServiceWrapper {
+public class LayoutLocalServiceWrapper
+	extends com.liferay.portal.kernel.service.LayoutLocalServiceWrapper {
 
-	public FriendlyURLLayoutLocalServiceWrapper() {
+	public LayoutLocalServiceWrapper() {
 		super(null);
 	}
 
-	public FriendlyURLLayoutLocalServiceWrapper(
-		LayoutLocalService layoutLocalService) {
-
+	public LayoutLocalServiceWrapper(LayoutLocalService layoutLocalService) {
 		super(layoutLocalService);
 	}
 
@@ -85,7 +82,7 @@ public class FriendlyURLLayoutLocalServiceWrapper
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId,
-				FriendlyURLLayoutUtil.getLayoutClassNameId(privateLayout),
+				LayoutFriendlyURLUtil.getLayoutClassNameId(privateLayout),
 				friendlyURL);
 
 		if (friendlyURLEntry != null) {

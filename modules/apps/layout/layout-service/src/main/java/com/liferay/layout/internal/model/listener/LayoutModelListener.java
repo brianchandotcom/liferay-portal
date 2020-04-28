@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.friendly.url.internal.model.listener;
+package com.liferay.layout.internal.model.listener;
 
-import com.liferay.friendly.url.internal.util.FriendlyURLLayoutUtil;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.layout.internal.util.LayoutFriendlyURLUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -27,13 +27,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = ModelListener.class)
-public class FriendlyURLLayoutModelListener extends BaseModelListener<Layout> {
+public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterRemove(Layout layout) {
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 			layout.getGroupId(),
-			FriendlyURLLayoutUtil.getLayoutClassNameId(
+			LayoutFriendlyURLUtil.getLayoutClassNameId(
 				layout.isPrivateLayout()),
 			layout.getPlid());
 	}

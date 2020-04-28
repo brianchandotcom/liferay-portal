@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.friendly.url.internal.service.test;
+package com.liferay.layout.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
@@ -43,7 +43,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class FriendlyURLLayoutLocalServiceTest {
+public class LayoutLocalServiceTest {
 
 	@ClassRule
 	@Rule

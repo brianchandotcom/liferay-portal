@@ -46,6 +46,7 @@ export default function getAlloyEditorProcessor(
 	let _editor;
 	let _eventHandlers;
 	let _element;
+	let _callbacks = {};
 
 	return {
 		createEditor: (
@@ -54,6 +55,9 @@ export default function getAlloyEditorProcessor(
 			destroyCallback,
 			clickPosition
 		) => {
+			_callbacks.changeCallback = changeCallback;
+			_callbacks.destroyCallback = destroyCallback;
+
 			if (_editor) {
 				return;
 			}
@@ -131,16 +135,22 @@ export default function getAlloyEditorProcessor(
 				nativeEditor.on(
 					'change',
 					debounce(() => {
-						changeCallback(nativeEditor.getData());
+						if (_callbacks.changeCallback) {
+							_callbacks.changeCallback(nativeEditor.getData());
+						}
 					}, 500)
 				),
 
 				nativeEditor.on('blur', () => {
 					if (_editor._mainUI.state.hidden) {
-						changeCallback(nativeEditor.getData());
+						if (_callbacks.changeCallback) {
+							_callbacks.changeCallback(nativeEditor.getData());
+						}
 
 						requestAnimationFrame(() => {
-							destroyCallback();
+							if (_callbacks.destroyCallback) {
+								_callbacks.destroyCallback();
+							}
 						});
 					}
 				}),
@@ -179,6 +189,7 @@ export default function getAlloyEditorProcessor(
 				_editor = null;
 				_eventHandlers = null;
 				_element = null;
+				_callbacks = {};
 			}
 		},
 

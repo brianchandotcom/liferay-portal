@@ -83,6 +83,12 @@ export default function FragmentContentProcessor({
 		editable.processor.createEditor(
 			editable.element,
 			(value) => {
+				const previousValue = editableValue[languageId];
+
+				if (previousValue === value) {
+					return;
+				}
+
 				let nextEditableValue = {
 					...editableValue,
 				};

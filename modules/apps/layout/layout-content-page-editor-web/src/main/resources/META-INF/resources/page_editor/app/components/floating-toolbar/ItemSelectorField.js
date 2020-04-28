@@ -28,17 +28,15 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 
 	const {typeOptions = {}} = field;
 
-	const className =
-		value.className ||
-		(collectionItemContext.collectionItem
-			? collectionItemContext.collectionItem.className
-			: '');
+	const collectionItem = collectionItemContext.collectionItem;
 
-	const classPK =
-		value.className ||
-		(collectionItemContext.collectionItem
-			? collectionItemContext.collectionItem.classPK
-			: '');
+	const isWithinCollection = collectionItem !== null;
+
+	const className = isWithinCollection
+		? collectionItem.className
+		: value.className;
+
+	const classPK = isWithinCollection ? collectionItem.classPK : value.classPK;
 
 	return (
 		<>
@@ -55,11 +53,12 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 						});
 					}}
 					selectedItemTitle={
-						value.title ||
-						(collectionItemContext.collectionItem
-							? Liferay.Language.get('collection-item')
-							: '')
+						isWithinCollection
+							? collectionItem.title ||
+							  Liferay.Language.get('collection-item')
+							: value.title
 					}
+					showAddButton={!isWithinCollection}
 				/>
 			</ClayForm.Group>
 
@@ -68,7 +67,7 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 					<TemplateSelector
 						className={className}
 						classPK={classPK}
-						onTemplateSelect={template => {
+						onTemplateSelect={(template) => {
 							onValueSelect(field.name, {...value, template});
 						}}
 						selectedTemplate={value.template}

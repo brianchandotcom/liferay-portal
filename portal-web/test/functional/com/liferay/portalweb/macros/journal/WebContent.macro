@@ -210,6 +210,23 @@ definition {
 			value1 = "${webContentContent}");
 	}
 
+	macro addPGViaAPWithoutAsserts {
+		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
+
+		WebContent.addCP(
+				webContentContent = "${webContentContent}",
+				webContentTitle = "${webContentTitle}");
+
+		AssertClickNoError(
+				locator1 = "Button#PUBLISH",
+				value1 = "Publish");
+
+		Pause(locator1 = "5000");
+
+		var key_assetTitle = "${webContentTitle}";
+
+	}
+
 	macro addPGViaWCD {
 		WebContentDisplayPortletNavigator.gotoAdd(portletNameScoped = "${portletNameScoped}");
 

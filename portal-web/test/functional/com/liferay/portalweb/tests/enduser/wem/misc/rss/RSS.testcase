@@ -15,8 +15,8 @@ definition {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Site Page Name");
+			groupName = "Site Name",
+			layoutName = "Site Page Name");
 	}
 
 	tearDown {
@@ -149,8 +149,8 @@ definition {
 		property testray.component.names = "RSS";
 
 		Navigator.gotoSitePage(
-				pageName = "Site Page Name",
-				siteName = "Site Name");
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "RSS Publisher");
 
@@ -169,8 +169,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoSitePage(
-				pageName = "Site Page Name",
-				siteName = "Site Name");
+			pageName = "Site Page Name",
+			siteName = "Site Name");
 
 		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Latimes : Technology News");
 	}
@@ -514,84 +514,6 @@ definition {
 		RSSPortlet.viewNoFeedTitle(feedTitle = "Technology");
 	}
 
-	@ignore = "true"
-	@priority = "3"
-	test EnableRSSFeedFromAssetpublisher {
-		property test.name.skip.portal.instance = "RSS#EnableRSSFeedFromAssetpublisher";
-		property testray.component.names = "Asset Publisher,RSS";
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Site Page Name 2");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name 2",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
-
-		WebContent.addPGViaAP(
-			webContentContent = "This is the web content test for rss feed",
-			webContentTitle = "Web Content Title");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Asset Publisher",
-			portletOption = "Configuration");
-
-		AssetPublisherPortlet.enableRSSSubscription();
-
-		Button.clickSave();
-
-		IFrame.selectTopFrame();
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name 2",
-			siteName = "Site Name");
-
-		var rssFeedUrl = selenium.getAttribute("//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]@href");
-		var rssFeedUrl = StringUtil.replace("${rssFeedUrl}", "localhost", "127.0.0.1");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
-
-		Portlet.gotoPortletOptions(
-			portletName = "RSS Publisher",
-			portletOption = "Configuration");
-
-		RSSPortlet.addFeed(
-			feedRowIndexNumber = "0",
-			feedTitle = "Web Asset Publisher",
-			feedUrlLink = "${rssFeedUrl}");
-
-		PortletEntry.save();
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
-
-		RSSPortlet.viewDisplayFeedTitle(feedTitle = "Web Asset Publisher");
-
-		RSSPortlet.openFeed(
-			feedTitle = "Asset Publisher",
-			siteName = "${siteName}");
-
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "This is the web content test for rss feed",
-			assetTitle = "Web Content Title");
-	}
-
 	@priority = "4"
 	test RemoveRSSPortlet {
 		property testray.component.names = "RSS";
@@ -625,8 +547,6 @@ definition {
 		property test.name.skip.portal.instance = "RSS#UpdateRSSFeedViaAssetpublisher";
 		property testray.component.names = "Asset Publisher,RSS";
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -639,12 +559,9 @@ definition {
 
 		RSSPortlet.updateFeedTime(feedTime = "1");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Asset Publisher Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Asset Publisher Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
@@ -658,9 +575,13 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		WebContent.addPGViaAP(
+		WebContent.addPGViaAPWithoutAsserts(
 			webContentContent = "This is the web content test for rss feed",
 			webContentTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Subscribe");
 

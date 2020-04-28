@@ -298,13 +298,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public Double getModelResourceWeight(String name) {
-		ModelResourceActionsBag modelResourceActionsBag =
-			_getModelResourceActionsBag(name);
-
-		Map<String, Double> modelResourceWeights =
-			modelResourceActionsBag.getResourceWeights();
-
-		return modelResourceWeights.get(name);
+		return _modelResourceWeights.get(name);
 	}
 
 	/**
@@ -1237,10 +1231,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		double weight = GetterUtil.getDouble(
 			modelResourceElement.elementTextTrim("weight"), 100);
 
-		Map<String, Double> modelResourceWeights =
-			modelResourceActionsBag.getResourceWeights();
-
-		modelResourceWeights.put(name, weight);
+		_modelResourceWeights.put(name, weight);
 
 		Set<String> modelResourceActions =
 			modelResourceActionsBag.getModelActions();
@@ -1372,6 +1363,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		_modelResourceActionsBags = new HashMap<>();
 	private final Map<String, Set<String>>
 		_modelResourcePortletResourceMappings = new HashMap<>();
+	private final Map<String, Double> _modelResourceWeights = new HashMap<>();
 	private final Set<String> _organizationModelResources = new HashSet<>();
 	private final Set<String> _portalModelResources = new HashSet<>();
 	private final Map<String, PortletResourceActionsBag>
@@ -1390,13 +1382,8 @@ public class ResourceActionsImpl implements ResourceActions {
 			return _ownerDefaultActions;
 		}
 
-		public Map<String, Double> getResourceWeights() {
-			return _resourceWeights;
-		}
-
 		private final Set<String> _modelActions = new HashSet<>();
 		private final Set<String> _ownerDefaultActions = new HashSet<>();
-		private final Map<String, Double> _resourceWeights = new HashMap<>();
 
 	}
 

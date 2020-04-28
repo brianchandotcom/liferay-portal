@@ -90,6 +90,9 @@ public class RoleUtil {
 
 			return RoleConstants.TYPE_SITE;
 		}
+		else if (roleType.equals(RoleConstants.TYPE_DEPOT_LABEL)) {
+			return RoleConstants.TYPE_DEPOT;
+		}
 
 		return RoleConstants.TYPE_REGULAR;
 	}

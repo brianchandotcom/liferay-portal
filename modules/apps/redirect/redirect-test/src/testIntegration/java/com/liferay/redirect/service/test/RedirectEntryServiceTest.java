@@ -15,7 +15,6 @@
 package com.liferay.redirect.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -94,19 +93,13 @@ public class RedirectEntryServiceTest {
 	public void testCreateRedirectEntriesWithUpdateReferences()
 		throws Exception {
 
-		String completeDestinationURL =
-			_GROUP_BASE_URL + StringPool.SLASH + "destinationURL";
-
-		String completeSourceAndDestinationURL =
-			_GROUP_BASE_URL + StringPool.SLASH + "sourceAndDestinationURL";
-
 		_redirectEntry = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), completeSourceAndDestinationURL, null, false,
+			_group.getGroupId(), "intermediateDestinationURL", null, false,
 			"sourceURL", ServiceContextTestUtil.getServiceContext());
 
 		_redirectEntryDestination = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), completeDestinationURL, null, false,
-			"sourceAndDestinationURL",
+			_group.getGroupId(), "finalDestinationURL", null, false,
+			"intermediateDestinationURL",
 			ServiceContextTestUtil.getServiceContext());
 
 		RedirectTestUtil.withRegularUser(
@@ -129,8 +122,8 @@ public class RedirectEntryServiceTest {
 					ActionKeys.UPDATE);
 
 				_redirectEntryService.updateRedirectEntriesReferences(
-					_group.getGroupId(), completeDestinationURL,
-					_GROUP_BASE_URL, "sourceAndDestinationURL");
+					_group.getGroupId(), "finalDestinationURL",
+					"intermediateDestinationURL");
 
 				_redirectEntry = _redirectEntryService.fetchRedirectEntry(
 					_redirectEntry.getRedirectEntryId());
@@ -140,7 +133,7 @@ public class RedirectEntryServiceTest {
 				Assert.assertEquals("sourceURL", _redirectEntry.getSourceURL());
 
 				Assert.assertEquals(
-					completeDestinationURL, _redirectEntry.getDestinationURL());
+					"finalDestinationURL", _redirectEntry.getDestinationURL());
 
 				_redirectEntryDestination =
 					_redirectEntryService.fetchRedirectEntry(
@@ -149,11 +142,11 @@ public class RedirectEntryServiceTest {
 				Assert.assertNotNull(_redirectEntryDestination);
 
 				Assert.assertEquals(
-					"sourceAndDestinationURL",
+					"intermediateDestinationURL",
 					_redirectEntryDestination.getSourceURL());
 
 				Assert.assertEquals(
-					completeDestinationURL,
+					"finalDestinationURL",
 					_redirectEntryDestination.getDestinationURL());
 			});
 	}
@@ -162,19 +155,13 @@ public class RedirectEntryServiceTest {
 	public void testCreateRedirectEntriesWithUpdateReferencesNoUpdatePermission()
 		throws Exception {
 
-		String completeDestinationURL =
-			_GROUP_BASE_URL + StringPool.SLASH + "destinationURL";
-
-		String completeSourceAndDestinationURL =
-			_GROUP_BASE_URL + StringPool.SLASH + "sourceAndDestinationURL";
-
 		_redirectEntry = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), completeSourceAndDestinationURL, null, false,
+			_group.getGroupId(), "intermediateDestinationURL", null, false,
 			"sourceURL", ServiceContextTestUtil.getServiceContext());
 
 		_redirectEntryDestination = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), completeDestinationURL, null, false,
-			"sourceAndDestinationURL",
+			_group.getGroupId(), "finalDestinationURL", null, false,
+			"intermediateDestinationURL",
 			ServiceContextTestUtil.getServiceContext());
 
 		RedirectTestUtil.withRegularUser(
@@ -191,8 +178,8 @@ public class RedirectEntryServiceTest {
 						_group.getGroupId()));
 
 				_redirectEntryService.updateRedirectEntriesReferences(
-					_group.getGroupId(), completeDestinationURL,
-					_GROUP_BASE_URL, "sourceAndDestinationURL");
+					_group.getGroupId(), "finalDestinationURL",
+					"intermediateDestinationURL");
 			});
 	}
 
@@ -368,8 +355,6 @@ public class RedirectEntryServiceTest {
 				Assert.assertNotNull(_redirectEntry);
 			});
 	}
-
-	private static final String _GROUP_BASE_URL = "http://www.liferay.com";
 
 	@DeleteAfterTestRun
 	private Group _group;

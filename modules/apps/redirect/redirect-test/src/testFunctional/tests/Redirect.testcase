@@ -548,6 +548,7 @@ definition {
 		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/2024",
+			redirectType = "Permanent (301)",
 			siteName = "test-site-name",
 			sourceURL = "test-source-page");
 
@@ -694,6 +695,7 @@ definition {
 		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/2013",
+			redirectType = "Permanent (301)",
 			siteName = "test-site-name",
 			sourceURL = "test-source-page");
 
@@ -769,6 +771,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -814,6 +817,7 @@ definition {
 		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			expirationDate = "12/31/2013",
+			redirectType = "Permanent (301)",
 			siteName = "test-site-name",
 			sourceURL = "test-source-page");
 

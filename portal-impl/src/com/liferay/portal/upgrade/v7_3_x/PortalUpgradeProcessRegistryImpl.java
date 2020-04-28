@@ -68,6 +68,15 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 3, 0), new UpgradeUserGroupGroupRole());
 
 		upgradeProcesses.put(new Version(8, 4, 0), new UpgradeUserGroupRole());
+
+		upgradeProcesses.put(
+			new Version(8, 5, 0),
+			new UpgradeCTModel(
+				"Group_", "Groups_Orgs", "Groups_Roles", "Groups_UserGroups",
+				"Image", "LayoutSet", "Organization_", "Role_", "Team", "User_",
+				"UserGroup", "UserGroupGroupRole", "UserGroupRole",
+				"UserGroups_Teams", "Users_Groups", "Users_Orgs", "Users_Roles",
+				"Users_Teams", "Users_UserGroups", "VirtualHost"));
 	}
 
 }

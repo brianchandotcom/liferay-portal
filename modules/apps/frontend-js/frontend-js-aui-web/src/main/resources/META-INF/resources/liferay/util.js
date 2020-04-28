@@ -293,12 +293,6 @@
 			}
 		},
 
-		disableEsc() {
-			if (document.all && window.event.keyCode == 27) {
-				window.event.returnValue = false;
-			}
-		},
-
 		disableFormButtons(inputs, form) {
 			inputs.attr('disabled', true);
 			inputs.setStyle('opacity', 0.5);

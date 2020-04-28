@@ -115,6 +115,15 @@ Liferay.Util = Liferay.Util || {};
  */
 Liferay.Util.addParams = addParams;
 
+/**
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ */
+Liferay.Util.disableEsc = () => {
+	if (document.all && window.event.keyCode == 27) {
+		window.event.returnValue = false;
+	}
+};
+
 Liferay.Util.escape = escape;
 Liferay.Util.fetch = fetch;
 Liferay.Util.formatStorage = formatStorage;

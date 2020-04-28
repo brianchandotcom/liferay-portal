@@ -826,6 +826,16 @@ definition {
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry");
 
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Cloud Layout",
+			portletName = "Tag Facet");
+
+		Refresh();
+
+		AssertElementPresent(
+			locator1 = "Search#TAG_FACET_CLOUD_LAYOUT",
+			tagName = "tag name");
+
 		SearchPortlets.searchEmbedded(searchTerm = "tag");
 
 		SearchResultPortlet.viewSearchResults(

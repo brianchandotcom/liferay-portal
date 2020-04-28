@@ -123,6 +123,11 @@
 	<td>//div/select[contains(@id, "SortPortlet")]/option[contains(., "${sortOption}")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TAG_FACET_CLOUD_LAYOUT</td>
+	<td>//ul[contains(@class,'tag-cloud')]//button[contains(.,'${tagName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -20,14 +20,15 @@ import org.gradle.api.plugins.BasePluginConvention;
 public class OsgiHelper {
 
     public static String getBundleSymbolicName(Project project) {
-        Object group = project.getGroup();
-
-        String groupId = group.toString();
-
         BasePluginConvention basePluginConvention = GradleUtil.getConvention(
             project, BasePluginConvention.class);
 
         String archivesBaseName = basePluginConvention.getArchivesBaseName();
+
+        Object group = project.getGroup();
+
+        String groupId = group.toString();
+
         if (archivesBaseName.startsWith(groupId)) {
             return archivesBaseName;
         }

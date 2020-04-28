@@ -21,15 +21,11 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 import com.liferay.redirect.web.internal.util.RedirectUtil;
-
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -63,14 +59,12 @@ public class CheckDestinationURLMVCActionCommand extends BaseMVCActionCommand {
 			RedirectUtil.getGroupBaseURL(themeDisplay) +
 				StringPool.FORWARD_SLASH + sourceURL;
 
-		List<RedirectEntry> redirectEntriesDestinationURL =
-			_redirectEntryLocalService.
-				getRedirectEntriesByGroupAndDestinationURL(
-					themeDisplay.getScopeGroupId(), completeSourceURL);
-
 		JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
 
-		if (ListUtil.isNotEmpty(redirectEntriesDestinationURL)) {
+		if (_redirectEntryLocalService.
+				checkRedirectEntriesByGroupAndDestinationURL(
+					themeDisplay.getScopeGroupId(), completeSourceURL)) {
+
 			jsonObject = JSONUtil.put("success", Boolean.FALSE);
 		}
 

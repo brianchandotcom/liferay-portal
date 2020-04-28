@@ -9,6 +9,31 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "This is a use case for LPS-111757"
+	@priority = "4"
+	test ViewGlobalLibDirectory {
+		property environment.acceptance = "true";
+
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			import com.liferay.portal.kernel.util.PortalUtil;
+			import java.nio.file.Paths;
+
+			out.println(Paths.get(PortalUtil.getGlobalLibDir()));
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		var globalLibDir = PropsUtil.get("liferay.app.server.global.lib.dir");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "${globalLibDir}");
+	}
+
 	@description = "This is a use case for LPS-102790"
 	@priority = "4"
 	test ViewSystemAndPortalProperties {

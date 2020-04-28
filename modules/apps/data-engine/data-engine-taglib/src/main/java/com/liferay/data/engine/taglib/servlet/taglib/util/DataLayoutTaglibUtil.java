@@ -746,7 +746,7 @@ public class DataLayoutTaglibUtil {
 				getDDMFormLayout();
 		}
 
-		private JSONArray _getDataRulesJSONArray() throws JSONException {
+		private JSONArray _getDataRulesJSONArray() {
 			JSONArray dataRulesJSONArray = _jsonFactory.createJSONArray();
 
 			for (DataRule dataRule : _dataLayout.getDataRules()) {
@@ -754,18 +754,25 @@ public class DataLayoutTaglibUtil {
 
 				JSONArray actionsJSONArray = _jsonFactory.createJSONArray();
 
-				for (Object action : dataRule.getActions()) {
-					actionsJSONArray.put(
-						_jsonFactory.createJSONObject((String)action));
+				for (Map<String, String> action : dataRule.getActions()) {
+					JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+					action.forEach((key, value) -> jsonObject.put(key, value));
+
+					actionsJSONArray.put(jsonObject);
 				}
 
 				dataRuleJSONObject.put("actions", actionsJSONArray);
 
 				JSONArray conditionsJSONArray = _jsonFactory.createJSONArray();
 
-				for (Object condition : dataRule.getConditions()) {
-					conditionsJSONArray.put(
-						_jsonFactory.createJSONObject((String)condition));
+				for (Map<String, String> condition : dataRule.getConditions()) {
+					JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+					condition.forEach(
+						(key, value) -> jsonObject.put(key, value));
+
+					conditionsJSONArray.put(jsonObject);
 				}
 
 				dataRuleJSONObject.put(

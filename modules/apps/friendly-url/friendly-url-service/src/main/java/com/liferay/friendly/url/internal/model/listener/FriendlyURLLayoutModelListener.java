@@ -16,8 +16,6 @@ package com.liferay.friendly.url.internal.model.listener;
 
 import com.liferay.friendly.url.internal.util.FriendlyURLLayoutUtil;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -33,16 +31,11 @@ public class FriendlyURLLayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterRemove(Layout layout) {
-		try {
-			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-				layout.getGroupId(),
-				FriendlyURLLayoutUtil.getLayoutClassNameId(
-					layout.isPrivateLayout()),
-				layout.getPlid());
-		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+			layout.getGroupId(),
+			FriendlyURLLayoutUtil.getLayoutClassNameId(
+				layout.isPrivateLayout()),
+			layout.getPlid());
 	}
 
 	@Reference

@@ -56,7 +56,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -233,11 +232,11 @@ public class DDMFormFieldTemplateContextFactory {
 		return ddmFormFieldTemplateContexts;
 	}
 
-	protected Map<String, Object> createNestedDDMFormFieldTemplateContext(
+	protected List<Object> createNestedDDMFormFieldTemplateContext(
 		DDMFormFieldValue parentDDMFormFieldValue,
 		String parentDDMFormFieldParameterName) {
 
-		Map<String, Object> nestedDDMFormFieldTemplateContext = new HashMap<>();
+		List<Object> nestedDDMFormFieldTemplateContext = new ArrayList<>();
 
 		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
 			parentDDMFormFieldValue.getNestedDDMFormFieldValuesMap();
@@ -249,8 +248,7 @@ public class DDMFormFieldTemplateContextFactory {
 				nestedDDMFormFieldValuesMap.get(
 					nestedDDMFormFieldValue.getName());
 
-			nestedDDMFormFieldTemplateContext.put(
-				nestedDDMFormFieldValue.getName(),
+			nestedDDMFormFieldTemplateContext.addAll(
 				createDDMFormFieldTemplateContexts(
 					nestedDDMFormFieldValues, parentDDMFormFieldParameterName));
 		}
@@ -483,7 +481,7 @@ public class DDMFormFieldTemplateContextFactory {
 
 	protected void setDDMFormFieldTemplateContextNestedTemplateContexts(
 		Map<String, Object> ddmFormFieldRenderingContext,
-		Map<String, Object> nestedDDMFormFieldTemplateContexts) {
+		List<Object> nestedDDMFormFieldTemplateContexts) {
 
 		if (nestedDDMFormFieldTemplateContexts.isEmpty()) {
 			return;
@@ -839,9 +837,11 @@ public class DDMFormFieldTemplateContextFactory {
 		return fields.stream();
 	}
 
-	private Map<String, Object> _getNestedFieldsContext(List<Object> pages) {
+	private List<Map<String, Object>> _getNestedFieldsContext(
+		List<Object> pages) {
+
 		if (ListUtil.isEmpty(pages)) {
-			return new HashMap<>();
+			return new ArrayList<>();
 		}
 
 		Stream<Object> stream = pages.stream();
@@ -853,10 +853,7 @@ public class DDMFormFieldTemplateContextFactory {
 		).flatMap(
 			this::_getFieldsStream
 		).collect(
-			Collectors.toMap(
-				field -> MapUtil.getString(
-					(Map<String, Object>)field, "fieldName"),
-				Function.identity())
+			Collectors.toList()
 		);
 	}
 

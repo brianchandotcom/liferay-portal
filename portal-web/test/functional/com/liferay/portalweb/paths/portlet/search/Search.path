@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FACET_DISPLAY_FREQUENCIES</td>
+	<td>//small[contains(@class,'term-count')]/preceding-sibling::span[contains(.,'${facetValueName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_MAPPINGS_EDITOR</td>
 	<td>//div[contains(@class,'ace_editor')]//span[contains(.,'${indexName}')]</td>
 	<td></td>

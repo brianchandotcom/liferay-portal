@@ -1679,6 +1679,66 @@ definition {
 			searchAssetType = "Wiki Page");
 	}
 
+	@priority = "4"
+	test SearchWithFolderFacet {
+		for (var count : list "1,2") {
+			JSONDocument.addFolder(
+				dmFolderDescription = "DM Folder Description ${count}",
+				dmFolderName = "DM Folder Name ${count}",
+				groupName = "Guest");
+		}
+
+		for (var count : list "1,2") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description ${count}",
+				dmDocumentTitle = "DM Document Title ${count}",
+				folderName = "DM Folder Name ${count}",
+				groupName = "Guest");
+		}
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "DM");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "DM Document Title 1/Document,DM Document Title 2/Document",
+			searchTerm = "DM");
+
+		SearchFacetPortlet.checkFacet(facetValueName = "DM Folder Name 1");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title 1",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "DM Document Title 2",
+			searchAssetType = "Document");
+
+		SearchFacetPortlet.clearFacet();
+
+		SearchFacetPortlet.checkFacet(facetValueName = "DM Folder Name 2");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title 2",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "DM Document Title 1",
+			searchAssetType = "Document");
+
+		SearchFacetPortlet.clearFacet();
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayFrequencies = "disable",
+			portletName = "Folder Facet");
+
+		Refresh();
+
+		AssertElementNotPresent(
+			facetValueName = "DM Folder Name 1",
+			locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
+	}
+
 	test SearchWithModifiedFacet {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

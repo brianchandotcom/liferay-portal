@@ -76,6 +76,10 @@ public interface InfoDisplayContributor<T> {
 		return infoDisplayFieldsValues.get(fieldName);
 	}
 
+	public default long getInfoDisplayObjectClassPK(T object) {
+		return 0;
+	}
+
 	public InfoDisplayObjectProvider getInfoDisplayObjectProvider(long classPK)
 		throws PortalException;
 

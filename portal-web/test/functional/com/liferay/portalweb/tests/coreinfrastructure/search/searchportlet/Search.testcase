@@ -599,6 +599,16 @@ definition {
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry");
 
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Cloud Layout",
+			portletName = "Category Facet");
+
+		Refresh();
+
+		AssertElementPresent(
+			categoryName = "Category Name",
+			locator1 = "Search#CATEGORY_FACET_CLOUD_LAYOUT");
+
 		SearchPortlets.searchEmbedded(searchTerm = "Category");
 
 		SearchResultPortlet.viewSearchResults(

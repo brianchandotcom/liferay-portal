@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CATEGORY_FACET_CLOUD_LAYOUT</td>
+	<td>//ul[contains(@class,'tag-cloud')]//button[contains(.,'${categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLASSIC_SEARCH_BAR</td>
 	<td>//input[contains(@id,'SearchPortlet') and @type='text']</td>
 	<td></td>

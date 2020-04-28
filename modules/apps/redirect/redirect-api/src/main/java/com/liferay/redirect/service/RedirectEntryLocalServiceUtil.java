@@ -78,6 +78,13 @@ public class RedirectEntryLocalServiceUtil {
 		return getService().addRedirectEntry(redirectEntry);
 	}
 
+	public static boolean checkRedirectEntriesByGroupAndDestinationURL(
+		long groupId, String destinationURL) {
+
+		return getService().checkRedirectEntriesByGroupAndDestinationURL(
+			groupId, destinationURL);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

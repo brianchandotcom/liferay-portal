@@ -82,6 +82,11 @@ public interface RedirectEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRedirectEntriesCount(long groupId) throws PortalException;
 
+	public void updateRedirectEntriesReferences(
+			long groupId, String destinationURL, String groupBaseURL,
+			boolean updateReferences, String sourceURL)
+		throws PortalException;
+
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, Date expirationDate,
 			boolean permanent, String sourceURL)

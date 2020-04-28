@@ -300,6 +300,45 @@ public class RedirectEntryServiceHttp {
 		}
 	}
 
+	public static void updateRedirectEntriesReferences(
+			HttpPrincipal httpPrincipal, long groupId, String destinationURL,
+			String groupBaseURL, boolean updateReferences, String sourceURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RedirectEntryServiceUtil.class,
+				"updateRedirectEntriesReferences",
+				_updateRedirectEntriesReferencesParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, destinationURL, groupBaseURL,
+				updateReferences, sourceURL);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		RedirectEntryServiceHttp.class);
 
@@ -323,6 +362,10 @@ public class RedirectEntryServiceHttp {
 		new Class[] {
 			long.class, String.class, java.util.Date.class, boolean.class,
 			String.class
+		};
+	private static final Class<?>[]
+		_updateRedirectEntriesReferencesParameterTypes6 = new Class[] {
+			long.class, String.class, String.class, boolean.class, String.class
 		};
 
 }

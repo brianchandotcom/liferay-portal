@@ -87,6 +87,15 @@ public class RedirectEntryServiceUtil {
 		return getService().getRedirectEntriesCount(groupId);
 	}
 
+	public static void updateRedirectEntriesReferences(
+			long groupId, String destinationURL, String groupBaseURL,
+			boolean updateReferences, String sourceURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().updateRedirectEntriesReferences(
+			groupId, destinationURL, groupBaseURL, updateReferences, sourceURL);
+	}
+
 	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL,
 			java.util.Date expirationDate, boolean permanent, String sourceURL)

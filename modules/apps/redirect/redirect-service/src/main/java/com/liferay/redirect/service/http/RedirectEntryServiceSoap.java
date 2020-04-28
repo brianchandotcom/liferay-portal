@@ -180,6 +180,23 @@ public class RedirectEntryServiceSoap {
 		}
 	}
 
+	public static void updateRedirectEntriesReferences(
+			long groupId, String destinationURL, String groupBaseURL,
+			boolean updateReferences, String sourceURL)
+		throws RemoteException {
+
+		try {
+			RedirectEntryServiceUtil.updateRedirectEntriesReferences(
+				groupId, destinationURL, groupBaseURL, updateReferences,
+				sourceURL);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		RedirectEntryServiceSoap.class);
 

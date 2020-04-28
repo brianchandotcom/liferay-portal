@@ -922,6 +922,9 @@ xpack.monitoring.collection.enabled: true</echo>
 						<not>
 							<contains string="@{indexName}" substring="." />
 						</not>
+						<not>
+							<contains string="@{indexName}" substring="ilm-history" />
+						</not>
 					</and>
 					<then>
 						<property name="create.follower.request.body">
@@ -978,6 +981,9 @@ xpack.monitoring.collection.enabled: true</echo>
 					<and>
 						<not>
 							<contains string="@{indexName}" substring="." />
+						</not>
+						<not>
+							<contains string="@{indexName}" substring="ilm-history" />
 						</not>
 						<not>
 							<contains string="${curl.output.follower.indices}" substring="@{indexName}" />

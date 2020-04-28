@@ -91,68 +91,6 @@ public class RedirectEntryServiceTest {
 	}
 
 	@Test
-	public void testCreateRedirectEntriesNoUpdateReferences() throws Exception {
-		String completeDestinationURL =
-			_GROUP_BASE_URL + StringPool.SLASH + "destinationURL";
-
-		String completeSourceAndDestinationURL =
-			_GROUP_BASE_URL + StringPool.SLASH + "sourceAndDestinationURL";
-
-		_redirectEntry = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), completeSourceAndDestinationURL, null, false,
-			"sourceURL", ServiceContextTestUtil.getServiceContext());
-
-		_redirectEntryDestination = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), completeDestinationURL, null, false,
-			"sourceAndDestinationURL",
-			ServiceContextTestUtil.getServiceContext());
-
-		RedirectTestUtil.withRegularUser(
-			(user, role) -> {
-				RoleTestUtil.addResourcePermission(
-					role, RedirectEntry.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(TestPropsValues.getCompanyId()),
-					ActionKeys.VIEW);
-
-				Assert.assertEquals(
-					2,
-					_redirectEntryService.getRedirectEntriesCount(
-						_group.getGroupId()));
-
-				_redirectEntryService.updateRedirectEntriesReferences(
-					_group.getGroupId(), completeDestinationURL,
-					_GROUP_BASE_URL, false, "sourceAndDestinationURL");
-
-				_redirectEntry = _redirectEntryService.fetchRedirectEntry(
-					this._redirectEntry.getRedirectEntryId());
-
-				Assert.assertNotNull(_redirectEntry);
-
-				Assert.assertEquals(
-					"sourceURL", this._redirectEntry.getSourceURL());
-
-				Assert.assertEquals(
-					completeSourceAndDestinationURL,
-					this._redirectEntry.getDestinationURL());
-
-				_redirectEntryDestination =
-					_redirectEntryService.fetchRedirectEntry(
-						this._redirectEntryDestination.getRedirectEntryId());
-
-				Assert.assertNotNull(_redirectEntryDestination);
-
-				Assert.assertEquals(
-					"sourceAndDestinationURL",
-					this._redirectEntryDestination.getSourceURL());
-
-				Assert.assertEquals(
-					completeDestinationURL,
-					this._redirectEntryDestination.getDestinationURL());
-			});
-	}
-
-	@Test
 	public void testCreateRedirectEntriesWithUpdateReferences()
 		throws Exception {
 
@@ -192,7 +130,7 @@ public class RedirectEntryServiceTest {
 
 				_redirectEntryService.updateRedirectEntriesReferences(
 					_group.getGroupId(), completeDestinationURL,
-					_GROUP_BASE_URL, true, "sourceAndDestinationURL");
+					_GROUP_BASE_URL, "sourceAndDestinationURL");
 
 				_redirectEntry = _redirectEntryService.fetchRedirectEntry(
 					_redirectEntry.getRedirectEntryId());
@@ -254,7 +192,7 @@ public class RedirectEntryServiceTest {
 
 				_redirectEntryService.updateRedirectEntriesReferences(
 					_group.getGroupId(), completeDestinationURL,
-					_GROUP_BASE_URL, true, "sourceAndDestinationURL");
+					_GROUP_BASE_URL, "sourceAndDestinationURL");
 			});
 	}
 

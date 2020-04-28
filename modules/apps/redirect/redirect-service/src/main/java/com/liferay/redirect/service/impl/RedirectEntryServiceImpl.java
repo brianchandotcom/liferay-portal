@@ -127,12 +127,8 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 	@Override
 	public void updateRedirectEntriesReferences(
 			long groupId, String destinationURL, String groupBaseURL,
-			boolean updateReferences, String sourceURL)
+			String sourceURL)
 		throws PortalException {
-
-		if (!updateReferences) {
-			return;
-		}
 
 		String completeSourceURL =
 			groupBaseURL + StringPool.FORWARD_SLASH + sourceURL;

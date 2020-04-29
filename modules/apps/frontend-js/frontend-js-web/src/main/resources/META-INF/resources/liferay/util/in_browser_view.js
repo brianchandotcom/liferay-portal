@@ -63,12 +63,12 @@ export default function inBrowserView(node, win, nodeRegion) {
 					top: frameOffset.top + window.scrollY,
 				};
 
-				var xOffset = frameOffset.left - winRegion.left;
+				const xOffset = frameOffset.left - winRegion.left;
 
 				nodeRegion.left += xOffset;
 				nodeRegion.right += xOffset;
 
-				var yOffset = frameOffset.top - winRegion.top;
+				const yOffset = frameOffset.top - winRegion.top;
 
 				nodeRegion.top += yOffset;
 				nodeRegion.bottom += yOffset;

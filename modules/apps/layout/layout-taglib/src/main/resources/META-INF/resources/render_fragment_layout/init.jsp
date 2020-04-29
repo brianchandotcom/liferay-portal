@@ -21,6 +21,7 @@ page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
 page import="com.liferay.fragment.renderer.DefaultFragmentRendererContext" %><%@
 page import="com.liferay.fragment.renderer.FragmentRendererController" %><%@
 page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><%@
+page import="com.liferay.info.constants.InfoDisplayWebKeys" %><%@
 page import="com.liferay.layout.taglib.internal.display.context.RenderFragmentLayoutDisplayContext" %><%@
 page import="com.liferay.layout.util.structure.CollectionItemLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.CollectionLayoutStructureItem" %><%@

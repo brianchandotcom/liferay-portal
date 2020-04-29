@@ -46,7 +46,7 @@ for (String childrenItemId : childrenItemIds) {
 				<%
 				for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionLayoutStructureItem, segmentsExperienceIds)) {
 					try {
-						request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
+						request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);
 				%>
 
 						<div class="col-md-<%= 12 / collectionLayoutStructureItem.getNumberOfColumns() %>">
@@ -56,7 +56,7 @@ for (String childrenItemId : childrenItemIds) {
 				<%
 					}
 					finally {
-						request.removeAttribute("render_layout_structure.jsp-collectionObject");
+						request.removeAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
 					}
 				}
 				%>
@@ -154,7 +154,7 @@ for (String childrenItemId : childrenItemIds) {
 
 			DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
 
-			Object displayObject = request.getAttribute("render_layout_structure.jsp-collectionObject");
+			Object displayObject = request.getAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
 
 			defaultFragmentRendererContext.setDisplayObject(displayObject);
 

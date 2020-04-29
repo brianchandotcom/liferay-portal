@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.layout.content.page.editor.web.internal.configuration.LayoutContentPageEditorConfiguration"
+	id = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration"
 )
-public interface LayoutContentPageEditorConfiguration {
+public interface FFLayoutContentPageEditorConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean responsiveEnabled();

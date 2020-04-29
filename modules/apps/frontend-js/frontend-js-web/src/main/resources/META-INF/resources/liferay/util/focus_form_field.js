@@ -30,19 +30,9 @@ function getDisabledParents(element) {
 }
 
 export default function focusFormField(element) {
-	let interacting = false;
-
 	element = getElement(element);
 
-	const handler = () => {
-		interacting = true;
-
-		document.body.removeEventListener('click', handler);
-	};
-
-	document.body.addEventListener('click', handler);
-
-	if (!interacting && inBrowserView(element)) {
+	if (inBrowserView(element)) {
 		const disabledParents = getDisabledParents(element);
 
 		const focusable =

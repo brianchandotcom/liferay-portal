@@ -942,13 +942,12 @@ definition {
 			dmFolderDescription = "DM SubFolder 2 Description",
 			dmFolderName = "DM SubFolder 2 Name");
 
-		JSONDocument.addFileWithUploadedFile(
+		DMNavigator.gotoFolder(dmFolderName = "DM SubFolder 2 Name");
+
+		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			folderName = "DM SubFolder 2 Name",
-			groupName = "Guest",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

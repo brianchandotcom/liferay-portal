@@ -410,10 +410,10 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 	const spaceOnTop = top - geometry.top;
 	const align = spaceOnRight > spaceOnLeft ? 'left' : 'right';
 
-	return (
-		// TODO: make tooltip match mock and switch to Clay v3 tooltips directly
-		// instead of using lfr-portal-tooltip.
+	// TODO: make tooltip match mock and switch to Clay v3 tooltips directly
+	// instead of using lfr-portal-tooltip.
 
+	return (
 		<div
 			className="lfr-segments-experiment-click-goal-target"
 			style={{

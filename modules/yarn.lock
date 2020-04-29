@@ -1167,7 +1167,7 @@
     "@clayui/link" "^3.1.1"
     classnames "^2.2.6"
 
-"@clayui/link@3.1.1", "@clayui/link@^3.1.0", "@clayui/link@^3.1.1":
+"@clayui/link@3.1.1", "@clayui/link@^3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@clayui/link/-/link-3.1.1.tgz#b4f454a0f9a45d132435f2168041eb2df2a77ba5"
   integrity sha512-9ITqLGZfw48E30/V/X2mJK5sK1FKL/p/QTkqZBf4NvUkP5ZuDR7fZGaT7GUCsyLFXWuumDe7+jJiMgUbzipu8g==
@@ -1187,7 +1187,7 @@
     "@clayui/sticker" "^3.1.1"
     classnames "^2.2.6"
 
-"@clayui/loading-indicator@3.0.2", "@clayui/loading-indicator@^3.0.1", "@clayui/loading-indicator@^3.0.2":
+"@clayui/loading-indicator@3.0.2", "@clayui/loading-indicator@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@clayui/loading-indicator/-/loading-indicator-3.0.2.tgz#4bdcc273f077ce83b818cf3b14ffd0b3de40c71d"
   integrity sha512-tJFqNsAgEQK20yHJtahtW7K/D/Z34syGE3TD/uEs5+tDPRjcpIi0zjPlay1QP5bBl5KoNvr8/qgTppWHzf/4wg==
@@ -7407,10 +7407,10 @@ escodegen@^1.11.0, escodegen@^1.11.1, escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-liferay@20.0.1:
-  version "20.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-20.0.1.tgz#966b1c538d9af8a63685efadd8d9a81c1d7321f1"
-  integrity sha512-9SSavMhQhgaN4NUzEkoD4GGMdAeIBW+YonnRhIqosfa/rwed1twKWeR55s8yR0p2MOUsORl87bhb9UkD2UVKBg==
+eslint-config-liferay@21.0.0:
+  version "21.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-21.0.0.tgz#65749b5b2b58ffd1dd2395ad320720fd4b5909dc"
+  integrity sha512-FMXe/ajc2OWW5U+4nU2sWhYzDWJ/bleRXYzhJfXoJIU6MAutx8W/SLw4nnux1JxmhTXtNiZhPaKTAZivbo6sfw==
   dependencies:
     eslint-config-prettier "^6.5.0"
     eslint-plugin-no-for-of-loops "^1.0.0"
@@ -11444,10 +11444,10 @@ liferay-npm-bundler@3.0.0-snapshot.dda6cd1:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-npm-scripts@30.0.0:
-  version "30.0.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-30.0.0.tgz#df80c616d056d49257349a69f271934e0111047c"
-  integrity sha512-477Kdd9SPiImvu22V+eQYNTpXOC9FSVm1Z08+wzy+1krNAcsM1YbsTEialr60lq+OzmXFnFJ1tA/C75A/k+vOQ==
+liferay-npm-scripts@31.0.0:
+  version "31.0.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-31.0.0.tgz#fda7780d215a4ef073c6c19aa31473d33f306f90"
+  integrity sha512-3aHE/t0tl4XWqdtx+temtUFYRe9mJxlsU+Upn2BcCArct4jk8VIgyYxv8uCI0gcwwgNbxTXs9I9OknW6im3oPg==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -11476,7 +11476,7 @@ liferay-npm-scripts@30.0.0:
     css-loader "^3.0.0"
     deepmerge "^4.0.0"
     eslint "6.8.0"
-    eslint-config-liferay "20.0.1"
+    eslint-config-liferay "21.0.0"
     fs-extra "^8.1.0"
     globby "11.0.0"
     gulp "^4.0.2"

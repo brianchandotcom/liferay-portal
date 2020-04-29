@@ -44,6 +44,7 @@ import resolveEditableValue from './resolveEditableValue';
 
 const FragmentContent = React.forwardRef(
 	({fragmentEntryLinkId, itemId}, ref) => {
+		const [fragmentElement, setFragmentElement] = useState(null);
 		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const editableProcessorUniqueId = useEditableProcessorUniqueId();
@@ -64,19 +65,35 @@ const FragmentContent = React.forwardRef(
 			[editables]
 		);
 
+		/**
+		 * Updates editables array for the rendered fragment.
+		 * @param {HTMLElement} [nextFragmentElement] Fragment element
+		 *  If not specified, fragmentElement state is used instead.
+		 * @return {Array} Updated editables array
+		 */
 		const updateEditables = useCallback(
-			(parent) => {
+			(nextFragmentElement = undefined) => {
 				let updatedEditableValues = [];
+
 				if (isMounted()) {
-					updatedEditableValues = parent
-						? getAllEditables(parent)
-						: [];
+					if (nextFragmentElement) {
+						setFragmentElement(nextFragmentElement);
+						updatedEditableValues = getAllEditables(
+							nextFragmentElement
+						);
+					}
+					else if (fragmentElement) {
+						updatedEditableValues = getAllEditables(
+							fragmentElement
+						);
+					}
+
 					setEditables(updatedEditableValues);
 				}
 
 				return updatedEditableValues;
 			},
-			[isMounted]
+			[fragmentElement, isMounted]
 		);
 
 		const languageId = useSelector((state) => state.languageId);
@@ -130,9 +147,7 @@ const FragmentContent = React.forwardRef(
 			}, 50);
 
 			if (!editableProcessorUniqueId) {
-				const updatedEditables = updateEditables(element);
-
-				updatedEditables.forEach((editable) => {
+				updateEditables().forEach((editable) => {
 					resolveEditableValue(
 						editableValues,
 						editable.editableId,

@@ -852,9 +852,18 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		JSONLayout.addPrivateLayout(
-			groupName = "Guest",
-			layoutName = "Private Page");
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPrivatePage(pageName = "Private Page");
+
+		Navigator.gotoPrivateSitePage(
+			pageName = "Private Page",
+			siteName = "Guest");
 
 		LAR.exportSiteCP(
 			larFileName = "ExportPrivatePage",

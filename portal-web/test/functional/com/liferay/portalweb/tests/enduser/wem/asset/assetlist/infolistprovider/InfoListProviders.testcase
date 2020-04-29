@@ -1,0 +1,167 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Asset Lists";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-110191. The related assets should be in AP when select Related Assets as Collection Provider."
+	@priority = "5"
+	test DisplayRelatedAssetsInAssetPublisher {
+		task ("Add a Web Content Article, a Blogs Entry and a Document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.png",
+				groupName = "Test Site Name",
+				mimeType = "image/png",
+				sourceFileName = "Document_1.png");
+		}
+
+		task ("Select the Blogs Entry and Document as Relate Assets in Web Content Article") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			RelatedAssets.selectAsset(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+
+			WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "Blogs Entry Title",
+				locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE",
+				value1 = "Blogs Entry Title");
+
+			RelatedAssets.selectAsset(
+				assetTitle = "Document_1.png",
+				assetType = "Basic Document");
+
+			WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "Blogs Entry Title",
+				locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE",
+				value1 = "Blogs Entry Title");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "Document_1.png",
+				locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE",
+				value1 = "Document_1.png");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a widget page and add two Asset Publisher portlets to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "2",
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Navigate to new site page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Select Related Assets as Collection Provider for Asset Publisher in Column 2") {
+			MouseOver.mouseOverNotVisible(
+				key_columnNumber = "2",
+				key_portletName = "Asset Publisher",
+				locator1 = "Home#PAGE_COLUMN_PORTLET_HEADER_ELLIPSIS");
+
+			Click.waitForMenuToggleJSClick(
+				key_columnNumber = "2",
+				key_portletName = "Asset Publisher",
+				locator1 = "Home#PAGE_COLUMN_PORTLET_HEADER_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			Navigator.gotoNavTab(navTab = "Asset Selection");
+
+			Panel.expandPanel(panel = "Asset Selection");
+
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+
+			Alert.viewSuccessMessage();
+
+			Panel.expandPanel(panel = "Select Collection Provider");
+
+			Select(
+				locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD",
+				value1 = "Related Assets");
+
+			Pause(locator1 = "3000");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert no results message shown on Asset Publisher in Column 2") {
+			AssertTextEquals(
+				locator1 = "//div[@id='column-2']//section[contains(@id,'AssetPublisher')]//div[contains(@class,'alert alert-info')]",
+				value1 = "There are no results.");
+		}
+
+		task ("Click the title of Web Content Article on Asset Publisher in Column 1") {
+			AssertClick(
+				key_assetTitle = "Web Content Title",
+				locator1 = "APAsset#ASSET_TITLE",
+				value1 = "Web Content Title");
+		}
+
+		task ("Assert Blogs Entry and Document are shown on Asset Publisher in Column 2") {
+			AssertTextEquals(
+				locator1 = "//div[@id='column-2']//section[contains(@id,'AssetPublisher')]//h4/*[contains(@class,'asset-title')][contains(.,'Blogs Entry Title')]",
+				value1 = "Blogs Entry Title");
+
+			AssertTextEquals(
+				locator1 = "//div[@id='column-2']//section[contains(@id,'AssetPublisher')]//h4/*[contains(@class,'asset-title')][contains(.,'Document_1.png')]",
+				value1 = "Document_1.png");
+		}
+	}
+
+}

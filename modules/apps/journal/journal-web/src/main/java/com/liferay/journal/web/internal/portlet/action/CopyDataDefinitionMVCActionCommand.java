@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -29,13 +30,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -94,24 +93,9 @@ public class CopyDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			dataDefinitionResource.getDataDefinition(ddmStructureId);
 
 		dataDefinition.setDataDefinitionKey(StringPool.BLANK);
-
-		Map<String, Object> newNameMap = new HashMap<>();
-
-		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
-			newNameMap.put(
-				LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
-		}
-
-		dataDefinition.setName(newNameMap);
-
-		Map<String, Object> newDescriptionMap = new HashMap<>();
-
-		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
-			newDescriptionMap.put(
-				LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
-		}
-
-		dataDefinition.setDescription(newDescriptionMap);
+		dataDefinition.setName(LocalizedValueUtil.toStringObjectMap(nameMap));
+		dataDefinition.setDescription(
+			LocalizedValueUtil.toStringObjectMap(descriptionMap));
 
 		DataDefinition newDataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(

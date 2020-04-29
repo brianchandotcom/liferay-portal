@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -182,12 +181,7 @@ public class LayoutModelDocumentContributor
 
 		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
 
-		if ((CompanyThreadLocal.getCompanyId() == 0) ||
-			ExportImportThreadLocal.isStagingInProcess()) {
-
-			searchContext.setCompanyId(stagingLayout.getCompanyId());
-		}
-
+		searchContext.setCompanyId(stagingGroup.getCompanyId());
 		searchContext.setGroupIds(new long[] {stagingGroup.getGroupId()});
 		searchContext.setEntryClassNames(new String[] {Layout.class.getName()});
 

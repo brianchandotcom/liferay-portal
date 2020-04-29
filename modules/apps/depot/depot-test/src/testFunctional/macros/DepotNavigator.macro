@@ -1,5 +1,17 @@
 definition {
 
+	macro gotoDefineCustomLanguages {
+		DepotNavigator.gotoEdit(depotName = "${depotName}");
+
+		DepotNavigator.gotoLanguages(depotName = "${depotName}");
+
+		Pause(locator1 = "3000");
+
+		Click.clickNoMouseOverNoWaitForVisible(
+			key_languagesOption = "Define a custom default language and additional active languages for this asset library.",
+			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
+	}
+
 	macro gotoDepot {
 		if (isSet(listView)) {
 			var key_listEntry = "${depotName}";

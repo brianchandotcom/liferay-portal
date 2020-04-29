@@ -86,7 +86,7 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, null,
 				_roleDescriptionsMaps.get(
 					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER),
-				RoleConstants.TYPE_REGULAR, null, null);
+				RoleConstants.TYPE_ORGANIZATION, null, null);
 		}
 	}
 

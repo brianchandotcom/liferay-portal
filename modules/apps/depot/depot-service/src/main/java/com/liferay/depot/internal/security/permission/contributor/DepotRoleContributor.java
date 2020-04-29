@@ -62,14 +62,10 @@ public class DepotRoleContributor implements RoleContributor {
 			UserBag userBag = roleCollection.getUserBag();
 
 			if (userBag.hasUserGroup(group)) {
-				roleCollection.addRoleId(
-					_getRoleId(
-						group.getCompanyId(),
-						DepotRolesConstants.ASSET_LIBRARY_MEMBER));
+				_addRoleId(
+					roleCollection, DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 
-				roleCollection.addRoleId(
-					_getRoleId(
-						group.getCompanyId(), RoleConstants.SITE_MEMBER));
+				_addRoleId(roleCollection, RoleConstants.SITE_MEMBER);
 			}
 
 			User user = roleCollection.getUser();
@@ -78,10 +74,7 @@ public class DepotRoleContributor implements RoleContributor {
 					user.getUserId(), group.getGroupId(),
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
 
-				roleCollection.addRoleId(
-					_getRoleId(
-						group.getCompanyId(),
-						RoleConstants.SITE_CONTENT_REVIEWER));
+				_addRoleId(roleCollection, RoleConstants.SITE_CONTENT_REVIEWER);
 			}
 
 			boolean assetLibraryOwner =
@@ -94,15 +87,11 @@ public class DepotRoleContributor implements RoleContributor {
 					user.getUserId(), group.getGroupId(),
 					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true)) {
 
-				roleCollection.addRoleId(
-					_getRoleId(
-						group.getCompanyId(),
-						RoleConstants.SITE_ADMINISTRATOR));
+				_addRoleId(roleCollection, RoleConstants.SITE_ADMINISTRATOR);
 			}
 
 			if (assetLibraryOwner) {
-				roleCollection.addRoleId(
-					_getRoleId(group.getCompanyId(), RoleConstants.SITE_OWNER));
+				_addRoleId(roleCollection, RoleConstants.SITE_OWNER);
 			}
 
 			List<DepotEntryGroupRel> depotEntryGroupRels =
@@ -115,11 +104,10 @@ public class DepotRoleContributor implements RoleContributor {
 						_groupLocalService.getGroup(
 							depotEntryGroupRel.getToGroupId()))) {
 
-					roleCollection.addRoleId(
-						_getRoleId(
-							group.getCompanyId(),
-							DepotRolesConstants.
-								ASSET_LIBRARY_CONNECTED_SITE_MEMBER));
+					_addRoleId(
+						roleCollection,
+						DepotRolesConstants.
+							ASSET_LIBRARY_CONNECTED_SITE_MEMBER);
 
 					break;
 				}
@@ -130,12 +118,13 @@ public class DepotRoleContributor implements RoleContributor {
 		}
 	}
 
-	private long _getRoleId(long companyId, String roleName)
+	private void _addRoleId(RoleCollection roleCollection, String roleName)
 		throws PortalException {
 
-		Role role = _roleLocalService.getRole(companyId, roleName);
+		Role role = _roleLocalService.getRole(
+			roleCollection.getCompanyId(), roleName);
 
-		return role.getRoleId();
+		roleCollection.addRoleId(role.getRoleId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

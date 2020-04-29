@@ -100,6 +100,7 @@ public class DisplayPagesImporterTest {
 		String className = "com.liferay.journal.model.JournalArticle";
 
 		Assert.assertEquals(className, layoutPageTemplateEntry.getClassName());
+
 		Assert.assertEquals(
 			"Display Page Template One", layoutPageTemplateEntry.getName());
 

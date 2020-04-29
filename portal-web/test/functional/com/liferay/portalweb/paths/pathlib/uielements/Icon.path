@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>INFO_IE</td>
-	<td>//button[contains(@aria-label,'info-circle') and @title='Info'] | //*[@data-qa-id='infoButton']</td>
+	<td>//button[contains(@aria-label,'info-circle-open')] | //*[@data-qa-id='infoButton']</td>
 	<td></td>
 </tr>
 <tr>

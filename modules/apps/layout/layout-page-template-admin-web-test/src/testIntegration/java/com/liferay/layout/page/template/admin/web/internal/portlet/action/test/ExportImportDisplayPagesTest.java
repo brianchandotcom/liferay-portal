@@ -91,6 +91,152 @@ public class ExportImportDisplayPagesTest {
 			_group2, TestPropsValues.getUserId());
 	}
 
+	@Test
+	public void testExportImportDisplayPage() throws Exception {
+		String className = "com.liferay.journal.model.JournalArticle";
+
+		long classNameId = _portal.getClassNameId(className);
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+
+		long classTypeId = 0;
+
+		List<ClassType> classTypes = infoDisplayContributor.getClassTypes(
+			_group1.getGroupId(), LocaleUtil.getSiteDefault());
+
+		for (ClassType classType : classTypes) {
+			if (Objects.equals(classType.getName(), "Basic Web Content")) {
+				classTypeId = classType.getClassTypeId();
+			}
+		}
+
+		Assert.assertNotEquals(0, classTypeId);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				_serviceContext1.getUserId(),
+				_serviceContext1.getScopeGroupId(), 0, classNameId, classTypeId,
+				"Display Page Template One",
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext1);
+
+		Layout layout1 = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry1.getPlid());
+
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			TestPropsValues.getUserId(), _group1.getGroupId(),
+			_portal.getClassNameId(Layout.class.getName()),
+			layoutPageTemplateEntry1.getPlid(),
+			_read("export_import_display_page_layout_data.json"),
+			_serviceContext1);
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			_group1.getGroupId(), RandomTestUtil.randomString(),
+			_serviceContext1);
+
+		Class<?> clazz = getClass();
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+			_group1.getGroupId(), TestPropsValues.getUserId(),
+			LayoutPageTemplateEntry.class.getName(),
+			layoutPageTemplateEntry1.getLayoutPageTemplateEntryId(),
+			RandomTestUtil.randomString(), repository.getDlFolderId(),
+			clazz.getResourceAsStream("dependencies/thumbnail.png"),
+			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry1.getLayoutPageTemplateEntryId(),
+			fileEntry.getFileEntryId());
+
+		long[] layoutPageTemplateEntryIds = {
+			layoutPageTemplateEntry1.getLayoutPageTemplateEntryId()
+		};
+
+		File file = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
+			layoutPageTemplateEntryIds);
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries = null;
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+
+		try {
+			layoutPageTemplatesImporterResultEntries =
+				_layoutPageTemplatesImporter.importFile(
+					TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
+					false);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		Assert.assertNotNull(layoutPageTemplatesImporterResultEntries);
+
+		Assert.assertEquals(
+			layoutPageTemplatesImporterResultEntries.toString(), 1,
+			layoutPageTemplatesImporterResultEntries.size());
+
+		LayoutPageTemplatesImporterResultEntry layoutPageTemplateImportEntry =
+			layoutPageTemplatesImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED,
+			layoutPageTemplateImportEntry.getStatus());
+
+		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
+			layoutPageTemplateImportEntry.getName());
+
+		layoutPageTemplateEntryKey = StringUtil.replace(
+			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group2.getGroupId(), layoutPageTemplateEntryKey);
+
+		Assert.assertNotNull(layoutPageTemplateEntry2);
+
+		Layout layout2 = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry2.getPlid());
+
+		Assert.assertNotNull(layout2);
+
+		Assert.assertEquals(
+			layout1.getMasterLayoutPlid(), layout2.getMasterLayoutPlid());
+
+		Assert.assertEquals(
+			layoutPageTemplateEntry1.getName(),
+			layoutPageTemplateEntry2.getName());
+		Assert.assertEquals(
+			layoutPageTemplateEntry1.getType(),
+			layoutPageTemplateEntry2.getType());
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure1 =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layoutPageTemplateEntry1.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layoutPageTemplateEntry1.getPlid());
+		LayoutPageTemplateStructure layoutPageTemplateStructure2 =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layoutPageTemplateEntry2.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layoutPageTemplateEntry2.getPlid());
+
+		LayoutStructure layoutStructure1 = LayoutStructure.of(
+			layoutPageTemplateStructure1.getData(0));
+		LayoutStructure layoutStructure2 = LayoutStructure.of(
+			layoutPageTemplateStructure2.getData(0));
+
+		_validateRootLayoutStructureItem(
+			(RootLayoutStructureItem)
+				layoutStructure1.getMainLayoutStructureItem(),
+			(RootLayoutStructureItem)
+				layoutStructure2.getMainLayoutStructureItem());
+	}
+
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));

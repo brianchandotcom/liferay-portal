@@ -20,6 +20,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_SELECTION_INFO_LIST_PROVIDER</td>
+	<td>//input[contains(@id,'selectionStyleInfoListProvider')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_SELECTION_MANUAL</td>
 	<td>//input[contains(@id,'selectionStyleManual')]</td>
 	<td></td>

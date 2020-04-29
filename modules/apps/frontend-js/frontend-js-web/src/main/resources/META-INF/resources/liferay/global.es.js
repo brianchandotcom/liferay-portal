@@ -132,12 +132,12 @@ Liferay.Util.formatXML = formatXML;
 Liferay.Util.getCropRegion = getCropRegion;
 
 /**
- * @deprecated As of Athanasius (7.3.x), replaced by `import {getDOM} from 'frontend-js-web'`
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 Liferay.Util.getDOM = getDOM;
 
 /**
- * @deprecated As of Athanasius (7.3.x), replaced by `import {getElement} from 'frontend-js-web'`
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 Liferay.Util.getElement = getElement;
 

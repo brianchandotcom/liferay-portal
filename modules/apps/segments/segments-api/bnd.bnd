@@ -18,7 +18,8 @@ Export-Package:\
 	com.liferay.segments.provider,\
 	com.liferay.segments.service,\
 	com.liferay.segments.service.persistence,\
-	com.liferay.segments.simulator
+	com.liferay.segments.simulator,\
+	com.liferay.segments.util
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.segments.lang)";\

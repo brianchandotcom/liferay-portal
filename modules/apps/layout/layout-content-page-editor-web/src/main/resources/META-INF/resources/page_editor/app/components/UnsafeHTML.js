@@ -83,15 +83,18 @@ export default class UnsafeHTML extends React.PureComponent {
 
 		ref.innerHTML = this.props.markup;
 
-		this.setState(
-			{
-				portals: this.props.getPortals(ref),
-			},
-			() => {
+		const portals = this.props.getPortals(ref);
+
+		if (portals.length || portals.length !== this.state.portals.length) {
+			this.setState({portals}, () => {
 				this._runRefScripts();
 				this.props.onRender(ref);
-			}
-		);
+			});
+		}
+		else {
+			this._runRefScripts();
+			this.props.onRender(ref);
+		}
 	}
 
 	/**

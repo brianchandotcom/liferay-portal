@@ -761,6 +761,57 @@ definition {
 			value1 = "Temporary (302)");
 	}
 
+	@description = "This ensures that the 404 URLs can be viewed after reactivating."
+	@priority = "5"
+	test View404URLsAfterReactivating {
+		var portalURL = PropsUtil.get("portal.url");
+
+		for (var i : list "1,2,3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Source Page${i}");
+		}
+
+		for (var i : list "1,2,3") {
+			Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+			Redirect.addEntry(
+				destinationURL = "${portalURL}/web/test-site-name/test-destination-page${i}",
+				redirectType = "Permanent (301)",
+				siteName = "test-site-name",
+				sourceURL = "test-source-page${i}");
+		}
+
+		for (var i : list "1,2,3") {
+			Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page${i}");
+		}
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.ignoreEntry(ignoreAllEntries = "true");
+
+		Redirect.view404URLsDefault();
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.ignoreEntry(
+			unignore = "true",
+			unignoreAllEntries = "true");
+
+		Redirect.view404URLsDefault();
+
+		for (var i : list "1,2,3") {
+			Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+			Redirect.view404URLs(
+				activeIgnoreURL = "true",
+				ignoreURL = "${portalURL}/web/test-site-name/test-destination-page${i}",
+				multipleURLs = "true");
+		}
+	}
+
 	@description = "This ensures that an expired temporary redirect can be reactivated."
 	@priority = "5"
 	test ViewExpiredAndActiveEntries {

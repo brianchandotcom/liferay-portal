@@ -43,12 +43,12 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(title);
 %>
 
-<portlet:actionURL name="/document_library/ddm/add_ddm_structure" var="addDDMStructureURL" />
+<portlet:actionURL name="/document_library/ddm/add_data_definition" var="addDataDefinitionURL" />
 
 <portlet:actionURL name="/document_library/ddm/update_ddm_structure" var="updateDDMStructureURL" />
 
 <clay:container>
-	<aui:form action="<%= (ddmStructure == null) ? addDDMStructureURL : updateDDMStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
+	<aui:form action="<%= (ddmStructure == null) ? addDataDefinitionURL : updateDDMStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="dataDefinitionId" type="hidden" value="<%= ddmStructureId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />

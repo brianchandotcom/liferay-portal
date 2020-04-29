@@ -24,6 +24,8 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -32,11 +34,13 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -59,8 +63,6 @@ public class SegmentsExperienceUtil {
 			classNameId, classPK, commentManager, groupId,
 			sourceSegmentsExperienceId, targetSegmentsExperienceId,
 			serviceContextFunction, userId);
-
-		_copyPortletPreferences(classPK);
 	}
 
 	private static void _copyLayoutData(
@@ -88,43 +90,66 @@ public class SegmentsExperienceUtil {
 				dataJSONObject.toString());
 	}
 
-	private static void _copyPortletPreferences(long plid) {
-		List<PortletPreferences> portletPreferencesList =
-			PortletPreferencesLocalServiceUtil.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid);
+	private static String _getNewEditableValues(
+			String editableValues, long plid)
+		throws JSONException {
 
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				portletPreferences.getPortletId());
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			editableValues);
 
-			if ((portlet == null) || portlet.isUndeployedPortlet()) {
-				continue;
-			}
+		String instanceId = editableValuesJSONObject.getString("instanceId");
+		String portletId = editableValuesJSONObject.getString("portletId");
 
-			//TODO check
-			String newPortletId = PortletIdCodec.generateInstanceId();
-
-			PortletPreferences existingPortletPreferences =
-				PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
-					portletPreferences.getOwnerId(),
-					portletPreferences.getOwnerType(), plid, newPortletId);
-
-			if (existingPortletPreferences == null) {
-				PortletPreferencesLocalServiceUtil.addPortletPreferences(
-					portletPreferences.getCompanyId(),
-					portletPreferences.getOwnerId(),
-					portletPreferences.getOwnerType(), plid, newPortletId,
-					portlet, portletPreferences.getPreferences());
-			}
-			else {
-				existingPortletPreferences.setPreferences(
-					portletPreferences.getPreferences());
-
-				PortletPreferencesLocalServiceUtil.updatePortletPreferences(
-					existingPortletPreferences);
-			}
+		if (Validator.isNull(instanceId) || Validator.isNull(portletId)) {
+			return editableValues;
 		}
+
+		return _getNewPortletPreferencesOptional(
+			instanceId, plid, portletId
+		).map(
+			portletPreferences -> {
+				JSONObject newEditableValuesJSONObject =
+					editableValuesJSONObject.put(
+						"instanceId",
+						PortletIdCodec.decodeInstanceId(
+							portletPreferences.getPortletId()));
+
+				return newEditableValuesJSONObject.toString();
+			}
+		).orElse(
+			editableValues
+		);
+	}
+
+	private static Optional<PortletPreferences>
+		_getNewPortletPreferencesOptional(
+			String instanceId, long plid, String portletId) {
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
+				PortletIdCodec.encode(portletId, instanceId));
+
+		if (portletPreferences == null) {
+			return Optional.empty();
+		}
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletPreferences.getPortletId());
+
+		if ((portlet == null) || portlet.isUndeployedPortlet()) {
+			return Optional.empty();
+		}
+
+		return Optional.of(
+			PortletPreferencesLocalServiceUtil.addPortletPreferences(
+				portletPreferences.getCompanyId(),
+				portletPreferences.getOwnerId(),
+				portletPreferences.getOwnerType(), plid,
+				PortletIdCodec.encode(
+					portletId, PortletIdCodec.generateInstanceId()),
+				portlet, portletPreferences.getPreferences()));
 	}
 
 	private static JSONObject _updateLayoutDataJSONObject(
@@ -176,6 +201,9 @@ public class SegmentsExperienceUtil {
 			newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
 			newFragmentEntryLink.setSegmentsExperienceId(
 				targetSegmentsExperienceId);
+			newFragmentEntryLink.setEditableValues(
+				_getNewEditableValues(
+					fragmentEntryLink.getEditableValues(), classPK));
 			newFragmentEntryLink.setLastPropagationDate(new Date());
 
 			newFragmentEntryLink =

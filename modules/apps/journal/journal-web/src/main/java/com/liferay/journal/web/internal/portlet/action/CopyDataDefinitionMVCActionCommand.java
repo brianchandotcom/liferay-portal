@@ -81,9 +81,6 @@ public class CopyDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), actionRequest);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -129,6 +126,9 @@ public class CopyDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "copyTemplates");
 
 		if (copyTemplates) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DDMStructure.class.getName(), actionRequest);
+
 			_ddmTemplateService.copyTemplates(
 				_portal.getClassNameId(DDMStructure.class), ddmStructureId,
 				_portal.getClassNameId(JournalArticle.class),

@@ -36,7 +36,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 	public static SpiraCustomProperty createSpiraCustomProperty(
 		final SpiraProject spiraProject,
 		final Class<? extends SpiraArtifact> spiraArtifactClass,
-		String customPropertyName) {
+		String customPropertyName, Type type) {
 
 		List<SpiraCustomProperty> spiraCustomProperties =
 			getSpiraCustomProperties(spiraProject, spiraArtifactClass);
@@ -77,7 +77,7 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 		requestJSONObject.put(
 			"ArtifactTypeId", getArtifactTypeID(spiraArtifactClass));
-		requestJSONObject.put("CustomPropertyTypeId", Type.MULTILIST.getID());
+		requestJSONObject.put("CustomPropertyTypeId", type.getID());
 		requestJSONObject.put("Name", customPropertyName);
 		requestJSONObject.put("ProjectTemplateId", projectTemplateID);
 
@@ -90,12 +90,14 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		requestJSONObject.put("PropertyNumber", positionNumber);
 
 		try {
-			SpiraCustomProperty spiraCustomProperty = new SpiraCustomProperty(
-				SpiraRestAPIUtil.requestJSONObject(
-					"project-templates/{project_template_id}/custom-properties",
-					urlParameters, urlPathReplacements, HttpRequestMethod.POST,
-					requestJSONObject.toString()),
-				spiraProject, spiraArtifactClass);
+			SpiraRestAPIUtil.requestJSONObject(
+				"project-templates/{project_template_id}/custom-properties",
+				urlParameters, urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONObject.toString());
+
+			SpiraCustomProperty spiraCustomProperty =
+				spiraProject.getSpiraCustomPropertyByName(
+					spiraArtifactClass, customPropertyName);
 
 			SearchQuery.clearSearchQueries(SpiraCustomProperty.class);
 
@@ -173,10 +175,18 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		return spiraCustomListValues;
 	}
 
+	public SpiraCustomProperty.Type getType() {
+		return Type.get(jsonObject.getInt("CustomPropertyTypeId"));
+	}
+
 	public static enum Type {
 
 		BOOLEAN(4), DATE(5), DECIMAL(3), INTEGER(2), LIST(6), MULTILIST(7),
 		TEXT(1), USER(8);
+
+		public static Type get(Integer id) {
+			return _types.get(id);
+		}
 
 		public Integer getID() {
 			return _id;
@@ -184,6 +194,14 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 		private Type(Integer id) {
 			_id = id;
+		}
+
+		private static Map<Integer, Type> _types = new HashMap<>();
+
+		static {
+			for (Type type : values()) {
+				_types.put(type.getID(), type);
+			}
 		}
 
 		private final Integer _id;

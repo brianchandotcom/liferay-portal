@@ -27,18 +27,11 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmStructure.getName(locale), false));
-
-PortletURL copyDDMStructureURL = renderResponse.createActionURL();
-
-if (journalDisplayContext.useDataEngineEditor()) {
-	copyDDMStructureURL.setParameter(ActionRequest.ACTION_NAME, "/journal/copy_data_definition");
-}
-else {
-	copyDDMStructureURL.setParameter(ActionRequest.ACTION_NAME, "/journal/copy_ddm_structure");
-}
-
-copyDDMStructureURL.setParameter("mvcPath", "/copy_ddm_structure.jsp");
 %>
+
+<portlet:actionURL name='<%= journalDisplayContext.useDataEngineEditor() ? "/journal/copy_data_definition" : "/journal/copy_ddm_structure" %>' var="copyDDMStructureURL">
+	<portlet:param name="mvcPath" value="/copy_ddm_structure.jsp" />
+</portlet:actionURL>
 
 <liferay-frontend:edit-form
 	action="<%= copyDDMStructureURL %>"

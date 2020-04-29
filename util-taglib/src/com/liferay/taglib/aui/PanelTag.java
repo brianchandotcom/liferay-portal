@@ -14,27 +14,13 @@
 
 package com.liferay.taglib.aui;
 
-import com.liferay.taglib.aui.base.BaseContainerTag;
-
-import javax.servlet.jsp.JspWriter;
+import com.liferay.taglib.aui.base.BasePanelTag;
 
 /**
  * @author Eduardo Lundgren
  * @author Bruno Basto
  * @author Nathan Cavanaugh
  * @author Julio Camarero
- * @deprecated As of Athanasius (7.3.x), replaced by clay:container
  */
-@Deprecated
-public class ContainerTag extends BaseContainerTag {
-
-	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		jspWriter.write("</div>");
-
-		return EVAL_PAGE;
-	}
-
+public class PanelTag extends BasePanelTag {
 }

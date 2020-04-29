@@ -12,29 +12,33 @@
  * details.
  */
 
-package com.liferay.taglib.aui;
+package com.liferay.taglib.aui.base;
 
-import com.liferay.taglib.aui.base.BaseContainerTag;
-
-import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Eduardo Lundgren
  * @author Bruno Basto
  * @author Nathan Cavanaugh
  * @author Julio Camarero
- * @deprecated As of Athanasius (7.3.x), replaced by clay:container
+ * @generated
  */
-@Deprecated
-public class ContainerTag extends BaseContainerTag {
+public abstract class BaseSpacerTag extends com.liferay.taglib.TagSupport {
 
 	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		jspWriter.write("</div>");
-
-		return EVAL_PAGE;
+	public int doStartTag() throws JspException {
+		return super.doStartTag();
 	}
+
+	protected void cleanUp() {
+	}
+
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	private static final String _PAGE =
+		"/html/taglib/aui/spacer/page.jsp";
+
 
 }

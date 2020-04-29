@@ -348,7 +348,7 @@
 		</attributes>
 	</component>
 	<component bodyContent="true" name="Container">
-		<description>Creates a container <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap <![CDATA[<code>&lt;aui:row&gt;</code>]]> components and offer additional styling.</description>
+		<description>Creates a container <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap <![CDATA[<code>&lt;aui:row&gt;</code>]]> components and offer additional styling. Deprecated as of Athanasius (7.3.x), replaced by clay:container.</description>
 		<attributes>
 			<attribute>
 				<description>A CSS class for styling the component.</description>

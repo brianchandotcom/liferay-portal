@@ -63,47 +63,20 @@ definition {
 
 		var fileExtension = File.getFileExtension(fileName = "${fileName}");
 
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			if ("${fileExtension}" == "html") {
-				Type.typeCodeMirrorEditorNoError(
-					key_editorNumber = "1",
-					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_IE",
-					value1 = "${content}");
-			}
-			else if ("${fileExtension}" == "css") {
-				Type.typeCodeMirrorEditorNoError(
-					key_editorNumber = "2",
-					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_IE",
-					value1 = "${content}");
-			}
-			else if ("${fileExtension}" == "js") {
-				Type.typeCodeMirrorEditorNoError(
-					key_editorNumber = "3",
-					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_IE",
-					value1 = "${content}");
-			}
-			else {
-				fail("Invalid file extension. Expected: html, css, js, or json. Got ${fileExtension}");
-			}
+		if ("${fileExtension}" == "html") {
+			FragmentsEditor.typeHtmlEditor(content = "${content}");
+		}
+		else if ("${fileExtension}" == "css") {
+			FragmentsEditor.typeCssEditor(content = "${content}");
+		}
+		else if ("${fileExtension}" == "js") {
+			FragmentsEditor.typeJsEditor(content = "${content}");
+		}
+		else if ("${fileExtension}" == "json") {
+			FragmentsEditor.typeConfigurationEditor(content = "${content}");
 		}
 		else {
-			if ("${fileExtension}" == "html") {
-				FragmentsEditor.typeHtmlEditor(content = "${content}");
-			}
-			else if ("${fileExtension}" == "css") {
-				FragmentsEditor.typeCssEditor(content = "${content}");
-			}
-			else if ("${fileExtension}" == "js") {
-				FragmentsEditor.typeJsEditor(content = "${content}");
-			}
-			else if ("${fileExtension}" == "json") {
-				FragmentsEditor.typeConfigurationEditor(content = "${content}");
-			}
-			else {
-				fail("Invalid file extension. Expected: html, css, js, or json. Got ${fileExtension}");
-			}
+			fail("Invalid file extension. Expected: html, css, js, or json. Got ${fileExtension}");
 		}
 	}
 

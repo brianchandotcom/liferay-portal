@@ -273,8 +273,12 @@ public class RecurrenceUtil {
 		List<CalendarBooking> calendarBookingInstances = expandCalendarBooking(
 			calendarBooking, calendarBooking.getStartTime(), Long.MAX_VALUE, 0);
 
-		return calendarBookingInstances.get(
-			calendarBookingInstances.size() - 1);
+		if (!calendarBookingInstances.isEmpty()) {
+			return calendarBookingInstances.get(
+				calendarBookingInstances.size() - 1);
+		}
+
+		return calendarBooking;
 	}
 
 	protected static boolean hasLimit(Recurrence recurrence) {

@@ -80,7 +80,8 @@ $light-color: #e7e7ed;
 		}
 
 		.comment-container:hover .actions-menu,
-		.actions-menu:focus {
+		.actions-menu:focus,
+		.actions-menu.open {
 			display: inline-block;
 		}
 	}

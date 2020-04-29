@@ -38,11 +38,3 @@ export default function undoReducer(state, action) {
 			return state;
 	}
 }
-
-// function getItemIdFromFragmentEntry(fragmentEntryLinkId, layoutData) {
-// 	return Object.values(layoutData.items).find(
-// 		item =>
-// 			item.config &&
-// 			item.config.fragmentEntryLinkId === fragmentEntryLinkId
-// 	).itemId;
-// }

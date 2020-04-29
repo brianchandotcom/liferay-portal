@@ -45,13 +45,15 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-appli
 	for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory.getKey())) {
 	%>
 
-		<div class="list-group">
-			<div class="list-group-heading panel-app-root panel-header <%= Objects.equals(themeDisplay.getPpid(), panelApp.getPortletId()) ? "active" : StringPool.BLANK %>">
-				<liferay-application-list:panel-app
-					panelApp="<%= panelApp %>"
-				/>
+		<c:if test="<%= panelApp.isShow(permissionChecker, themeDisplay.getScopeGroup()) %>">
+			<div class="list-group">
+				<div class="list-group-heading panel-app-root panel-header <%= Objects.equals(themeDisplay.getPpid(), panelApp.getPortletId()) ? "active" : StringPool.BLANK %>">
+					<liferay-application-list:panel-app
+						panelApp="<%= panelApp %>"
+					/>
+				</div>
 			</div>
-		</div>
+		</c:if>
 
 	<%
 	}

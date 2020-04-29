@@ -34,8 +34,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ProductMenuPanelApp extends BasePanelApp {
 
 	public ProductMenuPanelApp(
-		String panelCategoryKey, String portletId, long[] siteIds) {
+		long companyId, String panelCategoryKey, String portletId,
+		long[] siteIds) {
 
+		_companyId = companyId;
 		_panelCategoryKey = panelCategoryKey;
 		_portletId = portletId;
 		_siteIds = siteIds;
@@ -72,7 +74,8 @@ public class ProductMenuPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (super.isShow(permissionChecker, group) &&
+		if ((_companyId == group.getCompanyId()) &&
+			super.isShow(permissionChecker, group) &&
 			(PanelCategoryKeys.CONTROL_PANEL.equals(_panelCategoryKey) ||
 			 ArrayUtil.contains(_siteIds, AppBuilderAppConstants.SITE_ID_ALL) ||
 			 ArrayUtil.contains(_siteIds, group.getGroupId()))) {
@@ -83,6 +86,7 @@ public class ProductMenuPanelApp extends BasePanelApp {
 		return false;
 	}
 
+	private final long _companyId;
 	private final String _panelCategoryKey;
 	private final String _portletId;
 	private final long[] _siteIds;

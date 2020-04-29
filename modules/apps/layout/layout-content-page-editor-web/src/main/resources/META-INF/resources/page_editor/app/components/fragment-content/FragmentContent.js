@@ -191,13 +191,16 @@ const FragmentContent = React.forwardRef(
 			[]
 		);
 
-		const onFloatingToolbarButtonClick = (buttonId, editableId) => {
-			if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
-				setEditableProcessorUniqueId(
-					getEditableUniqueId(fragmentEntryLinkId, editableId)
-				);
-			}
-		};
+		const onFloatingToolbarButtonClick = useCallback(
+			(buttonId, editableId) => {
+				if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
+					setEditableProcessorUniqueId(
+						getEditableUniqueId(fragmentEntryLinkId, editableId)
+					);
+				}
+			},
+			[fragmentEntryLinkId, setEditableProcessorUniqueId]
+		);
 
 		return (
 			<>

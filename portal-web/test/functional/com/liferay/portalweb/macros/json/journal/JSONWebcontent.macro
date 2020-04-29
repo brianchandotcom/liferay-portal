@@ -47,6 +47,7 @@ definition {
 			groupId = "${groupId}");
 
 		JSONWebcontentAPI._addFolder(
+			folderDescription = "${folderDescription}",
 			folderName = "${folderName}",
 			groupId = "${groupId}",
 			parentFolderId = "${parentFolderId}");

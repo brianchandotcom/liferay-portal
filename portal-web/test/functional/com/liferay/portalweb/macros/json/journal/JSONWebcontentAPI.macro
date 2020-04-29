@@ -6,13 +6,20 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (isSet(folderDescription)) {
+			var description = "${folderDescription}";
+		}
+		else {
+			var description = "";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d parentFolderId=${parentFolderId} \
 				-d name=${folderName} \
-				-d description=''
+				-d description=${description}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

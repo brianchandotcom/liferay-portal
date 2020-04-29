@@ -70,33 +70,20 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			() -> super.hasPermission(groupId, name, primKey, actionId));
 	}
 
-	private Group _getDepotGroup(String name, long primKey) {
-		try {
-			if (!StringUtil.equals(name, Group.class.getName())) {
-				return null;
-			}
-
-			Group group = _groupLocalService.getGroup(primKey);
-
-			if (group.getType() == GroupConstants.TYPE_DEPOT) {
-				return group;
-			}
-
-			return null;
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return null;
-		}
-	}
-
 	private boolean _hasPermission(
 		String name, long primKey, String actionId,
 		Supplier<Boolean> hasPermissionSupplier) {
 
 		try {
-			Group depotGroup = _getDepotGroup(name, primKey);
+			Group depotGroup = null;
+
+			if (StringUtil.equals(name, Group.class.getName())) {
+				depotGroup = _groupLocalService.getGroup(primKey);
+
+				if (depotGroup.getType() != GroupConstants.TYPE_DEPOT) {
+					depotGroup = null;
+				}
+			}
 
 			if (depotGroup == null) {
 				return hasPermissionSupplier.get();

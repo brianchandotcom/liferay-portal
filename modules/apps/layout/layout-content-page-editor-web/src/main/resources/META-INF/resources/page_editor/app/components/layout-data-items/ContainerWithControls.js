@@ -15,7 +15,7 @@
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -51,23 +51,29 @@ const ContainerWithControls = React.forwardRef(
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 		const selectItem = useSelectItem();
 
-		const handleButtonClick = (id) => {
-			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
-				dispatch(
-					duplicateItem({
-						itemId: item.itemId,
-						selectItem,
-						store: {segmentsExperienceId},
-					})
-				);
-			}
-			else if (
-				id ===
-				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition.id
-			) {
-				setOpenSaveFragmentCompositionModal(true);
-			}
-		};
+		const handleButtonClick = useCallback(
+			(id) => {
+				if (
+					id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id
+				) {
+					dispatch(
+						duplicateItem({
+							itemId: item.itemId,
+							segmentsExperienceId,
+							selectItem,
+						})
+					);
+				}
+				else if (
+					id ===
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
+						.id
+				) {
+					setOpenSaveFragmentCompositionModal(true);
+				}
+			},
+			[dispatch, item.itemId, segmentsExperienceId, selectItem]
+		);
 
 		const buttons = [];
 

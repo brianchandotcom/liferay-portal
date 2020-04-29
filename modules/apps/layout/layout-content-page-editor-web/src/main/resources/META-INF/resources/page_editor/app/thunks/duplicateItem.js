@@ -15,9 +15,11 @@
 import duplicateItemAction from '../actions/duplicateItem';
 import FragmentService from '../services/FragmentService';
 
-export default function duplicateItem({itemId, store, selectItem = () => {}}) {
-	const {segmentsExperienceId} = store;
-
+export default function duplicateItem({
+	itemId,
+	segmentsExperienceId,
+	selectItem = () => {},
+}) {
 	return (dispatch) => {
 		FragmentService.duplicateItem({
 			itemId,

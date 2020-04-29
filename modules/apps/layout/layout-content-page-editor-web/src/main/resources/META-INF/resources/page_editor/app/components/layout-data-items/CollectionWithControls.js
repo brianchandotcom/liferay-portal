@@ -12,7 +12,7 @@
  * details.
  */
 
-import React from 'react';
+import React, {useCallback} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -40,17 +40,22 @@ const CollectionWithControls = React.forwardRef(
 			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration
 		);
 
-		const handleButtonClick = (id) => {
-			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
-				dispatch(
-					duplicateItem({
-						itemId: item.itemId,
-						selectItem,
-						store: {segmentsExperienceId},
-					})
-				);
-			}
-		};
+		const handleButtonClick = useCallback(
+			(id) => {
+				if (
+					id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id
+				) {
+					dispatch(
+						duplicateItem({
+							itemId: item.itemId,
+							segmentsExperienceId,
+							selectItem,
+						})
+					);
+				}
+			},
+			[dispatch, item.itemId, segmentsExperienceId, selectItem]
+		);
 
 		return (
 			<Topper item={item} itemRef={ref} layoutData={layoutData}>

@@ -29,7 +29,7 @@
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -74,7 +74,9 @@ const RowWithControls = React.forwardRef(
 			},
 		});
 
-		const state = useSelector((state) => state);
+		const segmentsExperienceId = useSelector(
+			(state) => state.segmentsExperienceId
+		);
 
 		const rowRef = useRef(null);
 		const rowRect = getRect(rowRef.current);
@@ -82,22 +84,28 @@ const RowWithControls = React.forwardRef(
 		const [resizeFinished, setResizeFinished] = useState(false);
 		const [showOverlay, setShowOverlay] = useState(false);
 
-		const handleButtonClick = (id) => {
-			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
-				dispatch(
-					duplicateItem({
-						itemId: item.itemId,
-						store: state,
-					})
-				);
-			}
-			else if (
-				id ===
-				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition.id
-			) {
-				setOpenSaveFragmentCompositionModal(true);
-			}
-		};
+		const handleButtonClick = useCallback(
+			(id) => {
+				if (
+					id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id
+				) {
+					dispatch(
+						duplicateItem({
+							itemId: item.itemId,
+							segmentsExperienceId,
+						})
+					);
+				}
+				else if (
+					id ===
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
+						.id
+				) {
+					setOpenSaveFragmentCompositionModal(true);
+				}
+			},
+			[dispatch, item.itemId, segmentsExperienceId]
+		);
 
 		const getHighlightedColumnIndex = (clientX) => {
 			const gridSizes = getGridSizes(rowRect.width);
@@ -166,11 +174,11 @@ const RowWithControls = React.forwardRef(
 				dispatch(
 					resizeColumns({
 						layoutData,
-						store: state,
+						segmentsExperienceId,
 					})
 				);
 			}
-		}, [layoutData, state, dispatch, resizeFinished]);
+		}, [layoutData, dispatch, resizeFinished, segmentsExperienceId]);
 
 		const buttons = [];
 

@@ -1174,6 +1174,12 @@ public class LayoutPageTemplatesImporterImpl
 
 	private String _toTypeName(int layoutPageTemplateEntryType) {
 		if (layoutPageTemplateEntryType ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+			return "display page template";
+		}
+
+		if (layoutPageTemplateEntryType ==
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
 
 			return "master page";

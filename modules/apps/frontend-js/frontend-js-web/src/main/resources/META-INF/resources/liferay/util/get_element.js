@@ -14,6 +14,9 @@
 
 import getDOM from './get_dom';
 
+/**
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ */
 export default function getElement(element) {
 	const currentElement = getDOM(element);
 

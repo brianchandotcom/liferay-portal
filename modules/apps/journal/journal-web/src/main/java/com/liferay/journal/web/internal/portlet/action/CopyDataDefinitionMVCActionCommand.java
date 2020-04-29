@@ -73,6 +73,9 @@ public class CopyDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long ddmStructureId = ParamUtil.getLong(
 			actionRequest, "ddmStructureId");
 
@@ -80,9 +83,6 @@ public class CopyDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		DataDefinitionResource dataDefinitionResource =
 			DataDefinitionResource.builder(

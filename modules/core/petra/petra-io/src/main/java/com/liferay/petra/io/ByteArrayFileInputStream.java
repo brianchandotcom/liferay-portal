@@ -190,16 +190,21 @@ public class ByteArrayFileInputStream extends InputStream {
 
 		_data = new byte[arraySize];
 
-		try (FileInputStream fileInputStream = new FileInputStream(_file)) {
-			int offset = 0;
-			int length = 0;
+		FileInputStream fileInputStream = new FileInputStream(_file);
 
+		int offset = 0;
+		int length = 0;
+
+		try {
 			while (offset < arraySize) {
 				length = fileInputStream.read(
 					_data, offset, arraySize - offset);
 
 				offset += length;
 			}
+		}
+		finally {
+			fileInputStream.close();
 		}
 	}
 

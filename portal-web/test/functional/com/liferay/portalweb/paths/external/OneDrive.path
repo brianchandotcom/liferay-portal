@@ -41,7 +41,12 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_TITLE</td>
-	<td>//div[@id='BreadcrumbTitle']</td>
+	<td>//div[@id='BreadcrumbTitle'] | //button[@id='documentTitle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_TITLE_RENAME</td>
+	<td>//input[@id='CommitNewDocumentTitle']</td>
 	<td></td>
 </tr>
 <tr>

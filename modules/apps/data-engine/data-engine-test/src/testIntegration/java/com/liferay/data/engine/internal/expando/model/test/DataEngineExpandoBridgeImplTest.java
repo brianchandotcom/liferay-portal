@@ -21,6 +21,7 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -90,9 +91,22 @@ public class DataEngineExpandoBridgeImplTest {
 
 		_company = CompanyLocalServiceUtil.getCompany(group.getCompanyId());
 
-		_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-			_company.getCompanyId(), DataDefinition.class.getName(),
-			RandomTestUtil.randomLong());
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.data.engine.internal.configuration." +
+						"DataEngineConfiguration",
+					new HashMapDictionary<String, Object>() {
+						{
+							put(
+								"dataEngineNativeObjectClassNames",
+								new String[] {DataDefinition.class.getName()});
+						}
+					})) {
+
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+				_company.getCompanyId(), DataDefinition.class.getName(),
+				RandomTestUtil.randomLong());
+		}
 	}
 
 	@AfterClass

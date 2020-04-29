@@ -21,6 +21,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,6 +84,15 @@ public class SiteRoleTypeContributor implements RoleTypeContributor {
 		}
 
 		return !_portal.isSystemRole(role.getName());
+	}
+
+	@Override
+	public boolean isAutomaticallyAssigned(Role role) {
+		if (Objects.equals(RoleConstants.SITE_MEMBER, role.getName())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

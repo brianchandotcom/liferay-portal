@@ -16,6 +16,7 @@ package com.liferay.roles.admin.internal.role.type.contributor;
 
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
@@ -66,11 +67,8 @@ public class RegularRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public boolean isAllowAssignMembers(Role role) {
-		String name = role.getName();
-
-		if (name.equals(RoleConstants.GUEST) ||
-			name.equals(RoleConstants.OWNER) ||
-			name.equals(RoleConstants.USER)) {
+		if (ArrayUtil.contains(
+				_AUTOMATICALLY_ASSIGNED_ROLE_NAMES, role.getName())) {
 
 			return false;
 		}
@@ -100,6 +98,21 @@ public class RegularRoleTypeContributor implements RoleTypeContributor {
 
 		return !_portal.isSystemRole(role.getName());
 	}
+
+	@Override
+	public boolean isAutomaticallyAssigned(Role role) {
+		if (ArrayUtil.contains(
+				_AUTOMATICALLY_ASSIGNED_ROLE_NAMES, role.getName())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final String[] _AUTOMATICALLY_ASSIGNED_ROLE_NAMES = {
+		RoleConstants.GUEST, RoleConstants.OWNER, RoleConstants.USER
+	};
 
 	@Reference
 	private Portal _portal;

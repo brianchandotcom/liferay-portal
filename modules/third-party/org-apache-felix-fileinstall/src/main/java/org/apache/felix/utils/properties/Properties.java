@@ -292,7 +292,9 @@ public class Properties extends AbstractMap<String, String> {
 					new ArrayList<>(propertiesReader.getValueLines())));
 		}
 
-		if (!maybeTyped || !propertiesReader.isTyped()) {
+		Boolean typed = propertiesReader.isTyped();
+
+		if (!maybeTyped || (typed == null) || !typed) {
 			_typed = false;
 
 			for (Entry<String, String> entry : _storage.entrySet()) {
@@ -633,7 +635,7 @@ public class Properties extends AbstractMap<String, String> {
 			return _valueLines;
 		}
 
-		public boolean isTyped() {
+		public Boolean isTyped() {
 			return _typed;
 		}
 

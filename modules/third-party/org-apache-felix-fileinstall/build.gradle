@@ -11,6 +11,12 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 }
 
+jar {
+	doFirst {
+		delete "classes/org/apache/felix/cm/file/ConfigurationHandler.class"
+	}
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/static")
 }

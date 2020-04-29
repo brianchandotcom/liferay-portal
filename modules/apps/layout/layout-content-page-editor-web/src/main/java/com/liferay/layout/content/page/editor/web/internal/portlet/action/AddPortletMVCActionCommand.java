@@ -47,10 +47,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -141,8 +139,7 @@ public class AddPortletMVCActionCommand
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
 
-		String instanceId = _getPortletInstanceId(
-			themeDisplay.getLayout(), portletId, segmentsExperienceId);
+		String instanceId = _getPortletInstanceId(portletId);
 
 		JSONObject editableValueJSONObject =
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
@@ -179,36 +176,20 @@ public class AddPortletMVCActionCommand
 				_itemSelector, portletId));
 	}
 
-	private String _getPortletInstanceId(
-			Layout layout, String portletId, long segmentsExperienceId)
+	private String _getPortletInstanceId(String portletId)
 		throws PortletIdException {
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		if (portlet.isInstanceable()) {
-			return SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				PortletIdCodec.generateInstanceId(), segmentsExperienceId);
+			//TODO check new instanceId
+
+			return PortletIdCodec.generateInstanceId();
 		}
 
-		String instanceId =
-			SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				String.valueOf(CharPool.NUMBER_0), segmentsExperienceId);
+		//TODO check Unable to add uninstanceable portlet more than once
 
-		String checkPortletId =
-			SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				PortletIdCodec.encode(portletId, instanceId),
-				segmentsExperienceId);
-
-		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-			checkPortletId);
-
-		if (count > 0) {
-			throw new PortletIdException(
-				"Unable to add uninstanceable portlet more than once");
-		}
-
-		return instanceId;
+		return String.valueOf(CharPool.NUMBER_0);
 	}
 
 	@Reference

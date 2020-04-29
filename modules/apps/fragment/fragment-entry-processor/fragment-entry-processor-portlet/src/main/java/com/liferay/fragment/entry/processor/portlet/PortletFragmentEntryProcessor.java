@@ -54,7 +54,6 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -213,10 +212,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 
 			if (segmentsExperienceIdOptionalLong.isPresent()) {
-				instanceId =
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						instanceId,
-						segmentsExperienceIdOptionalLong.getAsLong());
+				//TODO check new instanceId
+				instanceId = PortletIdCodec.generateInstanceId();
 			}
 
 			String defaultPreferences = StringPool.BLANK;
@@ -327,10 +324,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				_getSegmentsExperienceIdOptional(segmentsExperienceIds);
 
 			if (segmentsExperienceIdOptionalLong.isPresent()) {
-				instanceId =
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						instanceId,
-						segmentsExperienceIdOptionalLong.getAsLong());
+				//TODO
+				instanceId = PortletIdCodec.generateInstanceId();
 			}
 		}
 
@@ -426,8 +421,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		String instanceId = jsonObject.getString("instanceId");
+		//TODO check
 		Portlet portlet = _portletLocalService.getPortletById(
-			SegmentsExperiencePortletUtil.decodePortletName(portletId));
+			PortletIdCodec.decodePortletName(portletId));
 		PortletPreferences portletPreferences = null;
 
 		OptionalLong segmentsExperienceIdOptionalLong =
@@ -448,10 +444,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				instanceId = String.valueOf(CharPool.NUMBER_0);
 			}
 			else {
+				//TODO check
 				defaultPreferencesPortletId = PortletIdCodec.encode(
-					portletId,
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						instanceId, SegmentsExperienceConstants.ID_DEFAULT));
+					portletId, PortletIdCodec.generateInstanceId());
 			}
 
 			PortletPreferences defaultExperiencePortletPreferences =
@@ -467,8 +462,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						portlet.getDefaultPreferences());
 			}
 
-			instanceId = SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				instanceId, segmentsExperienceIdOptionalLong.getAsLong());
+			//TODO check
+			instanceId = PortletIdCodec.generateInstanceId();
 
 			String preferencesPortletId = PortletIdCodec.encode(
 				portletId, instanceId);

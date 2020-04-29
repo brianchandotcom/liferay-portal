@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,7 +114,7 @@ public class WidgetLayoutStructureItemHelper
 					getDefaultEditableValuesJSONObject(
 						StringPool.BLANK, StringPool.BLANK);
 
-			String instanceId = _getPortletInstanceId(layout, name, 0);
+			String instanceId = _getPortletInstanceId(layout, name);
 
 			editableValueJSONObject.put(
 				"instanceId", instanceId
@@ -155,8 +154,7 @@ public class WidgetLayoutStructureItemHelper
 		return null;
 	}
 
-	private String _getPortletInstanceId(
-			Layout layout, String portletId, long segmentsExperienceId)
+	private String _getPortletInstanceId(Layout layout, String portletId)
 		throws PortletIdException {
 
 		Portlet portlet = PortletLocalServiceUtil.fetchPortletById(
@@ -167,30 +165,14 @@ public class WidgetLayoutStructureItemHelper
 		}
 
 		if (portlet.isInstanceable()) {
-			return SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				PortletIdCodec.generateInstanceId(), segmentsExperienceId);
+			//TODO check new instanceId
+
+			return PortletIdCodec.generateInstanceId();
 		}
 
-		String instanceId =
-			SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				String.valueOf(CharPool.NUMBER_0), segmentsExperienceId);
+		//TODO check "Unable to add uninstanceable portlet more than once"
 
-		String checkPortletId =
-			SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				PortletIdCodec.encode(portletId, instanceId),
-				segmentsExperienceId);
-
-		long count =
-			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-				checkPortletId);
-
-		if (count > 0) {
-			throw new PortletIdException(
-				"Unable to add uninstanceable portlet more than once");
-		}
-
-		return instanceId;
+		return String.valueOf(CharPool.NUMBER_0);
 	}
 
 	private void _importPortletConfiguration(

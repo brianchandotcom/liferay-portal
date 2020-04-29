@@ -27,12 +27,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -60,8 +60,7 @@ public class SegmentsExperienceUtil {
 			sourceSegmentsExperienceId, targetSegmentsExperienceId,
 			serviceContextFunction, userId);
 
-		_copyPortletPreferences(
-			classPK, sourceSegmentsExperienceId, targetSegmentsExperienceId);
+		_copyPortletPreferences(classPK);
 	}
 
 	private static void _copyLayoutData(
@@ -89,10 +88,7 @@ public class SegmentsExperienceUtil {
 				dataJSONObject.toString());
 	}
 
-	private static void _copyPortletPreferences(
-		long plid, long sourceSegmentsExperienceId,
-		long targetSegmentsExperienceId) {
-
+	private static void _copyPortletPreferences(long plid) {
 		List<PortletPreferences> portletPreferencesList =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
@@ -106,18 +102,8 @@ public class SegmentsExperienceUtil {
 				continue;
 			}
 
-			long segmentsExperienceId =
-				SegmentsExperiencePortletUtil.getSegmentsExperienceId(
-					portletPreferences.getPortletId());
-
-			if (segmentsExperienceId != sourceSegmentsExperienceId) {
-				continue;
-			}
-
-			String newPortletId =
-				SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-					portletPreferences.getPortletId(),
-					targetSegmentsExperienceId);
+			//TODO check
+			String newPortletId = PortletIdCodec.generateInstanceId();
 
 			PortletPreferences existingPortletPreferences =
 				PortletPreferencesLocalServiceUtil.fetchPortletPreferences(

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
@@ -188,7 +188,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 					Layout.class)) {
 
 				_importPortletPreferencesSegmentsExperience(
-					portletDataContext, fragmentEntryLink.getClassPK());
+					portletDataContext, fragmentEntryLink.getClassPK(),
+					fragmentEntryLink.getSegmentsExperienceId());
 			}
 		}
 
@@ -212,13 +213,9 @@ public class FragmentEntryLinkExportImportContentProcessor
 				fragmentEntryLink.getClassPK());
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			long segmentsExperienceId =
-				SegmentsExperiencePortletUtil.getSegmentsExperienceId(
-					portletPreferences.getPortletId());
-
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					segmentsExperienceId);
+					fragmentEntryLink.getSegmentsExperienceId());
 
 			if (segmentsExperience == null) {
 				continue;
@@ -231,7 +228,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 	}
 
 	private void _importPortletPreferencesSegmentsExperience(
-			PortletDataContext portletDataContext, long plid)
+			PortletDataContext portletDataContext, long plid,
+			long segmentsExperienceId)
 		throws PortalException {
 
 		Map<Long, Long> plids =
@@ -250,21 +248,19 @@ public class FragmentEntryLinkExportImportContentProcessor
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, importedPlid);
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			String portletId = portletPreferences.getPortletId();
-
-			long segmentsExperienceId =
-				SegmentsExperiencePortletUtil.getSegmentsExperienceId(
-					portletId);
-
 			if (segmentsExperienceId > 0) {
 				long importedSegmentsExperienceId = MapUtil.getLong(
 					segmentsExperienceIds, segmentsExperienceId,
 					segmentsExperienceId);
 
 				if (importedSegmentsExperienceId != segmentsExperienceId) {
+					//TODO check new instanceId
+
 					portletPreferences.setPortletId(
-						SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-							portletId, importedSegmentsExperienceId));
+						PortletIdCodec.encode(
+							PortletIdCodec.decodePortletName(
+								portletPreferences.getPortletId()),
+							PortletIdCodec.generateInstanceId()));
 
 					_portletPreferencesLocalService.deletePortletPreferences(
 						portletPreferences.getPortletPreferencesId());

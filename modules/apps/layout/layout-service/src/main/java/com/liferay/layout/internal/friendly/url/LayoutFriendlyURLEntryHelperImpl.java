@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.layout.internal.model.listener;
+package com.liferay.layout.internal.friendly.url;
 
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,22 +25,25 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = ModelListener.class)
-public class LayoutModelListener extends BaseModelListener<Layout> {
+@Component(service = LayoutFriendlyURLEntryHelper.class)
+public class LayoutFriendlyURLEntryHelperImpl
+	implements LayoutFriendlyURLEntryHelper {
 
 	@Override
-	public void onAfterRemove(Layout layout) {
-		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-			layout.getGroupId(),
-			_layoutFriendlyURLEntryHelper.getClassNameId(
-				layout.isPrivateLayout()),
-			layout.getPlid());
+	public String getClassName(boolean privateLayout) {
+		return _resourceActions.getCompositeModelName(
+			Layout.class.getName(), String.valueOf(privateLayout));
+	}
+
+	@Override
+	public long getClassNameId(boolean privateLayout) {
+		return _portal.getClassNameId(getClassName(privateLayout));
 	}
 
 	@Reference
-	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+	private Portal _portal;
 
 	@Reference
-	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
+	private ResourceActions _resourceActions;
 
 }

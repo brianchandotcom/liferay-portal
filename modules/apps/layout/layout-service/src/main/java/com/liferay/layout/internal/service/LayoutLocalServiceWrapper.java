@@ -16,7 +16,7 @@ package com.liferay.layout.internal.service;
 
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.layout.internal.util.LayoutFriendlyURLUtil;
+import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -82,7 +82,7 @@ public class LayoutLocalServiceWrapper
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId,
-				LayoutFriendlyURLUtil.getLayoutClassNameId(privateLayout),
+				_layoutFriendlyURLEntryHelper.getClassNameId(privateLayout),
 				friendlyURL);
 
 		if (friendlyURLEntry != null) {
@@ -98,5 +98,8 @@ public class LayoutLocalServiceWrapper
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
 
 }

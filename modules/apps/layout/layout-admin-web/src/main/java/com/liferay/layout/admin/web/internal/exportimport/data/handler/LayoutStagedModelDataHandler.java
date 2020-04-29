@@ -43,6 +43,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.web.internal.exportimport.data.handler.helper.LayoutPageTemplateStructureDataHandlerHelper;
+import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -78,7 +79,6 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
@@ -1445,7 +1445,8 @@ public class LayoutStagedModelDataHandler
 
 		Map<Long, Long> layoutNewPrimaryKeys =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				_getLayoutClassName(layout));
+				_layoutFriendlyURLEntryHelper.getClassName(
+					layout.isPrivateLayout()));
 
 		layoutNewPrimaryKeys.put(
 			layout.getPrimaryKey(), importedLayout.getPrimaryKey());
@@ -2331,13 +2332,9 @@ public class LayoutStagedModelDataHandler
 	private List<FriendlyURLEntry> _getFriendlyURLEntries(Layout layout) {
 		return _friendlyURLEntryLocalService.getFriendlyURLEntries(
 			layout.getGroupId(),
-			_portal.getClassNameId(_getLayoutClassName(layout)),
+			_layoutFriendlyURLEntryHelper.getClassNameId(
+				layout.isPrivateLayout()),
 			layout.getPlid());
-	}
-
-	private String _getLayoutClassName(Layout layout) {
-		return _resourceActions.getCompositeModelName(
-			Layout.class.getName(), String.valueOf(layout.isPrivateLayout()));
 	}
 
 	private String _getLayoutPrototypeUuid(
@@ -2415,6 +2412,9 @@ public class LayoutStagedModelDataHandler
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
 
+	@Reference
+	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
+
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
@@ -2457,9 +2457,6 @@ public class LayoutStagedModelDataHandler
 
 	@Reference
 	private PortletRegistry _portletRegistry;
-
-	@Reference
-	private ResourceActions _resourceActions;
 
 	private ResourceLocalService _resourceLocalService;
 

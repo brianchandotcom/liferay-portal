@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.layout.api
 Bundle-Version: 6.3.0
 Export-Package:\
 	com.liferay.layout.exception,\
+	com.liferay.layout.friendly.url,\
 	com.liferay.layout.list.retriever,\
 	com.liferay.layout.model,\
 	com.liferay.layout.security.permission.resource,\

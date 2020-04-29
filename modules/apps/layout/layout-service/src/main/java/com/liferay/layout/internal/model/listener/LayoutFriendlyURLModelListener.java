@@ -15,7 +15,7 @@
 package com.liferay.layout.internal.model.listener;
 
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.layout.internal.util.LayoutFriendlyURLUtil;
+import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -57,7 +57,7 @@ public class LayoutFriendlyURLModelListener
 
 				_friendlyURLEntryLocalService.addFriendlyURLEntry(
 					layoutFriendlyURL.getGroupId(),
-					LayoutFriendlyURLUtil.getLayoutClassNameId(
+					_layoutFriendlyURLEntryHelper.getClassNameId(
 						layoutFriendlyURL.isPrivateLayout()),
 					layoutFriendlyURL.getPlid(),
 					Collections.singletonMap(
@@ -73,6 +73,9 @@ public class LayoutFriendlyURLModelListener
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

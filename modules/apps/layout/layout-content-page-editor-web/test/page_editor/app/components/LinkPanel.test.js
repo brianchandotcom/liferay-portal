@@ -30,8 +30,6 @@ import serviceFetch from '../../../../src/main/resources/META-INF/resources/page
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateEditableValues from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues';
 
-jest.useFakeTimers();
-
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
 	() => jest.fn(() => Promise.resolve({fieldValue: 'fieldValue'}))
@@ -234,7 +232,7 @@ describe('LinkPanel', () => {
 
 		userEvent.type(hrefInput, 'http://google.com');
 
-		jest.runAllTimers();
+		fireEvent.blur(hrefInput);
 
 		expect(updateEditableValues).toHaveBeenCalled();
 
@@ -259,7 +257,7 @@ describe('LinkPanel', () => {
 
 		userEvent.type(hrefInput, 'http://google.com');
 
-		jest.runAllTimers();
+		fireEvent.blur(hrefInput);
 
 		expect(updateEditableValues).toHaveBeenCalled();
 

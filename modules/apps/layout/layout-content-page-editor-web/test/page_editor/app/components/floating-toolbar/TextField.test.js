@@ -13,15 +13,13 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {TextField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/TextField';
 
 const INPUT_NAME = 'test';
-
-jest.useFakeTimers();
 
 const renderTextField = (typeOptions = {}, onValueSelect = () => {}) =>
 	render(
@@ -129,8 +127,6 @@ describe('TextField', () => {
 
 		userEvent.type(input, '5');
 
-		jest.runAllTimers();
-
 		expect(getByText(errorMessage)).toBeInTheDocument();
 	});
 
@@ -143,8 +139,6 @@ describe('TextField', () => {
 
 		userEvent.type(input, '5');
 
-		jest.runAllTimers();
-
 		expect(getByText('you-have-entered-invalid-data')).toBeInTheDocument();
 	});
 
@@ -156,7 +150,7 @@ describe('TextField', () => {
 
 		userEvent.type(input, 'something');
 
-		jest.runAllTimers();
+		fireEvent.blur(input, {event: {target: {checkValidity: () => true}}});
 
 		expect(onValueSelect).toBeCalledWith(INPUT_NAME, 'something');
 	});
@@ -172,7 +166,7 @@ describe('TextField', () => {
 
 		userEvent.type(input, 12);
 
-		jest.runAllTimers();
+		fireEvent.blur(input);
 
 		expect(onValueSelect).not.toBeCalled();
 	});

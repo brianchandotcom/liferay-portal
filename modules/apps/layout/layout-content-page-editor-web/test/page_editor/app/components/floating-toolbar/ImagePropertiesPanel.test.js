@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -198,14 +198,12 @@ describe('TextField', () => {
 	});
 
 	it('dispatches updateEditableValues when the image description is changed', async () => {
-		jest.useFakeTimers();
-
 		const {getByLabelText} = renderComponent({});
 		const input = getByLabelText('image-description');
 
 		await userEvent.type(input, 'Random description');
 
-		jest.runAllTimers();
+		fireEvent.blur(input);
 
 		expect(updateEditableValues).toHaveBeenLastCalledWith(
 			expect.objectContaining({

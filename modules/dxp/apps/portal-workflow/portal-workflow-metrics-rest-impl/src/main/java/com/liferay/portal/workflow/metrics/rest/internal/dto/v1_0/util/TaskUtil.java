@@ -72,6 +72,36 @@ public class TaskUtil {
 				processId = document.getLong("processId");
 				processVersion = document.getString("version");
 
+				setAssetTitle(
+					() -> {
+						String assetTitle = assetTitleMap.get(
+							locale.toLanguageTag());
+
+						if (Validator.isNull(assetTitle)) {
+							Locale defaultLocale =
+								LocaleThreadLocal.getDefaultLocale();
+
+							assetTitle = assetTitleMap.get(
+								defaultLocale.toLanguageTag());
+						}
+
+						return assetTitle;
+					});
+				setAssetType(
+					() -> {
+						String assetType = assetTypeMap.get(
+							locale.toLanguageTag());
+
+						if (Validator.isNull(assetType)) {
+							Locale defaultLocale =
+								LocaleThreadLocal.getDefaultLocale();
+
+							assetType = assetTypeMap.get(
+								defaultLocale.toLanguageTag());
+						}
+
+						return assetType;
+					});
 				setAssignee(
 					() -> {
 						String assigneeType = document.getString(

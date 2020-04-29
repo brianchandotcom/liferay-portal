@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Index;
 
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -28,7 +27,7 @@ import java.util.ResourceBundle;
 public class IndexUtil {
 
 	public static Index toIndex(
-		String indexEntityName, Language language, Locale locale,
+		String indexEntityName, Language language,
 		ResourceBundle resourceBundle) {
 
 		return new Index() {

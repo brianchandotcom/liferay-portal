@@ -65,7 +65,6 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 				_indexEntityNameSet,
 				indexEntityName -> IndexUtil.toIndex(
 					indexEntityName, _language,
-					contextAcceptLanguage.getPreferredLocale(),
 					ResourceBundleUtil.getModuleAndPortalResourceBundle(
 						contextAcceptLanguage.getPreferredLocale(),
 						IndexResourceImpl.class))));

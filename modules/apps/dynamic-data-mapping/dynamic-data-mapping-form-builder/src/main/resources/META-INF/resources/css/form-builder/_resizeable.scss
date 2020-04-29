@@ -3,6 +3,7 @@ $c: '.ddm-form-builder';
 #{$c} {
 	.ddm-resize-handle {
 		top: calc(50% - 4px);
+		z-index: 1;
 	}
 
 	.ddm-field-container {

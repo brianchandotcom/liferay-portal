@@ -4512,6 +4512,18 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 
+	<target name="functional-weblogic122-mysql57-jdk8">
+		<run-functional-test app.server.type="weblogic" database.type="mysql" />
+	</target>
+
+	<target name="functional-websphere90-mysql57-jdk8">
+		<run-functional-test app.server.type="websphere" database.type="mysql" />
+	</target>
+
+	<target name="functional-wildfly160-mysql57-jdk8">
+		<run-functional-test app.server.type="wildfly" database.type="mysql" />
+	</target>
+
 	<target name="gogo-shell-client-jdk8">
 		<run-batch-test>
 			<test-action>

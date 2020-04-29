@@ -17,9 +17,7 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -55,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/copy_ddm_structure"
+		"mvc.command.name=/journal/copy_data_definition"
 	},
 	service = MVCActionCommand.class
 )
@@ -89,60 +87,43 @@ public class CopyDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		DDMStructure existingDDMStructure = _ddmStructureService.getStructure(
-			ddmStructureId);
+		DataDefinitionResource dataDefinitionResource =
+			DataDefinitionResource.builder(
+			).user(
+				themeDisplay.getUser()
+			).build();
 
-		DDMStructureLayout ddmStructureLayout =
-			_ddmStructureLayoutLocalService.fetchStructureLayout(
-				existingDDMStructure.getGroupId(),
-				existingDDMStructure.getClassNameId(),
-				existingDDMStructure.getStructureKey());
+		DataDefinition dataDefinition =
+			dataDefinitionResource.getDataDefinition(ddmStructureId);
 
-		DDMStructure ddmStructure = null;
+		dataDefinition.setDataDefinitionKey(StringPool.BLANK);
 
-		if (ddmStructureLayout != null) {
-			DataDefinitionResource dataDefinitionResource =
-				DataDefinitionResource.builder(
-				).user(
-					themeDisplay.getUser()
-				).build();
+		Map<String, Object> newNameMap = new HashMap<>();
 
-			DataDefinition dataDefinition =
-				dataDefinitionResource.getDataDefinition(ddmStructureId);
-
-			dataDefinition.setDataDefinitionKey(StringPool.BLANK);
-
-			Map<String, Object> newNameMap = new HashMap<>();
-
-			for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
-				newNameMap.put(
-					LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
-			}
-
-			dataDefinition.setName(newNameMap);
-
-			Map<String, Object> newDescriptionMap = new HashMap<>();
-
-			for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
-				newDescriptionMap.put(
-					LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
-			}
-
-			dataDefinition.setDescription(newDescriptionMap);
-
-			DataDefinition newDataDefinition =
-				dataDefinitionResource.postSiteDataDefinitionByContentType(
-					themeDisplay.getScopeGroupId(), "journal", dataDefinition);
-
-			ddmStructure = _ddmStructureService.getStructure(
-				themeDisplay.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class),
-				newDataDefinition.getDataDefinitionKey());
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			newNameMap.put(
+				LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
 		}
-		else {
-			ddmStructure = _ddmStructureService.copyStructure(
-				ddmStructureId, nameMap, descriptionMap, serviceContext);
+
+		dataDefinition.setName(newNameMap);
+
+		Map<String, Object> newDescriptionMap = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
+			newDescriptionMap.put(
+				LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
 		}
+
+		dataDefinition.setDescription(newDescriptionMap);
+
+		DataDefinition newDataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				themeDisplay.getScopeGroupId(), "journal", dataDefinition);
+
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			themeDisplay.getScopeGroupId(),
+			_portal.getClassNameId(JournalArticle.class),
+			newDataDefinition.getDataDefinitionKey());
 
 		boolean copyTemplates = ParamUtil.getBoolean(
 			actionRequest, "copyTemplates");
@@ -155,9 +136,6 @@ public class CopyDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, serviceContext);
 		}
 	}
-
-	@Reference
-	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;

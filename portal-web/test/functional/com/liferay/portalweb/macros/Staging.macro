@@ -603,7 +603,9 @@ definition {
 	}
 
 	macro gotoHistory {
-		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
+		while (IsElementNotPresent(locator1 = "Staging#HISTORY_BUTTON")) {
+			Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
+		}
 
 		Click(locator1 = "Staging#HISTORY_BUTTON");
 

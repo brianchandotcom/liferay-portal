@@ -59,6 +59,83 @@ definition {
 		YoutubePortlet.assertVideoTitle(videoTitle = "Life at Liferay - A Look into Liferay Culture");
 	}
 
+	@description = "This is a use case for LPS-86141. The fragment should be added to all cells of the Collection Display when add it to one cell."
+	@priority = "5"
+	test AddFragmentToOneCellOfCollectionDisplay {
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+		}
+
+		task ("Add a Collection Display to page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+			ContentPages.clickPencil();
+
+			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Button fragment to the first cell") {
+			PageEditor.gotoTab(tabName = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_entryTitle = "Third Web Content",
+				key_fragmentName = "Button",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#COLLECTION_CELL",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+		}
+
+		task ("Assert the Button fragment is also added to other cells") {
+			AssertElementPresent(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			AssertElementPresent(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+		}
+	}
+
 	@description = "This is a use case for LPS-86141. The collections with multiple asset type are unavailable to the Collection Display."
 	@priority = "4"
 	test CollectionsWithMultipleAssetTypeAreUnavailableToCollectionDisplay {

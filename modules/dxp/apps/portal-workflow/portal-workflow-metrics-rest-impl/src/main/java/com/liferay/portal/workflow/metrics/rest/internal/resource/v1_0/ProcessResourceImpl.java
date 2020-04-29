@@ -16,6 +16,8 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -95,7 +97,9 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 				contextCompany.getCompanyId()));
 		searchSearchRequest.setQuery(_createBooleanQuery(processId));
 		searchSearchRequest.setSelectedFieldNames(
-			"processId", _getTitleFieldName());
+			"processId",
+			_getTitleFieldName(contextAcceptLanguage.getPreferredLocale()),
+			_getTitleFieldName(LocaleThreadLocal.getDefaultLocale()));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -109,7 +113,19 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 			SearchHit::getDocument
 		).findFirst(
 		).map(
-			document -> document.getString(_getTitleFieldName())
+			document -> {
+				String title = document.getString(
+					_getTitleFieldName(
+						contextAcceptLanguage.getPreferredLocale()));
+
+				if (Validator.isNull(title)) {
+					title = document.getString(
+						_getTitleFieldName(
+							LocaleThreadLocal.getDefaultLocale()));
+				}
+
+				return title;
+			}
 		).orElseGet(
 			() -> StringPool.BLANK
 		);
@@ -153,9 +169,8 @@ public class ProcessResourceImpl extends BaseProcessResourceImpl {
 			_queries.term("deleted", Boolean.FALSE));
 	}
 
-	private String _getTitleFieldName() {
-		return Field.getLocalizedName(
-			contextAcceptLanguage.getPreferredLocale(), "title");
+	private String _getTitleFieldName(Locale locale) {
+		return Field.getLocalizedName(locale, "title");
 	}
 
 	@Reference

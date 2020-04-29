@@ -320,6 +320,24 @@ definition {
 		}
 	}
 
+	macro moveLanguage {
+		Click(
+			key_language = "${depotLanguage}",
+			locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
+
+		if ("${moveDown}" == "true") {
+			MenuItem.click(menuItem = "Move Down");
+		}
+
+		else {
+			MenuItem.click(menuItem = "Move Up");
+		}
+
+		Button.click(button = "Save");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro view4LanguagesOrder {
 		AssertTextEquals.assertPartialText(
 			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_1",
@@ -475,6 +493,30 @@ definition {
 		Page.viewFriendlyURLLanguageOptionsPG(
 			currentLanguageList = "${currentLanguageList}",
 			fieldName = "Description");
+	}
+
+	macro viewLanguageItems {
+		Click(
+			key_language = "${depotLanguage}",
+			locator1 = "Icon#DEPOT_LANGUAGES_ELLIPSIS");
+
+		if ("${firstLanguageItem}" == "true") {
+			MenuItem.viewNotPresent(menuItem = "Move Up");
+
+			MenuItem.viewVisible(menuItem = "Move Down");
+		}
+
+		else if ("${lastLanguageItem}" == "true") {
+			MenuItem.viewNotPresent(menuItem = "Move Down");
+
+			MenuItem.viewVisible(menuItem = "Move Up");
+		}
+
+		else {
+			MenuItem.viewVisible(menuItem = "Move Down");
+
+			MenuItem.viewVisible(menuItem = "Move Up");
+		}
 	}
 
 	macro viewLanguageOrderInWebContent {

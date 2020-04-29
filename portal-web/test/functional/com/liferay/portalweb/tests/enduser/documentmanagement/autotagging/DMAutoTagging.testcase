@@ -222,12 +222,12 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		JSONDocument.addFileWithUploadedFile(
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document DOCX",
-			groupName = "Guest",
-			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			sourceFileName = "Alice's Adventures in Wonderland.docx");
+			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -303,12 +303,12 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		JSONDocument.addFileWithUploadedFile(
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document DOCX",
-			groupName = "Guest",
-			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			sourceFileName = "Alice's Adventures in Wonderland.docx");
+			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -392,16 +392,14 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "Auto Tagged PDF Description",
-			dmDocumentTitle = "Auto Tagged PDF",
-			groupName = "Guest",
-			mimeType = "application/pdf",
-			sourceFileName = "Alice's Adventures in Wonderland.pdf");
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			dmDocumentTitle = "DM Document PDF");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "Auto Tagged PDF Description",

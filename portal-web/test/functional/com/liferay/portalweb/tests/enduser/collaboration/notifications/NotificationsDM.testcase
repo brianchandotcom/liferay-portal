@@ -155,13 +155,10 @@ definition {
 
 		DMFolder.subscribePG();
 
-		JSONDocument.addFileWithUploadedFile(
+		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "DM Document Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
@@ -220,13 +217,10 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		JSONDocument.addFileWithUploadedFile(
+		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			sourceFileName = "Document_1.docx");
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "DM Document Title");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 

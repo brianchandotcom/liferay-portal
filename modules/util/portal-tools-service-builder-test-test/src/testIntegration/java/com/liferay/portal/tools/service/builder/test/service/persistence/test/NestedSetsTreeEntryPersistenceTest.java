@@ -753,7 +753,7 @@ public class NestedSetsTreeEntryPersistenceTest {
 				parentNestedSetsTreeEntryId);
 		}
 
-		_persistence.update(nestedSetsTreeEntry);
+		_nestedSetsTreeEntries.add(_persistence.update(nestedSetsTreeEntry));
 
 		return nestedSetsTreeEntry;
 	}

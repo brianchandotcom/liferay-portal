@@ -5,3 +5,4 @@ Liferay-Require-SchemaVersion: 2.1.0
 Liferay-Service: true
 Web-ContextPath: /data-engine-service
 -dsannotations-options: inherit
+-metatype: *

@@ -1135,6 +1135,10 @@
 					'.btn-cancel,.lfr-hide-dialog'
 				),
 			];
+
+			Liferay.fire('modalIframeLoaded', {
+				src: event.dialog.iframe.node.getAttribute('src'),
+			});
 		},
 		['aui-base']
 	);

@@ -82,8 +82,6 @@ public class DeleteSegmentsExperienceMVCActionCommand
 				_portletRegistry.getFragmentEntryLinkPortletIds(
 					fragmentEntryLink);
 
-			//TODO check deletion
-
 			for (String portletId : portletIds) {
 				PortletPreferences jxPortletPreferences =
 					_portletPreferencesLocalService.fetchPreferences(

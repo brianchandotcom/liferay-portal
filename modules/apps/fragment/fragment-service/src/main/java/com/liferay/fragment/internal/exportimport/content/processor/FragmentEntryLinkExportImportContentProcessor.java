@@ -184,8 +184,9 @@ public class FragmentEntryLinkExportImportContentProcessor
 			FragmentEntryLink fragmentEntryLink =
 				(FragmentEntryLink)stagedModel;
 
-			if (fragmentEntryLink.getClassNameId() == _portal.getClassNameId(
-					Layout.class)) {
+			if ((fragmentEntryLink.getClassNameId() == _portal.getClassNameId(
+					Layout.class)) &&
+				(fragmentEntryLink.getSegmentsExperienceId() > 0)) {
 
 				_importPortletPreferencesSegmentsExperience(
 					portletDataContext, fragmentEntryLink.getClassPK(),
@@ -240,29 +241,25 @@ public class FragmentEntryLinkExportImportContentProcessor
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, importedPlid);
 
 		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			if (segmentsExperienceId > 0) {
-				long importedSegmentsExperienceId = MapUtil.getLong(
-					segmentsExperienceIds, segmentsExperienceId,
-					segmentsExperienceId);
+			long importedSegmentsExperienceId = MapUtil.getLong(
+				segmentsExperienceIds, segmentsExperienceId,
+				segmentsExperienceId);
 
-				if (importedSegmentsExperienceId != segmentsExperienceId) {
-					//TODO check new instanceId
+			if (importedSegmentsExperienceId != segmentsExperienceId) {
+				portletPreferences.setPortletId(
+					PortletIdCodec.encode(
+						PortletIdCodec.decodePortletName(
+							portletPreferences.getPortletId()),
+						PortletIdCodec.generateInstanceId()));
 
-					portletPreferences.setPortletId(
-						PortletIdCodec.encode(
-							PortletIdCodec.decodePortletName(
-								portletPreferences.getPortletId()),
-							PortletIdCodec.generateInstanceId()));
+				_portletPreferencesLocalService.deletePortletPreferences(
+					portletPreferences.getPortletPreferencesId());
 
-					_portletPreferencesLocalService.deletePortletPreferences(
-						portletPreferences.getPortletPreferencesId());
-
-					_portletPreferencesLocalService.updatePreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, importedPlid,
-						portletPreferences.getPortletId(),
-						portletPreferences.getPreferences());
-				}
+				_portletPreferencesLocalService.updatePreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, importedPlid,
+					portletPreferences.getPortletId(),
+					portletPreferences.getPreferences());
 			}
 		}
 	}

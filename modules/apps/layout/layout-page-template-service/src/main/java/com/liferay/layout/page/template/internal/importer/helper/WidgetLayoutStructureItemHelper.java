@@ -23,7 +23,6 @@ import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -165,14 +164,20 @@ public class WidgetLayoutStructureItemHelper
 		}
 
 		if (portlet.isInstanceable()) {
-			//TODO check new instanceId
-
 			return PortletIdCodec.generateInstanceId();
 		}
 
-		//TODO check "Unable to add uninstanceable portlet more than once"
+		long count =
+			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				portletId);
 
-		return String.valueOf(CharPool.NUMBER_0);
+		if (count > 0) {
+			throw new PortletIdException(
+				"Unable to add uninstanceable portlet more than once");
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private void _importPortletConfiguration(

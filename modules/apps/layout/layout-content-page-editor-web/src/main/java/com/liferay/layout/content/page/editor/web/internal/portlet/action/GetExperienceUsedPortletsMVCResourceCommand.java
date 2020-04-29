@@ -64,12 +64,8 @@ public class GetExperienceUsedPortletsMVCResourceCommand
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid());
 
 		portletPreferencesList.forEach(
-			portletPreferences -> {
-				//TODO check used portlets
-
-				// PortletRegistry.getFragmentEntryLinkPortletIds ?
-
-			});
+			portletPreferences -> jsonArray.put(
+				portletPreferences.getPortletId()));
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);

@@ -26,7 +26,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -47,6 +46,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
@@ -139,7 +139,8 @@ public class AddPortletMVCActionCommand
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
 
-		String instanceId = _getPortletInstanceId(portletId);
+		String instanceId = _getPortletInstanceId(
+			themeDisplay.getLayout(), portletId);
 
 		JSONObject editableValueJSONObject =
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
@@ -176,20 +177,24 @@ public class AddPortletMVCActionCommand
 				_itemSelector, portletId));
 	}
 
-	private String _getPortletInstanceId(String portletId)
+	private String _getPortletInstanceId(Layout layout, String portletId)
 		throws PortletIdException {
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		if (portlet.isInstanceable()) {
-			//TODO check new instanceId
-
 			return PortletIdCodec.generateInstanceId();
 		}
 
-		//TODO check Unable to add uninstanceable portlet more than once
+		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId);
 
-		return String.valueOf(CharPool.NUMBER_0);
+		if (count > 0) {
+			throw new PortletIdException(
+				"Unable to add uninstanceable portlet more than once");
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Reference

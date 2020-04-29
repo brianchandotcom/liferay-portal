@@ -1,0 +1,13 @@
+$c: '.ddm-field-types-fieldset';
+
+#{$c} {
+	&__nested {
+		margin-left: -12px;
+		margin-right: -12px;
+
+		&__nested-separator,
+		.text-uppercase {
+			padding: 0 12px;
+		}
+	}
+}

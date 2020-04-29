@@ -12,6 +12,8 @@
  * details.
  */
 
+import './FieldSet.scss';
+
 import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer';
 import React, {useEffect, useMemo, useRef} from 'react';
 
@@ -112,7 +114,9 @@ const FieldSet = ({
 		{showLabel && !collapsible && (
 			<>
 				<label className="text-uppercase">{label}</label>
-				<div className="mt-1 separator" />
+				<div className="ddm-field-types-fieldset__nested-separator">
+					<div className="mt-1 separator" />
+				</div>
 			</>
 		)}
 
@@ -214,25 +218,29 @@ const FieldSetProxy = connectStore(
 				showLabel={false}
 				spritemap={spritemap}
 			>
-				<FieldSet
-					activePage={activePage}
-					collapsible={collapsible}
-					context={context}
-					editable={editable}
-					label={label}
-					onBlur={(event) => propagate('fieldBlurred', event)}
-					onChange={(event) => propagate('fieldEdited', event)}
-					onFocus={(event) => propagate('fieldFocused', event)}
-					onRemoveButton={() => dispatch('fieldRemoved', name)}
-					onRepeatButton={() => dispatch('fieldRepeated', name)}
-					pageIndex={pageIndex}
-					readOnly={readOnly}
-					repeatable={repeatable}
-					rows={getRows(rows, nestedFields)}
-					showLabel={showLabel}
-					showRepeatableRemoveButton={repeatable && repeatedIndex > 0}
-					spritemap={spritemap}
-				/>
+				<div className="ddm-field-types-fieldset__nested">
+					<FieldSet
+						activePage={activePage}
+						collapsible={collapsible}
+						context={context}
+						editable={editable}
+						label={label}
+						onBlur={(event) => propagate('fieldBlurred', event)}
+						onChange={(event) => propagate('fieldEdited', event)}
+						onFocus={(event) => propagate('fieldFocused', event)}
+						onRemoveButton={() => dispatch('fieldRemoved', name)}
+						onRepeatButton={() => dispatch('fieldRepeated', name)}
+						pageIndex={pageIndex}
+						readOnly={readOnly}
+						repeatable={repeatable}
+						rows={getRows(rows, nestedFields)}
+						showLabel={showLabel}
+						showRepeatableRemoveButton={
+							repeatable && repeatedIndex > 0
+						}
+						spritemap={spritemap}
+					/>
+				</div>
 			</FieldBaseProxy>
 		);
 	}

@@ -29,6 +29,7 @@ $c: '.ddm-form-builder';
 
 	.ddm-field-container {
 		border: 2px solid transparent;
+		padding: 0 12px;
 
 		&.dragging,
 		&.expanded,
@@ -56,7 +57,7 @@ $c: '.ddm-form-builder';
 		&.selected,
 		&.targetOver {
 			border-width: 2px;
-			margin: 0 1px;
+			margin: 0;
 		}
 	}
 

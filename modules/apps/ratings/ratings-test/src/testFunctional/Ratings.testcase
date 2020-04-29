@@ -330,7 +330,7 @@ definition {
 		Comments.addPG(entryComment = "Blogs Entry Comment");
 
 		Ratings.rateThumb(
-			commentRating = "true",
+			blogCommentRating = "true",
 			ratingResult = "Rate this as good");
 
 		Navigator.gotoPage(pageName = "Blogs Page");

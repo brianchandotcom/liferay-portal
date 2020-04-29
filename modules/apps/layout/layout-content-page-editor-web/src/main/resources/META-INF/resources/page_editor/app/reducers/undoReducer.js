@@ -15,16 +15,20 @@
 import {ADD_UNDO_ACTION, UPDATE_UNDO_ACTIONS} from '../actions/types';
 import {getDerivedStateForUndo} from '../components/undo/undoActions';
 
+const MAX_UNDO_ACTIONS = 20;
+
 export default function undoReducer(state, action) {
 	switch (action.type) {
 		case ADD_UNDO_ACTION: {
 			const {actionType} = action;
 
+			const nextUndoHistory = state.undoHistory || [];
+
 			return {
 				...state,
 				undoHistory: [
 					getDerivedStateForUndo({action, state, type: actionType}),
-					...(state.undoHistory || []),
+					...nextUndoHistory.slice(0, MAX_UNDO_ACTIONS - 1),
 				],
 			};
 		}

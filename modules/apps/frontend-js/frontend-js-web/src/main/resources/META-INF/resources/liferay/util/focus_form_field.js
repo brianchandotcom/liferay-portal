@@ -16,14 +16,14 @@ import getElement from './get_element';
 import inBrowserView from './in_browser_view';
 
 function getDisabledParents(element) {
-	let result = [];
+	const result = [];
 
-	if (element.parentElement) {
+	while (element.parentElement) {
 		if (element.parentElement.getAttribute('disabled')) {
-			result = [element.parentElement];
+			result.push(element.parentElement);
 		}
 
-		result = [...result, ...getDisabledParents(element.parentElement)];
+		element = element.parentElement;
 	}
 
 	return result;

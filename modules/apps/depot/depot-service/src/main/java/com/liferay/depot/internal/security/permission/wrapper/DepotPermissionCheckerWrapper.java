@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -63,10 +64,28 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 	@Override
 	public boolean hasPermission(
+		Group group, String name, String primKey, String actionId) {
+
+		return _hasPermission(
+			name, GetterUtil.getLong(primKey), actionId,
+			() -> super.hasPermission(group, name, primKey, actionId));
+	}
+
+	@Override
+	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
 		return _hasPermission(
 			name, primKey, actionId,
+			() -> super.hasPermission(groupId, name, primKey, actionId));
+	}
+
+	@Override
+	public boolean hasPermission(
+		long groupId, String name, String primKey, String actionId) {
+
+		return _hasPermission(
+			name, GetterUtil.getLong(primKey), actionId,
 			() -> super.hasPermission(groupId, name, primKey, actionId));
 	}
 

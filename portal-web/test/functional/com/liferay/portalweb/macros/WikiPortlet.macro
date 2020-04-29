@@ -1,7 +1,7 @@
 definition {
 
 	macro configureDisplaySettings {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var SettingName : list "${uncheckSetting}") {
 			Uncheck(locator1 = "Checkbox#${SettingName}");
@@ -61,7 +61,7 @@ definition {
 	}
 
 	macro viewConfigurationTabs {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var isPresent : list "${isPresent}") {
 			AssertElementPresent(locator1 = "Configuration#${isPresent}");
@@ -88,7 +88,7 @@ definition {
 	}
 
 	macro viewDisplaySettings {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var SettingName : list "${uncheckedSetting}") {
 			AssertNotChecked(locator1 = "Checkbox#${SettingName}");

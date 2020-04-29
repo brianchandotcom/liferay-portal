@@ -37,7 +37,7 @@ definition {
 			locator1 = "Portlet#H3_MODAL_TITLE",
 			value1 = "Add List");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${ddlListName}");
 
@@ -109,7 +109,7 @@ definition {
 			locator1 = "DDL#PORTLET_ACTIONS_EDIT_LIST",
 			value1 = "Edit List");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${ddlListNameEdit}");
 

@@ -533,7 +533,7 @@ definition {
 			}
 
 			else {
-				SelectFrame(locator1 = "IFrame#DIALOG");
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 				AssertClick(
 					key_dmDocumentTitle = "${webContentDocumentsAndMedia}",
@@ -639,7 +639,7 @@ definition {
 			}
 
 			else {
-				SelectFrame(locator1 = "IFrame#DIALOG");
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 				AssertClick.assertPartialTextClickAt(
 					key_listEntry = "${webContentSelectWCFile}",
@@ -866,7 +866,7 @@ definition {
 				locator1 = "Button#SELECT_CONTENT",
 				value1 = "Select");
 
-			SelectFrame(locator1 = "IFrame#DIALOG");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertClick.assertPartialTextClickAt(
 				key_listEntry = "${webContentSelectWCFile}",
@@ -991,7 +991,7 @@ definition {
 				navTab = "Web Content Images",
 				uploadFileName = "${webContentImage}");
 		}
-		var iFrameDialog = "IFrame#DIALOG";
+		var iFrameDialog = "IFrame#MODAL_BODY";
 
 		if (IsElementPresent(locator1 = "${iFrameDialog}")) {
 			SelectFrame(locator1 = "${iFrameDialog}");
@@ -1076,7 +1076,7 @@ definition {
 				locator1 = "Button#SELECT_CONTENT",
 				value1 = "Select");
 
-			SelectFrame(locator1 = "IFrame#DIALOG");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertClick.assertPartialTextClickAt(
 				key_listEntry = "${webContentSelectWCFile}",
@@ -1168,7 +1168,7 @@ definition {
 
 		Click(locator1 = "Button#PARENT_FOLDER_SELECT");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
 
@@ -1198,7 +1198,7 @@ definition {
 			locator1 = "Button#SELECT",
 			value1 = "Select");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
 
@@ -1227,7 +1227,7 @@ definition {
 			locator1 = "Button#SELECT",
 			value1 = "Select");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
 
@@ -1417,7 +1417,7 @@ definition {
 
 		IFrame.selectTopFrame();
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
 
@@ -1579,7 +1579,7 @@ definition {
 	}
 
 	macro viewCompareVersions {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.gotoEntry(rowEntry = "${version}");
 

@@ -56,7 +56,7 @@ definition {
 	}
 
 	macro addManualViaRSS {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "5000");
 

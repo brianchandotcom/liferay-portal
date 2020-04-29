@@ -89,7 +89,7 @@ definition {
 
 		SelectFrameTop();
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.selectEntry(rowEntry = "${tagName}");
 

@@ -10,7 +10,7 @@ definition {
 				locator1 = "Portlet#H3_MODAL_TITLE",
 				value1 = "Data Definitions");
 
-			SelectFrame(locator1 = "IFrame#DIALOG");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 
 		LexiconEntry.gotoAdd();
@@ -27,7 +27,7 @@ definition {
 	}
 
 	macro _select {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 
@@ -170,7 +170,7 @@ definition {
 	}
 
 	macro editPermissionsCP {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
 			addOrRemoveViewPermission = "${addOrRemoveViewPermission}",
@@ -211,11 +211,11 @@ definition {
 
 		SelectFrameTop();
 
-		while (IsElementNotPresent(locator1 = "IFrame#DIALOG")) {
+		while (IsElementNotPresent(locator1 = "IFrame#MODAL_BODY")) {
 			Pause(locator1 = "1000");
 		}
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals.assertValue(
 			locator1 = "TextInput#DATA_DEFINITION",
@@ -325,7 +325,7 @@ definition {
 			locator1 = "Button#SELECT",
 			value1 = "Select");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		var key_assetTitle = "${assetTitle}";
 

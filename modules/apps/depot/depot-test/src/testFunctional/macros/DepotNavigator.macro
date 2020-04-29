@@ -88,7 +88,7 @@ definition {
 
 		ProductMenuHelper.openWorkspace();
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
 

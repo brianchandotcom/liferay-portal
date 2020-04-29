@@ -183,7 +183,7 @@ definition {
 	macro addPollPG {
 		Click(locator1 = "Polls#ADD_NEW_POLL");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.gotoAdd();
 
@@ -228,7 +228,7 @@ definition {
 
 		Click(locator1 = "Polls#SELECT_QUESTION");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Select(
 			locator1 = "Polls#TITLE_DROPDOWN_SELECT",

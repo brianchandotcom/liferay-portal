@@ -242,7 +242,7 @@ definition {
 
 			Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
 
-			SelectFrame(locator1 = "IFrame#DIALOG");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			LexiconCard.clickCard(card = "Fjord");
 

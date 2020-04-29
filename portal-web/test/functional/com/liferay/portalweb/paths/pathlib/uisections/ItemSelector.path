@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ITEM_SELECTOR_IFRAME</td>
-	<td>//iframe[contains(@src,'ItemSelectorPortlet')]</td>
+	<td>//div[contains(@class,'modal-body')]/iframe</td>
 	<td></td>
 </tr>
 <tr>

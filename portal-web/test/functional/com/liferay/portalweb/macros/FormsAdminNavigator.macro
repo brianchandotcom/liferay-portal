@@ -85,7 +85,7 @@ definition {
 			menuItem = "Permissions",
 			rowEntry = "${formName}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro gotoPreviewForm {

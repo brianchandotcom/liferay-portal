@@ -289,7 +289,7 @@ definition {
 			portletName = "Web Content Display",
 			portletOption = "Configuration");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
 
@@ -297,7 +297,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick(
 			key_breadcrumbName = "Sites and Libraries",

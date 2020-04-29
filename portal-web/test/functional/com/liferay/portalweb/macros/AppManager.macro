@@ -43,7 +43,7 @@ definition {
 
 		MenuItem.click(menuItem = "Upload");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(locator1 = "TextInput#FILE");
 

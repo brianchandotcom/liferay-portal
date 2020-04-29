@@ -168,7 +168,7 @@ definition {
 
 			LexiconCard.clickCard(card = "Widget Page");
 
-			SelectFrame(locator1 = "IFrame#DIALOG");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertElementNotPresent(
 				checkboxName = "Global Navigation Menu Name",

@@ -618,7 +618,7 @@ definition {
 
 		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(documentandmedia)) {
 			NavItem.click(navItem = "Documents and Media");
@@ -729,7 +729,7 @@ definition {
 
 		Button.clickSelect();
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent.assertVisible(locator1 = "Button#SELECT_FILE");
 
@@ -1078,7 +1078,7 @@ definition {
 
 		Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro gotoTab {

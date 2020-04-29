@@ -430,7 +430,7 @@ definition {
 
 		Click(locator1 = "Icon#CLOSE");
 
-		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
 		DragAndDrop.dragAndDropPortletToObject(
 			key_portletTitleName = "Asset Publisher",
@@ -724,7 +724,7 @@ definition {
 
 		Click(locator1 = "Icon#CLOSE");
 
-		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
 		DragAndDrop.dragAndDropPortletToObject(
 			key_portletTitleName = "Asset Publisher",

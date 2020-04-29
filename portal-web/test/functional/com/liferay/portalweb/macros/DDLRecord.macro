@@ -428,7 +428,7 @@ definition {
 			locator1 = "Button#SELECT_CONTENT",
 			value1 = "Select");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "LexiconList#LIST_ENTRY",

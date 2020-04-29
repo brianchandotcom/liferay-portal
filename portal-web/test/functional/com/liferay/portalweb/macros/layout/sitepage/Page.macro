@@ -188,7 +188,7 @@ definition {
 
 		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		var key_cardText = "${themeName}";
 
@@ -371,7 +371,7 @@ definition {
 			menuItem = "Manage Actions",
 			rowEntry = "${deviceFamilyName}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(locator1 = "Button#ADD_ACTION");
 
@@ -416,7 +416,7 @@ definition {
 			locator1 = "Button#SELECT_MOBILE_DEVICE_RULES",
 			value1 = "Select");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		var key_deviceFamilyName = "${deviceFamilyName}";
 

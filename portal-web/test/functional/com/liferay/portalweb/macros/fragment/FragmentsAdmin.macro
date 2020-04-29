@@ -93,7 +93,7 @@ definition {
 	}
 
 	macro selectCollection {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconCard.clickCard(card = "${collectionName}");
 	}

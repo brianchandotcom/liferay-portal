@@ -33,7 +33,7 @@ definition {
 			masterLayoutName = "${masterLayoutName}",
 			pageTemplateName = "${pageTemplateName}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${childPageName}");
 
@@ -78,7 +78,7 @@ definition {
 			masterLayoutName = "${masterLayoutName}",
 			pageTemplateName = "${pageTemplateName}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${pageName}");
 

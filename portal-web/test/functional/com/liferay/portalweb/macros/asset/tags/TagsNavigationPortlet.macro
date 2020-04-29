@@ -19,7 +19,7 @@ definition {
 			portletName = "Tags Navigation",
 			portletOption = "Configuration");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(displayTemplate)) {
 			Select(
@@ -35,7 +35,7 @@ definition {
 			portletName = "Tags Navigation",
 			portletOption = "Configuration");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if ("${showUnusedTags}" == "true") {
 			Check.checkToggleSwitch(

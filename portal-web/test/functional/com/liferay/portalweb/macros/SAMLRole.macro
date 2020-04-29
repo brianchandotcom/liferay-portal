@@ -24,7 +24,7 @@ definition {
 			locator1 = "Button#CREATE_CERTIFICATE",
 			value1 = "Create Certificate");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Type(
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD",
@@ -56,7 +56,7 @@ definition {
 			locator1 = "Button#SUBMIT",
 			value1 = "Save");
 
-		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
 			key_certificateUsage = "${certificateUsage}",

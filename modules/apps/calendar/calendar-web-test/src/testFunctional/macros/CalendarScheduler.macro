@@ -116,7 +116,7 @@ definition {
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON",
 			value1 = "View Details");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro gotoEdit {

@@ -27,7 +27,7 @@ definition {
 	}
 
 	macro viewConfigurationXSLContent {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals(
 			locator1 = "TextInput#SETUP_XML_URL",

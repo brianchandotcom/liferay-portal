@@ -35,7 +35,7 @@ definition {
 			locator1 = "Button#REPLY_AS",
 			value1 = "Reply as...");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick(
 			locator1 = "Link#GUEST",

@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>CONFIGURATION</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'portlet_configuration')]</td>
+	<td>//div[contains(@class,'modal-body')]/iframe[contains(@src,'portlet_configuration')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_DIALOG</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>//div[contains(@class,'modal-body')]/iframe</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>DIALOG</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td>//iframe[@class='dialog-iframe-node']</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,7 +95,12 @@
 </tr>
 <tr>
 	<td>METADATA_SETS_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node ')]</td>
+	<td>//div[contains(@class,'modal-body')]/iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_BODY</td>
+	<td>//div[contains(@class,'modal-body')]/iframe</td>
 	<td></td>
 </tr>
 <tr>

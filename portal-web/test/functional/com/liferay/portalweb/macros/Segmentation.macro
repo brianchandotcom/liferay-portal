@@ -72,7 +72,7 @@ definition {
 	macro selectTag {
 		Click(locator1 = "Segmentation#ADD_TAG_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(locator1 = "Segmentation#SEARCH_TAG_FIELD");
 

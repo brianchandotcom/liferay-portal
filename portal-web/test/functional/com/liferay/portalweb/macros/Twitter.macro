@@ -5,7 +5,7 @@ definition {
 			locator1 = "Link#CONFIGURE_TWITTER",
 			value1 = "Please configure your Twitter screen name.");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.gotoNavTab(navTab = "Identification");
 

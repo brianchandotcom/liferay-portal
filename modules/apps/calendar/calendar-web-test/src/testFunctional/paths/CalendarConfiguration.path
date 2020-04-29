@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">CalendarConfiguration</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>CALENDAR_CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@name,'configurationIframe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--EVENTS_DISPLAYED-->
 <tr>
 	<td>EVENTS_DISPLAYED_MAX_DAYS</td>

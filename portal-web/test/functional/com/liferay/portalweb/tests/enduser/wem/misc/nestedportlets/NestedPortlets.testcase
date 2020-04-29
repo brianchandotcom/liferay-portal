@@ -53,7 +53,7 @@ definition {
 
 		Click(locator1 = "Icon#CLOSE");
 
-		WaitForElementNotPresent(locator1 = "IFrame#DIALOG");
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
 		NestedPortlets.dragAndDropPortletToPortletColumnPG(
 			columnNumberFrom = "1",

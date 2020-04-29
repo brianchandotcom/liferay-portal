@@ -77,7 +77,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.selectAll();
 
@@ -109,7 +109,7 @@ definition {
 
 		AssertElementPresent.assertVisible(locator1 = "Button#ADD");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		User.searchCP(searchTerm = "${userScreenName}");
 

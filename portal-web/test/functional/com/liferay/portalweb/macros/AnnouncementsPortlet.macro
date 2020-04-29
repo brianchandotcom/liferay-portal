@@ -5,7 +5,7 @@ definition {
 			portletName = "Announcements",
 			portletOption = "Configuration");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Select(
 			locator1 = "Select#PAGE_DELTA",

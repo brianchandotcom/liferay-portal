@@ -23,7 +23,7 @@ definition {
 				locator1 = "IFrame#IFRAME_TITLE",
 				value1 = "New Field Set");
 
-			SelectFrame(locator1 = "IFrame#DIALOG");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			PortletEntry.inputName(name = "${kfFieldSetName}");
 		}
@@ -80,7 +80,7 @@ definition {
 			locator1 = "KaleoFormsAdminEditProcess#ADD_WORKFLOW_BUTTON",
 			value1 = "Add Workflow");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputTitle(title = "${workflowDefinitionTitle}");
 	}
@@ -305,7 +305,7 @@ definition {
 			locator1 = "IFrame#IFRAME_TITLE",
 			value1 = "Edit Field Set");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${kfFieldSetNameEdit}");
 	}
@@ -333,7 +333,7 @@ definition {
 			menuItem = "Edit Form",
 			rowEntry = "${kfFormName}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${kfFormNameEdit}");
 
@@ -383,7 +383,7 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "${workflowDefinitionTitle}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputTitle(title = "${workflowDefinitionTitleEdit}");
 	}
@@ -488,7 +488,7 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "${workflowDefinitionTitle}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		KaleoFormsAdmin.publishWorkflow();
 	}
@@ -508,7 +508,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		if (IsElementPresent(locator1 = "IFrame#DIALOG")) {
+		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
 			Click(locator1 = "Icon#CLOSE");
 		}
 	}
@@ -595,7 +595,7 @@ definition {
 			menuItem = "Edit Form",
 			rowEntry = "${kfFormNameEdit}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals(
 			locator1 = "DDMEditStructure#NAME_FIELD",

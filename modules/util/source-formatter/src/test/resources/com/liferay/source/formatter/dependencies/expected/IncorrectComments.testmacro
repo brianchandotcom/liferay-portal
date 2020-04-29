@@ -14,7 +14,7 @@ definition {
 		// This is a comment that ends with COMMA,
 		// add the comment for better readability.
 
-		//SelectFrame(locator1 = "IFrame#DIALOG");
+		//SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		SitePages._addPageToNavigationMenu(
 			assertCheckboxMissing = "${assertCheckboxMissing}",

@@ -89,7 +89,7 @@ definition {
 			LexiconCard.clickCard(card = "${rowEntry}");
 		}
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${pageName}");
 

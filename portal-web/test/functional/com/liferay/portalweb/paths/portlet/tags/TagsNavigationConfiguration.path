@@ -9,13 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>TAGS_NAVIGATION_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@src,'tags-navigation')]</td>
+	<td>TAG_CLOUD_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@src,'tag-cloud')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TAG_CLOUD_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@src,'tag-cloud')]</td>
+	<td>TAGS_NAVIGATION_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@src,'tags-navigation')]</td>
 	<td></td>
 </tr>
 <tr>

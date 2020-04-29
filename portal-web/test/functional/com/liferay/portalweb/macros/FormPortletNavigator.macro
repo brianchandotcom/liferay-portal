@@ -5,7 +5,7 @@ definition {
 			locator1 = "FormPortlet#SELECT_FORM",
 			value1 = "Select Form");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 }

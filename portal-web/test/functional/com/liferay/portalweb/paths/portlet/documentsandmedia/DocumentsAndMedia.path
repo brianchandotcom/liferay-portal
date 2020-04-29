@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@id,'DLPortlet')]</td>
+	<td>//div[contains(@class,'modal-body')]/iframe</td>
 	<td></td>
 </tr>
 <tr>

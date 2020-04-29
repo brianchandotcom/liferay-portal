@@ -330,7 +330,7 @@ definition {
 			menuItem = "Permissions",
 			rowEntry = "${categoryName}");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if ("${viewableBy}" == "Anyone (Guest Role)") {
 			AssertChecked(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");

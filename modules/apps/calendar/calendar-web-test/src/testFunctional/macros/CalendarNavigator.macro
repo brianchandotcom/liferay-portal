@@ -3,7 +3,7 @@ definition {
 	var siteName = "Liferay";
 
 	macro _selectCalendarSettingsIframe {
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro _selectPermissionsIframe {
@@ -11,7 +11,7 @@ definition {
 			locator1 = "CalendarPermissions#PERMISSIONS_TITLE",
 			value1 = "Permissions");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro closeModal {
@@ -93,7 +93,7 @@ definition {
 			portletName = "Calendar",
 			portletOption = "Configuration");
 
-		SelectFrame(locator1 = "CalendarConfiguration#CALENDAR_CONFIGURATION_IFRAME");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro gotoCurrentSiteCalendarsManage {

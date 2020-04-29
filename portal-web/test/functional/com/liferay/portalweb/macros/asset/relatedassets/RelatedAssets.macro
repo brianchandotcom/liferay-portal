@@ -50,7 +50,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(scopeSite)) {
 			Click(locator1 = "Dropdown#FILTER_AND_ORDER");

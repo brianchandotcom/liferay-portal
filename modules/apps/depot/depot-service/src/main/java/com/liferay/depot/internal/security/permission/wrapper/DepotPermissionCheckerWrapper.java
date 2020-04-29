@@ -127,10 +127,6 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	private boolean _isGroupAdmin(Group group) throws PortalException {
-		if (group.getType() != GroupConstants.TYPE_DEPOT) {
-			return false;
-		}
-
 		if (_userGroupRoleLocalService.hasUserGroupRole(
 				getUserId(), group.getGroupId(),
 				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true) ||

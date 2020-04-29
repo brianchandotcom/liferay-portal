@@ -857,7 +857,7 @@ xpack.monitoring.collection.enabled: true</echo>
 			select="\1"
 		/>
 
-		<exec executable="curl" outputproperty="indexList">
+		<exec executable="curl" outputproperty="index.list">
 			<arg value="-X" />
 			<arg value="GET" />
 			<arg value="http://localhost:9200/_cat/indices?h=idx" />
@@ -865,9 +865,9 @@ xpack.monitoring.collection.enabled: true</echo>
 		</exec>
 
 		<propertyregex
-			input="${indexList}"
+			input="${index.list}"
 			override="true"
-			property="indexList"
+			property="index.list"
 			regexp="\n"
 			replace=","
 		/>
@@ -877,7 +877,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo>## Remote Cluster Indices</echo>
 		<echo>##</echo>
 		<echo></echo>
-		<echo>${indexList}</echo>
+		<echo>${index.list}</echo>
 		<echo></echo>
 
 		<property name="connect.cluster.request.body">
@@ -915,22 +915,22 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo>${curl.output.connect.to.remote.cluster}</echo>
 		<echo></echo>
 
-		<for list="${indexList}" param="indexName">
+		<for list="${index.list}" param="index.name">
 			<sequential>
 				<if>
 					<and>
 						<not>
-							<contains string="@{indexName}" substring="." />
+							<contains string="@{index.name}" substring="." />
 						</not>
 						<not>
-							<contains string="@{indexName}" substring="ilm-history" />
+							<contains string="@{index.name}" substring="ilm-history" />
 						</not>
 					</and>
 					<then>
 						<property name="create.follower.request.body">
 							<![CDATA[
 								{
-									"leader_index": "@{indexName}",
+									"leader_index": "@{index.name}",
 									"remote_cluster": "leader"
 								}
 							]]>
@@ -941,14 +941,14 @@ xpack.monitoring.collection.enabled: true</echo>
 							<arg value="Content-Type: application/json" />
 							<arg value="-X" />
 							<arg value="PUT" />
-							<arg value="localhost:9202/@{indexName}/_ccr/follow?wait_for_active_shards=1" />
+							<arg value="localhost:9202/@{index.name}/_ccr/follow?wait_for_active_shards=1" />
 							<arg value="-d" />
 							<arg value="${create.follower.request.body}" />
 							<arg value="-s" />
 						</exec>
 
 						<echo></echo>
-						<echo>Creating follower index for @{indexName}.</echo>
+						<echo>Creating follower index for @{index.name}.</echo>
 						<echo></echo>
 						<echo>${curl.output.create.follower.index}</echo>
 						<echo></echo>
@@ -975,18 +975,18 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo>${curl.output.follower.indices}</echo>
 		<echo></echo>
 
-		<for list="${indexList}" param="indexName">
+		<for list="${index.list}" param="index.name">
 			<sequential>
 				<if>
 					<and>
 						<not>
-							<contains string="@{indexName}" substring="." />
+							<contains string="@{index.name}" substring="." />
 						</not>
 						<not>
-							<contains string="@{indexName}" substring="ilm-history" />
+							<contains string="@{index.name}" substring="ilm-history" />
 						</not>
 						<not>
-							<contains string="${curl.output.follower.indices}" substring="@{indexName}" />
+							<contains string="${curl.output.follower.indices}" substring="@{index.name}" />
 						</not>
 					</and>
 					<then>

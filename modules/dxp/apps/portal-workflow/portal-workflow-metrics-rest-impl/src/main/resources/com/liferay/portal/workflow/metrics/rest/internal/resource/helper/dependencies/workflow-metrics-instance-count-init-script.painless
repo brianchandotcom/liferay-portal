@@ -1,5 +1,6 @@
 state.assigneeIdInstanceIds = new HashSet();
 state.assigneeIds = params.assigneeIds;
+state.assigneeType = params.assigneeType;
 state.completedInstanceIds = new HashSet();
 state.completed = params.completed;
 state.endDate = params.endDate;

@@ -313,18 +313,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return assignee;
 	}
 
-	private BooleanQuery _createAssigneeIdsExistsBooleanQuery(
-		Long[] assigneeIds) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		if (ArrayUtil.contains(assigneeIds, -1L)) {
-			booleanQuery.addMustNotQueryClauses(_queries.exists("assigneeIds"));
-		}
-
-		return booleanQuery;
-	}
-
 	private BooleanQuery _createAssigneeIdsTermsBooleanQuery(
 		Long[] assigneeIds) {
 
@@ -344,6 +332,17 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			));
 
 		return booleanQuery.addMustQueryClauses(termsQuery);
+	}
+
+	private BooleanQuery _createAssigneeTypeBooleanQuery(Long[] assigneeIds) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		if (ArrayUtil.contains(assigneeIds, -1L)) {
+			booleanQuery.addMustQueryClauses(
+				_queries.term("assigneeType", Role.class.getName()));
+		}
+
+		return booleanQuery;
 	}
 
 	private BooleanQuery _createBooleanQuery(long processId) {
@@ -578,8 +577,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		if (assigneeIds.length > 0) {
 			booleanQuery.addShouldQueryClauses(
-				_createAssigneeIdsExistsBooleanQuery(assigneeIds),
-				_createAssigneeIdsTermsBooleanQuery(assigneeIds));
+				_createAssigneeIdsTermsBooleanQuery(assigneeIds),
+				_createAssigneeTypeBooleanQuery(assigneeIds));
 		}
 
 		return booleanQuery.addMustQueryClauses(

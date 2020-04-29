@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.helper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -253,6 +254,8 @@ public class ResourceHelper {
 				).orElseGet(
 					() -> null
 				)
+			).put(
+				"assigneeType", Role.class.getName()
 			).put(
 				"completed", () -> completed
 			).put(

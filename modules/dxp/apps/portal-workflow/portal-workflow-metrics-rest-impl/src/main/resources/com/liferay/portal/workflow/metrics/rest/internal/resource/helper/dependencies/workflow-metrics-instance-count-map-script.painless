@@ -4,7 +4,8 @@ if (doc.uid.value.startsWith("WorkflowMetricsTask") &&
 	((state.assigneeIds == null) ||
 	 (((doc.assigneeIds.size() != 0) &&
 	  state.assigneeIds.contains(doc.assigneeIds.value)) || 
-	 (state.assigneeIds.contains("-1") && (doc.assigneeIds.size() == 0))))) {
+	 (state.assigneeIds.contains("-1") &&
+	  state.assigneeType.equals(doc.assigneeType.value))))) {
 
 	state.assigneeIdInstanceIds.add(instanceId);
 }

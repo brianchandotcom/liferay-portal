@@ -16,7 +16,6 @@ import {ClayInput} from '@clayui/form';
 import React, {useState} from 'react';
 
 import {ImageSelector} from '../../../common/components/ImageSelector';
-import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
 import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
@@ -44,7 +43,7 @@ export function ImagePropertiesPanel({item}) {
 	const editableConfig = editableValue.config || {};
 
 	const [imageDescription, setImageDescription] = useState(
-		editableConfig.alt
+		editableConfig.alt || ''
 	);
 
 	const imageUrl = useSelector((state) => {
@@ -92,11 +91,6 @@ export function ImagePropertiesPanel({item}) {
 			})
 		);
 	};
-
-	const [debounceUpdateEditableValues] = useDebounceCallback(
-		updateEditableValues,
-		500
-	);
 
 	const onImageChange = (imageTitle, imageUrl) => {
 		const {editableValues} = state.fragmentEntryLinks[fragmentEntryLinkId];
@@ -163,15 +157,20 @@ export function ImagePropertiesPanel({item}) {
 					</label>
 					<ClayInput
 						id="imageDescription"
+						onBlur={() => {
+							const previousValue = editableConfig.alt || '';
+
+							if (previousValue !== imageDescription) {
+								updateEditableValues(
+									imageDescription,
+									editableValues,
+									editableId,
+									processorKey
+								);
+							}
+						}}
 						onChange={(event) => {
 							setImageDescription(event.target.value);
-
-							debounceUpdateEditableValues(
-								event.target.value,
-								editableValues,
-								editableId,
-								processorKey
-							);
 						}}
 						sizing="sm"
 						type="text"

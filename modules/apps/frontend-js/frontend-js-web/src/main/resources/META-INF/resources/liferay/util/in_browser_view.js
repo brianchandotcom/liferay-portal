@@ -53,10 +53,10 @@ export default function inBrowserView(node, baseWindow, nodeRegion) {
 			nodeRegion.top >= winRegion.top;
 
 		if (viewable) {
-			const frameEl = baseWindow.frameElement;
+			const frameElement = baseWindow.frameElement;
 
-			if (frameEl) {
-				let frameOffset = frameEl.getBoundingClientRect();
+			if (frameElement) {
+				let frameOffset = frameElement.getBoundingClientRect();
 
 				frameOffset = {
 					left: frameOffset.left + window.scrollX,

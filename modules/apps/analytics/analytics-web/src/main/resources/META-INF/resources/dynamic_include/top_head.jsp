@@ -18,12 +18,15 @@
 
 <%
 String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG);
+String analyticsClientGroupIds = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS);
 %>
 
 <script data-senna-track="temporary" type="text/javascript">
 	var runMiddlewares = function () {
 		<liferay-util:dynamic-include key="/dynamic_include/top_head.jsp#analytics" />
 	};
+
+	var analyticsClientGroupIds = '<%= analyticsClientGroupIds %>';
 </script>
 
 <script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
@@ -63,12 +66,17 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 			Liferay.on('endNavigate', function (event) {
 				Analytics.dispose();
 
-				if (!themeDisplay.isControlPanel()) {
+				var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+
+				if (
+					!themeDisplay.isControlPanel() &&
+					analyticsClientGroupIds.indexOf(groupId) >= 0
+				) {
 					Analytics.create(config);
 
 					Analytics.registerMiddleware(function (request) {
 						request.context.canonicalUrl = themeDisplay.getCanonicalURL();
-						request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+						request.context.groupId = groupId;
 
 						return request;
 					});

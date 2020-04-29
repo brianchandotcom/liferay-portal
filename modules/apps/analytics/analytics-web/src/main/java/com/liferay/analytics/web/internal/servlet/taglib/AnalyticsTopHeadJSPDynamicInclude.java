@@ -16,6 +16,7 @@ package com.liferay.analytics.web.internal.servlet.taglib;
 
 import com.liferay.analytics.web.internal.constants.AnalyticsWebKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -80,6 +81,13 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG,
 			_serialize(analyticsClientConfig));
+
+		httpServletRequest.setAttribute(
+			AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS,
+			_serialize(
+				PrefsPropsUtil.getStringArray(
+					themeDisplay.getCompanyId(), "liferayAnalyticsGroupIds",
+					StringPool.COMMA)));
 
 		super.include(httpServletRequest, httpServletResponse, key);
 	}
@@ -212,6 +220,12 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		}
 
 		return jsonObject.toString();
+	}
+
+	private String _serialize(Object[] array) {
+		JSONArray jsonArray = _jsonFactory.createJSONArray(array);
+
+		return jsonArray.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

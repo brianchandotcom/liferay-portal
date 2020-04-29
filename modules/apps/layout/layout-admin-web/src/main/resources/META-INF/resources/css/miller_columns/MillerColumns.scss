@@ -21,7 +21,7 @@
 	}
 
 	@include media-breakpoint-up(md) {
-		height: calc(100vh - 384px);
+		height: calc(100vh - 284px);
 		min-height: 10rem;
 		overflow-y: scroll;
 	}

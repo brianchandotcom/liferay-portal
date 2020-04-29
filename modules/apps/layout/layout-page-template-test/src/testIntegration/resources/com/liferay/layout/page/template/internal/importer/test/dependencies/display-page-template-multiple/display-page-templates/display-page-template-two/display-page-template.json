@@ -1,0 +1,5 @@
+{
+	"contentSubtypeName": "Basic Web Content",
+	"contentTypeClassName": "com.liferay.journal.model.JournalArticle",
+	"name": "Display Page Template Two"
+}

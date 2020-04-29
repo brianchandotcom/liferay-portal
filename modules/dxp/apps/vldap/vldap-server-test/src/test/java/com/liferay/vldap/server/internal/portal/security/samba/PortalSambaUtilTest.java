@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 
 import java.lang.reflect.Method;
@@ -48,6 +50,8 @@ public class PortalSambaUtilTest extends BaseVLDAPTestCase {
 	@Before
 	@Override
 	public void setUp() throws Exception {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
 		_clazz = Class.forName(PortalSambaUtil.class.getName());
 
 		_classInstance = _clazz.newInstance();

@@ -521,6 +521,119 @@ definition {
 			value1 = "This content maps from web content");
 	}
 
+	@description = "This is a use case for LPS-86141. The title of asset entries in selected collection should be shown as a list in the Collection Display."
+	@priority = "5"
+	test ShowTitleOfCollectionItemsInCollectionDisplay {
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add three Blogs entries") {
+			for (var entryTitle : list "First Blogs Entry,Second Blogs Entry,Third Blogs Entry") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content",
+					entryTitle = "${entryTitle}",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+		}
+
+		task ("Add a manual Collections and select three Blogs entries") {
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.selectAsset(
+				assetListName = "Manual Collection",
+				assetType = "Blogs Entry",
+				entryList = "First Blogs Entry,Second Blogs Entry,Third Blogs Entry");
+		}
+
+		task ("Add a Collection Display to page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+			ContentPages.clickPencil();
+
+			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert the title of three Web Content Articles is shown as a list in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Third Web Content",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Second Web Content",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "First Web Content",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		task ("Select the manual collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Manual Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert the title of three Web Content Articles is shown as a list in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "First Blogs Entry",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Second Blogs Entry",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Third Blogs Entry",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+	}
+
 	@description = "Given a published content page with an unconfigured Content fragment, when the page is viewed the fragment should not be visible."
 	@priority = "4"
 	test UnconfiguredContentDisplayFragmentIsNotVisible {

@@ -14,7 +14,7 @@
 
 import getElement from './get_element';
 
-export default function inBrowserView(node, win, nodeRegion) {
+export default function inBrowserView(node, baseWindow, nodeRegion) {
 	let viewable = false;
 
 	node = getElement(node);
@@ -32,19 +32,19 @@ export default function inBrowserView(node, win, nodeRegion) {
 			nodeRegion.right = nodeRegion.left + node.offsetWidth;
 		}
 
-		if (!win) {
-			win = window;
+		if (!baseWindow) {
+			baseWindow = window;
 		}
 
-		win = getElement(win);
+		baseWindow = getElement(baseWindow);
 
 		const winRegion = {};
 
-		winRegion.left = win.scrollX;
-		winRegion.right = winRegion.left + win.innerWidth;
+		winRegion.left = baseWindow.scrollX;
+		winRegion.right = winRegion.left + baseWindow.innerWidth;
 
-		winRegion.top = win.scrollY;
-		winRegion.bottom = winRegion.top + win.innerHeight;
+		winRegion.top = baseWindow.scrollY;
+		winRegion.bottom = winRegion.top + baseWindow.innerHeight;
 
 		viewable =
 			nodeRegion.bottom <= winRegion.bottom &&
@@ -53,7 +53,7 @@ export default function inBrowserView(node, win, nodeRegion) {
 			nodeRegion.top >= winRegion.top;
 
 		if (viewable) {
-			const frameEl = win.frameElement;
+			const frameEl = baseWindow.frameElement;
 
 			if (frameEl) {
 				let frameOffset = frameEl.getBoundingClientRect();
@@ -73,7 +73,7 @@ export default function inBrowserView(node, win, nodeRegion) {
 				nodeRegion.top += yOffset;
 				nodeRegion.bottom += yOffset;
 
-				viewable = inBrowserView(node, win.parent, nodeRegion);
+				viewable = inBrowserView(node, baseWindow.parent, nodeRegion);
 			}
 		}
 	}

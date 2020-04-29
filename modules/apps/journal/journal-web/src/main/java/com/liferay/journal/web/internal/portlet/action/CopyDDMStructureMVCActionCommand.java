@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -48,9 +49,10 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
 		"mvc.command.name=/journal/copy_ddm_structure"
 	},
-	service = MVCActionCommand.class
+	service = {AopService.class, MVCActionCommand.class}
 )
-public class CopyDDMStructureMVCActionCommand extends BaseMVCActionCommand {
+public class CopyDDMStructureMVCActionCommand
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)

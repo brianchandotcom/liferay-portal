@@ -18,9 +18,12 @@ import java.io.File;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Jorge Ferrer
  */
+@ProviderType
 public interface FragmentsImporter {
 
 	/**

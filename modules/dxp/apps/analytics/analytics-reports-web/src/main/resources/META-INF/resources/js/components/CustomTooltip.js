@@ -11,6 +11,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+
 /**
  * Component to customize the content of recharts Tooltip
  * http://recharts.org/en-US/api/Tooltip#content

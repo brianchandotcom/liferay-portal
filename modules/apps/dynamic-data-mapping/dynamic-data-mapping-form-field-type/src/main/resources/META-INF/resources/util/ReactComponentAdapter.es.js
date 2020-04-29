@@ -127,6 +127,7 @@ function getConnectedReactComponentAdapter(ReactComponent, variant) {
 			// check which values have been changed, events and children are
 			// properties that are changing all the time when new renderings
 			// happen, a new reference is created all the time.
+
 			delete changes.events;
 			delete changes.children;
 

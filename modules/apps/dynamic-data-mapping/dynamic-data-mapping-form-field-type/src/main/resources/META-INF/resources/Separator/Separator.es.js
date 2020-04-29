@@ -27,6 +27,7 @@ const Separator = ({style}) => {
 			// with React, we can just add the raw value in the attribute, we don't need to
 			// worry about XSS here because it won't go to the server just for printing
 			// on the screen.
+
 			elRef.current.setAttribute('style', style);
 		}
 	}, [style]);

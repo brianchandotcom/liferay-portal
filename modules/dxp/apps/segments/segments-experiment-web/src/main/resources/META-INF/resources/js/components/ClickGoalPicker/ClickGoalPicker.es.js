@@ -103,6 +103,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 			target.scrollIntoView();
 
 			// Make sure nothing slides under the top nav.
+
 			window.scrollBy(0, -100);
 		}
 
@@ -206,8 +207,10 @@ function OverlayContainer({allowEdit, root}) {
 	const targetableElements = useRef();
 
 	// Before mount.
+
 	if (!targetableElements.current) {
 		// Apply CSS overrides.
+
 		const css = `
 			#banner {
 				cursor: not-allowed;
@@ -239,13 +242,16 @@ function OverlayContainer({allowEdit, root}) {
 		head.appendChild(style);
 
 		// This must happen after hiding the toppers.
+
 		targetableElements.current = getTargetableElements(root);
 	}
 
 	// On unmount.
+
 	useEffect(() => {
 		return () => {
 			// Remove CSS overrides.
+
 			const style = document.getElementById(cssId);
 
 			if (style) {
@@ -268,6 +274,7 @@ function OverlayContainer({allowEdit, root}) {
 	const handleClick = useCallback(
 		(event) => {
 			// Clicking anywhere other than a target aborts target selection.
+
 			event.preventDefault();
 			stopImmediatePropagation(event);
 			dispatch({type: 'deactivate'});
@@ -311,11 +318,13 @@ function Overlay({allowEdit, root, targetableElements}) {
 	);
 
 	// For now, treat scrolling just like resizing.
+
 	const handleScroll = handleResize;
 
 	useEventListener('resize', handleResize, false, window);
 
 	// TODO: also consider scrolling of elements with "overflow: auto/scroll";
+
 	useEventListener('scroll', handleScroll, false, window);
 
 	return (
@@ -395,6 +404,7 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 	// At this point we don't know the dimensions of our children, but we do
 	// know whether we have more space on the left or right of our target, so we
 	// flip based on that.
+
 	const spaceOnLeft = left - geometry.left;
 	const spaceOnRight = geometry.right - right;
 	const spaceOnTop = top - geometry.top;
@@ -403,6 +413,7 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 	return (
 		// TODO: make tooltip match mock and switch to Clay v3 tooltips directly
 		// instead of using lfr-portal-tooltip.
+
 		<div
 			className="lfr-segments-experiment-click-goal-target"
 			style={{
@@ -550,6 +561,7 @@ function TargetPopover({selector}) {
 	}, []);
 
 	// The +1 here is to avoid unwanted wrapping of the button.
+
 	const maxWidth = buttonWidth
 		? `${buttonWidth + POPOVER_PADDING * 2 + 1}px`
 		: 'none';

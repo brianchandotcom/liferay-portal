@@ -38,6 +38,7 @@ export default function usePlugins() {
 							console.error(error);
 
 							// Reset to allow future retries.
+
 							plugins.current.delete(key);
 						}
 

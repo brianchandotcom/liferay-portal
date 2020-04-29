@@ -16,6 +16,7 @@ import React from 'react';
 
 import {Component} from '../../core/AppContext';
 import FragmentsSidebar from './components/FragmentsSidebar';
+
 /**
  * Entry-point for "Fragments" (sidebar pane) functionality.
  */

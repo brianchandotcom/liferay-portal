@@ -79,6 +79,7 @@ class CollapseProvider {
 
 		// Reflow to make sure dimention is set, without this transition may
 		// not trigger.
+
 		panel.getBoundingClientRect();
 
 		panel.classList.remove(CssClass.COLLAPSE);

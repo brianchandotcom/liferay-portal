@@ -24,6 +24,7 @@ describe('Forms Plugin', () => {
 
 	beforeEach(() => {
 		// Force attaching DOM Content Loaded event
+
 		Object.defineProperty(document, 'readyState', {
 			value: 'loading',
 			writable: false,
@@ -195,6 +196,7 @@ describe('Forms Plugin', () => {
 			field.dispatchEvent(new Event('focus'));
 
 			// Fake timing.
+
 			duration = 1500;
 
 			field.dispatchEvent(new Event('blur'));

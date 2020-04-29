@@ -64,6 +64,7 @@ export default (evaluatorContext, properties, updateState) => {
 			if (REVALIDATE_UPDATES.length > 0) {
 				// All non-evaluable operations that were performed after the request
 				// was sent are used here to revalidate the new data.
+
 				REVALIDATE_UPDATES.forEach((item) => {
 					evaluatedPages = getEditedPages({
 						...item,
@@ -73,6 +74,7 @@ export default (evaluatorContext, properties, updateState) => {
 
 				// Redefine the list of updates to avoid leaking memory and avoid
 				// more expensive operations in the next interactions
+
 				REVALIDATE_UPDATES = [];
 			}
 

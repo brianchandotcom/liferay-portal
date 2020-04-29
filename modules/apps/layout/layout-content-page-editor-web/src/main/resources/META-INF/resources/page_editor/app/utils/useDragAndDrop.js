@@ -251,16 +251,20 @@ export default function useDragAndDrop({
 			}
 
 			// Determine rectangle on screen
+
 			const hoverBoundingRect = containerRef.current.getBoundingClientRect();
 
 			// Get vertical middle
+
 			const hoverMiddleY =
 				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
 			// Determine mouse position
+
 			const clientOffset = _monitor.getClientOffset();
 
 			// Get pixels to the top
+
 			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
 			const [
@@ -679,6 +683,7 @@ function getParentItemIdAndPositon({
 				: dropTargetItemIndex + 1;
 
 		// Moving an item in the same parent
+
 		if (parent.children.includes(dropItem.itemId)) {
 			const itemIndex = parent.children.indexOf(dropItem.itemId);
 

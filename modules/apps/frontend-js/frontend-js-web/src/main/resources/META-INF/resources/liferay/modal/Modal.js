@@ -34,6 +34,7 @@ const openModal = (props) => {
 
 	// Mount in detached node; Clay will take care of appending to `document.body`.
 	// See: https://github.com/liferay/clay/blob/master/packages/clay-shared/src/Portal.tsx
+
 	render(Modal, props, document.createElement('div'));
 };
 

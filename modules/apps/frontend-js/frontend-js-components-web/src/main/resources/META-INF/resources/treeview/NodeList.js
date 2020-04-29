@@ -29,6 +29,7 @@ export default function NodeList({
 
 	if (!rootNodeId) {
 		// All nodes have been filtered.
+
 		return null;
 	}
 

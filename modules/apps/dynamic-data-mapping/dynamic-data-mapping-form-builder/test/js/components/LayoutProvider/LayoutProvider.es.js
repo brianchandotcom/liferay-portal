@@ -471,6 +471,7 @@ describe('LayoutProvider', () => {
 								// Overrides the instanceId because it is generated when a field is duplicated,
 								// toMatchSnapshot has problems with deep arrays so we override it here to
 								// avoid this.
+
 								instanceId: 'Any<String>',
 								name: `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`,
 							};

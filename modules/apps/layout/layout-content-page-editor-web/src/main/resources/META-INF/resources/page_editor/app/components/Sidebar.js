@@ -237,6 +237,7 @@ export default function Sidebar() {
 						});
 
 						// Add separator between groups.
+
 						if (groupIndex === panels.length - 1) {
 							return elements.concat(buttons);
 						}

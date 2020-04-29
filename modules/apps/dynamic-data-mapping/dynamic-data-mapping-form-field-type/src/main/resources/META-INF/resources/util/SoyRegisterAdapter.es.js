@@ -57,6 +57,7 @@ export const SoyRegisterAdapter = (ComponentAdapter, variant) => {
 
 		// We call the template created above so that Metal
 		// can take care of the rest.
+
 		const templateAlias = Soy.getTemplate(
 			variant + 'Adapter.incrementaldom',
 			'render'

@@ -40,6 +40,7 @@ describe('WebContent Plugin', () => {
 
 	beforeEach(() => {
 		// Force attaching DOM Content Loaded event
+
 		Object.defineProperty(document, 'readyState', {
 			value: 'loading',
 			writable: false,

@@ -94,6 +94,7 @@ function APIService({contentPageEditorNamespace, endpoints, namespace}) {
 
 	function publishExperience(body) {
 		// TODO somehow type this
+
 		return _fetchWithError(editSegmentsExperimentStatusURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',

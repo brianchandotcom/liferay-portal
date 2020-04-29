@@ -88,6 +88,7 @@ describe('AddResultModal', () => {
 		// hasn't been called.
 		//
 		// This should be removed after disabling the initial fetch.
+
 		fetch.mockResponse(JSON.stringify({}));
 
 		const {getByTestId} = render(<AddResultModalWithModalMock />);

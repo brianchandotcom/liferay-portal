@@ -68,6 +68,7 @@ export default function useKeyboardNavigation(nodeId) {
 					// except for TAB, which is used to navigate away from the
 					// component (requires a `tabindex` of -1 on all internal
 					// components).
+
 					event.preventDefault();
 				}
 

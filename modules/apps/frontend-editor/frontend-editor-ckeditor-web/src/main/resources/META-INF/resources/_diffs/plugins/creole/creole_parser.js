@@ -206,6 +206,7 @@
 			apply(node, data, options) {
 				if (options && options.forIE) {
 					// workaround for bad IE
+
 					data = data.replace(/\n/g, ' \r');
 				}
 				node.appendChild(document.createTextNode(data));

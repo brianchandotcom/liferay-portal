@@ -73,6 +73,7 @@ const MillerColumns = ({
 	const [items, setItems] = useState(() => getItemsMap(initialColumns));
 
 	// Transform items map into a columns-like array.
+
 	const columns = useMemo(() => {
 		const columns = [];
 
@@ -91,6 +92,7 @@ const MillerColumns = ({
 		}
 
 		// Add empty column in the end if last column has an active item
+
 		const lastColumnActiveItem = columns[columns.length - 1].items.find(
 			(item) => item.active
 		);
@@ -134,6 +136,7 @@ const MillerColumns = ({
 		const parent = itemsArray.find((item) => item.id === newParentId);
 
 		// If no newIndex is provided set it as the last of the siblings.
+
 		if (typeof newIndex !== 'number') {
 			newIndex = parent.childrenCount || 0;
 		}
@@ -156,6 +159,7 @@ const MillerColumns = ({
 				// Exit if source was active but not anymore and we are on the
 				// next column to where source used to live to avoid saving its
 				// children (which must not be shown anymore)
+
 				if (
 					source.active &&
 					!newSource.active &&
@@ -165,10 +169,12 @@ const MillerColumns = ({
 				}
 
 				// Reset itemIndex counter on each column
+
 				itemIndex = 0;
 			}
 
 			// Skip the source item iteration
+
 			if (item.id === sourceId) {
 				itemIndex++;
 				prevColumnIndex = item.columnIndex;
@@ -215,6 +221,7 @@ const MillerColumns = ({
 		// If source parent is active (children are visible) set (again or not)
 		// the newSource in the map in case it's being placed as the last
 		// element (so won't reach that position in the loop).
+
 		if (parent.active) {
 			newItems.set(newSource.id, newSource);
 		}

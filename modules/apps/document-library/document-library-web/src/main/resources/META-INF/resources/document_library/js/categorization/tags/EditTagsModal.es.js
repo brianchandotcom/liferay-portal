@@ -47,6 +47,7 @@ const EditTagsModal = ({
 
 	// Flag that indicates whether new selected items must be added to old ones
 	// or replace them.
+
 	const [append, setAppend] = useState(true);
 	const [description, setDescription] = useState('');
 	const [loading, setLoading] = useState(true);
@@ -54,10 +55,12 @@ const EditTagsModal = ({
 
 	// Selected items received from the server and saved to compare with new
 	// ones.
+
 	const [initialSelectedItems, setInitialSelectedItems] = useState([]);
 	const [inputValue, setInputValue] = useState();
 
 	// Current selected items.
+
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
 		'add'
@@ -67,6 +70,7 @@ const EditTagsModal = ({
 
 	// This makes the component fetch selected items only after mounting it
 	// (a.k.a. first render).
+
 	useEffect(() => {
 		const selection = {
 			documentIds: fileEntries,

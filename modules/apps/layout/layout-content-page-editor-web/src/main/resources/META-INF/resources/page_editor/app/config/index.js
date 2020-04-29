@@ -30,6 +30,7 @@ export function initializeConfig(backendConfig) {
 	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
 
 	// Special items requiring augmentation, creation, or transformation.
+
 	const augmentedPanels = augmentPanelData(pluginsRootPath, sidebarPanels);
 
 	const syntheticItems = {
@@ -71,6 +72,7 @@ function augmentPanelData(pluginsRootPath, sidebarPanels) {
 			...panel,
 
 			// https://github.com/liferay/liferay-js-toolkit/issues/324
+
 			pluginEntryPoint: `${pluginsRootPath}/${sidebarPanelId}/index`,
 
 			sidebarPanelId,

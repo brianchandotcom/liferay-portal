@@ -374,6 +374,7 @@ describe('Review and Run test', () => {
 		expect(queryAllByLabelText('traffic-split').length).toBe(
 			segmentsVariants.length
 		);
+
 		/*
 		 * There is no show action button
 		 */

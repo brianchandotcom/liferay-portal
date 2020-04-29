@@ -25,6 +25,7 @@ import {
 } from './helpers';
 
 // We don't need any of the timing callbacks to run during these tests.
+
 jest.mock('../src/plugins/timing');
 
 jest.mock('../src/messageQueue', () => {

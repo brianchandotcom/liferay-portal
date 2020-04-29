@@ -46,6 +46,7 @@ function SelectCategory({
 		const data = {};
 
 		// Mark newly selected nodes as selected.
+
 		visit(nodes, (node) => {
 			if (selectedNodes.has(node.id)) {
 				data[node.id] = {
@@ -58,6 +59,7 @@ function SelectCategory({
 		});
 
 		// Mark unselected nodes as unchecked.
+
 		if (selectedNodesRef.current) {
 			Object.entries(selectedNodesRef.current).forEach(([id, node]) => {
 				if (!selectedNodes.has(id)) {

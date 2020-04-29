@@ -123,6 +123,7 @@ export const useSelector = (selector, compareEqual = (a, b) => a === b) => {
 
 	const initialState = useMemo(
 		() => selector(storeRef.current.getState()),
+
 		// We really want to call selector here just on component mount.
 		// This provides an initial value that will be recalculated when
 		// store suscription has been called.

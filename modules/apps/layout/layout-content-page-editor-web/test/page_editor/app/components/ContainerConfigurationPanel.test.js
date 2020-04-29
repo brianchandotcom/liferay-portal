@@ -161,6 +161,7 @@ describe('ContainerConfigurationPanel', () => {
 			});
 
 			// debug();
+
 			expect(getByLabelText('image-source').value).toBe(
 				'manual_selection'
 			);

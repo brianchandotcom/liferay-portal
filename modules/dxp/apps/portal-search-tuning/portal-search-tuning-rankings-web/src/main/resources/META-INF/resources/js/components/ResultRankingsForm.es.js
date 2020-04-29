@@ -288,12 +288,14 @@ class ResultRankingsForm extends Component {
 				const fetchedItems = items || {};
 
 				// Get existing results to update its addedResult property.
+
 				const existingFetchedIds = fetchedItems
 					.filter(({id}) => this.state.resultIds.includes(id))
 					.map(({id}) => id);
 
 				// Remove duplicate results from the new list of results to
 				// avoid duplicate key errors.
+
 				const newItems = fetchedItems.filter(
 					({id}) => !this.state.resultIds.includes(id)
 				);
@@ -305,6 +307,7 @@ class ResultRankingsForm extends Component {
 
 				// Keep history of all initially pinned results to update the
 				// end index of pinned results.
+
 				this._initialResultIdsPinned = [
 					...this._initialResultIdsPinned,
 					...newPinnedIds,
@@ -320,6 +323,7 @@ class ResultRankingsForm extends Component {
 							// This prevents confusion since unpinning or
 							// un-hiding added results removes it from results
 							// list entirely.
+
 							...updateDataMap(
 								state.dataMap,
 								existingFetchedIds,
@@ -385,12 +389,14 @@ class ResultRankingsForm extends Component {
 
 				// Get already existing results in order to set addedResult
 				// property to false in setState.
+
 				const existingFetchedIds = fetchedItems
 					.filter(({id}) => this.state.resultIds.includes(id))
 					.map(({id}) => id);
 
 				// Remove duplicate results from the new list of results to
 				// avoid duplicate key errors.
+
 				const newItems = fetchedItems.filter(
 					({id}) => !this.state.resultIds.includes(id)
 				);
@@ -399,6 +405,7 @@ class ResultRankingsForm extends Component {
 
 				// Keep history of all initial results, to get the difference
 				// for addedResults and for all added/removed hidden/pinned
+
 				this._initialResultIdsHidden = [
 					...this._initialResultIdsHidden,
 					...newIds,
@@ -413,6 +420,7 @@ class ResultRankingsForm extends Component {
 						// This prevents confusion since unpinning or
 						// un-hiding added results removes it from results
 						// list entirely.
+
 						...updateDataMap(state.dataMap, existingFetchedIds, {
 							addedResult: false,
 						}),

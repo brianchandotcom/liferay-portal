@@ -35,6 +35,7 @@ class NoRender extends React.Component {
 // being able to call page renderer rows. This should probably be removed
 // by a more friendly implementation when we remove the implementation of
 // calling the fields dynamically through soy.
+
 const PageRendererAdapter = ({
 	activePage,
 	context,

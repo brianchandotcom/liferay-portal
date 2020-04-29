@@ -28,6 +28,7 @@ export default function initializeSidebarConfig(backendInfo) {
 	const toolbarId = `${backendInfo.portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
 
 	// Special items requiring augmentation, creation, or transformation.
+
 	const augmentedPanels = augmentPanelData(
 		Object.values(backendInfo.sidebarPanels)
 	);

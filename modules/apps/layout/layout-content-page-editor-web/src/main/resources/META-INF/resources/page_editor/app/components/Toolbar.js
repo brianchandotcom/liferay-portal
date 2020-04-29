@@ -95,6 +95,7 @@ function ToolbarBody() {
 
 	if (loading.current) {
 		// Do this once only.
+
 		loading.current();
 		loading.current = null;
 	}
@@ -295,6 +296,7 @@ export default function Toolbar() {
 
 	if (!isMounted()) {
 		// First time here, must empty JSP-rendered markup from container.
+
 		while (container.firstChild) {
 			container.removeChild(container.firstChild);
 		}

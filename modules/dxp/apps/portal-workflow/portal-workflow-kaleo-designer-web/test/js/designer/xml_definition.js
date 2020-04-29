@@ -33,6 +33,7 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 
 		AUI().use(['liferay-kaleo-designer-utils'], (A) => {
 			// Stub for "aui-component", which refuses to load in test env.
+
 			A.Component = {
 				create({ATTRS, prototype, ...properties}) {
 					const constructor = function (config) {
@@ -103,6 +104,7 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 			//
 			//      https://github.com/yui/yui3/blob/25264e3629/src/dataschema/js/dataschema-xml.js#L182
 			//
+
 			xmlDefinition.definitionDoc.evaluate = undefined;
 
 			xmlDefinition.forEachField((_tagName, fieldData) => {

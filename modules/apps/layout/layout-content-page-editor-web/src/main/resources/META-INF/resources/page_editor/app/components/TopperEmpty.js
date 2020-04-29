@@ -114,6 +114,7 @@ function TopperEmpty({children, item, layoutData}) {
 						drop(node);
 
 						// Call the original ref, if any.
+
 						if (typeof child.ref === 'function') {
 							child.ref(node);
 						}

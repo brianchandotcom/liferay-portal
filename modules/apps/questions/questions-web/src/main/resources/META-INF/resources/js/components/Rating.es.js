@@ -78,6 +78,7 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 				}
 				displayType="unstyled"
 				// small={if-it-is-a-sub-comment}
+
 				monospaced
 				onClick={() => voteChange(-1)}
 			>

@@ -186,6 +186,7 @@ describe('Grid', () => {
 	// This test needs to be investigated further, it is failing at metal-events because it
 	// has no events adding, strange that we are adding but only this one is failing.
 	// This is not reproducible in manual tests.
+
 	it.skip('emits a fieldEdited event when changing the state of radio input', (done) => {
 		const handleFieldEdited = (data) => {
 			expect(data).toEqual(

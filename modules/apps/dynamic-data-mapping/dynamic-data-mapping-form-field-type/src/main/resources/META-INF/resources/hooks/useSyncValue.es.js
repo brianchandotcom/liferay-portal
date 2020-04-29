@@ -23,6 +23,7 @@ export const useSyncValue = (newValue, isDelay = true) => {
 	// Maintains the reference of the last value to check in later renderings if the
 	// value is new or keeps the same, it covers cases where the value typed by
 	// the user is sent to LayoutProvider but it does not descend with the new changes.
+
 	const previousValueRef = useRef(newValue);
 
 	const [value, setValue] = useState(newValue);

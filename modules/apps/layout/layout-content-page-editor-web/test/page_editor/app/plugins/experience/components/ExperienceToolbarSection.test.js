@@ -221,6 +221,7 @@ describe('ExperienceToolbarSection', () => {
 		//      "TypeError: Cannot read property '_defaultView' of undefined"
 		//
 		// Caused by: https://github.com/jsdom/jsdom/issues/2499
+
 		document.activeElement.blur = () => {};
 
 		userEvent.click(lockIcon);
@@ -436,6 +437,7 @@ describe('ExperienceToolbarSection', () => {
 
 		// Grab parentElement here to work around jsdom v13 issue.
 		// "TypeError: Cannot read property '_defaultView' of undefined"
+
 		userEvent.click(getByText('save').parentElement);
 
 		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(2));
@@ -517,6 +519,7 @@ describe('ExperienceToolbarSection', () => {
 
 		// Grab parentElement here to work around jsdom v13 issue.
 		// "TypeError: Cannot read property '_defaultView' of undefined"
+
 		userEvent.click(getByText('save').parentElement);
 
 		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));

@@ -188,9 +188,16 @@ definition {
 
 			MenuItem.click(menuItem = "Ignored URLs");
 
-			Redirect.gotoEntryMenuItem(
-				item = "Unignore",
-				sourceURL = "${ignoreURL}");
+			if ("${unignoreAllEntries}" == "true") {
+				PortletEntry.selectAll();
+
+				Click(locator1 = "Button#UNIGNORE_REDIRECT_URLS");
+			}
+			else {
+				Redirect.gotoEntryMenuItem(
+					item = "Unignore",
+					sourceURL = "${ignoreURL}");
+			}
 
 			Alert.viewSuccessMessage();
 		}
@@ -204,9 +211,16 @@ definition {
 
 			MenuItem.click(menuItem = "Active URLs");
 
-			Redirect.gotoEntryMenuItem(
-				item = "Ignore",
-				sourceURL = "${ignoreURL}");
+			if ("${ignoreAllEntries}" == "true") {
+				PortletEntry.selectAll();
+
+				Click(locator1 = "Button#IGNORE_REDIRECT_URLS");
+			}
+			else {
+				Redirect.gotoEntryMenuItem(
+					item = "Ignore",
+					sourceURL = "${ignoreURL}");
+			}
 
 			Alert.viewSuccessMessage();
 		}
@@ -223,7 +237,6 @@ definition {
 				locator1 = "NavBar#NAV_ITEM_REDIRECTION",
 				value1 = "404 URLs");
 		}
-
 		AssertTextEquals.assertPartialText(
 			key_rowEntry = "${ignoreURL}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",

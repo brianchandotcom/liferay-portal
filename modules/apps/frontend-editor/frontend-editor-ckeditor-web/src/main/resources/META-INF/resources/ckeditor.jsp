@@ -455,8 +455,6 @@ name = HtmlUtil.escapeJS(name);
 				window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
 			</c:if>
 
-			window['<%= name %>'].instanceReady = true;
-
 			Liferay.component('<%= name %>', window['<%= name %>'], {
 				portletId: '<%= portletId %>',
 			});
@@ -529,6 +527,8 @@ name = HtmlUtil.escapeJS(name);
 					initData();
 				</c:otherwise>
 			</c:choose>
+
+			window['<%= name %>'].instanceReady = true;
 
 			<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
 				CKEDITOR.instances['<%= name %>'].on(

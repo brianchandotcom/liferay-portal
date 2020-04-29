@@ -208,6 +208,26 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 	}
 
+	public static class Value {
+
+		public SpiraCustomProperty getSpiraCustomProperty() {
+			return _spiraCustomProperty;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		protected Value(SpiraCustomProperty spiraCustomProperty, String value) {
+			_spiraCustomProperty = spiraCustomProperty;
+			_value = value;
+		}
+
+		private final SpiraCustomProperty _spiraCustomProperty;
+		private final String _value;
+
+	}
+
 	protected static List<SpiraCustomProperty> getSpiraCustomProperties(
 		final SpiraProject spiraProject,
 		final Class<? extends SpiraArtifact> spiraArtifactClass,

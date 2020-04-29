@@ -130,6 +130,32 @@ public class DisplayPagesImporterTest {
 					layoutPageTemplateEntry.getPlid()));
 	}
 
+	@Test
+	public void testImportDisplayPageExistingNameNoOvewrite() throws Exception {
+		String testCaseName = "display-page-template-one";
+
+		_importLayoutPageTemplateEntry(testCaseName);
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries =
+				_getLayoutPageTemplatesImporterResultEntries(testCaseName);
+
+		LayoutPageTemplatesImporterResultEntry
+			layoutPageTemplatesImporterResultEntry =
+				layoutPageTemplatesImporterResultEntries.get(0);
+
+		Assert.assertEquals(
+			LayoutPageTemplatesImporterResultEntry.Status.IGNORED,
+			layoutPageTemplatesImporterResultEntry.getStatus());
+		Assert.assertEquals(
+			String.format(
+				"%s/display-page-templates/%s/display-page-template.json was " +
+					"ignored because a display page template with the same " +
+						"key already exists.",
+				testCaseName, testCaseName),
+			layoutPageTemplatesImporterResultEntry.getErrorMessage());
+	}
+
 	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)
 		throws IOException {
 

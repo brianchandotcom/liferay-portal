@@ -393,7 +393,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"fragments", _getFragmentCollections(false, true)
 			).put(
-				"languageId", themeDisplay.getLanguageId()
+				"languageId",
+				LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 			).put(
 				"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
 			).put(

@@ -15,10 +15,10 @@
 import getElement from './get_element';
 import inBrowserView from './in_browser_view';
 
-export default function focusFormField(el) {
+export default function focusFormField(element) {
 	let interacting = false;
 
-	el = getElement(el);
+	element = getElement(element);
 
 	const handler = () => {
 		interacting = true;
@@ -28,33 +28,36 @@ export default function focusFormField(el) {
 
 	document.body.addEventListener('click', handler);
 
-	if (!interacting && inBrowserView(el)) {
-		const getDisabledParents = function (el) {
+	if (!interacting && inBrowserView(element)) {
+		const getDisabledParents = function (element) {
 			let result = [];
 
-			if (el.parentElement) {
-				if (el.parentElement.getAttribute('disabled')) {
-					result = [el.parentElement];
+			if (element.parentElement) {
+				if (element.parentElement.getAttribute('disabled')) {
+					result = [element.parentElement];
 				}
 
-				result = [...result, ...getDisabledParents(el.parentElement)];
+				result = [
+					...result,
+					...getDisabledParents(element.parentElement),
+				];
 			}
 
 			return result;
 		};
 
-		const disabledParents = getDisabledParents(el);
+		const disabledParents = getDisabledParents(element);
 
 		const focusable =
-			!el.getAttribute('disabled') &&
-			el.offsetWidth > 0 &&
-			el.offsetHeight > 0 &&
+			!element.getAttribute('disabled') &&
+			element.offsetWidth > 0 &&
+			element.offsetHeight > 0 &&
 			!disabledParents.length;
 
-		const form = el.closest('form');
+		const form = element.closest('form');
 
 		if (!form || focusable) {
-			el.focus();
+			element.focus();
 		}
 		else if (form) {
 			const portletName = form.getAttribute('data-fm-namespace');
@@ -67,7 +70,7 @@ export default function focusFormField(el) {
 				const formName = event.formName;
 
 				if (elFormName === formName) {
-					el.focus();
+					element.focus();
 
 					Liferay.detach(formReadyEventName, formReadyHandler);
 				}

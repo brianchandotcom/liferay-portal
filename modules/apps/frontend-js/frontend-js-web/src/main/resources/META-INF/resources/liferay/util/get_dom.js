@@ -12,10 +12,10 @@
  * details.
  */
 
-export default function getDOM(el) {
-	if (el._node || el._nodes) {
-		return el.nodeType ? el : el._node || null;
+export default function getDOM(element) {
+	if (element._node || element._nodes) {
+		return element.nodeType ? element : element._node || null;
 	}
 
-	return el;
+	return element;
 }

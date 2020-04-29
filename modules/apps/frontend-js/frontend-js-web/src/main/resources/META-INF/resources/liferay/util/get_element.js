@@ -14,8 +14,8 @@
 
 import getDOM from './get_dom';
 
-export default function getElement(el) {
-	const currentElement = getDOM(el);
+export default function getElement(element) {
+	const currentElement = getDOM(element);
 
 	return typeof currentElement === 'string'
 		? document.querySelector(currentElement)

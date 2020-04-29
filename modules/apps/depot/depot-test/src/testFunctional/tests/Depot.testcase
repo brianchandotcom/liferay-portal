@@ -107,15 +107,29 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
 
-		DepotNavigator.gotoLanguages(depotName = "Test Depot Name");
+		Depot.viewLanguageItems(depotLanguage = "Spanish (Spain)");
 
-		Pause(locator1 = "3000");
+		DepotNavigator.openDepotAdmin();
 
-		Click.clickNoMouseOverNoWaitForVisible(
-			key_languagesOption = "Define a custom default language and additional active languages for this asset library.",
-			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+		Depot.moveLanguage(
+			depotLanguage = "Spanish (Spain)",
+			moveDown = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+		Depot.viewLanguageItems(
+			depotLanguage = "Spanish (Spain)",
+			lastLanguageItem = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
 
 		Depot.configureDefaultLanguage(
 			defaultDepotLanguage = "Spanish (Spain)",

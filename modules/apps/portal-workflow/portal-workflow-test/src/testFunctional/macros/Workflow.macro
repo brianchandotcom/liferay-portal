@@ -1225,13 +1225,16 @@ definition {
 	macro viewTaskAssignedToMyRoles {
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 		var key_workflowTask = "${workflowTask}";
+		var iterator = "0";
+		var maxRetryNumber = "10";
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
-		if (IsElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE")) {
+		while (IsElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE") && "${iterator}" != "${maxRetryNumber}") {
 			Navigator.gotoNavTab(navTab = "Assigned to Me");
-
 			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+			var iterator = MathUtil.sum("${iterator}", "1");
+			Pause(locator1 = "1000");
 		}
 
 		AssertTextEquals(

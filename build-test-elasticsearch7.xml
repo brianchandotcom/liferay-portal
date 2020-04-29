@@ -927,6 +927,8 @@ xpack.monitoring.collection.enabled: true</echo>
 						</not>
 					</and>
 					<then>
+						<local name="create.follower.request.body" />
+
 						<property name="create.follower.request.body">
 							<![CDATA[
 								{
@@ -935,6 +937,8 @@ xpack.monitoring.collection.enabled: true</echo>
 								}
 							]]>
 						</property>
+
+						<local name="curl.output.create.follower.index" />
 
 						<exec executable="curl" outputproperty="curl.output.create.follower.index">
 							<arg value="-H" />
@@ -952,9 +956,6 @@ xpack.monitoring.collection.enabled: true</echo>
 						<echo></echo>
 						<echo>${curl.output.create.follower.index}</echo>
 						<echo></echo>
-
-						<var name="create.follower.request.body" unset="true" />
-						<var name="curl.output.create.follower.index" unset="true" />
 					</then>
 				</if>
 			</sequential>

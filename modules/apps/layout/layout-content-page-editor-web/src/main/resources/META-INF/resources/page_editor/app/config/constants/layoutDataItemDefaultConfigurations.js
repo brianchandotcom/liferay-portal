@@ -39,6 +39,8 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 		fragmentEntryLinkId: '',
 	},
 
+	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: {},
+
 	[LAYOUT_DATA_ITEM_TYPES.root]: {},
 
 	[LAYOUT_DATA_ITEM_TYPES.row]: {

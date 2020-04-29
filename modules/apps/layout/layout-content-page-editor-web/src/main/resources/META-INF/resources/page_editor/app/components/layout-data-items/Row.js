@@ -72,7 +72,9 @@ Row.propTypes = {
 function getItemParent(item, itemLayoutData) {
 	const parent = itemLayoutData.items[item.parentId];
 
-	return parent && parent.type === LAYOUT_DATA_ITEM_TYPES.root
+	return parent &&
+		(parent.type === LAYOUT_DATA_ITEM_TYPES.root ||
+			parent.type === LAYOUT_DATA_ITEM_TYPES.fragmentDropZone)
 		? getItemParent(parent, itemLayoutData)
 		: parent;
 }

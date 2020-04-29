@@ -19,6 +19,7 @@ export const LAYOUT_DATA_ITEM_TYPES = {
 	container: 'container',
 	dropZone: 'drop-zone',
 	fragment: 'fragment',
+	fragmentDropZone: 'fragment-drop-zone',
 	root: 'root',
 	row: 'row',
 };

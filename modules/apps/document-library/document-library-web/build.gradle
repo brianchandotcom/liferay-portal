@@ -5,6 +5,8 @@ buildCSS {
 }
 
 dependencies {
+	compileInclude project(":apps:data-engine:data-engine-rest-client")
+
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -25,6 +27,7 @@ dependencies {
 	compileOnly project(":apps:change-tracking:change-tracking-api")
 	compileOnly project(":apps:comment:comment-taglib")
 	compileOnly project(":apps:data-engine:data-engine-api")
+	compileOnly project(":apps:data-engine:data-engine-rest-api")
 	compileOnly project(":apps:data-engine:data-engine-taglib")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:document-library:document-library-repository-authorization-api")

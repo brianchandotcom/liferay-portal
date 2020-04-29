@@ -118,6 +118,16 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		}
 	}
 
+	public SpiraCustomList.Value getSpiraCustomListValueByName(String name) {
+		for (SpiraCustomList.Value value : getSpiraCustomListValues()) {
+			if (name.equals(value.getName())) {
+				return value;
+			}
+		}
+
+		return null;
+	}
+
 	public List<SpiraCustomList.Value> getSpiraCustomListValues() {
 		SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
 

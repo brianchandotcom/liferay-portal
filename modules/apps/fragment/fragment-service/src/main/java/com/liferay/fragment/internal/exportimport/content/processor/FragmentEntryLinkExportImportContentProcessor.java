@@ -206,25 +206,17 @@ public class FragmentEntryLinkExportImportContentProcessor
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
-		List<PortletPreferences> portletPreferencesList =
-			_portletPreferencesLocalService.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				fragmentEntryLink.getClassPK());
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				fragmentEntryLink.getSegmentsExperienceId());
 
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					fragmentEntryLink.getSegmentsExperienceId());
-
-			if (segmentsExperience == null) {
-				continue;
-			}
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, fragmentEntryLink, segmentsExperience,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		if (segmentsExperience == null) {
+			return;
 		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, fragmentEntryLink, segmentsExperience,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 	}
 
 	private void _importPortletPreferencesSegmentsExperience(

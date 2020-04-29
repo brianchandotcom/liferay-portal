@@ -1056,7 +1056,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMDocument.navigateHomeViaDocumentViewPG();
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder1 Name");
 

@@ -75,12 +75,12 @@ $light-color: #e7e7ed;
 	}
 
 	@include media-breakpoint-up(sm) {
-		.dropdown {
+		.actions-menu {
 			display: none;
 		}
 
-		.comment-container:hover .dropdown,
-		.dropdown:focus {
+		.comment-container:hover .actions-menu,
+		.actions-menu:focus {
 			display: inline-block;
 		}
 	}

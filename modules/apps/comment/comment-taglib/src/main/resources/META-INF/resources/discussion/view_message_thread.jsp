@@ -168,6 +168,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() && (index > 0) %>">
 					<div class="autofit-col">
 						<liferay-ui:icon-menu
+							cssClass="actions-menu"
 							direction="left-side"
 							icon="<%= StringPool.BLANK %>"
 							markupView="lexicon"

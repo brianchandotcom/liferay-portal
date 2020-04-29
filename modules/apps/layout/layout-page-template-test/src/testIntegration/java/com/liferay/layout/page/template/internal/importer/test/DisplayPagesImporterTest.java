@@ -92,6 +92,44 @@ public class DisplayPagesImporterTest {
 		_user = TestPropsValues.getUser();
 	}
 
+	@Test
+	public void testImportDisplayPage() throws Exception {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_importLayoutPageTemplateEntry("display-page-template-one");
+
+		String className = "com.liferay.journal.model.JournalArticle";
+
+		Assert.assertEquals(className, layoutPageTemplateEntry.getClassName());
+		Assert.assertEquals(
+			"Display Page Template One", layoutPageTemplateEntry.getName());
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+
+		long expectedClassTypeId = 0;
+
+		List<ClassType> classTypes = infoDisplayContributor.getClassTypes(
+			_group.getGroupId(), LocaleUtil.getSiteDefault());
+
+		for (ClassType classType : classTypes) {
+			if (Objects.equals(classType.getName(), "Basic Web Content")) {
+				expectedClassTypeId = classType.getClassTypeId();
+			}
+		}
+
+		Assert.assertNotEquals(0, expectedClassTypeId);
+
+		Assert.assertEquals(
+			expectedClassTypeId, layoutPageTemplateEntry.getClassTypeId());
+
+		_validateLayoutPageTemplateStructure(
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layoutPageTemplateEntry.getPlid()));
+	}
+
 	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)
 		throws IOException {
 

@@ -106,6 +106,8 @@ Import-Package:\
 	\
 	!org.zeromq.*,\
 	\
+	!reactor.blockhound.*,\
+	\
 	!sun.security.*,\
 	\
 	com.liferay.portal.search.analysis,\

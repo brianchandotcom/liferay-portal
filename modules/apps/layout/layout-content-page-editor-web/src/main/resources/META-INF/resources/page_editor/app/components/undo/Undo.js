@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {Z_KEYCODE} from '../../config/constants/keycodes';
+import {useSelector} from '../../store/index';
 
 export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 	useEventListener(
@@ -34,11 +35,14 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 		window
 	);
 
+	const undoHistory = useSelector((state) => state.undoHistory);
+
 	return (
 		<ClayButton.Group className="d-block d-none mr-3">
 			<ClayButtonWithIcon
 				aria-label={Liferay.Language.get('undo')}
 				className="btn-monospaced"
+				disabled={!undoHistory || !undoHistory.length}
 				displayType="secondary"
 				onClick={onUndo}
 				small

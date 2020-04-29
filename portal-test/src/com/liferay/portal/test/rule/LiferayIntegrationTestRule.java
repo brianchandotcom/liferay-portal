@@ -42,13 +42,13 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		}
 
 		testRules.add(LogAssertionTestRule.INSTANCE);
+		testRules.add(DestinationAwaitClassTestRule.INSTANCE);
+		testRules.add(SynchronousDestinationTestRule.INSTANCE);
 		testRules.add(SybaseDumpTransactionLogTestRule.INSTANCE);
 		testRules.add(ClearThreadLocalClassTestRule.INSTANCE);
 		testRules.add(UniqueStringRandomizerBumperClassTestRule.INSTANCE);
-		testRules.add(DestinationAwaitClassTestRule.INSTANCE);
 		testRules.add(CompanyProviderClassTestRule.INSTANCE);
 		testRules.add(DeleteAfterTestRunMethodTestRule.INSTANCE);
-		testRules.add(SynchronousDestinationTestRule.INSTANCE);
 		testRules.add(InjectTestRule.INSTANCE);
 
 		return testRules.toArray(new TestRule[0]);

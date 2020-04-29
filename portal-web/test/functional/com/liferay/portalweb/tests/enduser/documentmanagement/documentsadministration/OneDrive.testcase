@@ -481,20 +481,20 @@ definition {
 			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
 		}
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_3.docx",
-			groupName = "Guest",
-			mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			sourceFileName = "Document_3.docx");
-
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_3.docx",
+			dmDocumentTitle = "Document_3.docx");
+
 		OneDrive.gotoEdit(dmDocumentTitle = "Document_3.docx");
 
-		OneDrive.editTitle(dmDocumentTitle = "Word Doc Title Edited");
+		OneDrive.editTitle(
+			dmDocumentTitle = "Word Doc Title Edited",
+			dmDocumentTypeName = "Word");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

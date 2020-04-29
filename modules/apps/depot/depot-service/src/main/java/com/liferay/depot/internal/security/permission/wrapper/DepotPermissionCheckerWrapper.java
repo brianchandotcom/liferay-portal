@@ -112,8 +112,28 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				return false;
 			}
 
-			if (_isGroupAdmin(depotGroup)) {
+			if (_userGroupRoleLocalService.hasUserGroupRole(
+					getUserId(), depotGroup.getGroupId(),
+					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true) ||
+				_userGroupRoleLocalService.hasUserGroupRole(
+					getUserId(), depotGroup.getGroupId(),
+					DepotRolesConstants.ASSET_LIBRARY_OWNER, true)) {
+
 				return true;
+			}
+
+			Group parentGroup = depotGroup;
+
+			while (!parentGroup.isRoot()) {
+				parentGroup = parentGroup.getParentGroup();
+
+				if (super.hasPermission(
+						parentGroup, Group.class.getName(),
+						String.valueOf(parentGroup.getGroupId()),
+						ActionKeys.MANAGE_SUBGROUPS)) {
+
+					return true;
+				}
 			}
 
 			return _depotEntryModelResourcePermission.contains(
@@ -124,34 +144,6 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 			return false;
 		}
-	}
-
-	private boolean _isGroupAdmin(Group group) throws PortalException {
-		if (_userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), group.getGroupId(),
-				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true) ||
-			_userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), group.getGroupId(),
-				DepotRolesConstants.ASSET_LIBRARY_OWNER, true)) {
-
-			return true;
-		}
-
-		Group parentGroup = group;
-
-		while (!parentGroup.isRoot()) {
-			parentGroup = parentGroup.getParentGroup();
-
-			if (super.hasPermission(
-					parentGroup, Group.class.getName(),
-					String.valueOf(parentGroup.getGroupId()),
-					ActionKeys.MANAGE_SUBGROUPS)) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

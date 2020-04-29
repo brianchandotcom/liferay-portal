@@ -159,12 +159,12 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 					</c:choose>
 				</div>
 
-				<div class="autofit-col autofit-col-expand">
+				<div class="autofit-col autofit-col-expand mr-4">
 					<div class="depot-type">
 						<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "asset-library" : "site" %>' />
 					</div>
 
-					<div class="site-name text-truncate">
+					<div class="lfr-portal-tooltip site-name text-truncate" title="<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>">
 						<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
 
 						<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">

@@ -22,6 +22,7 @@ import com.liferay.fragment.exception.DuplicateFragmentCompositionKeyException;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
@@ -91,7 +92,27 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			boolean overwrite)
 		throws Exception {
 
-		_invalidFragmentEntriesNames = new ArrayList<>();
+		List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
+			importFragmentEntries(
+				userId, groupId, fragmentCollectionId, file, overwrite);
+
+		Stream<FragmentsImporterResultEntry> stream =
+			fragmentsImporterResultEntries.stream();
+
+		return stream.map(
+			FragmentsImporterResultEntry::getName
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	@Override
+	public List<FragmentsImporterResultEntry> importFragmentEntries(
+			long userId, long groupId, long fragmentCollectionId, File file,
+			boolean overwrite)
+		throws Exception {
+
+		_fragmentsImporterResultEntries = new ArrayList<>();
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Map<String, String> orphanFragmentCompositions = new HashMap<>();
@@ -184,7 +205,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			}
 		}
 
-		return _invalidFragmentEntriesNames;
+		return _fragmentsImporterResultEntries;
 	}
 
 	private FragmentCollection _addFragmentCollection(
@@ -250,7 +271,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 			status = WorkflowConstants.STATUS_DRAFT;
 
-			_invalidFragmentEntriesNames.add(name);
+			_fragmentsImporterResultEntries.add(
+				new FragmentsImporterResultEntry(
+					name, FragmentsImporterResultEntry.Status.INVALID,
+					portalException.getMessage()));
 		}
 
 		int type = FragmentConstants.getTypeFromLabel(
@@ -861,7 +885,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	@Reference
 	private FragmentEntryValidator _fragmentEntryValidator;
 
-	private List<String> _invalidFragmentEntriesNames;
+	private List<FragmentsImporterResultEntry> _fragmentsImporterResultEntries;
 
 	@Reference
 	private Portal _portal;

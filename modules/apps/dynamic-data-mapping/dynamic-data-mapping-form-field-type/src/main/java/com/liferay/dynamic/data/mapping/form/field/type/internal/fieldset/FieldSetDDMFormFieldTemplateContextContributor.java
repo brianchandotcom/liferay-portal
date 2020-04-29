@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -98,33 +99,21 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 	}
 
 	protected JSONObject createRowJSONObject(List<Object> nestedFields) {
-		int columnSize = 12 / nestedFields.size();
-
 		JSONArray columnsJSONArray = jsonFactory.createJSONArray();
 
-		for (Object nestedFieldContext : nestedFields) {
-			JSONArray fieldsJSONArray = jsonFactory.createJSONArray();
-
-			fieldsJSONArray.put(
-				MapUtil.getString(
-					(Map<String, ?>)nestedFieldContext, "fieldName"));
-
-			JSONObject columnJSONObject = jsonFactory.createJSONObject();
-
-			columnJSONObject.put(
-				"fields", fieldsJSONArray
-			).put(
-				"size", columnSize
-			);
-
-			columnsJSONArray.put(columnJSONObject);
+		for (Object nestedField : nestedFields) {
+			columnsJSONArray.put(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.put(
+						MapUtil.getString(
+							(Map<String, ?>)nestedField, "fieldName"))
+				).put(
+					"size", 12 / nestedFields.size()
+				));
 		}
 
-		JSONObject rowJSONObject = jsonFactory.createJSONObject();
-
-		rowJSONObject.put("columns", columnsJSONArray);
-
-		return rowJSONObject;
+		return JSONUtil.put("columns", columnsJSONArray);
 	}
 
 	protected String getDDMStructureLayoutDefinition(long structureLayoutId) {
@@ -163,7 +152,7 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		Stream<Object> visibleNestedFieldsStream = nestedFields.stream();
 
 		List<Object> visibleNestedFields = visibleNestedFieldsStream.filter(
-			nestedField -> isNestedFieldVisible(nestedField)
+			this::isNestedFieldVisible
 		).collect(
 			Collectors.toList()
 		);

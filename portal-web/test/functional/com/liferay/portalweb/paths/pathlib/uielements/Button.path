@@ -334,6 +334,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IGNORE_REDIRECT_URLS</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-hidden')]]</td>
+	<td></td>
+</tr>s
+<tr>
 	<td>IMPORT</td>
 	<td>//div[contains(@class,'footer')]//button[contains(.,'Import')]</td>
 	<td></td>
@@ -741,6 +746,11 @@
 <tr>
 	<td>UNDO</td>
 	<td>//button[contains(.,'Undo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNIGNORE_REDIRECT_URLS</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
 	<td></td>
 </tr>
 <tr>

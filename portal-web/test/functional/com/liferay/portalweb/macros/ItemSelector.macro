@@ -282,6 +282,8 @@ definition {
 
 		Click(locator1 = "Icon#EYE_PREVIEW");
 
+		AssertElementPresent.assertVisible(locator1 = "ItemSelector#VIEWER_INFO");
+
 		Click(locator1 = "ItemSelector#VIEWER_INFO");
 
 		AssertElementPresent(

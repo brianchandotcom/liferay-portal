@@ -77,13 +77,24 @@ definition {
 
 		Click(locator1 = "OneDrive#DOCUMENTS_TITLE");
 
-		Type(
-			locator1 = "OneDrive#DOCUMENTS_TITLE",
-			value1 = "${dmDocumentTitle}");
+		if (isSet(dmDocumentTypeName)) {
+			Type(
+				locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME",
+				value1 = "${dmDocumentTitle}");
 
-		KeyPress(
-			locator1 = "OneDrive#DOCUMENTS_TITLE",
-			value1 = "\RETURN");
+			KeyPress(
+				locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME",
+				value1 = "\RETURN");
+		}
+		else {
+			Type(
+				locator1 = "OneDrive#DOCUMENTS_TITLE",
+				value1 = "${dmDocumentTitle}");
+
+			KeyPress(
+				locator1 = "OneDrive#DOCUMENTS_TITLE",
+				value1 = "\RETURN");
+		}
 
 		Navigator.closeWindow();
 

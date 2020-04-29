@@ -261,8 +261,6 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		try {
 			_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
 				html, configuration);
-
-			_fragmentEntryValidator.validateConfiguration(configuration);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -270,32 +268,46 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			}
 
 			status = WorkflowConstants.STATUS_DRAFT;
+		}
 
+		int type = FragmentConstants.getTypeFromLabel(
+			StringUtil.toLowerCase(StringUtil.trim(typeLabel)));
+
+		try {
+			if (fragmentEntry == null) {
+				fragmentEntry = _fragmentEntryService.addFragmentEntry(
+					fragmentCollection.getGroupId(), fragmentCollectionId,
+					fragmentEntryKey, name, css, html, js, cacheable,
+					configuration, 0, type, status,
+					ServiceContextThreadLocal.getServiceContext());
+			}
+			else {
+				fragmentEntry = _fragmentEntryService.updateFragmentEntry(
+					fragmentEntry.getFragmentEntryId(), name, css, html, js,
+					cacheable, configuration,
+					fragmentEntry.getPreviewFileEntryId(), status);
+			}
+
+			fragmentEntry.setReadOnly(readOnly);
+
+			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+				fragmentEntry);
+
+			_fragmentsImporterResultEntries.add(
+				new FragmentsImporterResultEntry(
+					name, FragmentsImporterResultEntry.Status.IMPORTED));
+
+			return _fragmentEntryLocalService.updateFragmentEntry(
+				fragmentEntry);
+		}
+		catch (PortalException portalException) {
 			_fragmentsImporterResultEntries.add(
 				new FragmentsImporterResultEntry(
 					name, FragmentsImporterResultEntry.Status.INVALID,
 					portalException.getMessage()));
 		}
 
-		int type = FragmentConstants.getTypeFromLabel(
-			StringUtil.toLowerCase(StringUtil.trim(typeLabel)));
-
-		if (fragmentEntry == null) {
-			fragmentEntry = _fragmentEntryService.addFragmentEntry(
-				fragmentCollection.getGroupId(), fragmentCollectionId,
-				fragmentEntryKey, name, css, html, js, cacheable, configuration,
-				0, type, status, ServiceContextThreadLocal.getServiceContext());
-		}
-		else {
-			fragmentEntry = _fragmentEntryService.updateFragmentEntry(
-				fragmentEntry.getFragmentEntryId(), name, css, html, js,
-				cacheable, configuration, fragmentEntry.getPreviewFileEntryId(),
-				status);
-		}
-
-		fragmentEntry.setReadOnly(readOnly);
-
-		return _fragmentEntryLocalService.updateFragmentEntry(fragmentEntry);
+		return null;
 	}
 
 	private String _getContent(ZipFile zipFile, String fileName)
@@ -701,6 +713,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			FragmentEntry fragmentEntry = _addFragmentEntry(
 				fragmentCollectionId, entry.getKey(), name, css, html, js,
 				cacheable, configuration, readOnly, typeLabel, overwrite);
+
+			if (fragmentEntry == null) {
+				continue;
+			}
 
 			if (Validator.isNotNull(fragmentJSON)) {
 				if (fragmentEntry.getPreviewFileEntryId() > 0) {

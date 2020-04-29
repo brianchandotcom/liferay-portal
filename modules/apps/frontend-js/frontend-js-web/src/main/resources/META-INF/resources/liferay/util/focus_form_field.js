@@ -15,6 +15,20 @@
 import getElement from './get_element';
 import inBrowserView from './in_browser_view';
 
+function getDisabledParents(element) {
+	let result = [];
+
+	if (element.parentElement) {
+		if (element.parentElement.getAttribute('disabled')) {
+			result = [element.parentElement];
+		}
+
+		result = [...result, ...getDisabledParents(element.parentElement)];
+	}
+
+	return result;
+}
+
 export default function focusFormField(element) {
 	let interacting = false;
 
@@ -29,23 +43,6 @@ export default function focusFormField(element) {
 	document.body.addEventListener('click', handler);
 
 	if (!interacting && inBrowserView(element)) {
-		const getDisabledParents = function (element) {
-			let result = [];
-
-			if (element.parentElement) {
-				if (element.parentElement.getAttribute('disabled')) {
-					result = [element.parentElement];
-				}
-
-				result = [
-					...result,
-					...getDisabledParents(element.parentElement),
-				];
-			}
-
-			return result;
-		};
-
 		const disabledParents = getDisabledParents(element);
 
 		const focusable =

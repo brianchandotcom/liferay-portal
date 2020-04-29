@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -82,15 +83,15 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "overwrite", true);
 
 		try {
-			List<String> invalidFragmentEntriesNames =
-				_fragmentsImporter.importFile(
+			List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
+				_fragmentsImporter.importFragmentEntries(
 					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 					fragmentCollectionId, file, overwrite);
 
-			if (ListUtil.isNotEmpty(invalidFragmentEntriesNames)) {
+			if (ListUtil.isNotEmpty(fragmentsImporterResultEntries)) {
 				SessionMessages.add(
-					actionRequest, "invalidFragmentEntriesNames",
-					invalidFragmentEntriesNames);
+					actionRequest, "fragmentsImporterResultEntries",
+					fragmentsImporterResultEntries);
 			}
 
 			SessionMessages.add(actionRequest, "success");

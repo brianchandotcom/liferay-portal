@@ -489,6 +489,11 @@
 </tr>
 <!--COLLECTION_DISPLAY-->
 <tr>
+	<td>COLLECTION_CELL</td>
+	<td>//div[contains(@class,'collection-item') and contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_ITEM_TITLE</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//div[contains(@class,'page-editor__collection')]/div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@class,'item__title') and contains(.,'${key_entryTitle}')]</td>
 	<td></td>

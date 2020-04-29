@@ -617,6 +617,117 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-86141. The changes will be propagated to others cells when edit inline content of fragment in one cell."
+	@priority = "4"
+	test PropagteChangesOfInlineContentToOtherCellsOfCollectionDisplay {
+		task ("Add three documents") {
+			for (var entryTitle : list "First Document,Second Document,Third Document") {
+				JSONDocument.addFile(
+					dmDocumentDescription = "DM Description",
+					dmDocumentTitle = "${entryTitle}",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("Add a dynamic Collections and select Document as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Document");
+		}
+
+		task ("Add a Collection Display to page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+			ContentPages.clickPencil();
+
+			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection and 3 Columns") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display",
+				layout = "3 Columns");
+		}
+
+		task ("Add a Heading fragment to the first cell") {
+			PageEditor.gotoTab(tabName = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_entryTitle = "Third Document",
+				key_fragmentName = "Heading",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#COLLECTION_CELL",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Edit inline Content of Heading in the first column") {
+			Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
+
+			Click.clickNoWaitForVisible(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Click(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
+
+			Type(
+				id = "element-text",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_CK_EDITOR",
+				value1 = "Modified Text");
+
+			PageEditor.waitForAutoSave();
+
+			Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
+
+			AssertTextEquals(
+				key_colPosition = "1",
+				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+				value1 = "Modified Text");
+		}
+
+		task ("Assert propagate changes of inline content to other cells") {
+			AssertTextEquals(
+				key_colPosition = "2",
+				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+				value1 = "Modified Text");
+
+			AssertTextEquals(
+				key_colPosition = "3",
+				key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+				value1 = "Modified Text");
+		}
+	}
+
 	@description = "This is a test for LPS-101248. Can select any custom web content template as a "Template" for web content selected in content fragment."
 	@priority = "5"
 	test SelectCustomWebContentTemplateViaContentDisplay {

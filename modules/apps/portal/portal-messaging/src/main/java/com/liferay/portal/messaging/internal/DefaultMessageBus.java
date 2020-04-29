@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
+import com.liferay.portal.kernel.messaging.DestinationInterceptor;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
@@ -234,7 +235,14 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 		message.setDestinationName(destinationName);
 
-		destination.send(message);
+		DestinationInterceptor destinationInterceptor = _destinationInterceptor;
+
+		if (destinationInterceptor != null) {
+			destinationInterceptor.send(destination, message);
+		}
+		else {
+			destination.send(message);
+		}
 	}
 
 	@Override
@@ -570,6 +578,13 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultMessageBus.class);
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile DestinationInterceptor _destinationInterceptor;
 
 	private final Map<String, Destination> _destinations =
 		new ConcurrentHashMap<>();

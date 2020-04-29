@@ -95,6 +95,47 @@ public class RecurrenceUtilTest {
 	}
 
 	@Test
+	public void testGetLastCalendarBookingInstanceBetweenCalendarBookingsWithSameRecurringCalendarBookingIdAndExceptionOnFirst() {
+		Calendar lastInstanceStartTimeJCalendar = getJan2016Calendar(2);
+
+		List<CalendarBooking> calendarBookings = getRecurringCalendarBookings(
+			getJan2016Calendar(1),
+			"RRULE:FREQ=DAILY;INTERVAL=1;UNTIL=20160101\n" +
+				"EXDATE;TZID=\"UTC\";VALUE=DATE:20160101",
+			lastInstanceStartTimeJCalendar,
+			"RRULE:FREQ=DAILY;INTERVAL=1;UNTIL=20160103\n" +
+				"EXDATE;TZID=\"UTC\";VALUE=DATE:20160101");
+
+		CalendarBooking calendarBooking20160101 = calendarBookings.get(0);
+		CalendarBooking calendarBooking20160102 = calendarBookings.get(1);
+
+		calendarBooking20160102.setRecurringCalendarBookingId(
+			calendarBooking20160101.getRecurringCalendarBookingId());
+
+		try {
+			CalendarBooking lastInstanceCalendarBooking =
+				RecurrenceUtil.getLastInstanceCalendarBooking(calendarBookings);
+
+			Assert.assertEquals(
+				lastInstanceCalendarBooking.getStartTime(),
+				lastInstanceStartTimeJCalendar.getTimeInMillis());
+
+			Recurrence recurrence20160101 =
+				calendarBooking20160101.getRecurrenceObj();
+			Recurrence recurrence20160102 =
+				calendarBooking20160102.getRecurrenceObj();
+
+			assertSameDay(
+				getJan2016Calendar(1), recurrence20160101.getUntilJCalendar());
+			assertSameDay(
+				getJan2016Calendar(3), recurrence20160102.getUntilJCalendar());
+		}
+		catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
+			Assert.fail();
+		}
+	}
+
+	@Test
 	public void testGetLastCalendarBookingInstanceReturnsUnboundRecurring() {
 		Calendar lastInstanceStartTimeJCalendar = getJan2016Calendar(23);
 

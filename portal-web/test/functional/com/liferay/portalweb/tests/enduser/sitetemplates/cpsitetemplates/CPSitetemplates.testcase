@@ -515,6 +515,7 @@ definition {
 	@priority = "5"
 	test ResetPageChanges {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPSitetemplates#ResetPageChanges";
 		property testray.component.names = "Training";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

@@ -293,9 +293,18 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 				fragmentEntry);
 
+			FragmentsImporterResultEntry.Status
+				fragmentsImporterResultEntryStatus =
+					FragmentsImporterResultEntry.Status.IMPORTED;
+
+			if (fragmentEntry.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+				fragmentsImporterResultEntryStatus =
+					FragmentsImporterResultEntry.Status.IMPORTED_DRAFT;
+			}
+
 			_fragmentsImporterResultEntries.add(
 				new FragmentsImporterResultEntry(
-					name, FragmentsImporterResultEntry.Status.IMPORTED));
+					name, fragmentsImporterResultEntryStatus));
 
 			return _fragmentEntryLocalService.updateFragmentEntry(
 				fragmentEntry);

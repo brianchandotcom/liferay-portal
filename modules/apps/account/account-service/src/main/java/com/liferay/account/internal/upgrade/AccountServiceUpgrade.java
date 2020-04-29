@@ -14,11 +14,9 @@
 
 package com.liferay.account.internal.upgrade;
 
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -34,15 +32,11 @@ public class AccountServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.1", "1.0.2",
-			new com.liferay.account.internal.upgrade.v1_0_2.UpgradeRole(
-				_roleLocalService));
+			new com.liferay.account.internal.upgrade.v1_0_2.UpgradeRole());
 
 		registry.register(
 			"1.0.2", "1.0.3",
 			new com.liferay.account.internal.upgrade.v1_0_3.UpgradeRole());
 	}
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 }

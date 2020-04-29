@@ -15,7 +15,6 @@
 package com.liferay.account.internal.upgrade.v1_0_2;
 
 import com.liferay.account.constants.AccountRoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -25,10 +24,6 @@ import java.sql.SQLException;
  * @author Pei-Jung Lan
  */
 public class UpgradeRole extends UpgradeProcess {
-
-	public UpgradeRole(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -60,7 +55,5 @@ public class UpgradeRole extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 	}
-
-	private final RoleLocalService _roleLocalService;
 
 }

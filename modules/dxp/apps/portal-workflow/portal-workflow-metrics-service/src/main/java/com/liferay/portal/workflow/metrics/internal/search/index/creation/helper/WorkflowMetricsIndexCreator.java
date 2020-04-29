@@ -60,8 +60,7 @@ public class WorkflowMetricsIndexCreator {
 			() -> {
 				int count = _backgroundTaskLocalService.getBackgroundTasksCount(
 					company.getGroupId(),
-					WorkflowMetricsReindexBackgroundTaskExecutor.class.
-						getName(),
+					WorkflowMetricsIndexCreator.class.getSimpleName(),
 					WorkflowMetricsReindexBackgroundTaskExecutor.class.
 						getName(),
 					false);
@@ -74,8 +73,7 @@ public class WorkflowMetricsIndexCreator {
 
 				_backgroundTaskLocalService.addBackgroundTask(
 					user.getUserId(), company.getGroupId(),
-					WorkflowMetricsReindexBackgroundTaskExecutor.class.
-						getName(),
+					WorkflowMetricsIndexCreator.class.getSimpleName(),
 					WorkflowMetricsReindexBackgroundTaskExecutor.class.
 						getName(),
 					HashMapBuilder.<String, Serializable>put(

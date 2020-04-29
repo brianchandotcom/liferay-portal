@@ -240,8 +240,7 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 		_backgroundTaskLocalService.addBackgroundTask(
 			omniAdminUser.getUserId(), group.getGroupId(),
-			WorkflowMetricsBackgroundTaskExecutorNames.
-				WORKFLOW_METRICS_REINDEX_BACKGROUND_TASK_EXECUTOR,
+			WorkflowMetricsDemo.class.getSimpleName(),
 			WorkflowMetricsBackgroundTaskExecutorNames.
 				WORKFLOW_METRICS_REINDEX_BACKGROUND_TASK_EXECUTOR,
 			HashMapBuilder.<String, Serializable>put(

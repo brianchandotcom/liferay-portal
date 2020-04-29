@@ -156,6 +156,39 @@ public class DisplayPagesImporterTest {
 			layoutPageTemplatesImporterResultEntry.getErrorMessage());
 	}
 
+	@Test
+	public void testImportDisplayPages() throws Exception {
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries =
+				_getLayoutPageTemplatesImporterResultEntries(
+					"display-page-template-multiple");
+
+		Assert.assertEquals(
+			layoutPageTemplatesImporterResultEntries.toString(), 2,
+			layoutPageTemplatesImporterResultEntries.size());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
+			_getLayoutPageTemplateEntry(
+				layoutPageTemplatesImporterResultEntries, 0);
+		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
+			_getLayoutPageTemplateEntry(
+				layoutPageTemplatesImporterResultEntries, 1);
+
+		List<String> actualLayoutPageTemplateEntryNames = ListUtil.sort(
+			new ArrayList() {
+				{
+					add(layoutPageTemplateEntry1.getName());
+					add(layoutPageTemplateEntry2.getName());
+				}
+			});
+
+		Assert.assertArrayEquals(
+			new String[] {
+				"Display Page Template One", "Display Page Template Two"
+			},
+			actualLayoutPageTemplateEntryNames.toArray(new String[0]));
+	}
+
 	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)
 		throws IOException {
 

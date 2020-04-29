@@ -17,7 +17,7 @@ import {undoAction} from '../components/undo/undoActions';
 
 export default function undo({store}) {
 	return (dispatch) => {
-		if (store.undoHistory && store.undoHistory.length === 0) {
+		if (!store.undoHistory || store.undoHistory.length === 0) {
 			return;
 		}
 

@@ -40,7 +40,7 @@ definition {
 	macro addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		var parentFolderId = JSONWebcontentSetter.setFolderId(
 			folderName = "${parentFolderName}",

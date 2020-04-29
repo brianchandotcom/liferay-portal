@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -204,6 +205,7 @@ public class SegmentsExperienceUtil {
 			newFragmentEntryLink.setEditableValues(
 				_getNewEditableValues(
 					fragmentEntryLink.getEditableValues(), classPK));
+			newFragmentEntryLink.setNamespace(StringUtil.randomId());
 			newFragmentEntryLink.setLastPropagationDate(new Date());
 
 			newFragmentEntryLink =

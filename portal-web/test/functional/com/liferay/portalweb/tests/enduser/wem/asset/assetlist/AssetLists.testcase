@@ -84,15 +84,15 @@ definition {
 	@priority = "5"
 	test DeleteAssetList {
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Asset List Test");
 		}
 
 		task ("Create a dynamic asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Asset List Test");
 		}
 
 		task ("Delete both asset lists") {
@@ -112,9 +112,9 @@ definition {
 	@priority = "5"
 	test RenameAssetList {
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Asset List Test");
 		}
 
 		task ("Rename the asset list") {
@@ -143,9 +143,9 @@ definition {
 		}
 
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Asset List Test");
 		}
 
 		task ("Select the created web content article to be linked to the asset list") {
@@ -177,17 +177,16 @@ definition {
 		}
 
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+			JSONAssetlist.addManualAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Manual Asset List Test");
 		}
 
 		task ("Add an Asset Publisher portlet to the created public page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Asset Publisher");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
 		}
 
 		task ("Select the created manual asset list to be used in the asset publisher portlet") {
@@ -218,11 +217,10 @@ definition {
 		}
 
 		task ("Add an Asset Publisher portlet to the created public page") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Asset Publisher");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
 		}
 
 		task ("Create web content articles") {
@@ -240,9 +238,9 @@ definition {
 				var queryContains = "Contains";
 
 				task ("Create a dynamic asset list") {
-					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+					JSONAssetlist.addDynamicAssetListEntry(
+						groupName = "Test Site Name",
+						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
 				task ("Create filter rule for asset list") {
@@ -298,9 +296,9 @@ definition {
 				var queryContains = "Contains";
 
 				task ("Create a dynamic asset list") {
-					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+					JSONAssetlist.addDynamicAssetListEntry(
+						groupName = "Test Site Name",
+						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
 				task ("Create filter rule for asset list") {
@@ -356,9 +354,9 @@ definition {
 				var queryContains = "Does Not Contain";
 
 				task ("Create a dynamic asset list") {
-					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+					JSONAssetlist.addDynamicAssetListEntry(
+						groupName = "Test Site Name",
+						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
 				task ("Create filter rule for asset list") {
@@ -414,9 +412,9 @@ definition {
 				var queryContains = "Does Not Contain";
 
 				task ("Create a dynamic asset list") {
-					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+					JSONAssetlist.addDynamicAssetListEntry(
+						groupName = "Test Site Name",
+						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
 				task ("Create filter rule for asset list") {
@@ -479,11 +477,10 @@ definition {
 		}
 
 		task ("Add an Asset Publisher portlet to the created public page") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Asset Publisher");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
 		}
 
 		task ("Create web content articles") {
@@ -501,9 +498,9 @@ definition {
 				var queryContains = "Contains";
 
 				task ("Create a dynamic asset list") {
-					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+					JSONAssetlist.addDynamicAssetListEntry(
+						groupName = "Test Site Name",
+						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
 				task ("Create filter rule for asset list") {
@@ -559,9 +556,9 @@ definition {
 				var queryContains = "Contains";
 
 				task ("Create a dynamic asset list") {
-					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+					JSONAssetlist.addDynamicAssetListEntry(
+						groupName = "Test Site Name",
+						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
 				task ("Create filter rule for asset list") {
@@ -617,9 +614,9 @@ definition {
 				var queryContains = "Does Not Contain";
 
 				task ("Create a dynamic asset list") {
-					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+					JSONAssetlist.addDynamicAssetListEntry(
+						groupName = "Test Site Name",
+						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
 				task ("Create filter rule for asset list") {
@@ -675,9 +672,9 @@ definition {
 				var queryContains = "Does Not Contain";
 
 				task ("Create a dynamic asset list") {
-					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+					JSONAssetlist.addDynamicAssetListEntry(
+						groupName = "Test Site Name",
+						title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
 				}
 
 				task ("Create filter rule for asset list") {

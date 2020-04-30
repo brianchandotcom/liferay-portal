@@ -101,9 +101,13 @@
 			}
 		}
 		.line-chart-wrapper--published-today {
-			left: 95px;
+			left: 0;
+			padding: 30px 0;
+			padding-left: 60px;
+			padding-right: 25px;
 			position: absolute;
-			top: 80px;
+			right: 0;
+			top: 25%;
 		}
 		.recharts-cartesian-axis .recharts-cartesian-axis-ticks {
 			opacity: 1;
@@ -116,7 +120,7 @@
 		left: 0;
 		position: absolute;
 		right: 0;
-		top: 50%;
+		top: 40%;
 	}
 
 	.interval-selector-wrapper {

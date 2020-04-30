@@ -2,6 +2,10 @@
 
 @import '../variables';
 
+$multiPanelSidebarButtonHeight: $multiPanelSidebarButtonWidth;
+
+// z-indexes for children of page-editor-sidebar (which is a stacking context).
+
 $zIndexButtons: 1;
 $zIndexContent: 0;
 
@@ -13,17 +17,67 @@ $zIndexContent: 0;
 	top: $toolbarHeight;
 	z-index: $zIndexMultiPanelSidebar;
 
-	&__buttons {
+	&-buttons {
+		background-color: $white;
+		border-left: solid thin $secondary-l3;
+		flex-direction: column;
+		padding-top: 16px;
+		width: $multiPanelSidebarButtonWidth;
 		z-index: $zIndexButtons;
 
+		a {
+			align-items: center;
+			border-radius: 0.25rem;
+			color: $secondary-l1;
+			display: flex;
+			height: 2.5em;
+			justify-content: center;
+
+			&.disabled {
+				color: $gray-500;
+			}
+
+			&.active,
+			&:focus,
+			&:hover {
+				background-color: $gray-200;
+				color: $gray-900;
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $primary-l1,
+					inset 0 0 fade-out($black, 1);
+				outline: none;
+			}
+		}
+
+		button {
+			border-radius: 0;
+			color: $gray-900;
+
+			&.disabled {
+				color: $gray-500;
+			}
+
+			&:active,
+			&:focus,
+			&:hover {
+				background-color: $gray-200;
+				color: $gray-900;
+			}
+		}
+
 		hr {
+			border-color: $gray-200;
 			margin: 12px 8px;
 		}
 	}
 
-	&__content {
-		background-color: #fff;
+	&-content {
+		background-color: $white;
+		border-left: 1px solid $gray-300;
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+		overflow-x: hidden;
 		position: fixed;
 		right: $multiPanelSidebarButtonWidth;
 		transform: translateX(100%);
@@ -31,23 +85,46 @@ $zIndexContent: 0;
 		width: $multiPanelSidebarContentWidth;
 		z-index: $zIndexContent;
 
-		.rtl & {
-			transform: translateX(-100%);
-		}
-
-		&.multi-panel-sidebar__content--open {
+		&-open {
 			transform: translateX(0);
-		}
-
-		&:not(&--open) {
-			.sidebar-light {
-				box-shadow: none;
-			}
 		}
 	}
 
 	body.has-control-menu & {
-		height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
-		top: $desktopControlMenuHeight + $toolbarHeight;
+		height: calc(100vh - #{$controlMenuHeight + $managementBarHeight});
+		top: $controlMenuHeight + $managementBarHeight;
+
+		@include media-breakpoint-up(lg) {
+			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
+			top: $desktopControlMenuHeight + $toolbarHeight;
+		}
+	}
+
+	&-dark {
+		& .multi-panel-sidebar-buttons {
+			background-color: $gray-800;
+			border-left-color: $secondary;
+
+			a.active,
+			a:focus,
+			a:hover {
+				color: $white;
+			}
+
+			button {
+				color: $gray-500;
+
+				&:active,
+				&:focus,
+				&:hover {
+					background-color: fade-out($white, 0.94);
+					color: $white;
+				}
+			}
+
+			hr {
+				border-color: $gray-600;
+			}
+		}
 	}
 }

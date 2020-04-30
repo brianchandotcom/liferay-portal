@@ -8,15 +8,6 @@ $sidebarMiniWidth: 72px;
 
 $defaultTransitionDuration: 0.5s;
 
-// Colors
-
-$multiPanelSidebarBorderColor: #e7e7ed;
-$multiPanelSidebarButtonBackgroundColor: #393a4a;
-$multiPanelSidebarButtonColor: #a7a9bc;
-$multiPanelSidebarButtonHoverColor: #fff;
-$multiPanelSidebarButtonSeparatorColor: #6b6c7e;
-$multiPanelSidebarContentBackgroundColor: #fff;
-
 // Layout
 
 $controlMenuHeight: 48px;
@@ -28,7 +19,7 @@ $toolbarHeight: 64px;
 
 // z-indexes, ordered numerically.
 
-$zIndexMultiPanelSidebar: 199;
+$zIndexMultiPanelSidebar: 972;
 $portletTopperZIndex: 990;
 $dragPreviewLayer: 991;
 $shimZIndex: 9999;

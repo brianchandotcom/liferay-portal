@@ -34,7 +34,11 @@ const {Suspense, useCallback, useContext, useEffect} = React;
  */
 const swallow = [(value) => value, (_error) => undefined];
 
-export default function MultiPanelSidebar({panels, sidebarPanels}) {
+export default function MultiPanelSidebar({
+	panels,
+	sidebarPanels,
+	variant = 'dark',
+}) {
 	const [{sidebarOpen, sidebarPanelId}, dispatch] = useContext(AppContext);
 	const [hasError, setHasError] = useStateSafe(false);
 	const isMounted = useIsMounted();
@@ -160,8 +164,13 @@ export default function MultiPanelSidebar({panels, sidebarPanels}) {
 
 	return (
 		<ClayTooltipProvider>
-			<div className="multi-panel-sidebar">
-				<nav className="multi-panel-sidebar__buttons tbar tbar-light tbar-stacked">
+			<div
+				className={classNames(
+					'multi-panel-sidebar',
+					`multi-panel-sidebar-${variant}`
+				)}
+			>
+				<nav className="multi-panel-sidebar-buttons tbar tbar-stacked">
 					<ul className="tbar-nav">
 						{panels.reduce((elements, group, groupIndex) => {
 							const buttons = group.map((panelId) => {
@@ -233,9 +242,8 @@ export default function MultiPanelSidebar({panels, sidebarPanels}) {
 					</ul>
 				</nav>
 				<div
-					className={classNames({
-						'multi-panel-sidebar__content': true,
-						'multi-panel-sidebar__content--open': sidebarOpen,
+					className={classNames('multi-panel-sidebar-content', {
+						'multi-panel-sidebar-content-open': sidebarOpen,
 					})}
 				>
 					{hasError ? (

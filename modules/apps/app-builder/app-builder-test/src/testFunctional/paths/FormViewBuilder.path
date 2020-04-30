@@ -156,13 +156,13 @@
 
 <tr>
 	<td>SIDEBAR_ADVANCED_PREDEFINED_DATE</td>
-	<td>//input[contains(@name,'predefinedValue')]/preceding-sibling::input</td>
+	<td>//input[contains(@name,'predefinedValue')]/..//input[@type!="hidden"]</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST</td>
-	<td>//div[contains(@data-field-name,'predefinedValue')]//div[contains(@class,'ddm-select-dropdown')]</td>
+	<td>//div[contains(@data-field-name,'predefinedValue')]//div[contains(@class,'form-builder-select-field')]</td>
 	<td></td>
 </tr>
 
@@ -232,13 +232,13 @@
 
 <tr>
 	<td>CHECKBOX_PREDEFINED</td>
-	<td>//li[contains(@class,'dropdown-item')]//input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]/..//preceding-sibling::input[contains(@type,'checkbox')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[contains(@label,'${key_fieldName}')]//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>CHECKBOX_PREDEFINED_LIST</td>
-	<td>//li[contains(@class,'dropdown-item')]//input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[contains(@label,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 

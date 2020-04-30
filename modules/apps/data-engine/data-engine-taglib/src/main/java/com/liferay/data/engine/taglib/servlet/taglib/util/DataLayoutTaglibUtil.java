@@ -752,31 +752,30 @@ public class DataLayoutTaglibUtil {
 			for (DataRule dataRule : _dataLayout.getDataRules()) {
 				JSONObject dataRuleJSONObject = _jsonFactory.createJSONObject();
 
-				JSONArray actionsJSONArray = _jsonFactory.createJSONArray();
+				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 				for (Map<String, String> action : dataRule.getActions()) {
 					JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-					action.forEach((key, value) -> jsonObject.put(key, value));
+					action.forEach(jsonObject::put);
 
-					actionsJSONArray.put(jsonObject);
+					jsonArray.put(jsonObject);
 				}
 
-				dataRuleJSONObject.put("actions", actionsJSONArray);
+				dataRuleJSONObject.put("actions", jsonArray);
 
-				JSONArray conditionsJSONArray = _jsonFactory.createJSONArray();
+				jsonArray = _jsonFactory.createJSONArray();
 
 				for (Map<String, String> condition : dataRule.getConditions()) {
 					JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-					condition.forEach(
-						(key, value) -> jsonObject.put(key, value));
+					condition.forEach(jsonObject::put);
 
-					conditionsJSONArray.put(jsonObject);
+					jsonArray.put(jsonObject);
 				}
 
 				dataRuleJSONObject.put(
-					"conditions", conditionsJSONArray
+					"conditions", jsonArray
 				).put(
 					"logical-operator", dataRule.getLogicalOperator()
 				);

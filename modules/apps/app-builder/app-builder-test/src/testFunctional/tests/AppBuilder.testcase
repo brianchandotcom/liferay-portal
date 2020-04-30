@@ -3026,18 +3026,14 @@ definition {
 			formViewName = "My Form View");
 
 		AppBuilderAdmin.openItem(itemName = "My Form View");
-		/*
-
-		// TODO: Remove this comment once LPS-110060 is fixed.
 
 		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Hobbies");
 
 		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies edited");
 
 		FormViewBuilder.validateFormMultipleSelectionField(
-			fieldLabel = "Hobbies 2",
+			fieldLabel = "Hobby 2",
 			fieldName = "Hobbies edited");
-		*/
 
 		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Marital Status");
 		FormViewBuilder.validateFormMultipleSelectionField(

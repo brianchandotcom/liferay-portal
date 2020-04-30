@@ -335,13 +335,13 @@ public class AccountEntryLocalServiceTest {
 		Organization parentOrganization =
 			OrganizationTestUtil.addOrganization();
 
-		_organizations.add(parentOrganization);
-
 		Organization organization = OrganizationTestUtil.addOrganization(
 			parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), false);
 
 		_organizations.add(organization);
+
+		_organizations.add(parentOrganization);
 
 		AccountEntry accountEntry1 = _addAccountEntryWithOrganization(
 			parentOrganization);

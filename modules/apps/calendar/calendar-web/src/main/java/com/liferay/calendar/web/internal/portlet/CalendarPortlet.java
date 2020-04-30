@@ -1750,8 +1750,7 @@ public class CalendarPortlet extends MVCPortlet {
 						calendarBookingId, instanceIndex,
 						calendar.getCalendarId(), childCalendarIds, titleMap,
 						descriptionMap, location, startTime, endTime, allDay,
-						(recurrence == null) ? null :
-							RecurrenceSerializer.serialize(recurrence),
+						RecurrenceSerializer.serialize(recurrence),
 						allFollowing, reminders[0], remindersType[0],
 						reminders[1], remindersType[1], serviceContext);
 			}

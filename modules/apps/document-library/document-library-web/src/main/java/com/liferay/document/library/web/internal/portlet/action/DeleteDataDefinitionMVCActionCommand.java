@@ -15,25 +15,29 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
-import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
+ * @author Alicia García
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/delete_data_definition"
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
+		"mvc.command.name=/document_library/ddm/delete_data_definition"
 	},
 	service = MVCActionCommand.class
 )

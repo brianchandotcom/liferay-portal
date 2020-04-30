@@ -2525,21 +2525,27 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String toDurationString(long duration) {
+		long remainingDuration = duration;
+
 		StringBuilder sb = new StringBuilder();
 
-		duration = _appendDurationStringForUnit(
-			duration, _MILLIS_DAY, sb, "day", "days");
+		remainingDuration = _appendDurationStringForUnit(
+			remainingDuration, _MILLIS_DAY, sb, "day", "days");
 
-		duration = _appendDurationStringForUnit(
-			duration, _MILLIS_HOUR, sb, "hour", "hours");
+		remainingDuration = _appendDurationStringForUnit(
+			remainingDuration, _MILLIS_HOUR, sb, "hour", "hours");
 
-		duration = _appendDurationStringForUnit(
-			duration, _MILLIS_MINUTE, sb, "minute", "minutes");
+		remainingDuration = _appendDurationStringForUnit(
+			remainingDuration, _MILLIS_MINUTE, sb, "minute", "minutes");
 
-		duration = _appendDurationStringForUnit(
-			duration, _MILLIS_SECOND, sb, "second", "seconds");
+		if (duration < 60000) {
+			remainingDuration = _appendDurationStringForUnit(
+				remainingDuration, _MILLIS_SECOND, sb, "second", "seconds");
+		}
 
-		duration = _appendDurationStringForUnit(duration, 1, sb, "ms", "ms");
+		if (duration < 1000) {
+			_appendDurationStringForUnit(remainingDuration, 1, sb, "ms", "ms");
+		}
 
 		String durationString = sb.toString();
 

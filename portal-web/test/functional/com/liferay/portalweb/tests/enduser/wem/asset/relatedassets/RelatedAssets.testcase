@@ -38,35 +38,39 @@ definition {
 			pageVersioningEnabled = "true",
 			siteName = "Site Name");
 
-		Category.openCategoriesAdmin(siteURLKey = "site-name-staging");
+		JSONCategory.addVocabulary(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			title = "Vocabulary Name");
 
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-
-		Category.addCP(
-			categoryName = "Category Name",
+		JSONCategory.addCategory(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content 1",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			title = "Web Content Title 1");
 
-		Pause(locator1 = "3000");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Web Content Content 1",
-			webContentTitle = "Web Content Title 1");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithCategoryCP(
+		var categoryId = JSONCategory.getCategoryId(
 			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name",
-			webContentContent = "Web Content Content 2",
-			webContentTitle = "Web Content Title 2");
+			groupName = "Site Name (Staging)",
+			site = "false",
+			vocabularyName = "Vocabulary Name");
+
+		var serviceContext = '''{"assetCategoryIds": ["${categoryId}"]}''';
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content 2",
+			groupName = "Site Name (Staging)",
+			serviceContext = "${serviceContext}",
+			site = "false",
+			title = "Web Content Title 2");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
@@ -144,25 +148,18 @@ definition {
 			pageVersioningEnabled = "true",
 			siteName = "Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content 1",
+			groupName = "Global",
+			title = "Web Content Title 1");
 
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Web Content Content 1",
-			webContentTitle = "Web Content Title 1");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content 2",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			title = "Web Content Title 2");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Web Content Content 2",
-			webContentTitle = "Web Content Title 2");
-
-		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
@@ -215,25 +212,26 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page 2");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page 1",
+			widgetName = "Web Content Display");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page 1",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page 1",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page 1",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page 1",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Related Assets");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page 1",
+			widgetName = "Related Assets");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page 1",
@@ -245,11 +243,14 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page 2",
+			widgetName = "Blogs");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page 2",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
 			assetTitle = "Web Content Title",
@@ -269,27 +270,15 @@ definition {
 			folderDescription = "Bookmarks Folder Description",
 			folderName = "Bookmarks Folder Name");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMFolder.addCP(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentFolder.addCP(
+		JSONWebcontent.addFolder(
 			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
+			folderName = "WC Folder Name",
+			groupName = "Guest");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page 1",

@@ -1424,6 +1424,15 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
+		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
+			String propertyValue = getProperty(
+				properties, combine(basePropertyName, "[", testSuiteName, "]"));
+
+			if (propertyValue != null) {
+				return propertyValue;
+			}
+		}
+
 		if ((jobName != null) && !jobName.isEmpty()) {
 			String propertyValue = getProperty(
 				properties, combine(basePropertyName, "[", jobName, "]"));
@@ -1453,15 +1462,6 @@ public class JenkinsResultsParserUtil {
 				}
 
 				return getProperty(properties, propertyName);
-			}
-		}
-
-		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
-			String propertyValue = getProperty(
-				properties, combine(basePropertyName, "[", testSuiteName, "]"));
-
-			if (propertyValue != null) {
-				return propertyValue;
 			}
 		}
 

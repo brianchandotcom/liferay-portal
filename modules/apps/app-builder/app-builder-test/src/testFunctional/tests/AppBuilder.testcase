@@ -55,7 +55,7 @@ definition {
 			for (var roleTitle : list "Portal Content Reviewer,User") {
 				Permissions.removePermissionViaAPI(
 					resourceAction = "ACCESS_IN_CONTROL_PANEL",
-					resourceName = "com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet",
+					resourceName = "com_liferay_app_builder_web_internal_portlet_ObjectsPortlet",
 					roleTitle = "${roleTitle}");
 
 				Permissions.removePermissionViaAPI(
@@ -3316,7 +3316,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet",
+			resourceName = "com_liferay_app_builder_web_internal_portlet_ObjectsPortlet",
 			roleTitle = "User");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -3401,7 +3401,7 @@ definition {
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet",
+			resourceName = "com_liferay_app_builder_web_internal_portlet_ObjectsPortlet",
 			roleTitle = "User");
 
 		Permissions.removePermissionViaAPI(
@@ -3415,7 +3415,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet",
+			resourceName = "com_liferay_app_builder_web_internal_portlet_ObjectsPortlet",
 			roleTitle = "Portal Content Reviewer");
 
 		Permissions.definePermissionViaJSONAPI(

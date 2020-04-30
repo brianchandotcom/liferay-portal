@@ -48,17 +48,10 @@ public class PageDefinitionDTOConverter {
 		Layout layout, boolean saveInlineContent,
 		boolean saveMappingConfiguration) {
 
-		return toDTO(layout, saveInlineContent, saveMappingConfiguration, 0);
-	}
-
-	public PageDefinition toDTO(
-		Layout layout, boolean saveInlineContent,
-		boolean saveMappingConfiguration, long segmentsExperienceId) {
-
 		return new PageDefinition() {
 			{
 				pageElement = _pageElementDTOConverter.toDTO(
-					layout, saveInlineContent, saveMappingConfiguration);
+					layout, saveInlineContent, saveMappingConfiguration, 0);
 				settings = _toSettings(layout);
 			}
 		};

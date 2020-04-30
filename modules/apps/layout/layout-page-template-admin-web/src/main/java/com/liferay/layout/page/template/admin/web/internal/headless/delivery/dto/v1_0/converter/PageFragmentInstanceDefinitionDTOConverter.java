@@ -91,15 +91,6 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 		FragmentLayoutStructureItem fragmentLayoutStructureItem,
 		boolean saveInlineContent, boolean saveMapping) {
 
-		return toDTO(
-			fragmentLayoutStructureItem, saveInlineContent, saveMapping, 0);
-	}
-
-	public PageFragmentInstanceDefinition toDTO(
-		FragmentLayoutStructureItem fragmentLayoutStructureItem,
-		boolean saveInlineContent, boolean saveMapping,
-		long segmentsExperienceId) {
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentLayoutStructureItem.getFragmentEntryLinkId());

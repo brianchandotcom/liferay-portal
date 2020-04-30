@@ -25,7 +25,6 @@ import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue;
-import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
 import com.liferay.headless.delivery.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageCollectionItemDefinition;
@@ -58,6 +57,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -84,19 +84,17 @@ import org.osgi.service.component.annotations.Reference;
 public class PageElementDTOConverter {
 
 	public PageElement toDTO(
-		com.liferay.portal.kernel.model.Layout layout,
-		boolean saveInlineContent, boolean saveMappingConfiguration) {
+		Layout layout, boolean saveInlineContent,
+		boolean saveMappingConfiguration, long segmentsExperienceId) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(),
-					_portal.getClassNameId(
-						com.liferay.portal.kernel.model.Layout.class),
+					layout.getGroupId(), _portal.getClassNameId(Layout.class),
 					layout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(0L));
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
 		LayoutStructureItem mainLayoutStructureItem =
 			layoutStructure.getMainLayoutStructureItem();
@@ -110,7 +108,8 @@ public class PageElementDTOConverter {
 				toDTO(
 					layout.getGroupId(), layoutStructure,
 					layoutStructure.getLayoutStructureItem(childItemId),
-					saveInlineContent, saveMappingConfiguration, 0));
+					saveInlineContent, saveMappingConfiguration,
+					segmentsExperienceId));
 		}
 
 		PageElement pageElement = toDTO(
@@ -247,39 +246,46 @@ public class PageElementDTOConverter {
 								containerLayoutStructureItem.
 									getBackgroundImageJSONObject(),
 								saveMappingConfiguration);
-							layout = new Layout() {
-								{
-									paddingBottom =
-										PaddingConverter.convertToExternalValue(
-											containerLayoutStructureItem.
-												getPaddingBottom());
-									paddingHorizontal =
-										PaddingConverter.convertToExternalValue(
-											containerLayoutStructureItem.
-												getPaddingHorizontal());
-									paddingTop =
-										PaddingConverter.convertToExternalValue(
-											containerLayoutStructureItem.
-												getPaddingTop());
+							layout =
+								new com.liferay.headless.delivery.dto.v1_0.
+									Layout() {
 
-									setContainerType(
-										() -> {
-											String containerType =
-												containerLayoutStructureItem.
-													getContainerType();
+									{
+										paddingBottom =
+											PaddingConverter.
+												convertToExternalValue(
+													containerLayoutStructureItem.
+														getPaddingBottom());
+										paddingHorizontal =
+											PaddingConverter.
+												convertToExternalValue(
+													containerLayoutStructureItem.
+														getPaddingHorizontal());
+										paddingTop =
+											PaddingConverter.
+												convertToExternalValue(
+													containerLayoutStructureItem.
+														getPaddingTop());
 
-											if (Validator.isNull(
-													containerType)) {
+										setContainerType(
+											() -> {
+												String containerType =
+													containerLayoutStructureItem.
+														getContainerType();
 
-												return null;
-											}
+												if (Validator.isNull(
+														containerType)) {
 
-											return ContainerType.create(
-												StringUtil.upperCaseFirstLetter(
-													containerType));
-										});
-								}
-							};
+													return null;
+												}
+
+												return ContainerType.create(
+													StringUtil.
+														upperCaseFirstLetter(
+															containerType));
+											});
+									}
+								};
 						}
 					};
 					type = PageElement.Type.SECTION;

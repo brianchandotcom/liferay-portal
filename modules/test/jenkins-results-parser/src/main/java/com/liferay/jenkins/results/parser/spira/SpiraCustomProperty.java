@@ -108,6 +108,12 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		}
 	}
 
+	public static SpiraCustomProperty.Value createSpiraCustomPropertyValue(
+		SpiraCustomProperty spiraCustomProperty, String value) {
+
+		return new SpiraCustomProperty.Value(spiraCustomProperty, value);
+	}
+
 	public static void deleteSpiraCustomPropertyByName(
 		final SpiraProject spiraProject,
 		final Class<? extends SpiraArtifact> spiraArtifactClass,

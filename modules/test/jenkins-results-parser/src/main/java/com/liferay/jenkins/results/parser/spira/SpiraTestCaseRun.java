@@ -330,12 +330,13 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 					}
 
 					SpiraCustomList spiraCustomList =
-						SpiraCustomList.getSpiraCustomListByName(
+						SpiraCustomList.createSpiraCustomListByName(
 							getSpiraProject(), SpiraTestCaseRun.class,
 							spiraCustomProperty.getName());
 
 					SpiraCustomList.Value spiraCustomListValue =
-						spiraCustomList.getSpiraCustomListValueByName(
+						SpiraCustomList.createSpiraCustomListValue(
+							getSpiraProject(), spiraCustomList,
 							spiraCustomPropertyValue.getValue());
 
 					integerListValueJSONArray.put(spiraCustomListValue.getID());

@@ -63,7 +63,8 @@ export default function FloatingToolbar({
 				isMounted() &&
 				show &&
 				elementRef.current &&
-				anchorRef.current
+				anchorRef.current &&
+				document.body.contains(anchorRef.current)
 			) {
 				try {
 					Align.align(

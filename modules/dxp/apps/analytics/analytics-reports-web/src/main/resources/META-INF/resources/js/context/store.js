@@ -11,7 +11,7 @@
 
 import React, {createContext, useCallback, useContext, useReducer} from 'react';
 
-const INITIAL_STATE = {warning: false};
+const INITIAL_STATE = {readsEnabled: true, warning: false};
 
 const ADD_WARNING = 'add-warning';
 
@@ -20,6 +20,7 @@ export const StoreContext = createContext([INITIAL_STATE, () => {}]);
 function reducer(state = INITIAL_STATE, action) {
 	if (action.type === ADD_WARNING) {
 		return {
+			...state,
 			warning: true,
 		};
 	}
@@ -27,11 +28,13 @@ function reducer(state = INITIAL_STATE, action) {
 	return state;
 }
 
-export function StoreContextProvider({children}) {
-	const store = useReducer(reducer, INITIAL_STATE);
+export function StoreContextProvider({children, value}) {
+	const stateAndDispatch = useReducer(reducer, {...INITIAL_STATE, ...value});
 
 	return (
-		<StoreContext.Provider value={store}>{children}</StoreContext.Provider>
+		<StoreContext.Provider value={stateAndDispatch}>
+			{children}
+		</StoreContext.Provider>
 	);
 }
 

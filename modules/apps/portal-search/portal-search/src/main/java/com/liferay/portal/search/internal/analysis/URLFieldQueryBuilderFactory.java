@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.analysis;
 
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
 
@@ -28,7 +29,7 @@ public class URLFieldQueryBuilderFactory implements FieldQueryBuilderFactory {
 
 	@Override
 	public FieldQueryBuilder getQueryBuilder(String field) {
-		if (field.endsWith("URL")) {
+		if (field.equals(Field.URL) || field.endsWith("URL")) {
 			return urlFieldQueryBuilder;
 		}
 

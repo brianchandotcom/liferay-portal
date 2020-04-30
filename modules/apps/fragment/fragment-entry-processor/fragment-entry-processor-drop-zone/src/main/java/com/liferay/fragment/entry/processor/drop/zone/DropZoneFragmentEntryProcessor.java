@@ -20,7 +20,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.renderer.FragmentDropZoneRenderer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -63,29 +62,6 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			).put(
 				"name", "lfr-drop-zone"
 			));
-	}
-
-	@Override
-	public JSONObject getDefaultEditableValuesJSONObject(
-		String html, String configuration) {
-
-		Document document = _getDocument(html);
-
-		Elements elements = document.select("lfr-drop-zone");
-
-		if (elements.size() <= 0) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		JSONObject defaultEditableValuesJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		for (Element element : elements) {
-			defaultEditableValuesJSONObject.put(
-				element.attr("id"), StringPool.BLANK);
-		}
-
-		return defaultEditableValuesJSONObject;
 	}
 
 	@Override

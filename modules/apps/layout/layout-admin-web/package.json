@@ -7,6 +7,7 @@
 		"@clayui/icon": "3.0.5",
 		"@clayui/label": "3.3.0",
 		"@clayui/link": "3.1.1",
+		"@clayui/list": "3.2.3",
 		"@clayui/modal": "3.5.0",
 		"classnames": "2.2.6",
 		"clay-badge": "2.21.2",

@@ -99,6 +99,15 @@ String friendlyURLBase = StringPool.BLANK;
 						xml="<%= HttpUtil.decodeURL(selLayout.getFriendlyURLsXML()) %>"
 					/>
 				</div>
+
+				<div><button id="<portlet:namespace />friendlyURLHistoryButton" type="button">history</button></div>
+				<div>
+					<react:component
+						data='<%= HashMapBuilder.<String, Object>put(
+						"data", "data").build() %>'
+						module="js/FriendlyURLHistory/FriendlyURLHistory"
+					/>
+				</div>
 			</c:when>
 			<c:otherwise>
 				<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
@@ -215,6 +224,20 @@ String friendlyURLBase = StringPool.BLANK;
 			) {
 				Liferay.Util.toggleDisabled(field, layoutPrototypeLinkChecked);
 			});
+		});
+	}
+
+	var friendlyURLHistoryButton = document.getElementById(
+		'<portlet:namespace />friendlyURLHistoryButton'
+	);
+
+	if (friendlyURLHistoryButton) {
+		friendlyURLHistoryButton.addEventListener('click', function () {
+			Liferay.componentReady('<portlet:namespace />FriendlyURLHistory').then(
+				function (FriendlyURLHistory) {
+					FriendlyURLHistory.open();
+				}
+			);
 		});
 	}
 </aui:script>

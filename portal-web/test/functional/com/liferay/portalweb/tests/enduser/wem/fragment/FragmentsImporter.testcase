@@ -62,6 +62,113 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for LPS-101256. The fragment composition could be exported and imported."
+	@priority = "4"
+	test ExportFragmentCompositionAndImport {
+		task ("Add a fragment collection") {
+			FragmentsAdmin.addCollection(
+				collectionDescription = "Collection Description",
+				collectionName = "Collection Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Add a fragment that uses the Button fragment code") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			Pause(locator1 = "3000");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button_configuration.json");
+
+			FragmentsEditor.gotoCodeTab();
+
+			Pause(locator1 = "3000");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button_configuration.html");
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Section to page") {
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		}
+
+		task ("Add the created fragment into Section") {
+			PageEditor.gotoTab(tabName = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Collection Name");
+
+			Click(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "Fragment Name",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "");
+
+			AssertElementPresent(
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+		}
+
+		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
+
+		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
+
+		PageEditor.clickPublish();
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+		task ("Export the fragment collection") {
+			FragmentsAdmin.exportCollection(collectionName = "Collection Name");
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "New Site Name");
+		}
+
+		task ("Navigate to fragments admin in the new site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+		}
+
+		task ("Import the fragment collection into the new site") {
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "new-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "New Fragment Name",
+			withSection = "true");
+
+		AssertElementPresent(
+			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
+			key_position = "1",
+			locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+	}
+
 	@description = "Fragment collections can be exported and imported."
 	@priority = "5"
 	test ExportImportCollectionViewFragment {

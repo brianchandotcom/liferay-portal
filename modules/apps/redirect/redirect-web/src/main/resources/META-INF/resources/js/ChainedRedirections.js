@@ -12,10 +12,6 @@
  * details.
  */
 
-/* Copy cat
-/Users/jorgegonzalez/projects/liferay-community/liferay-portal/modules/apps/document-library/document-library-web/src/main/resources/META-INF/resources/document_library/js/checkin/Checkin.es.js
-*/
-
 import {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';

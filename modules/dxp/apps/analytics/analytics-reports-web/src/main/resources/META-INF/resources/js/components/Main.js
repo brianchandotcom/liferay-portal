@@ -14,7 +14,6 @@ import React from 'react';
 
 import BasicInformation from './BasicInformation';
 import Chart from './Chart';
-import Hint from './Hint';
 import TotalCount from './TotalCount';
 import TrafficSources from './TrafficSources';
 
@@ -72,21 +71,13 @@ export default function Main({
 				timeSpanOptions={timeSpanOptions}
 			/>
 
-			<h5 className="mt-2 sheet-subtitle text-secondary">
-				{Liferay.Language.get('search-engines-traffic')}
-				<Hint
-					message={Liferay.Language.get(
-						'search-engines-traffic-help'
-					)}
-					title={Liferay.Language.get('search-engines-traffic')}
+			{trafficSources.length > 0 && (
+				<TrafficSources
+					languageTag={languageTag}
+					onTrafficSourceClick={onTrafficSourceClick}
+					trafficSources={trafficSources}
 				/>
-			</h5>
-
-			<TrafficSources
-				languageTag={languageTag}
-				onTrafficSourceClick={onTrafficSourceClick}
-				trafficSources={trafficSources}
-			/>
+			)}
 		</>
 	);
 }

@@ -71,6 +71,16 @@ export default function TrafficSources({
 
 	return (
 		<>
+			<h5 className="mt-2 sheet-subtitle text-secondary">
+				{Liferay.Language.get('search-engines-traffic')}
+				<Hint
+					message={Liferay.Language.get(
+						'search-engines-traffic-help'
+					)}
+					title={Liferay.Language.get('search-engines-traffic')}
+				/>
+			</h5>
+
 			{!fullPieChart && !missingTrafficSourceValue && (
 				<div className="mb-2 text-secondary">
 					{Liferay.Language.get(

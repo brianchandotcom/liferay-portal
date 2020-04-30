@@ -16,21 +16,32 @@ package com.liferay.redirect.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -78,6 +89,86 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 
 	@Override
 	public void testSearchByKeywordsInsideParentBaseModel() {
+	}
+
+	@Test
+	public void testSearchByURL() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
+				serviceContext.getScopeGroup(), "/path/page");
+
+		List<SearchResult> searchResults = _getSearchResults("/path/page");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectNotFoundEntry.getRedirectNotFoundEntryId(),
+			searchResult.getClassPK());
+	}
+
+	@Test
+	public void testSearchByURLPrefix() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
+				serviceContext.getScopeGroup(), "/path/page");
+
+		List<SearchResult> searchResults = _getSearchResults("/path");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectNotFoundEntry.getRedirectNotFoundEntryId(),
+			searchResult.getClassPK());
+	}
+
+	@Test
+	public void testSearchByURLSubstring() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
+				serviceContext.getScopeGroup(), "/path/page");
+
+		List<SearchResult> searchResults = _getSearchResults("age");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectNotFoundEntry.getRedirectNotFoundEntryId(),
+			searchResult.getClassPK());
+	}
+
+	@Test
+	public void testSearchByURLSuffix() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
+				serviceContext.getScopeGroup(), "/path/page");
+
+		List<SearchResult> searchResults = _getSearchResults("/page");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectNotFoundEntry.getRedirectNotFoundEntryId(),
+			searchResult.getClassPK());
 	}
 
 	@Override
@@ -160,6 +251,22 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 
 		return _redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
 			redirectNotFoundEntry);
+	}
+
+	private List<SearchResult> _getSearchResults(String keywords)
+		throws Exception {
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setGroupIds(new long[] {group.getGroupId()});
+		searchContext.setKeywords(keywords);
+
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+			getBaseModelClass());
+
+		return SearchResultUtil.getSearchResults(
+			indexer.search(searchContext), LocaleUtil.getDefault());
 	}
 
 	@Inject

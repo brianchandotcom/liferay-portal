@@ -42,7 +42,14 @@ definition {
 
 	@priority = "4"
 	test CannotMergeSingleTagViewWarning {
-		Tag.addCP(tagName = "tagname1");
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "tagname1");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
 
 		Tag.gotoMerge(
 			mergeMethod = "menuItem",
@@ -54,8 +61,17 @@ definition {
 	@priority = "4"
 	test DeleteMultipleTagsFromToolbar {
 		for (var i : list "1,2,3") {
-			Tag.addCP(tagName = "tagname${i}");
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tagname${i}");
+		}
 
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
+
+		for (var i : list "1,2,3") {
 			Tag.viewCP(tagName = "tagname${i}");
 		}
 
@@ -68,7 +84,14 @@ definition {
 
 	@priority = "5"
 	test DeleteTagFromMenu {
-		Tag.addCP(tagName = "tagname1");
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "tagname1");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
 
 		Tag.viewCP(tagName = "tagname1");
 
@@ -81,7 +104,14 @@ definition {
 
 	@priority = "4"
 	test DeleteTagFromToolbar {
-		Tag.addCP(tagName = "tagname1");
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "tagname1");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
 
 		Tag.viewCP(tagName = "tagname1");
 
@@ -94,7 +124,14 @@ definition {
 
 	@priority = "4"
 	test EditTagAndCancel {
-		Tag.addCP(tagName = "tagname1");
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "tagname1");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
 
 		Tag.viewCP(tagName = "tagname1");
 
@@ -115,7 +152,14 @@ definition {
 	test EditTagAndSave {
 		property portal.acceptance = "true";
 
-		Tag.addCP(tagName = "tagname1");
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "tagname1");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
 
 		Tag.viewCP(tagName = "tagname1");
 
@@ -135,8 +179,17 @@ definition {
 	@priority = "4"
 	test MergeMultipleTags {
 		for (var i : list "1,2,3") {
-			Tag.addCP(tagName = "tagname${i}");
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tagname${i}");
+		}
 
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
+
+		for (var i : list "1,2,3") {
 			Tag.viewCP(tagName = "tagname${i}");
 		}
 
@@ -160,8 +213,17 @@ definition {
 	@priority = "3"
 	test MergeTagsSelectAdditionalTag {
 		for (var i : list "1,2,3,4,5,6,7") {
-			Tag.addCP(tagName = "tagname${i}");
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tagname${i}");
+		}
 
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
+
+		for (var i : list "1,2,3,4,5,6,7") {
 			Tag.viewCP(tagName = "tagname${i}");
 		}
 
@@ -192,7 +254,14 @@ definition {
 
 	@priority = "4"
 	test ToggleDisplayStyles {
-		Tag.addCP(tagName = "tagname1");
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "tagname1");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -211,16 +280,25 @@ definition {
 		var index = "1";
 
 		while ("${index}" != "10") {
-			Tag.addCP(tagName = "tagname0${index}");
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tagname0${index}");
 
 			var index = ${index} + 1;
 		}
 
 		while ("${index}" != "26") {
-			Tag.addCP(tagName = "tagname${index}");
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tagname${index}");
 
 			var index = ${index} + 1;
 		}
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Tags");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",

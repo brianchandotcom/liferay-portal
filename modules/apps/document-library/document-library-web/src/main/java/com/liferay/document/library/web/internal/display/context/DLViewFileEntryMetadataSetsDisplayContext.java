@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.search.StructureSearch;
 import com.liferay.document.library.web.internal.search.StructureSearchTerms;
@@ -91,18 +92,11 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	public PortletURL getDeleteDDMStructurePortletURL(
 		DDMStructure ddmStructure) {
 
-		ActionURL actionURL = _liferayPortletResponse.createActionURL();
+		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
+			return _getDeleteDataDefinitionPortletURL(ddmStructure);
+		}
 
-		actionURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/document_library/ddm/delete_ddm_structure");
-		actionURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view");
-		actionURL.setParameter("navigation", "file_entry_metadata_sets");
-		actionURL.setParameter(
-			"ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
-
-		return actionURL;
+		return _getDeleteDDMStructurePortletURL(ddmStructure);
 	}
 
 	public PortletURL getEditDDMStructurePortletURL(DDMStructure ddmStructure) {
@@ -400,6 +394,40 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		}
 
 		structureSearch.setTotal(total);
+	}
+
+	private PortletURL _getDeleteDataDefinitionPortletURL(
+		DDMStructure ddmStructure) {
+
+		ActionURL actionURL = _liferayPortletResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/document_library/ddm/delete_data_definition");
+		actionURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
+		actionURL.setParameter("navigation", "file_entry_metadata_sets");
+		actionURL.setParameter(
+			"dataDefinitionId", String.valueOf(ddmStructure.getStructureId()));
+
+		return actionURL;
+	}
+
+	private PortletURL _getDeleteDDMStructurePortletURL(
+		DDMStructure ddmStructure) {
+
+		ActionURL actionURL = _liferayPortletResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/document_library/ddm/delete_ddm_structure");
+		actionURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
+		actionURL.setParameter("navigation", "file_entry_metadata_sets");
+		actionURL.setParameter(
+			"ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
+
+		return actionURL;
 	}
 
 	private final DDMStructureLinkLocalService _ddmStructureLinkLocalService;

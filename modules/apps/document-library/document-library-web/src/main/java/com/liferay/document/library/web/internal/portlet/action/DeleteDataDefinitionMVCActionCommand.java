@@ -14,9 +14,13 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -42,6 +46,32 @@ public class DeleteDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] deleteDataDefinitionIds = null;
+
+		long dataDefinitionId = ParamUtil.getLong(
+			actionRequest, "dataDefinitionId");
+
+		if (dataDefinitionId > 0) {
+			deleteDataDefinitionIds = new long[] {dataDefinitionId};
+		}
+		else {
+			deleteDataDefinitionIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
+
+		DataDefinitionResource dataDefinitionResource =
+			DataDefinitionResource.builder(
+			).user(
+				themeDisplay.getUser()
+			).build();
+
+		for (long deleteDataDefinitionId : deleteDataDefinitionIds) {
+			dataDefinitionResource.deleteDataDefinition(deleteDataDefinitionId);
+		}
 	}
 
 }

@@ -13,10 +13,18 @@ definition {
 		}
 
 		if (isSet(groupName)) {
-			var serviceContext = JSONBlogSetter.setServiceContext(groupName = "${groupName}");
+			var serviceContext = JSONBlogSetter.setServiceContext(
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				groupName = "${groupName}",
+				workflowAction = "${workflowAction}");
 		}
 		else {
-			var serviceContext = JSONBlogSetter.setServiceContext(groupName = "Guest");
+			var serviceContext = JSONBlogSetter.setServiceContext(
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				groupName = "Guest",
+				workflowAction = "${workflowAction}");
 		}
 
 		var curl = '''

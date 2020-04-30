@@ -396,7 +396,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		DMDocument.addCP(
+		DMDocument.addPG(
 			dmDocumentDescription = "Auto Tagged PDF Description",
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			dmDocumentTitle = "Auto Tagged PDF");

@@ -485,7 +485,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addCP(
+		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_3.docx",
 			dmDocumentTitle = "Document_3.docx");

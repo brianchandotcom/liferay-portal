@@ -14,7 +14,6 @@
 
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
-import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
@@ -44,7 +43,6 @@ import resolveEditableValue from './resolveEditableValue';
 
 const FragmentContent = React.forwardRef(
 	({fragmentEntryLinkId, itemId}, ref) => {
-		const [fragmentElement, setFragmentElement] = useState(null);
 		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const editableProcessorUniqueId = useEditableProcessorUniqueId();
@@ -71,29 +69,19 @@ const FragmentContent = React.forwardRef(
 		 *  If not specified, fragmentElement state is used instead.
 		 * @return {Array} Updated editables array
 		 */
-		const updateEditables = useCallback(
-			(nextFragmentElement = undefined) => {
+		const onRender = useCallback(
+			(fragmentElement) => {
 				let updatedEditableValues = [];
 
 				if (isMounted()) {
-					if (nextFragmentElement) {
-						setFragmentElement(nextFragmentElement);
-						updatedEditableValues = getAllEditables(
-							nextFragmentElement
-						);
-					}
-					else if (fragmentElement) {
-						updatedEditableValues = getAllEditables(
-							fragmentElement
-						);
-					}
-
-					setEditables(updatedEditableValues);
+					updatedEditableValues = getAllEditables(fragmentElement);
 				}
+
+				setEditables(updatedEditableValues);
 
 				return updatedEditableValues;
 			},
-			[fragmentElement, isMounted]
+			[isMounted]
 		);
 
 		const languageId = useSelector((state) => state.languageId);
@@ -136,42 +124,50 @@ const FragmentContent = React.forwardRef(
 			segmentsExperienceId,
 		]);
 
+		/**
+		 * fragmentElement keeps a copy of the fragment real HTML,
+		 * we perform editableValues replacements over this copy
+		 * to avoid multiple re-renders, when every replacement has
+		 * finished, this function must be called.
+		 *
+		 * Synchronizes fragmentElement's content to the real fragment
+		 * content. When this happens, the real re-render is performed.
+		 */
 		useEffect(() => {
-			let element = document.createElement('div');
-			element.innerHTML = defaultContent;
-
-			const updateContent = debounce(() => {
-				if (isMounted() && element) {
-					setContent(element.innerHTML);
-				}
-			}, 50);
+			let fragmentElement = document.createElement('div');
 
 			if (!editableProcessorUniqueId) {
-				updateEditables().forEach((editable) => {
-					resolveEditableValue(
-						editableValues,
-						editable.editableId,
-						editable.editableValueNamespace,
-						languageId,
-						getFieldValue
-					).then(([value, editableConfig]) => {
-						editable.processor.render(
-							editable.element,
-							value,
-							editableConfig
-						);
+				fragmentElement.innerHTML = defaultContent;
 
-						editable.element.classList.add('page-editor__editable');
+				Promise.all(
+					getAllEditables(fragmentElement).map((editable) =>
+						resolveEditableValue(
+							editableValues,
+							editable.editableId,
+							editable.editableValueNamespace,
+							languageId,
+							getFieldValue
+						).then(([value, editableConfig]) => {
+							editable.processor.render(
+								editable.element,
+								value,
+								editableConfig
+							);
 
-						updateContent();
-					});
+							editable.element.classList.add(
+								'page-editor__editable'
+							);
+						})
+					)
+				).then(() => {
+					if (isMounted() && fragmentElement) {
+						setContent(fragmentElement.innerHTML);
+					}
 				});
-
-				updateContent();
 			}
 
 			return () => {
-				element = null;
+				fragmentElement = null;
 			};
 		}, [
 			defaultContent,
@@ -180,7 +176,6 @@ const FragmentContent = React.forwardRef(
 			getFieldValue,
 			isMounted,
 			languageId,
-			updateEditables,
 		]);
 
 		const getPortals = useCallback(
@@ -232,7 +227,7 @@ const FragmentContent = React.forwardRef(
 						getPortals={getPortals}
 						globalContext={frameContext || window}
 						markup={content}
-						onRender={updateEditables}
+						onRender={onRender}
 					/>
 				</FragmentContentInteractionsFilter>
 

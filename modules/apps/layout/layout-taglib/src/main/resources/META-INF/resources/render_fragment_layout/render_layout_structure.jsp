@@ -88,7 +88,7 @@ for (String childrenItemId : childrenItemIds) {
 			%>
 
 			<clay:col
-				className="<%= renderFragmentLayoutDisplayContext.getColumnSizeClass(rowLayoutStructureItem, columnLayoutStructureItem) %>"
+				className="<%= renderFragmentLayoutDisplayContext.getColumnClass(rowLayoutStructureItem, columnLayoutStructureItem) %>"
 			>
 
 				<%
@@ -226,7 +226,7 @@ for (String childrenItemId : childrenItemIds) {
 				<c:when test="<%= includeContainer %>">
 					<div class="container-fluid p-0">
 						<clay:row
-							className='<%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>'
+							className="<%= renderFragmentLayoutDisplayContext.getRowClass(rowLayoutStructureItem) %>"
 						>
 
 							<%
@@ -239,7 +239,7 @@ for (String childrenItemId : childrenItemIds) {
 				</c:when>
 				<c:otherwise>
 					<clay:row
-						className='<%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>'
+						className="<%= renderFragmentLayoutDisplayContext.getRowClass(rowLayoutStructureItem) %>"
 					>
 
 						<%

@@ -36,9 +36,16 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	const rowContent = (
 		<div
 			className={classNames(className, 'row', {
+				'align-items-center': itemConfig.verticalAlignment === 'middle',
+				'align-items-end': itemConfig.verticalAlignment === 'bottom',
+				'align-items-start': itemConfig.verticalAlignment === 'top',
 				empty: !item.children.some(
 					(childId) => layoutData.items[childId].children.length
 				),
+				'flex-row-reverse': !(typeof itemConfig.reverseOrder ===
+				'boolean'
+					? !itemConfig.reverseOrder
+					: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[item.type]),
 				'no-gutters': !(typeof itemConfig.gutters === 'boolean'
 					? itemConfig.gutters
 					: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[item.type]),

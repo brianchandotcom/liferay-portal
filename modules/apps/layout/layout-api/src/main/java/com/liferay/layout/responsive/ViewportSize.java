@@ -19,13 +19,14 @@ package com.liferay.layout.responsive;
  */
 public enum ViewportSize {
 
-	DESKTOP("desktop", "col-lg-", "desktop", "desktop", 992, 960, 3, 1),
+	DESKTOP("desktop", "-lg-", "desktop", "desktop", 992, 960, 3, 1),
 	MOBILE_LANDSCAPE(
-		"landscapeMobile", "col-sm-","mobile-landscape", "mobile-landscape", 767, 576, 2,
-		3),
+		"landscapeMobile", "-sm-", "mobile-landscape", "mobile-landscape", 767,
+		576, 2, 3),
 	PORTRAIT_MOBILE(
-		"portraitMobile", "col-xs-","mobile-portrait", "mobile-portrait", 575, 240, 1, 4),
-	TABLET("tablet", "col-md-","tablet-portrait", "tablet", 991, 768, 3, 2);
+		"portraitMobile", "-xs-", "mobile-portrait", "mobile-portrait", 575,
+		240, 1, 4),
+	TABLET("tablet", "-md-", "tablet-portrait", "tablet", 991, 768, 3, 2);
 
 	public String getCssClassPrefix() {
 		return _cssClassPrefix;

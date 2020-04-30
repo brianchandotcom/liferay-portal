@@ -26,7 +26,7 @@ String analyticsClientGroupIds = (String)request.getAttribute(AnalyticsWebKeys.A
 		<liferay-util:dynamic-include key="/dynamic_include/top_head.jsp#analytics" />
 	};
 
-	var analyticsClientGroupIds = '<%= analyticsClientGroupIds %>';
+	var analyticsClientGroupIds = <%= analyticsClientGroupIds %>;
 </script>
 
 <script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">

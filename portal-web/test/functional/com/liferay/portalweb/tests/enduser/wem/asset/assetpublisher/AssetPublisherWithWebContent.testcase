@@ -11,16 +11,16 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Asset Publisher Page");
 
-		SitePages.addPublicPage(pageName = "Asset Publisher Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 	}
 
 	tearDown {
@@ -59,30 +59,21 @@ definition {
 	test AddWebContentWithGlobalScopeViaCPToLiferayAP {
 		property test.name.skip.portal.instance = "AssetPublisherWithWebContent#AddWebContentWithGlobalScopeViaCPToLiferayAP";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Global",
+			title = "WC WebContent Title");
 
-		WebContentNavigator.gotoAddCP();
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page 1");
 
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Test Page 1");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page 1",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoPage(pageName = "Test Page 1");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureSiteScopePG(
 			siteName = "Global",
@@ -136,17 +127,10 @@ definition {
 
 	@priority = "4"
 	test AddWebContentWithGlobalScopeViaCPToSiteAP {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Global",
+			title = "WC WebContent Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "Global");
 
@@ -156,25 +140,20 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Test Page 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Site Test Page 1");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Test Page 1",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Test Page 1",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureSiteScopePG(
 			siteName = "Global",
@@ -285,18 +264,16 @@ definition {
 			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
-		Navigator.openURL();
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Test Page 1");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page 1",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoPage(pageName = "Test Page 1");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureSiteScopePG(
 			siteName = "Global",
@@ -364,25 +341,20 @@ definition {
 			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Test Page 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Site Test Page 1");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Test Page 1",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Test Page 1",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureSiteScopePG(
 			siteName = "Global",
@@ -407,48 +379,36 @@ definition {
 
 	@priority = "4"
 	test DisplayWebContentTagViaAP {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page");
 
-		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Tags Navigation");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
-
-		Portlet.addPG(portletName = "Tags Navigation");
-
-		Navigator.gotoPage(pageName = "Tags Navigation Page");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureShowMetadataFieldsPG(
 			addMetadata = "true",
 			metadataFieldList = "Tags",
 			portletName = "Asset Publisher");
 
-		Navigator.openURL();
+		IFrame.closeFrame();
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			panel = "Site Administration",
-			portlet = "Tags");
+		var serviceContext = '''{"assetTagNames": ["tag name"]}''';
 
-		Tag.addCP(tagName = "tag name");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "tag name",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Guest",
+			serviceContext = "${serviceContext}",
+			title = "Web Content Title");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
@@ -550,15 +510,13 @@ definition {
 	@description = "This is a use case for LPS-80445."
 	@priority = "5"
 	test ViewWebContentViaAPDeleteCategory {
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			panel = "Site Administration",
-			portlet = "Categories");
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Name");
 
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-
-		Category.addCP(
-			categoryName = "Category Name",
+		JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
@@ -569,18 +527,18 @@ definition {
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithCategoryCP(
+		var categoryId = JSONCategory.getCategoryId(
 			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+			groupName = "Guest",
+			vocabularyName = "Vocabulary Name");
+
+		var serviceContext = '''{"assetCategoryIds": ["${categoryId}"]}''';
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Guest",
+			serviceContext = "${serviceContext}",
+			title = "Web Content Title");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 

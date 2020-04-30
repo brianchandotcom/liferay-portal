@@ -23,6 +23,7 @@ import State, {Config} from 'metal-state';
  * @review
  */
 class GeoJSONBase extends State {
+
 	/**
 	 * Receives an object with native features data and tries
 	 * to parse it with the implemented method _getNativeFeatures.
@@ -97,6 +98,7 @@ class GeoJSONBase extends State {
  * @type {!Object}
  */
 GeoJSONBase.STATE = {
+
 	/**
 	 * Map to be used
 	 * @review

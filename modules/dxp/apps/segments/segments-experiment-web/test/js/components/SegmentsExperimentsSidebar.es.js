@@ -553,6 +553,7 @@ describe('No Winner Declared', () => {
 	});
 
 	it('Variant publish action button when confirming in no winner declared status', async () => {
+
 		/**
 		 * The user accepts the confirmation message
 		 */
@@ -593,6 +594,7 @@ describe('No Winner Declared', () => {
 	});
 
 	it('Variant publish action button when not confirming in no winner declared status', async () => {
+
 		/**
 		 * The user rejects the confirmation message
 		 */
@@ -659,6 +661,7 @@ describe('Winner declared', () => {
 	});
 
 	it('Variant publish winner action button in alert in winner declared status', async () => {
+
 		/**
 		 * The user accepts the confirmation message
 		 */
@@ -699,6 +702,7 @@ describe('Winner declared', () => {
 	});
 
 	it('Variant publish action button when confirming in winner declared status', async () => {
+
 		/**
 		 * The user accepts the confirmation message
 		 */
@@ -739,6 +743,7 @@ describe('Winner declared', () => {
 	});
 
 	it('Variant publish action button when not confirming in winner declared status', async () => {
+
 		/**
 		 * The user rejects the confirmation message
 		 */

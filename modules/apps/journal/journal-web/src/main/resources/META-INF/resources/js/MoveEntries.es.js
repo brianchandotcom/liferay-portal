@@ -22,6 +22,7 @@ import {Config} from 'metal-state';
  * @review
  */
 class MoveEntries extends PortletBase {
+
 	/**
 	 * @inheritdoc
 	 * @review
@@ -100,6 +101,7 @@ class MoveEntries extends PortletBase {
  * @static
  */
 MoveEntries.STATE = {
+
 	/**
 	 * @default undefined
 	 * @memberof MoveEntries

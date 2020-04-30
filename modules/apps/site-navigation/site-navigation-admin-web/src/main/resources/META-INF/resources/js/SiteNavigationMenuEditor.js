@@ -56,6 +56,7 @@ const KEYS = {
  * Provides the Site Navigation Menu Editor.
  */
 class SiteNavigationMenuEditor extends State {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -366,6 +367,7 @@ class SiteNavigationMenuEditor extends State {
  * @type {!Object}
  */
 SiteNavigationMenuEditor.STATE = {
+
 	/**
 	 * Control menu height.
 	 *

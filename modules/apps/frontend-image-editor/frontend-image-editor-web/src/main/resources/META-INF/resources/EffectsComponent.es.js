@@ -24,6 +24,7 @@ import './EffectsControls.soy';
  * Creates an Effects component.
  */
 class EffectsComponent extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -276,6 +277,7 @@ class EffectsComponent extends Component {
  * @type {!Object}
  */
 EffectsComponent.STATE = {
+
 	/**
 	 * Offset in pixels (<code>px</code> postfix) for the carousel item.
 	 *

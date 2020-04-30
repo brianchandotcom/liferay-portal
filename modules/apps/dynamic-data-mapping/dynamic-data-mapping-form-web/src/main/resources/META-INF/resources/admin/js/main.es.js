@@ -1076,6 +1076,7 @@ class Form extends Component {
 }
 
 Form.PROPS = {
+
 	/**
 	 * The context for rendering a layout that represents a form.
 	 * @default undefined
@@ -1299,6 +1300,7 @@ Form.PROPS = {
 };
 
 Form.STATE = {
+
 	/**
 	 * Current active tab index.
 	 * @default

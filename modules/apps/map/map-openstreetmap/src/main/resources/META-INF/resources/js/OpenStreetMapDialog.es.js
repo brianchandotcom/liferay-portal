@@ -19,6 +19,7 @@ import State, {Config} from 'metal-state';
  * @review
  */
 class OpenStreetMapDialog extends State {
+
 	/**
 	 * Creates a new map dialog using OpenStreetMap's API
 	 * @param  {Array} args List of arguments to be passed to State
@@ -57,6 +58,7 @@ class OpenStreetMapDialog extends State {
  * @type {!Object}
  */
 OpenStreetMapDialog.STATE = {
+
 	/**
 	 * Map used for creating the dialog content
 	 * @review

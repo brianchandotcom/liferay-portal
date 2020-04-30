@@ -24,6 +24,7 @@ import './ResizeControls.soy';
  * Creates a Resize component.
  */
 class ResizeComponent extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -124,6 +125,7 @@ class ResizeComponent extends Component {
  * @type {!Object}
  */
 ResizeComponent.STATE = {
+
 	/**
 	 * Injected helper that retrieves the editor image data.
 	 *

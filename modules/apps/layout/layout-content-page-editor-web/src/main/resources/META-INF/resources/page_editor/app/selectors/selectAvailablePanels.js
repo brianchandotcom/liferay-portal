@@ -18,6 +18,7 @@ export const AVAILABLE_PANELS = ['comments', 'contents', 'page-structure'];
  * @param {Array<Array<string>>} panels
  */
 export default function selectAvailablePanels(panels) {
+
 	/**
 	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
 	 */

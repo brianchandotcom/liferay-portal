@@ -22,6 +22,7 @@ import Soy from 'metal-soy';
 import templates from './SaturationSlider.soy';
 
 class SaturationSlider extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -190,6 +191,7 @@ Soy.register(SaturationSlider, templates);
  */
 
 SaturationSlider.STATE = {
+
 	/**
 	 * Name of the hidden input field that holds the SaturationSlider value. Useful when SaturationSlider is embedded
 	 * inside a form so it can automatically send its value.

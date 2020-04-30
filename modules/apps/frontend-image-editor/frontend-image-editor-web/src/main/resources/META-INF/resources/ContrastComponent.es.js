@@ -28,6 +28,7 @@ import './ContrastControls.soy';
  * Creates a Contrast component.
  */
 class ContrastComponent extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -113,6 +114,7 @@ class ContrastComponent extends Component {
  * @type {!Object}
  */
 ContrastComponent.STATE = {
+
 	/**
 	 * Path of this module.
 	 *

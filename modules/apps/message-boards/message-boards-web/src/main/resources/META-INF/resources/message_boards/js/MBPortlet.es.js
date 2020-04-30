@@ -25,6 +25,7 @@ import {EventHandler} from 'metal-events';
  */
 
 class MBPortlet extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -345,6 +346,7 @@ class MBPortlet extends PortletBase {
  */
 
 MBPortlet.STATE = {
+
 	/**
 	 * Portlet's constants
 	 * @instance

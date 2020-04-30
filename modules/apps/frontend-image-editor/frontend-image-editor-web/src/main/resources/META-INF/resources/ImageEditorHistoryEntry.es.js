@@ -21,12 +21,14 @@
  * @review
  */
 class ImageEditorHistoryEntry {
+
 	/**
 	 * Constructor
 	 * @review
 	 */
 	constructor(image) {
 		this.dataPromise_ = new Promise((resolve) => {
+
 			// Preemtively fetch the imageData when all we have is the image url
 
 			if (image.url && !image.data) {

@@ -47,6 +47,7 @@ deconcept.SWFObject = function (
 	}
 	this.installedVer = deconcept.SWFObjectUtil.getPlayerVersion();
 	if (!window.opera && document.all && this.installedVer.major > 7) {
+
 		// only add the onunload cleanup if the Flash Player version supports External Interface and we are in IE
 		// fixes bug in some fp9 versions see http://blog.deconcept.com/2006/07/28/swfobject-143-released/
 
@@ -120,7 +121,9 @@ deconcept.SWFObject.prototype = {
 			navigator.mimeTypes &&
 			navigator.mimeTypes.length
 		) {
+
 			// netscape plugin architecture
+
 			if (this.getAttribute('doExpressInstall')) {
 				this.addVariable('MMplayerType', 'PlugIn');
 				this.setAttribute('swf', this.xiSWFPath);
@@ -150,7 +153,9 @@ deconcept.SWFObject.prototype = {
 			swfNode += '/>';
 		}
 		else {
+
 			// PC IE
+
 			if (this.getAttribute('doExpressInstall')) {
 				this.addVariable('MMplayerType', 'ActiveX');
 				this.setAttribute('swf', this.xiSWFPath);
@@ -184,6 +189,7 @@ deconcept.SWFObject.prototype = {
 	},
 	write: function (elementId) {
 		if (this.getAttribute('useExpressInstall')) {
+
 			// check to see if we need to do an express install
 
 			var expressInstallReqVer = new deconcept.PlayerVersion([6, 0, 65]);
@@ -240,7 +246,9 @@ deconcept.SWFObjectUtil.getPlayerVersion = function () {
 		navigator.userAgent &&
 		navigator.userAgent.indexOf('Windows CE') >= 0
 	) {
+
 		// if Windows CE
+
 		var axo = 1;
 		var counter = 3;
 		while (axo) {
@@ -260,6 +268,7 @@ deconcept.SWFObjectUtil.getPlayerVersion = function () {
 		}
 	}
 	else {
+
 		// Win IE (non mobile)
 		// do minor version lookup in IE, but avoid fp6 crashing issues
 		// see http://blog.deconcept.com/2006/01/11/getvariable-setvariable-crash-internet-explorer-flash-6/

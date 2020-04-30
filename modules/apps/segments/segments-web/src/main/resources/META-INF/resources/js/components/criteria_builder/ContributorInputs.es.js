@@ -22,6 +22,7 @@ function ContributorInputs({contributors}) {
 	return contributors
 		.filter((criteria) => criteria.query)
 		.map((criteria, i) => {
+
 			/**
 			 * First criteria has to be preceded by a `AND` conjunction
 			 */

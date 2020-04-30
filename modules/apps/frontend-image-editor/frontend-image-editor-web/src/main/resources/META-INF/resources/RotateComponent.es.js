@@ -24,6 +24,7 @@ import './RotateControls.soy';
  * Creates a Rotate component.
  */
 class RotateComponent extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -146,6 +147,7 @@ class RotateComponent extends Component {
  * @type {!Object}
  */
 RotateComponent.STATE = {
+
 	/**
 	 * Path of this module.
 	 *

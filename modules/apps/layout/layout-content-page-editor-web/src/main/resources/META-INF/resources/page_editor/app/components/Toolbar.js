@@ -97,6 +97,7 @@ function ToolbarBody() {
 	});
 
 	if (loading.current) {
+
 		// Do this once only.
 
 		loading.current();
@@ -310,6 +311,7 @@ export default function Toolbar() {
 	const isMounted = useIsMounted();
 
 	if (!isMounted()) {
+
 		// First time here, must empty JSP-rendered markup from container.
 
 		while (container.firstChild) {

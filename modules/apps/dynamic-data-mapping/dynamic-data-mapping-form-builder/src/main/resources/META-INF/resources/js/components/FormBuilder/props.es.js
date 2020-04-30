@@ -17,6 +17,7 @@ import {Config} from 'metal-state';
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 
 export default {
+
 	/**
 	 * @default
 	 * @instance

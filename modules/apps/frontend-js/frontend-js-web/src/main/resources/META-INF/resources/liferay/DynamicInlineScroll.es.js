@@ -25,6 +25,7 @@ import PortletBase from './PortletBase.es';
  * @extends {Component}
  */
 class DynamicInlineScroll extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -192,6 +193,7 @@ class DynamicInlineScroll extends PortletBase {
  * @type {!Object}
  */
 DynamicInlineScroll.STATE = {
+
 	/**
 	 * Current page index.
 	 *

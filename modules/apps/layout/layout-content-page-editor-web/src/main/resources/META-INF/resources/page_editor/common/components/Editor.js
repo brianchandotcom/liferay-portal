@@ -101,7 +101,9 @@ export default function Editor({
 				}
 			}
 			catch (_err) {
+
 				// https://github.com/liferay/alloy-editor/issues/1306
+
 			}
 		};
 	}, [autoFocus, editorConfig]);

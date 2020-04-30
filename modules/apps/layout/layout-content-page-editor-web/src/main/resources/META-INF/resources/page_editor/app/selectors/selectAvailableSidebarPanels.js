@@ -18,6 +18,7 @@ import {AVAILABLE_PANELS} from './selectAvailablePanels';
  * @param {{ [panelId: string]: object }} sidebarPanels
  */
 export default function selectAvailableSidebarPanels(sidebarPanels) {
+
 	/**
 	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
 	 */

@@ -233,7 +233,9 @@
 							(token = lexer.getNextToken()) &&
 							token[3] != STR_TAG_CODE
 						) {
+
 							// Continue.
+
 						}
 
 						instance._handleData(token, data);

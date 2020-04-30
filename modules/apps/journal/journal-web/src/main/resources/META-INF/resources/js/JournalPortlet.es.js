@@ -30,6 +30,7 @@ const SIDEBAR_VISIBLE_CLASS = 'contextual-sidebar-visible';
  * @extends {PortletBase}
  */
 class JournalPortlet extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */

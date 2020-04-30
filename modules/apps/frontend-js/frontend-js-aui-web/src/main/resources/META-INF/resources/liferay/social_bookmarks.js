@@ -42,6 +42,7 @@ AUI.add(
 		 */
 
 		var SocialBookmarks = A.Component.create({
+
 			/**
 			 * A static property used to define the default attribute
 			 * configuration for `SocialBookmarks`.
@@ -52,6 +53,7 @@ AUI.add(
 			 */
 
 			ATTRS: {
+
 				/**
 				 * The direct descendant of a widget's bounding box
 				 * and houses its content.
@@ -86,6 +88,7 @@ AUI.add(
 			NAME,
 
 			prototype: {
+
 				/**
 				 * Construction lifecycle implementation executed during
 				 * `SocialBookmarks` instantiation.

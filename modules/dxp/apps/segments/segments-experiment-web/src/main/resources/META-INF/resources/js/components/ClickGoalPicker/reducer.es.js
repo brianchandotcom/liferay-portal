@@ -57,6 +57,7 @@ export function getInitialState(target) {
 }
 
 const INITIAL_STATE = {
+
 	/**
 	 * The click goal target that is currently being edited.
 	 *

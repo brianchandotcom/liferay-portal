@@ -22,6 +22,7 @@ import templates from './FormPortal.soy';
 class FormPortal extends Component {}
 
 FormPortal.STATE = {
+
 	/**
 	 * @default input
 	 * @instance

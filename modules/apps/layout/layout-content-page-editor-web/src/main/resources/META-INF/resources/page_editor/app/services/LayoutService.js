@@ -16,6 +16,7 @@ import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
 export default {
+
 	/**
 	 * Adds an item to layoutData
 	 * @param {object} options

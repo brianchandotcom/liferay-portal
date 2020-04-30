@@ -13,6 +13,7 @@
  */
 
 (function ($) {
+
 	/*!
 	 * jQuery fm Plugin
 	 * version: 0.1

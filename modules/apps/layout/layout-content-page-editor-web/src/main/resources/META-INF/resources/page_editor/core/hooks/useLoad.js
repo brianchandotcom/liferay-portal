@@ -44,6 +44,7 @@ export default function useLoad() {
 							},
 							(error) => {
 								if (isMounted()) {
+
 									// Reset to allow future retries.
 
 									modules.current.delete(key);

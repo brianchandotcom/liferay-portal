@@ -24,6 +24,7 @@ import './CropControls.soy';
  * Creates a Crop component.
  */
 class CropComponent extends Component {
+
 	/**
 	 * Applies the brightness filter to generate a final version of the image.
 	 *
@@ -88,6 +89,7 @@ class CropComponent extends Component {
  * @type {!Object}
  */
 CropComponent.STATE = {
+
 	/**
 	 * Injected helper that retrieves the editor canvas.
 	 *

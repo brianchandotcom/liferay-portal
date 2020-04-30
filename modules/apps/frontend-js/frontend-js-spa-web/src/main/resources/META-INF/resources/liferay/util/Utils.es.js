@@ -21,6 +21,7 @@ const MAX_TIMEOUT = Math.pow(2, 31) - 1;
  */
 
 class Utils {
+
 	/**
 	 * Returns the maximum number allowed by the `setTimeout` function
 	 * @return {!Number} The number

@@ -113,6 +113,7 @@ class PageRenderer extends Component {
 }
 
 PageRenderer.STATE = {
+
 	/**
 	 * @instance
 	 * @memberof FormPage

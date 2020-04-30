@@ -21,6 +21,7 @@ import {Config} from 'metal-state';
  * Handles actions to display user name field for a given locale.
  */
 class UserNameFields extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -234,6 +235,7 @@ class UserNameFields extends PortletBase {
 }
 
 UserNameFields.STATE = {
+
 	/**
 	 * Uri to return the user name data.
 	 * @instance

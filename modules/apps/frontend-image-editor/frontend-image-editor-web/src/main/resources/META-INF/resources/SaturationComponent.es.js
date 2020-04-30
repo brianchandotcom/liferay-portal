@@ -28,6 +28,7 @@ import './SaturationControls.soy';
  * Creates a Saturation component.
  */
 class SaturationComponent extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -114,6 +115,7 @@ class SaturationComponent extends Component {
  * @type {!Object}
  */
 SaturationComponent.STATE = {
+
 	/**
 	 * Path of this module.
 	 *

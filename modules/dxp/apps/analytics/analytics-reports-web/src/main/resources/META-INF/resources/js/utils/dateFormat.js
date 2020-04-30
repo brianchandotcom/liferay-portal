@@ -14,6 +14,7 @@
  * internationalized date related content.
  */
 export const generateDateFormatters = (key) => {
+
 	/**
 	 * Given 2 date objects it produces a user friendly date interval
 	 *

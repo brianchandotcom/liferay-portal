@@ -48,6 +48,7 @@ import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
  * </ul>
  */
 class ImageEditor extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -516,6 +517,7 @@ class ImageEditor extends PortletBase {
  * @type {!Object}
  */
 ImageEditor.STATE = {
+
 	/**
 	 * Whether the editor is ready for user interaction.
 	 * @type {Object}

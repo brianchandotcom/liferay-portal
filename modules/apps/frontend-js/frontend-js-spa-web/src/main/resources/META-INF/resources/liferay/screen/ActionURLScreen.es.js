@@ -24,6 +24,7 @@ import EventScreen from './EventScreen.es';
  */
 
 class ActionURLScreen extends EventScreen {
+
 	/**
 	 * @inheritDoc
 	 */

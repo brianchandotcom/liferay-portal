@@ -24,7 +24,9 @@ export default function TreeviewLabel({node}) {
 				className="sr-only"
 				id={inputId}
 				onChange={() => {
+
 					// Let NodeListItem handle checked state.
+
 				}}
 				type="checkbox"
 			/>

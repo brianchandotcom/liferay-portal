@@ -38,6 +38,7 @@ class FieldBase extends Component {
 }
 
 FieldBase.STATE = {
+
 	/**
 	 * @default input
 	 * @memberof FieldBase

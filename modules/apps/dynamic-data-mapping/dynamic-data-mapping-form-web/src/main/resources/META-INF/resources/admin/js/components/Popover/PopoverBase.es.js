@@ -45,6 +45,7 @@ class PopoverBase extends Component {
 }
 
 PopoverBase.PROPS = {
+
 	/**
 	 * @type {string}
 	 * @default undefined

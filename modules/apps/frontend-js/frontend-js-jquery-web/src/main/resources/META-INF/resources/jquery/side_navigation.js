@@ -127,6 +127,7 @@
 		},
 
 		_focusElement(el) {
+
 			// ios 8 fixed element disappears when trying to scroll
 
 			el.focus();

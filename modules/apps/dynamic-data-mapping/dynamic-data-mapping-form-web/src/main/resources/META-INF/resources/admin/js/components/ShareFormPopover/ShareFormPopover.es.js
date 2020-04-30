@@ -138,6 +138,7 @@ class ShareFormPopover extends Component {
 }
 
 ShareFormPopover.PROPS = {
+
 	/**
 	 * The element to align with.
 	 * @default ""

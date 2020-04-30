@@ -191,6 +191,7 @@ class FieldActionsDropDown extends Component {
 }
 
 FieldActionsDropDown.PROPS = {
+
 	/**
 	 * @default false
 	 * @instance
@@ -229,6 +230,7 @@ FieldActionsDropDown.PROPS = {
 };
 
 FieldActionsDropDown.STATE = {
+
 	/**
 	 * @default false
 	 * @instance

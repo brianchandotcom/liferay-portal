@@ -23,6 +23,7 @@ import State, {Config} from 'metal-state';
  * @review
  */
 class MarkerBase extends State {
+
 	/**
 	 * Initializes the instance with a native marker which will handle all
 	 * the execution. This function may be moved to the class constructor in
@@ -109,6 +110,7 @@ class MarkerBase extends State {
  * @type {!Object}
  */
 MarkerBase.STATE = {
+
 	/**
 	 * Location to be used
 	 * @review

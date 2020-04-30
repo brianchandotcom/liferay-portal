@@ -63,6 +63,7 @@ class FormRenderer extends Component {
 }
 
 FormRenderer.STATE = {
+
 	/**
 	 * @default
 	 * @instance

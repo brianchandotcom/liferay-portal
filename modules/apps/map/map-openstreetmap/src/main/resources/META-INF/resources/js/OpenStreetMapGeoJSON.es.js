@@ -19,6 +19,7 @@ import GeoJSONBase from 'map-common/js/GeoJSONBase.es';
  * @review
  */
 class OpenStreetMapGeoJSONBase extends GeoJSONBase {
+
 	/**
 	 * Creates a new map geojson parser using OpenStreetMap's API
 	 * @param {Array} args List of arguments to be passed to State

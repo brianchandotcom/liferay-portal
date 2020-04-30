@@ -188,6 +188,7 @@ function updateNode(state, id, callback) {
 	let node = callback(nodeMap[id]);
 
 	if (node === nodeMap[id]) {
+
 		// Node didn't change, so leave state as-is.
 
 		return state.nodes;
@@ -242,6 +243,7 @@ function reducer(state, action) {
 			};
 
 		case 'COLLAPSE':
+
 			// eg double click
 
 			if (!filteredNodes) {
@@ -287,12 +289,14 @@ function reducer(state, action) {
 				else {
 					while (node) {
 						if (node.id !== action.nodeId) {
+
 							// Not the first iteration and we found a match: done.
 
 							break;
 						}
 
 						if (node.expanded && node.children.length) {
+
 							// Expanded, so go to first visible child.
 
 							node = node.children[0];
@@ -359,6 +363,7 @@ function reducer(state, action) {
 							break;
 						}
 						else {
+
 							// Go to parent.
 
 							node = nodeMap[node.parentId];
@@ -410,6 +415,7 @@ function reducer(state, action) {
 			break;
 
 		case 'TOGGLE_EXPANDED':
+
 			// Toggles the expanded or collapsed state of the selected
 			// parent node. eg. by double clicking; doesn't select a child.
 
@@ -470,6 +476,7 @@ function reducer(state, action) {
 
 		case 'COLLAPSE_PARENT':
 			{
+
 				// Collapse the currently selected parent node if it is
 				// expanded; otherwise move to the previous parent node
 				// (if possible).
@@ -500,6 +507,7 @@ function reducer(state, action) {
 
 		case 'EXPAND_AND_ENTER':
 			{
+
 				// Expand the currently selected parent node if it is closed;
 				// move to the first child list item if it was already expanded.
 
@@ -604,7 +612,9 @@ function reducer(state, action) {
 		}
 
 		case 'EXIT':
+
 			// Navigate away from tree.
+
 			break;
 
 		case 'UPDATE_NODES': {

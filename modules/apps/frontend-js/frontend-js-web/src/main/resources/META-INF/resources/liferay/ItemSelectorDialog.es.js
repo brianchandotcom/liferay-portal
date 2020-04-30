@@ -19,6 +19,7 @@ import {Config} from 'metal-state';
  * Shows a dialog and handles the selected item.
  */
 class ItemSelectorDialog extends Component {
+
 	/**
 	 * Closes the dialog.
 	 */
@@ -146,6 +147,7 @@ class ItemSelectorDialog extends Component {
  * @type {!Object}
  */
 ItemSelectorDialog.STATE = {
+
 	/**
 	 * Label for the Add button.
 	 *

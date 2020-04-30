@@ -56,6 +56,7 @@ class Tooltip extends Component {
 Soy.register(Tooltip, templates);
 
 Tooltip.STATE = {
+
 	/**
 	 * @default undefined
 	 * @instance

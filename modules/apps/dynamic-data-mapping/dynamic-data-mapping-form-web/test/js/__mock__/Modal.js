@@ -13,6 +13,7 @@
  */
 
 module.exports = {
+
 	// Mock this because we can't evaluate React JSX from a Metal-using module
 	// like dynamic-data-mapping-form-web.
 

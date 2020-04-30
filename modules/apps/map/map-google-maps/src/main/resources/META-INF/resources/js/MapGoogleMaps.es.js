@@ -26,6 +26,7 @@ import GoogleMapsSearch from './GoogleMapsSearch.es';
  * @review
  */
 class MapGoogleMaps extends MapBase {
+
 	/**
 	 * Creates a new map using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State

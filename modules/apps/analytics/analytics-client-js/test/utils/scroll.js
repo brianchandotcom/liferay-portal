@@ -48,6 +48,7 @@ const getPage = () => {
 describe('ScrollTracker', () => {
 	describe('getDepth() from an element', () => {
 		beforeEach(() => {
+
 			// Avoid: "Error: Not implemented: window.scrollTo."
 
 			window.scrollTo = (_x, y) => {

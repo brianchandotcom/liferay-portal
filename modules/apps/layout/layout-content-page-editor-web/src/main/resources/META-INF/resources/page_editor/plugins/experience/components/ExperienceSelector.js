@@ -233,7 +233,9 @@ const ExperienceSelector = ({
 				selectedExperienceId: selectedExperience.segmentsExperienceId,
 			})
 		).catch((_error) => {
+
 			// TODO handle error
+
 		});
 	};
 

@@ -29,6 +29,7 @@ import templates from './ManagementToolbar.soy';
  * Creates a Metal Management Toolbar component.
  */
 class ManagementToolbar extends ClayComponent {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -275,6 +276,7 @@ class ManagementToolbar extends ClayComponent {
  * @type {!Object}
  */
 ManagementToolbar.STATE = {
+
 	/**
 	 * List of items to display in the actions menu on active state.
 	 *

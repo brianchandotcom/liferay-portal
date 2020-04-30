@@ -22,6 +22,7 @@ import Soy from 'metal-soy';
 import templates from './BrightnessSlider.soy';
 
 class BrightnessSlider extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -190,6 +191,7 @@ Soy.register(BrightnessSlider, templates);
  */
 
 BrightnessSlider.STATE = {
+
 	/**
 	 * Name of the hidden input field that holds the BrightnessSlider value. Useful when BrightnessSlider is embedded
 	 * inside a form so it can automatically send its value.

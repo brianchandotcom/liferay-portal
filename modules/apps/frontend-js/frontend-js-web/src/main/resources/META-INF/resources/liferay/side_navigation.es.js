@@ -24,6 +24,7 @@ const INSTANCE_MAP = new WeakMap();
  * component wrappers from a DOM element.
  */
 function getElement(element) {
+
 	// Remove jQuery wrapper, if any.
 
 	if (element && element.jquery) {
@@ -115,9 +116,11 @@ function setClasses(element, classes) {
 	element = getElement(element);
 
 	if (element) {
+
 		// One at a time because IE 11: https://caniuse.com/#feat=classlist
 
 		Object.entries(classes).forEach(([className, present]) => {
+
 			// Some callers use multiple space-separated classNames for
 			// `openClass`/`data-open-class`. (Looking at you,
 			// product-navigation-simulation-web...)
@@ -197,6 +200,7 @@ function handleEvent(eventName, event) {
 		let target = event.target;
 
 		while (target) {
+
 			// In IE11 SVG elements have no `parentElement`, only a
 			// `parentNode`, so we have to search up the DOM using
 			// the latter. This in turn requires us to check for the
@@ -226,6 +230,7 @@ function handleEvent(eventName, event) {
  */
 function subscribe(elementOrSelector, eventName, handler) {
 	if (elementOrSelector) {
+
 		// Add only one listener per `eventName`.
 
 		if (!eventNamesToSelectors[eventName]) {
@@ -941,6 +946,7 @@ SideNavigation.prototype = {
 			}
 
 			if (instance.mobile) {
+
 				// ios 8 fixed element disappears when trying to scroll
 
 				menu.focus();
@@ -1088,6 +1094,7 @@ function onReady() {
 }
 
 if (document.readyState !== 'loading') {
+
 	// readyState is "interactive" or "complete".
 
 	onReady();

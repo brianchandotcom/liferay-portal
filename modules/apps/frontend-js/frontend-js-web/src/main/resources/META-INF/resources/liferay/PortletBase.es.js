@@ -26,6 +26,7 @@ import objectToFormData from './util/form/object_to_form_data.es';
  * @extends {Component}
  */
 class PortletBase extends Component {
+
 	/**
 	 * Returns a Node List containing all the matching element nodes within the
 	 * subtrees of the root object, in tree order. If there are no matching
@@ -164,6 +165,7 @@ class PortletBase extends Component {
  * @type {!Object}
  */
 PortletBase.STATE = {
+
 	/**
 	 * Portlet's namespace.
 	 *

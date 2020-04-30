@@ -24,6 +24,7 @@ import dom from 'metal-dom';
  */
 
 class EditAdaptiveMediaConfig extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -229,6 +230,7 @@ class EditAdaptiveMediaConfig extends PortletBase {
  * @type {!Object}
  */
 EditAdaptiveMediaConfig.STATE = {
+
 	/**
 	 * Node where errors will be rendered.
 	 * @instance

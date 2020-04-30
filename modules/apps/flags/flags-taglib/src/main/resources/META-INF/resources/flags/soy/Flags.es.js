@@ -29,6 +29,7 @@ import templates from './Flags.soy';
  */
 
 class Flags extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -137,6 +138,7 @@ class Flags extends PortletBase {
  */
 
 Flags.STATE = {
+
 	/**
 	 * Flag to indicate if dialog should be open.
 	 * @default false

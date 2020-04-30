@@ -156,6 +156,7 @@ const MillerColumns = ({
 			const columnIndex = item.columnIndex;
 
 			if (item.columnIndex > prevColumnIndex) {
+
 				// Exit if source was active but not anymore and we are on the
 				// next column to where source used to live to avoid saving its
 				// children (which must not be shown anymore)

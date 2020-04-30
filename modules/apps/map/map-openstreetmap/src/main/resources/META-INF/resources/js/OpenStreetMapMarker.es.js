@@ -19,6 +19,7 @@ import MarkerBase from 'map-common/js/MarkerBase.es';
  * @review
  */
 class OpenStreetMapMarker extends MarkerBase {
+
 	/**
 	 * @inheritDoc
 	 * @review

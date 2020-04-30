@@ -512,6 +512,7 @@
 				// Functions to run on portlet load
 
 				if (canEditTitle) {
+
 					// https://github.com/yui/yui3/issues/1808
 
 					var events = 'focus';

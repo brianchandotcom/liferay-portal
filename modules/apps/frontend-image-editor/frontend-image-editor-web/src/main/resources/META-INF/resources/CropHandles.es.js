@@ -25,6 +25,7 @@ import handlesTemplates from './CropHandles.soy';
  * Creates a Crop Handles Component.
  */
 class CropHandles extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -260,6 +261,7 @@ class CropHandles extends Component {
  * @type {!Object}
  */
 CropHandles.STATE = {
+
 	/**
 	 * Injected helper that retrieves the editor canvas element.
 	 *

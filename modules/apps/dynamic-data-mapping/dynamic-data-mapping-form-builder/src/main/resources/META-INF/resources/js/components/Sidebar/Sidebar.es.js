@@ -1242,6 +1242,7 @@ class Sidebar extends Component {
 }
 
 Sidebar.STATE = {
+
 	/**
 	 * @default 0
 	 * @instance
@@ -1293,6 +1294,7 @@ Sidebar.STATE = {
 };
 
 Sidebar.PROPS = {
+
 	/**
 	 * @default undefined
 	 * @instance

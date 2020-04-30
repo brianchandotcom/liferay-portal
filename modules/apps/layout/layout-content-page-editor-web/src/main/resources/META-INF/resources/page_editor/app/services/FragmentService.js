@@ -33,6 +33,7 @@ import serviceFetch from './serviceFetch';
  */
 
 export default {
+
 	/**
 	 * Adds a new Fragment to the current layout
 	 * @param {object} options

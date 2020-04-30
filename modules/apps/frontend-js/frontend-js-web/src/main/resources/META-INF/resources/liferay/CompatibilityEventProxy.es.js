@@ -20,6 +20,7 @@ import State from 'metal-state';
  * and adding the capability of adding targets to bubble events to them.
  */
 class CompatibilityEventProxy extends State {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -79,7 +80,9 @@ class CompatibilityEventProxy extends State {
 						event.target = this.host;
 					}
 					catch (e) {
+
 						// Do nothing
+
 					}
 				}
 
@@ -131,6 +134,7 @@ class CompatibilityEventProxy extends State {
  * @type {!Object}
  */
 CompatibilityEventProxy.STATE = {
+
 	/**
 	 * Replaces event names with adapted YUI names.
 	 *

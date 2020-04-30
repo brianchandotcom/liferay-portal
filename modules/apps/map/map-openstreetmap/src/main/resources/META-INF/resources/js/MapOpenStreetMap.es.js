@@ -26,6 +26,7 @@ import OpenStreetMapMarker from './OpenStreetMapMarker.es';
  * @review
  */
 class MapOpenStreetMap extends MapBase {
+
 	/**
 	 * Creates a new map using OpenStreetMap's API
 	 * @param  {Array} args List of arguments to be passed to State

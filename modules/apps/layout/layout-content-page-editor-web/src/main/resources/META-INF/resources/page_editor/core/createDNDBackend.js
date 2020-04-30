@@ -15,6 +15,7 @@
 import createBackend from 'react-dnd-html5-backend';
 
 export default function createDNDBackend(manager, mainContext) {
+
 	/**
 	 * @type {Set<Window>}
 	 */

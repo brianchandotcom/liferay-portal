@@ -28,6 +28,7 @@ export default function NodeList({
 	const rootNodeId = nodes[0] && nodes[0].id;
 
 	if (!rootNodeId) {
+
 		// All nodes have been filtered.
 
 		return null;

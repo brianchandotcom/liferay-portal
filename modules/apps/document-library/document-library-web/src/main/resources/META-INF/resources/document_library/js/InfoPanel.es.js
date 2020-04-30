@@ -19,6 +19,7 @@ import {PortletBase, openToast} from 'frontend-js-web';
  * @class InfoPanel
  */
 class InfoPanel extends PortletBase {
+
 	/**
 	 * @inheritdoc
 	 * @review

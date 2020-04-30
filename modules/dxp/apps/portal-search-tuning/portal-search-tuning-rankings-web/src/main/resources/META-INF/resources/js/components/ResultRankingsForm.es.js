@@ -53,6 +53,7 @@ class ResultRankingsForm extends Component {
 	};
 
 	state = {
+
 		/**
 		 * Number of the active tab.
 		 * @type {number}
@@ -317,6 +318,7 @@ class ResultRankingsForm extends Component {
 					(state) => ({
 						dataLoadingVisible: false,
 						dataMap: {
+
 							// In the case when a previously added result is
 							// actually one of the results that loads in, its
 							// 'addedResult' property must be set to false.
@@ -350,6 +352,7 @@ class ResultRankingsForm extends Component {
 				);
 			})
 			.catch((error) => {
+
 				// Delay showing error message so the user has confirmation
 				// when attempting to reload the content after an error.
 
@@ -414,6 +417,7 @@ class ResultRankingsForm extends Component {
 				this.setState((state) => ({
 					dataLoadingHidden: false,
 					dataMap: {
+
 						// In the case when a previously added result is
 						// actually one of the results that loads in, its
 						// 'addedResult' property must be set to false.
@@ -433,6 +437,7 @@ class ResultRankingsForm extends Component {
 				}));
 			})
 			.catch((error) => {
+
 				// Delay showing error message so the user has confirmation
 				// when attempting to reload the content after an error.
 
@@ -568,6 +573,7 @@ class ResultRankingsForm extends Component {
 				(id) => !addedResultsIds.includes(id)
 			),
 			resultIdsPinned: [
+
 				// Place the addedResults at the top of the pinned list
 				// while removing any that are already part of the
 				// pinned list.

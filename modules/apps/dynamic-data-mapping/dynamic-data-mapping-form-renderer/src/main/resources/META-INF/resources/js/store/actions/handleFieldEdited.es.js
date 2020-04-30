@@ -62,6 +62,7 @@ export default (evaluatorContext, properties, updateState) => {
 			pages: editedPages,
 		}).then((evaluatedPages) => {
 			if (REVALIDATE_UPDATES.length > 0) {
+
 				// All non-evaluable operations that were performed after the request
 				// was sent are used here to revalidate the new data.
 

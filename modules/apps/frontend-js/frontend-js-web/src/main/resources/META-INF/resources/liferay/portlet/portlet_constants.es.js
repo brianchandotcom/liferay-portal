@@ -15,6 +15,7 @@
 /* eslint-disable sort-keys */
 
 const PortletConstants = {
+
 	// Portlet mode
 
 	EDIT: 'edit',

@@ -32,6 +32,7 @@ describe('liferay-kaleo-designer-xml-definition', () => {
 		require('../../../src/main/resources/META-INF/resources/designer/js/utils');
 
 		AUI().use(['liferay-kaleo-designer-utils'], (A) => {
+
 			// Stub for "aui-component", which refuses to load in test env.
 
 			A.Component = {

@@ -30,6 +30,7 @@ function getExperienceUsedPortletIds({body, dispatch}) {
 }
 
 export default {
+
 	/**
 	 * Asks backend to create a new experience
 	 * @param {object} options

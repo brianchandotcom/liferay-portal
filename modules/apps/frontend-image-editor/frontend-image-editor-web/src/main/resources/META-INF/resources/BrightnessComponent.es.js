@@ -28,6 +28,7 @@ import './BrightnessControls.soy';
  * Creates a Brightness component.
  */
 class BrightnessComponent extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -114,6 +115,7 @@ class BrightnessComponent extends Component {
  * @type {!Object}
  */
 BrightnessComponent.STATE = {
+
 	/**
 	 * Path of this module.
 	 *

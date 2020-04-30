@@ -107,6 +107,7 @@ class FormBuilderBase extends Component {
 }
 
 FormBuilderBase.PROPS = {
+
 	/**
 	 * @default
 	 * @instance

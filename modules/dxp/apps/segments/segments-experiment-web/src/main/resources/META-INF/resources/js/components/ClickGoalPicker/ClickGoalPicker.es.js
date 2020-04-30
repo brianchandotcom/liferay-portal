@@ -209,6 +209,7 @@ function OverlayContainer({allowEdit, root}) {
 	// Before mount.
 
 	if (!targetableElements.current) {
+
 		// Apply CSS overrides.
 
 		const css = `
@@ -250,6 +251,7 @@ function OverlayContainer({allowEdit, root}) {
 
 	useEffect(() => {
 		return () => {
+
 			// Remove CSS overrides.
 
 			const style = document.getElementById(cssId);
@@ -273,6 +275,7 @@ function OverlayContainer({allowEdit, root}) {
 
 	const handleClick = useCallback(
 		(event) => {
+
 			// Clicking anywhere other than a target aborts target selection.
 
 			event.preventDefault();

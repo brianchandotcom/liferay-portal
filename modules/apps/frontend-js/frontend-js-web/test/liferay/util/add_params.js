@@ -77,6 +77,7 @@ describe('Liferay.Util.addParams', () => {
 	});
 
 	it('gracefully handles a relative path as the second argument', () => {
+
 		// Invariant: Jest environment sets up location like so:
 
 		expect(location.href).toBe('http://localhost/');

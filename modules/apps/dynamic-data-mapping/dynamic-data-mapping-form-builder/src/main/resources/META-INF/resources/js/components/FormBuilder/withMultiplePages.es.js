@@ -250,6 +250,7 @@ const withMultiplePages = (ChildComponent) => {
 	}
 
 	MultiplePages.PROPS = {
+
 		/**
 		 * @instance
 		 * @memberof LayoutProvider
@@ -262,6 +263,7 @@ const withMultiplePages = (ChildComponent) => {
 	};
 
 	MultiplePages.STATE = {
+
 		/**
 		 * @default false
 		 * @instance

@@ -19,6 +19,7 @@ import State from 'metal-state';
  * @review
  */
 class GoogleMapsGeocoder extends State {
+
 	/**
 	 * Creates a new geocoder using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State

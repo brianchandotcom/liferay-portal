@@ -19,6 +19,7 @@ import {Config} from 'metal-state';
  * @class FragmentCollectionsView
  */
 class FragmentCollectionsView extends PortletBase {
+
 	/**
 	 * @inheritdoc
 	 * @review
@@ -182,6 +183,7 @@ class FragmentCollectionsView extends PortletBase {
 }
 
 FragmentCollectionsView.STATE = {
+
 	/**
 	 * Collections form used for updating backend
 	 * @default undefined

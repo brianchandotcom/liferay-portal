@@ -64,6 +64,7 @@ export default function useKeyboardNavigation(nodeId) {
 
 			if (focusedNodeId === nodeId && HANDLED_KEY_CODES.has(keyCode)) {
 				if (keyCode !== KEYS.TAB) {
+
 					// We intercept and manage all key presses internally,
 					// except for TAB, which is used to navigate away from the
 					// component (requires a `tabindex` of -1 on all internal

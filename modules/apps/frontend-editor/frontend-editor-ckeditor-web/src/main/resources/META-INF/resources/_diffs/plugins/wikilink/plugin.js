@@ -32,6 +32,7 @@ CKEDITOR.plugins.add('wikilink', {
 		CKEDITOR.dialog.add('link', instance.path + 'dialogs/link.js');
 
 		editor.on('selectionChange', (event) => {
+
 			// document.queryCommandEnabled does not work for this in Firefox.
 			// Use element paths to detect the state.
 

@@ -82,7 +82,9 @@ const decodeUpdateString = function (pageRenderState, updateString) {
 		}
 	}
 	catch (e) {
+
 		// Do nothing
+
 	}
 
 	return portlets;
@@ -253,6 +255,7 @@ const generateParameterString = function (
 			const values = portletData.state.parameters[name];
 
 			if (values !== undefined) {
+
 				// If values are present, encode the mutlivalued parameter string
 
 				if (type === PUBLIC_RENDER_PARAM_KEY) {
@@ -381,6 +384,7 @@ const getUrl = function (
 	let url = '';
 
 	if (pageRenderState && pageRenderState.portlets) {
+
 		// If target portlet not defined for render URL, set it to null
 
 		if (type === 'RENDER' && portletId === undefined) {
@@ -440,6 +444,7 @@ const getUrl = function (
 			// Put the private & public parameters on the URL if cacheability != FULL
 
 			if (type !== 'RESOURCE' || cacheability !== 'cacheLevelFull') {
+
 				// Add the state for the target portlet, if there is one.
 				// (for the render URL, pid can be null, and the state will have
 				// been added previously)
@@ -678,6 +683,7 @@ const stateChanged = function (pageRenderState, newState, portletId) {
 				result = true;
 			}
 			else {
+
 				// Has a parameter changed or been added?
 
 				const newKeys = Object.keys(newState.parameters);

@@ -38,6 +38,7 @@ const PROPAGATED_PARAMS = ['bodyCssClass'];
  */
 
 class LiferayApp extends App {
+
 	/**
 	 * @inheritDoc
 	 */

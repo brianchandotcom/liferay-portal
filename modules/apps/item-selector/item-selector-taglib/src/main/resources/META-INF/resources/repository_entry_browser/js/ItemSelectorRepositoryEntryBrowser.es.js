@@ -34,6 +34,7 @@ const statusCode = Liferay.STATUS_CODE;
  * @extends {PortletBase}
  */
 class ItemSelectorRepositoryEntryBrowser extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -513,6 +514,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
  * @type {!Object}
  */
 ItemSelectorRepositoryEntryBrowser.STATE = {
+
 	/**
 	 * Text to show near the close icon in the Item Viewer
 	 *

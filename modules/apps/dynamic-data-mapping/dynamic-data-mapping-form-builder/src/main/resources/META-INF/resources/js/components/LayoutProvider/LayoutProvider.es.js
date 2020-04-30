@@ -623,6 +623,7 @@ class LayoutProvider extends Component {
 }
 
 LayoutProvider.PROPS = {
+
 	/**
 	 * @instance
 	 * @memberof LayoutProvider
@@ -774,6 +775,7 @@ LayoutProvider.PROPS = {
 };
 
 LayoutProvider.STATE = {
+
 	/**
 	 * @instance
 	 * @memberof FormPage

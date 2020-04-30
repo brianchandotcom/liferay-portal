@@ -24,6 +24,7 @@ import globals from 'senna/lib/globals/globals';
  */
 
 class EventScreen extends HtmlScreen {
+
 	/**
 	 * @inheritDoc
 	 */

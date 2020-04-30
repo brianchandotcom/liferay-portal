@@ -91,6 +91,7 @@ YUI.add(
 
 		var BrowserSelectors = {
 			getSelectors() {
+
 				// The methods in this if block only run once across all instances
 
 				if (!UA.selectors) {

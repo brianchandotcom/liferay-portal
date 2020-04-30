@@ -23,6 +23,7 @@ const Separator = ({style}) => {
 
 	useEffect(() => {
 		if (elRef.current) {
+
 			// The style is a string, to avoid creating a normalizer to generate compatibility
 			// with React, we can just add the raw value in the attribute, we don't need to
 			// worry about XSS here because it won't go to the server just for printing

@@ -134,6 +134,7 @@ function APIService({endpoints, namespace, page}) {
 	}
 
 	function getTrafficSourceDetails(name) {
+
 		// TODO remove frontend mock
 
 		return new Promise((resolve) =>

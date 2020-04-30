@@ -63,6 +63,7 @@ const pendingCallbacks = {};
  * @review
  */
 class MapBase extends State {
+
 	/**
 	 * MapBase constructor
 	 * @param  {Array} args List of arguments to be sent to State constructor
@@ -770,6 +771,7 @@ MapBase.POSITION_MAP = {};
  * @type {!Object}
  */
 MapBase.STATE = {
+
 	/**
 	 * DOM node selector identifying the element that will be used
 	 * for rendering the map

@@ -151,6 +151,7 @@ describe('Analytics', () => {
 		sendDummyEvents(Analytics, 1);
 
 		setTimeout(async () => {
+
 			// flush should have happened at least once
 
 			const userId = getItem(STORAGE_KEY_USER_ID);

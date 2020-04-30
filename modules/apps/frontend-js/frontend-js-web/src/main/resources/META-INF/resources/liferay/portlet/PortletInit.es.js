@@ -360,7 +360,9 @@ class PortletInit {
 						history.pushState(token, '', url);
 					}
 					catch (e) {
+
 						// Do nothing
+
 					}
 				}
 			});

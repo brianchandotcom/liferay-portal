@@ -23,6 +23,7 @@ import {EventHandler} from 'metal-events';
  * @extends {Component}
  */
 class WikiPortlet extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -219,6 +220,7 @@ class WikiPortlet extends PortletBase {
  * @type {!Object}
  */
 WikiPortlet.STATE = {
+
 	/**
 	 * Portlet's constants
 	 * @instance

@@ -38,6 +38,7 @@ export const connectStore = (Component) => {
 
 		const emit = (name, event, value) =>
 			instance.emit(name, {
+
 				// A hacky to imitate an instance of a Metal+soy component
 
 				fieldInstance: {

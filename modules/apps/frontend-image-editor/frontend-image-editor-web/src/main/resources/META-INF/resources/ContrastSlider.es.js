@@ -22,6 +22,7 @@ import Soy from 'metal-soy';
 import templates from './ContrastSlider.soy';
 
 class ContrastSlider extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -190,6 +191,7 @@ Soy.register(ContrastSlider, templates);
  */
 
 ContrastSlider.STATE = {
+
 	/**
 	 * Name of the hidden input field that holds the ContrastSlider value. Useful when ContrastSlider is embedded
 	 * inside a form so it can automatically send its value.

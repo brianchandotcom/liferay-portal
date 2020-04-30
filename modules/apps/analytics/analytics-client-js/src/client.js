@@ -19,6 +19,7 @@ import middlewares from './middlewares/defaults';
  * and use methods as only valid entry points for sending and modifying requests.
  */
 class Client {
+
 	/**
 	 * Returns a Request object with all data from the analytics instance
 	 * including the batched event objects

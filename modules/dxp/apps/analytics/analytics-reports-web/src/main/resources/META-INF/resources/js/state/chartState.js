@@ -118,6 +118,7 @@ function reducer(state, action) {
  * Declares the state as loading and resets the dataSet histogram values
  */
 function setLoadingState(state) {
+
 	/**
 	 * The dataSet does not need to be reset
 	 */
@@ -255,6 +256,7 @@ function mergeDataSets({
  * }
  */
 function addDataSetItem(state, payload, validAnalyticsConnection) {
+
 	/**
 	 * The dataSetItem is recognized as substitutive when the
 	 * previous state was in loading state.

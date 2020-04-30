@@ -82,6 +82,7 @@ describe('AddResultModal', () => {
 	});
 
 	it('prompts a message to search in the modal', async () => {
+
 		// This is a temporary mock to get the initial message to display.
 		// There currently isn't a way to disable the initial fetch, so the
 		// current workaround is showing an initial message if a refetch

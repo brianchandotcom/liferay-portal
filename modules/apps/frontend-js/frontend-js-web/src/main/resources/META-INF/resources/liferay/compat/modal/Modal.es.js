@@ -27,6 +27,7 @@ const KEY_CODE_ESC = 27;
  */
 
 class Modal extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -236,6 +237,7 @@ class Modal extends Component {
 }
 
 Modal.STATE = {
+
 	/**
 	 * A selector for the element that should be automatically focused when the modal
 	 * becomes visible, or `false` if no auto focus should happen. Defaults to the

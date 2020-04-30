@@ -18,6 +18,7 @@ import State from 'metal-state';
  * OpenStreetMapGeocoder
  */
 class OpenStreetMapGeocoder extends State {
+
 	/**
 	 * Handles the server response of a successfull address forward
 	 * @param {Object} response Server response

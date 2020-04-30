@@ -20,6 +20,7 @@ import {useEffect, useRef, useState} from 'react';
  * values are different and when the value is not changed for more than ms.
  */
 export const useSyncValue = (newValue, isDelay = true) => {
+
 	// Maintains the reference of the last value to check in later renderings if the
 	// value is new or keeps the same, it covers cases where the value typed by
 	// the user is sent to LayoutProvider but it does not descend with the new changes.

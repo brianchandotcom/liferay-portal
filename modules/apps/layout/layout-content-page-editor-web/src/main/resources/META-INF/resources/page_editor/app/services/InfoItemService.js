@@ -16,6 +16,7 @@ import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
 export default {
+
 	/**
 	 * Get an asset's value
 	 * @param {object} options

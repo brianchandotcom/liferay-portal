@@ -24,6 +24,7 @@ import Surface from 'senna/lib/surface/Surface';
  */
 
 class LiferaySurface extends Surface {
+
 	/**
 	 * @inheritDoc
 	 */

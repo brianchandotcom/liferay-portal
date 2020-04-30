@@ -30,6 +30,7 @@ import {RequestScreen, utils} from 'senna';
  *  - Global server error management
  */
 class SoyPortletRouter extends State {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -98,6 +99,7 @@ class SoyPortletRouter extends State {
 		 * way after retrieving the new renderState.
 		 */
 		class DeferredComponentScreen extends Router.defaultScreen {
+
 			/**
 			 * @inheritDoc
 			 */
@@ -560,6 +562,7 @@ class SoyPortletRouter extends State {
  * @static
  */
 SoyPortletRouter.STATE = {
+
 	/**
 	 * @instance
 	 * @memberof SoyPortletRouter

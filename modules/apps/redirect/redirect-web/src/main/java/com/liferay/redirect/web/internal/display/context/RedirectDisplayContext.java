@@ -45,6 +45,7 @@ import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.web.internal.search.RedirectEntrySearch;
 import com.liferay.redirect.web.internal.security.permission.resource.RedirectEntryPermission;
+import com.liferay.redirect.web.internal.util.RedirectUtil;
 import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
 
@@ -301,6 +302,8 @@ public class RedirectDisplayContext {
 			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
 
 		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
+		searchContext.setAttribute(
+			"groupBaseURL", RedirectUtil.getGroupBaseURL(_themeDisplay));
 		searchContext.setEnd(redirectEntrySearch.getEnd());
 		searchContext.setSorts(_getSorts());
 		searchContext.setStart(redirectEntrySearch.getStart());

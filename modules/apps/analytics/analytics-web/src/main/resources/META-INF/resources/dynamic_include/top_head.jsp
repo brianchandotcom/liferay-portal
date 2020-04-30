@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String analyticsClientChannelId = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CHANNEL_ID);
 String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG);
 String analyticsClientGroupIds = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS);
 %>
@@ -26,6 +27,7 @@ String analyticsClientGroupIds = (String)request.getAttribute(AnalyticsWebKeys.A
 		<liferay-util:dynamic-include key="/dynamic_include/top_head.jsp#analytics" />
 	};
 
+	var analyticsClientChannelId = '<%= analyticsClientChannelId %>';
 	var analyticsClientGroupIds = <%= analyticsClientGroupIds %>;
 </script>
 
@@ -46,6 +48,7 @@ String analyticsClientGroupIds = (String)request.getAttribute(AnalyticsWebKeys.A
 
 		Analytics.registerMiddleware(function (request) {
 			request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+			request.context.channelId = analyticsClientChannelId;
 			request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
 			return request;

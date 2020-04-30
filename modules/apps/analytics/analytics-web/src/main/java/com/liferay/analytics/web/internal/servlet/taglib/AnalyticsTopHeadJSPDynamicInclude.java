@@ -67,10 +67,11 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			return;
 		}
 
+		httpServletRequest.setAttribute(
+			AnalyticsWebKeys.ANALYTICS_CLIENT_CHANNEL_ID,
+			_getLiferayAnalyticsChannelId(httpServletRequest, themeDisplay));
+
 		Map<String, String> analyticsClientConfig = HashMapBuilder.put(
-			"channelId",
-			_getLiferayAnalyticsChannelId(httpServletRequest, themeDisplay)
-		).put(
 			"dataSourceId",
 			_getLiferayAnalyticsDataSourceId(themeDisplay.getCompany())
 		).put(

@@ -19,6 +19,9 @@ package com.liferay.analytics.web.internal.constants;
  */
 public class AnalyticsWebKeys {
 
+	public static final String ANALYTICS_CLIENT_CHANNEL_ID =
+		"ANALYTICS_CLIENT_CHANNEL_ID";
+
 	public static final String ANALYTICS_CLIENT_CONFIG =
 		"ANALYTICS_CLIENT_CONFIG";
 

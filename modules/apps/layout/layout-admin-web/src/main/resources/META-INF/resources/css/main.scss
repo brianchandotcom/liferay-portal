@@ -40,4 +40,10 @@
 		transform: translate(-50%, 0);
 		width: 100%;
 	}
+
+	&-url-history-modal {
+		.show-quick-actions-one-line .quick-action-menu {
+			align-items: center;
+		}
+	}
 }

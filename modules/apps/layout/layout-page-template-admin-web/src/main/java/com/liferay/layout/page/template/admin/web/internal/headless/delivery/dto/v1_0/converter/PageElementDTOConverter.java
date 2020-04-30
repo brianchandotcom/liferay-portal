@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.LayoutStructureItemExporter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.LayoutStructureItemExporterTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class PageElementDTOConverter {
 
 	public PageElement toDTO(
-		Layout layout, boolean saveInlineContent,
+		Layout layout, String layoutStructureItemId, boolean saveInlineContent,
 		boolean saveMappingConfiguration, long segmentsExperienceId) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -49,38 +50,16 @@ public class PageElementDTOConverter {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-		LayoutStructureItem mainLayoutStructureItem =
-			layoutStructure.getMainLayoutStructureItem();
-
-		List<PageElement> mainPageElements = new ArrayList<>();
-
-		for (String childItemId :
-				mainLayoutStructureItem.getChildrenItemIds()) {
-
-			mainPageElements.add(
-				toDTO(
-					layout.getGroupId(), layoutStructure,
-					layoutStructure.getLayoutStructureItem(childItemId),
-					saveInlineContent, saveMappingConfiguration,
-					segmentsExperienceId));
-		}
-
-		PageElement pageElement = toDTO(
-			layout.getGroupId(), mainLayoutStructureItem, saveInlineContent,
-			saveMappingConfiguration);
-
-		if (!mainPageElements.isEmpty()) {
-			pageElement.setPageElements(
-				mainPageElements.toArray(new PageElement[0]));
-		}
-
-		return pageElement;
+		return _toPageElement(
+			layout.getGroupId(), layoutStructure,
+			layoutStructure.getLayoutStructureItem(layoutStructureItemId),
+			saveInlineContent, saveMappingConfiguration);
 	}
 
-	public PageElement toDTO(
+	private PageElement _toPageElement(
 		long groupId, LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
-		boolean saveMappingConfiguration, long segmentsExperienceId) {
+		boolean saveMappingConfiguration) {
 
 		List<PageElement> pageElements = new ArrayList<>();
 
@@ -95,20 +74,19 @@ public class PageElementDTOConverter {
 
 			if (grandChildrenItemIds.isEmpty()) {
 				pageElements.add(
-					toDTO(
+					_toPageElement(
 						groupId, childLayoutStructureItem, saveInlineContent,
 						saveMappingConfiguration));
 			}
 			else {
 				pageElements.add(
-					toDTO(
+					_toPageElement(
 						groupId, layoutStructure, childLayoutStructureItem,
-						saveInlineContent, saveMappingConfiguration,
-						segmentsExperienceId));
+						saveInlineContent, saveMappingConfiguration));
 			}
 		}
 
-		PageElement pageElement = toDTO(
+		PageElement pageElement = _toPageElement(
 			groupId, layoutStructureItem, saveInlineContent,
 			saveMappingConfiguration);
 
@@ -120,7 +98,7 @@ public class PageElementDTOConverter {
 		return pageElement;
 	}
 
-	public PageElement toDTO(
+	private PageElement _toPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
@@ -138,6 +116,10 @@ public class PageElementDTOConverter {
 			groupId, layoutStructureItem, saveInlineContent,
 			saveMappingConfiguration);
 	}
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

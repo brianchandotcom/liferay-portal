@@ -17,8 +17,13 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.LayoutStructureItemExporterTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,10 +53,23 @@ public class PageDefinitionDTOConverter {
 		Layout layout, boolean saveInlineContent,
 		boolean saveMappingConfiguration) {
 
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), _portal.getClassNameId(Layout.class),
+					layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(0L));
+
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
 		return new PageDefinition() {
 			{
 				pageElement = _pageElementDTOConverter.toDTO(
-					layout, saveInlineContent, saveMappingConfiguration, 0);
+					layout, mainLayoutStructureItem.getItemId(),
+					saveInlineContent, saveMappingConfiguration, 0);
 				settings = _toSettings(layout);
 			}
 		};
@@ -165,6 +183,14 @@ public class PageDefinitionDTOConverter {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private LayoutStructureItemExporterTracker
+		_layoutStructureItemExporterTracker;
 
 	@Reference
 	private PageElementDTOConverter _pageElementDTOConverter;

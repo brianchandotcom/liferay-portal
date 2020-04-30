@@ -1069,11 +1069,11 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		MockMock.viewMail(
-			asset = "Inappropriate Content Flagged in Liferay",
+			asset = "Inappropriate Content Flagged in ${siteName}",
 			content = "flagged as inappropriate by Test Test",
 			recipient = "Test Test",
 			sender = "Joe Bloggs",
-			subject = "Inappropriate Content Flagged in Liferay");
+			subject = "Inappropriate Content Flagged in ${siteName}");
 	}
 
 	@priority = "5"

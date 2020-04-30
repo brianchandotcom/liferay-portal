@@ -187,9 +187,7 @@ public class UpdateConfigurationValuesMVCActionCommand
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
 		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor",
-		"com.liferay.fragment.entry.processor.drop.zone." +
-			"DropZoneFragmentEntryProcessor"
+			"EditableFragmentEntryProcessor"
 	};
 
 	@Reference

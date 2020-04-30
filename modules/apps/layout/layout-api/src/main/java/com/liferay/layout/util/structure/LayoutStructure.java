@@ -311,24 +311,7 @@ public class LayoutStructure {
 	public LayoutStructureItem getLayoutStructureItemByFragmentEntryLinkId(
 		long fragmentEntryLinkId) {
 
-		for (LayoutStructureItem layoutStructureItem :
-				getLayoutStructureItems()) {
-
-			if (!(layoutStructureItem instanceof FragmentLayoutStructureItem)) {
-				continue;
-			}
-
-			FragmentLayoutStructureItem fragmentLayoutStructureItem =
-				(FragmentLayoutStructureItem)layoutStructureItem;
-
-			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() ==
-					fragmentEntryLinkId) {
-
-				return fragmentLayoutStructureItem;
-			}
-		}
-
-		return null;
+		return _fragmentLayoutStructureItems.get(fragmentEntryLinkId);
 	}
 
 	public List<LayoutStructureItem> getLayoutStructureItems() {

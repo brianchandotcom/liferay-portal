@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.struts;
 
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -77,19 +78,40 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			List<String> invalidFragmentEntryNames =
-				_fragmentsImporter.importFile(
+			List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
+				_fragmentsImporter.importFragmentEntries(
 					themeDisplay.getUserId(), groupId, 0L, file, true);
 
+			JSONArray fragmentEntriesImportResultJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			for (FragmentsImporterResultEntry fragmentsImporterResultEntry :
+					fragmentsImporterResultEntries) {
+
+				FragmentsImporterResultEntry.Status status =
+					fragmentsImporterResultEntry.getStatus();
+
+				fragmentEntriesImportResultJSONArray.put(
+					JSONUtil.put(
+						"errorMessage",
+						fragmentsImporterResultEntry.getErrorMessage()
+					).put(
+						"name", fragmentsImporterResultEntry.getName()
+					).put(
+						"status", status.getLabel()
+					));
+			}
+
 			jsonObject.put(
-				"invalidFragmentEntryNames", invalidFragmentEntryNames);
+				"fragmentEntriesImportResult",
+				fragmentEntriesImportResultJSONArray);
 
 			List<LayoutPageTemplatesImporterResultEntry>
 				layoutPageTemplatesImporterResultEntries =
 					_layoutPageTemplatesImporter.importFile(
 						themeDisplay.getUserId(), groupId, 0L, file, true);
 
-			JSONArray invalidPageTemplatesJSONArray =
+			JSONArray pageTemplatesImportResultJSONArray =
 				JSONFactoryUtil.createJSONArray();
 
 			for (LayoutPageTemplatesImporterResultEntry
@@ -99,14 +121,7 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 				LayoutPageTemplatesImporterResultEntry.Status status =
 					layoutPageTemplatesImporterResultEntry.getStatus();
 
-				if (status ==
-						LayoutPageTemplatesImporterResultEntry.Status.
-							IMPORTED) {
-
-					continue;
-				}
-
-				invalidPageTemplatesJSONArray.put(
+				pageTemplatesImportResultJSONArray.put(
 					JSONUtil.put(
 						"errorMessage",
 						layoutPageTemplatesImporterResultEntry.getErrorMessage()
@@ -118,7 +133,8 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 			}
 
 			jsonObject.put(
-				"invalidPageTemplates", invalidPageTemplatesJSONArray);
+				"pageTemplatesImportResult",
+				pageTemplatesImportResultJSONArray);
 		}
 
 		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());

@@ -322,3 +322,4 @@ public abstract class Watcher implements Closeable {
     protected abstract void process(Path path);
     protected abstract void onRemove(Path path);
 }
+/* @generated */

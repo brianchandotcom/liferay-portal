@@ -54,7 +54,7 @@ public class WatcherScanner extends Scanner {
         }
         this.watcher = new ScannerWatcher();
         this.watcher.setFileMatcher(fileMatcher);
-        this.watcher.setRootDirectory(this.directory);
+        this.watcher.setRootDirectory(this.watchedDirectory);
         this.watcher.init();
         this.watcher.rescan();
     }
@@ -117,7 +117,7 @@ public class WatcherScanner extends Scanner {
         @Override
         protected void process(Path path) {
             File file = path.toFile();
-            if (!file.getParentFile().equals(directory)) {
+            if (!file.getParentFile().equals(watchedDirectory)) {
               // File is in a sub directory.
               if (skipSubdir) {
                 return;
@@ -131,7 +131,7 @@ public class WatcherScanner extends Scanner {
                     // Should not happen.
                     return;
                   }
-                } while (!file.getParentFile().equals(directory));
+                } while (!file.getParentFile().equals(watchedDirectory));
               }
               // Otherwise we recurse by adding the file as-is.
             }
@@ -163,3 +163,4 @@ public class WatcherScanner extends Scanner {
     }
 
 }
+/* @generated */

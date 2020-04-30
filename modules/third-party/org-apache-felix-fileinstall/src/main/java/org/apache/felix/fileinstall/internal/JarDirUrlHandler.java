@@ -1,5 +1,4 @@
 /**
- *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -15,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.felix.fileinstall.internal;
 
 import java.io.File;
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -31,75 +32,91 @@ import org.osgi.service.url.AbstractURLStreamHandlerService;
 /**
  * A URL handler that can jar a directory on the fly
  */
-public class JarDirUrlHandler extends AbstractURLStreamHandlerService
-{
+public class JarDirUrlHandler extends AbstractURLStreamHandlerService {
 
-    public static final String PROTOCOL = "jardir";
+	public static final String PROTOCOL = "jardir";
 
-    private static final String SYNTAX = PROTOCOL + ": file";
+	/**
+	 * Open the connection for the given URL.
+	 *
+	 * @param url the url from which to open a connection.
+	 * @return a connection on the specified URL.
+	 * @throws IOException if an error occurs or if the URL is malformed.
+	 */
+	@Override
+	public URLConnection openConnection(URL url) throws IOException {
+		String path = url.getPath();
 
-    /**
-     * Open the connection for the given URL.
-     *
-     * @param url the url from which to open a connection.
-     * @return a connection on the specified URL.
-     * @throws java.io.IOException if an error occurs or if the URL is malformed.
-     */
-	public URLConnection openConnection(URL url) throws IOException
-    {
-		if (url.getPath() == null || url.getPath().trim().length() == 0)
-        {
-			throw new MalformedURLException("Path can not be null or empty. Syntax: " + SYNTAX );
+		if (path == null) {
+			throw new MalformedURLException(
+				"Path can not be null. Syntax: " + _SYNTAX);
 		}
+
+		path = path.trim();
+
+		if (path.length() == 0) {
+			throw new MalformedURLException(
+				"Path can not be empty. Syntax: " + _SYNTAX);
+		}
+
 		return new Connection(url);
 	}
 
-    public class Connection extends URLConnection
-    {
+	public class Connection extends URLConnection {
 
-        public Connection(URL url)
-        {
-            super(url);
-        }
+		public Connection(URL url) {
+			super(url);
+		}
 
-        public void connect() throws IOException
-        {
-        }
+		@Override
+		public void connect() throws IOException {
+		}
 
-        public InputStream getInputStream() throws IOException
-        {
-            try
-            {
-                final PipedOutputStream pos = new PipedOutputStream();
-                final PipedInputStream pis = new PipedInputStream(pos);
-                new Thread()
-                {
-                    public void run()
-                    {
-                        try
-                        {
-                            Util.jarDir(new File(getURL().getPath()), pos);
-                        }
-                        catch (IOException e)
-                        {
-                            try
-                            {
-                                pos.close();
-                            }
-                            catch (IOException e2)
-                            {
-                                // Ignore
-                            }
-                        }
-                    }
-                }.start();
-                return pis;
-            }
-            catch (Exception e)
-            {
-                throw (IOException) new IOException("Error opening spring xml url").initCause(e);
-            }
-        }
-    }
+		@Override
+		public InputStream getInputStream() throws IOException {
+			try {
+				PipedOutputStream pipedOutputStream = new PipedOutputStream();
+
+				InputStream inputStream = new PipedInputStream(
+					pipedOutputStream);
+
+				Thread thread = new Thread() {
+
+					@Override
+					public void run() {
+						URL url = getURL();
+
+						try {
+							Util.jarDir(
+								new File(url.getPath()), pipedOutputStream);
+						}
+						catch (IOException ioException1) {
+							try {
+								pipedOutputStream.close();
+							}
+							catch (IOException ioException2) {
+
+								// Ignore
+
+							}
+						}
+					}
+
+				};
+
+				thread.start();
+
+				return inputStream;
+			}
+			catch (Exception exception) {
+				throw new IOException(
+					"Error opening spring xml url", exception);
+			}
+		}
+
+	}
+
+	private static final String _SYNTAX = PROTOCOL + ": file";
 
 }
+/* @generated */

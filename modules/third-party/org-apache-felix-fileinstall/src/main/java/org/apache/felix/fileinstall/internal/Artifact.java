@@ -1,10 +1,10 @@
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
+ * distributed with work for additional information
+ * regarding copyright ownership.  The ASF licenses file
  * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
+ * "License"); you may not use file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
  *   http://www.apache.org/licenses/LICENSE-2.0
@@ -16,9 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.apache.felix.fileinstall.internal;
 
 import java.io.File;
+
 import java.net.URL;
 
 import org.apache.felix.fileinstall.ArtifactListener;
@@ -26,95 +28,80 @@ import org.apache.felix.fileinstall.ArtifactListener;
 /**
  * An artifact that has been dropped into one watched directory.
  */
-public class Artifact
-{
+public class Artifact {
 
-    private File path;
-    private File jaredDirectory;
-    private URL jaredUrl;
-    private ArtifactListener listener;
-    private URL transformedUrl;
-    private File transformed;
-    private long bundleId = -1;
-    private long checksum;
+	public long getBundleId() {
+		return _bundleId;
+	}
 
-    public File getPath()
-    {
-        return path;
-    }
+	public long getChecksum() {
+		return _checksum;
+	}
 
-    public void setPath(File path)
-    {
-        this.path = path;
-    }
+	public File getJaredDirectory() {
+		return _jaredDirectory;
+	}
 
-    public File getJaredDirectory()
-    {
-        return jaredDirectory;
-    }
+	public URL getJaredUrl() {
+		return _jaredUrl;
+	}
 
-    public void setJaredDirectory(File jaredDirectory)
-    {
-        this.jaredDirectory = jaredDirectory;
-    }
+	public ArtifactListener getListener() {
+		return _artifactListener;
+	}
 
-    public URL getJaredUrl()
-    {
-        return jaredUrl;
-    }
+	public File getPath() {
+		return _path;
+	}
 
-    public void setJaredUrl(URL jaredUrl)
-    {
-        this.jaredUrl = jaredUrl;
-    }
+	public File getTransformed() {
+		return _transformed;
+	}
 
-    public ArtifactListener getListener()
-    {
-        return listener;
-    }
+	public URL getTransformedUrl() {
+		return _transformedURL;
+	}
 
-    public void setListener(ArtifactListener listener)
-    {
-        this.listener = listener;
-    }
+	public void setBundleId(long bundleId) {
+		_bundleId = bundleId;
+	}
 
-    public File getTransformed()
-    {
-        return transformed;
-    }
+	public void setChecksum(long checksum) {
+		_checksum = checksum;
+	}
 
-    public void setTransformed(File transformed)
-    {
-        this.transformed = transformed;
-    }
+	public void setJaredDirectory(File jaredDirectory) {
+		_jaredDirectory = jaredDirectory;
+	}
 
-    public URL getTransformedUrl()
-    {
-        return transformedUrl;
-    }
+	public void setJaredUrl(URL jaredUrl) {
+		_jaredUrl = jaredUrl;
+	}
 
-    public void setTransformedUrl(URL transformedUrl)
-    {
-        this.transformedUrl = transformedUrl;
-    }
+	public void setListener(ArtifactListener listener) {
+		_artifactListener = listener;
+	}
 
-    public long getBundleId()
-    {
-        return bundleId;
-    }
+	public void setPath(File path) {
+		_path = path;
+	}
 
-    public void setBundleId(long bundleId)
-    {
-        this.bundleId = bundleId;
-    }
+	public void setTransformed(File transformed) {
+		_transformed = transformed;
+	}
 
-    public long getChecksum()
-    {
-        return checksum;
-    }
+	public void setTransformedUrl(URL transformedUrl) {
+		_transformedURL = transformedUrl;
+	}
 
-    public void setChecksum(long checksum)
-    {
-        this.checksum = checksum;
-    }
+	private ArtifactListener _artifactListener;
+	private long _bundleId = -1;
+	private long _checksum;
+	private File _jaredDirectory;
+	private URL _jaredUrl;
+	private File _path;
+	private File _transformed;
+	private URL _transformedURL;
+
 }
+/* @generated */

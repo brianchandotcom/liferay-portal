@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -544,7 +545,9 @@ public class WorkflowDefinitionLinkDisplayContext {
 		List<WorkflowDefinitionLinkSearchEntry>
 			workflowDefinitionLinkSearchEntries = new ArrayList<>();
 
-		for (WorkflowHandler<?> workflowHandler : getWorkflowHandlers()) {
+		for (WorkflowHandler<?> workflowHandler :
+				getWorkflowHandlers(themeDisplay.getScopeGroup())) {
+
 			WorkflowDefinitionLinkSearchEntry
 				workflowDefinitionLinkSearchEntry =
 					createWorkflowDefinitionLinkSearchEntry(
@@ -635,7 +638,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 		}
 	}
 
-	protected List<WorkflowHandler<?>> getWorkflowHandlers() {
+	protected List<WorkflowHandler<?>> getWorkflowHandlers(Group group) {
 		List<WorkflowHandler<?>> workflowHandlers = null;
 
 		if (isControlPanelPortlet()) {
@@ -647,7 +650,9 @@ public class WorkflowDefinitionLinkDisplayContext {
 				WorkflowHandlerRegistryUtil.getScopeableWorkflowHandlers();
 		}
 
-		return ListUtil.filter(workflowHandlers, WorkflowHandler::isVisible);
+		return ListUtil.filter(
+			workflowHandlers,
+			workflowHandler -> workflowHandler.isVisible(group));
 	}
 
 	private String _getCurrentOrder(HttpServletRequest httpServletRequest) {

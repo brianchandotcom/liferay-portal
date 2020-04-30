@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.workflow;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -89,6 +90,10 @@ public interface WorkflowHandler<T> {
 	public boolean isScopeable();
 
 	public boolean isVisible();
+
+	public default boolean isVisible(Group group) {
+		return isVisible();
+	}
 
 	public void startWorkflowInstance(
 			long companyId, long groupId, long userId, long classPK, T model,

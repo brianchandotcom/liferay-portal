@@ -291,6 +291,29 @@ public class LayoutStructure {
 		return _layoutStructureItems.get(itemId);
 	}
 
+	public LayoutStructureItem getLayoutStructureItemByFragmentEntryLinkId(
+		long fragmentEntryLinkId) {
+
+		for (LayoutStructureItem layoutStructureItem :
+				getLayoutStructureItems()) {
+
+			if (!(layoutStructureItem instanceof FragmentLayoutStructureItem)) {
+				continue;
+			}
+
+			FragmentLayoutStructureItem fragmentLayoutStructureItem =
+				(FragmentLayoutStructureItem)layoutStructureItem;
+
+			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() ==
+					fragmentEntryLinkId) {
+
+				return fragmentLayoutStructureItem;
+			}
+		}
+
+		return null;
+	}
+
 	public List<LayoutStructureItem> getLayoutStructureItems() {
 		return ListUtil.fromCollection(_layoutStructureItems.values());
 	}

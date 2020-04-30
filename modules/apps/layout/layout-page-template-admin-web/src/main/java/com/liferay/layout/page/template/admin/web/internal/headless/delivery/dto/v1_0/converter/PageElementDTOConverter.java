@@ -19,8 +19,8 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
@@ -39,7 +39,8 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.util.structure.CollectionItemLayoutStructureItem;
 import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
@@ -62,7 +63,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -74,12 +75,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jürgen Kappler
  */
+@Component(service = PageElementDTOConverter.class)
 public class PageElementDTOConverter {
 
-	public static PageElement toDTO(
+	public PageElement toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -89,10 +94,10 @@ public class PageElementDTOConverter {
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
+			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					layout.getGroupId(),
-					PortalUtil.getClassNameId(
+					_portal.getClassNameId(
 						com.liferay.portal.kernel.model.Layout.class),
 					layout.getPlid());
 
@@ -132,7 +137,7 @@ public class PageElementDTOConverter {
 		return pageElement;
 	}
 
-	public static PageElement toDTO(
+	public PageElement toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -188,7 +193,7 @@ public class PageElementDTOConverter {
 		return pageElement;
 	}
 
-	public static PageElement toDTO(
+	public PageElement toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -337,7 +342,7 @@ public class PageElementDTOConverter {
 				(FragmentLayoutStructureItem)layoutStructureItem;
 
 			FragmentEntryLink fragmentEntryLink =
-				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					fragmentLayoutStructureItem.getFragmentEntryLinkId());
 
 			if (fragmentEntryLink == null) {
@@ -360,7 +365,7 @@ public class PageElementDTOConverter {
 				return new PageElement() {
 					{
 						definition =
-							PageFragmentInstanceDefinitionDTOConverter.toDTO(
+							_pageFragmentInstanceDefinitionDTOConverter.toDTO(
 								fragmentCollectionContributorTracker,
 								fragmentEntryConfigurationParser,
 								fragmentLayoutStructureItem,
@@ -377,9 +382,10 @@ public class PageElementDTOConverter {
 
 			return new PageElement() {
 				{
-					definition = PageWidgetInstanceDefinitionDTOConverter.toDTO(
-						fragmentEntryLink.getClassPK(),
-						PortletIdCodec.encode(portletId, instanceId));
+					definition =
+						_pageWidgetInstanceDefinitionDTOConverter.toDTO(
+							fragmentEntryLink.getClassPK(),
+							PortletIdCodec.encode(portletId, instanceId));
 					type = PageElement.Type.WIDGET;
 				}
 			};
@@ -414,7 +420,7 @@ public class PageElementDTOConverter {
 		return null;
 	}
 
-	private static Map<String, Object> _getConfigAsMap(JSONObject jsonObject) {
+	private Map<String, Object> _getConfigAsMap(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return null;
 		}
@@ -434,7 +440,7 @@ public class PageElementDTOConverter {
 		};
 	}
 
-	private static Function<Object, String> _getImageURLTransformerFunction() {
+	private Function<Object, String> _getImageURLTransformerFunction() {
 		return object -> {
 			if (object instanceof JSONObject) {
 				JSONObject jsonObject = (JSONObject)object;
@@ -446,14 +452,14 @@ public class PageElementDTOConverter {
 		};
 	}
 
-	private static boolean _isFragmentEntryKey(
+	private boolean _isFragmentEntryKey(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		String fragmentEntryKey,
 		FragmentRendererTracker fragmentRendererTracker, long groupId) {
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+			_fragmentEntryLocalService.fetchFragmentEntry(
 				groupId, fragmentEntryKey);
 
 		if (fragmentEntry != null) {
@@ -477,7 +483,7 @@ public class PageElementDTOConverter {
 		return false;
 	}
 
-	private static boolean _isSaveFragmentMappedValue(
+	private boolean _isSaveFragmentMappedValue(
 		JSONObject jsonObject, boolean saveMapping) {
 
 		if (saveMapping && jsonObject.has("classNameId") &&
@@ -493,7 +499,7 @@ public class PageElementDTOConverter {
 		return false;
 	}
 
-	private static FragmentImage _toBackgroundFragmentImage(
+	private FragmentImage _toBackgroundFragmentImage(
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		JSONObject jsonObject, boolean saveMappingConfiguration) {
 
@@ -533,7 +539,7 @@ public class PageElementDTOConverter {
 		};
 	}
 
-	private static FragmentInlineValue _toDefaultMappingValue(
+	private FragmentInlineValue _toDefaultMappingValue(
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		JSONObject jsonObject, Function<Object, String> transformerFunction) {
 
@@ -546,7 +552,7 @@ public class PageElementDTOConverter {
 		String className = null;
 
 		try {
-			className = PortalUtil.getClassName(classNameId);
+			className = _portal.getClassName(classNameId);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -604,7 +610,7 @@ public class PageElementDTOConverter {
 		return null;
 	}
 
-	private static FragmentMappedValue _toFragmentMappedValue(
+	private FragmentMappedValue _toFragmentMappedValue(
 		FragmentInlineValue fragmentInlineValue, JSONObject jsonObject) {
 
 		return new FragmentMappedValue() {
@@ -649,7 +655,7 @@ public class PageElementDTOConverter {
 		};
 	}
 
-	private static Fragment[] _toFragments(
+	private Fragment[] _toFragments(
 		List<String> fragmentEntryKeys,
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
@@ -674,7 +680,7 @@ public class PageElementDTOConverter {
 		return fragments.toArray(new Fragment[0]);
 	}
 
-	private static Map<String, Fragment[]> _toFragmentSettingsMap(
+	private Map<String, Fragment[]> _toFragmentSettingsMap(
 		DropZoneLayoutStructureItem dropZoneLayoutStructureItem,
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
@@ -699,7 +705,7 @@ public class PageElementDTOConverter {
 		).build();
 	}
 
-	private static FragmentInlineValue _toTitleFragmentInlineValue(
+	private FragmentInlineValue _toTitleFragmentInlineValue(
 		JSONObject jsonObject, String urlValue) {
 
 		String title = jsonObject.getString("title");
@@ -717,5 +723,30 @@ public class PageElementDTOConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageElementDTOConverter.class);
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private PageFragmentInstanceDefinitionDTOConverter
+		_pageFragmentInstanceDefinitionDTOConverter;
+
+	@Reference
+	private PageWidgetInstanceDefinitionDTOConverter
+		_pageWidgetInstanceDefinitionDTOConverter;
+
+	@Reference
+	private Portal _portal;
 
 }

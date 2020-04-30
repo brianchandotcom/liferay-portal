@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -48,14 +48,16 @@ import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jürgen Kappler
  */
+@Component(service = PageWidgetInstanceDefinitionDTOConverter.class)
 public class PageWidgetInstanceDefinitionDTOConverter {
 
-	public static PageWidgetInstanceDefinition toDTO(
-		long plid, String portletId) {
-
+	public PageWidgetInstanceDefinition toDTO(long plid, String portletId) {
 		if (Validator.isNull(portletId)) {
 			return null;
 		}
@@ -73,10 +75,8 @@ public class PageWidgetInstanceDefinitionDTOConverter {
 		};
 	}
 
-	private static Map<String, Object> _getWidgetConfig(
-		long plid, String portletId) {
-
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+	private Map<String, Object> _getWidgetConfig(long plid, String portletId) {
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		if (layout == null) {
 			return null;
@@ -84,7 +84,7 @@ public class PageWidgetInstanceDefinitionDTOConverter {
 
 		String portletName = PortletIdCodec.decodePortletName(portletId);
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletName);
+		Portlet portlet = _portletLocalService.getPortletById(portletName);
 
 		if (portlet == null) {
 			return null;
@@ -121,10 +121,10 @@ public class PageWidgetInstanceDefinitionDTOConverter {
 		return widgetConfigMap;
 	}
 
-	private static WidgetPermission[] _getWidgetPermissions(
+	private WidgetPermission[] _getWidgetPermissions(
 		long plid, String portletId) {
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		if (layout == null) {
 			return null;
@@ -132,17 +132,17 @@ public class PageWidgetInstanceDefinitionDTOConverter {
 
 		String portletName = PortletIdCodec.decodePortletName(portletId);
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletName);
+		Portlet portlet = _portletLocalService.getPortletById(portletName);
 
 		if (portlet == null) {
 			return null;
 		}
 
-		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+		String resourcePrimKey = _portletPermission.getPrimaryKey(
 			plid, portletId);
 
 		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.getResourcePermissions(
+			_resourcePermissionLocalService.getResourcePermissions(
 				layout.getCompanyId(), portletName,
 				ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 
@@ -151,7 +151,7 @@ public class PageWidgetInstanceDefinitionDTOConverter {
 		}
 
 		List<ResourceAction> resourceActions =
-			ResourceActionLocalServiceUtil.getResourceActions(portletName);
+			_resourceActionLocalService.getResourceActions(portletName);
 
 		if (ListUtil.isEmpty(resourceActions)) {
 			return null;
@@ -160,7 +160,7 @@ public class PageWidgetInstanceDefinitionDTOConverter {
 		List<WidgetPermission> widgetPermissions = new ArrayList<>();
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			Role role = RoleLocalServiceUtil.fetchRole(
+			Role role = _roleLocalService.fetchRole(
 				resourcePermission.getRoleId());
 
 			if (role == null) {
@@ -202,5 +202,23 @@ public class PageWidgetInstanceDefinitionDTOConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageWidgetInstanceDefinitionDTOConverter.class);
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPermission _portletPermission;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

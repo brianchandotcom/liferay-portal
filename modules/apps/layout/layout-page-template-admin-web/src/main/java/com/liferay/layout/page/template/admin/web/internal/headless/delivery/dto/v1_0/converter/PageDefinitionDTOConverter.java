@@ -22,24 +22,29 @@ import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Rubén Pulido
  */
+@Component(service = PageDefinitionDTOConverter.class)
 public class PageDefinitionDTOConverter {
 
-	public static PageDefinition toDTO(
+	public PageDefinition toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -53,7 +58,7 @@ public class PageDefinitionDTOConverter {
 			infoDisplayContributorTracker, layout, true, true);
 	}
 
-	public static PageDefinition toDTO(
+	public PageDefinition toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -69,7 +74,7 @@ public class PageDefinitionDTOConverter {
 			saveMappingConfiguration, 0);
 	}
 
-	public static PageDefinition toDTO(
+	public PageDefinition toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -80,7 +85,7 @@ public class PageDefinitionDTOConverter {
 
 		return new PageDefinition() {
 			{
-				pageElement = PageElementDTOConverter.toDTO(
+				pageElement = _pageElementDTOConverter.toDTO(
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					infoDisplayContributorTracker, layout, saveInlineContent,
@@ -90,7 +95,7 @@ public class PageDefinitionDTOConverter {
 		};
 	}
 
-	private static Settings _toSettings(Layout layout) {
+	private Settings _toSettings(Layout layout) {
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 
@@ -140,7 +145,7 @@ public class PageDefinitionDTOConverter {
 				setMasterPage(
 					() -> {
 						LayoutPageTemplateEntry layoutPageTemplateEntry =
-							LayoutPageTemplateEntryLocalServiceUtil.
+							_layoutPageTemplateEntryLocalService.
 								fetchLayoutPageTemplateEntryByPlid(
 									layout.getMasterLayoutPlid());
 
@@ -194,5 +199,15 @@ public class PageDefinitionDTOConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageDefinitionDTOConverter.class);
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private PageElementDTOConverter _pageElementDTOConverter;
+
+	@Reference
+	private Portal _portal;
 
 }

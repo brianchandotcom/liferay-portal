@@ -195,7 +195,7 @@ public class ExportHelper {
 			layoutPageTemplateEntry.getPlid());
 
 		if (layout != null) {
-			PageDefinition pageDefinition = PageDefinitionDTOConverter.toDTO(
+			PageDefinition pageDefinition = _pageDefinitionDTOConverter.toDTO(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
 				_infoDisplayContributorTracker, layout);
@@ -264,7 +264,7 @@ public class ExportHelper {
 			layoutPageTemplateEntry.getPlid());
 
 		if (layout != null) {
-			PageDefinition pageDefinition = PageDefinitionDTOConverter.toDTO(
+			PageDefinition pageDefinition = _pageDefinitionDTOConverter.toDTO(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
 				_infoDisplayContributorTracker, layout);
@@ -332,7 +332,7 @@ public class ExportHelper {
 			layoutPageTemplateEntry.getPlid());
 
 		if (layout != null) {
-			PageDefinition pageDefinition = PageDefinitionDTOConverter.toDTO(
+			PageDefinition pageDefinition = _pageDefinitionDTOConverter.toDTO(
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
 				_infoDisplayContributorTracker, layout);
@@ -388,5 +388,8 @@ public class ExportHelper {
 	@Reference
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
+	private PageDefinitionDTOConverter _pageDefinitionDTOConverter;
 
 }

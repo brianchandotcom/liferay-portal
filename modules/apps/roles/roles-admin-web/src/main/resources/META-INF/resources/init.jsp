@@ -175,8 +175,6 @@ if (permissionChecker.isCompanyAdmin()) {
 }
 
 RoleDisplayContext roleDisplayContext = new RoleDisplayContext(request, renderResponse);
-
-request.setAttribute(RoleDisplayContext.class.getName(), roleDisplayContext);
 %>
 
 <%@ include file="/init-ext.jsp" %>
@@ -209,9 +207,7 @@ private String _getActionLabel(HttpServletRequest request, ThemeDisplay themeDis
 	return actionLabel;
 }
 
-private String _getAssigneesMessage(HttpServletRequest request, Role role) throws Exception {
-	RoleDisplayContext roleDisplayContext = (RoleDisplayContext)request.getAttribute(RoleDisplayContext.class.getName());
-
+private String _getAssigneesMessage(HttpServletRequest request, Role role, RoleDisplayContext roleDisplayContext) throws Exception {
 	if (roleDisplayContext.isAutomaticallyAssigned(role)) {
 		return LanguageUtil.get(request, "this-role-is-automatically-assigned");
 	}

@@ -36,7 +36,7 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 			</h6>
 
 			<h6 class="text-default">
-				<span><%= _getAssigneesMessage(request, role) %></span>
+				<span><%= _getAssigneesMessage(request, role, roleDisplayContext) %></span>
 			</h6>
 		</liferay-ui:search-container-column-text>
 

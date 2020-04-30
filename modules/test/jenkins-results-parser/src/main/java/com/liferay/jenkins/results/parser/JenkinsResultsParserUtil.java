@@ -1382,6 +1382,92 @@ public class JenkinsResultsParserUtil {
 		return properties;
 	}
 
+	public static String getJobTestSuiteProperty(
+		Properties properties, String basePropertyName, String jobName,
+		String testSuiteName) {
+
+		if ((jobName != null) && !jobName.isEmpty() &&
+			(testSuiteName != null) && !testSuiteName.isEmpty()) {
+
+			String propertyValue = getProperty(
+				properties,
+				combine(
+					basePropertyName, "[", jobName, "]", "[", testSuiteName,
+					"]"));
+
+			if (propertyValue != null) {
+				return propertyValue;
+			}
+
+			String jobTestSuitePropertyNameRegex = combine(
+				Pattern.quote(basePropertyName), "\\[([^\\]]+)\\]\\[",
+				Pattern.quote(testSuiteName), "\\]");
+
+			for (String propertyName : properties.stringPropertyNames()) {
+				if (!propertyName.matches(jobTestSuitePropertyNameRegex)) {
+					continue;
+				}
+
+				String jobNameRegex = propertyName.replaceAll(
+					jobTestSuitePropertyNameRegex, "$1");
+
+				jobNameRegex = jobNameRegex.replaceAll(
+					"[^\\*]+", "\\\\Q$0\\\\E");
+
+				jobNameRegex = jobNameRegex.replace("*", ".+");
+
+				if (!jobName.matches(jobNameRegex)) {
+					continue;
+				}
+
+				return getProperty(properties, propertyName);
+			}
+		}
+
+		if ((jobName != null) && !jobName.isEmpty()) {
+			String propertyValue = getProperty(
+				properties, combine(basePropertyName, "[", jobName, "]"));
+
+			if (propertyValue != null) {
+				return propertyValue;
+			}
+
+			String jobPropertyNameRegex =
+				Pattern.quote(basePropertyName) + "\\[([^\\]]+)\\]";
+
+			for (String propertyName : properties.stringPropertyNames()) {
+				if (!propertyName.matches(jobPropertyNameRegex)) {
+					continue;
+				}
+
+				String jobNameRegex = propertyName.replaceAll(
+					jobPropertyNameRegex, "$1");
+
+				jobNameRegex = jobNameRegex.replaceAll(
+					"[^\\*]+", "\\\\Q$0\\\\E");
+
+				jobNameRegex = jobNameRegex.replace("*", ".+");
+
+				if (!jobName.matches(jobNameRegex)) {
+					continue;
+				}
+
+				return getProperty(properties, propertyName);
+			}
+		}
+
+		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
+			String propertyValue = getProperty(
+				properties, combine(basePropertyName, "[", testSuiteName, "]"));
+
+			if (propertyValue != null) {
+				return propertyValue;
+			}
+		}
+
+		return getProperty(properties, basePropertyName);
+	}
+
 	public static String getJobVariant(JSONObject jsonObject) {
 		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 

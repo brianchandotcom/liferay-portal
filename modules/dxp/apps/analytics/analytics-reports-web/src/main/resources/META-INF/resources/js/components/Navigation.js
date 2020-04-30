@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useState} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {useWarning} from '../context/store';
+import {StoreContext, useWarning} from '../context/store';
 import {numberFormat} from '../utils/numberFormat';
 import Detail from './Detail';
 import Main from './Main';
@@ -98,6 +98,12 @@ export default function Navigation({
 		return Promise.resolve(trafficSource ? trafficSource.value : '-');
 	}, [trafficSourceName, trafficSources]);
 
+	const [{readsEnabled}] = useContext(StoreContext);
+
+	const chartDataProviders = readsEnabled
+		? [getHistoricalViews, getHistoricalReads]
+		: [getHistoricalViews];
+
 	return (
 		<>
 			{!validAnalyticsConnection && (
@@ -126,10 +132,7 @@ export default function Navigation({
 				<div className="p-3">
 					<Main
 						authorName={authorName}
-						chartDataProviders={[
-							getHistoricalViews,
-							getHistoricalReads,
-						]}
+						chartDataProviders={chartDataProviders}
 						defaultTimeRange={defaultTimeRange}
 						defaultTimeSpanOption={defaultTimeSpanKey}
 						languageTag={languageTag}

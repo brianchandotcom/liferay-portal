@@ -26,7 +26,7 @@ import {
 } from 'recharts';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {useWarning} from '../context/store';
+import {StoreContext, useWarning} from '../context/store';
 import {useChartState} from '../state/chartState';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';
@@ -142,6 +142,8 @@ export default function Chart({
 
 	const [hasWarning, addWarning] = useWarning();
 
+	const [{readsEnabled}] = useContext(StoreContext);
+
 	const {actions, state: chartState} = useChartState({
 		defaultTimeSpanOption,
 		publishDate,
@@ -210,11 +212,13 @@ export default function Chart({
 				timeSpanComparator,
 			});
 
-			actions.addDataSetItem({
-				dataSetItem: {histogram: [], value: null},
-				key: 'analyticsReportsHistoricalReads',
-				timeSpanComparator,
-			});
+			if (readsEnabled) {
+				actions.addDataSetItem({
+					dataSetItem: {histogram: [], value: null},
+					key: 'analyticsReportsHistoricalReads',
+					timeSpanComparator,
+				});
+			}
 		}
 
 		return () => {

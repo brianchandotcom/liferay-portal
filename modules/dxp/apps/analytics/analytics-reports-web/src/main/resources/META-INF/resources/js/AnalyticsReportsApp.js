@@ -20,6 +20,8 @@ export default function ({context, props}) {
 	const {languageTag, namespace, page} = context;
 	const {defaultTimeRange, defaultTimeSpanKey, timeSpans} = context;
 	const {validAnalyticsConnection} = context;
+	const {readsEnabled} = context;
+
 	const {authorName, publishDate, title} = props;
 	const {trafficSources} = props;
 
@@ -47,7 +49,7 @@ export default function ({context, props}) {
 				validAnalyticsConnection,
 			}}
 		>
-			<StoreContextProvider>
+			<StoreContextProvider value={{readsEnabled}}>
 				<Navigation
 					api={api}
 					authorName={authorName}

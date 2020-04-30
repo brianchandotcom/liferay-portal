@@ -11,7 +11,7 @@
 
 import ClayAlert from '@clayui/alert';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
 import {useWarning} from '../context/store';
@@ -40,60 +40,63 @@ export default function Navigation({
 
 	const {getHistoricalReads, getHistoricalViews} = api;
 
-	function handleCurrentPage(currentPage) {
+	const handleCurrentPage = useCallback((currentPage) => {
 		setCurrentPage({view: currentPage.view});
-	}
+	}, []);
 
-	function handleTotalReads() {
+	const handleTotalReads = useCallback(() => {
 		return api.getTotalReads().then((response) => {
 			return numberFormat(
 				languageTag,
 				response.analyticsReportsTotalReads
 			);
 		});
-	}
+	}, [api, languageTag]);
 
-	function handleTotalViews() {
+	const handleTotalViews = useCallback(() => {
 		return api.getTotalViews().then((response) => {
 			return numberFormat(
 				languageTag,
 				response.analyticsReportsTotalViews
 			);
 		});
-	}
+	}, [api, languageTag]);
 
-	function handleTrafficShare() {
+	const handleTrafficShare = useCallback(() => {
 		const trafficSource = trafficSources.find((trafficSource) => {
 			return trafficSource['name'] === trafficSourceName;
 		});
 
 		return Promise.resolve(trafficSource ? trafficSource.share : '-');
-	}
+	}, [trafficSourceName, trafficSources]);
 
-	function handleTrafficSourceClick(trafficSourceName) {
+	const handleTrafficSourceClick = useCallback(
+		(trafficSourceName) => {
+			setTrafficSourceName(trafficSourceName);
+
+			api.getTrafficSourceDetails(trafficSourceName).then(
+				(trafficSourceData) => {
+					setCurrentPage({
+						data: trafficSourceData,
+						view: 'traffic-source-detail',
+					});
+				}
+			);
+		},
+		[api]
+	);
+
+	const handleTrafficSourceName = useCallback((trafficSourceName) => {
 		setTrafficSourceName(trafficSourceName);
+	}, []);
 
-		api.getTrafficSourceDetails(trafficSourceName).then(
-			(trafficSourceData) => {
-				setCurrentPage({
-					data: trafficSourceData,
-					view: 'traffic-source-detail',
-				});
-			}
-		);
-	}
-
-	function handleTrafficSourceName(trafficSourceName) {
-		setTrafficSourceName(trafficSourceName);
-	}
-
-	function handleTrafficVolume() {
+	const handleTrafficVolume = useCallback(() => {
 		const trafficSource = trafficSources.find((trafficSource) => {
 			return trafficSource['name'] === trafficSourceName;
 		});
 
 		return Promise.resolve(trafficSource ? trafficSource.value : '-');
-	}
+	}, [trafficSourceName, trafficSources]);
 
 	return (
 		<>

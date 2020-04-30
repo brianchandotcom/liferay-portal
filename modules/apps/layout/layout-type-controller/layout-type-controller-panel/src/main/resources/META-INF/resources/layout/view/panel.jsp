@@ -20,7 +20,7 @@
 	<c:when test="<%= !themeDisplay.isStatePopUp() %>">
 		<clay:container
 			className="lfr-panel-page"
-			id="main-content"
+			id='<%= renderResponse.getNamespace() + "main-content" %>'
 		>
 			<aui:row>
 

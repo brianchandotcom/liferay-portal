@@ -67,7 +67,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 <clay:container
 	className="c-pt-md-5"
-	id="permissionContainer"
+	id='<%= renderResponse.getNamespace() + "permissionContainer" %>'
 >
 	<aui:row>
 		<c:if test="<%= !portletName.equals(PortletKeys.SERVER_ADMIN) %>">

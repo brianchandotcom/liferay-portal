@@ -29,7 +29,7 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 />
 
 <clay:container
-	id="selectAccountEntry"
+	id='<%= renderResponse.getNamespace() + "selectAccountEntry" %>'
 >
 	<liferay-ui:search-container
 		searchContainer="<%= accountEntryDisplaySearchContainer %>"

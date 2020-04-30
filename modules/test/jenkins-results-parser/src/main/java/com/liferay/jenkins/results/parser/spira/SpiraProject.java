@@ -70,6 +70,29 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return jsonObject.getInt("ProjectTemplateId");
 	}
 
+	public SpiraCustomList getSpiraCustomListByName(
+		Class<? extends SpiraArtifact> spiraArtifactClass,
+		String customPropertyListName) {
+
+		List<SpiraCustomList> spiraCustomLists =
+			SpiraCustomList.getSpiraCustomLists(
+				this, spiraArtifactClass,
+				new SearchQuery.SearchParameter(
+					"Name", customPropertyListName));
+
+		if (spiraCustomLists.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate custom list name " + customPropertyListName);
+		}
+
+		if (spiraCustomLists.isEmpty()) {
+			throw new RuntimeException(
+				"Missing custom list name " + customPropertyListName);
+		}
+
+		return spiraCustomLists.get(0);
+	}
+
 	public SpiraCustomProperty getSpiraCustomPropertyByName(
 		Class<? extends SpiraArtifact> spiraArtifactClass,
 		String customPropertyName) {

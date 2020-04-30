@@ -74,7 +74,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 				SpiraTestCaseObject.ID_KEY, spiraTestCase.getID());
 
 			requestJSONObject.put(
-				"CustomProperties", result.getCustomListValuesJSONArray());
+				"CustomProperties", result.getCustomPropertyValuesJSONArray());
 			requestJSONObject.put("ExecutionStatusId", result.getStatusID());
 			requestJSONObject.put("RunnerMessage", spiraTestCase.getName());
 			requestJSONObject.put("RunnerName", "Liferay CI");
@@ -242,55 +242,122 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		public Result(
 			SpiraTestCaseObject spiraTestCase, RunnerFormat runnerFormat,
 			String runnerStackTrace, Status status,
-			List<SpiraCustomList.Value> spiraCustomListValues) {
+			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
 
 			_spiraTestCase = spiraTestCase;
 			_runnerFormat = runnerFormat;
 			_description = runnerStackTrace;
 			_status = status;
-			_spiraCustomListValues = spiraCustomListValues;
+			_spiraCustomPropertyValues = spiraCustomPropertyValues;
 		}
 
 		public Result(
 			Supplier<SpiraTestCaseObject> testCaseSupplier,
 			RunnerFormat runnerFormat, String runnerStackTrace, Status status,
-			List<SpiraCustomList.Value> spiraCustomListValues) {
+			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
 
 			_spiraTestCaseSupplier = testCaseSupplier;
 			_runnerFormat = runnerFormat;
 			_description = runnerStackTrace;
 			_status = status;
-			_spiraCustomListValues = spiraCustomListValues;
+			_spiraCustomPropertyValues = spiraCustomPropertyValues;
 		}
 
-		public JSONArray getCustomListValuesJSONArray() {
-			JSONArray customListValuesJSONArray = new JSONArray();
+		public JSONArray getCustomPropertyValuesJSONArray() {
+			JSONArray jsonArray = new JSONArray();
 
-			if (_spiraCustomListValues == null) {
-				return customListValuesJSONArray;
+			if (_spiraCustomPropertyValues == null) {
+				return jsonArray;
 			}
 
-			for (SpiraCustomList.Value spiraCustomListValue :
-					_spiraCustomListValues) {
+			for (SpiraCustomProperty.Value spiraCustomPropertyValue :
+					_spiraCustomPropertyValues) {
 
 				SpiraCustomProperty spiraCustomProperty =
-					spiraCustomListValue.getSpiraCustomProperty();
-
-				JSONArray integerListValueJSONArray = new JSONArray();
-
-				integerListValueJSONArray.put(spiraCustomListValue.getID());
+					spiraCustomPropertyValue.getSpiraCustomProperty();
 
 				JSONObject customListValuesJSONObject = new JSONObject();
 
-				customListValuesJSONObject.put(
-					"IntegerListValue", integerListValueJSONArray);
-				customListValuesJSONObject.put(
-					"PropertyNumber", spiraCustomProperty.getPropertyNumber());
+				int propertyNumber = spiraCustomProperty.getPropertyNumber();
 
-				customListValuesJSONArray.put(customListValuesJSONObject);
+				customListValuesJSONObject.put(
+					"PropertyNumber", propertyNumber);
+
+				SpiraCustomProperty.Type type = spiraCustomProperty.getType();
+
+				if (type == SpiraCustomProperty.Type.LIST) {
+					SpiraCustomList spiraCustomList =
+						SpiraCustomList.getSpiraCustomListByName(
+							getSpiraProject(), SpiraTestCaseRun.class,
+							spiraCustomProperty.getName());
+
+					SpiraCustomList.Value spiraCustomListValue =
+						spiraCustomList.getSpiraCustomListValueByName(
+							spiraCustomPropertyValue.getValue());
+
+					customListValuesJSONObject.put(
+						"IntegerValue", spiraCustomListValue.getID());
+
+					jsonArray.put(customListValuesJSONObject);
+				}
+				else if (type == SpiraCustomProperty.Type.MULTILIST) {
+					JSONArray integerListValueJSONArray = null;
+
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+						int jsonObjectPropertyNumber = jsonObject.optInt(
+							"PropertyNumber", -1);
+
+						if (jsonObjectPropertyNumber == -1) {
+							continue;
+						}
+
+						if (propertyNumber != jsonObjectPropertyNumber) {
+							continue;
+						}
+
+						integerListValueJSONArray = jsonObject.getJSONArray(
+							"IntegerListValue");
+
+						break;
+					}
+
+					if (integerListValueJSONArray == null) {
+						integerListValueJSONArray = new JSONArray();
+
+						jsonArray.put(customListValuesJSONObject);
+					}
+
+					SpiraCustomList spiraCustomList =
+						SpiraCustomList.getSpiraCustomListByName(
+							getSpiraProject(), SpiraTestCaseRun.class,
+							spiraCustomProperty.getName());
+
+					SpiraCustomList.Value spiraCustomListValue =
+						spiraCustomList.getSpiraCustomListValueByName(
+							spiraCustomPropertyValue.getValue());
+
+					integerListValueJSONArray.put(spiraCustomListValue.getID());
+
+					customListValuesJSONObject.put(
+						"IntegerListValue", integerListValueJSONArray);
+				}
+				else if (type == SpiraCustomProperty.Type.TEXT) {
+					customListValuesJSONObject.put(
+						"StringValue", spiraCustomPropertyValue.getValue());
+
+					jsonArray.put(customListValuesJSONObject);
+				}
+				else {
+					throw new RuntimeException(
+						"Unsupported custom property " + type);
+				}
 			}
 
-			return customListValuesJSONArray;
+			System.out.println(jsonArray);
+
+			return jsonArray;
 		}
 
 		public String getDescription() {
@@ -299,6 +366,12 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		public Integer getRunnerFormatID() {
 			return _runnerFormat.getID();
+		}
+
+		public SpiraProject getSpiraProject() {
+			SpiraTestCaseObject spiraTestCase = getSpiraTestCase();
+
+			return spiraTestCase.getSpiraProject();
 		}
 
 		public SpiraTestCaseObject getSpiraTestCase() {
@@ -325,7 +398,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 		private final String _description;
 		private final RunnerFormat _runnerFormat;
-		private final List<SpiraCustomList.Value> _spiraCustomListValues;
+		private final List<SpiraCustomProperty.Value>
+			_spiraCustomPropertyValues;
 		private SpiraTestCaseObject _spiraTestCase;
 		private Supplier<SpiraTestCaseObject> _spiraTestCaseSupplier;
 		private final Status _status;

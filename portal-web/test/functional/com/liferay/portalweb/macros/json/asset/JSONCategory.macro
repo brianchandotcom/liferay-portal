@@ -100,7 +100,7 @@ definition {
 	macro getCategoryId {
 		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
 
-		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
 			groupId = "${groupId}",

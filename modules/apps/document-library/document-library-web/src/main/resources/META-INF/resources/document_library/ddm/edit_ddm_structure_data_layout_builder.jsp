@@ -99,16 +99,6 @@ renderResponse.setTitle(title);
 
 						<aui:input name="description" />
 
-						<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", HtmlUtil.escape(LanguageUtil.get(resourceBundle, "metadata-set")), false) %>'>
-							<aui:input name="parentDDMStructureId" type="hidden" value="<%= dlEditDDMStructureDisplayContext.getParentDDMStructureId() %>" />
-
-							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentDDMStructureName" type="text" value="<%= dlEditDDMStructureDisplayContext.getParentDDMStructureName() %>" />
-
-							<aui:button onClick='<%= renderResponse.getNamespace() + "openParentDDMStructureSelector();" %>' value="select" />
-
-							<aui:button disabled="<%= Validator.isNull(dlEditDDMStructureDisplayContext.getParentDDMStructureName()) %>" name="removeParentDDMStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentDDMStructure();" %>' value="remove" />
-						</aui:field-wrapper>
-
 						<c:if test="<%= ddmStructure != null %>">
 							<portlet:resourceURL id="getStructure" var="getStructureURL">
 								<portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
@@ -144,61 +134,6 @@ renderResponse.setTitle(title);
 </clay:container>
 
 <aui:script>
-	function <portlet:namespace />openParentDDMStructureSelector() {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true,
-				},
-				eventName: '<portlet:namespace />selectDDMStructure',
-				id: '<portlet:namespace />selectDDMStructure',
-				title:
-					'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
-				uri:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(dlEditDDMStructureDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>',
-			},
-			function (event) {
-				var form = document.<portlet:namespace />fm;
-
-				Liferay.Util.setFormValues(form, {
-					parentDDMStructureId: event.ddmstructureid,
-					parentDDMStructureName: Liferay.Util.unescape(event.name),
-				});
-
-				var removeParentDDMStructureButton = Liferay.Util.getFormElement(
-					form,
-					'removeParentDDMStructureButton'
-				);
-
-				if (removeParentDDMStructureButton) {
-					Liferay.Util.toggleDisabled(
-						removeParentDDMStructureButton,
-						false
-					);
-				}
-			}
-		);
-	}
-
-	function <portlet:namespace />removeParentDDMStructure() {
-		var form = document.<portlet:namespace />fm;
-
-		Liferay.Util.setFormValues(form, {
-			parentDDMStructureId: '',
-			parentDDMStructureName: '',
-		});
-
-		var removeParentDDMStructureButton = Liferay.Util.getFormElement(
-			form,
-			'removeParentDDMStructureButton'
-		);
-
-		if (removeParentDDMStructureButton) {
-			Liferay.Util.toggleDisabled(removeParentDDMStructureButton, true);
-		}
-	}
-
 	function <portlet:namespace />getInputLocalizedValues(field) {
 		var inputLocalized = Liferay.component('<portlet:namespace />' + field);
 		var localizedValues = {};
@@ -215,6 +150,7 @@ renderResponse.setTitle(title);
 
 		return localizedValues;
 	}
+
 	function <portlet:namespace />saveDDMStructure() {
 		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
 			function (dataLayoutBuilder) {

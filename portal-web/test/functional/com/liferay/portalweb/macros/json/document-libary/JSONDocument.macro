@@ -69,6 +69,12 @@ definition {
 			var description = "";
 		}
 
+		var serviceContext = JSONDocumentSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
 		var curl = '''
 			${portalURL}/api/jsonws/dlapp/add-file-entry \
 			-u test@liferay.com:test \
@@ -79,7 +85,8 @@ definition {
 			-F title=${dmDocumentTitle} \
 		 	-F description=${description} \
 			-F changeLog='' \
-			-F file=@${filePath}
+			-F file=@${filePath} \
+			-F serviceContext=${serviceContext}
 		''';
 
 		echo("## Adding a 'File' with the following info using JSONWS:");

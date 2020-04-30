@@ -1,9 +1,19 @@
 {
-	"com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor": {
-		"dropZone1": "",
-		"dropZone2": "",
-		"dropZone3": "",
-		"dropZone4": "",
-		"dropZone5": ""
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_text1": {
+			"defaultValue": "test 1"
+		},
+		"editable_text2": {
+			"defaultValue": "test 2"
+		},
+		"editable_text3": {
+			"defaultValue": "test 3"
+		},
+		"editable_text4": {
+			"defaultValue": "test 4"
+		},
+		"editable_text5": {
+			"defaultValue": "test 5"
+		}
 	}
 }

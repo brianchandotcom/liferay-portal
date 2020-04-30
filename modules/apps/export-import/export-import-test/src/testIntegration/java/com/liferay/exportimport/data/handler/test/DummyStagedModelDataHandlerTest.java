@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -78,6 +79,11 @@ public class DummyStagedModelDataHandlerTest
 						PersistedModel persistedModel)
 					throws PortalException {
 
+					return null;
+				}
+
+				@Override
+				public BasePersistence<?> getBasePersistence() {
 					return null;
 				}
 

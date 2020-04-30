@@ -41,7 +41,7 @@ definition {
 				value1 = "${expirationDate}");
 		}
 
-		Button.clickSave();
+		Button.click(button = "Create");
 
 		if ("${redirectURLVariation}" == "Null") {
 			Alert.viewRequiredField();
@@ -120,7 +120,7 @@ definition {
 				value1 = "${expirationDate}");
 		}
 
-		Button.clickSave();
+		Button.click(button = "Create");
 
 		Alert.viewSuccessMessage();
 	}

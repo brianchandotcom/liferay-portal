@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_WITH_COLOR</td>
+	<td>//*[contains(@class,'btn-${key_color}')][normalize-space(text())='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_DISABLED</td>
 	<td>//*[contains(@class,'btn')][normalize-space(text())='${key_text}'][@disabled='']</td>
 	<td></td>

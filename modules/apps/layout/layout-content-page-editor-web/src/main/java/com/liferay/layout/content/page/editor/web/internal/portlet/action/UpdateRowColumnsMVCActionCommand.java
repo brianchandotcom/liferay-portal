@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -81,8 +82,10 @@ public class UpdateRowColumnsMVCActionCommand
 								deletedLayoutStructureItems)) {
 
 						FragmentEntryLinkUtil.deleteFragmentEntryLink(
-							themeDisplay.getCompanyId(), fragmentEntryLinkId,
-							themeDisplay.getPlid(), _portletRegistry);
+							themeDisplay.getCompanyId(),
+							_contentPageEditorListenerTracker,
+							fragmentEntryLinkId, themeDisplay.getPlid(),
+							_portletRegistry);
 
 						deletedFragmentEntryLinkIds.add(fragmentEntryLinkId);
 					}
@@ -94,6 +97,9 @@ public class UpdateRowColumnsMVCActionCommand
 			"layoutData", layoutDataJSONObject
 		);
 	}
+
+	@Reference
+	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

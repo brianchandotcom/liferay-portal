@@ -25,6 +25,8 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -44,6 +46,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -147,7 +151,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 	}
 
 	private JSONObject _addFragmentEntryLinkToLayoutDataJSONObject(
-			ActionRequest actionRequest, long fragmentEntryLinkId)
+			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -169,11 +173,21 @@ public class AddFragmentEntryLinkMVCActionCommand
 				layoutStructure -> {
 					LayoutStructureItem layoutStructureItem =
 						layoutStructure.addFragmentLayoutStructureItem(
-							fragmentEntryLinkId, parentItemId, position);
+							fragmentEntryLink.getFragmentEntryLinkId(),
+							parentItemId, position);
 
 					jsonObject.put(
 						"addedItemId", layoutStructureItem.getItemId());
 				});
+
+		List<ContentPageEditorListener> contentPageEditorListeners =
+			_contentPageEditorListenerTracker.getContentPageEditorListeners();
+
+		for (ContentPageEditorListener contentPageEditorListener :
+				contentPageEditorListeners) {
+
+			contentPageEditorListener.onAddFragmentEntryLink(fragmentEntryLink);
+		}
 
 		return jsonObject.put("layoutData", layoutDataJSONObject);
 	}
@@ -186,7 +200,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 			actionRequest);
 
 		JSONObject jsonObject = _addFragmentEntryLinkToLayoutDataJSONObject(
-			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());
+			actionRequest, fragmentEntryLink);
 
 		return jsonObject.put(
 			"fragmentEntryLink",
@@ -197,6 +211,9 @@ public class AddFragmentEntryLinkMVCActionCommand
 				_fragmentRendererController, _fragmentRendererTracker,
 				_itemSelector, StringPool.BLANK));
 	}
+
+	@Reference
+	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
 
 	@Reference
 	private FragmentCollectionContributorTracker

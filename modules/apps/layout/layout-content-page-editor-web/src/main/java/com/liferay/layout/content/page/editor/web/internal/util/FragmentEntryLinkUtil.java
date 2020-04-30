@@ -28,6 +28,8 @@ import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,7 +58,9 @@ import javax.portlet.ActionResponse;
 public class FragmentEntryLinkUtil {
 
 	public static void deleteFragmentEntryLink(
-			long companyId, long fragmentEntryLinkId, long plid,
+			long companyId,
+			ContentPageEditorListenerTracker contentPageEditorListenerTracker,
+			long fragmentEntryLinkId, long plid,
 			PortletRegistry portletRegistry)
 		throws PortalException {
 
@@ -100,6 +104,16 @@ public class FragmentEntryLinkUtil {
 		LayoutClassedModelUsageLocalServiceUtil.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLinkId),
 			PortalUtil.getClassNameId(FragmentEntryLink.class), plid);
+
+		List<ContentPageEditorListener> contentPageEditorListeners =
+			contentPageEditorListenerTracker.getContentPageEditorListeners();
+
+		for (ContentPageEditorListener contentPageEditorListener :
+				contentPageEditorListeners) {
+
+			contentPageEditorListener.onDeleteFragmentEntryLink(
+				fragmentEntryLink);
+		}
 	}
 
 	public static FragmentEntry getFragmentEntry(

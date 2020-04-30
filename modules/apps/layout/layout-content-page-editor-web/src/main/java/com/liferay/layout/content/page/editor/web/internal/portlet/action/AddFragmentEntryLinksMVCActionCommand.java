@@ -24,6 +24,8 @@ import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
@@ -146,6 +148,17 @@ public class AddFragmentEntryLinksMVCActionCommand
 					_fragmentCollectionContributorTracker,
 					_fragmentRendererController, _fragmentRendererTracker,
 					_itemSelector, StringPool.BLANK));
+
+			List<ContentPageEditorListener> contentPageEditorListeners =
+				_contentPageEditorListenerTracker.
+					getContentPageEditorListeners();
+
+			for (ContentPageEditorListener contentPageEditorListener :
+					contentPageEditorListeners) {
+
+				contentPageEditorListener.onAddFragmentEntryLink(
+					fragmentEntryLink);
+			}
 		}
 
 		return JSONUtil.put(
@@ -156,6 +169,9 @@ public class AddFragmentEntryLinksMVCActionCommand
 			"layoutData", layoutStructure.toJSONObject()
 		);
 	}
+
+	@Reference
+	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
 
 	@Reference
 	private FragmentCollectionContributorTracker

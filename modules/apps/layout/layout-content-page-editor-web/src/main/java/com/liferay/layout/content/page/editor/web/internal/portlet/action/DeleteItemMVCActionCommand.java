@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -76,7 +77,8 @@ public class DeleteItemMVCActionCommand
 					deletedLayoutStructureItems)) {
 
 			FragmentEntryLinkUtil.deleteFragmentEntryLink(
-				companyId, fragmentEntryLinkId, plid, _portletRegistry);
+				companyId, _contentPageEditorListenerTracker,
+				fragmentEntryLinkId, plid, _portletRegistry);
 
 			deletedFragmentEntryLinkIds.add(fragmentEntryLinkId);
 		}
@@ -114,6 +116,9 @@ public class DeleteItemMVCActionCommand
 			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), itemId,
 			themeDisplay.getPlid(), segmentsExperienceId);
 	}
+
+	@Reference
+	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

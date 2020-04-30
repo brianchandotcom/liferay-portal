@@ -95,7 +95,7 @@ public class DataEngineExpandoBridgeFactoryImpl
 			DataEngineConfiguration.class, properties);
 	}
 
-	private DataEngineConfiguration _dataEngineConfiguration;
+	private volatile DataEngineConfiguration _dataEngineConfiguration;
 
 	@Reference
 	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;

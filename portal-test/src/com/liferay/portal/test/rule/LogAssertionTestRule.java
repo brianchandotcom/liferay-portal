@@ -64,6 +64,9 @@ public class LogAssertionTestRule
 		List<ExpectedLogs> expectedLogsList,
 		List<CaptureAppender> captureAppenders) {
 
+		uninstallLog4jAppender();
+		uninstallJdk14Handler();
+
 		StringBundler sb = new StringBundler();
 
 		for (CaptureAppender captureAppender : captureAppenders) {
@@ -276,6 +279,19 @@ public class LogAssertionTestRule
 		}
 
 		return false;
+	}
+
+	protected static void uninstallJdk14Handler() {
+		Logger logger = Logger.getLogger(StringPool.BLANK);
+
+		logger.removeHandler(LogAssertionHandler.INSTANCE);
+	}
+
+	protected static void uninstallLog4jAppender() {
+		org.apache.log4j.Logger logger =
+			org.apache.log4j.Logger.getRootLogger();
+
+		logger.removeAppender(LogAssertionAppender.INSTANCE);
 	}
 
 	private LogAssertionTestRule() {

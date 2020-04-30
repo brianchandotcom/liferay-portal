@@ -100,11 +100,12 @@ class EventQueue {
 	 * @returns {AnalyticsMessage}
 	 */
 	_createMessage({context, events, userId}) {
-		const {channelId, dataSourceId} = this.analyticsInstance.config;
+		const {channelId, ...updatedContext} = context;
+		const {dataSourceId} = this.analyticsInstance.config;
 
 		return {
 			channelId,
-			context,
+			context: updatedContext,
 			dataSourceId,
 			events,
 			id: uuidv4(),

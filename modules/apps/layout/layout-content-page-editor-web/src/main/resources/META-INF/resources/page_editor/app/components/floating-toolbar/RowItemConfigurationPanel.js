@@ -12,15 +12,31 @@
  * details.
  */
 
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
-export const RowItemConfigurationPanel = ({
+const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
+	const [value, setValue] = useState(false);
+
+	return (
+		<ClayCheckbox
+			checked={value}
+			onChange={({target: {checked}}) => {
+				setValue(val => !val);
+				onValueChange(checked);
+			}}
+			{...otherProps}
+		/>
+	);
+};
+
+export const RowSelectConfigurationPanel = ({
 	config,
 	id,
 	identifier,
 	label,
+	labelOptions,
 	onValueChange,
 	options,
 }) => (
@@ -34,7 +50,9 @@ export const RowItemConfigurationPanel = ({
 				onValueChange(identifier, parseValue);
 			}}
 			options={options.map(value => ({
-				label: Number(value) || Liferay.Language.get(value),
+				label: labelOptions
+					? Liferay.Util.sub(labelOptions(value), value)
+					: Number(value) || Liferay.Language.get(value),
 				value,
 			}))}
 			value={String(config)}
@@ -42,11 +60,34 @@ export const RowItemConfigurationPanel = ({
 	</ClayForm.Group>
 );
 
-RowItemConfigurationPanel.propTypes = {
+RowSelectConfigurationPanel.propTypes = {
 	config: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	id: PropTypes.string,
 	identifier: PropTypes.string,
 	label: PropTypes.string,
 	onValueChange: PropTypes.func.isRequired,
 	options: PropTypes.array,
+};
+
+export const RowCheckboxConfigurationPanel = ({
+	config,
+	identifier,
+	label,
+	onValueChange,
+}) => (
+	<ClayForm.Group>
+		<ClayCheckboxWithState
+			aria-label={label}
+			checked={config}
+			label={label}
+			onValueChange={value => onValueChange(identifier, value)}
+		/>
+	</ClayForm.Group>
+);
+
+RowCheckboxConfigurationPanel.propTypes = {
+	config: PropTypes.bool,
+	identifier: PropTypes.string,
+	label: PropTypes.string,
+	onValueChange: PropTypes.func.isRequired,
 };

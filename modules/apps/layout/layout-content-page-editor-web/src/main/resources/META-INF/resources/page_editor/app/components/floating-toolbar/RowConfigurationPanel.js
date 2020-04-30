@@ -12,10 +12,9 @@
  * details.
  */
 
-import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
@@ -26,7 +25,10 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import updateRowColumns from '../../thunks/updateRowColumns';
-import {RowItemConfigurationPanel} from './RowItemConfigurationPanel';
+import {
+	RowCheckboxConfigurationPanel,
+	RowSelectConfigurationPanel,
+} from './RowItemConfigurationPanel';
 
 const MODULES_PER_ROW_OPTIONS = {
 	1: [1],
@@ -47,21 +49,6 @@ const ROW_CONFIGURATION_IDENTIFIERS = {
 	verticalAlignment: 'verticalAlignment',
 };
 
-const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
-	const [value, setValue] = useState(false);
-
-	return (
-		<ClayCheckbox
-			checked={value}
-			onChange={({target: {checked}}) => {
-				setValue((val) => !val);
-				onValueChange(checked);
-			}}
-			{...otherProps}
-		/>
-	);
-};
-
 export const RowConfigurationPanel = ({item}) => {
 	const {availableViewportSizes} = config;
 	const dispatch = useDispatch();
@@ -74,6 +61,7 @@ export const RowConfigurationPanel = ({item}) => {
 		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row],
 		...item.config,
 	};
+	const viewportSizeConfig = rowConfig[selectedViewportSize] || rowConfig;
 
 	const handleConfigurationValueChanged = (identifier, value) => {
 		let itemConfig = {[identifier]: value};
@@ -117,68 +105,70 @@ export const RowConfigurationPanel = ({item}) => {
 		);
 	};
 
-	const configRender = rowConfig[selectedViewportSize] || rowConfig;
+	const labelModulePerRowOptions = (value) => {
+		return value > 1
+			? Liferay.Language.get('x-modules-per-row')
+			: Liferay.Language.get('x-module-per-row');
+	};
 
 	return (
 		<>
-			<ClayForm.Group small>
-				<RowItemConfigurationPanel
-					config={configRender.numberOfColumns}
-					id="rowNumberOfColumns"
-					identifier={ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns}
-					label={Liferay.Language.get('number-of-columns')}
-					onValueChange={handleConfigurationValueChanged}
-					options={NUMBER_OF_COLUMNS_OPTIONS}
-				/>
-			</ClayForm.Group>
-			<div className="align-items-center d-flex justify-content-between">
-				<p className="mb-3">{Liferay.Language.get('styles')}</p>
+			<RowSelectConfigurationPanel
+				config={viewportSizeConfig.numberOfColumns}
+				id="rowNumberOfColumns"
+				identifier={ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns}
+				label={Liferay.Language.get('number-of-columns')}
+				onValueChange={handleConfigurationValueChanged}
+				options={NUMBER_OF_COLUMNS_OPTIONS}
+			/>
+			<div className="align-items-center d-flex justify-content-between page-editor__floating-toolbar__label pt-3">
+				<p className="mb-3 text-uppercase">
+					{Liferay.Language.get('styles')}
+				</p>
 				<p>
 					{Liferay.Language.get(
 						availableViewportSizes[selectedViewportSize].label
 					)}
 					<ClayIcon
-						className="ml-2"
+						className="ml-1"
 						symbol={
 							availableViewportSizes[selectedViewportSize].icon
 						}
 					/>
 				</p>
 			</div>
-			<ClayForm.Group small>
-				<RowItemConfigurationPanel
-					config={configRender.modulesPerRow}
-					id="rowModulesPerRow"
-					identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
-					label={Liferay.Language.get('layout')}
-					onValueChange={handleConfigurationValueChanged}
-					options={MODULES_PER_ROW_OPTIONS[rowConfig.numberOfColumns]}
-				/>
-			</ClayForm.Group>
-			<ClayForm.Group small>
-				<RowItemConfigurationPanel
-					config={configRender.verticalAlignment}
-					id="rowVerticalAlignment"
-					identifier={ROW_CONFIGURATION_IDENTIFIERS.verticalAlignment}
-					label={Liferay.Language.get('vertical-alignment')}
-					onValueChange={handleConfigurationValueChanged}
-					options={VERTICAL_ALIGNMENT}
-				/>
-			</ClayForm.Group>
+			<RowSelectConfigurationPanel
+				config={viewportSizeConfig.modulesPerRow}
+				id="rowModulesPerRow"
+				identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
+				label={Liferay.Language.get('layout')}
+				labelOptions={labelModulePerRowOptions}
+				onValueChange={handleConfigurationValueChanged}
+				options={MODULES_PER_ROW_OPTIONS[rowConfig.numberOfColumns]}
+			/>
 			{rowConfig.numberOfColumns > 1 && (
-				<ClayForm.Group>
-					<ClayCheckboxWithState
-						aria-label={Liferay.Language.get('columns-gutter')}
-						checked={configRender.gutters}
-						label={Liferay.Language.get('columns-gutter')}
-						onValueChange={(value) =>
-							handleConfigurationValueChanged(
-								ROW_CONFIGURATION_IDENTIFIERS.gutters,
-								value
-							)
-						}
-					/>
-				</ClayForm.Group>
+				<RowCheckboxConfigurationPanel
+					config={viewportSizeConfig.reverseOrder}
+					identifier={ROW_CONFIGURATION_IDENTIFIERS.reverseOrder}
+					label={Liferay.Language.get('inverse-order')}
+					onValueChange={handleConfigurationValueChanged}
+				/>
+			)}
+			<RowSelectConfigurationPanel
+				config={viewportSizeConfig.verticalAlignment}
+				id="rowVerticalAlignment"
+				identifier={ROW_CONFIGURATION_IDENTIFIERS.verticalAlignment}
+				label={Liferay.Language.get('vertical-alignment')}
+				onValueChange={handleConfigurationValueChanged}
+				options={VERTICAL_ALIGNMENT}
+			/>
+			{rowConfig.numberOfColumns < 2 && (
+				<RowCheckboxConfigurationPanel
+					config={viewportSizeConfig.gutters}
+					identifier={ROW_CONFIGURATION_IDENTIFIERS.gutters}
+					label={Liferay.Language.get('columns-gutter')}
+					onValueChange={handleConfigurationValueChanged}
+				/>
 			)}
 		</>
 	);

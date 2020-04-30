@@ -51,6 +51,13 @@
 		}
 	}
 
+	&__label {
+		border-top: 1px solid #e7e7ed;
+		color: $gray-600;
+		font-weight: 600;
+		font-size: 12px;
+	}
+
 	&__panel {
 		animation: FloatingToolbarPanelFadeIn ease 0.3s;
 		animation-fill-mode: forwards;

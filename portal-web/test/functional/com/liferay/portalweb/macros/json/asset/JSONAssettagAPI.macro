@@ -1,0 +1,19 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to add a tag"
+	macro _addTag {
+		Variables.assertDefined(parameterList = "${groupId},${tagName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assettag/add-tag \
+			-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${tagName}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

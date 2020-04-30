@@ -1,0 +1,14 @@
+definition {
+
+	@summary = "Add a basic tag"
+	macro addTag {
+		Variables.assertDefined(parameterList = "${groupName},${tagName}");
+
+		var groupId = JSONAssettagSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+
+		JSONAssettagAPI._addTag(
+			groupId = "${groupId}",
+			tagName = "${tagName}");
+	}
+
+}

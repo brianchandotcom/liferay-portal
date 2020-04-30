@@ -19,13 +19,17 @@ package com.liferay.layout.responsive;
  */
 public enum ViewportSize {
 
-	DESKTOP("desktop", "desktop", "desktop", 992, 960, 3, 1),
+	DESKTOP("desktop", "col-lg-", "desktop", "desktop", 992, 960, 3, 1),
 	MOBILE_LANDSCAPE(
-		"landscapeMobile", "mobile-landscape", "mobile-landscape", 767, 576, 2,
+		"landscapeMobile", "col-sm-","mobile-landscape", "mobile-landscape", 767, 576, 2,
 		3),
 	PORTRAIT_MOBILE(
-		"portraitMobile", "mobile-portrait", "mobile-portrait", 575, 240, 1, 4),
-	TABLET("tablet", "tablet-portrait", "tablet", 991, 768, 3, 2);
+		"portraitMobile", "col-xs-","mobile-portrait", "mobile-portrait", 575, 240, 1, 4),
+	TABLET("tablet", "col-md-","tablet-portrait", "tablet", 991, 768, 3, 2);
+
+	public String getCssClassPrefix() {
+		return _cssClassPrefix;
+	}
 
 	public String getIcon() {
 		return _icon;
@@ -56,10 +60,11 @@ public enum ViewportSize {
 	}
 
 	private ViewportSize(
-		String viewportSizeId, String icon, String label, int maxWidth,
-		int minWidth, int modulesPerRow, int order) {
+		String viewportSizeId, String cssClassPrefix, String icon, String label,
+		int maxWidth, int minWidth, int modulesPerRow, int order) {
 
 		_viewportSizeId = viewportSizeId;
+		_cssClassPrefix = cssClassPrefix;
 		_icon = icon;
 		_label = label;
 		_maxWidth = maxWidth;
@@ -68,6 +73,7 @@ public enum ViewportSize {
 		_order = order;
 	}
 
+	private final String _cssClassPrefix;
 	private final String _icon;
 	private final String _label;
 	private final int _maxWidth;

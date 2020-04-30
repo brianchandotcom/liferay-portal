@@ -83,10 +83,12 @@ for (String childrenItemId : childrenItemIds) {
 
 			<%
 			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
+
+			RowLayoutStructureItem rowLayoutStructureItem = (RowLayoutStructureItem)layoutStructure.getLayoutStructureItem(columnLayoutStructureItem.getParentItemId());
 			%>
 
 			<clay:col
-				md="<%= (columnLayoutStructureItem.getSize() > 0) ? String.valueOf(columnLayoutStructureItem.getSize()) : StringPool.BLANK %>"
+				className="<%= renderFragmentLayoutDisplayContext.getColumnSizeClass(rowLayoutStructureItem, columnLayoutStructureItem) %>"
 			>
 
 				<%

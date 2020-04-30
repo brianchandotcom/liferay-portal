@@ -14,13 +14,9 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,52 +40,25 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PageDefinitionDTOConverter.class)
 public class PageDefinitionDTOConverter {
 
-	public PageDefinition toDTO(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		Layout layout) {
-
-		return toDTO(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			infoDisplayContributorTracker, layout, true, true);
+	public PageDefinition toDTO(Layout layout) {
+		return toDTO(layout, true, true);
 	}
 
 	public PageDefinition toDTO(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		Layout layout, boolean saveInlineContent,
 		boolean saveMappingConfiguration) {
 
-		return toDTO(
-			fragmentCollectionContributorTracker,
-			fragmentEntryConfigurationParser, fragmentRendererTracker,
-			infoDisplayContributorTracker, layout, saveInlineContent,
-			saveMappingConfiguration, 0);
+		return toDTO(layout, saveInlineContent, saveMappingConfiguration, 0);
 	}
 
 	public PageDefinition toDTO(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		Layout layout, boolean saveInlineContent,
 		boolean saveMappingConfiguration, long segmentsExperienceId) {
 
 		return new PageDefinition() {
 			{
 				pageElement = _pageElementDTOConverter.toDTO(
-					fragmentCollectionContributorTracker,
-					fragmentEntryConfigurationParser, fragmentRendererTracker,
-					infoDisplayContributorTracker, layout, saveInlineContent,
-					saveMappingConfiguration);
+					layout, saveInlineContent, saveMappingConfiguration);
 				settings = _toSettings(layout);
 			}
 		};

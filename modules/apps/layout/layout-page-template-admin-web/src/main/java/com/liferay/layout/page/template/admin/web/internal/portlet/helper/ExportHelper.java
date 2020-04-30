@@ -196,9 +196,7 @@ public class ExportHelper {
 
 		if (layout != null) {
 			PageDefinition pageDefinition = _pageDefinitionDTOConverter.toDTO(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				_infoDisplayContributorTracker, layout);
+				layout);
 
 			zipWriter.addEntry(
 				displayPagePath + "/page-definition.json",
@@ -265,9 +263,7 @@ public class ExportHelper {
 
 		if (layout != null) {
 			PageDefinition pageDefinition = _pageDefinitionDTOConverter.toDTO(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				_infoDisplayContributorTracker, layout);
+				layout);
 
 			zipWriter.addEntry(
 				masterLayoutPath + "/page-definition.json",
@@ -333,9 +329,7 @@ public class ExportHelper {
 
 		if (layout != null) {
 			PageDefinition pageDefinition = _pageDefinitionDTOConverter.toDTO(
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-				_infoDisplayContributorTracker, layout);
+				layout);
 
 			zipWriter.addEntry(
 				layoutPageTemplateEntryPath + "/page-definition.json",

@@ -83,6 +83,34 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 	public void testSearchBaseModelWithTrash() {
 	}
 
+	@Test
+	public void testSearchByAbsoluteSourceURL() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		RedirectNotFoundEntry redirectNotFoundEntry =
+			_redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
+				serviceContext.getScopeGroup(), "/page");
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setAttribute(
+			"groupBaseURL", "http://localhost:8080/web/guest");
+		searchContext.setGroupIds(new long[] {group.getGroupId()});
+		searchContext.setKeywords("http://localhost:8080/web/guest/page");
+
+		List<SearchResult> searchResults = _getSearchResults(searchContext);
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectNotFoundEntry.getRedirectNotFoundEntryId(),
+			searchResult.getClassPK());
+	}
+
 	@Override
 	public void testSearchByDDMStructureField() {
 	}
@@ -253,6 +281,16 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 			redirectNotFoundEntry);
 	}
 
+	private List<SearchResult> _getSearchResults(SearchContext searchContext)
+		throws Exception {
+
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+			getBaseModelClass());
+
+		return SearchResultUtil.getSearchResults(
+			indexer.search(searchContext), LocaleUtil.getDefault());
+	}
+
 	private List<SearchResult> _getSearchResults(String keywords)
 		throws Exception {
 
@@ -262,11 +300,7 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 		searchContext.setGroupIds(new long[] {group.getGroupId()});
 		searchContext.setKeywords(keywords);
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-			getBaseModelClass());
-
-		return SearchResultUtil.getSearchResults(
-			indexer.search(searchContext), LocaleUtil.getDefault());
+		return _getSearchResults(searchContext);
 	}
 
 	@Inject

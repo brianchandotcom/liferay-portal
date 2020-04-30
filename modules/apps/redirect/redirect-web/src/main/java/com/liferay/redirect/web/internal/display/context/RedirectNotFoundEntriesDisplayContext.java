@@ -42,6 +42,7 @@ import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
 import com.liferay.redirect.web.internal.security.permission.resource.RedirectPermission;
+import com.liferay.redirect.web.internal.util.RedirectUtil;
 import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
 
@@ -260,6 +261,8 @@ public class RedirectNotFoundEntriesDisplayContext {
 			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
 
 		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
+		searchContext.setAttribute(
+			"groupBaseURL", RedirectUtil.getGroupBaseURL(_themeDisplay));
 		searchContext.setAttribute("ignored", _getIgnored());
 		searchContext.setAttribute("minModifiedDate", _getMinModifiedDate());
 		searchContext.setEnd(redirectNotFoundEntrySearch.getEnd());

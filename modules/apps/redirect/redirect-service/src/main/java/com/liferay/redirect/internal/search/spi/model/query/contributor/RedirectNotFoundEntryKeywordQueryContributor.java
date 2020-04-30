@@ -14,8 +14,16 @@
 
 package com.liferay.redirect.internal.search.spi.model.query.contributor;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.query.FieldQueryFactory;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
@@ -39,10 +47,34 @@ public class RedirectNotFoundEntryKeywordQueryContributor
 		String keywords, BooleanQuery booleanQuery,
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
+		SearchContext searchContext =
+			keywordQueryContributorHelper.getSearchContext();
+
 		_queryHelper.addSearchTerm(
-			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			Field.URL, false);
+			booleanQuery, searchContext, Field.URL, false);
+
+		String groupBaseURL = (String)searchContext.getAttribute(
+			"groupBaseURL");
+
+		if (Validator.isNotNull(groupBaseURL) &&
+			Validator.isNotNull(keywords) &&
+			keywords.startsWith(groupBaseURL)) {
+
+			Query query = fieldQueryFactory.createQuery(
+				Field.URL, StringUtil.removeSubstring(keywords, groupBaseURL),
+				false, false);
+
+			try {
+				booleanQuery.add(query, BooleanClauseOccur.SHOULD);
+			}
+			catch (ParseException parseException) {
+				throw new SystemException(parseException);
+			}
+		}
 	}
+
+	@Reference
+	protected FieldQueryFactory fieldQueryFactory;
 
 	@Reference
 	private QueryHelper _queryHelper;

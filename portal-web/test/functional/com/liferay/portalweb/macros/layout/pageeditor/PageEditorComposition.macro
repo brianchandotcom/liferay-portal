@@ -1,0 +1,28 @@
+definition {
+
+	macro saveAsFragment {
+		SelectFrameTop();
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${fragmentName}");
+
+		if ("${saveInlineContent}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Save Inline Content",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(collectionName)) {
+			AssertClick(
+				key_card = "${collectionName}",
+				locator1 = "LexiconCard#CARD",
+				value1 = "${collectionName}");
+		}
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+	}
+
+}

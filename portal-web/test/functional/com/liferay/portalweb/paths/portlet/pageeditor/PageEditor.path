@@ -430,6 +430,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_BODY_TOOLBAR_SAVE_AS_FRAGMENT_BUTTON</td>
+	<td>//button[@*='Save as Fragment']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_BODY_TOOLBAR_DUPLICATE_BUTTON</td>
 	<td>//button[@*='Duplicate']</td>
 	<td></td>

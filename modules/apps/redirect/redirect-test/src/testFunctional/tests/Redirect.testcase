@@ -681,6 +681,24 @@ definition {
 			entry2 = "2");
 	}
 
+	@description = "This ensures that accessing a nonexistent URL redirects the user to the home of the current site."
+	@priority = "4"
+	test Redirect404sToSiteHomePage {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/fakepage");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/fakepage");
+
+		AssertVisible(
+			key_pageName = "Test Source Page",
+			locator1 = "Home#PAGE_ACTIVE");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+	}
+
 	@description = "This ensures that an expired permanent redirect can be reset."
 	@priority = "5"
 	test ResetExpiredEntry {

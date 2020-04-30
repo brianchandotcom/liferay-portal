@@ -1,8 +1,6 @@
 {
 	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
 	},
-	"com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor": {
-	},
 	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
 		"element-text": {
 			"classNameId": "28701",

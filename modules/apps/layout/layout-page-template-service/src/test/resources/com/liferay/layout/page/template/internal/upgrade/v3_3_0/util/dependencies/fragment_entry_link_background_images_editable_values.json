@@ -6,8 +6,6 @@
 			}
 		}
 	},
-	"com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor": {
-	},
 	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
 	},
 	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {

@@ -23,7 +23,7 @@ const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
 		<ClayCheckbox
 			checked={value}
 			onChange={({target: {checked}}) => {
-				setValue(val => !val);
+				setValue((val) => !val);
 				onValueChange(checked);
 			}}
 			{...otherProps}
@@ -49,7 +49,7 @@ export const RowSelectConfigurationPanel = ({
 				const parseValue = Number(value) || value;
 				onValueChange(identifier, parseValue);
 			}}
-			options={options.map(value => ({
+			options={options.map((value) => ({
 				label: labelOptions
 					? Liferay.Util.sub(labelOptions(value), value)
 					: Number(value) || Liferay.Language.get(value),
@@ -80,7 +80,7 @@ export const RowCheckboxConfigurationPanel = ({
 			aria-label={label}
 			checked={config}
 			label={label}
-			onValueChange={value => onValueChange(identifier, value)}
+			onValueChange={(value) => onValueChange(identifier, value)}
 		/>
 	</ClayForm.Group>
 );

@@ -19,6 +19,7 @@ import React from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {useSelector} from '../../store/index';
 
 const Column = React.forwardRef(
 	({children, className, item, ...props}, ref) => {
@@ -30,11 +31,27 @@ const Column = React.forwardRef(
 			},
 		} = item;
 
+		const layoutData = useSelector((state) => state.layoutData);
+
+		const selectedViewportSize = useSelector(
+			(state) => state.selectedViewportSize
+		);
+
+		const parentItem = layoutData.items[item.parentId];
+
+		const parentItemConfig = parentItem.config[selectedViewportSize]
+			? parentItem.config[selectedViewportSize]
+			: parentItem.config;
+
+		const columnSize =
+			(size * parentItemConfig.numberOfColumns) /
+			parentItemConfig.modulesPerRow;
+
 		return (
 			<div
 				{...props}
 				className={classNames(className, 'col', {
-					[`col-${size}`]: size,
+					[`col-${columnSize}`]: columnSize,
 				})}
 				ref={ref}
 			>

@@ -26,7 +26,7 @@ import {useSelector} from '../../store/index';
 
 const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	const selectedViewportSize = useSelector(
-		state => state.selectedViewportSize
+		(state) => state.selectedViewportSize
 	);
 
 	const itemConfig = item.config[selectedViewportSize]

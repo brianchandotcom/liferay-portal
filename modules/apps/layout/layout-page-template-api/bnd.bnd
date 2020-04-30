@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.layout.page.template.headless.delivery.dto.v1_0,\
 	com.liferay.layout.page.template.importer,\
 	com.liferay.layout.page.template.model,\
+	com.liferay.layout.page.template.serializer,\
 	com.liferay.layout.page.template.service,\
 	com.liferay.layout.page.template.service.persistence,\
 	com.liferay.layout.page.template.util,\

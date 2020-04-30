@@ -699,6 +699,62 @@ definition {
 			value1 = "Not Found");
 	}
 
+	@description = "This ensures that a user is redirected to the updated friendlyURL when he accesses the former friendlyURL."
+	@priority = "5"
+	test RedirectToUpdatedFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Source Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/new-test-page");
+
+		AssertVisible(
+			key_pageName = "Test Source Page",
+			locator1 = "Home#PAGE_ACTIVE");
+	}
+
+	@description = "This ensures that a user is redirected to the updated localized friendlyURL when he accesses the former localized friendlyURL."
+	@priority = "5"
+	test RedirectToUpdatedLocalizedFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Source Page");
+
+		Page.addFriendlyURLLocalizedPG(
+			friendlyUrlLocalized = "es_ES",
+			localizedFriendlyURL = "/pagina-de-prueba");
+
+		PortletEntry.inputName(name = "Pagina de prueba");
+
+		Button.clickSave();
+
+		Page.addFriendlyURLLocalizedPG(
+			friendlyUrlLocalized = "es_ES",
+			localizedFriendlyURL = "/nueva-pagina-de-prueba");
+
+		Button.clickSave();
+
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/pagina-de-prueba");
+
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/nueva-pagina-de-prueba");
+
+		AssertVisible(
+			key_pageName = "Pagina de prueba",
+			locator1 = "Home#PAGE_ACTIVE");
+	}
+
 	@description = "This ensures that an expired permanent redirect can be reset."
 	@priority = "5"
 	test ResetExpiredEntry {

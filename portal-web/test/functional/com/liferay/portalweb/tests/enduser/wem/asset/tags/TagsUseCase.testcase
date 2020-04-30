@@ -28,36 +28,22 @@ definition {
 	test AddAutoAssertionTagViaBlogs {
 		property testray.component.names = "Blogs,Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
 
 		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
-			Navigator.openSiteURL(siteName = "Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Tags");
-
-			Tag.addCP(tagName = "${tagName}");
+			JSONAssettag.addTag(
+				groupName = "Site Name",
+				tagName = "${tagName}");
 		}
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -82,25 +68,20 @@ definition {
 	test AddFrontPageTag {
 		property testray.component.names = "Tags,Wiki";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Wiki");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Wiki");
 
 		WikiPage.addFrontPagePG(
 			pageAddTag = "true",
@@ -112,25 +93,25 @@ definition {
 	test AddMultipleTagsViaBlogs {
 		property testray.component.names = "Blogs,Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntryWithTags(
 			entryContent = "Entry Content",
@@ -158,36 +139,22 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Blogs,Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
 
 		for (var tagName : list "tag1,tag2,tag3") {
-			Navigator.openSiteURL(siteName = "Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Tags");
-
-			Tag.addCP(tagName = "${tagName}");
+			JSONAssettag.addTag(
+				groupName = "Site Name",
+				tagName = "${tagName}");
 		}
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -220,27 +187,20 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Blogs,Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
-
-		Refresh();
 
 		Blogs.addEntryWithTag(
 			entryContent = "Entry Content",
@@ -264,16 +224,16 @@ definition {
 	test DisplayTagCloud {
 		property testray.component.names = "Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page");
 
-		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Tags Navigation");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
-
-		Portlet.addPG(portletName = "Tags Navigation");
 
 		TagsNavigationPortlet.configureFlaggableSettingsPG(
 			showAssetCount = "true",
@@ -283,46 +243,33 @@ definition {
 
 		TagsNavigationPortlet.configureDisplayStylePG(displayTemplate = "Cloud");
 
-		Navigator.gotoPage(pageName = "Tags Navigation Page");
-
-		Portlet.addPG(portletName = "Asset Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Asset Publisher");
 
 		for (var tagName : list "first tag,second tag,third tag") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Tags");
-
-			Tag.addCP(tagName = "${tagName}");
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "${tagName}");
 		}
 
-		Navigator.openURL();
+		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Guest",
+			serviceContext = "${serviceContext}",
+			title = "Web Content Title");
 
-		WebContentNavigator.gotoAddCP();
+		var serviceContext = '''{"assetTagNames": ["first tag"]}''';
 
-		WebContent.addWithTagCP(
-			tagNameList = "first tag,second tag",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.txt",
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "first tag");
+			groupName = "Guest",
+			mimeType = "text/plain",
+			serviceContext = "${serviceContext}",
+			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
@@ -343,16 +290,16 @@ definition {
 	test DisplayTagUsageStatistics {
 		property testray.component.names = "Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page");
 
-		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Tags Navigation");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
-
-		Portlet.addPG(portletName = "Tags Navigation");
 
 		TagsNavigationPortlet.configureDisplayStylePG(displayTemplate = "Number");
 
@@ -360,46 +307,27 @@ definition {
 
 		TagsNavigationPortlet.configureFlaggableSettingsPG(showAssetCount = "true");
 
-		Navigator.gotoPage(pageName = "Tags Navigation Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Asset Publisher");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
 
-		for (var tagName : list "first tag,second tag,third tag") {
-			Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Guest",
+			serviceContext = "${serviceContext}",
+			title = "Web Content Title");
 
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Tags");
+		var serviceContext = '''{"assetTagNames": ["first tag"]}''';
 
-			Tag.addCP(tagName = "${tagName}");
-		}
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "first tag,second tag",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.txt",
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "first tag");
+			groupName = "Guest",
+			mimeType = "text/plain",
+			serviceContext = "${serviceContext}",
+			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
@@ -418,26 +346,21 @@ definition {
 	test DisplayUnusedTags {
 		property testray.component.names = "Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page");
 
-		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Tags Navigation");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
-		Portlet.addPG(portletName = "Tags Navigation");
-
 		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Tags");
-
-			Tag.addCP(tagName = "${tagName}");
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "${tagName}");
 		}
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
@@ -453,34 +376,22 @@ definition {
 	test RemoveSelectTagViaBlogs {
 		property testray.component.names = "Blogs,Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Blogs");
 
-		SitePages.addPublicPage(pageName = "Page Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
-
-		Blogs.addEntryWithTags(
+		JSONBlog.addEntry(
+			assetTagNames = "tag name 1,tag name 2,tag name 3",
 			entryContent = "Entry Content",
 			entryTitle = "Entry Title",
-			tagNameList = "tag name 1,tag name 2,tag name 3");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
+			groupName = "Site Name");
 
 		for (var tagName : list "tag name 1,tag name 2,tag name 3") {
 			Navigator.gotoSitePage(
@@ -529,25 +440,20 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Blogs,Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntryWithTags(
 			entryContent = "Entry Content",
@@ -596,56 +502,40 @@ definition {
 	test SearchMultipleTagsViaBlogs {
 		property testray.component.names = "Blogs,Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Blogs");
 
-		SitePages.addPublicPage(pageName = "Page Name");
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
 		SitePages.addPublicPage(
 			pageName = "search",
 			pageTemplateName = "Search");
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Blogs.addEntryWithTag(
+		JSONBlog.addEntry(
+			assetTagNames = "blue",
 			entryContent = "Entry Content 1",
 			entryTitle = "Entry Title 1",
-			tagName = "blue");
+			groupName = "Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Blogs.addEntryWithTag(
+		JSONBlog.addEntry(
+			assetTagNames = "blue green",
 			entryContent = "Entry Content 2",
 			entryTitle = "Entry Title 2",
-			tagName = "blue green");
+			groupName = "Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Blogs.addEntryWithTag(
+		JSONBlog.addEntry(
+			assetTagNames = "yellow",
 			entryContent = "Entry Content 3",
 			entryTitle = "Entry Title 3",
-			tagName = "yellow");
+			groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -668,12 +558,9 @@ definition {
 	test ViewTagCloudDisplayConfiguration {
 		property testray.component.names = "Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Tag Cloud Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tag Cloud Page");
 
 		Navigator.gotoPage(pageName = "Tag Cloud Page");
 
@@ -689,16 +576,16 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page");
 
-		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Tags Navigation");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
-
-		Portlet.addPG(portletName = "Tags Navigation");
 
 		TagsNavigationPortlet.configureFlaggableSettingsPG(
 			showAssetCount = "true",
@@ -708,46 +595,27 @@ definition {
 
 		TagsNavigationPortlet.configureDisplayStylePG(displayTemplate = "Cloud");
 
-		Navigator.gotoPage(pageName = "Tags Navigation Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Asset Publisher");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
 
-		for (var tagName : list "first tag,second tag,third tag") {
-			Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Guest",
+			serviceContext = "${serviceContext}",
+			title = "Web Content Title");
 
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Tags");
+		var serviceContext = '''{"assetTagNames": ["first tag"]}''';
 
-			Tag.addCP(tagName = "${tagName}");
-		}
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "first tag,second tag",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.txt",
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "first tag");
+			groupName = "Guest",
+			mimeType = "text/plain",
+			serviceContext = "${serviceContext}",
+			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 
@@ -759,19 +627,13 @@ definition {
 			tagName = "second tag (1)",
 			tagPopularityLevel = "3");
 
-		Navigator.openURL();
+		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "first tag,second tag",
-			webContentContent = "Web Content2 Content",
-			webContentTitle = "Web Content2 Title");
+		JSONWebcontent.addWebContent(
+			content = "Web Content2 Content",
+			groupName = "Guest",
+			serviceContext = "${serviceContext}",
+			title = "Web Content2 Title");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
 

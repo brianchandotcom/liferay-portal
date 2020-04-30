@@ -33,7 +33,9 @@ public class EditableValuesTransformerUtilTest {
 
 	@Before
 	public void setUp() {
-		new FileUtil().setFile(new FileImpl());
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 

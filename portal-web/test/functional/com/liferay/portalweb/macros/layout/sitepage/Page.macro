@@ -262,6 +262,14 @@ definition {
 		Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE");
 	}
 
+	macro editFriendlyURL {
+		Type(
+			locator1 = "TextInput#FRIENDLY_URL",
+			value1 = "${friendlyURLEdit}");
+
+		Button.clickSave();
+	}
+
 	macro editName {
 		Alert.closeMessage(messageType = "SUCCESS");
 

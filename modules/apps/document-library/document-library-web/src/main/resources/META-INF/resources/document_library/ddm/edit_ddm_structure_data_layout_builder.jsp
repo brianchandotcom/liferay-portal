@@ -220,14 +220,20 @@ renderResponse.setTitle(title);
 			function (dataLayoutBuilder) {
 				var name = <portlet:namespace />getInputLocalizedValues('name');
 
+				var description = <portlet:namespace />getInputLocalizedValues(
+					'description'
+				);
+
 				var formData = dataLayoutBuilder.getFormData();
 
 				var dataDefinition = formData.definition;
 
+				dataDefinition.description = description;
 				dataDefinition.name = name;
 
 				var dataLayout = formData.layout;
 
+				dataLayout.description = description;
 				dataLayout.name = name;
 
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {

@@ -413,7 +413,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			UserAccount userAccount)
 		throws Exception {
 
-		return userAccountResource.postUserAccount(userAccount);
+		return _addUserAccount(testGroup.getGroupId(), userAccount);
 	}
 
 	private UserAccount _addUserAccount(long siteId, UserAccount userAccount)

@@ -19,11 +19,14 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Asset Publisher Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
 	}
@@ -215,7 +218,6 @@ definition {
 
 	@priority = "4"
 	test AssertGuestRefreshNoConsoleErrors {
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",
@@ -802,11 +804,14 @@ definition {
 				title = "${siteName} WC Title");
 		}
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Site Name WC Content",
@@ -1202,11 +1207,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Blogs Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
 			pageName = "Blogs Page",
@@ -1283,11 +1287,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Web Content Display Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
@@ -1331,31 +1334,28 @@ definition {
 	test ViewRelatedAssetsViaRelatedAssetsPortlet {
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Related Assets");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Related Assets");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Related Assets");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Web Content Display Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Blogs Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
@@ -1418,11 +1418,14 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Blogs Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
 		Navigator.gotoSitePage(
 			pageName = "Blogs Page",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1432,11 +1435,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Documents and Media Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
@@ -1520,11 +1522,14 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Asset Publisher Page 2");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Asset Publisher Page 2",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page 2",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
 

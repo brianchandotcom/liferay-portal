@@ -16,11 +16,14 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Asset Publisher Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
 	}
@@ -79,9 +82,16 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		Portlet.addDuplicatePG(
-			portletCount = "3",
-			portletName = "Asset Publisher");
+		var i = "0";
+
+		while ("${i}" != "3") {
+			var i = ${i} + 1;
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+		}
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -236,18 +246,14 @@ definition {
 		property portal.release = "false";
 		property testray.component.names = "Asset Publisher,Bookmarks";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Bookmarks Page");
 
-		SitePages.addPublicPage(pageName = "Bookmarks Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Bookmarks Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Bookmarks");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Bookmarks Page",
+			widgetName = "Bookmarks");
 
 		Navigator.gotoSitePage(
 			pageName = "Bookmarks Page",
@@ -302,18 +308,14 @@ definition {
 		property portal.release = "false";
 		property testray.component.names = "Asset Publisher,Bookmarks,Content and Display Templates,Training";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Bookmarks Page");
 
-		SitePages.addPublicPage(pageName = "Bookmarks Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Bookmarks Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Bookmarks");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Bookmarks Page",
+			widgetName = "Bookmarks");
 
 		Navigator.gotoSitePage(
 			pageName = "Bookmarks Page",
@@ -399,13 +401,10 @@ definition {
 
 		AssetPublisherPortlet.viewDisplaySettings(displaySettings = "Ratings");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.addPGViaAP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -442,7 +441,10 @@ definition {
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
 
-		Portlet.addDuplicatePG(portletName = "Asset Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -542,18 +544,14 @@ definition {
 		property portal.release = "false";
 		property testray.component.names = "Asset Publisher,Bookmarks";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Bookmarks Page");
 
-		SitePages.addPublicPage(pageName = "Bookmarks Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Bookmarks Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Bookmarks");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Bookmarks Page",
+			widgetName = "Bookmarks");
 
 		Navigator.gotoSitePage(
 			pageName = "Bookmarks Page",
@@ -605,18 +603,18 @@ definition {
 	test FilterTagsByNameAP {
 		property testray.component.names = "Asset Publisher,Tags";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Tags Navigation Page");
 
-		SitePages.addPublicPage(pageName = "Tags Navigation Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Tags Navigation");
 
 		Navigator.gotoSitePage(
 			pageName = "Tags Navigation Page",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Tags Navigation");
 
 		TagsNavigationPortlet.configureDisplayStylePG(displayTemplate = "Number");
 
@@ -626,48 +624,29 @@ definition {
 
 		TagsNavigationPortlet.configureFlaggableSettingsPG(showAssetCount = "true");
 
-		Navigator.gotoSitePage(
-			pageName = "Tags Navigation Page",
-			siteName = "Test Site Name");
+		IFrame.closeFrame();
 
-		Portlet.addPG(portletName = "Asset Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Tags Navigation Page",
+			widgetName = "Asset Publisher");
 
-		for (var tagName : list "first tag,second tag,third tag") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
 
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Tags");
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			serviceContext = "${serviceContext}",
+			title = "Web Content Title");
 
-			Tag.addCP(tagName = "${tagName}");
-		}
+		var serviceContext = '''{"assetTagNames": ["first tag"]}''';
 
-		Navigator.openSiteURL(siteName = "Test Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "first tag,second tag",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
-
-		Navigator.openSiteURL(siteName = "Test Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.txt",
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "first tag");
+			groupName = "Test Site Name",
+			mimeType = "text/plain",
+			serviceContext = "${serviceContext}",
+			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoSitePage(
 			pageName = "Tags Navigation Page",
@@ -717,29 +696,20 @@ definition {
 			fieldNameOrder = "Modified Date",
 			sortOrder = "Ascending");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content 1",
+			groupName = "Test Site Name",
+			title = "WebContent Title 1");
 
-		WebContent.addPGViaAP(
-			webContentContent = "WebContent Content 1",
-			webContentTitle = "WebContent Title 1");
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content 2",
+			groupName = "Test Site Name",
+			title = "WebContent Title 2");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.addPGViaAP(
-			webContentContent = "WebContent Content 2",
-			webContentTitle = "WebContent Title 2");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.addPGViaAP(
-			webContentContent = "WebContent Content 3",
-			webContentTitle = "WebContent Title 3");
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content 3",
+			groupName = "Test Site Name",
+			title = "WebContent Title 3");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -788,29 +758,20 @@ definition {
 			fieldNameOrder = "Modified Date",
 			sortOrder = "Ascending");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content 1",
+			groupName = "Test Site Name",
+			title = "WebContent Title 1");
 
-		WebContent.addPGViaAP(
-			webContentContent = "WebContent Content 1",
-			webContentTitle = "WebContent Title 1");
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content 2",
+			groupName = "Test Site Name",
+			title = "WebContent Title 2");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.addPGViaAP(
-			webContentContent = "WebContent Content 2",
-			webContentTitle = "WebContent Title 2");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.addPGViaAP(
-			webContentContent = "WebContent Content 3",
-			webContentTitle = "WebContent Title 3");
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content 3",
+			groupName = "Test Site Name",
+			title = "WebContent Title 3");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -945,33 +906,24 @@ definition {
 			fieldNameOrder = "Publish Date",
 			sortOrder = "Ascending");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.addPGViaAP(
-			webContentContent = "WebContent Content 1",
-			webContentTitle = "WebContent Title 1");
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content 1",
+			groupName = "Test Site Name",
+			title = "WebContent Title 1");
 
 		Pause(locator1 = "65000");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.addPGViaAP(
-			webContentContent = "WebContent Content 2",
-			webContentTitle = "WebContent Title 2");
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content 2",
+			groupName = "Test Site Name",
+			title = "WebContent Title 2");
 
 		Pause(locator1 = "65000");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.addPGViaAP(
-			webContentContent = "WebContent Content 3",
-			webContentTitle = "WebContent Title 3");
+		JSONWebcontent.addWebContent(
+			content = "WebContent Content 3",
+			groupName = "Test Site Name",
+			title = "WebContent Title 3");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -999,20 +951,10 @@ definition {
 	test RestoreAPArchivedSetup {
 		property testray.component.names = "Asset Publisher,Training";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -1032,11 +974,14 @@ definition {
 
 		Portlet.deletePG(portletName = "Asset Publisher");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.restoreConfigurationTemplatePG(configurationName = "AP Manual Display");
 

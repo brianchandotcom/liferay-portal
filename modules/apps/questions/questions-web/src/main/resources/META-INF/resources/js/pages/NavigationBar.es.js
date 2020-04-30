@@ -37,7 +37,7 @@ export default withRouter(
 			if (sectionTitle) {
 				context.setSection(sectionTitle);
 			}
-			else {
+			else if (Object.keys(context.section).length === 0) {
 				getSections(context.siteKey).then((sections) =>
 					context.setSection(sections.items[0].title)
 				);

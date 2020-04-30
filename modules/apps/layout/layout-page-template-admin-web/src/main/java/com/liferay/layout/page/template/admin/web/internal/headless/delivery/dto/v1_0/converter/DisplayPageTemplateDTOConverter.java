@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 /**
  * @author Rubén Pulido
  */
-public class DisplayPageTemplateConverterUtil {
+public class DisplayPageTemplateDTOConverter {
 
-	public static DisplayPageTemplate toDisplayPageTemplate(
+	public static DisplayPageTemplate toDTO(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		return new DisplayPageTemplate() {
@@ -79,6 +79,6 @@ public class DisplayPageTemplateConverterUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DisplayPageTemplateConverterUtil.class);
+		DisplayPageTemplateDTOConverter.class);
 
 }

@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,51 +37,50 @@ import java.util.Map;
 /**
  * @author Rubén Pulido
  */
-public class PageDefinitionConverterUtil {
+public class PageDefinitionDTOConverter {
 
-	public static PageDefinition toPageDefinition(
+	public static PageDefinition toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		com.liferay.portal.kernel.model.Layout layout) {
+		Layout layout) {
 
-		return toPageDefinition(
+		return toDTO(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			infoDisplayContributorTracker, layout, true, true);
 	}
 
-	public static PageDefinition toPageDefinition(
+	public static PageDefinition toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		com.liferay.portal.kernel.model.Layout layout,
-		boolean saveInlineContent, boolean saveMappingConfiguration) {
+		Layout layout, boolean saveInlineContent,
+		boolean saveMappingConfiguration) {
 
-		return toPageDefinition(
+		return toDTO(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			infoDisplayContributorTracker, layout, saveInlineContent,
 			saveMappingConfiguration, 0);
 	}
 
-	public static PageDefinition toPageDefinition(
+	public static PageDefinition toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		com.liferay.portal.kernel.model.Layout layout,
-		boolean saveInlineContent, boolean saveMappingConfiguration,
-		long segmentsExperienceId) {
+		Layout layout, boolean saveInlineContent,
+		boolean saveMappingConfiguration, long segmentsExperienceId) {
 
 		return new PageDefinition() {
 			{
-				pageElement = PageElementConverterUtil.toPageElement(
+				pageElement = PageElementDTOConverter.toDTO(
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					infoDisplayContributorTracker, layout, saveInlineContent,
@@ -91,9 +90,7 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
-	private static Settings _toSettings(
-		com.liferay.portal.kernel.model.Layout layout) {
-
+	private static Settings _toSettings(Layout layout) {
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 
@@ -196,6 +193,6 @@ public class PageDefinitionConverterUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PageDefinitionConverterUtil.class);
+		PageDefinitionDTOConverter.class);
 
 }

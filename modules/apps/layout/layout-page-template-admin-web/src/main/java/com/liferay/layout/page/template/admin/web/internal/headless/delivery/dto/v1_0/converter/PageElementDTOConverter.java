@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
@@ -77,9 +77,9 @@ import java.util.function.Function;
 /**
  * @author Jürgen Kappler
  */
-public class PageElementConverterUtil {
+public class PageElementDTOConverter {
 
-	public static PageElement toPageElement(
+	public static PageElement toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -108,7 +108,7 @@ public class PageElementConverterUtil {
 				mainLayoutStructureItem.getChildrenItemIds()) {
 
 			mainPageElements.add(
-				toPageElement(
+				toDTO(
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					layout.getGroupId(), infoDisplayContributorTracker,
@@ -117,7 +117,7 @@ public class PageElementConverterUtil {
 					saveInlineContent, saveMappingConfiguration, 0));
 		}
 
-		PageElement pageElement = toPageElement(
+		PageElement pageElement = toDTO(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker,
 			layout.getGroupId(), infoDisplayContributorTracker,
@@ -132,7 +132,7 @@ public class PageElementConverterUtil {
 		return pageElement;
 	}
 
-	public static PageElement toPageElement(
+	public static PageElement toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -155,7 +155,7 @@ public class PageElementConverterUtil {
 
 			if (grandChildrenItemIds.isEmpty()) {
 				pageElements.add(
-					toPageElement(
+					toDTO(
 						fragmentCollectionContributorTracker,
 						fragmentEntryConfigurationParser,
 						fragmentRendererTracker, groupId,
@@ -164,7 +164,7 @@ public class PageElementConverterUtil {
 			}
 			else {
 				pageElements.add(
-					toPageElement(
+					toDTO(
 						fragmentCollectionContributorTracker,
 						fragmentEntryConfigurationParser,
 						fragmentRendererTracker, groupId,
@@ -174,7 +174,7 @@ public class PageElementConverterUtil {
 			}
 		}
 
-		PageElement pageElement = toPageElement(
+		PageElement pageElement = toDTO(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererTracker, groupId,
 			infoDisplayContributorTracker, layoutStructureItem,
@@ -188,7 +188,7 @@ public class PageElementConverterUtil {
 		return pageElement;
 	}
 
-	public static PageElement toPageElement(
+	public static PageElement toDTO(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -360,15 +360,13 @@ public class PageElementConverterUtil {
 				return new PageElement() {
 					{
 						definition =
-							PageFragmentInstanceDefinitionConverterUtil.
-								toPageFragmentInstanceDefinition(
-									fragmentCollectionContributorTracker,
-									fragmentEntryConfigurationParser,
-									fragmentLayoutStructureItem,
-									fragmentRendererTracker,
-									infoDisplayContributorTracker,
-									saveInlineContent,
-									saveMappingConfiguration);
+							PageFragmentInstanceDefinitionDTOConverter.toDTO(
+								fragmentCollectionContributorTracker,
+								fragmentEntryConfigurationParser,
+								fragmentLayoutStructureItem,
+								fragmentRendererTracker,
+								infoDisplayContributorTracker,
+								saveInlineContent, saveMappingConfiguration);
 						type = PageElement.Type.FRAGMENT;
 					}
 				};
@@ -379,11 +377,9 @@ public class PageElementConverterUtil {
 
 			return new PageElement() {
 				{
-					definition =
-						PageWidgetInstanceDefinitionConverterUtil.
-							toWidgetInstanceDefinition(
-								fragmentEntryLink.getClassPK(),
-								PortletIdCodec.encode(portletId, instanceId));
+					definition = PageWidgetInstanceDefinitionDTOConverter.toDTO(
+						fragmentEntryLink.getClassPK(),
+						PortletIdCodec.encode(portletId, instanceId));
 					type = PageElement.Type.WIDGET;
 				}
 			};
@@ -720,6 +716,6 @@ public class PageElementConverterUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PageElementConverterUtil.class);
+		PageElementDTOConverter.class);
 
 }

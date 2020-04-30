@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Widget;
@@ -51,9 +51,9 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Jürgen Kappler
  */
-public class PageWidgetInstanceDefinitionConverterUtil {
+public class PageWidgetInstanceDefinitionDTOConverter {
 
-	public static PageWidgetInstanceDefinition toWidgetInstanceDefinition(
+	public static PageWidgetInstanceDefinition toDTO(
 		long plid, String portletId) {
 
 		if (Validator.isNull(portletId)) {
@@ -201,6 +201,6 @@ public class PageWidgetInstanceDefinitionConverterUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PageWidgetInstanceDefinitionConverterUtil.class);
+		PageWidgetInstanceDefinitionDTOConverter.class);
 
 }

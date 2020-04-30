@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.headless.delivery.dto.v1_0;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -75,35 +75,33 @@ import java.util.stream.Stream;
 /**
  * @author Rubén Pulido
  */
-public class PageFragmentInstanceDefinitionConverterUtil {
+public class PageFragmentInstanceDefinitionDTOConverter {
 
-	public static PageFragmentInstanceDefinition
-		toPageFragmentInstanceDefinition(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-			FragmentLayoutStructureItem fragmentLayoutStructureItem,
-			FragmentRendererTracker fragmentRendererTracker,
-			InfoDisplayContributorTracker infoDisplayContributorTracker,
-			boolean saveInlineContent, boolean saveMapping) {
+	public static PageFragmentInstanceDefinition toDTO(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentLayoutStructureItem fragmentLayoutStructureItem,
+		FragmentRendererTracker fragmentRendererTracker,
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		boolean saveInlineContent, boolean saveMapping) {
 
-		return toPageFragmentInstanceDefinition(
+		return toDTO(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
 			fragmentRendererTracker, infoDisplayContributorTracker,
 			saveInlineContent, saveMapping, 0);
 	}
 
-	public static PageFragmentInstanceDefinition
-		toPageFragmentInstanceDefinition(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-			FragmentLayoutStructureItem fragmentLayoutStructureItem,
-			FragmentRendererTracker fragmentRendererTracker,
-			InfoDisplayContributorTracker infoDisplayContributorTracker,
-			boolean saveInlineContent, boolean saveMapping,
-			long segmentsExperienceId) {
+	public static PageFragmentInstanceDefinition toDTO(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentLayoutStructureItem fragmentLayoutStructureItem,
+		FragmentRendererTracker fragmentRendererTracker,
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		boolean saveInlineContent, boolean saveMapping,
+		long segmentsExperienceId) {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
@@ -141,16 +139,15 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 		};
 	}
 
-	public static PageFragmentInstanceDefinition
-		toPageFragmentInstanceDefinition(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-			FragmentLayoutStructureItem fragmentLayoutStructureItem,
-			InfoDisplayContributorTracker infoDisplayContributorTracker,
-			FragmentRendererTracker fragmentRendererTracker) {
+	public static PageFragmentInstanceDefinition toDTO(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		FragmentLayoutStructureItem fragmentLayoutStructureItem,
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		FragmentRendererTracker fragmentRendererTracker) {
 
-		return toPageFragmentInstanceDefinition(
+		return toDTO(
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentLayoutStructureItem,
 			fragmentRendererTracker, infoDisplayContributorTracker, true, true);
@@ -855,6 +852,6 @@ public class PageFragmentInstanceDefinitionConverterUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PageFragmentInstanceDefinitionConverterUtil.class);
+		PageFragmentInstanceDefinitionDTOConverter.class);
 
 }

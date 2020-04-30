@@ -31,12 +31,12 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.DisplayPageTemplateDTOConverter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.MasterPageDTOConverter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.PageDefinitionDTOConverter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.PageTemplateCollectionDTOConverter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.PageTemplateDTOConverter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
-import com.liferay.layout.page.template.headless.delivery.dto.v1_0.DisplayPageTemplateConverterUtil;
-import com.liferay.layout.page.template.headless.delivery.dto.v1_0.MasterPageConverterUtil;
-import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
-import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageTemplateCollectionConverterUtil;
-import com.liferay.layout.page.template.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
@@ -188,18 +188,17 @@ public class ExportHelper {
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_DISPLAY_PAGE_TEMPLATE,
 			objectWriter.writeValueAsString(
-				DisplayPageTemplateConverterUtil.toDisplayPageTemplate(
+				DisplayPageTemplateDTOConverter.toDTO(
 					layoutPageTemplateEntry)));
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		if (layout != null) {
-			PageDefinition pageDefinition =
-				PageDefinitionConverterUtil.toPageDefinition(
-					_fragmentCollectionContributorTracker,
-					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-					_infoDisplayContributorTracker, layout);
+			PageDefinition pageDefinition = PageDefinitionDTOConverter.toDTO(
+				_fragmentCollectionContributorTracker,
+				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+				_infoDisplayContributorTracker, layout);
 
 			zipWriter.addEntry(
 				displayPagePath + "/page-definition.json",
@@ -259,17 +258,16 @@ public class ExportHelper {
 			masterLayoutPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE,
 			objectWriter.writeValueAsString(
-				MasterPageConverterUtil.toMasterPage(layoutPageTemplateEntry)));
+				MasterPageDTOConverter.toDTO(layoutPageTemplateEntry)));
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		if (layout != null) {
-			PageDefinition pageDefinition =
-				PageDefinitionConverterUtil.toPageDefinition(
-					_fragmentCollectionContributorTracker,
-					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-					_infoDisplayContributorTracker, layout);
+			PageDefinition pageDefinition = PageDefinitionDTOConverter.toDTO(
+				_fragmentCollectionContributorTracker,
+				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+				_infoDisplayContributorTracker, layout);
 
 			zipWriter.addEntry(
 				masterLayoutPath + "/page-definition.json",
@@ -317,7 +315,7 @@ public class ExportHelper {
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_PAGE_TEMPLATE_COLLECTION,
 			objectWriter.writeValueAsString(
-				PageTemplateCollectionConverterUtil.toPageTemplateCollection(
+				PageTemplateCollectionDTOConverter.toDTO(
 					layoutPageTemplateCollection)));
 
 		String layoutPageTemplateEntryPath =
@@ -328,18 +326,16 @@ public class ExportHelper {
 			layoutPageTemplateEntryPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.FILE_NAME_PAGE_TEMPLATE,
 			objectWriter.writeValueAsString(
-				PageTemplateConverterUtil.toPageTemplate(
-					layoutPageTemplateEntry)));
+				PageTemplateDTOConverter.toDTO(layoutPageTemplateEntry)));
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		if (layout != null) {
-			PageDefinition pageDefinition =
-				PageDefinitionConverterUtil.toPageDefinition(
-					_fragmentCollectionContributorTracker,
-					_fragmentEntryConfigurationParser, _fragmentRendererTracker,
-					_infoDisplayContributorTracker, layout);
+			PageDefinition pageDefinition = PageDefinitionDTOConverter.toDTO(
+				_fragmentCollectionContributorTracker,
+				_fragmentEntryConfigurationParser, _fragmentRendererTracker,
+				_infoDisplayContributorTracker, layout);
 
 			zipWriter.addEntry(
 				layoutPageTemplateEntryPath + "/page-definition.json",

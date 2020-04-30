@@ -349,14 +349,6 @@ public class AccountEntryLocalServiceTest {
 			organization);
 
 		_assertSearchWithParams(
-			Arrays.asList(accountEntry1, accountEntry2),
-			_getLinkedHashMap(
-				"organizationIds",
-				new long[] {
-					parentOrganization.getOrganizationId(),
-					organization.getOrganizationId()
-				}));
-		_assertSearchWithParams(
 			Arrays.asList(accountEntry1),
 			_getLinkedHashMap(
 				"organizationIds",
@@ -366,6 +358,14 @@ public class AccountEntryLocalServiceTest {
 			_getLinkedHashMap(
 				"organizationIds",
 				new long[] {organization.getOrganizationId()}));
+		_assertSearchWithParams(
+			Arrays.asList(accountEntry1, accountEntry2),
+			_getLinkedHashMap(
+				"organizationIds",
+				new long[] {
+					parentOrganization.getOrganizationId(),
+					organization.getOrganizationId()
+				}));
 	}
 
 	@Test

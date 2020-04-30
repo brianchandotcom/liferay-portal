@@ -1,0 +1,30 @@
+task jarPatched(type: Zip)
+
+dependencies {
+	compileOnly group: "org.apache.logging.log4j", name: "log4j-api", version: "2.14.1"
+}
+
+jar {
+	setActions([])
+
+	dependsOn jarPatched
+}
+
+jarPatched {
+	archiveName = jar.archiveName
+	destinationDir = jar.destinationDir
+	duplicatesStrategy = "exclude"
+
+	exclude "META-INF/versions/9/module-info.class"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/StackLocator.class"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/StackLocator\$FqcnCallerLocator*"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/ProcessIdUtil.class"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/Base64Util.class"
+	exclude "META-INF/versions/9/org/apache/logging/log4j/util/internal/DefaultObjectInputFilter.class"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(configurations.compileOnly.singleFile)
+	}
+}

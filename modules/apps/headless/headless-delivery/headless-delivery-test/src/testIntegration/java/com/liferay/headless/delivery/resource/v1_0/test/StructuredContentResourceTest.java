@@ -182,14 +182,14 @@ public class StructuredContentResourceTest
 			ResourceConstants.SCOPE_GROUP,
 			String.valueOf(testGroup.getGroupId()), ActionKeys.ADD_ARTICLE);
 
-		User user = UserTestUtil.addGroupUser(testGroup, role.getName());
+		User ownerUser = UserTestUtil.addGroupUser(testGroup, role.getName());
 
 		StructuredContentResource.Builder builder =
 			StructuredContentResource.builder();
 
 		StructuredContentResource structuredContentResource =
 			builder.authentication(
-				user.getLogin(), user.getPasswordUnencrypted()
+				ownerUser.getLogin(), ownerUser.getPasswordUnencrypted()
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -214,7 +214,6 @@ public class StructuredContentResourceTest
 		}
 		finally {
 			_roleLocalService.deleteRole(role);
-			_userLocalService.deleteUser(user);
 		}
 
 		// Regular user
@@ -226,12 +225,12 @@ public class StructuredContentResourceTest
 			ResourceConstants.SCOPE_GROUP,
 			String.valueOf(testGroup.getGroupId()), ActionKeys.VIEW);
 
-		user = UserTestUtil.addGroupUser(testGroup, role.getName());
+		User regularUser = UserTestUtil.addGroupUser(testGroup, role.getName());
 
 		builder = StructuredContentResource.builder();
 
 		structuredContentResource = builder.authentication(
-			user.getLogin(), user.getPasswordUnencrypted()
+			regularUser.getLogin(), regularUser.getPasswordUnencrypted()
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -252,7 +251,8 @@ public class StructuredContentResourceTest
 		}
 		finally {
 			_roleLocalService.deleteRole(role);
-			_userLocalService.deleteUser(user);
+			_userLocalService.deleteUser(regularUser);
+			_userLocalService.deleteUser(ownerUser);
 		}
 	}
 

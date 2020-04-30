@@ -2530,21 +2530,23 @@ public class JenkinsResultsParserUtil {
 		StringBuilder sb = new StringBuilder();
 
 		remainingDuration = _appendDurationStringForUnit(
-			remainingDuration, _MILLIS_DAY, sb, "day", "days");
+			remainingDuration, _MILLIS_DAY, false, sb, "day", "days");
 
 		remainingDuration = _appendDurationStringForUnit(
-			remainingDuration, _MILLIS_HOUR, sb, "hour", "hours");
+			remainingDuration, _MILLIS_HOUR, false, sb, "hour", "hours");
 
 		remainingDuration = _appendDurationStringForUnit(
-			remainingDuration, _MILLIS_MINUTE, sb, "minute", "minutes");
+			remainingDuration, _MILLIS_MINUTE, true, sb, "minute", "minutes");
 
 		if (duration < 60000) {
 			remainingDuration = _appendDurationStringForUnit(
-				remainingDuration, _MILLIS_SECOND, sb, "second", "seconds");
+				remainingDuration, _MILLIS_SECOND, true, sb, "second",
+				"seconds");
 		}
 
 		if (duration < 1000) {
-			_appendDurationStringForUnit(remainingDuration, 1, sb, "ms", "ms");
+			_appendDurationStringForUnit(
+				remainingDuration, 1, true, sb, "ms", "ms");
 		}
 
 		String durationString = sb.toString();
@@ -3062,11 +3064,17 @@ public class JenkinsResultsParserUtil {
 	}
 
 	private static long _appendDurationStringForUnit(
-		long duration, long millisInUnit, StringBuilder sb,
+		long duration, long millisInUnit, boolean round, StringBuilder sb,
 		String unitDescriptionSingular, String unitDescriptionPlural) {
 
 		if (duration >= millisInUnit) {
 			long units = duration / millisInUnit;
+
+			long remainder = duration % millisInUnit;
+
+			if (round && (remainder >= (millisInUnit / 2))) {
+				units++;
+			}
 
 			sb.append(units);
 
@@ -3079,7 +3087,7 @@ public class JenkinsResultsParserUtil {
 
 			sb.append(" ");
 
-			return duration % millisInUnit;
+			return remainder;
 		}
 
 		return duration;

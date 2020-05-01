@@ -131,7 +131,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	public String getAction(
 		HttpServletRequest httpServletRequest, String action) {
 
-		String key = getActionNamePrefix() + action;
+		String key = _ACTION_NAME_PREFIX + action;
 
 		String value = LanguageUtil.get(httpServletRequest, key, null);
 
@@ -148,7 +148,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public String getAction(Locale locale, String action) {
-		String key = getActionNamePrefix() + action;
+		String key = _ACTION_NAME_PREFIX + action;
 
 		String value = LanguageUtil.get(locale, key, null);
 

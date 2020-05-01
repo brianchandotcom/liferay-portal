@@ -67,7 +67,7 @@ if (groupIds.length == 1) {
 						List<String> localizedResourceActions = new ArrayList<String>(resourceActions.size());
 
 						for (String resourceAction : resourceActions) {
-							localizedResourceActions.add(LanguageUtil.get(request, ResourceActionsUtil.getActionNamePrefix() + resourceAction));
+							localizedResourceActions.add(ResourceActionsUtil.getAction(request, resourceAction));
 						}
 					%>
 

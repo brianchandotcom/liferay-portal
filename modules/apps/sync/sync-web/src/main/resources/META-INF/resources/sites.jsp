@@ -107,7 +107,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 		List<String> localizedResourceActions = new ArrayList<String>(resourceActions.size());
 
 		for (String resourceAction : resourceActions) {
-			localizedResourceActions.add(LanguageUtil.get(request, ResourceActionsUtil.getActionNamePrefix() + resourceAction));
+			localizedResourceActions.add(ResourceActionsUtil.getAction(request, resourceAction));
 		}
 
 		String fullAccessPermissionsDescription = LanguageUtil.format(request, "full-access-x", StringUtil.merge(localizedResourceActions, StringPool.COMMA_AND_SPACE));
@@ -120,7 +120,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 			localizedResourceActions = new ArrayList<String>(resourceActions.size());
 
 			for (String resourceAction : resourceActions) {
-				localizedResourceActions.add(LanguageUtil.get(request, ResourceActionsUtil.getActionNamePrefix() + resourceAction));
+				localizedResourceActions.add(ResourceActionsUtil.getAction(request, resourceAction));
 			}
 
 			defaultPermissionsDescription = StringUtil.merge(localizedResourceActions, StringPool.COMMA_AND_SPACE);

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ClassNameImpl;
@@ -35,6 +34,7 @@ public class ClassNameLocalServiceImpl
 	extends ClassNameLocalServiceBaseImpl implements CacheRegistryItem {
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ClassName addClassName(String value) {
 		ClassName className = classNamePersistence.fetchByValue(value);
 
@@ -94,10 +94,7 @@ public class ClassNameLocalServiceImpl
 				return _nullClassName;
 			}
 
-			final ClassName callbackClassName = className;
-
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> _classNames.put(value, callbackClassName));
+			_classNames.put(value, className);
 		}
 
 		return className;
@@ -117,12 +114,8 @@ public class ClassNameLocalServiceImpl
 
 		if (className == null) {
 			try {
-				className = classNameLocalService.addClassName(value);
-
-				final ClassName callbackClassName = className;
-
-				TransactionCommitCallbackUtil.registerCallback(
-					() -> _classNames.put(value, callbackClassName));
+				_classNames.put(
+					value, classNameLocalService.addClassName(value));
 			}
 			catch (Throwable t) {
 				className = classNameLocalService.fetchClassName(value);

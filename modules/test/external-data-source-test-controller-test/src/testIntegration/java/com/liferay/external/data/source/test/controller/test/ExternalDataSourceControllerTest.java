@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
@@ -127,6 +128,12 @@ public class ExternalDataSourceControllerTest {
 		_apiBundle.uninstall();
 
 		FileUtil.deltree(_HYPERSONIC_TEMP_DIR_NAME);
+
+		DB portalDB = DBManagerUtil.getDB();
+
+		try (Connection con = DataAccess.getConnection()) {
+			portalDB.runSQL(con, "drop table TestEntity");
+		}
 	}
 
 	@Test

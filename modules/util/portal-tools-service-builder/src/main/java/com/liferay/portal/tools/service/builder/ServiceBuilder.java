@@ -1818,6 +1818,18 @@ public class ServiceBuilder {
 		return true;
 	}
 
+	public boolean isDSLEnabled() {
+		if (isVersionGTE_7_4_0()) {
+			return true;
+		}
+
+		if (ArrayUtil.contains(_incubationFeatures, "DSL")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isHBMCamelCasePropertyAccessor(String propertyName) {
 		if (propertyName.length() < 3) {
 			return false;
@@ -2366,9 +2378,7 @@ public class ServiceBuilder {
 			String classDeprecatedComment, List<String> modelNames)
 		throws Exception {
 
-		if (!isVersionGTE_7_4_0() &&
-			!ArrayUtil.contains(_incubationFeatures, "DSL")) {
-
+		if (!isDSLEnabled()) {
 			return;
 		}
 

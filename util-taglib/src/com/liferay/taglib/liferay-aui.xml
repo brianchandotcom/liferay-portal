@@ -1297,7 +1297,7 @@
 		</attributes>
 	</component>
 	<component bodyContent="true" name="Row">
-		<description>Creates a row to hold <![CDATA[<code>&lt;aui:col&gt;</code>]]> components.</description>
+		<description>Creates a row to hold <![CDATA[<code>&lt;aui:col&gt;</code>]]> components. Deprecated as of Athanasius (7.3.x), replaced by clay:row.</description>
 		<attributes>
 			<attribute>
 				<description>A CSS class for styling the component.</description>

@@ -68,6 +68,7 @@ public interface ClassNameLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ClassName addClassName(ClassName className);
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ClassName addClassName(String value);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

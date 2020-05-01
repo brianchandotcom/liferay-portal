@@ -35,14 +35,8 @@ public class RegionTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoDefiner<RegionTable> tableReferenceInfoDefiner) {
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
-			fromStep -> fromStep.from(
-				CountryTable.INSTANCE
-			).innerJoinON(
-				RegionTable.INSTANCE,
-				RegionTable.INSTANCE.countryId.eq(
-					CountryTable.INSTANCE.countryId)
-			));
+		tableReferenceInfoDefiner.defineSingleColumnReference(
+			RegionTable.INSTANCE.countryId, CountryTable.INSTANCE.countryId);
 
 		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			RegionTable.INSTANCE.regionCode);

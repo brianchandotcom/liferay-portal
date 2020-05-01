@@ -46,22 +46,11 @@ public class UserGroupTableReferenceDefinition
 		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			UserGroupTable.INSTANCE.externalReferenceCode);
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
-			fromStep -> fromStep.from(
-				CompanyTable.INSTANCE
-			).innerJoinON(
-				UserGroupTable.INSTANCE,
-				UserGroupTable.INSTANCE.companyId.eq(
-					CompanyTable.INSTANCE.companyId)
-			));
+		tableReferenceInfoDefiner.defineSingleColumnReference(
+			UserGroupTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
-			fromStep -> fromStep.from(
-				UserTable.INSTANCE
-			).innerJoinON(
-				UserGroupTable.INSTANCE,
-				UserGroupTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
-			));
+		tableReferenceInfoDefiner.defineSingleColumnReference(
+			UserGroupTable.INSTANCE.userId, UserTable.INSTANCE.userId);
 
 		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			UserGroupTable.INSTANCE.userName);
@@ -72,19 +61,9 @@ public class UserGroupTableReferenceDefinition
 		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			UserGroupTable.INSTANCE.modifiedDate);
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
-			fromStep -> {
-				UserGroupTable aliasUserGroupTable = UserGroupTable.INSTANCE.as(
-					"aliasUserGroupTable");
-
-				return fromStep.from(
-					aliasUserGroupTable
-				).innerJoinON(
-					UserGroupTable.INSTANCE,
-					UserGroupTable.INSTANCE.parentUserGroupId.eq(
-						aliasUserGroupTable.userGroupId)
-				);
-			});
+		tableReferenceInfoDefiner.defineParentColumnReference(
+			UserGroupTable.INSTANCE.userGroupId,
+			UserGroupTable.INSTANCE.parentUserGroupId);
 
 		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			UserGroupTable.INSTANCE.name);

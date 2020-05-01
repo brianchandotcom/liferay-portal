@@ -39,41 +39,20 @@ public class UserGroupGroupRoleTableReferenceDefinition
 		TableReferenceInfoDefiner<UserGroupGroupRoleTable>
 			tableReferenceInfoDefiner) {
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
-			fromStep -> fromStep.from(
-				CompanyTable.INSTANCE
-			).innerJoinON(
-				UserGroupGroupRoleTable.INSTANCE,
-				UserGroupGroupRoleTable.INSTANCE.companyId.eq(
-					CompanyTable.INSTANCE.companyId)
-			));
+		tableReferenceInfoDefiner.defineSingleColumnReference(
+			UserGroupGroupRoleTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId);
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
-			fromStep -> fromStep.from(
-				UserGroupTable.INSTANCE
-			).innerJoinON(
-				UserGroupGroupRoleTable.INSTANCE,
-				UserGroupGroupRoleTable.INSTANCE.userGroupId.eq(
-					UserGroupTable.INSTANCE.userGroupId)
-			));
+		tableReferenceInfoDefiner.defineSingleColumnReference(
+			UserGroupGroupRoleTable.INSTANCE.userGroupId,
+			UserGroupTable.INSTANCE.userGroupId);
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
-			fromStep -> fromStep.from(
-				GroupTable.INSTANCE
-			).innerJoinON(
-				UserGroupGroupRoleTable.INSTANCE,
-				UserGroupGroupRoleTable.INSTANCE.groupId.eq(
-					GroupTable.INSTANCE.groupId)
-			));
+		tableReferenceInfoDefiner.defineSingleColumnReference(
+			UserGroupGroupRoleTable.INSTANCE.groupId,
+			GroupTable.INSTANCE.groupId);
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
-			fromStep -> fromStep.from(
-				RoleTable.INSTANCE
-			).innerJoinON(
-				UserGroupGroupRoleTable.INSTANCE,
-				UserGroupGroupRoleTable.INSTANCE.roleId.eq(
-					RoleTable.INSTANCE.roleId)
-			));
+		tableReferenceInfoDefiner.defineSingleColumnReference(
+			UserGroupGroupRoleTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId);
 	}
 
 	@Override

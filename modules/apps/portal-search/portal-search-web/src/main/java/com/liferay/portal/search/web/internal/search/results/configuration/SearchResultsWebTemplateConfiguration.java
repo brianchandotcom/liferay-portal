@@ -21,11 +21,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Kevin Tan
  */
-@ExtendedObjectClassDefinition(category = "search")
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.search.web.internal.search.results.configuration.SearchResultsWebTemplateConfiguration",
-	localization = "content/Language",
-	name = "search-results-web-template-configuration-name"
+	id = "com.liferay.portal.search.web.internal.search.results.configuration.SearchResultsWebTemplateConfiguration"
 )
 public interface SearchResultsWebTemplateConfiguration {
 

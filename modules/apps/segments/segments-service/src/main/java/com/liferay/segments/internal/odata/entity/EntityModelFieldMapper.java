@@ -248,7 +248,9 @@ public class EntityModelFieldMapper {
 
 		entityFieldsMap.forEach(
 			(entityFieldName, entityField) -> {
-				ExpandoColumn expandoColumn = getExpandoColumn(entityFieldName);
+				ExpandoColumn expandoColumn =
+					_expandoColumnLocalService.fetchExpandoColumn(
+						getExpandoColumnId(entityFieldName));
 
 				if (expandoColumn == null) {
 					return;

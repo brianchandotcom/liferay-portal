@@ -251,7 +251,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a column to display content in an <code>&lt;aui:row&gt;</code> component.]]></description>
+		<description><![CDATA[Creates a column to display content in an <code>&lt;aui:row&gt;</code> component. Deprecated as of Athanasius (7.3.x), replaced by clay:col.]]></description>
 		<name>col</name>
 		<tag-class>com.liferay.taglib.aui.ColTag</tag-class>
 		<body-content>JSP</body-content>
@@ -304,7 +304,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a container <code>&lt;div&gt;</code> tag to wrap <code>&lt;aui:row&gt;</code> components and offer additional styling.]]></description>
+		<description><![CDATA[Creates a container <code>&lt;div&gt;</code> tag to wrap <code>&lt;aui:row&gt;</code> components and offer additional styling. Deprecated as of Athanasius (7.3.x), replaced by clay:container.]]></description>
 		<name>container</name>
 		<tag-class>com.liferay.taglib.aui.ContainerTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1285,7 +1285,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a row to hold <code>&lt;aui:col&gt;</code> components.]]></description>
+		<description><![CDATA[Creates a row to hold <code>&lt;aui:col&gt;</code> components. Deprecated as of Athanasius (7.3.x), replaced by clay:row.]]></description>
 		<name>row</name>
 		<tag-class>com.liferay.taglib.aui.RowTag</tag-class>
 		<body-content>JSP</body-content>

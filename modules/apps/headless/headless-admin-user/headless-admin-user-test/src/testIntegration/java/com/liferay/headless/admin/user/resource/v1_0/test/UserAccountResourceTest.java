@@ -279,24 +279,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		UserAccountContactInformation userAccountContactInformation2 =
 			userAccount2.getUserAccountContactInformation();
 
-		try {
-			_assertUserAccountContactInformation(
-				userAccountContactInformation1, userAccountContactInformation2,
-				"emailAddresses", "emailAddress", EmailAddressSerDes::toDTO);
-			_assertUserAccountContactInformation(
-				userAccountContactInformation1, userAccountContactInformation2,
-				"postalAddresses", "streetAddressLine1",
-				PostalAddressSerDes::toDTO);
-			_assertUserAccountContactInformation(
-				userAccountContactInformation1, userAccountContactInformation2,
-				"telephones", "phoneNumber", PhoneSerDes::toDTO);
-			_assertUserAccountContactInformation(
-				userAccountContactInformation1, userAccountContactInformation2,
-				"webUrls", "url", WebUrlSerDes::toDTO);
-		}
-		catch (Exception exception) {
-			Assert.fail(exception.getMessage());
-		}
+		_assertUserAccountContactInformation(
+			userAccountContactInformation1, userAccountContactInformation2,
+			"emailAddresses", "emailAddress", EmailAddressSerDes::toDTO);
+		_assertUserAccountContactInformation(
+			userAccountContactInformation1, userAccountContactInformation2,
+			"postalAddresses", "streetAddressLine1",
+			PostalAddressSerDes::toDTO);
+		_assertUserAccountContactInformation(
+			userAccountContactInformation1, userAccountContactInformation2,
+			"telephones", "phoneNumber", PhoneSerDes::toDTO);
+		_assertUserAccountContactInformation(
+			userAccountContactInformation1, userAccountContactInformation2,
+			"webUrls", "url", WebUrlSerDes::toDTO);
 
 		Assert.assertEquals(
 			userAccountContactInformation1.getFacebook(),
@@ -429,43 +424,47 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private void _assertUserAccountContactInformation(
-			UserAccountContactInformation userAccountContactInformation1,
-			UserAccountContactInformation userAccountContactInformation2,
-			String fieldName, String subfieldName,
-			Function<String, ?> deserializerFunction)
-		throws Exception {
+		UserAccountContactInformation userAccountContactInformation1,
+		UserAccountContactInformation userAccountContactInformation2,
+		String fieldName, String subfieldName,
+		Function<String, ?> deserializerFunction) {
 
-		String[] array1 = BeanUtils.getArrayProperty(
-			userAccountContactInformation1, fieldName);
-		String[] array2 = BeanUtils.getArrayProperty(
-			userAccountContactInformation2, fieldName);
-
-		Assert.assertEquals(
-			Arrays.toString(array1), array1.length, array2.length);
-
-		Comparator<String> comparator = Comparator.comparing(
-			s -> {
-				try {
-					return BeanUtils.getProperty(
-						deserializerFunction.apply(s), subfieldName);
-				}
-				catch (Exception exception) {
-					return null;
-				}
-			});
-
-		Arrays.sort(array1, comparator);
-		Arrays.sort(array2, comparator);
-
-		for (int i = 0; i < array1.length; i++) {
-			String bean1 = array1[i];
-			String bean2 = array2[i];
+		try {
+			String[] array1 = BeanUtils.getArrayProperty(
+				userAccountContactInformation1, fieldName);
+			String[] array2 = BeanUtils.getArrayProperty(
+				userAccountContactInformation2, fieldName);
 
 			Assert.assertEquals(
-				BeanUtils.getProperty(
-					deserializerFunction.apply(bean1), subfieldName),
-				BeanUtils.getProperty(
-					deserializerFunction.apply(bean2), subfieldName));
+				Arrays.toString(array1), array1.length, array2.length);
+
+			Comparator<String> comparator = Comparator.comparing(
+				s -> {
+					try {
+						return BeanUtils.getProperty(
+							deserializerFunction.apply(s), subfieldName);
+					}
+					catch (Exception exception) {
+						return null;
+					}
+				});
+
+			Arrays.sort(array1, comparator);
+			Arrays.sort(array2, comparator);
+
+			for (int i = 0; i < array1.length; i++) {
+				String bean1 = array1[i];
+				String bean2 = array2[i];
+
+				Assert.assertEquals(
+					BeanUtils.getProperty(
+						deserializerFunction.apply(bean1), subfieldName),
+					BeanUtils.getProperty(
+						deserializerFunction.apply(bean2), subfieldName));
+			}
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

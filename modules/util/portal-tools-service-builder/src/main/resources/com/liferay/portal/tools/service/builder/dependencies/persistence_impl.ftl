@@ -39,6 +39,11 @@ import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
 
 import ${apiPackagePath}.exception.${noSuchEntity}Exception;
 import ${apiPackagePath}.model.${entity.name};
+
+<#if serviceBuilder.isDSLEnabled()>
+	import ${apiPackagePath}.model.${entity.name}Table;
+</#if>
+
 import ${packagePath}.model.impl.${entity.name}Impl;
 import ${packagePath}.model.impl.${entity.name}ModelImpl;
 import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
@@ -227,6 +232,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if !dependencyInjectorDS>
 				setEntityCacheEnabled(${entityCacheEnabled});
 			</#if>
+		</#if>
+
+		<#if serviceBuilder.isDSLEnabled()>
+			setTable(${entity.name}Table.INSTANCE);
 		</#if>
 
 		<#if entity.badEntityColumns?size != 0>

@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -326,6 +327,13 @@ import org.osgi.service.component.annotations.Reference;
 				return ${entity.varName}Persistence.remove(${entity.varName});
 			</#if>
 		}
+
+		<#if serviceBuilder.isDSLEnabled()>
+			@Override
+			public <T> T dslQuery(DSLQuery dslQuery) {
+				return ${entity.varName}Persistence.dslQuery(dslQuery);
+			}
+		</#if>
 
 		@Override
 		public DynamicQuery dynamicQuery() {

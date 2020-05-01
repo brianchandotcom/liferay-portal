@@ -33,7 +33,8 @@ public class ServiceBuilderArgs {
 		"service.builder.modified.files";
 
 	public static final String[] READ_ONLY_PREFIXES = {
-		"dynamicQuery", "fetch", "get", "has", "is", "load", "reindex", "search"
+		"dslQuery", "dynamicQuery", "fetch", "get", "has", "is", "load",
+		"reindex", "search"
 	};
 
 	public static final String[] RESOURCE_ACTION_CONFIGS = {

@@ -371,6 +371,54 @@
 	</tag>
 	<tag>
 		<description></description>
+		<name>col</name>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.ColTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description></description>
+			<name>className</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>lg</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>md</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>sm</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>xl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description></description>
 		<name>container</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.ContainerTag</tag-class>
 		<body-content>JSP</body-content>

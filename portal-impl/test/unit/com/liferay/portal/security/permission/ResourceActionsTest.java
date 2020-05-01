@@ -25,11 +25,7 @@ import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
-import java.util.List;
-
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Michael Bowerman
@@ -63,58 +59,6 @@ public class ResourceActionsTest {
 		ResourceActionsUtil.read(
 			null, _classLoader, _SOURCE_PATH + "default.xml");
 	}
-
-	@Test
-	public void testRemovePortletResource() {
-		List<String> portletNames = ResourceActionsUtil.getPortletNames();
-
-		Assert.assertTrue(
-			portletNames.toString(), portletNames.contains(_PORTLET_NAME_1));
-		Assert.assertTrue(
-			portletNames.toString(), portletNames.contains(_PORTLET_NAME_2));
-
-		List<String> modelNames = ResourceActionsUtil.getModelNames();
-
-		Assert.assertTrue(
-			modelNames.toString(), modelNames.contains(_MODEL_NAME));
-
-		ResourceActionsUtil.removePortletResource(_PORTLET_NAME_1);
-
-		portletNames = ResourceActionsUtil.getPortletNames();
-
-		Assert.assertFalse(
-			portletNames.toString(), portletNames.contains(_PORTLET_NAME_1));
-		Assert.assertTrue(
-			portletNames.toString(), portletNames.contains(_PORTLET_NAME_2));
-
-		modelNames = ResourceActionsUtil.getModelNames();
-
-		Assert.assertTrue(
-			modelNames.toString(), modelNames.contains(_MODEL_NAME));
-
-		ResourceActionsUtil.removePortletResource(_PORTLET_NAME_2);
-
-		portletNames = ResourceActionsUtil.getPortletNames();
-
-		Assert.assertFalse(
-			portletNames.toString(), portletNames.contains(_PORTLET_NAME_1));
-		Assert.assertFalse(
-			portletNames.toString(), portletNames.contains(_PORTLET_NAME_2));
-
-		modelNames = ResourceActionsUtil.getModelNames();
-
-		Assert.assertFalse(
-			modelNames.toString(), modelNames.contains(_MODEL_NAME));
-	}
-
-	private static final String _MODEL_NAME =
-		"com.liferay.test.portlet.TestModel";
-
-	private static final String _PORTLET_NAME_1 =
-		"com_liferay_test_portlet_TestPortlet1";
-
-	private static final String _PORTLET_NAME_2 =
-		"com_liferay_test_portlet_TestPortlet2";
 
 	private static final String _SOURCE_PATH =
 		"com/liferay/portal/security/permission/dependencies/";

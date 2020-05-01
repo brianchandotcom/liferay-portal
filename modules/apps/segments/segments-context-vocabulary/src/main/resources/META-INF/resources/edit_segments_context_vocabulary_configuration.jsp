@@ -43,7 +43,7 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 </div>
 
 <div class="container-fluid container-fluid-max-xl">
-	<div class="row">
+	<clay:row>
 		<div class="col-md-3">
 			<nav class="menubar menubar-transparent menubar-vertical-expand-md">
 				<div class="collapse menubar-collapse" id="<%= 12 %>">
@@ -148,5 +148,5 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 				</aui:form>
 			</div>
 		</div>
-	</div>
+	</clay:row>
 </div>

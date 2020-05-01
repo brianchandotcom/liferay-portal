@@ -18,7 +18,9 @@
 
 <liferay-frontend:fieldset-group>
 	<liferay-frontend:fieldset>
-		<clay:row id="ordering">
+		<clay:row
+			id="ordering"
+		>
 			<aui:col width="<%= 50 %>">
 
 				<%

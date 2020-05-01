@@ -83,7 +83,7 @@ if (amImageConfigurationEntry != null) {
 			<liferay-ui:icon-help message="leave-a-size-field-empty-to-get-images-scaled-proportionally" />
 		</label>
 
-		<div class="row">
+		<clay:row>
 			<div class="col-md-3">
 
 				<%
@@ -121,7 +121,7 @@ if (amImageConfigurationEntry != null) {
 					<aui:validator name="number" />
 				</aui:input>
 			</div>
-		</div>
+		</clay:row>
 
 		<c:if test="<%= amImageConfigurationEntry == null %>">
 			<aui:input label="add-a-resolution-for-high-density-displays" name="addHighResolution" type="checkbox" />

@@ -36,7 +36,7 @@
 			>
 				<h4><liferay-ui:message key="layout-template" /></h4>
 
-				<div class="row">
+				<clay:row>
 
 					<%
 					String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
@@ -67,7 +67,7 @@
 					}
 					%>
 
-				</div>
+				</clay:row>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

@@ -20,7 +20,9 @@
 	<p>Badges help highlight important information such as notifications or new and unread messages. Badges have circular borders and are only used to specify a number.</p>
 </blockquote>
 
-<div class="row text-center">
+<clay:row
+	className="text-center"
+>
 	<div class="col-md-1">
 		<clay:badge
 			label="8"
@@ -73,4 +75,4 @@
 
 		<div>Warning</div>
 	</div>
-</div>
+</clay:row>

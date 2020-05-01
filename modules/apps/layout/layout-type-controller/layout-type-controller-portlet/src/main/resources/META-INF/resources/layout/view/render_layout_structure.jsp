@@ -38,7 +38,7 @@ for (String childrenItemId : childrenItemIds) {
 			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
-			<div class="row">
+			<clay:row>
 
 				<%
 				for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
@@ -58,7 +58,7 @@ for (String childrenItemId : childrenItemIds) {
 				}
 				%>
 
-			</div>
+			</clay:row>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 
@@ -200,25 +200,29 @@ for (String childrenItemId : childrenItemIds) {
 			<c:choose>
 				<c:when test="<%= parentLayoutStructureItem instanceof RootLayoutStructureItem %>">
 					<div className="container-fluid p-0">
-						<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
+						<clay:row
+							className='<%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>'
+						>
 
 							<%
 							request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 							%>
 
 							<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
-						</div>
+						</clay:row>
 					</div>
 				</c:when>
 				<c:otherwise>
-					<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
+					<clay:row
+						className='<%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>'
+					>
 
 						<%
 						request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 						%>
 
 						<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
-					</div>
+					</clay:row>
 				</c:otherwise>
 			</c:choose>
 		</c:when>

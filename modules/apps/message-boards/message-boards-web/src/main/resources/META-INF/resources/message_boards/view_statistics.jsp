@@ -39,7 +39,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 	<div class="statistics-panel">
 		<h3><liferay-ui:message key="overview" /></h3>
 
-		<div class="row">
+		<clay:row>
 			<div class="col-md-4">
 				<div class="overview-container statistics-panel">
 					<div class="sticker sticker-categories sticker-user-icon">
@@ -81,7 +81,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 					<p class="statistics-number"><%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %></p>
 				</div>
 			</div>
-		</div>
+		</clay:row>
 	</div>
 
 	<div class="statistics-panel">

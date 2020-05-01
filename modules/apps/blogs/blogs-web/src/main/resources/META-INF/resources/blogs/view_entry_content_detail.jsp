@@ -47,7 +47,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				className="<%= BlogsEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
 			>
-				<div class="row">
+				<clay:row>
 					<div class="categories col-md-8 mx-auto widget-metadata">
 						<liferay-asset:asset-categories-summary
 							className="<%= BlogsEntry.class.getName() %>"
@@ -56,10 +56,10 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 							portletURL="<%= renderResponse.createRenderURL() %>"
 						/>
 					</div>
-				</div>
+				</clay:row>
 			</liferay-asset:asset-categories-available>
 
-			<div class="row">
+			<clay:row>
 				<div class="col-md-8 mx-auto">
 					<div class="autofit-row">
 						<div class="autofit-col autofit-col-expand">
@@ -146,7 +146,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						</div>
 					</div>
 				</div>
-			</div>
+			</clay:row>
 		</div>
 
 		<%
@@ -167,26 +167,26 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				%>
 
 				<c:if test="<%= Validator.isNotNull(coverImageCaption) %>">
-					<div class="row">
+					<clay:row>
 						<div class="col-md-8 mx-auto">
 							<div class="cover-image-caption">
 								<small><%= entry.getCoverImageCaption() %></small>
 							</div>
 						</div>
-					</div>
+					</clay:row>
 				</c:if>
 			</c:if>
 
-			<div class="row">
+			<clay:row>
 				<div class="col-md-8 mx-auto widget-mode-detail-text">
 					<%= entry.getContent() %>
 				</div>
-			</div>
+			</clay:row>
 
 			<liferay-expando:custom-attributes-available
 				className="<%= BlogsEntry.class.getName() %>"
 			>
-				<div class="row">
+				<clay:row>
 					<div class="col-md-8 mx-auto widget-mode-detail">
 						<liferay-expando:custom-attribute-list
 							className="<%= BlogsEntry.class.getName() %>"
@@ -195,14 +195,14 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 							label="<%= true %>"
 						/>
 					</div>
-				</div>
+				</clay:row>
 			</liferay-expando:custom-attributes-available>
 
 			<liferay-asset:asset-tags-available
 				className="<%= BlogsEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
 			>
-				<div class="row">
+				<clay:row>
 					<div class="col-md-8 mx-auto widget-mode-detail">
 						<div class="entry-tags">
 							<liferay-asset:asset-tags-summary
@@ -212,12 +212,12 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 							/>
 						</div>
 					</div>
-				</div>
+				</clay:row>
 			</liferay-asset:asset-tags-available>
 		</div>
 
 		<div class="container">
-			<div class="row">
+			<clay:row>
 				<div class="col-md-8 mx-auto widget-mode-detail">
 
 					<%
@@ -228,10 +228,10 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						<liferay-util:param name="showFlags" value="<%= Boolean.TRUE.toString() %>" />
 					</liferay-util:include>
 				</div>
-			</div>
+			</clay:row>
 
 			<c:if test="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>">
-				<div class="row">
+				<clay:row>
 					<div class="col-md-8 mx-auto widget-mode-detail">
 
 						<%
@@ -246,7 +246,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 							/>
 						</div>
 					</div>
-				</div>
+				</clay:row>
 			</c:if>
 		</div>
 	</c:when>

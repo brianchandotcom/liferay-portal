@@ -18,7 +18,7 @@
 
 <h3>Image cards</h3>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-4" id="image-card-block">
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
@@ -46,11 +46,11 @@
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h4>Image Card with Sticker</h4>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-4" id="image-card-block">
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
@@ -84,11 +84,11 @@
 			title="<%= _PNG_FILE_TITLE %>"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h4>Image Card with Sticker Shape</h4>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-4" id="image-card-block">
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
@@ -127,11 +127,11 @@
 			title="<%= _PNG_FILE_TITLE %>"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h4>Image Card with Labels</h4>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-4" id="image-card-block">
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
@@ -169,11 +169,11 @@
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h4>Selectable Image Card</h4>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-4" id="image-card-block">
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
@@ -216,11 +216,11 @@
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h4>File Cards</h4>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-4" id="image-card-block">
 		<clay:file-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
@@ -259,11 +259,11 @@
 			title="<%= _DOC_FILE_TITLE %>"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h4>User Cards</h4>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-6" id="image-card-block">
 		<clay:user-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
@@ -285,11 +285,11 @@
 			subtitle="Latest Action"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h4>Horizontal Cards</h4>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-6" id="image-card-block">
 		<clay:horizontal-card
 			title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual"
@@ -304,7 +304,7 @@
 			title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <%!
 private static final String _DOC_FILE_TITLE = "deliverable.doc";

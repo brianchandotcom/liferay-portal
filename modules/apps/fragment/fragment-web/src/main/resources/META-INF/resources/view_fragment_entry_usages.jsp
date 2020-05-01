@@ -28,7 +28,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
-	<div class="row">
+
+	<%
+	FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntryLinkDisplayContext.getSearchContainer());
+	%>
+
+	<clay:row>
 		<div class="col-lg-3">
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
@@ -115,10 +120,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					</div>
 				</h2>
 
-				<%
-				FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntryLinkDisplayContext.getSearchContainer());
-				%>
-
 				<clay:management-toolbar
 					displayContext="<%= fragmentEntryUsageManagementToolbarDisplayContext %>"
 				/>
@@ -170,7 +171,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 				</aui:form>
 			</div>
 		</div>
-	</div>
+	</clay:row>
 </div>
 
 <liferay-frontend:component

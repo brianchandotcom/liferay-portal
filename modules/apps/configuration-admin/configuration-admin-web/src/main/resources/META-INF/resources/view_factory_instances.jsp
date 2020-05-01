@@ -62,7 +62,7 @@ renderResponse.setTitle(categoryDisplayName);
 </div>
 
 <div class="container-fluid container-fluid-max-xl">
-	<div class="row">
+	<clay:row>
 		<div class="col-md-3">
 			<liferay-util:include page="/configuration_category_menu.jsp" servletContext="<%= application %>" />
 		</div>
@@ -219,5 +219,5 @@ renderResponse.setTitle(categoryDisplayName);
 				</liferay-ui:search-container>
 			</div>
 		</div>
-	</div>
+	</clay:row>
 </div>

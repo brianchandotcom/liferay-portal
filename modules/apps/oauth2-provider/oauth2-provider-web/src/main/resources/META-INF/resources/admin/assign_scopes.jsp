@@ -41,7 +41,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 		</c:choose>
 	</liferay-ui:error>
 
-	<div class="row">
+	<clay:row>
 		<div class="col-lg-12">
 			<portlet:actionURL name="/admin/assign_scopes" var="assignScopesURL">
 				<portlet:param name="mvcRenderCommandName" value="/admin/assign_scopes" />
@@ -85,7 +85,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 				<aui:input id="impliedScopeAliases" name="scopeAliases" type="hidden" />
 			</aui:form>
 		</div>
-	</div>
+	</clay:row>
 </div>
 
 <aui:script require="metal-dom/src/dom as dom">

@@ -34,7 +34,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
-	<div class="row">
+	<clay:row>
 		<div class="col-lg-3">
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
@@ -159,5 +159,5 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 				</liferay-ui:search-container>
 			</div>
 		</div>
-	</div>
+	</clay:row>
 </div>

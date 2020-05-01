@@ -17,16 +17,16 @@
 <%@ include file="/process_info/init.jsp" %>
 
 <div class="container text-secondary">
-	<div class="row">
+	<clay:row>
 		<div class="col-sm">
 			<liferay-staging:process-title
 				backgroundTask="<%= backgroundTask %>"
 				listView="<%= false %>"
 			/>
 		</div>
-	</div>
+	</clay:row>
 
-	<div class="row">
+	<clay:row>
 		<div class="col-sm"><%= HtmlUtil.escape(userName) %></div>
 		<div class="col-sm">
 			<liferay-staging:process-date
@@ -43,23 +43,23 @@
 				listView="<%= false %>"
 			/>
 		</div>
-	</div>
+	</clay:row>
 
-	<div class="row">
+	<clay:row>
 		<div class="col">
 			<liferay-staging:process-in-progress
 				backgroundTask="<%= backgroundTask %>"
 				listView="<%= false %>"
 			/>
 		</div>
-	</div>
+	</clay:row>
 
-	<div class="row">
+	<clay:row>
 		<div class="col">
 			<liferay-staging:process-status
 				backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
 				backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
 			/>
 		</div>
-	</div>
+	</clay:row>
 </div>

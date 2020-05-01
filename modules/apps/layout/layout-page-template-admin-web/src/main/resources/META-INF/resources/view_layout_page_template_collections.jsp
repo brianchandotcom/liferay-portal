@@ -30,7 +30,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 <liferay-ui:success key="layoutPageTemplatePublished" message="the-page-template-was-published-succesfully" />
 
 <div class="container-fluid container-fluid-max-xl container-view">
-	<div class="row">
+	<clay:row>
 		<div class="col-lg-3">
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
@@ -144,7 +144,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 				</div>
 			</c:if>
 		</div>
-	</div>
+	</clay:row>
 </div>
 
 <aui:form cssClass="hide" name="layoutPageTemplateCollectionsFm">

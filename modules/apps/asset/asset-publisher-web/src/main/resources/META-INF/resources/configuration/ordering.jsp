@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:row id="ordering">
+<clay:row
+	id="ordering"
+>
 	<aui:col width="<%= 50 %>">
 
 		<%

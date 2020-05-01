@@ -116,7 +116,9 @@ if (Validator.isNotNull(keywords)) {
 	<liferay-ui:message key="<%= panelTitle %>" />
 </h4>
 
-<div class="m-1 row">
+<clay:row
+	className="m-1"
+>
 
 	<%
 	long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
@@ -207,7 +209,7 @@ if (Validator.isNotNull(keywords)) {
 	}
 	%>
 
-</div>
+</clay:row>
 
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace />numItemsContainer').delegate(

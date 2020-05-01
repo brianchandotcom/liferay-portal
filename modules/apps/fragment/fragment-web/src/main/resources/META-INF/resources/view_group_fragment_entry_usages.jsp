@@ -29,13 +29,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="sheet">
-		<div class="row">
+
+		<%
+		GroupFragmentEntryUsageManagementToolbarDisplayContext groupFragmentEntryUsageManagementToolbarDisplayContext = new GroupFragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupFragmentEntryLinkDisplayContext.getSearchContainer());
+		%>
+
+		<clay:row>
 			<div class="col-lg-12">
-
-				<%
-				GroupFragmentEntryUsageManagementToolbarDisplayContext groupFragmentEntryUsageManagementToolbarDisplayContext = new GroupFragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupFragmentEntryLinkDisplayContext.getSearchContainer());
-				%>
-
 				<clay:management-toolbar
 					displayContext="<%= groupFragmentEntryUsageManagementToolbarDisplayContext %>"
 				/>
@@ -75,7 +75,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					</liferay-ui:search-container>
 				</aui:form>
 			</div>
-		</div>
+		</clay:row>
 	</div>
 </div>
 

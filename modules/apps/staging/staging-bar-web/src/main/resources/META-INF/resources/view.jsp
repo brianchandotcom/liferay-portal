@@ -140,7 +140,7 @@ if (liveLayout != null) {
 		<c:if test="<%= !layout.isSystem() || layout.isTypeControlPanel() || !Objects.equals(layout.getFriendlyURL(), PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL) %>">
 			<div class="staging-bar">
 				<div class="container-fluid container-fluid-max-xl">
-					<div class="row">
+					<clay:row>
 						<c:choose>
 							<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 								<c:if test="<%= stagingGroup != null %>">
@@ -208,7 +208,7 @@ if (liveLayout != null) {
 								</div>
 							</c:otherwise>
 						</c:choose>
-					</div>
+					</clay:row>
 				</div>
 			</div>
 		</c:if>

@@ -22,7 +22,7 @@
 	<p>A dropdown is a list of options related to the element that triggers it.</p>
 </blockquote>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-2">
 		<clay:dropdown-menu
 			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
@@ -78,9 +78,9 @@
 			label="Icons"
 		/>
 	</div>
-</div>
+</clay:row>
 
-<div class="row">
+<clay:row>
 	<div class="col-md-4">
 		<clay:dropdown-menu
 			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
@@ -117,4 +117,4 @@
 			triggerCssClasses="btn-outline-borderless"
 		/>
 	</div>
-</div>
+</clay:row>

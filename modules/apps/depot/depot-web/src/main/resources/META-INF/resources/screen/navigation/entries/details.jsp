@@ -55,7 +55,7 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 			<liferay-ui:message key="asset-library-applications-description" />
 		</p>
 
-		<div class="row">
+		<clay:row>
 
 			<%
 			for (DepotApplication depotApplication : depotAdminDetailsDisplayContext.getDepotApplications()) {
@@ -69,7 +69,7 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 			}
 			%>
 
-		</div>
+		</clay:row>
 
 	</liferay-frontend:fieldset>
 

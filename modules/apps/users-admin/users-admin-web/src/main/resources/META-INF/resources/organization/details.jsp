@@ -37,7 +37,7 @@ if (organization != null) {
 
 <aui:model-context bean="<%= organization %>" model="<%= Organization.class %>" />
 
-<div class="row">
+<clay:row>
 	<div class="col-md-7">
 		<liferay-ui:error exception="<%= DuplicateOrganizationException.class %>" message="the-organization-name-is-already-taken" />
 
@@ -116,7 +116,7 @@ if (organization != null) {
 			</c:if>
 		</div>
 	</div>
-</div>
+</clay:row>
 
 <aui:script use="liferay-dynamic-select">
 	new Liferay.DynamicSelect([

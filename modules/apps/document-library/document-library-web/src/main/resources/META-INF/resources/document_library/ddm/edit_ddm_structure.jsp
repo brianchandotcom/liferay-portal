@@ -151,7 +151,9 @@ renderResponse.setTitle(title);
 						persistState="<%= true %>"
 						title='<%= LanguageUtil.get(request, "details") %>'
 					>
-						<clay:row className="lfr-ddm-types-form-column">
+						<clay:row
+							className="lfr-ddm-types-form-column"
+						>
 							<aui:input name="storageType" type="hidden" value="<%= StorageType.JSON.getValue() %>" />
 						</clay:row>
 

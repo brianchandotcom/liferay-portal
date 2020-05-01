@@ -22,7 +22,9 @@
 
 <h3>SQUARE</h3>
 
-<div class="mb-3 row text-center">
+<clay:row
+	className="mb-3 text-center"
+>
 	<div class="col-md-1">
 		<clay:sticker
 			label="JPG"
@@ -34,11 +36,13 @@
 			icon="picture"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h3>ROUND</h3>
 
-<div class="mb-3 row text-center">
+<clay:row
+	className="mb-3 text-center"
+>
 	<div class="col-md-1">
 		<clay:sticker
 			label="JPG"
@@ -52,11 +56,13 @@
 			shape="circle"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h3>POSITION</h3>
 
-<div class="mb-3 row">
+<clay:row
+	className="mb-3"
+>
 	<div class="col-md-2">
 		<div class="aspect-ratio">
 			<img class="aspect-ratio-item-fluid" src="https://claycss.com/images/thumbnail_hot_air_ballon.jpg" />
@@ -104,4 +110,4 @@
 			/>
 		</div>
 	</div>
-</div>
+</clay:row>

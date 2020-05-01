@@ -53,7 +53,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 
 	</aui:select>
 
-	<div class="row">
+	<clay:row>
 		<div class="col-lg-7" id="<portlet:namespace />allowedGrantTypesSection">
 			<h3 class="sheet-subtitle"><liferay-ui:message key="allowed-grant-types" /></h3>
 
@@ -226,7 +226,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 				</aui:script>
 			</div>
 		</c:if>
-	</div>
+	</clay:row>
 
 	<c:if test="<%= oAuth2Application != null %>">
 		<h3 class="sheet-subtitle"><liferay-ui:message key="supported-features" /></h3>

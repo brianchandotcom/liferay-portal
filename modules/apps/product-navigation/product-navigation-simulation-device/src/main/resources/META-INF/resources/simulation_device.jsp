@@ -19,7 +19,9 @@
 <div id="<portlet:namespace />simulationDeviceContainer">
 	<div class="list-group-panel">
 		<div class="container-fluid devices">
-			<div class="default-devices row">
+			<clay:row
+				className="default-devices"
+			>
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item selected text-center" data-device="desktop" type="button">
 					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
@@ -53,13 +55,16 @@
 
 					<small><liferay-ui:message key="custom" /></small>
 				</button>
-			</div>
+			</clay:row>
 
-			<div class="custom-devices d-lg-flex d-none hide row" id="<portlet:namespace />customDeviceContainer">
+			<clay:row
+				className="custom-devices d-lg-flex d-none hide"
+				id="<portlet:namespace />customDeviceContainer"
+			>
 				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="col-6" />
 
 				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="col-6" />
-			</div>
+			</clay:row>
 		</div>
 	</div>
 </div>

@@ -269,7 +269,9 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 						persistState="<%= true %>"
 						title='<%= LanguageUtil.get(request, "details") %>'
 					>
-						<clay:row className="lfr-ddm-types-form-column">
+						<clay:row
+							className="lfr-ddm-types-form-column"
+						>
 							<c:choose>
 								<c:when test="<%= Validator.isNull(storageTypeValue) %>">
 									<aui:col width="<%= 50 %>">

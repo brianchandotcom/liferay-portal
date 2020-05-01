@@ -30,7 +30,7 @@ if (kbArticle != null) {
 	<div class="kb-attachments">
 		<h5><liferay-ui:message key="attachments" /></h5>
 
-		<div class="row">
+		<clay:row>
 
 			<%
 			for (FileEntry fileEntry : attachmentsFileEntries) {
@@ -54,6 +54,6 @@ if (kbArticle != null) {
 			}
 			%>
 
-		</div>
+		</clay:row>
 	</div>
 </c:if>

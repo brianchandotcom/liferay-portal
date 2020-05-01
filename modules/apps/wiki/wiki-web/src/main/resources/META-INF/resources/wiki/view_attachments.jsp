@@ -24,7 +24,7 @@ final WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 	<div class="page-attachments">
 		<h5><liferay-ui:message key="attachments" /></h5>
 
-		<div class="row">
+		<clay:row>
 
 			<%
 			List<FileEntry> attachmentsFileEntries = wikiPage.getAttachmentsFileEntries();
@@ -50,6 +50,6 @@ final WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 			}
 			%>
 
-		</div>
+		</clay:row>
 	</div>
 </c:if>

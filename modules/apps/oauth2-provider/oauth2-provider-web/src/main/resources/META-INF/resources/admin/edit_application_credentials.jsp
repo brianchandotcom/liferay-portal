@@ -34,7 +34,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 <aui:form action="<%= updateOAuth2ApplicationURL %>" id="oauth2-application-fm" method="post" name="oauth2-application-fm">
 	<div class="container-fluid container-fluid-max-xl container-view">
 		<div class="sheet">
-			<div class="row">
+			<clay:row>
 				<div class="col-lg-12">
 					<liferay-ui:error exception="<%= DuplicateOAuth2ApplicationClientIdException.class %>" focusField="clientId" message="client-id-already-exists" />
 
@@ -109,9 +109,9 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 						</aui:fieldset>
 					</c:if>
 				</div>
-			</div>
+			</clay:row>
 
-			<div class="row">
+			<clay:row>
 				<c:choose>
 					<c:when test="<%= oAuth2Application != null %>">
 						<div class="col-lg-9">
@@ -146,9 +146,9 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 						</div>
 					</c:otherwise>
 				</c:choose>
-			</div>
+			</clay:row>
 
-			<div class="row">
+			<clay:row>
 				<div class="col-lg-12">
 					<aui:button-row>
 						<aui:button type="submit" />
@@ -156,7 +156,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 						<aui:button href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 					</aui:button-row>
 				</div>
-			</div>
+			</clay:row>
 		</div>
 	</div>
 </aui:form>

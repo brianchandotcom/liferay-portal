@@ -38,7 +38,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 <liferay-util:include page="/uad_data_navigation_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
-	<div class="row">
+	<clay:row>
 		<div class="col-lg-3">
 			<div class="panel panel-secondary">
 				<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />scopePanelBody" data-toggle="liferay-collapse">
@@ -208,7 +208,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				</div>
 			</div>
 		</div>
-	</div>
+	</clay:row>
 </div>
 
 <portlet:renderURL var="reviewUADDataURL">

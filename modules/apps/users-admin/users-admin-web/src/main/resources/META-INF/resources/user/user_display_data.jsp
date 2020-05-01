@@ -22,7 +22,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
-<div class="row">
+<clay:row>
 	<div class="col-md-6">
 		<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
 
@@ -170,4 +170,4 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 			</c:if>
 		</div>
 	</div>
-</div>
+</clay:row>

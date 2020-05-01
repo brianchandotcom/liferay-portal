@@ -227,7 +227,9 @@
 						String[] days = CalendarUtil.getDays(locale);
 						%>
 
-						<div class="row weekdays">
+						<clay:row
+							className="weekdays"
+						>
 
 							<%
 							int firstDayOfWeek = cal.getFirstDayOfWeek();
@@ -247,7 +249,7 @@
 							}
 							%>
 
-						</div>
+						</clay:row>
 					</td>
 				</tr>
 			</tbody>

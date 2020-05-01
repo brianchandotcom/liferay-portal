@@ -18,7 +18,9 @@
 Hits hits = searchDisplayContext.getHits();
 %>
 
-<clay:row className='<%= "search-layout" + (searchDisplayContext.isShowMenu() ? " menu-column" : StringPool.BLANK) %>'>
+<clay:row
+	className='<%= "search-layout" + (searchDisplayContext.isShowMenu() ? " menu-column" : StringPool.BLANK) %>'
+>
 	<c:if test="<%= searchDisplayContext.isShowMenu() %>">
 		<aui:col id="facetNavigation" span="<%= 3 %>">
 

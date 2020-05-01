@@ -32,7 +32,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">
-	<div class="row">
+	<clay:row>
 		<div class="col-lg-3">
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
@@ -131,7 +131,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 				</c:otherwise>
 			</c:choose>
 		</div>
-	</div>
+	</clay:row>
 </div>
 
 <script>

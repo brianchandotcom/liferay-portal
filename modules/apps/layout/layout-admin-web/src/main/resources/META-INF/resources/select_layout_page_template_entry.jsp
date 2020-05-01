@@ -34,7 +34,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view" id="<portlet:namespace />layoutPageTemplateEntries">
-	<div class="row">
+	<clay:row>
 		<div class="col-lg-3">
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
@@ -151,7 +151,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 				</c:choose>
 			</div>
 		</div>
-	</div>
+	</clay:row>
 </div>
 
 <aui:script require="metal-dom/src/all/dom as dom">

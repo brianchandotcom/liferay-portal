@@ -33,15 +33,19 @@
 	<tbody>
 		<tr>
 			<td>
-				<div class="flex-md-nowrap mb-2 row">
+				<clay:row
+					className="flex-md-nowrap mb-2"
+				>
 					<div class="col"><clay:button label="Primary" /></div>
 					<div class="col"><clay:button ariaLabel="Workflow" icon="workflow" /></div>
-				</div>
+				</clay:row>
 
-				<div class="flex-md-nowrap row">
+				<clay:row
+					className="flex-md-nowrap"
+				>
 					<div class="col"><clay:button disabled="<%= true %>" label="Primary" /></div>
 					<div class="col"><clay:button ariaLabel="Workflow" disabled="<%= true %>" icon="workflow" /></div>
-				</div>
+				</clay:row>
 			</td>
 			<td>
 				<strong>Primary</strong>: The primary button is always use for the most important actions. There can't be two primary actions together or near by.
@@ -49,15 +53,19 @@
 		</tr>
 		<tr>
 			<td>
-				<div class="flex-md-nowrap mb-2 row">
+				<clay:row
+					className="flex-md-nowrap mb-2"
+				>
 					<div class="col"><clay:button label="Secondary" style="secondary" /></div>
 					<div class="col"><clay:button ariaLabel="Wiki" icon="wiki" style="secondary" /></div>
-				</div>
+				</clay:row>
 
-				<div class="flex-md-nowrap row">
+				<clay:row
+					className="flex-md-nowrap"
+				>
 					<div class="col"><clay:button disabled="<%= true %>" label="Secondary" style="secondary" /></div>
 					<div class="col"><clay:button ariaLabel="Wiki" disabled="<%= true %>" icon="wiki" style="secondary" /></div>
-				</div>
+				</clay:row>
 			</td>
 			<td>
 				<strong>Secondary</strong>: The secondary button is always use for the secondary actions. There can be several secondary actions near by.
@@ -65,15 +73,19 @@
 		</tr>
 		<tr>
 			<td>
-				<div class="flex-md-nowrap mb-2 row">
+				<clay:row
+					className="flex-md-nowrap mb-2"
+				>
 					<div class="col"><clay:button label="Borderless" style="borderless" /></div>
 					<div class="col"><clay:button ariaLabel="Page Template" icon="page-template" style="borderless" /></div>
-				</div>
+				</clay:row>
 
-				<div class="flex-md-nowrap row">
+				<clay:row
+					className="flex-md-nowrap"
+				>
 					<div class="col"><clay:button disabled="<%= true %>" label="Borderless" style="borderless" /></div>
 					<div class="col"><clay:button ariaLabel="Page Template" disabled="<%= true %>" icon="page-template" style="borderless" /></div>
-				</div>
+				</clay:row>
 			</td>
 			<td>
 				<strong>Borderless</strong>: Use in those cases as toolbars where the secondary button would be too heavy for the pattern design. In this way the design gets cleaner.
@@ -81,15 +93,19 @@
 		</tr>
 		<tr>
 			<td>
-				<div class="flex-md-nowrap mb-2 row">
+				<clay:row
+					className="flex-md-nowrap mb-2"
+				>
 					<div class="col"><clay:button label="Link" style="link" /></div>
 					<div class="col"><clay:button ariaLabel="Add Role" icon="add-role" style="link" /></div>
-				</div>
+				</clay:row>
 
-				<div class="flex-md-nowrap row">
+				<clay:row
+					className="flex-md-nowrap"
+				>
 					<div class="col"><clay:button disabled="<%= true %>" label="Link" style="link" /></div>
 					<div class="col"><clay:button ariaLabel="Add Role" disabled="<%= true %>" icon="add-role" style="link" /></div>
-				</div>
+				</clay:row>
 			</td>
 			<td>
 				<strong>Link</strong>: Used for many Cancel actions.
@@ -100,7 +116,9 @@
 
 <h3>VARIATIONS</h3>
 
-<div class="row text-center">
+<clay:row
+	className="text-center"
+>
 	<div class="col-md-2">
 		<clay:button
 			icon="share"
@@ -148,4 +166,4 @@
 
 		<div>Action Button</div>
 	</div>
-</div>
+</clay:row>

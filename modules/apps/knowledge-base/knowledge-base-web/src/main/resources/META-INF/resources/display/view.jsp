@@ -26,7 +26,7 @@ request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_NAVIGATION_DISPLAY_CONTEXT, kbN
 
 <c:choose>
 	<c:when test="<%= kbArticle != null %>">
-		<div class="row">
+		<clay:row>
 			<c:if test="<%= kbNavigationDisplayContext.isLeftNavigationVisible() %>">
 				<div class="col-md-3">
 					<liferay-util:include page="/display/view_navigation.jsp" servletContext="<%= application %>" />
@@ -42,7 +42,7 @@ request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_NAVIGATION_DISPLAY_CONTEXT, kbN
 
 				<liferay-util:include page="/display/view_article.jsp" servletContext="<%= application %>" />
 			</div>
-		</div>
+		</clay:row>
 	</c:when>
 	<c:otherwise>
 

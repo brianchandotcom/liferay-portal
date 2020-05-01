@@ -37,7 +37,7 @@ String organizationIdsString = ParamUtil.getString(request, "organizationsSearch
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
-<div class="row">
+<clay:row>
 	<div class="col-md-6">
 		<liferay-ui:user-name-fields
 			contact="<%= selContact %>"
@@ -101,7 +101,7 @@ String organizationIdsString = ParamUtil.getString(request, "organizationsSearch
 			</aui:button-row>
 		</c:if>
 	</div>
-</div>
+</clay:row>
 
 <aui:script>
 	function <portlet:namespace />saveUser(cmd) {

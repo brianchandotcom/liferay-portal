@@ -36,7 +36,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 	<div class="statistics-panel">
 		<h3><liferay-ui:message key="overview" /></h3>
 
-		<div class="row">
+		<clay:row>
 			<div class="col-md-4">
 				<div class="overview-container statistics-panel">
 					<div class="sticker sticker-categories sticker-user-icon">
@@ -78,7 +78,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 					<p class="statistics-number"><%= numberFormat.format(MBStatsUserLocalServiceUtil.getStatsUsersByGroupIdCount(scopeGroupId)) %></p>
 				</div>
 			</div>
-		</div>
+		</clay:row>
 	</div>
 
 	<div class="statistics-panel">

@@ -58,7 +58,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 		</c:choose>
 	</liferay-ui:error>
 
-	<div class="row">
+	<clay:row>
 		<div class="col-lg-12">
 			<portlet:actionURL name="/admin/assign_scopes" var="assignScopesURL">
 				<portlet:param name="mvcRenderCommandName" value="/admin/assign_scopes" />
@@ -76,7 +76,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 							name="nodeJspFragment"
 						>
 						<li class="borderless list-group-item<c:if test="${assignedDeletedScopeAliases.contains(tree.value)}"> removed-scope</c:if>" id="${tree.value}-container">
-							<div class="row">
+							<clay:row>
 									<c:choose>
 										<c:when test="${parentNodes.size() > 0}">
 										<div class="col-md-6">
@@ -94,7 +94,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 								<div class="col-md-6 text-left">
 									${scopeAliasesDescriptionsMap.get(tree.value)}
 								</div>
-							</div>
+							</clay:row>
 						</li>
 
 						<oauth2-tree:render-children />
@@ -104,7 +104,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 							name="leafJspFragment"
 						>
 						<li class="borderless list-group-item<c:if test="${assignedDeletedScopeAliases.contains(tree.value)}"> removed-scope</c:if>" id="${tree.value}-container">
-							<div class="row">
+							<clay:row>
 									<c:choose>
 										<c:when test="${parentNodes.size() > 0}">
 										<div class="col-md-6">
@@ -122,7 +122,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 								<div class="col-md-6 text-left">
 									${scopeAliasesDescriptionsMap.get(tree.value)}
 								</div>
-							</div>
+							</clay:row>
 						</li>
 						</jsp:attribute>
 					</oauth2-tree:tree>
@@ -136,7 +136,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 				</aui:button-row>
 			</aui:form>
 		</div>
-	</div>
+	</clay:row>
 </div>
 </div>
 </div>

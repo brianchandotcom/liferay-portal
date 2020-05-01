@@ -29,13 +29,13 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		<liferay-ui:message key="layout.types.article" />
 	</div>
 
-	<div class="row">
+	<clay:row>
 		<div class="col-md-4">
 			<c:if test="<%= article != null %>">
 				<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</div>
-	</div>
+	</clay:row>
 
 	<div>
 		<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />

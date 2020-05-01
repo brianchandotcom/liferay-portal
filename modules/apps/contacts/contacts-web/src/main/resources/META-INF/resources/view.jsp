@@ -140,7 +140,9 @@ portletURL.setWindowState(WindowState.NORMAL);
 			</clay:row>
 		</aui:form>
 
-		<clay:row className="contacts-result-container lfr-app-column-view">
+		<clay:row
+			className="contacts-result-container lfr-app-column-view"
+		>
 			<aui:col cssClass="contacts-list" first="<%= true %>" width="<%= 30 %>">
 				<div class="toggle-user">
 					<liferay-ui:icon

@@ -41,7 +41,7 @@ for (String childrenItemId : childrenItemIds) {
 			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
-			<div class="row">
+			<clay:row>
 
 				<%
 				for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionLayoutStructureItem, segmentsExperienceIds)) {
@@ -61,7 +61,7 @@ for (String childrenItemId : childrenItemIds) {
 				}
 				%>
 
-			</div>
+			</clay:row>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof CollectionItemLayoutStructureItem %>">
 
@@ -213,25 +213,29 @@ for (String childrenItemId : childrenItemIds) {
 			<c:choose>
 				<c:when test="<%= includeContainer %>">
 					<div class="container-fluid p-0">
-						<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
+						<clay:row
+							className='<%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>'
+						>
 
 							<%
 							request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 							%>
 
 							<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-						</div>
+						</clay:row>
 					</div>
 				</c:when>
 				<c:otherwise>
-					<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
+					<clay:row
+						className='<%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>'
+					>
 
 						<%
 						request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 						%>
 
 						<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-					</div>
+					</clay:row>
 				</c:otherwise>
 			</c:choose>
 		</c:when>

@@ -385,7 +385,9 @@ while (manageableCalendarsIterator.hasNext()) {
 							<div class="separator"><!-- --></div>
 						</c:if>
 
-						<clay:row className="calendar-booking-invitations">
+						<clay:row
+							className="calendar-booking-invitations"
+						>
 							<aui:col width="<%= (calendarBooking != null) ? 25 : 33 %>">
 								<label class="field-label">
 									<liferay-ui:message key="pending[calendar]" /> (<span id="<portlet:namespace />pendingCounter"><%= pendingCalendarsJSONArray.length() %></span>)

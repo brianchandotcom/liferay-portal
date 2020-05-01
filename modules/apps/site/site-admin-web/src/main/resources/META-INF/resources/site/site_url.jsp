@@ -154,7 +154,7 @@ if (privateVirtualHostnames.isEmpty()) {
 		%>
 
 			<div class="container-fluid lfr-form-row">
-				<div class="row">
+				<clay:row>
 					<aui:input inlineField="<%= true %>" label="public-pages" maxlength="200" name="publicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
 					<aui:select inlineField="<%= true %>" label="language" name="publicVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
@@ -172,7 +172,7 @@ if (privateVirtualHostnames.isEmpty()) {
 						%>
 
 					</aui:select>
-				</div>
+				</clay:row>
 			</div>
 
 		<%
@@ -191,7 +191,7 @@ if (privateVirtualHostnames.isEmpty()) {
 		%>
 
 			<div class="container-fluid lfr-form-row">
-				<div class="row">
+				<clay:row>
 					<aui:input inlineField="<%= true %>" label="private-pages" maxlength="200" name="privateVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
 					<aui:select inlineField="<%= true %>" label="language" name="privateVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
@@ -209,7 +209,7 @@ if (privateVirtualHostnames.isEmpty()) {
 						%>
 
 					</aui:select>
-				</div>
+				</clay:row>
 			</div>
 
 		<%
@@ -242,7 +242,7 @@ if (privateVirtualHostnames.isEmpty()) {
 			%>
 
 				<div class="container-fluid lfr-form-row">
-					<div class="row">
+					<clay:row>
 						<aui:input inlineField="<%= true %>" label="staging-public-pages" maxlength="200" name="stagingPublicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
 						<aui:select inlineField="<%= true %>" label="language" name="stagingPublicVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
@@ -260,7 +260,7 @@ if (privateVirtualHostnames.isEmpty()) {
 							%>
 
 						</aui:select>
-					</div>
+					</clay:row>
 				</div>
 
 			<%
@@ -291,7 +291,7 @@ if (privateVirtualHostnames.isEmpty()) {
 			%>
 
 				<div class="container-fluid lfr-form-row">
-					<div class="row">
+					<clay:row>
 						<aui:input inlineField="<%= true %>" label="staging-private-pages" maxlength="200" name="stagingPrivateVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
 						<aui:select inlineField="<%= true %>" label="language" name="stagingPrivateVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
@@ -309,7 +309,7 @@ if (privateVirtualHostnames.isEmpty()) {
 							%>
 
 						</aui:select>
-					</div>
+					</clay:row>
 				</div>
 
 			<%

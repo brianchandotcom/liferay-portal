@@ -62,7 +62,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 
 <c:if test="<%= (selectedScreenNavigationEntry != null) && ListUtil.isNotEmpty(screenNavigationEntries) %>">
 	<div class="<%= containerWrapperCssClass %>">
-		<div class="row">
+		<clay:row>
 			<c:if test="<%= screenNavigationEntries.size() > 1 %>">
 				<div class="<%= navCssClass %>">
 					<nav class="<%= menubarCssClass %>">
@@ -104,6 +104,6 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 				%>
 
 			</div>
-		</div>
+		</clay:row>
 	</div>
 </c:if>

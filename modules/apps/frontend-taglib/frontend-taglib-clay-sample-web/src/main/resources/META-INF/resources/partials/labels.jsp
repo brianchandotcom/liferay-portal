@@ -20,7 +20,9 @@
 	<p>Labels are a mechanism to categorize information providing quick recognition.</p>
 </blockquote>
 
-<div class="mb-3 row">
+<clay:row
+	className="mb-3"
+>
 	<div class="col-2">
 		<div><clay:label label="Label text" style="info" /></div>
 		<div><clay:label label="Label text" size="lg" style="info" /></div>
@@ -45,11 +47,13 @@
 		<div><clay:label label="Approved" style="success" /></div>
 		<div><clay:label label="Approved" size="lg" style="success" /></div>
 	</div>
-</div>
+</clay:row>
 
 <h3>LABEL REMOVABLE</h3>
 
-<div class="mb-3 row">
+<clay:row
+	className="row"
+>
 	<div class="col-12">
 		<clay:label
 			closeable="<%= true %>"
@@ -63,15 +67,15 @@
 			style="success"
 		/>
 	</div>
-</div>
+</clay:row>
 
 <h3>LABEL WITH LINK</h3>
 
-<div class="row">
+<clay:row>
 	<div class="col-12">
 		<clay:label
 			href="#"
 			label="Label Text"
 		/>
 	</div>
-</div>
+</clay:row>

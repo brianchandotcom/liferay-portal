@@ -31,6 +31,17 @@ public class SearchQuery<T extends SpiraArtifact> {
 
 	public static class SearchParameter {
 
+		public SearchParameter(
+			SpiraCustomProperty.Value spiraCustomPropertyValue) {
+
+			SpiraCustomProperty spiraCustomProperty =
+				spiraCustomPropertyValue.getSpiraCustomProperty();
+
+			_name = spiraCustomProperty.getName();
+
+			_value = spiraCustomPropertyValue;
+		}
+
 		public SearchParameter(String name, Object value) {
 			_name = name;
 			_value = value;
@@ -69,6 +80,25 @@ public class SearchQuery<T extends SpiraArtifact> {
 		}
 
 		public boolean matches(JSONObject jsonObject) {
+			if (_value instanceof SpiraCustomProperty.Value) {
+				SpiraCustomProperty.Value spiraCustomPropertyValue =
+					(SpiraCustomProperty.Value)_value;
+
+				JSONArray customPropertiesJSONArray = jsonObject.getJSONArray(
+					"CustomProperties");
+
+				for (int i = 0; i < customPropertiesJSONArray.length(); i++) {
+					if (_matchesCustomProperty(
+							customPropertiesJSONArray.getJSONObject(i),
+							spiraCustomPropertyValue)) {
+
+						return true;
+					}
+				}
+
+				return false;
+			}
+
 			if (!Objects.equals(getValue(), jsonObject.get(getName()))) {
 				return false;
 			}
@@ -86,6 +116,24 @@ public class SearchQuery<T extends SpiraArtifact> {
 
 				filterJSONObject.put("IntValue", intValue);
 			}
+			else if (_value instanceof SpiraCustomProperty.Value) {
+				SpiraCustomProperty.Value spiraCustomPropertyValue =
+					(SpiraCustomProperty.Value)_value;
+
+				SpiraCustomProperty spiraCustomProperty =
+					spiraCustomPropertyValue.getSpiraCustomProperty();
+
+				if (spiraCustomProperty.getType() ==
+						SpiraCustomProperty.Type.TEXT) {
+
+					filterJSONObject.put(
+						"StringValue", spiraCustomPropertyValue.getName());
+				}
+				else {
+					filterJSONObject.put(
+						"IntValue", spiraCustomPropertyValue.getID());
+				}
+			}
 			else if (_value instanceof String) {
 				String stringValue = (String)_value;
 
@@ -98,6 +146,51 @@ public class SearchQuery<T extends SpiraArtifact> {
 			}
 
 			return filterJSONObject;
+		}
+
+		private boolean _matchesCustomProperty(
+			JSONObject jsonObject, SpiraCustomProperty.Value value) {
+
+			SpiraCustomProperty spiraCustomProperty =
+				value.getSpiraCustomProperty();
+
+			SpiraCustomProperty.Type type = spiraCustomProperty.getType();
+
+			if (type == SpiraCustomProperty.Type.LIST) {
+				if (value.getID() == jsonObject.optInt("IntegerValue")) {
+					return true;
+				}
+
+				return false;
+			}
+
+			if (type == SpiraCustomProperty.Type.MULTILIST) {
+				JSONArray jsonArray = jsonObject.optJSONArray(
+					"IntegerListValue");
+
+				if (jsonArray == null) {
+					return false;
+				}
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					if (jsonArray.getInt(i) == value.getID()) {
+						return true;
+					}
+				}
+			}
+
+			if (type == SpiraCustomProperty.Type.TEXT) {
+				String stringValue = jsonObject.optString("StringValue");
+
+				if (stringValue.contains(value.getName())) {
+					return true;
+				}
+
+				return false;
+			}
+
+			throw new UnsupportedOperationException(
+				"Invalid custom property type " + type);
 		}
 
 		private final String _name;

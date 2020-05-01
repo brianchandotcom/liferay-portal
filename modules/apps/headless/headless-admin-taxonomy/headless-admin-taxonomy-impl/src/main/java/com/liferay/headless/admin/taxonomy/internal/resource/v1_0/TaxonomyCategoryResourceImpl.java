@@ -64,9 +64,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -297,22 +294,23 @@ public class TaxonomyCategoryResourceImpl
 
 		AssetCategory assetCategory = _getAssetCategory(taxonomyCategoryId);
 
-		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyCategory.getName(), taxonomyCategory.getName_i18n(),
-			assetCategory.getTitleMap());
 		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			taxonomyCategory.getDescription(),
 			taxonomyCategory.getDescription_i18n(),
 			assetCategory.getDescriptionMap());
+		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			taxonomyCategory.getName(), taxonomyCategory.getName_i18n(),
+			assetCategory.getTitleMap());
 
-		_validateI18n(
-			false, assetCategory.getDefaultLanguageId(), titleMap,
-			descriptionMap);
+		LocalizedMapUtil.validateI18n(
+			false,
+			LocaleUtil.fromLanguageId(assetCategory.getDefaultLanguageId()),
+			"Taxonomy category", titleMap,
+			new HashSet<>(descriptionMap.keySet()));
 
 		assetCategory.setDescriptionMap(descriptionMap);
-
 		assetCategory.setExternalReferenceCode(
 			taxonomyCategory.getExternalReferenceCode());
 		assetCategory.setTitleMap(titleMap);
@@ -330,15 +328,17 @@ public class TaxonomyCategoryResourceImpl
 			long taxonomyCategoryId, long taxonomyVocabularyId)
 		throws Exception {
 
-		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyCategory.getName(), taxonomyCategory.getName_i18n());
 		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			taxonomyCategory.getDescription(),
 			taxonomyCategory.getDescription_i18n());
+		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			taxonomyCategory.getName(), taxonomyCategory.getName_i18n());
 
-		_validateI18n(true, languageId, titleMap, descriptionMap);
+		LocalizedMapUtil.validateI18n(
+			true, LocaleUtil.fromLanguageId(languageId), "Taxonomy category",
+			titleMap, new HashSet<>(descriptionMap.keySet()));
 
 		AssetCategory assetCategory = _assetCategoryService.addCategory(
 			groupId, taxonomyCategoryId, titleMap, descriptionMap,
@@ -495,39 +495,6 @@ public class TaxonomyCategoryResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			assetCategory);
-	}
-
-	private void _validateI18n(
-		boolean add, String defaultLanguageId, Map<Locale, String> titleMap,
-		Map<Locale, String> descriptionMap) {
-
-		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
-
-		if ((add && titleMap.isEmpty()) ||
-			!titleMap.containsKey(defaultLocale)) {
-
-			throw new BadRequestException(
-				"Taxonomy category must include the default language " +
-					LocaleUtil.toW3cLanguageId(defaultLocale));
-		}
-
-		Set<Locale> notFoundLocales = new HashSet<>(descriptionMap.keySet());
-
-		notFoundLocales.removeAll(titleMap.keySet());
-
-		if (!notFoundLocales.isEmpty()) {
-			Stream<Locale> notFoundLocaleStream = notFoundLocales.stream();
-
-			String missingLanguages = notFoundLocaleStream.map(
-				LocaleUtil::toW3cLanguageId
-			).collect(
-				Collectors.joining(",")
-			);
-
-			throw new BadRequestException(
-				"Taxonomy Category name missing in the languages: " +
-					missingLanguages);
-		}
 	}
 
 	private static final EntityModel _entityModel = new CategoryEntityModel();

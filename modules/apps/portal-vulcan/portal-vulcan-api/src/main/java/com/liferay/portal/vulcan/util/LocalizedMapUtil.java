@@ -20,6 +20,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.ws.rs.BadRequestException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -180,6 +185,44 @@ public class LocalizedMapUtil {
 		}
 
 		return resultLocalizedMap;
+	}
+
+	public static void validateI18n(
+		boolean add, Locale defaultLocale, String entityName,
+		Map<Locale, String> localizedMap, Set<Locale> notFoundLocales) {
+
+		if ((add && localizedMap.isEmpty()) ||
+			!localizedMap.containsKey(defaultLocale)) {
+
+			throw new BadRequestException(
+				entityName + " must include the default language " +
+					LocaleUtil.toW3cLanguageId(defaultLocale));
+		}
+
+		notFoundLocales.removeAll(localizedMap.keySet());
+
+		if (!notFoundLocales.isEmpty()) {
+			Stream<Locale> notFoundLocaleStream = notFoundLocales.stream();
+
+			String missingLanguages = notFoundLocaleStream.map(
+				LocaleUtil::toW3cLanguageId
+			).collect(
+				Collectors.joining(",")
+			);
+
+			throw new BadRequestException(
+				entityName + " title missing in the languages: " +
+					missingLanguages);
+		}
+	}
+
+	public static void validateI18n(
+		boolean add, String entityName, Map<Locale, String> localizedMap,
+		Set<Locale> notFoundLocales) {
+
+		validateI18n(
+			add, LocaleUtil.getSiteDefault(), entityName, localizedMap,
+			notFoundLocales);
 	}
 
 	private static Locale _getLocale(String languageId) {

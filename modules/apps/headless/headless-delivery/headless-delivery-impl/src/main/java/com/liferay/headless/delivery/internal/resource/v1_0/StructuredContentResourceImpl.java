@@ -109,8 +109,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ForbiddenException;
@@ -484,10 +482,6 @@ public class StructuredContentResourceImpl
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
-		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			structuredContent.getTitle(), structuredContent.getTitle_i18n(),
-			journalArticle.getTitleMap());
 		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			structuredContent.getDescription(),
@@ -498,8 +492,17 @@ public class StructuredContentResourceImpl
 			structuredContent.getFriendlyUrlPath(),
 			structuredContent.getFriendlyUrlPath_i18n(),
 			journalArticle.getFriendlyURLMap());
+		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			structuredContent.getTitle(), structuredContent.getTitle_i18n(),
+			journalArticle.getTitleMap());
 
-		_validateI18n(false, titleMap, descriptionMap, friendlyUrlMap);
+		Set<Locale> notFoundLocales = new HashSet<>(descriptionMap.keySet());
+
+		notFoundLocales.addAll(friendlyUrlMap.keySet());
+
+		LocalizedMapUtil.validateI18n(
+			false, "Structured content", titleMap, notFoundLocales);
 
 		_validateContentFields(
 			structuredContent.getContentFields(), ddmStructure);
@@ -595,19 +598,26 @@ public class StructuredContentResourceImpl
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
 			structuredContent.getDatePublished());
 
-		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			structuredContent.getTitle(), structuredContent.getTitle_i18n());
 		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			structuredContent.getDescription(),
 			structuredContent.getDescription_i18n());
+
+		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			structuredContent.getTitle(), structuredContent.getTitle_i18n());
+
 		Map<Locale, String> friendlyUrlMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
 			structuredContent.getFriendlyUrlPath(),
 			structuredContent.getFriendlyUrlPath_i18n(), titleMap);
 
-		_validateI18n(true, titleMap, descriptionMap, friendlyUrlMap);
+		Set<Locale> notFoundLocales = new HashSet<>(descriptionMap.keySet());
+
+		notFoundLocales.addAll(friendlyUrlMap.keySet());
+
+		LocalizedMapUtil.validateI18n(
+			true, "Structured content", titleMap, notFoundLocales);
 
 		_validateContentFields(
 			structuredContent.getContentFields(), ddmStructure);
@@ -1063,41 +1073,6 @@ public class StructuredContentResourceImpl
 				"Validation error: " +
 					ddmFormValuesValidationException.getMessage(),
 				ddmFormValuesValidationException);
-		}
-	}
-
-	private void _validateI18n(
-		boolean add, Map<Locale, String> titleMap,
-		Map<Locale, String> descriptionMap,
-		Map<Locale, String> friendlyUrlMap) {
-
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		if ((add && titleMap.isEmpty()) ||
-			!titleMap.containsKey(defaultLocale)) {
-
-			throw new BadRequestException(
-				"Structured content must include the title in the default " +
-					"language " + LocaleUtil.toW3cLanguageId(defaultLocale));
-		}
-
-		Set<Locale> notFoundLocales = new HashSet<>(descriptionMap.keySet());
-
-		notFoundLocales.addAll(friendlyUrlMap.keySet());
-		notFoundLocales.removeAll(titleMap.keySet());
-
-		if (!notFoundLocales.isEmpty()) {
-			Stream<Locale> notFoundLocaleStream = notFoundLocales.stream();
-
-			String missingLanguages = notFoundLocaleStream.map(
-				LocaleUtil::toW3cLanguageId
-			).collect(
-				Collectors.joining(",")
-			);
-
-			throw new BadRequestException(
-				"Structured Content title missing in the languages: " +
-					missingLanguages);
 		}
 	}
 

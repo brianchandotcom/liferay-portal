@@ -42,8 +42,8 @@ function gql(strings, ...values) {
 		.replace(/"/g, '\\"');
 }
 
-export const request = (query) =>
-	fetch(getURL(), {
+export const request = (query, params = {}) =>
+	fetch(getURL(params), {
 		body: `{"query": "${query}"}`,
 		headers: HEADERS,
 		method: 'POST',
@@ -195,7 +195,8 @@ export const getThread = (
 	page = 1,
 	sort = 'showAsAnswer:desc,dateModified:desc'
 ) =>
-	request(gql`
+	request(
+		gql`
         query {
             messageBoardThreadByFriendlyUrlPath(friendlyUrlPath: ${friendlyUrlPath}, siteKey: ${siteKey}){
             	actions
@@ -274,7 +275,9 @@ export const getThread = (
                 subscribed
                 viewCount
             }
-        }`);
+        }`,
+		{nestedFields: 'lastPostDate'}
+	);
 
 export const getMessages = (
 	parentMessageBoardMessageId,
@@ -282,11 +285,12 @@ export const getMessages = (
 	page = 1,
 	pageSize = 20
 ) =>
-	request(gql`
+	request(
+		gql`
         query {
               messageBoardThreadMessageBoardMessages(messageBoardThreadId: ${parentMessageBoardMessageId}, page: ${page}, pageSize: ${pageSize}, sort: ${
-		'showAsAnswer:desc,' + sort
-	}){
+			'showAsAnswer:desc,' + sort
+		}){
                 items {
                 	actions
                     aggregateRating {
@@ -329,7 +333,9 @@ export const getMessages = (
                 pageSize
                 totalCount
             }
-        }`).then((x) => x.items);
+        }`,
+		{nestedFields: 'lastPostDate'}
+	).then((x) => x.items);
 
 export const getThreadContent = (friendlyUrlPath, siteKey) =>
 	request(gql`

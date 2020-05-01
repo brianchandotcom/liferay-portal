@@ -164,6 +164,48 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testGetFileDraft() throws Exception {
+		String className = "com.liferay.journal.model.JournalArticle";
+
+		long classNameId = _portal.getClassNameId(className);
+
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+
+		long classTypeId = 0;
+
+		List<ClassType> classTypes = infoDisplayContributor.getClassTypes(
+			_group.getGroupId(), LocaleUtil.getSiteDefault());
+
+		for (ClassType classType : classTypes) {
+			if (Objects.equals(classType.getName(), "Basic Web Content")) {
+				classTypeId = classType.getClassTypeId();
+			}
+		}
+
+		Assert.assertNotEquals(0, classTypeId);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+				0, classNameId, classTypeId, StringUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
+				WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+		long[] layoutPageTemplateEntryIds = {
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		};
+
+		File file = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
+			layoutPageTemplateEntryIds);
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Assert.assertEquals(0, zipFile.size());
+		}
+	}
+
+	@Test
 	public void testGetFileNameMultipleDisplayPageTemplates() {
 		long[] layoutPageTemplateEntryIds = {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()

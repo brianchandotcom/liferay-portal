@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.trash.exception.NoSuchEntryException;
 import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.model.TrashEntryTable;
 import com.liferay.trash.model.impl.TrashEntryImpl;
 import com.liferay.trash.model.impl.TrashEntryModelImpl;
 import com.liferay.trash.service.persistence.TrashEntryPersistence;
@@ -2429,6 +2430,8 @@ public class TrashEntryPersistenceImpl
 
 		setModelImplClass(TrashEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(TrashEntryTable.INSTANCE);
 	}
 
 	/**

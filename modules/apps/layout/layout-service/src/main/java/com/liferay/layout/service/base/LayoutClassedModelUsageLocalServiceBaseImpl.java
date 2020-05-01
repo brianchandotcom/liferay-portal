@@ -23,6 +23,7 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.service.persistence.LayoutClassedModelUsageFinder;
 import com.liferay.layout.service.persistence.LayoutClassedModelUsagePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -142,6 +143,11 @@ public abstract class LayoutClassedModelUsageLocalServiceBaseImpl
 
 		return layoutClassedModelUsagePersistence.remove(
 			layoutClassedModelUsage);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return layoutClassedModelUsagePersistence.dslQuery(dslQuery);
 	}
 
 	@Override

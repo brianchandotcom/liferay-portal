@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutSetBranchTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -3226,6 +3227,8 @@ public class LayoutSetBranchPersistenceImpl
 		setModelImplClass(LayoutSetBranchImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(LayoutSetBranchTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

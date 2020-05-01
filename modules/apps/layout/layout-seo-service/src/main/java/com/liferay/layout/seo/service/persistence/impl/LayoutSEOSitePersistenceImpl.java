@@ -16,6 +16,7 @@ package com.liferay.layout.seo.service.persistence.impl;
 
 import com.liferay.layout.seo.exception.NoSuchSiteException;
 import com.liferay.layout.seo.model.LayoutSEOSite;
+import com.liferay.layout.seo.model.LayoutSEOSiteTable;
 import com.liferay.layout.seo.model.impl.LayoutSEOSiteImpl;
 import com.liferay.layout.seo.model.impl.LayoutSEOSiteModelImpl;
 import com.liferay.layout.seo.service.persistence.LayoutSEOSitePersistence;
@@ -1681,6 +1682,8 @@ public class LayoutSEOSitePersistenceImpl
 
 		setModelImplClass(LayoutSEOSiteImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(LayoutSEOSiteTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -34,6 +34,7 @@ import com.liferay.portlet.social.model.impl.SocialActivitySettingImpl;
 import com.liferay.portlet.social.model.impl.SocialActivitySettingModelImpl;
 import com.liferay.social.kernel.exception.NoSuchActivitySettingException;
 import com.liferay.social.kernel.model.SocialActivitySetting;
+import com.liferay.social.kernel.model.SocialActivitySettingTable;
 import com.liferay.social.kernel.service.persistence.SocialActivitySettingPersistence;
 
 import java.io.Serializable;
@@ -2620,6 +2621,8 @@ public class SocialActivitySettingPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(SocialActivitySettingTable.INSTANCE);
 	}
 
 	/**

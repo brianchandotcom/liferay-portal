@@ -17,6 +17,7 @@ package com.liferay.portlet.announcements.service.base;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -123,6 +124,11 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 		AnnouncementsFlag announcementsFlag) {
 
 		return announcementsFlagPersistence.remove(announcementsFlag);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return announcementsFlagPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

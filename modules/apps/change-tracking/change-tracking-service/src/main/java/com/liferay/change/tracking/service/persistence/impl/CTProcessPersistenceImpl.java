@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.exception.NoSuchProcessException;
 import com.liferay.change.tracking.model.CTProcess;
+import com.liferay.change.tracking.model.CTProcessTable;
 import com.liferay.change.tracking.model.impl.CTProcessImpl;
 import com.liferay.change.tracking.model.impl.CTProcessModelImpl;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
@@ -1093,6 +1094,8 @@ public class CTProcessPersistenceImpl
 
 		setModelImplClass(CTProcessImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CTProcessTable.INSTANCE);
 	}
 
 	/**

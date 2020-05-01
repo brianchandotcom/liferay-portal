@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.site.exception.NoSuchFriendlyURLException;
 import com.liferay.site.model.SiteFriendlyURL;
+import com.liferay.site.model.SiteFriendlyURLTable;
 import com.liferay.site.model.impl.SiteFriendlyURLImpl;
 import com.liferay.site.model.impl.SiteFriendlyURLModelImpl;
 import com.liferay.site.service.persistence.SiteFriendlyURLPersistence;
@@ -2875,6 +2876,8 @@ public class SiteFriendlyURLPersistenceImpl
 
 		setModelImplClass(SiteFriendlyURLImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SiteFriendlyURLTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

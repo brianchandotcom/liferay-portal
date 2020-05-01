@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RepositoryEntry;
+import com.liferay.portal.kernel.model.RepositoryEntryTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -2241,6 +2242,8 @@ public class RepositoryEntryPersistenceImpl
 		setModelImplClass(RepositoryEntryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(RepositoryEntryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(RepositoryEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

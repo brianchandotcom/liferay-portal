@@ -14,6 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -125,6 +126,11 @@ public abstract class EntryLocalServiceBaseImpl
 	@Override
 	public Entry deleteEntry(Entry entry) throws PortalException {
 		return entryPersistence.remove(entry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return entryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.mail.reader.service.persistence.impl;
 
 import com.liferay.mail.reader.exception.NoSuchAttachmentException;
 import com.liferay.mail.reader.model.Attachment;
+import com.liferay.mail.reader.model.AttachmentTable;
 import com.liferay.mail.reader.model.impl.AttachmentImpl;
 import com.liferay.mail.reader.model.impl.AttachmentModelImpl;
 import com.liferay.mail.reader.service.persistence.AttachmentPersistence;
@@ -593,6 +594,8 @@ public class AttachmentPersistenceImpl
 
 		setModelImplClass(AttachmentImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AttachmentTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

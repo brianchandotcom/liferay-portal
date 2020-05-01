@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.push.notifications.exception.NoSuchDeviceException;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
+import com.liferay.push.notifications.model.PushNotificationsDeviceTable;
 import com.liferay.push.notifications.model.impl.PushNotificationsDeviceImpl;
 import com.liferay.push.notifications.model.impl.PushNotificationsDeviceModelImpl;
 import com.liferay.push.notifications.service.persistence.PushNotificationsDevicePersistence;
@@ -1234,6 +1235,8 @@ public class PushNotificationsDevicePersistenceImpl
 
 		setModelImplClass(PushNotificationsDeviceImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(PushNotificationsDeviceTable.INSTANCE);
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.audit.storage.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -121,6 +122,11 @@ public abstract class AuditEventLocalServiceBaseImpl
 	@Override
 	public AuditEvent deleteAuditEvent(AuditEvent auditEvent) {
 		return auditEventPersistence.remove(auditEvent);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return auditEventPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordVersionException;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersionTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordVersionImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordVersionModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordVersionPersistence;
@@ -2750,6 +2751,8 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 		setModelImplClass(DDMFormInstanceRecordVersionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDMFormInstanceRecordVersionTable.INSTANCE);
 	}
 
 	/**

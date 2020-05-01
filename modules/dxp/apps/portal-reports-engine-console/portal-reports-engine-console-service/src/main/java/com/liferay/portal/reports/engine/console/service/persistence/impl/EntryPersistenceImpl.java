@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.reports.engine.console.exception.NoSuchEntryException;
 import com.liferay.portal.reports.engine.console.model.Entry;
+import com.liferay.portal.reports.engine.console.model.EntryTable;
 import com.liferay.portal.reports.engine.console.model.impl.EntryImpl;
 import com.liferay.portal.reports.engine.console.model.impl.EntryModelImpl;
 import com.liferay.portal.reports.engine.console.service.persistence.EntryPersistence;
@@ -92,6 +93,8 @@ public class EntryPersistenceImpl
 
 		setModelImplClass(EntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(EntryTable.INSTANCE);
 	}
 
 	/**

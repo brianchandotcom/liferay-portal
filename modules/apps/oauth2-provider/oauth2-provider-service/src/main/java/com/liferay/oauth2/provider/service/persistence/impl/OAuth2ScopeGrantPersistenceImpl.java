@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.service.persistence.impl;
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2ScopeGrantException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
+import com.liferay.oauth2.provider.model.OAuth2ScopeGrantTable;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantModelImpl;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
@@ -1058,6 +1059,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		setModelImplClass(OAuth2ScopeGrantImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(OAuth2ScopeGrantTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

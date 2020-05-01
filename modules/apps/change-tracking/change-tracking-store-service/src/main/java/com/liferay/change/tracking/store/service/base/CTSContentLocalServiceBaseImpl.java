@@ -20,6 +20,7 @@ import com.liferay.change.tracking.store.service.CTSContentLocalService;
 import com.liferay.change.tracking.store.service.persistence.CTSContentPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -134,6 +135,11 @@ public abstract class CTSContentLocalServiceBaseImpl
 	@Override
 	public CTSContent deleteCTSContent(CTSContent ctsContent) {
 		return ctsContentPersistence.remove(ctsContent);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ctsContentPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

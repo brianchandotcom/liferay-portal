@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -125,6 +126,11 @@ public abstract class DDMContentLocalServiceBaseImpl
 	@Override
 	public DDMContent deleteDDMContent(DDMContent ddmContent) {
 		return ddmContentPersistence.remove(ddmContent);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ddmContentPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

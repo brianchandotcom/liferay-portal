@@ -18,6 +18,7 @@ import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankFinder;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -120,6 +121,11 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	@Override
 	public DLFileRank deleteDLFileRank(DLFileRank dlFileRank) {
 		return dlFileRankPersistence.remove(dlFileRank);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return dlFileRankPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

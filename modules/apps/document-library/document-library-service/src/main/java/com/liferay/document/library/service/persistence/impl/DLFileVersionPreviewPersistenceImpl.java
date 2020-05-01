@@ -16,6 +16,7 @@ package com.liferay.document.library.service.persistence.impl;
 
 import com.liferay.document.library.exception.NoSuchFileVersionPreviewException;
 import com.liferay.document.library.model.DLFileVersionPreview;
+import com.liferay.document.library.model.DLFileVersionPreviewTable;
 import com.liferay.document.library.model.impl.DLFileVersionPreviewImpl;
 import com.liferay.document.library.model.impl.DLFileVersionPreviewModelImpl;
 import com.liferay.document.library.service.persistence.DLFileVersionPreviewPersistence;
@@ -1610,6 +1611,8 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		setModelImplClass(DLFileVersionPreviewImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DLFileVersionPreviewTable.INSTANCE);
 	}
 
 	/**

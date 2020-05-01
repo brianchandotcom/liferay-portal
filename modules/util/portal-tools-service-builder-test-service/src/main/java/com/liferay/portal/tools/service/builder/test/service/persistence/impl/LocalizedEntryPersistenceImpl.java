@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLocalizedEntryException;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntry;
+import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryPersistence;
@@ -76,6 +77,8 @@ public class LocalizedEntryPersistenceImpl
 		setModelImplClass(LocalizedEntryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LocalizedEntryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(LocalizedEntryTable.INSTANCE);
 	}
 
 	/**

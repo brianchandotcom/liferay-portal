@@ -16,6 +16,7 @@ package com.liferay.data.engine.service.persistence.impl;
 
 import com.liferay.data.engine.exception.NoSuchDataListViewException;
 import com.liferay.data.engine.model.DEDataListView;
+import com.liferay.data.engine.model.DEDataListViewTable;
 import com.liferay.data.engine.model.impl.DEDataListViewImpl;
 import com.liferay.data.engine.model.impl.DEDataListViewModelImpl;
 import com.liferay.data.engine.service.persistence.DEDataListViewPersistence;
@@ -2582,6 +2583,8 @@ public class DEDataListViewPersistenceImpl
 
 		setModelImplClass(DEDataListViewImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DEDataListViewTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

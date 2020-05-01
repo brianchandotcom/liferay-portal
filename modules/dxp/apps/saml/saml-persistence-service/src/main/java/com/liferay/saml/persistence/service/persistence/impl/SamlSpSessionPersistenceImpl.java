@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.persistence.exception.NoSuchSpSessionException;
 import com.liferay.saml.persistence.model.SamlSpSession;
+import com.liferay.saml.persistence.model.SamlSpSessionTable;
 import com.liferay.saml.persistence.model.impl.SamlSpSessionImpl;
 import com.liferay.saml.persistence.model.impl.SamlSpSessionModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlSpSessionPersistence;
@@ -1387,6 +1388,8 @@ public class SamlSpSessionPersistenceImpl
 
 		setModelImplClass(SamlSpSessionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SamlSpSessionTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -122,6 +123,11 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	@Override
 	public SocialRequest deleteSocialRequest(SocialRequest socialRequest) {
 		return socialRequestPersistence.remove(socialRequest);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return socialRequestPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

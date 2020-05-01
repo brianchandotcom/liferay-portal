@@ -110,6 +110,11 @@ public class LayoutSEOSiteLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _layoutSEOSiteLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _layoutSEOSiteLocalService.dynamicQuery();
 	}

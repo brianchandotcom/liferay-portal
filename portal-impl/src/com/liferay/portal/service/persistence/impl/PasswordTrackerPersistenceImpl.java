@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchPasswordTrackerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PasswordTracker;
+import com.liferay.portal.kernel.model.PasswordTrackerTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PasswordTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -582,6 +583,8 @@ public class PasswordTrackerPersistenceImpl
 		setModelImplClass(PasswordTrackerImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(PasswordTrackerModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(PasswordTrackerTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

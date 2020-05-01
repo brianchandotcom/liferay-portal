@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceException;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstancePersistence;
@@ -2827,6 +2828,8 @@ public class DDMFormInstancePersistenceImpl
 
 		setModelImplClass(DDMFormInstanceImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDMFormInstanceTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

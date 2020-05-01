@@ -141,6 +141,11 @@ public class MBStatsUserLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _mbStatsUserLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _mbStatsUserLocalService.dynamicQuery();
 	}

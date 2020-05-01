@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -191,6 +192,8 @@ public interface DDLRecordLocalService
 	 * @throws PortalException if a portal exception occurred
 	 */
 	public void deleteRecords(long recordSetId) throws PortalException;
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

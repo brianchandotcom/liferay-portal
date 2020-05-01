@@ -17,6 +17,7 @@ package com.liferay.akismet.service.base;
 import com.liferay.akismet.model.AkismetEntry;
 import com.liferay.akismet.service.AkismetEntryLocalService;
 import com.liferay.akismet.service.persistence.AkismetEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -122,6 +123,11 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 	@Override
 	public AkismetEntry deleteAkismetEntry(AkismetEntry akismetEntry) {
 		return akismetEntryPersistence.remove(akismetEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return akismetEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

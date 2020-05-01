@@ -16,6 +16,7 @@ package com.liferay.app.builder.service.persistence.impl;
 
 import com.liferay.app.builder.exception.NoSuchAppDeploymentException;
 import com.liferay.app.builder.model.AppBuilderAppDeployment;
+import com.liferay.app.builder.model.AppBuilderAppDeploymentTable;
 import com.liferay.app.builder.model.impl.AppBuilderAppDeploymentImpl;
 import com.liferay.app.builder.model.impl.AppBuilderAppDeploymentModelImpl;
 import com.liferay.app.builder.service.persistence.AppBuilderAppDeploymentPersistence;
@@ -894,6 +895,8 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 		setModelImplClass(AppBuilderAppDeploymentImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AppBuilderAppDeploymentTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

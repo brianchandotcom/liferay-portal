@@ -16,6 +16,7 @@ package com.liferay.oauth.service.persistence.impl;
 
 import com.liferay.oauth.exception.NoSuchUserException;
 import com.liferay.oauth.model.OAuthUser;
+import com.liferay.oauth.model.OAuthUserTable;
 import com.liferay.oauth.model.impl.OAuthUserImpl;
 import com.liferay.oauth.model.impl.OAuthUserModelImpl;
 import com.liferay.oauth.service.persistence.OAuthUserPersistence;
@@ -1561,6 +1562,8 @@ public class OAuthUserPersistenceImpl
 
 		setModelImplClass(OAuthUserImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(OAuthUserTable.INSTANCE);
 	}
 
 	/**

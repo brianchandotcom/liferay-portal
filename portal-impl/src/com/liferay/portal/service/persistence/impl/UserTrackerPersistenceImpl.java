@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchUserTrackerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserTracker;
+import com.liferay.portal.kernel.model.UserTrackerTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1624,6 +1625,8 @@ public class UserTrackerPersistenceImpl
 		setModelImplClass(UserTrackerImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserTrackerModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(UserTrackerTable.INSTANCE);
 	}
 
 	/**

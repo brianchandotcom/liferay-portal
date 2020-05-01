@@ -181,6 +181,11 @@ public class ExpandoTableLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _expandoTableLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _expandoTableLocalService.dynamicQuery();
 	}

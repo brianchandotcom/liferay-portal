@@ -17,6 +17,7 @@ package com.liferay.journal.service.base;
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -128,6 +129,11 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 		JournalContentSearch journalContentSearch) {
 
 		return journalContentSearchPersistence.remove(journalContentSearch);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return journalContentSearchPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

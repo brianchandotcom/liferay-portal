@@ -125,6 +125,11 @@ public class DDLRecordSetVersionLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _ddlRecordSetVersionLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddlRecordSetVersionLocalService.dynamicQuery();
 	}

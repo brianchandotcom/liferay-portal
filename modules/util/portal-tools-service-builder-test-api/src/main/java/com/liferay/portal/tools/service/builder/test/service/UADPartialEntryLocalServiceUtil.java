@@ -117,6 +117,12 @@ public class UADPartialEntryLocalServiceUtil {
 		return getService().deleteUADPartialEntry(uadPartialEntry);
 	}
 
+	public static <T> T dslQuery(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return getService().dslQuery(dslQuery);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
 		dynamicQuery() {
 

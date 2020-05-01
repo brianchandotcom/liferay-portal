@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.trash.exception.NoSuchVersionException;
 import com.liferay.trash.model.TrashVersion;
+import com.liferay.trash.model.TrashVersionTable;
 import com.liferay.trash.model.impl.TrashVersionImpl;
 import com.liferay.trash.model.impl.TrashVersionModelImpl;
 import com.liferay.trash.service.persistence.TrashVersionPersistence;
@@ -1358,6 +1359,8 @@ public class TrashVersionPersistenceImpl
 
 		setModelImplClass(TrashVersionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(TrashVersionTable.INSTANCE);
 	}
 
 	/**

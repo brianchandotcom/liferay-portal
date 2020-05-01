@@ -16,6 +16,7 @@ package com.liferay.account.service.persistence.impl;
 
 import com.liferay.account.exception.NoSuchEntryOrganizationRelException;
 import com.liferay.account.model.AccountEntryOrganizationRel;
+import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.model.impl.AccountEntryOrganizationRelImpl;
 import com.liferay.account.model.impl.AccountEntryOrganizationRelModelImpl;
 import com.liferay.account.service.persistence.AccountEntryOrganizationRelPersistence;
@@ -1388,6 +1389,8 @@ public class AccountEntryOrganizationRelPersistenceImpl
 
 		setModelImplClass(AccountEntryOrganizationRelImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AccountEntryOrganizationRelTable.INSTANCE);
 	}
 
 	/**

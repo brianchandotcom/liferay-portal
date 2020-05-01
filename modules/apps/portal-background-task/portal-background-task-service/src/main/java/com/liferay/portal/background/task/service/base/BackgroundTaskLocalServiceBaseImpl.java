@@ -14,6 +14,7 @@
 
 package com.liferay.portal.background.task.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
@@ -125,6 +126,11 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 		throws PortalException {
 
 		return backgroundTaskPersistence.remove(backgroundTask);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return backgroundTaskPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.service.persistence.impl;
 
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateCollectionException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollectionTable;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionModelImpl;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
@@ -3993,6 +3994,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		setModelImplClass(LayoutPageTemplateCollectionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(LayoutPageTemplateCollectionTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

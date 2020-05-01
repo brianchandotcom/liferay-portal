@@ -18,6 +18,7 @@ import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.persistence.ChangesetCollectionPersistence;
 import com.liferay.changeset.service.persistence.ChangesetEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -130,6 +131,11 @@ public abstract class ChangesetCollectionLocalServiceBaseImpl
 		ChangesetCollection changesetCollection) {
 
 		return changesetCollectionPersistence.remove(changesetCollection);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return changesetCollectionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

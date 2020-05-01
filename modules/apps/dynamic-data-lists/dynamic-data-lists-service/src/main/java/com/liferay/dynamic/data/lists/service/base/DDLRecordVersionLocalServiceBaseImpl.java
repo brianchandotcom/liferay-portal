@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -128,6 +129,11 @@ public abstract class DDLRecordVersionLocalServiceBaseImpl
 		DDLRecordVersion ddlRecordVersion) {
 
 		return ddlRecordVersionPersistence.remove(ddlRecordVersion);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ddlRecordVersionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

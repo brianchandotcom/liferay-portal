@@ -165,6 +165,11 @@ public class PasswordPolicyRelLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _passwordPolicyRelLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _passwordPolicyRelLocalService.dynamicQuery();
 	}

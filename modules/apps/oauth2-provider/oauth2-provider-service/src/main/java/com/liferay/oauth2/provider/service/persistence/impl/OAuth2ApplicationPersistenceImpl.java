@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.service.persistence.impl;
 
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationException;
 import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.model.OAuth2ApplicationTable;
 import com.liferay.oauth2.provider.model.impl.OAuth2ApplicationImpl;
 import com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationPersistence;
@@ -1260,6 +1261,8 @@ public class OAuth2ApplicationPersistenceImpl
 
 		setModelImplClass(OAuth2ApplicationImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(OAuth2ApplicationTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

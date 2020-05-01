@@ -25,6 +25,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -140,6 +141,11 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 		FriendlyURLEntry friendlyURLEntry) {
 
 		return friendlyURLEntryPersistence.remove(friendlyURLEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return friendlyURLEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

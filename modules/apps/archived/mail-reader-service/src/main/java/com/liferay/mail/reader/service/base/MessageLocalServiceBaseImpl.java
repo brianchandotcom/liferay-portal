@@ -20,6 +20,7 @@ import com.liferay.mail.reader.service.persistence.AccountPersistence;
 import com.liferay.mail.reader.service.persistence.AttachmentPersistence;
 import com.liferay.mail.reader.service.persistence.FolderPersistence;
 import com.liferay.mail.reader.service.persistence.MessagePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -123,6 +124,11 @@ public abstract class MessageLocalServiceBaseImpl
 	@Override
 	public Message deleteMessage(Message message) throws PortalException {
 		return messagePersistence.remove(message);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return messagePersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
@@ -10954,6 +10955,8 @@ public class DDMStructurePersistenceImpl
 
 		setModelImplClass(DDMStructureImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDMStructureTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

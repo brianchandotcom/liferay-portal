@@ -14,6 +14,7 @@
 
 package com.liferay.subscription.service;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -198,6 +199,8 @@ public interface SubscriptionLocalService
 	public void deleteSubscriptions(
 			long companyId, String className, long classPK)
 		throws PortalException;
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

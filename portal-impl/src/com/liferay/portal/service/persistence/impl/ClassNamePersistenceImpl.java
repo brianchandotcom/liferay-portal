@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -310,6 +311,8 @@ public class ClassNamePersistenceImpl
 		setModelImplClass(ClassNameImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(ClassNameModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(ClassNameTable.INSTANCE);
 	}
 
 	/**

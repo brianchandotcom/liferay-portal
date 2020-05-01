@@ -14,6 +14,7 @@
 
 package com.liferay.trash.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -121,6 +122,11 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	@Override
 	public TrashVersion deleteTrashVersion(TrashVersion trashVersion) {
 		return trashVersionPersistence.remove(trashVersion);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return trashVersionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

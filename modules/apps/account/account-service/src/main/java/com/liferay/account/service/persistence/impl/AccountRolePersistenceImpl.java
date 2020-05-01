@@ -16,6 +16,7 @@ package com.liferay.account.service.persistence.impl;
 
 import com.liferay.account.exception.NoSuchRoleException;
 import com.liferay.account.model.AccountRole;
+import com.liferay.account.model.AccountRoleTable;
 import com.liferay.account.model.impl.AccountRoleImpl;
 import com.liferay.account.model.impl.AccountRoleModelImpl;
 import com.liferay.account.service.persistence.AccountRolePersistence;
@@ -1576,6 +1577,8 @@ public class AccountRolePersistenceImpl
 
 		setModelImplClass(AccountRoleImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AccountRoleTable.INSTANCE);
 	}
 
 	/**

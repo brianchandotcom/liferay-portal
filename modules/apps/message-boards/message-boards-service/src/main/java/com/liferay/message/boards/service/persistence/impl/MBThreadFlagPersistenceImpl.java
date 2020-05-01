@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.persistence.impl;
 
 import com.liferay.message.boards.exception.NoSuchThreadFlagException;
 import com.liferay.message.boards.model.MBThreadFlag;
+import com.liferay.message.boards.model.MBThreadFlagTable;
 import com.liferay.message.boards.model.impl.MBThreadFlagImpl;
 import com.liferay.message.boards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.message.boards.service.persistence.MBThreadFlagPersistence;
@@ -2695,6 +2696,8 @@ public class MBThreadFlagPersistenceImpl
 
 		setModelImplClass(MBThreadFlagImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(MBThreadFlagTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

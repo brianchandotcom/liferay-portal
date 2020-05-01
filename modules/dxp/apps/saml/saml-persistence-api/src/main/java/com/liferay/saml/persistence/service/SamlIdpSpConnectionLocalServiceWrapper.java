@@ -139,6 +139,11 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _samlIdpSpConnectionLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _samlIdpSpConnectionLocalService.dynamicQuery();
 	}

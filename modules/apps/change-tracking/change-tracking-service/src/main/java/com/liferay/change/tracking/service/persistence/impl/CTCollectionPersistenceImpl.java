@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.exception.NoSuchCollectionException;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.impl.CTCollectionImpl;
 import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
@@ -1916,6 +1917,8 @@ public class CTCollectionPersistenceImpl
 
 		setModelImplClass(CTCollectionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CTCollectionTable.INSTANCE);
 	}
 
 	/**

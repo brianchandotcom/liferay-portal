@@ -23,6 +23,7 @@ import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.marketplace.service.persistence.AppPersistence;
 import com.liferay.marketplace.service.persistence.ModulePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -126,6 +127,11 @@ public abstract class AppLocalServiceBaseImpl
 	@Override
 	public App deleteApp(App app) {
 		return appPersistence.remove(app);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return appPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

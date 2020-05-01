@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -8377,6 +8378,8 @@ public class UserPersistenceImpl
 		setModelImplClass(UserImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(UserTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

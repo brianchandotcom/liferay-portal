@@ -15,6 +15,7 @@
 package com.liferay.portal.service.base;
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -136,6 +137,11 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 		PortletPreferences portletPreferences) {
 
 		return portletPreferencesPersistence.remove(portletPreferences);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return portletPreferencesPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

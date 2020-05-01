@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.wedeploy.auth.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -127,6 +128,11 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 		WeDeployAuthToken weDeployAuthToken) {
 
 		return weDeployAuthTokenPersistence.remove(weDeployAuthToken);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return weDeployAuthTokenPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

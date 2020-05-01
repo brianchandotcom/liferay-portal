@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.persistence.MBDiscussionPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -129,6 +130,11 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	@Override
 	public MBDiscussion deleteMBDiscussion(MBDiscussion mbDiscussion) {
 		return mbDiscussionPersistence.remove(mbDiscussion);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mbDiscussionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

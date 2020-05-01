@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -152,6 +153,11 @@ public abstract class KaleoTimerInstanceTokenLocalServiceBaseImpl
 
 		return kaleoTimerInstanceTokenPersistence.remove(
 			kaleoTimerInstanceToken);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return kaleoTimerInstanceTokenPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.asset.auto.tagger.service.persistence.impl;
 
 import com.liferay.asset.auto.tagger.exception.NoSuchEntryException;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
+import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntryTable;
 import com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryImpl;
 import com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryModelImpl;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPersistence;
@@ -1408,6 +1409,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 		setModelImplClass(AssetAutoTaggerEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AssetAutoTaggerEntryTable.INSTANCE);
 	}
 
 	/**

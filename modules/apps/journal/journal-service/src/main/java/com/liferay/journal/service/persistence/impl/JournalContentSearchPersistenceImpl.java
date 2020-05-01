@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence.impl;
 
 import com.liferay.journal.exception.NoSuchContentSearchException;
 import com.liferay.journal.model.JournalContentSearch;
+import com.liferay.journal.model.JournalContentSearchTable;
 import com.liferay.journal.model.impl.JournalContentSearchImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
@@ -5131,6 +5132,8 @@ public class JournalContentSearchPersistenceImpl
 
 		setModelImplClass(JournalContentSearchImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(JournalContentSearchTable.INSTANCE);
 	}
 
 	/**

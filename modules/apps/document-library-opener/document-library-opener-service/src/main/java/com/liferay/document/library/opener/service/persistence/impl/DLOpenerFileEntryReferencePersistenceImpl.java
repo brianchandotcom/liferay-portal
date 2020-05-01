@@ -16,6 +16,7 @@ package com.liferay.document.library.opener.service.persistence.impl;
 
 import com.liferay.document.library.opener.exception.NoSuchFileEntryReferenceException;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
+import com.liferay.document.library.opener.model.DLOpenerFileEntryReferenceTable;
 import com.liferay.document.library.opener.model.impl.DLOpenerFileEntryReferenceImpl;
 import com.liferay.document.library.opener.model.impl.DLOpenerFileEntryReferenceModelImpl;
 import com.liferay.document.library.opener.service.persistence.DLOpenerFileEntryReferencePersistence;
@@ -569,6 +570,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 
 		setModelImplClass(DLOpenerFileEntryReferenceImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DLOpenerFileEntryReferenceTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

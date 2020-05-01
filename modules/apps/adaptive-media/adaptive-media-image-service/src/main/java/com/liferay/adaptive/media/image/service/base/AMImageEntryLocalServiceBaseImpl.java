@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.image.service.base;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.service.persistence.AMImageEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -121,6 +122,11 @@ public abstract class AMImageEntryLocalServiceBaseImpl
 	@Override
 	public AMImageEntry deleteAMImageEntry(AMImageEntry amImageEntry) {
 		return amImageEntryPersistence.remove(amImageEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return amImageEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

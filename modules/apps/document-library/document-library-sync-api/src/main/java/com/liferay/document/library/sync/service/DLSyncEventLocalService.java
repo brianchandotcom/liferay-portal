@@ -15,6 +15,7 @@
 package com.liferay.document.library.sync.service;
 
 import com.liferay.document.library.sync.model.DLSyncEvent;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -115,6 +116,8 @@ public interface DLSyncEventLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

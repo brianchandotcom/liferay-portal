@@ -19,6 +19,7 @@ import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalSer
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder;
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -133,6 +134,11 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 		AssetCategoryProperty assetCategoryProperty) {
 
 		return assetCategoryPropertyPersistence.remove(assetCategoryProperty);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return assetCategoryPropertyPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

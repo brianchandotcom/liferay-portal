@@ -16,6 +16,7 @@ package com.liferay.invitation.invite.members.service.persistence.impl;
 
 import com.liferay.invitation.invite.members.exception.NoSuchMemberRequestException;
 import com.liferay.invitation.invite.members.model.MemberRequest;
+import com.liferay.invitation.invite.members.model.MemberRequestTable;
 import com.liferay.invitation.invite.members.model.impl.MemberRequestImpl;
 import com.liferay.invitation.invite.members.model.impl.MemberRequestModelImpl;
 import com.liferay.invitation.invite.members.service.persistence.MemberRequestPersistence;
@@ -1670,6 +1671,8 @@ public class MemberRequestPersistenceImpl
 
 		setModelImplClass(MemberRequestImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(MemberRequestTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

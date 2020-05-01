@@ -16,6 +16,7 @@ package com.liferay.document.library.file.rank.service.persistence.impl;
 
 import com.liferay.document.library.file.rank.exception.NoSuchFileRankException;
 import com.liferay.document.library.file.rank.model.DLFileRank;
+import com.liferay.document.library.file.rank.model.DLFileRankTable;
 import com.liferay.document.library.file.rank.model.impl.DLFileRankImpl;
 import com.liferay.document.library.file.rank.model.impl.DLFileRankModelImpl;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankPersistence;
@@ -2478,6 +2479,8 @@ public class DLFileRankPersistenceImpl
 
 		setModelImplClass(DLFileRankImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DLFileRankTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

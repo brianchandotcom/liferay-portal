@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service.persistence.impl;
 
 import com.liferay.asset.kernel.exception.NoSuchLinkException;
 import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.asset.kernel.model.AssetLinkTable;
 import com.liferay.asset.kernel.service.persistence.AssetLinkPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -3056,6 +3057,8 @@ public class AssetLinkPersistenceImpl
 		setModelImplClass(AssetLinkImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetLinkModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(AssetLinkTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

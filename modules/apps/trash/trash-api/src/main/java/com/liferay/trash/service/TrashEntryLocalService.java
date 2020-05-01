@@ -14,6 +14,7 @@
 
 package com.liferay.trash.service;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -165,6 +166,8 @@ public interface TrashEntryLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public TrashEntry deleteTrashEntry(TrashEntry trashEntry);
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerInstanceTokenException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceTokenTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerInstanceTokenPersistence;
@@ -2027,6 +2028,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		setModelImplClass(KaleoTimerInstanceTokenImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoTimerInstanceTokenTable.INSTANCE);
 	}
 
 	/**

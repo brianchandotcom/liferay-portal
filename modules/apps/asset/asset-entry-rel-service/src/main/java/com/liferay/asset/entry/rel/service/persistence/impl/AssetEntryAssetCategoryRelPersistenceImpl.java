@@ -16,6 +16,7 @@ package com.liferay.asset.entry.rel.service.persistence.impl;
 
 import com.liferay.asset.entry.rel.exception.NoSuchEntryAssetCategoryRelException;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
+import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRelTable;
 import com.liferay.asset.entry.rel.model.impl.AssetEntryAssetCategoryRelImpl;
 import com.liferay.asset.entry.rel.model.impl.AssetEntryAssetCategoryRelModelImpl;
 import com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRelPersistence;
@@ -1444,6 +1445,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		setModelImplClass(AssetEntryAssetCategoryRelImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AssetEntryAssetCategoryRelTable.INSTANCE);
 	}
 
 	/**

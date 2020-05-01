@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchOrgGroupRoleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.OrgGroupRole;
+import com.liferay.portal.kernel.model.OrgGroupRoleTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.OrgGroupRolePK;
 import com.liferay.portal.kernel.service.persistence.OrgGroupRolePersistence;
@@ -1080,6 +1081,8 @@ public class OrgGroupRolePersistenceImpl
 		setModelImplClass(OrgGroupRoleImpl.class);
 		setModelPKClass(OrgGroupRolePK.class);
 		setEntityCacheEnabled(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(OrgGroupRoleTable.INSTANCE);
 	}
 
 	/**

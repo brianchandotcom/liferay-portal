@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchPreferencesException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortalPreferences;
+import com.liferay.portal.kernel.model.PortalPreferencesTable;
 import com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -323,6 +324,8 @@ public class PortalPreferencesPersistenceImpl
 		setModelImplClass(PortalPreferencesImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(PortalPreferencesTable.INSTANCE);
 	}
 
 	/**

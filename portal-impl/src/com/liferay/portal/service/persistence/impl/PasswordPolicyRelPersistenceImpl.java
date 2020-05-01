@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PasswordPolicyRel;
+import com.liferay.portal.kernel.model.PasswordPolicyRelTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyRelPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -827,6 +828,8 @@ public class PasswordPolicyRelPersistenceImpl
 		setModelImplClass(PasswordPolicyRelImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(PasswordPolicyRelTable.INSTANCE);
 	}
 
 	/**

@@ -15,6 +15,7 @@
 package com.liferay.blogs.service;
 
 import com.liferay.blogs.model.BlogsStatsUser;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -120,6 +121,8 @@ public interface BlogsStatsUserLocalService
 	public void deleteStatsUserByGroupId(long groupId);
 
 	public void deleteStatsUserByUserId(long userId);
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

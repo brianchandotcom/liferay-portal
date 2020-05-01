@@ -36,6 +36,7 @@ import com.liferay.portlet.social.model.impl.SocialRequestImpl;
 import com.liferay.portlet.social.model.impl.SocialRequestModelImpl;
 import com.liferay.social.kernel.exception.NoSuchRequestException;
 import com.liferay.social.kernel.model.SocialRequest;
+import com.liferay.social.kernel.model.SocialRequestTable;
 import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
 
 import java.io.Serializable;
@@ -6266,6 +6267,8 @@ public class SocialRequestPersistenceImpl
 		setModelImplClass(SocialRequestImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(SocialRequestModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(SocialRequestTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

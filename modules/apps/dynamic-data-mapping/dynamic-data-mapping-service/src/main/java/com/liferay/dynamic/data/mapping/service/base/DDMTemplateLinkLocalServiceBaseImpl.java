@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -127,6 +128,11 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 		DDMTemplateLink ddmTemplateLink) {
 
 		return ddmTemplateLinkPersistence.remove(ddmTemplateLink);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ddmTemplateLinkPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

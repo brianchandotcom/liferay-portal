@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.model.LayoutFriendlyURLTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -5403,6 +5404,8 @@ public class LayoutFriendlyURLPersistenceImpl
 		setModelImplClass(LayoutFriendlyURLImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(LayoutFriendlyURLTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

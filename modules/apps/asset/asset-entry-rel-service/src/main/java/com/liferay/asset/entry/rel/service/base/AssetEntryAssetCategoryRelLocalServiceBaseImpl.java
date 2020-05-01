@@ -18,6 +18,7 @@ import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRelPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -136,6 +137,11 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 
 		return assetEntryAssetCategoryRelPersistence.remove(
 			assetEntryAssetCategoryRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return assetEntryAssetCategoryRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

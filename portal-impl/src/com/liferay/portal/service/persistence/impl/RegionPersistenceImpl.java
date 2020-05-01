@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1868,6 +1869,8 @@ public class RegionPersistenceImpl
 		setModelImplClass(RegionImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(RegionModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(RegionTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

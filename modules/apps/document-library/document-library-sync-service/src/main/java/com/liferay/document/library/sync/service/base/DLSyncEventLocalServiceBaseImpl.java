@@ -17,6 +17,7 @@ package com.liferay.document.library.sync.service.base;
 import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.document.library.sync.service.persistence.DLSyncEventPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -121,6 +122,11 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	@Override
 	public DLSyncEvent deleteDLSyncEvent(DLSyncEvent dlSyncEvent) {
 		return dlSyncEventPersistence.remove(dlSyncEvent);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return dlSyncEventPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

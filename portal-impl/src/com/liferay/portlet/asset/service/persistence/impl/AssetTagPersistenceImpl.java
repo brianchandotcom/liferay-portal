@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service.persistence.impl;
 
 import com.liferay.asset.kernel.exception.NoSuchTagException;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetTagTable;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.petra.string.StringBundler;
@@ -4351,6 +4352,8 @@ public class AssetTagPersistenceImpl
 		setModelImplClass(AssetTagImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetTagModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(AssetTagTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

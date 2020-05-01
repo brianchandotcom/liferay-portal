@@ -16,6 +16,7 @@ package com.liferay.mobile.device.rules.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -142,6 +143,8 @@ public interface MDRRuleGroupLocalService
 	public void deleteRuleGroup(MDRRuleGroup ruleGroup);
 
 	public void deleteRuleGroups(long groupId);
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

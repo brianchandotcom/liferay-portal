@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
+import com.liferay.portal.workflow.kaleo.model.KaleoTimerTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerPersistence;
@@ -1326,6 +1327,8 @@ public class KaleoTimerPersistenceImpl
 
 		setModelImplClass(KaleoTimerImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoTimerTable.INSTANCE);
 	}
 
 	/**

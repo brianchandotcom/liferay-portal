@@ -16,6 +16,7 @@ package com.liferay.depot.service.persistence.impl;
 
 import com.liferay.depot.exception.NoSuchAppCustomizationException;
 import com.liferay.depot.model.DepotAppCustomization;
+import com.liferay.depot.model.DepotAppCustomizationTable;
 import com.liferay.depot.model.impl.DepotAppCustomizationImpl;
 import com.liferay.depot.model.impl.DepotAppCustomizationModelImpl;
 import com.liferay.depot.service.persistence.DepotAppCustomizationPersistence;
@@ -1116,6 +1117,8 @@ public class DepotAppCustomizationPersistenceImpl
 
 		setModelImplClass(DepotAppCustomizationImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DepotAppCustomizationTable.INSTANCE);
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -121,6 +122,11 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 		UserTrackerPath userTrackerPath) {
 
 		return userTrackerPathPersistence.remove(userTrackerPath);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return userTrackerPathPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

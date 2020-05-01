@@ -17,6 +17,7 @@ package com.liferay.document.library.service.base;
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.service.persistence.DLFileVersionPreviewPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -129,6 +130,11 @@ public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 		DLFileVersionPreview dlFileVersionPreview) {
 
 		return dlFileVersionPreviewPersistence.remove(dlFileVersionPreview);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return dlFileVersionPreviewPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.service.OAuthApplicationLocalService;
 import com.liferay.oauth.service.persistence.OAuthApplicationPersistence;
 import com.liferay.oauth.service.persistence.OAuthUserPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -129,6 +130,11 @@ public abstract class OAuthApplicationLocalServiceBaseImpl
 		throws PortalException {
 
 		return oAuthApplicationPersistence.remove(oAuthApplication);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return oAuthApplicationPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

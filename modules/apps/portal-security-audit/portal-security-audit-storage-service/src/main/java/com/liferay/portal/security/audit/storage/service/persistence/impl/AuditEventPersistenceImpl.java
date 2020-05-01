@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.audit.storage.exception.NoSuchEventException;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
+import com.liferay.portal.security.audit.storage.model.AuditEventTable;
 import com.liferay.portal.security.audit.storage.model.impl.AuditEventImpl;
 import com.liferay.portal.security.audit.storage.model.impl.AuditEventModelImpl;
 import com.liferay.portal.security.audit.storage.service.persistence.AuditEventPersistence;
@@ -591,6 +592,8 @@ public class AuditEventPersistenceImpl
 
 		setModelImplClass(AuditEventImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AuditEventTable.INSTANCE);
 	}
 
 	/**

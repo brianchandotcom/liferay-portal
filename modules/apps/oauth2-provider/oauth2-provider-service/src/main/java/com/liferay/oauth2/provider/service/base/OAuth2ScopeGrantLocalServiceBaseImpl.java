@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationFinder
 import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -129,6 +130,11 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 		OAuth2ScopeGrant oAuth2ScopeGrant) {
 
 		return oAuth2ScopeGrantPersistence.remove(oAuth2ScopeGrant);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return oAuth2ScopeGrantPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

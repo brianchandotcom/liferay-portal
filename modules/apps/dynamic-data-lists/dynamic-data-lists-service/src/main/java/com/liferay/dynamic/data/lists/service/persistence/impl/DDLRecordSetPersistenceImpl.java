@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.service.persistence.impl;
 
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetTable;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
@@ -3841,6 +3842,8 @@ public class DDLRecordSetPersistenceImpl
 
 		setModelImplClass(DDLRecordSetImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDLRecordSetTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

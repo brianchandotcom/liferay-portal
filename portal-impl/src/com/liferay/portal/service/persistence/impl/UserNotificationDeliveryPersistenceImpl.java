@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchUserNotificationDeliveryExcepti
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserNotificationDeliveryPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -932,6 +933,8 @@ public class UserNotificationDeliveryPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(UserNotificationDeliveryTable.INSTANCE);
 	}
 
 	/**

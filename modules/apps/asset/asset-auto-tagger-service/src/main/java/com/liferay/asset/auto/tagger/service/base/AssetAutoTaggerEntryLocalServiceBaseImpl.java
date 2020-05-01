@@ -18,6 +18,7 @@ import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -132,6 +133,11 @@ public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 		AssetAutoTaggerEntry assetAutoTaggerEntry) {
 
 		return assetAutoTaggerEntryPersistence.remove(assetAutoTaggerEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return assetAutoTaggerEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

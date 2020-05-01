@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.wedeploy.auth.exception.NoSuchAppException;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
+import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthAppTable;
 import com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthAppImpl;
 import com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthAppModelImpl;
 import com.liferay.portal.security.wedeploy.auth.service.persistence.WeDeployAuthAppPersistence;
@@ -696,6 +697,8 @@ public class WeDeployAuthAppPersistenceImpl
 
 		setModelImplClass(WeDeployAuthAppImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(WeDeployAuthAppTable.INSTANCE);
 	}
 
 	/**

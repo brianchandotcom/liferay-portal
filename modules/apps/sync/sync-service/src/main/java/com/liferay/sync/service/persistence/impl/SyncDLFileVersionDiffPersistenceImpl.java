@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.sync.exception.NoSuchDLFileVersionDiffException;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
+import com.liferay.sync.model.SyncDLFileVersionDiffTable;
 import com.liferay.sync.model.impl.SyncDLFileVersionDiffImpl;
 import com.liferay.sync.model.impl.SyncDLFileVersionDiffModelImpl;
 import com.liferay.sync.service.persistence.SyncDLFileVersionDiffPersistence;
@@ -1417,6 +1418,8 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		setModelImplClass(SyncDLFileVersionDiffImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SyncDLFileVersionDiffTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

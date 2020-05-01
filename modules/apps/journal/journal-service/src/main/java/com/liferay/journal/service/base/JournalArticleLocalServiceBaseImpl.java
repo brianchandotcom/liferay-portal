@@ -30,6 +30,7 @@ import com.liferay.journal.service.persistence.JournalArticleResourcePersistence
 import com.liferay.journal.service.persistence.JournalFolderFinder;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -143,6 +144,11 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	@Override
 	public JournalArticle deleteJournalArticle(JournalArticle journalArticle) {
 		return journalArticlePersistence.remove(journalArticle);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return journalArticlePersistence.dslQuery(dslQuery);
 	}
 
 	@Override

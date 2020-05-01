@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence.impl;
 
 import com.liferay.journal.exception.NoSuchArticleLocalizationException;
 import com.liferay.journal.model.JournalArticleLocalization;
+import com.liferay.journal.model.JournalArticleLocalizationTable;
 import com.liferay.journal.model.impl.JournalArticleLocalizationImpl;
 import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.service.persistence.JournalArticleLocalizationPersistence;
@@ -1566,6 +1567,8 @@ public class JournalArticleLocalizationPersistenceImpl
 
 		setModelImplClass(JournalArticleLocalizationImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(JournalArticleLocalizationTable.INSTANCE);
 	}
 
 	/**

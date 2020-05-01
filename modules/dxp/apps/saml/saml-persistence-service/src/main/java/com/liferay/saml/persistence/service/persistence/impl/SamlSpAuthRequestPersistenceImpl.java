@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.persistence.exception.NoSuchSpAuthRequestException;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
+import com.liferay.saml.persistence.model.SamlSpAuthRequestTable;
 import com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl;
 import com.liferay.saml.persistence.model.impl.SamlSpAuthRequestModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlSpAuthRequestPersistence;
@@ -950,6 +951,8 @@ public class SamlSpAuthRequestPersistenceImpl
 
 		setModelImplClass(SamlSpAuthRequestImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SamlSpAuthRequestTable.INSTANCE);
 	}
 
 	/**

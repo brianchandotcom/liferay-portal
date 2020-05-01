@@ -27,6 +27,7 @@ import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -137,6 +138,11 @@ public abstract class MBThreadLocalServiceBaseImpl
 	@Override
 	public MBThread deleteMBThread(MBThread mbThread) {
 		return mbThreadPersistence.remove(mbThread);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mbThreadPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

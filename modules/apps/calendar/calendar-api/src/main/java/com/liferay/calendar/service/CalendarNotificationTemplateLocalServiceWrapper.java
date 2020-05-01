@@ -149,6 +149,11 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _calendarNotificationTemplateLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _calendarNotificationTemplateLocalService.dynamicQuery();
 	}

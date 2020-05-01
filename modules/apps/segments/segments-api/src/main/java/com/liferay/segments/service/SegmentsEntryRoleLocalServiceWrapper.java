@@ -150,6 +150,11 @@ public class SegmentsEntryRoleLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _segmentsEntryRoleLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _segmentsEntryRoleLocalService.dynamicQuery();
 	}

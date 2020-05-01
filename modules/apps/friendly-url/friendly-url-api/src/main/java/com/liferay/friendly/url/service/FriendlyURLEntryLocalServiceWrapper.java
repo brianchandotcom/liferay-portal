@@ -182,6 +182,11 @@ public class FriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _friendlyURLEntryLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _friendlyURLEntryLocalService.dynamicQuery();
 	}

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1264,6 +1265,8 @@ public class CompanyPersistenceImpl
 		setModelImplClass(CompanyImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(CompanyModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(CompanyTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLayoutPersistence;
@@ -4227,6 +4228,8 @@ public class DDMStructureLayoutPersistenceImpl
 
 		setModelImplClass(DDMStructureLayoutImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDMStructureLayoutTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

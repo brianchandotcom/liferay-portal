@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.model.VirtualHostTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
@@ -1198,6 +1199,8 @@ public class VirtualHostPersistenceImpl
 		setModelImplClass(VirtualHostImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(VirtualHostModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(VirtualHostTable.INSTANCE);
 	}
 
 	/**

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.revert.schema.version.exception.NoSuchEntryException;
 import com.liferay.revert.schema.version.model.RSVEntry;
+import com.liferay.revert.schema.version.model.RSVEntryTable;
 import com.liferay.revert.schema.version.model.impl.RSVEntryImpl;
 import com.liferay.revert.schema.version.model.impl.RSVEntryModelImpl;
 import com.liferay.revert.schema.version.service.persistence.RSVEntryPersistence;
@@ -86,6 +87,8 @@ public class RSVEntryPersistenceImpl
 
 		setModelImplClass(RSVEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(RSVEntryTable.INSTANCE);
 	}
 
 	/**

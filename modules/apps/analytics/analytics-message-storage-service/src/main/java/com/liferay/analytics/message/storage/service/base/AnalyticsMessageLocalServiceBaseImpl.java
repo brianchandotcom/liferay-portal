@@ -19,6 +19,7 @@ import com.liferay.analytics.message.storage.model.AnalyticsMessageBodyBlobModel
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsMessagePersistence;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -136,6 +137,11 @@ public abstract class AnalyticsMessageLocalServiceBaseImpl
 		AnalyticsMessage analyticsMessage) {
 
 		return analyticsMessagePersistence.remove(analyticsMessage);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return analyticsMessagePersistence.dslQuery(dslQuery);
 	}
 
 	@Override

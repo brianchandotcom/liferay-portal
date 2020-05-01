@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLinkTable;
 import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl;
 import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessLinkPersistence;
@@ -868,6 +869,8 @@ public class KaleoProcessLinkPersistenceImpl
 
 		setModelImplClass(KaleoProcessLinkImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoProcessLinkTable.INSTANCE);
 	}
 
 	/**

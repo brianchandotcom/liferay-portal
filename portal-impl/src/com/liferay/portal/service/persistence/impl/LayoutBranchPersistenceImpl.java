@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutBranchException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutBranch;
+import com.liferay.portal.kernel.model.LayoutBranchTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.LayoutBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2012,6 +2013,8 @@ public class LayoutBranchPersistenceImpl
 		setModelImplClass(LayoutBranchImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(LayoutBranchTable.INSTANCE);
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.changeset.service.persistence.impl;
 
 import com.liferay.changeset.exception.NoSuchCollectionException;
 import com.liferay.changeset.model.ChangesetCollection;
+import com.liferay.changeset.model.ChangesetCollectionTable;
 import com.liferay.changeset.model.impl.ChangesetCollectionImpl;
 import com.liferay.changeset.model.impl.ChangesetCollectionModelImpl;
 import com.liferay.changeset.service.persistence.ChangesetCollectionPersistence;
@@ -2504,6 +2505,8 @@ public class ChangesetCollectionPersistenceImpl
 
 		setModelImplClass(ChangesetCollectionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(ChangesetCollectionTable.INSTANCE);
 	}
 
 	/**

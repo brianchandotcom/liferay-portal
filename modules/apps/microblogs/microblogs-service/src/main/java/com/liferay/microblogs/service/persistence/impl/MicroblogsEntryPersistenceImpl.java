@@ -16,6 +16,7 @@ package com.liferay.microblogs.service.persistence.impl;
 
 import com.liferay.microblogs.exception.NoSuchEntryException;
 import com.liferay.microblogs.model.MicroblogsEntry;
+import com.liferay.microblogs.model.MicroblogsEntryTable;
 import com.liferay.microblogs.model.impl.MicroblogsEntryImpl;
 import com.liferay.microblogs.model.impl.MicroblogsEntryModelImpl;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence;
@@ -7673,6 +7674,8 @@ public class MicroblogsEntryPersistenceImpl
 
 		setModelImplClass(MicroblogsEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(MicroblogsEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

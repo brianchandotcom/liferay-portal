@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -128,6 +129,11 @@ public abstract class KaleoProcessLinkLocalServiceBaseImpl
 		KaleoProcessLink kaleoProcessLink) {
 
 		return kaleoProcessLinkPersistence.remove(kaleoProcessLink);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return kaleoProcessLinkPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

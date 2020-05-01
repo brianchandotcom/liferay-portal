@@ -16,6 +16,7 @@ package com.liferay.chat.service.persistence.impl;
 
 import com.liferay.chat.exception.NoSuchStatusException;
 import com.liferay.chat.model.Status;
+import com.liferay.chat.model.StatusTable;
 import com.liferay.chat.model.impl.StatusImpl;
 import com.liferay.chat.model.impl.StatusModelImpl;
 import com.liferay.chat.service.persistence.StatusPersistence;
@@ -1826,6 +1827,8 @@ public class StatusPersistenceImpl
 
 		setModelImplClass(StatusImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(StatusTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

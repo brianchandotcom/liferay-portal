@@ -16,6 +16,7 @@ package com.liferay.external.data.source.test.service.persistence.impl;
 
 import com.liferay.external.data.source.test.exception.NoSuchTestEntityException;
 import com.liferay.external.data.source.test.model.TestEntity;
+import com.liferay.external.data.source.test.model.TestEntityTable;
 import com.liferay.external.data.source.test.model.impl.TestEntityImpl;
 import com.liferay.external.data.source.test.model.impl.TestEntityModelImpl;
 import com.liferay.external.data.source.test.service.persistence.TestEntityPersistence;
@@ -77,6 +78,8 @@ public class TestEntityPersistenceImpl
 		setModelImplClass(TestEntityImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(TestEntityModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(TestEntityTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

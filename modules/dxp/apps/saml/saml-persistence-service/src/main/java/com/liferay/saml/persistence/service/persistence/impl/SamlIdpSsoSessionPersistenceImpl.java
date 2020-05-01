@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.persistence.exception.NoSuchIdpSsoSessionException;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
+import com.liferay.saml.persistence.model.SamlIdpSsoSessionTable;
 import com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl;
 import com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlIdpSsoSessionPersistence;
@@ -904,6 +905,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 		setModelImplClass(SamlIdpSsoSessionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SamlIdpSsoSessionTable.INSTANCE);
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.asset.display.page.service.persistence.impl;
 
 import com.liferay.asset.display.page.exception.NoSuchDisplayPageEntryException;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryImpl;
 import com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryModelImpl;
 import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence;
@@ -2901,6 +2902,8 @@ public class AssetDisplayPageEntryPersistenceImpl
 
 		setModelImplClass(AssetDisplayPageEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AssetDisplayPageEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

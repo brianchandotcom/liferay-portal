@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchOrgLaborException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.OrgLabor;
+import com.liferay.portal.kernel.model.OrgLaborTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.OrgLaborPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -583,6 +584,8 @@ public class OrgLaborPersistenceImpl
 		setModelImplClass(OrgLaborImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(OrgLaborModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(OrgLaborTable.INSTANCE);
 	}
 
 	/**

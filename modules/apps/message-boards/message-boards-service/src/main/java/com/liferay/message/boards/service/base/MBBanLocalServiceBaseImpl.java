@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.message.boards.service.persistence.MBBanPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -125,6 +126,11 @@ public abstract class MBBanLocalServiceBaseImpl
 	@Override
 	public MBBan deleteMBBan(MBBan mbBan) {
 		return mbBanPersistence.remove(mbBan);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mbBanPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

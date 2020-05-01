@@ -20,6 +20,7 @@ import com.liferay.mail.reader.service.persistence.AccountPersistence;
 import com.liferay.mail.reader.service.persistence.AttachmentPersistence;
 import com.liferay.mail.reader.service.persistence.FolderPersistence;
 import com.liferay.mail.reader.service.persistence.MessagePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -123,6 +124,11 @@ public abstract class FolderLocalServiceBaseImpl
 	@Override
 	public Folder deleteFolder(Folder folder) throws PortalException {
 		return folderPersistence.remove(folder);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return folderPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

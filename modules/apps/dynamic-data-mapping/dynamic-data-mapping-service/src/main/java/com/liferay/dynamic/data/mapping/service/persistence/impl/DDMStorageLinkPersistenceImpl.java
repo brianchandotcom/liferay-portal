@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence;
@@ -2724,6 +2725,8 @@ public class DDMStorageLinkPersistenceImpl
 
 		setModelImplClass(DDMStorageLinkImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDMStorageLinkTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

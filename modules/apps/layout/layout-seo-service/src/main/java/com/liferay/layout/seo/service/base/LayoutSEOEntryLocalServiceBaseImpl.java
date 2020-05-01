@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.persistence.LayoutSEOEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -127,6 +128,11 @@ public abstract class LayoutSEOEntryLocalServiceBaseImpl
 	@Override
 	public LayoutSEOEntry deleteLayoutSEOEntry(LayoutSEOEntry layoutSEOEntry) {
 		return layoutSEOEntryPersistence.remove(layoutSEOEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return layoutSEOEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

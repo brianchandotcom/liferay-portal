@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceVersionPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -129,6 +130,11 @@ public abstract class DDMFormInstanceVersionLocalServiceBaseImpl
 		DDMFormInstanceVersion ddmFormInstanceVersion) {
 
 		return ddmFormInstanceVersionPersistence.remove(ddmFormInstanceVersion);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ddmFormInstanceVersionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

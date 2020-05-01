@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchRecentLayoutBranchException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RecentLayoutBranch;
+import com.liferay.portal.kernel.model.RecentLayoutBranchTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1863,6 +1864,8 @@ public class RecentLayoutBranchPersistenceImpl
 		setModelImplClass(RecentLayoutBranchImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(RecentLayoutBranchModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(RecentLayoutBranchTable.INSTANCE);
 	}
 
 	/**

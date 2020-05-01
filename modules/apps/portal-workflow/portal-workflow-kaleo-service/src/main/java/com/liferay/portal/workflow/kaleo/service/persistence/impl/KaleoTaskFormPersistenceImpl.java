@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskFormException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormPersistence;
@@ -2413,6 +2414,8 @@ public class KaleoTaskFormPersistenceImpl
 
 		setModelImplClass(KaleoTaskFormImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoTaskFormTable.INSTANCE);
 	}
 
 	/**

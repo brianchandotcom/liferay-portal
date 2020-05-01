@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.service;
 import com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -153,6 +154,8 @@ public interface OAuth2ScopeGrantLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

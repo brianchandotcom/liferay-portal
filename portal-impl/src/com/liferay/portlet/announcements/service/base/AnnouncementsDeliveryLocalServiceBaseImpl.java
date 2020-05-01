@@ -17,6 +17,7 @@ package com.liferay.portlet.announcements.service.base;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -125,6 +126,11 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 		AnnouncementsDelivery announcementsDelivery) {
 
 		return announcementsDeliveryPersistence.remove(announcementsDelivery);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return announcementsDeliveryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

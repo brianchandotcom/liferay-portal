@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service.persistence.impl;
 
 import com.liferay.asset.kernel.exception.NoSuchCategoryPropertyException;
 import com.liferay.asset.kernel.model.AssetCategoryProperty;
+import com.liferay.asset.kernel.model.AssetCategoryPropertyTable;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -2040,6 +2041,8 @@ public class AssetCategoryPropertyPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(AssetCategoryPropertyTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

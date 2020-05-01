@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchNestedSetsTreeEntryException;
 import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry;
+import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.NestedSetsTreeEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.NestedSetsTreeEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.NestedSetsTreeEntryPersistence;
@@ -89,6 +90,8 @@ public class NestedSetsTreeEntryPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			NestedSetsTreeEntryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(NestedSetsTreeEntryTable.INSTANCE);
 	}
 
 	/**

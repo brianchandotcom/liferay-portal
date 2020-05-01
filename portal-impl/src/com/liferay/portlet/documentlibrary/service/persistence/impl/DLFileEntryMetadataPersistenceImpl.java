@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadataTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -2580,6 +2581,8 @@ public class DLFileEntryMetadataPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(DLFileEntryMetadataTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

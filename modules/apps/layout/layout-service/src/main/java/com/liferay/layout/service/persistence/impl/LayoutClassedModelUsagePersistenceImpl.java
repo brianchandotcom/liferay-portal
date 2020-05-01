@@ -16,6 +16,7 @@ package com.liferay.layout.service.persistence.impl;
 
 import com.liferay.layout.exception.NoSuchClassedModelUsageException;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.model.LayoutClassedModelUsageTable;
 import com.liferay.layout.model.impl.LayoutClassedModelUsageImpl;
 import com.liferay.layout.model.impl.LayoutClassedModelUsageModelImpl;
 import com.liferay.layout.service.persistence.LayoutClassedModelUsagePersistence;
@@ -4122,6 +4123,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		setModelImplClass(LayoutClassedModelUsageImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(LayoutClassedModelUsageTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -132,6 +133,11 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 		DDMStructureVersion ddmStructureVersion) {
 
 		return ddmStructureVersionPersistence.remove(ddmStructureVersion);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ddmStructureVersionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

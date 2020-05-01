@@ -25,6 +25,7 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -135,6 +136,11 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	@Override
 	public MBCategory deleteMBCategory(MBCategory mbCategory) {
 		return mbCategoryPersistence.remove(mbCategory);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mbCategoryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

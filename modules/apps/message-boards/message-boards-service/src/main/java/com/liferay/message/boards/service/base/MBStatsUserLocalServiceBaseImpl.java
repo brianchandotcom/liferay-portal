@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.base;
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.persistence.MBStatsUserPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -121,6 +122,11 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 	@Override
 	public MBStatsUser deleteMBStatsUser(MBStatsUser mbStatsUser) {
 		return mbStatsUserPersistence.remove(mbStatsUser);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mbStatsUserPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

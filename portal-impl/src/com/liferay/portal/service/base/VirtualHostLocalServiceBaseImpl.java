@@ -15,6 +15,7 @@
 package com.liferay.portal.service.base;
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -125,6 +126,11 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	@Override
 	public VirtualHost deleteVirtualHost(VirtualHost virtualHost) {
 		return virtualHostPersistence.remove(virtualHost);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return virtualHostPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

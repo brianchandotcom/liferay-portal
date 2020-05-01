@@ -16,6 +16,7 @@ package com.liferay.fragment.service.persistence.impl;
 
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.model.FragmentEntryLinkTable;
 import com.liferay.fragment.model.impl.FragmentEntryLinkImpl;
 import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
@@ -6078,6 +6079,8 @@ public class FragmentEntryLinkPersistenceImpl
 
 		setModelImplClass(FragmentEntryLinkImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(FragmentEntryLinkTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

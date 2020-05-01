@@ -17,6 +17,7 @@ package com.liferay.invitation.invite.members.service.base;
 import com.liferay.invitation.invite.members.model.MemberRequest;
 import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
 import com.liferay.invitation.invite.members.service.persistence.MemberRequestPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -121,6 +122,11 @@ public abstract class MemberRequestLocalServiceBaseImpl
 	@Override
 	public MemberRequest deleteMemberRequest(MemberRequest memberRequest) {
 		return memberRequestPersistence.remove(memberRequest);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return memberRequestPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

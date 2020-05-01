@@ -14,6 +14,7 @@
 
 package com.liferay.revert.schema.version.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -119,6 +120,11 @@ public abstract class RSVEntryLocalServiceBaseImpl
 	@Override
 	public RSVEntry deleteRSVEntry(RSVEntry rsvEntry) {
 		return rsvEntryPersistence.remove(rsvEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return rsvEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

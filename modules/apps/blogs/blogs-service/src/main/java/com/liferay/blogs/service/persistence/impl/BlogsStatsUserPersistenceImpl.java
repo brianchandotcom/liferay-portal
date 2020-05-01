@@ -16,6 +16,7 @@ package com.liferay.blogs.service.persistence.impl;
 
 import com.liferay.blogs.exception.NoSuchStatsUserException;
 import com.liferay.blogs.model.BlogsStatsUser;
+import com.liferay.blogs.model.BlogsStatsUserTable;
 import com.liferay.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.blogs.model.impl.BlogsStatsUserModelImpl;
 import com.liferay.blogs.service.persistence.BlogsStatsUserPersistence;
@@ -2971,6 +2972,8 @@ public class BlogsStatsUserPersistenceImpl
 
 		setModelImplClass(BlogsStatsUserImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(BlogsStatsUserTable.INSTANCE);
 	}
 
 	/**

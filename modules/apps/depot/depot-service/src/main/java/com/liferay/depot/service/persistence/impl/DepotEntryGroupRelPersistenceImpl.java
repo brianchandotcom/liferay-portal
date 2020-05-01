@@ -16,6 +16,7 @@ package com.liferay.depot.service.persistence.impl;
 
 import com.liferay.depot.exception.NoSuchEntryGroupRelException;
 import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.model.DepotEntryGroupRelTable;
 import com.liferay.depot.model.impl.DepotEntryGroupRelImpl;
 import com.liferay.depot.model.impl.DepotEntryGroupRelModelImpl;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
@@ -1892,6 +1893,8 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		setModelImplClass(DepotEntryGroupRelImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DepotEntryGroupRelTable.INSTANCE);
 	}
 
 	/**

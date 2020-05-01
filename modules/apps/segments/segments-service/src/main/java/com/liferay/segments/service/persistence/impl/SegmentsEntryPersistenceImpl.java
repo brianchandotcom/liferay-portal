@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsEntryTable;
 import com.liferay.segments.model.impl.SegmentsEntryImpl;
 import com.liferay.segments.model.impl.SegmentsEntryModelImpl;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
@@ -9779,6 +9780,8 @@ public class SegmentsEntryPersistenceImpl
 
 		setModelImplClass(SegmentsEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SegmentsEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

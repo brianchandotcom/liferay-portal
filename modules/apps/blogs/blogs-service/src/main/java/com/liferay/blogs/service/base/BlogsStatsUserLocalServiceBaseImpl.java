@@ -20,6 +20,7 @@ import com.liferay.blogs.service.persistence.BlogsEntryFinder;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.blogs.service.persistence.BlogsStatsUserFinder;
 import com.liferay.blogs.service.persistence.BlogsStatsUserPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -124,6 +125,11 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	@Override
 	public BlogsStatsUser deleteBlogsStatsUser(BlogsStatsUser blogsStatsUser) {
 		return blogsStatsUserPersistence.remove(blogsStatsUser);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return blogsStatsUserPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

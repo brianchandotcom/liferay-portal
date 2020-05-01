@@ -151,6 +151,11 @@ public class KaleoProcessLinkLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _kaleoProcessLinkLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _kaleoProcessLinkLocalService.dynamicQuery();
 	}

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskPersistence;
@@ -1339,6 +1340,8 @@ public class KaleoTaskPersistenceImpl
 
 		setModelImplClass(KaleoTaskImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoTaskTable.INSTANCE);
 	}
 
 	/**

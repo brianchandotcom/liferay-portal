@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.message.boards.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.service.persistence.MBThreadFlagPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -127,6 +128,11 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 	@Override
 	public MBThreadFlag deleteMBThreadFlag(MBThreadFlag mbThreadFlag) {
 		return mbThreadFlagPersistence.remove(mbThreadFlag);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mbThreadFlagPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

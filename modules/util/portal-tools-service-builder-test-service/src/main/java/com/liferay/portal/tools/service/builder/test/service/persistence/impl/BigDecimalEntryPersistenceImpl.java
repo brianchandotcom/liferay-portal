@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchBigDecimalEntryException;
 import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry;
+import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence;
@@ -1737,6 +1738,8 @@ public class BigDecimalEntryPersistenceImpl
 		setModelImplClass(BigDecimalEntryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(BigDecimalEntryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(BigDecimalEntryTable.INSTANCE);
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.service.persistence.impl;
 
 import com.liferay.expando.kernel.exception.NoSuchRowException;
 import com.liferay.expando.kernel.model.ExpandoRow;
+import com.liferay.expando.kernel.model.ExpandoRowTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -1302,6 +1303,8 @@ public class ExpandoRowPersistenceImpl
 		setModelImplClass(ExpandoRowImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(ExpandoRowTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -140,6 +141,11 @@ public abstract class UserGroupLocalServiceBaseImpl
 		throws PortalException {
 
 		return userGroupPersistence.remove(userGroup);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return userGroupPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
@@ -12799,6 +12800,8 @@ public class GroupPersistenceImpl
 		setModelImplClass(GroupImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(GroupModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(GroupTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

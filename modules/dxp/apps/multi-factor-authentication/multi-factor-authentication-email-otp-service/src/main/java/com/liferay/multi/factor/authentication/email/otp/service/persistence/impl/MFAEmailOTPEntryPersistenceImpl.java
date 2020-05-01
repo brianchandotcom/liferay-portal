@@ -16,6 +16,7 @@ package com.liferay.multi.factor.authentication.email.otp.service.persistence.im
 
 import com.liferay.multi.factor.authentication.email.otp.exception.NoSuchEntryException;
 import com.liferay.multi.factor.authentication.email.otp.model.MFAEmailOTPEntry;
+import com.liferay.multi.factor.authentication.email.otp.model.MFAEmailOTPEntryTable;
 import com.liferay.multi.factor.authentication.email.otp.model.impl.MFAEmailOTPEntryImpl;
 import com.liferay.multi.factor.authentication.email.otp.model.impl.MFAEmailOTPEntryModelImpl;
 import com.liferay.multi.factor.authentication.email.otp.service.persistence.MFAEmailOTPEntryPersistence;
@@ -296,6 +297,8 @@ public class MFAEmailOTPEntryPersistenceImpl
 
 		setModelImplClass(MFAEmailOTPEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(MFAEmailOTPEntryTable.INSTANCE);
 	}
 
 	/**

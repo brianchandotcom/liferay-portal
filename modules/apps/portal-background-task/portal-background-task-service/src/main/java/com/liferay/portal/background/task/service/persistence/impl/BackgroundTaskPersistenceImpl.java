@@ -17,6 +17,7 @@ package com.liferay.portal.background.task.service.persistence.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.background.task.exception.NoSuchBackgroundTaskException;
 import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.background.task.model.BackgroundTaskTable;
 import com.liferay.portal.background.task.model.impl.BackgroundTaskImpl;
 import com.liferay.portal.background.task.model.impl.BackgroundTaskModelImpl;
 import com.liferay.portal.background.task.service.persistence.BackgroundTaskPersistence;
@@ -8783,6 +8784,8 @@ public class BackgroundTaskPersistenceImpl
 
 		setModelImplClass(BackgroundTaskImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(BackgroundTaskTable.INSTANCE);
 	}
 
 	/**

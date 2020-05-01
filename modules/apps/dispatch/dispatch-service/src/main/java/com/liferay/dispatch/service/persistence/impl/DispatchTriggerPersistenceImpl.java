@@ -16,6 +16,7 @@ package com.liferay.dispatch.service.persistence.impl;
 
 import com.liferay.dispatch.exception.NoSuchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.model.DispatchTriggerTable;
 import com.liferay.dispatch.model.impl.DispatchTriggerImpl;
 import com.liferay.dispatch.model.impl.DispatchTriggerModelImpl;
 import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
@@ -2269,6 +2270,8 @@ public class DispatchTriggerPersistenceImpl
 
 		setModelImplClass(DispatchTriggerImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DispatchTriggerTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -27,6 +27,7 @@ import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -137,6 +138,11 @@ public abstract class MBMessageLocalServiceBaseImpl
 	@Override
 	public MBMessage deleteMBMessage(MBMessage mbMessage) {
 		return mbMessagePersistence.remove(mbMessage);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mbMessagePersistence.dslQuery(dslQuery);
 	}
 
 	@Override

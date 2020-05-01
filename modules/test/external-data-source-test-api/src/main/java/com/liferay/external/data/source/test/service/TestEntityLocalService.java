@@ -15,6 +15,7 @@
 package com.liferay.external.data.source.test.service;
 
 import com.liferay.external.data.source.test.model.TestEntity;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -110,6 +111,8 @@ public interface TestEntityLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public TestEntity deleteTestEntity(TestEntity testEntity);
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

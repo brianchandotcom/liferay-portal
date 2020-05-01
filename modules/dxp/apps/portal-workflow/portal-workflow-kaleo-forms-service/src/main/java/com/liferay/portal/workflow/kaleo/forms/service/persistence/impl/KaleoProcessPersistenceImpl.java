@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessTable;
 import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl;
 import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessPersistence;
@@ -2574,6 +2575,8 @@ public class KaleoProcessPersistenceImpl
 
 		setModelImplClass(KaleoProcessImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoProcessTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

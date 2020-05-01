@@ -28,6 +28,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -132,6 +133,11 @@ public abstract class CalendarLocalServiceBaseImpl
 	@Override
 	public Calendar deleteCalendar(Calendar calendar) throws PortalException {
 		return calendarPersistence.remove(calendar);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return calendarPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

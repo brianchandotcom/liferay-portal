@@ -16,6 +16,7 @@ package com.liferay.expando.kernel.service;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -268,6 +269,9 @@ public interface ExpandoValueLocalService
 	public void deleteValues(long classNameId, long classPK);
 
 	public void deleteValues(String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

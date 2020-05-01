@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchContactException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ContactTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1622,6 +1623,8 @@ public class ContactPersistenceImpl
 		setModelImplClass(ContactImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(ContactModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(ContactTable.INSTANCE);
 	}
 
 	/**

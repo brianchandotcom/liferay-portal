@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -147,6 +148,11 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 		AnnouncementsEntry announcementsEntry) {
 
 		return announcementsEntryPersistence.remove(announcementsEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return announcementsEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

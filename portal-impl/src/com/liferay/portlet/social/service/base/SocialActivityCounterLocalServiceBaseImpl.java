@@ -16,6 +16,7 @@ package com.liferay.portlet.social.service.base;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryFinder;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -136,6 +137,11 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 		SocialActivityCounter socialActivityCounter) {
 
 		return socialActivityCounterPersistence.remove(socialActivityCounter);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return socialActivityCounterPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

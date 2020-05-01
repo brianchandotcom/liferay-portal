@@ -17,6 +17,7 @@ package com.liferay.document.library.opener.service.base;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.document.library.opener.service.persistence.DLOpenerFileEntryReferencePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -133,6 +134,11 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 
 		return dlOpenerFileEntryReferencePersistence.remove(
 			dlOpenerFileEntryReference);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return dlOpenerFileEntryReferencePersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.background.task.service;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -164,6 +165,8 @@ public interface BackgroundTaskLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

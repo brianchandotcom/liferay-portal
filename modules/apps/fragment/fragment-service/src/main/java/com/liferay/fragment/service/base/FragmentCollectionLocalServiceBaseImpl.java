@@ -25,6 +25,7 @@ import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentCompositionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -140,6 +141,11 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 		throws PortalException {
 
 		return fragmentCollectionPersistence.remove(fragmentCollection);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return fragmentCollectionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLinkTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
@@ -1391,6 +1392,8 @@ public class DDMTemplateLinkPersistenceImpl
 
 		setModelImplClass(DDMTemplateLinkImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDMTemplateLinkTable.INSTANCE);
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.marketplace.service.persistence.impl;
 
 import com.liferay.marketplace.exception.NoSuchAppException;
 import com.liferay.marketplace.model.App;
+import com.liferay.marketplace.model.AppTable;
 import com.liferay.marketplace.model.impl.AppImpl;
 import com.liferay.marketplace.model.impl.AppModelImpl;
 import com.liferay.marketplace.service.persistence.AppPersistence;
@@ -2454,6 +2455,8 @@ public class AppPersistenceImpl
 
 		setModelImplClass(AppImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AppTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.model.WikiPageResource;
+import com.liferay.wiki.model.WikiPageResourceTable;
 import com.liferay.wiki.model.impl.WikiPageResourceImpl;
 import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.wiki.service.persistence.WikiPageResourcePersistence;
@@ -1731,6 +1732,8 @@ public class WikiPageResourcePersistenceImpl
 
 		setModelImplClass(WikiPageResourceImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(WikiPageResourceTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -16,6 +16,7 @@ package com.liferay.document.library.content.service.persistence.impl;
 
 import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
+import com.liferay.document.library.content.model.DLContentTable;
 import com.liferay.document.library.content.model.impl.DLContentImpl;
 import com.liferay.document.library.content.model.impl.DLContentModelImpl;
 import com.liferay.document.library.content.service.persistence.DLContentPersistence;
@@ -2284,6 +2285,8 @@ public class DLContentPersistenceImpl
 
 		setModelImplClass(DLContentImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DLContentTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

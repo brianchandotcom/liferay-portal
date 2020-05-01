@@ -16,6 +16,7 @@ package com.liferay.asset.list.service.persistence.impl;
 
 import com.liferay.asset.list.exception.NoSuchEntryUsageException;
 import com.liferay.asset.list.model.AssetListEntryUsage;
+import com.liferay.asset.list.model.AssetListEntryUsageTable;
 import com.liferay.asset.list.model.impl.AssetListEntryUsageImpl;
 import com.liferay.asset.list.model.impl.AssetListEntryUsageModelImpl;
 import com.liferay.asset.list.service.persistence.AssetListEntryUsagePersistence;
@@ -2953,6 +2954,8 @@ public class AssetListEntryUsagePersistenceImpl
 
 		setModelImplClass(AssetListEntryUsageImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AssetListEntryUsageTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

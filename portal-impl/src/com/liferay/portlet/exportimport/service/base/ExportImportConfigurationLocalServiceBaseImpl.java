@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -135,6 +136,11 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 
 		return exportImportConfigurationPersistence.remove(
 			exportImportConfiguration);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return exportImportConfigurationPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.depot.service.base;
 import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.persistence.DepotAppCustomizationPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -129,6 +130,11 @@ public abstract class DepotAppCustomizationLocalServiceBaseImpl
 		DepotAppCustomization depotAppCustomization) {
 
 		return depotAppCustomizationPersistence.remove(depotAppCustomization);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return depotAppCustomizationPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

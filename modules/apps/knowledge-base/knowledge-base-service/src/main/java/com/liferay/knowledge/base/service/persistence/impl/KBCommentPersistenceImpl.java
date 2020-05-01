@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.service.persistence.impl;
 
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBComment;
+import com.liferay.knowledge.base.model.KBCommentTable;
 import com.liferay.knowledge.base.model.impl.KBCommentImpl;
 import com.liferay.knowledge.base.model.impl.KBCommentModelImpl;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
@@ -5058,6 +5059,8 @@ public class KBCommentPersistenceImpl
 
 		setModelImplClass(KBCommentImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KBCommentTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

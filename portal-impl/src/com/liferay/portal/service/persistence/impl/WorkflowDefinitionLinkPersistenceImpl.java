@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLinkTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -2810,6 +2811,8 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(WorkflowDefinitionLinkTable.INSTANCE);
 	}
 
 	/**

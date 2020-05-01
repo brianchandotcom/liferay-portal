@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence.impl;
 
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderTable;
 import com.liferay.journal.model.impl.JournalFolderImpl;
 import com.liferay.journal.model.impl.JournalFolderModelImpl;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
@@ -7564,6 +7565,8 @@ public class JournalFolderPersistenceImpl
 
 		setModelImplClass(JournalFolderImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(JournalFolderTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.persistence.AccountEntryPersistence;
 import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -130,6 +131,11 @@ public abstract class AccountEntryUserRelLocalServiceBaseImpl
 		AccountEntryUserRel accountEntryUserRel) {
 
 		return accountEntryUserRelPersistence.remove(accountEntryUserRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return accountEntryUserRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

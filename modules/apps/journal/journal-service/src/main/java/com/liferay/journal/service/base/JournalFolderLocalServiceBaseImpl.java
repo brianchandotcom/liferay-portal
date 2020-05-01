@@ -28,6 +28,7 @@ import com.liferay.journal.service.persistence.JournalArticlePersistence;
 import com.liferay.journal.service.persistence.JournalFolderFinder;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -142,6 +143,11 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	@Override
 	public JournalFolder deleteJournalFolder(JournalFolder journalFolder) {
 		return journalFolderPersistence.remove(journalFolder);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return journalFolderPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

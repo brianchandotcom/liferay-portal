@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.lock.exception.NoSuchLockException;
 import com.liferay.portal.lock.model.Lock;
+import com.liferay.portal.lock.model.LockTable;
 import com.liferay.portal.lock.model.impl.LockImpl;
 import com.liferay.portal.lock.model.impl.LockModelImpl;
 import com.liferay.portal.lock.service.persistence.LockPersistence;
@@ -2560,6 +2561,8 @@ public class LockPersistenceImpl
 
 		setModelImplClass(LockImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(LockTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

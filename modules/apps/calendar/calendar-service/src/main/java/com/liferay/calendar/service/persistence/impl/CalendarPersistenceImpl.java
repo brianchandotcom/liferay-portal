@@ -16,6 +16,7 @@ package com.liferay.calendar.service.persistence.impl;
 
 import com.liferay.calendar.exception.NoSuchCalendarException;
 import com.liferay.calendar.model.Calendar;
+import com.liferay.calendar.model.CalendarTable;
 import com.liferay.calendar.model.impl.CalendarImpl;
 import com.liferay.calendar.model.impl.CalendarModelImpl;
 import com.liferay.calendar.service.persistence.CalendarPersistence;
@@ -3430,6 +3431,8 @@ public class CalendarPersistenceImpl
 
 		setModelImplClass(CalendarImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CalendarTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.persistence.AccountEntryOrganizationRelPersistence;
 import com.liferay.account.service.persistence.AccountEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -134,6 +135,11 @@ public abstract class AccountEntryOrganizationRelLocalServiceBaseImpl
 
 		return accountEntryOrganizationRelPersistence.remove(
 			accountEntryOrganizationRel);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return accountEntryOrganizationRelPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

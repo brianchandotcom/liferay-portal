@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.segments.exception.NoSuchEntryRoleException;
 import com.liferay.segments.model.SegmentsEntryRole;
+import com.liferay.segments.model.SegmentsEntryRoleTable;
 import com.liferay.segments.model.impl.SegmentsEntryRoleImpl;
 import com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl;
 import com.liferay.segments.service.persistence.SegmentsEntryRolePersistence;
@@ -1339,6 +1340,8 @@ public class SegmentsEntryRolePersistenceImpl
 
 		setModelImplClass(SegmentsEntryRoleImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SegmentsEntryRoleTable.INSTANCE);
 	}
 
 	/**

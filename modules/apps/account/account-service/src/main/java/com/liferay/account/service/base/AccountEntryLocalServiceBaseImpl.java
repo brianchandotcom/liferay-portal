@@ -17,6 +17,7 @@ package com.liferay.account.service.base;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.persistence.AccountEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -124,6 +125,11 @@ public abstract class AccountEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return accountEntryPersistence.remove(accountEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return accountEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

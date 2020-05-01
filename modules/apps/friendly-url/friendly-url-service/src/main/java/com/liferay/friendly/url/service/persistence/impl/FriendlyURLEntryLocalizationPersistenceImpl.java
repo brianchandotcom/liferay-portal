@@ -16,6 +16,7 @@ package com.liferay.friendly.url.service.persistence.impl;
 
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationTable;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
@@ -1187,6 +1188,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 		setModelImplClass(FriendlyURLEntryLocalizationImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(FriendlyURLEntryLocalizationTable.INSTANCE);
 	}
 
 	/**

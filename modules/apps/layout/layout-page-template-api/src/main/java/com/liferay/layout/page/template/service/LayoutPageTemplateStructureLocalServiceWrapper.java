@@ -146,6 +146,11 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _layoutPageTemplateStructureLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _layoutPageTemplateStructureLocalService.dynamicQuery();
 	}

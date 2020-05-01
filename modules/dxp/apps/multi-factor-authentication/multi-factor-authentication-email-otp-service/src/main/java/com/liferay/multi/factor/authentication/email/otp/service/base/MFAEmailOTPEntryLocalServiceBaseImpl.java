@@ -17,6 +17,7 @@ package com.liferay.multi.factor.authentication.email.otp.service.base;
 import com.liferay.multi.factor.authentication.email.otp.model.MFAEmailOTPEntry;
 import com.liferay.multi.factor.authentication.email.otp.service.MFAEmailOTPEntryLocalService;
 import com.liferay.multi.factor.authentication.email.otp.service.persistence.MFAEmailOTPEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -126,6 +127,11 @@ public abstract class MFAEmailOTPEntryLocalServiceBaseImpl
 		MFAEmailOTPEntry mfaEmailOTPEntry) {
 
 		return mfaEmailOTPEntryPersistence.remove(mfaEmailOTPEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mfaEmailOTPEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

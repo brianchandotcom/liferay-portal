@@ -16,6 +16,7 @@ package com.liferay.change.tracking.store.service.persistence.impl;
 
 import com.liferay.change.tracking.store.exception.NoSuchContentException;
 import com.liferay.change.tracking.store.model.CTSContent;
+import com.liferay.change.tracking.store.model.CTSContentTable;
 import com.liferay.change.tracking.store.model.impl.CTSContentImpl;
 import com.liferay.change.tracking.store.model.impl.CTSContentModelImpl;
 import com.liferay.change.tracking.store.service.persistence.CTSContentPersistence;
@@ -2592,6 +2593,8 @@ public class CTSContentPersistenceImpl
 
 		setModelImplClass(CTSContentImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CTSContentTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

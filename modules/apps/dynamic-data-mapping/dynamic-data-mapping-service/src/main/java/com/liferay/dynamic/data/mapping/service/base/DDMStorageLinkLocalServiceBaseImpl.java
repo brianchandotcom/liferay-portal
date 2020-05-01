@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -121,6 +122,11 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	@Override
 	public DDMStorageLink deleteDDMStorageLink(DDMStorageLink ddmStorageLink) {
 		return ddmStorageLinkPersistence.remove(ddmStorageLink);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ddmStorageLinkPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

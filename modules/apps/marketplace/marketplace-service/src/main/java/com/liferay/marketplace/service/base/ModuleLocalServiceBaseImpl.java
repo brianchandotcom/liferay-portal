@@ -18,6 +18,7 @@ import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.marketplace.service.persistence.AppPersistence;
 import com.liferay.marketplace.service.persistence.ModulePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -120,6 +121,11 @@ public abstract class ModuleLocalServiceBaseImpl
 	@Override
 	public Module deleteModule(Module module) {
 		return modulePersistence.remove(module);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return modulePersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletItem;
+import com.liferay.portal.kernel.model.PortletItemTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1610,6 +1611,8 @@ public class PortletItemPersistenceImpl
 		setModelImplClass(PortletItemImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(PortletItemModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(PortletItemTable.INSTANCE);
 	}
 
 	/**

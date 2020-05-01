@@ -16,6 +16,7 @@ package com.liferay.html.preview.service.persistence.impl;
 
 import com.liferay.html.preview.exception.NoSuchHtmlPreviewEntryException;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
+import com.liferay.html.preview.model.HtmlPreviewEntryTable;
 import com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl;
 import com.liferay.html.preview.model.impl.HtmlPreviewEntryModelImpl;
 import com.liferay.html.preview.service.persistence.HtmlPreviewEntryPersistence;
@@ -364,6 +365,8 @@ public class HtmlPreviewEntryPersistenceImpl
 
 		setModelImplClass(HtmlPreviewEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(HtmlPreviewEntryTable.INSTANCE);
 	}
 
 	/**

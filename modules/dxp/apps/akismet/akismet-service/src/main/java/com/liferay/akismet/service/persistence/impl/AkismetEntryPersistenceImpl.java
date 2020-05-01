@@ -16,6 +16,7 @@ package com.liferay.akismet.service.persistence.impl;
 
 import com.liferay.akismet.exception.NoSuchAkismetEntryException;
 import com.liferay.akismet.model.AkismetEntry;
+import com.liferay.akismet.model.AkismetEntryTable;
 import com.liferay.akismet.model.impl.AkismetEntryImpl;
 import com.liferay.akismet.model.impl.AkismetEntryModelImpl;
 import com.liferay.akismet.service.persistence.AkismetEntryPersistence;
@@ -860,6 +861,8 @@ public class AkismetEntryPersistenceImpl
 		setModelImplClass(AkismetEntryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(AkismetEntryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(AkismetEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -16,6 +16,7 @@ package com.liferay.oauth.service.persistence.impl;
 
 import com.liferay.oauth.exception.NoSuchApplicationException;
 import com.liferay.oauth.model.OAuthApplication;
+import com.liferay.oauth.model.OAuthApplicationTable;
 import com.liferay.oauth.model.impl.OAuthApplicationImpl;
 import com.liferay.oauth.model.impl.OAuthApplicationModelImpl;
 import com.liferay.oauth.service.persistence.OAuthApplicationPersistence;
@@ -2495,6 +2496,8 @@ public class OAuthApplicationPersistenceImpl
 
 		setModelImplClass(OAuthApplicationImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(OAuthApplicationTable.INSTANCE);
 	}
 
 	/**

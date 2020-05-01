@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchVersionedEntryException;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntry;
+import com.liferay.portal.tools.service.builder.test.model.VersionedEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryPersistence;
@@ -1329,6 +1330,8 @@ public class VersionedEntryPersistenceImpl
 		setModelImplClass(VersionedEntryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(VersionedEntryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(VersionedEntryTable.INSTANCE);
 	}
 
 	/**

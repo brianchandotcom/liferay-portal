@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.segments.exception.NoSuchEntryRelException;
 import com.liferay.segments.model.SegmentsEntryRel;
+import com.liferay.segments.model.SegmentsEntryRelTable;
 import com.liferay.segments.model.impl.SegmentsEntryRelImpl;
 import com.liferay.segments.model.impl.SegmentsEntryRelModelImpl;
 import com.liferay.segments.service.persistence.SegmentsEntryRelPersistence;
@@ -1998,6 +1999,8 @@ public class SegmentsEntryRelPersistenceImpl
 
 		setModelImplClass(SegmentsEntryRelImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SegmentsEntryRelTable.INSTANCE);
 	}
 
 	/**

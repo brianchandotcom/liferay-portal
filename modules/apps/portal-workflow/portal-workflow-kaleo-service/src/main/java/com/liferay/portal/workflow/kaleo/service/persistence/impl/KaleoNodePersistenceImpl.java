@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.model.KaleoNodeTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodePersistence;
@@ -1675,6 +1676,8 @@ public class KaleoNodePersistenceImpl
 
 		setModelImplClass(KaleoNodeImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoNodeTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

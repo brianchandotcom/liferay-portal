@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -10048,6 +10049,8 @@ public class RolePersistenceImpl
 		setModelImplClass(RoleImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(RoleModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(RoleTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -35,6 +35,7 @@ import com.liferay.portlet.social.model.impl.SocialActivityImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityModelImpl;
 import com.liferay.social.kernel.exception.NoSuchActivityException;
 import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivityTable;
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 
 import java.io.Serializable;
@@ -6134,6 +6135,8 @@ public class SocialActivityPersistenceImpl
 		setModelImplClass(SocialActivityImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(SocialActivityModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(SocialActivityTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

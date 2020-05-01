@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -5847,6 +5848,8 @@ public class DLFileVersionPersistenceImpl
 		setModelImplClass(DLFileVersionImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(DLFileVersionTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

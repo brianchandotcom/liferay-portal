@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.exception.NoSuchMessageException;
 import com.liferay.change.tracking.model.CTMessage;
+import com.liferay.change.tracking.model.CTMessageTable;
 import com.liferay.change.tracking.model.impl.CTMessageImpl;
 import com.liferay.change.tracking.model.impl.CTMessageModelImpl;
 import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
@@ -593,6 +594,8 @@ public class CTMessagePersistenceImpl
 
 		setModelImplClass(CTMessageImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CTMessageTable.INSTANCE);
 	}
 
 	/**

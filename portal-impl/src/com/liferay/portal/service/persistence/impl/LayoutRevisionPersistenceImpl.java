@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutRevisionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -7856,6 +7857,8 @@ public class LayoutRevisionPersistenceImpl
 		setModelImplClass(LayoutRevisionImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(LayoutRevisionTable.INSTANCE);
 	}
 
 	/**

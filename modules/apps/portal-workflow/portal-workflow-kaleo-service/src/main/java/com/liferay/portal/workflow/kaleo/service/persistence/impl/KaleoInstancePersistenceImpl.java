@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstanceTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstancePersistence;
@@ -3555,6 +3556,8 @@ public class KaleoInstancePersistenceImpl
 
 		setModelImplClass(KaleoInstanceImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoInstanceTable.INSTANCE);
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.sync.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -134,6 +135,11 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 		throws PortalException {
 
 		return syncDLFileVersionDiffPersistence.remove(syncDLFileVersionDiff);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return syncDLFileVersionDiffPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.ListTypeTable;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -915,6 +916,8 @@ public class ListTypePersistenceImpl
 		setModelImplClass(ListTypeImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(ListTypeModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(ListTypeTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

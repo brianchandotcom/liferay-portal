@@ -20,6 +20,7 @@ import com.liferay.chat.service.persistence.EntryFinder;
 import com.liferay.chat.service.persistence.EntryPersistence;
 import com.liferay.chat.service.persistence.StatusFinder;
 import com.liferay.chat.service.persistence.StatusPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -122,6 +123,11 @@ public abstract class StatusLocalServiceBaseImpl
 	@Override
 	public Status deleteStatus(Status status) {
 		return statusPersistence.remove(status);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return statusPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.rest.oauth2.service;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -126,6 +127,8 @@ public interface SharepointOAuth2TokenEntryLocalService
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry);
 
 	public void deleteUserSharepointOAuth2TokenEntries(long userId);
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
+import com.liferay.portal.kernel.model.UserGroupGroupRoleTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
@@ -3064,6 +3065,8 @@ public class UserGroupGroupRolePersistenceImpl
 		setModelImplClass(UserGroupGroupRoleImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(UserGroupGroupRoleTable.INSTANCE);
 	}
 
 	/**

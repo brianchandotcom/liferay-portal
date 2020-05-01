@@ -16,6 +16,7 @@ package com.liferay.account.service.persistence.impl;
 
 import com.liferay.account.exception.NoSuchEntryUserRelException;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.model.AccountEntryUserRelTable;
 import com.liferay.account.model.impl.AccountEntryUserRelImpl;
 import com.liferay.account.model.impl.AccountEntryUserRelModelImpl;
 import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
@@ -1372,6 +1373,8 @@ public class AccountEntryUserRelPersistenceImpl
 
 		setModelImplClass(AccountEntryUserRelImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AccountEntryUserRelTable.INSTANCE);
 	}
 
 	/**

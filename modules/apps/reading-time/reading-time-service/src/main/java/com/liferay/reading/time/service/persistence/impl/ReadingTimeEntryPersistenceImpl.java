@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.reading.time.exception.NoSuchEntryException;
 import com.liferay.reading.time.model.ReadingTimeEntry;
+import com.liferay.reading.time.model.ReadingTimeEntryTable;
 import com.liferay.reading.time.model.impl.ReadingTimeEntryImpl;
 import com.liferay.reading.time.model.impl.ReadingTimeEntryModelImpl;
 import com.liferay.reading.time.service.persistence.ReadingTimeEntryPersistence;
@@ -1734,6 +1735,8 @@ public class ReadingTimeEntryPersistenceImpl
 
 		setModelImplClass(ReadingTimeEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(ReadingTimeEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

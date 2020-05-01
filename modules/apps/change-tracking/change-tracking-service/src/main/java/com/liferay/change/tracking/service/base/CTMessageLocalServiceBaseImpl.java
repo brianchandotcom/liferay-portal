@@ -17,6 +17,7 @@ package com.liferay.change.tracking.service.base;
 import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.service.CTMessageLocalService;
 import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -119,6 +120,11 @@ public abstract class CTMessageLocalServiceBaseImpl
 	@Override
 	public CTMessage deleteCTMessage(CTMessage ctMessage) {
 		return ctMessagePersistence.remove(ctMessage);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ctMessagePersistence.dslQuery(dslQuery);
 	}
 
 	@Override

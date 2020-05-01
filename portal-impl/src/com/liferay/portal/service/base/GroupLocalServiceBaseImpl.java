@@ -26,6 +26,7 @@ import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder;
 import com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -166,6 +167,11 @@ public abstract class GroupLocalServiceBaseImpl
 	@Override
 	public Group deleteGroup(Group group) throws PortalException {
 		return groupPersistence.remove(group);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return groupPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

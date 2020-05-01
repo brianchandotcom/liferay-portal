@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -145,6 +146,11 @@ public abstract class SegmentsExperimentLocalServiceBaseImpl
 		throws PortalException {
 
 		return segmentsExperimentPersistence.remove(segmentsExperiment);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return segmentsExperimentPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

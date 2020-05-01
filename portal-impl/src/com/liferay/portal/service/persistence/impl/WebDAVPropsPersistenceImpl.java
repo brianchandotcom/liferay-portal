@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchWebDAVPropsException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WebDAVProps;
+import com.liferay.portal.kernel.model.WebDAVPropsTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -309,6 +310,8 @@ public class WebDAVPropsPersistenceImpl
 		setModelImplClass(WebDAVPropsImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(WebDAVPropsTable.INSTANCE);
 	}
 
 	/**

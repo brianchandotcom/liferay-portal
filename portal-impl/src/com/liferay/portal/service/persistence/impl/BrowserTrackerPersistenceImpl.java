@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchBrowserTrackerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BrowserTracker;
+import com.liferay.portal.kernel.model.BrowserTrackerTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -284,6 +285,8 @@ public class BrowserTrackerPersistenceImpl
 		setModelImplClass(BrowserTrackerImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(BrowserTrackerTable.INSTANCE);
 	}
 
 	/**

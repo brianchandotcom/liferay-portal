@@ -27,6 +27,7 @@ import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
 import com.liferay.knowledge.base.service.persistence.KBFolderFinder;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.knowledge.base.service.persistence.KBTemplatePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -130,6 +131,11 @@ public abstract class KBFolderLocalServiceBaseImpl
 	@Override
 	public KBFolder deleteKBFolder(KBFolder kbFolder) {
 		return kbFolderPersistence.remove(kbFolder);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return kbFolderPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

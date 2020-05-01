@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.TicketPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1533,6 +1534,8 @@ public class TicketPersistenceImpl
 		setModelImplClass(TicketImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(TicketModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(TicketTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

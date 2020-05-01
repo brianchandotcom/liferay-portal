@@ -16,6 +16,7 @@ package com.liferay.marketplace.service.persistence.impl;
 
 import com.liferay.marketplace.exception.NoSuchModuleException;
 import com.liferay.marketplace.model.Module;
+import com.liferay.marketplace.model.ModuleTable;
 import com.liferay.marketplace.model.impl.ModuleImpl;
 import com.liferay.marketplace.model.impl.ModuleModelImpl;
 import com.liferay.marketplace.service.persistence.ModulePersistence;
@@ -3407,6 +3408,8 @@ public class ModulePersistenceImpl
 
 		setModelImplClass(ModuleImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(ModuleTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

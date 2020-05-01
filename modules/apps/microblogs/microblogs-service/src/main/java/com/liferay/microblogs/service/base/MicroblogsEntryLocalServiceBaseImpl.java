@@ -18,6 +18,7 @@ import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryFinder;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -127,6 +128,11 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return microblogsEntryPersistence.remove(microblogsEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return microblogsEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

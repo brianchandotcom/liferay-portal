@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.exception.NoSuchAutoResolutionInfoException;
 import com.liferay.change.tracking.model.CTAutoResolutionInfo;
+import com.liferay.change.tracking.model.CTAutoResolutionInfoTable;
 import com.liferay.change.tracking.model.impl.CTAutoResolutionInfoImpl;
 import com.liferay.change.tracking.model.impl.CTAutoResolutionInfoModelImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
@@ -608,6 +609,8 @@ public class CTAutoResolutionInfoPersistenceImpl
 
 		setModelImplClass(CTAutoResolutionInfoImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CTAutoResolutionInfoTable.INSTANCE);
 	}
 
 	/**

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchReleaseException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.ReleaseTable;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.ReleasePersistence;
@@ -329,6 +330,8 @@ public class ReleasePersistenceImpl
 		setModelImplClass(ReleaseImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(ReleaseModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(ReleaseTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

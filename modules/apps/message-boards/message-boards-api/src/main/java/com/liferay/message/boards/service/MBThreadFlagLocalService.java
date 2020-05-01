@@ -17,6 +17,7 @@ package com.liferay.message.boards.service;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadFlag;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -131,6 +132,8 @@ public interface MBThreadFlagLocalService
 	public void deleteThreadFlagsByThreadId(long threadId);
 
 	public void deleteThreadFlagsByUserId(long userId);
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lock.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -119,6 +120,11 @@ public abstract class LockLocalServiceBaseImpl
 	@Override
 	public Lock deleteLock(Lock lock) {
 		return lockPersistence.remove(lock);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return lockPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

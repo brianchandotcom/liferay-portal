@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchUserIdMapperException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserIdMapper;
+import com.liferay.portal.kernel.model.UserIdMapperTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserIdMapperPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1120,6 +1121,8 @@ public class UserIdMapperPersistenceImpl
 		setModelImplClass(UserIdMapperImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(UserIdMapperTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -142,6 +142,11 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _workflowDefinitionLinkLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _workflowDefinitionLinkLocalService.dynamicQuery();
 	}

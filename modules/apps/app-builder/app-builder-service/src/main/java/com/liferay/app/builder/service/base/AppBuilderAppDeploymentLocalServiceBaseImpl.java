@@ -17,6 +17,7 @@ package com.liferay.app.builder.service.base;
 import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalService;
 import com.liferay.app.builder.service.persistence.AppBuilderAppDeploymentPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -133,6 +134,11 @@ public abstract class AppBuilderAppDeploymentLocalServiceBaseImpl
 
 		return appBuilderAppDeploymentPersistence.remove(
 			appBuilderAppDeployment);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return appBuilderAppDeploymentPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

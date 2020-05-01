@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.service.MBMailingListLocalService;
 import com.liferay.message.boards.service.persistence.MBMailingListPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -127,6 +128,11 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	@Override
 	public MBMailingList deleteMBMailingList(MBMailingList mbMailingList) {
 		return mbMailingListPersistence.remove(mbMailingList);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mbMailingListPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

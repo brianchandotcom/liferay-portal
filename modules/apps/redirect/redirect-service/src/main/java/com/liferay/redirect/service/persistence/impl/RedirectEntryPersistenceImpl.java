@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.redirect.exception.NoSuchEntryException;
 import com.liferay.redirect.model.RedirectEntry;
+import com.liferay.redirect.model.RedirectEntryTable;
 import com.liferay.redirect.model.impl.RedirectEntryImpl;
 import com.liferay.redirect.model.impl.RedirectEntryModelImpl;
 import com.liferay.redirect.service.persistence.RedirectEntryPersistence;
@@ -3650,6 +3651,8 @@ public class RedirectEntryPersistenceImpl
 
 		setModelImplClass(RedirectEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(RedirectEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -16,6 +16,7 @@ package com.liferay.mail.reader.service.persistence.impl;
 
 import com.liferay.mail.reader.exception.NoSuchAccountException;
 import com.liferay.mail.reader.model.Account;
+import com.liferay.mail.reader.model.AccountTable;
 import com.liferay.mail.reader.model.impl.AccountImpl;
 import com.liferay.mail.reader.model.impl.AccountModelImpl;
 import com.liferay.mail.reader.service.persistence.AccountPersistence;
@@ -859,6 +860,8 @@ public class AccountPersistenceImpl
 
 		setModelImplClass(AccountImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AccountTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

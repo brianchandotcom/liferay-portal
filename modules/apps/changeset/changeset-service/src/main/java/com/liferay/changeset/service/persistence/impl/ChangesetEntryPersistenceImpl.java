@@ -16,6 +16,7 @@ package com.liferay.changeset.service.persistence.impl;
 
 import com.liferay.changeset.exception.NoSuchEntryException;
 import com.liferay.changeset.model.ChangesetEntry;
+import com.liferay.changeset.model.ChangesetEntryTable;
 import com.liferay.changeset.model.impl.ChangesetEntryImpl;
 import com.liferay.changeset.model.impl.ChangesetEntryModelImpl;
 import com.liferay.changeset.service.persistence.ChangesetEntryPersistence;
@@ -2977,6 +2978,8 @@ public class ChangesetEntryPersistenceImpl
 
 		setModelImplClass(ChangesetEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(ChangesetEntryTable.INSTANCE);
 	}
 
 	/**

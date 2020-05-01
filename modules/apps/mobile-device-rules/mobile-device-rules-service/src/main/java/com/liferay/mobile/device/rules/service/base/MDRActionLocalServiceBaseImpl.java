@@ -23,6 +23,7 @@ import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.service.MDRActionLocalService;
 import com.liferay.mobile.device.rules.service.persistence.MDRActionPersistence;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupInstancePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -128,6 +129,11 @@ public abstract class MDRActionLocalServiceBaseImpl
 	@Override
 	public MDRAction deleteMDRAction(MDRAction mdrAction) {
 		return mdrActionPersistence.remove(mdrAction);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mdrActionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portlet.announcements.service.persistence.impl;
 
 import com.liferay.announcements.kernel.exception.NoSuchEntryException;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.model.AnnouncementsEntryTable;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -7940,6 +7941,8 @@ public class AnnouncementsEntryPersistenceImpl
 		setModelImplClass(AnnouncementsEntryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(AnnouncementsEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

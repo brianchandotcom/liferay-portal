@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchUADPartialEntryException;
 import com.liferay.portal.tools.service.builder.test.model.UADPartialEntry;
+import com.liferay.portal.tools.service.builder.test.model.UADPartialEntryTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.UADPartialEntryPersistence;
@@ -76,6 +77,8 @@ public class UADPartialEntryPersistenceImpl
 		setModelImplClass(UADPartialEntryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(UADPartialEntryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(UADPartialEntryTable.INSTANCE);
 	}
 
 	/**

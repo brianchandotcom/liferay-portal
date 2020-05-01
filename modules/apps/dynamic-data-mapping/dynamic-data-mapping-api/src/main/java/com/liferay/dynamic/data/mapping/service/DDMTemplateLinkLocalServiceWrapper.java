@@ -143,6 +143,11 @@ public class DDMTemplateLinkLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _ddmTemplateLinkLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddmTemplateLinkLocalService.dynamicQuery();
 	}

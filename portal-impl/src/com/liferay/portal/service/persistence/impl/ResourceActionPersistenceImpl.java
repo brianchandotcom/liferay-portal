@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceActionTable;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -902,6 +903,8 @@ public class ResourceActionPersistenceImpl
 		setModelImplClass(ResourceActionImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(ResourceActionModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(ResourceActionTable.INSTANCE);
 	}
 
 	/**

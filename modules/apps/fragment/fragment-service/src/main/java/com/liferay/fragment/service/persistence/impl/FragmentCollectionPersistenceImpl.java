@@ -16,6 +16,7 @@ package com.liferay.fragment.service.persistence.impl;
 
 import com.liferay.fragment.exception.NoSuchCollectionException;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentCollectionTable;
 import com.liferay.fragment.model.impl.FragmentCollectionImpl;
 import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
@@ -3404,6 +3405,8 @@ public class FragmentCollectionPersistenceImpl
 
 		setModelImplClass(FragmentCollectionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(FragmentCollectionTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

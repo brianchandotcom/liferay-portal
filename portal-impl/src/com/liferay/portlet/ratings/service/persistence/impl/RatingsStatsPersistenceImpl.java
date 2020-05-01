@@ -37,6 +37,7 @@ import com.liferay.portlet.ratings.model.impl.RatingsStatsImpl;
 import com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl;
 import com.liferay.ratings.kernel.exception.NoSuchStatsException;
 import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.model.RatingsStatsTable;
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
 
 import java.io.Serializable;
@@ -671,6 +672,8 @@ public class RatingsStatsPersistenceImpl
 		setModelImplClass(RatingsStatsImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(RatingsStatsTable.INSTANCE);
 	}
 
 	/**

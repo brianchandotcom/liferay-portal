@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchWebsiteException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.model.WebsiteTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3952,6 +3953,8 @@ public class WebsitePersistenceImpl
 		setModelImplClass(WebsiteImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(WebsiteModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(WebsiteTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLinkTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence;
@@ -1381,6 +1382,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 		setModelImplClass(DDMDataProviderInstanceLinkImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDMDataProviderInstanceLinkTable.INSTANCE);
 	}
 
 	/**

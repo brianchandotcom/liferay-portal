@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -129,6 +130,11 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 		DDMTemplateVersion ddmTemplateVersion) {
 
 		return ddmTemplateVersionPersistence.remove(ddmTemplateVersion);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ddmTemplateVersionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

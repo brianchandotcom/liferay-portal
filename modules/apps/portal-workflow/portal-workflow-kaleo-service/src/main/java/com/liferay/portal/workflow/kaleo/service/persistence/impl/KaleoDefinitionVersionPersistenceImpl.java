@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersionTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionVersionImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionVersionModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoDefinitionVersionPersistence;
@@ -1504,6 +1505,8 @@ public class KaleoDefinitionVersionPersistenceImpl
 
 		setModelImplClass(KaleoDefinitionVersionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoDefinitionVersionTable.INSTANCE);
 	}
 
 	/**

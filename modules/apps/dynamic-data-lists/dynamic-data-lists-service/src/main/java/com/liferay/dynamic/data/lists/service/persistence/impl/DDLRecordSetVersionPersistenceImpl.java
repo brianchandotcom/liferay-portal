@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.service.persistence.impl;
 
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetVersionTable;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetVersionImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetVersionModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionPersistence;
@@ -1412,6 +1413,8 @@ public class DDLRecordSetVersionPersistenceImpl
 
 		setModelImplClass(DDLRecordSetVersionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDLRecordSetVersionTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

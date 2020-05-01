@@ -15,6 +15,7 @@
 package com.liferay.polls.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -158,6 +159,8 @@ public interface PollsQuestionLocalService
 	public void deleteQuestion(PollsQuestion question) throws PortalException;
 
 	public void deleteQuestions(long groupId) throws PortalException;
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

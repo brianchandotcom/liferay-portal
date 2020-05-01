@@ -26,6 +26,7 @@ import com.liferay.fragment.service.persistence.FragmentEntryFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -138,6 +139,11 @@ public abstract class FragmentEntryLinkLocalServiceBaseImpl
 		FragmentEntryLink fragmentEntryLink) {
 
 		return fragmentEntryLinkPersistence.remove(fragmentEntryLink);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return fragmentEntryLinkPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.document.library.content.service.DLContentLocalService;
 import com.liferay.document.library.content.service.persistence.DLContentPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -132,6 +133,11 @@ public abstract class DLContentLocalServiceBaseImpl
 	@Override
 	public DLContent deleteDLContent(DLContent dlContent) {
 		return dlContentPersistence.remove(dlContent);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return dlContentPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

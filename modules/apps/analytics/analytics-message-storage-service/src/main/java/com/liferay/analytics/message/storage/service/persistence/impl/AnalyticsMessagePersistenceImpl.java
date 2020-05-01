@@ -16,6 +16,7 @@ package com.liferay.analytics.message.storage.service.persistence.impl;
 
 import com.liferay.analytics.message.storage.exception.NoSuchMessageException;
 import com.liferay.analytics.message.storage.model.AnalyticsMessage;
+import com.liferay.analytics.message.storage.model.AnalyticsMessageTable;
 import com.liferay.analytics.message.storage.model.impl.AnalyticsMessageImpl;
 import com.liferay.analytics.message.storage.model.impl.AnalyticsMessageModelImpl;
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsMessagePersistence;
@@ -597,6 +598,8 @@ public class AnalyticsMessagePersistenceImpl
 
 		setModelImplClass(AnalyticsMessageImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AnalyticsMessageTable.INSTANCE);
 	}
 
 	/**

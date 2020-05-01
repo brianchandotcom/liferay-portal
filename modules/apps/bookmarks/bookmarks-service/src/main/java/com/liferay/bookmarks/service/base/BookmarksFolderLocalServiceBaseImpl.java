@@ -26,6 +26,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -141,6 +142,11 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 		BookmarksFolder bookmarksFolder) {
 
 		return bookmarksFolderPersistence.remove(bookmarksFolder);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return bookmarksFolderPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

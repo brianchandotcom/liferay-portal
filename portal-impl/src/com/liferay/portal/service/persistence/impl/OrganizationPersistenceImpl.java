@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -9292,6 +9293,8 @@ public class OrganizationPersistenceImpl
 		setModelImplClass(OrganizationImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(OrganizationModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(OrganizationTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

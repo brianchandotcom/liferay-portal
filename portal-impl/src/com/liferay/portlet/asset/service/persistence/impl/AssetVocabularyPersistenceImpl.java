@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service.persistence.impl;
 
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyTable;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -5045,6 +5046,8 @@ public class AssetVocabularyPersistenceImpl
 		setModelImplClass(AssetVocabularyImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(AssetVocabularyTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -130,6 +131,11 @@ public abstract class DDMStructureLinkLocalServiceBaseImpl
 		DDMStructureLink ddmStructureLink) {
 
 		return ddmStructureLinkPersistence.remove(ddmStructureLink);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return ddmStructureLinkPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

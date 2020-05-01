@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLocalizedEntryLocalizationException;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization;
+import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalizationTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryLocalizationImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryLocalizationModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryLocalizationPersistence;
@@ -883,6 +884,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			LocalizedEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(LocalizedEntryLocalizationTable.INSTANCE);
 	}
 
 	/**

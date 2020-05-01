@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchUserTrackerPathException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserTrackerPath;
+import com.liferay.portal.kernel.model.UserTrackerPathTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPathPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -595,6 +596,8 @@ public class UserTrackerPathPersistenceImpl
 		setModelImplClass(UserTrackerPathImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(UserTrackerPathTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

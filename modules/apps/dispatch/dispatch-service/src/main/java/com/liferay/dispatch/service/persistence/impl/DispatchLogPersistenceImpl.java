@@ -16,6 +16,7 @@ package com.liferay.dispatch.service.persistence.impl;
 
 import com.liferay.dispatch.exception.NoSuchLogException;
 import com.liferay.dispatch.model.DispatchLog;
+import com.liferay.dispatch.model.DispatchLogTable;
 import com.liferay.dispatch.model.impl.DispatchLogImpl;
 import com.liferay.dispatch.model.impl.DispatchLogModelImpl;
 import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
@@ -1155,6 +1156,8 @@ public class DispatchLogPersistenceImpl
 
 		setModelImplClass(DispatchLogImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DispatchLogTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

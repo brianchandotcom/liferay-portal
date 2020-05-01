@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchSystemEventException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.model.SystemEventTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2336,6 +2337,8 @@ public class SystemEventPersistenceImpl
 		setModelImplClass(SystemEventImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(SystemEventModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(SystemEventTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

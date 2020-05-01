@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.LayoutSetPrototypeTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -3955,6 +3956,8 @@ public class LayoutSetPrototypePersistenceImpl
 		setModelImplClass(LayoutSetPrototypeImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LayoutSetPrototypeModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(LayoutSetPrototypeTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

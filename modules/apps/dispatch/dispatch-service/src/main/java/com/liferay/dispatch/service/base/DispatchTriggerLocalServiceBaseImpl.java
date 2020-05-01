@@ -18,6 +18,7 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
 import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -127,6 +128,11 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 		throws PortalException {
 
 		return dispatchTriggerPersistence.remove(dispatchTrigger);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return dispatchTriggerPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

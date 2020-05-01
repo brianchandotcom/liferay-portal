@@ -33,6 +33,7 @@ import com.liferay.portlet.social.model.impl.SocialActivityLimitImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl;
 import com.liferay.social.kernel.exception.NoSuchActivityLimitException;
 import com.liferay.social.kernel.model.SocialActivityLimit;
+import com.liferay.social.kernel.model.SocialActivityLimitTable;
 import com.liferay.social.kernel.service.persistence.SocialActivityLimitPersistence;
 
 import java.io.Serializable;
@@ -2009,6 +2010,8 @@ public class SocialActivityLimitPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(SocialActivityLimitTable.INSTANCE);
 	}
 
 	/**

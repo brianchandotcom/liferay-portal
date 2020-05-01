@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.persistence.AccountEntryPersistence;
 import com.liferay.account.service.persistence.AccountRolePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -125,6 +126,11 @@ public abstract class AccountRoleLocalServiceBaseImpl
 		throws PortalException {
 
 		return accountRolePersistence.remove(accountRole);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return accountRolePersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.calendar.service.persistence.impl;
 
 import com.liferay.calendar.exception.NoSuchResourceException;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.model.CalendarResourceTable;
 import com.liferay.calendar.model.impl.CalendarResourceImpl;
 import com.liferay.calendar.model.impl.CalendarResourceModelImpl;
 import com.liferay.calendar.service.persistence.CalendarResourcePersistence;
@@ -6263,6 +6264,8 @@ public class CalendarResourcePersistenceImpl
 
 		setModelImplClass(CalendarResourceImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CalendarResourceTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

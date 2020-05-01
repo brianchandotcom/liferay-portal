@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -150,6 +151,11 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 
 		return layoutPageTemplateEntryPersistence.remove(
 			layoutPageTemplateEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return layoutPageTemplateEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

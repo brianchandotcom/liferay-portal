@@ -16,6 +16,7 @@ package com.liferay.portlet.announcements.service.persistence.impl;
 
 import com.liferay.announcements.kernel.exception.NoSuchDeliveryException;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
+import com.liferay.announcements.kernel.model.AnnouncementsDeliveryTable;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -1363,6 +1364,8 @@ public class AnnouncementsDeliveryPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(AnnouncementsDeliveryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -17,6 +17,7 @@ package com.liferay.polls.service.persistence.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.polls.exception.NoSuchVoteException;
 import com.liferay.polls.model.PollsVote;
+import com.liferay.polls.model.PollsVoteTable;
 import com.liferay.polls.model.impl.PollsVoteImpl;
 import com.liferay.polls.model.impl.PollsVoteModelImpl;
 import com.liferay.polls.service.persistence.PollsVotePersistence;
@@ -3015,6 +3016,8 @@ public class PollsVotePersistenceImpl
 
 		setModelImplClass(PollsVoteImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(PollsVoteTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

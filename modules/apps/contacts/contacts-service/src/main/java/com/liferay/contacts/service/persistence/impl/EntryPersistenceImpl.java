@@ -16,6 +16,7 @@ package com.liferay.contacts.service.persistence.impl;
 
 import com.liferay.contacts.exception.NoSuchEntryException;
 import com.liferay.contacts.model.Entry;
+import com.liferay.contacts.model.EntryTable;
 import com.liferay.contacts.model.impl.EntryImpl;
 import com.liferay.contacts.model.impl.EntryModelImpl;
 import com.liferay.contacts.service.persistence.EntryPersistence;
@@ -860,6 +861,8 @@ public class EntryPersistenceImpl
 
 		setModelImplClass(EntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(EntryTable.INSTANCE);
 	}
 
 	/**

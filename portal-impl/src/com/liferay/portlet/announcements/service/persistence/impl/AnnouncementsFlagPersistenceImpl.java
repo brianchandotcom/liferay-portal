@@ -16,6 +16,7 @@ package com.liferay.portlet.announcements.service.persistence.impl;
 
 import com.liferay.announcements.kernel.exception.NoSuchFlagException;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.model.AnnouncementsFlagTable;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -1346,6 +1347,8 @@ public class AnnouncementsFlagPersistenceImpl
 		setModelImplClass(AnnouncementsFlagImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(AnnouncementsFlagTable.INSTANCE);
 	}
 
 	/**

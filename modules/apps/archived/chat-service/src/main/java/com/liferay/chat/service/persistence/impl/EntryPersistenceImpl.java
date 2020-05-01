@@ -16,6 +16,7 @@ package com.liferay.chat.service.persistence.impl;
 
 import com.liferay.chat.exception.NoSuchEntryException;
 import com.liferay.chat.model.Entry;
+import com.liferay.chat.model.EntryTable;
 import com.liferay.chat.model.impl.EntryImpl;
 import com.liferay.chat.model.impl.EntryModelImpl;
 import com.liferay.chat.service.persistence.EntryPersistence;
@@ -4404,6 +4405,8 @@ public class EntryPersistenceImpl
 
 		setModelImplClass(EntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(EntryTable.INSTANCE);
 	}
 
 	/**

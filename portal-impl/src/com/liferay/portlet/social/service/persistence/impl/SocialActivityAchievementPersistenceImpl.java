@@ -33,6 +33,7 @@ import com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityAchievementModelImpl;
 import com.liferay.social.kernel.exception.NoSuchActivityAchievementException;
 import com.liferay.social.kernel.model.SocialActivityAchievement;
+import com.liferay.social.kernel.model.SocialActivityAchievementTable;
 import com.liferay.social.kernel.service.persistence.SocialActivityAchievementPersistence;
 
 import java.io.Serializable;
@@ -3174,6 +3175,8 @@ public class SocialActivityAchievementPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(SocialActivityAchievementTable.INSTANCE);
 	}
 
 	/**

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.model.TeamTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -2676,6 +2677,8 @@ public class TeamPersistenceImpl
 		setModelImplClass(TeamImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(TeamModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(TeamTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

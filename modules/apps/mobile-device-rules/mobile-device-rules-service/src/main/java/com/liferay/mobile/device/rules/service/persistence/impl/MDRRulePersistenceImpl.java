@@ -16,6 +16,7 @@ package com.liferay.mobile.device.rules.service.persistence.impl;
 
 import com.liferay.mobile.device.rules.exception.NoSuchRuleException;
 import com.liferay.mobile.device.rules.model.MDRRule;
+import com.liferay.mobile.device.rules.model.MDRRuleTable;
 import com.liferay.mobile.device.rules.model.impl.MDRRuleImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRRuleModelImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRRulePersistence;
@@ -1970,6 +1971,8 @@ public class MDRRulePersistenceImpl
 
 		setModelImplClass(MDRRuleImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(MDRRuleTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

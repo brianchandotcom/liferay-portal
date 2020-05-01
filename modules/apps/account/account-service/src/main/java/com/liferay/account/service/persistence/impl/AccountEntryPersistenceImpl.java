@@ -16,6 +16,7 @@ package com.liferay.account.service.persistence.impl;
 
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryTable;
 import com.liferay.account.model.impl.AccountEntryImpl;
 import com.liferay.account.model.impl.AccountEntryModelImpl;
 import com.liferay.account.service.persistence.AccountEntryPersistence;
@@ -1916,6 +1917,8 @@ public class AccountEntryPersistenceImpl
 
 		setModelImplClass(AccountEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(AccountEntryTable.INSTANCE);
 	}
 
 	/**

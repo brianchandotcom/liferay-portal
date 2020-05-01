@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.subscription.exception.NoSuchSubscriptionException;
 import com.liferay.subscription.model.Subscription;
+import com.liferay.subscription.model.SubscriptionTable;
 import com.liferay.subscription.model.impl.SubscriptionImpl;
 import com.liferay.subscription.model.impl.SubscriptionModelImpl;
 import com.liferay.subscription.service.persistence.SubscriptionPersistence;
@@ -3873,6 +3874,8 @@ public class SubscriptionPersistenceImpl
 
 		setModelImplClass(SubscriptionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SubscriptionTable.INSTANCE);
 	}
 
 	/**

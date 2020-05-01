@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.service.base;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -126,6 +127,11 @@ public abstract class OAuth2ApplicationLocalServiceBaseImpl
 		OAuth2Application oAuth2Application) {
 
 		return oAuth2ApplicationPersistence.remove(oAuth2Application);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return oAuth2ApplicationPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

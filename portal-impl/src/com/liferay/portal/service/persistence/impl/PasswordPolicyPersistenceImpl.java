@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PasswordPolicy;
+import com.liferay.portal.kernel.model.PasswordPolicyTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -3473,6 +3474,8 @@ public class PasswordPolicyPersistenceImpl
 		setModelImplClass(PasswordPolicyImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(PasswordPolicyModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(PasswordPolicyTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

@@ -24,6 +24,7 @@ import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupFinder;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupPersistence;
 import com.liferay.mobile.device.rules.service.persistence.MDRRulePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -129,6 +130,11 @@ public abstract class MDRRuleGroupLocalServiceBaseImpl
 	@Override
 	public MDRRuleGroup deleteMDRRuleGroup(MDRRuleGroup mdrRuleGroup) {
 		return mdrRuleGroupPersistence.remove(mdrRuleGroup);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return mdrRuleGroupPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

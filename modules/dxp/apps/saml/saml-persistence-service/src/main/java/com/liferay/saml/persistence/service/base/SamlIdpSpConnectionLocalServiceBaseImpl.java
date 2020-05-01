@@ -14,6 +14,7 @@
 
 package com.liferay.saml.persistence.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -135,6 +136,11 @@ public abstract class SamlIdpSpConnectionLocalServiceBaseImpl
 		SamlIdpSpConnection samlIdpSpConnection) {
 
 		return samlIdpSpConnectionPersistence.remove(samlIdpSpConnection);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return samlIdpSpConnectionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

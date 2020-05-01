@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
@@ -6729,6 +6730,8 @@ public class ResourcePermissionPersistenceImpl
 		setModelImplClass(ResourcePermissionImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(ResourcePermissionTable.INSTANCE);
 	}
 
 	/**

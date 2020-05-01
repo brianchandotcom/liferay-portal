@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchPluginSettingException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PluginSetting;
+import com.liferay.portal.kernel.model.PluginSettingTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PluginSettingPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -899,6 +900,8 @@ public class PluginSettingPersistenceImpl
 		setModelImplClass(PluginSettingImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(PluginSettingModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(PluginSettingTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

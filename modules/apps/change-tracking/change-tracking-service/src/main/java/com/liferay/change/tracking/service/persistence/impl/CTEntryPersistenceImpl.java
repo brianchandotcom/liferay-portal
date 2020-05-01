@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.exception.NoSuchEntryException;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.model.impl.CTEntryImpl;
 import com.liferay.change.tracking.model.impl.CTEntryModelImpl;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
@@ -2298,6 +2299,8 @@ public class CTEntryPersistenceImpl
 
 		setModelImplClass(CTEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CTEntryTable.INSTANCE);
 	}
 
 	/**

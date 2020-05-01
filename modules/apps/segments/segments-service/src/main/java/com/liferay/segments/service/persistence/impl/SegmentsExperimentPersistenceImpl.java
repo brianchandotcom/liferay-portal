@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.model.SegmentsExperimentTable;
 import com.liferay.segments.model.impl.SegmentsExperimentImpl;
 import com.liferay.segments.model.impl.SegmentsExperimentModelImpl;
 import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
@@ -5833,6 +5834,8 @@ public class SegmentsExperimentPersistenceImpl
 
 		setModelImplClass(SegmentsExperimentImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SegmentsExperimentTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

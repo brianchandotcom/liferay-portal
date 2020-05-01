@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.service.persistence.impl;
 
 import com.liferay.expando.kernel.exception.NoSuchTableException;
 import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -907,6 +908,8 @@ public class ExpandoTablePersistenceImpl
 		setModelImplClass(ExpandoTableImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(ExpandoTableTable.INSTANCE);
 	}
 
 	/**

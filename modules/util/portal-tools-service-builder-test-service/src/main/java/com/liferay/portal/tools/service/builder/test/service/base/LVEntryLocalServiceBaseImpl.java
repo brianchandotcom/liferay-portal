@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.service.builder.test.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -153,6 +154,11 @@ public abstract class LVEntryLocalServiceBaseImpl
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return lvEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

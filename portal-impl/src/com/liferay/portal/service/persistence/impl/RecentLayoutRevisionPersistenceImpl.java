@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchRecentLayoutRevisionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RecentLayoutRevision;
+import com.liferay.portal.kernel.model.RecentLayoutRevisionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutRevisionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1875,6 +1876,8 @@ public class RecentLayoutRevisionPersistenceImpl
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(
 			RecentLayoutRevisionModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(RecentLayoutRevisionTable.INSTANCE);
 	}
 
 	/**

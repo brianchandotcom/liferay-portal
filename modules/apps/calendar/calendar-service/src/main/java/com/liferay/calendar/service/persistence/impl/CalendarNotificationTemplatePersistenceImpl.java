@@ -16,6 +16,7 @@ package com.liferay.calendar.service.persistence.impl;
 
 import com.liferay.calendar.exception.NoSuchNotificationTemplateException;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
+import com.liferay.calendar.model.CalendarNotificationTemplateTable;
 import com.liferay.calendar.model.impl.CalendarNotificationTemplateImpl;
 import com.liferay.calendar.model.impl.CalendarNotificationTemplateModelImpl;
 import com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence;
@@ -2384,6 +2385,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		setModelImplClass(CalendarNotificationTemplateImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CalendarNotificationTemplateTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

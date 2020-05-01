@@ -20,6 +20,7 @@ import com.liferay.expando.kernel.service.persistence.ExpandoColumnPersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -126,6 +127,11 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 	@Override
 	public ExpandoColumn deleteExpandoColumn(ExpandoColumn expandoColumn) {
 		return expandoColumnPersistence.remove(expandoColumn);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return expandoColumnPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence.impl;
 
 import com.liferay.journal.exception.NoSuchArticleResourceException;
 import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.model.JournalArticleResourceTable;
 import com.liferay.journal.model.impl.JournalArticleResourceImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
@@ -2354,6 +2355,8 @@ public class JournalArticleResourcePersistenceImpl
 
 		setModelImplClass(JournalArticleResourceImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(JournalArticleResourceTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

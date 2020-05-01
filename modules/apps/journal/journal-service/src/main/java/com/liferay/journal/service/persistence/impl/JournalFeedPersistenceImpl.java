@@ -16,6 +16,7 @@ package com.liferay.journal.service.persistence.impl;
 
 import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.model.JournalFeed;
+import com.liferay.journal.model.JournalFeedTable;
 import com.liferay.journal.model.impl.JournalFeedImpl;
 import com.liferay.journal.model.impl.JournalFeedModelImpl;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
@@ -2601,6 +2602,8 @@ public class JournalFeedPersistenceImpl
 
 		setModelImplClass(JournalFeedImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(JournalFeedTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

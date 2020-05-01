@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.view.count.exception.NoSuchEntryException;
 import com.liferay.view.count.model.ViewCountEntry;
+import com.liferay.view.count.model.ViewCountEntryTable;
 import com.liferay.view.count.model.impl.ViewCountEntryImpl;
 import com.liferay.view.count.model.impl.ViewCountEntryModelImpl;
 import com.liferay.view.count.service.persistence.ViewCountEntryPK;
@@ -89,6 +90,8 @@ public class ViewCountEntryPersistenceImpl
 
 		setModelImplClass(ViewCountEntryImpl.class);
 		setModelPKClass(ViewCountEntryPK.class);
+
+		setTable(ViewCountEntryTable.INSTANCE);
 	}
 
 	/**

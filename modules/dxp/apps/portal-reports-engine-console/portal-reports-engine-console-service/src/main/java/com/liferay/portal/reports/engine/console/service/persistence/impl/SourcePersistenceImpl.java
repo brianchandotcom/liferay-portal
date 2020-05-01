@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.reports.engine.console.exception.NoSuchSourceException;
 import com.liferay.portal.reports.engine.console.model.Source;
+import com.liferay.portal.reports.engine.console.model.SourceTable;
 import com.liferay.portal.reports.engine.console.model.impl.SourceImpl;
 import com.liferay.portal.reports.engine.console.model.impl.SourceModelImpl;
 import com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence;
@@ -2828,6 +2829,8 @@ public class SourcePersistenceImpl
 
 		setModelImplClass(SourceImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SourceTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

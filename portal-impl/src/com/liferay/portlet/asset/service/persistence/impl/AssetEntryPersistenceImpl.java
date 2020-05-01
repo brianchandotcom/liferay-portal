@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service.persistence.impl;
 
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
@@ -5194,6 +5195,8 @@ public class AssetEntryPersistenceImpl
 		setModelImplClass(AssetEntryImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(AssetEntryModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(AssetEntryTable.INSTANCE);
 	}
 
 	/**

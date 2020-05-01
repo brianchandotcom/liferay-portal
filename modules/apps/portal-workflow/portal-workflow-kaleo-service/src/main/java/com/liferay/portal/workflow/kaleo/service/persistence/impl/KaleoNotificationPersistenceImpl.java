@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
+import com.liferay.portal.workflow.kaleo.model.KaleoNotificationTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationPersistence;
@@ -2414,6 +2415,8 @@ public class KaleoNotificationPersistenceImpl
 
 		setModelImplClass(KaleoNotificationImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoNotificationTable.INSTANCE);
 	}
 
 	/**

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLazyBlobEntityException;
 import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity;
+import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntityTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.LazyBlobEntityImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.LazyBlobEntityModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntityPersistence;
@@ -877,6 +878,8 @@ public class LazyBlobEntityPersistenceImpl
 		setModelImplClass(LazyBlobEntityImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LazyBlobEntityModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(LazyBlobEntityTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

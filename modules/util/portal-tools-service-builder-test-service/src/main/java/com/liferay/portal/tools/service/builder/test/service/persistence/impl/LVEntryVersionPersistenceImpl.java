@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryVersionException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
+import com.liferay.portal.tools.service.builder.test.model.LVEntryVersionTable;
 import com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionImpl;
 import com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionModelImpl;
 import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence;
@@ -5958,6 +5959,8 @@ public class LVEntryVersionPersistenceImpl
 		setModelImplClass(LVEntryVersionImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(LVEntryVersionModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(LVEntryVersionTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

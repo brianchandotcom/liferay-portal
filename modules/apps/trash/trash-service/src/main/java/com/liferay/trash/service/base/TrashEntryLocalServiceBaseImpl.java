@@ -14,6 +14,7 @@
 
 package com.liferay.trash.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -120,6 +121,11 @@ public abstract class TrashEntryLocalServiceBaseImpl
 	@Override
 	public TrashEntry deleteTrashEntry(TrashEntry trashEntry) {
 		return trashEntryPersistence.remove(trashEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return trashEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

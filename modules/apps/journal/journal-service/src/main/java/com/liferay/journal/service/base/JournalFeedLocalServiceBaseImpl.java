@@ -23,6 +23,7 @@ import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.journal.service.persistence.JournalFeedFinder;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -126,6 +127,11 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	@Override
 	public JournalFeed deleteJournalFeed(JournalFeed journalFeed) {
 		return journalFeedPersistence.remove(journalFeed);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return journalFeedPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
+import com.liferay.portal.workflow.kaleo.model.KaleoTransitionTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTransitionImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTransitionModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTransitionPersistence;
@@ -2159,6 +2160,8 @@ public class KaleoTransitionPersistenceImpl
 
 		setModelImplClass(KaleoTransitionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoTransitionTable.INSTANCE);
 	}
 
 	/**

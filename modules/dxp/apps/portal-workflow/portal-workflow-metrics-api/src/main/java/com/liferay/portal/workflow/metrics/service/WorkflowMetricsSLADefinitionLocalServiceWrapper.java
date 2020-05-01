@@ -156,6 +156,11 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+		return _workflowMetricsSLADefinitionLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _workflowMetricsSLADefinitionLocalService.dynamicQuery();
 	}

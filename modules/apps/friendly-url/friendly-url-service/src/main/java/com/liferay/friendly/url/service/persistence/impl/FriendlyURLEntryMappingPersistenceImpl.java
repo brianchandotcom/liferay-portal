@@ -16,6 +16,7 @@ package com.liferay.friendly.url.service.persistence.impl;
 
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryMappingException;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
+import com.liferay.friendly.url.model.FriendlyURLEntryMappingTable;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingImpl;
 import com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingModelImpl;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
@@ -319,6 +320,8 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 		setModelImplClass(FriendlyURLEntryMappingImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(FriendlyURLEntryMappingTable.INSTANCE);
 	}
 
 	/**

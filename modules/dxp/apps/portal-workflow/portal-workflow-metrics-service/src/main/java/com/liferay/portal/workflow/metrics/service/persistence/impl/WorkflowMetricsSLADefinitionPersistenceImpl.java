@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.workflow.metrics.exception.NoSuchSLADefinitionException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionTable;
 import com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionImpl;
 import com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionModelImpl;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionPersistence;
@@ -4954,6 +4955,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		setModelImplClass(WorkflowMetricsSLADefinitionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(WorkflowMetricsSLADefinitionTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

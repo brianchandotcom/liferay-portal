@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.persistence.exception.NoSuchIdpSpConnectionException;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
+import com.liferay.saml.persistence.model.SamlIdpSpConnectionTable;
 import com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl;
 import com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlIdpSpConnectionPersistence;
@@ -888,6 +889,8 @@ public class SamlIdpSpConnectionPersistenceImpl
 
 		setModelImplClass(SamlIdpSpConnectionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SamlIdpSpConnectionTable.INSTANCE);
 	}
 
 	/**

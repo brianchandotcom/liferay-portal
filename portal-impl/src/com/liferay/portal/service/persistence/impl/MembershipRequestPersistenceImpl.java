@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchMembershipRequestException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.MembershipRequest;
+import com.liferay.portal.kernel.model.MembershipRequestTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.MembershipRequestPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2222,6 +2223,8 @@ public class MembershipRequestPersistenceImpl
 		setModelImplClass(MembershipRequestImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(MembershipRequestTable.INSTANCE);
 	}
 
 	/**

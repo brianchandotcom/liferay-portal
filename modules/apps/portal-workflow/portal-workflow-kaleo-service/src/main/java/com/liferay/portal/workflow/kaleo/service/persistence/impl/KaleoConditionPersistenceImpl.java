@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
+import com.liferay.portal.workflow.kaleo.model.KaleoConditionTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoConditionPersistence;
@@ -1345,6 +1346,8 @@ public class KaleoConditionPersistenceImpl
 
 		setModelImplClass(KaleoConditionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoConditionTable.INSTANCE);
 	}
 
 	/**

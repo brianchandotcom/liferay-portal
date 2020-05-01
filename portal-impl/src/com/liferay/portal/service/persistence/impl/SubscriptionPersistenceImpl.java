@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Subscription;
+import com.liferay.portal.kernel.model.SubscriptionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -2869,6 +2870,8 @@ public class SubscriptionPersistenceImpl
 		setModelImplClass(SubscriptionImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(SubscriptionModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(SubscriptionTable.INSTANCE);
 	}
 
 	/**

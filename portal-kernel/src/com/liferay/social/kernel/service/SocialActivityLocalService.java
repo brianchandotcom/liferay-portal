@@ -15,6 +15,7 @@
 package com.liferay.social.kernel.service;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -268,6 +269,9 @@ public interface SocialActivityLocalService
 	 * @param userId the primary key of the user
 	 */
 	public void deleteUserActivities(long userId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

@@ -15,6 +15,7 @@
 package com.liferay.polls.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.polls.model.PollsVote;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -118,6 +119,8 @@ public interface PollsVoteLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public PollsVote deletePollsVote(PollsVote pollsVote);
+
+	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

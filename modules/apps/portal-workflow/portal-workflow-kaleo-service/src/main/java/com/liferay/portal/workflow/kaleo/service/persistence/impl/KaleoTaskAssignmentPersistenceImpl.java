@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentTable;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence;
@@ -2421,6 +2422,8 @@ public class KaleoTaskAssignmentPersistenceImpl
 
 		setModelImplClass(KaleoTaskAssignmentImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KaleoTaskAssignmentTable.INSTANCE);
 	}
 
 	/**

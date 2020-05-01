@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetLinkFinder;
 import com.liferay.asset.kernel.service.persistence.AssetLinkPersistence;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -125,6 +126,11 @@ public abstract class AssetLinkLocalServiceBaseImpl
 	@Override
 	public AssetLink deleteAssetLink(AssetLink assetLink) {
 		return assetLinkPersistence.remove(assetLink);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return assetLinkPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

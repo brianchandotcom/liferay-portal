@@ -18,6 +18,7 @@ import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
 import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -122,6 +123,11 @@ public abstract class DispatchLogLocalServiceBaseImpl
 	@Override
 	public DispatchLog deleteDispatchLog(DispatchLog dispatchLog) {
 		return dispatchLogPersistence.remove(dispatchLog);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return dispatchLogPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

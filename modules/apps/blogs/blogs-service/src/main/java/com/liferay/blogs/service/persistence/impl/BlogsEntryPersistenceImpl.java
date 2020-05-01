@@ -16,6 +16,7 @@ package com.liferay.blogs.service.persistence.impl;
 
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntryTable;
 import com.liferay.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
@@ -21143,6 +21144,8 @@ public class BlogsEntryPersistenceImpl
 
 		setModelImplClass(BlogsEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(BlogsEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

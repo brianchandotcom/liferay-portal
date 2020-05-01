@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.model.SharingEntryTable;
 import com.liferay.sharing.model.impl.SharingEntryImpl;
 import com.liferay.sharing.model.impl.SharingEntryModelImpl;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
@@ -5393,6 +5394,8 @@ public class SharingEntryPersistenceImpl
 
 		setModelImplClass(SharingEntryImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SharingEntryTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

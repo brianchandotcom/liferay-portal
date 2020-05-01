@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
@@ -130,6 +131,11 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	@Override
 	public PollsQuestion deletePollsQuestion(PollsQuestion pollsQuestion) {
 		return pollsQuestionPersistence.remove(pollsQuestion);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return pollsQuestionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

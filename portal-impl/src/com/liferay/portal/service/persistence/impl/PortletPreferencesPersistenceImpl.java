@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
@@ -5814,6 +5815,8 @@ public class PortletPreferencesPersistenceImpl
 		setModelImplClass(PortletPreferencesImpl.class);
 		setModelPKClass(long.class);
 		setEntityCacheEnabled(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED);
+
+		setTable(PortletPreferencesTable.INSTANCE);
 	}
 
 	/**

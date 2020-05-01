@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.service.persistence.impl;
 
 import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.model.KBFolderTable;
 import com.liferay.knowledge.base.model.impl.KBFolderImpl;
 import com.liferay.knowledge.base.model.impl.KBFolderModelImpl;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
@@ -3008,6 +3009,8 @@ public class KBFolderPersistenceImpl
 
 		setModelImplClass(KBFolderImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(KBFolderTable.INSTANCE);
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 

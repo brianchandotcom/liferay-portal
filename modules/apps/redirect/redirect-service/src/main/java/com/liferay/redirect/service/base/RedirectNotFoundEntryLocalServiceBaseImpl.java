@@ -14,6 +14,7 @@
 
 package com.liferay.redirect.service.base;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -129,6 +130,11 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 		RedirectNotFoundEntry redirectNotFoundEntry) {
 
 		return redirectNotFoundEntryPersistence.remove(redirectNotFoundEntry);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return redirectNotFoundEntryPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.exception.NoSuchPreferencesException;
 import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.model.CTPreferencesTable;
 import com.liferay.change.tracking.model.impl.CTPreferencesImpl;
 import com.liferay.change.tracking.model.impl.CTPreferencesModelImpl;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
@@ -1347,6 +1348,8 @@ public class CTPreferencesPersistenceImpl
 
 		setModelImplClass(CTPreferencesImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(CTPreferencesTable.INSTANCE);
 	}
 
 	/**

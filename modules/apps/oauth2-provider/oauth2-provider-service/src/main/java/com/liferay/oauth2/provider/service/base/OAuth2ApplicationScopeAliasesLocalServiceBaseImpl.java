@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationScopeAliasesPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -134,6 +135,11 @@ public abstract class OAuth2ApplicationScopeAliasesLocalServiceBaseImpl
 
 		return oAuth2ApplicationScopeAliasesPersistence.remove(
 			oAuth2ApplicationScopeAliases);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return oAuth2ApplicationScopeAliasesPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

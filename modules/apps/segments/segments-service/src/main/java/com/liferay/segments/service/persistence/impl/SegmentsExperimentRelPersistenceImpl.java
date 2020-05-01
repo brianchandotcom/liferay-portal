@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.segments.exception.NoSuchExperimentRelException;
 import com.liferay.segments.model.SegmentsExperimentRel;
+import com.liferay.segments.model.SegmentsExperimentRelTable;
 import com.liferay.segments.model.impl.SegmentsExperimentRelImpl;
 import com.liferay.segments.model.impl.SegmentsExperimentRelModelImpl;
 import com.liferay.segments.service.persistence.SegmentsExperimentRelPersistence;
@@ -859,6 +860,8 @@ public class SegmentsExperimentRelPersistenceImpl
 
 		setModelImplClass(SegmentsExperimentRelImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SegmentsExperimentRelTable.INSTANCE);
 	}
 
 	/**

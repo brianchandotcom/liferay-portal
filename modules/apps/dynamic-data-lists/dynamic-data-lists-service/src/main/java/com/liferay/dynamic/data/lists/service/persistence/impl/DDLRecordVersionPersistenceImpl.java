@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.service.persistence.impl;
 
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersionTable;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
@@ -2664,6 +2665,8 @@ public class DDLRecordVersionPersistenceImpl
 
 		setModelImplClass(DDLRecordVersionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDLRecordVersionTable.INSTANCE);
 	}
 
 	/**

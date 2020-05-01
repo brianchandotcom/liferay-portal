@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.persistence.exception.NoSuchSpMessageException;
 import com.liferay.saml.persistence.model.SamlSpMessage;
+import com.liferay.saml.persistence.model.SamlSpMessageTable;
 import com.liferay.saml.persistence.model.impl.SamlSpMessageImpl;
 import com.liferay.saml.persistence.model.impl.SamlSpMessageModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlSpMessagePersistence;
@@ -947,6 +948,8 @@ public class SamlSpMessagePersistenceImpl
 
 		setModelImplClass(SamlSpMessageImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(SamlSpMessageTable.INSTANCE);
 	}
 
 	/**

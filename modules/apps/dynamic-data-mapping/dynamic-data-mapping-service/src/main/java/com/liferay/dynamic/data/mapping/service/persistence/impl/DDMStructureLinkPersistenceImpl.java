@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
@@ -1987,6 +1988,8 @@ public class DDMStructureLinkPersistenceImpl
 
 		setModelImplClass(DDMStructureLinkImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDMStructureLinkTable.INSTANCE);
 	}
 
 	/**

@@ -152,6 +152,12 @@ public class SegmentsExperienceLocalServiceUtil {
 		getService().deleteSegmentsExperiences(groupId, classNameId, classPK);
 	}
 
+	public static <T> T dslQuery(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return getService().dslQuery(dslQuery);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
 		dynamicQuery() {
 

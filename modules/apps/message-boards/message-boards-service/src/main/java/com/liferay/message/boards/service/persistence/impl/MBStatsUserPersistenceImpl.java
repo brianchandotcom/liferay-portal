@@ -16,6 +16,7 @@ package com.liferay.message.boards.service.persistence.impl;
 
 import com.liferay.message.boards.exception.NoSuchStatsUserException;
 import com.liferay.message.boards.model.MBStatsUser;
+import com.liferay.message.boards.model.MBStatsUserTable;
 import com.liferay.message.boards.model.impl.MBStatsUserImpl;
 import com.liferay.message.boards.model.impl.MBStatsUserModelImpl;
 import com.liferay.message.boards.service.persistence.MBStatsUserPersistence;
@@ -1880,6 +1881,8 @@ public class MBStatsUserPersistenceImpl
 
 		setModelImplClass(MBStatsUserImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(MBStatsUserTable.INSTANCE);
 	}
 
 	/**

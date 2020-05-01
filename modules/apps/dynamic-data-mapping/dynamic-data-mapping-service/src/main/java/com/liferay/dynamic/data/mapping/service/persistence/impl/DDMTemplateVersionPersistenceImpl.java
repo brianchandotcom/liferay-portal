@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersionTable;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
@@ -1463,6 +1464,8 @@ public class DDMTemplateVersionPersistenceImpl
 
 		setModelImplClass(DDMTemplateVersionImpl.class);
 		setModelPKClass(long.class);
+
+		setTable(DDMTemplateVersionTable.INSTANCE);
 	}
 
 	/**

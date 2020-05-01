@@ -17,6 +17,7 @@ package com.liferay.external.data.source.test.service.base;
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.external.data.source.test.service.TestEntityLocalService;
 import com.liferay.external.data.source.test.service.persistence.TestEntityPersistence;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -118,6 +119,11 @@ public abstract class TestEntityLocalServiceBaseImpl
 	@Override
 	public TestEntity deleteTestEntity(TestEntity testEntity) {
 		return testEntityPersistence.remove(testEntity);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return testEntityPersistence.dslQuery(dslQuery);
 	}
 
 	@Override

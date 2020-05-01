@@ -273,7 +273,11 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 
 	@Override
 	public long getNodeAttachmentsFolderId() {
-		WikiNode node = getNode();
+		WikiNode node = WikiNodeLocalServiceUtil.fetchWikiNode(getNodeId());
+
+		if (node == null) {
+			return 0;
+		}
 
 		return node.getAttachmentsFolderId();
 	}

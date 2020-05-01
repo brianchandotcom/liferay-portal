@@ -68,6 +68,13 @@ public class ClassNameLocalServiceImpl
 	}
 
 	@Override
+	public ClassName deleteClassName(ClassName className) {
+		_classNames.remove(className.getValue());
+
+		return classNamePersistence.remove(className);
+	}
+
+	@Override
 	public ClassName fetchByClassNameId(long classNameId) {
 		return classNamePersistence.fetchByPrimaryKey(classNameId);
 	}

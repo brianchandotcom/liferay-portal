@@ -32,7 +32,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Chema Balsas
  */
-public class ContainerTag extends IncludeTag {
+public class RowTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -47,10 +47,6 @@ public class ContainerTag extends IncludeTag {
 
 	public String getId() {
 		return _id;
-	}
-
-	public String getSize() {
-		return _size;
 	}
 
 	public void setClassName(String className) {
@@ -68,17 +64,12 @@ public class ContainerTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setSize(String size) {
-		_size = size;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_className = null;
 		_id = null;
-		_size = "xl";
 	}
 
 	@Override
@@ -130,17 +121,12 @@ public class ContainerTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute("clay:container:className", _className);
 		httpServletRequest.setAttribute("clay:container:id", _id);
-		httpServletRequest.setAttribute("clay:container:size", _size);
 	}
 
 	private String _getClassName() {
 		Set className = new LinkedHashSet();
 
-		className.add("container-fluid");
-
-		if (Validator.isNotNull(_size)) {
-			className.add("container-fluid-max-" + _size);
-		}
+		className.add("row");
 
 		if (Validator.isNotNull(_className)) {
 			className.addAll(StringUtil.split(_className, CharPool.SPACE));
@@ -149,16 +135,15 @@ public class ContainerTag extends IncludeTag {
 		return StringUtil.merge(className, StringPool.SPACE);
 	}
 
-	private static final String _ATTRIBUTE_NAMESPACE = "clay:container:";
+	private static final String _ATTRIBUTE_NAMESPACE = "clay:row:";
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _END_PAGE = "/container/end.jsp";
+	private static final String _END_PAGE = "/row/end.jsp";
 
-	private static final String _START_PAGE = "/container/start.jsp";
+	private static final String _START_PAGE = "/row/start.jsp";
 
 	private String _className;
 	private String _id;
-	private String _size = "xl";
 
 }

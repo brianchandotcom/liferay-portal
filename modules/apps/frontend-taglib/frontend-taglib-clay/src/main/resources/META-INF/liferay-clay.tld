@@ -1937,6 +1937,24 @@
 	</tag>
 	<tag>
 		<description></description>
+		<name>row</name>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.RowTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description></description>
+			<name>className</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description></description>
 		<name>select</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.SelectTag</tag-class>
 		<body-content>empty</body-content>

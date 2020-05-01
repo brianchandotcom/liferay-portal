@@ -37,6 +37,10 @@ public interface ResourceActions {
 
 	public void check(String portletName);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void checkAction(String name, String actionId)
 		throws NoSuchResourceActionException;
 
@@ -45,6 +49,10 @@ public interface ResourceActions {
 
 	public String getAction(Locale locale, String action);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getActionNamePrefix();
 
 	public String getCompositeModelName(String... classNames);
@@ -74,10 +82,22 @@ public interface ResourceActions {
 
 	public Double getModelResourceWeight(String name);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getOrganizationModelResources();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getPortalModelResources();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getPortletBaseResource(String portletName);
 
 	public List<String> getPortletModelResources(String portletName);
@@ -103,6 +123,10 @@ public interface ResourceActions {
 	public List<String> getResourceActions(
 		String portletResource, String modelResource);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public List<String> getResourceGroupDefaultActions(String name);
 
 	public List<String> getResourceGuestUnsupportedActions(
@@ -111,10 +135,22 @@ public interface ResourceActions {
 	public List<Role> getRoles(
 		long companyId, Group group, String modelResource, int[] roleTypes);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getRootModelResources();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean hasModelResourceActions(String name);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isOrganizationModelResource(String modelResource);
 
 	public boolean isPortalModelResource(String modelResource);
@@ -135,6 +171,10 @@ public interface ResourceActions {
 			String... sources)
 		throws Exception;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void removePortletResource(String portletName);
 
 }

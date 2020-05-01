@@ -16,9 +16,14 @@ package com.liferay.change.tracking.reference.helper;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.portal.kernel.model.UserTable;
 
+import java.util.Date;
 import java.util.function.Function;
 
 /**
@@ -26,9 +31,62 @@ import java.util.function.Function;
  */
 public interface TableReferenceDefinitionHelper<T extends Table<T>> {
 
+	public default void defineGroupedModel(T table) {
+		defineSingleColumnReference(
+			table.getColumn("groupId", Long.class),
+			GroupTable.INSTANCE.groupId);
+
+		defineSingleColumnReference(
+			table.getColumn("companyId", Long.class),
+			CompanyTable.INSTANCE.companyId);
+
+		defineSingleColumnReference(
+			table.getColumn("userId", Long.class), UserTable.INSTANCE.userId);
+
+		defineNonreferenceColumn(table.getColumn("userName", String.class));
+
+		defineNonreferenceColumn(table.getColumn("createDate", Date.class));
+
+		defineNonreferenceColumn(table.getColumn("modifiedDate", Date.class));
+	}
+
 	public void defineNonreferenceColumn(Column<T, ?> column);
+
+	public default <C> void defineParentColumnReference(
+		Column<T, C> pkColumn, Column<T, C> parentPKColumn) {
+
+		if (!pkColumn.isPrimaryKey()) {
+			throw new IllegalArgumentException(pkColumn + " is not primary");
+		}
+
+		T parentTable = pkColumn.getTable();
+
+		T aliasParentTable = parentTable.as("aliasParentTable");
+
+		Column<T, C> aliasPKColumn = aliasParentTable.getColumn(
+			pkColumn.getName(), pkColumn.getJavaType());
+
+		defineSingleColumnReference(parentPKColumn, aliasPKColumn);
+	}
 
 	public void defineReferenceInnerJoin(
 		Function<FromStep, JoinStep> joinFunction);
+
+	public default <C> void defineSingleColumnReference(
+		Column<T, C> column1, Column<?, C> column2) {
+
+		if (column1.getTable() == column2.getTable()) {
+			throw new IllegalArgumentException();
+		}
+
+		Predicate predicate = column1.eq(column2);
+
+		defineReferenceInnerJoin(
+			fromStep -> fromStep.from(
+				column2.getTable()
+			).innerJoinON(
+				column1.getTable(), predicate
+			));
+	}
 
 }

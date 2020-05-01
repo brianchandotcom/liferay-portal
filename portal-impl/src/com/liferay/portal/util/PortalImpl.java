@@ -724,8 +724,7 @@ public class PortalImpl implements Portal {
 			HttpServletRequest httpServletRequest, Portlet portlet)
 		throws PortalException {
 
-		String name = ResourceActionsUtil.getPortletBaseResource(
-			portlet.getRootPortletId());
+		String name = _getPortletBaseResource(portlet);
 
 		if (Validator.isNull(name)) {
 			return;
@@ -754,8 +753,7 @@ public class PortalImpl implements Portal {
 			long companyId, Layout layout, Portlet portlet)
 		throws PortalException {
 
-		String name = ResourceActionsUtil.getPortletBaseResource(
-			portlet.getRootPortletId());
+		String name = _getPortletBaseResource(portlet);
 
 		if (Validator.isNull(name)) {
 			return;
@@ -8551,6 +8549,19 @@ public class PortalImpl implements Portal {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getPortletBaseResource(Portlet portlet) {
+		for (String modelName :
+				ResourceActionsUtil.getPortletModelResources(
+					portlet.getRootPortletId())) {
+
+			if (!modelName.contains(".model.")) {
+				return modelName;
+			}
+		}
+
+		return null;
 	}
 
 	private String _getPortletTitle(

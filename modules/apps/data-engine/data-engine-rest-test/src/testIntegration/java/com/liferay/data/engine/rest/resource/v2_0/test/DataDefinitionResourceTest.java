@@ -25,7 +25,9 @@ import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -35,11 +37,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +66,7 @@ public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			DataDefinitionResourceTest.class);
 
@@ -88,7 +88,7 @@ public class DataDefinitionResourceTest
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 		_serviceRegistration.unregister();
 	}
 
@@ -237,6 +237,42 @@ public class DataDefinitionResourceTest
 				"JSONObject/data",
 				"JSONObject/dataDefinitionByContentTypeByDataDefinitionKey",
 				"JSONObject/name", "Object/en_US"));
+	}
+
+	@Test
+	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKeyNotFound()
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataDefinitionByContentTypeByDataDefinitionKey",
+				HashMapBuilder.<String, Object>put(
+					"contentType", "\"native-object\""
+				).put(
+					"dataDefinitionKey",
+					"\"" + RandomTestUtil.randomString() + "\""
+				).put(
+					"siteKey", "\"" + irrelevantGroup.getGroupId() + "\""
+				).build(),
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	@Override
@@ -450,8 +486,7 @@ public class DataDefinitionResourceTest
 
 	@Override
 	protected String
-			testGetDataDefinitionByContentTypeContentTypePage_getContentType()
-		throws Exception {
+		testGetDataDefinitionByContentTypeContentTypePage_getContentType() {
 
 		return _CONTENT_TYPE;
 	}
@@ -482,16 +517,14 @@ public class DataDefinitionResourceTest
 
 	@Override
 	protected String
-			testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType()
-		throws Exception {
+		testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType() {
 
 		return _CONTENT_TYPE;
 	}
 
 	@Override
 	protected Long
-			testGetSiteDataDefinitionByContentTypeContentTypePage_getSiteId()
-		throws Exception {
+		testGetSiteDataDefinitionByContentTypeContentTypePage_getSiteId() {
 
 		return testGroup.getGroupId();
 	}
@@ -625,8 +658,5 @@ public class DataDefinitionResourceTest
 	private static List<DDMStructure> _ddmStructures;
 
 	private static ServiceRegistration _serviceRegistration;
-
-	@Inject(type = Portal.class)
-	private Portal _portal;
 
 }

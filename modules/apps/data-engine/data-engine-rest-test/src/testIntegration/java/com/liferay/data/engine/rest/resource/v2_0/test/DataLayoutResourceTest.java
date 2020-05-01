@@ -29,6 +29,7 @@ import com.liferay.data.engine.rest.resource.v2_0.test.util.DataDefinitionTestUt
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -159,6 +160,41 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 				jsonObject, "JSONObject/data",
 				"JSONObject/dataLayoutByContentTypeByDataLayoutKey",
 				"JSONObject/name", "Object/en_US"));
+	}
+
+	@Override
+	public void testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKeyNotFound()
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataLayoutByContentTypeByDataLayoutKey",
+				HashMapBuilder.<String, Object>put(
+					"contentType", "\"native-object\""
+				).put(
+					"dataLayoutKey", "\"" + RandomTestUtil.randomString() + "\""
+				).put(
+					"siteKey", "\"" + irrelevantGroup.getGroupId() + "\""
+				).build(),
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+		Assert.assertNotNull(errorsJSONArray);
+		Assert.assertEquals(1, errorsJSONArray.length());
+		JSONObject errorJSONObject = errorsJSONArray.getJSONObject(0);
+
+		JSONObject extensionsJSONObject = errorJSONObject.getJSONObject(
+			"extensions");
+
+		Assert.assertEquals(
+			"Not Found", extensionsJSONObject.getString("code"));
 	}
 
 	@Override
@@ -324,9 +360,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetDataDefinitionDataLayoutsPage_getDataDefinitionId()
-		throws Exception {
-
+	protected Long testGetDataDefinitionDataLayoutsPage_getDataDefinitionId() {
 		return _dataDefinition.getId();
 	}
 

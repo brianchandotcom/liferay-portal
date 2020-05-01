@@ -18,12 +18,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.change.tracking.service.CTProcessService;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -37,9 +40,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -103,10 +109,25 @@ public class CTCollectionServiceTest {
 			journalFolder,
 			_journalFolderLocalService.fetchJournalFolder(
 				journalFolder.getFolderId()));
+
+		List<CTProcess> ctProcesses = _ctProcessService.getCTProcesses(
+			_user.getCompanyId(), _user.getUserId(), _ctCollection.getName(),
+			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+
+		Assert.assertEquals(ctProcesses.toString(), 1, ctProcesses.size());
+
+		CTProcess ctProcess = ctProcesses.get(0);
+
+		Assert.assertEquals(
+			_ctCollection.getCtCollectionId(), ctProcess.getCtCollectionId());
 	}
 
 	@Inject
 	private static CTCollectionService _ctCollectionService;
+
+	@Inject
+	private static CTProcessService _ctProcessService;
 
 	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;

@@ -41,7 +41,9 @@ public class LayoutDataConverterTest {
 
 		fileUtil.setFile(new FileImpl());
 
-		new JSONFactoryUtil().setJSONFactory(new JSONFactoryImpl());
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	@Test

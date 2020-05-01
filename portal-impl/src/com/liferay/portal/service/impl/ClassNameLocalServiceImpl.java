@@ -57,7 +57,7 @@ public class ClassNameLocalServiceImpl
 		List<ClassName> classNames = classNamePersistence.findAll();
 
 		for (ClassName className : classNames) {
-			_classNames.put(className.getValue(), className);
+			_classNames.computeIfAbsent(className.getValue(), key -> className);
 		}
 
 		List<String> models = ModelHintsUtil.getModels();
@@ -85,16 +85,11 @@ public class ClassNameLocalServiceImpl
 			return _nullClassName;
 		}
 
-		ClassName className = _classNames.get(value);
+		ClassName className = _classNames.computeIfAbsent(
+			value, key -> classNamePersistence.fetchByValue(value));
 
 		if (className == null) {
-			className = classNamePersistence.fetchByValue(value);
-
-			if (className == null) {
-				return _nullClassName;
-			}
-
-			_classNames.put(value, className);
+			return _nullClassName;
 		}
 
 		return className;
@@ -110,20 +105,19 @@ public class ClassNameLocalServiceImpl
 		// Always cache the class name. This table exists to improve
 		// performance. Create the class name if one does not exist.
 
-		ClassName className = _classNames.get(value);
+		ClassName className = _classNames.computeIfAbsent(
+			value,
+			key -> {
+				try {
+					return classNameLocalService.addClassName(value);
+				}
+				catch (Throwable throwable) {
+					return null;
+				}
+			});
 
 		if (className == null) {
-			try {
-				_classNames.put(
-					value, classNameLocalService.addClassName(value));
-			}
-			catch (Throwable t) {
-				className = classNameLocalService.fetchClassName(value);
-
-				if (className == _nullClassName) {
-					throw t;
-				}
-			}
+			return classNameLocalService.fetchClassName(value);
 		}
 
 		return className;

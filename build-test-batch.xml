@@ -2716,7 +2716,7 @@ log.sanitizer.enabled=false</echo>
 
 							<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />
 
-							<antcall target="start-app-server-preserve-liferay-home" />
+							<antcall inheritAll="false" target="start-app-server-preserve-liferay-home" />
 
 							<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="testIntegration">
 								<arg value="--continue" />
@@ -2724,7 +2724,7 @@ log.sanitizer.enabled=false</echo>
 								<arg value="-Dtest.class.group.index=${axis.variable}" />
 							</gradle-execute>
 
-							<antcall target="stop-app-server" />
+							<antcall inheritAll="false" target="stop-app-server" />
 
 							<if>
 								<and>

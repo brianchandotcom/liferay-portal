@@ -100,6 +100,15 @@ public class SessionWrapper implements Session {
 	}
 
 	@Override
+	public SQLQuery createSynchronizedSQLQuery(
+			String queryString, boolean strictName, String[] tableNames)
+		throws ORMException {
+
+		return session.createSynchronizedSQLQuery(
+			queryString, strictName, tableNames);
+	}
+
+	@Override
 	public void delete(Object object) throws ORMException {
 		session.delete(object);
 	}

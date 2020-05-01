@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.persistence;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Projection;
@@ -107,6 +108,8 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 */
 	public long countWithDynamicQuery(
 		DynamicQuery dynamicQuery, Projection projection);
+
+	public <R> R dslQuery(DSLQuery dslQuery);
 
 	/**
 	 * Returns the model instance with the primary key or returns

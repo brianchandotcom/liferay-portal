@@ -15,6 +15,19 @@
 package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.ast.ASTNode;
+import com.liferay.petra.sql.dsl.expression.Alias;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
+import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
+import com.liferay.petra.sql.dsl.spi.expression.TableStar;
+import com.liferay.petra.sql.dsl.spi.query.Select;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -31,8 +44,11 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -47,22 +63,29 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.sql.Types;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -131,6 +154,88 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		Long firstResult = results.get(0);
 
 		return firstResult.longValue();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public <R> R dslQuery(DSLQuery dslQuery) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DefaultASTNodeListener defaultASTNodeListener =
+				new DefaultASTNodeListener();
+
+			String sql = dslQuery.toSQL(defaultASTNodeListener);
+
+			String[] tableNames = defaultASTNodeListener.getTableNames();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				sql, true, tableNames);
+
+			List<Object> scalarValues =
+				defaultASTNodeListener.getScalarValues();
+
+			if (!scalarValues.isEmpty()) {
+				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+				for (Object value : scalarValues) {
+					queryPos.add(value);
+				}
+			}
+
+			Select select = _getSelect(dslQuery);
+
+			ProjectionType projectionType = _getProjectionType(
+				tableNames, select.getExpressions());
+
+			if (projectionType == ProjectionType.COUNT) {
+				sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			}
+			else if (projectionType == ProjectionType.MODELS) {
+				sqlQuery.addEntity(_table.getTableName(), _modelImplClass);
+			}
+			else {
+				for (Expression<?> expression : select.getExpressions()) {
+					if (expression instanceof Alias) {
+						Alias<?> alias = (Alias<?>)expression;
+
+						sqlQuery.addScalar(
+							alias.getName(), _getType(alias.getExpression()));
+					}
+					else if (expression instanceof Column) {
+						Column<?, ?> column = (Column<?, ?>)expression;
+
+						sqlQuery.addScalar(column.getName(), _getType(column));
+					}
+					else {
+						throw new IllegalArgumentException(
+							"Unnamed projection expression " + expression);
+					}
+				}
+			}
+
+			if (projectionType == ProjectionType.COUNT) {
+				List<?> results = sqlQuery.list();
+
+				if (results.isEmpty()) {
+					return (R)(Long)0L;
+				}
+
+				return (R)results.get(0);
+			}
+
+			return (R)QueryUtil.list(
+				sqlQuery, getDialect(), defaultASTNodeListener.getStart(),
+				defaultASTNodeListener.getEnd());
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override
@@ -718,6 +823,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 	}
 
+	protected void setTable(Table<?> table) {
+		_table = table;
+	}
+
 	/**
 	 * Updates the model instance in the database or adds it if it does not yet
 	 * exist. {@link #remove(BaseModel)} depends on this method to implement the
@@ -770,8 +879,134 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected boolean entityCacheEnabled;
 	protected boolean finderCacheEnabled;
 
+	private static Select _getSelect(DSLQuery dslQuery) {
+		ASTNode astNode = dslQuery;
+
+		while (astNode instanceof BaseASTNode) {
+			if (astNode instanceof Select) {
+				return (Select)astNode;
+			}
+
+			BaseASTNode baseASTNode = (BaseASTNode)astNode;
+
+			astNode = baseASTNode.getChild();
+		}
+
+		throw new IllegalArgumentException("No Select found for " + dslQuery);
+	}
+
+	private static Type _getType(Expression<?> expression) {
+		if (expression instanceof Column) {
+			Column<?, ?> column = (Column<?, ?>)expression;
+
+			Class<?> javaTypeClass = column.getJavaType();
+
+			Type type = _typeMap.get(javaTypeClass);
+
+			if (type != null) {
+				return type;
+			}
+		}
+
+		if (expression instanceof Alias) {
+			Alias<?> alias = (Alias<?>)expression;
+
+			return _getType(alias.getExpression());
+		}
+
+		if (expression instanceof AggregateExpression) {
+			AggregateExpression aggregateExpression =
+				(AggregateExpression)expression;
+
+			if (Objects.equals(aggregateExpression.getName(), "count")) {
+				return Type.LONG;
+			}
+
+			return _getType(aggregateExpression.getExpression());
+		}
+
+		if (expression instanceof DSLFunction) {
+			DSLFunction<?> dslFunction = (DSLFunction<?>)expression;
+
+			DSLFunctionType dslFunctionType = dslFunction.getDslFunctionType();
+
+			if ((dslFunctionType == DSLFunctionType.CAST_CLOB_TEXT) ||
+				(dslFunctionType == DSLFunctionType.CAST_TEXT) ||
+				(dslFunctionType == DSLFunctionType.CONCAT) ||
+				(dslFunctionType == DSLFunctionType.LOWER)) {
+
+				return Type.STRING;
+			}
+
+			if ((dslFunctionType == DSLFunctionType.BITWISE_AND) ||
+				(dslFunctionType == DSLFunctionType.CAST_LONG)) {
+
+				return Type.LONG;
+			}
+
+			return _getType(dslFunction.getExpressions()[0]);
+		}
+
+		throw new IllegalArgumentException(expression.toString());
+	}
+
+	private ProjectionType _getProjectionType(
+		String[] tableNames, Collection<? extends Expression<?>> expressions) {
+
+		if (expressions.isEmpty() && (tableNames.length == 1)) {
+			if (Objects.equals(tableNames[0], _table.getTableName())) {
+				return ProjectionType.MODELS;
+			}
+		}
+		else if (expressions.size() == 1) {
+			Iterator<? extends Expression<?>> iterator = expressions.iterator();
+
+			Expression<?> expression = iterator.next();
+
+			if (expression instanceof TableStar) {
+				TableStar tableStar = (TableStar)expression;
+
+				if (Objects.equals(_table, tableStar.getTable())) {
+					return ProjectionType.MODELS;
+				}
+			}
+			else if (expression instanceof Alias<?>) {
+				Alias<?> alias = (Alias<?>)expression;
+
+				if (COUNT_COLUMN_NAME.equals(alias.getName())) {
+					return ProjectionType.COUNT;
+				}
+			}
+		}
+
+		return ProjectionType.COLUMNS;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePersistenceImpl.class);
+
+	private static final Map<Class<?>, Type> _typeMap =
+		HashMapBuilder.<Class<?>, Type>put(
+			BigDecimal.class, Type.BIG_DECIMAL
+		).put(
+			Boolean.class, Type.BOOLEAN
+		).put(
+			Date.class, Type.DATE
+		).put(
+			Double.class, Type.DOUBLE
+		).put(
+			Float.class, Type.FLOAT
+		).put(
+			Integer.class, Type.INTEGER
+		).put(
+			Long.class, Type.LONG
+		).put(
+			Short.class, Type.SHORT
+		).put(
+			String.class, Type.STRING
+		).put(
+			Timestamp.class, Type.TIMESTAMP
+		).build();
 
 	private int _databaseOrderByMaxColumns;
 	private DataSource _dataSource;
@@ -782,6 +1017,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private Class<? extends T> _modelImplClass;
 	private ModelPKType _modelPKType = ModelPKType.COMPOUND;
 	private SessionFactory _sessionFactory;
+	private Table<?> _table;
 
 	private static class NullModel
 		implements BaseModel<NullModel>, CacheModel<NullModel>, MVCCModel {
@@ -923,6 +1159,12 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private enum ModelPKType {
 
 		COMPOUND, NUMBER, STRING
+
+	}
+
+	private enum ProjectionType {
+
+		COLUMNS, COUNT, MODELS
 
 	}
 

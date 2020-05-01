@@ -269,6 +269,30 @@ public class ClassLoaderSession implements Session {
 	}
 
 	@Override
+	public SQLQuery createSynchronizedSQLQuery(
+			String queryString, boolean strictName, String[] tableNames)
+		throws ORMException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(_classLoader);
+			}
+
+			return _session.createSynchronizedSQLQuery(
+				queryString, strictName, tableNames);
+		}
+		finally {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
+	@Override
 	public void delete(Object object) throws ORMException {
 		Thread currentThread = Thread.currentThread();
 

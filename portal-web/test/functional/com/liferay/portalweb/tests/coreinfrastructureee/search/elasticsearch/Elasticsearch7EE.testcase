@@ -97,6 +97,8 @@ definition {
 	}
 
 	test AssertSimilarResultsDisplayTemplate {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -144,6 +146,8 @@ definition {
 	}
 
 	test AssertSimilarResultsMatchesAssetType {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		for (var count : list "1,2,3") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Content",
@@ -323,6 +327,7 @@ definition {
 	}
 
 	test ConfigureSimilarResultsDocumentFrequency {
+		property osgi.app.includes = "portal-search-similar-results";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#ConfigureSimilarResultsDocumentFrequency";
 
 		JSONWebcontent.addWebContent(
@@ -394,6 +399,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsFields {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		JSONBlog.addEntry(
 			entryContent = "Content",
 			entryTitle = "No Match Content");
@@ -443,6 +450,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsMaximumItemDisplay {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		for (var titleName : list "Alpha,Bravo,Charlie,Delta,Echo,Foxtrot") {
 			JSONWebcontent.addWebContent(
 				content = "${titleName}",
@@ -483,6 +492,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsMaximumQueryTerms {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		for (var count : list "One, Two, Three") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -516,6 +527,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsMinimumShouldMatch {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
@@ -575,6 +588,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsStopWords {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		JSONWebcontent.addWebContent(
 			content = "No Match",
 			groupName = "Guest",
@@ -634,6 +649,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsTermFrequency {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		for (var count : list "One, Two, Three") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -692,6 +709,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsWordLength {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

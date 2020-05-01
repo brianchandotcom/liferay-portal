@@ -383,35 +383,31 @@ public class GroupImpl extends GroupBaseImpl {
 			return null;
 		}
 
-		try {
+		if (_liveGroup == null) {
+			_liveGroup = GroupLocalServiceUtil.fetchGroup(getLiveGroupId());
+
 			if (_liveGroup == null) {
-				_liveGroup = GroupLocalServiceUtil.getGroup(getLiveGroupId());
-
-				if (_liveGroup instanceof GroupImpl) {
-					GroupImpl groupImpl = (GroupImpl)_liveGroup;
-
-					groupImpl._stagingGroup = this;
-				}
-				else {
-					_liveGroup = new GroupWrapper(_liveGroup) {
-
-						@Override
-						public Group getStagingGroup() {
-							return GroupImpl.this;
-						}
-
-					};
-				}
+				return null;
 			}
 
-			return _liveGroup;
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Error getting live group for " + getLiveGroupId(), exception);
+			if (_liveGroup instanceof GroupImpl) {
+				GroupImpl groupImpl = (GroupImpl)_liveGroup;
 
-			return null;
+				groupImpl._stagingGroup = this;
+			}
+			else {
+				_liveGroup = new GroupWrapper(_liveGroup) {
+
+					@Override
+					public Group getStagingGroup() {
+						return GroupImpl.this;
+					}
+
+				};
+			}
 		}
+
+		return _liveGroup;
 	}
 
 	@Override

@@ -14,6 +14,9 @@
 
 package com.liferay.headless.discovery.internal.jaxrs.application;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.headless.discovery.internal.dto.Hint;
 import com.liferay.headless.discovery.internal.dto.Resource;
 import com.liferay.headless.discovery.internal.dto.Resources;
@@ -30,10 +33,14 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.ext.Providers;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,7 +58,8 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 	property = {
 		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/api",
 		JaxrsWhiteboardConstants.JAX_RS_EXTENSION_SELECT + "=(osgi.jaxrs.name=Liferay.Vulcan)",
-		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Liferay.Headless.Discovery.API"
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Liferay.Headless.Discovery.API",
+		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.check.csrf.token=false"
 	},
 	service = Application.class
 )
@@ -59,7 +67,9 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 
 	@GET
 	@Produces({"application/json", "application/xml"})
-	public Resources discovery() {
+	public Response discovery(@HeaderParam("Accept") String accept)
+		throws JsonProcessingException {
+
 		Map<String, List<ResourceMethodInfoDTO>> resourceMethodInfoDTOsMap =
 			_getResourceMethodInfoDTOsMap();
 
@@ -71,7 +81,25 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 			resourcesMap.put(entry.getKey(), _getResource(entry.getValue()));
 		}
 
-		return new Resources(resourcesMap);
+		Resources resources = new Resources(resourcesMap);
+
+		if ((accept != null) &&
+			accept.contains(MediaType.APPLICATION_XHTML_XML)) {
+
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			return Response.ok(
+				objectMapper.writerWithDefaultPrettyPrinter(
+				).writeValueAsString(
+					resources
+				),
+				MediaType.APPLICATION_JSON_TYPE
+			).build();
+		}
+
+		return Response.ok(
+			resources
+		).build();
 	}
 
 	public Set<Object> getSingletons() {
@@ -151,6 +179,9 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;
+
+	@Context
+	private Providers _providers;
 
 	@Context
 	private UriInfo _uriInfo;

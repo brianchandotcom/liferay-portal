@@ -49,7 +49,8 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 	property = {
 		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/openapi",
 		JaxrsWhiteboardConstants.JAX_RS_EXTENSION_SELECT + "=(osgi.jaxrs.name=Liferay.Vulcan)",
-		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Liferay.Headless.Discovery.OpenAPI"
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Liferay.Headless.Discovery.OpenAPI",
+		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.check.csrf.token=false"
 	},
 	service = Application.class
 )
@@ -98,7 +99,9 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 			if (!paths.isEmpty()) {
 				String baseURL = applicationDTO.base;
 
-				if (StringUtil.contains(accept, MediaType.APPLICATION_XML)) {
+				if ((accept != null) &&
+					accept.contains(MediaType.APPLICATION_XML)) {
+
 					baseURL = baseURL.substring(1);
 				}
 

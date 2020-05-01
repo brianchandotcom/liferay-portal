@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.drop.zone.model.listener;
+package com.liferay.fragment.entry.processor.drop.zone.listener;
 
 import com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
@@ -29,8 +30,8 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -46,26 +47,26 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ModelListener.class)
-public class FragmentEntryLinkModelListener
-	extends BaseModelListener<FragmentEntryLink> {
+@Component(service = ContentPageEditorListener.class)
+public class DropZoneContentPageEditorListener
+	implements ContentPageEditorListener {
 
 	@Override
-	public void onAfterCreate(FragmentEntryLink fragmentEntryLink)
-		throws ModelListenerException {
-
+	public void onAddFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
 		try {
 			_updateLayoutPageTemplateStructure(fragmentEntryLink);
 		}
 		catch (Exception exception) {
-			throw new ModelListenerException(exception);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to update layout page template structure",
+					exception);
+			}
 		}
 	}
 
 	@Override
-	public void onAfterRemove(FragmentEntryLink fragmentEntryLink)
-		throws ModelListenerException {
-
+	public void onDeleteFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
 		try {
 			JSONObject editableValuesJSONObject =
 				JSONFactoryUtil.createJSONObject(
@@ -141,14 +142,22 @@ public class FragmentEntryLinkModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(FragmentEntryLink fragmentEntryLink)
-		throws ModelListenerException {
+	public void onUpdateFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
+	}
+
+	@Override
+	public void onUpdateFragmentEntryLinkConfigurationValues(
+		FragmentEntryLink fragmentEntryLink) {
 
 		try {
 			_updateLayoutPageTemplateStructure(fragmentEntryLink);
 		}
 		catch (Exception exception) {
-			throw new ModelListenerException(exception);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to update layout page template structure",
+					exception);
+			}
 		}
 	}
 
@@ -290,6 +299,9 @@ public class FragmentEntryLinkModelListener
 				fragmentEntryLink.getSegmentsExperienceId(),
 				dataJSONObject.toString());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DropZoneContentPageEditorListener.class);
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

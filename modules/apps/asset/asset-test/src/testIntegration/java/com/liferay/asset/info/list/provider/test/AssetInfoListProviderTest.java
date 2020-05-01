@@ -233,6 +233,7 @@ public class AssetInfoListProviderTest {
 
 		AssetEntry assetEntry1 = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(), article1.getResourcePrimKey());
+
 		AssetEntry assetEntry2 = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(), article2.getResourcePrimKey());
 		AssetEntry relatedAssetEntry = _assetEntryLocalService.getEntry(

@@ -16,6 +16,9 @@ package com.liferay.headless.admin.user.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Javier Gamarra
@@ -37,6 +40,30 @@ public class EmailAddressUtil {
 				type = listType.getName();
 			}
 		};
+	}
+
+	public static com.liferay.portal.kernel.model.EmailAddress
+		toServiceBuilderEmailAddress(EmailAddress emailAddress, String type) {
+
+		String address = emailAddress.getEmailAddress();
+
+		if (Validator.isNull(address)) {
+			return null;
+		}
+
+		com.liferay.portal.kernel.model.EmailAddress
+			serviceBuilderEmailAddress =
+				EmailAddressLocalServiceUtil.createEmailAddress(
+					GetterUtil.getLong(emailAddress.getId()));
+
+		serviceBuilderEmailAddress.setAddress(address);
+		serviceBuilderEmailAddress.setTypeId(
+			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
+				"email-address", emailAddress.getType(), type));
+		serviceBuilderEmailAddress.setPrimary(
+			GetterUtil.getBoolean(emailAddress.getPrimary()));
+
+		return serviceBuilderEmailAddress;
 	}
 
 }

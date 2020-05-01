@@ -175,7 +175,9 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 					getCompanyId(), getOrganizationId());
 			}
 			catch (Exception exception) {
-				_log.error("Unable to get organization group", exception);
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to get organization group", exception);
+				}
 			}
 		}
 

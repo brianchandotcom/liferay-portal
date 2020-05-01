@@ -43,6 +43,8 @@ public class AccountEntrySearchRegistrar {
 
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
+				modelSearchDefinition.setSearchResultPermissionFilterSuppressed(
+					true);
 			});
 	}
 

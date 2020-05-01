@@ -147,21 +147,6 @@ public class ConfigurationEntryRetrieverImpl
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		Set<ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels(
-				configurationCategory, languageId, scope, scopePK);
-
-		for (ConfigurationModel configurationModel : configurationModels) {
-			if (configurationModel.isGenerateUI()) {
-				ConfigurationEntry configurationEntry =
-					new ConfigurationModelConfigurationEntry(
-						configurationModel, locale,
-						_resourceBundleLoaderProvider);
-
-				configurationEntries.add(configurationEntry);
-			}
-		}
-
 		Set<ConfigurationScreen> configurationScreens = getConfigurationScreens(
 			configurationCategory);
 
@@ -177,6 +162,21 @@ public class ConfigurationEntryRetrieverImpl
 					configurationScreen, locale);
 
 			configurationEntries.add(configurationEntry);
+		}
+
+		Set<ConfigurationModel> configurationModels =
+			_configurationModelRetriever.getConfigurationModels(
+				configurationCategory, languageId, scope, scopePK);
+
+		for (ConfigurationModel configurationModel : configurationModels) {
+			if (configurationModel.isGenerateUI()) {
+				ConfigurationEntry configurationEntry =
+					new ConfigurationModelConfigurationEntry(
+						configurationModel, locale,
+						_resourceBundleLoaderProvider);
+
+				configurationEntries.add(configurationEntry);
+			}
 		}
 
 		return configurationEntries;

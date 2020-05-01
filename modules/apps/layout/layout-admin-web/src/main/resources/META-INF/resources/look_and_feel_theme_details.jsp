@@ -50,7 +50,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 <aui:input name="regularThemeId" type="hidden" value="<%= selTheme.getThemeId() %>" />
 <aui:input name="regularColorSchemeId" type="hidden" value="<%= selColorScheme.getColorSchemeId() %>" />
 
-<aui:row>
+<clay:row>
 	<div class="col-6 col-sm-4">
 		<div class="card image-card img-thumbnail">
 			<div class="aspect-ratio aspect-ratio-16-to-9">
@@ -76,7 +76,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 			</p>
 		</c:if>
 	</div>
-</aui:row>
+</clay:row>
 
 <c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getShortDescription()) %>">
 	<h4><liferay-ui:message key="description" /></h4>
@@ -94,7 +94,7 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 	<h2 class="h4"><liferay-ui:message key="color-schemes" /></h2>
 
 	<div class="clearfix" id="<portlet:namespace />colorSchemesContainer">
-		<aui:row>
+		<clay:row>
 
 			<%
 			String selColorSchemeId = selColorScheme.getColorSchemeId();
@@ -122,7 +122,7 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 			}
 			%>
 
-		</aui:row>
+		</clay:row>
 	</div>
 </c:if>
 

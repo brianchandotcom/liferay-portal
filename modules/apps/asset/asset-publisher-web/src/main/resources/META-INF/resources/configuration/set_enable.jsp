@@ -45,7 +45,7 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 	<liferay-ui:message key="enable" />
 </h4>
 
-<aui:row>
+<clay:row>
 	<aui:col width="<%= 50 %>">
 		<aui:input label="print" name="preferences--enablePrint--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePrint() %>" />
 
@@ -87,7 +87,7 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 			</c:otherwise>
 		</c:choose>
 	</aui:col>
-</aui:row>
+</clay:row>
 
 <c:if test="<%= assetPublisherDisplayContext.isOpenOfficeServerEnabled() %>">
 
@@ -101,7 +101,7 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 		<liferay-ui:icon-help message="enabling-openoffice-integration-provides-document-conversion-functionality" />
 	</h4>
 
-	<aui:row>
+	<clay:row>
 		<aui:col width="<%= 50 %>">
 
 			<%
@@ -131,7 +131,7 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 			%>
 
 		</aui:col>
-	</aui:row>
+	</clay:row>
 </c:if>
 
 <h4 class="sheet-tertiary-title">

@@ -35,7 +35,7 @@
 						<aui:option label="<%= ContactsConstants.DISPLAY_STYLE_DETAIL_LABEL %>" value="<%= ContactsConstants.DISPLAY_STYLE_DETAIL %>" />
 					</aui:select>
 
-					<aui:row>
+					<clay:row>
 						<aui:col width="<%= 50 %>">
 							<aui:input name="preferences--showAdditionalEmailAddresses--" type="checkbox" value="<%= showAdditionalEmailAddresses %>" />
 
@@ -67,7 +67,7 @@
 
 							<aui:input name="preferences--showWebsites--" type="checkbox" value="<%= showWebsites %>" />
 						</aui:col>
-					</aui:row>
+					</clay:row>
 				</liferay-frontend:fieldset>
 			</liferay-frontend:fieldset-group>
 		</liferay-frontend:edit-form-body>

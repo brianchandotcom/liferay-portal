@@ -30,7 +30,7 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.getOAuthApp
 	title="<%= oAuthApplication.getName() %>"
 />
 
-<aui:row>
+<clay:row>
 	<aui:col width="<%= (oAuthApplication.getLogoId() != 0) ? 50 : 100 %>">
 		<c:if test="<%= Validator.isNotNull(oAuthApplication.getDescription()) %>">
 			<aui:field-wrapper label="description">
@@ -97,4 +97,4 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.getOAuthApp
 			<img src="<%= HtmlUtil.escape(themeDisplay.getPathImage() + "/logo?img_id=" + oAuthApplication.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(oAuthApplication.getLogoId())) %>" />
 		</aui:col>
 	</c:if>
-</aui:row>
+</clay:row>

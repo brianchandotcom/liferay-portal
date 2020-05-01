@@ -18,7 +18,7 @@
 Hits hits = searchDisplayContext.getHits();
 %>
 
-<aui:row cssClass='<%= "search-layout" + (searchDisplayContext.isShowMenu() ? " menu-column" : StringPool.BLANK) %>'>
+<clay:row className='<%= "search-layout" + (searchDisplayContext.isShowMenu() ? " menu-column" : StringPool.BLANK) %>'>
 	<c:if test="<%= searchDisplayContext.isShowMenu() %>">
 		<aui:col id="facetNavigation" span="<%= 3 %>">
 
@@ -95,7 +95,7 @@ Hits hits = searchDisplayContext.getHits();
 			</c:if>
 		</liferay-ui:search-container>
 	</aui:col>
-</aui:row>
+</clay:row>
 
 <aui:script require="metal-dom/src/dom as dom">
 	var facetNavigation = document.getElementById(

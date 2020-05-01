@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:row id="grouping">
+<clay:row id="grouping">
 	<aui:col width="<%= 30 %>">
 
 		<%
@@ -81,4 +81,4 @@
 
 		</aui:select>
 	</aui:col>
-</aui:row>
+</clay:row>

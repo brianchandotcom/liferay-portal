@@ -302,7 +302,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 										</div>
 
 										<div class="lfr-ddm-small-image-content toggler-content-collapsed">
-											<aui:row>
+											<clay:row>
 												<c:if test="<%= smallImage && (template != null) %>">
 													<aui:col width="<%= 50 %>">
 														<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-ddm-small-image-preview" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
@@ -322,7 +322,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 														<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageFile" type="file" />
 													</aui:fieldset>
 												</aui:col>
-											</aui:row>
+											</clay:row>
 										</div>
 									</div>
 								</c:otherwise>

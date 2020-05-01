@@ -39,7 +39,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 <aui:model-context bean="<%= account %>" model="<%= Account.class %>" />
 
-<aui:row>
+<clay:row>
 	<aui:col width="<%= 50 %>">
 		<liferay-ui:error exception="<%= AccountNameException.class %>" message="please-enter-a-valid-name" />
 
@@ -61,11 +61,11 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 		<aui:input label="enable-cdn-dynamic-resources" name='<%= "settings--" + PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED + "--" %>' type="checkbox" value="<%= cdnDynamicResourcesEnabled %>" />
 	</aui:col>
-</aui:row>
+</clay:row>
 
 <h4><liferay-ui:message key="navigation" /></h4>
 
-<aui:row>
+<clay:row>
 	<aui:col width="<%= 50 %>">
 		<aui:input bean="<%= company %>" helpMessage="home-url-help" label="home-url" model="<%= Company.class %>" name="homeURL" />
 
@@ -75,11 +75,11 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 	<aui:col width="<%= 50 %>">
 		<aui:input helpMessage="default-logout-page-help" label="default-logout-page" name='<%= "settings--" + PropsKeys.DEFAULT_LOGOUT_PAGE_PATH + "--" %>' type="text" value="<%= defaultLogoutPagePath %>" />
 	</aui:col>
-</aui:row>
+</clay:row>
 
 <h4><liferay-ui:message key="additional-information" /></h4>
 
-<aui:row>
+<clay:row>
 	<aui:col width="<%= 50 %>">
 		<aui:input name="legalName" />
 
@@ -97,4 +97,4 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 		<aui:input name="type" />
 	</aui:col>
-</aui:row>
+</clay:row>

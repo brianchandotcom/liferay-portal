@@ -38,7 +38,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 
 <div class="card-horizontal main-content-card">
 	<div class="card-body">
-		<aui:row>
+		<clay:row>
 			<div class="col-6 col-sm-4">
 				<div class="card image-card img-thumbnail">
 					<div class="aspect-ratio aspect-ratio-16-to-9">
@@ -64,7 +64,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 					</p>
 				</c:if>
 			</div>
-		</aui:row>
+		</clay:row>
 
 		<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getShortDescription()) %>">
 			<h2 class="h4"><liferay-ui:message key="description" /></h2>
@@ -83,7 +83,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 		<c:if test="<%= !colorSchemes.isEmpty() && Validator.isNotNull(selColorScheme) %>">
 			<h2 class="h4"><liferay-ui:message key="color-scheme" /></h2>
 
-			<aui:row>
+			<clay:row>
 				<div class="col-6 col-md-3 col-sm-4">
 					<div class="card image-card img-thumbnail">
 						<div class="aspect-ratio aspect-ratio-16-to-9">
@@ -99,7 +99,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 						</div>
 					</div>
 				</div>
-			</aui:row>
+			</clay:row>
 		</c:if>
 
 		<%

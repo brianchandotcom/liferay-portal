@@ -66,7 +66,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 			</h2>
 		</div>
 
-		<aui:row cssClass="clay-site-row-spacer">
+		<clay:row className="clay-site-row-spacer">
 			<aui:col span="<%= 12 %>">
 				<h3 class="sheet-subtitle">
 					<liferay-ui:message key="text-and-numbers" />
@@ -273,6 +273,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 					</div>
 				</a>
 			</aui:col>
-		</aui:row>
+		</clay:row>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

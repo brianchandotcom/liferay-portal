@@ -29,7 +29,7 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:row>
+		<clay:row>
 			<aui:col width="<%= 50 %>">
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset>
@@ -66,7 +66,7 @@
 					showBorders="<%= true %>"
 				/>
 			</aui:col>
-		</aui:row>
+		</clay:row>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

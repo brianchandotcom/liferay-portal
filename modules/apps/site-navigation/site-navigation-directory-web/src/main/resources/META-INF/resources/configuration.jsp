@@ -30,29 +30,29 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:row>
+		<clay:row>
 			<aui:col width="<%= 50 %>">
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset
 						cssClass="ml-3"
 					>
-						<aui:row>
+						<clay:row>
 							<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
 								<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />
 								<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" />
 								<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" />
 								<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" />
 							</aui:select>
-						</aui:row>
+						</clay:row>
 
-						<aui:row>
+						<clay:row>
 							<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
 								<aui:option label="icon" />
 								<aui:option label="descriptive" />
 								<aui:option label="list" />
 								<aui:option label="list-hierarchy" />
 							</aui:select>
-						</aui:row>
+						</clay:row>
 					</liferay-frontend:fieldset>
 				</liferay-frontend:fieldset-group>
 			</aui:col>
@@ -64,7 +64,7 @@
 					showBorders="<%= true %>"
 				/>
 			</aui:col>
-		</aui:row>
+		</clay:row>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

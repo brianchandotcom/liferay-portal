@@ -29,7 +29,7 @@ OrderByComparator orderByComparator = KBUtil.getKBArticleOrderByComparator(order
 List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 %>
 
-<aui:row>
+<clay:row>
 	<aui:col width="<%= 100 %>">
 		<ul class="sidebar-block tabular-list-group-unstyled">
 
@@ -108,7 +108,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 
 		</ul>
 	</aui:col>
-</aui:row>
+</clay:row>
 
 <portlet:renderURL var="compareVersionURL">
 	<portlet:param name="mvcPath" value="/admin/common/compare_versions.jsp" />

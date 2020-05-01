@@ -119,7 +119,7 @@ else {
 		<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="report-parameters">
 			<aui:input cssClass="report-parameters" name="reportParameters" type="hidden" />
 
-			<aui:row>
+			<clay:row>
 				<aui:col width="<%= 35 %>">
 					<aui:input cssClass="parameters-key" name="key" size="20" type="text" />
 				</aui:col>
@@ -159,7 +159,7 @@ else {
 						<aui:button value="add-parameter" />
 					</aui:button-row>
 				</aui:col>
-			</aui:row>
+			</clay:row>
 
 			<aui:field-wrapper>
 				<aui:col>

@@ -52,7 +52,7 @@ renderResponse.setTitle(definition.getName(locale));
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:row cssClass="lfr-asset-column lfr-asset-column-details">
+			<clay:row className="lfr-asset-column lfr-asset-column-details">
 				<aui:col width="<%= 50 %>">
 					<aui:field-wrapper label="requested-report-id">
 						<%= entry.getEntryId() %>
@@ -123,7 +123,7 @@ renderResponse.setTitle(definition.getName(locale));
 						<%= entry.getModifiedDate() %>
 					</aui:field-wrapper>
 				</aui:col>
-			</aui:row>
+			</clay:row>
 		</aui:fieldset>
 
 		<%

@@ -50,7 +50,7 @@ else {
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:row>
+		<clay:row>
 			<aui:col width="<%= 50 %>">
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset
@@ -111,7 +111,7 @@ else {
 						label="menu-items-to-show"
 					>
 						<div id="<portlet:namespace />customDisplayOptions">
-							<aui:row>
+							<clay:row>
 								<aui:col width="<%= 75 %>">
 									<aui:select id="rootMenuItemType" label="start-with-menu-items-in" name="preferences--rootMenuItemType--" value="<%= rootMenuItemType %>">
 										<aui:option label="level" value="absolute" />
@@ -137,9 +137,9 @@ else {
 										</aui:select>
 									</div>
 								</aui:col>
-							</aui:row>
+							</clay:row>
 
-							<aui:row>
+							<clay:row>
 								<aui:col width="<%= 80 %>">
 									<div class="mb-3 <%= rootMenuItemType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemIdPanel">
 										<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
@@ -177,9 +177,9 @@ else {
 										<aui:button name="chooseRootMenuItem" value="menu-item" />
 									</div>
 								</aui:col>
-							</aui:row>
+							</clay:row>
 
-							<aui:row>
+							<clay:row>
 								<aui:col width="<%= 50 %>">
 									<aui:select label="sublevels-to-display" name="preferences--displayDepth--">
 										<aui:option label="unlimited" value="0" />
@@ -203,7 +203,7 @@ else {
 										<aui:option label="all" />
 									</aui:select>
 								</aui:col>
-							</aui:row>
+							</clay:row>
 						</div>
 					</liferay-frontend:fieldset>
 				</liferay-frontend:fieldset-group>
@@ -215,7 +215,7 @@ else {
 					showBorders="<%= true %>"
 				/>
 			</aui:col>
-		</aui:row>
+		</clay:row>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

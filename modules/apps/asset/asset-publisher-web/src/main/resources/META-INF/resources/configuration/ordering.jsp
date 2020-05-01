@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:row id="ordering">
+<clay:row id="ordering">
 	<aui:col width="<%= 50 %>">
 
 		<%
@@ -113,7 +113,7 @@
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
 		</aui:field-wrapper>
 	</aui:col>
-</aui:row>
+</clay:row>
 
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace />ordering').delegate(

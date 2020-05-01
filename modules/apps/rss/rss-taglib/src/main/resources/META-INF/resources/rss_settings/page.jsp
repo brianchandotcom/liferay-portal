@@ -31,14 +31,14 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 
 	<div id="<portlet:namespace />rssOptions">
 		<c:if test="<%= nameEnabled %>">
-			<aui:row>
+			<clay:row>
 				<aui:col>
 					<aui:input label="rss-feed-name" name="preferences--rssName--" type="text" value="<%= name %>" />
 				</aui:col>
-			</aui:row>
+			</clay:row>
 		</c:if>
 
-		<aui:row>
+		<clay:row>
 			<aui:col width="<%= 33 %>">
 				<aui:select label="maximum-items-to-display" name="preferences--rssDelta--" value="<%= delta %>">
 					<aui:option label="1" />
@@ -92,7 +92,7 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 
 				</aui:select>
 			</aui:col>
-		</aui:row>
+		</clay:row>
 	</div>
 </div>
 

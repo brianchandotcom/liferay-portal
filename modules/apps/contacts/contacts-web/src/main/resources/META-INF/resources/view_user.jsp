@@ -36,7 +36,7 @@ request.setAttribute("view_user.jsp-user", user2);
 <c:if test="<%= user2 != null %>">
 	<div class="contacts-profile <%= (user.getUserId() == user2.getUserId()) ? "my-profile" : StringPool.BLANK %>" id="<portlet:namespace />contactsProfile">
 		<c:if test="<%= (displayStyle == ContactsConstants.DISPLAY_STYLE_BASIC) || (displayStyle == ContactsConstants.DISPLAY_STYLE_FULL) %>">
-			<aui:row>
+			<clay:row>
 				<aui:col cssClass="social-relations" width="<%= 100 %>">
 
 					<%
@@ -82,7 +82,7 @@ request.setAttribute("view_user.jsp-user", user2);
 						</div>
 					</c:if>
 
-					<aui:row>
+					<clay:row>
 						<aui:col cssClass="contacts-action" width="<%= 100 %>">
 							<c:choose>
 								<c:when test="<%= portletId.equals(ContactsPortletKeys.CONTACTS_CENTER) || portletId.equals(ContactsPortletKeys.MEMBERS) %>">
@@ -136,9 +136,9 @@ request.setAttribute("view_user.jsp-user", user2);
 								</c:otherwise>
 							</c:choose>
 						</aui:col>
-					</aui:row>
+					</clay:row>
 				</aui:col>
-			</aui:row>
+			</clay:row>
 
 			<div class="field-group lfr-detail-info" data-title="<%= LanguageUtil.get(request, "details") %>">
 
@@ -178,7 +178,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 		<c:if test="<%= ((displayStyle == ContactsConstants.DISPLAY_STYLE_DETAIL) || (displayStyle == ContactsConstants.DISPLAY_STYLE_FULL) || ((themeDisplay.getUserId() == user2.getUserId()) && showCompleteYourProfile)) && UserPermissionUtil.contains(permissionChecker, user2.getUserId(), ActionKeys.VIEW) %>">
 			<div class="user-information" id="<portlet:namespace />userInformation">
-				<aui:row>
+				<clay:row>
 					<aui:col width="<%= 100 %>">
 						<c:if test="<%= showUsersInformation %>">
 							<aui:col cssClass="user-information-column-1" width="<%= showSites ? 80 : 100 %>">
@@ -336,7 +336,7 @@ request.setAttribute("view_user.jsp-user", user2);
 							</aui:col>
 						</c:if>
 					</aui:col>
-				</aui:row>
+				</clay:row>
 			</div>
 
 			<c:if test="<%= showRecentActivity && UserPermissionUtil.contains(permissionChecker, user2.getUserId(), ActionKeys.VIEW) %>">

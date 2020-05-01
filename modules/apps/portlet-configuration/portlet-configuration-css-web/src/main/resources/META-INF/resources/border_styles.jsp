@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:row>
+<clay:row>
 	<aui:col cssClass="lfr-border-width use-for-all-column" width="<%= 33 %>">
 		<aui:fieldset label="border-width">
 			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' data-inputselector=".same-border-width" label="same-for-all" name="useForAllWidth" type="toggle-switch" />
@@ -145,4 +145,4 @@
 			</fieldset>
 		</aui:fieldset>
 	</aui:col>
-</aui:row>
+</clay:row>

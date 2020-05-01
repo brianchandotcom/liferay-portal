@@ -25,11 +25,11 @@
 		request.setAttribute(ContactsWebKeys.CONTACTS_USER, user2);
 		%>
 
-		<aui:row>
+		<clay:row>
 			<aui:col cssClass="contacts-container" width="<%= 100 %>">
 				<liferay-util:include page="/view_user.jsp" servletContext="<%= application %>" />
 			</aui:col>
-		</aui:row>
+		</clay:row>
 	</c:when>
 	<c:otherwise>
 		<div class="lfr-message-info">

@@ -257,13 +257,13 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 			%>
 
-			<aui:row>
+			<clay:row>
 				<liferay-ui:header
 					title="<%= topLink %>"
 				/>
 
 				<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />
-			</aui:row>
+			</clay:row>
 
 			<%
 			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, topLink), currentURL);

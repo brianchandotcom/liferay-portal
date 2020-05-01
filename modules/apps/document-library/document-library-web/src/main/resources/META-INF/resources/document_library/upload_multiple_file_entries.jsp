@@ -55,7 +55,7 @@ if (portletTitleBasedNavigation) {
 		<div class="card-body">
 			<c:choose>
 				<c:when test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
-					<aui:row>
+					<clay:row>
 						<aui:col width="<%= 50 %>">
 							<aui:form name="fm1">
 								<div class="lfr-dynamic-uploader">
@@ -277,7 +277,7 @@ if (portletTitleBasedNavigation) {
 								);
 							</aui:script>
 						</aui:col>
-					</aui:row>
+					</clay:row>
 				</c:when>
 				<c:otherwise>
 					<div class="alert alert-danger">

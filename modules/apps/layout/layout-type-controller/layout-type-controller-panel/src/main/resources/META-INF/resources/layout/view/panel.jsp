@@ -22,7 +22,7 @@
 			className="lfr-panel-page"
 			id='<%= renderResponse.getNamespace() + "main-content" %>'
 		>
-			<aui:row>
+			<clay:row>
 
 				<%
 				String panelBodyCssClass = "panel-page-body";
@@ -67,7 +67,7 @@
 				<aui:col cssClass="<%= panelBodyCssClass %>" width="<%= 80 %>">
 					<%@ include file="/layout/view/panel_description.jspf" %>
 				</aui:col>
-			</aui:row>
+			</clay:row>
 		</clay:container>
 	</c:when>
 	<c:otherwise>

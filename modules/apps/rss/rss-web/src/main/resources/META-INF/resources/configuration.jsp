@@ -115,7 +115,7 @@
 					<aui:option label="right" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("right") %>' />
 				</aui:select>
 
-				<aui:row>
+				<clay:row>
 					<aui:col width="<%= 50 %>">
 						<aui:input name="preferences--showFeedTitle--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>" />
 
@@ -134,7 +134,7 @@
 
 						<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
 					</aui:col>
-				</aui:row>
+				</clay:row>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>

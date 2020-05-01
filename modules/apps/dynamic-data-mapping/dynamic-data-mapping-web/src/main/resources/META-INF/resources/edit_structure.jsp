@@ -269,7 +269,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 						persistState="<%= true %>"
 						title='<%= LanguageUtil.get(request, "details") %>'
 					>
-						<aui:row cssClass="lfr-ddm-types-form-column">
+						<clay:row className="lfr-ddm-types-form-column">
 							<c:choose>
 								<c:when test="<%= Validator.isNull(storageTypeValue) %>">
 									<aui:col width="<%= 50 %>">
@@ -294,7 +294,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 									<aui:input name="storageType" type="hidden" value="<%= storageTypeValue %>" />
 								</c:otherwise>
 							</c:choose>
-						</aui:row>
+						</clay:row>
 
 						<c:if test="<%= !ddmDisplayContext.autogenerateStructureKey() %>">
 							<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", HtmlUtil.escape(ddmDisplay.getStructureName(locale)), false) %>' name="structureKey" />

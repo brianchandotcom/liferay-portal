@@ -33,7 +33,7 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 	int entriesCount = BookmarksEntryServiceUtil.getEntriesCount(scopeGroupId, folder.getFolderId(), status);
 	%>
 
-	<aui:row>
+	<clay:row>
 		<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 100 %>">
 			<c:if test="<%= Validator.isNotNull(folder.getDescription()) %>">
 				<div class="lfr-asset-description">
@@ -84,5 +84,5 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 				/>
 			</liferay-expando:custom-attributes-available>
 		</aui:col>
-	</aui:row>
+	</clay:row>
 </c:if>

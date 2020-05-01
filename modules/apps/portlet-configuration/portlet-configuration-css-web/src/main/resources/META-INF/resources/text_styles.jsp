@@ -20,7 +20,7 @@
 DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDecimalFormat();
 %>
 
-<aui:row>
+<clay:row>
 	<aui:col width="<%= 33 %>">
 		<aui:select label="font" name="fontFamily" showEmptyOption="<%= true %>">
 			<aui:option label="Arial" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Arial") %>' />
@@ -125,4 +125,4 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 
 		</aui:select>
 	</aui:col>
-</aui:row>
+</clay:row>

@@ -20,6 +20,7 @@ import com.liferay.petra.sql.dsl.factory.DSLQueryFactory;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
+import com.liferay.petra.sql.dsl.spi.expression.TableStar;
 import com.liferay.petra.sql.dsl.spi.query.Select;
 
 import java.util.Arrays;
@@ -57,7 +58,7 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 
 	@Override
 	public <T extends Table<T>> FromStep select(Table<T> table) {
-		return new Select(false, table.getColumns());
+		return new Select(false, Collections.singleton(new TableStar(table)));
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 
 	@Override
 	public <T extends Table<T>> FromStep selectDistinct(T table) {
-		return new Select(true, table.getColumns());
+		return new Select(true, Collections.singleton(new TableStar(table)));
 	}
 
 	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(

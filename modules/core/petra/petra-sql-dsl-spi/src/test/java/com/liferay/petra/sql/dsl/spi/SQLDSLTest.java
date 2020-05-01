@@ -46,6 +46,7 @@ import com.liferay.petra.sql.dsl.spi.expression.NullExpression;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.sql.dsl.spi.expression.ScalarList;
+import com.liferay.petra.sql.dsl.spi.expression.TableStar;
 import com.liferay.petra.sql.dsl.spi.expression.step.CaseWhenThen;
 import com.liferay.petra.sql.dsl.spi.expression.step.ElseEnd;
 import com.liferay.petra.sql.dsl.spi.expression.step.WhenThen;
@@ -122,6 +123,7 @@ public class SQLDSLTest {
 				assertClasses.add(Select.class);
 				assertClasses.add(SetOperation.class);
 				assertClasses.add(SetOperationType.class);
+				assertClasses.add(TableStar.class);
 				assertClasses.add(WhenThen.class);
 				assertClasses.add(Where.class);
 			}
@@ -1034,18 +1036,13 @@ public class SQLDSLTest {
 		FromStep fromStep = DSLQueryFactoryUtil.select(
 			MainExampleTable.INSTANCE);
 
-		Assert.assertEquals(
-			"select MainExample.description, MainExample.flag, " +
-				"MainExample.mainExampleId, MainExample.name",
-			fromStep.toString());
+		Assert.assertEquals("select MainExample.*", fromStep.toString());
 
 		fromStep = DSLQueryFactoryUtil.selectDistinct(
 			MainExampleTable.INSTANCE);
 
 		Assert.assertEquals(
-			"select distinct MainExample.description, MainExample.flag, " +
-				"MainExample.mainExampleId, MainExample.name",
-			fromStep.toString());
+			"select distinct MainExample.*", fromStep.toString());
 	}
 
 	@Test
@@ -1301,6 +1298,15 @@ public class SQLDSLTest {
 			Assert.assertSame(
 				UnsupportedOperationException.class, exception.getClass());
 		}
+	}
+
+	@Test
+	public void testTableStar() {
+		TableStar tableStar = new TableStar(MainExampleTable.INSTANCE);
+
+		Assert.assertSame(MainExampleTable.INSTANCE, tableStar.getTable());
+
+		Assert.assertEquals("MainExample.*", tableStar.toString());
 	}
 
 	@Test

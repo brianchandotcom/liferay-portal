@@ -356,6 +356,7 @@ public class AccountEntryLocalServiceTest {
 					parentOrganization.getOrganizationId(),
 					organization.getOrganizationId()
 				}));
+
 		_assertSearchWithParams(
 			Arrays.asList(accountEntry1),
 			_getLinkedHashMap(

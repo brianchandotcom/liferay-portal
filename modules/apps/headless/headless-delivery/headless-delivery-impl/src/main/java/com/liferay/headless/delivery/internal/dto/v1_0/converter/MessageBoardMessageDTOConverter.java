@@ -39,6 +39,10 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
+import java.util.Optional;
+
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -122,10 +126,13 @@ public class MessageBoardMessageDTOConverter
 							return null;
 						}
 
+						Optional<UriInfo> uriInfoOptional =
+							dtoConverterContext.getUriInfoOptional();
+
 						return CreatorStatisticsUtil.toCreatorStatistics(
 							_mbStatsUserLocalService,
 							String.valueOf(dtoConverterContext.getLocale()),
-							user);
+							uriInfoOptional.orElse(null), user);
 					});
 				setParentMessageBoardMessageId(
 					() -> {

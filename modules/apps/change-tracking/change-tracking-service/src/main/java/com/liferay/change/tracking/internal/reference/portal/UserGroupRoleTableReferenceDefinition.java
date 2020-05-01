@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceDefinitionHelper;
+import com.liferay.change.tracking.reference.helper.TableReferenceInfoDefiner;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.RoleTable;
@@ -36,10 +36,10 @@ public class UserGroupRoleTableReferenceDefinition
 
 	@Override
 	public void defineTableReferences(
-		TableReferenceDefinitionHelper<UserGroupRoleTable>
-			tableReferenceDefinitionHelper) {
+		TableReferenceInfoDefiner<UserGroupRoleTable>
+			tableReferenceInfoDefiner) {
 
-		tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				CompanyTable.INSTANCE
 			).innerJoinON(
@@ -48,7 +48,7 @@ public class UserGroupRoleTableReferenceDefinition
 					CompanyTable.INSTANCE.companyId)
 			));
 
-		tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				UserTable.INSTANCE
 			).innerJoinON(
@@ -56,7 +56,7 @@ public class UserGroupRoleTableReferenceDefinition
 				UserGroupRoleTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
 			));
 
-		tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE
 			).innerJoinON(
@@ -65,7 +65,7 @@ public class UserGroupRoleTableReferenceDefinition
 					GroupTable.INSTANCE.groupId)
 			));
 
-		tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				RoleTable.INSTANCE
 			).innerJoinON(

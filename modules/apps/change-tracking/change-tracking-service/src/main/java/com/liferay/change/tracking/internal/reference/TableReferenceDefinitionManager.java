@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.internal.reference;
 
-import com.liferay.change.tracking.internal.reference.helper.TableReferenceDefinitionHelperImpl;
+import com.liferay.change.tracking.internal.reference.helper.TableReferenceInfoDefinerImpl;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -271,16 +271,15 @@ public class TableReferenceDefinitionManager {
 				return null;
 			}
 
-			TableReferenceDefinitionHelperImpl<T>
-				tableReferenceDefinitionHelperImpl =
-					new TableReferenceDefinitionHelperImpl<>(
-						tableReferenceDefinition, primaryKeyColumn);
+			TableReferenceInfoDefinerImpl<T> tableReferenceInfoDefinerImpl =
+				new TableReferenceInfoDefinerImpl<>(
+					tableReferenceDefinition, primaryKeyColumn);
 
 			tableReferenceDefinition.defineTableReferences(
-				tableReferenceDefinitionHelperImpl);
+				tableReferenceInfoDefinerImpl);
 
 			TableReferenceInfo<T> tableReferenceInfo =
-				tableReferenceDefinitionHelperImpl.getTableReferenceInfo();
+				tableReferenceInfoDefinerImpl.getTableReferenceInfo();
 
 			if (tableReferenceInfo != null) {
 				synchronized (TableReferenceDefinitionManager.this) {

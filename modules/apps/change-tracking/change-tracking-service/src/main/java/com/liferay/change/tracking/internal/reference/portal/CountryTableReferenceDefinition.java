@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceDefinitionHelper;
+import com.liferay.change.tracking.reference.helper.TableReferenceInfoDefiner;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
@@ -32,28 +32,27 @@ public class CountryTableReferenceDefinition
 
 	@Override
 	public void defineTableReferences(
-		TableReferenceDefinitionHelper<CountryTable>
-			tableReferenceDefinitionHelper) {
+		TableReferenceInfoDefiner<CountryTable> tableReferenceInfoDefiner) {
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			CountryTable.INSTANCE.name);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			CountryTable.INSTANCE.a2);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			CountryTable.INSTANCE.a3);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			CountryTable.INSTANCE.number);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			CountryTable.INSTANCE.idd);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			CountryTable.INSTANCE.zipRequired);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			CountryTable.INSTANCE.active);
 	}
 

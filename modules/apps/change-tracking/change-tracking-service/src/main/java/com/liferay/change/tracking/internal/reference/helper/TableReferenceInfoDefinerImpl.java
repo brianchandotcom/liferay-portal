@@ -18,7 +18,7 @@ import com.liferay.change.tracking.internal.reference.TableJoinHolder;
 import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
 import com.liferay.change.tracking.internal.reference.TableUtil;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceDefinitionHelper;
+import com.liferay.change.tracking.reference.helper.TableReferenceInfoDefiner;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
@@ -52,10 +52,10 @@ import java.util.function.Function;
 /**
  * @author Preston Crary
  */
-public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
-	implements TableReferenceDefinitionHelper<T> {
+public class TableReferenceInfoDefinerImpl<T extends Table<T>>
+	implements TableReferenceInfoDefiner<T> {
 
-	public TableReferenceDefinitionHelperImpl(
+	public TableReferenceInfoDefinerImpl(
 		TableReferenceDefinition<T> tableReferenceDefinition,
 		Column<T, Long> primaryKeyColumn) {
 
@@ -219,7 +219,7 @@ public class TableReferenceDefinitionHelperImpl<T extends Table<T>>
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TableReferenceDefinitionHelperImpl.class);
+		TableReferenceInfoDefinerImpl.class);
 
 	private static final Consumer<String> _emptyStringConsumer = string -> {
 	};

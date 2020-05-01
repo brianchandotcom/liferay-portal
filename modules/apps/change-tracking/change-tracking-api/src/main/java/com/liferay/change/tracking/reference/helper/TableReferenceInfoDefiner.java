@@ -29,7 +29,7 @@ import java.util.function.Function;
 /**
  * @author Preston Crary
  */
-public interface TableReferenceDefinitionHelper<T extends Table<T>> {
+public interface TableReferenceInfoDefiner<T extends Table<T>> {
 
 	public default void defineGroupedModel(T table) {
 		defineSingleColumnReference(

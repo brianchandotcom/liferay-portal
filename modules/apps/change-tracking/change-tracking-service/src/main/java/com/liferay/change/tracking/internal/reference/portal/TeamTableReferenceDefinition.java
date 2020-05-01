@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceDefinitionHelper;
+import com.liferay.change.tracking.reference.helper.TableReferenceInfoDefiner;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.GroupTable;
@@ -39,13 +39,12 @@ public class TeamTableReferenceDefinition
 
 	@Override
 	public void defineTableReferences(
-		TableReferenceDefinitionHelper<TeamTable>
-			tableReferenceDefinitionHelper) {
+		TableReferenceInfoDefiner<TeamTable> tableReferenceInfoDefiner) {
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			TeamTable.INSTANCE.uuid);
 
-		tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				CompanyTable.INSTANCE
 			).innerJoinON(
@@ -53,7 +52,7 @@ public class TeamTableReferenceDefinition
 				TeamTable.INSTANCE.companyId.eq(CompanyTable.INSTANCE.companyId)
 			));
 
-		tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				UserTable.INSTANCE
 			).innerJoinON(
@@ -61,16 +60,16 @@ public class TeamTableReferenceDefinition
 				TeamTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
 			));
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			TeamTable.INSTANCE.userName);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			TeamTable.INSTANCE.createDate);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			TeamTable.INSTANCE.modifiedDate);
 
-		tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE
 			).innerJoinON(
@@ -78,16 +77,16 @@ public class TeamTableReferenceDefinition
 				TeamTable.INSTANCE.groupId.eq(GroupTable.INSTANCE.groupId)
 			));
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			TeamTable.INSTANCE.name);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			TeamTable.INSTANCE.description);
 
-		tableReferenceDefinitionHelper.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumn(
 			TeamTable.INSTANCE.lastPublishDate);
 
-		tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourcePermissionTable.INSTANCE
 			).innerJoinON(
@@ -103,7 +102,7 @@ public class TeamTableReferenceDefinition
 				)
 			));
 
-		tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				RoleTable.INSTANCE
 			).innerJoinON(

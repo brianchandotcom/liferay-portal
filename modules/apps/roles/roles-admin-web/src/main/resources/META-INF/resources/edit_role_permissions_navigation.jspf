@@ -73,60 +73,6 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 			</li>
 
 			<c:choose>
-				<c:when test="<%= Objects.equals(role.getClassName(), AccountRole.class.getName()) %>">
-
-					<%
-					PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(AccountPanelCategoryKeys.CONTROL_PANEL_ACCOUNT_ENTRIES_ADMIN);
-
-					List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory);
-					%>
-
-					<c:if test="<%= !panelApps.isEmpty() %>">
-						<div class="permission-navigation-section">
-							<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
-								<%= panelCategory.getLabel(locale) %>
-								<span class="collapse-icon-closed">
-									<aui:icon image="caret-right" markupView="lexicon" />
-								</span>
-								<span class="collapse-icon-open">
-									<aui:icon image="caret-bottom" markupView="lexicon" />
-								</span>
-							</a>
-
-							<ul class="nav nav-stacked permission-navigation-item-content toggler-content toggler-content-collapsed">
-
-								<%
-								for (PanelApp panelApp : panelApps) {
-									Portlet panelAppPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), panelApp.getPortletId());
-
-									String controlPanelEntryClassName = panelAppPortlet.getControlPanelEntryClass();
-									ControlPanelEntry controlPanelEntry = panelAppPortlet.getControlPanelEntryInstance();
-
-									if (Objects.equals(controlPanelEntryClassName, AdministratorControlPanelEntry.class.getName()) || Objects.equals(controlPanelEntryClassName, OmniadminControlPanelEntry.class.getName()) || AdministratorControlPanelEntry.class.isAssignableFrom(controlPanelEntry.getClass()) || OmniadminControlPanelEntry.class.isAssignableFrom(controlPanelEntry.getClass())) {
-										continue;
-									}
-
-									editPermissionsResourceURL.setParameter("portletResource", panelAppPortlet.getPortletId());
-
-									editPermissionsURL.setParameter("portletResource", panelAppPortlet.getPortletId());
-
-									data.put("resource-href", editPermissionsResourceURL.toString());
-								%>
-
-									<li class="nav-item permission-navigation-item-container <%= portletResource.equals(panelAppPortlet.getPortletId())? "selected" : "" %>">
-										<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
-											<%= PortalUtil.getPortletLongTitle(panelAppPortlet, application, locale) %>
-										</aui:a>
-									</li>
-
-								<%
-								}
-								%>
-
-							</ul>
-						</div>
-					</c:if>
-				</c:when>
 				<c:when test="<%= role.getType() == RoleConstants.TYPE_ORGANIZATION %>">
 
 					<%
@@ -239,6 +185,61 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 					</li>
 				</c:when>
 			</c:choose>
+
+			<c:if test="<%= (role.getType() == RoleConstants.TYPE_ACCOUNT) || (role.getType() == RoleConstants.TYPE_ORGANIZATION) %>">
+
+				<%
+				PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(AccountPanelCategoryKeys.CONTROL_PANEL_ACCOUNT_ENTRIES_ADMIN);
+
+				List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory);
+				%>
+
+				<c:if test="<%= !panelApps.isEmpty() %>">
+					<div class="permission-navigation-section">
+						<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+							<%= panelCategory.getLabel(locale) %>
+							<span class="collapse-icon-closed">
+								<aui:icon image="caret-right" markupView="lexicon" />
+							</span>
+							<span class="collapse-icon-open">
+								<aui:icon image="caret-bottom" markupView="lexicon" />
+							</span>
+						</a>
+
+						<ul class="nav nav-stacked permission-navigation-item-content toggler-content toggler-content-collapsed">
+
+							<%
+							for (PanelApp panelApp : panelApps) {
+								Portlet panelAppPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), panelApp.getPortletId());
+
+								String controlPanelEntryClassName = panelAppPortlet.getControlPanelEntryClass();
+								ControlPanelEntry controlPanelEntry = panelAppPortlet.getControlPanelEntryInstance();
+
+								if (Objects.equals(controlPanelEntryClassName, AdministratorControlPanelEntry.class.getName()) || Objects.equals(controlPanelEntryClassName, OmniadminControlPanelEntry.class.getName()) || AdministratorControlPanelEntry.class.isAssignableFrom(controlPanelEntry.getClass()) || OmniadminControlPanelEntry.class.isAssignableFrom(controlPanelEntry.getClass())) {
+									continue;
+								}
+
+								editPermissionsResourceURL.setParameter("portletResource", panelAppPortlet.getPortletId());
+
+								editPermissionsURL.setParameter("portletResource", panelAppPortlet.getPortletId());
+
+								data.put("resource-href", editPermissionsResourceURL.toString());
+							%>
+
+								<li class="nav-item permission-navigation-item-container <%= portletResource.equals(panelAppPortlet.getPortletId())? "selected" : "" %>">
+									<aui:a cssClass="nav-link permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
+										<%= PortalUtil.getPortletLongTitle(panelAppPortlet, application, locale) %>
+									</aui:a>
+								</li>
+
+							<%
+							}
+							%>
+
+						</ul>
+					</div>
+				</c:if>
+			</c:if>
 
 			<li class="nav-item permission-navigation-section">
 				<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">

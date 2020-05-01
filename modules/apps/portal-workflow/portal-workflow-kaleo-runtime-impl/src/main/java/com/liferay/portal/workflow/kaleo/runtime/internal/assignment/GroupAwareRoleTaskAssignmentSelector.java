@@ -154,8 +154,7 @@ public class GroupAwareRoleTaskAssignmentSelector
 	protected boolean isValidAssignment(Group group, Role role)
 		throws PortalException {
 
-		if ((group != null) &&
-			(group.getType() == GroupConstants.TYPE_DEPOT) &&
+		if ((group != null) && (group.getType() == GroupConstants.TYPE_DEPOT) &&
 			(role.getType() == RoleConstants.TYPE_DEPOT)) {
 
 			return true;

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationInterceptor;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -109,8 +110,8 @@ public class DBPartitionDestinationInterceptor
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Executing ", taskName, " for partition with ",
-						"company id ", company.getCompanyId()));
+						"Executing ", taskName, " for partition with company ",
+						"id ", company.getCompanyId()));
 			}
 
 			message.put("companyId", company.getCompanyId());
@@ -146,7 +147,8 @@ public class DBPartitionDestinationInterceptor
 	protected boolean isExcluded(
 		String destinationName, String schedulerJobName) {
 
-		if (_excludedMessageBusDestinationNames.contains(destinationName) ||
+		if (destinationName.equals(DestinationNames.SCHEDULER_ENGINE) ||
+			_excludedMessageBusDestinationNames.contains(destinationName) ||
 			_excludedSchedulerJobNames.contains(schedulerJobName)) {
 
 			return true;

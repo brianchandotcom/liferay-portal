@@ -95,23 +95,15 @@ public class ExpandoTableLocalServiceImpl
 
 		// Columns
 
-		runSQL(
-			"delete from ExpandoColumn where tableId = " + table.getTableId());
-
-		expandoColumnPersistence.clearCache();
+		expandoColumnPersistence.removeByTableId(table.getTableId());
 
 		// Rows
 
-		runSQL("delete from ExpandoRow where tableId = " + table.getTableId());
-
-		expandoRowPersistence.clearCache();
+		expandoRowPersistence.removeByTableId(table.getTableId());
 
 		// Values
 
-		runSQL(
-			"delete from ExpandoValue where tableId = " + table.getTableId());
-
-		expandoValuePersistence.clearCache();
+		expandoValuePersistence.removeByTableId(table.getTableId());
 	}
 
 	@Override

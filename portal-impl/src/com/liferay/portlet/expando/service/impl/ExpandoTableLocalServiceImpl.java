@@ -80,6 +80,13 @@ public class ExpandoTableLocalServiceImpl
 	}
 
 	@Override
+	public ExpandoTable deleteExpandoTable(ExpandoTable expandoTable) {
+		deleteTable(expandoTable);
+
+		return expandoTable;
+	}
+
+	@Override
 	public void deleteTable(ExpandoTable table) {
 
 		// Table

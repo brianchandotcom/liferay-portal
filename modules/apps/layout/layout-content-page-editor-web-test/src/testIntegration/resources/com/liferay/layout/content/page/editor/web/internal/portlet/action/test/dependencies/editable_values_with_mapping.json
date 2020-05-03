@@ -1,0 +1,24 @@
+{
+	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
+	},
+	"com.liferay.fragment.entry.processor.drop.zone.DropZoneFragmentEntryProcessor": {
+		"dropZones": [
+		]
+	},
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"link": {
+			"classNameId": "${MAPPED_TEXT_CLASS_NAME_ID}",
+			"classPK": "${MAPPED_TEXT_CLASS_PK}",
+			"config": {
+				"classNameId": "${MAPPED_LINK_CLASS_NAME_ID}",
+				"classPK": "${MAPPED_LINK_CLASS_PK}",
+				"fieldId": "title",
+				"target": "_top"
+			},
+			"defaultValue": "Go Somewhere",
+			"fieldId": "title"
+		}
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+	}
+}

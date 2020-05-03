@@ -1,0 +1,61 @@
+{
+	"definition": {
+		"backgroundImage": {
+		},
+		"layout": {
+			"containerType": "Fixed",
+			"paddingBottom": 1,
+			"paddingHorizontal": 1,
+			"paddingTop": 1
+		}
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragment": {
+					"collectionName": "${FRAGMENT_COLLECTION_NAME}",
+					"key": "${FRAGMENT_ENTRY_KEY}",
+					"name": "${FRAGMENT_ENTRY_NAME}"
+				},
+				"fragmentConfig": {
+					"buttonAlign": "left",
+					"buttonSize": "nm",
+					"buttonType": "primary",
+					"marginBottom": "3"
+				},
+				"fragmentFields": [
+					{
+						"id": "link",
+						"value": {
+							"fragmentLink": {
+								"href": {
+									"defaultValue": {
+										"value": "${MAPPED_LINK_DEFAULT_VALUE}"
+									},
+									"mapping": {
+										"fieldKey": "title",
+										"itemClassName": "${MAPPED_LINK_CLASS_NAME}",
+										"itemClassPK": "${MAPPED_LINK_CLASS_PK}"
+									}
+								},
+								"target": "Top"
+							},
+							"text": {
+								"defaultValue": {
+									"value": "${MAPPED_TEXT_DEFAULT_VALUE}"
+								},
+								"mapping": {
+									"fieldKey": "title",
+									"itemClassName": "${MAPPED_TEXT_CLASS_NAME}",
+									"itemClassPK": "${MAPPED_TEXT_CLASS_PK}"
+								}
+							}
+						}
+					}
+				]
+			},
+			"type": "Fragment"
+		}
+	],
+	"type": "Section"
+}

@@ -29,6 +29,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -262,10 +263,15 @@ public class MBMailingListLocalServiceImpl
 		mailingListRequest.setInPassword(mailingList.getInPassword());
 		mailingListRequest.setAllowAnonymous(mailingList.isAllowAnonymous());
 
+		Message message = new Message();
+
+		message.put("companyId", mailingList.getCompanyId());
+
+		message.setPayload(mailingListRequest);
+
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, null,
-			DestinationNames.MESSAGE_BOARDS_MAILING_LIST, mailingListRequest,
-			0);
+			DestinationNames.MESSAGE_BOARDS_MAILING_LIST, message, 0);
 	}
 
 	protected void unscheduleMailingList(MBMailingList mailingList)

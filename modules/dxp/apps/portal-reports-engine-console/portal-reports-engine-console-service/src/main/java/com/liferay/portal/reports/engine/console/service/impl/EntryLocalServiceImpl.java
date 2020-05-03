@@ -552,6 +552,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		Message message = new Message();
 
+		message.put("companyId", entry.getCompanyId());
 		message.put("entryId", entry.getEntryId());
 		message.put("reportName", reportName);
 

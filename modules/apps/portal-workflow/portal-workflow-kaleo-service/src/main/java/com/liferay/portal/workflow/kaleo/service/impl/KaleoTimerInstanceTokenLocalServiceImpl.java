@@ -330,6 +330,8 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 
 		Message message = new Message();
 
+		message.put("companyId", kaleoTimerInstanceToken.getCompanyId());
+
 		message.put(
 			"kaleoTimerInstanceTokenId",
 			kaleoTimerInstanceToken.getKaleoTimerInstanceTokenId());

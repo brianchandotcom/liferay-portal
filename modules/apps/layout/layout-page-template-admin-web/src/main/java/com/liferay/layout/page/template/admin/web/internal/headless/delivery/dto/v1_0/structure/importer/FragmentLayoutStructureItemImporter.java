@@ -21,10 +21,9 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.service.FragmentCollectionServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -39,10 +38,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -54,27 +53,25 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jürgen Kappler
  */
-public class FragmentLayoutStructureItemHelper
-	extends BaseLayoutStructureItemHelper implements LayoutStructureItemHelper {
+@Component(service = LayoutStructureItemImporter.class)
+public class FragmentLayoutStructureItemImporter
+	extends BaseLayoutStructureItemImporter
+	implements LayoutStructureItemImporter {
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			FragmentEntryValidator fragmentEntryValidator,
-			FragmentRendererTracker fragmentRendererTracker, Layout layout,
-			LayoutStructure layoutStructure, PageElement pageElement,
-			String parentItemId, int position)
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, String parentItemId, int position)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			fragmentCollectionContributorTracker,
-			fragmentEntryProcessorRegistry, fragmentEntryValidator, layout,
-			pageElement, position);
+			layout, pageElement, position);
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -84,12 +81,13 @@ public class FragmentLayoutStructureItemHelper
 			fragmentEntryLink.getFragmentEntryLinkId(), parentItemId, position);
 	}
 
+	@Override
+	public PageElement.Type getPageElementType() {
+		return PageElement.Type.FRAGMENT;
+	}
+
 	private FragmentEntryLink _addFragmentEntryLink(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			FragmentEntryValidator fragmentEntryValidator, Layout layout,
-			PageElement pageElement, int position)
+			Layout layout, PageElement pageElement, int position)
 		throws Exception {
 
 		Map<String, Object> definitionMap = getDefinitionMap(
@@ -108,8 +106,7 @@ public class FragmentLayoutStructureItemHelper
 			return null;
 		}
 
-		FragmentEntry fragmentEntry = _getFragmentEntry(
-			fragmentCollectionContributorTracker, fragmentKey, layout);
+		FragmentEntry fragmentEntry = _getFragmentEntry(fragmentKey, layout);
 
 		if (fragmentEntry == null) {
 			return null;
@@ -122,11 +119,11 @@ public class FragmentLayoutStructureItemHelper
 		String configuration = fragmentEntry.getConfiguration();
 
 		FragmentCollection fragmentCollection =
-			FragmentCollectionServiceUtil.fetchFragmentCollection(
+			_fragmentCollectionService.fetchFragmentCollection(
 				fragmentEntry.getFragmentCollectionId());
 
 		JSONObject defaultEditableValuesJSONObject =
-			fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
+			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
 				_replaceResources(fragmentCollection, html), configuration);
 
 		Map<String, String> editableTypes =
@@ -157,7 +154,7 @@ public class FragmentLayoutStructureItemHelper
 				configurationTypes,
 				(Map<String, Object>)definitionMap.get("fragmentConfig"));
 
-		fragmentEntryValidator.validateConfigurationValues(
+		_fragmentEntryValidator.validateConfigurationValues(
 			configuration, fragmentEntryProcessorValuesJSONObject);
 
 		if (freeMarkerFragmentEntryProcessorJSONObject.length() > 0) {
@@ -172,9 +169,9 @@ public class FragmentLayoutStructureItemHelper
 			fragmentEntryProcessorValuesJSONObject);
 
 		try {
-			return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 				layout.getUserId(), layout.getGroupId(), 0, fragmentEntryId, 0,
-				PortalUtil.getClassNameId(Layout.class.getName()),
+				_portal.getClassNameId(Layout.class.getName()),
 				layout.getPlid(), css, html, js, configuration,
 				jsonObject.toString(), StringUtil.randomId(), position,
 				fragmentKey, ServiceContextThreadLocal.getServiceContext());
@@ -368,18 +365,14 @@ public class FragmentLayoutStructureItemHelper
 		return configurationTypes;
 	}
 
-	private FragmentEntry _getFragmentEntry(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
-		String fragmentKey, Layout layout) {
-
+	private FragmentEntry _getFragmentEntry(String fragmentKey, Layout layout) {
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+			_fragmentEntryLocalService.fetchFragmentEntry(
 				layout.getGroupId(), fragmentKey);
 
 		if (fragmentEntry == null) {
 			fragmentEntry =
-				fragmentCollectionContributorTracker.getFragmentEntry(
+				_fragmentCollectionContributorTracker.getFragmentEntry(
 					fragmentKey);
 		}
 
@@ -429,11 +422,9 @@ public class FragmentLayoutStructureItemHelper
 		Matcher matcher = _pattern.matcher(html);
 
 		while (matcher.find()) {
-			FileEntry fileEntry =
-				PortletFileRepositoryUtil.fetchPortletFileEntry(
-					fragmentCollection.getGroupId(),
-					fragmentCollection.getResourcesFolderId(),
-					matcher.group(1));
+			FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
+				fragmentCollection.getGroupId(),
+				fragmentCollection.getResourcesFolderId(), matcher.group(1));
 
 			String fileEntryURL = StringPool.BLANK;
 
@@ -576,9 +567,34 @@ public class FragmentLayoutStructureItemHelper
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentLayoutStructureItemHelper.class);
+		FragmentLayoutStructureItemImporter.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentCollectionService _fragmentCollectionService;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
+
+	@Reference
+	private FragmentEntryValidator _fragmentEntryValidator;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

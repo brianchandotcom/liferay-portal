@@ -17,12 +17,8 @@ package com.liferay.layout.page.template.admin.web.internal.importer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
@@ -33,8 +29,8 @@ import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemHelper;
-import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemHelperFactory;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporterTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.exception.DisplayPageTemplateValidatorException;
@@ -1083,22 +1079,17 @@ public class LayoutPageTemplatesImporterImpl
 			PageElement pageElement, String parentItemId, int position)
 		throws Exception {
 
-		LayoutStructureItemHelperFactory layoutStructureItemHelperFactory =
-			LayoutStructureItemHelperFactory.getInstance();
-
-		LayoutStructureItemHelper layoutStructureItemHelper =
-			layoutStructureItemHelperFactory.getLayoutStructureItemHelper(
+		LayoutStructureItemImporter layoutStructureItemImporter =
+			_layoutStructureItemImporterTracker.getLayoutStructureItemImporter(
 				pageElement.getType());
 
 		LayoutStructureItem layoutStructureItem = null;
 
-		if (layoutStructureItemHelper != null) {
+		if (layoutStructureItemImporter != null) {
 			layoutStructureItem =
-				layoutStructureItemHelper.addLayoutStructureItem(
-					_fragmentCollectionContributorTracker,
-					_fragmentEntryProcessorRegistry, _fragmentEntryValidator,
-					_fragmentRendererTracker, layout, layoutStructure,
-					pageElement, parentItemId, position);
+				layoutStructureItemImporter.addLayoutStructureItem(
+					layout, layoutStructure, pageElement, parentItemId,
+					position);
 		}
 		else if (pageElement.getType() == PageElement.Type.ROOT) {
 			layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
@@ -1314,20 +1305,7 @@ public class LayoutPageTemplatesImporterImpl
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
-	@Reference
-	private FragmentEntryValidator _fragmentEntryValidator;
-
-	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
@@ -1362,6 +1340,10 @@ public class LayoutPageTemplatesImporterImpl
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private LayoutStructureItemImporterTracker
+		_layoutStructureItemImporterTracker;
 
 	@Reference
 	private Portal _portal;

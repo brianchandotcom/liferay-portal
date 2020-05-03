@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * @author Pavel Savinov
  */
-public abstract class BaseLayoutStructureItemHelper {
+public abstract class BaseLayoutStructureItemImporter {
 
 	protected Map<String, Object> getDefinitionMap(Object definition)
 		throws Exception {

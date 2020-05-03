@@ -18,12 +18,10 @@ import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
-import com.liferay.fragment.validator.FragmentEntryValidator;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -39,21 +37,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Rubén Pulido
  */
-public class DropZoneLayoutStructureItemHelper
-	extends BaseLayoutStructureItemHelper implements LayoutStructureItemHelper {
+@Component(service = LayoutStructureItemImporter.class)
+public class DropZoneLayoutStructureItemImporter
+	extends BaseLayoutStructureItemImporter
+	implements LayoutStructureItemImporter {
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			FragmentEntryValidator fragmentEntryValidator,
-			FragmentRendererTracker fragmentRendererTracker, Layout layout,
-			LayoutStructure layoutStructure, PageElement pageElement,
-			String parentItemId, int position)
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, String parentItemId, int position)
 		throws Exception {
 
 		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
@@ -111,9 +109,7 @@ public class DropZoneLayoutStructureItemHelper
 			fragmentEntryKeys.add(allowedFragmentMap.get(_KEY_KEY));
 
 			String fragmentCollectionKey = _getFragmentCollectionKey(
-				fragmentCollectionContributorTracker,
-				allowedFragmentMap.get(_KEY_KEY), fragmentRendererTracker,
-				layout.getGroupId());
+				allowedFragmentMap.get(_KEY_KEY), layout.getGroupId());
 
 			if (Validator.isNotNull(fragmentCollectionKey)) {
 				fragmentCollectionKeys.add(fragmentCollectionKey);
@@ -130,27 +126,27 @@ public class DropZoneLayoutStructureItemHelper
 		return dropZoneLayoutStructureItem;
 	}
 
-	private String _getFragmentCollectionKey(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			String fragmentKey, FragmentRendererTracker fragmentRendererTracker,
-			long groupId)
+	@Override
+	public PageElement.Type getPageElementType() {
+		return PageElement.Type.DROP_ZONE;
+	}
+
+	private String _getFragmentCollectionKey(String fragmentKey, long groupId)
 		throws PortalException {
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
-				groupId, fragmentKey);
+			_fragmentEntryLocalService.fetchFragmentEntry(groupId, fragmentKey);
 
 		if (fragmentEntry != null) {
 			FragmentCollection fragmentCollection =
-				FragmentCollectionLocalServiceUtil.getFragmentCollection(
+				_fragmentCollectionLocalService.getFragmentCollection(
 					fragmentEntry.getFragmentCollectionId());
 
 			return fragmentCollection.getFragmentCollectionKey();
 		}
 
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			fragmentCollectionContributorTracker.
+			_fragmentCollectionContributorTracker.
 				getFragmentCollectionContributors();
 
 		for (FragmentCollectionContributor fragmentCollectionContributor :
@@ -167,7 +163,7 @@ public class DropZoneLayoutStructureItemHelper
 		}
 
 		FragmentRenderer fragmentRenderer =
-			fragmentRendererTracker.getFragmentRenderer(fragmentKey);
+			_fragmentRendererTracker.getFragmentRenderer(fragmentKey);
 
 		if (fragmentRenderer != null) {
 			return fragmentRenderer.getCollectionKey();
@@ -181,5 +177,18 @@ public class DropZoneLayoutStructureItemHelper
 	private static final String _KEY_KEY = "key";
 
 	private static final String _KEY_UNALLOWED_FRAGMENTS = "unallowedFragments";
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
 
 }

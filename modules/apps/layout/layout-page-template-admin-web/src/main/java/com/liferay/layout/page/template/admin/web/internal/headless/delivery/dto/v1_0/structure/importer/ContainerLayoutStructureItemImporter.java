@@ -14,10 +14,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
@@ -32,21 +28,20 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jürgen Kappler
  */
-public class ContainerLayoutStructureItemHelper
-	extends BaseLayoutStructureItemHelper implements LayoutStructureItemHelper {
+@Component(service = LayoutStructureItemImporter.class)
+public class ContainerLayoutStructureItemImporter
+	extends BaseLayoutStructureItemImporter
+	implements LayoutStructureItemImporter {
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
-			FragmentCollectionContributorTracker
-				fragmentCollectionContributorTracker,
-			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			FragmentEntryValidator fragmentEntryValidator,
-			FragmentRendererTracker fragmentRendererTracker, Layout layout,
-			LayoutStructure layoutStructure, PageElement pageElement,
-			String parentItemId, int position)
+			Layout layout, LayoutStructure layoutStructure,
+			PageElement pageElement, String parentItemId, int position)
 		throws Exception {
 
 		ContainerLayoutStructureItem containerLayoutStructureItem =
@@ -108,6 +103,11 @@ public class ContainerLayoutStructureItemHelper
 		}
 
 		return containerLayoutStructureItem;
+	}
+
+	@Override
+	public PageElement.Type getPageElementType() {
+		return PageElement.Type.SECTION;
 	}
 
 	private Object _getLocalizedValue(Map<String, Object> map) {

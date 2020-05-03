@@ -657,10 +657,13 @@ public abstract class BaseDataLayoutResourceTestCase {
 												"\"");
 										put(
 											"contentType",
-											dataLayout.getContentType());
+											"\"" + dataLayout.getContentType() +
+												"\"");
 										put(
 											"dataLayoutKey",
-											dataLayout.getDataLayoutKey());
+											"\"" +
+												dataLayout.getDataLayoutKey() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),

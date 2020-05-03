@@ -1059,11 +1059,15 @@ public abstract class BaseDataDefinitionResourceTestCase {
 												"\"");
 										put(
 											"contentType",
-											dataDefinition.getContentType());
+											"\"" +
+												dataDefinition.
+													getContentType() + "\"");
 										put(
 											"dataDefinitionKey",
-											dataDefinition.
-												getDataDefinitionKey());
+											"\"" +
+												dataDefinition.
+													getDataDefinitionKey() +
+														"\"");
 									}
 								},
 								getGraphQLFields())),

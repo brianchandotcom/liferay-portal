@@ -1662,8 +1662,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 													getSiteId() + "\"");
 										put(
 											"friendlyUrlPath",
-											messageBoardMessage.
-												getFriendlyUrlPath());
+											"\"" +
+												messageBoardMessage.
+													getFriendlyUrlPath() +
+														"\"");
 									}
 								},
 								getGraphQLFields())),

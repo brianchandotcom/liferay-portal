@@ -233,7 +233,8 @@ public abstract class BaseSiteResourceTestCase {
 									{
 										put(
 											"friendlyUrlPath",
-											site.getFriendlyUrlPath());
+											"\"" + site.getFriendlyUrlPath() +
+												"\"");
 									}
 								},
 								getGraphQLFields())),

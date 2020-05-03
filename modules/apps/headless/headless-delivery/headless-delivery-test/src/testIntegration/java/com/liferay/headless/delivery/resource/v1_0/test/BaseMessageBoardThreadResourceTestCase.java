@@ -1530,8 +1530,10 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 													"\"");
 										put(
 											"friendlyUrlPath",
-											messageBoardThread.
-												getFriendlyUrlPath());
+											"\"" +
+												messageBoardThread.
+													getFriendlyUrlPath() +
+														"\"");
 									}
 								},
 								getGraphQLFields())),

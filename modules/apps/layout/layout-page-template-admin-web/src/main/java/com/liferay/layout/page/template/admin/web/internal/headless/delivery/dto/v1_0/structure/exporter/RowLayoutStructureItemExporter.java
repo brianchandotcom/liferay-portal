@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.exporter;
 
-import com.liferay.headless.delivery.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.headless.delivery.dto.v1_0.PageRowDefinition;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowLayoutStructureItem;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,12 +25,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(service = LayoutStructureItemExporter.class)
-public class ColumnLayoutStructureItemExporter
+public class RowLayoutStructureItemExporter
 	implements LayoutStructureItemExporter {
 
 	@Override
 	public String getClassName() {
-		return ColumnLayoutStructureItem.class.getName();
+		return RowLayoutStructureItem.class.getName();
 	}
 
 	@Override
@@ -38,17 +38,19 @@ public class ColumnLayoutStructureItemExporter
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
-		ColumnLayoutStructureItem columnLayoutStructureItem =
-			(ColumnLayoutStructureItem)layoutStructureItem;
+		RowLayoutStructureItem rowLayoutStructureItem =
+			(RowLayoutStructureItem)layoutStructureItem;
 
 		return new PageElement() {
 			{
-				definition = new PageColumnDefinition() {
+				definition = new PageRowDefinition() {
 					{
-						size = columnLayoutStructureItem.getSize();
+						gutters = rowLayoutStructureItem.isGutters();
+						numberOfColumns =
+							rowLayoutStructureItem.getNumberOfColumns();
 					}
 				};
-				type = PageElement.Type.COLUMN;
+				type = PageElement.Type.ROW;
 			}
 		};
 	}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.exporter;
 
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;

@@ -15,8 +15,8 @@
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.LayoutStructureItemExporter;
-import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.LayoutStructureItemExporterTracker;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.exporter.LayoutStructureItemExporter;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.exporter.LayoutStructureItemExporterTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;

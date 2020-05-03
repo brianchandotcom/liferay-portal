@@ -12,20 +12,36 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.exporter;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RootLayoutStructureItem;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jürgen Kappler
  */
-public interface LayoutStructureItemExporter {
+@Component(service = LayoutStructureItemExporter.class)
+public class RootLayoutStructureItemExporter
+	implements LayoutStructureItemExporter {
 
-	public String getClassName();
+	@Override
+	public String getClassName() {
+		return RootLayoutStructureItem.class.getName();
+	}
 
+	@Override
 	public PageElement getPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
-		boolean saveInlineContent, boolean saveMappingConfiguration);
+		boolean saveInlineContent, boolean saveMappingConfiguration) {
+
+		return new PageElement() {
+			{
+				type = PageElement.Type.ROOT;
+			}
+		};
+	}
 
 }

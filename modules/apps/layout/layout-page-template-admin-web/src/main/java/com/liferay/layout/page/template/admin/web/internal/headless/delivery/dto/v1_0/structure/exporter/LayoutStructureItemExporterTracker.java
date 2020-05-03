@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.exporter;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

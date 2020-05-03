@@ -19,8 +19,8 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -47,42 +45,26 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSiteDocumentsPage() throws Exception {
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		graphQLFields.add(new GraphQLField("page"));
-		graphQLFields.add(new GraphQLField("totalCount"));
-
-		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
-
-		graphQLFields.add(
-			new GraphQLField(
-				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
-
 		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"documents",
-				HashMapBuilder.<String, Object>put(
-					"flatten", true
-				).put(
-					"page", 1
-				).put(
-					"pageSize", 2
-				).put(
-					"siteKey", "\"" + testGroup.getGroupId() + "\""
-				).build(),
-				graphQLFields.toArray(new GraphQLField[0])));
+			"documents",
+			HashMapBuilder.<String, Object>put(
+				"flatten", true
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 2
+			).put(
+				"siteKey", "\"" + testGroup.getGroupId() + "\""
+			).build(),
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
 
 		Document document1 = testGraphQLDocument_addDocument();
 		Document document2 = testGraphQLDocument_addDocument();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		JSONObject documentsJSONObject = dataJSONObject.getJSONObject(
-			"documents");
+		JSONObject documentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/documents");
 
 		Assert.assertEquals(2, documentsJSONObject.get("totalCount"));
 

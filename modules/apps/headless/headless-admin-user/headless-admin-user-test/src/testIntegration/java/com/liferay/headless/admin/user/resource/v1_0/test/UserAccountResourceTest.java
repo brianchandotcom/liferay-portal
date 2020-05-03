@@ -22,7 +22,6 @@ import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -236,35 +235,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		UserAccount userAccount3 = userAccountResource.getUserAccount(
 			_testUser.getUserId());
 
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
-
-		graphQLFields.add(
-			new GraphQLField(
-				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
-
-		graphQLFields.add(new GraphQLField("page"));
-		graphQLFields.add(new GraphQLField("totalCount"));
-
 		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"userAccounts",
-				HashMapBuilder.<String, Object>put(
-					"page", 1
-				).put(
-					"pageSize", 3
-				).build(),
-				graphQLFields.toArray(new GraphQLField[0])));
+			"userAccounts",
+			HashMapBuilder.<String, Object>put(
+				"page", 1
+			).put(
+				"pageSize", 3
+			).build(),
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		JSONObject userAccountsJSONObject = dataJSONObject.getJSONObject(
-			"userAccounts");
+		JSONObject userAccountsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/userAccounts");
 
 		Assert.assertEquals(3, userAccountsJSONObject.get("totalCount"));
 

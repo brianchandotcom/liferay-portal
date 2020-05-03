@@ -16,8 +16,8 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
@@ -28,7 +28,6 @@ import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalend
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -99,29 +98,13 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLGetCalendarsPage() throws Exception {
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
-
-		graphQLFields.add(
-			new GraphQLField(
-				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
-
-		graphQLFields.add(new GraphQLField("page"));
-		graphQLFields.add(new GraphQLField("totalCount"));
-
 		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"calendars", graphQLFields.toArray(new GraphQLField[0])));
+			"calendars", new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		JSONObject calendarsJSONObject = dataJSONObject.getJSONObject(
-			"calendars");
+		JSONObject calendarsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/calendars");
 
 		Assert.assertEquals(1, calendarsJSONObject.get("totalCount"));
 
@@ -133,12 +116,9 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 
 		_registerCustomCalendar();
 
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		dataJSONObject = jsonObject.getJSONObject("data");
-
-		calendarsJSONObject = dataJSONObject.getJSONObject("calendars");
+		calendarsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/calendars");
 
 		Assert.assertEquals(2, calendarsJSONObject.get("totalCount"));
 

@@ -96,6 +96,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 	<#assign
 		generateGetPermissionCheckerMethods = false
+		generatePatchMethods = false
 		javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 	/>
 
@@ -208,7 +209,10 @@ public abstract class Base${schemaName}ResourceImpl
 			<#elseif javaMethodSignature.returnType?contains("Page<")>
 				return Page.of(Collections.emptyList());
 			<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "patch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("patch")) && !javaMethodSignature.operation.requestBody.content?keys?seq_contains("multipart/form-data")>
-				<#assign firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0] />
+								<#assign
+					generatePatchMethods = true
+					firstJavaMethodParameter = javaMethodSignature.javaMethodParameters[0]
+				/>
 
 				${schemaName} existing${schemaName} = get${schemaName}(${firstJavaMethodParameter.parameterName});
 
@@ -425,8 +429,10 @@ public abstract class Base${schemaName}ResourceImpl
 		return addAction(actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(${schemaName} ${schemaVarName}, ${schemaName} existing${schemaVarName?cap_first}) {
-	}
+	<#if generatePatchMethods>
+		protected void preparePatch(${schemaName} ${schemaVarName}, ${schemaName} existing${schemaVarName?cap_first}) {
+		}
+	</#if>
 
 	protected <T, R> List<R> transform(java.util.Collection<T> collection, UnsafeFunction<T, R, Exception> unsafeFunction) {
 		return TransformUtil.transform(collection, unsafeFunction);

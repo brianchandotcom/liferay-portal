@@ -4,6 +4,10 @@ package ${configYAML.apiPackagePath}.client.serdes.${escapedVersion};
 	import ${configYAML.apiPackagePath}.client.constant.${escapedVersion}.${globalEnumSchemaName};
 </#list>
 
+<#list allExternalSchemas?keys as externalSchemaName>
+	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${externalSchemaName};
+</#list>
+
 <#list allSchemas?keys as schemaName>
 	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 </#list>

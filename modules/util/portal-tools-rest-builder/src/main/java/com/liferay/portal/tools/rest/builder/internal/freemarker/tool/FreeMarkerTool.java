@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
@@ -59,6 +60,56 @@ public class FreeMarkerTool {
 		return _freeMarkerTool;
 	}
 
+	public String getClientParameters(
+		List<JavaMethodParameter> javaMethodParameters, String schemaName,
+		String schemaVarName) {
+
+		StringBuilder sb = new StringBuilder();
+
+		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
+			String parameterAnnotation = null;
+
+			String parameter = OpenAPIParserUtil.getParameter(
+				javaMethodParameter, parameterAnnotation);
+
+			if (parameter.contains("dto")) {
+				sb.append(parameter.substring(parameter.lastIndexOf(".") + 1));
+			}
+			else {
+				sb.append(parameter);
+			}
+
+			sb.append(',');
+		}
+
+		if (sb.length() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+
+		String parameter = sb.toString();
+
+		parameter = StringUtil.replace(
+			parameter, ".constant.", ".client.constant.");
+		parameter = StringUtil.replace(
+			parameter, "com.liferay.portal.kernel.search.filter.Filter filter",
+			"String filterString");
+		parameter = StringUtil.replace(
+			parameter, "com.liferay.portal.kernel.search.Sort[] sorts",
+			"String sortString");
+		parameter = StringUtil.replace(
+			parameter,
+			"com.liferay.portal.vulcan.multipart.MultipartBody multipartBody",
+			StringBundler.concat(
+				schemaName, " ", schemaVarName,
+				", Map<String, File> multipartFiles"));
+		parameter = StringUtil.removeSubstring(
+			parameter, "com.liferay.portal.vulcan.permission.");
+		parameter = StringUtil.removeSubstring(
+			parameter, "com.liferay.portal.vulcan.pagination.");
+
+		return parameter;
+	}
+
 	public Map<String, Schema> getDTOEnumSchemas(
 		OpenAPIYAML openAPIYAML, Schema schema) {
 
@@ -68,7 +119,7 @@ public class FreeMarkerTool {
 	public String getDTOParentClassName(
 		OpenAPIYAML openAPIYAML, String schemaName) {
 
-		Map<String, Schema> schemas = _getSchemas(openAPIYAML);
+		Map<String, Schema> schemas = getSchemas(openAPIYAML);
 
 		for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
 			Schema schema = entry.getValue();
@@ -256,7 +307,7 @@ public class FreeMarkerTool {
 				javaMethodSignature -> StringUtil.count(
 					javaMethodSignature.getPath(), "/")));
 
-		Map<String, Schema> schemas = _getSchemas(openAPIYAML);
+		Map<String, Schema> schemas = getSchemas(openAPIYAML);
 
 		Map<String, JavaMethodSignature> javaMethodSignatureMap =
 			new HashMap<>();
@@ -341,6 +392,15 @@ public class FreeMarkerTool {
 		return OpenAPIParserUtil.getJavaDataType(
 			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML),
 			schema);
+	}
+
+	public String getJavaDataType(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
+
+		Map<String, String> javaDataTypeMap =
+			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML);
+
+		return javaDataTypeMap.get(schemaName);
 	}
 
 	public JavaMethodSignature getJavaMethodSignature(
@@ -485,6 +545,16 @@ public class FreeMarkerTool {
 		sb.append(" -u 'test@liferay.com:test'");
 
 		return sb.toString();
+	}
+
+	public Map<String, Schema> getSchemas(OpenAPIYAML openAPIYAML) {
+		Components components = openAPIYAML.getComponents();
+
+		if (components == null) {
+			return new HashMap<>();
+		}
+
+		return components.getSchemas();
 	}
 
 	public String getSchemaVarName(String schemaName) {
@@ -689,7 +759,7 @@ public class FreeMarkerTool {
 			sb.append("totalCount");
 		}
 		else {
-			Map<String, Schema> schemas = _getSchemas(openAPIYAML);
+			Map<String, Schema> schemas = getSchemas(openAPIYAML);
 
 			String returnSchema = returnType.substring(
 				returnType.lastIndexOf(".") + 1);
@@ -843,9 +913,7 @@ public class FreeMarkerTool {
 
 		Set<String> properties = new TreeSet<>();
 
-		Components components = openAPIYAML.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
+		Map<String, Schema> schemas = getSchemas(openAPIYAML);
 
 		List<JavaMethodParameter> javaMethodParameters =
 			javaMethodSignature.getJavaMethodParameters();
@@ -897,12 +965,6 @@ public class FreeMarkerTool {
 		}
 
 		return sb.toString();
-	}
-
-	private Map<String, Schema> _getSchemas(OpenAPIYAML openAPIYAML) {
-		Components components = openAPIYAML.getComponents();
-
-		return components.getSchemas();
 	}
 
 	private boolean _isGraphQLPropertyRelation(

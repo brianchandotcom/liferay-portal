@@ -50,6 +50,10 @@ public class GraphQLOpenAPIParser {
 
 		Components components = openAPIYAML.getComponents();
 
+		if (components == null) {
+			return javaMethodSignatures;
+		}
+
 		Map<String, Schema> schemas = components.getSchemas();
 
 		for (String schemaName : schemas.keySet()) {

@@ -20,17 +20,27 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
+import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
+import com.liferay.portal.vulcan.yaml.YAMLUtil;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
+import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
+import com.liferay.portal.vulcan.yaml.openapi.PathItem;
+import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.math.BigDecimal;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -133,6 +143,63 @@ public class OpenAPIParserUtil {
 		return name;
 	}
 
+	public static List<String> getExternalReferences(OpenAPIYAML openAPIYAML) {
+		Set<String> externalReferences = new HashSet<>();
+
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		for (Map.Entry<String, PathItem> entry1 : pathItems.entrySet()) {
+			List<Operation> operations = getOperations(entry1.getValue());
+
+			for (Operation operation : operations) {
+				RequestBody requestBody = operation.getRequestBody();
+
+				if (requestBody != null) {
+					Map<String, Content> contentMap = requestBody.getContent();
+
+					for (Map.Entry<String, Content> entry2 :
+							contentMap.entrySet()) {
+
+						Content content = entry2.getValue();
+
+						Schema schema = content.getSchema();
+
+						String reference = schema.getReference();
+
+						if ((reference != null) &&
+							!reference.contains("#/components/schemas/")) {
+
+							externalReferences.add(reference);
+						}
+					}
+				}
+			}
+		}
+
+		return new ArrayList<>(externalReferences);
+	}
+
+	public static Map<String, Schema> getExternalSchemas(
+			OpenAPIYAML openAPIYAML)
+		throws Exception {
+
+		Map<String, Schema> externalReferencesMap = new HashMap<>();
+
+		List<String> externalReferences = getExternalReferences(openAPIYAML);
+
+		for (String reference : externalReferences) {
+			String path = reference.substring(0, reference.indexOf("#"));
+
+			File openAPIFile = new File(path);
+
+			externalReferencesMap.putAll(
+				OpenAPIUtil.getAllSchemas(
+					YAMLUtil.loadOpenAPIYAML(FileUtil.read(openAPIFile))));
+		}
+
+		return externalReferencesMap;
+	}
+
 	public static String getHTTPMethod(Operation operation) {
 		Class<? extends Operation> clazz = operation.getClass();
 
@@ -196,6 +263,32 @@ public class OpenAPIParserUtil {
 		Map<String, Schema> allSchemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
 		Map<String, String> javaDataTypeMap = new HashMap<>();
 
+		List<String> externalReferences = getExternalReferences(openAPIYAML);
+
+		try {
+			for (String externalReference : externalReferences) {
+				String openAPIPath = externalReference.substring(
+					0, externalReference.indexOf("#"));
+
+				String configPath = StringUtil.replace(
+					openAPIPath, "rest-openapi.yaml", "rest-config.yaml");
+
+				ConfigYAML externalConfigYAML = YAMLUtil.loadConfigYAML(
+					FileUtil.read(new File(configPath)));
+
+				OpenAPIYAML externalOpenAPIYAML = YAMLUtil.loadOpenAPIYAML(
+					FileUtil.read(new File(openAPIPath)));
+
+				Map<String, String> externalJavaDataTypeMap =
+					getJavaDataTypeMap(externalConfigYAML, externalOpenAPIYAML);
+
+				javaDataTypeMap.putAll(externalJavaDataTypeMap);
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
 		for (String schemaName : allSchemas.keySet()) {
 			StringBuilder sb = new StringBuilder();
 
@@ -248,6 +341,40 @@ public class OpenAPIParserUtil {
 		return javaDataTypeMap;
 	}
 
+	public static List<Operation> getOperations(PathItem pathItem) {
+		List<Operation> operations = new ArrayList<>();
+
+		if (pathItem.getDelete() != null) {
+			operations.add(pathItem.getDelete());
+		}
+
+		if (pathItem.getGet() != null) {
+			operations.add(pathItem.getGet());
+		}
+
+		if (pathItem.getHead() != null) {
+			operations.add(pathItem.getHead());
+		}
+
+		if (pathItem.getOptions() != null) {
+			operations.add(pathItem.getOptions());
+		}
+
+		if (pathItem.getPatch() != null) {
+			operations.add(pathItem.getPatch());
+		}
+
+		if (pathItem.getPost() != null) {
+			operations.add(pathItem.getPost());
+		}
+
+		if (pathItem.getPut() != null) {
+			operations.add(pathItem.getPut());
+		}
+
+		return operations;
+	}
+
 	public static String getParameter(
 		JavaMethodParameter javaMethodParameter, String parameterAnnotation) {
 
@@ -274,6 +401,10 @@ public class OpenAPIParserUtil {
 	}
 
 	public static String getReferenceName(String reference) {
+		if (!reference.contains("#/components/schemas")) {
+			return reference.substring(reference.lastIndexOf("#") + 1);
+		}
+
 		int index = reference.lastIndexOf('/');
 
 		if (index == -1) {

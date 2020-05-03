@@ -81,9 +81,13 @@ public class OpenAPIUtil {
 	public static Map<String, Schema> getAllSchemas(OpenAPIYAML openAPIYAML) {
 		Map<String, Schema> allSchemas = new TreeMap<>();
 
-		Queue<Map<String, Schema>> queue = new LinkedList<>();
-
 		Components components = openAPIYAML.getComponents();
+
+		if (components == null) {
+			return allSchemas;
+		}
+
+		Queue<Map<String, Schema>> queue = new LinkedList<>();
 
 		queue.add(components.getSchemas());
 
@@ -154,6 +158,10 @@ public class OpenAPIUtil {
 		Map<String, Schema> globalEnumSchemas = new TreeMap<>();
 
 		Components components = openAPIYAML.getComponents();
+
+		if (components == null) {
+			return globalEnumSchemas;
+		}
 
 		Map<String, Schema> schemas = components.getSchemas();
 

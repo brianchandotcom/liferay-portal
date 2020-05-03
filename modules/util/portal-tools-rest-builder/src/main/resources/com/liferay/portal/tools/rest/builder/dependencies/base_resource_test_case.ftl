@@ -6,6 +6,12 @@ package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
+<#list allExternalSchemas?keys as schemaName>
+	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
+	import ${configYAML.apiPackagePath}.client.resource.${escapedVersion}.${schemaName}Resource;
+	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
+</#list>
+
 import ${configYAML.apiPackagePath}.client.http.HttpInvoker;
 import ${configYAML.apiPackagePath}.client.pagination.Page;
 import ${configYAML.apiPackagePath}.client.pagination.Pagination;
@@ -1736,7 +1742,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			graphQLFields.add(new GraphQLField("siteId"));
 		</#if>
 
-		for (Field field : ReflectionUtil.getDeclaredFields(${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}.class)) {
+		for (Field field : ReflectionUtil.getDeclaredFields(${freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)}.class)) {
 			if (!ArrayUtil.contains(getAdditionalAssertFieldNames(), field.getName())){
 				continue;
 			}

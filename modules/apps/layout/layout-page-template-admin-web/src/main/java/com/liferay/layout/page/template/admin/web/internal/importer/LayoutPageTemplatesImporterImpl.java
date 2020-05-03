@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.internal.importer;
+package com.liferay.layout.page.template.admin.web.internal.importer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,14 +33,14 @@ import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemHelper;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemHelperFactory;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.exception.DisplayPageTemplateValidatorException;
 import com.liferay.layout.page.template.exception.MasterPageValidatorException;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
-import com.liferay.layout.page.template.internal.importer.helper.LayoutStructureItemHelper;
-import com.liferay.layout.page.template.internal.importer.helper.LayoutStructureItemHelperFactory;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;

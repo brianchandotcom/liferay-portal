@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.layout.page.template.internal.importer.helper;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 
 import java.util.Map;
@@ -29,7 +31,7 @@ import java.util.Map;
 /**
  * @author Jürgen Kappler
  */
-public class ColumnLayoutStructureItemHelper
+public class CollectionLayoutStructureItemHelper
 	extends BaseLayoutStructureItemHelper implements LayoutStructureItemHelper {
 
 	@Override
@@ -43,20 +45,42 @@ public class ColumnLayoutStructureItemHelper
 			String parentItemId, int position)
 		throws Exception {
 
-		ColumnLayoutStructureItem columnLayoutStructureItem =
-			(ColumnLayoutStructureItem)
-				layoutStructure.addColumnLayoutStructureItem(
+		CollectionLayoutStructureItem collectionLayoutStructureItem =
+			(CollectionLayoutStructureItem)
+				layoutStructure.addCollectionLayoutStructureItem(
 					parentItemId, position);
 
 		Map<String, Object> definitionMap = getDefinitionMap(
 			pageElement.getDefinition());
 
 		if (definitionMap != null) {
-			columnLayoutStructureItem.setSize(
-				(Integer)definitionMap.get("size"));
+			Map<String, Object> collectionConfig =
+				(Map<String, Object>)definitionMap.get("collectionConfig");
+
+			if (collectionConfig != null) {
+				collectionLayoutStructureItem.setCollectionJSONObject(
+					_getCollectionConfigAsJSONObject(collectionConfig));
+			}
+
+			collectionLayoutStructureItem.setNumberOfColumns(
+				(Integer)definitionMap.get("numberOfColumns"));
+			collectionLayoutStructureItem.setNumberOfColumns(
+				(Integer)definitionMap.get("numberOfItems"));
 		}
 
-		return columnLayoutStructureItem;
+		return collectionLayoutStructureItem;
+	}
+
+	private JSONObject _getCollectionConfigAsJSONObject(
+		Map<String, Object> collectionConfig) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		for (Map.Entry<String, Object> entry : collectionConfig.entrySet()) {
+			jsonObject.put(entry.getKey(), entry.getValue());
+		}
+
+		return jsonObject;
 	}
 
 }

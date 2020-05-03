@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.internal.importer.helper;
+package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.model.Layout;
 /**
  * @author Jürgen Kappler
  */
-public interface LayoutStructureItemHelper {
+public class CollectionItemLayoutStructureItemHelper
+	extends BaseLayoutStructureItemHelper implements LayoutStructureItemHelper {
 
+	@Override
 	public LayoutStructureItem addLayoutStructureItem(
 			FragmentCollectionContributorTracker
 				fragmentCollectionContributorTracker,
@@ -36,6 +38,10 @@ public interface LayoutStructureItemHelper {
 			FragmentRendererTracker fragmentRendererTracker, Layout layout,
 			LayoutStructure layoutStructure, PageElement pageElement,
 			String parentItemId, int position)
-		throws Exception;
+		throws Exception {
+
+		return layoutStructure.addCollectionItemLayoutStructureItem(
+			parentItemId, position);
+	}
 
 }

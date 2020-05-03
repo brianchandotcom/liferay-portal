@@ -600,6 +600,12 @@ definition {
 			layoutName = "Tags Navigation Page",
 			widgetName = "Asset Publisher");
 
+		for (var tagName : list "first tag,second tag,third tag") {
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "${tagName}");
+		}
+
 		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
 
 		JSONWebcontent.addWebContent(

@@ -1327,7 +1327,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 														<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
 															put("siteKey", "\"" + ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() + "\"");
 														<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
-															put("${javaMethodParameter.parameterName}", ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}());
+															put("${javaMethodParameter.parameterName}",
+																<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+																	"\"" + ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() + "\""
+																<#else>
+																	${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+																</#if>
+															);
 														<#else>
 															put("${javaMethodParameter.parameterName}", null);
 														</#if>

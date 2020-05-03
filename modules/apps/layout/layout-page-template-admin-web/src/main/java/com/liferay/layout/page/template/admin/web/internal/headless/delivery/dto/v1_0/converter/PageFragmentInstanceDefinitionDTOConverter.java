@@ -43,7 +43,6 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -713,6 +712,8 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 				mapping = new Mapping() {
 					{
 						defaultValue = fragmentInlineValue;
+						itemClassName = _toItemClassName(jsonObject);
+						itemClassPK = _toitemClassPK(jsonObject);
 
 						setFieldKey(
 							() -> {
@@ -725,29 +726,82 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 
 								return jsonObject.getString("mappedField");
 							});
-						setItemKey(
-							() -> {
-								String classNameId = jsonObject.getString(
-									"classNameId");
-
-								if (Validator.isNull(classNameId)) {
-									return null;
-								}
-
-								String classPK = jsonObject.getString(
-									"classPK");
-
-								if (Validator.isNull(classPK)) {
-									return null;
-								}
-
-								return StringBundler.concat(
-									classNameId, StringPool.POUND, classPK);
-							});
 					}
 				};
 			}
 		};
+	}
+
+	private String _toItemClassName(JSONObject jsonObject) {
+		String classNameIdString = jsonObject.getString("classNameId");
+
+		if (Validator.isNull(classNameIdString)) {
+			return null;
+		}
+
+		long classNameId = 0;
+
+		try {
+			classNameId = Long.parseLong(classNameIdString);
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"Item class name could not be set since class name " +
+							"ID %s could not be parsed to long",
+						classNameIdString),
+					numberFormatException);
+			}
+
+			return null;
+		}
+
+		String className = null;
+
+		try {
+			className = _portal.getClassName(classNameId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Item class name could not be set since no class name " +
+						"could be obtained for class name ID " + classNameId,
+					exception);
+			}
+
+			return null;
+		}
+
+		return className;
+	}
+
+	private Long _toitemClassPK(JSONObject jsonObject) {
+		String classPKString = jsonObject.getString("classPK");
+
+		if (Validator.isNull(classPKString)) {
+			return null;
+		}
+
+		Long classPK = null;
+
+		try {
+			classPK = Long.parseLong(classPKString);
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"Item class PK could not be set since class PK %s " +
+							"could not be parsed to long",
+						classPKString),
+					numberFormatException);
+			}
+
+			return null;
+		}
+
+		return classPK;
 	}
 
 	private Map<String, String> _toLocaleMap(JSONObject jsonObject) {

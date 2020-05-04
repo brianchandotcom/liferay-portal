@@ -15,7 +15,6 @@
 package com.liferay.fragment.entry.processor.drop.zone;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
@@ -27,20 +26,13 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -63,7 +55,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 	public JSONArray getAvailableTagsJSONArray() {
 		return JSONUtil.put(
 			JSONUtil.put(
-				"content", "<lfr-drop-zone id=\"\"></lfr-drop-zone>"
+				"content", "<lfr-drop-zone></lfr-drop-zone>"
 			).put(
 				"name", "lfr-drop-zone"
 			));
@@ -152,45 +144,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
-		throws PortalException {
-
-		Document document = _getDocument(html);
-
-		Elements elements = document.select("lfr-drop-zone");
-
-		for (Element element : elements) {
-			if (Validator.isNull(element.attr("id"))) {
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", getClass());
-
-				throw new FragmentEntryContentException(
-					LanguageUtil.get(
-						resourceBundle, "drop-zone-id-must-not-be-empty"));
-			}
-		}
-
-		Stream<Element> uniqueElementsStream = elements.stream();
-
-		Map<String, Long> idsMap = uniqueElementsStream.collect(
-			Collectors.groupingBy(
-				element -> element.attr("id"), Collectors.counting()));
-
-		Collection<String> ids = idsMap.keySet();
-
-		Stream<String> idsStream = ids.stream();
-
-		idsStream = idsStream.filter(id -> idsMap.get(id) > 1);
-
-		if (idsStream.count() > 0) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
-			throw new FragmentEntryContentException(
-				LanguageUtil.get(
-					resourceBundle,
-					"you-must-define-a-unique-id-for-each-drop-zone"));
-		}
+	public void validateFragmentEntryHTML(String html, String configuration) {
 	}
 
 	private Document _getDocument(String html) {

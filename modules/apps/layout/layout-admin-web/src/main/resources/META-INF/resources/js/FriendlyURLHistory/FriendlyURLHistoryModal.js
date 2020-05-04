@@ -14,17 +14,51 @@
 
 import {ClaySelect} from '@clayui/form';
 import ClayList from '@clayui/list';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
+import {useIsMounted} from 'frontend-js-react-web';
+import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const FriendlyURLHistoryModal = ({
-	availableLocales,
+	defaultLocaleId,
+	friendlyURLEntryLocalizationslURL,
 	observer,
-	siteDefaultLocaleId,
-	urls,
 }) => {
-	const [locale, setLocale] = useState(siteDefaultLocaleId);
+	const [locale, setLocale] = useState(defaultLocaleId);
+	const [loading, setLoading] = useState(true);
+	const [
+		friendlyURLEntryLocalizations,
+		setFriendlyURLEntryLocalizations,
+	] = useState({});
+	const [friendlyURLEntries, setFriendlyURLEntries] = useState({
+		current: {},
+		history: [],
+	});
+	const [availableLocales, setAvailableLocales] = useState([]);
+	const isMounted = useIsMounted();
+
+	useEffect(() => {
+		fetch(friendlyURLEntryLocalizationslURL)
+			.then((response) => response.json())
+			.then((response) => {
+				if (isMounted()) {
+					setAvailableLocales(Object.keys(response));
+					setFriendlyURLEntryLocalizations(response);
+					setLoading(false);
+				}
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+			});
+	}, [friendlyURLEntryLocalizationslURL, isMounted]);
+
+	useEffect(() => {
+		setFriendlyURLEntries(friendlyURLEntryLocalizations[locale]);
+	}, [friendlyURLEntryLocalizations, locale]);
 
 	return (
 		<ClayModal
@@ -37,73 +71,86 @@ const FriendlyURLHistoryModal = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<p>
-					<ClaySelect
-						onChange={({target: {value}}) => {
-							setLocale(value);
-						}}
-					>
-						{availableLocales.map(({displayName, localeId}) => (
-							<ClaySelect.Option
-								key={localeId}
-								label={displayName}
-								value={localeId}
-							/>
-						))}
-					</ClaySelect>
-				</p>
+				{loading ? (
+					<ClayLoadingIndicator />
+				) : (
+					<>
+						<p>
+							<ClaySelect
+								disabled={availableLocales.length < 2}
+								onChange={({target: {value}}) => {
+									setLocale(value);
+								}}
+							>
+								{availableLocales.map((localeId) => (
+									<ClaySelect.Option
+										key={localeId}
+										label={localeId}
+										value={localeId}
+									/>
+								))}
+							</ClaySelect>
+						</p>
 
-				<ClayList
-					className="show-quick-actions-one-line"
-					showQuickActionsOnHover
-				>
-					<ClayList.Header>Active URL</ClayList.Header>
-					<ClayList.Item flex>
-						<ClayList.ItemField expand>
-							<ClayList.ItemText className="text-truncate">
-								{urls[locale].current.urlTitle}
-							</ClayList.ItemText>
-						</ClayList.ItemField>
-					</ClayList.Item>
-					<ClayList.Header>Old Friendly URLs</ClayList.Header>
-					{(urls[locale].history || []).map(
-						({friendlyURLEntryId, urlTitle}) => (
-							<ClayList.Item flex key={friendlyURLEntryId}>
+						<ClayList
+							className="show-quick-actions-one-line"
+							showQuickActionsOnHover
+						>
+							<ClayList.Header>Active URL</ClayList.Header>
+							<ClayList.Item flex>
 								<ClayList.ItemField expand>
 									<ClayList.ItemText className="text-truncate">
-										{urlTitle}
+										{friendlyURLEntries.current.urlTitle}
 									</ClayList.ItemText>
 								</ClayList.ItemField>
-								<ClayList.ItemField>
-									<ClayList.QuickActionMenu>
-										<ClayList.QuickActionMenu.Item
-											onClick={() =>
-												alert('Clicked the reload!')
-											}
-											symbol="reload"
-										/>
-										<ClayList.QuickActionMenu.Item
-											onClick={() =>
-												alert('Clicked the circle!')
-											}
-											symbol="times-circle"
-										/>
-									</ClayList.QuickActionMenu>
-								</ClayList.ItemField>
 							</ClayList.Item>
-						)
-					)}
-				</ClayList>
+							<ClayList.Header>Old Friendly URLs</ClayList.Header>
+							{(friendlyURLEntries.history || []).map(
+								({friendlyURLEntryId, urlTitle}) => (
+									<ClayList.Item
+										flex
+										key={friendlyURLEntryId}
+									>
+										<ClayList.ItemField expand>
+											<ClayList.ItemText className="text-truncate">
+												{urlTitle}
+											</ClayList.ItemText>
+										</ClayList.ItemField>
+										<ClayList.ItemField>
+											<ClayList.QuickActionMenu>
+												<ClayList.QuickActionMenu.Item
+													onClick={() =>
+														alert(
+															'Clicked the reload!'
+														)
+													}
+													symbol="reload"
+												/>
+												<ClayList.QuickActionMenu.Item
+													onClick={() =>
+														alert(
+															'Clicked the circle!'
+														)
+													}
+													symbol="times-circle"
+												/>
+											</ClayList.QuickActionMenu>
+										</ClayList.ItemField>
+									</ClayList.Item>
+								)
+							)}
+						</ClayList>
+					</>
+				)}
 			</ClayModal.Body>
 		</ClayModal>
 	);
 };
 
 FriendlyURLHistoryModal.propTypes = {
-	availableLocales: PropTypes.object.isRequired,
+	defaultLocaleId: PropTypes.string.isRequired,
+	friendlyURLEntryLocalizationslURL: PropTypes.string.isRequired,
 	observer: PropTypes.object.isRequired,
-	siteDefaultLocaleId: PropTypes.string.isRequired,
-	urls: PropTypes.object.isRequired,
 };
 
 export default FriendlyURLHistoryModal;

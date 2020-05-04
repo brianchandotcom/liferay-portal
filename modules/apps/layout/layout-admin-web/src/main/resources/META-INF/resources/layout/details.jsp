@@ -100,11 +100,16 @@ String friendlyURLBase = StringPool.BLANK;
 					/>
 				</div>
 
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/layout/get_friendly_url_entry_localizations" var="friendlyURLEntryLocalizationslURL">
+					<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+				</liferay-portlet:resourceURL>
+
 				<div><button id="<portlet:namespace />friendlyURLHistoryButton" type="button">history</button></div>
 				<div>
 					<react:component
 						data='<%= HashMapBuilder.<String, Object>put(
-						"data", "data").build() %>'
+						"defaultLocaleId", LocaleUtil.toLanguageId(company.getDefaultUser().getLocale()))
+						.put("friendlyURLEntryLocalizationslURL", friendlyURLEntryLocalizationslURL).build() %>'
 						module="js/FriendlyURLHistory/FriendlyURLHistory"
 					/>
 				</div>

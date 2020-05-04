@@ -64,15 +64,12 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 				continue;
 			}
 
-			String defaultValue = LanguageUtil.get(
-				httpServletRequest, storageType);
-
 			keyValuePairs.add(
 				new KeyValuePair(
 					storageType,
 					LanguageUtil.get(
 						httpServletRequest, storageType + "[stands-for]",
-						defaultValue)));
+						LanguageUtil.get(httpServletRequest, storageType))));
 		}
 
 		DDMDataProviderResponse.Builder builder =

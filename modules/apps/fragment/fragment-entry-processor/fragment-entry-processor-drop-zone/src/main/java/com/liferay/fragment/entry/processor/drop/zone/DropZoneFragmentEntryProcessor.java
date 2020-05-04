@@ -90,6 +90,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 					_portal.getClassNameId(Layout.class.getName()),
 					fragmentEntryLink.getClassPK());
 
+		if (layoutPageTemplateStructure == null) {
+			return html;
+		}
+
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(
 				fragmentEntryLink.getSegmentsExperienceId()));

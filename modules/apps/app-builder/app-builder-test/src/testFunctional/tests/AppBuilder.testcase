@@ -2234,6 +2234,7 @@ definition {
 	@priority = "5"
 	test PredefinedValuesArePersistedInFormView {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "My new object",

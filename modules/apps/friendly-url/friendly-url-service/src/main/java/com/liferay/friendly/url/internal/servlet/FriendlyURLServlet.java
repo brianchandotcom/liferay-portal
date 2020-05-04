@@ -345,20 +345,18 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 
-		if (layout != null) {
-			String layoutType = layout.getType();
+		if ((layout != null) &&
+			Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
 
-			if (layoutType.equals(LayoutConstants.TYPE_URL)) {
-				Map<String, String[]> parameterMap =
-					httpServletRequest.getParameterMap();
+			Map<String, String[]> parameterMap =
+				httpServletRequest.getParameterMap();
 
-				if (parameterMap != null) {
-					for (Map.Entry<String, String[]> entry :
-							parameterMap.entrySet()) {
+			if (parameterMap != null) {
+				for (Map.Entry<String, String[]> entry :
+						parameterMap.entrySet()) {
 
-						actualURL = HttpUtil.setParameter(
-							actualURL, entry.getKey(), entry.getValue()[0]);
-					}
+					actualURL = HttpUtil.setParameter(
+						actualURL, entry.getKey(), entry.getValue()[0]);
 				}
 			}
 		}

@@ -37,11 +37,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -57,15 +56,7 @@ public class ChangesetManagerImpl
 	@Clusterable(onMaster = true)
 	@Override
 	public void addChangeset(Changeset changeset) {
-		Objects.nonNull(changeset);
-
-		String changesetUuid = changeset.getUuid();
-
-		if (_changesets.containsKey(changesetUuid)) {
-			return;
-		}
-
-		_changesets.put(changesetUuid, changeset);
+		_changesets.putIfAbsent(changeset.getUuid(), changeset);
 	}
 
 	/**
@@ -74,7 +65,7 @@ public class ChangesetManagerImpl
 	@Deprecated
 	@Override
 	public void clearChangesets() {
-		_changesets = new HashMap<>();
+		_changesets = new ConcurrentHashMap<>();
 	}
 
 	@Override
@@ -199,7 +190,7 @@ public class ChangesetManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChangesetManagerImpl.class);
 
-	private Map<String, Changeset> _changesets = new HashMap<>();
+	private Map<String, Changeset> _changesets = new ConcurrentHashMap<>();
 
 	@Reference
 	private ExportImportConfigurationLocalService

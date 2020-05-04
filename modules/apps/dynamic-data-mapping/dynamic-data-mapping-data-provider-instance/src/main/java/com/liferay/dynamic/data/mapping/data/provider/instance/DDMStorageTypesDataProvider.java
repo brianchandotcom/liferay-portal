@@ -47,12 +47,12 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
+		Set<String> storageTypes =
+			ddmStorageAdapterTracker.getDDMStorageAdapterTypes();
+
 		Optional<HttpServletRequest> httpServletRequestOptional =
 			ddmDataProviderRequest.getParameterOptional(
 				"httpServletRequest", HttpServletRequest.class);
-
-		Set<String> storageTypes =
-			ddmStorageAdapterTracker.getDDMStorageAdapterTypes();
 
 		HttpServletRequest httpServletRequest =
 			httpServletRequestOptional.orElse(null);

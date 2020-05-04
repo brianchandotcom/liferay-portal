@@ -132,7 +132,7 @@ public class MergePropertiesTask extends DefaultTask {
 
 	@TaskAction
 	public void merge() {
-		WorkQueue workQueue = _workerExecutor.processIsolation();
+		WorkQueue workQueue = _workerExecutor.noIsolation();
 
 		workQueue.submit(
 			MergePropertiesWorkAction.class,

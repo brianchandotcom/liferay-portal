@@ -555,6 +555,8 @@ definition {
 
 	@priority = "4"
 	test SearchBlogsEntryCategory {
+		property test.name.skip.portal.instance = "SolrSearch#SearchBlogsEntryCategory";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -786,6 +788,8 @@ definition {
 
 	@priority = "4"
 	test SearchBlogsEntryTag {
+		property test.name.skip.portal.instance = "SolrSearch#SearchBlogsEntryTag";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1280,6 +1284,8 @@ definition {
 
 	@priority = "4"
 	test SearchUser {
+		property test.name.skip.portal.instance = "SolrSearch#SearchUser";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -1468,6 +1474,8 @@ definition {
 
 	@priority = "4"
 	test SearchWebContent {
+		property test.name.skip.portal.instance = "SolrSearch#SearchWebContent";
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",

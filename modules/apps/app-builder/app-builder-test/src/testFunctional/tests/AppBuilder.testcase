@@ -85,7 +85,7 @@ definition {
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
 
-		AppBuilderAdmin.validatePermissionsFromRolesAreNotChecked(roleList = "Account Manager,Analytics Administrator,Portal Content Reviewer,Power User,User");
+		AppBuilderAdmin.validatePermissionsFromRolesAreNotChecked(roleList = "Analytics Administrator,Portal Content Reviewer,Power User,User");
 
 		AppBuilderAdmin.addAllPermissionsFromRoles(roleList = "Portal Content Reviewer,User");
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");

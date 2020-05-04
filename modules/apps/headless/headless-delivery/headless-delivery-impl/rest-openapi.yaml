@@ -2370,11 +2370,6 @@ components:
                     readOnly: true
                     type: object
             type: object
-        Widget:
-            properties:
-                name:
-                    type: string
-            type: object
         WidgetInstance:
             properties:
                 widgetConfig:

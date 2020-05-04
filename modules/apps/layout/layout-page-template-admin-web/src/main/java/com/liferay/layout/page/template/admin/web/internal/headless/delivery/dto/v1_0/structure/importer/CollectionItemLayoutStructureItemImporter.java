@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = LayoutStructureItemImporter.class)
 public class CollectionItemLayoutStructureItemImporter
-	extends BaseLayoutStructureItemImporter
 	implements LayoutStructureItemImporter {
 
 	@Override

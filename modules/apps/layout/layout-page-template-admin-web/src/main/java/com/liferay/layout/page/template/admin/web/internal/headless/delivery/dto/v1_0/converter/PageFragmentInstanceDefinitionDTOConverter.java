@@ -20,6 +20,7 @@ import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorU
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
@@ -39,6 +40,7 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
 import com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition;
+import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -52,6 +54,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -118,6 +121,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 				fragmentConfig = _getFragmentConfig(fragmentEntryLink);
 				fragmentFields = _getFragmentFields(
 					fragmentEntryLink, saveInlineContent, saveMapping);
+				widgetInstances = _getWidgetInstances(fragmentEntryLink);
 			}
 		};
 	}
@@ -383,6 +387,27 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 		}
 
 		return fragmentFields;
+	}
+
+	private WidgetInstance[] _getWidgetInstances(
+		FragmentEntryLink fragmentEntryLink) {
+
+		List<String> fragmentEntryLinkPortletIds =
+			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
+
+		if (ListUtil.isNull(fragmentEntryLinkPortletIds)) {
+			return null;
+		}
+
+		List<WidgetInstance> widgetInstances = new ArrayList<>();
+
+		for (String fragmentEntryLinkPortletId : fragmentEntryLinkPortletIds) {
+			widgetInstances.add(
+				_widgetInstanceDTOConverter.toDTO(
+					fragmentEntryLink, fragmentEntryLinkPortletId));
+		}
+
+		return widgetInstances.toArray(new WidgetInstance[0]);
 	}
 
 	private boolean _isSaveFragmentMappedValue(
@@ -877,5 +902,11 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
+
+	@Reference
+	private WidgetInstanceDTOConverter _widgetInstanceDTOConverter;
 
 }

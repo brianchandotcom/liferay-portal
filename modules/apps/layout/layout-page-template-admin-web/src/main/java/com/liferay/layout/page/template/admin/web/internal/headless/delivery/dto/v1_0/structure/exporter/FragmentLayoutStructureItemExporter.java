@@ -87,7 +87,7 @@ public class FragmentLayoutStructureItemExporter
 		return new PageElement() {
 			{
 				definition = _pageWidgetInstanceDefinitionDTOConverter.toDTO(
-					fragmentEntryLink.getClassPK(),
+					fragmentEntryLink,
 					PortletIdCodec.encode(portletId, instanceId));
 				type = PageElement.Type.WIDGET;
 			}

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
 import com.liferay.petra.string.StringPool;
@@ -56,16 +57,22 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = WidgetInstanceDTOConverter.class)
 public class WidgetInstanceDTOConverter {
 
-	public WidgetInstance toDTO(long plid, String portletId) {
+	public WidgetInstance toDTO(
+		FragmentEntryLink fragmentEntryLink, String portletId) {
+
 		if (Validator.isNull(portletId)) {
 			return null;
 		}
 
 		return new WidgetInstance() {
 			{
-				widgetConfig = _getWidgetConfig(plid, portletId);
+				widgetConfig = _getWidgetConfig(
+					fragmentEntryLink.getClassPK(), portletId);
+				widgetInstanceId = _getWidgetInstanceId(
+					fragmentEntryLink, portletId);
 				widgetName = PortletIdCodec.decodePortletName(portletId);
-				widgetPermissions = _getWidgetPermissions(plid, portletId);
+				widgetPermissions = _getWidgetPermissions(
+					fragmentEntryLink.getClassPK(), portletId);
 			}
 		};
 	}
@@ -114,6 +121,20 @@ public class WidgetInstanceDTOConverter {
 		}
 
 		return widgetConfigMap;
+	}
+
+	private String _getWidgetInstanceId(
+		FragmentEntryLink fragmentEntryLink, String portletId) {
+
+		String instanceId = PortletIdCodec.decodeInstanceId(portletId);
+
+		String namespace = fragmentEntryLink.getNamespace();
+
+		if (instanceId.startsWith(namespace)) {
+			return instanceId.substring(namespace.length());
+		}
+
+		return instanceId;
 	}
 
 	private WidgetPermission[] _getWidgetPermissions(

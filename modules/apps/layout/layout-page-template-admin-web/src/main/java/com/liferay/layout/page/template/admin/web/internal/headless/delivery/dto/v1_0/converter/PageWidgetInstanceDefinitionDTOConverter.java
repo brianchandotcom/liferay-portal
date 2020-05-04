@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -26,7 +27,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PageWidgetInstanceDefinitionDTOConverter.class)
 public class PageWidgetInstanceDefinitionDTOConverter {
 
-	public PageWidgetInstanceDefinition toDTO(long plid, String portletId) {
+	public PageWidgetInstanceDefinition toDTO(
+		FragmentEntryLink fragmentEntryLink, String portletId) {
+
 		if (Validator.isNull(portletId)) {
 			return null;
 		}
@@ -34,7 +37,7 @@ public class PageWidgetInstanceDefinitionDTOConverter {
 		return new PageWidgetInstanceDefinition() {
 			{
 				widgetInstance = _widgetInstanceDTOConverter.toDTO(
-					plid, portletId);
+					fragmentEntryLink, portletId);
 			}
 		};
 	}

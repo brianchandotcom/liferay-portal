@@ -22,7 +22,7 @@ import {PROPERTY_TYPES} from '../../utils/constants.es';
 import {DragTypes} from '../../utils/drag-types.es';
 
 const TYPE_ICON_MAP = {
-	[PROPERTY_TYPES.BOOLEAN]: 'text',
+	[PROPERTY_TYPES.BOOLEAN]: 'check-circle',
 	[PROPERTY_TYPES.COLLECTION]: 'table',
 	[PROPERTY_TYPES.DATE]: 'date',
 	[PROPERTY_TYPES.DATE_TIME]: 'date',

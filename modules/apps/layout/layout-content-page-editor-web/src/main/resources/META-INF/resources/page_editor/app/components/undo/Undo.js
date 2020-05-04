@@ -20,11 +20,27 @@ import React from 'react';
 import {Z_KEYCODE} from '../../config/constants/keycodes';
 import {useSelector} from '../../store/index';
 
+const isTextElement = (element) => {
+	return (
+		(element.tagName === 'INPUT' && element.type === 'text') ||
+		element.tagName === 'TEXTAREA'
+	);
+};
+
+const isAlloyEditor = (element) => {
+	return (
+		element.classList.contains('alloy-editor') &&
+		element.parentElement.classList.contains('alloy-editor-container')
+	);
+};
+
 export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 	useEventListener(
 		'keydown',
 		(event) => {
 			if (
+				!isTextElement(event.target) &&
+				!isAlloyEditor(event.target) &&
 				event.keyCode === Z_KEYCODE &&
 				(event.ctrlKey || event.metaKey)
 			) {

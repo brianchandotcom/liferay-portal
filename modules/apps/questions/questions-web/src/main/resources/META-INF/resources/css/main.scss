@@ -14,7 +14,12 @@
 }
 
 .question-row-article-body {
-	max-height: 8vh;
+	height: 2.5rem;
+	> * {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }
 
 .questions-title {

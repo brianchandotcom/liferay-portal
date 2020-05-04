@@ -44,7 +44,7 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 						for (User assignableUser : workflowTaskDisplayContext.getAssignableUsers(workflowTask)) {
 						%>
 
-							<aui:option label="<%= HtmlUtil.escape(assignableUser.getFullName()) %>" selected="<%= workflowTask.getAssigneeUserId() == assignableUser.getUserId() %>" value="<%= String.valueOf(assignableUser.getUserId()) %>" />
+							<aui:option label="<%= HtmlUtil.escape(assignableUser.getScreenName()) + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + HtmlUtil.escape(assignableUser.getFullName()) + StringPool.CLOSE_PARENTHESIS %>" selected="<%= workflowTask.getAssigneeUserId() == assignableUser.getUserId() %>" value="<%= String.valueOf(assignableUser.getUserId()) %>" />
 
 						<%
 						}

@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
+import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -263,7 +263,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			}
 
 			Set<User> assignableUsers = new TreeSet<>(
-				new UserFirstNameComparator(true));
+				new UserScreenNameComparator(true));
 
 			long assignedUserId = _getAssignedUserId(workflowTaskId);
 

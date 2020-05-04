@@ -262,7 +262,7 @@ const Select = ({
 	const menuElementRef = useRef(null);
 	const triggerElementRef = useRef(null);
 
-	const [currentValue, setCurrentValue] = useSyncValue(value);
+	const [currentValue, setCurrentValue] = useSyncValue(value, false);
 	const [expand, setExpand] = useState(false);
 
 	const handleFocus = (event, direction) => {

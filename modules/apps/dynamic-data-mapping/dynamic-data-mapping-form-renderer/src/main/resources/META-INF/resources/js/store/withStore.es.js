@@ -43,6 +43,10 @@ const _handleFieldEdited = function (properties) {
 				return;
 			}
 
+			if (this.isDisposed()) {
+				return;
+			}
+
 			this.setState(
 				{
 					pages: evaluatedPages,
@@ -67,6 +71,10 @@ const _handleFieldBlurred = function (properties) {
 			return;
 		}
 
+		if (this.isDisposed()) {
+			return;
+		}
+
 		this.setState({
 			pages: blurredFieldPages,
 		});
@@ -87,6 +95,10 @@ const _handleFieldFocused = function (properties) {
 	this.fieldFocusDate = new Date();
 
 	handleFieldFocused(pages, properties).then((focusedFieldPages) => {
+		if (this.isDisposed()) {
+			return;
+		}
+		
 		this.setState({
 			pages: focusedFieldPages,
 		});

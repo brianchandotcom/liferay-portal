@@ -207,9 +207,10 @@ const FieldSetProxy = connectStore(
 		return (
 			<FieldBaseProxy
 				{...otherProps}
+				dispatch={dispatch}
 				name={name}
 				readOnly={readOnly}
-				repeatable={false}
+				repeatable={repeatable}
 				showLabel={false}
 				spritemap={spritemap}
 			>

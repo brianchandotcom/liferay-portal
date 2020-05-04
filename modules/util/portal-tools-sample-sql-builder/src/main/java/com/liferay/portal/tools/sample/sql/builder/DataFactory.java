@@ -3384,18 +3384,19 @@ public class DataFactory {
 	}
 
 	public String toInsertSQL(
-		String tableName, long companyId, long firstId, long secondId) {
+		String mappingTableName, long companyId, long leftPrimaryKey,
+		long rightPrimaryKey) {
 
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("insert into ");
-		sb.append(tableName);
+		sb.append(mappingTableName);
 		sb.append(" values (");
 		sb.append(companyId);
 		sb.append(", ");
-		sb.append(firstId);
+		sb.append(leftPrimaryKey);
 		sb.append(", ");
-		sb.append(secondId);
+		sb.append(rightPrimaryKey);
 		sb.append(", 0, null);");
 
 		return sb.toString();

@@ -112,27 +112,24 @@ public class RecurrenceUtilTest {
 		calendarBooking20160102.setRecurringCalendarBookingId(
 			calendarBooking20160101.getRecurringCalendarBookingId());
 
-		try {
-			CalendarBooking lastInstanceCalendarBooking =
-				RecurrenceUtil.getLastInstanceCalendarBooking(calendarBookings);
+		CalendarBooking lastInstanceCalendarBooking =
+			RecurrenceUtil.getLastInstanceCalendarBooking(calendarBookings);
 
-			Assert.assertEquals(
-				lastInstanceCalendarBooking.getStartTime(),
-				lastInstanceStartTimeJCalendar.getTimeInMillis());
+		Assert.assertEquals(
+			lastInstanceCalendarBooking.getStartTime(),
+			lastInstanceStartTimeJCalendar.getTimeInMillis());
 
-			Recurrence recurrence20160101 =
-				calendarBooking20160101.getRecurrenceObj();
-			Recurrence recurrence20160102 =
-				calendarBooking20160102.getRecurrenceObj();
+		Recurrence recurrence20160101 =
+			calendarBooking20160101.getRecurrenceObj();
 
-			assertSameDay(
-				getJan2016Calendar(1), recurrence20160101.getUntilJCalendar());
-			assertSameDay(
-				getJan2016Calendar(3), recurrence20160102.getUntilJCalendar());
-		}
-		catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
-			Assert.fail();
-		}
+		assertSameDay(
+			getJan2016Calendar(1), recurrence20160101.getUntilJCalendar());
+
+		Recurrence recurrence20160102 =
+			calendarBooking20160102.getRecurrenceObj();
+
+		assertSameDay(
+			getJan2016Calendar(3), recurrence20160102.getUntilJCalendar());
 	}
 
 	@Test

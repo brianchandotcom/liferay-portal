@@ -3383,6 +3383,24 @@ public class DataFactory {
 		}
 	}
 
+	public String toInsertSQL(
+		String tableName, long companyId, long firstId, long secondId) {
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("insert into ");
+		sb.append(tableName);
+		sb.append(" values (");
+		sb.append(companyId);
+		sb.append(", ");
+		sb.append(firstId);
+		sb.append(", ");
+		sb.append(secondId);
+		sb.append(", 0, null);");
+
+		return sb.toString();
+	}
+
 	protected ObjectValuePair<String[], Integer>
 		getAssetPublisherAssetCategoriesQueryValues(
 			List<AssetCategoryModel> assetCategoryModels, int index) {

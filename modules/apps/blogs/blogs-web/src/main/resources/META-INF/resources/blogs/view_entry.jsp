@@ -94,7 +94,10 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 		<c:if test="<%= (previousEntry != null) || (nextEntry != null) %>">
 			<clay:row>
-				<div class="col-md-10 col-md-offset-1 entry-navigation">
+				<clay:col
+					className="col-md-offset-1 entry-navigation"
+					md="10"
+				>
 					<h2>
 						<strong><liferay-ui:message key="more-blog-entries" /></strong>
 					</h2>
@@ -115,13 +118,16 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 						<liferay-util:include page="/blogs/view_entry_related.jsp" servletContext="<%= application %>" />
 					</clay:row>
-				</div>
+				</clay:col>
 			</clay:row>
 		</c:if>
 	</c:if>
 
 	<clay:row>
-		<div class="col-md-8 col-md-offset-2">
+		<clay:col
+			className="col-md-offset-2"
+			md="8"
+		>
 			<c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">
 
 				<%
@@ -144,7 +150,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					/>
 				</c:if>
 			</c:if>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 

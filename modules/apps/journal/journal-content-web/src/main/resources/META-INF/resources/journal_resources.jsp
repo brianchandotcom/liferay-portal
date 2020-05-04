@@ -30,11 +30,13 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 	</div>
 
 	<clay:row>
-		<div class="col-md-4">
+		<clay:col
+			md="4"
+		>
 			<c:if test="<%= article != null %>">
 				<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>" />
 			</c:if>
-		</div>
+		</clay:col>
 	</clay:row>
 
 	<div>

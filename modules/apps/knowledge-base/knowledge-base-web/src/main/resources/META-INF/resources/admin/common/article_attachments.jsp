@@ -37,7 +37,9 @@ if (kbArticle != null) {
 				String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
 			%>
 
-				<div class="col-md-4">
+				<clay:col
+					md="4"
+				>
 					<liferay-frontend:horizontal-card
 						text="<%= fileEntry.getTitle() %>"
 						url="<%= rowURL %>"
@@ -48,7 +50,7 @@ if (kbArticle != null) {
 							/>
 						</liferay-frontend:horizontal-card-col>
 					</liferay-frontend:horizontal-card>
-				</div>
+				</clay:col>
 
 			<%
 			}

@@ -129,7 +129,10 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 
 					<aui:input name="coverImageCaption" type="hidden" />
 
-					<div class="col-md-8 col-md-offset-2">
+					<clay:col
+						className="col-md-offset-2"
+						md="8"
+					>
 						<div class="cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
 							<small>
 								<liferay-editor:editor
@@ -141,9 +144,12 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 								/>
 							</small>
 						</div>
-					</div>
+					</clay:col>
 
-					<div class="col-md-8 col-md-offset-2">
+					<clay:col
+						className="col-md-offset-2"
+						md="8"
+					>
 						<div class="entry-title form-group">
 							<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-title form-control-unstyled" label="" name="title" onChange='<%= renderResponse.getNamespace() + "onChangeTitle(event.target.value)" %>' placeholder='<%= LanguageUtil.get(request, "title") + StringPool.BLANK + " *" %>' required="<%= true %>" showRequiredLabel="<%= true %>" type="textarea" value="<%= HtmlUtil.escape(title) %>" />
 						</div>
@@ -166,7 +172,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 						</div>
 
 						<aui:input name="content" type="hidden" />
-					</div>
+					</clay:col>
 				</aui:fieldset>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">

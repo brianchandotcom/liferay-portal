@@ -196,12 +196,12 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						</c:if>
 
 						<clay:row>
-							<div class="col">
+							<clay:col>
 								<liferay-staging:process-status
 									backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
 									backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
 								/>
-							</div>
+							</clay:col>
 						</clay:row>
 
 						<c:if test="<%= Validator.isNotNull(backgroundTask.getStatusMessage()) %>">

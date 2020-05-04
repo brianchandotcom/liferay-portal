@@ -23,56 +23,68 @@
 <clay:row
 	className="text-center"
 >
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:badge
 			label="8"
 		/>
 
 		<div>Primary</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:badge
 			label="87"
 			style="secondary"
 		/>
 
 		<div>Secondary</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:badge
 			label="91"
 			style="info"
 		/>
 
 		<div>Info</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:badge
 			label="130"
 			style="danger"
 		/>
 
 		<div>Error</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:badge
 			label="1111"
 			style="success"
 		/>
 
 		<div>Success</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:badge
 			label="21"
 			style="warning"
 		/>
 
 		<div>Warning</div>
-	</div>
+	</clay:col>
 </clay:row>

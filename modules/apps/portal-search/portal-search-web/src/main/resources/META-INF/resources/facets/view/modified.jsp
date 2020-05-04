@@ -184,7 +184,10 @@ int index = 0;
 					%>
 
 					<div class="<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "hide" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>customRange">
-						<div class="col-md-6" id="<%= randomNamespace %>customRangeFrom">
+						<clay:col
+							id='<%= randomNamespace + "customRangeFrom" %>'
+							md="6"
+						>
 							<aui:field-wrapper label="from">
 								<liferay-ui:input-date
 									dayParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "dayFrom" %>'
@@ -198,9 +201,12 @@ int index = 0;
 									yearValue="<%= fromCalendar.get(Calendar.YEAR) %>"
 								/>
 							</aui:field-wrapper>
-						</div>
+						</clay:col>
 
-						<div class="col-md-6" id="<%= randomNamespace %>customRangeTo">
+						<clay:col
+							id='<%= randomNamespace + "customRangeTo" %>'
+							md="6"
+						>
 							<aui:field-wrapper label="to">
 								<liferay-ui:input-date
 									dayParam='<%= HtmlUtil.escapeJS(facet.getFieldId()) + "dayTo" %>'
@@ -214,7 +220,7 @@ int index = 0;
 									yearValue="<%= toCalendar.get(Calendar.YEAR) %>"
 								/>
 							</aui:field-wrapper>
-						</div>
+						</clay:col>
 
 						<%
 						String taglibSearchCustomRange = "window['" + renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "searchCustomRange'](" + (index + 1) + ");";

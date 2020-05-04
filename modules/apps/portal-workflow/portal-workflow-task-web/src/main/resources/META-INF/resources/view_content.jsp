@@ -44,7 +44,10 @@ renderResponse.setTitle(title);
 %>
 
 <div class="container-fluid-1280 main-content-body">
-	<div class="col-md-12 lfr-asset-column lfr-asset-column-details">
+	<clay:col
+		className="lfr-asset-column lfr-asset-column-details"
+		md="12"
+	>
 		<div class="card-horizontal main-content-card">
 			<div class="panel-body">
 				<c:if test="<%= assetEntry != null %>">
@@ -74,5 +77,5 @@ renderResponse.setTitle(title);
 				</c:if>
 			</div>
 		</div>
-	</div>
+	</clay:col>
 </div>

@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -120,7 +121,10 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 						</li>
 
 						<div class="<%= !modifiedFacetCalendarDisplayContext.isSelected() ? "hide" : StringPool.BLANK %> modified-custom-range" id="<portlet:namespace />customRange">
-							<div class="col-md-6" id="<portlet:namespace />customRangeFrom">
+							<clay:col
+								id='<%= renderResponse.getNamespace() + "customRangeFrom" %>'
+								md="6"
+							>
 								<aui:field-wrapper label="from">
 									<liferay-ui:input-date
 										cssClass="modified-facet-custom-range-input-date-from"
@@ -135,9 +139,12 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 										yearValue="<%= modifiedFacetCalendarDisplayContext.getFromYearValue() %>"
 									/>
 								</aui:field-wrapper>
-							</div>
+							</clay:col>
 
-							<div class="col-md-6" id="<portlet:namespace />customRangeTo">
+							<clay:col
+								id='<%= renderResponse.getNamespace() + "customRangeTo" %>'
+								md="6"
+							>
 								<aui:field-wrapper label="to">
 									<liferay-ui:input-date
 										cssClass="modified-facet-custom-range-input-date-to"
@@ -152,7 +159,7 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 										yearValue="<%= modifiedFacetCalendarDisplayContext.getToYearValue() %>"
 									/>
 								</aui:field-wrapper>
-							</div>
+							</clay:col>
 
 							<aui:button cssClass="modified-facet-custom-range-filter-button" disabled="<%= modifiedFacetCalendarDisplayContext.isRangeBackwards() %>" name="searchCustomRangeButton" value="search" />
 						</div>

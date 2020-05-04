@@ -33,7 +33,9 @@ final WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 				String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
 			%>
 
-				<div class="col-md-4">
+				<clay:col
+					md="4"
+				>
 					<liferay-frontend:horizontal-card
 						text="<%= fileEntry.getTitle() %>"
 						url="<%= rowURL %>"
@@ -44,7 +46,7 @@ final WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 							/>
 						</liferay-frontend:horizontal-card-col>
 					</liferay-frontend:horizontal-card>
-				</div>
+				</clay:col>
 
 			<%
 			}

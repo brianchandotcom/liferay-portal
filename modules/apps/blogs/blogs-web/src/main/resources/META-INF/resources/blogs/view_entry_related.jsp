@@ -25,7 +25,9 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 %>
 
 <c:if test="<%= blogsEntry != null %>">
-	<div class="col-lg-6">
+	<clay:col
+		lg="6"
+	>
 		<div class="card">
 
 			<%
@@ -116,5 +118,5 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				</div>
 			</div>
 		</div>
-	</div>
+	</clay:col>
 </c:if>

@@ -54,12 +54,16 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 	</aui:select>
 
 	<clay:row>
-		<div class="col-lg-7" id="<portlet:namespace />allowedGrantTypesSection">
-			<h3 class="sheet-subtitle"><liferay-ui:message key="allowed-grant-types" /></h3>
 
-			<%
-			String clientCredentialsCheckboxName = null;
-			%>
+		<%
+		String clientCredentialsCheckboxName = null;
+		%>
+
+		<clay:col
+			id='<%= renderResponse.getNamespace() + "allowedGrantTypesSection" %>'
+			lg="7"
+		>
+			<h3 class="sheet-subtitle"><liferay-ui:message key="allowed-grant-types" /></h3>
 
 			<aui:field-wrapper>
 				<div id="<portlet:namespace />allowedGrantTypes">
@@ -143,10 +147,13 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 
 				</div>
 			</aui:field-wrapper>
-		</div>
+		</clay:col>
 
 		<c:if test="<%= clientCredentialsCheckboxName != null %>">
-			<div class="col-lg-5" id="<portlet:namespace />clientCredentialsSection">
+			<clay:col
+				id='<%= renderResponse.getNamespace() + "clientCredentialsSection" %>'
+				lg="5"
+			>
 				<h3 class="sheet-subtitle"><liferay-ui:message key="client-credentials-user" /></h3>
 
 				<aui:field-wrapper>
@@ -224,7 +231,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 						});
 					}
 				</aui:script>
-			</div>
+			</clay:col>
 		</c:if>
 	</clay:row>
 

@@ -27,7 +27,9 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 		<clay:row
 			className="justify-content-center"
 		>
-			<div class="col-lg-12">
+			<clay:col
+				lg="12"
+			>
 				<div class="card card-root mb-0 mt-4 shadowless-card">
 					<div class="card-body pt-0">
 						<aui:form>
@@ -76,7 +78,7 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 						</aui:form>
 					</div>
 				</div>
-			</div>
+			</clay:col>
 		</clay:row>
 	</div>
 </div>

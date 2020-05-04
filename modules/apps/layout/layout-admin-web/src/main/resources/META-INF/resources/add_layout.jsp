@@ -45,9 +45,11 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 							for (SiteNavigationMenu autoSiteNavigationMenu : autoSiteNavigationMenus) {
 							%>
 
-								<div class="col-6">
+								<clay:col
+									size="6"
+								>
 									<aui:input id='<%= "menu_" + autoSiteNavigationMenu.getSiteNavigationMenuId() %>' label="<%= HtmlUtil.escape(autoSiteNavigationMenu.getName()) %>" name="TypeSettingsProperties--siteNavigationMenuId--" type="checkbox" value="<%= autoSiteNavigationMenu.getSiteNavigationMenuId() %>" />
-								</div>
+								</clay:col>
 
 							<%
 							}

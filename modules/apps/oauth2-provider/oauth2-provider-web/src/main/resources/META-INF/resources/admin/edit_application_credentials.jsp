@@ -35,7 +35,9 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 	<div class="container-fluid container-fluid-max-xl container-view">
 		<div class="sheet">
 			<clay:row>
-				<div class="col-lg-12">
+				<clay:col
+					lg="12"
+				>
 					<liferay-ui:error exception="<%= DuplicateOAuth2ApplicationClientIdException.class %>" focusField="clientId" message="client-id-already-exists" />
 
 					<liferay-ui:error exception="<%= OAuth2ApplicationClientGrantTypeException.class %>">
@@ -108,17 +110,21 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 							<aui:input name="originalClientSecret" type="hidden" value="<%= clientSecret %>" />
 						</aui:fieldset>
 					</c:if>
-				</div>
+				</clay:col>
 			</clay:row>
 
 			<clay:row>
 				<c:choose>
 					<c:when test="<%= oAuth2Application != null %>">
-						<div class="col-lg-9">
+						<clay:col
+							lg="9"
+						>
 							<liferay-util:include page="/admin/edit_application_left_column.jsp" servletContext="<%= application %>" />
-						</div>
+						</clay:col>
 
-						<div class="col-lg-3">
+						<clay:col
+							lg="3"
+						>
 							<h3 class="sheet-subtitle"><liferay-ui:message key="icon" /></h3>
 
 							<%
@@ -138,24 +144,28 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="portrait" />" src="<%= HtmlUtil.escapeAttribute(thumbnailURL) %>" />
 								</c:otherwise>
 							</c:choose>
-						</div>
+						</clay:col>
 					</c:when>
 					<c:otherwise>
-						<div class="col-lg-12">
+						<clay:col
+							lg="12"
+						>
 							<liferay-util:include page="/admin/edit_application_left_column.jsp" servletContext="<%= application %>" />
-						</div>
+						</clay:col>
 					</c:otherwise>
 				</c:choose>
 			</clay:row>
 
 			<clay:row>
-				<div class="col-lg-12">
+				<clay:col
+					lg="12"
+				>
 					<aui:button-row>
 						<aui:button type="submit" />
 
 						<aui:button href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 					</aui:button-row>
-				</div>
+				</clay:col>
 			</clay:row>
 		</div>
 	</div>

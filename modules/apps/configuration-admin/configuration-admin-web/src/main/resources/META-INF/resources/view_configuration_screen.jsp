@@ -46,28 +46,34 @@ renderResponse.setTitle(categoryDisplayName);
 %>
 
 <div class="container-fluid container-fluid-max-xl">
-	<div class="col-12">
+	<clay:col
+		size="12"
+	>
 		<liferay-ui:breadcrumb
 			showCurrentGroup="<%= false %>"
 			showGuestGroup="<%= false %>"
 			showLayout="<%= false %>"
 			showParentGroups="<%= false %>"
 		/>
-	</div>
+	</clay:col>
 </div>
 
 <div class="container-fluid container-fluid-max-xl">
 	<clay:row>
-		<div class="col-md-3">
+		<clay:col
+			md="3"
+		>
 			<liferay-util:include page="/configuration_category_menu.jsp" servletContext="<%= application %>" />
-		</div>
+		</clay:col>
 
-		<div class="col-md-9">
+		<clay:col
+			md="9"
+		>
 
 			<%
 			configurationScreen.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
 			%>
 
-		</div>
+		</clay:col>
 	</clay:row>
 </div>

@@ -32,13 +32,15 @@
 	for (int i = 0; i < icons.length; i++) {
 	%>
 
-		<div class="col-md-3">
+		<clay:col
+			md="3"
+		>
 			<clay:icon
 				symbol="<%= icons[i] %>"
 			/>
 
 			<span class="ml-2"><%= icons[i] %></span>
-		</div>
+		</clay:col>
 
 	<%
 	}
@@ -58,13 +60,15 @@
 	for (int i = 0; i < flags.length; i++) {
 	%>
 
-		<div class="col-md-3">
+		<clay:col
+			md="3"
+		>
 			<clay:icon
 				symbol="<%= flags[i] %>"
 			/>
 
 			<span class="ml-2"><%= flags[i] %></span>
-		</div>
+		</clay:col>
 
 	<%
 	}

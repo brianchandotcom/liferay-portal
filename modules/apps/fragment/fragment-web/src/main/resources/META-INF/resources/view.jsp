@@ -26,7 +26,9 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 
 <div class="container-fluid container-fluid-max-xl container-view">
 	<clay:row>
-		<div class="col-lg-3">
+		<clay:col
+			lg="3"
+		>
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
 					<li class="nav-item">
@@ -224,9 +226,11 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 					</li>
 				</ul>
 			</nav>
-		</div>
+		</clay:col>
 
-		<div class="col-lg-9">
+		<clay:col
+			lg="9"
+		>
 			<c:if test="<%= (fragmentDisplayContext.getFragmentCollection() != null) || (fragmentDisplayContext.getFragmentCollectionContributor() != null) %>">
 				<div class="sheet">
 					<h2 class="sheet-title">
@@ -266,7 +270,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 					</div>
 				</div>
 			</c:if>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 

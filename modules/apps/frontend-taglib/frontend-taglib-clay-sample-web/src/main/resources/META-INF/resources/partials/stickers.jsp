@@ -25,17 +25,21 @@
 <clay:row
 	className="mb-3 text-center"
 >
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:sticker
 			label="JPG"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:sticker
 			icon="picture"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h3>ROUND</h3>
@@ -43,19 +47,23 @@
 <clay:row
 	className="mb-3 text-center"
 >
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:sticker
 			label="JPG"
 			shape="circle"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-1">
+	<clay:col
+		md="1"
+	>
 		<clay:sticker
 			icon="picture"
 			shape="circle"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h3>POSITION</h3>
@@ -63,7 +71,9 @@
 <clay:row
 	className="mb-3"
 >
-	<div class="col-md-2">
+	<clay:col
+		md="2"
+	>
 		<div class="aspect-ratio">
 			<img class="aspect-ratio-item-fluid" src="https://claycss.com/images/thumbnail_hot_air_ballon.jpg" />
 
@@ -73,9 +83,11 @@
 				style="danger"
 			/>
 		</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-2">
+	<clay:col
+		md="2"
+	>
 		<div class="aspect-ratio">
 			<img class="aspect-ratio-item-fluid" src="https://claycss.com/images/thumbnail_hot_air_ballon.jpg" />
 
@@ -84,10 +96,12 @@
 				position="bottom-left"
 				style="danger"
 			/>
-		</div>
+		</clay:col>
 	</div>
 
-	<div class="col-md-2">
+	<clay:col
+		md="2"
+	>
 		<div class="aspect-ratio">
 			<img class="aspect-ratio-item-fluid" src="https://claycss.com/images/thumbnail_hot_air_ballon.jpg" />
 
@@ -97,9 +111,11 @@
 				style="danger"
 			/>
 		</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-2">
+	<clay:col
+		md="2"
+	>
 		<div class="aspect-ratio">
 			<img class="aspect-ratio-item-fluid" src="https://claycss.com/images/thumbnail_hot_air_ballon.jpg" />
 
@@ -109,5 +125,5 @@
 				style="danger"
 			/>
 		</div>
-	</div>
+	</clay:col>
 </clay:row>

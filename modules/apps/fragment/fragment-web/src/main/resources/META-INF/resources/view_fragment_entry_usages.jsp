@@ -34,7 +34,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 	%>
 
 	<clay:row>
-		<div class="col-lg-3">
+		<clay:col
+			lg="3"
+		>
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
 					<li class="nav-item">
@@ -95,9 +97,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					</li>
 				</ul>
 			</nav>
-		</div>
+		</clay:col>
 
-		<div class="col-lg-9">
+		<clay:col
+			lg="9"
+		>
 			<div class="sheet">
 				<h2 class="sheet-title">
 					<div class="autofit-row autofit-row-center">
@@ -170,7 +174,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					</liferay-ui:search-container>
 				</aui:form>
 			</div>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 

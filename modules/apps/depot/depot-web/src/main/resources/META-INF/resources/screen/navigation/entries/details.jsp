@@ -61,9 +61,11 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 			for (DepotApplication depotApplication : depotAdminDetailsDisplayContext.getDepotApplications()) {
 			%>
 
-				<div class="col-md-6">
+				<clay:col
+					md="6"
+				>
 					<aui:input label="<%= depotApplication.getLabel(locale) %>" name='<%= "DepotAppCustomization--" + depotApplication.getPortletId() + "--" %>' type="checkbox" value="<%= depotAdminDetailsDisplayContext.isEnabled(depotApplication.getPortletId()) %>" />
-				</div>
+				</clay:col>
 
 			<%
 			}

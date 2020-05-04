@@ -18,48 +18,59 @@
 
 <div class="container text-secondary">
 	<clay:row>
-		<div class="col-sm">
+		<clay:col
+			sm=""
+		>
 			<liferay-staging:process-title
 				backgroundTask="<%= backgroundTask %>"
 				listView="<%= false %>"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 
 	<clay:row>
-		<div class="col-sm"><%= HtmlUtil.escape(userName) %></div>
-		<div class="col-sm">
+		<clay:col
+			sm=""
+		>
+			<%= HtmlUtil.escape(userName) %>
+		</clay:col>
+
+		<clay:col
+			sm=""
+		>
 			<liferay-staging:process-date
 				date="<%= backgroundTask.getCreateDate() %>"
 				labelKey="start-date"
 				listView="<%= false %>"
 			/>
-		</div>
+		</clay:col>
 
-		<div class="col-sm">
+		<clay:col
+			sm=""
+		>
 			<liferay-staging:process-date
 				date="<%= backgroundTask.getCompletionDate() %>"
 				labelKey="completion-date"
 				listView="<%= false %>"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 
 	<clay:row>
-		<div class="col">
+		<clay:col>
 			<liferay-staging:process-in-progress
 				backgroundTask="<%= backgroundTask %>"
 				listView="<%= false %>"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 
 	<clay:row>
-		<div class="col">
+		<clay:col>
 			<liferay-staging:process-status
 				backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
 				backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>

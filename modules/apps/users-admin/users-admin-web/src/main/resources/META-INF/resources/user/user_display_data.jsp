@@ -23,7 +23,9 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
 <clay:row>
-	<div class="col-md-6">
+	<clay:col
+		md="6"
+	>
 		<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
 
 		<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
@@ -138,9 +140,11 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
 			<aui:input name="userId" type="resource" value="<%= String.valueOf(selUser.getUserId()) %>" />
 		</c:if>
-	</div>
+	</clay:col>
 
-	<div class="col-md-5">
+	<clay:col
+		md="5"
+	>
 		<div align="middle">
 			<c:if test="<%= selUser != null %>">
 				<c:choose>
@@ -169,5 +173,5 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 				</c:choose>
 			</c:if>
 		</div>
-	</div>
+	</clay:col>
 </clay:row>

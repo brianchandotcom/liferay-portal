@@ -36,15 +36,15 @@
 				<clay:row
 					className="flex-md-nowrap mb-2"
 				>
-					<div class="col"><clay:button label="Primary" /></div>
-					<div class="col"><clay:button ariaLabel="Workflow" icon="workflow" /></div>
+					<clay:col><clay:button label="Primary" /></clay:col>
+					<clay:col><clay:button ariaLabel="Workflow" icon="workflow" /></clay:col>
 				</clay:row>
 
 				<clay:row
 					className="flex-md-nowrap"
 				>
-					<div class="col"><clay:button disabled="<%= true %>" label="Primary" /></div>
-					<div class="col"><clay:button ariaLabel="Workflow" disabled="<%= true %>" icon="workflow" /></div>
+					<clay:col><clay:button disabled="<%= true %>" label="Primary" /></clay:col>
+					<clay:col><clay:button ariaLabel="Workflow" disabled="<%= true %>" icon="workflow" /></clay:col>
 				</clay:row>
 			</td>
 			<td>
@@ -56,15 +56,15 @@
 				<clay:row
 					className="flex-md-nowrap mb-2"
 				>
-					<div class="col"><clay:button label="Secondary" style="secondary" /></div>
-					<div class="col"><clay:button ariaLabel="Wiki" icon="wiki" style="secondary" /></div>
+					<clay:col><clay:button label="Secondary" style="secondary" /></clay:col>
+					<clay:col><clay:button ariaLabel="Wiki" icon="wiki" style="secondary" /></clay:col>
 				</clay:row>
 
 				<clay:row
 					className="flex-md-nowrap"
 				>
-					<div class="col"><clay:button disabled="<%= true %>" label="Secondary" style="secondary" /></div>
-					<div class="col"><clay:button ariaLabel="Wiki" disabled="<%= true %>" icon="wiki" style="secondary" /></div>
+					<clay:col><clay:button disabled="<%= true %>" label="Secondary" style="secondary" /></clay:col>
+					<clay:col><clay:button ariaLabel="Wiki" disabled="<%= true %>" icon="wiki" style="secondary" /></clay:col>
 				</clay:row>
 			</td>
 			<td>
@@ -76,15 +76,15 @@
 				<clay:row
 					className="flex-md-nowrap mb-2"
 				>
-					<div class="col"><clay:button label="Borderless" style="borderless" /></div>
-					<div class="col"><clay:button ariaLabel="Page Template" icon="page-template" style="borderless" /></div>
+					<clay:col><clay:button label="Borderless" style="borderless" /></clay:col>
+					<clay:col><clay:button ariaLabel="Page Template" icon="page-template" style="borderless" /></clay:col>
 				</clay:row>
 
 				<clay:row
 					className="flex-md-nowrap"
 				>
-					<div class="col"><clay:button disabled="<%= true %>" label="Borderless" style="borderless" /></div>
-					<div class="col"><clay:button ariaLabel="Page Template" disabled="<%= true %>" icon="page-template" style="borderless" /></div>
+					<clay:col><clay:button disabled="<%= true %>" label="Borderless" style="borderless" /></clay:col>
+					<clay:col><clay:button ariaLabel="Page Template" disabled="<%= true %>" icon="page-template" style="borderless" /></clay:col>
 				</clay:row>
 			</td>
 			<td>
@@ -96,15 +96,15 @@
 				<clay:row
 					className="flex-md-nowrap mb-2"
 				>
-					<div class="col"><clay:button label="Link" style="link" /></div>
-					<div class="col"><clay:button ariaLabel="Add Role" icon="add-role" style="link" /></div>
+					<clay:col><clay:button label="Link" style="link" /></clay:col>
+					<clay:col><clay:button ariaLabel="Add Role" icon="add-role" style="link" /></clay:col>
 				</clay:row>
 
 				<clay:row
 					className="flex-md-nowrap"
 				>
-					<div class="col"><clay:button disabled="<%= true %>" label="Link" style="link" /></div>
-					<div class="col"><clay:button ariaLabel="Add Role" disabled="<%= true %>" icon="add-role" style="link" /></div>
+					<clay:col><clay:button disabled="<%= true %>" label="Link" style="link" /></clay:col>
+					<clay:col><clay:button ariaLabel="Add Role" disabled="<%= true %>" icon="add-role" style="link" /></clay:col>
 				</clay:row>
 			</td>
 			<td>
@@ -119,16 +119,20 @@
 <clay:row
 	className="text-center"
 >
-	<div class="col-md-2">
+	<clay:col
+		md="2"
+	>
 		<clay:button
 			icon="share"
 			label="Share"
 		/>
 
 		<div>Icon and Text Button</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-2">
+	<clay:col
+		md="2"
+	>
 		<clay:button
 			icon="indent-less"
 			monospaced="<%= true %>"
@@ -136,18 +140,22 @@
 		/>
 
 		<div>Monospaced Button</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4">
+	<clay:col
+		md="4"
+	>
 		<clay:button
 			block="<%= true %>"
 			label="Button"
 		/>
 
 		<div>Block Level Button</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-2">
+	<clay:col
+		md="2"
+	>
 		<clay:button
 			icon="plus"
 			monospaced="<%= true %>"
@@ -155,9 +163,11 @@
 		/>
 
 		<div>Plus Button</div>
-	</div>
+	</clay:col>
 
-	<div class="col-md-2">
+	<clay:col
+		md="2"
+	>
 		<clay:button
 			icon="ellipsis-v"
 			monospaced="<%= true %>"
@@ -165,5 +175,5 @@
 		/>
 
 		<div>Action Button</div>
-	</div>
+	</clay:col>
 </clay:row>

@@ -410,7 +410,10 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 	</c:if>
 
 	<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">
-		<div class="col-md-12 mt-4">
+		<clay:col
+			className="mt-4"
+			md="12"
+		>
 			<liferay-comment:discussion
 				className="<%= assetEntry.getClassName() %>"
 				classPK="<%= assetEntry.getClassPK() %>"
@@ -419,6 +422,6 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 				redirect="<%= currentURL %>"
 				userId="<%= assetRenderer.getUserId() %>"
 			/>
-		</div>
+		</clay:col>
 	</c:if>
 </div>

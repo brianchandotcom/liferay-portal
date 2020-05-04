@@ -39,15 +39,21 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 <div class="card-horizontal main-content-card">
 	<div class="card-body">
 		<clay:row>
-			<div class="col-6 col-sm-4">
+			<clay:col
+				size="6"
+				sm="4"
+			>
 				<div class="card image-card img-thumbnail">
 					<div class="aspect-ratio aspect-ratio-16-to-9">
 						<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="aspect-ratio-item-flush aspect-ratio-item-top-center img-thumbnail theme-screenshot" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
 					</div>
 				</div>
-			</div>
+			</clay:col>
 
-			<div class="col-6 col-sm-8">
+			<clay:col
+				size="6"
+				sm="8"
+			>
 				<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getName()) %>">
 					<h2 class="h4"><liferay-ui:message key="name" /></h2>
 
@@ -63,7 +69,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 						<aui:a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>" target="_blank"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></aui:a>
 					</p>
 				</c:if>
-			</div>
+			</clay:col>
 		</clay:row>
 
 		<c:if test="<%= (selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getShortDescription()) %>">
@@ -84,7 +90,11 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 			<h2 class="h4"><liferay-ui:message key="color-scheme" /></h2>
 
 			<clay:row>
-				<div class="col-6 col-md-3 col-sm-4">
+				<clay:col
+					md="3"
+					size="6"
+					sm="4"
+				>
 					<div class="card image-card img-thumbnail">
 						<div class="aspect-ratio aspect-ratio-16-to-9">
 							<img alt="" class="aspect-ratio-item-flush aspect-ratio-item-top-center img-thumbnail theme-screenshot" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selColorScheme.getName()) %>" />
@@ -98,7 +108,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 							</div>
 						</div>
 					</div>
-				</div>
+				</clay:col>
 			</clay:row>
 		</c:if>
 

@@ -29,140 +29,148 @@
 
 <div class="container-fluid">
 	<clay:row>
-		<div class="col">
+		<clay:col>
 			<chart:area-spline
 				config="<%= chartSampleDisplayContext.getAreaSplineChartConfig() %>"
 				id="area-spline"
 			/>
-		</div>
+		</clay:col>
 
-		<div class="col">
+		<clay:col>
 			<chart:area-step
 				config="<%= chartSampleDisplayContext.getAreaStepChartConfig() %>"
 				id="area-step"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 
 <div class="container-fluid">
 	<clay:row>
-		<div class="col">
+		<clay:col>
 			<chart:line
 				config="<%= chartSampleDisplayContext.getLineChartConfig() %>"
 				id="line"
 			/>
-		</div>
+		</clay:col>
 
-		<div class="col">
+		<clay:col>
 			<chart:scatter
 				config="<%= chartSampleDisplayContext.getScatterChartConfig() %>"
 				id="scatter"
 			/>
-		</div>
+		</clay:col>
 
-		<div class="col">
+		<clay:col>
 			<chart:spline
 				config="<%= chartSampleDisplayContext.getSplineChartConfig() %>"
 				id="spline"
 			/>
-		</div>
+		</clay:col>
 
-		<div class="col">
+		<clay:col>
 			<chart:step
 				config="<%= chartSampleDisplayContext.getStepChartConfig() %>"
 				id="step"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 
 <div class="container-fluid">
 	<clay:row>
-		<div class="col">
+		<clay:col>
 			<chart:bar
 				config="<%= chartSampleDisplayContext.getBarChartConfig() %>"
 				id="bar"
 			/>
-		</div>
+		</clay:col>
 
-		<div class="col">
+		<clay:col>
 			<chart:combination
 				config="<%= chartSampleDisplayContext.getCombinationChartConfig() %>"
 				id="combination"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 
 <div class="container-fluid">
 	<clay:row>
-		<div class="col">
+		<clay:col>
 			<chart:donut
 				config="<%= chartSampleDisplayContext.getDonutChartConfig() %>"
 				id="donut"
 			/>
-		</div>
+		</clay:col>
 
-		<div class="col">
+		<clay:col>
 			<chart:pie
 				config="<%= chartSampleDisplayContext.getPieChartConfig() %>"
 				id="pie"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 
 <div class="container-fluid">
 	<clay:row>
-		<div class="col">
+		<clay:col>
 			<chart:gauge
 				config="<%= chartSampleDisplayContext.getGaugeChartConfig() %>"
 				id="gauge"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 
 <div class="container-fluid">
 	<clay:row>
-		<div class="col geomap">
+		<clay:col
+			className="geomap"
+		>
 			<chart:geomap
 				config="<%= chartSampleDisplayContext.getGeomapConfig1() %>"
 				id="geomap-default-colors"
 			/>
-		</div>
+		</clay:col>
 
-		<div class="col geomap">
+		<clay:col
+			className="geomap"
+		>
 			<chart:geomap
 				config="<%= chartSampleDisplayContext.getGeomapConfig2() %>"
 				id="gemomap-custom-colors"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 
 <div class="container-fluid">
 	<clay:row>
-		<div class="col polling-interval">
+		<clay:col
+			className="polling-interval"
+		>
 			<chart:line
 				componentId="polling-interval-line-chart"
 				config="<%= chartSampleDisplayContext.getPollingIntervalLineChartConfig() %>"
 				id="polling-interval-line-chart"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 
 <div class="container-fluid">
 	<clay:row>
-		<div class="col predictive">
+		<clay:col
+			className="predictive"
+		>
 			<chart:predictive
 				componentId="predictive-chart"
 				config="<%= chartSampleDisplayContext.getPredictiveChartConfig() %>"
 				id="predictive-chart"
 			/>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 

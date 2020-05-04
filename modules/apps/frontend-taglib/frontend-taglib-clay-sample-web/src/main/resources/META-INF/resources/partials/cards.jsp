@@ -19,7 +19,10 @@
 <h3>Image cards</h3>
 
 <clay:row>
-	<div class="col-md-4" id="image-card-block">
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			href="#1"
@@ -28,30 +31,39 @@
 			subtitle="Author Action"
 			title="Madrid"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-icon-block">
+	<clay:col
+		id="image-card-icon-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="camera"
 			subtitle="Author Action"
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-empty-block">
+	<clay:col
+		id="image-card-empty-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			subtitle="Author Action"
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h4>Image Card with Sticker</h4>
 
 <clay:row>
-	<div class="col-md-4" id="image-card-block">
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			href="#1"
@@ -62,9 +74,12 @@
 			subtitle="Author Action"
 			title="California"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-icon-block">
+	<clay:col
+		id="image-card-icon-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="camera"
@@ -73,9 +88,12 @@
 			subtitle="Author Action"
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-empty-block">
+	<clay:col
+		id="image-card-empty-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			stickerLabel="PNG"
@@ -83,13 +101,16 @@
 			subtitle="Author Action"
 			title="<%= _PNG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h4>Image Card with Sticker Shape</h4>
 
 <clay:row>
-	<div class="col-md-4" id="image-card-block">
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			href="#1"
@@ -101,9 +122,12 @@
 			subtitle="Author Action"
 			title="California"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-icon-block">
+	<clay:col
+		id="image-card-icon-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="camera"
@@ -113,9 +137,12 @@
 			subtitle="Author Action"
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-empty-block">
+	<clay:col
+		id="image-card-empty-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			stickerImageAlt="Alt Text"
@@ -126,13 +153,16 @@
 			subtitle="Author Action"
 			title="<%= _PNG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h4>Image Card with Labels</h4>
 
 <clay:row>
-	<div class="col-md-4" id="image-card-block">
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			href="#1"
@@ -144,9 +174,12 @@
 			subtitle="Author Action"
 			title="Beetle"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-icon-block">
+	<clay:col
+		id="image-card-icon-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="camera"
@@ -157,9 +190,12 @@
 			subtitle="Author Action"
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-empty-block">
+	<clay:col
+		id="image-card-empty-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			labels="<%= cardsDisplayContext.getLabelItems() %>"
@@ -168,13 +204,16 @@
 			subtitle="Author Action"
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h4>Selectable Image Card</h4>
 
 <clay:row>
-	<div class="col-md-4" id="image-card-block">
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			href="#1"
@@ -188,9 +227,12 @@
 			subtitle="Author Action"
 			title="Beetle"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-icon-block">
+	<clay:col
+		id="image-card-icon-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="camera"
@@ -202,9 +244,12 @@
 			subtitle="Author Action"
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-empty-block">
+	<clay:col
+		id="image-card-empty-block"
+		md="4"
+	>
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			labels="<%= cardsDisplayContext.getLabelItems() %>"
@@ -215,13 +260,16 @@
 			subtitle="Author Action"
 			title="<%= _SVG_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h4>File Cards</h4>
 
 <clay:row>
-	<div class="col-md-4" id="image-card-block">
+	<clay:col
+		id="image-card-block"
+		md="4"
+	>
 		<clay:file-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			labels="<%= cardsDisplayContext.getLabelItems() %>"
@@ -230,9 +278,12 @@
 			subtitle="Stevie Ray Vaughn"
 			title="<%= _PDF_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-icon-block">
+	<clay:col
+		id="image-card-icon-block"
+		md="4"
+	>
 		<clay:file-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			labels="<%= cardsDisplayContext.getLabelItems() %>"
@@ -244,9 +295,12 @@
 			subtitle="Jimi Hendrix"
 			title="<%= _MP3_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-4" id="image-card-empty-block">
+	<clay:col
+		id="image-card-empty-block"
+		md="4"
+	>
 		<clay:file-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="list"
@@ -258,22 +312,28 @@
 			subtitle="Paco de Lucia"
 			title="<%= _DOC_FILE_TITLE %>"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h4>User Cards</h4>
 
 <clay:row>
-	<div class="col-md-6" id="image-card-block">
+	<clay:col
+		id="image-card-block"
+		md="6"
+	>
 		<clay:user-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			name="User Name"
 			subtitle="Latest Action"
 			userColorClass="danger"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-6" id="image-card-icon-block">
+	<clay:col
+		id="image-card-icon-block"
+		md="6"
+	>
 		<clay:user-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			disabled="<%= true %>"
@@ -284,26 +344,32 @@
 			selected="<%= true %>"
 			subtitle="Latest Action"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h4>Horizontal Cards</h4>
 
 <clay:row>
-	<div class="col-md-6" id="image-card-block">
+	<clay:col
+		id="image-card-block"
+		md="6"
+	>
 		<clay:horizontal-card
 			title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual"
 		/>
-	</div>
+	</clay:col>
 
-	<div class="col-md-6" id="image-card-icon-block">
+	<clay:col
+		id="image-card-icon-block"
+		md="6"
+	>
 		<clay:horizontal-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
 			title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <%!

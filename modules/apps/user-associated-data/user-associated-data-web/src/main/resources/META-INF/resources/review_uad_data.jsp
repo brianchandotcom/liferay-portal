@@ -39,7 +39,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<clay:row>
-		<div class="col-lg-3">
+		<clay:col
+			lg="3"
+		>
 			<div class="panel panel-secondary">
 				<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />scopePanelBody" data-toggle="liferay-collapse">
 					<span class="panel-title">
@@ -176,9 +178,11 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					</div>
 				</div>
 			</c:if>
-		</div>
+		</clay:col>
 
-		<div class="col-lg-9">
+		<clay:col
+			lg="9"
+		>
 			<div class="sheet">
 				<div class="sheet-header">
 					<h2 class="sheet-title"><liferay-ui:message key="review-data" /></h2>
@@ -207,7 +211,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					</c:choose>
 				</div>
 			</div>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 

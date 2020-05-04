@@ -23,30 +23,40 @@
 <clay:row
 	className="mb-3"
 >
-	<div class="col-2">
+	<clay:col
+		size="2"
+	>
 		<div><clay:label label="Label text" style="info" /></div>
 		<div><clay:label label="Label text" size="lg" style="info" /></div>
-	</div>
+	</clay:col>
 
-	<div class="col-2">
+	<clay:col
+		size="2"
+	>
 		<div><clay:label label="Status" /></div>
 		<div><clay:label label="Status" size="lg" /></div>
-	</div>
+	</clay:col>
 
-	<div class="col-2">
+	<clay:col
+		size="2"
+	>
 		<div><clay:label label="Pending" style="warning" /></div>
 		<div><clay:label label="Pending" size="lg" style="warning" /></div>
-	</div>
+	</clay:col>
 
-	<div class="col-2">
+	<clay:col
+		size="2"
+	>
 		<div><clay:label label="Rejected" style="danger" /></div>
 		<div><clay:label label="Rejected" size="lg" style="danger" /></div>
-	</div>
+	</clay:col>
 
-	<div class="col-2">
+	<clay:col
+		size="2"
+	>
 		<div><clay:label label="Approved" style="success" /></div>
 		<div><clay:label label="Approved" size="lg" style="success" /></div>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h3>LABEL REMOVABLE</h3>
@@ -54,7 +64,9 @@
 <clay:row
 	className="row"
 >
-	<div class="col-12">
+	<clay:col
+		size="12"
+	>
 		<clay:label
 			closeable="<%= true %>"
 			label="Normal Label"
@@ -66,16 +78,18 @@
 			size="lg"
 			style="success"
 		/>
-	</div>
+	</clay:col>
 </clay:row>
 
 <h3>LABEL WITH LINK</h3>
 
 <clay:row>
-	<div class="col-12">
+	<clay:col
+		size="12"
+	>
 		<clay:label
 			href="#"
 			label="Label Text"
 		/>
-	</div>
+	</clay:col>
 </clay:row>

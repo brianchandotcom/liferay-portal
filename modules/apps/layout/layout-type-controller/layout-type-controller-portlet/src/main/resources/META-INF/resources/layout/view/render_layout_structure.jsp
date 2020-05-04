@@ -46,9 +46,11 @@ for (String childrenItemId : childrenItemIds) {
 						request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
 				%>
 
-						<div class="col-md-<%= 12 / collectionLayoutStructureItem.getNumberOfColumns() %>">
+						<clay:col
+							md="<%= String.valueOf(12 / collectionLayoutStructureItem.getNumberOfColumns()) %>"
+						>
 							<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
-						</div>
+						</clay:col>
 
 				<%
 					}
@@ -66,14 +68,16 @@ for (String childrenItemId : childrenItemIds) {
 			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
 			%>
 
-			<div class="<%= (columnLayoutStructureItem.getSize() > 0) ? "col-md-" + columnLayoutStructureItem.getSize() : "col-md" %>">
+			<clay:col
+				md="<%= (columnLayoutStructureItem.getSize() > 0) ? String.valueOf(columnLayoutStructureItem.getSize()) : StringPool.BLANK %>"
+			>
 
 				<%
 				request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
 				<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
-			</div>
+			</clay:col>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ContainerLayoutStructureItem %>">
 

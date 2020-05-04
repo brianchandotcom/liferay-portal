@@ -44,7 +44,11 @@
 					for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
 					%>
 
-						<div class="col-6 col-md-3 col-sm-4">
+						<clay:col
+							md="3"
+							size="6"
+							sm="4"
+						>
 							<div class="radio radio-card radio-top-left">
 								<label>
 									<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
@@ -61,7 +65,7 @@
 									</div>
 								</label>
 							</div>
-						</div>
+						</clay:col>
 
 					<%
 					}

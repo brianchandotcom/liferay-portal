@@ -82,23 +82,29 @@ renderResponse.setTitle(categoryDisplayName);
 <portlet:actionURL name="deleteConfiguration" var="deleteConfigurationActionURL" />
 
 <div class="container-fluid container-fluid-max-xl">
-	<div class="col-12">
+	<clay:col
+		size="12"
+	>
 		<liferay-ui:breadcrumb
 			showCurrentGroup="<%= false %>"
 			showGuestGroup="<%= false %>"
 			showLayout="<%= false %>"
 			showParentGroups="<%= false %>"
 		/>
-	</div>
+	</clay:col>
 </div>
 
 <div class="container-fluid container-fluid-max-xl">
 	<clay:row>
-		<div class="col-md-3">
+		<clay:col
+			md="3"
+		>
 			<liferay-util:include page="/configuration_category_menu.jsp" servletContext="<%= application %>" />
-		</div>
+		</clay:col>
 
-		<div class="col-md-9">
+		<clay:col
+			md="9"
+		>
 			<div class="sheet sheet-lg">
 				<aui:form action="<%= bindConfigurationActionURL %>" method="post" name="fm">
 					<aui:input name="redirect" type="hidden" value="<%= bindRedirectURL %>" />
@@ -238,6 +244,6 @@ renderResponse.setTitle(categoryDisplayName);
 					</aui:button-row>
 				</aui:form>
 			</div>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>

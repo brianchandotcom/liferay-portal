@@ -35,7 +35,9 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<clay:row>
-		<div class="col-lg-3">
+		<clay:col
+			lg="3"
+		>
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
 					<li class="nav-item">
@@ -96,9 +98,11 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 					</li>
 				</ul>
 			</nav>
-		</div>
+		</clay:col>
 
-		<div class="col-lg-9">
+		<clay:col
+			lg="9"
+		>
 			<div class="sheet">
 				<h3 class="sheet-title">
 					<c:choose>
@@ -158,6 +162,6 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 					/>
 				</liferay-ui:search-container>
 			</div>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>

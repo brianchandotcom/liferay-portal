@@ -59,7 +59,9 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 	</liferay-ui:error>
 
 	<clay:row>
-		<div class="col-lg-12">
+		<clay:col
+			lg="12"
+		>
 			<portlet:actionURL name="/admin/assign_scopes" var="assignScopesURL">
 				<portlet:param name="mvcRenderCommandName" value="/admin/assign_scopes" />
 				<portlet:param name="navigation" value="assign_scopes" />
@@ -77,23 +79,31 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 						>
 						<li class="borderless list-group-item<c:if test="${assignedDeletedScopeAliases.contains(tree.value)}"> removed-scope</c:if>" id="${tree.value}-container">
 							<clay:row>
-									<c:choose>
-										<c:when test="${parentNodes.size() > 0}">
-										<div class="col-md-6">
+								<c:choose>
+									<c:when test="${parentNodes.size() > 0}">
+										<clay:col
+											md="6"
+										>
 											<div class="scope-children-${parentNodes.size()}">
 												<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-childrens="true" data-parent="${parentNodes.getFirst().value}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
 											</div>
-										</div>
-										</c:when>
-										<c:otherwise>
-										<div class="col-md-6">
+										</clay:col>
+									</c:when>
+									<c:otherwise>
+										<clay:col
+											md="6"
+										>
 											<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-childrens="true" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
-										</div>
-										</c:otherwise>
-									</c:choose>
-								<div class="col-md-6 text-left">
+										</clay:col>
+									</c:otherwise>
+								</c:choose>
+
+								<clay:col
+									className="text-left"
+									md="6"
+								>
 									${scopeAliasesDescriptionsMap.get(tree.value)}
-								</div>
+								</clay:col>
 							</clay:row>
 						</li>
 
@@ -105,23 +115,31 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 						>
 						<li class="borderless list-group-item<c:if test="${assignedDeletedScopeAliases.contains(tree.value)}"> removed-scope</c:if>" id="${tree.value}-container">
 							<clay:row>
-									<c:choose>
-										<c:when test="${parentNodes.size() > 0}">
-										<div class="col-md-6">
+								<c:choose>
+									<c:when test="${parentNodes.size() > 0}">
+										<clay:col
+											md="6"
+										>
 											<div class="scope-children-${parentNodes.size()}">
 												<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-parent="${parentNodes.getFirst().value}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
 											</div>
-										</div>
-										</c:when>
-										<c:otherwise>
-										<div class="col-md-6">
+										</clay:col>
+									</c:when>
+									<c:otherwise>
+										<clay:col
+											md="6"
+										>
 											<aui:input checked="${assignedScopeAliases.contains(tree.value)}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
-										</div>
-										</c:otherwise>
-									</c:choose>
-								<div class="col-md-6 text-left">
+										</clay:col>
+									</c:otherwise>
+								</c:choose>
+
+								<clay:col
+									className="text-left"
+									md="6"
+								>
 									${scopeAliasesDescriptionsMap.get(tree.value)}
-								</div>
+								</clay:col>
 							</clay:row>
 						</li>
 						</jsp:attribute>
@@ -135,7 +153,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 					<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" type="cancel" />
 				</aui:button-row>
 			</aui:form>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>
 </div>

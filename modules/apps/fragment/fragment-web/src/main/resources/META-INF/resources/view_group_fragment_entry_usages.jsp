@@ -35,7 +35,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 		%>
 
 		<clay:row>
-			<div class="col-lg-12">
+			<clay:col
+				lg="12"
+			>
 				<clay:management-toolbar
 					displayContext="<%= groupFragmentEntryUsageManagementToolbarDisplayContext %>"
 				/>
@@ -74,7 +76,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 						/>
 					</liferay-ui:search-container>
 				</aui:form>
-			</div>
+			</clay:col>
 		</clay:row>
 	</div>
 </div>

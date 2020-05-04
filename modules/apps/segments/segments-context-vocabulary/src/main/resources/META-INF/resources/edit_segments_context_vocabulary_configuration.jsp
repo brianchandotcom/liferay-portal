@@ -32,19 +32,23 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 </liferay-ui:error>
 
 <div class="container-fluid container-fluid-max-xl">
-	<div class="col-12">
+	<clay:col
+		size="12"
+	>
 		<liferay-ui:breadcrumb
 			showCurrentGroup="<%= false %>"
 			showGuestGroup="<%= false %>"
 			showLayout="<%= false %>"
 			showParentGroups="<%= false %>"
 		/>
-	</div>
+	</clay:col>
 </div>
 
 <div class="container-fluid container-fluid-max-xl">
 	<clay:row>
-		<div class="col-md-3">
+		<clay:col
+			md="3"
+		>
 			<nav class="menubar menubar-transparent menubar-vertical-expand-md">
 				<div class="collapse menubar-collapse" id="<%= 12 %>">
 					<ul class="nav nav-nested">
@@ -64,9 +68,11 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 					</ul>
 				</div>
 			</nav>
-		</div>
+		</clay:col>
 
-		<div class="col-md-9">
+		<clay:col
+			md="9"
+		>
 			<div class="sheet sheet-lg">
 				<aui:form action="<%= segmentsContextVocabularyConfigurationDisplayContext.getActionURL() %>" method="post" name="fm">
 					<aui:input name="factoryPid" type="hidden" value="<%= segmentsContextVocabularyConfigurationDisplayContext.getFactoryPid() %>" />
@@ -147,6 +153,6 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 					</aui:button-row>
 				</aui:form>
 			</div>
-		</div>
+		</clay:col>
 	</clay:row>
 </div>

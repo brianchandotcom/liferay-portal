@@ -17,9 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <clay:row>
-	<div class="col-md-4">
+	<clay:col
+		md="4"
+	>
 		<clay:vertical-card
 			verticalCard="<%= new JournalDDMTemplateVerticalCard(journalContentDisplayContext.getDDMTemplate(), request) %>"
 		/>
-	</div>
+	</clay:col>
 </clay:row>

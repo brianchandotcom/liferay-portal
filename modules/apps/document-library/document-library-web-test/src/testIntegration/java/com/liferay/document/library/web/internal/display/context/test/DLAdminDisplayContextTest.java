@@ -158,6 +158,8 @@ public class DLAdminDisplayContextTest {
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, null);
+		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST,
 			mockLiferayPortletActionRequest);
 		mockLiferayPortletActionRequest.setAttribute(

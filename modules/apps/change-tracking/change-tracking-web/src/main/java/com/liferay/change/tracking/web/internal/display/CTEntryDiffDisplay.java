@@ -33,18 +33,19 @@ import javax.servlet.http.HttpServletResponse;
 public class CTEntryDiffDisplay {
 
 	public CTEntryDiffDisplay(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, CTCollection ctCollection,
+		CTCollection ctCollection,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry, CTEntry ctEntry,
-		CTEntryLocalService ctEntryLocalService, Language language,
+		CTEntryLocalService ctEntryLocalService,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, Language language,
 		String name) {
 
-		_httpServletRequest = httpServletRequest;
-		_httpServletResponse = httpServletResponse;
 		_ctCollection = ctCollection;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntry = ctEntry;
 		_ctEntryLocalService = ctEntryLocalService;
+		_httpServletRequest = httpServletRequest;
+		_httpServletResponse = httpServletResponse;
 		_language = language;
 		_name = name;
 	}
@@ -84,14 +85,14 @@ public class CTEntryDiffDisplay {
 					_getCTSQLMode(_ctEntry.getCtCollectionId()))) {
 
 				_ctDisplayRendererRegistry.renderCTEntry(
-					_ctCollection.getCtCollectionId(), _ctEntry,
-					_httpServletRequest, _httpServletResponse);
+					_httpServletRequest, _httpServletResponse,
+					_ctCollection.getCtCollectionId(), _ctEntry);
 			}
 		}
 		else {
 			_ctDisplayRendererRegistry.renderCTEntry(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, _ctEntry,
-				_httpServletRequest, _httpServletResponse);
+				_httpServletRequest, _httpServletResponse,
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, _ctEntry);
 		}
 	}
 
@@ -104,14 +105,14 @@ public class CTEntryDiffDisplay {
 					_getCTSQLMode(ctCollectionId))) {
 
 				_ctDisplayRendererRegistry.renderCTEntry(
-					ctCollectionId, _ctEntry, _httpServletRequest,
-					_httpServletResponse);
+					_httpServletRequest, _httpServletResponse, ctCollectionId,
+					_ctEntry);
 			}
 		}
 		else {
 			_ctDisplayRendererRegistry.renderCTEntry(
-				_ctCollection.getCtCollectionId(), _ctEntry,
-				_httpServletRequest, _httpServletResponse);
+				_httpServletRequest, _httpServletResponse,
+				_ctCollection.getCtCollectionId(), _ctEntry);
 		}
 	}
 

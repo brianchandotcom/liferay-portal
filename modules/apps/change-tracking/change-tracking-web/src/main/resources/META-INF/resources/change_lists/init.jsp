@@ -19,5 +19,9 @@
 <%
 ChangeListsDisplayContext changeListsDisplayContext = (ChangeListsDisplayContext)request.getAttribute(CTWebKeys.CHANGE_LISTS_DISPLAY_CONTEXT);
 
-CTDisplayRendererRegistry ctDisplayRendererRegistry = changeListsDisplayContext.getCtDisplayRendererRegistry();
+CTDisplayRendererRegistry ctDisplayRendererRegistry = null;
+
+if (changeListsDisplayContext != null) {
+	ctDisplayRendererRegistry = changeListsDisplayContext.getCtDisplayRendererRegistry();
+}
 %>

@@ -30,11 +30,11 @@ import com.liferay.portal.spring.transaction.TransactionExecutor;
 
 import java.io.Serializable;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -55,43 +55,23 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class BasePersistenceRegistry {
 
-	public <T extends BaseModel<T>> Collection<T> fetchBaseModels(
+	public <T extends BaseModel<T>> T fetchBaseModel(
+		long classNameId, long primaryKey) {
+
+		return _applyBasePersistence(
+			classNameId,
+			basePersistence -> (T)basePersistence.fetchByPrimaryKey(
+				primaryKey));
+	}
+
+	public <T extends BaseModel<T>> Map<Serializable, T> fetchBaseModelMap(
 		long classNameId, List<Long> primaryKeys) {
 
-		TableReferenceDefinition<?> tableReferenceDefinition =
-			_tableReferenceDefinitionServiceTrackerMap.getService(classNameId);
-
-		BasePersistence<T> basePersistence =
-			(BasePersistence<T>)tableReferenceDefinition.getBasePersistence();
-
-		TransactionExecutor transactionExecutor = _portalTransactionExecutor;
-
-		Bundle bundle = FrameworkUtil.getBundle(basePersistence.getClass());
-
-		if (bundle != null) {
-			transactionExecutor = _transactionExecutorMap.get(
-				bundle.getBundleId());
-
-			if (transactionExecutor == null) {
-				throw new IllegalStateException(
-					"No TransactionExecutor for " + tableReferenceDefinition);
-			}
-		}
-
-		try {
-			return transactionExecutor.execute(
-				_transactionAttributeAdapter,
-				() -> {
-					Map<Serializable, T> map =
-						basePersistence.fetchByPrimaryKeys(
-							new HashSet<>(primaryKeys));
-
-					return map.values();
-				});
-		}
-		catch (Throwable throwable) {
-			return ReflectionUtil.throwException(throwable);
-		}
+		return _applyBasePersistence(
+			classNameId,
+			basePersistence ->
+				(Map<Serializable, T>)basePersistence.fetchByPrimaryKeys(
+					new HashSet<>(primaryKeys)));
 	}
 
 	@Activate
@@ -123,6 +103,39 @@ public class BasePersistenceRegistry {
 		_tableReferenceDefinitionServiceTrackerMap.close();
 
 		_transactionExecutorServiceTracker.close();
+	}
+
+	private <T extends BaseModel<T>, R> R _applyBasePersistence(
+		long classNameId, Function<BasePersistence<T>, R> function) {
+
+		TableReferenceDefinition<?> tableReferenceDefinition =
+			_tableReferenceDefinitionServiceTrackerMap.getService(classNameId);
+
+		BasePersistence<T> basePersistence =
+			(BasePersistence<T>)tableReferenceDefinition.getBasePersistence();
+
+		TransactionExecutor transactionExecutor = _portalTransactionExecutor;
+
+		Bundle bundle = FrameworkUtil.getBundle(basePersistence.getClass());
+
+		if (bundle != null) {
+			transactionExecutor = _transactionExecutorMap.get(
+				bundle.getBundleId());
+
+			if (transactionExecutor == null) {
+				throw new IllegalStateException(
+					"No TransactionExecutor for " + tableReferenceDefinition);
+			}
+		}
+
+		try {
+			return transactionExecutor.execute(
+				_transactionAttributeAdapter,
+				() -> function.apply(basePersistence));
+		}
+		catch (Throwable throwable) {
+			return ReflectionUtil.throwException(throwable);
+		}
 	}
 
 	private static final TransactionExecutor _portalTransactionExecutor =

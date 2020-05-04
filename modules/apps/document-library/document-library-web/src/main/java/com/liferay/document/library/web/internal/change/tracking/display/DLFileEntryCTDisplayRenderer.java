@@ -78,6 +78,11 @@ public class DLFileEntryCTDisplayRenderer
 	}
 
 	@Override
+	public String getTitle(Locale locale, DLFileEntry dlFileEntry) {
+		return dlFileEntry.getTitle();
+	}
+
+	@Override
 	public String getTypeName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, DLFileEntryCTDisplayRenderer.class);

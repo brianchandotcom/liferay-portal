@@ -76,19 +76,7 @@ public class ResourcePermissionCTDisplayRenderer
 	}
 
 	@Override
-	public String getTypeName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, ResourcePermissionCTDisplayRenderer.class);
-
-		return _language.get(
-			resourceBundle,
-			"model.resource.com.liferay.portal.kernel.model." +
-				"ResourcePermission");
-	}
-
-	@Override
-	public String getTypeName(
-			Locale locale, ResourcePermission resourcePermission)
+	public String getTitle(Locale locale, ResourcePermission resourcePermission)
 		throws PortalException {
 
 		List<String> arguments = new ArrayList<>(4);
@@ -180,6 +168,17 @@ public class ResourcePermissionCTDisplayRenderer
 				resourceBundle, "x-permissions-for-x-x-x",
 				arguments.toArray(new String[0]), false);
 		}
+	}
+
+	@Override
+	public String getTypeName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, ResourcePermissionCTDisplayRenderer.class);
+
+		return _language.get(
+			resourceBundle,
+			"model.resource.com.liferay.portal.kernel.model." +
+				"ResourcePermission");
 	}
 
 	@Override

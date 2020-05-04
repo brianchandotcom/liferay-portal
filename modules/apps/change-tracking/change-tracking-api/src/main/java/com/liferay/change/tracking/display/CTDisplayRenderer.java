@@ -31,13 +31,9 @@ public interface CTDisplayRenderer<T> {
 
 	public Class<T> getModelClass();
 
+	public String getTitle(Locale locale, T model) throws PortalException;
+
 	public String getTypeName(Locale locale);
-
-	public default String getTypeName(Locale locale, T model)
-		throws PortalException {
-
-		return getTypeName(locale);
-	}
 
 	public void render(
 			HttpServletRequest httpServletRequest,

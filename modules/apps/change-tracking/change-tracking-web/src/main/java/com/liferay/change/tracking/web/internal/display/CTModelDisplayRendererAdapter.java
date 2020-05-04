@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.web.internal.display;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
@@ -34,17 +35,22 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 	implements CTDisplayRenderer<T> {
 
 	@SuppressWarnings("unchecked")
-	public static <T> CTDisplayRenderer<T> getInstance() {
+	public static <T extends BaseModel<T>> CTDisplayRenderer<T> getInstance() {
 		return (CTDisplayRenderer<T>)_INSTANCE;
 	}
 
 	@Override
-	public String getEditURL(HttpServletRequest httpServletRequest, T ctModel) {
+	public String getEditURL(HttpServletRequest httpServletRequest, T model) {
 		return null;
 	}
 
 	@Override
 	public Class<T> getModelClass() {
+		return null;
+	}
+
+	@Override
+	public String getTitle(Locale locale, T model) throws PortalException {
 		return null;
 	}
 
@@ -56,7 +62,7 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, T ctModel)
+			HttpServletResponse httpServletResponse, T model)
 		throws Exception {
 
 		Writer writer = httpServletResponse.getWriter();
@@ -64,7 +70,7 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 		writer.write("<div class=\"table-responsive\"><table class=\"table\">");
 
 		Map<String, Function<T, Object>> attributeGetterFunctions =
-			ctModel.getAttributeGetterFunctions();
+			model.getAttributeGetterFunctions();
 
 		for (Map.Entry<String, Function<T, Object>> entry :
 				attributeGetterFunctions.entrySet()) {
@@ -75,7 +81,7 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 			writer.write(entry.getKey());
 			writer.write("</td><td>");
 
-			Object attributeValue = function.apply(ctModel);
+			Object attributeValue = function.apply(model);
 
 			if (attributeValue instanceof String) {
 				writer.write(HtmlUtil.escape(attributeValue.toString()));

@@ -89,7 +89,8 @@ portletDisplay.setURLBack(backURL);
 								</div>
 
 								<div class="autofit-col-expand">
-									<p class="entry-title text-muted"><%= ctDisplayRendererRegistry.getEntryTitle(ctEntry, request) %></p>
+									<p class="entry-title text-muted"><%= HtmlUtil.escape(ctDisplayRendererRegistry.getEntryDescription(
+										request, ctEntry)) %></p>
 
 									<div>
 										<div class="alert alert-success autofit-row" role="alert">
@@ -187,7 +188,8 @@ portletDisplay.setURLBack(backURL);
 								</div>
 
 								<div class="autofit-col-expand">
-									<p class="entry-title text-muted"><%= ctDisplayRendererRegistry.getEntryTitle(ctEntry, request) %></p>
+									<p class="entry-title text-muted"><%= HtmlUtil.escape(ctDisplayRendererRegistry.getEntryDescription(
+										request, ctEntry)) %></p>
 
 									<div>
 										<div class="alert alert-warning autofit-row" role="alert">

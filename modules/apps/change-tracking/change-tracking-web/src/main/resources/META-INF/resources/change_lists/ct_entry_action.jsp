@@ -64,7 +64,7 @@ CTCollection ctCollection = viewChangesDisplayContext.getCtCollection();
 
 			<liferay-ui:icon
 				message="view-diff"
-				url='<%= StringBundler.concat("javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, title: '", ctDisplayRendererRegistry.getEntryTitle(ctEntry, request), "', uri: '", diffURL.toString(), "'});") %>'
+				url='<%= StringBundler.concat("javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, title: '", HtmlUtil.escapeJS(ctDisplayRendererRegistry.getEntryDescription(request, ctEntry)), "', uri: '", diffURL.toString(), "'});") %>'
 			/>
 		</c:otherwise>
 	</c:choose>

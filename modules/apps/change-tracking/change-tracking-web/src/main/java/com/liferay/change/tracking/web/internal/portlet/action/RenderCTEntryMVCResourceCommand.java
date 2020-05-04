@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -40,12 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/render_tree_view_entry"
+		"mvc.command.name=/change_lists/render_ct_entry"
 	},
 	service = MVCResourceCommand.class
 )
-public class RenderTreeViewEntryMVCResourceCommand
-	extends BaseMVCResourceCommand {
+public class RenderCTEntryMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -60,24 +56,18 @@ public class RenderTreeViewEntryMVCResourceCommand
 		throws Exception {
 
 		long ctCollectionId = ParamUtil.getLong(
-			resourceRequest, "ctCollectionId");
+			resourceRequest, "ctCollectionId",
+			CTConstants.CT_COLLECTION_ID_PRODUCTION);
 		long modelClassNameId = ParamUtil.getLong(
 			resourceRequest, "modelClassNameId");
 		long modelClassPK = ParamUtil.getLong(resourceRequest, "modelClassPK");
 
-		T model = null;
+		T model = (T)_ctDisplayRendererRegistry.fetchCTModel(
+			ctCollectionId, modelClassNameId, modelClassPK);
 
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			_ctDisplayRendererRegistry.fetchCTModel(
-				ctCollectionId, modelClassNameId, modelClassPK);
-		}
-		else {
-			Collection<T> baseModels = _basePersistenceRegistry.fetchBaseModels(
-				modelClassNameId, Arrays.asList(modelClassPK));
-
-			for (T baseModel : baseModels) {
-				model = baseModel;
-			}
+		if (model == null) {
+			model = _basePersistenceRegistry.fetchBaseModel(
+				modelClassNameId, modelClassPK);
 		}
 
 		_ctDisplayRendererRegistry.renderCTEntry(

@@ -20,9 +20,6 @@ import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistr
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -52,21 +49,12 @@ public class ViewEntryDisplayContext {
 		long modelClassPK = ParamUtil.getLong(
 			httpServletRequest, "modelClassPK");
 
-		T model = null;
+		T model = (T)_ctDisplayRendererRegistry.fetchCTModel(
+			ctCollectionId, modelClassNameId, modelClassPK);
 
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			Collection<T> baseModels = _basePersistenceRegistry.fetchBaseModels(
-				modelClassNameId, Arrays.asList(modelClassPK));
-
-			for (T baseModel : baseModels) {
-				model = baseModel;
-
-				break;
-			}
-		}
-		else {
-			model = (T)_ctDisplayRendererRegistry.fetchCTModel(
-				ctCollectionId, modelClassNameId, modelClassPK);
+		if (model == null) {
+			model = _basePersistenceRegistry.fetchBaseModel(
+				modelClassNameId, modelClassPK);
 		}
 
 		_ctDisplayRendererRegistry.renderCTEntry(

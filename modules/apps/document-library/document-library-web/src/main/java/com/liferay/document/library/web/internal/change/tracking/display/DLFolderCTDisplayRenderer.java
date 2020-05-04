@@ -79,6 +79,11 @@ public class DLFolderCTDisplayRenderer implements CTDisplayRenderer<DLFolder> {
 	}
 
 	@Override
+	public String getTitle(Locale locale, DLFolder dlFolder) {
+		return dlFolder.getName();
+	}
+
+	@Override
 	public String getTypeName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, DLFolderCTDisplayRenderer.class);

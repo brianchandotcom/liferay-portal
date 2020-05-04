@@ -38,10 +38,14 @@
 
 .change-lists-diff-table-wrapper table {
 	border-collapse: collapse;
+	table-layout: fixed;
+	width: 100%;
+	word-wrap: break-word;
 
 	.change-lists-diff-td {
 		border-left: solid 1px #e7e7ed;
 		border-right: solid 1px #e7e7ed;
+		vertical-align: top;
 	}
 }
 
@@ -60,6 +64,10 @@
 .view-tree-change-list-wrapper {
 	.breadcrumb {
 		margin-bottom: 0;
+	}
+
+	.panel-body {
+		margin-top: 16px;
 	}
 
 	.sheet {

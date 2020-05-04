@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.change.tracking.web.internal.display.company;
+package com.liferay.change.tracking.web.internal.display.user;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Writer;
 
@@ -36,25 +36,27 @@ import org.osgi.service.component.annotations.Reference;
  * @author Samuel Trong Tran
  */
 @Component(immediate = true, service = CTDisplayRenderer.class)
-public class CompanyCTDisplayRenderer implements CTDisplayRenderer<Company> {
+public class UserCTDisplayRenderer implements CTDisplayRenderer<User> {
 
 	@Override
-	public String getEditURL(
-		HttpServletRequest httpServletRequest, Company company) {
-
+	public String getEditURL(HttpServletRequest httpServletRequest, User user) {
 		return null;
 	}
 
 	@Override
-	public Class<Company> getModelClass() {
-		return Company.class;
+	public Class<User> getModelClass() {
+		return User.class;
 	}
 
 	@Override
-	public String getTitle(Locale locale, Company company)
-		throws PortalException {
+	public String getTitle(Locale locale, User user) {
+		String title = user.getFullName();
 
-		return company.getName();
+		if (Validator.isNotNull(title)) {
+			return title;
+		}
+
+		return user.getScreenName();
 	}
 
 	@Override
@@ -62,25 +64,35 @@ public class CompanyCTDisplayRenderer implements CTDisplayRenderer<Company> {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return _language.get(resourceBundle, "company");
+		return _language.get(
+			resourceBundle,
+			"model.resource.com.liferay.portal.kernel.model.User");
 	}
 
 	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Company company)
+			HttpServletResponse httpServletResponse, User user)
 		throws Exception {
 
 		Writer writer = httpServletResponse.getWriter();
 
 		writer.write("<p><b>");
-		writer.write(_language.get(httpServletRequest, "company-id"));
+		writer.write(_language.get(httpServletRequest, "user-id"));
 		writer.write("</b>: ");
-		writer.write(String.valueOf(company.getCompanyId()));
+		writer.write(String.valueOf(user.getUserId()));
 		writer.write("</p><p><b>");
 		writer.write(_language.get(httpServletRequest, "name"));
 		writer.write("</b>: ");
-		writer.write(HtmlUtil.escape(company.getName()));
+		writer.write(HtmlUtil.escape(user.getFullName()));
+		writer.write("</p><p><b>");
+		writer.write(_language.get(httpServletRequest, "screen-name"));
+		writer.write("</b>: ");
+		writer.write(HtmlUtil.escape(user.getScreenName()));
+		writer.write("</p><p><b>");
+		writer.write(_language.get(httpServletRequest, "email-address"));
+		writer.write("</b>: ");
+		writer.write(user.getEmailAddress());
 		writer.write("</p>");
 	}
 

@@ -22,15 +22,14 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,46 +43,40 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/view_diff"
+		"mvc.command.name=/change_lists/render_diff"
 	},
-	service = MVCRenderCommand.class
+	service = MVCResourceCommand.class
 )
-public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
+public class RenderDiffMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
 
-		try {
-			long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
+		long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");
 
-			CTEntry ctEntry = _ctEntryLocalService.getCTEntry(ctEntryId);
+		CTEntry ctEntry = _ctEntryLocalService.getCTEntry(ctEntryId);
 
-			CTCollection ctCollection =
-				_ctCollectionLocalService.getCTCollection(
-					ctEntry.getCtCollectionId());
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			ctEntry.getCtCollectionId());
 
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
 
-			String name = _ctDisplayRendererRegistry.getTitle(
-				ctEntry, _portal.getLocale(httpServletRequest));
+		String name = _ctDisplayRendererRegistry.getTitle(
+			ctEntry, _portal.getLocale(httpServletRequest));
 
-			CTEntryDiffDisplay ctEntryDiffDisplay = new CTEntryDiffDisplay(
-				ctCollection, _ctDisplayRendererRegistry, ctEntry,
-				_ctEntryLocalService, httpServletRequest,
-				_portal.getHttpServletResponse(renderResponse), _language,
-				name);
+		CTEntryDiffDisplay ctEntryDiffDisplay = new CTEntryDiffDisplay(
+			ctCollection, _ctDisplayRendererRegistry, ctEntry,
+			_ctEntryLocalService, httpServletRequest,
+			_portal.getHttpServletResponse(resourceResponse), _language, name);
 
-			renderRequest.setAttribute(
-				CTWebKeys.CT_ENTRY_DIFF_DISPLAY, ctEntryDiffDisplay);
+		resourceRequest.setAttribute(
+			CTWebKeys.CT_ENTRY_DIFF_DISPLAY, ctEntryDiffDisplay);
 
-			return "/change_lists/view_diff.jsp";
-		}
-		catch (PortalException portalException) {
-			throw new PortletException(portalException);
-		}
+		include(
+			resourceRequest, resourceResponse, "/change_lists/render_diff.jsp");
 	}
 
 	@Reference

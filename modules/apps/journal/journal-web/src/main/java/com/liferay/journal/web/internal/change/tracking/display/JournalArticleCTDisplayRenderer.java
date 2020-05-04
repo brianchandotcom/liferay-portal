@@ -84,6 +84,11 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
+	public String getTitle(Locale locale, JournalArticle journalArticle) {
+		return journalArticle.getTitle(locale);
+	}
+
+	@Override
 	public String getTypeName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, JournalArticleCTDisplayRenderer.class);

@@ -54,11 +54,12 @@ ViewChangesManagementToolbarDisplayContext viewChangesManagementToolbarDisplayCo
 				name="change"
 			>
 				<div class="change-list-name">
-					<%= ctDisplayRendererRegistry.getTypeName(ctEntry, locale) %>
+					<%= HtmlUtil.escape(ctDisplayRendererRegistry.getTitle(ctEntry, locale)) %>
 				</div>
 
 				<div class="change-list-description">
-					<%= ctDisplayRendererRegistry.getEntryTitle(ctEntry, request) %>
+					<%= HtmlUtil.escape(ctDisplayRendererRegistry.getEntryDescription(
+						request, ctEntry)) %>
 				</div>
 			</liferay-ui:search-container-column-text>
 
@@ -81,6 +82,7 @@ ViewChangesManagementToolbarDisplayContext viewChangesManagementToolbarDisplayCo
 
 		<liferay-ui:search-iterator
 			markupView="lexicon"
+			resultRowSplitter="<%= viewChangesDisplayContext.getResultRowSplitter() %>"
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>

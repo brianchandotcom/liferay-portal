@@ -21,43 +21,8 @@
 </liferay-portlet:renderURL>
 
 <%
-CTEntryDiffDisplay ctEntryDiffDisplay = (CTEntryDiffDisplay)request.getAttribute(CTWebKeys.CT_ENTRY_DIFF_DISPLAY);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 %>
 
-<div class="change-lists-diff-table-wrapper">
-	<table class="table table-autofit">
-		<tr class="table-divider">
-			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_ADDITION) %>">
-				<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getLeftTitle()) %></td>
-			</c:if>
-
-			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION) %>">
-				<td class="change-lists-diff-td"><%= HtmlUtil.escape(ctEntryDiffDisplay.getRightTitle()) %></td>
-			</c:if>
-		</tr>
-		<tr>
-			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_ADDITION) %>">
-				<td class="change-lists-diff-td">
-
-					<%
-					ctEntryDiffDisplay.renderLeftCTRow();
-					%>
-
-				</td>
-			</c:if>
-
-			<c:if test="<%= !ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION) %>">
-				<td class="change-lists-diff-td">
-
-					<%
-					ctEntryDiffDisplay.renderRightCTRow();
-					%>
-
-				</td>
-			</c:if>
-		</tr>
-	</table>
-</div>
+<liferay-util:include page="/change_lists/render_diff.jsp" servletContext="<%= application %>" />

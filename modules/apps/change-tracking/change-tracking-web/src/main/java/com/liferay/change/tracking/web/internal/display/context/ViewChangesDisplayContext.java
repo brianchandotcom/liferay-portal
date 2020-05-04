@@ -14,21 +14,22 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.reference.closure.CTClosure;
 import com.liferay.change.tracking.reference.closure.CTClosureFactory;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
+import com.liferay.change.tracking.web.internal.dao.search.CTEntryResultRowSplitter;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
+import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,15 +49,17 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Stack;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -72,6 +75,7 @@ public class ViewChangesDisplayContext {
 	public ViewChangesDisplayContext(
 		BasePersistenceRegistry basePersistenceRegistry,
 		CTClosureFactory ctClosureFactory, CTCollection ctCollection,
+		CTConfiguration ctConfiguration,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService, Language language,
 		Portal portal, RenderRequest renderRequest,
@@ -80,6 +84,7 @@ public class ViewChangesDisplayContext {
 		_basePersistenceRegistry = basePersistenceRegistry;
 		_ctClosureFactory = ctClosureFactory;
 		_ctCollection = ctCollection;
+		_ctConfiguration = ctConfiguration;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 
 		_ctEntryLocalService = ctEntryLocalService;
@@ -136,11 +141,11 @@ public class ViewChangesDisplayContext {
 		return ParamUtil.getLong(_renderRequest, "modelClassPK");
 	}
 
-	public Map<String, Object> getReactData() throws PortalException {
+	public Map<String, Object> getReactData() {
 		return HashMapBuilder.<String, Object>put(
-			"headerTitles",
-			() -> JSONUtil.put(
-				"change", _language.get(_httpServletRequest, "change"))
+			"displayTitles",
+			JSONUtil.put(
+				"everything", _language.get(_httpServletRequest, "everything"))
 		).put(
 			"spritemap",
 			() -> {
@@ -153,6 +158,11 @@ public class ViewChangesDisplayContext {
 		).put(
 			"tree", _getTreeJsonObject()
 		).build();
+	}
+
+	public CTEntryResultRowSplitter getResultRowSplitter() {
+		return new CTEntryResultRowSplitter(
+			_ctDisplayRendererRegistry, _httpServletRequest.getLocale());
 	}
 
 	public SearchContainer<CTEntry> getSearchContainer() {
@@ -209,27 +219,6 @@ public class ViewChangesDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public String getTreeViewChildURL(CTEntry ctEntry) throws PortletException {
-		CTClosure ctClosure = _getCTClosure();
-
-		Map<Long, List<Long>> childPKsMap = ctClosure.getChildPKsMap(
-			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
-
-		if (childPKsMap.isEmpty()) {
-			return null;
-		}
-
-		PortletURL currentURL = PortletURLUtil.clone(
-			_getCurrentURLObj(), _renderResponse);
-
-		currentURL.setParameter(
-			"modelClassNameId", String.valueOf(ctEntry.getModelClassNameId()));
-		currentURL.setParameter(
-			"modelClassPK", String.valueOf(ctEntry.getModelClassPK()));
-
-		return currentURL.toString();
-	}
-
 	public List<NavigationItem> getViewNavigationItems() {
 		if (!hasChanges()) {
 			return NavigationItemListBuilder.add(
@@ -282,6 +271,141 @@ public class ViewChangesDisplayContext {
 		return false;
 	}
 
+	private <T extends BaseModel<T>> void _addChildClassJSONObjects(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, long childClassNameId,
+		List<Long> childClassPKs, List<JSONObject> childJSONObjects,
+		List<JSONObject> rootDisplayNodes) {
+
+		Map<Serializable, T> baseModelMap =
+			_basePersistenceRegistry.fetchBaseModelMap(
+				childClassNameId, childClassPKs);
+		Map<Serializable, CTEntry> ctEntryMap = _getCTEntryMap(
+			childClassNameId);
+
+		for (long childClassPK : childClassPKs) {
+			long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+
+			CTEntry ctEntry = ctEntryMap.get(childClassPK);
+
+			if ((ctEntry != null) &&
+				(ctEntry.getChangeType() !=
+					CTConstants.CT_CHANGE_TYPE_DELETION)) {
+
+				ctCollectionId = _ctCollection.getCtCollectionId();
+			}
+
+			T baseModel = baseModelMap.get(childClassPK);
+
+			if (baseModel == null) {
+				baseModel = (T)_ctDisplayRendererRegistry.fetchCTModel(
+					ctCollectionId, childClassNameId, childClassPK);
+			}
+
+			String title = _ctDisplayRendererRegistry.getTitle(
+				_renderRequest.getLocale(), baseModel, childClassNameId);
+
+			JSONObject childJSONObject = JSONUtil.put(
+				"modelClassNameId", childClassNameId
+			).put(
+				"modelClassPK", childClassPK
+			).put(
+				"title", title
+			).put(
+				"typeName", _getTypeName(childClassNameId)
+			);
+
+			JSONArray dropdownItemsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+			ResourceURL renderURL = _renderResponse.createResourceURL();
+
+			if (ctEntry != null) {
+				childJSONObject.put(
+					"description",
+					_ctDisplayRendererRegistry.getEntryDescription(
+						_httpServletRequest, ctEntry));
+
+				String editURL = _ctDisplayRendererRegistry.getEditURL(
+					_httpServletRequest, ctEntry);
+
+				if (Validator.isNotNull(editURL)) {
+					dropdownItemsJSONArray.put(
+						JSONUtil.put(
+							"href", editURL
+						).put(
+							"label", _language.get(_httpServletRequest, "edit")
+						));
+				}
+
+				dropdownItemsJSONArray.put(
+					JSONUtil.put(
+						"href",
+						_ctDisplayRendererRegistry.getViewURL(
+							liferayPortletRequest, liferayPortletResponse,
+							ctEntry, true)
+					).put(
+						"label", _language.get(_httpServletRequest, "view-diff")
+					));
+
+				renderURL.setResourceID("/change_lists/render_diff");
+
+				renderURL.setParameter(
+					"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+			}
+			else {
+				dropdownItemsJSONArray.put(
+					JSONUtil.put(
+						"href",
+						_ctDisplayRendererRegistry.getViewURL(
+							liferayPortletRequest, liferayPortletResponse,
+							ctCollectionId, childClassNameId, childClassPK,
+							title)
+					).put(
+						"label", _language.get(_httpServletRequest, "view")
+					));
+
+				renderURL.setResourceID("/change_lists/render_ct_entry");
+
+				renderURL.setParameter(
+					"ctCollectionId", String.valueOf(ctCollectionId));
+				renderURL.setParameter(
+					"modelClassNameId", String.valueOf(childClassNameId));
+				renderURL.setParameter(
+					"modelClassPK", String.valueOf(childClassPK));
+			}
+
+			childJSONObject.put(
+				"dropdownItems", dropdownItemsJSONArray
+			).put(
+				"id", _nodeIdCounter++
+			).put(
+				"renderURL", renderURL.toString()
+			);
+
+			childJSONObjects.add(childJSONObject);
+
+			if (rootDisplayNodes != null) {
+				_addRootDisplayNode(childJSONObject, rootDisplayNodes);
+			}
+		}
+	}
+
+	private void _addRootDisplayNode(
+		JSONObject node, List<JSONObject> rootDisplayNodes) {
+
+		for (JSONObject rootDisplayNode : rootDisplayNodes) {
+			if ((rootDisplayNode.getLong("modelClassNameId") == node.getLong(
+					"modelClassNameId")) &&
+				(rootDisplayNode.getLong("modelClassPK") == node.getLong(
+					"modelClassPK"))) {
+
+				return;
+			}
+		}
+
+		rootDisplayNodes.add(node);
+	}
+
 	private CTClosure _getCTClosure() {
 		if (_ctClosure != null) {
 			return _ctClosure;
@@ -293,15 +417,17 @@ public class ViewChangesDisplayContext {
 		return _ctClosure;
 	}
 
-	private PortletURL _getCurrentURLObj() {
-		if (_currentURLObj != null) {
-			return _currentURLObj;
+	private Map<Serializable, CTEntry> _getCTEntryMap(long classNameId) {
+		Map<Serializable, CTEntry> ctEntryMap = new HashMap<>();
+
+		for (CTEntry ctEntry :
+				_ctEntryLocalService.getCTEntries(
+					_ctCollection.getCtCollectionId(), classNameId)) {
+
+			ctEntryMap.put(ctEntry.getModelClassPK(), ctEntry);
 		}
 
-		_currentURLObj = PortletURLUtil.getCurrent(
-			_renderRequest, _renderResponse);
-
-		return _currentURLObj;
+		return ctEntryMap;
 	}
 
 	private String _getOrderByCol() {
@@ -316,25 +442,68 @@ public class ViewChangesDisplayContext {
 			"desc");
 	}
 
-	private JSONObject _getTreeJsonObject() throws PortalException {
+	private JSONObject _getTreeJsonObject() {
 		CTClosure ctClosure = _getCTClosure();
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(_renderRequest);
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(_renderResponse);
 
-		int nodeIdCounter = 1;
+		JSONObject everythingJSONObject = JSONUtil.put(
+			"id", 0
+		).put(
+			"title", _language.get(_httpServletRequest, "home")
+		);
 
-		JSONObject treeJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONArray rootDisplayClassesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		JSONObject treeJSONObject = JSONUtil.put(
+			"everything", everythingJSONObject
+		).put(
+			"rootDisplayClasses", rootDisplayClassesJSONArray
+		);
+
+		Map<Long, List<JSONObject>> rootDisplayMap = new LinkedHashMap<>();
+
+		for (String className : _ctConfiguration.rootDisplayClassNames()) {
+			long classNameId = _portal.getClassNameId(className);
+
+			List<JSONObject> rootNodes = new ArrayList<>();
+
+			rootDisplayMap.put(classNameId, rootNodes);
+
+			String typeName = _getTypeName(classNameId);
+
+			rootDisplayClassesJSONArray.put(typeName);
+		}
+
+		for (String childClassName :
+				_ctConfiguration.rootDisplayChildClassNames()) {
+
+			for (long parentClassNameId :
+					CTClosureUtil.getParentClassNameIds(
+						ctClosure, _portal.getClassNameId(childClassName))) {
+
+				if (rootDisplayMap.containsKey(parentClassNameId)) {
+					continue;
+				}
+
+				List<JSONObject> rootNodes = new ArrayList<>();
+
+				rootDisplayMap.put(parentClassNameId, rootNodes);
+
+				String typeName = _getTypeName(parentClassNameId);
+
+				rootDisplayClassesJSONArray.put(typeName);
+			}
+		}
+
+		_nodeIdCounter = 1;
 
 		Stack<JSONObject> stack = new Stack<>();
 
-		stack.push(
-			treeJSONObject.put(
-				"id", 0
-			).put(
-				"title", _language.get(_httpServletRequest, "home")
-			));
+		stack.push(everythingJSONObject);
 
 		while (!stack.isEmpty()) {
 			Map<Long, List<Long>> childPKsMap = null;
@@ -349,155 +518,80 @@ public class ViewChangesDisplayContext {
 					stackJSONObject.getLong("modelClassPK"));
 			}
 
-			if (!childPKsMap.isEmpty()) {
-				List<JSONObject> childJSONObjects = new ArrayList<>();
-
-				List<Long> childClassNameIds = new ArrayList<>(
-					childPKsMap.keySet());
-
-				for (long childClassNameId : childClassNameIds) {
-					_putChildClassJSONObjects(
-						childClassNameId, childJSONObjects,
-						childPKsMap.get(childClassNameId),
-						liferayPortletRequest, liferayPortletResponse);
-				}
-
-				childJSONObjects.sort(new SortJSONObjectsByTitle());
-
-				JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
-
-				for (JSONObject childJSONObject : childJSONObjects) {
-					childJSONObject.put("id", nodeIdCounter++);
-
-					childrenJSONArray.put(childJSONObject);
-
-					stack.push(childJSONObject);
-				}
-
-				if (childrenJSONArray.length() > 0) {
-					stackJSONObject.put("children", childrenJSONArray);
-				}
+			if (childPKsMap.isEmpty()) {
+				continue;
 			}
+
+			List<JSONObject> childJSONObjects = new ArrayList<>();
+
+			for (Map.Entry<Long, List<Long>> entry : childPKsMap.entrySet()) {
+				_addChildClassJSONObjects(
+					liferayPortletRequest, liferayPortletResponse,
+					entry.getKey(), entry.getValue(), childJSONObjects,
+					rootDisplayMap.get(entry.getKey()));
+			}
+
+			childJSONObjects.sort(new SortJSONObjectsByTitleComparator());
+
+			JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (JSONObject childJSONObject : childJSONObjects) {
+				childrenJSONArray.put(childJSONObject);
+
+				stack.push(childJSONObject);
+			}
+
+			if (childrenJSONArray.length() > 0) {
+				stackJSONObject.put("children", childrenJSONArray);
+			}
+		}
+
+		for (Map.Entry<Long, List<JSONObject>> entry :
+				rootDisplayMap.entrySet()) {
+
+			List<Integer> nodeIds = new ArrayList<>();
+
+			List<JSONObject> roodDisplayNodes = entry.getValue();
+
+			roodDisplayNodes.sort(new SortJSONObjectsByTitleComparator());
+
+			for (JSONObject rootDisplayNode : roodDisplayNodes) {
+				nodeIds.add(rootDisplayNode.getInt("id"));
+			}
+
+			String typeName = _getTypeName(entry.getKey());
+
+			treeJSONObject.put(typeName, nodeIds);
 		}
 
 		return treeJSONObject;
 	}
 
-	private <T extends BaseModel<T>> void _putChildClassJSONObjects(
-		long childClassNameId, List<JSONObject> childJSONObjects,
-		List<Long> childPKs, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					_ctCollection.getCtCollectionId())) {
-
-			Collection<T> baseModels = _basePersistenceRegistry.fetchBaseModels(
-				childClassNameId, childPKs);
-
-			for (T baseModel : baseModels) {
-				long childClassPK = (long)baseModel.getPrimaryKeyObj();
-
-				ResourceURL renderURL = _renderResponse.createResourceURL();
-
-				renderURL.setResourceID("/change_lists/render_tree_view_entry");
-				renderURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(_ctCollection.getCtCollectionId()));
-				renderURL.setParameter(
-					"modelClassNameId", String.valueOf(childClassNameId));
-				renderURL.setParameter(
-					"modelClassPK", String.valueOf(childClassPK));
-
-				JSONObject childJSONObject = JSONUtil.put(
-					"modelClassNameId", childClassNameId
-				).put(
-					"modelClassPK", childClassPK
-				).put(
-					"renderURL", renderURL.toString()
-				).put(
-					"title",
-					_ctDisplayRendererRegistry.getTypeName(
-						_renderRequest.getLocale(), baseModel, childClassNameId)
-				);
-
-				JSONArray dropdownItemsJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
-					_ctCollection.getCtCollectionId(), childClassNameId,
-					childClassPK);
-
-				if (ctEntry != null) {
-					childJSONObject.put(
-						"ctEntry", "true"
-					).put(
-						"description",
-						_ctDisplayRendererRegistry.getEntryTitle(
-							ctEntry, _httpServletRequest)
-					);
-
-					String editURL = _ctDisplayRendererRegistry.getEditURL(
-						_httpServletRequest, ctEntry);
-
-					if (Validator.isNotNull(editURL)) {
-						dropdownItemsJSONArray.put(
-							JSONUtil.put(
-								"href", editURL
-							).put(
-								"label",
-								_language.get(_httpServletRequest, "edit")
-							));
-					}
-
-					dropdownItemsJSONArray.put(
-						JSONUtil.put(
-							"href",
-							_ctDisplayRendererRegistry.getViewURL(
-								liferayPortletRequest, liferayPortletResponse,
-								ctEntry, true)
-						).put(
-							"label",
-							_language.get(_httpServletRequest, "view-diff")
-						));
-				}
-				else {
-					childJSONObject.put("ctEntry", "false");
-
-					dropdownItemsJSONArray.put(
-						JSONUtil.put(
-							"href",
-							_ctDisplayRendererRegistry.getViewURL(
-								liferayPortletRequest, liferayPortletResponse,
-								childClassNameId, childClassPK)
-						).put(
-							"label", _language.get(_httpServletRequest, "view")
-						));
-				}
-
-				childJSONObject.put("dropdownItems", dropdownItemsJSONArray);
-
-				childJSONObjects.add(childJSONObject);
-			}
-		}
+	private String _getTypeName(long classNameId) {
+		return _typeNameMap.computeIfAbsent(
+			classNameId,
+			key -> _ctDisplayRendererRegistry.getTypeName(
+				_httpServletRequest.getLocale(), classNameId));
 	}
 
 	private final BasePersistenceRegistry _basePersistenceRegistry;
 	private CTClosure _ctClosure;
 	private final CTClosureFactory _ctClosureFactory;
 	private final CTCollection _ctCollection;
+	private final CTConfiguration _ctConfiguration;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
-	private PortletURL _currentURLObj;
 	private final boolean _hasChanges;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private int _nodeIdCounter;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CTEntry> _searchContainer;
+	private final Map<Long, String> _typeNameMap = new HashMap<>();
 
-	private static class SortJSONObjectsByTitle
+	private static class SortJSONObjectsByTitleComparator
 		implements Comparator<JSONObject> {
 
 		@Override

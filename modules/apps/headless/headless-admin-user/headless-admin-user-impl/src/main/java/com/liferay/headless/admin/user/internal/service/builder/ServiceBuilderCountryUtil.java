@@ -17,34 +17,31 @@ package com.liferay.headless.admin.user.internal.service.builder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.CountryServiceUtil;
 
 import java.util.Optional;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = ServiceBuilderCountryHelper.class)
-public class ServiceBuilderCountryHelper {
+public class ServiceBuilderCountryUtil {
 
-	public Country toServiceBuilderCountry(String addressCountry) {
+	public static Country toServiceBuilderCountry(String addressCountry) {
 		try {
-			Country country = _countryService.fetchCountryByA2(addressCountry);
+			Country country = CountryServiceUtil.fetchCountryByA2(
+				addressCountry);
 
 			if (country != null) {
 				return country;
 			}
 
-			country = _countryService.fetchCountryByA3(addressCountry);
+			country = CountryServiceUtil.fetchCountryByA3(addressCountry);
 
 			if (country != null) {
 				return country;
 			}
 
-			return _countryService.getCountryByName(addressCountry);
+			return CountryServiceUtil.getCountryByName(addressCountry);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -55,11 +52,11 @@ public class ServiceBuilderCountryHelper {
 		return null;
 	}
 
-	public long toServiceBuilderCountryId(String addressCountry) {
+	public static long toServiceBuilderCountryId(String addressCountry) {
 		return Optional.ofNullable(
 			addressCountry
 		).map(
-			this::toServiceBuilderCountry
+			ServiceBuilderCountryUtil::toServiceBuilderCountry
 		).map(
 			Country::getCountryId
 		).orElse(
@@ -68,9 +65,6 @@ public class ServiceBuilderCountryHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ServiceBuilderCountryHelper.class);
-
-	@Reference
-	private CountryService _countryService;
+		ServiceBuilderCountryUtil.class);
 
 }

@@ -15,20 +15,16 @@
 package com.liferay.headless.admin.user.internal.service.builder;
 
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
-import com.liferay.portal.kernel.service.EmailAddressLocalService;
+import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = ServiceBuilderEmailAddressHelper.class)
-public class ServiceBuilderEmailAddressHelper {
+public class ServiceBuilderEmailAddressUtil {
 
-	public com.liferay.portal.kernel.model.EmailAddress
+	public static com.liferay.portal.kernel.model.EmailAddress
 		toServiceBuilderEmailAddress(EmailAddress emailAddress, String type) {
 
 		String address = emailAddress.getEmailAddress();
@@ -39,23 +35,17 @@ public class ServiceBuilderEmailAddressHelper {
 
 		com.liferay.portal.kernel.model.EmailAddress
 			serviceBuilderEmailAddress =
-				_emailAddressLocalService.createEmailAddress(
+				EmailAddressLocalServiceUtil.createEmailAddress(
 					GetterUtil.getLong(emailAddress.getId()));
 
 		serviceBuilderEmailAddress.setAddress(address);
 		serviceBuilderEmailAddress.setTypeId(
-			_serviceBuilderListTypeHelper.toServiceBuilderListTypeId(
+			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
 				"email-address", emailAddress.getType(), type));
 		serviceBuilderEmailAddress.setPrimary(
 			GetterUtil.getBoolean(emailAddress.getPrimary()));
 
 		return serviceBuilderEmailAddress;
 	}
-
-	@Reference
-	private EmailAddressLocalService _emailAddressLocalService;
-
-	@Reference
-	private ServiceBuilderListTypeHelper _serviceBuilderListTypeHelper;
 
 }

@@ -16,20 +16,16 @@ package com.liferay.headless.admin.user.internal.service.builder;
 
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = ServiceBuilderAddressHelper.class)
-public class ServiceBuilderAddressHelper {
+public class ServiceBuilderAddressUtil {
 
-	public Address toServiceBuilderAddress(
+	public static Address toServiceBuilderAddress(
 		PostalAddress postalAddress, String type) {
 
 		String street1 = postalAddress.getStreetAddressLine1();
@@ -37,7 +33,7 @@ public class ServiceBuilderAddressHelper {
 		String street3 = postalAddress.getStreetAddressLine3();
 		String city = postalAddress.getAddressLocality();
 		String zip = postalAddress.getPostalCode();
-		long countryId = _serviceBuilderCountryHelper.toServiceBuilderCountryId(
+		long countryId = ServiceBuilderCountryUtil.toServiceBuilderCountryId(
 			postalAddress.getAddressCountry());
 
 		if (Validator.isNull(street1) && Validator.isNull(street2) &&
@@ -47,7 +43,7 @@ public class ServiceBuilderAddressHelper {
 			return null;
 		}
 
-		Address address = _addressLocalService.createAddress(
+		Address address = AddressLocalServiceUtil.createAddress(
 			GetterUtil.getLong(postalAddress.getId()));
 
 		address.setStreet1(street1);
@@ -56,28 +52,16 @@ public class ServiceBuilderAddressHelper {
 		address.setCity(city);
 		address.setZip(zip);
 		address.setRegionId(
-			_serviceBuilderRegionHelper.getServiceBuilderRegionId(
+			ServiceBuilderRegionUtil.getServiceBuilderRegionId(
 				postalAddress.getAddressRegion(), countryId));
 		address.setCountryId(countryId);
 		address.setTypeId(
-			_serviceBuilderListTypeHelper.toServiceBuilderListTypeId(
+			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
 				"other", postalAddress.getAddressType(), type));
 		address.setMailing(true);
 		address.setPrimary(GetterUtil.getBoolean(postalAddress.getPrimary()));
 
 		return address;
 	}
-
-	@Reference
-	private AddressLocalService _addressLocalService;
-
-	@Reference
-	private ServiceBuilderCountryHelper _serviceBuilderCountryHelper;
-
-	@Reference
-	private ServiceBuilderListTypeHelper _serviceBuilderListTypeHelper;
-
-	@Reference
-	private ServiceBuilderRegionHelper _serviceBuilderRegionHelper;
 
 }

@@ -15,20 +15,16 @@
 package com.liferay.headless.admin.user.internal.service.builder;
 
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
-import com.liferay.portal.kernel.service.PhoneLocalService;
+import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = ServiceBuilderPhoneHelper.class)
-public class ServiceBuilderPhoneHelper {
+public class ServiceBuilderPhoneUtil {
 
-	public com.liferay.portal.kernel.model.Phone toServiceBuilderPhone(
+	public static com.liferay.portal.kernel.model.Phone toServiceBuilderPhone(
 		Phone phone, String type) {
 
 		String number = phone.getPhoneNumber();
@@ -39,23 +35,18 @@ public class ServiceBuilderPhoneHelper {
 		}
 
 		com.liferay.portal.kernel.model.Phone serviceBuilderPhone =
-			_phoneLocalService.createPhone(GetterUtil.getLong(phone.getId()));
+			PhoneLocalServiceUtil.createPhone(
+				GetterUtil.getLong(phone.getId()));
 
 		serviceBuilderPhone.setNumber(number);
 		serviceBuilderPhone.setExtension(extension);
 		serviceBuilderPhone.setTypeId(
-			_serviceBuilderListTypeHelper.toServiceBuilderListTypeId(
+			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
 				"other", phone.getPhoneType(), type));
 		serviceBuilderPhone.setPrimary(
 			GetterUtil.getBoolean(phone.getPrimary()));
 
 		return serviceBuilderPhone;
 	}
-
-	@Reference
-	private PhoneLocalService _phoneLocalService;
-
-	@Reference
-	private ServiceBuilderListTypeHelper _serviceBuilderListTypeHelper;
 
 }

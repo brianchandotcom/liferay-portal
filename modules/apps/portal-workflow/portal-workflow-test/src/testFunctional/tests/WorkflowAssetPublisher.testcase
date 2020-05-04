@@ -163,6 +163,7 @@ definition {
 
 	@priority = "4"
 	test ApproveWebContentPG {
+		property portal.upstream = "quarantine";
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -197,6 +198,8 @@ definition {
 
 	@priority = "4"
 	test RejectBlogsEntryPG {
+		property portal.upstream = "quarantine";
+
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		Blogs.addWithWorkflowViaAP(

@@ -247,7 +247,7 @@ const MillerColumnsItem = ({
 			</a>
 
 			{draggable && (
-				<div className="autofit-col autofit-padded-no-gutters h2 miller-columns-item-drag-handler">
+				<div className="autofit-col miller-columns-item-drag-handler pl-0">
 					<ClayIcon symbol="drag" />
 				</div>
 			)}
@@ -335,7 +335,7 @@ const MillerColumnsItem = ({
 			)}
 
 			{hasChild && (
-				<div className="autofit-col autofit-padded-no-gutters miller-columns-item-child-indicator text-muted">
+				<div className="autofit-col miller-columns-item-child-indicator">
 					<ClayIcon symbol="caret-right" />
 				</div>
 			)}

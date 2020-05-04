@@ -19,7 +19,7 @@
 <liferay-frontend:fieldset-group>
 	<liferay-frontend:fieldset>
 		<clay:row
-			id="ordering"
+			id='<%= renderResponse.getNamespace() + "ordering" %>'
 		>
 			<aui:col width="<%= 50 %>">
 

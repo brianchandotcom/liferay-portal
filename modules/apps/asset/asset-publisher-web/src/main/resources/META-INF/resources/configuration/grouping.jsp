@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:row
-	id="grouping"
+	id='<%= renderResponse.getNamespace() + "grouping" %>'
 >
 	<aui:col width="<%= 30 %>">
 

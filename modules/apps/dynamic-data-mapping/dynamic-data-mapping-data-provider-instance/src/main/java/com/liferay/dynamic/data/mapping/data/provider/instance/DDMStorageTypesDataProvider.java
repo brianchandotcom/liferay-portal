@@ -45,6 +45,8 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 	public DDMDataProviderResponse getData(
 		DDMDataProviderRequest ddmDataProviderRequest) {
 
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
 		Optional<HttpServletRequest> httpServletRequestOptional =
 			ddmDataProviderRequest.getParameterOptional(
 				"httpServletRequest", HttpServletRequest.class);
@@ -54,8 +56,6 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 
 		HttpServletRequest httpServletRequest =
 			httpServletRequestOptional.orElse(null);
-
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		for (String storageType : storageTypes) {
 			if (httpServletRequest == null) {

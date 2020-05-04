@@ -16,27 +16,23 @@ package com.liferay.headless.admin.user.internal.service.builder;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.service.ListTypeLocalService;
-import com.liferay.portal.kernel.service.ListTypeService;
+import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 
 import java.util.Locale;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = ServiceBuilderListTypeHelper.class)
-public class ServiceBuilderListTypeHelper {
+public class ServiceBuilderListTypeUtil {
 
-	public long getServiceBuilderListTypeId(String value, String type) {
-		ListType listType = _listTypeLocalService.addListType(value, type);
+	public static long getServiceBuilderListTypeId(String value, String type) {
+		ListType listType = ListTypeLocalServiceUtil.addListType(value, type);
 
 		return listType.getListTypeId();
 	}
 
-	public String getServiceBuilderListTypeMessage(
+	public static String getServiceBuilderListTypeMessage(
 			long listTypeId, Locale locale)
 		throws Exception {
 
@@ -44,18 +40,18 @@ public class ServiceBuilderListTypeHelper {
 			return null;
 		}
 
-		ListType listType = _listTypeService.getListType(listTypeId);
+		ListType listType = ListTypeServiceUtil.getListType(listTypeId);
 
 		return LanguageUtil.get(locale, listType.getName());
 	}
 
-	public long toServiceBuilderListTypeId(
+	public static long toServiceBuilderListTypeId(
 		String defaultName, String name, String type) {
 
-		ListType listType = _listTypeLocalService.getListType(name, type);
+		ListType listType = ListTypeLocalServiceUtil.getListType(name, type);
 
 		if (listType == null) {
-			listType = _listTypeLocalService.getListType(defaultName, type);
+			listType = ListTypeLocalServiceUtil.getListType(defaultName, type);
 		}
 
 		if (listType != null) {
@@ -64,11 +60,5 @@ public class ServiceBuilderListTypeHelper {
 
 		return 0;
 	}
-
-	@Reference
-	private ListTypeLocalService _listTypeLocalService;
-
-	@Reference
-	private ListTypeService _listTypeService;
 
 }

@@ -32,11 +32,11 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.UserAccountEntityModel;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderAddressHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderEmailAddressHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderListTypeHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderPhoneHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderWebsiteHelper;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderAddressUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderEmailAddressUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderListTypeUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderPhoneUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderWebsiteUtil;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -235,7 +235,7 @@ public class UserAccountResourceImpl
 				transformToList(
 					postalAddresses,
 					_postalAddress ->
-						_serviceBuilderAddressHelper.toServiceBuilderAddress(
+						ServiceBuilderAddressUtil.toServiceBuilderAddress(
 							_postalAddress, ListTypeConstants.CONTACT_ADDRESS)),
 				Objects::nonNull)
 		).orElse(
@@ -278,7 +278,7 @@ public class UserAccountResourceImpl
 		return Optional.ofNullable(
 			userAccount.getHonorificPrefix()
 		).map(
-			prefix -> _serviceBuilderListTypeHelper.getServiceBuilderListTypeId(
+			prefix -> ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
 				prefix, ListTypeConstants.CONTACT_PREFIX)
 		).orElse(
 			0L
@@ -297,7 +297,7 @@ public class UserAccountResourceImpl
 				transformToList(
 					emailAddresses,
 					emailAddress ->
-						_serviceBuilderEmailAddressHelper.
+						ServiceBuilderEmailAddressUtil.
 							toServiceBuilderEmailAddress(
 								emailAddress,
 								ListTypeConstants.CONTACT_EMAIL_ADDRESS)),
@@ -318,9 +318,8 @@ public class UserAccountResourceImpl
 			telephones -> ListUtil.filter(
 				transformToList(
 					telephones,
-					telephone ->
-						_serviceBuilderPhoneHelper.toServiceBuilderPhone(
-							telephone, ListTypeConstants.CONTACT_PHONE)),
+					telephone -> ServiceBuilderPhoneUtil.toServiceBuilderPhone(
+						telephone, ListTypeConstants.CONTACT_PHONE)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -331,7 +330,7 @@ public class UserAccountResourceImpl
 		return Optional.ofNullable(
 			userAccount.getHonorificSuffix()
 		).map(
-			prefix -> _serviceBuilderListTypeHelper.getServiceBuilderListTypeId(
+			prefix -> ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
 				prefix, ListTypeConstants.CONTACT_SUFFIX)
 		).orElse(
 			0L
@@ -378,9 +377,8 @@ public class UserAccountResourceImpl
 			webUrls -> ListUtil.filter(
 				transformToList(
 					webUrls,
-					webUrl ->
-						_serviceBuilderWebsiteHelper.toServiceBuilderWebsite(
-							webUrl, ListTypeConstants.CONTACT_WEBSITE)),
+					webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
+						webUrl, ListTypeConstants.CONTACT_WEBSITE)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -440,15 +438,13 @@ public class UserAccountResourceImpl
 				familyName = user.getLastName();
 				givenName = user.getFirstName();
 				honorificPrefix =
-					_serviceBuilderListTypeHelper.
-						getServiceBuilderListTypeMessage(
-							contact.getPrefixId(),
-							contextAcceptLanguage.getPreferredLocale());
+					ServiceBuilderListTypeUtil.getServiceBuilderListTypeMessage(
+						contact.getPrefixId(),
+						contextAcceptLanguage.getPreferredLocale());
 				honorificSuffix =
-					_serviceBuilderListTypeHelper.
-						getServiceBuilderListTypeMessage(
-							contact.getSuffixId(),
-							contextAcceptLanguage.getPreferredLocale());
+					ServiceBuilderListTypeUtil.getServiceBuilderListTypeMessage(
+						contact.getSuffixId(),
+						contextAcceptLanguage.getPreferredLocale());
 				id = user.getUserId();
 				jobTitle = user.getJobTitle();
 				keywords = ListUtil.toArray(
@@ -556,21 +552,6 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private RoleService _roleService;
-
-	@Reference
-	private ServiceBuilderAddressHelper _serviceBuilderAddressHelper;
-
-	@Reference
-	private ServiceBuilderEmailAddressHelper _serviceBuilderEmailAddressHelper;
-
-	@Reference
-	private ServiceBuilderListTypeHelper _serviceBuilderListTypeHelper;
-
-	@Reference
-	private ServiceBuilderPhoneHelper _serviceBuilderPhoneHelper;
-
-	@Reference
-	private ServiceBuilderWebsiteHelper _serviceBuilderWebsiteHelper;
 
 	@Reference
 	private UserService _userService;

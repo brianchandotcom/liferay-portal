@@ -21,13 +21,13 @@ import com.liferay.headless.admin.user.dto.v1_0.OrganizationContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.Service;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.OrganizationEntityModel;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderAddressHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderCountryHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderEmailAddressHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderListTypeHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderPhoneHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderRegionHelper;
-import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderWebsiteHelper;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderAddressUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderCountryUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderEmailAddressUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderListTypeUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderPhoneUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderRegionUtil;
+import com.liferay.headless.admin.user.internal.service.builder.ServiceBuilderWebsiteUtil;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -251,7 +251,7 @@ public class OrganizationResourceImpl
 				transformToList(
 					postalAddresses,
 					_postalAddress ->
-						_serviceBuilderAddressHelper.toServiceBuilderAddress(
+						ServiceBuilderAddressUtil.toServiceBuilderAddress(
 							_postalAddress,
 							ListTypeConstants.ORGANIZATION_ADDRESS)),
 				Objects::nonNull)
@@ -266,7 +266,7 @@ public class OrganizationResourceImpl
 		).map(
 			Location::getAddressCountry
 		).map(
-			_serviceBuilderCountryHelper::toServiceBuilderCountryId
+			ServiceBuilderCountryUtil::toServiceBuilderCountryId
 		).orElse(
 			0L
 		);
@@ -336,7 +336,7 @@ public class OrganizationResourceImpl
 				transformToList(
 					emailAddresses,
 					emailAddress ->
-						_serviceBuilderEmailAddressHelper.
+						ServiceBuilderEmailAddressUtil.
 							toServiceBuilderEmailAddress(
 								emailAddress,
 								ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS)),
@@ -414,9 +414,8 @@ public class OrganizationResourceImpl
 			telephones -> ListUtil.filter(
 				transformToList(
 					telephones,
-					telephone ->
-						_serviceBuilderPhoneHelper.toServiceBuilderPhone(
-							telephone, ListTypeConstants.ORGANIZATION_PHONE)),
+					telephone -> ServiceBuilderPhoneUtil.toServiceBuilderPhone(
+						telephone, ListTypeConstants.ORGANIZATION_PHONE)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -429,9 +428,8 @@ public class OrganizationResourceImpl
 		).map(
 			Location::getAddressRegion
 		).map(
-			addressRegion ->
-				_serviceBuilderRegionHelper.getServiceBuilderRegionId(
-					addressRegion, countryId)
+			addressRegion -> ServiceBuilderRegionUtil.getServiceBuilderRegionId(
+				addressRegion, countryId)
 		).orElse(
 			(long)0
 		);
@@ -464,9 +462,8 @@ public class OrganizationResourceImpl
 			webUrls -> ListUtil.filter(
 				transformToList(
 					webUrls,
-					webUrl ->
-						_serviceBuilderWebsiteHelper.toServiceBuilderWebsite(
-							webUrl, ListTypeConstants.ORGANIZATION_WEBSITE)),
+					webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
+						webUrl, ListTypeConstants.ORGANIZATION_WEBSITE)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -481,7 +478,7 @@ public class OrganizationResourceImpl
 	}
 
 	private OrgLabor _toOrgLabor(Service service) {
-		long typeId = _serviceBuilderListTypeHelper.toServiceBuilderListTypeId(
+		long typeId = ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
 			"administrative", service.getServiceType(),
 			ListTypeConstants.ORGANIZATION_SERVICE);
 
@@ -599,26 +596,5 @@ public class OrganizationResourceImpl
 
 	@Reference
 	private OrgLaborLocalService _orgLaborLocalService;
-
-	@Reference
-	private ServiceBuilderAddressHelper _serviceBuilderAddressHelper;
-
-	@Reference
-	private ServiceBuilderCountryHelper _serviceBuilderCountryHelper;
-
-	@Reference
-	private ServiceBuilderEmailAddressHelper _serviceBuilderEmailAddressHelper;
-
-	@Reference
-	private ServiceBuilderListTypeHelper _serviceBuilderListTypeHelper;
-
-	@Reference
-	private ServiceBuilderPhoneHelper _serviceBuilderPhoneHelper;
-
-	@Reference
-	private ServiceBuilderRegionHelper _serviceBuilderRegionHelper;
-
-	@Reference
-	private ServiceBuilderWebsiteHelper _serviceBuilderWebsiteHelper;
 
 }

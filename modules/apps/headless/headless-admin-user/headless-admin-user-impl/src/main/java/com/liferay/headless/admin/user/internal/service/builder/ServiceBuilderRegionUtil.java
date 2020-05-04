@@ -15,35 +15,31 @@
 package com.liferay.headless.admin.user.internal.service.builder;
 
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = ServiceBuilderRegionHelper.class)
-public class ServiceBuilderRegionHelper {
+public class ServiceBuilderRegionUtil {
 
-	public long getServiceBuilderRegionId(
+	public static long getServiceBuilderRegionId(
 		String addressRegion, long countryId) {
 
 		if (Validator.isNull(addressRegion) || (countryId <= 0)) {
 			return 0;
 		}
 
-		Region region = _regionService.fetchRegion(countryId, addressRegion);
+		Region region = RegionServiceUtil.fetchRegion(countryId, addressRegion);
 
 		if (region != null) {
 			return region.getRegionId();
 		}
 
-		List<Region> regions = _regionService.getRegions(countryId);
+		List<Region> regions = RegionServiceUtil.getRegions(countryId);
 
 		for (Region curRegion : regions) {
 			if (StringUtil.equalsIgnoreCase(
@@ -55,8 +51,5 @@ public class ServiceBuilderRegionHelper {
 
 		return 0;
 	}
-
-	@Reference
-	private RegionService _regionService;
 
 }

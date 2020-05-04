@@ -68,10 +68,19 @@ public class ChangesetManagerImpl
 		_changesets.put(changesetUuid, changeset);
 	}
 
-	@Clusterable(onMaster = true)
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void clearChangesets() {
 		_changesets = new HashMap<>();
+	}
+
+	@Clusterable(onMaster = true)
+	@Override
+	public Changeset getChangeset(String changesetUuid) {
+		return _changesets.remove(changesetUuid);
 	}
 
 	@Override
@@ -79,19 +88,28 @@ public class ChangesetManagerImpl
 		return ChangesetManager.class.getName();
 	}
 
-	@Clusterable(onMaster = true)
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean hasChangeset(String changesetUuid) {
 		return _changesets.containsKey(changesetUuid);
 	}
 
-	@Clusterable(onMaster = true)
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Optional<Changeset> peekChangeset(String changesetUuid) {
 		return Optional.ofNullable(_changesets.get(changesetUuid));
 	}
 
-	@Clusterable(onMaster = true)
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getChangeset(String changesetUuid)}
+	 */
+	@Deprecated
 	@Override
 	public Optional<Changeset> popChangeset(String changesetUuid) {
 		Changeset changeset = _changesets.remove(changesetUuid);
@@ -99,7 +117,10 @@ public class ChangesetManagerImpl
 		return Optional.ofNullable(changeset);
 	}
 
-	@Clusterable(onMaster = true)
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long publishChangeset(
 		Changeset changeset, ChangesetEnvironment changesetEnvironment) {

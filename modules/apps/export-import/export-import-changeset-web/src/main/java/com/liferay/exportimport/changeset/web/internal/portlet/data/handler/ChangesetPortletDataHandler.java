@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
@@ -173,14 +172,11 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			_exportChangesetCollection(portletDataContext, changesetCollection);
 		}
 		else {
-			Optional<Changeset> changesetOptional =
-				_changesetManager.popChangeset(changesetUuid);
+			Changeset changeset = _changesetManager.getChangeset(changesetUuid);
 
-			if (!changesetOptional.isPresent()) {
+			if (changeset == null) {
 				return getExportDataRootElementString(rootElement);
 			}
-
-			Changeset changeset = changesetOptional.get();
 
 			Stream<StagedModel> stream = changeset.stream();
 

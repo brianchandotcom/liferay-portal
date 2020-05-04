@@ -32,8 +32,10 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -52,6 +54,18 @@ public class LangMergerPlugin implements Plugin<Project> {
 			project, MERGE_LANG_TASK_NAME, MergePropertiesTask.class);
 
 		mergePropertiesTask.setDescription("Merges language property files.");
+
+		TaskOutputs taskOutputs = mergePropertiesTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
 
 		PluginContainer pluginContainer = project.getPlugins();
 

@@ -46,12 +46,9 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.CollectionUtils;
@@ -62,7 +59,6 @@ import org.gradle.workers.WorkerExecutor;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class MergePropertiesTask extends DefaultTask {
 
 	@Inject
@@ -119,7 +115,6 @@ public class MergePropertiesTask extends DefaultTask {
 	}
 
 	@InputFiles
-	@PathSensitive(PathSensitivity.RELATIVE)
 	@SkipWhenEmpty
 	public FileCollection getSourceFiles() {
 		List<FileCollection> fileCollections = new ArrayList<>();

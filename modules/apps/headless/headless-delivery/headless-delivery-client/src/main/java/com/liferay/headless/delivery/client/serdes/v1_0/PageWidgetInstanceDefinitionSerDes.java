@@ -15,7 +15,6 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.PageWidgetInstanceDefinition;
-import com.liferay.headless.delivery.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -23,7 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -61,52 +59,16 @@ public class PageWidgetInstanceDefinitionSerDes {
 
 		sb.append("{");
 
-		if (pageWidgetInstanceDefinition.getWidget() != null) {
+		if (pageWidgetInstanceDefinition.getWidgetInstance() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"widget\": ");
+			sb.append("\"widgetInstance\": ");
 
-			sb.append(String.valueOf(pageWidgetInstanceDefinition.getWidget()));
-		}
-
-		if (pageWidgetInstanceDefinition.getWidgetConfig() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"widgetConfig\": ");
-
-			sb.append(_toJSON(pageWidgetInstanceDefinition.getWidgetConfig()));
-		}
-
-		if (pageWidgetInstanceDefinition.getWidgetPermissions() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"widgetPermissions\": ");
-
-			sb.append("[");
-
-			for (int i = 0;
-				 i < pageWidgetInstanceDefinition.getWidgetPermissions().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(
-						pageWidgetInstanceDefinition.getWidgetPermissions()
-							[i]));
-
-				if ((i + 1) < pageWidgetInstanceDefinition.
-						getWidgetPermissions().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(
+				String.valueOf(
+					pageWidgetInstanceDefinition.getWidgetInstance()));
 		}
 
 		sb.append("}");
@@ -131,32 +93,14 @@ public class PageWidgetInstanceDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageWidgetInstanceDefinition.getWidget() == null) {
-			map.put("widget", null);
+		if (pageWidgetInstanceDefinition.getWidgetInstance() == null) {
+			map.put("widgetInstance", null);
 		}
 		else {
 			map.put(
-				"widget",
-				String.valueOf(pageWidgetInstanceDefinition.getWidget()));
-		}
-
-		if (pageWidgetInstanceDefinition.getWidgetConfig() == null) {
-			map.put("widgetConfig", null);
-		}
-		else {
-			map.put(
-				"widgetConfig",
-				String.valueOf(pageWidgetInstanceDefinition.getWidgetConfig()));
-		}
-
-		if (pageWidgetInstanceDefinition.getWidgetPermissions() == null) {
-			map.put("widgetPermissions", null);
-		}
-		else {
-			map.put(
-				"widgetPermissions",
+				"widgetInstance",
 				String.valueOf(
-					pageWidgetInstanceDefinition.getWidgetPermissions()));
+					pageWidgetInstanceDefinition.getWidgetInstance()));
 		}
 
 		return map;
@@ -180,30 +124,11 @@ public class PageWidgetInstanceDefinitionSerDes {
 			PageWidgetInstanceDefinition pageWidgetInstanceDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "widget")) {
+			if (Objects.equals(jsonParserFieldName, "widgetInstance")) {
 				if (jsonParserFieldValue != null) {
-					pageWidgetInstanceDefinition.setWidget(
-						WidgetSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "widgetConfig")) {
-				if (jsonParserFieldValue != null) {
-					pageWidgetInstanceDefinition.setWidgetConfig(
-						(Map)PageWidgetInstanceDefinitionSerDes.toMap(
+					pageWidgetInstanceDefinition.setWidgetInstance(
+						WidgetInstanceSerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "widgetPermissions")) {
-				if (jsonParserFieldValue != null) {
-					pageWidgetInstanceDefinition.setWidgetPermissions(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> WidgetPermissionSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new WidgetPermission[size]
-						));
 				}
 			}
 			else {

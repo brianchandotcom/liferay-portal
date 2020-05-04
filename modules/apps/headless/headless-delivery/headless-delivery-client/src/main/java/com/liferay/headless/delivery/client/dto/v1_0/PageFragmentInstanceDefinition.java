@@ -94,6 +94,28 @@ public class PageFragmentInstanceDefinition implements Cloneable {
 
 	protected FragmentField[] fragmentFields;
 
+	public WidgetInstance[] getWidgetInstances() {
+		return widgetInstances;
+	}
+
+	public void setWidgetInstances(WidgetInstance[] widgetInstances) {
+		this.widgetInstances = widgetInstances;
+	}
+
+	public void setWidgetInstances(
+		UnsafeSupplier<WidgetInstance[], Exception>
+			widgetInstancesUnsafeSupplier) {
+
+		try {
+			widgetInstances = widgetInstancesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected WidgetInstance[] widgetInstances;
+
 	@Override
 	public PageFragmentInstanceDefinition clone()
 		throws CloneNotSupportedException {

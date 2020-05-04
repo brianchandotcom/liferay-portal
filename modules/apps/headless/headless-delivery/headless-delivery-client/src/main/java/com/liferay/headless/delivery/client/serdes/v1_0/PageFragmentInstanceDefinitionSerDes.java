@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.client.dto.v1_0.PageFragmentInstanceDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -111,6 +112,34 @@ public class PageFragmentInstanceDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (pageFragmentInstanceDefinition.getWidgetInstances() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetInstances\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageFragmentInstanceDefinition.getWidgetInstances().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						pageFragmentInstanceDefinition.getWidgetInstances()
+							[i]));
+
+				if ((i + 1) < pageFragmentInstanceDefinition.
+						getWidgetInstances().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -162,6 +191,16 @@ public class PageFragmentInstanceDefinitionSerDes {
 					pageFragmentInstanceDefinition.getFragmentFields()));
 		}
 
+		if (pageFragmentInstanceDefinition.getWidgetInstances() == null) {
+			map.put("widgetInstances", null);
+		}
+		else {
+			map.put(
+				"widgetInstances",
+				String.valueOf(
+					pageFragmentInstanceDefinition.getWidgetInstances()));
+		}
+
 		return map;
 	}
 
@@ -205,6 +244,18 @@ public class PageFragmentInstanceDefinitionSerDes {
 							object -> FragmentFieldSerDes.toDTO((String)object)
 						).toArray(
 							size -> new FragmentField[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "widgetInstances")) {
+				if (jsonParserFieldValue != null) {
+					pageFragmentInstanceDefinition.setWidgetInstances(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> WidgetInstanceSerDes.toDTO((String)object)
+						).toArray(
+							size -> new WidgetInstance[size]
 						));
 				}
 			}

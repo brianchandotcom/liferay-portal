@@ -41,57 +41,28 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageFragmentInstanceDefinition")
+@GraphQLName("WidgetInstance")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageFragmentInstanceDefinition")
-public class PageFragmentInstanceDefinition {
+@XmlRootElement(name = "WidgetInstance")
+public class WidgetInstance {
 
 	@Schema
 	@Valid
-	public Fragment getFragment() {
-		return fragment;
+	public Map<String, Object> getWidgetConfig() {
+		return widgetConfig;
 	}
 
-	public void setFragment(Fragment fragment) {
-		this.fragment = fragment;
-	}
-
-	@JsonIgnore
-	public void setFragment(
-		UnsafeSupplier<Fragment, Exception> fragmentUnsafeSupplier) {
-
-		try {
-			fragment = fragmentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Fragment fragment;
-
-	@Schema
-	@Valid
-	public Map<String, Object> getFragmentConfig() {
-		return fragmentConfig;
-	}
-
-	public void setFragmentConfig(Map<String, Object> fragmentConfig) {
-		this.fragmentConfig = fragmentConfig;
+	public void setWidgetConfig(Map<String, Object> widgetConfig) {
+		this.widgetConfig = widgetConfig;
 	}
 
 	@JsonIgnore
-	public void setFragmentConfig(
+	public void setWidgetConfig(
 		UnsafeSupplier<Map<String, Object>, Exception>
-			fragmentConfigUnsafeSupplier) {
+			widgetConfigUnsafeSupplier) {
 
 		try {
-			fragmentConfig = fragmentConfigUnsafeSupplier.get();
+			widgetConfig = widgetConfigUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -103,25 +74,23 @@ public class PageFragmentInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> fragmentConfig;
+	protected Map<String, Object> widgetConfig;
 
 	@Schema
-	@Valid
-	public FragmentField[] getFragmentFields() {
-		return fragmentFields;
+	public String getWidgetInstanceId() {
+		return widgetInstanceId;
 	}
 
-	public void setFragmentFields(FragmentField[] fragmentFields) {
-		this.fragmentFields = fragmentFields;
+	public void setWidgetInstanceId(String widgetInstanceId) {
+		this.widgetInstanceId = widgetInstanceId;
 	}
 
 	@JsonIgnore
-	public void setFragmentFields(
-		UnsafeSupplier<FragmentField[], Exception>
-			fragmentFieldsUnsafeSupplier) {
+	public void setWidgetInstanceId(
+		UnsafeSupplier<String, Exception> widgetInstanceIdUnsafeSupplier) {
 
 		try {
-			fragmentFields = fragmentFieldsUnsafeSupplier.get();
+			widgetInstanceId = widgetInstanceIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -133,25 +102,23 @@ public class PageFragmentInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentField[] fragmentFields;
+	protected String widgetInstanceId;
 
 	@Schema
-	@Valid
-	public WidgetInstance[] getWidgetInstances() {
-		return widgetInstances;
+	public String getWidgetName() {
+		return widgetName;
 	}
 
-	public void setWidgetInstances(WidgetInstance[] widgetInstances) {
-		this.widgetInstances = widgetInstances;
+	public void setWidgetName(String widgetName) {
+		this.widgetName = widgetName;
 	}
 
 	@JsonIgnore
-	public void setWidgetInstances(
-		UnsafeSupplier<WidgetInstance[], Exception>
-			widgetInstancesUnsafeSupplier) {
+	public void setWidgetName(
+		UnsafeSupplier<String, Exception> widgetNameUnsafeSupplier) {
 
 		try {
-			widgetInstances = widgetInstancesUnsafeSupplier.get();
+			widgetName = widgetNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -163,7 +130,37 @@ public class PageFragmentInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected WidgetInstance[] widgetInstances;
+	protected String widgetName;
+
+	@Schema
+	@Valid
+	public WidgetPermission[] getWidgetPermissions() {
+		return widgetPermissions;
+	}
+
+	public void setWidgetPermissions(WidgetPermission[] widgetPermissions) {
+		this.widgetPermissions = widgetPermissions;
+	}
+
+	@JsonIgnore
+	public void setWidgetPermissions(
+		UnsafeSupplier<WidgetPermission[], Exception>
+			widgetPermissionsUnsafeSupplier) {
+
+		try {
+			widgetPermissions = widgetPermissionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected WidgetPermission[] widgetPermissions;
 
 	@Override
 	public boolean equals(Object object) {
@@ -171,15 +168,13 @@ public class PageFragmentInstanceDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageFragmentInstanceDefinition)) {
+		if (!(object instanceof WidgetInstance)) {
 			return false;
 		}
 
-		PageFragmentInstanceDefinition pageFragmentInstanceDefinition =
-			(PageFragmentInstanceDefinition)object;
+		WidgetInstance widgetInstance = (WidgetInstance)object;
 
-		return Objects.equals(
-			toString(), pageFragmentInstanceDefinition.toString());
+		return Objects.equals(toString(), widgetInstance.toString());
 	}
 
 	@Override
@@ -194,59 +189,57 @@ public class PageFragmentInstanceDefinition {
 
 		sb.append("{");
 
-		if (fragment != null) {
+		if (widgetConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragment\": ");
+			sb.append("\"widgetConfig\": ");
 
-			sb.append(String.valueOf(fragment));
+			sb.append(_toJSON(widgetConfig));
 		}
 
-		if (fragmentConfig != null) {
+		if (widgetInstanceId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentConfig\": ");
+			sb.append("\"widgetInstanceId\": ");
 
-			sb.append(_toJSON(fragmentConfig));
+			sb.append("\"");
+
+			sb.append(_escape(widgetInstanceId));
+
+			sb.append("\"");
 		}
 
-		if (fragmentFields != null) {
+		if (widgetName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentFields\": ");
+			sb.append("\"widgetName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(widgetName));
+
+			sb.append("\"");
+		}
+
+		if (widgetPermissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widgetPermissions\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < fragmentFields.length; i++) {
-				sb.append(String.valueOf(fragmentFields[i]));
+			for (int i = 0; i < widgetPermissions.length; i++) {
+				sb.append(String.valueOf(widgetPermissions[i]));
 
-				if ((i + 1) < fragmentFields.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (widgetInstances != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"widgetInstances\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < widgetInstances.length; i++) {
-				sb.append(String.valueOf(widgetInstances[i]));
-
-				if ((i + 1) < widgetInstances.length) {
+				if ((i + 1) < widgetPermissions.length) {
 					sb.append(", ");
 				}
 			}
@@ -260,7 +253,7 @@ public class PageFragmentInstanceDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.WidgetInstance",
 		name = "x-class-name"
 	)
 	public String xClassName;
@@ -286,44 +279,9 @@ public class PageFragmentInstanceDefinition {
 			sb.append("\"");
 			sb.append(entry.getKey());
 			sb.append("\":");
-
-			Object value = entry.getValue();
-
-			Class<?> clazz = value.getClass();
-
-			if (clazz.isArray()) {
-				sb.append("[");
-
-				Object[] valueArray = (Object[])value;
-
-				for (int i = 0; i < valueArray.length; i++) {
-					if (valueArray[i] instanceof String) {
-						sb.append("\"");
-						sb.append(valueArray[i]);
-						sb.append("\"");
-					}
-					else {
-						sb.append(valueArray[i]);
-					}
-
-					if ((i + 1) < valueArray.length) {
-						sb.append(", ");
-					}
-				}
-
-				sb.append("]");
-			}
-			else if (value instanceof Map) {
-				sb.append(_toJSON((Map<String, ?>)value));
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(value);
-				sb.append("\"");
-			}
-			else {
-				sb.append(value);
-			}
+			sb.append("\"");
+			sb.append(entry.getValue());
+			sb.append("\"");
 
 			if (iterator.hasNext()) {
 				sb.append(",");

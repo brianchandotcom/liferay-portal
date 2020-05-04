@@ -17,7 +17,6 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.PageWidgetInstanceDefinitionSerDes;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -29,70 +28,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class PageWidgetInstanceDefinition implements Cloneable {
 
-	public Widget getWidget() {
-		return widget;
+	public WidgetInstance getWidgetInstance() {
+		return widgetInstance;
 	}
 
-	public void setWidget(Widget widget) {
-		this.widget = widget;
+	public void setWidgetInstance(WidgetInstance widgetInstance) {
+		this.widgetInstance = widgetInstance;
 	}
 
-	public void setWidget(
-		UnsafeSupplier<Widget, Exception> widgetUnsafeSupplier) {
+	public void setWidgetInstance(
+		UnsafeSupplier<WidgetInstance, Exception>
+			widgetInstanceUnsafeSupplier) {
 
 		try {
-			widget = widgetUnsafeSupplier.get();
+			widgetInstance = widgetInstanceUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Widget widget;
-
-	public Map<String, Object> getWidgetConfig() {
-		return widgetConfig;
-	}
-
-	public void setWidgetConfig(Map<String, Object> widgetConfig) {
-		this.widgetConfig = widgetConfig;
-	}
-
-	public void setWidgetConfig(
-		UnsafeSupplier<Map<String, Object>, Exception>
-			widgetConfigUnsafeSupplier) {
-
-		try {
-			widgetConfig = widgetConfigUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, Object> widgetConfig;
-
-	public WidgetPermission[] getWidgetPermissions() {
-		return widgetPermissions;
-	}
-
-	public void setWidgetPermissions(WidgetPermission[] widgetPermissions) {
-		this.widgetPermissions = widgetPermissions;
-	}
-
-	public void setWidgetPermissions(
-		UnsafeSupplier<WidgetPermission[], Exception>
-			widgetPermissionsUnsafeSupplier) {
-
-		try {
-			widgetPermissions = widgetPermissionsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected WidgetPermission[] widgetPermissions;
+	protected WidgetInstance widgetInstance;
 
 	@Override
 	public PageWidgetInstanceDefinition clone()

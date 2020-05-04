@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
-import React, {forwardRef, useMemo} from 'react';
+import React, {forwardRef} from 'react';
 
 const LabelOptionListItem = ({onCloseButtonClicked, option}) => (
 	<li>
@@ -68,13 +68,17 @@ const VisibleSelectInput = forwardRef(
 
 		const isValueEmpty = value.length === 0;
 
-		const selectedLabel = useMemo(
-			() =>
-				isValueEmpty
-					? triggerPlaceholder
-					: options.find((option) => option.value === value[0]).label,
-			[isValueEmpty, options, triggerPlaceholder, value]
-		);
+		const selectedLabel = () => {
+			if (isValueEmpty) {
+				return triggerPlaceholder;
+			}
+
+			const selectedOption = options.find(
+				(option) => option.value === value[0]
+			);
+
+			return selectedOption ? selectedOption.label : triggerPlaceholder;
+		};
 
 		return (
 			<div
@@ -101,7 +105,7 @@ const VisibleSelectInput = forwardRef(
 					{isValueEmpty || (value.length === 1 && !multiple) ? (
 						<OptionSelected
 							isPlaceholder={isValueEmpty}
-							label={selectedLabel}
+							label={selectedLabel()}
 						/>
 					) : (
 						value.map((item) => {

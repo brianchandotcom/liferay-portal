@@ -156,3 +156,9 @@ export function slugToText(slug) {
 export function historyPushWithSlug(push) {
 	return (url) => push(stringToSlug(url));
 }
+
+export function stripHTML(text) {
+	const htmlTags = /<([^>]+>)/g;
+
+	return text.replace(htmlTags, '');
+}

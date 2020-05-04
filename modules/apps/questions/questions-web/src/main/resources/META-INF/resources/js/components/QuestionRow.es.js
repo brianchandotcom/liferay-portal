@@ -15,7 +15,11 @@
 import React, {useContext} from 'react';
 
 import {AppContext} from '../AppContext.es';
-import {dateToInternationalHuman, normalizeRating} from '../utils/utils.es';
+import {
+	dateToInternationalHuman,
+	normalizeRating,
+	stripHTML,
+} from '../utils/utils.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Link from './Link.es';
 import QuestionBadge from './QuestionsBadge.es';
@@ -80,7 +84,10 @@ export default ({question}) => {
 			</Link>
 
 			<div className="c-mb-0 c-mt-3 question-row-article-body stretched-link-layer text-truncate">
-				<ArticleBodyRenderer {...question} />
+				<ArticleBodyRenderer
+					{...question}
+					articleBody={stripHTML(question.articleBody)}
+				/>
 			</div>
 
 			<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">

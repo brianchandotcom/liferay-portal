@@ -2,52 +2,48 @@
 	<nav
 		class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
 	>
-		<div class="container-fluid container-fluid-max-xl px-0">
-			<button
-				aria-controls="navigationBarCollapse"
-				aria-expanded="false"
-				aria-label="Tabs Toggle Navigation"
-				class="collapsed navbar-toggler navbar-toggler-link"
-				data-toggle="collapse"
-			>
-				<span class="navbar-text-truncate">Tab 1</span>
-				<span class="icon-caret-bottom"></span>
-			</button>
+		<button
+			aria-controls="navigationBarCollapse"
+			aria-expanded="false"
+			aria-label="Tabs Toggle Navigation"
+			class="collapsed navbar-toggler navbar-toggler-link"
+			data-toggle="collapse"
+		>
+			<span class="navbar-text-truncate">Tab 1</span>
+			<span class="icon-caret-bottom"></span>
+		</button>
 
-			<div class="collapse navbar-collapse" id="navigationBarCollapse" style="z-index: 1;">
-				<div class="container-fluid container-fluid-max-xl">
-					<ul class="navbar-nav" role="tablist">
-						[#list 0..configuration.numberOfTabs-1 as i]
-							<li class="nav-item" role="presentation">
-								<button
-									aria-controls="tabPanel${i+1}"
-									aria-selected="false"
-									class="nav-link"
-									id="tab${i+1}"
-									role="tab"
-								>
-									<span
-										class="navbar-text-truncate"
-										data-lfr-editable-id="title${i+1}"
-										data-lfr-editable-type="text"
-										tabindex="-1"
-									>
-										Tab ${i+1}
-									</span>
-								</button>
-							</li>
-						[/#list]
-					</ul>
-				</div>
-			</div>
+		<div class="collapse navbar-collapse" id="navigationBarCollapse" style="z-index: 1;">
+			<ul class="navbar-nav" role="tablist">
+				[#list 0..configuration.numberOfTabs-1 as i]
+				<li class="nav-item" role="presentation">
+					<button
+						aria-controls="tabPanel${i+1}"
+						aria-selected="false"
+						class="nav-link"
+						id="tab${i+1}"
+						role="tab"
+					>
+						<span
+							class="navbar-text-truncate"
+							data-lfr-editable-id="title${i+1}"
+							data-lfr-editable-type="text"
+							tabindex="-1"
+						>
+							Tab ${i+1}
+						</span>
+					</button>
+				</li>
+				[/#list]
+			</ul>
 		</div>
 	</nav>
 
 	<div class="tab-panel">
 		[#list 0..configuration.numberOfTabs-1 as i]
-			<div aria-labelledby="tab${i+1}" class="tab-panel-item d-none" id="tabPanel${i+1}" role="tabpanel" tabindex="0">
-				<lfr-drop-zone id="dropZone${i+1}"></lfr-drop-zone>
-			</div>
+		<div aria-labelledby="tab${i+1}" class="tab-panel-item d-none" id="tabPanel${i+1}" role="tabpanel" tabindex="0">
+			<lfr-drop-zone id="dropZone${i+1}"></lfr-drop-zone>
+		</div>
 		[/#list]
 	</div>
 </div>

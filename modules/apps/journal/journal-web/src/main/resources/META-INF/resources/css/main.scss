@@ -230,6 +230,10 @@ $productMenuWidth: 320px;
 		}
 
 		.sidebar-body {
+			.panel {
+				margin-bottom: 0;
+			}
+
 			.panel-body {
 				margin-bottom: 16px;
 				padding: 0;

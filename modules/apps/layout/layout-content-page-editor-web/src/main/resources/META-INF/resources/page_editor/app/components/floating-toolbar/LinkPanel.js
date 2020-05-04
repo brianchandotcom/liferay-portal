@@ -87,6 +87,18 @@ export default function LinkPanel({item}) {
 	const getFieldValue = useGetFieldValue();
 
 	useEffect(() => {
+		const editableConfig = editableValue ? editableValue.config : {};
+
+		setHref((href) => {
+			if (href !== editableConfig.href) {
+				return editableConfig.href || '';
+			}
+
+			return href;
+		});
+	}, [editableValue]);
+
+	useEffect(() => {
 		updateMappedHrefValue({
 			classNameId: editableConfig.classNameId,
 			classPK: editableConfig.classPK,

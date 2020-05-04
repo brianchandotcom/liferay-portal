@@ -13,7 +13,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {ImageSelector} from '../../../common/components/ImageSelector';
 import {getEditableItemPropTypes} from '../../../prop-types/index';
@@ -45,6 +45,18 @@ export function ImagePropertiesPanel({item}) {
 	const [imageDescription, setImageDescription] = useState(
 		editableConfig.alt || ''
 	);
+
+	useEffect(() => {
+		const editableConfig = editableValue ? editableValue.config : {};
+
+		setImageDescription((imageDescription) => {
+			if (imageDescription !== editableConfig.alt) {
+				return editableConfig.alt || '';
+			}
+
+			return imageDescription;
+		});
+	}, [editableValue]);
 
 	const imageUrl = useSelector((state) => {
 		const url = selectEditableValueContent(

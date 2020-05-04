@@ -740,7 +740,7 @@ public class DLAdminManagementToolbarDisplayContext {
 
 		orderColumns.put("modifiedDate", "modified-date");
 		orderColumns.put("size", "size");
-		orderColumns.put("title", "title");
+		orderColumns.put("title", "name");
 
 		return new DropdownItemList() {
 			{

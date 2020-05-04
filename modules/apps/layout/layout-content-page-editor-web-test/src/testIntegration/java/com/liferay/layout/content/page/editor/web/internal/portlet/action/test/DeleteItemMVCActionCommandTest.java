@@ -24,9 +24,10 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -42,14 +43,13 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
-import java.io.InputStream;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -89,46 +89,69 @@ public class DeleteItemMVCActionCommandTest {
 
 	@Test
 	public void testDeleteContainerItem() throws Exception {
-		_addLayoutPageTemplateStructure(
-			_read("layout_data_with_children.json"));
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.addContainerLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_group.getCompanyId(), _group.getGroupId(), "newItemId",
-			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
+			_group.getCompanyId(), _group.getGroupId(),
+			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
 
-		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
-			"items");
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
 
-		Assert.assertEquals(1, itemsJSONObject.length());
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
+		Assert.assertEquals(
+			layoutStructureItems.toString(), 1, layoutStructureItems.size());
 
-		Assert.assertNotNull(rootJSONObject);
+		Assert.assertNotNull(layoutStructure.getMainLayoutStructureItem());
 
-		JSONArray childrenJSONArray = rootJSONObject.getJSONArray("children");
+		rootLayoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
-		Assert.assertEquals(0, childrenJSONArray.length());
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 0, childrenItemIds.size());
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testDeleteDropZone() throws Exception {
-		_addLayoutPageTemplateStructure(
-			_read("layout_data_with_drop_zone.json"));
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem dropZoneLayoutStructureItem =
+			layoutStructure.addDropZoneLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_group.getCompanyId(), _group.getGroupId(), "dropZoneItemId",
-			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
+			_group.getCompanyId(), _group.getGroupId(),
+			dropZoneLayoutStructureItem.getItemId(), _layout.getPlid(),
+			SegmentsExperienceConstants.ID_DEFAULT);
 	}
 
 	@Test
@@ -141,54 +164,80 @@ public class DeleteItemMVCActionCommandTest {
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
-		String layoutData = StringUtil.replace(
-			_read("layout_data_with_fragment_entry_link.json"),
-			"[$FRAGMENT_ENTRY_LINK_ID$]",
-			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+		LayoutStructure layoutStructure = new LayoutStructure();
 
-		_addLayoutPageTemplateStructure(layoutData);
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem fragmentLayoutStructureItem =
+			layoutStructure.addFragmentLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				rootLayoutStructureItem.getItemId(), 0);
+
+		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_group.getCompanyId(), _group.getGroupId(), "newItemId",
-			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
+			_group.getCompanyId(), _group.getGroupId(),
+			fragmentLayoutStructureItem.getItemId(), _layout.getPlid(),
+			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
 
-		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
-			"items");
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
 
-		Assert.assertEquals(1, itemsJSONObject.length());
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
+		Assert.assertEquals(
+			layoutStructureItems.toString(), 1, layoutStructureItems.size());
 
-		Assert.assertNotNull(rootJSONObject);
+		Assert.assertNotNull(layoutStructure.getMainLayoutStructureItem());
 
-		JSONArray childrenJSONArray = rootJSONObject.getJSONArray("children");
+		rootLayoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
-		Assert.assertEquals(0, childrenJSONArray.length());
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 0, childrenItemIds.size());
 
 		Assert.assertNull(
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId()));
+		Assert.assertNull(
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testDeleteItemContainingDropZone() throws Exception {
-		_addLayoutPageTemplateStructure(
-			_read("layout_data_with_drop_zone.json"));
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.addContainerLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addDropZoneLayoutStructureItem(
+			containerLayoutStructureItem.getItemId(), 0);
+
+		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_group.getCompanyId(), _group.getGroupId(), "newItemId",
-			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
+			_group.getCompanyId(), _group.getGroupId(),
+			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			SegmentsExperienceConstants.ID_DEFAULT);
 	}
 
 	@Test
@@ -201,39 +250,56 @@ public class DeleteItemMVCActionCommandTest {
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
-		String layoutData = StringUtil.replace(
-			_read("layout_data_with_fragment_entry_link.json"),
-			"[$FRAGMENT_ENTRY_LINK_ID$]",
-			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+		LayoutStructure layoutStructure = new LayoutStructure();
 
-		_addLayoutPageTemplateStructure(layoutData);
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.addContainerLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			containerLayoutStructureItem.getItemId(), 0);
+
+		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_group.getCompanyId(), _group.getGroupId(), "newItemId",
-			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
+			_group.getCompanyId(), _group.getGroupId(),
+			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
 
-		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
-			"items");
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
 
-		Assert.assertEquals(1, itemsJSONObject.length());
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
+		Assert.assertEquals(
+			layoutStructureItems.toString(), 1, layoutStructureItems.size());
 
-		Assert.assertNotNull(rootJSONObject);
+		Assert.assertNotNull(layoutStructure.getMainLayoutStructureItem());
 
-		JSONArray childrenJSONArray = rootJSONObject.getJSONArray("children");
+		rootLayoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
-		Assert.assertEquals(0, childrenJSONArray.length());
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 0, childrenItemIds.size());
 
 		Assert.assertNull(
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId()));
+		Assert.assertNull(
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 	}
 
@@ -257,47 +323,66 @@ public class DeleteItemMVCActionCommandTest {
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
-		String layoutData = StringUtil.replace(
-			_read("layout_data_with_several_nested_fragment_entry_link.json"),
-			new String[] {
-				"[$FRAGMENT_ENTRY_LINK_ID_1$]", "[$FRAGMENT_ENTRY_LINK_ID_2$]"
-			},
-			new String[] {
-				String.valueOf(fragmentEntryLink1.getFragmentEntryLinkId()),
-				String.valueOf(fragmentEntryLink2.getFragmentEntryLinkId())
-			});
+		LayoutStructure layoutStructure = new LayoutStructure();
 
-		_addLayoutPageTemplateStructure(layoutData);
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.addContainerLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			fragmentEntryLink1.getFragmentEntryLinkId(),
+			containerLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			fragmentEntryLink2.getFragmentEntryLinkId(),
+			containerLayoutStructureItem.getItemId(), 0);
+
+		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_group.getCompanyId(), _group.getGroupId(), "newItemId",
-			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
+			_group.getCompanyId(), _group.getGroupId(),
+			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
 
-		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
-			"items");
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
 
-		Assert.assertEquals(1, itemsJSONObject.length());
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
+		Assert.assertEquals(
+			layoutStructureItems.toString(), 1, layoutStructureItems.size());
 
-		Assert.assertNotNull(rootJSONObject);
+		Assert.assertNotNull(layoutStructure.getMainLayoutStructureItem());
 
-		JSONArray childrenJSONArray = rootJSONObject.getJSONArray("children");
+		rootLayoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
-		Assert.assertEquals(0, childrenJSONArray.length());
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 0, childrenItemIds.size());
 
 		Assert.assertNull(
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink1.getFragmentEntryLinkId()));
 		Assert.assertNull(
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLink1.getFragmentEntryLinkId()));
+		Assert.assertNull(
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink2.getFragmentEntryLinkId()));
+		Assert.assertNull(
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 				fragmentEntryLink2.getFragmentEntryLinkId()));
 	}
 
@@ -319,47 +404,70 @@ public class DeleteItemMVCActionCommandTest {
 				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
-		String layoutData = StringUtil.replace(
-			_read("layout_data_with_two_level_nesting.json"),
-			new String[] {
-				"[$FRAGMENT_ENTRY_LINK_ID_1$]", "[$FRAGMENT_ENTRY_LINK_ID_2$]"
-			},
-			new String[] {
-				String.valueOf(fragmentEntryLink1.getFragmentEntryLinkId()),
-				String.valueOf(fragmentEntryLink2.getFragmentEntryLinkId())
-			});
+		LayoutStructure layoutStructure = new LayoutStructure();
 
-		_addLayoutPageTemplateStructure(layoutData);
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.addContainerLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		LayoutStructureItem columnLayoutStructureItem =
+			layoutStructure.addContainerLayoutStructureItem(
+				containerLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			fragmentEntryLink1.getFragmentEntryLinkId(),
+			columnLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			fragmentEntryLink2.getFragmentEntryLinkId(),
+			columnLayoutStructureItem.getItemId(), 0);
+
+		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_group.getCompanyId(), _group.getGroupId(), "newItemId",
-			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
+			_group.getCompanyId(), _group.getGroupId(),
+			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
 			"layoutData");
 
-		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
-			"items");
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
 
-		Assert.assertEquals(1, itemsJSONObject.length());
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
+		Assert.assertEquals(
+			layoutStructureItems.toString(), 1, layoutStructureItems.size());
 
-		Assert.assertNotNull(rootJSONObject);
+		Assert.assertNotNull(layoutStructure.getMainLayoutStructureItem());
 
-		JSONArray childrenJSONArray = rootJSONObject.getJSONArray("children");
+		rootLayoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
-		Assert.assertEquals(0, childrenJSONArray.length());
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 0, childrenItemIds.size());
 
 		Assert.assertNull(
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink1.getFragmentEntryLinkId()));
 		Assert.assertNull(
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLink1.getFragmentEntryLinkId()));
+		Assert.assertNull(
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink2.getFragmentEntryLinkId()));
+		Assert.assertNull(
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 				fragmentEntryLink2.getFragmentEntryLinkId()));
 	}
 
@@ -388,15 +496,6 @@ public class DeleteItemMVCActionCommandTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(Layout.class.getName()), _layout.getPlid(),
 			layoutData, _serviceContext);
-	}
-
-	private String _read(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		return StringUtil.read(inputStream);
 	}
 
 	@Inject

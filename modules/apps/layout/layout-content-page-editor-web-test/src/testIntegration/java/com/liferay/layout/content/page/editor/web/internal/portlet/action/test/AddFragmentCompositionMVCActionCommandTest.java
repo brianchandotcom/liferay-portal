@@ -30,6 +30,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -309,18 +310,23 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				_read("fragment_configuration.json"), editableValues,
 				StringPool.BLANK, 0, null, _serviceContext);
 
-		String data = StringUtil.replace(
-			_read("layout_data_with_section_with_fragment_with_mapping.json"),
-			"${", "}",
-			HashMapBuilder.put(
-				"FRAGMENT_ENTRY_LINK_ID",
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
-			).build());
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.addContainerLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			containerLayoutStructureItem.getItemId(), 0);
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(Layout.class.getName()), _layout.getPlid(),
-			data, _serviceContext);
+			layoutStructure.toString(), _serviceContext);
 
 		MockActionRequest mockActionRequest = _getMockActionRequest();
 
@@ -329,7 +335,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		mockActionRequest.addParameter(
 			"fragmentCollectionId",
 			String.valueOf(fragmentCollection.getFragmentCollectionId()));
-		mockActionRequest.addParameter("itemId", "SECTION_ID");
+		mockActionRequest.addParameter(
+			"itemId", containerLayoutStructureItem.getItemId());
 		mockActionRequest.addParameter("name", RandomTestUtil.randomString());
 		mockActionRequest.addParameter(
 			"saveInlineContent", Boolean.TRUE.toString());

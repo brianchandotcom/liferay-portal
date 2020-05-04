@@ -23,6 +23,11 @@ const Selector = {
 	TRIGGER: '[data-toggle="liferay-dropdown"]',
 };
 
+const KEYCODES = {
+	ENTER: 13,
+	SPACE: 32,
+};
+
 class DropdownProvider {
 	EVENT_HIDDEN = 'liferay.dropdown.hidden';
 	EVENT_HIDE = 'liferay.dropdown.hide';
@@ -39,6 +44,13 @@ class DropdownProvider {
 			'click',
 			Selector.TRIGGER,
 			this._onTriggerClick
+		);
+
+		dom.delegate(
+			document.body,
+			'keydown',
+			Selector.TRIGGER,
+			this._onKeyDown
 		);
 
 		Liferay.DropdownProvider = this;
@@ -105,6 +117,15 @@ class DropdownProvider {
 	_getTrigger(menu) {
 		return menu.parentElement.querySelector('.dropdown-toggle');
 	}
+
+	_onKeyDown = (event) => {
+		if (
+			event.keyCode === KEYCODES.ENTER ||
+			event.keyCode === KEYCODES.SPACE
+		) {
+			this._onTriggerClick(event);
+		}
+	};
 
 	_onTriggerClick = (event) => {
 		const trigger = event.delegateTarget;

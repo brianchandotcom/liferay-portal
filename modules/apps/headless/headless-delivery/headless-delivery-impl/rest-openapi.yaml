@@ -1903,6 +1903,10 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentField"
                     type: array
+                widgetInstances:
+                    items:
+                        $ref: "#/components/schemas/WidgetInstance"
+                    type: array
             type: object
         PageRootDefinition:
             type: object

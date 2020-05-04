@@ -252,6 +252,13 @@
 					},
 					"title": "The fragmentFields Schema",
 					"type": "array"
+				},
+				"widgetInstances": {
+					"items": {
+						"$ref": "#/definitions/WidgetInstance"
+					},
+					"title": "The widgetInstances Schema",
+					"type": "array"
 				}
 			},
 			"title": "The FragmentInstanceDefinition Schema",
@@ -647,29 +654,18 @@
 			"title": "The SectionDefinition Schema",
 			"type": "object"
 		},
-		"Widget": {
+		"WidgetInstance": {
 			"additionalProperties": false,
 			"properties": {
-				"name": {
-					"title": "The name Schema",
-					"type": "string"
-				}
-			},
-			"required": [
-				"name"
-			],
-			"title": "The widget Schema",
-			"type": "object"
-		},
-		"WidgetInstanceDefinition": {
-			"additionalProperties": false,
-			"properties": {
-				"widget": {
-					"$ref": "#/definitions/Widget"
-				},
 				"widgetConfig": {
 					"title": "The widgetConfig Schema",
 					"type": "object"
+				},
+				"widgetInstanceId": {
+					"type": "string"
+				},
+				"widgetName": {
+					"type": "string"
 				},
 				"widgetPermissions": {
 					"items": {
@@ -697,6 +693,24 @@
 					"type": "array"
 				}
 			},
+			"required": [
+				"widgetName"
+			],
+			"title": "The WidgetInstance Schema",
+			"type": "object"
+		},
+		"WidgetInstanceDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"widgetInstance": {
+					"$ref": "#/definitions/WidgetInstance",
+					"title": "The widgetInstance Schema",
+					"type": "object"
+				}
+			},
+			"required": [
+				"widgetInstance"
+			],
 			"title": "The WidgetInstanceDefinition Schema",
 			"type": "object"
 		}

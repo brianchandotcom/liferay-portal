@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Theme</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Theme</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TEST_THEME_7_3_HOME_PAGE_PNG</td>
+	<td>portal/screenshots/theme/test-theme.png</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

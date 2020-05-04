@@ -18,7 +18,6 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.persistence.CTCollectionFinder;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
-import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
@@ -130,9 +129,6 @@ public abstract class CTCollectionServiceBaseImpl
 
 	@Reference
 	protected CTEntryPersistence ctEntryPersistence;
-
-	@Reference
-	protected CTEntryFinder ctEntryFinder;
 
 	@Reference
 	protected CTMessagePersistence ctMessagePersistence;

@@ -18,7 +18,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.persistence.CTCollectionFinder;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
-import com.liferay.change.tracking.service.persistence.CTEntryFinder;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -406,9 +405,6 @@ public abstract class CTEntryLocalServiceBaseImpl
 
 	@Reference
 	protected CTEntryPersistence ctEntryPersistence;
-
-	@Reference
-	protected CTEntryFinder ctEntryFinder;
 
 	@Reference
 	protected CTCollectionPersistence ctCollectionPersistence;

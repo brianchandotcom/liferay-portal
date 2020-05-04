@@ -12,7 +12,6 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import React, {
 	useContext,
 	useEffect,
@@ -22,7 +21,7 @@ import React, {
 } from 'react';
 
 import AppContext from '../../../AppContext.es';
-import {EDIT_CUSTOM_OBJECT_FIELD, EVALUATION_ERROR} from '../../../actions.es';
+import {EDIT_CUSTOM_OBJECT_FIELD} from '../../../actions.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import renderSettingsForm, {
 	getEvents,
@@ -62,7 +61,7 @@ export default function () {
 		if (form === null || form.isDisposed()) {
 			setForm(
 				renderSettingsForm(
-					getEvents(dispatchEvent, filteredSettingsContext),
+					getEvents(dispatchEvent, settingsContext),
 					filteredSettingsContext,
 					formRef.current
 				)
@@ -79,32 +78,9 @@ export default function () {
 				};
 			}
 
-			newState = {
+			form.setState({
 				...newState,
-				events: getEvents(dispatchEvent, filteredSettingsContext),
-			};
-
-			form.setState(newState, () => {
-				let evaluableForm = false;
-				const visitor = new PagesVisitor(pages);
-
-				visitor.mapFields(({evaluable}) => {
-					if (evaluable) {
-						evaluableForm = true;
-					}
-				});
-
-				if (evaluableForm) {
-					form.evaluate()
-						.then((pages) => {
-							if (form.isDisposed()) {
-								return;
-							}
-
-							form.setState({pages});
-						})
-						.catch((error) => dispatch(EVALUATION_ERROR, error));
-				}
+				events: getEvents(dispatchEvent, settingsContext),
 			});
 		}
 	}, [

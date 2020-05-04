@@ -44,8 +44,18 @@ export const getEvents = (dispatchEvent, settingsContext) => {
 		this.evaluate();
 	};
 
+	const handleFormEvaluated = function (pages) {
+		dispatchEvent('focusedFieldEvaluationEnded', {
+			settingsContext: {
+				...settingsContext,
+				pages,
+			},
+		});
+	};
+
 	return {
 		attached: handleFormAttached,
+		evaluated: handleFormEvaluated,
 		fieldBlurred: handleFieldBlurred,
 		fieldEdited: handleFieldEdited,
 	};

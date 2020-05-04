@@ -32,8 +32,6 @@ public interface ChangesetManager {
 	@Deprecated
 	public void clearChangesets();
 
-	public Changeset getChangeset(String changesetUuid);
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
@@ -47,7 +45,8 @@ public interface ChangesetManager {
 	public Optional<Changeset> peekChangeset(String changesetUuid);
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getChangeset(String changesetUuid)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #removeChangeset(String changesetUuid)}
 	 */
 	@Deprecated
 	public Optional<Changeset> popChangeset(String changesetUuid);
@@ -58,5 +57,7 @@ public interface ChangesetManager {
 	@Deprecated
 	public long publishChangeset(
 		Changeset changeset, ChangesetEnvironment changesetEnvironment);
+
+	public Changeset removeChangeset(String changesetUuid);
 
 }

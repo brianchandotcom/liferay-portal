@@ -77,12 +77,6 @@ public class ChangesetManagerImpl
 		_changesets = new HashMap<>();
 	}
 
-	@Clusterable(onMaster = true)
-	@Override
-	public Changeset getChangeset(String changesetUuid) {
-		return _changesets.remove(changesetUuid);
-	}
-
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return ChangesetManager.class.getName();
@@ -107,7 +101,8 @@ public class ChangesetManagerImpl
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getChangeset(String changesetUuid)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #removeChangeset(String changesetUuid)}
 	 */
 	@Deprecated
 	@Override
@@ -196,6 +191,12 @@ public class ChangesetManagerImpl
 
 			return 0;
 		}
+	}
+
+	@Clusterable(onMaster = true)
+	@Override
+	public Changeset removeChangeset(String changesetUuid) {
+		return _changesets.remove(changesetUuid);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

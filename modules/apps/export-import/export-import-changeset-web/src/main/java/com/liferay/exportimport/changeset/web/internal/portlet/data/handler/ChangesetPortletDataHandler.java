@@ -172,7 +172,8 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			_exportChangesetCollection(portletDataContext, changesetCollection);
 		}
 		else {
-			Changeset changeset = _changesetManager.getChangeset(changesetUuid);
+			Changeset changeset = _changesetManager.removeChangeset(
+				changesetUuid);
 
 			if (changeset == null) {
 				return getExportDataRootElementString(rootElement);

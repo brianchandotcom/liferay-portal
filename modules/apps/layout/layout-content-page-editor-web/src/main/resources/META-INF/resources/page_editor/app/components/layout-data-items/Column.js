@@ -38,7 +38,7 @@ const Column = React.forwardRef(
 				})}
 				ref={ref}
 			>
-				{children}
+				<div className="page-editor__col__border">{children}</div>
 			</div>
 		);
 	}

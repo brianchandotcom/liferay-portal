@@ -9,7 +9,7 @@
 
 	position: relative;
 
-	&:before {
+	&:after {
 		box-shadow: inset 0 0 0 $borderWidth fade_out($primary-l2, 1);
 		content: '';
 		display: block;
@@ -72,29 +72,47 @@
 		z-index: $portletTopperZIndex + 1;
 	}
 
-	&.hovered:before {
+	&.hovered:after {
 		box-shadow: inset 0 0 0 $borderWidth $primary-l1;
-		z-index: 1;
 	}
 
-	&.active:before {
+	&.active:after {
 		box-shadow: inset 0 0 0 $borderWidth $primary;
 		z-index: 1;
 	}
 
-	&.drag-over-bottom:before {
+	&.drag-over-bottom:after {
 		border-bottom: 4px solid $primary-l1;
 	}
 
-	&.drag-over-top:before {
+	&.drag-over-top:after {
 		border-top: 4px solid $primary-l1;
-		z-index: 1;
+	}
+
+	&.drag-over-bottom.page-editor__col {
+		&:after {
+			border: none;
+		}
+
+		&:before {
+			border-bottom: 4px solid $primary-l1;
+		}
+	}
+
+	&.drag-over-top.page-editor__col {
+		&:after {
+			border: none;
+		}
+
+		&:before {
+			border-top: 4px solid $primary-l1;
+		}
 	}
 
 	&.drag-over-middle .page-editor__container > .container:after,
 	&.drag-over-middle .page-editor__container > .container-fluid:after,
-	&.drag-over-middle.page-editor__col:after,
-	&.drag-over-middle.page-editor__collection-item:after {
+	&.drag-over-middle.page-editor__col:before,
+	&.drag-over-middle.page-editor__collection-item:before {
 		box-shadow: inset 0 0 0 4px $primary-l1;
 	}
 
@@ -111,7 +129,6 @@
 	&.not-droppable.page-editor__collection-item:after {
 		box-shadow: inset 0 0 0 1px $danger;
 		position: absolute;
-		z-index: 1;
 	}
 	&.not-droppable.page-editor__col[data-advice]:before,
 	&.not-droppable.page-editor__collection-item[data-advice]:before,
@@ -127,7 +144,6 @@
 		position: absolute;
 		transform: translateY(4px);
 		width: auto;
-		z-index: 1;
 	}
 	&.not-droppable.page-editor__col[data-advice]:before,
 	&.not-droppable.page-editor__collection-item[data-advice]:before {
@@ -171,16 +187,15 @@
 	}
 
 	&--mapped {
-		&:before {
+		&:after {
 			box-shadow: inset 0 0 0 1px #dfc9ff;
-			z-index: 1;
 		}
 
-		&.hovered:before {
+		&.hovered:after {
 			box-shadow: inset 0 0 0 $borderWidth fade_out($purple, 0.5);
 		}
 
-		&.active:before {
+		&.active:after {
 			box-shadow: inset 0 0 0 $borderWidth $purple;
 		}
 	}

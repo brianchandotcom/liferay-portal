@@ -60,11 +60,15 @@
 		}
 	}
 
-	&__col:after,
+	&__col__border {
+		border: 1px solid $primary-l2;
+		height: 100%;
+	}
+
 	&__container,
-	&__container > .container:after,
-	&__container > .container-fluid:after,
-	&__row:after {
+	&__container > .container:before,
+	&__container > .container-fluid:before,
+	&__row:before {
 		box-shadow: inset 0 0 0 1px $primary-l2;
 	}
 
@@ -75,7 +79,7 @@
 	&__collection-item {
 		position: relative;
 
-		&:after {
+		&:before {
 			$spacingUnit: 12px;
 
 			content: '';
@@ -90,7 +94,7 @@
 	}
 
 	&__collection-item {
-		&:after {
+		&:before {
 			left: 0;
 			width: 100%;
 		}
@@ -108,40 +112,42 @@
 		$editablesBorderWidth: 1px;
 
 		&--hovered {
-			box-shadow: 0 0 0 $editablesBorderWidth $primary-l1;
+			box-shadow: inset 0 0 0 $editablesBorderWidth $primary-l1;
 		}
 
 		&--mapped {
-			box-shadow: 0 0 0 $editablesBorderWidth fade_out($purple, 0.7);
+			box-shadow: inset 0 0 0 $editablesBorderWidth fade_out($purple, 0.7);
 
 			&.page-editor__editable--hovered {
-				box-shadow: 0 0 0 $editablesBorderWidth fade_out($purple, 0.3);
+				box-shadow: inset 0 0 0 $editablesBorderWidth
+					fade_out($purple, 0.3);
 			}
 
 			&.page-editor__editable--active {
-				box-shadow: 0 0 0 $editablesBorderWidth $purple;
+				box-shadow: inset 0 0 0 $editablesBorderWidth $purple;
 			}
 		}
 
 		&--translated {
-			box-shadow: 0 0 0 $editablesBorderWidth fade_out($success-l1, 0.7);
+			box-shadow: inset 0 0 0 $editablesBorderWidth
+				fade_out($success-l1, 0.7);
 
 			&.page-editor__editable--hovered {
-				box-shadow: 0 0 0 $editablesBorderWidth
+				box-shadow: inset 0 0 0 $editablesBorderWidth
 					fade_out($success-l1, 0.3);
 			}
 
 			&.page-editor__editable--active {
-				box-shadow: 0 0 0 $editablesBorderWidth $success-l1;
+				box-shadow: inset 0 0 0 $editablesBorderWidth $success-l1;
 			}
 		}
 
 		&--active {
-			box-shadow: 0 0 0 $editablesBorderWidth $primary;
+			box-shadow: inset 0 0 0 $editablesBorderWidth $primary;
 		}
 	}
 
-	&__row.no-gutters > .page-editor__col:after {
+	&__row.no-gutters > .page-editor__col:before {
 		left: 0;
 		width: 100%;
 	}

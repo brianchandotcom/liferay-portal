@@ -133,7 +133,6 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		formRenderingContext.setHttpServletRequest(
 			_ddmFormAdminRequestHelper.getRequest());
-
 		formRenderingContext.setHttpServletResponse(_httpServletResponse);
 
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();

@@ -1730,6 +1730,18 @@ definition {
 	}
 
 	macro viewSiteRSVPWithUnapprovedWorkflow {
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		var key_siteCalendarName = "${siteCalendarName}";
+		var key_siteName = "${siteName}";
+
+		Pause(locator1 = "5000");
+
+		if (IsElementNotPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
+			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
+		}
+
 		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "${eventTitle}");
 
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR");

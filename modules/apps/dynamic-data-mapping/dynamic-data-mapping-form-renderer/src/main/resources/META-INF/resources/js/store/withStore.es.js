@@ -98,7 +98,7 @@ const _handleFieldFocused = function (properties) {
 		if (this.isDisposed()) {
 			return;
 		}
-		
+
 		this.setState({
 			pages: focusedFieldPages,
 		});

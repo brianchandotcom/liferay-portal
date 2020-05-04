@@ -33,7 +33,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.dependency.checker", version: "1.0.4"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.go", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jsdoc", version: "2.0.51"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.merger", version: "2.0.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.merger", version: "2.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.18"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.26"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.8"

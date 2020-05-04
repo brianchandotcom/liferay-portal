@@ -92,10 +92,8 @@ function getConnectedReactComponentAdapter(ReactComponent, variant) {
 	class ReactComponentAdapter extends JSXComponent {
 
 		/**
-		 * For Metal to track config changes, we need to declare the
-		 * configs in the static property so that willReceiveProps is
-		 * called as expected. We added the configs before Metal started
-		 * configuring so that they are recognized later.
+		 * For Metal to track config changes, we need to config the state so
+		 * that willReceiveProps is called as expected.
 		 */
 		constructor(config, parentElement) {
 			const props = {};
@@ -103,13 +101,18 @@ function getConnectedReactComponentAdapter(ReactComponent, variant) {
 				.concat(CONFIG_DEFAULT)
 				.forEach((key) => {
 					if (!CONFIG_BLACKLIST.includes(key)) {
-						props[key] = Config.any();
+						props[key] = Config.any().value(config[key]);
 					}
 				});
 
-			ReactComponentAdapter.PROPS = props;
-
 			super(config, parentElement);
+
+			const data = JSXComponent.DATA_MANAGER.getManagerData(this);
+
+			data.props_.configState({
+				...JSXComponent.DATA,
+				...props,
+			});
 		}
 
 		created() {

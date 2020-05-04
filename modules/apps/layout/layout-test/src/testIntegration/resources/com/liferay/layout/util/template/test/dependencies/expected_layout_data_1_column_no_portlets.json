@@ -32,7 +32,31 @@
 			],
 			"config": {
 				"gutters": true,
-				"numberOfColumns": 1
+				"landscapeMobile": {
+					"gutters": true,
+					"modulesPerRow": 3,
+					"numberOfColumns": 1,
+					"reverseOrder": false,
+					"verticalAlignment": "top"
+				},
+				"modulesPerRow": 3,
+				"numberOfColumns": 1,
+				"portraitMobile": {
+					"gutters": true,
+					"modulesPerRow": 3,
+					"numberOfColumns": 1,
+					"reverseOrder": false,
+					"verticalAlignment": "top"
+				},
+				"reverseOrder": false,
+				"tablet": {
+					"gutters": true,
+					"modulesPerRow": 3,
+					"numberOfColumns": 1,
+					"reverseOrder": false,
+					"verticalAlignment": "top"
+				},
+				"verticalAlignment": "top"
 			},
 			"itemId": "ROOT-CONTAINER0-ROW0",
 			"parentId": "ROOT-CONTAINER0",

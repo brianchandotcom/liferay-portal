@@ -17,7 +17,6 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import FriendlyURLHistoryModal from './FriendlyURLHistoryModal';
-import * as provisionalData from './provisionalData';
 
 function FriendlyURLHistory({portletNamespace, ...restProps}) {
 	const [showModal, setShowModal] = useState(false);
@@ -68,7 +67,6 @@ FriendlyURLHistory.propTypes = {
 export default function (props) {
 	return (
 		<FriendlyURLHistory
-			{...provisionalData}
 			{...props}
 			portletNamespace={`_${props.portletNamespace}_`}
 		/>

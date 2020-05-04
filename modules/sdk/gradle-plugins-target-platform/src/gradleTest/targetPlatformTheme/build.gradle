@@ -3,7 +3,7 @@ buildscript {
 		classpath(group: "com.liferay", name: "com.liferay.gradle.plugins", version: "5.0.54") {
 			exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 		}
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.12"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.13"
 	}
 
 	repositories {

@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Runtime Implementation
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.runtime.impl
 Bundle-Version: 5.0.7
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.lang)";\
+		resource.bundle.base.name="content.Language"
 -dsannotations-options: inherit

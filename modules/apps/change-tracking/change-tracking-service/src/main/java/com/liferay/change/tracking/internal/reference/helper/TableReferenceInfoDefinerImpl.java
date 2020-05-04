@@ -53,7 +53,7 @@ import java.util.function.Function;
  * @author Preston Crary
  */
 public class TableReferenceInfoDefinerImpl<T extends Table<T>>
-	implements TableReferenceInfoDefiner<T> {
+	extends TableReferenceInfoDefiner<T> {
 
 	public TableReferenceInfoDefinerImpl(
 		TableReferenceDefinition<T> tableReferenceDefinition,

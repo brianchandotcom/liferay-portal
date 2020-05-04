@@ -29,9 +29,9 @@ import java.util.function.Function;
 /**
  * @author Preston Crary
  */
-public interface TableReferenceInfoDefiner<T extends Table<T>> {
+public abstract class TableReferenceInfoDefiner<T extends Table<T>> {
 
-	public default void defineGroupedModel(T table) {
+	public void defineGroupedModel(T table) {
 		defineSingleColumnReference(
 			table.getColumn("groupId", Long.class),
 			GroupTable.INSTANCE.groupId);
@@ -50,9 +50,16 @@ public interface TableReferenceInfoDefiner<T extends Table<T>> {
 		defineNonreferenceColumn(table.getColumn("modifiedDate", Date.class));
 	}
 
-	public void defineNonreferenceColumn(Column<T, ?> column);
+	public abstract void defineNonreferenceColumn(Column<T, ?> column);
 
-	public default <C> void defineParentColumnReference(
+	@SafeVarargs
+	public final void defineNonreferenceColumns(Column<T, ?>... columns) {
+		for (Column<T, ?> column : columns) {
+			defineNonreferenceColumn(column);
+		}
+	}
+
+	public <C> void defineParentColumnReference(
 		Column<T, C> pkColumn, Column<T, C> parentPKColumn) {
 
 		if (!pkColumn.isPrimaryKey()) {
@@ -69,10 +76,10 @@ public interface TableReferenceInfoDefiner<T extends Table<T>> {
 		defineSingleColumnReference(parentPKColumn, aliasPKColumn);
 	}
 
-	public void defineReferenceInnerJoin(
+	public abstract void defineReferenceInnerJoin(
 		Function<FromStep, JoinStep> joinFunction);
 
-	public default <C> void defineSingleColumnReference(
+	public <C> void defineSingleColumnReference(
 		Column<T, C> column1, Column<?, C> column2) {
 
 		if (column1.getTable() == column2.getTable()) {

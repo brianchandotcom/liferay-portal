@@ -57,7 +57,7 @@ public class ClassNameLocalServiceImpl
 		List<ClassName> classNames = classNamePersistence.findAll();
 
 		for (ClassName className : classNames) {
-			_classNames.computeIfAbsent(className.getValue(), key -> className);
+			_classNames.put(className.getValue(), className);
 		}
 
 		List<String> models = ModelHintsUtil.getModels();

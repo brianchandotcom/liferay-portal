@@ -21,9 +21,9 @@ String name = GetterUtil.getString((String)request.getAttribute(CKEditorConstant
 
 name = namespace + name;
 
-Map<String, Object> defaultEditorData = new HashMap<String, Object>();
-
-defaultEditorData.put("name", HtmlUtil.escapeAttribute(name));
+Map<String, Object> defaultEditorData = HashMapBuilder.<String, Object>put(
+					"name", HtmlUtil.escapeAttribute(name)
+				).build();
 %>
 
 <div>

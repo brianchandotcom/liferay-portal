@@ -34,6 +34,7 @@ page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalWebResourceConstants" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalWebResourcesUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
@@ -43,8 +44,7 @@ page import="com.liferay.portal.kernel.util.URLCodec" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %>

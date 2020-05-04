@@ -17,7 +17,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {Editor} from './Editor';
 
-const getToolbarSet = toolbarSet => {
+const getToolbarSet = (toolbarSet) => {
 	if (isPhone()) {
 		toolbarSet = 'phone';
 	}
@@ -57,7 +57,7 @@ const ClassicEditor = ({
 				config={config}
 				data={contents}
 				id={name}
-				onBeforeLoad={CKEDITOR => {
+				onBeforeLoad={(CKEDITOR) => {
 					CKEDITOR.disableAutoInline = true;
 					CKEDITOR.dtd.$removeEmpty.i = 0;
 					CKEDITOR.dtd.$removeEmpty.span = 0;

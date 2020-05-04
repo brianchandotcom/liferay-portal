@@ -721,7 +721,7 @@ class Sidebar extends Component {
 	}
 
 	_handleSettingsFieldEdited({fieldInstance, value}) {
-		if (fieldInstance && !fieldInstance.isDisposed()) {
+		if (fieldInstance && !fieldInstance.isDisposed() && this.state.open) {
 			const {editingLanguageId} = this.props;
 			const {fieldName} = fieldInstance;
 			const {dispatch} = this.context;

@@ -24,7 +24,7 @@
 	<react:component
 		data='<%=
 			HashMapBuilder.<String, Object>put(
-				"basePortletURL", renderResponse.createRenderURL()
+				"basePortletURL", String.valueOf(renderResponse.createRenderURL())
 			).put(
 				"pathFriendlyURLPublic", PortalUtil.getPathFriendlyURLPublic()
 			).build() %>'

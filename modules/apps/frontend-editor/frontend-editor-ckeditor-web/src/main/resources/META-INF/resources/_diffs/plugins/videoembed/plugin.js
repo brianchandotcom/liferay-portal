@@ -565,6 +565,19 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 					const doc = instance.wrapper.getDocument();
 					doc.appendStyleSheet('/o/frontend-css-web/main.css');
 
+					function mouseDownListener(event) {
+						const result = getSelectedElement(editor);
+
+						currentAlignment = result.alignment;
+						currentElement = result.element;
+
+						if (resizer.isHandle(event.target)) {
+							resizer.initDrag(event);
+						}
+					}
+
+					doc.$.addEventListener('mousedown', mouseDownListener);
+
 					const body = doc.getBody();
 					if (body) {
 						body.addClass('cke_editor_content');
@@ -686,8 +699,6 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 				if (resizeElement) {
 					resizeElement.remove();
 				}
-
-				document.removeEventListener('mousedown', mouseDownListener);
 			});
 
 			editor.on('blur', () => {
@@ -699,17 +710,6 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 					return CKEDITOR.FILTER_SKIP_TREE;
 				}
 			});
-
-			const mouseDownListener = function (event) {
-				const result = getSelectedElement(editor);
-
-				currentAlignment = result.alignment;
-				currentElement = result.element;
-
-				if (resizer.isHandle(event.target)) {
-					resizer.initDrag(event);
-				}
-			};
 
 			var path = instance.path;
 
@@ -730,8 +730,6 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 					},
 				});
 			});
-
-			document.addEventListener('mousedown', mouseDownListener, false);
 		},
 
 		onOkVideo(editor, data) {

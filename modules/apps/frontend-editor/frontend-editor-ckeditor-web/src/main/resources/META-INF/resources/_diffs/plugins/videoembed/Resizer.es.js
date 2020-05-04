@@ -115,7 +115,7 @@
 		}
 
 		show(el) {
-			const uiNode = this.editor.config.uiNode || document.body;
+			const uiNode = this.editor.config.uiNode || this.document.body;
 
 			this.el = el;
 
@@ -169,7 +169,8 @@
 			drag.onDrag = () => {
 				this.calculateSize(drag);
 
-				const editorBounds = this.editor.element.$.getBoundingClientRect();
+				const body = this.editor.document.getBody();
+				const editorBounds = body.$.getBoundingClientRect();
 
 				if (this.previewBox.width >= editorBounds.width) {
 					return;

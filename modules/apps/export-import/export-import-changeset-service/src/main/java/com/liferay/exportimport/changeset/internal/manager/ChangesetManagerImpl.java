@@ -82,10 +82,7 @@ public class ChangesetManagerImpl
 		return ChangesetManager.class.getName();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
+	@Clusterable(onMaster = true)
 	@Override
 	public boolean hasChangeset(String changesetUuid) {
 		return _changesets.containsKey(changesetUuid);

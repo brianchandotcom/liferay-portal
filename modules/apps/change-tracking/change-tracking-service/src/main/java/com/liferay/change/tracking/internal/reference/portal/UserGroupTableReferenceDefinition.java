@@ -40,10 +40,8 @@ public class UserGroupTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoDefiner<UserGroupTable> tableReferenceInfoDefiner) {
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			UserGroupTable.INSTANCE.uuid);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			UserGroupTable.INSTANCE.uuid,
 			UserGroupTable.INSTANCE.externalReferenceCode);
 
 		tableReferenceInfoDefiner.defineSingleColumnReference(
@@ -52,26 +50,17 @@ public class UserGroupTableReferenceDefinition
 		tableReferenceInfoDefiner.defineSingleColumnReference(
 			UserGroupTable.INSTANCE.userId, UserTable.INSTANCE.userId);
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			UserGroupTable.INSTANCE.userName);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			UserGroupTable.INSTANCE.createDate);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			UserGroupTable.INSTANCE.userName,
+			UserGroupTable.INSTANCE.createDate,
 			UserGroupTable.INSTANCE.modifiedDate);
 
 		tableReferenceInfoDefiner.defineParentColumnReference(
 			UserGroupTable.INSTANCE.userGroupId,
 			UserGroupTable.INSTANCE.parentUserGroupId);
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			UserGroupTable.INSTANCE.name);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			UserGroupTable.INSTANCE.description);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			UserGroupTable.INSTANCE.name, UserGroupTable.INSTANCE.description,
 			UserGroupTable.INSTANCE.addedByLDAPImport);
 
 		tableReferenceInfoDefiner.defineReferenceInnerJoin(

@@ -38,13 +38,8 @@ public class RegionTableReferenceDefinition
 		tableReferenceInfoDefiner.defineSingleColumnReference(
 			RegionTable.INSTANCE.countryId, CountryTable.INSTANCE.countryId);
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			RegionTable.INSTANCE.regionCode);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			RegionTable.INSTANCE.name);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			RegionTable.INSTANCE.regionCode, RegionTable.INSTANCE.name,
 			RegionTable.INSTANCE.active);
 	}
 

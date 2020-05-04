@@ -40,17 +40,9 @@ public class TeamTableReferenceDefinition
 
 		tableReferenceInfoDefiner.defineGroupedModel(TeamTable.INSTANCE);
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			TeamTable.INSTANCE.uuid);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			TeamTable.INSTANCE.name);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			TeamTable.INSTANCE.description);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			TeamTable.INSTANCE.lastPublishDate);
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			TeamTable.INSTANCE.uuid, TeamTable.INSTANCE.name,
+			TeamTable.INSTANCE.description, TeamTable.INSTANCE.lastPublishDate);
 
 		tableReferenceInfoDefiner.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(

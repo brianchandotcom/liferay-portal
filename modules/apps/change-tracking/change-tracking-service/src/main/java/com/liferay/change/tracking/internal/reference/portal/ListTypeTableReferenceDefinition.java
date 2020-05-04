@@ -34,11 +34,8 @@ public class ListTypeTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoDefiner<ListTypeTable> tableReferenceInfoDefiner) {
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			ListTypeTable.INSTANCE.name);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			ListTypeTable.INSTANCE.type);
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			ListTypeTable.INSTANCE.name, ListTypeTable.INSTANCE.type);
 	}
 
 	@Override

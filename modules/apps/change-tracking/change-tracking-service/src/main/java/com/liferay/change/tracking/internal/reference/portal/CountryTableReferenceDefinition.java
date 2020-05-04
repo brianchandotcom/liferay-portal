@@ -34,25 +34,10 @@ public class CountryTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoDefiner<CountryTable> tableReferenceInfoDefiner) {
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			CountryTable.INSTANCE.name);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			CountryTable.INSTANCE.a2);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			CountryTable.INSTANCE.a3);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			CountryTable.INSTANCE.number);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			CountryTable.INSTANCE.idd);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			CountryTable.INSTANCE.zipRequired);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			CountryTable.INSTANCE.name, CountryTable.INSTANCE.a2,
+			CountryTable.INSTANCE.a3, CountryTable.INSTANCE.number,
+			CountryTable.INSTANCE.idd, CountryTable.INSTANCE.zipRequired,
 			CountryTable.INSTANCE.active);
 	}
 

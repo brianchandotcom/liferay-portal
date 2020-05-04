@@ -2015,23 +2015,8 @@ components:
             type: object
         PageWidgetInstanceDefinition:
             properties:
-                widget:
-                    $ref: "#/components/schemas/Widget"
-                widgetConfig:
-                    additionalProperties:
-                        type: object
-                    type: object
-                widgetPermissions:
-                    items:
-                        properties:
-                            actionKeys:
-                                items:
-                                    type: string
-                                type: array
-                            roleKey:
-                                type: string
-                        type: object
-                    type: array
+                widgetInstance:
+                    $ref: "#/components/schemas/WidgetInstance"
             type: object
         Rating:
             description:
@@ -2385,6 +2370,28 @@ components:
             properties:
                 name:
                     type: string
+            type: object
+        WidgetInstance:
+            properties:
+                widgetConfig:
+                    additionalProperties:
+                        type: object
+                    type: object
+                widgetInstanceId:
+                    type: string
+                widgetName:
+                    type: string
+                widgetPermissions:
+                    items:
+                        properties:
+                            actionKeys:
+                                items:
+                                    type: string
+                                type: array
+                            roleKey:
+                                type: string
+                        type: object
+                    type: array
             type: object
         WikiNode:
             # @review

@@ -218,6 +218,32 @@ definition {
 		Page.uploadFileForLogo(logoFile = "${logoFile}");
 	}
 
+	macro changeSinglePageTheme {
+		Click(locator1 = "ControlMenu#EDIT");
+		Pause(locator1 = "5000");
+		Click.clickNoMouseOver(
+			key_tabName = "${tabName}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+			
+		Click(locator1 = "SitePagesEditPage#REGULAR_UNIQUE_LOOK_AND_FEEL");
+
+		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		var key_cardText = "${themeName}";
+
+		AssertTextPresent(
+			locator1 = "Card#SPECIFIC_LARGE_TEXT",
+			value1 = "${key_cardText}");
+
+		Click(locator1 = "Card#SPECIFIC_LARGE_TEXT");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		PortletEntry.save();
+	}
+
 	macro deleteFriendlyURLPG {
 		Navigator.gotoNavTab(navTab = "General");
 
@@ -260,14 +286,6 @@ definition {
 
 	macro disableMobileDeviceRulesAreInheritedFromPublicPages {
 		Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE");
-	}
-
-	macro editFriendlyURL {
-		Type(
-			locator1 = "TextInput#FRIENDLY_URL",
-			value1 = "${friendlyURLEdit}");
-
-		Button.clickSave();
 	}
 
 	macro editName {

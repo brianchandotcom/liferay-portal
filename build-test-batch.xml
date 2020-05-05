@@ -5181,6 +5181,7 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="modules-integration-project-templates-jdk8">
 		<antcall target="modules-unit-jdk8">
+			<param name="project.templates.test" value="true" />
 			<param name="project.templates.test.builds" value="true" />
 		</antcall>
 	</target>
@@ -5331,6 +5332,17 @@ log.sanitizer.enabled=false</echo>
 	<target name="modules-unit-jdk8">
 		<run-batch-test>
 			<test-action>
+				<if>
+					<equals arg1="${project.templates.test}" arg2="true" />
+					<then>
+						<gradle-execute dir="modules/sdk/project-templates" task="install">
+							<arg value="--continue" />
+							<arg value="-Dbuild.exclude.ant.plugin=true" />
+							<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
+						</gradle-execute>
+					</then>
+				</if>
+
 				<gradle-execute dir="modules" task="test">
 					<arg value="--continue" />
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
@@ -5368,6 +5380,7 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="modules-unit-project-templates-jdk8">
 		<antcall target="modules-unit-jdk8">
+			<param name="project.templates.test" value="true" />
 			<param name="project.templates.test.builds" value="false" />
 		</antcall>
 	</target>

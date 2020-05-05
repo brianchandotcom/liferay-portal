@@ -180,6 +180,30 @@ public class DataDefinitionResourceTest
 				"JSONObject/name", "Object/en_US"));
 	}
 
+	@Test
+	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKeyNotFound()
+		throws Exception {
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dataDefinitionByContentTypeByDataDefinitionKey",
+						HashMapBuilder.<String, Object>put(
+							"contentType", "\"native-object\""
+						).put(
+							"dataDefinitionKey",
+							"\"" + RandomTestUtil.randomString() + "\""
+						).put(
+							"siteKey",
+							"\"" + irrelevantGroup.getGroupId() + "\""
+						).build(),
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	@Override
 	@Test
 	public void testPostDataDefinitionByContentType() throws Exception {

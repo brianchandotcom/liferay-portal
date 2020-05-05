@@ -101,12 +101,12 @@
 				</div>
 
 				<aui:input label="num-of-entries-per-feed" name="preferences--entriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.entriesPerFeed() %>">
-					<aui:validator name="digits" />
+					<aui:validator errorMessage='<%= LanguageUtil.get(request, "please-enter-only-integers") %>' name="digits" />
 					<aui:validator name="min">1</aui:validator>
 				</aui:input>
 
 				<aui:input label="num-of-expanded-entries-per-feed" name="preferences--expandedEntriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>">
-					<aui:validator name="digits" />
+					<aui:validator errorMessage='<%= LanguageUtil.get(request, "please-enter-only-integers") %>' name="digits" />
 					<aui:validator name="min">1</aui:validator>
 				</aui:input>
 

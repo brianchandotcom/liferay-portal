@@ -65,7 +65,8 @@ import org.junit.runner.Description;
  * @author Shuyang Zhou
  */
 public class DataGuardTestRule
-	extends AbstractTestRule<DataGuardTestRule.DataBag, Void> {
+	extends AbstractTestRule
+		<DataGuardTestRule.DataBag, Map<String, List<BaseModel<?>>>> {
 
 	public static final DataGuardTestRule INSTANCE = new DataGuardTestRule();
 
@@ -92,84 +93,49 @@ public class DataGuardTestRule
 	protected void afterClass(Description description, DataBag dataBag)
 		throws Throwable {
 
-		Map<String, List<BaseModel<?>>> previousDataMap = dataBag._dataMap;
-
-		_autoDeleteLeftovers(previousDataMap);
-
-		Map<String, Map<Serializable, String>> records = dataBag._records;
+		if (dataBag == null) {
+			return;
+		}
 
 		ServiceRegistration<SessionCustomizer> serviceRegistration =
 			dataBag._serviceRegistration;
 
 		serviceRegistration.unregister();
 
-		StringBundler sb = new StringBundler();
+		_recordsThreadLocal.remove();
 
-		Map<String, List<BaseModel<?>>> dataMap = _captureDataMap();
-
-		for (Map.Entry<String, List<BaseModel<?>>> entry : dataMap.entrySet()) {
-			String className = entry.getKey();
-
-			List<BaseModel<?>> currentBaseModels = entry.getValue();
-
-			List<BaseModel<?>> previsoutBaseModels = previousDataMap.remove(
-				className);
-
-			List<BaseModel<?>> leftoverBaseModels = new ArrayList<>(
-				currentBaseModels);
-
-			if (previsoutBaseModels != null) {
-				leftoverBaseModels.removeAll(previsoutBaseModels);
-			}
-
-			if (!leftoverBaseModels.isEmpty()) {
-				sb.append(description.getClassName());
-				sb.append(" caused leftover data for class :");
-				sb.append(className);
-				sb.append(" with data : [\n");
-
-				for (BaseModel<?> baseModel : leftoverBaseModels) {
-					sb.append(StringPool.TAB);
-					sb.append(baseModel);
-
-					String backtraceInfo = null;
-
-					Map<Serializable, String> map = records.get(
-						baseModel.getModelClassName());
-
-					if (map != null) {
-						backtraceInfo = map.get(baseModel.getPrimaryKeyObj());
-					}
-
-					if (backtraceInfo == null) {
-						sb.append(" with no backtrace info,\n");
-					}
-					else {
-						sb.append(" with backtrace info,\n");
-						sb.append(StringPool.TAB);
-						sb.append(StringPool.TAB);
-						sb.append(backtraceInfo);
-						sb.append(",\n");
-					}
-				}
-
-				sb.setStringAt("\n]\n", sb.index() - 1);
-			}
-		}
-
-		Assert.assertTrue(sb.toString(), sb.index() == 0);
+		_autoDeleteAndAssert(description, dataBag._dataMap, dataBag._records);
 	}
 
 	@Override
-	protected void afterMethod(Description description, Void m, Object target) {
+	protected void afterMethod(
+			Description description, Map<String, List<BaseModel<?>>> dataMap,
+			Object target)
+		throws Throwable {
+
+		if (dataMap == null) {
+			return;
+		}
+
+		_autoDeleteAndAssert(description, dataMap, _recordsThreadLocal.get());
 	}
 
 	@Override
 	protected DataBag beforeClass(Description description) {
+		DataGuard dataGuard = description.getAnnotation(DataGuard.class);
+
+		if ((dataGuard != null) &&
+			(dataGuard.scope() == DataGuard.Scope.NONE)) {
+
+			return null;
+		}
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		Map<String, Map<Serializable, String>> records =
 			new ConcurrentHashMap<>();
+
+		_recordsThreadLocal.set(records);
 
 		ServiceRegistration<SessionCustomizer> serviceRegistration =
 			registry.registerService(
@@ -180,8 +146,20 @@ public class DataGuardTestRule
 	}
 
 	@Override
-	protected Void beforeMethod(Description description, Object target) {
-		return null;
+	protected Map<String, List<BaseModel<?>>> beforeMethod(
+		Description description, Object target) {
+
+		Class<?> testClass = description.getTestClass();
+
+		DataGuard dataGuard = testClass.getAnnotation(DataGuard.class);
+
+		if ((dataGuard == null) ||
+			(dataGuard.scope() != DataGuard.Scope.METHOD)) {
+
+			return null;
+		}
+
+		return _captureDataMap();
 	}
 
 	private static Map<String, List<BaseModel<?>>> _captureDataMap() {
@@ -375,6 +353,71 @@ public class DataGuardTestRule
 	private DataGuardTestRule() {
 	}
 
+	private void _autoDeleteAndAssert(
+			Description description,
+			Map<String, List<BaseModel<?>>> previousDataMap,
+			Map<String, Map<Serializable, String>> records)
+		throws Throwable {
+
+		_autoDeleteLeftovers(previousDataMap);
+
+		StringBundler sb = new StringBundler();
+
+		Map<String, List<BaseModel<?>>> dataMap = _captureDataMap();
+
+		for (Map.Entry<String, List<BaseModel<?>>> entry : dataMap.entrySet()) {
+			String className = entry.getKey();
+
+			List<BaseModel<?>> currentBaseModels = entry.getValue();
+
+			List<BaseModel<?>> previsoutBaseModels = previousDataMap.remove(
+				className);
+
+			List<BaseModel<?>> leftoverBaseModels = new ArrayList<>(
+				currentBaseModels);
+
+			if (previsoutBaseModels != null) {
+				leftoverBaseModels.removeAll(previsoutBaseModels);
+			}
+
+			if (!leftoverBaseModels.isEmpty()) {
+				sb.append(description.getClassName());
+				sb.append(" caused leftover data for class :");
+				sb.append(className);
+				sb.append(" with data : [\n");
+
+				for (BaseModel<?> baseModel : leftoverBaseModels) {
+					sb.append(StringPool.TAB);
+					sb.append(baseModel);
+
+					String backtraceInfo = null;
+
+					Map<Serializable, String> map = records.get(
+						baseModel.getModelClassName());
+
+					if (map != null) {
+						backtraceInfo = map.get(baseModel.getPrimaryKeyObj());
+					}
+
+					if (backtraceInfo == null) {
+						sb.append(" with no backtrace info,\n");
+					}
+					else {
+						sb.append(" with backtrace info,\n");
+						sb.append(StringPool.TAB);
+						sb.append(StringPool.TAB);
+						sb.append(backtraceInfo);
+						sb.append(",\n");
+					}
+				}
+
+				sb.setStringAt("\n]\n", sb.index() - 1);
+			}
+		}
+
+		Assert.assertTrue(sb.toString(), sb.index() == 0);
+	}
+
 	private void _autoDeleteLeftovers(
 			Map<String, List<BaseModel<?>>> previousDataMap)
 		throws Throwable {
@@ -495,6 +538,8 @@ public class DataGuardTestRule
 		}
 	}
 
+	private static final ThreadLocal<Map<String, Map<Serializable, String>>>
+		_recordsThreadLocal = new ThreadLocal<>();
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.SUPPORTS,

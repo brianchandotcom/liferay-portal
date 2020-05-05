@@ -36,6 +36,15 @@ public class LayoutPageTemplatesImporterResultEntry {
 		_errorMessage = errorMessage;
 	}
 
+	public LayoutPageTemplatesImporterResultEntry(
+		String name, int type, Status status, String[] warningMessages) {
+
+		_name = name;
+		_type = type;
+		_status = status;
+		_warningMessages = warningMessages;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #LayoutPageTemplatesImporterResultEntry(String, int, Status)}
@@ -72,6 +81,10 @@ public class LayoutPageTemplatesImporterResultEntry {
 		return _type;
 	}
 
+	public String[] getWarningMessages() {
+		return _warningMessages;
+	}
+
 	public enum Status {
 
 		IGNORED("ignored"), IMPORTED("imported"), INVALID("invalid");
@@ -92,5 +105,6 @@ public class LayoutPageTemplatesImporterResultEntry {
 	private final String _name;
 	private final Status _status;
 	private int _type;
+	private String[] _warningMessages;
 
 }

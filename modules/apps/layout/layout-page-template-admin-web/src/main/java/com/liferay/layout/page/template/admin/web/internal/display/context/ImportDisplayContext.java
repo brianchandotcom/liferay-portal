@@ -19,12 +19,15 @@ import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResu
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.RenderRequest;
 
@@ -92,6 +95,39 @@ public class ImportDisplayContext {
 		}
 
 		return typeLayoutPageTemplatesImporterResultEntryMap;
+	}
+
+	public List<LayoutPageTemplatesImporterResultEntry>
+		getLayoutPageTemplatesImporterResultEntriesWithWarnings() {
+
+		Map
+			<LayoutPageTemplatesImporterResultEntry.Status,
+			 List<LayoutPageTemplatesImporterResultEntry>>
+				layoutPageTemplatesImporterResultEntryMap =
+					_getLayoutPageTemplatesImporterResultEntryMap();
+
+		if (MapUtil.isEmpty(layoutPageTemplatesImporterResultEntryMap)) {
+			return null;
+		}
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries =
+				layoutPageTemplatesImporterResultEntryMap.get(
+					LayoutPageTemplatesImporterResultEntry.Status.IMPORTED);
+
+		if (layoutPageTemplatesImporterResultEntries == null) {
+			return null;
+		}
+
+		Stream<LayoutPageTemplatesImporterResultEntry> stream =
+			layoutPageTemplatesImporterResultEntries.stream();
+
+		return stream.filter(
+			layoutPageTemplatesImporterResultEntry -> ArrayUtil.isNotEmpty(
+				layoutPageTemplatesImporterResultEntry.getWarningMessages())
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public List<LayoutPageTemplatesImporterResultEntry>

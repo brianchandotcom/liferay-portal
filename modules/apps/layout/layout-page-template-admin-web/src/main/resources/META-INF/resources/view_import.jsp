@@ -104,6 +104,49 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 		</c:if>
 
 		<%
+		List<LayoutPageTemplatesImporterResultEntry> layoutPageTemplatesImporterResultEntriesWithWarnings = importDisplayContext.getLayoutPageTemplatesImporterResultEntriesWithWarnings();
+		%>
+
+		<c:if test="<%= ListUtil.isNotEmpty(layoutPageTemplatesImporterResultEntriesWithWarnings) %>">
+			<div class="alert alert-warning warning-dialog">
+				<span class="error-message"><liferay-ui:message key="some-entries-threw-warnings" /></span>
+
+				<ul class="error-list-items">
+
+					<%
+					for (int i = 0; i < layoutPageTemplatesImporterResultEntriesWithWarnings.size(); i++) {
+						LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = layoutPageTemplatesImporterResultEntriesWithWarnings.get(i);
+
+						String[] warningMessages = layoutPageTemplatesImporterResultEntry.getWarningMessages();
+					%>
+
+						<li>
+							<span class="error-info"><%= HtmlUtil.escape(layoutPageTemplatesImporterResultEntry.getName()) %></span>
+
+							<ul>
+
+								<%
+								for (String warningMessage : warningMessages) {
+								%>
+
+									<li><span class="error-info"><%= HtmlUtil.escape(warningMessage) %></span></li>
+
+								<%
+								}
+								%>
+
+							</ul>
+						</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</div>
+		</c:if>
+
+		<%
 		List<LayoutPageTemplatesImporterResultEntry> notImportedLayoutPageTemplatesImporterResultEntries = importDisplayContext.getNotImportedLayoutPageTemplatesImporterResultEntries();
 		%>
 

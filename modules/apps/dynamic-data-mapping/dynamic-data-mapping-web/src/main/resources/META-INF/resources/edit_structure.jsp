@@ -274,7 +274,9 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 						>
 							<c:choose>
 								<c:when test="<%= Validator.isNull(storageTypeValue) %>">
-									<aui:col width="<%= 50 %>">
+									<clay:col
+										md="6"
+									>
 										<aui:field-wrapper>
 											<aui:select disabled="<%= structure != null %>" name="storageType">
 
@@ -290,7 +292,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 											</aui:select>
 										</aui:field-wrapper>
-									</aui:col>
+									</clay:col>
 								</c:when>
 								<c:otherwise>
 									<aui:input name="storageType" type="hidden" value="<%= storageTypeValue %>" />

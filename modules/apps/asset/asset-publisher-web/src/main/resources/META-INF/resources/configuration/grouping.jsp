@@ -19,7 +19,9 @@
 <clay:row
 	id='<%= renderResponse.getNamespace() + "grouping" %>'
 >
-	<aui:col width="<%= 30 %>">
+	<clay:col
+		md="4"
+	>
 
 		<%
 		long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
@@ -82,5 +84,5 @@
 			%>
 
 		</aui:select>
-	</aui:col>
+	</clay:col>
 </clay:row>

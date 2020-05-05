@@ -35,7 +35,10 @@
 				}
 				%>
 
-				<aui:col cssClass="panel-page-menu" width="<%= 20 %>">
+				<clay:col
+					className="panel-page-menu"
+					md="3"
+				>
 
 					<%
 					PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
@@ -62,11 +65,14 @@
 					}
 					%>
 
-				</aui:col>
+				</clay:col>
 
-				<aui:col cssClass="<%= panelBodyCssClass %>" width="<%= 80 %>">
+				<clay:col
+					className="<%= panelBodyCssClass %>"
+					md="9"
+				>
 					<%@ include file="/layout/view/panel_description.jspf" %>
-				</aui:col>
+				</clay:col>
 			</clay:row>
 		</clay:container>
 	</c:when>

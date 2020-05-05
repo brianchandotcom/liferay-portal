@@ -388,41 +388,51 @@ while (manageableCalendarsIterator.hasNext()) {
 						<clay:row
 							className="calendar-booking-invitations"
 						>
-							<aui:col width="<%= (calendarBooking != null) ? 25 : 33 %>">
+							<clay:col
+								md="<%= (calendarBooking != null) ? String.valueOf(3) : String.valueOf(4) %>"
+							>
 								<label class="field-label">
 									<liferay-ui:message key="pending[calendar]" /> (<span id="<portlet:namespace />pendingCounter"><%= pendingCalendarsJSONArray.length() %></span>)
 								</label>
 
 								<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListPending"></div>
-							</aui:col>
+							</clay:col>
 
-							<aui:col width="<%= (calendarBooking != null) ? 25 : 33 %>">
+							<clay:col
+								md="<%= (calendarBooking != null) ? String.valueOf(3) : String.valueOf(4) %>"
+							>
 								<label class="field-label">
 									<liferay-ui:message key="accepted" /> (<span id="<portlet:namespace />acceptedCounter"><%= acceptedCalendarsJSONArray.length() %></span>)
 								</label>
 
 								<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListAccepted"></div>
-							</aui:col>
+							</clay:col>
 
-							<aui:col width="<%= (calendarBooking != null) ? 25 : 33 %>">
+							<clay:col
+								md="<%= (calendarBooking != null) ? String.valueOf(3) : String.valueOf(4) %>"
+							>
 								<label class="field-label">
 									<liferay-ui:message key="declined" /> (<span id="<portlet:namespace />declinedCounter"><%= declinedCalendarsJSONArray.length() %></span>)
 								</label>
 
 								<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListDeclined"></div>
-							</aui:col>
+							</clay:col>
 
 							<c:if test="<%= calendarBooking != null %>">
-								<aui:col width="<%= 25 %>">
+								<clay:col
+									md="6"
+								>
 									<label class="field-label">
 										<liferay-ui:message key="maybe" /> (<span id="<portlet:namespace />maybeCounter"><%= maybeCalendarsJSONArray.length() %></span>)
 									</label>
 
 									<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListMaybe"></div>
-								</aui:col>
+								</clay:col>
 							</c:if>
 
-							<aui:col width="<%= 100 %>">
+							<clay:col
+								size="12"
+							>
 								<div class="calendar-portlet-list-header toggler-header-collapsed" id="<portlet:namespace />checkAvailability">
 									<span class="calendar-portlet-list-arrow"></span>
 
@@ -444,7 +454,7 @@ while (manageableCalendarsIterator.hasNext()) {
 										</liferay-util:include>
 									</div>
 								</div>
-							</aui:col>
+							</clay:col>
 						</clay:row>
 					</liferay-ui:panel>
 

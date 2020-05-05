@@ -17,6 +17,7 @@ dependencies {
 	compileOnly project(":apps:captcha:captcha-api")
 	compileOnly project(":apps:captcha:captcha-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:login:login-web-api")
 	compileOnly project(":apps:petra:petra-content")
 	compileOnly project(":apps:portal:portal-upgrade-api")

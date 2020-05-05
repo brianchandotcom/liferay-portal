@@ -66,7 +66,9 @@ renderResponse.setTitle(headerTitle);
 %>
 
 <div class="container-fluid-1280">
-	<aui:col cssClass="lfr-asset-column lfr-asset-column-details">
+	<clay:col
+		className="lfr-asset-column lfr-asset-column-details"
+	>
 		<liferay-ui:success key='<%= workflowTaskDisplayContext.getPortletResource() + "requestProcessed" %>' message="your-request-completed-successfully" />
 
 		<liferay-ui:error exception="<%= WorkflowTaskDueDateException.class %>" message="please-enter-a-valid-due-date" />
@@ -82,7 +84,9 @@ renderResponse.setTitle(headerTitle);
 					<liferay-util:param name="mvcPath" value="/edit_workflow_task.jsp" />
 				</liferay-util:include>
 
-				<aui:col width="<%= 50 %>">
+				<clay:col
+					md="6"
+				>
 					<aui:field-wrapper label="assigned-to">
 						<aui:fieldset>
 							<div class="card-row">
@@ -119,9 +123,11 @@ renderResponse.setTitle(headerTitle);
 							<%= workflowTaskDisplayContext.getState(workflowTask) %>
 						</aui:fieldset>
 					</aui:field-wrapper>
-				</aui:col>
+				</clay:col>
 
-				<aui:col width="<%= 50 %>">
+				<clay:col
+					md="6"
+				>
 					<aui:field-wrapper label="create-date">
 						<aui:fieldset>
 							<%= workflowTaskDisplayContext.getCreateDate(workflowTask) %>
@@ -133,16 +139,16 @@ renderResponse.setTitle(headerTitle);
 							<%= workflowTaskDisplayContext.getDueDateString(workflowTask) %>
 						</aui:fieldset>
 					</aui:field-wrapper>
-				</aui:col>
+				</clay:col>
 
 				<c:if test="<%= Validator.isNotNull(workflowTask.getDescription()) %>">
-					<aui:col>
+					<clay:col>
 						<aui:field-wrapper label="description">
 							<aui:fieldset>
 								<%= workflowTaskDisplayContext.getDescription(workflowTask) %>
 							</aui:fieldset>
 						</aui:field-wrapper>
-					</aui:col>
+					</clay:col>
 				</c:if>
 			</aui:fieldset>
 
@@ -285,7 +291,7 @@ renderResponse.setTitle(headerTitle);
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 		</aui:fieldset-group>
-	</aui:col>
+	</clay:col>
 </div>
 
 <aui:script use="liferay-workflow-tasks">

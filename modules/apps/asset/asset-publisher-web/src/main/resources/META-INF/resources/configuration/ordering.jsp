@@ -19,7 +19,9 @@
 <clay:row
 	id='<%= renderResponse.getNamespace() + "ordering" %>'
 >
-	<aui:col width="<%= 50 %>">
+	<clay:col
+		md="6"
+	>
 
 		<%
 		String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
@@ -67,9 +69,11 @@
 
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
 		</aui:field-wrapper>
-	</aui:col>
+	</clay:col>
 
-	<aui:col width="<%= 50 %>">
+	<clay:col
+		md="6"
+	>
 
 		<%
 		String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
@@ -114,7 +118,7 @@
 
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
 		</aui:field-wrapper>
-	</aui:col>
+	</clay:col>
 </clay:row>
 
 <aui:script use="aui-base">

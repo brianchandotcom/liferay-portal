@@ -116,15 +116,19 @@
 				</aui:select>
 
 				<clay:row>
-					<aui:col width="<%= 50 %>">
+					<clay:col
+						md="6"
+					>
 						<aui:input name="preferences--showFeedTitle--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>" />
 
 						<aui:input name="preferences--showFeedPublishedDate--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedPublishedDate() %>" />
 
 						<aui:input name="preferences--showFeedDescription--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedDescription() %>" />
-					</aui:col>
+					</clay:col>
 
-					<aui:col width="<%= 50 %>">
+					<clay:col
+						md="6"
+					>
 
 						<%
 						String taglibShowFeedImageOnClick = "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "feedImageAlignment.disabled = '';} else {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "feedImageAlignment.disabled = 'disabled';}";
@@ -133,7 +137,7 @@
 						<aui:input name="preferences--showFeedImage--" onClick="<%= taglibShowFeedImageOnClick %>" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedImage() %>" />
 
 						<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
-					</aui:col>
+					</clay:col>
 				</clay:row>
 			</liferay-ui:section>
 		</liferay-ui:tabs>

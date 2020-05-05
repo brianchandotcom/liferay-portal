@@ -86,7 +86,11 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 >
 	<clay:row>
 		<c:if test="<%= !displaySchedulerOnly %>">
-			<aui:col cssClass='<%= "calendar-portlet-column-options " + (columnOptionsVisible ? StringPool.BLANK : "hide") %>' id="columnOptions" span="<%= 3 %>">
+			<clay:col
+				className='<%= "calendar-portlet-column-options " + (columnOptionsVisible ? StringPool.BLANK : "hide") %>'
+				id="columnOptions"
+				md="3"
+			>
 				<div class="calendar-portlet-mini-calendar" id="<portlet:namespace />miniCalendarContainer"></div>
 
 				<div id="<portlet:namespace />calendarListContainer">
@@ -136,10 +140,14 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 						</c:if>
 					</div>
 				</div>
-			</aui:col>
+			</clay:col>
 		</c:if>
 
-		<aui:col cssClass="calendar-portlet-column-grid" id="columnGrid" span="<%= (columnOptionsVisible && !displaySchedulerOnly) ? 9 : 12 %>">
+		<clay:col
+			className="calendar-portlet-column-grid"
+			id="columnGrid"
+			md="<%= (columnOptionsVisible && !displaySchedulerOnly) ? String.valueOf(9) : String.valueOf(12) %>"
+		>
 			<c:if test="<%= !displaySchedulerOnly %>">
 				<div class="calendar-portlet-column-toggler" id="<portlet:namespace />columnToggler">
 					<clay:icon
@@ -204,7 +212,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 				<liferay-util:param name="viewCalendarBookingURL" value="<%= viewCalendarBookingURL %>" />
 			</liferay-util:include>
-		</aui:col>
+		</clay:col>
 	</clay:row>
 </clay:container>
 

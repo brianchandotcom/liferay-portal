@@ -17,7 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <clay:row>
-	<aui:col cssClass="lfr-padding use-for-all-column" width="<%= 50 %>">
+	<clay:col
+		className="lfr-padding use-for-all-column"
+		md="6"
+	>
 		<aui:fieldset label="padding">
 			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isSpacingSameForAll("padding") %>' data-inputselector=".same-padding" label="same-for-all" name="useForAllPadding" type="toggle-switch" />
 
@@ -58,9 +61,12 @@
 				</aui:select>
 			</span>
 		</aui:fieldset>
-	</aui:col>
+	</clay:col>
 
-	<aui:col cssClass="lfr-margin use-for-all-column" last="<%= true %>" width="<%= 50 %>">
+	<clay:col
+		className="lfr-margin use-for-all-column"
+		md="6"
+	>
 		<aui:fieldset label="margin">
 			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isSpacingSameForAll("margin") %>' data-inputselector=".same-margin" label="same-for-all" name="useForAllMargin" type="toggle-switch" />
 
@@ -101,5 +107,5 @@
 				</aui:select>
 			</span>
 		</aui:fieldset>
-	</aui:col>
+	</clay:col>
 </clay:row>

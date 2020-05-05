@@ -31,7 +31,9 @@
 
 	<liferay-frontend:edit-form-body>
 		<clay:row>
-			<aui:col width="<%= 50 %>">
+			<clay:col
+				md="6"
+			>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset
 						cssClass="ml-3"
@@ -55,15 +57,17 @@
 						</clay:row>
 					</liferay-frontend:fieldset>
 				</liferay-frontend:fieldset-group>
-			</aui:col>
+			</clay:col>
 
-			<aui:col width="<%= 50 %>">
+			<clay:col
+				md="6"
+			>
 				<liferay-portlet:preview
 					portletName="<%= portletResource %>"
 					queryString="struts_action=/sites_directory/view"
 					showBorders="<%= true %>"
 				/>
-			</aui:col>
+			</clay:col>
 		</clay:row>
 	</liferay-frontend:edit-form-body>
 

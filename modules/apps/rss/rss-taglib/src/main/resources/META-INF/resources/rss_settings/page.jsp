@@ -32,14 +32,16 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 	<div id="<portlet:namespace />rssOptions">
 		<c:if test="<%= nameEnabled %>">
 			<clay:row>
-				<aui:col>
+				<clay:col>
 					<aui:input label="rss-feed-name" name="preferences--rssName--" type="text" value="<%= name %>" />
-				</aui:col>
+				</clay:col>
 			</clay:row>
 		</c:if>
 
 		<clay:row>
-			<aui:col width="<%= 33 %>">
+			<clay:col
+				md="4"
+			>
 				<aui:select label="maximum-items-to-display" name="preferences--rssDelta--" value="<%= delta %>">
 					<aui:option label="1" />
 					<aui:option label="2" />
@@ -59,9 +61,11 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 					<aui:option label="90" />
 					<aui:option label="100" />
 				</aui:select>
-			</aui:col>
+			</clay:col>
 
-			<aui:col width="<%= 33 %>">
+			<clay:col
+				md="4"
+			>
 				<aui:select label="display-style" name="preferences--rssDisplayStyle--">
 
 					<%
@@ -75,9 +79,11 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 					%>
 
 				</aui:select>
-			</aui:col>
+			</clay:col>
 
-			<aui:col width="<%= 33 %>">
+			<clay:col
+				md="4"
+			>
 				<aui:select label="format" name="preferences--rssFeedType--">
 
 					<%
@@ -91,7 +97,7 @@ boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("lifera
 					%>
 
 				</aui:select>
-			</aui:col>
+			</clay:col>
 		</clay:row>
 	</div>
 </div>

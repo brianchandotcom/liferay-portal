@@ -140,7 +140,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 	<aui:model-context model="<%= Contact.class %>" />
 
 	<aui:fieldset column="<%= true %>">
-		<aui:col width="<%= 50 %>">
+		<clay:col
+			md="6"
+		>
 
 			<%
 			Boolean autoGenerateScreenName = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE);
@@ -168,9 +170,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 			</aui:input>
 
 			<liferay-ui:user-name-fields />
-		</aui:col>
+		</clay:col>
 
-		<aui:col width="<%= 50 %>">
+		<clay:col
+			md="6"
+		>
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
 				<aui:input label="password" name="password1" size="30" type="password" value="">
 					<aui:validator name="required" />
@@ -206,7 +210,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 			<c:if test="<%= captchaConfiguration.createAccountCaptchaEnabled() %>">
 				<liferay-captcha:captcha />
 			</c:if>
-		</aui:col>
+		</clay:col>
 	</aui:fieldset>
 
 	<aui:button-row>

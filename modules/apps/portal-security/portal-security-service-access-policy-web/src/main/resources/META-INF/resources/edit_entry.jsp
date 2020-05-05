@@ -108,13 +108,17 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 
 					<div class="lfr-form-row">
 						<div class="row-fields">
-							<aui:col md="6">
+							<clay:col
+								md="6"
+							>
 								<aui:input cssClass="service-class-name" data-service-class-name="<%= serviceClassName %>" id='<%= "serviceClassName" + i %>' label="service-class" name="serviceClassName" type="text" value="<%= serviceClassName %>" />
-							</aui:col>
+							</clay:col>
 
-							<aui:col md="6">
+							<clay:col
+								md="6"
+							>
 								<aui:input cssClass="action-method-name" id='<%= "actionMethodName" + i %>' label="method-name" name="actionMethodName" type="text" value="<%= actionMethodName %>" />
-							</aui:col>
+							</clay:col>
 						</div>
 					</div>
 

@@ -51,7 +51,9 @@ if (auditEventId > 0) {
 			</div>
 		</c:when>
 		<c:otherwise>
-			<aui:col columnWidth="350">
+			<clay:col
+				size="12"
+			>
 				<aui:field-wrapper label="event-id">
 					<%= auditEvent.getAuditEventId() %>
 				</aui:field-wrapper>
@@ -75,9 +77,11 @@ if (auditEventId > 0) {
 
 					(<%= eventTypeAction %>)
 				</aui:field-wrapper>
-			</aui:col>
+			</clay:col>
 
-			<aui:col>
+			<clay:col
+				size="12"
+			>
 				<aui:field-wrapper label="user-id">
 					<%= auditEvent.getUserId() %>
 				</aui:field-wrapper>
@@ -105,7 +109,7 @@ if (auditEventId > 0) {
 				<aui:field-wrapper label="additional-information">
 					<%= Validator.isNotNull(auditEvent.getAdditionalInfo()) ? auditEvent.getAdditionalInfo() : LanguageUtil.get(request, "none") %>
 				</aui:field-wrapper>
-			</aui:col>
+			</clay:col>
 		</c:otherwise>
 	</c:choose>
 </aui:fieldset>

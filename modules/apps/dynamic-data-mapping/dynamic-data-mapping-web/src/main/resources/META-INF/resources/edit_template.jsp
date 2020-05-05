@@ -304,12 +304,16 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 										<div class="lfr-ddm-small-image-content toggler-content-collapsed">
 											<clay:row>
 												<c:if test="<%= smallImage && (template != null) %>">
-													<aui:col width="<%= 50 %>">
+													<clay:col
+														md="6"
+													>
 														<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-ddm-small-image-preview" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
-													</aui:col>
+													</clay:col>
 												</c:if>
 
-												<aui:col width="<%= (smallImage && (template != null)) ? 50 : 100 %>">
+												<clay:col
+													md="<%= (smallImage && (template != null)) ? String.valueOf(6) : String.valueOf(12) %>"
+												>
 													<aui:fieldset>
 														<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
 
@@ -321,7 +325,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 														<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageFile" type="file" />
 													</aui:fieldset>
-												</aui:col>
+												</clay:col>
 											</clay:row>
 										</div>
 									</div>

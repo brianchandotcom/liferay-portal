@@ -120,11 +120,15 @@ else {
 			<aui:input cssClass="report-parameters" name="reportParameters" type="hidden" />
 
 			<clay:row>
-				<aui:col width="<%= 35 %>">
+				<clay:col
+					md="4"
+				>
 					<aui:input cssClass="parameters-key" name="key" size="20" type="text" />
-				</aui:col>
+				</clay:col>
 
-				<aui:col width="<%= 35 %>">
+				<clay:col
+					md="4"
+				>
 
 					<%
 					Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -145,26 +149,30 @@ else {
 							yearValue="<%= calendar.get(Calendar.YEAR) %>"
 						/>
 					</aui:field-wrapper>
-				</aui:col>
+				</clay:col>
 
-				<aui:col width="<%= 15 %>">
+				<clay:col
+					md="2"
+				>
 					<aui:select cssClass="parameters-input-type" label="type" name="type">
 						<aui:option label="text" value="text" />
 						<aui:option label="date" value="date" />
 					</aui:select>
-				</aui:col>
+				</clay:col>
 
-				<aui:col width="<%= 15 %>">
+				<clay:col
+					md="2"
+				>
 					<aui:button-row cssClass="add-parameter">
 						<aui:button value="add-parameter" />
 					</aui:button-row>
-				</aui:col>
+				</clay:col>
 			</clay:row>
 
 			<aui:field-wrapper>
-				<aui:col>
+				<clay:col>
 					<div class="report-tags"></div>
-				</aui:col>
+				</clay:col>
 			</aui:field-wrapper>
 		</aui:fieldset>
 

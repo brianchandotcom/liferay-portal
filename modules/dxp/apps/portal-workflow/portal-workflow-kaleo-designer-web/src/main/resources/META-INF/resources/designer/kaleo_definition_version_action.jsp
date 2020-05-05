@@ -135,13 +135,17 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 			<aui:input name="duplicatedDefinitionName" type="hidden" value="<%= kaleoDefinition.getName() %>" />
 
 			<aui:fieldset>
-				<aui:col>
+				<clay:col
+					size="12"
+				>
 					<aui:input label="title" name='<%= randomNamespace + "title" %>' placeholder="<%= duplicateTitle %>" type="text" />
-				</aui:col>
+				</clay:col>
 
-				<aui:col>
+				<clay:col
+					size="12"
+				>
 					<liferay-ui:message key="copy-does-not-include-revisions" />
-				</aui:col>
+				</clay:col>
 			</aui:fieldset>
 		</aui:form>
 	</div>

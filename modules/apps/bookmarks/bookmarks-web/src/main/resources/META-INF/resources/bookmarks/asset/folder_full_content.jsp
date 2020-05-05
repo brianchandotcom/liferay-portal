@@ -34,7 +34,9 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 	%>
 
 	<clay:row>
-		<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 100 %>">
+		<clay:col
+			className="lfr-asset-column lfr-asset-column-details"
+		>
 			<c:if test="<%= Validator.isNotNull(folder.getDescription()) %>">
 				<div class="lfr-asset-description">
 					<%= HtmlUtil.escape(folder.getDescription()) %>
@@ -83,6 +85,6 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 					label="<%= true %>"
 				/>
 			</liferay-expando:custom-attributes-available>
-		</aui:col>
+		</clay:col>
 	</clay:row>
 </c:if>

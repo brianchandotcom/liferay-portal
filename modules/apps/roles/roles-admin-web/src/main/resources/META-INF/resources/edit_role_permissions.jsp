@@ -71,12 +71,18 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 >
 	<clay:row>
 		<c:if test="<%= !portletName.equals(PortletKeys.SERVER_ADMIN) %>">
-			<aui:col width="<%= 25 %>">
+			<clay:col
+				md="3"
+			>
 				<%@ include file="/edit_role_permissions_navigation.jspf" %>
-			</aui:col>
+			</clay:col>
 		</c:if>
 
-		<aui:col cssClass="lfr-permission-content-container" id="permissionContentContainer" width="<%= portletName.equals(PortletKeys.SERVER_ADMIN) ? 100 : 75 %>">
+		<clay:col
+			className="lfr-permission-content-container"
+			id="permissionContentContainer"
+			md="<%= portletName.equals(PortletKeys.SERVER_ADMIN) ? String.valueOf(12) : String.valueOf(9) %>"
+		>
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.VIEW) %>">
 					<liferay-util:include page="/edit_role_permissions_summary.jsp" servletContext="<%= application %>" />
@@ -91,7 +97,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 					<liferay-util:include page="/edit_role_permissions_form.jsp" servletContext="<%= application %>" />
 				</c:otherwise>
 			</c:choose>
-		</aui:col>
+		</clay:col>
 	</clay:row>
 </clay:container>
 

@@ -17,7 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <clay:row>
-	<aui:col cssClass="lfr-border-width use-for-all-column" width="<%= 33 %>">
+	<clay:col
+		className="lfr-border-width use-for-all-column"
+		md="4"
+	>
 		<aui:fieldset label="border-width">
 			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderWidth") %>' data-inputselector=".same-border-width" label="same-for-all" name="useForAllWidth" type="toggle-switch" />
 
@@ -58,9 +61,12 @@
 				</aui:select>
 			</span>
 		</aui:fieldset>
-	</aui:col>
+	</clay:col>
 
-	<aui:col cssClass="lfr-border-style" width="<%= 33 %>">
+	<clay:col
+		className="lfr-border-style"
+		md="4"
+	>
 		<aui:fieldset label="border-style">
 			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderStyle") %>' data-inputselector=".same-border-style" label="same-for-all" name="useForAllStyle" type="toggle-switch" />
 
@@ -112,9 +118,12 @@
 				<aui:option label="solid" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderStyle"), "solid") %>' />
 			</aui:select>
 		</aui:fieldset>
-	</aui:col>
+	</clay:col>
 
-	<aui:col cssClass="lfr-border-color" last="<%= true %>" width="<%= 33 %>">
+	<clay:col
+		className="lfr-border-color"
+		md="4"
+	>
 		<aui:fieldset label="border-color">
 			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor") %>' data-inputselector=".same-border-color" label="same-for-all" name="useForAllColor" type="toggle-switch" />
 
@@ -144,5 +153,5 @@
 				</liferay-util:include>
 			</fieldset>
 		</aui:fieldset>
-	</aui:col>
+	</clay:col>
 </clay:row>

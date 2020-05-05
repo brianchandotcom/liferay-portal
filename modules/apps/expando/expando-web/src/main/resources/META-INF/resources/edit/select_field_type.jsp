@@ -69,13 +69,17 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 		<clay:row
 			className="clay-site-row-spacer"
 		>
-			<aui:col span="<%= 12 %>">
+			<clay:col
+				size="12"
+			>
 				<h3 class="sheet-subtitle">
 					<liferay-ui:message key="text-and-numbers" />
 				</h3>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 4 %>">
+			<clay:col
+				md="4"
+			>
 				<portlet:renderURL var="createTextAreaURL">
 					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -93,9 +97,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 						<span class="form-control form-control-textarea"></span>
 					</div>
 				</a>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 4 %>">
+			<clay:col
+				md="4"
+			>
 				<portlet:renderURL var="createInputFieldURL">
 					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -113,15 +119,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 						<span class="form-control"></span>
 					</div>
 				</a>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 12 %>">
+			<clay:col
+				size="12"
+			>
 				<h3 class="sheet-subtitle">
 					<liferay-ui:message key="selection" />
 				</h3>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 4 %>">
+			<clay:col
+				md="4"
+			>
 				<portlet:renderURL var="createDropdownURL">
 					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -139,9 +149,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 						<span class="form-control form-control-select">Option 1</span>
 					</div>
 				</a>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 4 %>">
+			<clay:col
+				md="4"
+			>
 				<portlet:renderURL var="createCheckboxURL">
 					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -163,9 +175,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 						</span>
 					</div>
 				</a>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 4 %>">
+			<clay:col
+				md="4"
+			>
 				<portlet:renderURL var="createRadioURL">
 					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -187,15 +201,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 						</span>
 					</div>
 				</a>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 12 %>">
+			<clay:col
+				size="12"
+			>
 				<h3 class="sheet-subtitle">
 					<liferay-ui:message key="others" />
 				</h3>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 4 %>">
+			<clay:col
+				md="4"
+			>
 				<portlet:renderURL var="createGeolocationURL">
 					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -215,9 +233,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 						</div>
 					</div>
 				</a>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 4 %>">
+			<clay:col
+				md="4"
+			>
 				<portlet:renderURL var="createDateURL">
 					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -247,9 +267,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 						</div>
 					</div>
 				</a>
-			</aui:col>
+			</clay:col>
 
-			<aui:col span="<%= 4 %>">
+			<clay:col
+				md="4"
+			>
 				<portlet:renderURL var="createBooleanURL">
 					<portlet:param name="mvcPath" value="/edit/expando.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -274,7 +296,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 						</span>
 					</div>
 				</a>
-			</aui:col>
+			</clay:col>
 		</clay:row>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

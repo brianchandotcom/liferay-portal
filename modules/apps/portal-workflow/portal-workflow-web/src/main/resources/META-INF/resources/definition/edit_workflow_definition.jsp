@@ -219,7 +219,9 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 						<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />
 
 						<aui:fieldset cssClass="workflow-definition-content">
-							<aui:col>
+							<clay:col
+								size="12"
+							>
 								<aui:field-wrapper label="title">
 									<liferay-ui:input-localized
 										name="title"
@@ -227,9 +229,12 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 										xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>'
 									/>
 								</aui:field-wrapper>
-							</aui:col>
+							</clay:col>
 
-							<aui:col cssClass="workflow-definition-upload">
+							<clay:col
+								className="workflow-definition-upload"
+								size="12"
+							>
 								<liferay-util:buffer
 									var="importFileMark"
 								>
@@ -241,11 +246,15 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 								<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
 
 								<input accept="application/xml" class="workflow-definition-upload-source" id="<portlet:namespace />upload" type="file" />
-							</aui:col>
+							</clay:col>
 
-							<aui:col cssClass="workflow-definition-content-source-wrapper" id="contentSourceWrapper">
+							<clay:col
+								className="workflow-definition-content-source-wrapper"
+								id="contentSourceWrapper"
+								size="12"
+							>
 								<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
-							</aui:col>
+							</clay:col>
 						</aui:fieldset>
 					</div>
 				</div>
@@ -285,18 +294,22 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
 
 			<aui:fieldset>
-				<aui:col>
+				<clay:col
+					size="12"
+				>
 					<aui:field-wrapper label="title">
 						<liferay-ui:input-localized
 							name='<%= randomNamespace + "title" %>'
 							xml="<%= duplicateTitle %>"
 						/>
 					</aui:field-wrapper>
-				</aui:col>
+				</clay:col>
 
-				<aui:col>
+				<clay:col
+					size="12"
+				>
 					<liferay-ui:message key="copy-does-not-include-revisions" />
-				</aui:col>
+				</clay:col>
 			</aui:fieldset>
 		</aui:form>
 	</c:if>

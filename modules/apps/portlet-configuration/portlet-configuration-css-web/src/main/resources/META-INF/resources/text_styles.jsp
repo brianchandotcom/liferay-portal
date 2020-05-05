@@ -21,7 +21,9 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 %>
 
 <clay:row>
-	<aui:col width="<%= 33 %>">
+	<clay:col
+		md="4"
+	>
 		<aui:select label="font" name="fontFamily" showEmptyOption="<%= true %>">
 			<aui:option label="Arial" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Arial") %>' />
 			<aui:option label="Georgia" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("fontFamily"), "Georgia") %>' />
@@ -69,9 +71,11 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 			<aui:option label="overline" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textDecoration"), "overline") %>' />
 			<aui:option label="strikethrough" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textDecoration"), "line-through") %>' value="line-through" />
 		</aui:select>
-	</aui:col>
+	</clay:col>
 
-	<aui:col last="<%= true %>" width="<%= 60 %>">
+	<clay:col
+		md="8"
+	>
 		<aui:select label="word-spacing" name="wordSpacing" showEmptyOption="<%= true %>">
 
 			<%
@@ -124,5 +128,5 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 			%>
 
 		</aui:select>
-	</aui:col>
+	</clay:col>
 </clay:row>

@@ -36,7 +36,9 @@
 					</aui:select>
 
 					<clay:row>
-						<aui:col width="<%= 50 %>">
+						<clay:col
+							md="6"
+						>
 							<aui:input name="preferences--showAdditionalEmailAddresses--" type="checkbox" value="<%= showAdditionalEmailAddresses %>" />
 
 							<aui:input name="preferences--showAddresses--" type="checkbox" value="<%= showAddresses %>" />
@@ -50,9 +52,11 @@
 							<aui:input name="preferences--showPhones--" type="checkbox" value="<%= showPhones %>" />
 
 							<aui:input label="show-sms" name="preferences--showSMS--" type="checkbox" value="<%= showSMS %>" />
-						</aui:col>
+						</clay:col>
 
-						<aui:col width="<%= 50 %>">
+						<clay:col
+							md="6"
+						>
 							<aui:input name="preferences--showSocialNetwork--" type="checkbox" value="<%= showSocialNetwork %>" />
 
 							<aui:input label="show-icon" name="preferences--showIcon--" type="checkbox" value="<%= showIcon %>" />
@@ -66,7 +70,7 @@
 							<aui:input name="preferences--showUsersInformation--" type="checkbox" value="<%= showUsersInformation %>" />
 
 							<aui:input name="preferences--showWebsites--" type="checkbox" value="<%= showWebsites %>" />
-						</aui:col>
+						</clay:col>
 					</clay:row>
 				</liferay-frontend:fieldset>
 			</liferay-frontend:fieldset-group>

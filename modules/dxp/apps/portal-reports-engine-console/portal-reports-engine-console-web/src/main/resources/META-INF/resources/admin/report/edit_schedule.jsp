@@ -104,11 +104,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 					<clay:row>
 						<c:choose>
 							<c:when test='<%= type.equals("date") %>'>
-								<aui:col width="<%= 20 %>">
+								<clay:col
+									md="3"
+								>
 									<aui:field-wrapper helpMessage="entry-report-date-parameters-help" label="<%= HtmlUtil.escape(key) %>" />
-								</aui:col>
+								</clay:col>
 
-								<aui:col width="<%= 30 %>">
+								<clay:col
+									md="4"
+								>
 
 									<%
 									Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
@@ -130,9 +134,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 										yearParam='<%= key +"Year" %>'
 										yearValue="<%= calendar.get(Calendar.YEAR) %>"
 									/>
-								</aui:col>
+								</clay:col>
 
-								<aui:col width="<%= 50 %>">
+								<clay:col
+									md="6"
+								>
 									<aui:select label="" name='<%= "useVariable" + HtmlUtil.escapeAttribute(key) %>' onChange='<%= "useVariable" + keyJSId + "();" %>' showEmptyOption="<%= true %>">
 										<aui:option label="start-date" value="startDate" />
 										<aui:option label="end-date" value="endDate" />
@@ -172,18 +178,22 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 											}
 										}
 									</script>
-								</aui:col>
+								</clay:col>
 							</c:when>
 							<c:otherwise>
-								<aui:col width="<%= 20 %>">
+								<clay:col
+									md="3"
+								>
 									<%= HtmlUtil.escape(key) %>
-								</aui:col>
+								</clay:col>
 
-								<aui:col width="<%= 80 %>">
+								<clay:col
+									md="9"
+								>
 									<span class="field field-text" id="aui_3_2_0_1428">
 										<input class="form-control" name="<portlet:namespace /><%= "parameterValue" + HtmlUtil.escapeAttribute(key) %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" /><br />
 									</span>
-								</aui:col>
+								</clay:col>
 							</c:otherwise>
 						</c:choose>
 					</clay:row>

@@ -60,7 +60,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 			</h3>
 
 			<clay:row>
-				<aui:col width="<%= 50 %>">
+				<clay:col
+					md="6"
+				>
 					<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeDuplicate.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken" />
 					<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNull.class %>" focusField="screenName" message="the-screen-name-cannot-be-blank" />
 					<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeNumeric.class %>" focusField="screenName" message="the-screen-name-cannot-contain-only-numeric-values" />
@@ -92,9 +94,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 					</aui:input>
 
 					<liferay-ui:user-name-fields />
-				</aui:col>
+				</clay:col>
 
-				<aui:col width="<%= 40 %>">
+				<clay:col
+					md="6"
+				>
 					<div class="text-center">
 
 						<%
@@ -109,7 +113,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 							tempImageFileName="0"
 						/>
 					</div>
-				</aui:col>
+				</clay:col>
 			</clay:row>
 		</div>
 	</liferay-frontend:edit-form-body>

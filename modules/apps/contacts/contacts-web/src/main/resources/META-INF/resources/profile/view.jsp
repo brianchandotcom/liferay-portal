@@ -26,9 +26,11 @@
 		%>
 
 		<clay:row>
-			<aui:col cssClass="contacts-container" width="<%= 100 %>">
+			<clay:col
+				className="contacts-container"
+			>
 				<liferay-util:include page="/view_user.jsp" servletContext="<%= application %>" />
-			</aui:col>
+			</clay:col>
 		</clay:row>
 	</c:when>
 	<c:otherwise>

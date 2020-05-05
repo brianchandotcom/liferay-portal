@@ -51,7 +51,9 @@ else {
 
 	<liferay-frontend:edit-form-body>
 		<clay:row>
-			<aui:col width="<%= 50 %>">
+			<clay:col
+				md="6"
+			>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:fieldset
 						cssClass="p-3"
@@ -112,15 +114,19 @@ else {
 					>
 						<div id="<portlet:namespace />customDisplayOptions">
 							<clay:row>
-								<aui:col width="<%= 75 %>">
+								<clay:col
+									md="9"
+								>
 									<aui:select id="rootMenuItemType" label="start-with-menu-items-in" name="preferences--rootMenuItemType--" value="<%= rootMenuItemType %>">
 										<aui:option label="level" value="absolute" />
 										<aui:option label="level-relative-to-the-current-menu-item" value="relative" />
 										<aui:option label="select" value="select" />
 									</aui:select>
-								</aui:col>
+								</clay:col>
 
-								<aui:col width="<%= 25 %>">
+								<clay:col
+									md="3"
+								>
 									<div class="mt-4 <%= (rootMenuItemType.equals("parent-at-level") || rootMenuItemType.equals("relative-parent-up-by")) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemLevel">
 										<aui:select label="" name="preferences--rootMenuItemLevel--">
 
@@ -136,11 +142,13 @@ else {
 
 										</aui:select>
 									</div>
-								</aui:col>
+								</clay:col>
 							</clay:row>
 
 							<clay:row>
-								<aui:col width="<%= 80 %>">
+								<clay:col
+									md="10"
+								>
 									<div class="mb-3 <%= rootMenuItemType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemIdPanel">
 										<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
 
@@ -176,11 +184,13 @@ else {
 
 										<aui:button name="chooseRootMenuItem" value="menu-item" />
 									</div>
-								</aui:col>
+								</clay:col>
 							</clay:row>
 
 							<clay:row>
-								<aui:col width="<%= 50 %>">
+								<clay:col
+									md="6"
+								>
 									<aui:select label="sublevels-to-display" name="preferences--displayDepth--">
 										<aui:option label="unlimited" value="0" />
 
@@ -195,26 +205,30 @@ else {
 										%>
 
 									</aui:select>
-								</aui:col>
+								</clay:col>
 
-								<aui:col width="<%= 50 %>">
+								<clay:col
+									md="6"
+								>
 									<aui:select label="expand-sublevels" name="preferences--expandedLevels--" value="<%= siteNavigationMenuDisplayContext.getExpandedLevels() %>">
 										<aui:option label="auto" />
 										<aui:option label="all" />
 									</aui:select>
-								</aui:col>
+								</clay:col>
 							</clay:row>
 						</div>
 					</liferay-frontend:fieldset>
 				</liferay-frontend:fieldset-group>
-			</aui:col>
+			</clay:col>
 
-			<aui:col width="<%= 50 %>">
+			<clay:col
+				md="6"
+			>
 				<liferay-portlet:preview
 					portletName="<%= portletResource %>"
 					showBorders="<%= true %>"
 				/>
-			</aui:col>
+			</clay:col>
 		</clay:row>
 	</liferay-frontend:edit-form-body>
 

@@ -37,7 +37,9 @@ request.setAttribute("view_user.jsp-user", user2);
 	<div class="contacts-profile <%= (user.getUserId() == user2.getUserId()) ? "my-profile" : StringPool.BLANK %>" id="<portlet:namespace />contactsProfile">
 		<c:if test="<%= (displayStyle == ContactsConstants.DISPLAY_STYLE_BASIC) || (displayStyle == ContactsConstants.DISPLAY_STYLE_FULL) %>">
 			<clay:row>
-				<aui:col cssClass="social-relations" width="<%= 100 %>">
+				<clay:col
+					className="social-relations"
+				>
 
 					<%
 					boolean connection = SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), user2.getUserId(), SocialRelationConstants.TYPE_BI_CONNECTION);
@@ -83,7 +85,9 @@ request.setAttribute("view_user.jsp-user", user2);
 					</c:if>
 
 					<clay:row>
-						<aui:col cssClass="contacts-action" width="<%= 100 %>">
+						<clay:col
+							className="contacts-action"
+						>
 							<c:choose>
 								<c:when test="<%= portletId.equals(ContactsPortletKeys.CONTACTS_CENTER) || portletId.equals(ContactsPortletKeys.MEMBERS) %>">
 
@@ -135,9 +139,9 @@ request.setAttribute("view_user.jsp-user", user2);
 									<liferay-util:include page="/user/user_toolbar.jsp" servletContext="<%= application %>" />
 								</c:otherwise>
 							</c:choose>
-						</aui:col>
+						</clay:col>
 					</clay:row>
-				</aui:col>
+				</clay:col>
 			</clay:row>
 
 			<div class="field-group lfr-detail-info" data-title="<%= LanguageUtil.get(request, "details") %>">
@@ -179,9 +183,12 @@ request.setAttribute("view_user.jsp-user", user2);
 		<c:if test="<%= ((displayStyle == ContactsConstants.DISPLAY_STYLE_DETAIL) || (displayStyle == ContactsConstants.DISPLAY_STYLE_FULL) || ((themeDisplay.getUserId() == user2.getUserId()) && showCompleteYourProfile)) && UserPermissionUtil.contains(permissionChecker, user2.getUserId(), ActionKeys.VIEW) %>">
 			<div class="user-information" id="<portlet:namespace />userInformation">
 				<clay:row>
-					<aui:col width="<%= 100 %>">
+					<clay:col>
 						<c:if test="<%= showUsersInformation %>">
-							<aui:col cssClass="user-information-column-1" width="<%= showSites ? 80 : 100 %>">
+							<clay:col
+								className="user-information-column-1"
+								md="<%= showSites ? String.valueOf(9) : String.valueOf(12) %>"
+							>
 								<div class="user-information-title">
 									<liferay-ui:message key="about" />
 								</div>
@@ -217,11 +224,14 @@ request.setAttribute("view_user.jsp-user", user2);
 								}
 								%>
 
-							</aui:col>
+							</clay:col>
 						</c:if>
 
 						<c:if test="<%= showSites || showTags %>">
-							<aui:col cssClass="user-information-column-2" width="<%= showUsersInformation ? 20 : 100 %>">
+							<clay:col
+								className="user-information-column-2"
+								md="<%= showUsersInformation ? String.valueOf(3) : String.valueOf(12) %>"
+							>
 								<c:if test="<%= showSites %>">
 
 									<%
@@ -333,9 +343,9 @@ request.setAttribute("view_user.jsp-user", user2);
 										</c:otherwise>
 									</c:choose>
 								</c:if>
-							</aui:col>
+							</clay:col>
 						</c:if>
-					</aui:col>
+					</clay:col>
 				</clay:row>
 			</div>
 

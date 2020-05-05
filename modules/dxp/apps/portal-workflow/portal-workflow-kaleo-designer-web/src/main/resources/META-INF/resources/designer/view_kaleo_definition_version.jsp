@@ -76,7 +76,9 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 <div class="card-horizontal main-content-card">
 	<div class="card-row-padded">
 		<aui:fieldset cssClass="workflow-definition-content">
-			<aui:col>
+			<clay:col
+				size="12"
+			>
 				<aui:field-wrapper label="title">
 					<liferay-ui:input-localized
 						disabled="<%= true %>"
@@ -84,11 +86,15 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 						xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>'
 					/>
 				</aui:field-wrapper>
-			</aui:col>
+			</clay:col>
 
-			<aui:col cssClass="workflow-definition-content-source-wrapper" id="contentSourceWrapper">
+			<clay:col
+				className="workflow-definition-content-source-wrapper"
+				id="contentSourceWrapper"
+				size="12"
+			>
 				<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
-			</aui:col>
+			</clay:col>
 		</aui:fieldset>
 
 		<c:choose>

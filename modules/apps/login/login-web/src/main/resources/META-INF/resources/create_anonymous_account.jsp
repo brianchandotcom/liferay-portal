@@ -58,7 +58,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "anonymous-account"));
 		<liferay-ui:error exception="<%= UserEmailAddressException.MustValidate.class %>" message="please-enter-a-valid-email-address" />
 
 		<aui:fieldset column="<%= true %>">
-			<aui:col width="<%= 50 %>">
+			<clay:col
+				md="6"
+			>
 				<aui:input model="<%= User.class %>" name="firstName" />
 
 				<%
@@ -76,13 +78,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "anonymous-account"));
 						<aui:validator name="required" />
 					</c:if>
 				</aui:input>
-			</aui:col>
+			</clay:col>
 
-			<aui:col width="<%= 50 %>">
+			<clay:col
+				md="6"
+			>
 				<c:if test="<%= captchaConfiguration.createAccountCaptchaEnabled() %>">
 					<liferay-captcha:captcha />
 				</c:if>
-			</aui:col>
+			</clay:col>
 		</aui:fieldset>
 
 		<aui:button-row>

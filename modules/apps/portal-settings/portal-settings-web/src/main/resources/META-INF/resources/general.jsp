@@ -40,7 +40,9 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 <aui:model-context bean="<%= account %>" model="<%= Account.class %>" />
 
 <clay:row>
-	<aui:col width="<%= 50 %>">
+	<clay:col
+		md="6"
+	>
 		<liferay-ui:error exception="<%= AccountNameException.class %>" message="please-enter-a-valid-name" />
 
 		<aui:input name="name" />
@@ -52,35 +54,43 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 		<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
 
 		<aui:input bean="<%= virtualHost %>" fieldParam="virtualHostname" label="virtual-host" model="<%= VirtualHost.class %>" name="hostname" />
-	</aui:col>
+	</clay:col>
 
-	<aui:col width="<%= 50 %>">
+	<clay:col
+		md="6"
+	>
 		<aui:input label="cdn-host-http" name='<%= "settings--" + PropsKeys.CDN_HOST_HTTP + "--" %>' type="text" value="<%= cdnHostHttp %>" />
 
 		<aui:input label="cdn-host-https" name='<%= "settings--" + PropsKeys.CDN_HOST_HTTPS + "--" %>' type="text" value="<%= cdnHostHttps %>" />
 
 		<aui:input label="enable-cdn-dynamic-resources" name='<%= "settings--" + PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED + "--" %>' type="checkbox" value="<%= cdnDynamicResourcesEnabled %>" />
-	</aui:col>
+	</clay:col>
 </clay:row>
 
 <h4><liferay-ui:message key="navigation" /></h4>
 
 <clay:row>
-	<aui:col width="<%= 50 %>">
+	<clay:col
+		md="6"
+	>
 		<aui:input bean="<%= company %>" helpMessage="home-url-help" label="home-url" model="<%= Company.class %>" name="homeURL" />
 
 		<aui:input helpMessage="default-landing-page-help" label="default-landing-page" name='<%= "settings--" + PropsKeys.DEFAULT_LANDING_PAGE_PATH + "--" %>' type="text" value="<%= defaultLandingPagePath %>" />
-	</aui:col>
+	</clay:col>
 
-	<aui:col width="<%= 50 %>">
+	<clay:col
+		md="6"
+	>
 		<aui:input helpMessage="default-logout-page-help" label="default-logout-page" name='<%= "settings--" + PropsKeys.DEFAULT_LOGOUT_PAGE_PATH + "--" %>' type="text" value="<%= defaultLogoutPagePath %>" />
-	</aui:col>
+	</clay:col>
 </clay:row>
 
 <h4><liferay-ui:message key="additional-information" /></h4>
 
 <clay:row>
-	<aui:col width="<%= 50 %>">
+	<clay:col
+		md="6"
+	>
 		<aui:input name="legalName" />
 
 		<aui:input name="legalId" />
@@ -88,13 +98,15 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 		<aui:input name="legalType" />
 
 		<aui:input name="sicCode" />
-	</aui:col>
+	</clay:col>
 
-	<aui:col width="<%= 50 %>">
+	<clay:col
+		md="6"
+	>
 		<aui:input name="tickerSymbol" />
 
 		<aui:input name="industry" />
 
 		<aui:input name="type" />
-	</aui:col>
+	</clay:col>
 </clay:row>

@@ -21,7 +21,9 @@
 		<clay:row
 			id='<%= renderResponse.getNamespace() + "ordering" %>'
 		>
-			<aui:col width="<%= 50 %>">
+			<clay:col
+				md="6"
+			>
 
 				<%
 				String orderByColumn1 = editAssetListDisplayContext.getOrderByColumn1();
@@ -61,9 +63,11 @@
 
 					<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
 				</aui:field-wrapper>
-			</aui:col>
+			</clay:col>
 
-			<aui:col width="<%= 50 %>">
+			<clay:col
+				md="6"
+			>
 
 				<%
 				String orderByColumn2 = editAssetListDisplayContext.getOrderByColumn2();
@@ -103,7 +107,7 @@
 
 					<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
 				</aui:field-wrapper>
-			</aui:col>
+			</clay:col>
 		</clay:row>
 	</liferay-frontend:fieldset>
 </liferay-frontend:fieldset-group>

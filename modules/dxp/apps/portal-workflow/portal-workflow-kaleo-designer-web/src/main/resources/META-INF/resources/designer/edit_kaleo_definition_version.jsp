@@ -784,7 +784,9 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 					<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
 
 					<aui:fieldset>
-						<aui:col>
+						<clay:col
+							size="12"
+						>
 							<aui:field-wrapper label="title">
 								<liferay-ui:input-localized
 									name='<%= randomNamespace + "title" %>'
@@ -792,11 +794,13 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									xml=""
 								/>
 							</aui:field-wrapper>
-						</aui:col>
+						</clay:col>
 
-						<aui:col>
+						<clay:col
+							size="12"
+						>
 							<liferay-ui:message key="copy-does-not-include-revisions" />
-						</aui:col>
+						</clay:col>
 					</aui:fieldset>
 				</aui:form>
 			</div>

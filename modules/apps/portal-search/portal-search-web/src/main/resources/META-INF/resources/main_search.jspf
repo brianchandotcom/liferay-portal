@@ -22,7 +22,10 @@ Hits hits = searchDisplayContext.getHits();
 	className='<%= "search-layout" + (searchDisplayContext.isShowMenu() ? " menu-column" : StringPool.BLANK) %>'
 >
 	<c:if test="<%= searchDisplayContext.isShowMenu() %>">
-		<aui:col id="facetNavigation" span="<%= 3 %>">
+		<clay:col
+			id="facetNavigation"
+			md="3"
+		>
 
 			<%
 			for (SearchFacet searchFacet : ListUtil.sort(searchDisplayContext.getEnabledSearchFacets(), SearchFacetComparator.INSTANCE)) {
@@ -36,10 +39,13 @@ Hits hits = searchDisplayContext.getHits();
 			}
 			%>
 
-		</aui:col>
+		</clay:col>
 	</c:if>
 
-	<aui:col cssClass="result" first="<%= !searchDisplayContext.isShowMenu() %>" span="<%= 9 %>">
+	<clay:col
+		className="result"
+		md="9"
+	>
 		<%@ include file="/main_search_suggest.jspf" %>
 
 		<liferay-ui:search-container
@@ -96,7 +102,7 @@ Hits hits = searchDisplayContext.getHits();
 				</div>
 			</c:if>
 		</liferay-ui:search-container>
-	</aui:col>
+	</clay:col>
 </clay:row>
 
 <aui:script require="metal-dom/src/dom as dom">

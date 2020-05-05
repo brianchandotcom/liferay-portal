@@ -35,7 +35,9 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 %>
 
 <div class="container-fluid-1280">
-	<aui:col cssClass="lfr-asset-column lfr-asset-column-details">
+	<clay:col
+		className="lfr-asset-column lfr-asset-column-details"
+	>
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 
@@ -45,21 +47,25 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 
 				<liferay-util:include page="/instance/workflow_instance_action.jsp" servletContext="<%= application %>" />
 
-				<aui:col width="<%= 60 %>">
+				<clay:col
+					md="7"
+				>
 					<aui:field-wrapper label="state">
 						<aui:fieldset>
 							<%= HtmlUtil.escape(workflowInstanceEditDisplayContext.getWorkflowInstanceState()) %>
 						</aui:fieldset>
 					</aui:field-wrapper>
-				</aui:col>
+				</clay:col>
 
-				<aui:col width="<%= 33 %>">
+				<clay:col
+					md="4"
+				>
 					<aui:field-wrapper label="end-date">
 						<aui:fieldset>
 							<%= workflowInstanceEditDisplayContext.getWorkflowInstanceEndDate() %>
 						</aui:fieldset>
 					</aui:field-wrapper>
-				</aui:col>
+				</clay:col>
 			</aui:fieldset>
 
 			<liferay-ui:panel-container
@@ -194,5 +200,5 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 		</aui:fieldset-group>
-	</aui:col>
+	</clay:col>
 </div>

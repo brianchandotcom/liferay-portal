@@ -56,7 +56,9 @@ if (portletTitleBasedNavigation) {
 			<c:choose>
 				<c:when test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 					<clay:row>
-						<aui:col width="<%= 50 %>">
+						<clay:col
+							md="6"
+						>
 							<aui:form name="fm1">
 								<div class="lfr-dynamic-uploader">
 									<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
@@ -95,9 +97,11 @@ if (portletTitleBasedNavigation) {
 										'<liferay-portlet:actionURL name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>',
 								});
 							</aui:script>
-						</aui:col>
+						</clay:col>
 
-						<aui:col width="<%= 50 %>">
+						<clay:col
+							md="6"
+						>
 							<div class="common-file-metadata-container hide selected" id="<portlet:namespace />commonFileMetadataContainer">
 								<liferay-util:include page="/document_library/upload_multiple_file_entries_resources.jsp" servletContext="<%= application %>" />
 							</div>
@@ -276,7 +280,7 @@ if (portletTitleBasedNavigation) {
 									['aui-base']
 								);
 							</aui:script>
-						</aui:col>
+						</clay:col>
 					</clay:row>
 				</c:when>
 				<c:otherwise>

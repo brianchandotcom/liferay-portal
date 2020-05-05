@@ -30,7 +30,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 %>
 
 <clay:row>
-	<aui:col width="<%= 100 %>">
+	<clay:col>
 		<ul class="sidebar-block tabular-list-group-unstyled">
 
 			<%
@@ -107,7 +107,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 			%>
 
 		</ul>
-	</aui:col>
+	</clay:col>
 </clay:row>
 
 <portlet:renderURL var="compareVersionURL">

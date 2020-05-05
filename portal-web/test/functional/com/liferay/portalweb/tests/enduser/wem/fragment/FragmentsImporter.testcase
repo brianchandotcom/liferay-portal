@@ -164,7 +164,7 @@ definition {
 			withSection = "true");
 
 		AssertElementPresent(
-			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
+			key_elementHeader = "/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
 			key_position = "1",
 			locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
 	}

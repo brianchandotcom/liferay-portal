@@ -16,6 +16,7 @@ package com.liferay.data.engine.internal.expando.model.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
+import com.liferay.data.engine.nativeobject.DataEngineNativeObjectField;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -77,6 +78,13 @@ public class DataEngineExpandoBridgeImplTest {
 				@Override
 				public String getClassName() {
 					return DataDefinition.class.getName();
+				}
+
+				@Override
+				public List<DataEngineNativeObjectField>
+					getDataEngineNativeObjectFields() {
+
+					return null;
 				}
 
 				@Override

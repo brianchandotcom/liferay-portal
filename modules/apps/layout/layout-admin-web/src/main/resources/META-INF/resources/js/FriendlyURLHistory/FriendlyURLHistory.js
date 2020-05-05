@@ -20,7 +20,7 @@ import FriendlyURLHistoryModal from './FriendlyURLHistoryModal';
 
 function FriendlyURLHistory({portletNamespace, ...restProps}) {
 	const [showModal, setShowModal] = useState(false);
-	const [callback, setCallback] = useState();
+	const [selectedLanguageId, setSelectedLanguageId] = useState();
 	const BRIDGE_COMPONENT_ID = `${portletNamespace}FriendlyURLHistory`;
 
 	const handleOnClose = () => {
@@ -35,8 +35,8 @@ function FriendlyURLHistory({portletNamespace, ...restProps}) {
 		Liferay.component(
 			BRIDGE_COMPONENT_ID,
 			{
-				open: (callback) => {
-					setCallback(() => callback);
+				open: (selectedLanguageId) => {
+					setSelectedLanguageId(selectedLanguageId);
 					setShowModal(true);
 				},
 			},
@@ -51,7 +51,7 @@ function FriendlyURLHistory({portletNamespace, ...restProps}) {
 			{showModal && (
 				<FriendlyURLHistoryModal
 					{...restProps}
-					callback={callback}
+					initialLanguageId={selectedLanguageId}
 					observer={observer}
 					onModalClose={onClose}
 				/>

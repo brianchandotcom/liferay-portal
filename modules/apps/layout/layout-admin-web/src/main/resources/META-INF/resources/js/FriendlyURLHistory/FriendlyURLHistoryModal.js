@@ -24,18 +24,15 @@ import React, {useEffect, useState} from 'react';
 const FriendlyURLHistoryModal = ({
 	defaultLocaleId,
 	friendlyURLEntryLocalizationslURL,
+	initialLanguageId,
 	observer,
 }) => {
-	const [locale, setLocale] = useState(defaultLocaleId);
+	const [locale, setLocale] = useState();
 	const [loading, setLoading] = useState(true);
 	const [
 		friendlyURLEntryLocalizations,
 		setFriendlyURLEntryLocalizations,
 	] = useState({});
-	const [friendlyURLEntries, setFriendlyURLEntries] = useState({
-		current: {},
-		history: [],
-	});
 	const [availableLocales, setAvailableLocales] = useState([]);
 	const isMounted = useIsMounted();
 
@@ -57,8 +54,28 @@ const FriendlyURLHistoryModal = ({
 	}, [friendlyURLEntryLocalizationslURL, isMounted]);
 
 	useEffect(() => {
-		setFriendlyURLEntries(friendlyURLEntryLocalizations[locale]);
-	}, [friendlyURLEntryLocalizations, locale]);
+		if (!loading) {
+			let selectedLanguageId;
+
+			if (friendlyURLEntryLocalizations[initialLanguageId]) {
+				selectedLanguageId = initialLanguageId;
+			}
+			else if (friendlyURLEntryLocalizations[defaultLocaleId]) {
+				selectedLanguageId = defaultLocaleId;
+			}
+			else {
+				selectedLanguageId = availableLocales[0];
+			}
+
+			setLocale(selectedLanguageId);
+		}
+	}, [
+		availableLocales,
+		defaultLocaleId,
+		friendlyURLEntryLocalizations,
+		initialLanguageId,
+		loading,
+	]);
 
 	return (
 		<ClayModal
@@ -71,7 +88,7 @@ const FriendlyURLHistoryModal = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{loading ? (
+				{loading || !locale ? (
 					<ClayLoadingIndicator />
 				) : (
 					<>
@@ -81,6 +98,7 @@ const FriendlyURLHistoryModal = ({
 								onChange={({target: {value}}) => {
 									setLocale(value);
 								}}
+								value={locale}
 							>
 								{availableLocales.map((localeId) => (
 									<ClaySelect.Option
@@ -100,12 +118,16 @@ const FriendlyURLHistoryModal = ({
 							<ClayList.Item flex>
 								<ClayList.ItemField expand>
 									<ClayList.ItemText className="text-truncate">
-										{friendlyURLEntries.current.urlTitle}
+										{
+											friendlyURLEntryLocalizations[
+												locale
+											].current.urlTitle
+										}
 									</ClayList.ItemText>
 								</ClayList.ItemField>
 							</ClayList.Item>
 							<ClayList.Header>Old Friendly URLs</ClayList.Header>
-							{(friendlyURLEntries.history || []).map(
+							{friendlyURLEntryLocalizations[locale].history.map(
 								({friendlyURLEntryId, urlTitle}) => (
 									<ClayList.Item
 										flex

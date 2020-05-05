@@ -240,7 +240,11 @@ String friendlyURLBase = StringPool.BLANK;
 		friendlyURLHistoryButton.addEventListener('click', function () {
 			Liferay.componentReady('<portlet:namespace />FriendlyURLHistory').then(
 				function (FriendlyURLHistory) {
-					FriendlyURLHistory.open();
+					FriendlyURLHistory.open(
+						Liferay.component(
+							'<portlet:namespace />friendlyURL'
+						).getSelectedLanguageId()
+					);
 				}
 			);
 		});

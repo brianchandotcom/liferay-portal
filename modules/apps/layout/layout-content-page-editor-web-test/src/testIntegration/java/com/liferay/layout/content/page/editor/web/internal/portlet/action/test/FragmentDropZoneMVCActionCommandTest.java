@@ -19,8 +19,10 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -60,12 +62,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.io.IOException;
 
 import java.util.List;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,9 +105,9 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 		_layout = _addLayout();
 
-		LayoutStructure layoutStructure = new LayoutStructure();
+		_layoutStructure = new LayoutStructure();
 
-		layoutStructure.addRootLayoutStructureItem();
+		_layoutStructure.addRootLayoutStructureItem();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -116,7 +120,7 @@ public class FragmentDropZoneMVCActionCommandTest {
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(Layout.class.getName()), _layout.getPlid(),
-			layoutStructure.toString(), serviceContext);
+			_layoutStructure.toString(), serviceContext);
 	}
 
 	@Test
@@ -165,6 +169,93 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 		Assert.assertTrue(
 			layoutStructureItem instanceof FragmentDropZoneLayoutStructureItem);
+	}
+
+	@Test
+	public void testDeleteFragmentEntryLinkItemWithDropZone() throws Exception {
+		MockLiferayPortletActionRequest actionRequest =
+			_getMockLiferayPortletActionRequest(_group.getGroupId());
+
+		actionRequest.addParameter(
+			"fragmentEntryKey", _fragmentEntry.getFragmentEntryKey());
+		actionRequest.addParameter(
+			"itemType", LayoutDataItemTypeConstants.TYPE_FRAGMENT);
+		actionRequest.addParameter(
+			"parentItemId", _layoutStructure.getMainItemId());
+		actionRequest.addParameter("position", "0");
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_addFragmentEntryLinkMVCActionCommand,
+			"_processAddFragmentEntryLink",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockLiferayPortletActionResponse());
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
+
+		JSONObject fragmentEntryLinkJSONObject = jsonObject.getJSONObject(
+			"fragmentEntryLink");
+
+		long fragmentEntryLinkId = fragmentEntryLinkJSONObject.getLong(
+			"fragmentEntryLinkId");
+
+		LayoutStructureItem fragmentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLinkId);
+
+		List<String> childrenItemIds =
+			fragmentLayoutStructureItem.getChildrenItemIds();
+
+		actionRequest = _getMockLiferayPortletActionRequest(
+			_group.getGroupId());
+
+		actionRequest.addParameter(
+			"itemType", LayoutDataItemTypeConstants.TYPE_CONTAINER);
+		actionRequest.addParameter("parentItemId", childrenItemIds.get(0));
+		actionRequest.addParameter("position", "0");
+
+		ReflectionTestUtil.invoke(
+			_addItemMVCActionCommand, "addItemToLayoutData",
+			new Class<?>[] {ActionRequest.class}, actionRequest);
+
+		jsonObject = ReflectionTestUtil.invoke(
+			_deleteItemMVCActionCommand, "deleteItemJSONObject",
+			new Class<?>[] {
+				long.class, long.class, String.class, long.class, long.class
+			},
+			_group.getCompanyId(), _group.getGroupId(),
+			fragmentLayoutStructureItem.getItemId(), _layout.getPlid(),
+			SegmentsExperienceConstants.ID_DEFAULT);
+
+		layoutDataJSONObject = jsonObject.getJSONObject("layoutData");
+
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
+
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
+
+		Assert.assertEquals(
+			layoutStructureItems.toString(), 1, layoutStructureItems.size());
+
+		Assert.assertNotNull(layoutStructure.getMainLayoutStructureItem());
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		childrenItemIds = rootLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 0, childrenItemIds.size());
+
+		Assert.assertNull(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLinkId));
+		Assert.assertNull(
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLinkId));
 	}
 
 	private Layout _addLayout() throws PortalException {
@@ -269,15 +360,24 @@ public class FragmentDropZoneMVCActionCommandTest {
 	@Inject(filter = "mvc.command.name=/content_layout/add_fragment_entry_link")
 	private MVCActionCommand _addFragmentEntryLinkMVCActionCommand;
 
+	@Inject(filter = "mvc.command.name=/content_layout/add_item")
+	private MVCActionCommand _addItemMVCActionCommand;
+
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject(filter = "mvc.command.name=/content_layout/delete_item")
+	private MVCActionCommand _deleteItemMVCActionCommand;
+
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	private FragmentEntry _fragmentEntry;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
@@ -293,6 +393,8 @@ public class FragmentDropZoneMVCActionCommandTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	private LayoutStructure _layoutStructure;
 
 	@Inject
 	private Portal _portal;

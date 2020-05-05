@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -153,15 +152,6 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 	@Override
 	public List<CTProcess> getCTProcesses(long ctCollectionId) {
 		return ctProcessPersistence.findByCollectionId(ctCollectionId);
-	}
-
-	@Override
-	public List<CTProcess> getCTProcesses(
-		long companyId, long userId, String keywords, int status, int start,
-		int end, OrderByComparator<CTProcess> orderByComparator) {
-
-		return ctProcessFinder.findByC_U_N_D_S(
-			companyId, userId, keywords, status, start, end, orderByComparator);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

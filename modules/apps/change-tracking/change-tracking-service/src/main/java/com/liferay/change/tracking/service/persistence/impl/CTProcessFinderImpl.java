@@ -52,27 +52,6 @@ public class CTProcessFinderImpl
 		long companyId, long userId, String keywords, int status, int start,
 		int end, OrderByComparator<?> orderByComparator) {
 
-		return doFindByC_U_N_D_S(
-			companyId, userId, keywords, status, start, end, orderByComparator,
-			true);
-	}
-
-	@Override
-	public List<CTProcess> findByC_U_N_D_S(
-		long companyId, long userId, String keywords, int status, int start,
-		int end, OrderByComparator<?> orderByComparator) {
-
-		return doFindByC_U_N_D_S(
-			companyId, userId, keywords, status, start, end, orderByComparator,
-			false);
-	}
-
-	@SuppressWarnings("unchecked")
-	protected List<CTProcess> doFindByC_U_N_D_S(
-		long companyId, long userId, String keywords, int status, int start,
-		int end, OrderByComparator<?> orderByComparator,
-		boolean inlineSQLHelper) {
-
 		Session session = null;
 
 		try {
@@ -125,12 +104,10 @@ public class CTProcessFinderImpl
 				predicate = predicate.and(keywordsPredicate.withParentheses());
 			}
 
-			if (inlineSQLHelper) {
-				predicate = predicate.and(
-					_inlineSQLHelper.getPermissionWherePredicate(
-						CTCollection.class,
-						CTCollectionTable.INSTANCE.ctCollectionId));
-			}
+			predicate = predicate.and(
+				_inlineSQLHelper.getPermissionWherePredicate(
+					CTCollection.class,
+					CTCollectionTable.INSTANCE.ctCollectionId));
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
 				DSLQueryFactoryUtil.select(

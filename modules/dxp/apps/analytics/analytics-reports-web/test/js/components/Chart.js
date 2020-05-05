@@ -14,6 +14,7 @@ import {cleanup, render, wait} from '@testing-library/react';
 import React from 'react';
 
 import Chart from '../../../src/main/resources/META-INF/resources/js/components/Chart';
+import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/store';
 
 const mockReadsDataProvider = jest.fn(() =>
 	Promise.resolve({
@@ -226,14 +227,19 @@ describe('Chart', () => {
 		};
 
 		const {getByText} = render(
-			<Chart
-				dataProviders={[mockViewsDataProvider, mockReadsDataProvider]}
-				defaultTimeRange={testProps.defaultTimeRange}
-				defaultTimeSpanOption={testProps.defaultTimeSpanOption}
-				languageTag={testProps.languageTag}
-				publishDate={testProps.publishDate}
-				timeSpanOptions={mockTimeSpanOptions}
-			/>
+			<StoreContextProvider value={{publishedToday: true}}>
+				<Chart
+					dataProviders={[
+						mockViewsDataProvider,
+						mockReadsDataProvider,
+					]}
+					defaultTimeRange={testProps.defaultTimeRange}
+					defaultTimeSpanOption={testProps.defaultTimeSpanOption}
+					languageTag={testProps.languageTag}
+					publishDate={testProps.publishDate}
+					timeSpanOptions={mockTimeSpanOptions}
+				/>
+			</StoreContextProvider>
 		);
 
 		await wait(() =>

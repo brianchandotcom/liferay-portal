@@ -17,6 +17,7 @@ package com.liferay.portal.db.partition.test.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.db.partition.DBPartitionUtil;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
+
+import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 
 /**
  * @author Alberto Chaparro
@@ -44,8 +47,12 @@ public class DBPartitionTestUtil {
 		ReflectionTestUtil.setFieldValue(
 			DBPartitionUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
 			StringPool.BLANK);
+
+		_lazyConnectionDataSourceProxy.setTargetDataSource(_currentDataSource);
+
 		ReflectionTestUtil.setFieldValue(
-			InfrastructureUtil.class, "_dataSource", _currentDataSource);
+			InfrastructureUtil.class, "_dataSource",
+			_lazyConnectionDataSourceProxy);
 	}
 
 	public static void enableDBPartition() throws SQLException {
@@ -65,10 +72,15 @@ public class DBPartitionTestUtil {
 		DataSource dbPartitionDataSource = DBPartitionUtil.wrapDataSource(
 			_currentDataSource);
 
+		_lazyConnectionDataSourceProxy.setTargetDataSource(
+			dbPartitionDataSource);
+
 		ReflectionTestUtil.setFieldValue(
 			DBInitUtil.class, "_dataSource", dbPartitionDataSource);
+
 		ReflectionTestUtil.setFieldValue(
-			InfrastructureUtil.class, "_dataSource", dbPartitionDataSource);
+			InfrastructureUtil.class, "_dataSource",
+			_lazyConnectionDataSourceProxy);
 	}
 
 	public static String getSchemaName(long companyId) {
@@ -87,5 +99,9 @@ public class DBPartitionTestUtil {
 
 	private static final DataSource _currentDataSource =
 		ReflectionTestUtil.getFieldValue(DBInitUtil.class, "_dataSource");
+	private static final LazyConnectionDataSourceProxy
+		_lazyConnectionDataSourceProxy =
+			(LazyConnectionDataSourceProxy)PortalBeanLocatorUtil.locate(
+				"liferayDataSource");
 
 }

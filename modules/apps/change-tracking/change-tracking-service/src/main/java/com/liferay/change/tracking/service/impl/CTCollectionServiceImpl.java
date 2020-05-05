@@ -18,12 +18,20 @@ import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTAutoResolutionInfo;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.base.CTCollectionServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -108,15 +116,32 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 		long companyId, int status, String keywords, int start, int end,
 		OrderByComparator<CTCollection> obc) {
 
-		return ctCollectionFinder.filterFindByC_S(
-			companyId, status, keywords, start, end, obc);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+		).from(
+			CTCollectionTable.INSTANCE
+		).where(
+			_getC_SPredicate(companyId, status, keywords)
+		).orderBy(
+			CTCollectionTable.INSTANCE, obc
+		).limit(
+			start, end
+		);
+
+		return ctCollectionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
 	public int getCTCollectionsCount(
 		long companyId, int status, String keywords) {
 
-		return ctCollectionFinder.filterCountByC_S(companyId, status, keywords);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
+		).from(
+			CTCollectionTable.INSTANCE
+		).where(
+			_getC_SPredicate(companyId, status, keywords)
+		);
+
+		return ctCollectionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -158,6 +183,55 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 			userId, ctCollectionId, name, description);
 	}
 
+	private Predicate _getC_SPredicate(
+		long companyId, int status, String keywords) {
+
+		Predicate predicate = CTCollectionTable.INSTANCE.companyId.eq(
+			companyId);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			predicate = predicate.and(
+				CTCollectionTable.INSTANCE.status.eq(status));
+		}
+
+		Predicate keywordsPredicate = null;
+
+		for (String keyword :
+				_customSQL.keywords(keywords, true, WildcardMode.SURROUND)) {
+
+			if (keyword == null) {
+				continue;
+			}
+
+			Predicate keywordPredicate = DSLFunctionFactoryUtil.lower(
+				CTCollectionTable.INSTANCE.name
+			).like(
+				keyword
+			).or(
+				DSLFunctionFactoryUtil.lower(
+					CTCollectionTable.INSTANCE.description
+				).like(
+					keyword
+				)
+			);
+
+			if (keywordsPredicate == null) {
+				keywordsPredicate = keywordPredicate;
+			}
+			else {
+				keywordsPredicate = keywordsPredicate.or(keywordPredicate);
+			}
+		}
+
+		if (keywordsPredicate != null) {
+			predicate = predicate.and(keywordsPredicate.withParentheses());
+		}
+
+		return predicate.and(
+			_inlineSQLHelper.getPermissionWherePredicate(
+				CTCollection.class, CTCollectionTable.INSTANCE.ctCollectionId));
+	}
+
 	@Reference
 	private CTAutoResolutionInfoPersistence _ctAutoResolutionInfoPersistence;
 
@@ -169,6 +243,12 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
+
+	@Reference
+	private CustomSQL _customSQL;
+
+	@Reference
+	private InlineSQLHelper _inlineSQLHelper;
 
 	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

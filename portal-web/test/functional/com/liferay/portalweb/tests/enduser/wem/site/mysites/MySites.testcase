@@ -42,11 +42,10 @@ definition {
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
-			Navigator.gotoSitePage(
-				pageName = "Site Page",
-				siteName = "Home Site");
-
-			Portlet.addPG(portletName = "My Sites");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Home Site",
+				layoutName = "Site Page",
+				widgetName = "My Sites");
 		}
 
 		task ("View pagination") {
@@ -115,11 +114,9 @@ definition {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		task ("Create a private site") {
-			Site.openSitesAdmin();
-
-			Site.addBlankCP(
-				membershipType = "Private",
-				siteName = "Site Name");
+			JSONGroup.addGroup(
+				groupName = "Site Name",
+				type = "Private");
 		}
 
 		task ("Create a user and set its password") {
@@ -166,11 +163,9 @@ definition {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		task ("Create a restricted site") {
-			Site.openSitesAdmin();
-
-			Site.addBlankCP(
-				membershipType = "Restricted",
-				siteName = "Site Name");
+			JSONGroup.addGroup(
+				groupName = "Site Name",
+				type = "Restricted");
 		}
 
 		task ("Create a user and set its password") {
@@ -316,11 +311,10 @@ definition {
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
-			Navigator.gotoSitePage(
-				pageName = "Site Page",
-				siteName = "Home Site");
-
-			Portlet.addPG(portletName = "My Sites");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Home Site",
+				layoutName = "Site Page",
+				widgetName = "My Sites");
 		}
 
 		task ("Search for new site in My Sites widget") {
@@ -385,11 +379,14 @@ definition {
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Home Site",
+				layoutName = "Site Page",
+				widgetName = "My Sites");
+
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
 				siteName = "Home Site");
-
-			Portlet.addPG(portletName = "My Sites");
 		}
 
 		task ("Sign in as new user") {
@@ -425,11 +422,14 @@ definition {
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Home Site",
+				layoutName = "Site Page",
+				widgetName = "My Sites");
+
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
 				siteName = "Home Site");
-
-			Portlet.addPG(portletName = "My Sites");
 		}
 
 		task ("Assert deactivated site is not searchable") {
@@ -474,19 +474,20 @@ definition {
 		}
 
 		task ("Add new site with manual membership disabled") {
-			JSONGroup.addGroup(groupName = "Site Name");
-
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-			Site.manageMembershipOptions(allowManualMembershipManagement = "false");
+			JSONGroup.addGroup(
+				groupName = "Site Name",
+				manualMembership = "false");
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Home Site",
+				layoutName = "Site Page",
+				widgetName = "My Sites");
+
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
 				siteName = "Home Site");
-
-			Portlet.addPG(portletName = "My Sites");
 		}
 
 		task ("Assert user cannot join a site with disabled membership maanagement") {
@@ -510,19 +511,20 @@ definition {
 		property testray.component.names = "Site Administration";
 
 		task ("Add new site with manual membership disabled") {
-			JSONGroup.addGroup(groupName = "Site Name");
-
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
-
-			Site.manageMembershipOptions(allowManualMembershipManagement = "false");
+			JSONGroup.addGroup(
+				groupName = "Site Name",
+				manualMembership = "false");
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Home Site",
+				layoutName = "Site Page",
+				widgetName = "My Sites");
+
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
 				siteName = "Home Site");
-
-			Portlet.addPG(portletName = "My Sites");
 		}
 
 		task ("Assert superadmin cannot leave site") {
@@ -554,11 +556,14 @@ definition {
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Home Site",
+				layoutName = "Site Page",
+				widgetName = "My Sites");
+
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
 				siteName = "Home Site");
-
-			Portlet.addPG(portletName = "My Sites");
 		}
 
 		task ("Go to public and private pages via My Sites widget") {
@@ -594,11 +599,14 @@ definition {
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Home Site",
+				layoutName = "Site Page",
+				widgetName = "My Sites");
+
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
 				siteName = "Home Site");
-
-			Portlet.addPG(portletName = "My Sites");
 		}
 
 		task ("View Site tags via My Sites widget") {

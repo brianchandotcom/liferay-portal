@@ -36,12 +36,12 @@ public class DiscoveredBeanMethod {
 		return _beanClass;
 	}
 
-	public Method getMethod() {
-		return _method;
+	public BeanPortletMethodType getBeanPortletMethodType() {
+		return _beanPortletMethodType;
 	}
 
-	public BeanPortletMethodType getMethodType() {
-		return _beanPortletMethodType;
+	public Method getMethod() {
+		return _method;
 	}
 
 	public String[] getPortletNames() {

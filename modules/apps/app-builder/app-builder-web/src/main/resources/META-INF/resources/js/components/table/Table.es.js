@@ -59,6 +59,7 @@ const Table = ({
 										checked={false}
 										disabled={false}
 										indeterminate={false}
+										onChange={() => {}}
 									/>
 								</Cell>
 							)}

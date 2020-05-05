@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditTableView renders 1`] = `
+<DocumentFragment>
+  <div
+    class="tools-control-group"
+  >
+    <div
+      class="control-menu-level-1-heading"
+    >
+      new-table-view
+    </div>
+  </div>
+  <div
+    class="app-builder-table-view"
+  >
+    <form>
+      <nav
+        class="app-builder-upper-toolbar component-tbar subnav-tbar-light tbar"
+      >
+        <div
+          class="container-fluid container-fluid-max-xl"
+        >
+          <ul
+            class="tbar-nav"
+          >
+            <li
+              class="tbar-item tbar-item-expand"
+            >
+              <div
+                class="tbar-section"
+              >
+                <div
+                  class="input-group"
+                >
+                  <div
+                    class="input-group-item"
+                  >
+                    <input
+                      aria-label="untitled-table-view"
+                      class="form-control form-control-inline"
+                      placeholder="untitled-table-view"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li
+              class="tbar-item"
+            >
+              <div
+                class="tbar-section"
+              >
+                <div
+                  class="input-group"
+                >
+                  <div
+                    class="input-group-item"
+                  >
+                    <button
+                      class="ml-3 btn btn-sm btn-secondary"
+                      type="button"
+                    >
+                      cancel
+                    </button>
+                  </div>
+                  <div
+                    class="input-group-item"
+                  >
+                    <button
+                      class="ml-3 btn btn-sm btn-primary"
+                      disabled=""
+                      type="button"
+                    >
+                      save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </form>
+    <div
+      class="app-builder-sidebar main data-layout-builder-sidebar"
+    >
+      <div
+        class="sidebar sidebar-light"
+      >
+        <div
+          class="sidebar-header"
+        >
+          <form>
+            <div
+              class="autofit-row sidebar-section"
+            >
+              <div
+                class="autofit-col autofit-col-expand"
+              >
+                <div
+                  class="input-group"
+                >
+                  <div
+                    class="input-group-item"
+                  >
+                    <input
+                      aria-label="search"
+                      class="form-control input-group-inset input-group-inset-after"
+                      placeholder="search..."
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="input-group-inset-item input-group-inset-item-after"
+                    >
+                      <button
+                        class="btn btn-monospaced btn-unstyled"
+                        type="button"
+                      >
+                        <svg
+                          class="lexicon-icon lexicon-icon-search"
+                          role="presentation"
+                        >
+                          <use
+                            xlink:href="#search"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div
+          class="sidebar-body"
+        >
+          <nav
+            class="component-tbar tbar"
+          >
+            <div
+              class="container-fluid"
+            >
+              <ul
+                class="nav nav-underline"
+                role="tablist"
+              >
+                <li
+                  class="nav-item"
+                >
+                  <button
+                    class="btn btn-unstyled nav-link active"
+                    data-senna-off="true"
+                    role="tab"
+                  >
+                    columns
+                  </button>
+                </li>
+                <li
+                  class="nav-item"
+                >
+                  <button
+                    class="btn btn-unstyled nav-link"
+                    data-senna-off="true"
+                    role="tab"
+                  >
+                    filters
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div
+            class="tab-content"
+          >
+            <div
+              class="active fade mt-3 show tab-pane"
+              role="tabpanel"
+            >
+              <div
+                class="autofit-row autofit-row-center field-type"
+                data-field-type-name="Text"
+                draggable="true"
+              >
+                <div
+                  class="autofit-col pl-2 pr-2"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-drag"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#drag"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="autofit-col pr-2"
+                >
+                  <span
+                    class="sticker data-layout-builder-field-sticker sticker-rounded sticker-light sticker-md"
+                  >
+                    <span
+                      class="sticker-overlay"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-text"
+                        role="presentation"
+                      >
+                        <use
+                          xlink:href="#text"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+                <div
+                  class="autofit-col autofit-col-expand pr-2"
+                >
+                  <h4
+                    class="list-group-title text-truncate"
+                  >
+                    <span>
+                      Player
+                    </span>
+                  </h4>
+                  <p
+                    class="list-group-subtitle text-truncate"
+                  >
+                    <small>
+                      Text
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="data-layout-builder-sidebar-content"
+    >
+      <div
+        class="container table-view-container"
+      >
+        <div
+          class="p-4 sheet"
+        >
+          <div
+            class="empty-drop-zone-header"
+          />
+          <div
+            class="empty-drop-zone"
+          >
+            <p
+              class="m-0"
+            >
+              drag-columns-from-the-sidebar-and-drop-here
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -76,7 +76,7 @@ const FiltersSidebarHeader = () => {
 const FieldsTabContent = ({keywords, onAddFieldName}) => {
 	const [
 		{
-			dataDefinition: {dataDefinitionFields},
+			dataDefinition: {dataDefinitionFields = []},
 			dataListView: {fieldNames},
 			fieldTypes,
 		},

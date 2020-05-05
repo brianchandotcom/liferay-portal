@@ -108,7 +108,7 @@ const EditTableView = withRouter(({history}) => {
 
 	const {
 		fieldNames,
-		name: {en_US: dataListViewName},
+		name: {en_US: dataListViewName = ''},
 	} = dataListView;
 
 	const [isSidebarClosed, setSidebarClosed] = useState(false);
@@ -142,7 +142,7 @@ const EditTableView = withRouter(({history}) => {
 				>
 					<UpperToolbar>
 						<UpperToolbar.Input
-							onInput={onInput}
+							onChange={onInput}
 							placeholder={Liferay.Language.get(
 								'untitled-table-view'
 							)}

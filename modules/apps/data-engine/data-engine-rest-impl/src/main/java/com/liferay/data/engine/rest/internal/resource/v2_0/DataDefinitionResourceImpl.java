@@ -18,8 +18,10 @@ import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
+import com.liferay.data.engine.nativeobject.DataEngineNativeObjectField;
 import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutColumn;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPage;
@@ -70,6 +72,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -109,6 +112,9 @@ import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.sql.Types;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -333,6 +339,8 @@ public class DataDefinitionResourceImpl
 							availableLanguageIds = new String[] {
 								contextAcceptLanguage.getPreferredLanguageId()
 							};
+							dataDefinitionFields = _toDataDefinitionFields(
+								dataEngineNativeObject);
 							dataDefinitionKey =
 								dataEngineNativeObject.getClassName();
 							name = HashMapBuilder.<String, Object>put(
@@ -692,6 +700,18 @@ public class DataDefinitionResourceImpl
 		return dataLayout.getId();
 	}
 
+	private String _getFieldType(int sqlType) {
+		if ((sqlType == Types.BIGINT) || (sqlType == Types.DECIMAL) ||
+			(sqlType == Types.DOUBLE) || (sqlType == Types.FLOAT) ||
+			(sqlType == Types.INTEGER) || (sqlType == Types.NUMERIC) ||
+			(sqlType == Types.TINYINT)) {
+
+			return "number";
+		}
+
+		return "text";
+	}
+
 	private JSONObject _getFieldTypeMetadataJSONObject(
 		String ddmFormFieldName, ResourceBundle resourceBundle) {
 
@@ -824,6 +844,34 @@ public class DataDefinitionResourceImpl
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmFormFieldTypeServicesTracker, ddmStructure,
 			_spiDDMFormRuleConverter);
+	}
+
+	private DataDefinitionField[] _toDataDefinitionFields(
+		DataEngineNativeObject dataEngineNativeObject) {
+
+		List<DataDefinitionField> dataDefinitionFields = new ArrayList<>();
+
+		for (DataEngineNativeObjectField dataEngineNativeObjectField :
+				dataEngineNativeObject.getDataEngineNativeObjectFields()) {
+
+			Column column = dataEngineNativeObjectField.getColumn();
+
+			dataDefinitionFields.add(
+				new DataDefinitionField() {
+					{
+						customProperties = HashMapBuilder.<String, Object>put(
+							"native-field", "native-field"
+						).build();
+						fieldType = GetterUtil.getString(
+							dataEngineNativeObjectField.getCustomType(),
+							_getFieldType(column.getSQLType()));
+						name = column.getName();
+						required = !column.isNullAllowed();
+					}
+				});
+		}
+
+		return dataDefinitionFields.toArray(new DataDefinitionField[0]);
 	}
 
 	private DataDefinitionValidationException

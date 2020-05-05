@@ -23,6 +23,7 @@
 	action="<%= configurationActionURL %>"
 	method="post"
 	name="fm"
+	novalidate=""
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />

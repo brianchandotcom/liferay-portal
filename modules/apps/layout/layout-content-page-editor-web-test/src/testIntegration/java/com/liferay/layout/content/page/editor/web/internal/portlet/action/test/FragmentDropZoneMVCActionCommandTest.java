@@ -102,8 +102,7 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
-		_fragmentEntry = _getFragmentEntry(
-			_group.getGroupId(), _getFileAsString());
+		_fragmentEntry = _addFragmentEntry();
 
 		_layout = _addLayout();
 
@@ -372,6 +371,117 @@ public class FragmentDropZoneMVCActionCommandTest {
 		}
 	}
 
+	@Test
+	public void testUpdateConfigurationValuesFragmentEntryLinkWithDropZone()
+		throws Exception {
+
+		MockLiferayPortletActionRequest actionRequest =
+			_getMockLiferayPortletActionRequest(_group.getGroupId());
+
+		actionRequest.addParameter(
+			"fragmentEntryKey", _fragmentEntry.getFragmentEntryKey());
+		actionRequest.addParameter(
+			"itemType", LayoutDataItemTypeConstants.TYPE_FRAGMENT);
+		actionRequest.addParameter(
+			"parentItemId", _layoutStructure.getMainItemId());
+		actionRequest.addParameter("position", "0");
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_addFragmentEntryLinkMVCActionCommand,
+			"_processAddFragmentEntryLink",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockLiferayPortletActionResponse());
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
+
+		JSONObject fragmentEntryLinkJSONObject = jsonObject.getJSONObject(
+			"fragmentEntryLink");
+
+		long fragmentEntryLinkId = fragmentEntryLinkJSONObject.getLong(
+			"fragmentEntryLinkId");
+
+		LayoutStructureItem fragmentFayoutStructureItem =
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLinkId);
+
+		List<String> childrenItemIds =
+			fragmentFayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 1, childrenItemIds.size());
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(childrenItemIds.get(0));
+
+		Assert.assertTrue(
+			layoutStructureItem instanceof FragmentDropZoneLayoutStructureItem);
+
+		actionRequest = _getMockLiferayPortletActionRequest(
+			_group.getGroupId());
+
+		actionRequest.addParameter(
+			"fragmentEntryLinkId", String.valueOf(fragmentEntryLinkId));
+		actionRequest.addParameter(
+			"editableValues",
+			_getFileAsString("drop_zone_fragment_entry_editable_values.json"));
+
+		jsonObject = ReflectionTestUtil.invoke(
+			_updateConfigurationValuesMVCActionCommand,
+			"_processUpdateConfigurationValues",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockLiferayPortletActionResponse());
+
+		layoutDataJSONObject = jsonObject.getJSONObject("layoutData");
+
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
+
+		fragmentFayoutStructureItem =
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLinkId);
+
+		childrenItemIds = fragmentFayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 2, childrenItemIds.size());
+
+		layoutStructureItem = layoutStructure.getLayoutStructureItem(
+			childrenItemIds.get(0));
+
+		Assert.assertTrue(
+			layoutStructureItem instanceof FragmentDropZoneLayoutStructureItem);
+
+		layoutStructureItem = layoutStructure.getLayoutStructureItem(
+			childrenItemIds.get(1));
+
+		Assert.assertTrue(
+			layoutStructureItem instanceof FragmentDropZoneLayoutStructureItem);
+	}
+
+	private FragmentEntry _addFragmentEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				StringUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		return _fragmentEntryLocalService.addFragmentEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			fragmentCollection.getFragmentCollectionId(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			RandomTestUtil.randomString(),
+			_getFileAsString("drop_zone_fragment_entry.html"),
+			RandomTestUtil.randomString(),
+			_getFileAsString("drop_zone_fragment_entry_configuration.json"), 0,
+			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+	}
+
 	private Layout _addLayout() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -385,33 +495,13 @@ public class FragmentDropZoneMVCActionCommandTest {
 			StringPool.BLANK, serviceContext);
 	}
 
-	private String _getFileAsString() throws IOException {
+	private String _getFileAsString(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
 		return StringUtil.read(
 			clazz.getClassLoader(),
 			"com/liferay/layout/content/page/editor/web/internal/portlet" +
-				"/action/test/dependencies/drop_zone_fragment_entry.html");
-	}
-
-	private FragmentEntry _getFragmentEntry(long groupId, String html)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				TestPropsValues.getUserId(), groupId, StringUtil.randomString(),
-				StringPool.BLANK, serviceContext);
-
-		return _fragmentEntryLocalService.addFragmentEntry(
-			TestPropsValues.getUserId(), groupId,
-			fragmentCollection.getFragmentCollectionId(),
-			StringUtil.randomString(), StringUtil.randomString(),
-			RandomTestUtil.randomString(), html, RandomTestUtil.randomString(),
-			"{fieldSets: []}", 0, FragmentConstants.TYPE_COMPONENT,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+				"/action/test/dependencies/" + fileName);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()
@@ -518,5 +608,10 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 	@Inject
 	private ThemeLocalService _themeLocalService;
+
+	@Inject(
+		filter = "mvc.command.name=/content_layout/update_configuration_values"
+	)
+	private MVCActionCommand _updateConfigurationValuesMVCActionCommand;
 
 }

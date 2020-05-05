@@ -23,7 +23,7 @@ import addItem from '../../../app/thunks/addItem';
 import {useItemDrag} from '../../../app/utils/useItemDrag';
 import Collapse from '../../../common/components/Collapse';
 
-const CollectionDisplayCard = () => {
+export const CollectionDisplayCard = () => {
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
 	const selectItem = useSelectItem();
@@ -54,6 +54,7 @@ const CollectionDisplayCard = () => {
 				'selector-button',
 				'overflow-hidden'
 			)}
+			key={'collection-display'}
 			ref={dragRef}
 		>
 			<div className="page-editor__fragments__fragment-card-no-preview">

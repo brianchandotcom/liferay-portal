@@ -19,7 +19,7 @@ import Collapse from '../../../common/components/Collapse';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import CollectionDisplay from './CollectionDisplay';
+import CollectionDisplay, {CollectionDisplayCard} from './CollectionDisplay';
 import FragmentCard from './FragmentCard';
 import LayoutElements from './LayoutElements';
 
@@ -27,6 +27,8 @@ export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
 
 	const [searchValue, setSearchValue] = useState('');
+
+	let collectionDisplayAdded = false;
 
 	const filteredFragments = useMemo(() => {
 		const searchValueLowerCase = searchValue.toLowerCase();
@@ -61,35 +63,56 @@ export default function FragmentsSidebar() {
 
 				{!searchValue.length && <LayoutElements />}
 
-				{filteredFragments.map((fragmentCollection) => (
-					<div key={fragmentCollection.fragmentCollectionId}>
-						<Collapse
-							label={fragmentCollection.name}
-							open={searchValue.length > 0}
-						>
-							<div className="align-items-start d-flex flex-wrap justify-content-between">
-								{fragmentCollection.fragmentEntries.map(
-									(fragmentEntry) => (
-										<FragmentCard
-											fragmentEntryKey={
-												fragmentEntry.fragmentEntryKey
-											}
-											groupId={fragmentEntry.groupId}
-											imagePreviewURL={
-												fragmentEntry.imagePreviewURL
-											}
-											key={fragmentEntry.fragmentEntryKey}
-											name={fragmentEntry.name}
-											type={fragmentEntry.type}
-										/>
-									)
-								)}
-							</div>
-						</Collapse>
-					</div>
-				))}
+				{filteredFragments.map((fragmentCollection) => {
+					const fragmentCollectionElement = (
+						<div key={fragmentCollection.fragmentCollectionId}>
+							<Collapse
+								label={fragmentCollection.name}
+								open={searchValue.length > 0}
+							>
+								<div className="align-items-start d-flex flex-wrap justify-content-between">
+									{fragmentCollection.fragmentEntries.map(
+										(fragmentEntry) => (
+											<FragmentCard
+												fragmentEntryKey={
+													fragmentEntry.fragmentEntryKey
+												}
+												groupId={fragmentEntry.groupId}
+												imagePreviewURL={
+													fragmentEntry.imagePreviewURL
+												}
+												key={
+													fragmentEntry.fragmentEntryKey
+												}
+												name={fragmentEntry.name}
+												type={fragmentEntry.type}
+											/>
+										)
+									)}
 
-				{!searchValue.length && <CollectionDisplay />}
+									{fragmentCollection.fragmentCollectionId ===
+										'content-display' && (
+										<CollectionDisplayCard />
+									)}
+								</div>
+							</Collapse>
+						</div>
+					);
+
+					if (
+						fragmentCollection.fragmentCollectionId ===
+							'content-display' &&
+						!collectionDisplayAdded
+					) {
+						collectionDisplayAdded = true;
+					}
+
+					return fragmentCollectionElement;
+				})}
+
+				{!searchValue.length && !collectionDisplayAdded && (
+					<CollectionDisplay />
+				)}
 			</SidebarPanelContent>
 		</>
 	);

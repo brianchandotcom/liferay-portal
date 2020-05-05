@@ -14,17 +14,27 @@
 
 package com.liferay.data.engine.nativeobject;
 
-import java.util.List;
+import com.liferay.petra.sql.dsl.Column;
 
 /**
  * @author Jeyvison Nascimento
  */
-public interface DataEngineNativeObject {
+public class DataEngineNativeObjectField {
 
-	public String getClassName();
+	public DataEngineNativeObjectField(Column column, String customType) {
+		_column = column;
+		_customType = customType;
+	}
 
-	public List<DataEngineNativeObjectField> getDataEngineNativeObjectFields();
+	public Column getColumn() {
+		return _column;
+	}
 
-	public String getName();
+	public String getCustomType() {
+		return _customType;
+	}
+
+	private final Column _column;
+	private final String _customType;
 
 }

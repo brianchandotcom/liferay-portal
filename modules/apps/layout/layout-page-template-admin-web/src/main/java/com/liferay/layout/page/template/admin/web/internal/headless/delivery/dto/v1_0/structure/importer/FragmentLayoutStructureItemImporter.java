@@ -26,6 +26,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.util.PortletConfigurationImporterHelper;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.util.PortletPermissionsImporterHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -168,21 +171,22 @@ public class FragmentLayoutStructureItemImporter
 			defaultEditableValuesJSONObject,
 			fragmentEntryProcessorValuesJSONObject);
 
-		try {
-			return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				layout.getUserId(), layout.getGroupId(), 0, fragmentEntryId, 0,
 				_portal.getClassNameId(Layout.class.getName()),
 				layout.getPlid(), css, html, js, configuration,
 				jsonObject.toString(), StringUtil.randomId(), position,
 				fragmentKey, ServiceContextThreadLocal.getServiceContext());
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
+
+		List<Object> widgetInstances = (List<Object>)definitionMap.get(
+			"widgetInstances");
+
+		if (widgetInstances != null) {
+			_processWidgetInstances(fragmentEntryLink, layout, widgetInstances);
 		}
 
-		return null;
+		return fragmentEntryLink;
 	}
 
 	private JSONObject _createBaseFragmentFieldJSONObject(
@@ -427,6 +431,48 @@ public class FragmentLayoutStructureItemImporter
 		}
 	}
 
+	private void _processWidgetInstances(
+			FragmentEntryLink fragmentEntryLink, Layout layout,
+			List<Object> widgetInstances)
+		throws Exception {
+
+		for (Object widgetInstance : widgetInstances) {
+			Map<String, Object> widgetInstanceMap =
+				(Map<String, Object>)widgetInstance;
+
+			String widgetName = (String)widgetInstanceMap.get("widgetName");
+
+			if (Validator.isNull(widgetName)) {
+				continue;
+			}
+
+			String widgetInstanceId = (String)widgetInstanceMap.get(
+				"widgetInstanceId");
+
+			if (widgetInstanceId != null) {
+				widgetInstanceId =
+					fragmentEntryLink.getNamespace() + widgetInstanceId;
+			}
+
+			Map<String, Object> widgetConfigDefinitionMap =
+				(Map<String, Object>)widgetInstanceMap.get("widgetConfig");
+
+			_portletConfigurationImporterHelper.importPortletConfiguration(
+				layout.getPlid(),
+				PortletIdCodec.encode(widgetName, widgetInstanceId),
+				widgetConfigDefinitionMap);
+
+			List<Map<String, Object>> widgetPermissionsMaps =
+				(List<Map<String, Object>>)widgetInstanceMap.get(
+					"widgetPermissions");
+
+			_portletPermissionsImporterHelper.importPortletPermissions(
+				layout.getPlid(),
+				PortletIdCodec.encode(widgetName, widgetInstanceId),
+				widgetPermissionsMaps);
+		}
+	}
+
 	private String _replaceResources(
 			FragmentCollection fragmentCollection, String html)
 		throws PortalException {
@@ -611,6 +657,13 @@ public class FragmentLayoutStructureItemImporter
 	private Portal _portal;
 
 	@Reference
+	private PortletConfigurationImporterHelper
+		_portletConfigurationImporterHelper;
+
+	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private PortletPermissionsImporterHelper _portletPermissionsImporterHelper;
 
 }

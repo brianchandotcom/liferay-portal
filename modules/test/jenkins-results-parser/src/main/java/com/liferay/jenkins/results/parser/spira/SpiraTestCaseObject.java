@@ -267,11 +267,10 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 					new SearchQuery.SearchParameter(spiraCustomValue));
 			}
 
-			SearchQuery.SearchParameter[] searchParameters =
-				new SearchQuery.SearchParameter[searchParameterList.size()];
-
 			List<SpiraTestCaseObject> spiraTestCases = getSpiraTestCases(
-				spiraProject, searchParameterList.toArray(searchParameters));
+				spiraProject,
+				searchParameterList.toArray(
+					new SearchQuery.SearchParameter[0]));
 
 			if (!spiraTestCases.isEmpty()) {
 				return spiraTestCases.get(0);

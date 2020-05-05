@@ -61,8 +61,6 @@ definition {
 	@description = "This ensures that the SVG image can be added to a fragment background."
 	@priority = "5"
 	test AddSVGImageToFragmentBackground {
-		property portal.upstream = "quarantine";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");

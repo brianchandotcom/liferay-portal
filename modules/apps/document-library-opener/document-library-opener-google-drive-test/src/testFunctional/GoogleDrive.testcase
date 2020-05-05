@@ -290,7 +290,6 @@ definition {
 	@description = "This test ensures that special characters  can be saved through the Google Doc editor"
 	@priority = "4"
 	test EditGoogleDocWithSpecialCharacters {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleDocWithSpecialCharacters";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

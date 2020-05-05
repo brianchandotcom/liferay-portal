@@ -41,7 +41,6 @@ definition {
 	@description = "This test is skipping portal instance setup due to LPS-75168"
 	@priority = "4"
 	test ViewNewSiteMember {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "InviteMembers#ViewNewSiteMember";
 
 		ProductMenu.gotoPortlet(

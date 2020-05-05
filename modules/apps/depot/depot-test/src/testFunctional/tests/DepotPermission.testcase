@@ -116,8 +116,6 @@ definition {
 	@description = "This ensures that the user can only view memberships with view permissions."
 	@priority = "5"
 	test AccessMembershipWithViewOnlyPermissions {
-		property portal.upstream = "quarantine";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",

@@ -454,8 +454,6 @@ definition {
 
 	@priority = "4"
 	test ViewWebsiteNotificationForNewCommentViaBlogs {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(

@@ -6,7 +6,6 @@ definition {
 	property dummy.socket.proxy.disabled = "true";
 	property osgi.app.includes = "sharepoint";
 	property portal.release = "true";
-	property portal.upstream = "quarantine";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Sharepoint";
 
@@ -541,7 +540,6 @@ definition {
 
 	@priority = "4"
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
-		property portal.release = "false";
 		property test.name.skip.portal.instance = "CPSharepoint#ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -580,7 +578,6 @@ definition {
 
 	@priority = "4"
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
-		property portal.release = "false";
 		property test.name.skip.portal.instance = "CPSharepoint#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");

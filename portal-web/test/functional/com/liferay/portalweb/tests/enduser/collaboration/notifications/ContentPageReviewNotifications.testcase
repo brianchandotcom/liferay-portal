@@ -70,8 +70,6 @@ definition {
 	@description = "This case ensures that the user is notified when someone comments on their content page fragment."
 	@priority = "5"
 	test ViewComment {
-		property portal.upstream = "quarantine";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Content Page Name");
@@ -124,8 +122,6 @@ definition {
 	@description = "This test covers LPS-101493. It ensures that a user who replies to a comment will receive further reply notifications."
 	@priority = "4"
 	test ViewCommentFurtherReply {
-		property portal.upstream = "quarantine";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Content Page Name");
@@ -210,8 +206,6 @@ definition {
 	@description = "This case ensures that a user is notified when a reply is added to their comment."
 	@priority = "5"
 	test ViewCommentReply {
-		property portal.upstream = "quarantine";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Content Page Name");
@@ -274,8 +268,6 @@ definition {
 	@description = "This case ensures a user who is mentioned in a comment will receive notifications."
 	@priority = "4"
 	test ViewMentionFromComment {
-		property portal.upstream = "quarantine";
-
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Content Page Name");

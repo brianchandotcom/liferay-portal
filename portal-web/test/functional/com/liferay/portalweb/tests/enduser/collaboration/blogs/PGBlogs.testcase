@@ -192,8 +192,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntryWithSamePageScope {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONLayout.addPublicLayout(
@@ -617,8 +615,6 @@ definition {
 
 	@priority = "4"
 	test DeleteBlogsEntryComment {
-		property portal.release = "false";
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1354,8 +1350,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test ViewBlogsEntryRSS {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONBlog.addEntry(

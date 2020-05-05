@@ -231,8 +231,6 @@ definition {
 	@description = "This ensures that a depot web content persists in WCD as previously and it's not appeared in the item selector on a connected site when WC application is disabled."
 	@priority = "5"
 	test ViewDisabledAssetViaWCD {
-		property portal.upstream = "quarantine";
-
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(

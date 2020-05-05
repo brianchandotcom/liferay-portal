@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Headless Web
+Bundle-SymbolicName: com.liferay.headless.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /headless-web

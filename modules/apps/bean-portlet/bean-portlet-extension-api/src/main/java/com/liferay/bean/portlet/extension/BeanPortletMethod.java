@@ -30,9 +30,9 @@ public interface BeanPortletMethod extends Comparable<BeanPortletMethod> {
 
 	public String getActionName();
 
-	public BeanPortletMethodType getBeanPortletMethodType();
+	public Class<?> getBeanClass();
 
-	public Class<?> getBeanType();
+	public BeanPortletMethodType getBeanPortletMethodType();
 
 	public Method getMethod();
 

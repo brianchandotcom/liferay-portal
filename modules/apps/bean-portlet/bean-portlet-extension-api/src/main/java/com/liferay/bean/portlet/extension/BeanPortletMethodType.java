@@ -240,20 +240,23 @@ public enum BeanPortletMethodType {
 			return false;
 		}
 
-		Class<?> returnType = method.getReturnType();
+		Class<?> returnClass = method.getReturnType();
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
 		// Exact match
 
-		if (returnType.equals(Void.TYPE) && _isAssignableFrom(parameterTypes)) {
+		if (returnClass.equals(Void.TYPE) &&
+			_isAssignableFrom(parameterTypes)) {
+
 			return true;
 		}
 
 		// Variant match
 
 		if (_variant && (parameterTypes.length == 0) &&
-			(returnType.equals(Void.TYPE) || returnType.equals(String.class))) {
+			(returnClass.equals(Void.TYPE) ||
+			 returnClass.equals(String.class))) {
 
 			return true;
 		}

@@ -65,56 +65,7 @@ public class CTCollectionFinderImpl
 		DSLQuery dslQuery = fromStep.from(
 			CTCollectionTable.INSTANCE
 		).where(
-			() -> {
-				Predicate predicate = CTCollectionTable.INSTANCE.companyId.eq(
-					companyId);
-
-				if (status != WorkflowConstants.STATUS_ANY) {
-					predicate = predicate.and(
-						CTCollectionTable.INSTANCE.status.eq(status));
-				}
-
-				Predicate keywordsPredicate = null;
-
-				for (String keyword :
-						_customSQL.keywords(
-							keywords, true, WildcardMode.SURROUND)) {
-
-					if (keyword == null) {
-						continue;
-					}
-
-					Predicate keywordPredicate = DSLFunctionFactoryUtil.lower(
-						CTCollectionTable.INSTANCE.name
-					).like(
-						keyword
-					).or(
-						DSLFunctionFactoryUtil.lower(
-							CTCollectionTable.INSTANCE.description
-						).like(
-							keyword
-						)
-					);
-
-					if (keywordsPredicate == null) {
-						keywordsPredicate = keywordPredicate;
-					}
-					else {
-						keywordsPredicate = keywordsPredicate.or(
-							keywordPredicate);
-					}
-				}
-
-				if (keywordsPredicate != null) {
-					predicate = predicate.and(
-						keywordsPredicate.withParentheses());
-				}
-
-				return predicate.and(
-					_inlineSQLHelper.getPermissionWherePredicate(
-						CTCollection.class,
-						CTCollectionTable.INSTANCE.ctCollectionId));
-			}
+			_getC_SPredicate(companyId, status, keywords)
 		).orderBy(
 			CTCollectionTable.INSTANCE, obc
 		).limit(
@@ -122,6 +73,55 @@ public class CTCollectionFinderImpl
 		);
 
 		return ctCollectionPersistence.dslQuery(dslQuery);
+	}
+
+	private Predicate _getC_SPredicate(
+		long companyId, int status, String keywords) {
+
+		Predicate predicate = CTCollectionTable.INSTANCE.companyId.eq(
+			companyId);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			predicate = predicate.and(
+				CTCollectionTable.INSTANCE.status.eq(status));
+		}
+
+		Predicate keywordsPredicate = null;
+
+		for (String keyword :
+				_customSQL.keywords(keywords, true, WildcardMode.SURROUND)) {
+
+			if (keyword == null) {
+				continue;
+			}
+
+			Predicate keywordPredicate = DSLFunctionFactoryUtil.lower(
+				CTCollectionTable.INSTANCE.name
+			).like(
+				keyword
+			).or(
+				DSLFunctionFactoryUtil.lower(
+					CTCollectionTable.INSTANCE.description
+				).like(
+					keyword
+				)
+			);
+
+			if (keywordsPredicate == null) {
+				keywordsPredicate = keywordPredicate;
+			}
+			else {
+				keywordsPredicate = keywordsPredicate.or(keywordPredicate);
+			}
+		}
+
+		if (keywordsPredicate != null) {
+			predicate = predicate.and(keywordsPredicate.withParentheses());
+		}
+
+		return predicate.and(
+			_inlineSQLHelper.getPermissionWherePredicate(
+				CTCollection.class, CTCollectionTable.INSTANCE.ctCollectionId));
 	}
 
 	@Reference

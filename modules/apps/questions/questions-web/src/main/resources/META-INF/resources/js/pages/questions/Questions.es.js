@@ -129,7 +129,11 @@ export default withRouter(
 
 		const changePage = (number) => {
 			setPage(number);
-			historyPushParser(`/questions/${context.section}?page=${number}`);
+			historyPushParser(
+				`/questions/${context.section}${
+					tag ? '/tag/' + tag : ''
+				}?page=${number}`
+			);
 		};
 
 		return (

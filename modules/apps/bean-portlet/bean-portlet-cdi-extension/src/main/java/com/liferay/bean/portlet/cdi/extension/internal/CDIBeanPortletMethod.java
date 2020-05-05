@@ -39,7 +39,7 @@ public class CDIBeanPortletMethod extends BaseBeanPortletMethod {
 	}
 
 	@Override
-	public Class<?> getBeanType() {
+	public Class<?> getBeanClass() {
 		return _beanClass;
 	}
 

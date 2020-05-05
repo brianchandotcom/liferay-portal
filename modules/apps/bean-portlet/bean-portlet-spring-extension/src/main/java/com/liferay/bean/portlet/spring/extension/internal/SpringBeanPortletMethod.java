@@ -37,7 +37,7 @@ public class SpringBeanPortletMethod extends BaseBeanPortletMethod {
 	}
 
 	@Override
-	public Class<?> getBeanType() {
+	public Class<?> getBeanClass() {
 		return _beanClass;
 	}
 

@@ -23,22 +23,23 @@ import org.springframework.beans.factory.config.DependencyDescriptor;
 public class JSR330DependencyDescriptor extends DependencyDescriptor {
 
 	public JSR330DependencyDescriptor(
-		String beanName, DependencyDescriptor original, Class<?> requiredType) {
+		String beanName, DependencyDescriptor original,
+		Class<?> requiredClass) {
 
 		super(original);
 
 		_beanName = beanName;
-		_requiredType = requiredType;
+		_requiredClass = requiredClass;
 	}
 
 	@Override
 	public Object resolveShortcut(BeanFactory beanFactory) {
-		return beanFactory.getBean(_beanName, _requiredType);
+		return beanFactory.getBean(_beanName, _requiredClass);
 	}
 
 	private static final long serialVersionUID = 1L;
 
 	private final String _beanName;
-	private final Class<?> _requiredType;
+	private final Class<?> _requiredClass;
 
 }

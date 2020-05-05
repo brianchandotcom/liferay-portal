@@ -102,12 +102,12 @@
 
 				<aui:input label="num-of-entries-per-feed" name="preferences--entriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.entriesPerFeed() %>">
 					<aui:validator errorMessage='<%= LanguageUtil.get(request, "please-enter-only-integers") %>' name="digits" />
-					<aui:validator name="min">1</aui:validator>
+					<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-an-integer-greater-than-or-equal-to-x", 1) %>' name="min">1</aui:validator>
 				</aui:input>
 
 				<aui:input label="num-of-expanded-entries-per-feed" name="preferences--expandedEntriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>">
 					<aui:validator errorMessage='<%= LanguageUtil.get(request, "please-enter-only-integers") %>' name="digits" />
-					<aui:validator name="min">1</aui:validator>
+					<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-an-integer-greater-than-or-equal-to-x", 1) %>' name="min">1</aui:validator>
 				</aui:input>
 
 				<aui:select disabled="<%= !rssPortletInstanceConfiguration.showFeedImage() %>" name="preferences--feedImageAlignment--">

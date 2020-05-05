@@ -480,10 +480,10 @@ if (urlConfiguration != null) {
 
 	portletDisplay.setURLConfiguration(urlConfiguration.toString());
 
-	StringBundler urlConfigurationJSSB = new StringBundler(15);
+	StringBundler urlConfigurationJSSB = new StringBundler(
+		PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ? 14 : 12);
 
 	urlConfigurationJSSB.append("Liferay.Portlet.openModal({");
-	urlConfigurationJSSB.append("iframeBodyCssClass: 'dialog-with-footer', ");
 	urlConfigurationJSSB.append("namespace: '");
 	urlConfigurationJSSB.append(portletDisplay.getNamespace());
 	urlConfigurationJSSB.append("', portletSelector: '#p_p_id_");

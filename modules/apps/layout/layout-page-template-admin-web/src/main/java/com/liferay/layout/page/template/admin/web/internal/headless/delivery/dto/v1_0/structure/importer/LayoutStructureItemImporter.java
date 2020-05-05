@@ -19,6 +19,8 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.model.Layout;
 
+import java.util.List;
+
 /**
  * @author Jürgen Kappler
  */
@@ -30,5 +32,12 @@ public interface LayoutStructureItemImporter {
 		throws Exception;
 
 	public PageElement.Type getPageElementType();
+
+	public default List<String> validateLayoutStructureItem(
+			long groupId, PageElement pageElement)
+		throws Exception {
+
+		return null;
+	}
 
 }

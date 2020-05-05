@@ -88,14 +88,10 @@ definition {
 		}
 	}
 
-	// Ignore failing test because of ticket LPS-112763
-
 	@description = "This is the test for LPS-103104. Can add a child page via page tree panel."
-	@ignore = "true"
 	@priority = "5"
 	test AddChildPageViaPageFinder {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		Navigator.openSiteURL(siteName = "Test Site Name 2");
 

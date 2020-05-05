@@ -917,6 +917,51 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
+	 * Returns all the web content articles that the user has permission to view
+	 * matching the group and layout UUID.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  layoutUuid the unique string identifying the web content
+	 *         article's display page
+	 * @param  start the lower bound of the range of web content articles to
+	 *         return
+	 * @param  end the upper bound of the range of web content articles to
+	 *         return (not inclusive)
+	 * @return the range of matching web content articles
+	 */
+	@Override
+	public List<JournalArticle> getArticlesByLayoutUuid(
+		long groupId, String layoutUuid, int start, int end) {
+
+		return journalArticlePersistence.filterFindByG_L(
+			groupId, layoutUuid, start, end);
+	}
+
+	/**
+	 * Returns the number of web content articles that the user has permission
+	 * to view matching the group and layout UUID.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  layoutUuid the unique string identifying the web content
+	 *         article's display page
+	 * @return the matching web content articles
+	 */
+	@Override
+	public int getArticlesByLayoutUuidCount(long groupId, String layoutUuid) {
+		return journalArticlePersistence.filterCountByG_L(groupId, layoutUuid);
+	}
+
+	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group, class name ID, DDM structure key, and workflow status.
 	 *
@@ -1626,9 +1671,58 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, status, new QueryDefinition<>(status));
 	}
 
+	/**
+	 * Returns all the web content articles that the user has permission to view
+	 * matching the group.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @return The matching web content articles
+	 */
 	@Override
 	public List<JournalArticle> getLayoutArticles(long groupId) {
 		return journalArticlePersistence.filterFindByG_NotL(
+			groupId, new String[] {null, StringPool.BLANK});
+	}
+
+	/**
+	 * Returns all the web content articles that the user has permission to view
+	 * matching the group.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  start the lower bound of the range of web content articles to
+	 *         return
+	 * @param  end the upper bound of the range of web content articles to
+	 *         return (not inclusive)
+	 * @return the range of matching web content articles
+	 */
+	@Override
+	public List<JournalArticle> getLayoutArticles(
+		long groupId, int start, int end) {
+
+		return journalArticlePersistence.filterFindByG_NotL(
+			groupId, new String[] {null, StringPool.BLANK}, start, end);
+	}
+
+	/**
+	 * Returns the number of web content articles that the user has permission
+	 * to view matching the group.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @return the number of matching web content articles
+	 */
+	@Override
+	public int getLayoutArticlesCount(long groupId) {
+		return journalArticlePersistence.filterCountByG_NotL(
 			groupId, new String[] {null, StringPool.BLANK});
 	}
 

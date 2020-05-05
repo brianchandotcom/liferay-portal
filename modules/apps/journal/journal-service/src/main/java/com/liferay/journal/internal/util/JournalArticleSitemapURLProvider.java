@@ -25,6 +25,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,8 +83,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		else {
 			visitArticles(
 				element, layoutSet, themeDisplay,
-				_journalArticleService.getArticlesByLayoutUuid(
-					layoutSet.getGroupId(), layoutUuid),
+				_getDisplayPageArticles(layoutSet.getGroupId(), layoutUuid),
 				true);
 		}
 	}
@@ -93,8 +93,20 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		int end = QueryUtil.ALL_POS;
+		int start = QueryUtil.ALL_POS;
+
+		int journalArticleCount = _journalArticleService.getLayoutArticlesCount(
+			layoutSet.getGroupId());
+
+		if (journalArticleCount > Sitemap.MAXIMUM_NUMBER_OF_ENTRIES) {
+			end = journalArticleCount;
+			start = journalArticleCount - Sitemap.MAXIMUM_NUMBER_OF_ENTRIES;
+		}
+
 		List<JournalArticle> journalArticles =
-			_journalArticleService.getLayoutArticles(layoutSet.getGroupId());
+			_journalArticleService.getLayoutArticles(
+				layoutSet.getGroupId(), start, end);
 
 		visitArticles(element, layoutSet, themeDisplay, journalArticles, true);
 	}
@@ -247,6 +259,25 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 			processedArticleIds.add(journalArticle.getArticleId());
 		}
+	}
+
+	private List<JournalArticle> _getDisplayPageArticles(
+		long groupId, String layoutUuid) {
+
+		int end = QueryUtil.ALL_POS;
+		int start = QueryUtil.ALL_POS;
+
+		int journalArticleCount =
+			_journalArticleService.getArticlesByLayoutUuidCount(
+				groupId, layoutUuid);
+
+		if (journalArticleCount > Sitemap.MAXIMUM_NUMBER_OF_ENTRIES) {
+			end = journalArticleCount;
+			start = journalArticleCount - Sitemap.MAXIMUM_NUMBER_OF_ENTRIES;
+		}
+
+		return _journalArticleService.getArticlesByLayoutUuid(
+			groupId, layoutUuid, start, end);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

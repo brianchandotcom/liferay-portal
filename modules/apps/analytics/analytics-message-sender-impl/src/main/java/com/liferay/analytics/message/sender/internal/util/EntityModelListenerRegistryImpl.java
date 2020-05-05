@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.message.sender.internal.util;
 
-import com.liferay.analytics.message.sender.model.EntityModelListener;
+import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.analytics.message.sender.util.EntityModelListenerRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

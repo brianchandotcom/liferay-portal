@@ -202,6 +202,10 @@ definition {
 			rowEntry = "${userGroupName}");
 	}
 
+	macro openUserGroupsAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet");
+	}
+
 	macro removeMemberCP {
 		Search.searchCP(searchTerm = "${userGroupName}");
 

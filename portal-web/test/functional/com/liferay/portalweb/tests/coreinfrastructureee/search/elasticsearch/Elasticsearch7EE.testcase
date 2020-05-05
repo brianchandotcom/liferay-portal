@@ -899,6 +899,52 @@ definition {
 		SearchResultPortlet.viewSearchResultNotPresent(searchTerm = "DM");
 	}
 
+	test HotDeployCrossClusterReplicationApp {
+		property hot.deploy.osgi.app.includes = "portal-search-elasticsearch-cross-cluster-replication";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#HotDeployCrossClusterReplicationApp";
+
+		var appName = "Liferay Cross-Cluster Replication for Elasticsearch";
+
+		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
+
+		AssertConsoleTextPresent(value1 = "STARTED ${appName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Cross-Cluster Replication",
+			configurationScope = "System Scope");
+
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Active",
+			searchTerm = "Replication");
+
+		AppManager.deactivateAppCP(appName = "${appName}");
+
+		AppManager.viewAppCP(
+			appName = "${appName}",
+			appStatus = "Resolved",
+			searchTerm = "Replication");
+
+		AssertConsoleTextPresent(value1 = "STOPPED com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl");
+
+		AppManager.activateAppCP(appName = "${appName}");
+
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl");
+
+		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
+	}
+
 	test HotDeployLearningToRankApp {
 		property hot.deploy.osgi.app.includes = "portal-search-learning-to-rank";
 		property portal.upstream = "quarantine";

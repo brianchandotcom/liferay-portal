@@ -231,6 +231,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for LPS-101256. Can duplicate fragment in layout elements in composition."
+	@priority = "4"
+	test ImportFragmentWithDupicateFragmentComposition {
+		task ("Navigate to the fragment import screen") {
+			FragmentsAdminNavigator.gotoImportCollection();
+		}
+
+		task ("Import fragment dependencies") {
+			UploadCommonFile(
+				locator1 = "TextInput#FILE",
+				value1 = "collections-duplcatefragment.zip");
+
+			SelectFrameTop();
+
+			Click.mouseDownMouseUp(
+				key_text = "Import",
+				locator1 = "Modal#ANY_BUTTON");
+		}
+
+		task ("Assert the zip imported properly") {
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+		}
+
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "New Fragment Name",
+			withSection = "true");
+
+		AssertElementPresent(locator1 = "//div[contains(@class,'col-4')]//li[contains(@class,'title')][contains(.,'Heading')]");
+
+		AssertElementPresent(locator1 = "xpath=(//div[contains(@class,'col-4')]//li[contains(@class,'title')][contains(.,'Heading')])[2]");
+
+		AssertElementPresent(locator1 = "//div[contains(@class,'col-4')]/following::li[contains(@class,'title')][contains(.,'Heading')]");
+	}
+
 	@description = "This is a test case for LPS-101256. The fragment replacing HTML,CSS,JS,JSON in dependencies survives after importing."
 	@priority = "4"
 	test ImportFragmentWithHTMLCSSJSJSONReplaced {

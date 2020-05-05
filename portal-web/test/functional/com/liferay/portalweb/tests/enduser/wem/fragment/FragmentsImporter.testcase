@@ -279,10 +279,12 @@ definition {
 
 		PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
 
+		// This is a bug filed in LPS-112814
+
 		AssertTextEquals(
 			key_fieldLabel = "Button Text",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Go Somewhere");
+			value1 = "Description");
 
 		ClickNoError(
 			key_text = "Here we go",

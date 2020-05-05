@@ -21,19 +21,25 @@ import {withRouter} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import UserIcon from '../../components/UserIcon.es';
+import useQuery from '../../hooks/useQuery.es';
 import {getUserActivity} from '../../utils/client.es';
+import {historyPushWithSlug} from '../../utils/utils.es';
 import NavigationBar from '../NavigationBar.es';
 
 export default withRouter(
 	({
+		history,
+		location,
 		match: {
 			params: {creatorId},
 		},
 	}) => {
 		const context = useContext(AppContext);
-		const siteKey = context.siteKey;
 		const defaultPostsNumber = 0;
 		const defaultRank = context.defaultRank;
+		const historyPushParser = historyPushWithSlug(history.push);
+		const queryParams = useQuery(location);
+		const siteKey = context.siteKey;
 
 		const [creatorInfo, setCreatorInfo] = useState({});
 		const [loading, setLoading] = useState(true);
@@ -41,7 +47,12 @@ export default withRouter(
 		const [questions, setQuestions] = useState([]);
 
 		useEffect(() => {
-			getUserActivity(siteKey, creatorId)
+			const pageNumber = queryParams.get('page') || 1;
+			setPage(isNaN(pageNumber) ? 1 : parseInt(pageNumber, 10));
+		}, [queryParams]);
+
+		useEffect(() => {
+			getUserActivity({page, siteKey, userId: creatorId})
 				.then((questions) => {
 					const creatorBasicInfo = questions.items[0].creator;
 					const creatorStatistics =
@@ -61,7 +72,7 @@ export default withRouter(
 					setLoading(false);
 					setCreatorInfo(getCreatorDefaultInfo(creatorId));
 				});
-		}, [creatorId, getCreatorDefaultInfo, siteKey]);
+		}, [creatorId, getCreatorDefaultInfo, page, siteKey]);
 
 		const getCreatorDefaultInfo = useCallback(
 			(creatorId) => ({
@@ -75,6 +86,11 @@ export default withRouter(
 			}),
 			[defaultPostsNumber, defaultRank]
 		);
+
+		const changePage = (number) => {
+			setPage(number);
+			historyPushParser(`/activity/${creatorId}?page=${number}`);
+		};
 
 		return (
 			<>
@@ -148,7 +164,7 @@ export default withRouter(
 							<ClayPaginationWithBasicItems
 								activePage={page}
 								ellipsisBuffer={2}
-								onPageChange={setPage}
+								onPageChange={changePage}
 								totalPages={Math.ceil(
 									questions.totalCount / questions.pageSize
 								)}

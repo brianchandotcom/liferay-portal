@@ -528,12 +528,17 @@ export const getSections = (siteKey) =>
 		}
 `);
 
-export const getUserActivity = (siteKey, userId = '') => {
+export const getUserActivity = ({
+	page = 1,
+	pageSize = 30,
+	siteKey,
+	userId = '',
+}) => {
 	const filter = `creatorId eq ${userId}`;
 
 	return request(gql`
 		query {
-			messageBoardThreads(filter: ${filter}, flatten: true, siteKey: ${siteKey}, sort: "dateCreated:desc") {
+			messageBoardThreads(filter: ${filter}, flatten: true, page: ${page}, pageSize: ${pageSize}, siteKey: ${siteKey}, sort: "dateCreated:desc") {
 				items {
 					aggregateRating {
 						ratingAverage

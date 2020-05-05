@@ -37,22 +37,28 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,6 +95,36 @@ public class FragmentLayoutStructureItemImporter
 		return PageElement.Type.FRAGMENT;
 	}
 
+	@Override
+	public List<String> validateLayoutStructureItem(
+			long groupId, PageElement pageElement)
+		throws Exception {
+
+		Map<String, Object> definitionMap = getDefinitionMap(
+			pageElement.getDefinition());
+
+		if (definitionMap == null) {
+			return null;
+		}
+
+		Map<String, Object> fragmentDefinitionMap =
+			(Map<String, Object>)definitionMap.get("fragment");
+
+		String fragmentKey = (String)fragmentDefinitionMap.get("key");
+
+		if (Validator.isNull(fragmentKey)) {
+			return null;
+		}
+
+		FragmentEntry fragmentEntry = _getFragmentEntry(fragmentKey, groupId);
+
+		if (fragmentEntry != null) {
+			return null;
+		}
+
+		return ListUtil.fromArray(_getWarningMessage(groupId, fragmentKey));
+	}
+
 	private FragmentEntryLink _addFragmentEntryLink(
 			Layout layout, PageElement pageElement, int position)
 		throws Exception {
@@ -109,7 +145,8 @@ public class FragmentLayoutStructureItemImporter
 			return null;
 		}
 
-		FragmentEntry fragmentEntry = _getFragmentEntry(fragmentKey, layout);
+		FragmentEntry fragmentEntry = _getFragmentEntry(
+			fragmentKey, layout.getGroupId());
 
 		if (fragmentEntry == null) {
 			return null;
@@ -369,10 +406,9 @@ public class FragmentLayoutStructureItemImporter
 		return configurationTypes;
 	}
 
-	private FragmentEntry _getFragmentEntry(String fragmentKey, Layout layout) {
+	private FragmentEntry _getFragmentEntry(String fragmentKey, long groupId) {
 		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				layout.getGroupId(), fragmentKey);
+			_fragmentEntryLocalService.fetchFragmentEntry(groupId, fragmentKey);
 
 		if (fragmentEntry == null) {
 			fragmentEntry =
@@ -381,6 +417,30 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		return fragmentEntry;
+	}
+
+	private String _getWarningMessage(long groupId, String fragmentKey)
+		throws PortalException {
+
+		Locale locale = null;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			locale = serviceContext.getLocale();
+		}
+		else {
+			locale = _portal.getSiteDefaultLocale(groupId);
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return _language.format(
+			resourceBundle,
+			"fragment-with-key-x-was-ignored-because-it-does-not-exist",
+			new String[] {fragmentKey});
 	}
 
 	private void _processMapping(
@@ -652,6 +712,9 @@ public class FragmentLayoutStructureItemImporter
 
 	@Reference
 	private FragmentEntryValidator _fragmentEntryValidator;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

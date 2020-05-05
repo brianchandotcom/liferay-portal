@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
+import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageService;
@@ -182,9 +183,16 @@ public class MessageBoardMessageResourceImpl
 			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
-		return _toMessageBoardMessage(
-			_mbMessageService.fetchMBMessageByUrlSubject(
-				siteId, friendlyUrlPath));
+		MBMessage mbMessage = _mbMessageService.fetchMBMessageByUrlSubject(
+			siteId, friendlyUrlPath);
+
+		if (mbMessage == null) {
+			throw new NoSuchMessageException(
+				"No such message exists with friendly URL path " +
+					friendlyUrlPath);
+		}
+
+		return _toMessageBoardMessage(mbMessage);
 	}
 
 	@Override

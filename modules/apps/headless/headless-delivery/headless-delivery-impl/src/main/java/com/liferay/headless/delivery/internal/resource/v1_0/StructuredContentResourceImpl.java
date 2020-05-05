@@ -225,7 +225,7 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		JournalArticle journalArticle =
-			_journalArticleLocalService.fetchJournalArticleByUuidAndGroupId(
+			_journalArticleLocalService.getJournalArticleByUuidAndGroupId(
 				uuid, siteId);
 
 		_journalArticleModelResourcePermission.check(

@@ -38,6 +38,7 @@ import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMess
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
+import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -248,9 +249,16 @@ public class MessageBoardThreadResourceImpl
 			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
-		return _toMessageBoardThread(
-			_mbMessageService.fetchMBMessageByUrlSubject(
-				siteId, friendlyUrlPath));
+		MBMessage mbMessage = _mbMessageService.fetchMBMessageByUrlSubject(
+			siteId, friendlyUrlPath);
+
+		if (mbMessage == null) {
+			throw new NoSuchMessageException(
+				"No such message thread exists with friendly URL path " +
+					friendlyUrlPath);
+		}
+
+		return _toMessageBoardThread(mbMessage);
 	}
 
 	@Override

@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.analytics.message.sender.client,\
 	com.liferay.analytics.message.sender.constants,\
 	com.liferay.analytics.message.sender.model,\
+	com.liferay.analytics.message.sender.model.listener,\
 	com.liferay.analytics.message.sender.util

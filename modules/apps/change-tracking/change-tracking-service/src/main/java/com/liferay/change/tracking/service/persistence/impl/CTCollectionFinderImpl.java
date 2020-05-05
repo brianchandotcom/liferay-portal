@@ -22,7 +22,6 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -47,10 +46,6 @@ public class CTCollectionFinderImpl
 			CTCollectionTable.INSTANCE
 		).where(
 			_getC_SPredicate(companyId, status, keywords)
-		).orderBy(
-			CTCollectionTable.INSTANCE, null
-		).limit(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS
 		);
 
 		return ctCollectionPersistence.dslQuery(dslQuery);

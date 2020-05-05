@@ -26,7 +26,7 @@ import {
 } from 'recharts';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext, useWarning} from '../context/store';
+import {StoreContext, useHistoricalWarning} from '../context/store';
 import {useChartState} from '../state/chartState';
 import {generateDateFormatters as dateFormat} from '../utils/dateFormat';
 import {numberFormat} from '../utils/numberFormat';
@@ -140,7 +140,7 @@ export default function Chart({
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
-	const [hasWarning, addWarning] = useWarning();
+	const [hasHistoricalWarning, addHistoricalWarning] = useHistoricalWarning();
 
 	const [{readsEnabled}] = useContext(StoreContext);
 
@@ -193,8 +193,8 @@ export default function Chart({
 							key = 'analyticsReportsHistoricalViews';
 						}
 
-						if (!hasWarning) {
-							addWarning();
+						if (!hasHistoricalWarning) {
+							addHistoricalWarning();
 						}
 
 						actions.addDataSetItem({
@@ -332,11 +332,15 @@ export default function Chart({
 						/>
 					)}
 
-					{validAnalyticsConnection && publishedToday && (
-						<div className={publishedTodayClasses}>
-							{Liferay.Language.get('no-data-is-available-yet')}
-						</div>
-					)}
+					{validAnalyticsConnection &&
+						publishedToday &&
+						!hasHistoricalWarning && (
+							<div className={publishedTodayClasses}>
+								{Liferay.Language.get(
+									'no-data-is-available-yet'
+								)}
+							</div>
+						)}
 
 					{title && <h5>{title}</h5>}
 
@@ -348,7 +352,9 @@ export default function Chart({
 						>
 							<CartesianGrid
 								horizontalPoints={
-									validAnalyticsConnection && publishedToday
+									validAnalyticsConnection &&
+									publishedToday &&
+									!hasHistoricalWarning
 										? [CHART_SIZES.dotRadius]
 										: []
 								}

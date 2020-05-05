@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useState} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext, useWarning} from '../context/store';
+import {StoreContext, useHistoricalWarning, useWarning} from '../context/store';
 import {numberFormat} from '../utils/numberFormat';
 import Detail from './Detail';
 import Main from './Main';
@@ -37,6 +37,8 @@ export default function Navigation({
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const [hasWarning] = useWarning();
+
+	const [hasHistoricalWarning] = useHistoricalWarning();
 
 	const {getHistoricalReads, getHistoricalViews} = api;
 
@@ -116,7 +118,7 @@ export default function Navigation({
 				</ClayAlert>
 			)}
 
-			{validAnalyticsConnection && hasWarning && (
+			{validAnalyticsConnection && (hasWarning || hasHistoricalWarning) && (
 				<ClayAlert
 					className="p-0"
 					displayType="warning"

@@ -21,7 +21,7 @@ import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -93,11 +93,7 @@ public class BlogPostingImageResourceTest
 	protected Map<String, File> getMultipartFiles() throws Exception {
 		return HashMapBuilder.<String, File>put(
 			"file",
-			() -> {
-				String randomString = RandomTestUtil.randomString();
-
-				return FileUtil.createTempFile(randomString.getBytes());
-			}
+			() -> FileUtil.createTempFile(TestDataConstants.TEST_BYTE_ARRAY)
 		).build();
 	}
 

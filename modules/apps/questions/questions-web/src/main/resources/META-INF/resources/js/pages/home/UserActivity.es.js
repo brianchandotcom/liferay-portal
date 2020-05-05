@@ -79,40 +79,47 @@ export default withRouter(
 		return (
 			<>
 				<NavigationBar />
-				<PageHeader />
-				<Questions />
+				<section className="questions-section questions-section-list">
+					<div className="questions-container">
+						<div className="row">
+							<PageHeader />
+							<Questions />
+						</div>
+					</div>
+				</section>
 			</>
 		);
 
 		function PageHeader() {
 			return (
-				<>
-					<div className="d-flex flex-row justify-content-between">
-						<div className="d-flex">
+				<div className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
+					<div className="d-flex flex-row">
+						<div className="c-mt-3">
 							<UserIcon
 								fullName={creatorInfo.name}
 								portraitURL={creatorInfo.image}
 								userId={String(creatorInfo.id)}
+								size="xl"
 							/>
-							<div className="c-ml-3 flex-column">
-								<div>
-									<span className="h3">
-										Rank: {creatorInfo.rank}
-									</span>
-								</div>
-								<div>
-									<span className="h3">
-										{creatorInfo.name}
-									</span>
-								</div>
-								<div>
-									<span className="h3">
-										Posts: {creatorInfo.postsNumber}
-									</span>
-								</div>
+						</div>				
+						<div className="c-ml-4 flex-column">
+							<div>
+								<span className="small">
+									Rank: {creatorInfo.rank}
+								</span>
+							</div>
+							<div>
+								<strong className="h2">
+									{creatorInfo.name}
+								</strong>
+							</div>
+							<div>
+								<span className="small">
+									Posts: {creatorInfo.postsNumber}
+								</span>
 							</div>
 						</div>
-						<div>
+						<div className="flex-column justify-content-end">
 							<ClayButton
 								className="d-none"
 								displayType="secondary"
@@ -121,16 +128,16 @@ export default withRouter(
 							</ClayButton>
 						</div>
 					</div>
-					<div>
-						<h1>Latest Questions Asked</h1>
+					<div className="c-mt-5 border-bottom">
+						<h2>Latest Questions Asked</h2>
 					</div>
-				</>
+				</div>
 			);
 		}
 
 		function Questions() {
 			return (
-				<>
+				<div className="c-mx-auto c-px-0 col-xl-10">
 					{loading ? (
 						<ClayLoadingIndicator />
 					) : (
@@ -154,7 +161,7 @@ export default withRouter(
 								)}
 							/>
 						)}
-				</>
+				</div>
 			);
 		}
 	}

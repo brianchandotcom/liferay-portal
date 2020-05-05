@@ -72,10 +72,25 @@ public class PortletConfigurationImporterHelper {
 		String portletPreferencesXML = PortletPreferencesFactoryUtil.toXML(
 			portletPreferences);
 
-		_portletPreferencesLocalService.addPortletPreferences(
-			layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId,
-			null, portletPreferencesXML);
+		com.liferay.portal.kernel.model.PortletPreferences
+			persistedPortletPreferences =
+				_portletPreferencesLocalService.fetchPortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+					portletId);
+
+		if (persistedPortletPreferences == null) {
+			_portletPreferencesLocalService.addPortletPreferences(
+				layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				portletId, null, portletPreferencesXML);
+		}
+		else {
+			_portletPreferencesLocalService.updatePreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				portletId, portletPreferencesXML);
+		}
 	}
 
 	@Reference

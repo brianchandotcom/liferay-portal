@@ -33,7 +33,9 @@ definition {
 		JSONGroupAPI._addGroup(
 			groupDescriptionMap = "${groupDescriptionMap}",
 			groupNameMap = "${groupNameMap}",
-			parentGroupId = "${parentGroupId}");
+			manualMembership = "${manualMembership}",
+			parentGroupId = "${parentGroupId}",
+			type = "${type}");
 	}
 
 	macro assignGroupRoleToUser {

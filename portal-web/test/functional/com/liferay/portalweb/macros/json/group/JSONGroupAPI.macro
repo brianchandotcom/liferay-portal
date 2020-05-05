@@ -6,6 +6,23 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if ("${type}" == "Private") {
+			var type = "3";
+		}
+		else if ("${type}" == "Restricted") {
+			var type = "2";
+		}
+		else {
+			var type = "1";
+		}
+
+		if ("${manualMembership}" == "false") {
+			var manualMembership = "false";
+		}
+		else {
+			var manualMembership = "true";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/group/add-group \
 				-u test@liferay.com:test \
@@ -13,8 +30,8 @@ definition {
 				-d liveGroupId=0 \
 				-d nameMap=${groupNameMap} \
 				-d descriptionMap=${groupDescriptionMap} \
-				-d type=1 \
-				-d manualMembership=true \
+				-d type=${type} \
+				-d manualMembership=${manualMembership} \
 				-d membershipRestriction=0 \
 				-d friendlyURL= \
 				-d site=true \

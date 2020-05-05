@@ -279,6 +279,10 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraTestCaseFolders;
 	}
 
+	public List<SpiraTestCaseObject> getSpiraTestCases() {
+		return SpiraTestCaseObject.getSpiraTestCases(this);
+	}
+
 	public List<SpiraTestCaseObject> getSpiraTestCasesByPath(
 		String testCasePath) {
 

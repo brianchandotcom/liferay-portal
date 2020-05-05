@@ -17,24 +17,17 @@ package com.liferay.portal.db.partition.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.db.partition.DBPartitionUtil;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
+import com.liferay.portal.db.partition.test.util.DBPartitionTestUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -45,10 +38,7 @@ import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,64 +46,29 @@ import org.junit.runner.RunWith;
  * @author Alberto Chaparro
  */
 @RunWith(Arquillian.class)
-public class DBPartitionUtilTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
-
-	public static void assume() {
-		_db = DBManagerUtil.getDB();
-
-		Assume.assumeTrue(_db.getDBType() == DBType.MYSQL);
-	}
+public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_connection = DataAccess.getConnection();
-		_currentDatabasePartitionEnabledValue =
-			ReflectionTestUtil.getAndSetFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", true);
-		_currentDatabasePartitionInstanceIdValue =
-			ReflectionTestUtil.getAndSetFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
-				_DB_PARTITION_INSTANCE_ID);
-		_currentDataSource = ReflectionTestUtil.getFieldValue(
-			DBInitUtil.class, "_dataSource");
 
 		_defaultSchemaName = _connection.getCatalog();
 
-		DBPartitionUtil.setDefaultCompanyId(_portal.getDefaultCompanyId());
+		DBPartitionTestUtil.enableDBPartition();
 
-		DataSource dbPartitionDataSource = DBPartitionUtil.wrapDataSource(
-			_currentDataSource);
-
-		ReflectionTestUtil.setFieldValue(
-			DBInitUtil.class, "_dataSource", dbPartitionDataSource);
-		ReflectionTestUtil.setFieldValue(
-			InfrastructureUtil.class, "_dataSource", dbPartitionDataSource);
-
-		_db.runSQL("create schema " + _getSchemaName() + " character set utf8");
+		getDB().runSQL(
+			"create schema " + DBPartitionTestUtil.getSchemaName(_COMPANY_ID) +
+				" character set utf8");
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_db.runSQL("drop schema " + _getSchemaName());
+		getDB().runSQL(
+			"drop schema " + DBPartitionTestUtil.getSchemaName(_COMPANY_ID));
 
 		DataAccess.cleanUp(_connection);
 
-		ReflectionTestUtil.setFieldValue(
-			DBInitUtil.class, "_dataSource", _currentDataSource);
-		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED",
-			_currentDatabasePartitionEnabledValue);
-		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
-			_currentDatabasePartitionInstanceIdValue);
-		ReflectionTestUtil.setFieldValue(
-			InfrastructureUtil.class, "_dataSource", _currentDataSource);
+		DBPartitionTestUtil.disableDBPartition();
 	}
 
 	@After
@@ -132,8 +87,9 @@ public class DBPartitionUtilTest {
 
 			statement.executeUpdate(
 				StringBundler.concat(
-					"create table ", _getSchemaName(), ".TestTable ",
-					"(testColumn int)"));
+					"create table ",
+					DBPartitionTestUtil.getSchemaName(_COMPANY_ID),
+					".TestTable (testColumn int)"));
 
 			statement.execute("select 1 from TestTable");
 
@@ -184,7 +140,9 @@ public class DBPartitionUtilTest {
 
 			try (Statement statement = _connection.createStatement()) {
 				statement.execute(
-					"select 1 from " + _getSchemaName() + ".CompanyInfo");
+					"select 1 from " +
+						DBPartitionTestUtil.getSchemaName(_COMPANY_ID) +
+							".CompanyInfo");
 			}
 		}
 		finally {
@@ -200,20 +158,9 @@ public class DBPartitionUtilTest {
 			DBPartitionUtil.addDBPartition(_portal.getDefaultCompanyId()));
 	}
 
-	private static String _getSchemaName() {
-		return _DB_PARTITION_INSTANCE_ID + StringPool.UNDERLINE + _COMPANY_ID;
-	}
-
 	private static final long _COMPANY_ID = 1L;
 
-	private static final String _DB_PARTITION_INSTANCE_ID =
-		"dbPartitionUtilTest";
-
 	private static Connection _connection;
-	private static boolean _currentDatabasePartitionEnabledValue;
-	private static String _currentDatabasePartitionInstanceIdValue;
-	private static DataSource _currentDataSource;
-	private static DB _db;
 	private static String _defaultSchemaName;
 
 	@Inject

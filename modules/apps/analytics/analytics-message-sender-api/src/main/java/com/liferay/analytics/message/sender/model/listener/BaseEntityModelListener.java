@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.message.sender.internal.model.listener;
+package com.liferay.analytics.message.sender.model.listener;
 
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
 import com.liferay.analytics.message.sender.model.EntityModelListener;

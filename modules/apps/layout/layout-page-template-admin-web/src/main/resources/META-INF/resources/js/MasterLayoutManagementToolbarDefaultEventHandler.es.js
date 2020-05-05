@@ -37,6 +37,10 @@ class MasterLayoutManagementToolbarDefaultEventHandler extends DefaultEventHandl
 			submitForm(this.one('#fm'));
 		}
 	}
+
+	exportMasterLayouts(itemData) {
+		submitForm(this.one('#fm'), itemData.exportMasterLayoutURL);
+	}
 }
 
 MasterLayoutManagementToolbarDefaultEventHandler.STATE = {

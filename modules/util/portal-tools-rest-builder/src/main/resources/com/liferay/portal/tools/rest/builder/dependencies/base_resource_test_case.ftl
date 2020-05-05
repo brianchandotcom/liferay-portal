@@ -1354,6 +1354,53 @@ public abstract class Base${schemaName}ResourceTestCase {
 					Assert.assertTrue(true);
 				</#if>
 			}
+
+			@Test
+			public void testGraphQL${javaMethodSignature.methodName?cap_first}NotFound() throws Exception {
+				<#if javaMethodSignature.javaMethodParameters?size != 0 && properties?keys?seq_contains("id")>
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#if !stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+							${javaMethodParameter.parameterType} irrelevant${javaMethodParameter.parameterName?cap_first} =
+							<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Boolean")>
+								RandomTestUtil.randomBoolean();
+							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
+								RandomTestUtil.randomInt();
+							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
+								RandomTestUtil.randomLong();
+							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Double")>
+								RandomTestUtil.randomDouble();
+							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+								"\"" + RandomTestUtil.randomString() + "\"";
+							<#else>
+								null;
+							</#if>
+						</#if>
+					</#list>
+
+					Assert.assertEquals("Not Found",
+						JSONUtil.getValueAsString(
+							invokeGraphQLQuery(
+								new GraphQLField(
+									"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}",
+									new HashMap<String, Object>() {
+										{
+											<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+												<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+													<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+														put("siteKey", "\"" + irrelevantGroup.getGroupId() + "\"");
+													<#else>
+														put("${javaMethodParameter.parameterName}",irrelevant${javaMethodParameter.parameterName?cap_first});
+													</#if>
+												</#if>
+											</#list>
+										}
+									},
+									getGraphQLFields())),
+							"JSONArray/errors", "Object/0", "JSONObject/extensions", "Object/code"));
+				<#else>
+					Assert.assertTrue(true);
+				</#if>
+				}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && stringUtil.equals(javaMethodSignature.methodName, "postSite" + schemaName) && !freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {

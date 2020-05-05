@@ -180,9 +180,15 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		Select(
-			locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT",
-			value1 = "${user}");
+		Click(locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT");
+
+		Pause(locator1 = "1000");
+
+		Click(
+			key_user = "${user}",
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_VALUE");
+
+		Pause(locator1 = "1000");
 
 		if (isSet(comment)) {
 			Type(

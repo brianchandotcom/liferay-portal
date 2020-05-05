@@ -14,6 +14,8 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.util;
 
+import com.liferay.layout.page.template.admin.web.internal.importer.PortletConfigurationImporterTracker;
+import com.liferay.layout.page.template.importer.PortletConfigurationImporter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -91,10 +93,23 @@ public class PortletConfigurationImporterHelper {
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 				portletId, portletPreferencesXML);
 		}
+
+		PortletConfigurationImporter portletConfigurationImporter =
+			_portletConfigurationImporterTracker.
+				getPortletConfigurationImporter(portletName);
+
+		if (portletConfigurationImporter != null) {
+			portletConfigurationImporter.importPortletConfiguration(
+				layout.getPlid(), portletId, widgetConfig);
+		}
 	}
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortletConfigurationImporterTracker
+		_portletConfigurationImporterTracker;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

@@ -17,6 +17,8 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
+import com.liferay.layout.page.template.admin.web.internal.exporter.PortletConfigurationExporterTracker;
+import com.liferay.layout.page.template.exporter.PortletConfigurationExporter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -117,6 +120,20 @@ public class WidgetInstanceDTOConverter {
 			}
 			else {
 				widgetConfigMap.put(entrySet.getKey(), StringPool.BLANK);
+			}
+		}
+
+		PortletConfigurationExporter portletConfigurationExporter =
+			_portletConfigurationExporterTracker.
+				getPortletConfigurationExporter(portletName);
+
+		if (portletConfigurationExporter != null) {
+			Map<String, Object> portletConfiguration =
+				portletConfigurationExporter.getPortletConfiguration(
+					plid, portletId);
+
+			if (MapUtil.isNotEmpty(portletConfiguration)) {
+				widgetConfigMap.putAll(portletConfiguration);
 			}
 		}
 
@@ -221,6 +238,10 @@ public class WidgetInstanceDTOConverter {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortletConfigurationExporterTracker
+		_portletConfigurationExporterTracker;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

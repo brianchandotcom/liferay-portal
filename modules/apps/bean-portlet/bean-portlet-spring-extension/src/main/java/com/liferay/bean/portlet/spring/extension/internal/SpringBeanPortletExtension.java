@@ -100,18 +100,15 @@ public class SpringBeanPortletExtension {
 		ConfigurableBeanFactory configurableBeanFactory) {
 
 		configurableBeanFactory.registerScope(
-			"portletRequest", new SpringPortletRequestScope());
-
-		configurableBeanFactory.registerScope(
 			"portletAppSession",
 			new SpringPortletSessionScope(PortletSession.APPLICATION_SCOPE));
-
+		configurableBeanFactory.registerScope(
+			"portletRenderState", new SpringRenderStateScope());
+		configurableBeanFactory.registerScope(
+			"portletRequest", new SpringPortletRequestScope());
 		configurableBeanFactory.registerScope(
 			"portletSession",
 			new SpringPortletSessionScope(PortletSession.PORTLET_SCOPE));
-
-		configurableBeanFactory.registerScope(
-			"portletRenderState", new SpringRenderStateScope());
 
 		_configurableBeanFactory = configurableBeanFactory;
 	}

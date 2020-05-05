@@ -16,12 +16,10 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.persistence.CTCollectionFinder;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.change.tracking.service.persistence.CTEntryPersistence;
 import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
-import com.liferay.change.tracking.service.persistence.CTProcessFinder;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -420,9 +418,6 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	protected CTCollectionPersistence ctCollectionPersistence;
 
 	@Reference
-	protected CTCollectionFinder ctCollectionFinder;
-
-	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
@@ -437,8 +432,5 @@ public abstract class CTCollectionLocalServiceBaseImpl
 
 	@Reference
 	protected CTProcessPersistence ctProcessPersistence;
-
-	@Reference
-	protected CTProcessFinder ctProcessFinder;
 
 }

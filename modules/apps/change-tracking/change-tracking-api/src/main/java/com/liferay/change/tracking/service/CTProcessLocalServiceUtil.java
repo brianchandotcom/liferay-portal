@@ -262,18 +262,6 @@ public class CTProcessLocalServiceUtil {
 		return getService().getCTProcesses(ctCollectionId);
 	}
 
-	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
-		getCTProcesses(
-			long companyId, long userId, String keywords, int status, int start,
-			int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.change.tracking.model.CTProcess>
-					orderByComparator) {
-
-		return getService().getCTProcesses(
-			companyId, userId, keywords, status, start, end, orderByComparator);
-	}
-
 	/**
 	 * Returns the number of ct processes.
 	 *

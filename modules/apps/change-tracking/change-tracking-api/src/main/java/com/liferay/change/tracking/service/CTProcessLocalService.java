@@ -219,11 +219,6 @@ public interface CTProcessLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTProcess> getCTProcesses(long ctCollectionId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTProcess> getCTProcesses(
-		long companyId, long userId, String keywords, int status, int start,
-		int end, OrderByComparator<CTProcess> orderByComparator);
-
 	/**
 	 * Returns the number of ct processes.
 	 *

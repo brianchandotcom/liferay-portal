@@ -16,9 +16,7 @@ package com.liferay.change.tracking.service.base;
 
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTProcessService;
-import com.liferay.change.tracking.service.persistence.CTCollectionFinder;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
-import com.liferay.change.tracking.service.persistence.CTProcessFinder;
 import com.liferay.change.tracking.service.persistence.CTProcessPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -118,13 +116,7 @@ public abstract class CTProcessServiceBaseImpl
 	protected CTProcessPersistence ctProcessPersistence;
 
 	@Reference
-	protected CTProcessFinder ctProcessFinder;
-
-	@Reference
 	protected CTCollectionPersistence ctCollectionPersistence;
-
-	@Reference
-	protected CTCollectionFinder ctCollectionFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

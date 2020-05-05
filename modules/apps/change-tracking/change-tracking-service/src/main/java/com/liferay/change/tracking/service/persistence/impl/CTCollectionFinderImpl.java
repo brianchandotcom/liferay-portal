@@ -21,7 +21,6 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
@@ -43,9 +42,18 @@ public class CTCollectionFinderImpl
 
 	@Override
 	public int filterCountByC_S(long companyId, int status, String keywords) {
-		return applyC_S(
-			DSLQueryFactoryUtil.count(), companyId, status, keywords, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.count(
+		).from(
+			CTCollectionTable.INSTANCE
+		).where(
+			_getC_SPredicate(companyId, status, keywords)
+		).orderBy(
+			CTCollectionTable.INSTANCE, null
+		).limit(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS
+		);
+
+		return ctCollectionPersistence.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -53,16 +61,8 @@ public class CTCollectionFinderImpl
 		long companyId, int status, String keywords, int start, int end,
 		OrderByComparator<CTCollection> obc) {
 
-		return applyC_S(
-			DSLQueryFactoryUtil.select(), companyId, status, keywords, obc,
-			start, end);
-	}
-
-	protected <T> T applyC_S(
-		FromStep fromStep, long companyId, int status, String keywords,
-		OrderByComparator<CTCollection> obc, int start, int end) {
-
-		DSLQuery dslQuery = fromStep.from(
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+		).from(
 			CTCollectionTable.INSTANCE
 		).where(
 			_getC_SPredicate(companyId, status, keywords)

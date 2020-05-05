@@ -62,7 +62,6 @@ const RowWithControls = React.forwardRef(
 			},
 		});
 
-
 		const segmentsExperienceId = useSelector(
 			(state) => state.segmentsExperienceId
 		);

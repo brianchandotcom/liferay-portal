@@ -72,6 +72,9 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		requestJSONObject.put("Name", customPropertyName);
 		requestJSONObject.put("ProjectTemplateId", projectTemplateID);
 
+		spiraCustomProperties = getSpiraCustomProperties(
+			spiraProject, spiraArtifactClass);
+
 		Integer positionNumber = _getNextPositionNumber(spiraCustomProperties);
 
 		if (positionNumber == null) {

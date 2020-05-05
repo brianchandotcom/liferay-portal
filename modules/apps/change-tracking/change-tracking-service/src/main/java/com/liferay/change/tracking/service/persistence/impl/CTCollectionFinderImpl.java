@@ -16,26 +16,20 @@ package com.liferay.change.tracking.service.persistence.impl;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
-import com.liferay.change.tracking.model.impl.CTCollectionImpl;
 import com.liferay.change.tracking.service.persistence.CTCollectionFinder;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
-import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,21 +45,7 @@ public class CTCollectionFinderImpl
 	public int filterCountByC_S(long companyId, int status, String keywords) {
 		return applyC_S(
 			DSLQueryFactoryUtil.count(), companyId, status, keywords, null,
-			sqlQuery -> {
-				sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-				Iterator<Long> itr = sqlQuery.iterate();
-
-				if (itr.hasNext()) {
-					Long count = itr.next();
-
-					if (count != null) {
-						return count.intValue();
-					}
-				}
-
-				return 0;
-			});
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
@@ -75,93 +55,73 @@ public class CTCollectionFinderImpl
 
 		return applyC_S(
 			DSLQueryFactoryUtil.select(), companyId, status, keywords, obc,
-			sqlQuery -> {
-				sqlQuery.addEntity(
-					CTCollectionTable.INSTANCE.getName(),
-					CTCollectionImpl.class);
-
-				return (List<CTCollection>)QueryUtil.list(
-					sqlQuery, getDialect(), start, end);
-			});
+			start, end);
 	}
 
 	protected <T> T applyC_S(
 		FromStep fromStep, long companyId, int status, String keywords,
-		OrderByComparator<CTCollection> obc,
-		Function<SQLQuery, T> sqlQueryFunction) {
+		OrderByComparator<CTCollection> obc, int start, int end) {
 
-		Session session = null;
+		DSLQuery dslQuery = fromStep.from(
+			CTCollectionTable.INSTANCE
+		).where(
+			() -> {
+				Predicate predicate = CTCollectionTable.INSTANCE.companyId.eq(
+					companyId);
 
-		try {
-			session = openSession();
+				if (status != WorkflowConstants.STATUS_ANY) {
+					predicate = predicate.and(
+						CTCollectionTable.INSTANCE.status.eq(status));
+				}
 
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
-				fromStep.from(
-					CTCollectionTable.INSTANCE
-				).where(
-					() -> {
-						Predicate predicate =
-							CTCollectionTable.INSTANCE.companyId.eq(companyId);
+				Predicate keywordsPredicate = null;
 
-						if (status != WorkflowConstants.STATUS_ANY) {
-							predicate = predicate.and(
-								CTCollectionTable.INSTANCE.status.eq(status));
-						}
+				for (String keyword :
+						_customSQL.keywords(
+							keywords, true, WildcardMode.SURROUND)) {
 
-						Predicate keywordsPredicate = null;
-
-						for (String keyword :
-								_customSQL.keywords(
-									keywords, true, WildcardMode.SURROUND)) {
-
-							if (keyword == null) {
-								continue;
-							}
-
-							Predicate keywordPredicate =
-								DSLFunctionFactoryUtil.lower(
-									CTCollectionTable.INSTANCE.name
-								).like(
-									keyword
-								).or(
-									DSLFunctionFactoryUtil.lower(
-										CTCollectionTable.INSTANCE.description
-									).like(
-										keyword
-									)
-								);
-
-							if (keywordsPredicate == null) {
-								keywordsPredicate = keywordPredicate;
-							}
-							else {
-								keywordsPredicate = keywordsPredicate.or(
-									keywordPredicate);
-							}
-						}
-
-						if (keywordsPredicate != null) {
-							predicate = predicate.and(
-								keywordsPredicate.withParentheses());
-						}
-
-						return predicate.and(
-							_inlineSQLHelper.getPermissionWherePredicate(
-								CTCollection.class,
-								CTCollectionTable.INSTANCE.ctCollectionId));
+					if (keyword == null) {
+						continue;
 					}
-				).orderBy(
-					CTCollectionTable.INSTANCE, obc
-				));
 
-			return sqlQueryFunction.apply(sqlQuery);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+					Predicate keywordPredicate = DSLFunctionFactoryUtil.lower(
+						CTCollectionTable.INSTANCE.name
+					).like(
+						keyword
+					).or(
+						DSLFunctionFactoryUtil.lower(
+							CTCollectionTable.INSTANCE.description
+						).like(
+							keyword
+						)
+					);
+
+					if (keywordsPredicate == null) {
+						keywordsPredicate = keywordPredicate;
+					}
+					else {
+						keywordsPredicate = keywordsPredicate.or(
+							keywordPredicate);
+					}
+				}
+
+				if (keywordsPredicate != null) {
+					predicate = predicate.and(
+						keywordsPredicate.withParentheses());
+				}
+
+				return predicate.and(
+					_inlineSQLHelper.getPermissionWherePredicate(
+						CTCollection.class,
+						CTCollectionTable.INSTANCE.ctCollectionId));
+			}
+		).orderBy(
+			CTCollectionTable.INSTANCE, obc
+		).limit(
+			start, end
+		);
+
+		return ctCollectionPersistence.dslQuery(dslQuery);
 	}
 
 	@Reference

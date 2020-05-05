@@ -47,7 +47,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 				onUndo();
 			}
 		},
-		false,
+		true,
 		window
 	);
 

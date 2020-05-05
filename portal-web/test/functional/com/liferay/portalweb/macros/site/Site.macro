@@ -874,6 +874,10 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site/settings");
 	}
 
+	macro openSiteTeamsAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site_teams");
+	}
+
 	macro removeMemberCP {
 		var key_cardText = "${userScreenName}";
 

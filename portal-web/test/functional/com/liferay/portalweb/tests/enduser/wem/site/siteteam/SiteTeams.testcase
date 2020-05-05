@@ -9,6 +9,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
 	}
 
 	tearDown {
@@ -24,7 +26,7 @@ definition {
 
 			JSONUser.tearDownNonAdminUsers();
 
-			Site.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 	}
 
@@ -32,17 +34,7 @@ definition {
 	test AddSiteTeam {
 		property testray.component.names = "Site Administration";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
@@ -57,40 +49,20 @@ definition {
 	test AddSiteTeamAssignUser {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Memberships");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
@@ -100,12 +72,7 @@ definition {
 			teamName = "Site Team Name",
 			userScreenName = "usersn");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.viewMemberCP(
 			membershipType = "User",
@@ -118,17 +85,7 @@ definition {
 	test AddSiteTeamAssignUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
@@ -138,26 +95,15 @@ definition {
 			teamDescription = "Site Team Description",
 			teamName = "Site Team Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(userGroupName = "User Group Name");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Memberships");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.assignUserGroups(
 			teamName = "Site Team Name",
@@ -165,10 +111,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.viewMemberCP(
 			membershipType = "User Group",
@@ -180,26 +123,11 @@ definition {
 	test AddSiteTeamMultiple {
 		property testray.component.names = "Site Administration";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Site Page");
-
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team1 Description",
@@ -231,40 +159,20 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Memberships");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
@@ -274,12 +182,7 @@ definition {
 			teamName = "Site Team Name",
 			userScreenName = "usersn");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.viewMemberCP(
 			membershipType = "User",
@@ -287,10 +190,7 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.removeMemberCP(
 			membershipType = "User",
@@ -298,10 +198,7 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.viewNoMembersCP(teamName = "Site Team Name");
 	}
@@ -310,17 +207,7 @@ definition {
 	test AddSiteTeamRemoveUserGroup {
 		property testray.component.names = "Site Administration,User Groups";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
@@ -330,57 +217,35 @@ definition {
 			teamDescription = "Site Team Description",
 			teamName = "Site Team Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
+		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(userGroupName = "User Group Name");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Memberships");
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.assignUserGroups(
 			teamName = "Site Team Name",
 			userGroupName = "User Group Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.viewMemberCP(
 			membershipType = "User Group",
 			teamName = "Site Team Name",
 			userGroupName = "User Group Name");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.removeMemberCP(
 			membershipType = "User Group",
 			teamName = "Site Team Name",
 			userGroupName = "User Group Name");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.viewNoMembersCP(teamName = "Site Team Name");
 	}
@@ -388,55 +253,31 @@ definition {
 	test AddSiteTeamSearchUserGroups {
 		property testray.component.names = "Site Administration,User Groups";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
 		for (var n : list "1,2") {
-			ProductMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "User Groups");
+			UserGroup.openUserGroupsAdmin();
 
 			UserGroup.addCP(userGroupName = "User Group Name ${n}");
 
-			SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "People",
-				panel = "Site Administration",
-				portlet = "Memberships");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name ${n}");
 		}
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
 			teamName = "Site Team Name");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.assignUserGroups(
 			teamName = "Site Team Name",
 			userGroupName = "User Group Name 1");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.gotoEntry(rowEntry = "Site Team Name");
 
@@ -453,31 +294,14 @@ definition {
 	test AddSiteTeamSearchUsers {
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
 		for (var n : list "1,2") {
-			ProductMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.addCP(
+			JSONUser.addUser(
 				userEmailAddress = "userea${n}@liferay.com",
 				userFirstName = "userfn${n}",
 				userLastName = "userln${n}",
 				userScreenName = "usersn${n}");
 
-			SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "People",
-				panel = "Site Administration",
-				portlet = "Memberships");
+			Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 			Site.assignUserAsMemberCP(
 				userFirstName = "userfn${n}",
@@ -485,12 +309,7 @@ definition {
 				userScreenName = "usersn${n}");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
@@ -500,12 +319,7 @@ definition {
 			teamName = "Site Team Name",
 			userScreenName = "usersn1");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.gotoEntry(rowEntry = "Site Team Name");
 
@@ -527,17 +341,7 @@ definition {
 	test DeleteSiteTeam {
 		property testray.component.names = "Site Administration";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",
@@ -555,17 +359,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Teams");
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
 		Team.addCP(
 			teamDescription = "Site Team Description",

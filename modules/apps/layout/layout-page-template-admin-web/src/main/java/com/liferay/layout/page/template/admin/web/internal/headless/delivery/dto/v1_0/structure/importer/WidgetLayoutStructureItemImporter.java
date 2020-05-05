@@ -100,14 +100,21 @@ public class WidgetLayoutStructureItemImporter
 			return null;
 		}
 
-		Map<String, Object> widgetDefinitionMap =
-			(Map<String, Object>)definitionMap.get("widget");
+		Map<String, Object> widgetInstance =
+			(Map<String, Object>)definitionMap.get("widgetInstance");
 
-		String name = (String)widgetDefinitionMap.get("name");
-
-		if (Validator.isNull(name)) {
+		if (widgetInstance == null) {
 			return null;
 		}
+
+		String widgetName = (String)widgetInstance.get("widgetName");
+
+		if (Validator.isNull(widgetName)) {
+			return null;
+		}
+
+		String widgetInstanceId = (String)widgetInstance.get(
+			"widgetInstanceId");
 
 		try {
 			JSONObject editableValueJSONObject =
@@ -115,37 +122,43 @@ public class WidgetLayoutStructureItemImporter
 					getDefaultEditableValuesJSONObject(
 						StringPool.BLANK, StringPool.BLANK);
 
-			String namespace = StringUtil.randomId();
+			if (Validator.isNull(widgetInstanceId)) {
+				widgetInstanceId = StringUtil.randomId();
+			}
 
-			String instanceId = _getPortletInstanceId(namespace, layout, name);
+			widgetInstanceId = _getPortletInstanceId(
+				layout, widgetInstanceId, widgetName);
 
 			editableValueJSONObject.put(
-				"instanceId", instanceId
+				"instanceId", widgetInstanceId
 			).put(
-				"portletId", name
+				"portletId", widgetName
 			);
 
 			Map<String, Object> widgetConfigDefinitionMap =
-				(Map<String, Object>)definitionMap.get("widgetConfig");
+				(Map<String, Object>)widgetInstance.get("widgetConfig");
 
 			_importPortletConfiguration(
-				layout.getPlid(), PortletIdCodec.encode(name, instanceId),
+				layout.getPlid(),
+				PortletIdCodec.encode(widgetName, widgetInstanceId),
 				widgetConfigDefinitionMap);
 
 			List<Map<String, Object>> widgetPermissionsMaps =
-				(List<Map<String, Object>>)definitionMap.get(
+				(List<Map<String, Object>>)widgetInstance.get(
 					"widgetPermissions");
 
 			_importPortletPermissions(
-				layout.getPlid(), PortletIdCodec.encode(name, instanceId),
+				layout.getPlid(),
+				PortletIdCodec.encode(widgetName, widgetInstanceId),
 				widgetPermissionsMaps);
 
 			return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 				layout.getUserId(), layout.getGroupId(), 0, 0, 0,
 				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, editableValueJSONObject.toString(), namespace,
-				0, null, ServiceContextThreadLocal.getServiceContext());
+				StringPool.BLANK, editableValueJSONObject.toString(),
+				widgetInstanceId, 0, null,
+				ServiceContextThreadLocal.getServiceContext());
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -157,7 +170,7 @@ public class WidgetLayoutStructureItemImporter
 	}
 
 	private String _getPortletInstanceId(
-			String namespace, Layout layout, String portletId)
+			Layout layout, String portletInstanceId, String portletId)
 		throws PortletIdException {
 
 		Portlet portlet = _portletLocalService.fetchPortletById(
@@ -168,7 +181,7 @@ public class WidgetLayoutStructureItemImporter
 		}
 
 		if (portlet.isInstanceable()) {
-			return namespace;
+			return portletInstanceId;
 		}
 
 		long count = _portletPreferencesLocalService.getPortletPreferencesCount(

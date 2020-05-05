@@ -22,9 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -43,7 +41,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,11 +60,6 @@ public class DataDefinitionResourceFactoryImplTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_user = UserTestUtil.addUser();
-	}
-
 	@Test
 	public void testHttpServletRequestLocale() throws Exception {
 		DataDefinitionResource dataDefinitionResource =
@@ -86,7 +78,7 @@ public class DataDefinitionResourceFactoryImplTest {
 
 				}
 			).user(
-				_user
+				UserTestUtil.addUser()
 			).build();
 
 		_assertTranslations(
@@ -103,7 +95,7 @@ public class DataDefinitionResourceFactoryImplTest {
 			).preferredLocale(
 				LocaleUtil.BRAZIL
 			).user(
-				_user
+				UserTestUtil.addUser()
 			).build();
 
 		_assertTranslations(
@@ -118,7 +110,7 @@ public class DataDefinitionResourceFactoryImplTest {
 		DataDefinitionResource dataDefinitionResource =
 			DataDefinitionResource.builder(
 			).user(
-				_user
+				UserTestUtil.addUser()
 			).build();
 
 		_assertTranslations(
@@ -177,8 +169,5 @@ public class DataDefinitionResourceFactoryImplTest {
 
 	@Inject
 	private Portal _portal;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

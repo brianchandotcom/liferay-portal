@@ -243,11 +243,9 @@ public class EditFragmentEntryDisplayContext {
 			return _cssContent;
 		}
 
-		_cssContent = ParamUtil.getString(_httpServletRequest, "cssContent");
-
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		if ((fragmentEntry != null) && Validator.isNull(_cssContent)) {
+		if (fragmentEntry != null) {
 			_cssContent = fragmentEntry.getCss();
 
 			if (Validator.isNull(_cssContent)) {
@@ -292,11 +290,9 @@ public class EditFragmentEntryDisplayContext {
 			return _htmlContent;
 		}
 
-		_htmlContent = ParamUtil.getString(_httpServletRequest, "htmlContent");
-
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		if ((fragmentEntry != null) && Validator.isNull(_htmlContent)) {
+		if (fragmentEntry != null) {
 			_htmlContent = fragmentEntry.getHtml();
 
 			if (Validator.isNull(_htmlContent)) {
@@ -318,11 +314,9 @@ public class EditFragmentEntryDisplayContext {
 			return _jsContent;
 		}
 
-		_jsContent = ParamUtil.getString(_httpServletRequest, "jsContent");
-
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		if ((fragmentEntry != null) && Validator.isNull(_jsContent)) {
+		if (fragmentEntry != null) {
 			_jsContent = fragmentEntry.getJs();
 		}
 

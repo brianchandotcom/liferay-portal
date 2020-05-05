@@ -104,6 +104,7 @@ function thousandsToKilosFormater(value) {
 function legendFormatterGenerator(
 	totals,
 	languageTag,
+	publishedToday,
 	validAnalyticsConnection
 ) {
 	return (value) => {
@@ -121,7 +122,9 @@ function legendFormatterGenerator(
 					{keyToTranslatedLabelValue(value)}
 				</span>
 				<span className="font-weight-bold">
-					{validAnalyticsConnection && preformattedNumber !== null
+					{validAnalyticsConnection &&
+					preformattedNumber !== null &&
+					!publishedToday
 						? numberFormat(languageTag, preformattedNumber)
 						: '-'}
 				</span>
@@ -142,7 +145,7 @@ export default function Chart({
 
 	const [hasHistoricalWarning, addHistoricalWarning] = useHistoricalWarning();
 
-	const [{readsEnabled}] = useContext(StoreContext);
+	const [{publishedToday, readsEnabled}] = useContext(StoreContext);
 
 	const {actions, state: chartState} = useChartState({
 		defaultTimeSpanOption,
@@ -150,9 +153,6 @@ export default function Chart({
 	});
 
 	const isMounted = useIsMounted();
-
-	const publishedToday =
-		new Date().toDateString() === new Date(publishDate).toDateString();
 
 	useEffect(() => {
 		let gone = false;
@@ -290,6 +290,7 @@ export default function Chart({
 		legendFormatterGenerator(
 			dataSet.totals,
 			languageTag,
+			publishedToday,
 			validAnalyticsConnection
 		);
 

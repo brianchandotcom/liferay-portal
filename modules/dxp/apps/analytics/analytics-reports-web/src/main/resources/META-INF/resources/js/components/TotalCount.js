@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {useWarning} from '../context/store';
+import {StoreContext, useWarning} from '../context/store';
 import Hint from './Hint';
 
 function TotalCount({
@@ -34,6 +34,8 @@ function TotalCount({
 	const isMounted = useIsMounted();
 
 	const [, addWarning] = useWarning();
+
+	const [{publishedToday}] = useContext(StoreContext);
 
 	useEffect(() => {
 		if (validAnalyticsConnection) {
@@ -55,7 +57,7 @@ function TotalCount({
 
 	let displayValue = '-';
 
-	if (validAnalyticsConnection) {
+	if (validAnalyticsConnection && !publishedToday) {
 		displayValue =
 			percentage && value !== '-' ? <span>{`${value}%`}</span> : value;
 	}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.admin.user.internal.service.builder;
+package com.liferay.headless.admin.user.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;

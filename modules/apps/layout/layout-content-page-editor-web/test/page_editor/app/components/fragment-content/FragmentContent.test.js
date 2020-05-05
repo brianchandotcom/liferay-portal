@@ -17,7 +17,7 @@ import React from 'react';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 
 import {ControlsProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/Controls';
 import {EditableProcessorContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/EditableProcessorContext';
@@ -46,7 +46,7 @@ jest.mock(
 const FRAGMENT_ENTRY_LINK_ID = '1';
 
 const getFragmentEntryLink = ({
-	content = '<lfr-editable id="editable-id" type="text">Default content</lfr-editable>',
+	content = '<lfr-editable id="editable-id" class="page-editor__editable" type="text">Default content</lfr-editable>',
 	editableValues = {
 		[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
 			'editable-id': {},
@@ -132,20 +132,24 @@ describe('FragmentContent', () => {
 		resolveEditableValue.mockClear();
 	});
 
-	it('renders the fragment content', () => {
+	it('renders the fragment content', async () => {
 		const fragmentEntryLink = getFragmentEntryLink();
 
-		const {container} = renderFragmentContent(fragmentEntryLink);
+		await act(async () => {
+			renderFragmentContent(fragmentEntryLink);
+		});
 
-		const editableContent = container.querySelector('#editable-id');
+		const editableContent = document.body.querySelector('#editable-id');
 
 		expect(editableContent.outerHTML).toBe(fragmentEntryLink.content);
 	});
 
-	it('calls resolve editable values with the correct parameters when content has a editable', () => {
+	it('calls resolve editable values with the correct parameters when content has a editable', async () => {
 		const fragmentEntryLink = getFragmentEntryLink();
 
-		renderFragmentContent(fragmentEntryLink);
+		await act(async () => {
+			renderFragmentContent(fragmentEntryLink);
+		});
 
 		expect(resolveEditableValue).toBeCalledWith(
 			fragmentEntryLink.editableValues,
@@ -156,13 +160,15 @@ describe('FragmentContent', () => {
 		);
 	});
 
-	it('calls resolve editable values with the correct parameters when content has a data-lfr-editable-id', () => {
+	it('calls resolve editable values with the correct parameters when content has a data-lfr-editable-id', async () => {
 		const fragmentEntryLink = getFragmentEntryLink({
 			content:
 				'<p data-lfr-editable-id="editable-id" data-lfr-editable-type="text">Default content</p>',
 		});
 
-		renderFragmentContent(fragmentEntryLink);
+		await act(async () => {
+			renderFragmentContent(fragmentEntryLink);
+		});
 
 		expect(resolveEditableValue).toBeCalledWith(
 			fragmentEntryLink.editableValues,
@@ -173,7 +179,7 @@ describe('FragmentContent', () => {
 		);
 	});
 
-	it('calls resolve editable values with the correct parameters when content has a background image editable', () => {
+	it('calls resolve editable values with the correct parameters when content has a background image editable', async () => {
 		const fragmentEntryLink = getFragmentEntryLink({
 			content: '<div data-lfr-background-image-id="background-id"></div>',
 
@@ -184,7 +190,9 @@ describe('FragmentContent', () => {
 			},
 		});
 
-		renderFragmentContent(fragmentEntryLink);
+		await act(async () => {
+			renderFragmentContent(fragmentEntryLink);
+		});
 
 		expect(resolveEditableValue).toBeCalledWith(
 			fragmentEntryLink.editableValues,

@@ -58,10 +58,6 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layoutUuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
-		if (layout.isSystem()) {
-			return;
-		}
-
 		visitLayout(element, layout, themeDisplay);
 	}
 

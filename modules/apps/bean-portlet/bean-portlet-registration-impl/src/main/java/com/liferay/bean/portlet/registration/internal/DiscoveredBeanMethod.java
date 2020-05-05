@@ -32,7 +32,7 @@ public class DiscoveredBeanMethod {
 		_method = method;
 	}
 
-	public Class<?> getBeanType() {
+	public Class<?> getBeanClass() {
 		return _beanClass;
 	}
 

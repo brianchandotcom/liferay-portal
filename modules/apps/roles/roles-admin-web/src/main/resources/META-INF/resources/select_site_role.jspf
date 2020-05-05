@@ -107,7 +107,7 @@ SearchContainer roleSearchContainer = selectRoleManagementToolbarDisplayContext.
 					/>
 
 					<liferay-ui:search-container-column-text
-						name="roleType"
+						name="type"
 						value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
 					/>
 

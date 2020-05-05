@@ -80,7 +80,7 @@ public class JSR330InjectedMethodElement
 
 			Assert.state(
 				_configurableListableBeanFactory != null,
-				"Bean factory unavailable");
+				"Bean factory is unavailable");
 
 			TypeConverter typeConverter =
 				_configurableListableBeanFactory.getTypeConverter();

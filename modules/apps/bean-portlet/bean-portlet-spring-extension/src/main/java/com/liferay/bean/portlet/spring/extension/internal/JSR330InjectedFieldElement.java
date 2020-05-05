@@ -69,7 +69,7 @@ public class JSR330InjectedFieldElement
 			Set<String> autowiredBeanNames = new LinkedHashSet<>();
 			Assert.state(
 				_configurableListableBeanFactory != null,
-				"Bean factory unavailable");
+				"Bean factory is unavailable");
 			TypeConverter typeConverter =
 				_configurableListableBeanFactory.getTypeConverter();
 

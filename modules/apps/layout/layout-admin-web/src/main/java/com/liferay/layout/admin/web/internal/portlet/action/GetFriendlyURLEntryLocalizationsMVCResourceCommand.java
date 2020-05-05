@@ -34,11 +34,13 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,20 +132,27 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 				_getFriendlyURLEntryLocalizationsMap(mainFriendlyURLEntry);
 
 		friendlyURLEntryLocalizationsMap.forEach(
-			(languageId, friendlyEntryURLLocalizations) ->
+			(languageId, friendlyEntryURLLocalizations) -> {
+				FriendlyURLEntryLocalization mainFriendlyURLEntryLocalization =
+					_getFriendlyURLEntryLocalization(
+						mainFriendlyURLEntry, languageId);
+
 				friendlyURLEntryLocalizationsJSONObject.put(
 					languageId,
 					JSONUtil.put(
 						"current",
 						_serializeFriendlyURLEntryLocalization(
-							_getFriendlyURLEntryLocalization(
-								mainFriendlyURLEntry, languageId))
+							mainFriendlyURLEntryLocalization)
 					).put(
 						"history",
 						_getJSONJArray(
-							friendlyEntryURLLocalizations,
+							ListUtil.remove(
+								friendlyEntryURLLocalizations,
+								Arrays.asList(
+									mainFriendlyURLEntryLocalization)),
 							this::_serializeFriendlyURLEntryLocalization)
-					)));
+					));
+			});
 
 		return friendlyURLEntryLocalizationsJSONObject;
 	}
@@ -160,10 +169,6 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 					mainFriendlyURLEntry.getGroupId(),
 					mainFriendlyURLEntry.getClassNameId(),
 					mainFriendlyURLEntry.getClassPK())) {
-
-			if (friendlyURLEntry.equals(mainFriendlyURLEntry)) {
-				continue;
-			}
 
 			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
 					_friendlyURLEntryLocalService.

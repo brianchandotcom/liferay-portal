@@ -22,6 +22,7 @@ import com.liferay.data.engine.rest.resource.v2_0.test.util.DataRecordCollection
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -34,6 +35,7 @@ import org.junit.runner.RunWith;
  * @author Jeyvison Nascimento
  * @author Leonardo Barros
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 

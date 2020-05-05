@@ -89,11 +89,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -154,8 +156,11 @@ public class LayoutPageTemplatesImporterImpl
 		PageElement pageElement = _objectMapper.readValue(
 			pageElementJSON, PageElement.class);
 
+		Set<String> warningMessages = new HashSet<>();
+
 		_processPageElement(
-			layout, layoutStructure, pageElement, parentItemId, position);
+			layout, layoutStructure, pageElement, parentItemId, position,
+			warningMessages);
 
 		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
 
@@ -906,7 +911,10 @@ public class LayoutPageTemplatesImporterImpl
 			}
 
 			if (added) {
-				_processPageDefinition(layoutPageTemplateEntry, pageDefinition);
+				Set<String> warningMessages = new HashSet<>();
+
+				_processPageDefinition(
+					layoutPageTemplateEntry, pageDefinition, warningMessages);
 
 				long previewFileEntryId = _getPreviewFileEntryId(
 					groupId,
@@ -920,8 +928,8 @@ public class LayoutPageTemplatesImporterImpl
 				_layoutPageTemplatesImporterResultEntries.add(
 					new LayoutPageTemplatesImporterResultEntry(
 						name, layoutPageTemplateEntryType,
-						LayoutPageTemplatesImporterResultEntry.Status.
-							IMPORTED));
+						LayoutPageTemplatesImporterResultEntry.Status.IMPORTED,
+						warningMessages.toArray(new String[0])));
 			}
 			else {
 				_layoutPageTemplatesImporterResultEntries.add(
@@ -990,7 +998,7 @@ public class LayoutPageTemplatesImporterImpl
 
 	private void _processPageDefinition(
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
-			PageDefinition pageDefinition)
+			PageDefinition pageDefinition, Set<String> warningMessages)
 		throws Exception {
 
 		Layout layout = _layoutLocalService.getLayout(
@@ -1014,7 +1022,8 @@ public class LayoutPageTemplatesImporterImpl
 
 					_processPageElement(
 						layout, layoutStructure, childPageElement,
-						rootLayoutStructureItem.getItemId(), position);
+						rootLayoutStructureItem.getItemId(), position,
+						warningMessages);
 
 					position++;
 				}
@@ -1034,7 +1043,8 @@ public class LayoutPageTemplatesImporterImpl
 
 	private void _processPageElement(
 			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position)
+			PageElement pageElement, String parentItemId, int position,
+			Set<String> warningMessages)
 		throws Exception {
 
 		LayoutStructureItemImporter layoutStructureItemImporter =
@@ -1044,6 +1054,14 @@ public class LayoutPageTemplatesImporterImpl
 		LayoutStructureItem layoutStructureItem = null;
 
 		if (layoutStructureItemImporter != null) {
+			List<String> layoutStructureItemWarningMessages =
+				layoutStructureItemImporter.validateLayoutStructureItem(
+					layout.getGroupId(), pageElement);
+
+			if (ListUtil.isNotEmpty(layoutStructureItemWarningMessages)) {
+				warningMessages.addAll(layoutStructureItemWarningMessages);
+			}
+
 			layoutStructureItem =
 				layoutStructureItemImporter.addLayoutStructureItem(
 					layout, layoutStructure, pageElement, parentItemId,
@@ -1067,7 +1085,8 @@ public class LayoutPageTemplatesImporterImpl
 		for (PageElement childPageElement : pageElement.getPageElements()) {
 			_processPageElement(
 				layout, layoutStructure, childPageElement,
-				layoutStructureItem.getItemId(), childPosition);
+				layoutStructureItem.getItemId(), childPosition,
+				warningMessages);
 
 			childPosition++;
 		}

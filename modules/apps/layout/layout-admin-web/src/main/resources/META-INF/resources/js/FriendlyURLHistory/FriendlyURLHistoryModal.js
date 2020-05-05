@@ -43,7 +43,6 @@ const FriendlyURLHistoryModal = ({
 				if (isMounted()) {
 					setAvailableLocales(Object.keys(response));
 					setFriendlyURLEntryLocalizations(response);
-					setLoading(false);
 				}
 			})
 			.catch((error) => {
@@ -54,7 +53,7 @@ const FriendlyURLHistoryModal = ({
 	}, [friendlyURLEntryLocalizationslURL, isMounted]);
 
 	useEffect(() => {
-		if (!loading) {
+		if (loading) {
 			let selectedLanguageId;
 
 			if (friendlyURLEntryLocalizations[initialLanguageId]) {
@@ -77,6 +76,17 @@ const FriendlyURLHistoryModal = ({
 		loading,
 	]);
 
+	useEffect(() => {
+		if (
+			loading &&
+			friendlyURLEntryLocalizations &&
+			locale &&
+			friendlyURLEntryLocalizations[locale]
+		) {
+			setLoading(false);
+		}
+	}, [friendlyURLEntryLocalizations, loading, locale]);
+
 	return (
 		<ClayModal
 			className="portlet-layouts-admin-url-history-modal"
@@ -88,7 +98,7 @@ const FriendlyURLHistoryModal = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{loading || !locale ? (
+				{loading ? (
 					<ClayLoadingIndicator />
 				) : (
 					<>

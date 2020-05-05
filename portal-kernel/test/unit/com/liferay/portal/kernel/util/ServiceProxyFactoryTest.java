@@ -108,7 +108,7 @@ public class ServiceProxyFactoryTest {
 
 		ServiceProxyFactory.newServiceTrackedInstance(
 			TestService.class, TestServiceUtil.class, testServiceUtil,
-			"nonStaticField", null, false);
+			"nonstaticField", null, false);
 
 		FinalizeAction finalizeAction = null;
 
@@ -241,7 +241,7 @@ public class ServiceProxyFactoryTest {
 
 		try {
 			ServiceProxyFactory.newServiceTrackedInstance(
-				TestService.class, TestServiceUtil.class, "nonStaticField",
+				TestService.class, TestServiceUtil.class, "nonstaticField",
 				false);
 
 			Assert.fail();
@@ -251,7 +251,7 @@ public class ServiceProxyFactoryTest {
 				IllegalArgumentException.class, throwable.getClass());
 
 			Field testServiceField = ReflectionUtil.getDeclaredField(
-				TestServiceUtil.class, "nonStaticField");
+				TestServiceUtil.class, "nonstaticField");
 
 			Assert.assertEquals(
 				testServiceField + " is not static", throwable.getMessage());
@@ -267,7 +267,7 @@ public class ServiceProxyFactoryTest {
 
 		ServiceProxyFactory.newServiceTrackedInstance(
 			TestService.class, TestServiceUtil.class, testServiceUtil,
-			"nonStaticField", null, false);
+			"nonstaticField", null, false);
 
 		Assert.assertSame(testService, testServiceUtil.nonstaticField);
 
@@ -292,7 +292,7 @@ public class ServiceProxyFactoryTest {
 
 		TestService testService = ServiceProxyFactory.newServiceTrackedInstance(
 			TestService.class, TestServiceUtil.class, testServiceUtil,
-			"nonStaticField", null, false);
+			"nonstaticField", null, false);
 
 		_testNonblockingProxy(false, testService, testServiceUtil);
 	}

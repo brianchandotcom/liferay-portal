@@ -48,7 +48,7 @@ public class ThreadLocalDistributorTest {
 		_keyValuePairs.add(
 			new KeyValuePair(TestClass.class.getName(), "_threadLocal"));
 		_keyValuePairs.add(
-			new KeyValuePair(TestClass.class.getName(), "_nonStatic"));
+			new KeyValuePair(TestClass.class.getName(), "_nonstatic"));
 		_keyValuePairs.add(
 			new KeyValuePair(TestClass.class.getName(), "_nullValue"));
 		_keyValuePairs.add(
@@ -87,7 +87,7 @@ public class ThreadLocalDistributorTest {
 			LogRecord logRecord1 = logRecords.get(0);
 
 			Assert.assertEquals(
-				"_nonStatic is not a static ThreadLocal",
+				"_nonstatic is not a static ThreadLocal",
 				logRecord1.getMessage());
 
 			LogRecord logRecord2 = logRecords.get(1);
@@ -164,7 +164,7 @@ public class ThreadLocalDistributorTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"_nonStatic is not a static ThreadLocal",
+				"_nonstatic is not a static ThreadLocal",
 				logRecord.getMessage());
 
 			logRecord = logRecords.get(1);

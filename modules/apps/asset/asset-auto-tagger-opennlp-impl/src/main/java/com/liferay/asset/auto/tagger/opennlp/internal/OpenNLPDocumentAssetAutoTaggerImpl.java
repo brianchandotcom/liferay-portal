@@ -187,8 +187,7 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 				if (_sentenceModel == null) {
 					_sentenceModel = new SentenceModel(
 						_bundle.getResource(
-							"/lib/org.apache.opennlp.model.en.sent-1.5.0-" +
-								"bin.bin"));
+							"org.apache.opennlp.model.en.sent.bin"));
 				}
 
 				return _sentenceModel;
@@ -217,8 +216,7 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 				if (_tokenizerModel == null) {
 					_tokenizerModel = new TokenizerModel(
 						_bundle.getResource(
-							"/lib/org.apache.opennlp.model.en.token-1.5.0-" +
-								"bin.bin"));
+							"org.apache.opennlp.model.en.token.bin"));
 				}
 
 				return _tokenizerModel;
@@ -249,16 +247,15 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 					_tokenNameFinderModels = Arrays.asList(
 						new TokenNameFinderModel(
 							_bundle.getResource(
-								"/lib/org.apache.opennlp.model.en.ner." +
-									"location-1.5.0-bin.bin")),
+								"org.apache.opennlp.model.en.ner.location." +
+									"bin")),
 						new TokenNameFinderModel(
 							_bundle.getResource(
-								"/lib/org.apache.opennlp.model.en.ner." +
-									"organization-1.5.0-bin.bin")),
+								"org.apache.opennlp.model.en.ner." +
+									"organization.bin")),
 						new TokenNameFinderModel(
 							_bundle.getResource(
-								"/lib/org.apache.opennlp.model.en.ner.person-" +
-									"1.5.0-bin.bin")));
+								"org.apache.opennlp.model.en.ner.person.bin")));
 				}
 
 				return _tokenNameFinderModels;

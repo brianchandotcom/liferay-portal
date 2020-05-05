@@ -74,6 +74,55 @@ public class UpdateConfigurationValuesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse,
+			_processUpdateConfigurationValues(actionRequest, actionResponse));
+	}
+
+	private JSONObject _mergeEditableValuesJSONObject(
+			JSONObject defaultEditableValuesJSONObject, String editableValues)
+		throws Exception {
+
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			editableValues);
+
+		for (String fragmentEntryProcessorKey :
+				_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
+
+			JSONObject editableFragmentEntryProcessorJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					fragmentEntryProcessorKey);
+
+			JSONObject defaultEditableFragmentEntryProcessorJSONObject =
+				defaultEditableValuesJSONObject.getJSONObject(
+					fragmentEntryProcessorKey);
+
+			if (defaultEditableFragmentEntryProcessorJSONObject == null) {
+				continue;
+			}
+
+			Iterator<String> keys =
+				defaultEditableFragmentEntryProcessorJSONObject.keys();
+
+			while (keys.hasNext()) {
+				String key = keys.next();
+
+				if (!editableFragmentEntryProcessorJSONObject.has(key)) {
+					editableFragmentEntryProcessorJSONObject.put(
+						key,
+						defaultEditableFragmentEntryProcessorJSONObject.get(
+							key));
+				}
+			}
+		}
+
+		return editableValuesJSONObject;
+	}
+
+	private JSONObject _processUpdateConfigurationValues(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -140,49 +189,7 @@ public class UpdateConfigurationValuesMVCActionCommand
 			layoutPageTemplateStructure.getData(
 				fragmentEntryLink.getSegmentsExperienceId()));
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse,
-			jsonObject.put("layoutData", layoutStructure.toJSONObject()));
-	}
-
-	private JSONObject _mergeEditableValuesJSONObject(
-			JSONObject defaultEditableValuesJSONObject, String editableValues)
-		throws Exception {
-
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			editableValues);
-
-		for (String fragmentEntryProcessorKey :
-				_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
-
-			JSONObject editableFragmentEntryProcessorJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					fragmentEntryProcessorKey);
-
-			JSONObject defaultEditableFragmentEntryProcessorJSONObject =
-				defaultEditableValuesJSONObject.getJSONObject(
-					fragmentEntryProcessorKey);
-
-			if (defaultEditableFragmentEntryProcessorJSONObject == null) {
-				continue;
-			}
-
-			Iterator<String> keys =
-				defaultEditableFragmentEntryProcessorJSONObject.keys();
-
-			while (keys.hasNext()) {
-				String key = keys.next();
-
-				if (!editableFragmentEntryProcessorJSONObject.has(key)) {
-					editableFragmentEntryProcessorJSONObject.put(
-						key,
-						defaultEditableFragmentEntryProcessorJSONObject.get(
-							key));
-				}
-			}
-		}
-
-		return editableValuesJSONObject;
+		return jsonObject.put("layoutData", layoutStructure.toJSONObject());
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {

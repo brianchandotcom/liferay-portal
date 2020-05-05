@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.segments;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -54,22 +55,22 @@ public class SegmentsExperienceUtil {
 
 	public static void copySegmentsExperienceData(
 			long classNameId, long classPK, CommentManager commentManager,
-			long groupId, long sourceSegmentsExperienceId,
-			long targetSegmentsExperienceId,
+			long groupId, PortletRegistry portletRegistry,
+			long sourceSegmentsExperienceId, long targetSegmentsExperienceId,
 			Function<String, ServiceContext> serviceContextFunction,
 			long userId)
 		throws PortalException {
 
 		_copyLayoutData(
-			classNameId, classPK, commentManager, groupId,
+			classNameId, classPK, commentManager, groupId, portletRegistry,
 			sourceSegmentsExperienceId, targetSegmentsExperienceId,
 			serviceContextFunction, userId);
 	}
 
 	private static void _copyLayoutData(
 			long classNameId, long classPK, CommentManager commentManager,
-			long groupId, long sourceSegmentsExperienceId,
-			long targetSegmentsExperienceId,
+			long groupId, PortletRegistry portletRegistry,
+			long sourceSegmentsExperienceId, long targetSegmentsExperienceId,
 			Function<String, ServiceContext> serviceContextFunction,
 			long userId)
 		throws PortalException {
@@ -82,13 +83,63 @@ public class SegmentsExperienceUtil {
 		JSONObject dataJSONObject = _updateLayoutDataJSONObject(
 			classNameId, classPK, commentManager,
 			layoutPageTemplateStructure.getData(sourceSegmentsExperienceId),
-			groupId, sourceSegmentsExperienceId, serviceContextFunction,
-			targetSegmentsExperienceId, userId);
+			groupId, portletRegistry, sourceSegmentsExperienceId,
+			serviceContextFunction, targetSegmentsExperienceId, userId);
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructure(
 				groupId, classNameId, classPK, targetSegmentsExperienceId,
 				dataJSONObject.toString());
+	}
+
+	private static void _copyPortletPreferences(
+		FragmentEntryLink fragmentEntryLink,
+		FragmentEntryLink newFragmentEntryLink, long plid,
+		PortletRegistry portletRegistry) {
+
+		List<String> portletIds =
+			portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
+
+		for (String portletId : portletIds) {
+			PortletPreferences portletPreferences =
+				PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
+
+			if (portletPreferences == null) {
+				continue;
+			}
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+			if ((portlet == null) || portlet.isUndeployedPortlet()) {
+				continue;
+			}
+
+			String newPortletId = StringUtil.replace(
+				portletId, fragmentEntryLink.getNamespace(),
+				newFragmentEntryLink.getNamespace());
+
+			PortletPreferences existingPortletPreferences =
+				PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
+					portletPreferences.getOwnerId(),
+					portletPreferences.getOwnerType(), plid, newPortletId);
+
+			if (existingPortletPreferences == null) {
+				PortletPreferencesLocalServiceUtil.addPortletPreferences(
+					portletPreferences.getCompanyId(),
+					portletPreferences.getOwnerId(),
+					portletPreferences.getOwnerType(), plid, newPortletId,
+					portlet, portletPreferences.getPreferences());
+			}
+			else {
+				existingPortletPreferences.setPreferences(
+					portletPreferences.getPreferences());
+
+				PortletPreferencesLocalServiceUtil.updatePortletPreferences(
+					existingPortletPreferences);
+			}
+		}
 	}
 
 	private static String _getNewEditableValues(
@@ -154,7 +205,8 @@ public class SegmentsExperienceUtil {
 
 	private static JSONObject _updateLayoutDataJSONObject(
 			long classNameId, long classPK, CommentManager commentManager,
-			String data, long groupId, long sourceSegmentsExperienceId,
+			String data, long groupId, PortletRegistry portletRegistry,
+			long sourceSegmentsExperienceId,
 			Function<String, ServiceContext> serviceContextFunction,
 			long targetSegmentsExperienceId, long userId)
 		throws PortalException {
@@ -224,6 +276,10 @@ public class SegmentsExperienceUtil {
 				fragmentEntryLink.getFragmentEntryLinkId(),
 				newFragmentEntryLink.getFragmentEntryLinkId(),
 				serviceContextFunction);
+
+			_copyPortletPreferences(
+				fragmentEntryLink, newFragmentEntryLink, classPK,
+				portletRegistry);
 		}
 
 		return layoutStructure.toJSONObject();

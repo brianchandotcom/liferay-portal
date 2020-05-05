@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -98,7 +99,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
 			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-			_commentManager, themeDisplay.getScopeGroupId(),
+			_commentManager, themeDisplay.getScopeGroupId(), _portletRegistry,
 			baseSegmentsExperienceId,
 			segmentsExperience.getSegmentsExperienceId(),
 			className -> serviceContext, themeDisplay.getUserId());
@@ -312,7 +313,8 @@ public class AddSegmentsExperienceMVCActionCommand
 		if (draftLayout != null) {
 			SegmentsExperienceUtil.copySegmentsExperienceData(
 				draftLayout.getClassNameId(), draftLayout.getPlid(),
-				_commentManager, groupId, baseSegmentsExperienceId,
+				_commentManager, groupId, _portletRegistry,
+				baseSegmentsExperienceId,
 				segmentsExperience.getSegmentsExperienceId(),
 				className -> serviceContext, serviceContext.getUserId());
 		}
@@ -349,6 +351,9 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

@@ -80,7 +80,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 		<clay:col
 			className="lfr-permission-content-container"
-			id="permissionContentContainer"
+			id='<%= renderResponse.getNamespace() + "permissionContentContainer" %>'
 			md="<%= portletName.equals(PortletKeys.SERVER_ADMIN) ? String.valueOf(12) : String.valueOf(9) %>"
 		>
 			<c:choose>

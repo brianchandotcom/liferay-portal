@@ -88,7 +88,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 		<c:if test="<%= !displaySchedulerOnly %>">
 			<clay:col
 				className='<%= "calendar-portlet-column-options " + (columnOptionsVisible ? StringPool.BLANK : "hide") %>'
-				id="columnOptions"
+				id='<%= renderResponse.getNamespace() + "columnOptions" %>'
 				md="3"
 			>
 				<div class="calendar-portlet-mini-calendar" id="<portlet:namespace />miniCalendarContainer"></div>
@@ -145,7 +145,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 		<clay:col
 			className="calendar-portlet-column-grid"
-			id="columnGrid"
+			id='<%= renderResponse.getNamespace() + "columnGrid" %>'
 			md="<%= (columnOptionsVisible && !displaySchedulerOnly) ? String.valueOf(9) : String.valueOf(12) %>"
 		>
 			<c:if test="<%= !displaySchedulerOnly %>">

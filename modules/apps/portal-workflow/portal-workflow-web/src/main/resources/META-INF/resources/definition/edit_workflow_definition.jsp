@@ -250,7 +250,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 							<clay:col
 								className="workflow-definition-content-source-wrapper"
-								id="contentSourceWrapper"
+								id='<%= renderResponse.getNamespace() + "contentSourceWrapper" %>'
 								size="12"
 							>
 								<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>

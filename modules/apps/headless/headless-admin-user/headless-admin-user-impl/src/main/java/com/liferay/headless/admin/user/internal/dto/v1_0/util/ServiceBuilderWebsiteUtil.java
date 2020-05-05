@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class ServiceBuilderWebsiteUtil {
 
-	public static Website toServiceBuilderWebsite(WebUrl webUrl, String type) {
+	public static Website toServiceBuilderWebsite(String type, WebUrl webUrl) {
 		String url = webUrl.getUrl();
 
 		if (Validator.isNull(url)) {

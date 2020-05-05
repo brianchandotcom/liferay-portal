@@ -279,7 +279,7 @@ public class UserAccountResourceImpl
 			userAccount.getHonorificPrefix()
 		).map(
 			prefix -> ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
-				prefix, ListTypeConstants.CONTACT_PREFIX)
+				ListTypeConstants.CONTACT_PREFIX, prefix)
 		).orElse(
 			0L
 		);
@@ -331,7 +331,7 @@ public class UserAccountResourceImpl
 			userAccount.getHonorificSuffix()
 		).map(
 			prefix -> ServiceBuilderListTypeUtil.getServiceBuilderListTypeId(
-				prefix, ListTypeConstants.CONTACT_SUFFIX)
+				ListTypeConstants.CONTACT_SUFFIX, prefix)
 		).orElse(
 			0L
 		);
@@ -378,7 +378,7 @@ public class UserAccountResourceImpl
 				transformToList(
 					webUrls,
 					webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
-						webUrl, ListTypeConstants.CONTACT_WEBSITE)),
+						ListTypeConstants.CONTACT_WEBSITE, webUrl)),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()

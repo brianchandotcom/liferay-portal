@@ -26,7 +26,7 @@ import java.util.Locale;
  */
 public class ServiceBuilderListTypeUtil {
 
-	public static long getServiceBuilderListTypeId(String value, String type) {
+	public static long getServiceBuilderListTypeId(String type, String value) {
 		ListType listType = ListTypeLocalServiceUtil.addListType(value, type);
 
 		return listType.getListTypeId();

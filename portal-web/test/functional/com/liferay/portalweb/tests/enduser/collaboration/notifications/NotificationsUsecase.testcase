@@ -279,20 +279,6 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.IllegalArgumentException");
 	}
 
-	@priority = "3"
-	test ViewDefaultNotificationsPortletDeliveryOptions {
-		property osgi.app.includes = "bookmarks";
-		property portal.release = "false";
-
-		Navigator.openURL();
-
-		NotificationsPortlet.gotoNotificationDelivery(notificationPG = "true");
-
-		IFrame.selectConfigurationFrame();
-
-		NotificationsPortlet.viewDefaultNotificationDeliveries();
-	}
-
 	@description = "This test covers LPS-104398. It views a notification of a web content article created in a folder."
 	@priority = "4"
 	test ViewFolderArticleNotification {

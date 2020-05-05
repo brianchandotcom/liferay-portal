@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -114,7 +115,9 @@ public class WidgetLayoutStructureItemImporter
 					getDefaultEditableValuesJSONObject(
 						StringPool.BLANK, StringPool.BLANK);
 
-			String instanceId = _getPortletInstanceId(layout, name);
+			String namespace = StringUtil.randomId();
+
+			String instanceId = _getPortletInstanceId(layout, namespace, name);
 
 			editableValueJSONObject.put(
 				"instanceId", instanceId
@@ -141,9 +144,8 @@ public class WidgetLayoutStructureItemImporter
 				layout.getUserId(), layout.getGroupId(), 0, 0, 0,
 				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, editableValueJSONObject.toString(),
-				StringPool.BLANK, 0, null,
-				ServiceContextThreadLocal.getServiceContext());
+				StringPool.BLANK, editableValueJSONObject.toString(), namespace,
+				0, null, ServiceContextThreadLocal.getServiceContext());
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -154,7 +156,8 @@ public class WidgetLayoutStructureItemImporter
 		return null;
 	}
 
-	private String _getPortletInstanceId(Layout layout, String portletId)
+	private String _getPortletInstanceId(
+			Layout layout, String namespace, String portletId)
 		throws PortletIdException {
 
 		Portlet portlet = _portletLocalService.fetchPortletById(
@@ -165,7 +168,7 @@ public class WidgetLayoutStructureItemImporter
 		}
 
 		if (portlet.isInstanceable()) {
-			return PortletIdCodec.generateInstanceId();
+			return namespace;
 		}
 
 		long count = _portletPreferencesLocalService.getPortletPreferencesCount(

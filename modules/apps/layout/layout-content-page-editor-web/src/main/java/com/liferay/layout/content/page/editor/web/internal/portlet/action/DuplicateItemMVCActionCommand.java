@@ -252,6 +252,8 @@ public class DuplicateItemMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		String namespace = StringUtil.randomId();
+
 		if (Validator.isNotNull(portletId)) {
 			Portlet portlet = _portletLocalService.getPortletById(portletId);
 
@@ -262,7 +264,7 @@ public class DuplicateItemMVCActionCommand
 			String oldInstanceId = editableValuesJSONObject.getString(
 				"instanceId");
 
-			String newInstanceId = PortletIdCodec.generateInstanceId();
+			String newInstanceId = PortletIdCodec.encode(portletId, namespace);
 
 			editableValuesJSONObject.put("instanceId", newInstanceId);
 
@@ -281,7 +283,7 @@ public class DuplicateItemMVCActionCommand
 				fragmentEntryLink.getClassPK(), fragmentEntryLink.getCss(),
 				fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
 				fragmentEntryLink.getConfiguration(),
-				editableValuesJSONObject.toString(), StringUtil.randomId(), 0,
+				editableValuesJSONObject.toString(), namespace, 0,
 				fragmentEntryLink.getRendererKey(), serviceContext);
 
 		return FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(

@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
@@ -139,8 +140,10 @@ public class AddPortletMVCActionCommand
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
 
+		String namespace = StringUtil.randomId();
+
 		String instanceId = _getPortletInstanceId(
-			themeDisplay.getLayout(), portletId);
+			namespace, themeDisplay.getLayout(), portletId);
 
 		JSONObject editableValueJSONObject =
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
@@ -161,7 +164,7 @@ public class AddPortletMVCActionCommand
 				0, segmentsExperienceId, _portal.getClassNameId(Layout.class),
 				themeDisplay.getPlid(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK,
-				editableValueJSONObject.toString(), StringPool.BLANK, 0, null,
+				editableValueJSONObject.toString(), namespace, 0, null,
 				serviceContext);
 
 		JSONObject jsonObject = addFragmentEntryLinkToLayoutData(
@@ -177,13 +180,14 @@ public class AddPortletMVCActionCommand
 				_itemSelector, portletId));
 	}
 
-	private String _getPortletInstanceId(Layout layout, String portletId)
+	private String _getPortletInstanceId(
+			String namespace, Layout layout, String portletId)
 		throws PortletIdException {
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		if (portlet.isInstanceable()) {
-			return PortletIdCodec.generateInstanceId();
+			return namespace;
 		}
 
 		long count = _portletPreferencesLocalService.getPortletPreferencesCount(

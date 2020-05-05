@@ -92,7 +92,7 @@ public class SegmentsExperienceUtil {
 	}
 
 	private static String _getNewEditableValues(
-			String editableValues, long plid)
+			String editableValues, String namespace, long plid)
 		throws JSONException {
 
 		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
@@ -106,7 +106,7 @@ public class SegmentsExperienceUtil {
 		}
 
 		return _getNewPortletPreferencesOptional(
-			instanceId, plid, portletId
+			instanceId, namespace, plid, portletId
 		).map(
 			portletPreferences -> {
 				JSONObject newEditableValuesJSONObject =
@@ -124,7 +124,7 @@ public class SegmentsExperienceUtil {
 
 	private static Optional<PortletPreferences>
 		_getNewPortletPreferencesOptional(
-			String instanceId, long plid, String portletId) {
+			String instanceId, String namespace, long plid, String portletId) {
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.fetchPortletPreferences(
@@ -148,9 +148,8 @@ public class SegmentsExperienceUtil {
 				portletPreferences.getCompanyId(),
 				portletPreferences.getOwnerId(),
 				portletPreferences.getOwnerType(), plid,
-				PortletIdCodec.encode(
-					portletId, PortletIdCodec.generateInstanceId()),
-				portlet, portletPreferences.getPreferences()));
+				PortletIdCodec.encode(portletId, namespace), portlet,
+				portletPreferences.getPreferences()));
 	}
 
 	private static JSONObject _updateLayoutDataJSONObject(
@@ -202,10 +201,15 @@ public class SegmentsExperienceUtil {
 			newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
 			newFragmentEntryLink.setSegmentsExperienceId(
 				targetSegmentsExperienceId);
+
+			String namespace = StringUtil.randomId();
+
 			newFragmentEntryLink.setEditableValues(
 				_getNewEditableValues(
-					fragmentEntryLink.getEditableValues(), classPK));
-			newFragmentEntryLink.setNamespace(StringUtil.randomId());
+					fragmentEntryLink.getEditableValues(), namespace, classPK));
+
+			newFragmentEntryLink.setNamespace(namespace);
+
 			newFragmentEntryLink.setLastPropagationDate(new Date());
 
 			newFragmentEntryLink =

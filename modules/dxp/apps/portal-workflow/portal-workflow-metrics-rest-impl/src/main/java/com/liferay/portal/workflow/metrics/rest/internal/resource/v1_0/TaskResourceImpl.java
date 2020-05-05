@@ -209,18 +209,18 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 			taskBulkSelection.getSlaStatuses(),
 			taskBulkSelection.getTaskNames());
 
-		int instanceCount = _getTaskCount(searchSearchResponse);
+		int taskCount = _getTaskCount(searchSearchResponse);
 
-		if (instanceCount > 0) {
+		if (taskCount > 0) {
 			return Page.of(
 				_getTasks(
 					taskBulkSelection.getAssigneeIds(),
-					searchSearchResponse.getCount(),
 					taskBulkSelection.getInstanceIds(), pagination,
 					taskBulkSelection.getProcessId(),
 					taskBulkSelection.getSlaStatuses(),
+					searchSearchResponse.getCount(),
 					taskBulkSelection.getTaskNames()),
-				pagination, instanceCount);
+				pagination, taskCount);
 		}
 
 		return Page.of(Collections.emptyList());
@@ -294,7 +294,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 				_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
 					contextCompany.getCompanyId())));
 		slaTaskResultsBooleanQuery.addMustQueryClauses(
-			_createSLAInstanceResultsBooleanQuery(instanceIds, processId));
+			_createSLATaskResultsBooleanQuery(instanceIds, processId));
 
 		BooleanQuery tasksBooleanQuery = _queries.booleanQuery();
 
@@ -371,7 +371,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		return booleanQuery.addMustQueryClauses(termsQuery);
 	}
 
-	private BooleanQuery _createSLAInstanceResultsBooleanQuery(
+	private BooleanQuery _createSLATaskResultsBooleanQuery(
 		Long[] instanceIds, Long processId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
@@ -526,8 +526,8 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	}
 
 	private List<Task> _getTasks(
-		Long[] assigneeIds, long instanceCount, Long[] instanceIds,
-		Pagination pagination, Long processId, String[] slaStatuses,
+		Long[] assigneeIds, Long[] instanceIds, Pagination pagination,
+		Long processId, String[] slaStatuses, long taskCount,
 		String[] taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -560,7 +560,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 				_createBucketSortPipelineAggregation(pagination));
 		}
 
-		termsAggregation.setSize(GetterUtil.getInteger(instanceCount));
+		termsAggregation.setSize(GetterUtil.getInteger(taskCount));
 
 		searchSearchRequest.addAggregation(termsAggregation);
 

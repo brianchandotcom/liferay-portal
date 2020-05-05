@@ -13,7 +13,7 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import toggleShowResolvedComments from '../../../app/actions/toggleShowResolvedComments';
 import {useDispatch, useSelector} from '../../../app/store/index';
@@ -32,6 +32,16 @@ export default function ResolvedCommentsToggle() {
 				fragmentEntryLink.comments.some((comment) => comment.resolved)
 		)
 	);
+
+	useEffect(() => {
+		if (!hasResolvedComments) {
+			dispatch(
+				toggleShowResolvedComments({
+					showResolvedComments: false,
+				})
+			);
+		}
+	}, [dispatch, hasResolvedComments]);
 
 	return (
 		<div className="pb-3 px-3">

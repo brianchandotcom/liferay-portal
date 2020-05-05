@@ -23,7 +23,9 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -258,6 +260,118 @@ public class FragmentDropZoneMVCActionCommandTest {
 				fragmentEntryLinkId));
 	}
 
+	@Test
+	public void testDuplicateFragmentEntryLinkWithDropZone() throws Exception {
+		MockLiferayPortletActionRequest actionRequest =
+			_getMockLiferayPortletActionRequest(_group.getGroupId());
+
+		actionRequest.addParameter(
+			"fragmentEntryKey", _fragmentEntry.getFragmentEntryKey());
+		actionRequest.addParameter(
+			"itemType", LayoutDataItemTypeConstants.TYPE_FRAGMENT);
+		actionRequest.addParameter(
+			"parentItemId", _layoutStructure.getMainItemId());
+		actionRequest.addParameter("position", "0");
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_addFragmentEntryLinkMVCActionCommand,
+			"_processAddFragmentEntryLink",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockLiferayPortletActionResponse());
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
+
+		JSONObject fragmentEntryLinkJSONObject = jsonObject.getJSONObject(
+			"fragmentEntryLink");
+
+		long fragmentEntryLinkId = fragmentEntryLinkJSONObject.getLong(
+			"fragmentEntryLinkId");
+
+		LayoutStructureItem fragmentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLinkId);
+
+		List<String> childrenItemIds =
+			fragmentLayoutStructureItem.getChildrenItemIds();
+
+		actionRequest = _getMockLiferayPortletActionRequest(
+			_group.getGroupId());
+
+		actionRequest.addParameter(
+			"itemType", LayoutDataItemTypeConstants.TYPE_CONTAINER);
+		actionRequest.addParameter("parentItemId", childrenItemIds.get(0));
+		actionRequest.addParameter("position", "0");
+
+		ReflectionTestUtil.invoke(
+			_addItemMVCActionCommand, "addItemToLayoutData",
+			new Class<?>[] {ActionRequest.class}, actionRequest);
+
+		actionRequest = _getMockLiferayPortletActionRequest(
+			_group.getGroupId());
+
+		actionRequest.addParameter(
+			"itemId", fragmentLayoutStructureItem.getItemId());
+
+		jsonObject = ReflectionTestUtil.invoke(
+			_duplicateItemMVCActionCommand,
+			"_addDuplicateFragmentEntryLinkToLayoutDataJSONObject",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockLiferayPortletActionResponse());
+
+		layoutDataJSONObject = jsonObject.getJSONObject("layoutData");
+
+		layoutStructure = LayoutStructure.of(layoutDataJSONObject.toString());
+
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
+
+		Assert.assertEquals(
+			layoutStructureItems.toString(), 7, layoutStructureItems.size());
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		childrenItemIds = rootLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 2, childrenItemIds.size());
+
+		for (String childrenItemId : childrenItemIds) {
+			fragmentLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			Assert.assertTrue(
+				fragmentLayoutStructureItem instanceof
+					FragmentLayoutStructureItem);
+
+			List<String> fragmentChildrenItemIds =
+				fragmentLayoutStructureItem.getChildrenItemIds();
+
+			LayoutStructureItem fragmentDropZoneLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(
+					fragmentChildrenItemIds.get(0));
+
+			Assert.assertTrue(
+				fragmentDropZoneLayoutStructureItem instanceof
+					FragmentDropZoneLayoutStructureItem);
+
+			List<String> fragmentDropZoneChildrenItemIds =
+				fragmentDropZoneLayoutStructureItem.getChildrenItemIds();
+
+			LayoutStructureItem containerLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(
+					fragmentDropZoneChildrenItemIds.get(0));
+
+			Assert.assertTrue(
+				containerLayoutStructureItem instanceof
+					ContainerLayoutStructureItem);
+		}
+	}
+
 	private Layout _addLayout() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -370,6 +484,9 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/content_layout/delete_item")
 	private MVCActionCommand _deleteItemMVCActionCommand;
+
+	@Inject(filter = "mvc.command.name=/content_layout/duplicate_item")
+	private MVCActionCommand _duplicateItemMVCActionCommand;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

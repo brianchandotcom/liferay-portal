@@ -228,7 +228,8 @@ public class HistogramMetricResourceTest
 					}
 				}
 			},
-			endLocalDateTime, startLocalDateTime, "Months");
+			endLocalDateTime, startLocalDateTime,
+			HistogramMetric.Unit.MONTHS.getValue());
 		_assertMetric(
 			new LinkedHashSet<Histogram>(histograms) {
 				{
@@ -252,7 +253,8 @@ public class HistogramMetricResourceTest
 					}
 				}
 			},
-			endLocalDateTime, startLocalDateTime, "Weeks");
+			endLocalDateTime, startLocalDateTime,
+			HistogramMetric.Unit.WEEKS.getValue());
 		_assertMetric(
 			new LinkedHashSet<Histogram>(histograms) {
 				{
@@ -271,7 +273,8 @@ public class HistogramMetricResourceTest
 					}
 				}
 			},
-			endLocalDateTime, startLocalDateTime, "Years");
+			endLocalDateTime, startLocalDateTime,
+			HistogramMetric.Unit.YEARS.getValue());
 		_assertMetric(
 			new LinkedHashSet<Histogram>(histograms) {
 				{
@@ -286,7 +289,8 @@ public class HistogramMetricResourceTest
 					}
 				}
 			},
-			endLocalDateTime, startLocalDateTime, "Days");
+			endLocalDateTime, startLocalDateTime,
+			HistogramMetric.Unit.DAYS.getValue());
 		_assertMetric(
 			new LinkedHashSet<Histogram>(histograms) {
 				{
@@ -301,7 +305,8 @@ public class HistogramMetricResourceTest
 					}
 				}
 			},
-			endLocalDateTime, startLocalDateTime, "Hours");
+			endLocalDateTime, startLocalDateTime,
+			HistogramMetric.Unit.HOURS.getValue());
 	}
 
 	private Date _toDate(LocalDateTime localDateTime) {

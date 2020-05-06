@@ -97,10 +97,10 @@ public class SegmentsExperienceUtil {
 		FragmentEntryLink newFragmentEntryLink, long plid,
 		PortletRegistry portletRegistry) {
 
-		List<String> portletIds =
-			portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
+		for (String portletId :
+				portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink)) {
 
-		for (String portletId : portletIds) {
 			_getNewPortletPreferencesOptional(
 				fragmentEntryLink.getNamespace(),
 				newFragmentEntryLink.getNamespace(), plid, portletId);

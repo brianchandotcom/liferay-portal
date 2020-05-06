@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -359,8 +358,5 @@ public class FragmentEntryLinkExportImportContentProcessor
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

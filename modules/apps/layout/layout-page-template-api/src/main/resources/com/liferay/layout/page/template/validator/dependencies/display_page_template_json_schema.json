@@ -3,13 +3,28 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"properties": {
-		"contentSubtypeName": {
-			"title": "The contentSubtypeName Schema",
-			"type": "string"
+		"contentSubtype": {
+			"properties": {
+				"classTypeId": {
+					"title": "The classTypeId Schema",
+					"type": "integer"
+				}
+			},
+			"title": "The contentSubtype Schema",
+			"type": "object"
 		},
-		"contentTypeClassName": {
-			"title": "The contentTypeClassName Schema",
-			"type": "string"
+		"contentType": {
+			"properties": {
+				"className": {
+					"title": "The className Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"className"
+			],
+			"title": "The contentType Schema",
+			"type": "object"
 		},
 		"key": {
 			"title": "The key Schema",
@@ -21,7 +36,7 @@
 		}
 	},
 	"required": [
-		"contentTypeClassName",
+		"contentType",
 		"name"
 	],
 	"title": "The DisplayPageTemplate Schema",

@@ -116,7 +116,6 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -313,11 +312,9 @@ public class DataDefinitionResourceImpl
 		if (Objects.equals(contentType, "native-object") &&
 			Validator.isNull(keywords)) {
 
-			Collection<DataEngineNativeObject> dataEngineNativeObjects =
-				_dataEngineNativeObjectTracker.getDataEngineNativeObjects();
-
 			for (DataEngineNativeObject dataEngineNativeObject :
-					dataEngineNativeObjects) {
+					_dataEngineNativeObjectTracker.
+						getDataEngineNativeObjects()) {
 
 				DataDefinition dataDefinition = null;
 

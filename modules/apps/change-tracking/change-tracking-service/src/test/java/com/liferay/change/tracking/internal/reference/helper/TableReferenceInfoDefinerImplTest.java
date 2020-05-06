@@ -580,6 +580,28 @@ public class TableReferenceInfoDefinerImplTest {
 	}
 
 	@Test
+	public void testTableReferenceDefinitionNonreferenceColumnValidation() {
+		Consumer<TableReferenceInfoDefiner<MainExampleTable>> consumer =
+			tableReferenceInfoDefiner ->
+				tableReferenceInfoDefiner.defineNonreferenceColumn(
+					(Column)ReferenceExampleTable.INSTANCE.mainExampleId);
+
+		try {
+			_defineTableReferences(
+				MainExampleTable.INSTANCE,
+				MainExampleTable.INSTANCE.mainExampleId, consumer);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Invalid table for column " +
+					ReferenceExampleTable.INSTANCE.mainExampleId,
+				illegalArgumentException.getMessage());
+		}
+	}
+
+	@Test
 	public void testTableReferenceDefinitionTableColumnValidation() {
 		Consumer<TableReferenceInfoDefiner<MainExampleTable>> consumer =
 			tableReferenceInfoDefiner -> {

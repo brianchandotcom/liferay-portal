@@ -65,6 +65,11 @@ public class TableReferenceInfoDefinerImpl<T extends Table<T>>
 
 	@Override
 	public void defineNonreferenceColumn(Column<T, ?> column) {
+		if (_tableReferenceDefinition.getTable() != column.getTable()) {
+			throw new IllegalArgumentException(
+				"Invalid table for column " + column);
+		}
+
 		_definedColumns.add(column);
 	}
 

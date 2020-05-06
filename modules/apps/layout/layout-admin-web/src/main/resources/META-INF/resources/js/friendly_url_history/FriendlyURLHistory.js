@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -21,7 +22,6 @@ import FriendlyURLHistoryModal from './FriendlyURLHistoryModal';
 function FriendlyURLHistory({portletNamespace, ...restProps}) {
 	const [showModal, setShowModal] = useState(false);
 	const [selectedLanguageId, setSelectedLanguageId] = useState();
-	const BRIDGE_COMPONENT_ID = `${portletNamespace}FriendlyURLHistory`;
 
 	const handleOnClose = () => {
 		setShowModal(false);
@@ -31,23 +31,24 @@ function FriendlyURLHistory({portletNamespace, ...restProps}) {
 		onClose: handleOnClose,
 	});
 
-	if (!Liferay.component(BRIDGE_COMPONENT_ID)) {
-		Liferay.component(
-			BRIDGE_COMPONENT_ID,
-			{
-				open: (selectedLanguageId) => {
-					setSelectedLanguageId(selectedLanguageId);
-					setShowModal(true);
-				},
-			},
-			{
-				destroyOnNavigate: true,
-			}
-		);
-	}
-
 	return (
 		<>
+			<ClayButtonWithIcon
+				borderless
+				className="btn-url-history"
+				displayType="secondary"
+				onClick={() => {
+					setSelectedLanguageId(
+						Liferay.component(
+							`${portletNamespace}friendlyURL`
+						).getSelectedLanguageId()
+					);
+					setShowModal(true);
+				}}
+				outline
+				small
+				symbol="restore"
+			/>
 			{showModal && (
 				<FriendlyURLHistoryModal
 					{...restProps}

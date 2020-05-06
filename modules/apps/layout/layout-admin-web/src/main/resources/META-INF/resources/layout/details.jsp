@@ -94,14 +94,6 @@ String friendlyURLBase = StringPool.BLANK;
 				</liferay-portlet:resourceURL>
 
 				<div class="btn-url-history-wrapper">
-					<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm btn-url-history" id="<portlet:namespace />friendlyURLHistoryButton" type="button">
-						<svg class="lexicon-icon lexicon-icon-restore">
-							<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#restore" />
-						</svg>
-					</button>
-				</div>
-
-				<div>
 					<react:component
 						data='<%= HashMapBuilder.<String, Object>put(
 						"defaultLanguageId", LocaleUtil.toLanguageId(company.getDefaultUser().getLocale()))
@@ -236,24 +228,6 @@ String friendlyURLBase = StringPool.BLANK;
 			) {
 				Liferay.Util.toggleDisabled(field, layoutPrototypeLinkChecked);
 			});
-		});
-	}
-
-	var friendlyURLHistoryButton = document.getElementById(
-		'<portlet:namespace />friendlyURLHistoryButton'
-	);
-
-	if (friendlyURLHistoryButton) {
-		friendlyURLHistoryButton.addEventListener('click', function () {
-			Liferay.componentReady('<portlet:namespace />FriendlyURLHistory').then(
-				function (FriendlyURLHistory) {
-					FriendlyURLHistory.open(
-						Liferay.component(
-							'<portlet:namespace />friendlyURL'
-						).getSelectedLanguageId()
-					);
-				}
-			);
 		});
 	}
 </aui:script>

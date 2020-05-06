@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>YOUR_RATING_STACKED_STAR</td>
+	<td>//div[contains(@class,'stacked-stars')]//a[contains(@class,'icon-star')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>YOUR_RATING_STACKED_STAR_COUNT</td>
 	<td>//div[contains(@class,'stacked-stars')]//a[contains(@title,'Rate this ${key_ratingStarCount} stars out of 5')]</td>
 	<td></td>

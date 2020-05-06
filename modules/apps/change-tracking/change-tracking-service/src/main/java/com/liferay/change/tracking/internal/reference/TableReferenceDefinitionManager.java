@@ -279,7 +279,7 @@ public class TableReferenceDefinitionManager {
 				tableReferenceInfoBuilderImpl);
 
 			TableReferenceInfo<T> tableReferenceInfo =
-				tableReferenceInfoBuilderImpl.getTableReferenceInfo();
+				tableReferenceInfoBuilderImpl.build();
 
 			if (tableReferenceInfo != null) {
 				synchronized (TableReferenceDefinitionManager.this) {

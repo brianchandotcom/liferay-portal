@@ -63,6 +63,37 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 		_primaryKeyColumn = primaryKeyColumn;
 	}
 
+	public TableReferenceInfo<T> build() {
+		T table = _tableReferenceDefinition.getTable();
+
+		List<Column<T, ?>> undefinedColumns = null;
+
+		for (Column<T, ?> column : table.getColumns()) {
+			if (!Objects.equals(column.getName(), "mvccVersion") &&
+				!column.isPrimaryKey() && !_definedColumns.contains(column)) {
+
+				if (undefinedColumns == null) {
+					undefinedColumns = new ArrayList<>();
+				}
+
+				undefinedColumns.add(column);
+			}
+		}
+
+		if (undefinedColumns != null) {
+			_log.error(
+				StringBundler.concat(
+					_tableReferenceDefinition, " did not define columns ",
+					undefinedColumns));
+
+			return null;
+		}
+
+		return new TableReferenceInfo<>(
+			_tableReferenceDefinition, _parentTableJoinHoldersMap,
+			_childTableJoinHoldersMap);
+	}
+
 	@Override
 	public void defineNonreferenceColumn(Column<T, ?> column) {
 		if (_tableReferenceDefinition.getTable() != column.getTable()) {
@@ -190,37 +221,6 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 
 		tableJoinHolders.add(
 			new TableJoinHolder(fromPKColumn, joinPKColumn, joinFunction));
-	}
-
-	public TableReferenceInfo<T> getTableReferenceInfo() {
-		T table = _tableReferenceDefinition.getTable();
-
-		List<Column<T, ?>> undefinedColumns = null;
-
-		for (Column<T, ?> column : table.getColumns()) {
-			if (!Objects.equals(column.getName(), "mvccVersion") &&
-				!column.isPrimaryKey() && !_definedColumns.contains(column)) {
-
-				if (undefinedColumns == null) {
-					undefinedColumns = new ArrayList<>();
-				}
-
-				undefinedColumns.add(column);
-			}
-		}
-
-		if (undefinedColumns != null) {
-			_log.error(
-				StringBundler.concat(
-					_tableReferenceDefinition, " did not define columns ",
-					undefinedColumns));
-
-			return null;
-		}
-
-		return new TableReferenceInfo<>(
-			_tableReferenceDefinition, _parentTableJoinHoldersMap,
-			_childTableJoinHoldersMap);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

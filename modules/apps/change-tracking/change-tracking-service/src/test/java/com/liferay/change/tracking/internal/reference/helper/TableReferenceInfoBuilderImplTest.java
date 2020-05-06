@@ -85,7 +85,7 @@ public class TableReferenceInfoBuilderImplTest {
 				MainExampleTable.INSTANCE.mainExampleId, consumer);
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
-			tableReferenceInfoBuilderImpl.getTableReferenceInfo();
+			tableReferenceInfoBuilderImpl.build();
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -188,7 +188,7 @@ public class TableReferenceInfoBuilderImplTest {
 				ReferenceExampleTable.INSTANCE.referenceExampleId, consumer);
 
 		TableReferenceInfo<ReferenceExampleTable> tableReferenceInfo =
-			tableReferenceInfoBuilderImpl.getTableReferenceInfo();
+			tableReferenceInfoBuilderImpl.build();
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -560,7 +560,7 @@ public class TableReferenceInfoBuilderImplTest {
 				MainExampleTable.INSTANCE.mainExampleId, consumer);
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
-			tableReferenceInfoBuilderImpl.getTableReferenceInfo();
+			tableReferenceInfoBuilderImpl.build();
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -629,7 +629,7 @@ public class TableReferenceInfoBuilderImplTest {
 					Level.WARNING)) {
 
 			TableReferenceInfo<MainExampleTable> tableReferenceInfo =
-				tableReferenceInfoBuilderImpl.getTableReferenceInfo();
+				tableReferenceInfoBuilderImpl.build();
 
 			Assert.assertNull(tableReferenceInfo);
 

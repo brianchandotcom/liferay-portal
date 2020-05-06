@@ -83,7 +83,7 @@ public class HistogramMetricResourceTest
 	public void testGetProcessHistogramMetric() throws Exception {
 		LocalDate nowlocalDate = LocalDate.now(ZoneId.of("GMT"));
 
-		LocalDateTime nowLocalDateTime = _createLocalDateTime();
+		LocalDateTime nowLocalDateTime = _createLocalDateTime(nowlocalDate);
 
 		_testGetProcessMetric(
 			nowLocalDateTime,
@@ -163,8 +163,9 @@ public class HistogramMetricResourceTest
 		return histogramMetric;
 	}
 
-	private LocalDateTime _createLocalDateTime() {
-		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("GMT"));
+	private LocalDateTime _createLocalDateTime(LocalDate localDate) {
+		LocalDateTime localDateTime = localDate.atTime(
+			LocalTime.now(ZoneId.of("GMT")));
 
 		localDateTime = localDateTime.withMinute(0);
 		localDateTime = localDateTime.withNano(0);

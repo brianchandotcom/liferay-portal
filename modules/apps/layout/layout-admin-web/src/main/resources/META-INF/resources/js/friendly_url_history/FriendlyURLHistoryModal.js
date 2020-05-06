@@ -136,24 +136,36 @@ const FriendlyURLHistoryModal = ({
 									</ClayList.ItemText>
 								</ClayList.ItemField>
 							</ClayList.Item>
-							<ClayList.Header>Old Friendly URLs</ClayList.Header>
-							{friendlyURLEntryLocalizations[
-								languageId
-							].history.map(({friendlyURLEntryId, urlTitle}) => (
-								<ClayList.Item flex key={friendlyURLEntryId}>
-									<ClayList.ItemField expand>
-										<ClayList.ItemText className="text-truncate">
-											{urlTitle}
-										</ClayList.ItemText>
-									</ClayList.ItemField>
-									<ClayList.ItemField className="d-none">
-										<ClayList.QuickActionMenu>
-											<ClayList.QuickActionMenu.Item symbol="reload" />
-											<ClayList.QuickActionMenu.Item symbol="times-circle" />
-										</ClayList.QuickActionMenu>
-									</ClayList.ItemField>
-								</ClayList.Item>
-							))}
+							{friendlyURLEntryLocalizations[languageId].history
+								.length > 0 && (
+								<>
+									<ClayList.Header>
+										Old Friendly URLs
+									</ClayList.Header>
+									{friendlyURLEntryLocalizations[
+										languageId
+									].history.map(
+										({friendlyURLEntryId, urlTitle}) => (
+											<ClayList.Item
+												flex
+												key={friendlyURLEntryId}
+											>
+												<ClayList.ItemField expand>
+													<ClayList.ItemText className="text-truncate">
+														{urlTitle}
+													</ClayList.ItemText>
+												</ClayList.ItemField>
+												<ClayList.ItemField className="d-none">
+													<ClayList.QuickActionMenu>
+														<ClayList.QuickActionMenu.Item symbol="reload" />
+														<ClayList.QuickActionMenu.Item symbol="times-circle" />
+													</ClayList.QuickActionMenu>
+												</ClayList.ItemField>
+											</ClayList.Item>
+										)
+									)}
+								</>
+							)}
 						</ClayList>
 					</>
 				)}

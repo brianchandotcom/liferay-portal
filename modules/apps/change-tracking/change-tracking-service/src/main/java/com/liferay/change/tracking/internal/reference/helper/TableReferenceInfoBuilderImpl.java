@@ -95,17 +95,21 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 	}
 
 	@Override
-	public void defineNonreferenceColumn(Column<T, ?> column) {
+	public TableReferenceInfoBuilder<T> defineNonreferenceColumn(
+		Column<T, ?> column) {
+
 		if (_tableReferenceDefinition.getTable() != column.getTable()) {
 			throw new IllegalArgumentException(
 				"Invalid table for column " + column);
 		}
 
 		_definedColumns.add(column);
+
+		return this;
 	}
 
 	@Override
-	public void defineReferenceInnerJoin(
+	public TableReferenceInfoBuilder<T> defineReferenceInnerJoin(
 		Function<FromStep, JoinStep> joinFunction) {
 
 		JoinStep joinStep = joinFunction.apply(_validationFromStep);
@@ -221,6 +225,8 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 
 		tableJoinHolders.add(
 			new TableJoinHolder(fromPKColumn, joinPKColumn, joinFunction));
+
+		return this;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -31,7 +31,7 @@ import java.util.function.Function;
  */
 public interface TableReferenceInfoBuilder<T extends Table<T>> {
 
-	public default void defineGroupedModel(T table) {
+	public default TableReferenceInfoBuilder<T> defineGroupedModel(T table) {
 		defineSingleColumnReference(
 			table.getColumn("groupId", Long.class),
 			GroupTable.INSTANCE.groupId);
@@ -48,18 +48,25 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 		defineNonreferenceColumn(table.getColumn("createDate", Date.class));
 
 		defineNonreferenceColumn(table.getColumn("modifiedDate", Date.class));
+
+		return this;
 	}
 
-	public void defineNonreferenceColumn(Column<T, ?> column);
+	public TableReferenceInfoBuilder<T> defineNonreferenceColumn(
+		Column<T, ?> column);
 
 	@SuppressWarnings("unchecked")
-	public default void defineNonreferenceColumns(Column<?, ?>... columns) {
+	public default TableReferenceInfoBuilder<T> defineNonreferenceColumns(
+		Column<?, ?>... columns) {
+
 		for (Column<?, ?> column : columns) {
 			defineNonreferenceColumn((Column<T, ?>)column);
 		}
+
+		return this;
 	}
 
-	public default <C> void defineParentColumnReference(
+	public default <C> TableReferenceInfoBuilder<T> defineParentColumnReference(
 		Column<T, C> pkColumn, Column<T, C> parentPKColumn) {
 
 		if (!pkColumn.isPrimaryKey()) {
@@ -74,12 +81,14 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 			pkColumn.getName(), pkColumn.getJavaType());
 
 		defineSingleColumnReference(parentPKColumn, aliasPKColumn);
+
+		return this;
 	}
 
-	public void defineReferenceInnerJoin(
+	public TableReferenceInfoBuilder<T> defineReferenceInnerJoin(
 		Function<FromStep, JoinStep> joinFunction);
 
-	public default <C> void defineSingleColumnReference(
+	public default <C> TableReferenceInfoBuilder<T> defineSingleColumnReference(
 		Column<T, C> column1, Column<?, C> column2) {
 
 		if (column1.getTable() == column2.getTable()) {
@@ -94,6 +103,8 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 			).innerJoinON(
 				column1.getTable(), predicate
 			));
+
+		return this;
 	}
 
 }

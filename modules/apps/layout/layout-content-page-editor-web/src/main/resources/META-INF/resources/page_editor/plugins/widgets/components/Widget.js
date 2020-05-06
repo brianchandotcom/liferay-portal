@@ -19,18 +19,19 @@ import React from 'react';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addWidget from '../../../app/thunks/addWidget';
-import {useItemDrag} from '../../../app/utils/useItemDrag';
+import {useDragSymbol} from '../../../app/utils/useDragAndDrop';
 
 export default function Widget({instanceable, portletId, title, used}) {
 	const dispatch = useDispatch();
+	const disabled = used && !instanceable;
 	const store = useSelector((state) => state);
 
-	const disabled = used && !instanceable;
-
-	const dragRef = useItemDrag({
-		canDrag: () => !disabled,
-		name: title,
-		onDragEnd: (parentId, position) =>
+	const {sourceRef} = useDragSymbol(
+		{
+			label: title,
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
+		(parentId, position) => {
 			dispatch(
 				addWidget({
 					parentItemId: parentId,
@@ -38,15 +39,15 @@ export default function Widget({instanceable, portletId, title, used}) {
 					position,
 					store,
 				})
-			),
-		type: LAYOUT_DATA_ITEM_TYPES.fragment,
-	});
+			);
+		}
+	);
 
 	return (
 		<button
 			className="btn btn-sm btn-unstyled d-block mb-1 px-2 py-1"
 			disabled={disabled}
-			ref={dragRef}
+			ref={disabled ? sourceRef : () => {}}
 			type="button"
 		>
 			<ClayIcon

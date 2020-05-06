@@ -21,7 +21,7 @@ import {useSelectItem} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addFragment from '../../../app/thunks/addFragment';
-import {useItemDrag} from '../../../app/utils/useItemDrag';
+import {useDragSymbol} from '../../../app/utils/useDragAndDrop';
 
 const ImagePreview = ({imagePreviewURL}) => {
 	if (imagePreviewURL) {
@@ -50,9 +50,12 @@ export default function FragmentCard({
 	const store = useSelector((state) => state);
 	const selectItem = useSelectItem();
 
-	const dragRef = useItemDrag({
-		name,
-		onDragEnd: (parentId, position) => {
+	const {sourceRef} = useDragSymbol(
+		{
+			label: name,
+			type: LAYOUT_DATA_ITEM_TYPES.fragment,
+		},
+		(parentId, position) => {
 			dispatch(
 				addFragment({
 					fragmentEntryKey,
@@ -64,9 +67,8 @@ export default function FragmentCard({
 					type,
 				})
 			);
-		},
-		type: LAYOUT_DATA_ITEM_TYPES.fragment,
-	});
+		}
+	);
 
 	return (
 		<div
@@ -78,7 +80,7 @@ export default function FragmentCard({
 				'selector-button',
 				'overflow-hidden'
 			)}
-			ref={dragRef}
+			ref={sourceRef}
 		>
 			<ImagePreview imagePreviewURL={imagePreviewURL} />
 

@@ -18,7 +18,7 @@ import React from 'react';
 import {useSelectItem} from '../../../app/components/Controls';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addItem from '../../../app/thunks/addItem';
-import {useItemDrag} from '../../../app/utils/useItemDrag';
+import {useDragSymbol} from '../../../app/utils/useDragAndDrop';
 import Collapse from '../../../common/components/Collapse';
 
 const layoutElements = [
@@ -39,9 +39,12 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 	const store = useSelector((state) => state);
 	const selectItem = useSelectItem();
 
-	const dragRef = useItemDrag({
-		name: label,
-		onDragEnd: (parentId, position) =>
+	const {sourceRef} = useDragSymbol(
+		{
+			label,
+			type,
+		},
+		(parentId, position) => {
 			dispatch(
 				addItem({
 					itemType: type,
@@ -50,9 +53,9 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 					selectItem,
 					store,
 				})
-			),
-		type,
-	});
+			);
+		}
+	);
 
 	return (
 		<button
@@ -64,7 +67,7 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 				'card-interactive-secondary',
 				'selector-button'
 			)}
-			ref={dragRef}
+			ref={sourceRef}
 			type="button"
 		>
 			<div className="card-body px-2 py-3" role="image">

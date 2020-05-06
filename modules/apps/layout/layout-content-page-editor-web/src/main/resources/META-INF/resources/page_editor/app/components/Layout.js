@@ -34,7 +34,6 @@ import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
-import {DragAndDropContextProvider} from '../utils/useDragAndDrop';
 import {
 	useActivationOrigin,
 	useActiveItemId,
@@ -221,13 +220,11 @@ export default function Layout({mainItemId}) {
 				ref={layoutRef}
 			>
 				<EditableProcessorContextProvider>
-					<DragAndDropContextProvider>
-						<LayoutDataItem
-							fragmentEntryLinks={fragmentEntryLinks}
-							item={mainItem}
-							layoutData={layoutData}
-						/>
-					</DragAndDropContextProvider>
+					<LayoutDataItem
+						fragmentEntryLinks={fragmentEntryLinks}
+						item={mainItem}
+						layoutData={layoutData}
+					/>
 				</EditableProcessorContextProvider>
 			</div>
 		</>

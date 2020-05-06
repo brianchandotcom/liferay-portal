@@ -89,6 +89,27 @@ String friendlyURLBase = StringPool.BLANK;
 
 		<c:choose>
 			<c:when test="<%= selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/layout/get_friendly_url_entry_localizations" var="friendlyURLEntryLocalizationslURL">
+					<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+				</liferay-portlet:resourceURL>
+
+				<div class="btn-url-history-wrapper">
+					<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm btn-url-history" id="<portlet:namespace />friendlyURLHistoryButton" type="button">
+						<svg class="lexicon-icon lexicon-icon-restore">
+							<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#restore" />
+						</svg>
+					</button>
+				</div>
+
+				<div>
+					<react:component
+						data='<%= HashMapBuilder.<String, Object>put(
+						"defaultLanguageId", LocaleUtil.toLanguageId(company.getDefaultUser().getLocale()))
+						.put("friendlyURLEntryLocalizationslURL", friendlyURLEntryLocalizationslURL).build() %>'
+						module="js/FriendlyURLHistory/FriendlyURLHistory"
+					/>
+				</div>
+
 				<div class="form-group friendly-url">
 					<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
 
@@ -97,20 +118,6 @@ String friendlyURLBase = StringPool.BLANK;
 						inputAddon="<%= friendlyURLBase.toString() %>"
 						name="friendlyURL"
 						xml="<%= HttpUtil.decodeURL(selLayout.getFriendlyURLsXML()) %>"
-					/>
-				</div>
-
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/layout/get_friendly_url_entry_localizations" var="friendlyURLEntryLocalizationslURL">
-					<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
-				</liferay-portlet:resourceURL>
-
-				<div><button id="<portlet:namespace />friendlyURLHistoryButton" type="button">history</button></div>
-				<div>
-					<react:component
-						data='<%= HashMapBuilder.<String, Object>put(
-						"defaultLanguageId", LocaleUtil.toLanguageId(company.getDefaultUser().getLocale()))
-						.put("friendlyURLEntryLocalizationslURL", friendlyURLEntryLocalizationslURL).build() %>'
-						module="js/FriendlyURLHistory/FriendlyURLHistory"
 					/>
 				</div>
 			</c:when>

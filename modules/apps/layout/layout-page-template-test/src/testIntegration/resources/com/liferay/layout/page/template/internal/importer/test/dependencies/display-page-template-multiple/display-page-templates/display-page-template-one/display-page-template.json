@@ -1,5 +1,6 @@
 {
-	"contentSubtypeName": "Basic Web Content",
-	"contentTypeClassName": "com.liferay.journal.model.JournalArticle",
+	"contentType": {
+		"className": "com.liferay.portal.kernel.repository.model.FileEntry"
+	},
 	"name": "Display Page Template One"
 }

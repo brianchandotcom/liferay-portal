@@ -15,8 +15,6 @@
 package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
@@ -41,7 +39,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -58,7 +55,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,31 +93,15 @@ public class DisplayPagesImporterTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_importLayoutPageTemplateEntry("display-page-template-one");
 
-		String className = "com.liferay.journal.model.JournalArticle";
+		String className =
+			"com.liferay.portal.kernel.repository.model.FileEntry";
 
 		Assert.assertEquals(className, layoutPageTemplateEntry.getClassName());
 
 		Assert.assertEquals(
 			"Display Page Template One", layoutPageTemplateEntry.getName());
 
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
-
-		long expectedClassTypeId = 0;
-
-		List<ClassType> classTypes = infoDisplayContributor.getClassTypes(
-			_group.getGroupId(), LocaleUtil.getSiteDefault());
-
-		for (ClassType classType : classTypes) {
-			if (Objects.equals(classType.getName(), "Basic Web Content")) {
-				expectedClassTypeId = classType.getClassTypeId();
-			}
-		}
-
-		Assert.assertNotEquals(0, expectedClassTypeId);
-
-		Assert.assertEquals(
-			expectedClassTypeId, layoutPageTemplateEntry.getClassTypeId());
+		Assert.assertEquals(0, layoutPageTemplateEntry.getClassTypeId());
 
 		_validateLayoutPageTemplateStructure(
 			_layoutPageTemplateStructureLocalService.

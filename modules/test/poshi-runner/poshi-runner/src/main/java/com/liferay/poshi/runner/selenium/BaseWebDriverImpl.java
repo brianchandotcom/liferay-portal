@@ -3270,6 +3270,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void waitForJavascript(
+			String javascript, String message, String argument)
+		throws Exception {
+
+		Condition javascriptCondition = getJavascriptCondition(
+			javascript, message, argument);
+
+		javascriptCondition.waitFor();
+	}
+
+	@Override
 	public void waitForNotEditable(String locator) throws Exception {
 		Condition notEditableCondition = getNotEditableCondition(locator);
 
@@ -3771,6 +3782,36 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			LiferaySeleniumUtil.getSourceDirFilePath(filePath));
 
 		return new ImageTarget(file);
+	}
+
+	protected Condition getJavascriptCondition(
+		String javascript, String message, String argument) {
+
+		return new Condition(message) {
+
+			@Override
+			public boolean evaluate() {
+				WebElement bodyWebElement = getWebElement("//body");
+
+				WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+				WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+				JavascriptExecutor javascriptExecutor =
+					(JavascriptExecutor)wrappedWebDriver;
+
+				Boolean javascriptResult =
+					(Boolean)javascriptExecutor.executeScript(
+						javascript, argument);
+
+				if (javascriptResult == null) {
+					return false;
+				}
+
+				return javascriptResult;
+			}
+
+		};
 	}
 
 	protected int getNavigationBarHeight() {

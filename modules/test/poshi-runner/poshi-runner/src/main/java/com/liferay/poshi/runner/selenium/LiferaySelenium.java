@@ -501,6 +501,10 @@ public interface LiferaySelenium {
 	public void waitForElementPresent(String locator, String throwException)
 		throws Exception;
 
+	public void waitForJavascript(
+			String javascript, String message, String argument)
+		throws Exception;
+
 	public void waitForNotEditable(String locator) throws Exception;
 
 	public void waitForNotPartialText(String locator, String value)

@@ -13,9 +13,10 @@
  */
 
 import {ClayRadio} from '@clayui/form';
-import React, {useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import {useSyncValue} from '../hooks/useSyncValue.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
 import {setJSONArrayValue} from '../util/setters.es';
@@ -30,7 +31,7 @@ const Radio = ({
 	options,
 	value,
 }) => {
-	const [currentValue, setCurrentValue] = useState(value);
+	const [currentValue, setCurrentValue] = useSyncValue(value);
 
 	return (
 		<div className="ddm-radio" onBlur={onBlur} onFocus={onFocus}>

@@ -106,7 +106,7 @@ String friendlyURLBase = StringPool.BLANK;
 						data='<%= HashMapBuilder.<String, Object>put(
 						"defaultLanguageId", LocaleUtil.toLanguageId(company.getDefaultUser().getLocale()))
 						.put("friendlyURLEntryLocalizationslURL", friendlyURLEntryLocalizationslURL).build() %>'
-						module="js/FriendlyURLHistory/FriendlyURLHistory"
+						module="js/friendly_url_history/FriendlyURLHistory"
 					/>
 				</div>
 

@@ -31,14 +31,27 @@ const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
 	);
 };
 
+const selectOptions = (options, optionsLabel) =>
+	Array.isArray(options)
+		? options.map((value) => ({
+				label: optionsLabel
+					? Liferay.Util.sub(optionsLabel(value), value)
+					: Number(value),
+				value,
+		  }))
+		: Object.keys(options).map((key) => ({
+				label: options[key],
+				value: key,
+		  }));
+
 export const RowSelectConfigurationPanel = ({
 	config,
 	id,
 	identifier,
 	label,
-	labelOptions,
 	onValueChange,
 	options,
+	optionsLabel,
 }) => (
 	<ClayForm.Group small>
 		<label htmlFor={id}>{label}</label>
@@ -49,12 +62,7 @@ export const RowSelectConfigurationPanel = ({
 				const parseValue = Number(value) || value;
 				onValueChange(identifier, parseValue);
 			}}
-			options={options.map((value) => ({
-				label: labelOptions
-					? Liferay.Util.sub(labelOptions(value), value)
-					: Number(value) || Liferay.Language.get(value),
-				value,
-			}))}
+			options={selectOptions(options, optionsLabel)}
 			value={String(config)}
 		/>
 	</ClayForm.Group>
@@ -66,7 +74,7 @@ RowSelectConfigurationPanel.propTypes = {
 	identifier: PropTypes.string,
 	label: PropTypes.string,
 	onValueChange: PropTypes.func.isRequired,
-	options: PropTypes.array,
+	options: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 export const RowCheckboxConfigurationPanel = ({

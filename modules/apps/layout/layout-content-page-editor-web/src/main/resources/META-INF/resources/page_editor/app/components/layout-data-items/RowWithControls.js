@@ -65,9 +65,9 @@ const RowWithControls = React.forwardRef(
 		const segmentsExperienceId = useSelector(
 			(state) => state.segmentsExperienceId
 		);
-
-		const state = useSelector((state) => state);
-		const {selectedViewportSize} = state;
+		const selectedViewportSize = useSelector(
+			(state) => state.selectedViewportSize
+		);
 		const selectedViewportSizeConfig =
 			config[selectedViewportSize] || config;
 

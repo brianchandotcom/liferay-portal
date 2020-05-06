@@ -47,7 +47,7 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 		gutters: true,
 		modulesPerRow: 3,
 		numberOfColumns: 3,
-		reverseOrder: true,
+		reverseOrder: false,
 		verticalAlignment: 'top',
 	},
 };

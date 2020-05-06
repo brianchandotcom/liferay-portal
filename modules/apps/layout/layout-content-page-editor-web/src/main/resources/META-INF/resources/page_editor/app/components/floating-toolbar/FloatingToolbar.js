@@ -47,6 +47,9 @@ export default function FloatingToolbar({
 	const [windowWidth, setWindowWidth] = useState(0);
 
 	const languageId = useSelector((state) => state.languageId);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
 	const itemElement = itemRef.current;
 
@@ -162,6 +165,7 @@ export default function FloatingToolbar({
 		itemElement,
 		itemRef,
 		panelId,
+		selectedViewportSize,
 		show,
 		windowScrollPosition,
 		windowWidth,

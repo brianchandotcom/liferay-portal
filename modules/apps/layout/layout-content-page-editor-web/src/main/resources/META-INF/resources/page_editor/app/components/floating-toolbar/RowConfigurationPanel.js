@@ -30,16 +30,20 @@ import {
 	RowSelectConfigurationPanel,
 } from './RowItemConfigurationPanel';
 
-const MODULES_PER_ROW_OPTIONS = {
-	1: [1],
-	2: [1, 2],
-	3: [1, 3],
-	4: [2, 4],
-	5: [2, 5],
-	6: [2, 3, 6],
-};
+const MODULES_PER_ROW_OPTIONS = [
+	[1],
+	[1, 2],
+	[1, 3],
+	[2, 4],
+	[2, 5],
+	[2, 3, 6],
+];
 const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
-const VERTICAL_ALIGNMENT = ['top', 'middle', 'bottom'];
+const VERTICAL_ALIGNMENT = {
+	bottom: Liferay.Language.get('bottom'),
+	middle: Liferay.Language.get('middle'),
+	top: Liferay.Language.get('top'),
+};
 
 const ROW_CONFIGURATION_IDENTIFIERS = {
 	gutters: 'gutters',
@@ -66,7 +70,10 @@ export const RowConfigurationPanel = ({item}) => {
 	const handleConfigurationValueChanged = (identifier, value) => {
 		let itemConfig = {[identifier]: value};
 
-		if (selectedViewportSize !== VIEWPORT_SIZES.desktop) {
+		if (
+			selectedViewportSize !== VIEWPORT_SIZES.desktop &&
+			identifier !== ROW_CONFIGURATION_IDENTIFIERS.gutters
+		) {
 			itemConfig = {[selectedViewportSize]: itemConfig};
 		}
 
@@ -121,6 +128,14 @@ export const RowConfigurationPanel = ({item}) => {
 				onValueChange={handleConfigurationValueChanged}
 				options={NUMBER_OF_COLUMNS_OPTIONS}
 			/>
+			{viewportSizeConfig.numberOfColumns > 1 && (
+				<RowCheckboxConfigurationPanel
+					config={rowConfig.gutters}
+					identifier={ROW_CONFIGURATION_IDENTIFIERS.gutters}
+					label={Liferay.Language.get('show-gutter')}
+					onValueChange={handleConfigurationValueChanged}
+				/>
+			)}
 			<div className="align-items-center d-flex justify-content-between page-editor__floating-toolbar__label pt-3">
 				<p className="mb-3 text-uppercase">
 					{Liferay.Language.get('styles')}
@@ -142,18 +157,19 @@ export const RowConfigurationPanel = ({item}) => {
 				id="rowModulesPerRow"
 				identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
 				label={Liferay.Language.get('layout')}
-				labelOptions={labelModulePerRowOptions}
 				onValueChange={handleConfigurationValueChanged}
-				options={MODULES_PER_ROW_OPTIONS[rowConfig.numberOfColumns]}
+				options={MODULES_PER_ROW_OPTIONS[rowConfig.numberOfColumns - 1]}
+				optionsLabel={labelModulePerRowOptions}
 			/>
-			{rowConfig.numberOfColumns > 1 && (
-				<RowCheckboxConfigurationPanel
-					config={viewportSizeConfig.reverseOrder}
-					identifier={ROW_CONFIGURATION_IDENTIFIERS.reverseOrder}
-					label={Liferay.Language.get('inverse-order')}
-					onValueChange={handleConfigurationValueChanged}
-				/>
-			)}
+			{viewportSizeConfig.numberOfColumns === 2 &&
+				viewportSizeConfig.modulesPerRow === 1 && (
+					<RowCheckboxConfigurationPanel
+						config={viewportSizeConfig.reverseOrder}
+						identifier={ROW_CONFIGURATION_IDENTIFIERS.reverseOrder}
+						label={Liferay.Language.get('inverse-order')}
+						onValueChange={handleConfigurationValueChanged}
+					/>
+				)}
 			<RowSelectConfigurationPanel
 				config={viewportSizeConfig.verticalAlignment}
 				id="rowVerticalAlignment"
@@ -162,14 +178,6 @@ export const RowConfigurationPanel = ({item}) => {
 				onValueChange={handleConfigurationValueChanged}
 				options={VERTICAL_ALIGNMENT}
 			/>
-			{rowConfig.numberOfColumns < 2 && (
-				<RowCheckboxConfigurationPanel
-					config={viewportSizeConfig.gutters}
-					identifier={ROW_CONFIGURATION_IDENTIFIERS.gutters}
-					label={Liferay.Language.get('columns-gutter')}
-					onValueChange={handleConfigurationValueChanged}
-				/>
-			)}
 		</>
 	);
 };

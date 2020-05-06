@@ -32,26 +32,32 @@ const Column = React.forwardRef(
 		} = item;
 
 		const layoutData = useSelector((state) => state.layoutData);
-
+		const parentItem = layoutData.items[item.parentId];
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
 		);
 
-		const parentItem = layoutData.items[item.parentId];
+		const parentItemConfig =
+			parentItem.config[selectedViewportSize] || parentItem.config;
 
-		const parentItemConfig = parentItem.config[selectedViewportSize]
-			? parentItem.config[selectedViewportSize]
-			: parentItem.config;
+		const {modulesPerRow, numberOfColumns} = parentItemConfig;
 
-		const columnSize =
+		let columnSize =
 			(size * parentItemConfig.numberOfColumns) /
 			parentItemConfig.modulesPerRow;
+
+		if (numberOfColumns === 5 && modulesPerRow !== numberOfColumns) {
+			columnSize = parentItem.children.indexOf(item.itemId) > 2 ? 6 : 4;
+		}
 
 		return (
 			<div
 				{...props}
 				className={classNames(className, 'col', {
 					[`col-${columnSize}`]: columnSize,
+					empty:
+						modulesPerRow !== numberOfColumns &&
+						!item.children.length,
 				})}
 				ref={ref}
 			>

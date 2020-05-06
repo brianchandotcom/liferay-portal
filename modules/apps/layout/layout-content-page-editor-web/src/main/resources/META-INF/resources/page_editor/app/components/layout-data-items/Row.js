@@ -20,7 +20,6 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
 
@@ -29,26 +28,21 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 		(state) => state.selectedViewportSize
 	);
 
-	const itemConfig = item.config[selectedViewportSize]
-		? item.config[selectedViewportSize]
-		: item.config;
-
+	const itemConfig = item.config[selectedViewportSize] || item.config;
 	const rowContent = (
 		<div
 			className={classNames(className, 'row', {
-				'align-items-center': itemConfig.verticalAlignment === 'middle',
-				'align-items-end': itemConfig.verticalAlignment === 'bottom',
-				'align-items-start': itemConfig.verticalAlignment === 'top',
-				empty: !item.children.some(
-					(childId) => layoutData.items[childId].children.length
-				),
-				'flex-row-reverse': !(typeof itemConfig.reverseOrder ===
-				'boolean'
-					? !itemConfig.reverseOrder
-					: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[item.type]),
-				'no-gutters': !(typeof itemConfig.gutters === 'boolean'
-					? itemConfig.gutters
-					: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[item.type]),
+				empty:
+					itemConfig.numberOfColumns === itemConfig.modulesPerRow &&
+					!item.children.some(
+						(childId) => layoutData.items[childId].children.length
+					),
+				'flex-column-reverse':
+					itemConfig.numberOfColumns === 2 &&
+					itemConfig.modulesPerRow === 1 &&
+					itemConfig.reverseOrder,
+
+				'no-gutters': !item.config.gutters,
 			})}
 			ref={ref}
 		>

@@ -29,7 +29,7 @@ definition {
 
 		// Quarantine for LPS-110532
 
-		Upgrade.viewHomePage();
+		Upgrade.viewDefaultPage();
 
 		Upgrade.configurePageEditor();
 	}
@@ -43,7 +43,7 @@ definition {
 
 		// Quarantine for LPS-110532
 
-		Upgrade.viewHomePage();
+		Upgrade.viewDefaultPage();
 
 		Upgrade.configurePageEditor();
 	}

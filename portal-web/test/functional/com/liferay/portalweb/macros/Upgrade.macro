@@ -1785,6 +1785,16 @@ definition {
 		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
 	}
 
+	macro viewDefaultPage {
+		Navigator.openURL();
+
+		// Assert the Home/Welcome page is a widget page in the default site when upgrade from 7.2/7.1/7.0
+
+		AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
+
+		AssertVisible(locator1 = "ControlMenu#ADD");
+	}
+
 	macro viewDocument {
 		Navigator.gotoPage(pageName = "Document");
 
@@ -1824,14 +1834,6 @@ definition {
 			appName = "Liferay Portal Rules Engine Drools",
 			appStatus = "Active",
 			searchTerm = "Drools");
-	}
-
-	macro viewHomePage {
-		Navigator.openURL();
-
-		// Assert the Home page is a widget page in the default site when upgrade from 7.2
-
-		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 	}
 
 	macro viewInstanceSettings {
@@ -2721,16 +2723,6 @@ definition {
 		SignOut.signOut();
 
 		SignIn.signIn();
-	}
-
-	macro viewWelcomePage {
-		Navigator.openURL();
-
-		// Assert the Welcome page is a widget page in the default site when upgrade from 7.1 and 7.0
-
-		AssertNotVisible(locator1 = "Icon#EDIT_PENCIL");
-
-		AssertVisible(locator1 = "ControlMenu#ADD");
 	}
 
 }

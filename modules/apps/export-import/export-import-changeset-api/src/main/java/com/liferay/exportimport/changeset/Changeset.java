@@ -98,9 +98,9 @@ public class Changeset implements Serializable {
 			String stagedModelClassName =
 				ExportImportClassedModelUtil.getClassName(stagedModel);
 
-			_changeset._stagedModels.addAll(
-				_getChildrenStagedModels(
-					stagedModel, stagedModelClassName, function));
+			_collectChildrenStagedModels(
+				_changeset._stagedModels, stagedModel, stagedModelClassName,
+				function);
 
 			return this;
 		}
@@ -146,11 +146,10 @@ public class Changeset implements Serializable {
 
 	}
 
-	private static List<StagedModel> _getChildrenStagedModels(
-		StagedModel parentStagedModel, String parentClassName,
+	private static void _collectChildrenStagedModels(
+		List<StagedModel> childrenStagedModels, StagedModel parentStagedModel,
+		String parentClassName,
 		Function<StagedModel, Collection<?>> hierarchyFunction) {
-
-		List<StagedModel> stagedModels = new ArrayList<>();
 
 		for (Object object : hierarchyFunction.apply(parentStagedModel)) {
 			StagedModel stagedModel = (StagedModel)object;
@@ -158,15 +157,13 @@ public class Changeset implements Serializable {
 			String stagedModelClassName = stagedModel.getModelClassName();
 
 			if (stagedModelClassName.equals(parentClassName)) {
-				stagedModels.addAll(
-					_getChildrenStagedModels(
-						stagedModel, parentClassName, hierarchyFunction));
+				_collectChildrenStagedModels(
+					childrenStagedModels, stagedModel, parentClassName,
+					hierarchyFunction);
 			}
 
-			stagedModels.add(stagedModel);
+			childrenStagedModels.add(stagedModel);
 		}
-
-		return stagedModels;
 	}
 
 	private Changeset() {

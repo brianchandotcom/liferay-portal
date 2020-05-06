@@ -29,7 +29,7 @@ const layoutElements = [
 	},
 	{
 		columns: ['4', '4', '4'],
-		label: Liferay.Language.get('row'),
+		label: Liferay.Language.get('grid'),
 		type: 'row',
 	},
 ];

@@ -32,7 +32,7 @@ const ExperiencesList = ({
 }) => {
 	const dispatch = useDispatch();
 
-	const handleExperienceSelection = (id) => dispatch(selectExperience(id));
+	const handleExperienceSelection = (id) => dispatch(selectExperience({id}));
 
 	return (
 		<ul className="list-unstyled mt-4" role="list">

@@ -12,28 +12,14 @@
  * details.
  */
 
-import ExperienceService from '../../../app/services/ExperienceService';
-import selectExperienceAction from '../actions/selectExperience';
+import selectExperience from '../../../plugins/experience/thunks/selectExperience';
 
-export default function selectExperience({id, isUndo = false}) {
-	return (dispatch) => {
-		return ExperienceService.selectExperience({
-			body: {
-				segmentsExperienceId: id,
-			},
-			dispatch,
-		})
-			.then((portletIds) => {
-				return dispatch(
-					selectExperienceAction({
-						isUndo,
-						portletIds,
-						segmentsExperienceId: id,
-					})
-				);
-			})
-			.catch((error) => {
-				return error;
-			});
-	};
+function undoAction({action}) {
+	return selectExperience({id: action.segmentExperienceId, isUndo: true});
 }
+
+function getDerivedStateForUndo({state}) {
+	return {segmentExperienceId: state.segmentsExperienceId};
+}
+
+export {undoAction, getDerivedStateForUndo};

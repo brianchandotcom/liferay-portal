@@ -15,10 +15,12 @@
 import {SELECT_SEGMENTS_EXPERIENCE} from './types';
 
 export default function selectExperience({
+	isUndo,
 	portletIds = [],
 	segmentsExperienceId,
 }) {
 	return {
+		isUndo,
 		payload: {
 			portletIds,
 			segmentsExperienceId,

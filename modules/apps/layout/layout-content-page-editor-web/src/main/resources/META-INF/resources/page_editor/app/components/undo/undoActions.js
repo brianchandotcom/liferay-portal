@@ -12,6 +12,7 @@
  * details.
  */
 
+import {SELECT_SEGMENTS_EXPERIENCE} from '../../../plugins/experience/actions';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
@@ -28,6 +29,7 @@ import * as undoEditableValuesAction from './undoEditableValuesAction';
 import * as undoFragmentConfiguration from './undoFragmentConfiguration';
 import * as undoFragmentEntryLinks from './undoFragmentEntryLinks';
 import * as undoLayoutDataAction from './undoLayoutDataAction';
+import * as undoSelectExperience from './undoSelectExperience';
 import * as undoUpdateLanguage from './undoUpdateLanguage';
 
 const UNDO_ACTIONS = {
@@ -35,6 +37,7 @@ const UNDO_ACTIONS = {
 	[ADD_ITEM]: undoLayoutDataAction,
 	[DUPLICATE_ITEM]: undoDuplicateItem,
 	[MOVE_ITEM]: undoLayoutDataAction,
+	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,
 	[UPDATE_COL_SIZE_START]: undoLayoutDataAction,
 	[UPDATE_EDITABLE_VALUES]: undoEditableValuesAction,
 	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoFragmentConfiguration,

@@ -543,7 +543,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_roleTypes = RoleConstants.TYPES_REGULAR_AND_SITE;
 
 		if (_group.getType() == GroupConstants.TYPE_DEPOT) {
-			_roleTypes = RoleConstants.TYPES_DEPOT_AND_REGULAR;
+			_roleTypes = _TYPES_DEPOT_AND_REGULAR;
 		}
 
 		if (ResourceActionsUtil.isPortalModelResource(getModelResource())) {
@@ -730,6 +730,10 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 		return _roleTypesParam;
 	}
+
+	private static final int[] _TYPES_DEPOT_AND_REGULAR = {
+		RoleConstants.TYPE_DEPOT, RoleConstants.TYPE_REGULAR
+	};
 
 	private List<String> _actions;
 	private Group _group;

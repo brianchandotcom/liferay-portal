@@ -102,10 +102,6 @@ public class RoleConstants {
 
 	public static final String TYPE_SITE_LABEL = "site";
 
-	public static final int[] TYPES_DEPOT_AND_REGULAR = {
-		TYPE_DEPOT, TYPE_REGULAR
-	};
-
 	public static final int[] TYPES_ORGANIZATION_AND_REGULAR = {
 		TYPE_REGULAR, TYPE_ORGANIZATION
 	};

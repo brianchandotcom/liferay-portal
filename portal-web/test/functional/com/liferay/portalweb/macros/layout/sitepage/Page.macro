@@ -552,6 +552,8 @@ definition {
 			AssertConfirm.waitForConfirmation(value1 = "${javaScriptPage}");
 		}
 
+		Click.clickAtNotVisible(locator1 = "//div[@id='navigationCollapse']");
+
 		WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
 
 		MouseOver(locator1 = "Home#PAGE_2");

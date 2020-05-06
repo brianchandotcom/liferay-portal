@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ import java.util.Set;
  * @author Yi-Chen Tsai
  */
 public abstract class PortalAcceptanceTestSuiteJob
-	extends PortalGitRepositoryJob implements TestSuiteJob {
+	extends PortalGitRepositoryJob implements BatchDependentJob, TestSuiteJob {
 
 	public PortalAcceptanceTestSuiteJob(String jobName) {
 		this(jobName, "default");
@@ -59,6 +60,19 @@ public abstract class PortalAcceptanceTestSuiteJob
 		}
 
 		return testBatchNamesSet;
+	}
+
+	@Override
+	public Set<String> getDependentBatchNames() {
+		String testBatchNames = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.batch.names.smoke", getBranchName(),
+			getTestSuiteName());
+
+		if (testBatchNames == null) {
+			return new HashSet<>();
+		}
+
+		return getSetFromString(testBatchNames);
 	}
 
 	@Override

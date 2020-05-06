@@ -176,6 +176,13 @@ const RatingsStars = ({
 								</ClayDropDown.Item>
 							);
 						})}
+
+						<ClayDropDown.Item
+							disabled={score === 0}
+							key={starScores.length + 1}
+						>
+							{Liferay.Language.get('delete')}
+						</ClayDropDown.Item>
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</div>

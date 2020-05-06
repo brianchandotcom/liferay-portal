@@ -110,7 +110,7 @@ export const RowConfigurationPanel = ({item}) => {
 		);
 	};
 
-	const labelModulePerRowOptions = (value) => {
+	const getModulesPerRowOptionLabel = (value) => {
 		return value > 1
 			? Liferay.Language.get('x-modules-per-row')
 			: Liferay.Language.get('x-module-per-row');
@@ -156,6 +156,7 @@ export const RowConfigurationPanel = ({item}) => {
 					</div>
 					<RowConfigurationSelectField
 						config={viewportSizeConfig.modulesPerRow}
+						getOptionLabel={getModulesPerRowOptionLabel}
 						id="rowModulesPerRow"
 						identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
 						label={Liferay.Language.get('layout')}
@@ -165,7 +166,6 @@ export const RowConfigurationPanel = ({item}) => {
 								rowConfig.numberOfColumns - 1
 							]
 						}
-						optionsLabel={labelModulePerRowOptions}
 					/>
 					{viewportSizeConfig.numberOfColumns === 2 &&
 						viewportSizeConfig.modulesPerRow === 1 && (

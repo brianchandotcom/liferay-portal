@@ -10,6 +10,7 @@
 	margin-left: 4px;
 	padding-left: 8px;
 	padding-right: 8px;
+	white-space: nowrap;
 
 	&__mask {
 		height: 100%;
@@ -44,9 +45,6 @@
 		color: $dark;
 		font-size: 13px;
 		line-height: 20px;
-		max-width: 80%;
-		overflow: hidden;
-		text-overflow: ellipsis;
 
 		&--active {
 			font-weight: 600;

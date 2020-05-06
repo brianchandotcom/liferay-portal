@@ -109,8 +109,8 @@
 		}
 	}
 
-	&.drag-over-middle .page-editor__container > .container:after,
-	&.drag-over-middle .page-editor__container > .container-fluid:after,
+	&.drag-over-middle .page-editor__container > .container:before,
+	&.drag-over-middle .page-editor__container > .container-fluid:before,
 	&.drag-over-middle.page-editor__col:before,
 	&.drag-over-middle.page-editor__collection-item:before {
 		box-shadow: inset 0 0 0 4px $primary-l1;
@@ -124,9 +124,9 @@
 		}
 	}
 
-	&.not-droppable .page-editor__container > .container:after,
-	&.not-droppable.page-editor__col:after,
-	&.not-droppable.page-editor__collection-item:after {
+	&.not-droppable .page-editor__container > .container:before,
+	&.not-droppable.page-editor__col:before,
+	&.not-droppable.page-editor__collection-item:before {
 		box-shadow: inset 0 0 0 1px $danger;
 		position: absolute;
 	}

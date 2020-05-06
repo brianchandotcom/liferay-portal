@@ -423,7 +423,7 @@ public class SpringBeanPortletExtension {
 
 				if (requestDispatcher == null) {
 					_log.error(
-						"Unable to acquire dispatcher to include=" + include);
+						"Unable to acquire dispatcher to include " + include);
 				}
 				else {
 					requestDispatcher.include(portletRequest, portletResponse);
@@ -470,7 +470,7 @@ public class SpringBeanPortletExtension {
 			String className = clazz.getName();
 
 			if (!className.startsWith("org.springframework")) {
-				_log.error("Unable to discover methods in class: " + clazz);
+				_log.error("Unable to discover methods in class " + clazz);
 			}
 
 			return false;

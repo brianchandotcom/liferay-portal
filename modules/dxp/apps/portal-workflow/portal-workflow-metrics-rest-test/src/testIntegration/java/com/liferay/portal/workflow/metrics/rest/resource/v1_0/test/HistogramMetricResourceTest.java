@@ -81,31 +81,32 @@ public class HistogramMetricResourceTest
 	@Override
 	@Test
 	public void testGetProcessHistogramMetric() throws Exception {
-		LocalDate localDate = LocalDate.now(ZoneId.of("GMT"));
+		LocalDate nowlocalDate = LocalDate.now(ZoneId.of("GMT"));
 
 		LocalDateTime nowLocalDateTime = _createLocalDateTime();
 
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(6), LocalTime.MIDNIGHT));
+			LocalDateTime.of(nowlocalDate.minusDays(6), LocalTime.MIDNIGHT));
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(29), LocalTime.MIDNIGHT));
+			LocalDateTime.of(nowlocalDate.minusDays(29), LocalTime.MIDNIGHT));
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(89), LocalTime.MIDNIGHT));
+			LocalDateTime.of(nowlocalDate.minusDays(89), LocalTime.MIDNIGHT));
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(179), LocalTime.MIDNIGHT));
+			LocalDateTime.of(nowlocalDate.minusDays(179), LocalTime.MIDNIGHT));
 		_testGetProcessMetric(
 			nowLocalDateTime,
-			LocalDateTime.of(localDate.minusDays(364), LocalTime.MIDNIGHT));
+			LocalDateTime.of(nowlocalDate.minusDays(364), LocalTime.MIDNIGHT));
 		_testGetProcessMetric(
-			nowLocalDateTime, LocalDateTime.of(localDate, LocalTime.MIDNIGHT));
+			nowLocalDateTime,
+			LocalDateTime.of(nowlocalDate, LocalTime.MIDNIGHT));
 
 		_testGetProcessMetric(
-			LocalDateTime.of(localDate.minusDays(1), LocalTime.MAX),
-			LocalDateTime.of(localDate.minusDays(1), LocalTime.MIDNIGHT));
+			LocalDateTime.of(nowlocalDate.minusDays(1), LocalTime.MAX),
+			LocalDateTime.of(nowlocalDate.minusDays(1), LocalTime.MIDNIGHT));
 	}
 
 	@Override

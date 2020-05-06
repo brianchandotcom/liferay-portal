@@ -997,6 +997,22 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void executeJavascript(
+		String javascript, String argument1, String argument2) {
+
+		WebElement webElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		javascriptExecutor.executeScript(javascript, argument1, argument2);
+	}
+
+	@Override
 	public void fail(String message) {
 		LiferaySeleniumUtil.fail(message);
 	}
@@ -1236,6 +1252,23 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public String getHtmlSource() {
 		return getPageSource();
+	}
+
+	@Override
+	public String getJavascriptResult(
+		String javascript, String argument1, String argument2) {
+
+		WebElement webElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		return (String)javascriptExecutor.executeScript(
+			javascript, argument1, argument2);
 	}
 
 	@Override

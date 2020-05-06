@@ -737,10 +737,17 @@ components:
             description:
                 ""
             properties:
-                contentSubtypeName:
-                    type: string
-                contentTypeClassName:
-                    type: string
+                contentSubtype:
+                    properties:
+                        classTypeId:
+                            format: int64
+                            type: integer
+                    type: object
+                contentType:
+                    properties:
+                        className:
+                            type: string
+                    type: object
                 key:
                     type: string
                 name:

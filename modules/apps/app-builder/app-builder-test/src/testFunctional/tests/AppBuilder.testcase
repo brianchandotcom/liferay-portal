@@ -116,6 +116,7 @@ definition {
 	@description = "This is a use case for LPS-104569."
 	@priority = "5"
 	test AddMultipleFormViewsToTheSameObject {
+		property test.name.skip.portal.instance = "AppBuilder#AddMultipleFormViewsToTheSameObject";
 		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
@@ -212,6 +213,7 @@ definition {
 	@description = "Add a Form View with a Select From List field"
 	@priority = "5"
 	test AddSimpleFormViewWithSelectFromListField {
+		property test.name.skip.portal.instance = "AppBuilder#AddSimpleFormViewWithSelectFromListField";
 		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
@@ -501,6 +503,7 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as Product Menu"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfProductMenuApp {
+		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfProductMenuApp";
 		property portal.acceptance = "true";
 
 		var myFormViewName = "My Registration form";
@@ -754,6 +757,7 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfStandaloneApp {
+		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfStandaloneApp";
 		property portal.acceptance = "true";
 
 		var myFormViewName = "My Registration form";
@@ -1007,6 +1011,7 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
+		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfWidgetApp";
 		property portal.acceptance = "true";
 
 		var myFormViewName = "My Registration form";
@@ -1182,6 +1187,7 @@ definition {
 	@description = "Create table views with a fixed entries filter of list field types (select from list and single selection)"
 	@priority = "5"
 	test CreateTableViewsWithFixedEntriesFilter {
+		property test.name.skip.portal.instance = "AppBuilder#CreateTableViewsWithFixedEntriesFilter";
 		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
@@ -1543,6 +1549,7 @@ definition {
 	@description = "Delete fields from the Form View through the Delete options and assert its affect on other Form and Table views"
 	@priority = "5"
 	test DeleteFormViewFieldFromObject {
+		property test.name.skip.portal.instance = "AppBuilder#DeleteFormViewFieldFromObject";
 		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
@@ -2948,6 +2955,7 @@ definition {
 	@description = "Reuse my object's existing fields when creating a new form view"
 	@priority = "5"
 	test ReuseExistingFormViewFields {
+		property test.name.skip.portal.instance = "AppBuilder#ReuseExistingFormViewFields";
 		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
@@ -3089,6 +3097,7 @@ definition {
 	@description = "Search for a column(field) in the columns list in Table View Builder"
 	@priority = "5"
 	test SearchColumnListInTableViewBuilder {
+		property test.name.skip.portal.instance = "AppBuilder#SearchColumnListInTableViewBuilder";
 		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(

@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -72,6 +74,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_testUser = _userLocalService.getUserByEmailAddress(
 			testGroup.getCompanyId(), "test@liferay.com");
+
+		_userLocalService.deleteGroupUser(
+			testGroup.getGroupId(), _testUser.getUserId());
+
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			_testUser.getModelClassName());
+
+		indexer.reindex(_testUser);
 	}
 
 	@Override

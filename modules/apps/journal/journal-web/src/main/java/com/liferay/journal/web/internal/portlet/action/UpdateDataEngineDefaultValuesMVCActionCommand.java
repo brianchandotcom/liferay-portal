@@ -19,7 +19,6 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
@@ -29,9 +28,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
-import com.liferay.journal.web.internal.configuration.JournalDDMEditorConfiguration;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -56,34 +53,23 @@ import java.util.Objects;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.journal.web.internal.configuration.JournalDDMEditorConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
-		"mvc.command.name=/journal/add_ddm_structure_default_values",
-		"mvc.command.name=/journal/update_ddm_structure_default_values"
+		"mvc.command.name=/journal/add_data_engine_default_values",
+		"mvc.command.name=/journal/update_data_engine_default_values"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateDDMStructureDefaultValuesMVCActionCommand
+public class UpdateDataEngineDefaultValuesMVCActionCommand
 	extends BaseMVCActionCommand {
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_journalDDMEditorConfiguration = ConfigurableUtil.createConfigurable(
-			JournalDDMEditorConfiguration.class, properties);
-	}
 
 	@Override
 	protected void doProcessAction(
@@ -133,19 +119,8 @@ public class UpdateDDMStructureDefaultValuesMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), uploadPortletRequest);
 
-		Fields fields = null;
-
-		if (_journalDDMEditorConfiguration.useDataEngineEditor()) {
-			DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
-				actionRequest, ddmStructure.getDDMForm());
-
-			fields = _ddmFormValuesToFieldsConverter.convert(
-				ddmStructure, ddmFormValues);
-		}
-		else {
-			fields = DDMUtil.getFields(
-				ddmStructure.getStructureId(), serviceContext);
-		}
+		Fields fields = DDMUtil.getFields(
+			ddmStructure.getStructureId(), serviceContext);
 
 		String content = _journalConverter.getContent(ddmStructure, fields);
 
@@ -210,7 +185,7 @@ public class UpdateDDMStructureDefaultValuesMVCActionCommand
 
 		JournalArticle article = null;
 
-		if (actionName.equals("/journal/add_ddm_structure_default_values")) {
+		if (actionName.equals("/journal/add_data_engine_default_values")) {
 
 			// Add article
 
@@ -224,7 +199,7 @@ public class UpdateDDMStructureDefaultValuesMVCActionCommand
 				smallImage, smallImageURL, smallFile, serviceContext);
 		}
 		else if (actionName.equals(
-					"/journal/update_ddm_structure_default_values")) {
+					"/journal/update_data_engine_default_values")) {
 
 			// Update article
 
@@ -259,9 +234,6 @@ public class UpdateDDMStructureDefaultValuesMVCActionCommand
 
 	@Reference
 	private JournalConverter _journalConverter;
-
-	private volatile JournalDDMEditorConfiguration
-		_journalDDMEditorConfiguration;
 
 	@Reference
 	private JournalHelper _journalHelper;

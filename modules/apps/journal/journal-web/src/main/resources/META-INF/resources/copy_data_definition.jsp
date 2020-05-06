@@ -29,7 +29,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmStructure.getName(locale), false));
 %>
 
-<portlet:actionURL name='<%= journalDisplayContext.useDataEngineEditor() ? "/journal/copy_data_definition" : "/journal/copy_ddm_structure" %>' var="copyDDMStructureURL">
+<portlet:actionURL name="/journal/copy_data_definition" var="copyDDMStructureURL">
 	<portlet:param name="mvcPath" value="/copy_ddm_structure.jsp" />
 </portlet:actionURL>
 

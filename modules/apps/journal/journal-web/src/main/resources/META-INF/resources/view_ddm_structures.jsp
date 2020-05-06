@@ -31,13 +31,11 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 	displayContext="<%= journalDDMStructuresManagementToolbarDisplayContext %>"
 />
 
-<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/journal/delete_ddm_structure" var="deleteDDMStructureURL" />
-
-<portlet:actionURL name="/journal/delete_data_definition" var="deleteDataDefinitionURL">
+<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/journal/delete_data_definition" var="deleteDataDefinitionURL">
 	<portlet:param name="mvcPath" value="/view_ddm_structures.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= journalDisplayContext.useDataEngineEditor() ? deleteDataDefinitionURL : deleteDDMStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= deleteDataDefinitionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
@@ -70,7 +68,7 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 			if (DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE)) {
 				PortletURL rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
+				rowURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
 

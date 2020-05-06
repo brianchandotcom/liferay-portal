@@ -174,8 +174,8 @@ class JournalPortlet extends PortletBase {
 
 			if (classNameId > 0) {
 				actionName = articleId
-					? '/journal/update_ddm_structure_default_values'
-					: '/journal/add_ddm_structure_default_values';
+					? '/journal/update_data_engine_default_values'
+					: '/journal/add_data_engine_default_values';
 			}
 			else {
 				actionName = articleId

@@ -70,7 +70,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 						<c:if test="<%= journalEditArticleDisplayContext.getClassNameId() > JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>">
 							<portlet:actionURL name="/journal/reset_values_ddm_structure" var="resetValuesDDMStructureURL">
-								<portlet:param name="mvcPath" value="/edit_ddm_structure.jsp" />
+								<portlet:param name="mvcPath" value="/edit_data_definition.jsp" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(journalEditArticleDisplayContext.getGroupId()) %>" />
 								<portlet:param name="articleId" value="<%= journalEditArticleDisplayContext.getArticleId() %>" />
@@ -240,44 +240,19 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				<liferay-ui:error exception="<%= NoSuchTemplateException.class %>" message="please-select-an-existing-template" />
 				<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
-				<%
-				JournalItemSelectorHelper journalItemSelectorHelper = new JournalItemSelectorHelper(article, journalDisplayContext.getFolder(), renderRequest, renderResponse);
-
-				long classNameId = ParamUtil.getLong(request, "classNameId");
-				%>
-
 				<div class="article-content-content">
-					<c:choose>
-						<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
-							<liferay-data-engine:data-layout-renderer
-								containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
-								dataDefinitionId="<%= ddmStructure.getStructureId() %>"
-								dataRecordValues="<%= journalEditArticleDisplayContext.getValues(ddmStructure) %>"
-								namespace="<%= liferayPortletResponse.getNamespace() %>"
-							/>
+					<liferay-data-engine:data-layout-renderer
+						containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
+						dataDefinitionId="<%= ddmStructure.getStructureId() %>"
+						dataRecordValues="<%= journalEditArticleDisplayContext.getValues(ddmStructure) %>"
+						namespace="<%= liferayPortletResponse.getNamespace() %>"
+					/>
 
-							<liferay-frontend:component
-								componentId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRendererLanguageProxy" %>'
-								module="js/dataEngineLayoutRendererLanguageProxy.es"
-								servletContext="<%= application %>"
-							/>
-						</c:when>
-						<c:otherwise>
-							<liferay-ddm:html
-								checkRequired="<%= classNameId == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>"
-								classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-								classPK="<%= ddmStructure.getStructureId() %>"
-								ddmFormValues="<%= journalEditArticleDisplayContext.getDDMFormValues(ddmStructure) %>"
-								defaultEditLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getSelectedLanguageId()) %>"
-								defaultLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getDefaultArticleLanguageId()) %>"
-								documentLibrarySelectorURL="<%= String.valueOf(journalItemSelectorHelper.getDocumentLibrarySelectorURL()) %>"
-								groupId="<%= journalEditArticleDisplayContext.getGroupId() %>"
-								ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"
-								imageSelectorURL="<%= String.valueOf(journalItemSelectorHelper.getImageSelectorURL()) %>"
-								requestedLocale="<%= locale %>"
-							/>
-						</c:otherwise>
-					</c:choose>
+					<liferay-frontend:component
+						componentId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRendererLanguageProxy" %>'
+						module="js/dataEngineLayoutRendererLanguageProxy.es"
+						servletContext="<%= application %>"
+					/>
 				</div>
 			</clay:sheet>
 		</clay:container-fluid>

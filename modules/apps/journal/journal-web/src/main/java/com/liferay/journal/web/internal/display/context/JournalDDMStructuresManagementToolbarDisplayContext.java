@@ -115,7 +115,7 @@ public class JournalDDMStructuresManagementToolbarDisplayContext
 
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(), "mvcPath",
-					"/edit_ddm_structure.jsp", "redirect",
+					"/edit_data_definition.jsp", "redirect",
 					themeDisplay.getURLCurrent());
 
 				dropdownItem.setLabel(

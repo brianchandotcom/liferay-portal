@@ -47,7 +47,7 @@ else {
 	editDDMStructureURL.setParameter(ActionRequest.ACTION_NAME, "/journal/update_data_definition");
 }
 
-editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
+editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 %>
 
 <aui:form action="<%= editDDMStructureURL.toString() %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveDDMStructure();" %>'>

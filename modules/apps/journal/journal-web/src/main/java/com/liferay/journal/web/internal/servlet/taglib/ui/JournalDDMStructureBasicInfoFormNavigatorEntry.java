@@ -46,7 +46,7 @@ public class JournalDDMStructureBasicInfoFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/ddm_structure/basic_info.jsp";
+		return "/data_engine/basic_info.jsp";
 	}
 
 }

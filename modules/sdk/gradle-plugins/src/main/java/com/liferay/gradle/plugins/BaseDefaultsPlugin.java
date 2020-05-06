@@ -14,11 +14,10 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
-
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.plugins.PluginContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -28,19 +27,21 @@ public abstract class BaseDefaultsPlugin<T extends Plugin<? extends Project>>
 
 	@Override
 	public void apply(final Project project) {
-		GradleUtil.withPlugin(
-			project, getPluginClass(),
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			getPluginClass(),
 			new Action<T>() {
 
 				@Override
 				public void execute(T plugin) {
-					configureDefaults(project, plugin);
+					applyPluginDefaults(project, plugin);
 				}
 
 			});
 	}
 
-	protected abstract void configureDefaults(Project project, T plugin);
+	protected abstract void applyPluginDefaults(Project project, T plugin);
 
 	protected abstract Class<T> getPluginClass();
 

@@ -35,7 +35,7 @@ public class LiferayBaseDefaultsPlugin
 		new LiferayBaseDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, LiferayBasePlugin liferayBasePlugin) {
 
 		project.afterEvaluate(

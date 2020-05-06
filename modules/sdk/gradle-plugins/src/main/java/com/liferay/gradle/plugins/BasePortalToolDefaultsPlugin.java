@@ -46,11 +46,6 @@ public abstract class BasePortalToolDefaultsPlugin
 		}
 	}
 
-	@Override
-	protected void configureDefaults(Project project, T plugin) {
-		addPortalToolDependencies(project);
-	}
-
 	protected abstract String getPortalToolConfigurationName();
 
 	protected String getPortalToolGroup() {

@@ -265,7 +265,7 @@ definition {
 			organizationSite = "true");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Organization Name 1",
+			groupName = "Organization Name 1 LFR_ORGANIZATION",
 			layoutName = "Site Page");
 
 		User.openUsersAdmin();

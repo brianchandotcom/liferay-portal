@@ -12,16 +12,14 @@
  * details.
  */
 
-import {UPDATE_LANGUAGE_ID} from './types';
+import {updateLanguageId} from '../../actions/index';
 
-/**
- * @param {string} languageId
- * @return {object}
- */
-export default function updateLanguageId({isUndo = false, languageId}) {
-	return {
-		isUndo,
-		languageId,
-		type: UPDATE_LANGUAGE_ID,
-	};
+function undoAction({action}) {
+	return (dispatch) => dispatch(updateLanguageId({...action, isUndo: true}));
 }
+
+function getDerivedStateForUndo({state}) {
+	return {languageId: state.languageId};
+}
+
+export {undoAction, getDerivedStateForUndo};

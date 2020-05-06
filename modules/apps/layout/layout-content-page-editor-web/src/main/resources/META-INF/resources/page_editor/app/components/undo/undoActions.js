@@ -21,12 +21,14 @@ import {
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
+	UPDATE_LANGUAGE_ID,
 } from '../../actions/types';
 import * as undoDuplicateItem from './undoDuplicateItem';
 import * as undoEditableValuesAction from './undoEditableValuesAction';
 import * as undoFragmentConfiguration from './undoFragmentConfiguration';
 import * as undoFragmentEntryLinks from './undoFragmentEntryLinks';
 import * as undoLayoutDataAction from './undoLayoutDataAction';
+import * as undoUpdateLanguage from './undoUpdateLanguage';
 
 const UNDO_ACTIONS = {
 	[ADD_FRAGMENT_ENTRY_LINKS]: undoFragmentEntryLinks,
@@ -37,6 +39,7 @@ const UNDO_ACTIONS = {
 	[UPDATE_EDITABLE_VALUES]: undoEditableValuesAction,
 	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoFragmentConfiguration,
 	[UPDATE_ITEM_CONFIG]: undoLayoutDataAction,
+	[UPDATE_LANGUAGE_ID]: undoUpdateLanguage,
 };
 
 export function canUndoAction(action) {

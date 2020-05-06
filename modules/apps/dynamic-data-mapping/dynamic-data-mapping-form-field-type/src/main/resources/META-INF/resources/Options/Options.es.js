@@ -19,10 +19,8 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import {Main as KeyValue} from '../KeyValue/KeyValue.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import KeyValue from '../KeyValue/KeyValue.es';
 import DnD from './DnD.es';
 import DragPreview from './DragPreview.es';
 import {
@@ -298,84 +296,68 @@ const Options = ({
 	);
 };
 
-const OptionsProxy = connectStore(
-	({
-		defaultLanguageId = themeDisplay.getLanguageId(),
-		dispatch,
-		editingLanguageId = themeDisplay.getLanguageId(),
-		emit,
-		placeholder = Liferay.Language.get('enter-an-option'),
-		readOnly,
-		required,
-		store,
-		value = {},
-		visible,
-		...otherProps
-	}) => (
-		<DndProvider backend={HTML5Backend}>
-			<FieldBaseProxy
-				{...otherProps}
-				dispatch={dispatch}
-				readOnly={readOnly}
-				store={store}
-				visible={visible}
+const Main = ({
+	defaultLanguageId = themeDisplay.getLanguageId(),
+	editingLanguageId = themeDisplay.getLanguageId(),
+	onChange,
+	placeholder = Liferay.Language.get('enter-an-option'),
+	readOnly,
+	required,
+	value = {},
+	visible,
+	...otherProps
+}) => (
+	<DndProvider backend={HTML5Backend}>
+		<FieldBase {...otherProps} readOnly={readOnly} visible={visible}>
+			<Options
+				defaultLanguageId={defaultLanguageId}
+				disabled={readOnly}
+				editingLanguageId={editingLanguageId}
+				onChange={(value) => onChange({}, value)}
+				value={value}
 			>
-				<Options
-					defaultLanguageId={defaultLanguageId}
-					disabled={readOnly}
-					editingLanguageId={editingLanguageId}
-					onChange={(value) => emit('fieldEdited', {}, value)}
-					value={value}
-				>
-					{({
-						defaultOptionRef,
-						handleBlur,
-						handleField,
-						index,
-						option,
-					}) => (
-						<KeyValue
-							dispatch={dispatch}
-							generateKeyword={option.generateKeyword}
-							keyword={option.value}
-							keywordReadOnly={
-								defaultLanguageId !== editingLanguageId
+				{({
+					defaultOptionRef,
+					handleBlur,
+					handleField,
+					index,
+					option,
+				}) => (
+					<KeyValue
+						generateKeyword={option.generateKeyword}
+						keyword={option.value}
+						keywordReadOnly={
+							defaultLanguageId !== editingLanguageId
+						}
+						name={`option${index}`}
+						onBlur={handleBlur}
+						onChange={(event) =>
+							handleField('label', event.target.value)
+						}
+						onFocus={() => {
+							if (defaultOptionRef.current) {
+								handleField('label', '');
+								defaultOptionRef.current = false;
 							}
-							name={`option${index}`}
-							onKeywordBlur={handleBlur}
-							onKeywordChange={(event, value, generate) => {
-								handleField('generateKeyword', generate);
-								handleField('value', value);
-							}}
-							onTextBlur={handleBlur}
-							onTextChange={(event) =>
-								handleField('label', event.target.value)
-							}
-							onTextFocus={() => {
-								if (defaultOptionRef.current) {
-									handleField('label', '');
-									defaultOptionRef.current = false;
-								}
-							}}
-							placeholder={placeholder}
-							readOnly={option.disabled}
-							required={required}
-							showLabel={false}
-							store={store}
-							value={option.label}
-							visible={visible}
-						/>
-					)}
-				</Options>
-			</FieldBaseProxy>
-		</DndProvider>
-	)
+						}}
+						onKeywordBlur={handleBlur}
+						onKeywordChange={(event, value, generate) => {
+							handleField('generateKeyword', generate);
+							handleField('value', value);
+						}}
+						placeholder={placeholder}
+						readOnly={option.disabled}
+						required={required}
+						showLabel={false}
+						value={option.label}
+						visible={visible}
+					/>
+				)}
+			</Options>
+		</FieldBase>
+	</DndProvider>
 );
 
-const ReactOptionsAdapter = getConnectedReactComponentAdapter(
-	OptionsProxy,
-	'options'
-);
+Main.displayName = 'Options';
 
-export {ReactOptionsAdapter};
-export default ReactOptionsAdapter;
+export default Main;

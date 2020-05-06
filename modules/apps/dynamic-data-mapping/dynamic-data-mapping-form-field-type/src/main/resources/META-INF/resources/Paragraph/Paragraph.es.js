@@ -14,34 +14,22 @@
 
 import React from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
-const Paragraph = ({name, text}) => (
-	<div
-		className="form-group liferay-ddm-form-field-paragraph"
-		data-field-name={name}
-	>
+const Paragraph = ({name, text, ...otherProps}) => (
+	<FieldBase {...otherProps} name={name}>
 		<div
-			className="liferay-ddm-form-field-paragraph-text"
-			dangerouslySetInnerHTML={{
-				__html: typeof text === 'object' ? text.content : text,
-			}}
-		/>
-	</div>
+			className="form-group liferay-ddm-form-field-paragraph"
+			data-field-name={name}
+		>
+			<div
+				className="liferay-ddm-form-field-paragraph-text"
+				dangerouslySetInnerHTML={{
+					__html: typeof text === 'object' ? text.content : text,
+				}}
+			/>
+		</div>
+	</FieldBase>
 );
 
-const ParagraphProxy = connectStore(({name, text, ...otherProps}) => (
-	<FieldBaseProxy {...otherProps} name={name}>
-		<Paragraph name={name} text={text} />
-	</FieldBaseProxy>
-));
-
-const ReactParagraphAdapter = getConnectedReactComponentAdapter(
-	ParagraphProxy,
-	'paragraph'
-);
-
-export {ReactParagraphAdapter};
-export default ReactParagraphAdapter;
+export default Paragraph;

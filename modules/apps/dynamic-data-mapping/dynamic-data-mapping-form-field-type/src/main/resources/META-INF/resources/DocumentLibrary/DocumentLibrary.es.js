@@ -16,6 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {useStore} from 'dynamic-data-mapping-form-renderer';
 import {
 	ItemSelectorDialog,
 	createActionURL,
@@ -23,9 +24,7 @@ import {
 } from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
 function getDocumentLibrarySelectorURL({
 	groupId,
@@ -198,102 +197,91 @@ const DocumentLibrary = ({
 	);
 };
 
-const DocumentLibraryProxy = connectStore(
-	({
-		emit,
-		fileEntryTitle,
-		fileEntryURL,
-		groupId,
-		id,
+const Main = ({
+	fileEntryTitle,
+	fileEntryURL,
+	groupId,
+	id,
+	itemSelectorAuthToken,
+	name,
+	onBlur,
+	onChange,
+	onFocus,
+	placeholder,
+	readOnly,
+	value = '{}',
+	...otherProps
+}) => {
+	const {store} = useStore();
+	const [currentValue, setCurrentValue] = useState(value);
+
+	const handleVisibleChange = (event) => {
+		if (event.selectedItem) {
+			onFocus(event);
+		}
+		else {
+			onBlur(event);
+		}
+	};
+
+	const handleSelectButtonClicked = ({
 		itemSelectorAuthToken,
-		name,
-		placeholder,
-		readOnly,
-		store,
-		value = '{}',
-		...otherProps
+		portletNamespace,
 	}) => {
-		const [currentValue, setCurrentValue] = useState(value);
+		const itemSelectorDialog = new ItemSelectorDialog({
+			eventName: `${portletNamespace}selectDocumentLibrary`,
+			singleSelect: true,
+			url: getDocumentLibrarySelectorURL({
+				groupId,
+				itemSelectorAuthToken,
+				portletNamespace,
+			}),
+		});
 
-		const handleVisibleChange = (event) => {
-			if (event.selectedItem) {
-				emit('fieldFocused', event, event.selectedItem);
-			}
-			else {
-				emit('fieldBlurred', event);
-			}
-		};
+		itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
+		itemSelectorDialog.on('visibleChange', handleVisibleChange);
 
-		const handleSelectButtonClicked = ({
-			itemSelectorAuthToken,
-			portletNamespace,
-		}) => {
-			const itemSelectorDialog = new ItemSelectorDialog({
-				eventName: `${portletNamespace}selectDocumentLibrary`,
-				singleSelect: true,
-				url: getDocumentLibrarySelectorURL({
-					groupId,
-					itemSelectorAuthToken,
-					portletNamespace,
-				}),
-			});
+		itemSelectorDialog.open();
+	};
 
-			itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
-			itemSelectorDialog.on('visibleChange', handleVisibleChange);
+	const handleFieldChanged = (event) => {
+		const selectedItem = event.selectedItem;
 
-			itemSelectorDialog.open();
-		};
+		if (selectedItem) {
+			const {value} = selectedItem;
 
-		const handleFieldChanged = (event) => {
-			const selectedItem = event.selectedItem;
+			setCurrentValue(value);
 
-			if (selectedItem) {
-				const {value} = selectedItem;
+			onChange(event, value);
+		}
+	};
 
-				setCurrentValue(value);
-
-				emit('fieldEdited', event, value);
-			}
-		};
-
-		return (
-			<FieldBaseProxy
-				{...otherProps}
+	return (
+		<FieldBase {...otherProps} id={id} name={name} readOnly={readOnly}>
+			<DocumentLibrary
+				fileEntryTitle={fileEntryTitle}
+				fileEntryURL={fileEntryURL}
 				id={id}
 				name={name}
+				onClearButtonClicked={(event) => {
+					setCurrentValue(null);
+
+					onChange(event, '{}');
+				}}
+				onSelectButtonClicked={() =>
+					handleSelectButtonClicked({
+						itemSelectorAuthToken,
+						portletNamespace: store.portletNamespace,
+					})
+				}
+				placeholder={placeholder}
 				readOnly={readOnly}
-				store={store}
-			>
-				<DocumentLibrary
-					fileEntryTitle={fileEntryTitle}
-					fileEntryURL={fileEntryURL}
-					id={id}
-					name={name}
-					onClearButtonClicked={(event) => {
-						setCurrentValue(null);
+				value={currentValue || ''}
+			/>
+		</FieldBase>
+	);
+};
 
-						emit('fieldEdited', event, '{}');
-					}}
-					onSelectButtonClicked={() =>
-						handleSelectButtonClicked({
-							itemSelectorAuthToken,
-							portletNamespace: store.portletNamespace,
-						})
-					}
-					placeholder={placeholder}
-					readOnly={readOnly}
-					value={currentValue || ''}
-				/>
-			</FieldBaseProxy>
-		);
-	}
-);
+Main.displayName = 'DocumentLibrary';
 
-const ReactDocumentLibraryAdapter = getConnectedReactComponentAdapter(
-	DocumentLibraryProxy,
-	'document_library'
-);
-
-export {ReactDocumentLibraryAdapter};
-
-export default ReactDocumentLibraryAdapter;
+export default Main;

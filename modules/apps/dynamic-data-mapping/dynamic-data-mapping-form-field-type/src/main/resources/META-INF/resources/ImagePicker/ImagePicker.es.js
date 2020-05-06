@@ -18,9 +18,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {ItemSelectorDialog, cancelDebounce, debounce} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
 const useDebounceCallback = (callback, milliseconds) => {
 	const callbackRef = useRef(debounce(callback, milliseconds));
@@ -234,74 +232,61 @@ const ImagePicker = ({
 	);
 };
 
-const ImagePickerProxy = connectStore(
-	({
-		emit,
-		id,
-		inputValue,
-		itemSelectorURL,
-		name,
-		portletNamespace,
-		readOnly,
-		value,
-		...otherProps
-	}) => {
-		const formatValue = (sourceValue) => {
-			if (sourceValue) {
-				if (typeof sourceValue === 'string') {
-					return JSON.parse(sourceValue);
-				}
-				else if (typeof sourceValue === 'object') {
-					return sourceValue;
-				}
+const Main = ({
+	id,
+	inputValue,
+	itemSelectorURL,
+	name,
+	onChange,
+	portletNamespace,
+	readOnly,
+	value,
+	...otherProps
+}) => {
+	const formatValue = (sourceValue) => {
+		if (sourceValue) {
+			if (typeof sourceValue === 'string') {
+				return JSON.parse(sourceValue);
 			}
+			else if (typeof sourceValue === 'object') {
+				return sourceValue;
+			}
+		}
 
-			return null;
-		};
+		return null;
+	};
 
-		return (
-			<FieldBaseProxy
-				{...otherProps}
+	return (
+		<FieldBase {...otherProps} id={id} name={name} readOnly={readOnly}>
+			<ImagePicker
 				id={id}
+				inputValue={{
+					...(formatValue(inputValue) || formatValue(value) || {}),
+				}}
+				itemSelectorURL={itemSelectorURL}
 				name={name}
+				onClearClick={(data) => {
+					const {event} = data;
+
+					onChange(event, data);
+				}}
+				onDescriptionChange={(data) => {
+					const {event} = data;
+
+					onChange(event, data);
+				}}
+				onFieldChanged={(data) => {
+					const {event} = data;
+
+					onChange(event, data);
+				}}
+				portletNamespace={portletNamespace}
 				readOnly={readOnly}
-			>
-				<ImagePicker
-					id={id}
-					inputValue={{
-						...(formatValue(inputValue) ||
-							formatValue(value) ||
-							{}),
-					}}
-					itemSelectorURL={itemSelectorURL}
-					name={name}
-					onClearClick={(data) => {
-						const {event} = data;
+			/>
+		</FieldBase>
+	);
+};
 
-						emit('fieldEdited', event, data);
-					}}
-					onDescriptionChange={(data) => {
-						const {event} = data;
+Main.displayName = 'ImagePicker';
 
-						emit('fieldEdited', event, data);
-					}}
-					onFieldChanged={(data) => {
-						const {event} = data;
-
-						emit('fieldEdited', event, data);
-					}}
-					portletNamespace={portletNamespace}
-					readOnly={readOnly}
-				/>
-			</FieldBaseProxy>
-		);
-	}
-);
-
-const ReactImagePickerAdapter = getConnectedReactComponentAdapter(
-	ImagePickerProxy,
-	'image'
-);
-
-export {ReactImagePickerAdapter};
-export default ReactImagePickerAdapter;
+export default Main;

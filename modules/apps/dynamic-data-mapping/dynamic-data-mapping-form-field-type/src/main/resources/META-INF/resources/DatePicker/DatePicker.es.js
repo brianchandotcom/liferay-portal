@@ -18,10 +18,8 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createAutoCorrectedDatePipe} from 'text-mask-addons';
 import {createTextMaskInputElement} from 'text-mask-core';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
 
 const getInputMask = (dateFormat, dateDelimiter) => {
 	const inputMaskArray = [];
@@ -197,40 +195,33 @@ const DatePicker = ({
 	);
 };
 
-const DatePickerProxy = connectStore(
-	({
-		emit,
-		name,
-		placeholder,
-		predefinedValue,
-		readOnly,
-		spritemap,
-		value,
-		...otherProps
-	}) => (
-		<FieldBaseProxy
-			{...otherProps}
+const Main = ({
+	name,
+	onChange,
+	placeholder,
+	predefinedValue,
+	readOnly,
+	spritemap,
+	value,
+	...otherProps
+}) => (
+	<FieldBase
+		{...otherProps}
+		name={name}
+		readOnly={readOnly}
+		spritemap={spritemap}
+	>
+		<DatePicker
+			disabled={readOnly}
 			name={name}
-			readOnly={readOnly}
+			onChange={(value) => onChange({}, value)}
+			placeholder={placeholder}
 			spritemap={spritemap}
-		>
-			<DatePicker
-				disabled={readOnly}
-				name={name}
-				onChange={(value) => emit('fieldEdited', {}, value)}
-				placeholder={placeholder}
-				spritemap={spritemap}
-				value={value ? value : predefinedValue}
-			/>
-		</FieldBaseProxy>
-	)
+			value={value ? value : predefinedValue}
+		/>
+	</FieldBase>
 );
 
-const ReactDatePickerAdapter = getConnectedReactComponentAdapter(
-	DatePickerProxy,
-	'date'
-);
+Main.displayName = 'DatePicker';
 
-export {ReactDatePickerAdapter};
-
-export default ReactDatePickerAdapter;
+export default Main;

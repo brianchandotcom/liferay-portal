@@ -14,11 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
-import {
-	FieldBaseProxy,
-	connectStore,
-	getConnectedReactComponentAdapter,
-} from 'dynamic-data-mapping-form-field-type';
+import {ReactFieldBase} from 'dynamic-data-mapping-form-field-type';
 import {ItemSelectorDialog} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -113,34 +109,28 @@ const LayoutSelector = ({
 	);
 };
 
-const LayoutSelectorProxy = connectStore(
-	({
-		emit,
-		itemSelectorURL,
-		name,
-		portletNamespace,
-		predefinedValue,
-		readOnly,
-		value,
-		...otherProps
-	}) => (
-		<FieldBaseProxy {...otherProps} name={name} readOnly={readOnly}>
-			<LayoutSelector
-				disabled={readOnly}
-				inputValue={value && value !== '' ? value : predefinedValue}
-				itemSelectorURL={itemSelectorURL}
-				name={name}
-				onChange={(value) => emit('fieldEdited', {}, value)}
-				portletNamespace={portletNamespace}
-			/>
-		</FieldBaseProxy>
-	)
+const Main = ({
+	itemSelectorURL,
+	name,
+	onChange,
+	portletNamespace,
+	predefinedValue,
+	readOnly,
+	value,
+	...otherProps
+}) => (
+	<ReactFieldBase {...otherProps} name={name} readOnly={readOnly}>
+		<LayoutSelector
+			disabled={readOnly}
+			inputValue={value && value !== '' ? value : predefinedValue}
+			itemSelectorURL={itemSelectorURL}
+			name={name}
+			onChange={(value) => onChange({}, value)}
+			portletNamespace={portletNamespace}
+		/>
+	</ReactFieldBase>
 );
 
-const ReactLayoutSelectorAdapter = getConnectedReactComponentAdapter(
-	LayoutSelectorProxy,
-	'link_to_layout'
-);
+Main.displayName = 'LayoutSelector';
 
-export {ReactLayoutSelectorAdapter};
-export default ReactLayoutSelectorAdapter;
+export default Main;

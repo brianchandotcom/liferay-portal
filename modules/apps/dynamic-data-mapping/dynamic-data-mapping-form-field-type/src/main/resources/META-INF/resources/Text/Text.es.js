@@ -18,10 +18,8 @@ import {ClayInput} from '@clayui/form';
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
 
 const Text = ({
 	disabled,
@@ -266,7 +264,7 @@ const Main = ({
 		];
 
 	return (
-		<FieldBaseProxy {...otherProps} id={id} name={name} readOnly={readOnly}>
+		<FieldBase {...otherProps} id={id} name={name} readOnly={readOnly}>
 			<Component
 				disabled={readOnly}
 				fieldName={fieldName}
@@ -280,22 +278,10 @@ const Main = ({
 				syncDelay={syncDelay}
 				value={value ? value : predefinedValue}
 			/>
-		</FieldBaseProxy>
+		</FieldBase>
 	);
 };
 
 Main.displayName = 'Text';
 
-const TextProxy = connectStore(({emit, ...otherProps}) => (
-	<Main
-		{...otherProps}
-		onBlur={(event) => emit('fieldBlurred', event, event.target.value)}
-		onChange={(event) => emit('fieldEdited', event, event.target.value)}
-		onFocus={(event) => emit('fieldFocused', event, event.target.value)}
-	/>
-));
-
-const ReactTextAdapter = getConnectedReactComponentAdapter(TextProxy, 'text');
-
-export {ReactTextAdapter, useSyncValue, Main};
-export default ReactTextAdapter;
+export default Main;

@@ -15,11 +15,9 @@
 import {globalEval} from 'metal-dom';
 import React, {useEffect, useMemo, useRef} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
-const Captcha = ({html, name}) => {
+const Captcha = ({html, name, ...otherProps}) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const contentMemoized = useMemo(() => html, []);
 	const elRef = useRef(null);
@@ -53,31 +51,14 @@ const Captcha = ({html, name}) => {
 	}, [elRef, name]);
 
 	return (
-		<>
+		<FieldBase {...otherProps} name={name} visible={true}>
 			<div
 				dangerouslySetInnerHTML={{__html: contentMemoized}}
 				ref={elRef}
 			/>
 			<input id={name} type="hidden" />
-		</>
+		</FieldBase>
 	);
 };
 
-const CaptchaProxy = connectStore(({dispatch, html, name, ...otherProps}) => (
-	<FieldBaseProxy
-		{...otherProps}
-		dispatch={dispatch}
-		name={name}
-		visible={true}
-	>
-		<Captcha html={html.content} name={name} />
-	</FieldBaseProxy>
-));
-
-const ReactCaptchaAdapter = getConnectedReactComponentAdapter(
-	CaptchaProxy,
-	'captcha'
-);
-
-export {ReactCaptchaAdapter};
-export default ReactCaptchaAdapter;
+export default Captcha;

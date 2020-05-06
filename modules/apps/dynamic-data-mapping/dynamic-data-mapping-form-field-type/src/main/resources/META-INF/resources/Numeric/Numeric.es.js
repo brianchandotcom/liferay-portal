@@ -17,10 +17,8 @@ import React, {useEffect, useRef} from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import vanillaTextMask from 'vanilla-text-mask';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
 
 const getMaskConfig = (dataType, symbols) => {
 	let config = {
@@ -124,7 +122,7 @@ const Main = ({
 	value,
 	...otherProps
 }) => (
-	<FieldBaseProxy {...otherProps} id={id} name={name} readOnly={readOnly}>
+	<FieldBase {...otherProps} id={id} name={name} readOnly={readOnly}>
 		<Numeric
 			dataType={dataType}
 			disabled={readOnly}
@@ -137,24 +135,10 @@ const Main = ({
 			symbols={symbols}
 			value={value ? value : predefinedValue}
 		/>
-	</FieldBaseProxy>
+	</FieldBase>
 );
 
 Main.displayName = 'Numeric';
 
-const NumericProxy = connectStore(({emit, ...otherProps}) => (
-	<Main
-		{...otherProps}
-		onBlur={(event) => emit('fieldBlurred', event, event.target.value)}
-		onChange={(event) => emit('fieldEdited', event, event.target.value)}
-		onFocus={(event) => emit('fieldFocused', event, event.target.value)}
-	/>
-));
-
-const ReactNumericAdapter = getConnectedReactComponentAdapter(
-	NumericProxy,
-	'numeric'
-);
-
 export {Main};
-export default ReactNumericAdapter;
+export default Main;

@@ -14,11 +14,9 @@
 
 import React, {useEffect, useRef} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
-const Separator = ({style}) => {
+const Separator = ({style, ...otherProps}) => {
 	const elRef = useRef(null);
 
 	useEffect(() => {
@@ -33,19 +31,11 @@ const Separator = ({style}) => {
 		}
 	}, [style]);
 
-	return <div className="separator" ref={elRef} />;
+	return (
+		<FieldBase {...otherProps}>
+			<div className="separator" ref={elRef} />
+		</FieldBase>
+	);
 };
 
-const SeparatorProxy = connectStore(({style, ...otherProps}) => (
-	<FieldBaseProxy {...otherProps}>
-		<Separator style={style} />
-	</FieldBaseProxy>
-));
-
-const ReactSeparatorAdapter = getConnectedReactComponentAdapter(
-	SeparatorProxy,
-	'separator'
-);
-
-export {ReactSeparatorAdapter};
-export default ReactSeparatorAdapter;
+export default Separator;

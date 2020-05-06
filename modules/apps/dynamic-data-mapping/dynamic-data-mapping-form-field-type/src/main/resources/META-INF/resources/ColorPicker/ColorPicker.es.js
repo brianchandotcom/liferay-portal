@@ -15,9 +15,7 @@
 import ClayColorPicker from '@clayui/color-picker';
 import React, {useEffect, useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
 const DEFAULT_COLORS = [
 	'000000',
@@ -76,50 +74,33 @@ const ClayColorPickerWithState = ({
 	);
 };
 
-/**
- * The Proxy is on the front line of `PageRenderer.RegisterFieldType`, communicates
- * directly with the store and issues events from the Metal instance. This should
- * be overridden when we have a Store/Provider React implementation.
- */
-const ColorPickerProxy = connectStore(
-	({
-		dispatch,
-		emit,
-		name,
-		predefinedValue = '000000',
-		readOnly,
-		spritemap,
-		value,
-		...otherProps
-	}) => (
-		<FieldBaseProxy
-			dispatch={dispatch}
+const ColorPicker = ({
+	name,
+	onBlur,
+	onChange,
+	onFocus,
+	predefinedValue = '000000',
+	readOnly,
+	spritemap,
+	value,
+	...otherProps
+}) => (
+	<FieldBase
+		name={name}
+		readOnly={readOnly}
+		spritemap={spritemap}
+		{...otherProps}
+	>
+		<ClayColorPickerWithState
+			inputValue={value ? value : predefinedValue}
 			name={name}
+			onBlur={onBlur}
+			onFocus={onFocus}
+			onValueChange={(value) => onChange({}, value)}
 			readOnly={readOnly}
 			spritemap={spritemap}
-			{...otherProps}
-		>
-			<ClayColorPickerWithState
-				inputValue={value ? value : predefinedValue}
-				name={name}
-				onBlur={(event) =>
-					emit('fieldBlurred', event, event.target.value)
-				}
-				onFocus={(event) =>
-					emit('fieldFocused', event, event.target.value)
-				}
-				onValueChange={(value) => emit('fieldEdited', {}, value)}
-				readOnly={readOnly}
-				spritemap={spritemap}
-			/>
-		</FieldBaseProxy>
-	)
+		/>
+	</FieldBase>
 );
 
-const ReactColorPickerAdapter = getConnectedReactComponentAdapter(
-	ColorPickerProxy,
-	'color'
-);
-
-export {ClayColorPickerWithState, ReactColorPickerAdapter};
-export default ReactColorPickerAdapter;
+export default ColorPicker;

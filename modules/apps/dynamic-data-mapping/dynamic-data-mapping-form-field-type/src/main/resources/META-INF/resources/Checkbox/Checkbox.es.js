@@ -16,9 +16,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
 const Switcher = ({
 	checked: initialChecked,
@@ -104,7 +102,6 @@ const Checkbox = ({
 
 const Main = ({
 	disabled,
-	dispatch,
 	label,
 	name,
 	onChange,
@@ -118,8 +115,7 @@ const Main = ({
 	const Toggle = showAsSwitcher ? Switcher : Checkbox;
 
 	return (
-		<FieldBaseProxy
-			dispatch={dispatch}
+		<FieldBase
 			label={label}
 			name={name}
 			required={required}
@@ -137,23 +133,11 @@ const Main = ({
 				showLabel={showLabel}
 				spritemap={spritemap}
 			/>
-		</FieldBaseProxy>
+		</FieldBase>
 	);
 };
 
 Main.displayName = 'Checkbox';
 
-const CheckboxProxy = connectStore(({emit, ...otherProps}) => (
-	<Main
-		{...otherProps}
-		onChange={(event, value) => emit('fieldEdited', event, value)}
-	/>
-));
-
-const ReactCheckboxAdapter = getConnectedReactComponentAdapter(
-	CheckboxProxy,
-	'checkbox'
-);
-
-export {ReactCheckboxAdapter, Main};
-export default ReactCheckboxAdapter;
+export {Main};
+export default Main;

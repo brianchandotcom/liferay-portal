@@ -14,74 +14,42 @@
 
 import React, {useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
 const Password = ({
-	disabled,
 	name,
 	onBlur,
+	onChange,
 	onFocus,
-	onInput,
 	placeholder,
+	predefinedValue,
+	readOnly: disabled,
 	value: initialValue,
+	...otherProps
 }) => {
-	const [value, setValue] = useState(initialValue);
+	const [value, setValue] = useState(
+		initialValue ? initialValue : predefinedValue
+	);
 
 	return (
-		<input
-			className="ddm-field-text form-control"
-			disabled={disabled}
-			id={name}
-			name={name}
-			onBlur={onBlur}
-			onFocus={onFocus}
-			onInput={(event) => {
-				onInput(event);
-				setValue(event.target.value);
-			}}
-			placeholder={placeholder}
-			type="password"
-			value={value}
-		/>
+		<FieldBase {...otherProps} name={name} readOnly={disabled}>
+			<input
+				className="ddm-field-text form-control"
+				disabled={disabled}
+				id={name}
+				name={name}
+				onBlur={onBlur}
+				onFocus={onFocus}
+				onInput={(event) => {
+					onChange(event);
+					setValue(event.target.value);
+				}}
+				placeholder={placeholder}
+				type="password"
+				value={value}
+			/>
+		</FieldBase>
 	);
 };
 
-const PasswordProxy = connectStore(
-	({
-		emit,
-		name,
-		placeholder,
-		predefinedValue,
-		readOnly,
-		value,
-		...otherProps
-	}) => (
-		<FieldBaseProxy {...otherProps} name={name} readOnly={readOnly}>
-			<Password
-				disabled={readOnly}
-				name={name}
-				onBlur={(event) =>
-					emit('fieldBlurred', event, event.target.value)
-				}
-				onFocus={(event) =>
-					emit('fieldFocused', event, event.target.value)
-				}
-				onInput={(event) =>
-					emit('fieldEdited', event, event.target.value)
-				}
-				placeholder={placeholder}
-				value={value ? value : predefinedValue}
-			/>
-		</FieldBaseProxy>
-	)
-);
-
-const ReactPasswordAdapter = getConnectedReactComponentAdapter(
-	PasswordProxy,
-	'password'
-);
-
-export {ReactPasswordAdapter};
-export default ReactPasswordAdapter;
+export default Password;

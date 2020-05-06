@@ -15,11 +15,9 @@
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 import React, {useRef} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import {Main as Text} from '../Text/Text.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import Text from '../Text/Text.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
 
 const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
 	<div className="active form-text key-value-editor">
@@ -42,61 +40,57 @@ const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
 );
 
 const Main = ({
-	dispatch,
 	generateKeyword: initialGenerateKeyword = true,
-	keyword,
+	keyword: initialKeyword,
 	keywordReadOnly,
 	name,
+	onBlur,
+	onChange,
+	onFocus,
 	onKeywordBlur,
 	onKeywordChange,
-	onTextBlur,
-	onTextChange,
-	onTextFocus,
 	placeholder,
 	readOnly,
 	required,
 	showLabel,
 	spritemap,
-	store,
 	value,
 	visible,
 	...otherProps
 }) => {
+	const [keyword, setKeyword] = useSyncValue(initialKeyword);
+
 	const generateKeywordRef = useRef(initialGenerateKeyword);
 
 	return (
-		<FieldBaseProxy
+		<FieldBase
 			{...otherProps}
-			dispatch={dispatch}
 			name={name}
 			readOnly={readOnly}
 			required={required}
 			showLabel={showLabel}
 			spritemap={spritemap}
-			store={store}
 			visible={visible}
 		>
 			<Text
-				dispatch={dispatch}
 				name={`keyValueLabel${name}`}
-				onBlur={onTextBlur}
+				onBlur={onBlur}
 				onChange={(event) => {
 					const {value} = event.target;
 
-					onTextChange(event);
+					onChange(event);
 
 					if (generateKeywordRef.current) {
 						const newKeyword = normalizeFieldName(value);
 						onKeywordChange(event, newKeyword, true);
 					}
 				}}
-				onFocus={onTextFocus}
+				onFocus={onFocus}
 				placeholder={placeholder}
 				readOnly={readOnly}
 				required={required}
 				showLabel={showLabel}
 				spritemap={spritemap}
-				store={store}
 				syncDelay={false}
 				value={value}
 				visible={visible}
@@ -109,48 +103,14 @@ const Main = ({
 
 					generateKeywordRef.current = false;
 					onKeywordChange(event, value, false);
+					setKeyword(value);
 				}}
 				value={keyword}
 			/>
-		</FieldBaseProxy>
+		</FieldBase>
 	);
 };
 
 Main.displayName = 'KeyValue';
 
-const KeyValueProxy = connectStore(
-	({emit, keyword: initialKeyword, ...otherProps}) => {
-		const [keyword, setKeyword] = useSyncValue(initialKeyword);
-
-		return (
-			<Main
-				{...otherProps}
-				keyword={keyword}
-				onKeywordBlur={(event) =>
-					emit('fieldKeywordBlurred', event, event.target.value)
-				}
-				onKeywordChange={(event, value) => {
-					setKeyword(value);
-					emit('fieldKeywordEdited', event, value);
-				}}
-				onTextBlur={(event) =>
-					emit('fieldBlurred', event, event.target.value)
-				}
-				onTextChange={(event) =>
-					emit('fieldEdited', event, event.target.value)
-				}
-				onTextFocus={(event) =>
-					emit('fieldFocused', event, event.target.value)
-				}
-			/>
-		);
-	}
-);
-
-const ReactKeyValueAdapter = getConnectedReactComponentAdapter(
-	KeyValueProxy,
-	'key_value'
-);
-
-export {ReactKeyValueAdapter, Main};
-export default ReactKeyValueAdapter;
+export default Main;

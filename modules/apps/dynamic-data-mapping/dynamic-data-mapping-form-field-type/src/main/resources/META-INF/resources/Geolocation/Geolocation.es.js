@@ -15,9 +15,7 @@
 import 'leaflet/dist/leaflet.css';
 import React from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {MAP_PROVIDER, useGeolocation} from './useGeolocation.es';
 
 const geolocateTitle = Liferay.Language.get('geolocate');
@@ -84,37 +82,31 @@ const Geolocation = ({
 	);
 };
 
-const GeolocationProxy = connectStore(
-	({
-		emit,
-		googleMapsAPIKey,
-		instanceId,
-		mapProviderKey = MAP_PROVIDER.openStreetMap,
-		name,
-		readOnly,
-		value,
-		viewMode,
-		...otherProps
-	}) => (
-		<FieldBaseProxy {...otherProps} name={name}>
-			<Geolocation
-				disabled={readOnly}
-				googleMapsAPIKey={googleMapsAPIKey}
-				instanceId={instanceId}
-				mapProviderKey={mapProviderKey}
-				name={name}
-				onChange={(value) => emit('fieldEdited', {}, value)}
-				value={value}
-				viewMode={viewMode}
-			/>
-		</FieldBaseProxy>
-	)
+const Main = ({
+	googleMapsAPIKey,
+	instanceId,
+	mapProviderKey = MAP_PROVIDER.openStreetMap,
+	name,
+	onChange,
+	readOnly,
+	value,
+	viewMode,
+	...otherProps
+}) => (
+	<FieldBase {...otherProps} name={name}>
+		<Geolocation
+			disabled={readOnly}
+			googleMapsAPIKey={googleMapsAPIKey}
+			instanceId={instanceId}
+			mapProviderKey={mapProviderKey}
+			name={name}
+			onChange={(value) => onChange({}, value)}
+			value={value}
+			viewMode={viewMode}
+		/>
+	</FieldBase>
 );
 
-const ReactGeolocationAdapter = getConnectedReactComponentAdapter(
-	GeolocationProxy,
-	'geolocation'
-);
+Main.displayName = 'Geolocation';
 
-export {ReactGeolocationAdapter};
-export default ReactGeolocationAdapter;
+export default Main;

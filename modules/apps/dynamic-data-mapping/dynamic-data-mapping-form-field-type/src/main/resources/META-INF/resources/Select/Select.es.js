@@ -16,10 +16,8 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import React, {forwardRef, useMemo, useRef, useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
 import HiddenSelectInput from './HiddenSelectInput.es';
 import VisibleSelectInput from './VisibleSelectInput.es';
 
@@ -421,8 +419,9 @@ const Main = ({
 	localizedValue = {},
 	multiple,
 	name,
+	onBlur = () => {},
 	onChange,
-	onExpand = () => {},
+	onFocus = () => {},
 	options = [],
 	predefinedValue = [],
 	readOnly = false,
@@ -455,7 +454,7 @@ const Main = ({
 	);
 
 	return (
-		<FieldBaseProxy
+		<FieldBase
 			label={label}
 			localizedValue={localizedValue}
 			name={name}
@@ -465,40 +464,30 @@ const Main = ({
 			<Select
 				multiple={multiple}
 				name={name}
-				onCloseButtonClicked={onChange}
-				onDropdownItemClicked={onChange}
-				onExpand={onExpand}
+				onCloseButtonClicked={({event, value}) =>
+					onChange(event, value)
+				}
+				onDropdownItemClicked={({event, value}) =>
+					onChange(event, value)
+				}
+				onExpand={({event, expand}) => {
+					if (expand) {
+						onFocus(event);
+					}
+					else {
+						onBlur(event);
+					}
+				}}
 				options={normalizedOptions}
 				predefinedValue={predefinedValueArray}
 				readOnly={readOnly}
 				value={value}
 				{...otherProps}
 			/>
-		</FieldBaseProxy>
+		</FieldBase>
 	);
 };
 
 Main.displayName = 'Select';
 
-const SelectProxy = connectStore(({emit, ...otherProps}) => (
-	<Main
-		{...otherProps}
-		onChange={({event, value}) => emit('fieldEdited', event, value)}
-		onExpand={({event, expand}) => {
-			if (expand) {
-				emit('fieldFocused', event, event.target.value);
-			}
-			else {
-				emit('fieldBlurred', event, event.target.value);
-			}
-		}}
-	/>
-));
-
-const ReactSelectAdapter = getConnectedReactComponentAdapter(
-	SelectProxy,
-	'select'
-);
-
-export {ReactSelectAdapter, Main};
-export default ReactSelectAdapter;
+export default Main;

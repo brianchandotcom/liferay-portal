@@ -16,9 +16,7 @@ import {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {setJSONArrayValue} from '../util/setters.es';
 
 const Switcher = ({
@@ -108,54 +106,42 @@ const CheckboxMultiple = ({
 	);
 };
 
-const CheckboxMultipleProxy = connectStore(
-	({
-		dispatch,
-		emit,
-		inline,
-		name,
-		options = [
-			{
-				label: 'Option 1',
-			},
-			{
-				label: 'Option 2',
-			},
-		],
-		predefinedValue,
-		readOnly,
-		showAsSwitcher = true,
-		value,
-		...otherProps
-	}) => (
-		<FieldBaseProxy
-			dispatch={dispatch}
+const Main = ({
+	inline,
+	name,
+	options = [
+		{
+			label: 'Option 1',
+		},
+		{
+			label: 'Option 2',
+		},
+	],
+	onBlur,
+	onChange,
+	onFocus,
+	predefinedValue,
+	readOnly,
+	showAsSwitcher = true,
+	value,
+	...otherProps
+}) => (
+	<FieldBase name={name} readOnly={readOnly} {...otherProps}>
+		<CheckboxMultiple
+			disabled={readOnly}
+			inline={inline}
+			isSwitcher={showAsSwitcher}
 			name={name}
-			readOnly={readOnly}
-			{...otherProps}
-		>
-			<CheckboxMultiple
-				disabled={readOnly}
-				inline={inline}
-				isSwitcher={showAsSwitcher}
-				name={name}
-				onBlur={(event) =>
-					emit('fieldBlurred', event, event.target.value)
-				}
-				onChange={(event, value) => emit('fieldEdited', event, value)}
-				onFocus={(event) => emit('fieldFocused', event)}
-				options={options}
-				predefinedValue={setJSONArrayValue(predefinedValue)}
-				value={setJSONArrayValue(value)}
-			/>
-		</FieldBaseProxy>
-	)
+			onBlur={onBlur}
+			onChange={onChange}
+			onFocus={onFocus}
+			options={options}
+			predefinedValue={setJSONArrayValue(predefinedValue)}
+			value={setJSONArrayValue(value)}
+		/>
+	</FieldBase>
 );
 
-const ReactCheckboxMultipleAdapter = getConnectedReactComponentAdapter(
-	CheckboxMultipleProxy,
-	'checkbox_multiple'
-);
+Main.displayName = 'CheckboxMultiple';
 
-export {ReactCheckboxMultipleAdapter};
-export default ReactCheckboxMultipleAdapter;
+export default Main;

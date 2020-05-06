@@ -15,10 +15,8 @@
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
 
 const CKEDITOR_CONFIG = {
 	toolbar: [
@@ -69,8 +67,18 @@ const CKEDITOR_CONFIG = {
 	],
 };
 
-const RichText = ({data, id, name, onChange, readOnly}) => {
-	const [currentValue, setCurrentValue] = useSyncValue(data);
+const RichText = ({
+	id,
+	name,
+	onChange,
+	predefinedValue,
+	readOnly,
+	value,
+	...otherProps
+}) => {
+	const [currentValue, setCurrentValue] = useSyncValue(
+		value ? value : predefinedValue
+	);
 
 	const editorProps = {
 		config: CKEDITOR_CONFIG,
@@ -87,12 +95,12 @@ const RichText = ({data, id, name, onChange, readOnly}) => {
 
 			setCurrentValue(newValue);
 
-			onChange({data: newValue, event});
+			onChange(event, newValue);
 		};
 	}
 
 	return (
-		<>
+		<FieldBase {...otherProps} id={id} name={name} readOnly={readOnly}>
 			<Editor {...editorProps} />
 
 			<input
@@ -101,43 +109,8 @@ const RichText = ({data, id, name, onChange, readOnly}) => {
 				name={name}
 				type="hidden"
 			/>
-		</>
+		</FieldBase>
 	);
 };
 
-const Main = ({
-	id,
-	name,
-	onChange,
-	predefinedValue,
-	readOnly,
-	value,
-	...otherProps
-}) => {
-	return (
-		<FieldBaseProxy {...otherProps} id={id} name={name} readOnly={readOnly}>
-			<RichText
-				data={value || predefinedValue}
-				id={id}
-				name={name}
-				onChange={onChange}
-				readOnly={readOnly}
-			/>
-		</FieldBaseProxy>
-	);
-};
-
-const RichTextProxy = connectStore(({emit, ...otherProps}) => (
-	<Main
-		{...otherProps}
-		onChange={({data, event}) => emit('fieldEdited', event, data)}
-	/>
-));
-
-const ReactRichTextAdapter = getConnectedReactComponentAdapter(
-	RichTextProxy,
-	'rich_text'
-);
-
-export {ReactRichTextAdapter};
-export default ReactRichTextAdapter;
+export default RichText;

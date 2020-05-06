@@ -16,9 +16,7 @@ import {ClayInput, ClayRadio} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React, {useState} from 'react';
 
-import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
 const TableHead = ({columns}) => (
 	<ClayTable.Head>
@@ -74,9 +72,9 @@ const Grid = ({
 	columns = [{label: 'col1', value: 'fieldId'}],
 	disabled,
 	name,
-	onBlur = () => {},
-	onChange = () => {},
-	onFocus = () => {},
+	onBlur,
+	onChange,
+	onFocus,
 	rows = [{label: 'row', value: 'jehf'}],
 	value,
 	...otherProps
@@ -133,44 +131,46 @@ const Grid = ({
 	</div>
 );
 
-const GridProxy = connectStore(
-	({columns, emit, name, readOnly, rows, value = {}, ...otherProps}) => {
-		const [state, setState] = useState(value);
+const Main = ({
+	columns,
+	name,
+	readOnly,
+	rows,
+	onChange,
+	onFocus,
+	onBlur,
+	value = {},
+	...otherProps
+}) => {
+	const [state, setState] = useState(value);
 
-		return (
-			<FieldBaseProxy name={name} readOnly={readOnly} {...otherProps}>
-				<Grid
-					columns={columns}
-					disabled={readOnly}
-					name={name}
-					onBlur={(event) =>
-						emit('fieldBlurred', event, event.target.value)
-					}
-					onChange={(event) => {
-						const {target} = event;
-						const value = {
-							[target.name]: target.value,
-						};
+	return (
+		<FieldBase name={name} readOnly={readOnly} {...otherProps}>
+			<Grid
+				columns={columns}
+				disabled={readOnly}
+				name={name}
+				onBlur={onBlur}
+				onChange={(event) => {
+					const {target} = event;
+					const value = {
+						[target.name]: target.value,
+					};
 
-						const newState = {...state, ...value};
+					const newState = {...state, ...value};
 
-						setState(newState);
+					setState(newState);
 
-						emit('fieldEdited', event, newState);
-					}}
-					onFocus={(event) =>
-						emit('fieldFocused', event, event.target.value)
-					}
-					rows={rows}
-					value={state}
-				/>
-			</FieldBaseProxy>
-		);
-	}
-);
+					onChange(event, newState);
+				}}
+				onFocus={onFocus}
+				rows={rows}
+				value={state}
+			/>
+		</FieldBase>
+	);
+};
 
-const ReactGridAdapter = getConnectedReactComponentAdapter(GridProxy, 'grid');
+Main.displayName = 'Grid';
 
-export {ReactGridAdapter};
-
-export default ReactGridAdapter;
+export default Main;

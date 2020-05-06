@@ -12,7 +12,5 @@
  * details.
  */
 
-export {connectStore} from './util/connectStore.es';
-export {FieldBaseProxy} from './FieldBase/ReactFieldBase.es';
+export {FieldBase as ReactFieldBase} from './FieldBase/ReactFieldBase.es';
 export {default as FieldBase} from './FieldBase/FieldBase.es';
-export {default as getConnectedReactComponentAdapter} from './util/ReactComponentAdapter.es';

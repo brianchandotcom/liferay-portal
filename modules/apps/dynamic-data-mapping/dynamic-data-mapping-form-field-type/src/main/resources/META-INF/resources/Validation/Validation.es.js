@@ -15,12 +15,10 @@
 import ClayForm from '@clayui/form';
 import React, {useState} from 'react';
 
-import {Main as Checkbox} from '../Checkbox/Checkbox.es';
-import {Main as Numeric} from '../Numeric/Numeric.es';
-import {Main as Select} from '../Select/Select.es';
-import {Main as Text} from '../Text/Text.es';
-import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import {connectStore} from '../util/connectStore.es';
+import Checkbox from '../Checkbox/Checkbox.es';
+import Numeric from '../Numeric/Numeric.es';
+import Select from '../Select/Select.es';
+import Text from '../Text/Text.es';
 import {subWords} from '../util/strings.es';
 import {getSelectedValidation, transformData} from './transform.es';
 
@@ -42,7 +40,6 @@ const Validation = ({
 	validations,
 	value,
 	visible,
-	...otherProps
 }) => {
 	const [
 		{enableValidation, errorMessage, parameter, selectedValidation},
@@ -103,7 +100,6 @@ const Validation = ({
 	return (
 		<ClayForm.Group className="lfr-ddm-form-field-validation">
 			<Checkbox
-				{...otherProps}
 				disabled={readOnly}
 				label={label}
 				name="enableValidation"
@@ -119,11 +115,10 @@ const Validation = ({
 			{enableValidation && (
 				<>
 					<Select
-						{...otherProps}
 						disableEmptyOption
 						label={Liferay.Language.get('if-input')}
 						name="selectedValidation"
-						onChange={({value}) =>
+						onChange={(event, value) =>
 							handleChange(
 								'selectedValidation',
 								transformSelectedValidation(value)
@@ -138,7 +133,6 @@ const Validation = ({
 					/>
 					{selectedValidation.parameterMessage && (
 						<DynamicComponent
-							{...otherProps}
 							dataType={dataType}
 							label={Liferay.Language.get('the-value')}
 							name={`${name}_parameter`}
@@ -154,7 +148,6 @@ const Validation = ({
 						/>
 					)}
 					<Text
-						{...otherProps}
 						label={Liferay.Language.get('show-error-message')}
 						name={`${name}_errorMessage`}
 						onChange={(event) =>
@@ -173,55 +166,43 @@ const Validation = ({
 	);
 };
 
-const ValidationProxy = connectStore(
-	({
-		emit,
-		dataType: initialDataType,
+const Main = ({
+	dataType: initialDataType,
+	defaultLanguageId,
+	editingLanguageId,
+	label,
+	name,
+	onChange,
+	readOnly,
+	spritemap,
+	validation,
+	validations: initialValidations,
+	value = {},
+	visible,
+}) => {
+	const data = transformData({
 		defaultLanguageId,
-		dispatch,
 		editingLanguageId,
-		label,
-		name,
-		readOnly,
-		spritemap,
-		store,
+		initialDataType,
+		initialValidations,
 		validation,
-		validations: initialValidations,
-		value = {},
-		visible,
-	}) => {
-		const data = transformData({
-			defaultLanguageId,
-			editingLanguageId,
-			initialDataType,
-			initialValidations,
-			validation,
-			value,
-		});
+		value,
+	});
 
-		return (
-			<Validation
-				{...data}
-				dispatch={dispatch}
-				editingLanguageId={editingLanguageId}
-				label={label}
-				name={name}
-				onChange={(value) => emit('fieldEdited', {}, value)}
-				readOnly={readOnly}
-				spritemap={spritemap}
-				store={store}
-				validation={validation}
-				value={value}
-				visible={visible}
-			/>
-		);
-	}
-);
+	return (
+		<Validation
+			{...data}
+			editingLanguageId={editingLanguageId}
+			label={label}
+			name={name}
+			onChange={(value) => onChange({}, value)}
+			readOnly={readOnly}
+			spritemap={spritemap}
+			validation={validation}
+			value={value}
+			visible={visible}
+		/>
+	);
+};
 
-const ReactValidationAdapter = getConnectedReactComponentAdapter(
-	ValidationProxy,
-	'validation'
-);
-
-export {ReactValidationAdapter};
-export default ReactValidationAdapter;
+export default Main;

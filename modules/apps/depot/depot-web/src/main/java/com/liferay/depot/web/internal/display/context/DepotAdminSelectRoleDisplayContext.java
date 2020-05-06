@@ -15,6 +15,7 @@
 package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
@@ -53,6 +55,7 @@ import com.liferay.roles.admin.kernel.util.RolesAdminUtil;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -81,10 +84,44 @@ public class DepotAdminSelectRoleDisplayContext {
 		int step = ParamUtil.getInteger(renderRequest, "step", Step1.TYPE);
 
 		if (step == Step2.TYPE) {
-			_step = new Step2(renderRequest, renderResponse, _user);
+			_step = new Step2(null, renderRequest, renderResponse, _user);
 		}
 		else {
-			_step = new Step1(renderRequest, renderResponse, _user);
+			String keywords = ParamUtil.getString(renderRequest, "keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				_step = new Step1(renderRequest, renderResponse, _user);
+			}
+			else {
+				long[] classNameIds = {
+					PortalUtil.getClassNameId(DepotEntry.class.getName())
+				};
+
+				LinkedHashMap<String, Object> groupParams =
+					LinkedHashMapBuilder.<String, Object>put(
+						"inherit", Boolean.FALSE
+					).put(
+						"types",
+						Collections.singletonList(GroupConstants.TYPE_DEPOT)
+					).put(
+						"usersGroups", _user.getUserId()
+					).build();
+
+				int searchCount = GroupServiceUtil.searchCount(
+					_user.getCompanyId(), classNameIds, keywords, groupParams);
+
+				if (searchCount == 1) {
+					List<Group> groups = GroupServiceUtil.search(
+						_user.getCompanyId(), classNameIds, keywords,
+						groupParams, 0, 1, null);
+
+					_step = new Step2(
+						groups.get(0), renderRequest, renderResponse, _user);
+				}
+				else {
+					_step = new Step1(renderRequest, renderResponse, _user);
+				}
+			}
 		}
 	}
 
@@ -214,15 +251,20 @@ public class DepotAdminSelectRoleDisplayContext {
 		public static final int TYPE = 2;
 
 		public Step2(
-				RenderRequest renderRequest, RenderResponse renderResponse,
-				User user)
+				Group group, RenderRequest renderRequest,
+				RenderResponse renderResponse, User user)
 			throws PortalException {
 
 			_renderRequest = renderRequest;
 			_renderResponse = renderResponse;
 			_user = user;
 
-			_group = _getGroup(renderRequest);
+			if (group == null) {
+				_group = _getGroup(renderRequest);
+			}
+			else {
+				_group = group;
+			}
 
 			_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

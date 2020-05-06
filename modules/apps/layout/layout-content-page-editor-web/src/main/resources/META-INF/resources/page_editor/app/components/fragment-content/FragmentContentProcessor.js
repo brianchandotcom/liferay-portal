@@ -85,6 +85,13 @@ export default function FragmentContentProcessor({
 			(value) => {
 				const previousValue = editableValue[languageId];
 
+				if (
+					!previousValue &&
+					value === editableValue.defaultValue.trim()
+				) {
+					return;
+				}
+
 				if (previousValue === value) {
 					return;
 				}

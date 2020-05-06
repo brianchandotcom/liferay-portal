@@ -136,48 +136,62 @@ export const RowConfigurationPanel = ({item}) => {
 					onValueChange={handleConfigurationValueChanged}
 				/>
 			)}
-			<div className="align-items-center d-flex justify-content-between page-editor__floating-toolbar__label pt-3">
-				<p className="mb-3 text-uppercase">
-					{Liferay.Language.get('styles')}
-				</p>
-				<p>
-					{Liferay.Language.get(
-						availableViewportSizes[selectedViewportSize].label
-					)}
-					<ClayIcon
-						className="ml-1"
-						symbol={
-							availableViewportSizes[selectedViewportSize].icon
-						}
-					/>
-				</p>
-			</div>
-			<RowSelectConfigurationPanel
-				config={viewportSizeConfig.modulesPerRow}
-				id="rowModulesPerRow"
-				identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
-				label={Liferay.Language.get('layout')}
-				onValueChange={handleConfigurationValueChanged}
-				options={MODULES_PER_ROW_OPTIONS[rowConfig.numberOfColumns - 1]}
-				optionsLabel={labelModulePerRowOptions}
-			/>
-			{viewportSizeConfig.numberOfColumns === 2 &&
-				viewportSizeConfig.modulesPerRow === 1 && (
-					<RowCheckboxConfigurationPanel
-						config={viewportSizeConfig.reverseOrder}
-						identifier={ROW_CONFIGURATION_IDENTIFIERS.reverseOrder}
-						label={Liferay.Language.get('inverse-order')}
+			{config.responsiveEnabled && (
+				<>
+					<div className="align-items-center d-flex justify-content-between page-editor__floating-toolbar__label pt-3">
+						<p className="mb-3 text-uppercase">
+							{Liferay.Language.get('styles')}
+						</p>
+						<p>
+							{Liferay.Language.get(
+								availableViewportSizes[selectedViewportSize]
+									.label
+							)}
+							<ClayIcon
+								className="ml-1"
+								symbol={
+									availableViewportSizes[selectedViewportSize]
+										.icon
+								}
+							/>
+						</p>
+					</div>
+					<RowSelectConfigurationPanel
+						config={viewportSizeConfig.modulesPerRow}
+						id="rowModulesPerRow"
+						identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
+						label={Liferay.Language.get('layout')}
 						onValueChange={handleConfigurationValueChanged}
+						options={
+							MODULES_PER_ROW_OPTIONS[
+								rowConfig.numberOfColumns - 1
+							]
+						}
+						optionsLabel={labelModulePerRowOptions}
 					/>
-				)}
-			<RowSelectConfigurationPanel
-				config={viewportSizeConfig.verticalAlignment}
-				id="rowVerticalAlignment"
-				identifier={ROW_CONFIGURATION_IDENTIFIERS.verticalAlignment}
-				label={Liferay.Language.get('vertical-alignment')}
-				onValueChange={handleConfigurationValueChanged}
-				options={VERTICAL_ALIGNMENT}
-			/>
+					{viewportSizeConfig.numberOfColumns === 2 &&
+						viewportSizeConfig.modulesPerRow === 1 && (
+							<RowCheckboxConfigurationPanel
+								config={viewportSizeConfig.reverseOrder}
+								identifier={
+									ROW_CONFIGURATION_IDENTIFIERS.reverseOrder
+								}
+								label={Liferay.Language.get('inverse-order')}
+								onValueChange={handleConfigurationValueChanged}
+							/>
+						)}
+					<RowSelectConfigurationPanel
+						config={viewportSizeConfig.verticalAlignment}
+						id="rowVerticalAlignment"
+						identifier={
+							ROW_CONFIGURATION_IDENTIFIERS.verticalAlignment
+						}
+						label={Liferay.Language.get('vertical-alignment')}
+						onValueChange={handleConfigurationValueChanged}
+						options={VERTICAL_ALIGNMENT}
+					/>
+				</>
+			)}
 		</>
 	);
 };

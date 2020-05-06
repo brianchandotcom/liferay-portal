@@ -20,5 +20,5 @@ export const LAYOUT_DATA_ITEM_TYPE_LABELS = {
 	dropZone: Liferay.Language.get('drop-zone'),
 	fragment: Liferay.Language.get('fragment'),
 	root: Liferay.Language.get('root'),
-	row: Liferay.Language.get('grid'),
+	row: Liferay.Language.get('row'),
 };

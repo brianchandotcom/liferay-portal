@@ -203,24 +203,24 @@ public class BeanFilterInvokerPortletFilter
 
 	static {
 		try {
-			_destroyMethod = PortletFilter.class.getMethod("destroy");
 			_actionDoFilterMethod = ActionFilter.class.getMethod(
 				"doFilter", ActionRequest.class, ActionResponse.class,
 				FilterChain.class);
+			_destroyMethod = PortletFilter.class.getMethod("destroy");
 			_eventDoFilterMethod = EventFilter.class.getMethod(
 				"doFilter", EventRequest.class, EventResponse.class,
 				FilterChain.class);
 			_headerDoFilterMethod = HeaderFilter.class.getMethod(
 				"doFilter", HeaderRequest.class, HeaderResponse.class,
 				HeaderFilterChain.class);
+			_initMethod = PortletFilter.class.getMethod(
+				"init", FilterConfig.class);
 			_renderDoFilterMethod = RenderFilter.class.getMethod(
 				"doFilter", RenderRequest.class, RenderResponse.class,
 				FilterChain.class);
 			_resourceDoFilterMethod = ResourceFilter.class.getMethod(
 				"doFilter", ResourceRequest.class, ResourceResponse.class,
 				FilterChain.class);
-			_initMethod = PortletFilter.class.getMethod(
-				"init", FilterConfig.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
 			throw new ExceptionInInitializerError(noSuchMethodException);

@@ -31,8 +31,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
@@ -721,18 +719,6 @@ public class DataLayoutTaglibUtil {
 			return new UnlocalizedValue(jsonObject.toString());
 		}
 
-		private DDMForm _deserializeDDMForm(String content) {
-			DDMFormDeserializerDeserializeRequest.Builder builder =
-				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-					content);
-
-			DDMFormDeserializerDeserializeResponse
-				ddmFormDeserializerDeserializeResponse =
-					_jsonDDMFormDeserializer.deserialize(builder.build());
-
-			return ddmFormDeserializerDeserializeResponse.getDDMForm();
-		}
-
 		private DDMFormLayout _deserializeDDMFormLayout(String content) {
 			DDMFormLayoutDeserializerDeserializeRequest.Builder builder =
 				DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
@@ -806,7 +792,9 @@ public class DataLayoutTaglibUtil {
 				"defaultLanguageId", ddmStructure.getDefaultLanguageId()
 			);
 
-			return _deserializeDDMForm(jsonObject.toJSONString());
+			ddmStructure.setDefinition(jsonObject.toJSONString());
+
+			return ddmStructure.getDDMForm();
 		}
 
 		private DDMFormLayout _getDDMFormLayout() throws Exception {

@@ -20,8 +20,6 @@ import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataRecordValuesUtil;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -54,20 +52,11 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 		DDMStructure ddmStructure = ddmStructureVersion.getStructure();
 
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				ddmStructure.getDefinition());
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(builder.build());
+		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		return _ddmFormRenderer.render(
-			ddmFormDeserializerDeserializeResponse.getDDMForm(),
-			ddmStructureLayout.getDDMFormLayout(),
-			_toDDMFormRenderingContext(
-				dataLayoutRendererContext,
-				ddmFormDeserializerDeserializeResponse.getDDMForm()));
+			ddmForm, ddmStructureLayout.getDDMFormLayout(),
+			_toDDMFormRenderingContext(dataLayoutRendererContext, ddmForm));
 	}
 
 	private DDMFormRenderingContext _toDDMFormRenderingContext(

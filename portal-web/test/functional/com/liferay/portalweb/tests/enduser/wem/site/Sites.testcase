@@ -27,10 +27,7 @@ definition {
 	test ActivateSite {
 		property test.name.skip.portal.instance = "Sites#ActivateSite";
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Infrastructure",
@@ -314,19 +311,9 @@ definition {
 	test ViewDefaultGlobalScopeLandingPage {
 		property testray.component.names = "Site Administration";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoSite(site = "Global");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		ProductMenuHelper.openProductMenu();
 
 		Site.viewGlobalLandingDefault(
 			portletName = "Web Content",
@@ -373,11 +360,15 @@ definition {
 			childSiteName = "Child ChildSiteName",
 			siteName = "Child SiteName");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Child SiteName",
+			layoutName = "Site Page",
+			parentGroupName = "Site Name",
+			widgetName = "Sites Directory");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
 			siteName = "Child SiteName");
-
-		Portlet.addPG(portletName = "Sites Directory");
 
 		SitesDirectory.configureSetupPG(directorySites = "Parent Level");
 
@@ -438,11 +429,15 @@ definition {
 			layoutName = "Site Page",
 			parentGroupName = "Site Name");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Child Site1Name",
+			layoutName = "Site Page",
+			parentGroupName = "Site Name",
+			widgetName = "Sites Directory");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
 			siteName = "Child Site1Name");
-
-		Portlet.addPG(portletName = "Sites Directory");
 
 		SitesDirectory.configureSetupPG(directorySites = "Top Level");
 
@@ -480,11 +475,16 @@ definition {
 
 		SitesDirectory.viewDescriptivePG(siteName = "Child ChildSite2Name");
 
+		JSONLayout.addWidgetToPublicLayout(
+			grandParentGroupName = "Site Name",
+			groupName = "Child ChildSite1Name",
+			layoutName = "Site Page",
+			parentGroupName = "Child Site1Name",
+			widgetName = "Sites Directory");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
 			siteName = "Child ChildSite1Name");
-
-		Portlet.addPG(portletName = "Sites Directory");
 
 		SitesDirectory.configureSetupPG(directorySites = "Top Level");
 

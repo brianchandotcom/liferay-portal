@@ -52,6 +52,13 @@ public interface TableReferenceInfoDefiner<T extends Table<T>> {
 
 	public void defineNonreferenceColumn(Column<T, ?> column);
 
+	@SuppressWarnings("unchecked")
+	public default void defineNonreferenceColumns(Column<?, ?>... columns) {
+		for (Column<?, ?> column : columns) {
+			defineNonreferenceColumn((Column<T, ?>)column);
+		}
+	}
+
 	public default <C> void defineParentColumnReference(
 		Column<T, C> pkColumn, Column<T, C> parentPKColumn) {
 

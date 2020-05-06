@@ -156,6 +156,7 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 				}),
 
 				name: Liferay.Language.get('drop-zone'),
+				removable: false,
 			}))
 		);
 	}

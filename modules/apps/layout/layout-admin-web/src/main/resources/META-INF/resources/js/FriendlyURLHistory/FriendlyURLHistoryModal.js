@@ -146,20 +146,10 @@ const FriendlyURLHistoryModal = ({
 											{urlTitle}
 										</ClayList.ItemText>
 									</ClayList.ItemField>
-									<ClayList.ItemField>
+									<ClayList.ItemField className="d-none">
 										<ClayList.QuickActionMenu>
-											<ClayList.QuickActionMenu.Item
-												onClick={() =>
-													alert('Clicked the reload!')
-												}
-												symbol="reload"
-											/>
-											<ClayList.QuickActionMenu.Item
-												onClick={() =>
-													alert('Clicked the circle!')
-												}
-												symbol="times-circle"
-											/>
+											<ClayList.QuickActionMenu.Item symbol="reload" />
+											<ClayList.QuickActionMenu.Item symbol="times-circle" />
 										</ClayList.QuickActionMenu>
 									</ClayList.ItemField>
 								</ClayList.Item>

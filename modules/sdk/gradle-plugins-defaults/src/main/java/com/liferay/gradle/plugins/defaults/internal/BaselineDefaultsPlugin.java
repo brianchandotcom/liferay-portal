@@ -40,7 +40,7 @@ public class BaselineDefaultsPlugin extends BaseDefaultsPlugin<BaselinePlugin> {
 	public static final Plugin<Project> INSTANCE = new BaselineDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, BaselinePlugin baselinePlugin) {
 
 		_configureTasksBaseline(project);

@@ -36,10 +36,10 @@ public class UpgradeTableBuilderDefaultsPlugin
 		new UpgradeTableBuilderDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, UpgradeTableBuilderPlugin upgradeTableBuilderPlugin) {
 
-		super.configureDefaults(project, upgradeTableBuilderPlugin);
+		addPortalToolDependencies(project);
 
 		_configureTasksBuildUpgradeTable(project);
 	}

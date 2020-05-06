@@ -50,7 +50,7 @@ public class TestIntegrationDefaultsPlugin
 		new TestIntegrationDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, TestIntegrationPlugin testIntegrationPlugin) {
 
 		String portalVersion = PortalTools.getPortalVersion(project);

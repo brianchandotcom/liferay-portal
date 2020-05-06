@@ -49,8 +49,8 @@ public class WhipDefaultsPlugin
 	}
 
 	@Override
-	protected void configureDefaults(Project project, WhipPlugin whipPlugin) {
-		super.configureDefaults(project, whipPlugin);
+	protected void applyPluginDefaults(Project project, WhipPlugin whipPlugin) {
+		addPortalToolDependencies(project);
 
 		_configureTasksTest(project);
 	}

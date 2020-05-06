@@ -37,10 +37,10 @@ public class RESTBuilderDefaultsPlugin
 		new RESTBuilderDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		final Project project, RESTBuilderPlugin restBuilderPlugin) {
 
-		super.configureDefaults(project, restBuilderPlugin);
+		addPortalToolDependencies(project);
 
 		BuildRESTTask buildRESTTask = (BuildRESTTask)GradleUtil.getTask(
 			project, RESTBuilderPlugin.BUILD_REST_TASK_NAME);

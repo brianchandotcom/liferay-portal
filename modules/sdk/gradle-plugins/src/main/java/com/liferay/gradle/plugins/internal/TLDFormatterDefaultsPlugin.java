@@ -30,6 +30,13 @@ public class TLDFormatterDefaultsPlugin
 		new TLDFormatterDefaultsPlugin();
 
 	@Override
+	protected void applyPluginDefaults(
+		Project project, TLDFormatterPlugin tldFormatterPlugin) {
+
+		addPortalToolDependencies(project);
+	}
+
+	@Override
 	protected Class<TLDFormatterPlugin> getPluginClass() {
 		return TLDFormatterPlugin.class;
 	}

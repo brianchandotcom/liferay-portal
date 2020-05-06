@@ -33,7 +33,7 @@ import org.gradle.api.tasks.TaskContainer;
 public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
-	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
+	protected void applyPluginDefaults(Project project, NodePlugin nodePlugin) {
 		_configureNode(project);
 		_configureTasksExecutePackageManager(project);
 		_configureTasksNpmInstall(project);

@@ -53,7 +53,7 @@ public class PublishPluginDefaultsPlugin
 		new PublishPluginDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, PublishPlugin publishPlugin) {
 
 		_configurePluginBundle(project);

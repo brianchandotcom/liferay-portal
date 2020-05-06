@@ -51,7 +51,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	public static final Plugin<Project> INSTANCE = new IdeaDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, final IdeaPlugin ideaPlugin) {
 
 		_configureIdeaModuleIml(project, ideaPlugin);

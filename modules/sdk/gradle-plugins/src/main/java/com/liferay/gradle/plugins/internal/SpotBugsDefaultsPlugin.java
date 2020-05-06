@@ -46,7 +46,7 @@ public class SpotBugsDefaultsPlugin extends BaseDefaultsPlugin<SpotBugsPlugin> {
 	public static final Plugin<Project> INSTANCE = new SpotBugsDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, SpotBugsPlugin spotBugsPlugin) {
 
 		project.afterEvaluate(

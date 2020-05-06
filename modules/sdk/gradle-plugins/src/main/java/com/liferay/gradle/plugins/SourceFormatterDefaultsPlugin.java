@@ -37,10 +37,10 @@ public class SourceFormatterDefaultsPlugin
 		new SourceFormatterDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		final Project project, SourceFormatterPlugin sourceFormatterPlugin) {
 
-		super.configureDefaults(project, sourceFormatterPlugin);
+		addPortalToolDependencies(project);
 
 		_configureTasksFormatSource(project);
 

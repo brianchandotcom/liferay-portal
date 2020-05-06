@@ -54,7 +54,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	public static final Plugin<Project> INSTANCE = new EclipseDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, EclipsePlugin eclipsePlugin) {
 
 		final File portalRootDir = GradleUtil.getRootDir(

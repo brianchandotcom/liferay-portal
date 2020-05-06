@@ -30,6 +30,13 @@ public class JavadocFormatterDefaultsPlugin
 		new JavadocFormatterDefaultsPlugin();
 
 	@Override
+	protected void applyPluginDefaults(
+		Project project, JavadocFormatterPlugin javadocFormatterPlugin) {
+
+		addPortalToolDependencies(project);
+	}
+
+	@Override
 	protected Class<JavadocFormatterPlugin> getPluginClass() {
 		return JavadocFormatterPlugin.class;
 	}

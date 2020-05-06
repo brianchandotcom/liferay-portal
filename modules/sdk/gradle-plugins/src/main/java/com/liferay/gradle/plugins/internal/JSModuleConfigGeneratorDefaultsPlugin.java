@@ -33,7 +33,7 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 		new JSModuleConfigGeneratorDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project,
 		JSModuleConfigGeneratorPlugin jsModuleConfigGeneratorPlugin) {
 

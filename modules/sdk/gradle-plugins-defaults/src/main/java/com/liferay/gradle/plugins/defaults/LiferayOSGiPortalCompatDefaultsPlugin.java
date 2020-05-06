@@ -64,7 +64,7 @@ public class LiferayOSGiPortalCompatDefaultsPlugin
 		"transformImportedFiles";
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, LiferayOSGiDefaultsPlugin liferayOSGiDefaultsPlugin) {
 
 		File portalRootDir = GradleUtil.getRootDir(

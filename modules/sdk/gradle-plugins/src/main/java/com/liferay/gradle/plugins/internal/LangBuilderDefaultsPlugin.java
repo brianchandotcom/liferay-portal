@@ -34,10 +34,10 @@ public class LangBuilderDefaultsPlugin
 		new LangBuilderDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, LangBuilderPlugin langBuilderPlugin) {
 
-		super.configureDefaults(project, langBuilderPlugin);
+		addPortalToolDependencies(project);
 
 		_configureTasksBuildLang(project);
 	}

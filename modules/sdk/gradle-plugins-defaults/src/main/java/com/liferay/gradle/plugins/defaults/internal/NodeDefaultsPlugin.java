@@ -43,7 +43,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	public static final Plugin<Project> INSTANCE = new NodeDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
+	protected void applyPluginDefaults(Project project, NodePlugin nodePlugin) {
 		String portalVersion = PortalTools.getPortalVersion(project);
 
 		_configureNode(project, portalVersion);

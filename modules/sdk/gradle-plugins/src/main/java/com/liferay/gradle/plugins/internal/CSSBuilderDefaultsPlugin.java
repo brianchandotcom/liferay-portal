@@ -37,10 +37,10 @@ public class CSSBuilderDefaultsPlugin
 		new CSSBuilderDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, CSSBuilderPlugin cssBuilderPlugin) {
 
-		super.configureDefaults(project, cssBuilderPlugin);
+		addPortalToolDependencies(project);
 
 		addPortalToolDependencies(
 			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,

@@ -54,10 +54,10 @@ public class ServiceBuilderDefaultsPlugin
 		new ServiceBuilderDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		final Project project, ServiceBuilderPlugin serviceBuilderPlugin) {
 
-		super.configureDefaults(project, serviceBuilderPlugin);
+		addPortalToolDependencies(project);
 
 		BuildServiceTask buildServiceTask =
 			(BuildServiceTask)GradleUtil.getTask(

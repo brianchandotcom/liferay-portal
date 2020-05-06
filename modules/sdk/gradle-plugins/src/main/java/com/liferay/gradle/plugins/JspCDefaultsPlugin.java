@@ -52,7 +52,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 	public static final Plugin<Project> INSTANCE = new JspCDefaultsPlugin();
 
 	@Override
-	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
+	protected void applyPluginDefaults(Project project, JspCPlugin jspCPlugin) {
 		_configureTaskGenerateJSPJava(project);
 		_configureTaskJar(project);
 		_configureTaskProcessResources(project);

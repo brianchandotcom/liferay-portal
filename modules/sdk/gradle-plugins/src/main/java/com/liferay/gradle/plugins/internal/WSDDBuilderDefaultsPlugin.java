@@ -30,6 +30,13 @@ public class WSDDBuilderDefaultsPlugin
 		new WSDDBuilderDefaultsPlugin();
 
 	@Override
+	protected void applyPluginDefaults(
+		Project project, WSDDBuilderPlugin wsddBuilderPlugin) {
+
+		addPortalToolDependencies(project);
+	}
+
+	@Override
 	protected Class<WSDDBuilderPlugin> getPluginClass() {
 		return WSDDBuilderPlugin.class;
 	}

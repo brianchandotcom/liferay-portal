@@ -84,10 +84,10 @@ public class AlloyTaglibDefaultsPlugin
 	}
 
 	@Override
-	protected void configureDefaults(
+	protected void applyPluginDefaults(
 		Project project, AlloyTaglibPlugin alloyTaglibPlugin) {
 
-		super.configureDefaults(project, alloyTaglibPlugin);
+		addPortalToolDependencies(project);
 
 		_configureTasksBuildTaglibs(project);
 	}

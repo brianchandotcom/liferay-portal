@@ -12,24 +12,9 @@
  * details.
  */
 
-import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
-
-const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
-	const [value, setValue] = useState(false);
-
-	return (
-		<ClayCheckbox
-			checked={value}
-			onChange={({target: {checked}}) => {
-				setValue((val) => !val);
-				onValueChange(checked);
-			}}
-			{...otherProps}
-		/>
-	);
-};
+import React from 'react';
 
 const selectOptions = (options, optionsLabel) =>
 	Array.isArray(options)
@@ -44,7 +29,7 @@ const selectOptions = (options, optionsLabel) =>
 				value: key,
 		  }));
 
-export const RowSelectConfigurationPanel = ({
+export const RowConfigurationSelectField = ({
 	config,
 	id,
 	identifier,
@@ -68,34 +53,11 @@ export const RowSelectConfigurationPanel = ({
 	</ClayForm.Group>
 );
 
-RowSelectConfigurationPanel.propTypes = {
+RowConfigurationSelectField.propTypes = {
 	config: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	id: PropTypes.string,
 	identifier: PropTypes.string,
 	label: PropTypes.string,
 	onValueChange: PropTypes.func.isRequired,
 	options: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-};
-
-export const RowCheckboxConfigurationPanel = ({
-	config,
-	identifier,
-	label,
-	onValueChange,
-}) => (
-	<ClayForm.Group>
-		<ClayCheckboxWithState
-			aria-label={label}
-			checked={config}
-			label={label}
-			onValueChange={(value) => onValueChange(identifier, value)}
-		/>
-	</ClayForm.Group>
-);
-
-RowCheckboxConfigurationPanel.propTypes = {
-	config: PropTypes.bool,
-	identifier: PropTypes.string,
-	label: PropTypes.string,
-	onValueChange: PropTypes.func.isRequired,
 };

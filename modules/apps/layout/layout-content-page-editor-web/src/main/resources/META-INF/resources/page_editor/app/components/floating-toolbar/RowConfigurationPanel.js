@@ -25,10 +25,8 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import updateRowColumns from '../../thunks/updateRowColumns';
-import {
-	RowCheckboxConfigurationPanel,
-	RowSelectConfigurationPanel,
-} from './RowItemConfigurationPanel';
+import {RowConfigurationCheckboxField} from './RowConfigurationCheckboxField';
+import {RowConfigurationSelectField} from './RowConfigurationSelectField';
 
 const MODULES_PER_ROW_OPTIONS = [
 	[1],
@@ -120,7 +118,7 @@ export const RowConfigurationPanel = ({item}) => {
 
 	return (
 		<>
-			<RowSelectConfigurationPanel
+			<RowConfigurationSelectField
 				config={viewportSizeConfig.numberOfColumns}
 				id="rowNumberOfColumns"
 				identifier={ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns}
@@ -129,7 +127,7 @@ export const RowConfigurationPanel = ({item}) => {
 				options={NUMBER_OF_COLUMNS_OPTIONS}
 			/>
 			{viewportSizeConfig.numberOfColumns > 1 && (
-				<RowCheckboxConfigurationPanel
+				<RowConfigurationCheckboxField
 					config={rowConfig.gutters}
 					identifier={ROW_CONFIGURATION_IDENTIFIERS.gutters}
 					label={Liferay.Language.get('show-gutter')}
@@ -156,7 +154,7 @@ export const RowConfigurationPanel = ({item}) => {
 							/>
 						</p>
 					</div>
-					<RowSelectConfigurationPanel
+					<RowConfigurationSelectField
 						config={viewportSizeConfig.modulesPerRow}
 						id="rowModulesPerRow"
 						identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
@@ -171,7 +169,7 @@ export const RowConfigurationPanel = ({item}) => {
 					/>
 					{viewportSizeConfig.numberOfColumns === 2 &&
 						viewportSizeConfig.modulesPerRow === 1 && (
-							<RowCheckboxConfigurationPanel
+							<RowConfigurationCheckboxField
 								config={viewportSizeConfig.reverseOrder}
 								identifier={
 									ROW_CONFIGURATION_IDENTIFIERS.reverseOrder
@@ -180,7 +178,7 @@ export const RowConfigurationPanel = ({item}) => {
 								onValueChange={handleConfigurationValueChanged}
 							/>
 						)}
-					<RowSelectConfigurationPanel
+					<RowConfigurationSelectField
 						config={viewportSizeConfig.verticalAlignment}
 						id="rowVerticalAlignment"
 						identifier={

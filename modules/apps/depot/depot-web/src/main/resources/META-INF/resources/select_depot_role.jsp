@@ -55,7 +55,7 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 
 					<liferay-ui:search-container-column-text
 						name="roleType"
-						value="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
+						value=""
 					/>
 
 					<liferay-ui:search-container-column-text>

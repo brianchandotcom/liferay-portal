@@ -191,7 +191,7 @@ public class HistogramMetricResourceTest
 			timeAmount = timeRange / 30.0;
 		}
 		else if (Objects.equals(unit, HistogramMetric.Unit.WEEKS.getValue())) {
-			timeAmount = timeRange / 7.;
+			timeAmount = timeRange / 7.0;
 		}
 		else if (Objects.equals(unit, HistogramMetric.Unit.YEARS.getValue())) {
 			timeAmount = timeRange / 365.0;

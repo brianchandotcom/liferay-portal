@@ -49,7 +49,8 @@ public class AutowiredUtil {
 		if (dependency instanceof DependencyDescriptor) {
 			DependencyDescriptor descriptor = (DependencyDescriptor)dependency;
 			Assert.state(
-				autowireCapableBeanFactory != null, "Bean factory is unavailable");
+				autowireCapableBeanFactory != null,
+				"Bean factory is unavailable");
 
 			return autowireCapableBeanFactory.resolveDependency(
 				descriptor, beanName, null, null);

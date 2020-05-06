@@ -21,6 +21,8 @@ import React, {useCallback, useState} from 'react';
 
 import Lang from '../utils/lang';
 
+const SCORE_UNVOTE = -1;
+
 const RatingsStars = ({
 	disabled = true,
 	initialAverageScore = 0,
@@ -61,6 +63,12 @@ const RatingsStars = ({
 	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
 	const isMounted = useIsMounted();
 
+	const handleDeleteClick = () => {
+		setScore(SCORE_UNVOTE);
+		handleSendVoteRequest(SCORE_UNVOTE);
+		setIsDropdownOpen(false);
+	};
+
 	const handleOnClick = (index) => {
 		const {label, value} = starScores[index];
 
@@ -73,7 +81,7 @@ const RatingsStars = ({
 		(score) => {
 			sendVoteRequest(score).then(
 				({averageScore, score, totalEntries} = {}) => {
-					if (isMounted() && averageScore && score && totalEntries) {
+					if (isMounted()) {
 						setTotalEntries(totalEntries);
 						setAverageScore(formatAverageScore(averageScore));
 						setScore(getLabelScore(score));
@@ -180,6 +188,9 @@ const RatingsStars = ({
 						<ClayDropDown.Item
 							disabled={score === 0}
 							key={starScores.length + 1}
+							onClick={() => {
+								handleDeleteClick();
+							}}
 						>
 							{Liferay.Language.get('delete')}
 						</ClayDropDown.Item>

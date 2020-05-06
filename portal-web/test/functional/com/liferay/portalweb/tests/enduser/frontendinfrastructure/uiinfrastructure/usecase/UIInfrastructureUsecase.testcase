@@ -264,17 +264,23 @@ definition {
 			key_portletTitleName = "Message Boards",
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE");
 
+		Portlet.assertPortletHeader(portletName = "MBPortlet");
+
 		takeScreenshot();
 
 		MouseOver(
 			key_portletTitleName = "Hello World",
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE");
 
+		Portlet.assertPortletHeader(portletName = "HelloWorldPortlet");
+
 		takeScreenshot();
 
 		MouseOver(
 			key_portletTitleName = "Documents and Media",
 			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_3_PORTLET_TITLE");
+
+		Portlet.assertPortletHeader(portletName = "DLPortlet");
 
 		takeScreenshot();
 	}

@@ -102,6 +102,12 @@ definition {
 		AssertElementPresent(locator1 = "Portlet#LOADED");
 	}
 
+	macro assertPortletHeader {
+		var key_portletTitleName = "${portletName}";
+
+		AssertElementPresent(locator1 = "Home#PORTLET_HEADER");
+	}
+
 	macro assertServerShutdown {
 		var shutdownPauseCount = "0";
 

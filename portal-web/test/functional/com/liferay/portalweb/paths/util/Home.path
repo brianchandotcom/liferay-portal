@@ -580,6 +580,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_HEADER</td>
+	<td>//section[contains(@id, '${key_portletTitleName}')]//header[@class='portlet-topper']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

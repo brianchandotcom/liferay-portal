@@ -44,32 +44,6 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		String className = fragmentEntryLink.getClassName();
-		long classPK = fragmentEntryLink.getClassPK();
-
-		Optional<Object> displayObjectOptional =
-			fragmentRendererContext.getDisplayObjectOptional();
-
-		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
-
-		if (assetEntry != null) {
-			className = assetEntry.getClassName();
-			classPK = assetEntry.getClassPK();
-		}
-
-		InfoDisplayContributor infoDisplayContributor =
-			(InfoDisplayContributor)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
-
-		if (displayObjectOptional.isPresent() &&
-			(infoDisplayContributor != null)) {
-
-			className = infoDisplayContributor.getClassName();
-			classPK = infoDisplayContributor.getInfoDisplayObjectClassPK(
-				displayObjectOptional.get());
-		}
-
 		JSONObject jsonObject =
 			(JSONObject)fragmentEntryConfigurationParser.getFieldValue(
 				getConfiguration(fragmentRendererContext),
@@ -78,11 +52,37 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 		if ((jsonObject != null) && jsonObject.has("className") &&
 			jsonObject.has("classPK")) {
 
-			className = jsonObject.getString("className");
-			classPK = jsonObject.getLong("classPK");
+			return new Tuple(
+				jsonObject.getString("className"),
+				jsonObject.getLong("classPK"));
 		}
 
-		return new Tuple(className, classPK);
+		Optional<Object> displayObjectOptional =
+			fragmentRendererContext.getDisplayObjectOptional();
+
+		InfoDisplayContributor infoDisplayContributor =
+			(InfoDisplayContributor)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
+
+		if (displayObjectOptional.isPresent() &&
+			(infoDisplayContributor != null)) {
+
+			return new Tuple(
+				infoDisplayContributor.getClassName(),
+				infoDisplayContributor.getInfoDisplayObjectClassPK(
+					displayObjectOptional.get()));
+		}
+
+		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY);
+
+		if (assetEntry != null) {
+			return new Tuple(
+				assetEntry.getClassName(), assetEntry.getClassPK());
+		}
+
+		return new Tuple(
+			fragmentEntryLink.getClassName(), fragmentEntryLink.getClassPK());
 	}
 
 	@Reference

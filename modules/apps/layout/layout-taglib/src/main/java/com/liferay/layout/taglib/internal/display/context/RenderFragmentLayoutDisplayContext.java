@@ -26,12 +26,8 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
-import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
-import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
-import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -55,7 +51,6 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -219,49 +214,6 @@ public class RenderFragmentLayoutDisplayContext {
 			className);
 	}
 
-	public String getColumnClass(
-		RowLayoutStructureItem rowLayoutStructureItem,
-		ColumnLayoutStructureItem columnLayoutStructureItem) {
-
-		StringBundler sb = new StringBundler();
-
-		int columnSize =
-			columnLayoutStructureItem.getSize() *
-				rowLayoutStructureItem.getNumberOfColumns() /
-					rowLayoutStructureItem.getModulesPerRow();
-
-		sb.append("col-lg-");
-		sb.append(columnSize);
-
-		Map<String, JSONObject> viewportSizeConfigurations =
-			rowLayoutStructureItem.getViewportSizeConfigurations();
-
-		for (ViewportSize viewportSize : ViewportSize.values()) {
-			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
-				continue;
-			}
-
-			JSONObject viewportSizeConfigurationJSONObject =
-				viewportSizeConfigurations.getOrDefault(
-					viewportSize.getViewportSizeId(),
-					JSONFactoryUtil.createJSONObject());
-
-			int modulesPerRow = viewportSizeConfigurationJSONObject.getInt(
-				"modulesPerRow", rowLayoutStructureItem.getModulesPerRow());
-
-			columnSize =
-				columnLayoutStructureItem.getSize() *
-					rowLayoutStructureItem.getNumberOfColumns() / modulesPerRow;
-
-			sb.append(StringPool.SPACE);
-			sb.append("col");
-			sb.append(viewportSize.getCssClassPrefix());
-			sb.append(columnSize);
-		}
-
-		return sb.toString();
-	}
-
 	public String getPortletFooterPaths() {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -316,99 +268,6 @@ public class RenderFragmentLayoutDisplayContext {
 		return unsyncStringWriter.toString();
 	}
 
-	public String getRowClass(RowLayoutStructureItem rowLayoutStructureItem) {
-		StringBundler sb = new StringBundler();
-
-		sb.append("align-items-lg-");
-		sb.append(
-			_getVerticalAlignmentClass(
-				rowLayoutStructureItem.getVerticalAlignment()));
-
-		Map<String, JSONObject> viewportSizeConfigurations =
-			rowLayoutStructureItem.getViewportSizeConfigurations();
-
-		for (ViewportSize viewportSize : ViewportSize.values()) {
-			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
-				continue;
-			}
-
-			JSONObject viewportSizeConfigurationJSONObject =
-				viewportSizeConfigurations.getOrDefault(
-					viewportSize.getViewportSizeId(),
-					JSONFactoryUtil.createJSONObject());
-
-			String verticalAlignment =
-				viewportSizeConfigurationJSONObject.getString(
-					"verticalAlignment",
-					rowLayoutStructureItem.getVerticalAlignment());
-
-			sb.append(StringPool.SPACE);
-			sb.append("align-items");
-			sb.append(viewportSize.getCssClassPrefix());
-			sb.append(_getVerticalAlignmentClass(verticalAlignment));
-		}
-
-		sb.append(StringPool.SPACE);
-
-		if (rowLayoutStructureItem.isReverseOrder() &&
-			(rowLayoutStructureItem.getModulesPerRow() > 1)) {
-
-			sb.append("flex-lg-row-reverse");
-		}
-		else if (rowLayoutStructureItem.isReverseOrder() &&
-				 (rowLayoutStructureItem.getModulesPerRow() == 1)) {
-
-			sb.append("flex-lg-column-reverse");
-		}
-		else {
-			sb.append("flex-lg-row");
-		}
-
-		for (ViewportSize viewportSize : ViewportSize.values()) {
-			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
-				continue;
-			}
-
-			JSONObject viewportSizeConfigurationJSONObject =
-				viewportSizeConfigurations.getOrDefault(
-					viewportSize.getViewportSizeId(),
-					JSONFactoryUtil.createJSONObject());
-
-			boolean reverseOrder =
-				viewportSizeConfigurationJSONObject.getBoolean(
-					"reverseOrder", rowLayoutStructureItem.isReverseOrder());
-
-			int modulesPerRow = viewportSizeConfigurationJSONObject.getInt(
-				"modulesPerRow", rowLayoutStructureItem.getModulesPerRow());
-
-			sb.append(StringPool.SPACE);
-
-			if (reverseOrder) {
-				sb.append("flex");
-				sb.append(viewportSize.getCssClassPrefix());
-
-				if (modulesPerRow > 1) {
-					sb.append("row-reverse");
-				}
-				else if (modulesPerRow == 1) {
-					sb.append("column-reverse");
-				}
-			}
-			else {
-				sb.append("flex");
-				sb.append(viewportSize.getCssClassPrefix());
-				sb.append("row");
-			}
-		}
-
-		if (!rowLayoutStructureItem.isGutters()) {
-			sb.append(StringPool.SPACE);
-			sb.append("no-gutters");
-		}
-
-		return sb.toString();
-	}
-
 	private ListObjectReference _getListObjectReference(
 		JSONObject collectionJSONObject) {
 
@@ -456,17 +315,6 @@ public class RenderFragmentLayoutDisplayContext {
 		}
 
 		return _portlets;
-	}
-
-	private String _getVerticalAlignmentClass(String verticalAlignment) {
-		if (Objects.equals(verticalAlignment, "bottom")) {
-			return "end";
-		}
-		else if (Objects.equals(verticalAlignment, "middle")) {
-			return "center";
-		}
-
-		return "start";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

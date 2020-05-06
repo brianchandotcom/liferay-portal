@@ -88,7 +88,7 @@ for (String childrenItemId : childrenItemIds) {
 			%>
 
 			<clay:col
-				className="<%= renderFragmentLayoutDisplayContext.getColumnClass(rowLayoutStructureItem, columnLayoutStructureItem) %>"
+				className="<%= ResponsiveLayoutStructureUtil.getColumnClass(rowLayoutStructureItem, columnLayoutStructureItem) %>"
 			>
 
 				<%
@@ -226,7 +226,7 @@ for (String childrenItemId : childrenItemIds) {
 				<c:when test="<%= includeContainer %>">
 					<div class="container-fluid p-0">
 						<clay:row
-							className="<%= renderFragmentLayoutDisplayContext.getRowClass(rowLayoutStructureItem) %>"
+							className="<%= ResponsiveLayoutStructureUtil.getRowClass(rowLayoutStructureItem) %>"
 						>
 
 							<%
@@ -239,7 +239,7 @@ for (String childrenItemId : childrenItemIds) {
 				</c:when>
 				<c:otherwise>
 					<clay:row
-						className="<%= renderFragmentLayoutDisplayContext.getRowClass(rowLayoutStructureItem) %>"
+						className="<%= ResponsiveLayoutStructureUtil.getRowClass(rowLayoutStructureItem) %>"
 					>
 
 						<%

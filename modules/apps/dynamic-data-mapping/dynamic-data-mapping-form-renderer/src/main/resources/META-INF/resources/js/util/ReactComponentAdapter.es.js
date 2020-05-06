@@ -19,7 +19,6 @@ import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import Observer from './Observer.es';
-import {SoyRegisterAdapter} from './SoyRegisterAdapter.es';
 
 const CONFIG_BLACKLIST = ['children', 'events', 'ref', 'visible'];
 const CONFIG_DEFAULT = ['displayErrors'];
@@ -49,21 +48,6 @@ const CONFIG_DEFAULT = ['displayErrors'];
  * //	);
  * // }
  *
- * Some considerations that must be made, this works very well in the context of DDM fields,
- * where the dynamic rendering mechanism of the components is used using Soy with the use of
- * `deltemplates`, so you just need to pass the name of the `variant` of your field so that
- * it can be called dynamically, this registers a variant in `PageRenderer.RegisterFieldType`.
- * This is optional; this adapter can work very well in the context of Metal+JSX.
- *
- * @example
- * // import getConnectedReactComponentAdapter from '/path/ReactComponentAdapter.es';
- * //
- * // const ReactComponent = ({className}) => <div className={className} />;
- * // const ReactComponentAdapter = getConnectedReactComponentAdapter(
- * //   ReactComponent,
- * //	'separetor'
- * // );
- *
  * To call the React component in the context of Metal + soy, where varient is not an option,
  * you can use Metal's `Soy.register` to create a fake component so that you can call the React
  * component in Soy. The use of children from Soy components for React does not work.
@@ -85,12 +69,10 @@ const CONFIG_DEFAULT = ['displayErrors'];
  * // {/call}
  *
  * @param {React.createElement} ReactComponent
- * @param {String} variant
  */
 
-function getConnectedReactComponentAdapter(ReactComponent, variant) {
+function getConnectedReactComponentAdapter(ReactComponent) {
 	class ReactComponentAdapter extends JSXComponent {
-
 		/**
 		 * For Metal to track config changes, we need to config the state so
 		 * that willReceiveProps is called as expected.
@@ -127,7 +109,6 @@ function getConnectedReactComponentAdapter(ReactComponent, variant) {
 		}
 
 		willReceiveProps(changes) {
-
 			// Delete the events and children properties to make it easier to
 			// check which values have been changed, events and children are
 			// properties that are changing all the time when new renderings
@@ -193,10 +174,6 @@ function getConnectedReactComponentAdapter(ReactComponent, variant) {
 
 			this.instance_ = element;
 		}
-	}
-
-	if (variant) {
-		SoyRegisterAdapter(ReactComponentAdapter, variant);
 	}
 
 	ReactComponentAdapter.RENDERER = IncrementalDomRenderer;

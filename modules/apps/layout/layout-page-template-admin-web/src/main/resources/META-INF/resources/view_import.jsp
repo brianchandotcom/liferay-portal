@@ -109,7 +109,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 
 		<c:if test="<%= ListUtil.isNotEmpty(layoutPageTemplatesImporterResultEntriesWithWarnings) %>">
 			<div class="alert alert-warning warning-dialog">
-				<span class="error-message"><liferay-ui:message key="some-entries-threw-warnings" /></span>
+				<span class="error-message"><liferay-ui:message key="some-entries-were-imported-with-warnings" /></span>
 
 				<ul class="error-list-items">
 

@@ -149,4 +149,11 @@ definition {
 			value1 = "${tagName}");
 	}
 
+	macro viewCategory {
+		AssertTextEquals(
+			key_categoryName = "${categoryName}",
+			locator1 = "AssetCategorization#CATEGORY",
+			value1 = "${categoryName}");
+	}
+
 }

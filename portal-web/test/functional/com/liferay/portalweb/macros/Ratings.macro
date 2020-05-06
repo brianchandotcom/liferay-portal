@@ -32,9 +32,13 @@ definition {
 	}
 
 	macro rateStackedStars {
+		MouseOver(locator1 = "Ratings#YOUR_RATING_STACKED_STAR");
+
 		Click(
 			key_ratingStarCount = "${ratingStarCount}",
 			locator1 = "Ratings#YOUR_RATING_STACKED_STAR_COUNT");
+
+		MouseOver(locator1 = "Ratings#YOUR_RATING_STACKED_STAR");
 
 		AssertElementPresent(
 			key_ratingStarCount = "${ratingStarCount}",
@@ -89,6 +93,7 @@ definition {
 	}
 
 	macro viewRateStackedStar {
+		MouseOver(locator1 = "Ratings#YOUR_RATING_STACKED_STAR");
 
 		AssertElementPresent(
 			key_ratingStarCount = "${ratingStarCount}",

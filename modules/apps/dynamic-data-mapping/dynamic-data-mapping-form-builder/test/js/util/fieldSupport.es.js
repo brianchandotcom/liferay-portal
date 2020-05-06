@@ -26,7 +26,7 @@ describe('Field Support Utilities', () => {
 								{
 									fields: [
 										{
-											dataDefinitionId: 123,
+											ddmStructureId: 123,
 											fieldName: 'myFieldSet',
 											nestedFields: [
 												{

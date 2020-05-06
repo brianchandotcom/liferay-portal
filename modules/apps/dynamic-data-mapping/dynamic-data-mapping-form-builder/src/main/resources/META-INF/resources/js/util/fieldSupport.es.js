@@ -166,7 +166,7 @@ export const getParentFieldSet = (pages, fieldName) => {
 };
 
 export const isFieldSet = (field) =>
-	field.type === FIELD_TYPE_FIELDSET && field.dataDefinitionId;
+	field.type === FIELD_TYPE_FIELDSET && field.ddmStructureId;
 
 export const isFieldSetChild = (pages, fieldName) => {
 	return !!getParentFieldSet(pages, fieldName);

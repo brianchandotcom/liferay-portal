@@ -19,9 +19,9 @@ export const containsFieldSet = (dataDefinition, dataDefinitionId) => {
 		const {customProperties, fieldType} = dataDefinitionField;
 
 		if (
-			fieldType === 'section' &&
+			fieldType === 'fieldset' &&
 			customProperties &&
-			customProperties.dataDefinitionId == dataDefinitionId
+			customProperties.ddmStructureId == dataDefinitionId
 		) {
 			hasFieldSet = true;
 		}

@@ -38,7 +38,7 @@ const handleFieldSetAdded = (props, state, event) => {
 	fieldSetField = updateField(
 		props,
 		fieldSetField,
-		'dataDefinitionId',
+		'ddmStructureId',
 		fieldSet.id
 	);
 

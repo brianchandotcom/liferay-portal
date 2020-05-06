@@ -23,7 +23,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -151,18 +153,26 @@ public class Changeset implements Serializable {
 		String parentClassName,
 		Function<StagedModel, Collection<?>> hierarchyFunction) {
 
-		for (Object object : hierarchyFunction.apply(parentStagedModel)) {
-			StagedModel stagedModel = (StagedModel)object;
+		Queue<StagedModel> queue = new LinkedList<>();
 
+		queue.add(parentStagedModel);
+
+		StagedModel stagedModel = null;
+
+		while ((stagedModel = queue.poll()) != null) {
 			String stagedModelClassName = stagedModel.getModelClassName();
 
 			if (stagedModelClassName.equals(parentClassName)) {
-				_collectChildrenStagedModels(
-					childrenStagedModels, stagedModel, parentClassName,
-					hierarchyFunction);
-			}
+				for (Object object :
+						hierarchyFunction.apply(parentStagedModel)) {
 
-			childrenStagedModels.add(stagedModel);
+					StagedModel childStagedModel = (StagedModel)object;
+
+					childrenStagedModels.add(childStagedModel);
+
+					queue.add(childStagedModel);
+				}
+			}
 		}
 	}
 

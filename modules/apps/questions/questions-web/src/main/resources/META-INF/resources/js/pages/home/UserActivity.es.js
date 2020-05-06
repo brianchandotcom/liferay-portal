@@ -81,7 +81,7 @@ export default withRouter(
 				<NavigationBar />
 				<section className="questions-section questions-section-list">
 					<div className="questions-container">
-						<div className="row">
+						<div className="row c-p-5">
 							<PageHeader />
 							<Questions />
 						</div>
@@ -92,7 +92,7 @@ export default withRouter(
 
 		function PageHeader() {
 			return (
-				<div className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
+				<div className="c-mt-3 c-mx-auto c-px-0 col-xl-10">
 					<div className="d-flex flex-row">
 						<div className="c-mt-3">
 							<UserIcon

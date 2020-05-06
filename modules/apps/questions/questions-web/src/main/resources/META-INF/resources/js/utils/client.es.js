@@ -555,6 +555,7 @@ export const getUserActivity = (siteKey, userId = '') => {
 					hasValidAnswer
 					headline
 					id
+					keywords
 					messageBoardSection {
 						title
 					}

@@ -65,7 +65,7 @@ public class ChangesetManagerImpl
 	@Deprecated
 	@Override
 	public void clearChangesets() {
-		_changesets = new ConcurrentHashMap<>();
+		_changesets.clear();
 	}
 
 	@Override
@@ -190,7 +190,8 @@ public class ChangesetManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChangesetManagerImpl.class);
 
-	private Map<String, Changeset> _changesets = new ConcurrentHashMap<>();
+	private final Map<String, Changeset> _changesets =
+		new ConcurrentHashMap<>();
 
 	@Reference
 	private ExportImportConfigurationLocalService

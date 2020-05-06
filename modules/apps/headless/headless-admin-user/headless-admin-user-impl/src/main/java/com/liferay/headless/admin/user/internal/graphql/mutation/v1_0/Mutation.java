@@ -205,6 +205,33 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField(description = "Deletes the user account")
+	public boolean deleteUserAccount(
+			@GraphQLName("userAccountId") Long userAccountId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> userAccountResource.deleteUserAccount(
+				userAccountId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteUserAccountBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> userAccountResource.deleteUserAccountBatch(
+				callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

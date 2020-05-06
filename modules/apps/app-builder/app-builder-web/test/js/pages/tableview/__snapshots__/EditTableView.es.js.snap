@@ -232,7 +232,7 @@ exports[`EditTableView renders 1`] = `
                     class="list-group-subtitle text-truncate"
                   >
                     <small>
-                      Text
+                      TEXT
                     </small>
                   </p>
                 </div>

@@ -35,5 +35,6 @@ window.Liferay = {
 	ThemeDisplay: {
 		...(window.Liferay.ThemeDisplay || {}),
 		getDefaultLanguageId: () => 'en_US',
+		getLanguageId: () => 'en_US',
 	},
 };

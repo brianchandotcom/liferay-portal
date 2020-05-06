@@ -114,7 +114,7 @@ export const reducer = (state = initialState, action) => {
 				dataListView: {
 					...state.dataListView,
 					name: {
-						[themeDisplay.getLanguageId()]: name,
+						[Liferay.ThemeDisplay.getLanguageId()]: name,
 					},
 				},
 			};

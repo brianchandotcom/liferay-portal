@@ -108,7 +108,7 @@ const EditTableView = withRouter(({history}) => {
 
 	const {
 		fieldNames,
-		name: {en_US: dataListViewName = ''},
+		name: {[Liferay.ThemeDisplay.getLanguageId()]: dataListViewName = ''},
 	} = dataListView;
 
 	const [isSidebarClosed, setSidebarClosed] = useState(false);

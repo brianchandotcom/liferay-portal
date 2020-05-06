@@ -29,29 +29,20 @@ import com.liferay.headless.admin.user.client.serdes.v1_0.PostalAddressSerDes;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
 import com.liferay.headless.admin.user.client.serdes.v1_0.WebUrlSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -68,6 +59,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
@@ -80,37 +72,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_testUser = _userLocalService.getUserByEmailAddress(
 			testGroup.getCompanyId(), "test@liferay.com");
-
-		_userLocalService.deleteGroupUser(
-			testGroup.getGroupId(), _testUser.getUserId());
-
-		// See LPS-94496 for why we have to delete all users except for the
-		// test user
-
-		List<User> users = _userLocalService.getUsers(
-			PortalUtil.getDefaultCompanyId(), false,
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-
-		for (User user : users) {
-			if (user.getUserId() != _testUser.getUserId()) {
-				_userLocalService.deleteUser(user);
-			}
-		}
-
-		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			_testUser.getModelClassName());
-
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
-
-		for (Company company : companies) {
-			IndexWriterHelperUtil.deleteEntityDocuments(
-				indexer.getSearchEngineId(), company.getCompanyId(),
-				_testUser.getModelClassName(), true);
-
-			indexer.reindex(
-				new String[] {String.valueOf(company.getCompanyId())});
-		}
 	}
 
 	@Override
@@ -423,8 +384,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		userAccount = userAccountResource.postUserAccount(userAccount);
 
-		_users.add(_userLocalService.getUser(userAccount.getId()));
-
 		_userLocalService.addGroupUser(siteId, userAccount.getId());
 
 		return userAccount;
@@ -538,15 +497,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		};
 	}
 
-	@DeleteAfterTestRun
 	private Organization _organization;
-
 	private User _testUser;
 
 	@Inject
 	private UserLocalService _userLocalService;
-
-	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<>();
 
 }

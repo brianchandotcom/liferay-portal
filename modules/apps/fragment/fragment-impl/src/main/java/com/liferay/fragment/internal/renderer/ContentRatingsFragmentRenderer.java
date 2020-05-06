@@ -78,16 +78,15 @@ public class ContentRatingsFragmentRenderer
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		RatingsTag ratingsTag = new RatingsTag();
+
 		Tuple displayObject = getDisplayObject(
 			fragmentRendererContext, httpServletRequest);
 
-		String className = GetterUtil.getString(displayObject.getObject(0));
-		long classPK = GetterUtil.getLong(displayObject.getObject(1));
+		ratingsTag.setClassName(
+			GetterUtil.getString(displayObject.getObject(0)));
+		ratingsTag.setClassPK(GetterUtil.getLong(displayObject.getObject(1)));
 
-		RatingsTag ratingsTag = new RatingsTag();
-
-		ratingsTag.setClassName(className);
-		ratingsTag.setClassPK(classPK);
 		ratingsTag.setInTrash(false);
 
 		try {

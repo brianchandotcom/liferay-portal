@@ -91,34 +91,35 @@ public class ContentFlagsFragmentRenderer
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		FlagsTag flagsTag = new FlagsTag();
+
 		Tuple displayObject = getDisplayObject(
 			fragmentRendererContext, httpServletRequest);
 
-		String className = GetterUtil.getString(displayObject.getObject(0));
+		flagsTag.setClassName(GetterUtil.getString(displayObject.getObject(0)));
+
 		long classPK = GetterUtil.getLong(displayObject.getObject(1));
 
-		InfoDisplayContributor infoDisplayContributor =
-			(InfoDisplayContributor)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
-
-		FlagsTag flagsTag = new FlagsTag();
-
-		flagsTag.setClassName(className);
 		flagsTag.setClassPK(classPK);
+
 		flagsTag.setReportedUserId(_portal.getUserId(httpServletRequest));
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
 		try {
-			String message = LanguageUtil.get(
-				httpServletRequest,
-				GetterUtil.getString(
-					fragmentEntryConfigurationParser.getFieldValue(
-						getConfiguration(fragmentRendererContext),
-						fragmentEntryLink.getEditableValues(), "message")));
+			flagsTag.setMessage(
+				LanguageUtil.get(
+					httpServletRequest,
+					GetterUtil.getString(
+						fragmentEntryConfigurationParser.getFieldValue(
+							getConfiguration(fragmentRendererContext),
+							fragmentEntryLink.getEditableValues(),
+							"message"))));
 
-			flagsTag.setMessage(message);
+			InfoDisplayContributor infoDisplayContributor =
+				(InfoDisplayContributor)httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
 
 			if (infoDisplayContributor != null) {
 				InfoDisplayObjectProvider infoDisplayObjectProvider =

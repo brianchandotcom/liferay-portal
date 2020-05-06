@@ -47,10 +47,8 @@ public class OrganizationTableReferenceDefinition
 		TableReferenceInfoDefiner<OrganizationTable>
 			tableReferenceInfoDefiner) {
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			OrganizationTable.INSTANCE.uuid);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			OrganizationTable.INSTANCE.uuid,
 			OrganizationTable.INSTANCE.externalReferenceCode);
 
 		tableReferenceInfoDefiner.defineReferenceInnerJoin(
@@ -77,29 +75,18 @@ public class OrganizationTableReferenceDefinition
 		tableReferenceInfoDefiner.defineSingleColumnReference(
 			OrganizationTable.INSTANCE.userId, UserTable.INSTANCE.userId);
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			OrganizationTable.INSTANCE.userName);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			OrganizationTable.INSTANCE.createDate);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			OrganizationTable.INSTANCE.userName,
+			OrganizationTable.INSTANCE.createDate,
 			OrganizationTable.INSTANCE.modifiedDate);
 
 		tableReferenceInfoDefiner.defineParentColumnReference(
 			OrganizationTable.INSTANCE.organizationId,
 			OrganizationTable.INSTANCE.parentOrganizationId);
 
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			OrganizationTable.INSTANCE.treePath);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			OrganizationTable.INSTANCE.name);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
-			OrganizationTable.INSTANCE.type);
-
-		tableReferenceInfoDefiner.defineNonreferenceColumn(
+		tableReferenceInfoDefiner.defineNonreferenceColumns(
+			OrganizationTable.INSTANCE.treePath,
+			OrganizationTable.INSTANCE.name, OrganizationTable.INSTANCE.type,
 			OrganizationTable.INSTANCE.recursable);
 
 		tableReferenceInfoDefiner.defineSingleColumnReference(

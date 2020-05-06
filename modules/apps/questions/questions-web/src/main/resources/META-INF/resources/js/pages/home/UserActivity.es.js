@@ -88,7 +88,6 @@ export default withRouter(
 		);
 
 		const changePage = (number) => {
-			setPage(number);
 			historyPushParser(`/activity/${creatorId}?page=${number}`);
 		};
 

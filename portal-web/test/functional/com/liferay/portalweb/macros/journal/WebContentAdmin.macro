@@ -38,10 +38,6 @@ definition {
 		Confirm();
 	}
 
-	macro openWebContentAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
-	}
-
 	macro viewEntryNotPresent {
 		LexiconList.viewListEntryNotPresent(listEntry = "${entry}");
 	}

@@ -14,6 +14,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {useEventListener} from 'frontend-js-react-web';
+import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -27,10 +28,11 @@ const isTextElement = (element) => {
 	);
 };
 
-const isAlloyEditor = (element) => {
+const isCommentsAlloyEditor = (element) => {
 	return (
 		element.classList.contains('alloy-editor') &&
-		element.parentElement.classList.contains('alloy-editor-container')
+		element.parentElement.classList.contains('alloy-editor-container') &&
+		closest(element, '.page-editor__sidebar')
 	);
 };
 
@@ -40,7 +42,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 		(event) => {
 			if (
 				!isTextElement(event.target) &&
-				!isAlloyEditor(event.target) &&
+				!isCommentsAlloyEditor(event.target) &&
 				event.keyCode === Z_KEYCODE &&
 				(event.ctrlKey || event.metaKey)
 			) {

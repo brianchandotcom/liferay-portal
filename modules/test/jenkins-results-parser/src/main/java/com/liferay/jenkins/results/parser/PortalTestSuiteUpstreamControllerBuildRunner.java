@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,23 +142,27 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			sb.append("/buildWithParameters?");
 			sb.append("token=");
 			sb.append(jenkinsAuthenticationToken);
-			sb.append("&CI_TEST_SUITE=");
-			sb.append(testSuiteName);
-			sb.append("&JENKINS_GITHUB_BRANCH_NAME=");
-			sb.append(buildData.getJenkinsGitHubBranchName());
-			sb.append("&JENKINS_GITHUB_BRANCH_USERNAME=");
-			sb.append(buildData.getJenkinsGitHubUsername());
-			sb.append("&PORTAL_GIT_COMMIT=");
-			sb.append(buildData.getPortalBranchSHA());
-			sb.append("&PORTAL_GITHUB_URL=");
-			sb.append(buildData.getPortalGitHubURL());
+
+			Map<String, String> invocationParameters = new HashMap<>();
+
+			invocationParameters.put("CI_TEST_SUITE", testSuiteName);
+			invocationParameters.put(
+				"JENKINS_GITHUB_BRANCH_NAME",
+				buildData.getJenkinsGitHubBranchName());
+			invocationParameters.put(
+				"JENKINS_GITHUB_BRANCH_USERNAME",
+				buildData.getJenkinsGitHubUsername());
+			invocationParameters.put(
+				"PORTAL_GIT_COMMIT", buildData.getPortalBranchSHA());
+			invocationParameters.put(
+				"PORTAL_GITHUB_URL", buildData.getPortalGitHubURL());
 
 			String testPortalBuildProfile = getTestPortalBuildProfile(
 				testSuiteName);
 
 			if (testPortalBuildProfile != null) {
-				sb.append("&TEST_PORTAL_BUILD_PROFILE=");
-				sb.append(testPortalBuildProfile);
+				invocationParameters.put(
+					"TEST_PORTAL_BUILD_PROFILE", testPortalBuildProfile);
 			}
 
 			String testrayProjectName = _getTestrayProjectName(testSuiteName);
@@ -178,12 +183,27 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 					testrayBuildType = _getTestrayBuildType(testSuiteName);
 				}
 
-				sb.append("&TESTRAY_BUILD_NAME=");
-				sb.append(testraybuildName);
-				sb.append("&TESTRAY_BUILD_TYPE=");
-				sb.append(testrayBuildType);
-				sb.append("&TESTRAY_PROJECT_NAME=");
-				sb.append(testrayProjectName);
+				invocationParameters.put(
+					"TESTRAY_BUILD_NAME", testraybuildName);
+				invocationParameters.put(
+					"TESTRAY_BUILD_TYPE", testrayBuildType);
+				invocationParameters.put(
+					"TESTRAY_PROJECT_NAME", testrayProjectName);
+			}
+
+			invocationParameters.putAll(buildData.getBuildParameters());
+
+			for (Map.Entry<String, String> invocationParameter :
+					invocationParameters.entrySet()) {
+
+				if (invocationParameter.getValue() == null) {
+					continue;
+				}
+
+				sb.append("&");
+				sb.append(invocationParameter.getKey());
+				sb.append("=");
+				sb.append(invocationParameter.getValue());
 			}
 
 			try {

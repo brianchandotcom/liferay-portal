@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -109,48 +111,65 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 
 		S buildData = getBuildData();
 
-		sb.append("&CI_TEST_SUITE=");
+		Map<String, String> invocationParameters = new HashMap<>();
 
 		String testSuiteName = buildData.getTestSuiteName();
 
-		sb.append(testSuiteName);
+		invocationParameters.put("CI_TEST_SUITE", testSuiteName);
 
-		sb.append("&CONTROLLER_BUILD_URL=");
-		sb.append(buildData.getBuildURL());
-		sb.append("&JENKINS_GITHUB_BRANCH_NAME=");
-		sb.append(buildData.getJenkinsGitHubBranchName());
-		sb.append("&JENKINS_GITHUB_BRANCH_USERNAME=");
-		sb.append(buildData.getJenkinsGitHubUsername());
-		sb.append("&PORTAL_GIT_COMMIT=");
-		sb.append(buildData.getPortalBranchSHA());
+		invocationParameters.put(
+			"CONTROLLER_BUILD_URL", buildData.getBuildURL());
+		invocationParameters.put(
+			"JENKINS_GITHUB_BRANCH_NAME",
+			buildData.getJenkinsGitHubBranchName());
+		invocationParameters.put(
+			"JENKINS_GITHUB_BRANCH_USERNAME",
+			buildData.getJenkinsGitHubUsername());
+		invocationParameters.put(
+			"PORTAL_GIT_COMMIT", buildData.getPortalBranchSHA());
 
 		String portalGitHubCompareURL = _getPortalGitHubCompareURL();
 
 		if (portalGitHubCompareURL != null) {
-			sb.append("&PORTAL_GITHUB_COMPARE_URL=");
-			sb.append(portalGitHubCompareURL);
+			invocationParameters.put(
+				"PORTAL_GITHUB_COMPARE_URL", portalGitHubCompareURL);
 		}
 
-		sb.append("&PORTAL_GITHUB_URL=");
-		sb.append(buildData.getPortalGitHubURL());
+		invocationParameters.put(
+			"PORTAL_GITHUB_URL", buildData.getPortalGitHubURL());
 
 		String testPortalBuildProfile = getTestPortalBuildProfile(
 			testSuiteName);
 
 		if (testPortalBuildProfile != null) {
-			sb.append("&TEST_PORTAL_BUILD_PROFILE=");
-			sb.append(testPortalBuildProfile);
+			invocationParameters.put(
+				"TEST_PORTAL_BUILD_PROFILE", testPortalBuildProfile);
 		}
 
 		String testrayProjectName = buildData.getTestrayProjectName();
 
 		if (testrayProjectName != null) {
-			sb.append("&TESTRAY_BUILD_NAME=");
-			sb.append(buildData.getTestrayBuildName());
-			sb.append("&TESTRAY_BUILD_TYPE=");
-			sb.append(buildData.getTestrayBuildType());
-			sb.append("&TESTRAY_PROJECT_NAME=");
-			sb.append(testrayProjectName);
+			invocationParameters.put(
+				"TESTRAY_BUILD_NAME", buildData.getTestrayBuildName());
+			invocationParameters.put(
+				"TESTRAY_BUILD_TYPE", buildData.getTestrayBuildType());
+			invocationParameters.put(
+				"TESTRAY_PROJECT_NAME", testrayProjectName);
+		}
+
+		invocationParameters.putAll(buildData.getBuildParameters());
+
+		for (Map.Entry<String, String> invocationParameter :
+				invocationParameters.entrySet()) {
+
+			if (invocationParameter.getValue() == null) {
+				continue;
+			}
+
+			sb.append("&");
+			sb.append(invocationParameter.getKey());
+			sb.append("=");
+			sb.append(invocationParameter.getValue());
 		}
 
 		try {

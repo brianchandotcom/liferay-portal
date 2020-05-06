@@ -1610,6 +1610,54 @@ definition {
 			userScreenName = "test1");
 	}
 
+	@description = "This is a use case for LPS-111656"
+	@priority = "3"
+	test ViewCategoryAssociatedToUser {
+		JSONCategory.addVocabulary(
+			groupName = "Global",
+			title = "Vocabulary Name 1");
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editCategorizationCP(
+			categoryName = "Category Name 1",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoMemberships();
+
+		PortletEntry.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		AssetCategorization.viewCategory(categoryName = "Category Name 1");
+	}
+
 	@priority = "4"
 	test ViewContentInCustomOrganizationTypeSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

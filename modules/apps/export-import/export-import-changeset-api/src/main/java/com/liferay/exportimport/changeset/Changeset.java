@@ -54,8 +54,6 @@ public class Changeset implements Serializable {
 
 		public Builder(Changeset changeset) {
 			_changeset = changeset;
-
-			_changeset._stagedModels = new ArrayList<>();
 		}
 
 		public Builder addModel(
@@ -127,8 +125,6 @@ public class Changeset implements Serializable {
 
 		public RawBuilder(Changeset changeset) {
 			_changeset = changeset;
-
-			_changeset._stagedModels = new ArrayList<>();
 		}
 
 		public RawBuilder addMultipleStagedModel(
@@ -183,9 +179,10 @@ public class Changeset implements Serializable {
 	}
 
 	private Changeset() {
+		_uuid = PortalUUIDUtil.generate();
 	}
 
-	private List<StagedModel> _stagedModels;
-	private String _uuid = PortalUUIDUtil.generate();
+	private final List<StagedModel> _stagedModels = new ArrayList<>();
+	private final String _uuid;
 
 }

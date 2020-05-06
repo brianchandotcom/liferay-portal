@@ -119,6 +119,7 @@ public class SpringBeanPortletFilter
 		throws IOException, PortletException {
 
 		LocaleContext localeContext = LocaleContextHolder.getLocaleContext();
+
 		LocaleContextHolder.setLocaleContext(
 			new SimpleLocaleContext(portletRequest.getLocale()), false);
 

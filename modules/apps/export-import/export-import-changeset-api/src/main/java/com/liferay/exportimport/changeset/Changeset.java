@@ -59,13 +59,7 @@ public class Changeset implements Serializable {
 			Supplier<ClassedModel> supplier,
 			Function<ClassedModel, StagedModel> adapterFunction) {
 
-			Supplier<StagedModel> stagedModelSupplier = () -> {
-				ClassedModel classedModel = supplier.get();
-
-				return adapterFunction.apply(classedModel);
-			};
-
-			_changeset._stagedModels.add(stagedModelSupplier.get());
+			_changeset._stagedModels.add(adapterFunction.apply(supplier.get()));
 
 			return this;
 		}

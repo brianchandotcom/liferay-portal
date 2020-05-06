@@ -24,7 +24,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -76,13 +75,12 @@ public class Changeset implements Serializable {
 
 			Collection<? extends StagedModel> stagedModels = supplier.get();
 
-			Stream<? extends StagedModel> stream = stagedModels.stream();
-
-			stream.filter(
-				Objects::nonNull
-			).forEach(
-				stagedModel -> _changeset._stagedModels.add(stagedModel)
-			);
+			stagedModels.forEach(
+				stagedModel -> {
+					if (stagedModel != null) {
+						_changeset._stagedModels.add(stagedModel);
+					}
+				});
 
 			return this;
 		}
@@ -130,13 +128,12 @@ public class Changeset implements Serializable {
 		public RawBuilder addMultipleStagedModel(
 			Collection<? extends StagedModel> stagedModels) {
 
-			Stream<? extends StagedModel> stream = stagedModels.stream();
-
-			stream.filter(
-				Objects::nonNull
-			).forEach(
-				stagedModel -> _changeset._stagedModels.add(stagedModel)
-			);
+			stagedModels.forEach(
+				stagedModel -> {
+					if (stagedModel != null) {
+						_changeset._stagedModels.add(stagedModel);
+					}
+				});
 
 			return this;
 		}

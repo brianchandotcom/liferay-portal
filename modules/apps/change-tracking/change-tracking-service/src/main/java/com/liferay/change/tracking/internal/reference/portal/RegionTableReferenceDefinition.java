@@ -36,11 +36,11 @@ public class RegionTableReferenceDefinition
 		TableReferenceInfoBuilder<RegionTable> tableReferenceInfoBuilder) {
 
 		tableReferenceInfoBuilder.defineSingleColumnReference(
-			RegionTable.INSTANCE.countryId, CountryTable.INSTANCE.countryId);
-
-		tableReferenceInfoBuilder.defineNonreferenceColumns(
+			RegionTable.INSTANCE.countryId, CountryTable.INSTANCE.countryId
+		).defineNonreferenceColumns(
 			RegionTable.INSTANCE.regionCode, RegionTable.INSTANCE.name,
-			RegionTable.INSTANCE.active);
+			RegionTable.INSTANCE.active
+		);
 	}
 
 	@Override

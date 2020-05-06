@@ -49,9 +49,8 @@ public class OrganizationTableReferenceDefinition
 
 		tableReferenceInfoBuilder.defineNonreferenceColumns(
 			OrganizationTable.INSTANCE.uuid,
-			OrganizationTable.INSTANCE.externalReferenceCode);
-
-		tableReferenceInfoBuilder.defineReferenceInnerJoin(
+			OrganizationTable.INSTANCE.externalReferenceCode
+		).defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE
 			).innerJoinON(
@@ -66,37 +65,29 @@ public class OrganizationTableReferenceDefinition
 					ClassNameTable.INSTANCE.value.eq(
 						Organization.class.getName())
 				)
-			));
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
+			)
+		).defineSingleColumnReference(
 			OrganizationTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId);
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
-			OrganizationTable.INSTANCE.userId, UserTable.INSTANCE.userId);
-
-		tableReferenceInfoBuilder.defineNonreferenceColumns(
+			CompanyTable.INSTANCE.companyId
+		).defineSingleColumnReference(
+			OrganizationTable.INSTANCE.userId, UserTable.INSTANCE.userId
+		).defineNonreferenceColumns(
 			OrganizationTable.INSTANCE.userName,
 			OrganizationTable.INSTANCE.createDate,
-			OrganizationTable.INSTANCE.modifiedDate);
-
-		tableReferenceInfoBuilder.defineParentColumnReference(
+			OrganizationTable.INSTANCE.modifiedDate
+		).defineParentColumnReference(
 			OrganizationTable.INSTANCE.organizationId,
-			OrganizationTable.INSTANCE.parentOrganizationId);
-
-		tableReferenceInfoBuilder.defineNonreferenceColumns(
+			OrganizationTable.INSTANCE.parentOrganizationId
+		).defineNonreferenceColumns(
 			OrganizationTable.INSTANCE.treePath,
 			OrganizationTable.INSTANCE.name, OrganizationTable.INSTANCE.type,
-			OrganizationTable.INSTANCE.recursable);
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
-			OrganizationTable.INSTANCE.regionId, RegionTable.INSTANCE.regionId);
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
+			OrganizationTable.INSTANCE.recursable
+		).defineSingleColumnReference(
+			OrganizationTable.INSTANCE.regionId, RegionTable.INSTANCE.regionId
+		).defineSingleColumnReference(
 			OrganizationTable.INSTANCE.countryId,
-			CountryTable.INSTANCE.countryId);
-
-		tableReferenceInfoBuilder.defineReferenceInnerJoin(
+			CountryTable.INSTANCE.countryId
+		).defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				ListTypeTable.INSTANCE
 			).innerJoinON(
@@ -107,15 +98,12 @@ public class OrganizationTableReferenceDefinition
 					ListTypeTable.INSTANCE.type.eq(
 						ListTypeConstants.ORGANIZATION_STATUS)
 				)
-			));
-
-		tableReferenceInfoBuilder.defineNonreferenceColumn(
-			OrganizationTable.INSTANCE.comments);
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
-			OrganizationTable.INSTANCE.logoId, ImageTable.INSTANCE.imageId);
-
-		tableReferenceInfoBuilder.defineReferenceInnerJoin(
+			)
+		).defineNonreferenceColumn(
+			OrganizationTable.INSTANCE.comments
+		).defineSingleColumnReference(
+			OrganizationTable.INSTANCE.logoId, ImageTable.INSTANCE.imageId
+		).defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourcePermissionTable.INSTANCE
 			).innerJoinON(
@@ -129,9 +117,8 @@ public class OrganizationTableReferenceDefinition
 					ResourcePermissionTable.INSTANCE.primKeyId.eq(
 						OrganizationTable.INSTANCE.organizationId)
 				)
-			));
-
-		tableReferenceInfoBuilder.defineReferenceInnerJoin(
+			)
+		).defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				AssetEntryTable.INSTANCE
 			).innerJoinON(
@@ -146,7 +133,8 @@ public class OrganizationTableReferenceDefinition
 					ClassNameTable.INSTANCE.value.eq(
 						Organization.class.getName())
 				)
-			));
+			)
+		);
 	}
 
 	@Override

@@ -41,18 +41,16 @@ public class UserGroupGroupRoleTableReferenceDefinition
 
 		tableReferenceInfoBuilder.defineSingleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId);
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
+			CompanyTable.INSTANCE.companyId
+		).defineSingleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.userGroupId,
-			UserGroupTable.INSTANCE.userGroupId);
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
+			UserGroupTable.INSTANCE.userGroupId
+		).defineSingleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.groupId,
-			GroupTable.INSTANCE.groupId);
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
-			UserGroupGroupRoleTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId);
+			GroupTable.INSTANCE.groupId
+		).defineSingleColumnReference(
+			UserGroupGroupRoleTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId
+		);
 	}
 
 	@Override

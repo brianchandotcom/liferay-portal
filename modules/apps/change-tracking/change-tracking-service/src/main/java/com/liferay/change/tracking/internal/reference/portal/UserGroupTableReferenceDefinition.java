@@ -42,28 +42,22 @@ public class UserGroupTableReferenceDefinition
 
 		tableReferenceInfoBuilder.defineNonreferenceColumns(
 			UserGroupTable.INSTANCE.uuid,
-			UserGroupTable.INSTANCE.externalReferenceCode);
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
-			UserGroupTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
-
-		tableReferenceInfoBuilder.defineSingleColumnReference(
-			UserGroupTable.INSTANCE.userId, UserTable.INSTANCE.userId);
-
-		tableReferenceInfoBuilder.defineNonreferenceColumns(
+			UserGroupTable.INSTANCE.externalReferenceCode
+		).defineSingleColumnReference(
+			UserGroupTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
+		).defineSingleColumnReference(
+			UserGroupTable.INSTANCE.userId, UserTable.INSTANCE.userId
+		).defineNonreferenceColumns(
 			UserGroupTable.INSTANCE.userName,
 			UserGroupTable.INSTANCE.createDate,
-			UserGroupTable.INSTANCE.modifiedDate);
-
-		tableReferenceInfoBuilder.defineParentColumnReference(
+			UserGroupTable.INSTANCE.modifiedDate
+		).defineParentColumnReference(
 			UserGroupTable.INSTANCE.userGroupId,
-			UserGroupTable.INSTANCE.parentUserGroupId);
-
-		tableReferenceInfoBuilder.defineNonreferenceColumns(
+			UserGroupTable.INSTANCE.parentUserGroupId
+		).defineNonreferenceColumns(
 			UserGroupTable.INSTANCE.name, UserGroupTable.INSTANCE.description,
-			UserGroupTable.INSTANCE.addedByLDAPImport);
-
-		tableReferenceInfoBuilder.defineReferenceInnerJoin(
+			UserGroupTable.INSTANCE.addedByLDAPImport
+		).defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE
 			).innerJoinON(
@@ -81,9 +75,8 @@ public class UserGroupTableReferenceDefinition
 				).and(
 					ClassNameTable.INSTANCE.value.eq(UserGroup.class.getName())
 				)
-			));
-
-		tableReferenceInfoBuilder.defineReferenceInnerJoin(
+			)
+		).defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourcePermissionTable.INSTANCE
 			).innerJoinON(
@@ -97,7 +90,8 @@ public class UserGroupTableReferenceDefinition
 					ResourcePermissionTable.INSTANCE.primKeyId.eq(
 						UserGroupTable.INSTANCE.userGroupId)
 				)
-			));
+			)
+		);
 	}
 
 	@Override

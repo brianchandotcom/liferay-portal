@@ -1,0 +1,20 @@
+.friendly-url .language-value {
+	padding-right: 2.5rem;
+}
+
+.btn-url-history {
+	position: absolute;
+	right: 3.15rem;
+	top: 3.5rem;
+	z-index: 5;
+
+	&-wrapper {
+		position: relative;
+	}
+}
+
+&-url-history-modal {
+	.show-quick-actions-one-line .quick-action-menu {
+		align-items: center;
+	}
+}

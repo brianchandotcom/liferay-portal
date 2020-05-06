@@ -18,7 +18,12 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 export default function getLabelName(item, fragmentEntryLinks) {
 	let name;
 
-	if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+	if (
+		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
+		item.config &&
+		item.config.fragmentEntryLinkId &&
+		fragmentEntryLinks[item.config.fragmentEntryLinkId]
+	) {
 		name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
 	}
 	else if (item.type === LAYOUT_DATA_ITEM_TYPES.collectionItem) {

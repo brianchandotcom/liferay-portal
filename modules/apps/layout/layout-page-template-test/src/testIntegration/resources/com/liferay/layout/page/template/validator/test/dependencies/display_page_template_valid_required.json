@@ -1,4 +1,6 @@
 {
-	"contentTypeClassName": "com.liferay.journal.model.JournalArticle",
+	"contentType": {
+		"className": "com.liferay.journal.model.JournalArticle"
+	},
 	"name": "My Display Page Template"
 }

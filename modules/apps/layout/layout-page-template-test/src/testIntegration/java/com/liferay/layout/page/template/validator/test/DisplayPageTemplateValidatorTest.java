@@ -51,13 +51,25 @@ public class DisplayPageTemplateValidatorTest {
 	}
 
 	@Test
+	public void testValidatePageTemplateInvalidMissingContentType()
+		throws Exception {
+
+		expectedException.expect(DisplayPageTemplateValidatorException.class);
+		expectedException.expectMessage(
+			new StringStartsWith("required key [contentType] not found"));
+
+		DisplayPageTemplateValidator.validateDisplayPageTemplate(
+			_read("display_page_template_invalid_missing_content_type.json"));
+	}
+
+	@Test
 	public void testValidatePageTemplateInvalidMissingContentTypeClassName()
 		throws Exception {
 
 		expectedException.expect(DisplayPageTemplateValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
-				"required key [contentTypeClassName] not found"));
+				"/contentType: required key [className] not found"));
 
 		DisplayPageTemplateValidator.validateDisplayPageTemplate(
 			_read(

@@ -1,6 +1,10 @@
 {
-	"contentSubtypeName": "Basic Web Content",
-	"contentTypeClassName": "com.liferay.journal.model.JournalArticle",
+	"contentSubtype": {
+		"classTypeId": 1
+	},
+	"contentType": {
+		"className": "com.liferay.journal.model.JournalArticle"
+	},
 	"extra": "value",
 	"name": "My Display Page Template"
 }

@@ -23,12 +23,18 @@ const findFieldByName = (dataDefinitionFields, fieldName) =>
 		return findFieldByName(nestedDataDefinitionFields, fieldName);
 	});
 
-export default ({dataDefinitionFields}, fieldTypeName) => {
+export default ({dataDefinitionFields}, desiredName, currentName = null) => {
 	let counter = 0;
-	let name = normalizeFieldName(fieldTypeName);
+	let name = normalizeFieldName(desiredName);
 
-	while (findFieldByName(dataDefinitionFields, name)) {
-		name = normalizeFieldName(`${fieldTypeName}${++counter}`);
+	let existingField;
+
+	while (
+		(existingField = findFieldByName(dataDefinitionFields, name)) &&
+		existingField &&
+		existingField.name !== currentName
+	) {
+		name = normalizeFieldName(`${desiredName}${++counter}`);
 	}
 
 	return name;

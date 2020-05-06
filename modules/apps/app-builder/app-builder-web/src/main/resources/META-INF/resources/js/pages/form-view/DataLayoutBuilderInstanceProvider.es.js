@@ -68,8 +68,15 @@ export default ({children, dataLayoutBuilder}) => {
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
 
-		provider.props.fieldNameGenerator = (desiredFieldName) =>
-			generateDataDefinitionFieldName(dataDefinition, desiredFieldName);
+		provider.props.fieldNameGenerator = (
+			desiredFieldName,
+			currentFieldName
+		) =>
+			generateDataDefinitionFieldName(
+				dataDefinition,
+				desiredFieldName,
+				currentFieldName
+			);
 	}, [dataDefinition, dataLayoutBuilder]);
 
 	return (

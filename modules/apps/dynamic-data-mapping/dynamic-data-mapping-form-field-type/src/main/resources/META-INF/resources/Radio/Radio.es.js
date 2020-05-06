@@ -13,7 +13,7 @@
  */
 
 import {ClayRadio} from '@clayui/form';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
@@ -29,22 +29,30 @@ const Radio = ({
 	onFocus,
 	options,
 	value,
-}) => (
-	<div className="ddm-radio" onBlur={onBlur} onFocus={onFocus}>
-		{options.map((option) => (
-			<ClayRadio
-				checked={value === option.value}
-				disabled={disabled}
-				inline={inline}
-				key={option.value}
-				label={option.label}
-				name={name}
-				onChange={onChange}
-				value={option.value}
-			/>
-		))}
-	</div>
-);
+}) => {
+	const [currentValue, setCurrentValue] = useState(value);
+
+	return (
+		<div className="ddm-radio" onBlur={onBlur} onFocus={onFocus}>
+			{options.map((option) => (
+				<ClayRadio
+					checked={currentValue === option.value}
+					disabled={disabled}
+					inline={inline}
+					key={option.value}
+					label={option.label}
+					name={name}
+					onChange={(event) => {
+						setCurrentValue(option.value);
+
+						onChange(event);
+					}}
+					value={option.value}
+				/>
+			))}
+		</div>
+	);
+};
 
 const RadioProxy = connectStore(
 	({

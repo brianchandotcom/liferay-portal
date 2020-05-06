@@ -172,6 +172,9 @@ public interface LiferaySelenium {
 
 	public void echo(String message);
 
+	public void executeJavascript(
+		String javascript, String argument1, String argument2);
+
 	public void fail(String message);
 
 	public String getAlert();
@@ -199,6 +202,9 @@ public interface LiferaySelenium {
 	public String getFirstNumberIncrement(String locator);
 
 	public String getHtmlSource();
+
+	public String getJavascriptResult(
+		String javascript, String argument1, String argument2);
 
 	public String getLocation() throws Exception;
 

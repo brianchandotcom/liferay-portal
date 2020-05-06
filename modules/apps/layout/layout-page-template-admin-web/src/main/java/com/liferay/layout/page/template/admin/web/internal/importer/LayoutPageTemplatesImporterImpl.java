@@ -16,9 +16,10 @@ package com.liferay.layout.page.template.admin.web.internal.importer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.headless.delivery.dto.v1_0.ContentSubtype;
+import com.liferay.headless.delivery.dto.v1_0.ContentType;
 import com.liferay.headless.delivery.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
@@ -26,8 +27,6 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporterTracker;
@@ -74,7 +73,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -172,46 +170,6 @@ public class LayoutPageTemplatesImporterImpl
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);
 
 		return fragmentEntryLinks;
-	}
-
-	private long _getClassTypeId(
-		DisplayPageTemplate displayPageTemplate, long groupId) {
-
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				displayPageTemplate.getContentTypeClassName());
-
-		if (infoDisplayContributor == null) {
-			return 0;
-		}
-
-		List<ClassType> classTypes = new ArrayList<>();
-
-		try {
-			classTypes = infoDisplayContributor.getClassTypes(
-				groupId, LocaleUtil.getSiteDefault());
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					String.format(
-						"Class types for group %s and locale %s could not be " +
-							"obtained"),
-					portalException);
-			}
-
-			return 0;
-		}
-
-		String contentSubtypeName = displayPageTemplate.getContentSubtypeName();
-
-		for (ClassType classType : classTypes) {
-			if (contentSubtypeName.equals(classType.getName())) {
-				return classType.getClassTypeId();
-			}
-		}
-
-		return 0;
 	}
 
 	private PageTemplateCollectionEntry
@@ -1308,9 +1266,6 @@ public class LayoutPageTemplatesImporterImpl
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Reference
 	private Language _language;
 
 	@Reference
@@ -1484,9 +1439,19 @@ public class LayoutPageTemplatesImporterImpl
 			DisplayPageTemplate displayPageTemplate =
 				_displayPageTemplateEntry.getDisplayPageTemplate();
 
+			ContentType contentType = displayPageTemplate.getContentType();
+
 			long classNameId = _portal.getClassNameId(
-				displayPageTemplate.getContentTypeClassName());
-			long classTypeId = _getClassTypeId(displayPageTemplate, _groupId);
+				contentType.getClassName());
+
+			long classTypeId = 0L;
+
+			ContentSubtype contentSubtype =
+				displayPageTemplate.getContentSubtype();
+
+			if (contentSubtype != null) {
+				classTypeId = contentSubtype.getClassTypeId();
+			}
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.

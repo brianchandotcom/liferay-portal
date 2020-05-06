@@ -28,47 +28,48 @@ import javax.annotation.Generated;
 @Generated("")
 public class DisplayPageTemplate implements Cloneable {
 
-	public String getContentSubtypeName() {
-		return contentSubtypeName;
+	public ContentSubtype getContentSubtype() {
+		return contentSubtype;
 	}
 
-	public void setContentSubtypeName(String contentSubtypeName) {
-		this.contentSubtypeName = contentSubtypeName;
+	public void setContentSubtype(ContentSubtype contentSubtype) {
+		this.contentSubtype = contentSubtype;
 	}
 
-	public void setContentSubtypeName(
-		UnsafeSupplier<String, Exception> contentSubtypeNameUnsafeSupplier) {
+	public void setContentSubtype(
+		UnsafeSupplier<ContentSubtype, Exception>
+			contentSubtypeUnsafeSupplier) {
 
 		try {
-			contentSubtypeName = contentSubtypeNameUnsafeSupplier.get();
+			contentSubtype = contentSubtypeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String contentSubtypeName;
+	protected ContentSubtype contentSubtype;
 
-	public String getContentTypeClassName() {
-		return contentTypeClassName;
+	public ContentType getContentType() {
+		return contentType;
 	}
 
-	public void setContentTypeClassName(String contentTypeClassName) {
-		this.contentTypeClassName = contentTypeClassName;
+	public void setContentType(ContentType contentType) {
+		this.contentType = contentType;
 	}
 
-	public void setContentTypeClassName(
-		UnsafeSupplier<String, Exception> contentTypeClassNameUnsafeSupplier) {
+	public void setContentType(
+		UnsafeSupplier<ContentType, Exception> contentTypeUnsafeSupplier) {
 
 		try {
-			contentTypeClassName = contentTypeClassNameUnsafeSupplier.get();
+			contentType = contentTypeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String contentTypeClassName;
+	protected ContentType contentType;
 
 	public String getKey() {
 		return key;

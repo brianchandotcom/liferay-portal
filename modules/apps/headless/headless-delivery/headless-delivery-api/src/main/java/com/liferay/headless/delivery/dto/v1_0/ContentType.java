@@ -32,8 +32,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -41,28 +39,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DisplayPageTemplate")
+@GraphQLName("ContentType")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DisplayPageTemplate")
-public class DisplayPageTemplate {
+@XmlRootElement(name = "ContentType")
+public class ContentType {
 
 	@Schema
-	@Valid
-	public ContentSubtype getContentSubtype() {
-		return contentSubtype;
+	public String getClassName() {
+		return className;
 	}
 
-	public void setContentSubtype(ContentSubtype contentSubtype) {
-		this.contentSubtype = contentSubtype;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
 	@JsonIgnore
-	public void setContentSubtype(
-		UnsafeSupplier<ContentSubtype, Exception>
-			contentSubtypeUnsafeSupplier) {
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
 		try {
-			contentSubtype = contentSubtypeUnsafeSupplier.get();
+			className = classNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -74,88 +70,7 @@ public class DisplayPageTemplate {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ContentSubtype contentSubtype;
-
-	@Schema
-	@Valid
-	public ContentType getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(ContentType contentType) {
-		this.contentType = contentType;
-	}
-
-	@JsonIgnore
-	public void setContentType(
-		UnsafeSupplier<ContentType, Exception> contentTypeUnsafeSupplier) {
-
-		try {
-			contentType = contentTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ContentType contentType;
-
-	@Schema
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	@JsonIgnore
-	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
-		try {
-			key = keyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String key;
-
-	@Schema
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected String className;
 
 	@Override
 	public boolean equals(Object object) {
@@ -163,13 +78,13 @@ public class DisplayPageTemplate {
 			return true;
 		}
 
-		if (!(object instanceof DisplayPageTemplate)) {
+		if (!(object instanceof ContentType)) {
 			return false;
 		}
 
-		DisplayPageTemplate displayPageTemplate = (DisplayPageTemplate)object;
+		ContentType contentType = (ContentType)object;
 
-		return Objects.equals(toString(), displayPageTemplate.toString());
+		return Objects.equals(toString(), contentType.toString());
 	}
 
 	@Override
@@ -184,50 +99,16 @@ public class DisplayPageTemplate {
 
 		sb.append("{");
 
-		if (contentSubtype != null) {
+		if (className != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"contentSubtype\": ");
-
-			sb.append(String.valueOf(contentSubtype));
-		}
-
-		if (contentType != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"contentType\": ");
-
-			sb.append(String.valueOf(contentType));
-		}
-
-		if (key != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"key\": ");
+			sb.append("\"className\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(key));
-
-			sb.append("\"");
-		}
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(name));
+			sb.append(_escape(className));
 
 			sb.append("\"");
 		}
@@ -238,7 +119,7 @@ public class DisplayPageTemplate {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.DisplayPageTemplate",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentType",
 		name = "x-class-name"
 	)
 	public String xClassName;

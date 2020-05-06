@@ -147,7 +147,7 @@ public class Changeset implements Serializable {
 	}
 
 	private static List<StagedModel> _getChildrenStagedModels(
-		final StagedModel parentStagedModel, final String parentClassName,
+		StagedModel parentStagedModel, String parentClassName,
 		Function<StagedModel, Collection<?>> hierarchyFunction) {
 
 		List<StagedModel> stagedModels = new ArrayList<>();

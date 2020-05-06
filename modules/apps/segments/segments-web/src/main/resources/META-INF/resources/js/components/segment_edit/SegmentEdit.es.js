@@ -415,20 +415,24 @@ class SegmentEdit extends Component {
 								readOnly={!editing}
 							/>
 
-							<img
-								className="lfr-portal-tooltip source-icon"
-								data-testid="source-icon"
-								src={
-									source === SOURCES.ASAH_FARO_BACKEND.name
-										? `${assetsPath}${SOURCES.ASAH_FARO_BACKEND.icon}`
-										: `${assetsPath}${SOURCES.DEFAULT.icon}`
-								}
-								title={
-									source === SOURCES.ASAH_FARO_BACKEND.name
-										? SOURCES.ASAH_FARO_BACKEND.label
-										: SOURCES.DEFAULT.label
-								}
-							/>
+							<div className="align-self-center">
+								<img
+									className="lfr-portal-tooltip source-icon"
+									data-testid="source-icon"
+									src={
+										source ===
+										SOURCES.ASAH_FARO_BACKEND.name
+											? `${assetsPath}${SOURCES.ASAH_FARO_BACKEND.icon}`
+											: `${assetsPath}${SOURCES.DEFAULT.icon}`
+									}
+									title={
+										source ===
+										SOURCES.ASAH_FARO_BACKEND.name
+											? SOURCES.ASAH_FARO_BACKEND.label
+											: SOURCES.DEFAULT.label
+									}
+								/>
+							</div>
 						</div>
 
 						{hasUpdatePermission && (

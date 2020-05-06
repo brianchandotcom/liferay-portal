@@ -189,11 +189,11 @@ public class CDIBeanPortletExtension implements Extension {
 			annotations.remove(
 				annotatedType.getAnnotation(ConversationScoped.class));
 			annotations.remove(
-				annotatedType.getAnnotation(RequestScoped.class));
-			annotations.remove(
 				annotatedType.getAnnotation(PortletRequestScoped.class));
 			annotations.remove(
 				annotatedType.getAnnotation(PortletSessionScoped.class));
+			annotations.remove(
+				annotatedType.getAnnotation(RequestScoped.class));
 			annotations.remove(
 				annotatedType.getAnnotation(SessionScoped.class));
 

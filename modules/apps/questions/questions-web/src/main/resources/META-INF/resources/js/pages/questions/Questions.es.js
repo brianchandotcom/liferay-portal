@@ -30,7 +30,7 @@ export default withRouter(
 		history,
 		location,
 		match: {
-			params: {creatorId, tag},
+			params: {creatorId, sectionTitle, tag},
 		},
 	}) => {
 		const [currentTag, setCurrentTag] = useState('');
@@ -57,6 +57,11 @@ export default withRouter(
 		useEffect(() => {
 			const pageNumber = queryParams.get('page') || 1;
 			setPage(isNaN(pageNumber) ? 1 : parseInt(pageNumber, 10));
+		}, [queryParams]);
+
+		useEffect(() => {
+			const searchParameter = queryParams.get('search') || '';
+			setSearch(searchParameter);
 		}, [queryParams]);
 
 		useEffect(() => {
@@ -127,12 +132,20 @@ export default withRouter(
 			}
 		};
 
+		const loadSearch = (search) => {
+			historyPushParser(
+				`/questions/${sectionTitle}${
+					search && search !== '' ? '?search=' + search : ''
+				}`
+			);
+		};
+
 		const changePage = (number) => {
 			setPage(number);
 			historyPushParser(
-				`/questions/${context.section}${
-					tag ? '/tag/' + tag : ''
-				}?page=${number}`
+				`/questions/${context.section}${tag ? '/tag/' + tag : ''}${
+					search && search !== '' ? '?search=' + search + '&' : '?'
+				}page=${number}`
 			);
 		};
 
@@ -143,7 +156,7 @@ export default withRouter(
 						<div className="c-mt-3 col col-xl-12">
 							<QuestionsNavigationBar
 								filterChange={filterChange}
-								searchChange={(search) => setSearch(search)}
+								searchChange={loadSearch}
 								sectionChange={(section) => setSection(section)}
 							/>
 						</div>

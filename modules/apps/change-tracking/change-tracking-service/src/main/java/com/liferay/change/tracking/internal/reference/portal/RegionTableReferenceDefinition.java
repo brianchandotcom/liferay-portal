@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceInfoDefiner;
+import com.liferay.change.tracking.reference.helper.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -33,12 +33,12 @@ public class RegionTableReferenceDefinition
 
 	@Override
 	public void defineTableReferences(
-		TableReferenceInfoDefiner<RegionTable> tableReferenceInfoDefiner) {
+		TableReferenceInfoBuilder<RegionTable> tableReferenceInfoBuilder) {
 
-		tableReferenceInfoDefiner.defineSingleColumnReference(
+		tableReferenceInfoBuilder.defineSingleColumnReference(
 			RegionTable.INSTANCE.countryId, CountryTable.INSTANCE.countryId);
 
-		tableReferenceInfoDefiner.defineNonreferenceColumns(
+		tableReferenceInfoBuilder.defineNonreferenceColumns(
 			RegionTable.INSTANCE.regionCode, RegionTable.INSTANCE.name,
 			RegionTable.INSTANCE.active);
 	}

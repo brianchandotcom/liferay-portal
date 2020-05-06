@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceInfoDefiner;
+import com.liferay.change.tracking.reference.helper.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.RoleTable;
@@ -36,22 +36,22 @@ public class UserGroupGroupRoleTableReferenceDefinition
 
 	@Override
 	public void defineTableReferences(
-		TableReferenceInfoDefiner<UserGroupGroupRoleTable>
-			tableReferenceInfoDefiner) {
+		TableReferenceInfoBuilder<UserGroupGroupRoleTable>
+			tableReferenceInfoBuilder) {
 
-		tableReferenceInfoDefiner.defineSingleColumnReference(
+		tableReferenceInfoBuilder.defineSingleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId);
 
-		tableReferenceInfoDefiner.defineSingleColumnReference(
+		tableReferenceInfoBuilder.defineSingleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.userGroupId,
 			UserGroupTable.INSTANCE.userGroupId);
 
-		tableReferenceInfoDefiner.defineSingleColumnReference(
+		tableReferenceInfoBuilder.defineSingleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.groupId,
 			GroupTable.INSTANCE.groupId);
 
-		tableReferenceInfoDefiner.defineSingleColumnReference(
+		tableReferenceInfoBuilder.defineSingleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId);
 	}
 

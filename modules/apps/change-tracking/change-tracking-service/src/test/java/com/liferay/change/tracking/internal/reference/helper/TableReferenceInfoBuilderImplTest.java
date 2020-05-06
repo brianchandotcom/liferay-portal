@@ -17,7 +17,7 @@ package com.liferay.change.tracking.internal.reference.helper;
 import com.liferay.change.tracking.internal.reference.TableJoinHolder;
 import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceInfoDefiner;
+import com.liferay.change.tracking.reference.helper.TableReferenceInfoBuilder;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -47,7 +47,7 @@ import org.junit.Test;
 /**
  * @author Preston Crary
  */
-public class TableReferenceInfoDefinerImplTest {
+public class TableReferenceInfoBuilderImplTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -64,7 +64,7 @@ public class TableReferenceInfoDefinerImplTest {
 					ReferenceExampleTable.INSTANCE.mainExampleId)
 			);
 
-		Consumer<TableReferenceInfoDefiner<MainExampleTable>> consumer =
+		Consumer<TableReferenceInfoBuilder<MainExampleTable>> consumer =
 			tableReferenceDefinitionHelper -> {
 				tableReferenceDefinitionHelper.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.mvccVersion);
@@ -79,13 +79,13 @@ public class TableReferenceInfoDefinerImplTest {
 					childJoinFunction);
 			};
 
-		TableReferenceInfoDefinerImpl<MainExampleTable>
-			tableReferenceInfoDefinerImpl = _defineTableReferences(
+		TableReferenceInfoBuilderImpl<MainExampleTable>
+			tableReferenceInfoBuilderImpl = _defineTableReferences(
 				MainExampleTable.INSTANCE,
 				MainExampleTable.INSTANCE.mainExampleId, consumer);
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
-			tableReferenceInfoDefinerImpl.getTableReferenceInfo();
+			tableReferenceInfoBuilderImpl.getTableReferenceInfo();
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -164,7 +164,7 @@ public class TableReferenceInfoDefinerImplTest {
 					ReferenceExampleTable.INSTANCE.referenceExampleId)
 			);
 
-		Consumer<TableReferenceInfoDefiner<ReferenceExampleTable>> consumer =
+		Consumer<TableReferenceInfoBuilder<ReferenceExampleTable>> consumer =
 			tableReferenceInfoDefiner -> {
 				tableReferenceInfoDefiner.defineReferenceInnerJoin(
 					parentJoinFunction);
@@ -182,13 +182,13 @@ public class TableReferenceInfoDefinerImplTest {
 					selfJoinFunction4);
 			};
 
-		TableReferenceInfoDefinerImpl<ReferenceExampleTable>
-			tableReferenceInfoDefinerImpl = _defineTableReferences(
+		TableReferenceInfoBuilderImpl<ReferenceExampleTable>
+			tableReferenceInfoBuilderImpl = _defineTableReferences(
 				ReferenceExampleTable.INSTANCE,
 				ReferenceExampleTable.INSTANCE.referenceExampleId, consumer);
 
 		TableReferenceInfo<ReferenceExampleTable> tableReferenceInfo =
-			tableReferenceInfoDefinerImpl.getTableReferenceInfo();
+			tableReferenceInfoBuilderImpl.getTableReferenceInfo();
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -291,7 +291,7 @@ public class TableReferenceInfoDefinerImplTest {
 
 	@Test
 	public void testTableReferenceDefinitionInnerJoinValidation() {
-		Consumer<TableReferenceInfoDefiner<MainExampleTable>> consumer =
+		Consumer<TableReferenceInfoBuilder<MainExampleTable>> consumer =
 			tableReferenceInfoDefiner -> {
 				tableReferenceInfoDefiner.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.flag);
@@ -554,13 +554,13 @@ public class TableReferenceInfoDefinerImplTest {
 				}
 			};
 
-		TableReferenceInfoDefinerImpl<MainExampleTable>
-			tableReferenceInfoDefinerImpl = _defineTableReferences(
+		TableReferenceInfoBuilderImpl<MainExampleTable>
+			tableReferenceInfoBuilderImpl = _defineTableReferences(
 				MainExampleTable.INSTANCE,
 				MainExampleTable.INSTANCE.mainExampleId, consumer);
 
 		TableReferenceInfo<MainExampleTable> tableReferenceInfo =
-			tableReferenceInfoDefinerImpl.getTableReferenceInfo();
+			tableReferenceInfoBuilderImpl.getTableReferenceInfo();
 
 		Assert.assertNotNull(tableReferenceInfo);
 
@@ -581,9 +581,9 @@ public class TableReferenceInfoDefinerImplTest {
 
 	@Test
 	public void testTableReferenceDefinitionNonreferenceColumnValidation() {
-		Consumer<TableReferenceInfoDefiner<MainExampleTable>> consumer =
-			tableReferenceInfoDefiner ->
-				tableReferenceInfoDefiner.defineNonreferenceColumn(
+		Consumer<TableReferenceInfoBuilder<MainExampleTable>> consumer =
+			tableTableReferenceInfoBuilder ->
+				tableTableReferenceInfoBuilder.defineNonreferenceColumn(
 					(Column)ReferenceExampleTable.INSTANCE.mainExampleId);
 
 		try {
@@ -603,9 +603,9 @@ public class TableReferenceInfoDefinerImplTest {
 
 	@Test
 	public void testTableReferenceDefinitionTableColumnValidation() {
-		Consumer<TableReferenceInfoDefiner<MainExampleTable>> consumer =
-			tableReferenceInfoDefiner -> {
-				tableReferenceInfoDefiner.defineReferenceInnerJoin(
+		Consumer<TableReferenceInfoBuilder<MainExampleTable>> consumer =
+			tableReferenceInfoBuilder -> {
+				tableReferenceInfoBuilder.defineReferenceInnerJoin(
 					fromStep -> fromStep.from(
 						ReferenceExampleTable.INSTANCE
 					).innerJoinON(
@@ -614,22 +614,22 @@ public class TableReferenceInfoDefinerImplTest {
 							MainExampleTable.INSTANCE.mainExampleId)
 					));
 
-				tableReferenceInfoDefiner.defineNonreferenceColumn(
+				tableReferenceInfoBuilder.defineNonreferenceColumn(
 					MainExampleTable.INSTANCE.name);
 			};
 
-		TableReferenceInfoDefinerImpl<MainExampleTable>
-			tableReferenceInfoDefinerImpl = _defineTableReferences(
+		TableReferenceInfoBuilderImpl<MainExampleTable>
+			tableReferenceInfoBuilderImpl = _defineTableReferences(
 				MainExampleTable.INSTANCE,
 				MainExampleTable.INSTANCE.mainExampleId, consumer);
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					TableReferenceInfoDefinerImpl.class.getName(),
+					TableReferenceInfoBuilderImpl.class.getName(),
 					Level.WARNING)) {
 
 			TableReferenceInfo<MainExampleTable> tableReferenceInfo =
-				tableReferenceInfoDefinerImpl.getTableReferenceInfo();
+				tableReferenceInfoBuilderImpl.getTableReferenceInfo();
 
 			Assert.assertNull(tableReferenceInfo);
 
@@ -648,22 +648,22 @@ public class TableReferenceInfoDefinerImplTest {
 		}
 	}
 
-	private <T extends Table<T>> TableReferenceInfoDefinerImpl<T>
+	private <T extends Table<T>> TableReferenceInfoBuilderImpl<T>
 		_defineTableReferences(
 			T table, Column<T, Long> primaryKeyColumn,
-			Consumer<TableReferenceInfoDefiner<T>> consumer) {
+			Consumer<TableReferenceInfoBuilder<T>> consumer) {
 
 		TestTableReferenceDefinition<T> testTableReferenceDefinition =
 			new TestTableReferenceDefinition<>(table, consumer);
 
-		TableReferenceInfoDefinerImpl<T> tableReferenceInfoDefinerImpl =
-			new TableReferenceInfoDefinerImpl<>(
+		TableReferenceInfoBuilderImpl<T> tableReferenceInfoBuilderImpl =
+			new TableReferenceInfoBuilderImpl<>(
 				testTableReferenceDefinition, primaryKeyColumn);
 
 		testTableReferenceDefinition.defineTableReferences(
-			tableReferenceInfoDefinerImpl);
+			tableReferenceInfoBuilderImpl);
 
-		return tableReferenceInfoDefinerImpl;
+		return tableReferenceInfoBuilderImpl;
 	}
 
 	private static class InvalidTable extends BaseTable<InvalidTable> {
@@ -733,9 +733,9 @@ public class TableReferenceInfoDefinerImplTest {
 
 		@Override
 		public void defineTableReferences(
-			TableReferenceInfoDefiner<T> tableReferenceInfoDefiner) {
+			TableReferenceInfoBuilder<T> tableReferenceInfoBuilder) {
 
-			_consumer.accept(tableReferenceInfoDefiner);
+			_consumer.accept(tableReferenceInfoBuilder);
 		}
 
 		@Override
@@ -754,13 +754,13 @@ public class TableReferenceInfoDefinerImplTest {
 		}
 
 		private TestTableReferenceDefinition(
-			T table, Consumer<TableReferenceInfoDefiner<T>> consumer) {
+			T table, Consumer<TableReferenceInfoBuilder<T>> consumer) {
 
 			_table = table;
 			_consumer = consumer;
 		}
 
-		private final Consumer<TableReferenceInfoDefiner<T>> _consumer;
+		private final Consumer<TableReferenceInfoBuilder<T>> _consumer;
 		private final T _table;
 
 	}

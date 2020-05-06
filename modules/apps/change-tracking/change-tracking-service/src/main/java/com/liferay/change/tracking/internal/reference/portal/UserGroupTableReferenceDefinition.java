@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceInfoDefiner;
+import com.liferay.change.tracking.reference.helper.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.GroupTable;
@@ -38,32 +38,32 @@ public class UserGroupTableReferenceDefinition
 
 	@Override
 	public void defineTableReferences(
-		TableReferenceInfoDefiner<UserGroupTable> tableReferenceInfoDefiner) {
+		TableReferenceInfoBuilder<UserGroupTable> tableReferenceInfoBuilder) {
 
-		tableReferenceInfoDefiner.defineNonreferenceColumns(
+		tableReferenceInfoBuilder.defineNonreferenceColumns(
 			UserGroupTable.INSTANCE.uuid,
 			UserGroupTable.INSTANCE.externalReferenceCode);
 
-		tableReferenceInfoDefiner.defineSingleColumnReference(
+		tableReferenceInfoBuilder.defineSingleColumnReference(
 			UserGroupTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
 
-		tableReferenceInfoDefiner.defineSingleColumnReference(
+		tableReferenceInfoBuilder.defineSingleColumnReference(
 			UserGroupTable.INSTANCE.userId, UserTable.INSTANCE.userId);
 
-		tableReferenceInfoDefiner.defineNonreferenceColumns(
+		tableReferenceInfoBuilder.defineNonreferenceColumns(
 			UserGroupTable.INSTANCE.userName,
 			UserGroupTable.INSTANCE.createDate,
 			UserGroupTable.INSTANCE.modifiedDate);
 
-		tableReferenceInfoDefiner.defineParentColumnReference(
+		tableReferenceInfoBuilder.defineParentColumnReference(
 			UserGroupTable.INSTANCE.userGroupId,
 			UserGroupTable.INSTANCE.parentUserGroupId);
 
-		tableReferenceInfoDefiner.defineNonreferenceColumns(
+		tableReferenceInfoBuilder.defineNonreferenceColumns(
 			UserGroupTable.INSTANCE.name, UserGroupTable.INSTANCE.description,
 			UserGroupTable.INSTANCE.addedByLDAPImport);
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
+		tableReferenceInfoBuilder.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE
 			).innerJoinON(
@@ -83,7 +83,7 @@ public class UserGroupTableReferenceDefinition
 				)
 			));
 
-		tableReferenceInfoDefiner.defineReferenceInnerJoin(
+		tableReferenceInfoBuilder.defineReferenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourcePermissionTable.INSTANCE
 			).innerJoinON(

@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.reference;
 
-import com.liferay.change.tracking.reference.helper.TableReferenceInfoDefiner;
+import com.liferay.change.tracking.reference.helper.TableReferenceInfoBuilder;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 public interface TableReferenceDefinition<T extends Table<T>> {
 
 	public void defineTableReferences(
-		TableReferenceInfoDefiner<T> tableReferenceInfoDefiner);
+		TableReferenceInfoBuilder<T> tableReferenceInfoBuilder);
 
 	public BasePersistence<?> getBasePersistence();
 

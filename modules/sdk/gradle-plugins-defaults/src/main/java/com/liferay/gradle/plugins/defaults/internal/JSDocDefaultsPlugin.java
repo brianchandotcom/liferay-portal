@@ -37,7 +37,9 @@ public class JSDocDefaultsPlugin extends BaseDefaultsPlugin<JSDocPlugin> {
 	public static final Plugin<Project> INSTANCE = new JSDocDefaultsPlugin();
 
 	@Override
-	protected void applyPluginDefaults(Project project, JSDocPlugin jsDocPlugin) {
+	protected void applyPluginDefaults(
+		Project project, JSDocPlugin jsDocPlugin) {
+
 		_configureTasksJSDoc(project);
 	}
 

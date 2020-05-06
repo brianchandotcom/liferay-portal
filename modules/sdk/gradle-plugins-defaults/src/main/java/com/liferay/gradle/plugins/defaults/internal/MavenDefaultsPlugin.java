@@ -39,7 +39,9 @@ public class MavenDefaultsPlugin extends BaseDefaultsPlugin<MavenPlugin> {
 	public static final Plugin<Project> INSTANCE = new MavenDefaultsPlugin();
 
 	@Override
-	protected void applyPluginDefaults(Project project, MavenPlugin mavenPlugin) {
+	protected void applyPluginDefaults(
+		Project project, MavenPlugin mavenPlugin) {
+
 		_configureTaskUploadArchives(project);
 	}
 

@@ -47,7 +47,9 @@ public class DBSupportDefaultsPlugin
 		new DBSupportDefaultsPlugin();
 
 	@Override
-	protected void applyPluginDefaults(Project project, DBSupportPlugin plugin) {
+	protected void applyPluginDefaults(
+		Project project, DBSupportPlugin plugin) {
+
 		addPortalToolDependencies(project);
 
 		LiferayExtension liferayExtension = GradleUtil.getExtension(

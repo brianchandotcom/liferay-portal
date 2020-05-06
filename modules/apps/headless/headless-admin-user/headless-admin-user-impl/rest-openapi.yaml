@@ -1702,6 +1702,26 @@ paths:
                     description:
                         ""
     "/user-accounts/{userAccountId}":
+        delete:
+            # @review
+            description:
+                Deletes the user account
+            operationId: deleteUserAccount
+            parameters:
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["UserAccount"]
         get:
             description:
                 Retrieves the user account.

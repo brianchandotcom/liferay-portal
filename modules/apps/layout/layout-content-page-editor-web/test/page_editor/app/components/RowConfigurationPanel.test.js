@@ -25,7 +25,10 @@ const renderComponent = (dispatch = () => {}) =>
 	render(
 		<StoreAPIContextProvider
 			dispatch={dispatch}
-			getState={() => ({segmentsExperienceId: '0'})}
+			getState={() => ({
+				segmentsExperienceId: '0',
+				selectedViewportSize: 'tablet',
+			})}
 		>
 			<RowConfigurationPanel
 				item={{
@@ -41,7 +44,7 @@ const renderComponent = (dispatch = () => {}) =>
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({config: {}})
+	() => ({config: {availableViewportSizes: {tablet: {label: 'Tablet'}}}})
 );
 
 jest.mock(
@@ -73,12 +76,13 @@ describe('RowConfigurationPanel', () => {
 			itemId: '0',
 			numberOfColumns: 6,
 			segmentsExperienceId: '0',
+			viewportSizeId: 'tablet',
 		});
 	});
 
 	it('allows changing the gutter', async () => {
 		const {getByLabelText} = renderComponent();
-		const input = getByLabelText('columns-gutter');
+		const input = getByLabelText('show-gutter');
 
 		await fireEvent.click(input);
 

@@ -239,7 +239,7 @@ describe('PageStructureSidebar', () => {
 		});
 
 		expect(queryByLabelText('remove-x-section')).toBeInTheDocument();
-		expect(queryByLabelText('remove-x-row')).toBeInTheDocument();
+		expect(queryByLabelText('remove-x-grid')).toBeInTheDocument();
 		expect(queryByLabelText('remove-x-column')).toBe(null);
 		expect(queryByLabelText('remove-x-Fragment 1')).toBeInTheDocument();
 	});
@@ -258,7 +258,7 @@ describe('PageStructureSidebar', () => {
 		const {getByLabelText} = renderComponent({
 			activeItemId: '03-column',
 		});
-		const button = getByLabelText('select-x-row');
+		const button = getByLabelText('select-x-grid');
 
 		userEvent.click(button);
 

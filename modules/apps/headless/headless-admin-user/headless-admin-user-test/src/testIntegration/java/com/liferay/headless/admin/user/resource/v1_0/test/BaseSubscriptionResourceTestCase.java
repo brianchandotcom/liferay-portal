@@ -347,6 +347,28 @@ public abstract class BaseSubscriptionResourceTestCase {
 						"Object/myUserAccountSubscription"))));
 	}
 
+	@Test
+	public void testGraphQLGetMyUserAccountSubscriptionNotFound()
+		throws Exception {
+
+		Long irrelevantSubscriptionId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"myUserAccountSubscription",
+						new HashMap<String, Object>() {
+							{
+								put("subscriptionId", irrelevantSubscriptionId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	protected Subscription testGraphQLSubscription_addSubscription()
 		throws Exception {
 

@@ -448,6 +448,30 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 						"JSONObject/data", "Object/knowledgeBaseAttachment"))));
 	}
 
+	@Test
+	public void testGraphQLGetKnowledgeBaseAttachmentNotFound()
+		throws Exception {
+
+		Long irrelevantKnowledgeBaseAttachmentId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"knowledgeBaseAttachment",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"knowledgeBaseAttachmentId",
+									irrelevantKnowledgeBaseAttachmentId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	protected KnowledgeBaseAttachment
 			testGraphQLKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
 		throws Exception {

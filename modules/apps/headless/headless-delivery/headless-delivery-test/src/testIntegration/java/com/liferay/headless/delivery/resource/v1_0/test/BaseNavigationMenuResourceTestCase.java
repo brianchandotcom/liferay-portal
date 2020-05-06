@@ -236,6 +236,28 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetNavigationMenuNotFound() throws Exception {
+		Long irrelevantNavigationMenuId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"navigationMenu",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"navigationMenuId",
+									irrelevantNavigationMenuId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetSiteNavigationMenusPage() throws Exception {
 		Page<NavigationMenu> page =
 			navigationMenuResource.getSiteNavigationMenusPage(

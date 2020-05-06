@@ -236,6 +236,28 @@ public abstract class BaseFormStructureResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetFormStructureNotFound() throws Exception {
+		Long irrelevantFormStructureId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"formStructure",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"formStructureId",
+									irrelevantFormStructureId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetSiteFormStructuresPage() throws Exception {
 		Page<FormStructure> page =
 			formStructureResource.getSiteFormStructuresPage(

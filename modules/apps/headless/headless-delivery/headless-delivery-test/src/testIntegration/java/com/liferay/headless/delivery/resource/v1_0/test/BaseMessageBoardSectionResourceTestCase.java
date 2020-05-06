@@ -322,6 +322,28 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetMessageBoardSectionNotFound() throws Exception {
+		Long irrelevantMessageBoardSectionId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"messageBoardSection",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardSectionId",
+									irrelevantMessageBoardSectionId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testPatchMessageBoardSection() throws Exception {
 		MessageBoardSection postMessageBoardSection =
 			testPatchMessageBoardSection_addMessageBoardSection();

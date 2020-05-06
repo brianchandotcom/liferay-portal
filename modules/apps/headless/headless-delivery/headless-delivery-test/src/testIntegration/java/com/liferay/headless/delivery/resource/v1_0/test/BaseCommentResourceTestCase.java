@@ -605,6 +605,26 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetCommentNotFound() throws Exception {
+		Long irrelevantCommentId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"comment",
+						new HashMap<String, Object>() {
+							{
+								put("commentId", irrelevantCommentId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testPutComment() throws Exception {
 		Comment postComment = testPutComment_addComment();
 

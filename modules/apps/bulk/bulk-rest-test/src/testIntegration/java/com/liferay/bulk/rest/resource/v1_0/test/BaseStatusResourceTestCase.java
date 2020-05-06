@@ -193,6 +193,11 @@ public abstract class BaseStatusResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	@Test
+	public void testGraphQLGetStatusNotFound() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {

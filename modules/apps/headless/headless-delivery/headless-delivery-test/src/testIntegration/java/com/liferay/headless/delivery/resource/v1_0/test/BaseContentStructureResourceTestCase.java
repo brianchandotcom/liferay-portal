@@ -244,6 +244,28 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetContentStructureNotFound() throws Exception {
+		Long irrelevantContentStructureId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"contentStructure",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"contentStructureId",
+									irrelevantContentStructureId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetSiteContentStructuresPage() throws Exception {
 		Page<ContentStructure> page =
 			contentStructureResource.getSiteContentStructuresPage(

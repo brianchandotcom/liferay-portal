@@ -223,6 +223,26 @@ public abstract class BaseFormRecordResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetFormRecordNotFound() throws Exception {
+		Long irrelevantFormRecordId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"formRecord",
+						new HashMap<String, Object>() {
+							{
+								put("formRecordId", irrelevantFormRecordId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testPutFormRecord() throws Exception {
 		FormRecord postFormRecord = testPutFormRecord_addFormRecord();
 
@@ -404,6 +424,28 @@ public abstract class BaseFormRecordResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/formFormRecordByLatestDraft"))));
+	}
+
+	@Test
+	public void testGraphQLGetFormFormRecordByLatestDraftNotFound()
+		throws Exception {
+
+		Long irrelevantFormId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"formFormRecordByLatestDraft",
+						new HashMap<String, Object>() {
+							{
+								put("formId", irrelevantFormId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	protected FormRecord testGraphQLFormRecord_addFormRecord()

@@ -354,6 +354,26 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetWorkflowLogNotFound() throws Exception {
+		Long irrelevantWorkflowLogId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"workflowLog",
+						new HashMap<String, Object>() {
+							{
+								put("workflowLogId", irrelevantWorkflowLogId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetWorkflowTaskWorkflowLogsPage() throws Exception {
 		Page<WorkflowLog> page =
 			workflowLogResource.getWorkflowTaskWorkflowLogsPage(

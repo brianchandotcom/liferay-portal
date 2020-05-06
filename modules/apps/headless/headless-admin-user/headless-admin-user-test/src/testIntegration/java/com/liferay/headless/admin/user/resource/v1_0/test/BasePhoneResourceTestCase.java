@@ -291,6 +291,26 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetPhoneNotFound() throws Exception {
+		Long irrelevantPhoneId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"phone",
+						new HashMap<String, Object>() {
+							{
+								put("phoneId", irrelevantPhoneId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetUserAccountPhonesPage() throws Exception {
 		Page<Phone> page = phoneResource.getUserAccountPhonesPage(
 			testGetUserAccountPhonesPage_getUserAccountId());

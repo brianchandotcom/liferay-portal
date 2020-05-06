@@ -268,6 +268,26 @@ public abstract class BaseRoleResourceTestCase {
 						"JSONObject/data", "Object/role"))));
 	}
 
+	@Test
+	public void testGraphQLGetRoleNotFound() throws Exception {
+		Long irrelevantRoleId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"role",
+						new HashMap<String, Object>() {
+							{
+								put("roleId", irrelevantRoleId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	protected Role testGraphQLRole_addRole() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

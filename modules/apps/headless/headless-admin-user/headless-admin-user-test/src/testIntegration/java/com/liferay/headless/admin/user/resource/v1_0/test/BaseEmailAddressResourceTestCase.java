@@ -232,6 +232,26 @@ public abstract class BaseEmailAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetEmailAddressNotFound() throws Exception {
+		Long irrelevantEmailAddressId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"emailAddress",
+						new HashMap<String, Object>() {
+							{
+								put("emailAddressId", irrelevantEmailAddressId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetOrganizationEmailAddressesPage() throws Exception {
 		Page<EmailAddress> page =
 			emailAddressResource.getOrganizationEmailAddressesPage(

@@ -350,6 +350,26 @@ public abstract class BaseWebUrlResourceTestCase {
 						"JSONObject/data", "Object/webUrl"))));
 	}
 
+	@Test
+	public void testGraphQLGetWebUrlNotFound() throws Exception {
+		Long irrelevantWebUrlId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"webUrl",
+						new HashMap<String, Object>() {
+							{
+								put("webUrlId", irrelevantWebUrlId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	protected WebUrl testGraphQLWebUrl_addWebUrl() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

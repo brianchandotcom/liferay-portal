@@ -326,6 +326,28 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetBlogPostingImageNotFound() throws Exception {
+		Long irrelevantBlogPostingImageId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"blogPostingImage",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"blogPostingImageId",
+									irrelevantBlogPostingImageId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetSiteBlogPostingImagesPage() throws Exception {
 		Page<BlogPostingImage> page =
 			blogPostingImageResource.getSiteBlogPostingImagesPage(

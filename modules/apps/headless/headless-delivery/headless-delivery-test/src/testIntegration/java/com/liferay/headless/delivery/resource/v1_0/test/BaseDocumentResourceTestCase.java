@@ -637,6 +637,26 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetDocumentNotFound() throws Exception {
+		Long irrelevantDocumentId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"document",
+						new HashMap<String, Object>() {
+							{
+								put("documentId", irrelevantDocumentId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testPatchDocument() throws Exception {
 		Document postDocument = testPatchDocument_addDocument();
 

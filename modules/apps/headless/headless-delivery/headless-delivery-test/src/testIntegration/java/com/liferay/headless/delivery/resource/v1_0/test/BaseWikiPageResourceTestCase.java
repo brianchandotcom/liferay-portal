@@ -693,6 +693,26 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetWikiPageNotFound() throws Exception {
+		Long irrelevantWikiPageId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"wikiPage",
+						new HashMap<String, Object>() {
+							{
+								put("wikiPageId", irrelevantWikiPageId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testPutWikiPage() throws Exception {
 		WikiPage postWikiPage = testPutWikiPage_addWikiPage();
 

@@ -317,6 +317,28 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetPostalAddressNotFound() throws Exception {
+		Long irrelevantPostalAddressId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"postalAddress",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"postalAddressId",
+									irrelevantPostalAddressId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetUserAccountPostalAddressesPage() throws Exception {
 		Page<PostalAddress> page =
 			postalAddressResource.getUserAccountPostalAddressesPage(

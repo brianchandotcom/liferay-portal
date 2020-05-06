@@ -319,6 +319,28 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetWikiPageAttachmentNotFound() throws Exception {
+		Long irrelevantWikiPageAttachmentId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"wikiPageAttachment",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"wikiPageAttachmentId",
+									irrelevantWikiPageAttachmentId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetWikiPageWikiPageAttachmentsPage() throws Exception {
 		Page<WikiPageAttachment> page =
 			wikiPageAttachmentResource.getWikiPageWikiPageAttachmentsPage(

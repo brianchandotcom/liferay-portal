@@ -315,6 +315,26 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetBlogPostingNotFound() throws Exception {
+		Long irrelevantBlogPostingId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"blogPosting",
+						new HashMap<String, Object>() {
+							{
+								put("blogPostingId", irrelevantBlogPostingId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testPatchBlogPosting() throws Exception {
 		BlogPosting postBlogPosting = testPatchBlogPosting_addBlogPosting();
 

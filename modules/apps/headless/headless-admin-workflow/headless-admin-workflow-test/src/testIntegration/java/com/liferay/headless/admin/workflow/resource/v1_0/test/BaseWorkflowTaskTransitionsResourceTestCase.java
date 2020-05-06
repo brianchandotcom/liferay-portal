@@ -200,6 +200,13 @@ public abstract class BaseWorkflowTaskTransitionsResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	@Test
+	public void testGraphQLGetWorkflowTaskTransitionNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {

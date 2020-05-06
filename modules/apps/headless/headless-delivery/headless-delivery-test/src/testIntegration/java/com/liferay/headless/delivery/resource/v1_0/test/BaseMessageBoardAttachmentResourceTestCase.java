@@ -328,6 +328,30 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetMessageBoardAttachmentNotFound()
+		throws Exception {
+
+		Long irrelevantMessageBoardAttachmentId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"messageBoardAttachment",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"messageBoardAttachmentId",
+									irrelevantMessageBoardAttachmentId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetMessageBoardMessageMessageBoardAttachmentsPage()
 		throws Exception {
 

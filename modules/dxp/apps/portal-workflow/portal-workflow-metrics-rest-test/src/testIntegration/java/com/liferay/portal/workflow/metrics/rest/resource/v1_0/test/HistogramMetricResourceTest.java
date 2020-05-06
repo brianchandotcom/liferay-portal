@@ -183,6 +183,10 @@ public class HistogramMetricResourceTest
 
 		double timeAmount = histograms.size();
 
+		if (timeRange == 0) {
+			timeRange = 1;
+		}
+
 		if (Objects.equals(unit, HistogramMetric.Unit.MONTHS.getValue())) {
 			timeAmount = timeRange / 30.0;
 		}

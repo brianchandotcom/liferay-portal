@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -54,6 +55,7 @@ import java.io.File;
 
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -318,13 +320,13 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
-	private void _validateContent(String content, String expectedFileName)
+	private void _validateContent(String content, String expectedContent)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
-			_read(expectedFileName));
+			expectedContent);
 
 		Assert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString());
@@ -336,13 +338,34 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 		if (_isPageDefinitionFile(zipEntry.getName())) {
 			_validateContent(
 				StringUtil.read(zipFile.getInputStream(zipEntry)),
-				"expected_display_page_page_template_definition.json");
+				_read("expected_display_page_page_template_definition.json"));
 		}
 
 		if (_isDisplayPageFile(zipEntry.getName())) {
+			InfoDisplayContributor infoDisplayContributor =
+				_infoDisplayContributorTracker.getInfoDisplayContributor(
+					"com.liferay.journal.model.JournalArticle");
+
+			long classTypeId = 0;
+
+			List<ClassType> classTypes = infoDisplayContributor.getClassTypes(
+				_group.getGroupId(), LocaleUtil.getSiteDefault());
+
+			for (ClassType classType : classTypes) {
+				if (Objects.equals(classType.getName(), "Basic Web Content")) {
+					classTypeId = classType.getClassTypeId();
+				}
+			}
+
+			HashMap<String, String> valuesMap = HashMapBuilder.put(
+				"CONTENT_SUBTYPE_CLASS_TYPE_ID", String.valueOf(classTypeId)
+			).build();
+
 			_validateContent(
 				StringUtil.read(zipFile.getInputStream(zipEntry)),
-				"expected_display_page_template.json");
+				StringUtil.replace(
+					_read("expected_display_page_template.json"), "\"${", "}\"",
+					valuesMap));
 		}
 
 		if (_isDisplayPageThumbnailFile(zipEntry.getName())) {

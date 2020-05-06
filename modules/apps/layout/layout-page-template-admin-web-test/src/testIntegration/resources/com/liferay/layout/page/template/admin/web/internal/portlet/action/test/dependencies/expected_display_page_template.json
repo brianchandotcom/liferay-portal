@@ -1,5 +1,9 @@
 {
-	"contentSubtypeName": "Basic Web Content",
-	"contentTypeClassName": "com.liferay.journal.model.JournalArticle",
+	"contentSubtype": {
+		"classTypeId": "${CONTENT_SUBTYPE_CLASS_TYPE_ID}"
+	},
+	"contentType": {
+		"className": "com.liferay.journal.model.JournalArticle"
+	},
 	"name": "Display Page Template One"
 }

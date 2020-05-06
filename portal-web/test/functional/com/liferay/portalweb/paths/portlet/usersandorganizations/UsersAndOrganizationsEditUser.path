@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_CATEGORY_SELECT</td>
+	<td>//label[contains(.,'Categorization')]//following-sibling::div//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_TAG_FIELD</td>
 	<td>//input[contains(@class,'form-control-inset')]</td>
 	<td></td>

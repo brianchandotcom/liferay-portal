@@ -36,15 +36,23 @@ const isCommentsAlloyEditor = (element) => {
 	);
 };
 
+const isWithinIframe = () => {
+	return window.top !== window.self;
+};
+
+const isUndoCombination = (event) => {
+	return event.keyCode === Z_KEYCODE && (event.ctrlKey || event.metaKey);
+};
+
 export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 	useEventListener(
 		'keydown',
 		(event) => {
 			if (
+				isUndoCombination(event) &&
 				!isTextElement(event.target) &&
 				!isCommentsAlloyEditor(event.target) &&
-				event.keyCode === Z_KEYCODE &&
-				(event.ctrlKey || event.metaKey)
+				!isWithinIframe()
 			) {
 				onUndo();
 			}

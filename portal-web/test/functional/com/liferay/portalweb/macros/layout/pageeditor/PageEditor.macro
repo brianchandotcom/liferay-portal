@@ -786,17 +786,17 @@ definition {
 		}
 
 		if ("${spaceBetweenColumns}" == "true") {
-			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Columns Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
+			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
 				Click.clickAtNotVisible(
-					checkboxName = "Columns Gutter",
+					checkboxName = "Show Gutter",
 					locator1 = "Checkbox#ANY_CHECKBOX");
 			}
 		}
 
 		if ("${spaceBetweenColumns}" == "false") {
-			while (IsChecked(checkboxName = "Columns Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
+			while (IsChecked(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
 				Click.clickAtNotVisible(
-					checkboxName = "Columns Gutter",
+					checkboxName = "Show Gutter",
 					locator1 = "Checkbox#ANY_CHECKBOX");
 			}
 		}

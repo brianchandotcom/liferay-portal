@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>Redirect</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Redirect</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SIDEBAR_INFO_ITEM</td>
+	<td>//div[contains(@class,'sidebar-body')]//dt[contains(@class,'sidebar-dt') and contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<tr>
+    <td>FLOATING_TOOLTIP_URL</td>
+    <td>//div[contains(@class,'tooltip')]//div[contains(.,'${key_redirectURL}')]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

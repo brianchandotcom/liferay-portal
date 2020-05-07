@@ -82,7 +82,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	showSearch="false"
 />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form action="<%= currentURL %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -154,7 +154,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	var deleteEntries = function () {

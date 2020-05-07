@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.base.RedirectEntryServiceBaseImpl;
@@ -138,6 +139,24 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 		for (RedirectEntry redirectEntry : redirectEntries) {
 			updateRedirectEntry(
 				redirectEntry.getRedirectEntryId(), destinationURL,
+				redirectEntry.getExpirationDate(), redirectEntry.isPermanent(),
+				redirectEntry.getSourceURL());
+		}
+
+		RedirectEntry chainedRedirectEntry =
+			redirectEntryLocalService.fetchRedirectEntry(
+				groupId,
+				StringUtil.removeSubstring(
+					destinationURL, groupBaseURL + StringPool.SLASH));
+
+		if (chainedRedirectEntry != null) {
+			RedirectEntry redirectEntry =
+				redirectEntryLocalService.fetchRedirectEntry(
+					groupId, sourceURL);
+
+			updateRedirectEntry(
+				redirectEntry.getRedirectEntryId(),
+				chainedRedirectEntry.getDestinationURL(),
 				redirectEntry.getExpirationDate(), redirectEntry.isPermanent(),
 				redirectEntry.getSourceURL());
 		}

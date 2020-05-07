@@ -39,6 +39,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -108,6 +109,8 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getString("ddmDataProviderInstanceOutput"),
 			ddmFormField);
 		setDDMFormFieldDataType(jsonObject.getString("dataType"), ddmFormField);
+		setDDMFormFieldDDMStructureIdProperty(jsonObject, ddmFormField);
+		setDDMFormFieldDDMStructureLayoutIdProperty(jsonObject, ddmFormField);
 		setDDMFormFieldFieldName(
 			jsonObject.getString("fieldName"), ddmFormField);
 		setDDMFormFieldInline(jsonObject.getBoolean("inline"), ddmFormField);
@@ -264,6 +267,28 @@ public class DDMFormTemplateContextProcessor {
 		String dataType, DDMFormField ddmFormField) {
 
 		ddmFormField.setDataType(GetterUtil.getString(dataType));
+	}
+
+	protected void setDDMFormFieldDDMStructureIdProperty(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
+
+		if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
+			return;
+		}
+
+		ddmFormField.setProperty(
+			"ddmStructureId", jsonObject.getLong("ddmStructureId"));
+	}
+
+	protected void setDDMFormFieldDDMStructureLayoutIdProperty(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
+
+		if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
+			return;
+		}
+
+		ddmFormField.setProperty(
+			"ddmStructureLayoutId", jsonObject.getLong("ddmStructureLayoutId"));
 	}
 
 	protected void setDDMFormFieldFieldName(

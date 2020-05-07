@@ -1408,7 +1408,7 @@ definition {
 			AssertNotChecked(
 				key_contentName = "${contentName}",
 				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL");
-			}
+		}
 	}
 
 	macro viewValidationError {

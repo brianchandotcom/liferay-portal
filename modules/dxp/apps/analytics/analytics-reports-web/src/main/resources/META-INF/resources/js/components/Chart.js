@@ -173,7 +173,7 @@ export default function Chart({
 					.then((data) => {
 						if (!gone) {
 							if (isMounted()) {
-								Object.keys(data).map((key) => {
+								Object.entries(data).map((key) => {
 									actions.addDataSetItem({
 										dataSetItem: data[key],
 										key,
@@ -206,19 +206,17 @@ export default function Chart({
 			});
 		}
 		else {
-			actions.addDataSetItem({
-				dataSetItem: {histogram: [], value: null},
-				key: 'analyticsReportsHistoricalViews',
-				timeSpanComparator,
-			});
+			var keys = ['analyticsReportsHistoricalViews'];
 
 			if (readsEnabled) {
-				actions.addDataSetItem({
-					dataSetItem: {histogram: [], value: null},
-					key: 'analyticsReportsHistoricalReads',
-					timeSpanComparator,
-				});
+				keys.push('analyticsReportsHistoricalReads');
 			}
+
+			actions.addDataSetItems({
+				dataSetItem: {histogram: [], value: null},
+				keys,
+				timeSpanComparator,
+			});
 		}
 
 		return () => {

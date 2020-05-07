@@ -19,7 +19,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.headless.discovery.internal.dto.Hint;
 import com.liferay.headless.discovery.internal.dto.Resource;
 import com.liferay.headless.discovery.internal.dto.Resources;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.net.URI;
 
@@ -31,6 +43,10 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Produces;
@@ -39,7 +55,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.ext.Providers;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,8 +81,15 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 
 	@GET
 	@Produces({"application/json", "application/xml"})
-	public Response discovery(@HeaderParam("Accept") String accept)
+	public Response discovery(
+			@HeaderParam("Accept") String accept,
+			@Context HttpServletRequest httpServletRequest,
+			@Context HttpServletResponse httpServletResponse)
 		throws Exception {
+
+		if ((accept != null) && accept.contains(MediaType.TEXT_HTML)) {
+			return _getHTMLResponse(httpServletRequest, httpServletResponse);
+		}
 
 		Map<String, List<ResourceMethodInfoDTO>> resourceMethodInfoDTOsMap =
 			_getResourceMethodInfoDTOsMap();
@@ -103,6 +125,44 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 
 	public Set<Object> getSingletons() {
 		return Collections.singleton(this);
+	}
+
+	private Response _getHTMLResponse(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		String templateId = "/headless-web.ftl";
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			templateId, getClass().getResource(templateId));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		ServletContext servletContext = ServletContextPool.get(
+			StringPool.BLANK);
+
+		httpServletRequest.setAttribute(WebKeys.CTX, servletContext);
+
+		httpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(httpServletRequest));
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.prepare(httpServletRequest);
+
+		template.put("themeServletContext", servletContext);
+
+		template.prepareTaglib(httpServletRequest, httpServletResponse);
+
+		template.put(TemplateConstants.WRITER, unsyncStringWriter);
+
+		template.processTemplate(unsyncStringWriter);
+
+		return Response.ok(
+			unsyncStringWriter.toString()
+		).build();
 	}
 
 	private Resource _getResource(
@@ -176,11 +236,28 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 		return resourcesMap;
 	}
 
+	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ServicePreAction servicePreAction = new ServicePreAction();
+
+		DummyHttpServletResponse dummyHttpServletResponse =
+			new DummyHttpServletResponse();
+
+		servicePreAction.servicePre(
+			httpServletRequest, dummyHttpServletResponse, false);
+
+		ThemeServicePreAction themeServicePreAction =
+			new ThemeServicePreAction();
+
+		themeServicePreAction.run(httpServletRequest, dummyHttpServletResponse);
+
+		return (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;
-
-	@Context
-	private Providers _providers;
 
 	@Context
 	private UriInfo _uriInfo;

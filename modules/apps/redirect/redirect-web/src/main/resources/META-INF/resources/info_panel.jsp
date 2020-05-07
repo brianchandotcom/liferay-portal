@@ -20,14 +20,13 @@
 List<RedirectEntry> redirectEntries = (List<RedirectEntry>)GetterUtil.getObject(request.getAttribute(RedirectWebKeys.REDIRECT_ENTRIES), Collections.emptyList());
 %>
 
-<div class="bg-white sidebar-header">
+<div class="sidebar-header">
 	<h1 class="sidebar-title">
 		<liferay-ui:message key="info" />
 	</h1>
 </div>
 
 <clay:navigation-bar
-	elementClasses="bg-white"
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
@@ -41,7 +40,7 @@ List<RedirectEntry> redirectEntries = (List<RedirectEntry>)GetterUtil.getObject(
 	%>'
 />
 
-<div class="bg-white sidebar-body">
+<div class="sidebar-body">
 	<c:choose>
 		<c:when test="<%= redirectEntries.size() == 0 %>">
 			<p class="h5">

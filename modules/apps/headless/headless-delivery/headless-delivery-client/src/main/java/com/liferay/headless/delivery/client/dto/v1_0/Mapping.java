@@ -28,6 +28,28 @@ import javax.annotation.Generated;
 @Generated("")
 public class Mapping implements Cloneable {
 
+	public String getCollectionItemFieldKey() {
+		return collectionItemFieldKey;
+	}
+
+	public void setCollectionItemFieldKey(String collectionItemFieldKey) {
+		this.collectionItemFieldKey = collectionItemFieldKey;
+	}
+
+	public void setCollectionItemFieldKey(
+		UnsafeSupplier<String, Exception>
+			collectionItemFieldKeyUnsafeSupplier) {
+
+		try {
+			collectionItemFieldKey = collectionItemFieldKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String collectionItemFieldKey;
+
 	public String getFieldKey() {
 		return fieldKey;
 	}

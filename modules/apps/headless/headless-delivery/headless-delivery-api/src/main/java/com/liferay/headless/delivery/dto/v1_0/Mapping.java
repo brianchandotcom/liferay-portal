@@ -45,6 +45,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Mapping {
 
 	@Schema
+	public String getCollectionItemFieldKey() {
+		return collectionItemFieldKey;
+	}
+
+	public void setCollectionItemFieldKey(String collectionItemFieldKey) {
+		this.collectionItemFieldKey = collectionItemFieldKey;
+	}
+
+	@JsonIgnore
+	public void setCollectionItemFieldKey(
+		UnsafeSupplier<String, Exception>
+			collectionItemFieldKeyUnsafeSupplier) {
+
+		try {
+			collectionItemFieldKey = collectionItemFieldKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String collectionItemFieldKey;
+
+	@Schema
 	public String getFieldKey() {
 		return fieldKey;
 	}
@@ -154,6 +183,20 @@ public class Mapping {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (collectionItemFieldKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionItemFieldKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(collectionItemFieldKey));
+
+			sb.append("\"");
+		}
 
 		if (fieldKey != null) {
 			if (sb.length() > 1) {

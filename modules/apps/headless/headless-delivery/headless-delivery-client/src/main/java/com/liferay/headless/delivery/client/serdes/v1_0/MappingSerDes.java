@@ -53,6 +53,20 @@ public class MappingSerDes {
 
 		sb.append("{");
 
+		if (mapping.getCollectionItemFieldKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionItemFieldKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(mapping.getCollectionItemFieldKey()));
+
+			sb.append("\"");
+		}
+
 		if (mapping.getFieldKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -109,6 +123,15 @@ public class MappingSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (mapping.getCollectionItemFieldKey() == null) {
+			map.put("collectionItemFieldKey", null);
+		}
+		else {
+			map.put(
+				"collectionItemFieldKey",
+				String.valueOf(mapping.getCollectionItemFieldKey()));
+		}
+
 		if (mapping.getFieldKey() == null) {
 			map.put("fieldKey", null);
 		}
@@ -151,7 +174,13 @@ public class MappingSerDes {
 			Mapping mapping, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fieldKey")) {
+			if (Objects.equals(jsonParserFieldName, "collectionItemFieldKey")) {
+				if (jsonParserFieldValue != null) {
+					mapping.setCollectionItemFieldKey(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fieldKey")) {
 				if (jsonParserFieldValue != null) {
 					mapping.setFieldKey((String)jsonParserFieldValue);
 				}

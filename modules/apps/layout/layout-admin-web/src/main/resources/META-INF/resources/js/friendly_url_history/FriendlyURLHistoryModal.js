@@ -118,7 +118,9 @@ const FriendlyURLHistoryModal = ({
 							className="show-quick-actions-one-line"
 							showQuickActionsOnHover
 						>
-							<ClayList.Header>Active URL</ClayList.Header>
+							<ClayList.Header>
+								{Liferay.Language.get('active-url')}
+							</ClayList.Header>
 							<ClayList.Item flex>
 								<ClayList.ItemField expand>
 									<ClayList.ItemText className="text-truncate">
@@ -134,7 +136,9 @@ const FriendlyURLHistoryModal = ({
 								.length > 0 && (
 								<>
 									<ClayList.Header>
-										Old Friendly URLs
+										{Liferay.Language.get(
+											'old-friendly-urls'
+										)}
 									</ClayList.Header>
 									{friendlyURLEntryLocalizations[
 										languageId

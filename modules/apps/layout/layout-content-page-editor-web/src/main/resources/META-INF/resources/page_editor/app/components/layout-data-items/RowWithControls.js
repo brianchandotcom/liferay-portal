@@ -30,6 +30,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import resizeColumns from '../../thunks/resizeColumns';
+import {getViewportSize} from '../../utils/getViewportSize';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import SaveFragmentCompositionModal from '../floating-toolbar/SaveFragmentCompositionModal';
@@ -68,8 +69,9 @@ const RowWithControls = React.forwardRef(
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
 		);
-		const selectedViewportSizeConfig =
-			config[selectedViewportSize] || config;
+		const viewportRowConfig = (option) =>
+			(config[getViewportSize(config, selectedViewportSize, option)] ||
+				config)[option];
 
 		const rowRef = useRef(null);
 		const rowRect = getRect(rowRef.current);
@@ -184,16 +186,14 @@ const RowWithControls = React.forwardRef(
 
 		buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration);
 
+		const verticalAlignment = viewportRowConfig('verticalAlignment');
+
 		return (
 			<Topper item={item} itemRef={ref} layoutData={layoutData}>
 				<Row
 					className={classNames('page-editor__row', {
-						'align-bottom':
-							selectedViewportSizeConfig.verticalAlignment ===
-							'bottom',
-						'align-middle':
-							selectedViewportSizeConfig.verticalAlignment ===
-							'middle',
+						'align-bottom': verticalAlignment === 'bottom',
+						'align-middle': verticalAlignment === 'middle',
 					})}
 					item={item}
 					layoutData={layoutData}

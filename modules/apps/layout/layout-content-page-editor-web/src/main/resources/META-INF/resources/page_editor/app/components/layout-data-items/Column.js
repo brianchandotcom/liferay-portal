@@ -20,6 +20,7 @@ import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
+import {getViewportSize} from '../../utils/getViewportSize';
 
 const Column = React.forwardRef(
 	({children, className, item, ...props}, ref) => {
@@ -37,14 +38,16 @@ const Column = React.forwardRef(
 			(state) => state.selectedViewportSize
 		);
 
-		const parentItemConfig =
-			parentItem.config[selectedViewportSize] || parentItem.config;
+		const parentItemConfig = (option) => {
+			return (parentItem.config[
+				getViewportSize(parentItem.config, selectedViewportSize, option)
+			] || parentItem.config)[option];
+		};
 
-		const {modulesPerRow, numberOfColumns} = parentItemConfig;
+		const modulesPerRow = parentItemConfig('modulesPerRow');
+		const numberOfColumns = parentItemConfig('numberOfColumns');
 
-		let columnSize =
-			(size * parentItemConfig.numberOfColumns) /
-			parentItemConfig.modulesPerRow;
+		let columnSize = (size * numberOfColumns) / modulesPerRow;
 
 		if (numberOfColumns === 5 && modulesPerRow !== numberOfColumns) {
 			columnSize = parentItem.children.indexOf(item.itemId) > 2 ? 6 : 4;

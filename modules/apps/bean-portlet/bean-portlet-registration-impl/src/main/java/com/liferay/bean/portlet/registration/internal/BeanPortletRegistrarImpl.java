@@ -178,9 +178,9 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 		URL portletDescriptorURL = bundle.getEntry("/WEB-INF/portlet.xml");
 
+		BeanApp beanApp = null;
 		Map<String, BeanFilter> beanFilters = new HashMap<>();
 		Map<String, BeanPortlet> beanPortlets = new HashMap<>();
-		BeanApp beanApp = null;
 
 		if (portletDescriptorURL != null) {
 			try {
@@ -561,13 +561,13 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 		portletListeners.addAll(beanApp.getPortletListeners());
 
-		beanApp.setSpecVersion(specVersion);
-		beanApp.setDefaultNamespace(defaultNamespace);
-		beanApp.setEvents(events);
-		beanApp.setPublicRenderParameters(publicRenderParameters);
 		beanApp.setContainerRuntimeOptions(containerRuntimeOptions);
 		beanApp.setCustomPortletModes(customPortletModes);
+		beanApp.setDefaultNamespace(defaultNamespace);
+		beanApp.setEvents(events);
 		beanApp.setPortletListeners(portletListeners);
+		beanApp.setPublicRenderParameters(publicRenderParameters);
+		beanApp.setSpecVersion(specVersion);
 
 		String preferencesValidator = preferencesValidatorFunction.apply(
 			configuredPortletName);

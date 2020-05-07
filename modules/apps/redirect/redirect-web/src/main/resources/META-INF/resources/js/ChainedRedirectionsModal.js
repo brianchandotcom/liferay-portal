@@ -24,6 +24,7 @@ const ChainedRedirectionsModal = ({
 	callback = noop,
 	observer,
 	onModalClose = noop,
+	redirectEntryChainCause,
 	saveButtonLabel,
 }) => {
 	const [updateReferences, setUpdateReferences] = useState(true);
@@ -48,27 +49,43 @@ const ChainedRedirectionsModal = ({
 				<ClayModal.Body>
 					<p className="portlet-redirect-modal-title">
 						<strong>
-							{Liferay.Language.get(
-								'do-you-want-to-create-the-redirect-and-update-the-references'
-							)}
+							{redirectEntryChainCause === 'sourceURL'
+								? Liferay.Language.get(
+										'do-you-want-to-create-the-redirect-and-update-the-references'
+								  )
+								: Liferay.Language.get(
+										'do-you-want-to-create-this-redirect-and-update-it'
+								  )}
 						</strong>
 					</p>
 					<div className="portlet-redirect-modal-description">
 						<p>
-							{Liferay.Language.get(
-								'there-are-other-redirects-pointing-to-the-source-url-of-this-redirect'
-							)}
+							{redirectEntryChainCause === 'sourceURL'
+								? Liferay.Language.get(
+										'there-are-other-redirects-pointing-to-the-source-url-of-this-redirect'
+								  )
+								: Liferay.Language.get(
+										'this-redirect-points-to-the-source-url-of-another-redirect'
+								  )}
 						</p>
 						<p>
-							{Liferay.Language.get(
-								'update-the-references-of-the-other-redirects-to-avoid-this-chain'
-							)}
+							{redirectEntryChainCause === 'sourceURL'
+								? Liferay.Language.get(
+										'update-the-references-of-the-other-redirects-to-avoid-this-chain'
+								  )
+								: Liferay.Language.get(
+										'update-this-redirect-to-avoid-this-chain'
+								  )}
 						</p>
 					</div>
 					<fieldset className="fieldset">
 						<ClayCheckbox
 							checked={updateReferences}
-							label={Liferay.Language.get('update-references')}
+							label={
+								redirectEntryChainCause === 'sourceURL'
+									? Liferay.Language.get('update-references')
+									: Liferay.Language.get('update-redirect')
+							}
 							onChange={() => setUpdateReferences((val) => !val)}
 						/>
 					</fieldset>
@@ -99,6 +116,7 @@ ChainedRedirectionsModal.propTypes = {
 	callback: PropTypes.func,
 	observer: PropTypes.object.isRequired,
 	onModalClose: PropTypes.func,
+	redirectEntryChainCause: PropTypes.string.isRequired,
 	saveButtonLabel: PropTypes.string.isRequired,
 };
 

@@ -19,6 +19,9 @@ import React, {useState} from 'react';
 import ChainedRedirectionsModal from './ChainedRedirectionsModal';
 
 function ChainedRedirections({portletNamespace, ...restProps}) {
+	const [redirectEntryChainCause, setRedirectEntryChainCause] = useState(
+		null
+	);
 	const [showModal, setShowModal] = useState(false);
 	const [callback, setCallback] = useState();
 	const BRIDGE_COMPONENT_ID = `${portletNamespace}RedirectsChainedRedirections`;
@@ -35,8 +38,9 @@ function ChainedRedirections({portletNamespace, ...restProps}) {
 		Liferay.component(
 			BRIDGE_COMPONENT_ID,
 			{
-				open: (callback) => {
+				open: (redirectEntryChainCause, callback) => {
 					setCallback(() => callback);
+					setRedirectEntryChainCause(redirectEntryChainCause);
 					setShowModal(true);
 				},
 			},
@@ -54,6 +58,7 @@ function ChainedRedirections({portletNamespace, ...restProps}) {
 					callback={callback}
 					observer={observer}
 					onModalClose={onClose}
+					redirectEntryChainCause={redirectEntryChainCause}
 				/>
 			)}
 		</>

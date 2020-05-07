@@ -34,11 +34,11 @@ export default function ({checkRedirectEntryChainURL, namespace}) {
 					return response.json();
 				})
 				.then((response) => {
-					if (response.success) {
-						submitForm(form);
+					if (response.redirectEntryChainCause) {
+						showModal(response.redirectEntryChainCause);
 					}
 					else {
-						showModal();
+						submitForm(form);
 					}
 				})
 				.catch(() => {
@@ -57,16 +57,19 @@ export default function ({checkRedirectEntryChainURL, namespace}) {
 		}
 	}
 
-	function showModal() {
+	function showModal(redirectEntryChainCause) {
 		Liferay.componentReady(`${namespace}RedirectsChainedRedirections`).then(
 			(ChainedRedirections) => {
-				ChainedRedirections.open((updateReferences) => {
-					Liferay.Util.postForm(form, {
-						data: {
-							updateReferences,
-						},
-					});
-				});
+				ChainedRedirections.open(
+					redirectEntryChainCause,
+					(updateReferences) => {
+						Liferay.Util.postForm(form, {
+							data: {
+								updateReferences,
+							},
+						});
+					}
+				);
 			}
 		);
 	}

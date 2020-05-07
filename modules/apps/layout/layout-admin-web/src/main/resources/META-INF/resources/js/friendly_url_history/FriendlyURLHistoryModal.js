@@ -105,12 +105,12 @@ const FriendlyURLHistoryModal = ({
 					<>
 						<div className="pb-3 text-right">
 							<LanguageSelector
-								defaultLanguage={defaultLanguageId}
+								defaultLanguageId={defaultLanguageId}
 								languageIds={availableLanguages}
 								onChange={(value) => {
 									setLanguageId(value);
 								}}
-								selectedLanguage={languageId}
+								selectedLanguageId={languageId}
 							/>
 						</div>
 

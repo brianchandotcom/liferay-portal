@@ -18,63 +18,64 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import React, {useState} from 'react';
 
-const DropDownWithState = ({children}) => {
+function getLanguage(id) {
+	const text = id.replace('_', '-');
+	const icon = text.toLowerCase();
+
+	return {
+		icon,
+		text,
+	};
+}
+
+export default function LanguageSelector({
+	defaultLanguageId,
+	languageIds,
+	onChange,
+	selectedLanguageId,
+}) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const language = getLanguage(selectedLanguageId);
 
 	return (
 		<ClayDropDown
 			active={isDropdownOpen}
-			onActiveChange={(isActive) => setIsDropdownOpen(isActive)}
+			onActiveChange={setIsDropdownOpen}
 			trigger={
 				<ClayButton displayType="secondary" monospaced>
 					<span className="inline-item">
-						<ClayIcon symbol="en-us" />
+						<ClayIcon symbol={language.icon} />
 					</span>
-					<span className="btn-section">en-US</span>
+					<span className="btn-section">{language.text}</span>
 				</ClayButton>
 			}
 		>
-			{children({setActive: setIsDropdownOpen})}
-		</ClayDropDown>
-	);
-};
-export default function LanguageSelector({
-	defaultLanguage,
-	languageIds,
-	onChange,
-	selectedLanguage,
-}) {
-	return (
-		<DropDownWithState>
-			{({setActive}) => (
-				<ClayDropDown.ItemList>
-					{languageIds.map((languageId) => (
+			<ClayDropDown.ItemList>
+				{languageIds.map((id) => {
+					const {icon, text} = getLanguage(id);
+
+					return (
 						<ClayDropDown.Item
-							active={languageId === selectedLanguage}
-							id={languageId}
-							key={languageId}
+							active={id === selectedLanguageId}
+							key={id}
 							onClick={() => {
-								onChange(languageId);
-								setActive(false);
+								onChange(id);
+								setIsDropdownOpen(false);
 							}}
 						>
 							<span className="inline-item inline-item-before">
-								<ClayIcon
-									symbol={languageId
-										.replace('_', '-')
-										.toLowerCase()}
-								/>
+								<ClayIcon symbol={icon} />
 							</span>
-							{languageId.replace('_', '-')}{' '}
-							{defaultLanguage === languageId && (
+							{text}{' '}
+							{defaultLanguageId === id && (
 								<ClayLabel displayType="info">
 									{Liferay.Language.get('default')}
 								</ClayLabel>
 							)}
 						</ClayDropDown.Item>
-					))}
-				</ClayDropDown.ItemList>
-			)}
-		</DropDownWithState>
+					);
+				})}
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
 	);
 }

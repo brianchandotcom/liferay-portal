@@ -75,7 +75,7 @@ const DestinationUrlInput = ({
 						displayType="secondary"
 						onClick={handleTryRedirection}
 						symbol="shortcut"
-						title={Liferay.Language.get('try-redirection')}
+						title={Liferay.Language.get('check-url')}
 					/>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>

@@ -36,7 +36,7 @@ public class SpringPortletRequestScope extends BaseScope {
 
 		if (scopedBeanManager == null) {
 			_log.error(
-				"Attempted to get a @PortletRequestScoped bean name=" + name +
+				"Attempted to get a @PortletRequestScoped bean named " + name +
 					" outside the scope of a portlet request.");
 
 			return null;

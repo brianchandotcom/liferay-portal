@@ -47,7 +47,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 	</aui:button-row>
 </c:if>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-calendars-for-the-selected-resource"
 		iteratorURL="<%= renderResponse.createRenderURL() %>"
@@ -103,7 +103,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>
 
 <div class="calendar-portlet-import-container hide" id="<portlet:namespace />importCalendarContainer">
 	<div class="hide portlet-msg-error" id="<portlet:namespace />portletErrorMessage"></div>

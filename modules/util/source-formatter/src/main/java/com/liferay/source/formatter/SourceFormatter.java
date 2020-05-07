@@ -475,6 +475,34 @@ public class SourceFormatter {
 		}
 	}
 
+	private Set<String> _addDependentFileName(
+		Set<String> dependentFileNames, String fileName,
+		String dependentFileName) {
+
+		String dirName = fileName.substring(
+			0, fileName.lastIndexOf(CharPool.SLASH));
+
+		while (true) {
+			String dependentFilePathName = dirName + "/" + dependentFileName;
+
+			File file = new File(dependentFilePathName);
+
+			if (file.exists()) {
+				dependentFileNames.add(dependentFilePathName);
+
+				return dependentFileNames;
+			}
+
+			int pos = dirName.lastIndexOf(CharPool.SLASH);
+
+			if (pos == -1) {
+				return dependentFileNames;
+			}
+
+			dirName = dirName.substring(0, pos);
+		}
+	}
+
 	private void _addDependentFileNames() {
 		Set<String> recentChangesFileNames =
 			_sourceFormatterArgs.getRecentChangesFileNames();
@@ -538,34 +566,6 @@ public class SourceFormatter {
 
 		_sourceFormatterArgs.addRecentChangesFileNames(
 			dependentFileNames, null);
-	}
-
-	private Set<String> _addDependentFileName(
-		Set<String> dependentFileNames, String fileName,
-		String dependentFileName) {
-
-		String dirName = fileName.substring(
-			0, fileName.lastIndexOf(CharPool.SLASH));
-
-		while (true) {
-			String dependentFilePathName = dirName + "/" + dependentFileName;
-
-			File file = new File(dependentFilePathName);
-
-			if (file.exists()) {
-				dependentFileNames.add(dependentFilePathName);
-
-				return dependentFileNames;
-			}
-
-			int pos = dirName.lastIndexOf(CharPool.SLASH);
-
-			if (pos == -1) {
-				return dependentFileNames;
-			}
-
-			dirName = dirName.substring(0, pos);
-		}
 	}
 
 	private boolean _containsDir(String dirName) {

@@ -83,6 +83,30 @@ public class RedirectEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.redirect.model.RedirectEntrySoap addRedirectEntry(
+			long groupId, String destinationURL, java.util.Date expirationDate,
+			String groupBaseURL, boolean permanent, String sourceURL,
+			boolean updateChainedRedirectEntries,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.redirect.model.RedirectEntry returnValue =
+				RedirectEntryServiceUtil.addRedirectEntry(
+					groupId, destinationURL, expirationDate, groupBaseURL,
+					permanent, sourceURL, updateChainedRedirectEntries,
+					serviceContext);
+
+			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.redirect.model.RedirectEntrySoap
 			deleteRedirectEntry(long redirectEntryId)
 		throws RemoteException {
@@ -157,22 +181,6 @@ public class RedirectEntryServiceSoap {
 		}
 	}
 
-	public static void updateChainedRedirectEntries(
-			long groupId, String destinationURL, String groupBaseURL,
-			String sourceURL)
-		throws RemoteException {
-
-		try {
-			RedirectEntryServiceUtil.updateChainedRedirectEntries(
-				groupId, destinationURL, groupBaseURL, sourceURL);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static com.liferay.redirect.model.RedirectEntrySoap
 			updateRedirectEntry(
 				long redirectEntryId, String destinationURL,
@@ -185,6 +193,31 @@ public class RedirectEntryServiceSoap {
 				RedirectEntryServiceUtil.updateRedirectEntry(
 					redirectEntryId, destinationURL, expirationDate, permanent,
 					sourceURL);
+
+			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.redirect.model.RedirectEntrySoap
+			updateRedirectEntry(
+				long redirectEntryId, String destinationURL,
+				java.util.Date expirationDate, String groupBaseURL,
+				boolean permanent, String sourceURL,
+				boolean updateChainedRedirectEntries)
+		throws RemoteException {
+
+		try {
+			com.liferay.redirect.model.RedirectEntry returnValue =
+				RedirectEntryServiceUtil.updateRedirectEntry(
+					redirectEntryId, destinationURL, expirationDate,
+					groupBaseURL, permanent, sourceURL,
+					updateChainedRedirectEntries);
 
 			return com.liferay.redirect.model.RedirectEntrySoap.toSoapModel(
 				returnValue);

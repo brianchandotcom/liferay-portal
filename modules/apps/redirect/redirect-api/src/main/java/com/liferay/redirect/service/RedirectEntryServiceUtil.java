@@ -48,6 +48,18 @@ public class RedirectEntryServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.redirect.model.RedirectEntry addRedirectEntry(
+			long groupId, String destinationURL, java.util.Date expirationDate,
+			String groupBaseURL, boolean permanent, String sourceURL,
+			boolean updateChainedRedirectEntries,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addRedirectEntry(
+			groupId, destinationURL, expirationDate, groupBaseURL, permanent,
+			sourceURL, updateChainedRedirectEntries, serviceContext);
+	}
+
 	public static com.liferay.redirect.model.RedirectEntry deleteRedirectEntry(
 			long redirectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -87,15 +99,6 @@ public class RedirectEntryServiceUtil {
 		return getService().getRedirectEntriesCount(groupId);
 	}
 
-	public static void updateChainedRedirectEntries(
-			long groupId, String destinationURL, String groupBaseURL,
-			String sourceURL)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().updateChainedRedirectEntries(
-			groupId, destinationURL, groupBaseURL, sourceURL);
-	}
-
 	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL,
 			java.util.Date expirationDate, boolean permanent, String sourceURL)
@@ -104,6 +107,18 @@ public class RedirectEntryServiceUtil {
 		return getService().updateRedirectEntry(
 			redirectEntryId, destinationURL, expirationDate, permanent,
 			sourceURL);
+	}
+
+	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
+			long redirectEntryId, String destinationURL,
+			java.util.Date expirationDate, String groupBaseURL,
+			boolean permanent, String sourceURL,
+			boolean updateChainedRedirectEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateRedirectEntry(
+			redirectEntryId, destinationURL, expirationDate, groupBaseURL,
+			permanent, sourceURL, updateChainedRedirectEntries);
 	}
 
 	public static RedirectEntryService getService() {

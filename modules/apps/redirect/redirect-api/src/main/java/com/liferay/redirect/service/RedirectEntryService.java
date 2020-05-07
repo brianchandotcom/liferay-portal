@@ -59,6 +59,12 @@ public interface RedirectEntryService extends BaseService {
 			boolean permanent, String sourceURL, ServiceContext serviceContext)
 		throws PortalException;
 
+	public RedirectEntry addRedirectEntry(
+			long groupId, String destinationURL, Date expirationDate,
+			String groupBaseURL, boolean permanent, String sourceURL,
+			boolean updateChainedRedirectEntries, ServiceContext serviceContext)
+		throws PortalException;
+
 	public RedirectEntry deleteRedirectEntry(long redirectEntryId)
 		throws PortalException;
 
@@ -82,14 +88,15 @@ public interface RedirectEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRedirectEntriesCount(long groupId) throws PortalException;
 
-	public void updateChainedRedirectEntries(
-			long groupId, String destinationURL, String groupBaseURL,
-			String sourceURL)
+	public RedirectEntry updateRedirectEntry(
+			long redirectEntryId, String destinationURL, Date expirationDate,
+			boolean permanent, String sourceURL)
 		throws PortalException;
 
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, Date expirationDate,
-			boolean permanent, String sourceURL)
+			String groupBaseURL, boolean permanent, String sourceURL,
+			boolean updateChainedRedirectEntries)
 		throws PortalException;
 
 }

@@ -45,6 +45,19 @@ public class RedirectEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.redirect.model.RedirectEntry addRedirectEntry(
+			long groupId, String destinationURL, java.util.Date expirationDate,
+			String groupBaseURL, boolean permanent, String sourceURL,
+			boolean updateChainedRedirectEntries,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectEntryService.addRedirectEntry(
+			groupId, destinationURL, expirationDate, groupBaseURL, permanent,
+			sourceURL, updateChainedRedirectEntries, serviceContext);
+	}
+
+	@Override
 	public com.liferay.redirect.model.RedirectEntry deleteRedirectEntry(
 			long redirectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -90,16 +103,6 @@ public class RedirectEntryServiceWrapper
 	}
 
 	@Override
-	public void updateChainedRedirectEntries(
-			long groupId, String destinationURL, String groupBaseURL,
-			String sourceURL)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_redirectEntryService.updateChainedRedirectEntries(
-			groupId, destinationURL, groupBaseURL, sourceURL);
-	}
-
-	@Override
 	public com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL,
 			java.util.Date expirationDate, boolean permanent, String sourceURL)
@@ -108,6 +111,19 @@ public class RedirectEntryServiceWrapper
 		return _redirectEntryService.updateRedirectEntry(
 			redirectEntryId, destinationURL, expirationDate, permanent,
 			sourceURL);
+	}
+
+	@Override
+	public com.liferay.redirect.model.RedirectEntry updateRedirectEntry(
+			long redirectEntryId, String destinationURL,
+			java.util.Date expirationDate, String groupBaseURL,
+			boolean permanent, String sourceURL,
+			boolean updateChainedRedirectEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _redirectEntryService.updateRedirectEntry(
+			redirectEntryId, destinationURL, expirationDate, groupBaseURL,
+			permanent, sourceURL, updateChainedRedirectEntries);
 	}
 
 	@Override

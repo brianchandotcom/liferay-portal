@@ -18,7 +18,7 @@ import {withFormik} from 'formik';
 import React, {useEffect} from 'react';
 
 import CFInput from './form/CFInput';
-import fetch from './util/fetch';
+import apiFetch from './util/apiFetch';
 import {generateKey, getLocalStorage, setLocalStorage} from './util/storage';
 import {getURL} from './util/url';
 import {getSchemaType} from './util/util';
@@ -121,42 +121,7 @@ const APIFormBase = (props) => {
 };
 
 const formikAPIForm = withFormik({
-	mapPropsToValues: ({methodData, schema}) => {
-		const {operationId, parameters} = methodData;
-
-		const initialValues = {};
-
-		const storedValues = getLocalStorage(generateKey(operationId));
-
-		if (parameters) {
-			parameters.forEach(({name}) => {
-				initialValues[name] = storedValues[name] || '';
-			});
-		}
-
-		schemaIterator(schema, ({defaultVal, name}) => {
-			initialValues[name] = storedValues[name] || '';
-		});
-
-		return initialValues;
-	},
-	validate: (values, {methodData, schema}) => {
-		const errors = {};
-
-		methodData.parameters.forEach(({name, required}) => {
-			if (!!required && !values[name]) {
-				errors[name] = 'Required';
-			}
-		});
-
-		schemaIterator(schema, ({name, required}) => {
-			if (!!required && !values[name]) {
-				errors[name] = 'Required';
-			}
-		});
-
-		return errors;
-	},
+	displayName: 'APIFormBase',
 	handleSubmit: (values, {props, setSubmitting}) => {
 		const {
 			baseURL,
@@ -180,9 +145,9 @@ const formikAPIForm = withFormik({
 			});
 		}
 
-		const apiURL = getURL({baseURL, path, params: parameters, values});
+		const apiURL = getURL({baseURL, params: parameters, path, values});
 
-		fetch(apiURL, method, data, contentType).then((response) => {
+		apiFetch(apiURL, method, data, contentType).then((response) => {
 			onResponse({
 				apiURL,
 				data,
@@ -192,7 +157,42 @@ const formikAPIForm = withFormik({
 			setSubmitting(false);
 		});
 	},
-	displayName: 'APIFormBase',
+	mapPropsToValues: ({methodData, schema}) => {
+		const {operationId, parameters} = methodData;
+
+		const initialValues = {};
+
+		const storedValues = getLocalStorage(generateKey(operationId));
+
+		if (parameters) {
+			parameters.forEach(({name}) => {
+				initialValues[name] = storedValues[name] || '';
+			});
+		}
+
+		schemaIterator(schema, ({name}) => {
+			initialValues[name] = storedValues[name] || '';
+		});
+
+		return initialValues;
+	},
+	validate: (values, {methodData, schema}) => {
+		const errors = {};
+
+		methodData.parameters.forEach(({name, required}) => {
+			if (!!required && !values[name]) {
+				errors[name] = 'Required';
+			}
+		});
+
+		schemaIterator(schema, ({name, required}) => {
+			if (!!required && !values[name]) {
+				errors[name] = 'Required';
+			}
+		});
+
+		return errors;
+	},
 })(APIFormBase);
 
 export default formikAPIForm;

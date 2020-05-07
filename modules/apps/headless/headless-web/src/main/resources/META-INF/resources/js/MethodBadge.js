@@ -16,11 +16,11 @@ import ClayBadge from '@clayui/badge';
 import React from 'react';
 
 const METHOD_DISPLAY_MAP = {
-	post: 'success',
-	get: 'primary',
-	put: 'warning',
-	patch: 'info',
 	delete: 'danger',
+	get: 'primary',
+	patch: 'info',
+	post: 'success',
+	put: 'warning',
 };
 
 const MethodBadge = (props) => {

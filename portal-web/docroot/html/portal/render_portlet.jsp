@@ -480,8 +480,7 @@ if (urlConfiguration != null) {
 
 	portletDisplay.setURLConfiguration(urlConfiguration.toString());
 
-	StringBundler urlConfigurationJSSB = new StringBundler(
-		PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ? 14 : 12);
+	StringBundler urlConfigurationJSSB = new StringBundler(PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ? 14 : 12);
 
 	urlConfigurationJSSB.append("Liferay.Portlet.openModal({");
 	urlConfigurationJSSB.append("namespace: '");

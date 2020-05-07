@@ -351,11 +351,14 @@ public class WorkflowDefinitionDisplayContext {
 			int status)
 		throws PortalException {
 
-		WorkflowDefinitionSearch workflowDefinitionSearch =
-			new WorkflowDefinitionSearch(
-				renderRequest, _getPortletURL(httpServletRequest));
+		if (Objects.nonNull(_workflowDefinitionSearch)) {
+			return _workflowDefinitionSearch;
+		}
 
-		workflowDefinitionSearch.setEmptyResultsMessage(
+		_workflowDefinitionSearch = new WorkflowDefinitionSearch(
+			renderRequest, _getPortletURL(httpServletRequest));
+
+		_workflowDefinitionSearch.setEmptyResultsMessage(
 			"no-workflow-definitions-are-defined");
 
 		List<WorkflowDefinition> workflowDefinitions =
@@ -378,20 +381,20 @@ public class WorkflowDefinitionDisplayContext {
 				searchTerms.getKeywords(), status, false);
 		}
 
-		workflowDefinitionSearch.setTotal(workflowDefinitions.size());
+		_workflowDefinitionSearch.setTotal(workflowDefinitions.size());
 
 		if (workflowDefinitions.size() >
-				(workflowDefinitionSearch.getEnd() -
-					workflowDefinitionSearch.getStart())) {
+				(_workflowDefinitionSearch.getEnd() -
+					_workflowDefinitionSearch.getStart())) {
 
 			workflowDefinitions = ListUtil.subList(
-				workflowDefinitions, workflowDefinitionSearch.getStart(),
-				workflowDefinitionSearch.getEnd());
+				workflowDefinitions, _workflowDefinitionSearch.getStart(),
+				_workflowDefinitionSearch.getEnd());
 		}
 
-		workflowDefinitionSearch.setResults(workflowDefinitions);
+		_workflowDefinitionSearch.setResults(workflowDefinitions);
 
-		return workflowDefinitionSearch;
+		return _workflowDefinitionSearch;
 	}
 
 	public String getSearchURL(HttpServletRequest httpServletRequest) {
@@ -711,5 +714,6 @@ public class WorkflowDefinitionDisplayContext {
 	private final UserLocalService _userLocalService;
 	private final WorkflowDefinitionRequestHelper
 		_workflowDefinitionRequestHelper;
+	private WorkflowDefinitionSearch _workflowDefinitionSearch;
 
 }

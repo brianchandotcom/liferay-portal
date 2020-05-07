@@ -38,6 +38,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.26"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.8"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.1.0"
+	compile group: "gradle.plugin.com.github.spotbugs.snom", name: "spotbugs-gradle-plugin", version: "4.0.0"
 	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"
 	compile group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "1.5.7.RELEASE"
 

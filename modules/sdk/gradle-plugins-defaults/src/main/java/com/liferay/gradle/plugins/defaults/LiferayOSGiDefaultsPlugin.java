@@ -36,6 +36,7 @@ import com.liferay.gradle.plugins.defaults.internal.JSDocDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.JaCoCoPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.PublishPluginDefaultsPlugin;
+import com.liferay.gradle.plugins.defaults.internal.SpotBugsDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.WhipDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.BackupFilesBuildAdapter;
 import com.liferay.gradle.plugins.defaults.internal.util.CopyrightUtil;
@@ -1723,6 +1724,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		FindSecurityBugsPlugin.INSTANCE.apply(project);
 		JSDocDefaultsPlugin.INSTANCE.apply(project);
 		PublishPluginDefaultsPlugin.INSTANCE.apply(project);
+		SpotBugsDefaultsPlugin.INSTANCE.apply(project);
 	}
 
 	private void _applyVersionOverrideJson(Project project, String fileName)

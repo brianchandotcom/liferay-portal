@@ -55,7 +55,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 					<%
 					row.setData(HashMapBuilder.<String, Object>put("actions", redirectManagementToolbarDisplayContext.getAvailableActions(redirectEntry)).build());
 
-					String destinationUrl = HtmlUtil.escape(redirectEntry.getDestinationURL());
+					String destinationURL = HtmlUtil.escape(redirectEntry.getDestinationURL());
 
 					String sourceURL = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL();
 					%>
@@ -73,9 +73,8 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						cssClass="table-cell-content"
 						name="destination-url"
 					>
-
-						<span data-title="<%= destinationUrl %>">
-							<%= destinationUrl %>
+						<span data-title="<%= destinationURL %>">
+							<%= destinationURL %>
 						</span>
 					</liferay-ui:search-container-column-text>
 

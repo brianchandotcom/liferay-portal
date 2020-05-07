@@ -44,4 +44,11 @@ public interface OpenAPIResource {
 		return null;
 	}
 
+	public default Response getOpenAPI(
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
+		throws Exception {
+
+		return getOpenAPI(resourceClasses, type, uriInfo);
+	}
+
 }

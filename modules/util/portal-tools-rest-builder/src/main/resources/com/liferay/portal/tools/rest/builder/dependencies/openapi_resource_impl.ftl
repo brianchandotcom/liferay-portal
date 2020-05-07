@@ -15,8 +15,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,11 +51,14 @@ public class OpenAPIResourceImpl {
 	@Path("/openapi.{type:json|yaml}")
 	@Produces({MediaType.APPLICATION_JSON, "application/yaml"})
 	public Response getOpenAPI(@PathParam("type") String type) throws Exception {
-		return _openAPIResource.getOpenAPI(_resourceClasses, type);
+		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
 	private OpenAPIResource _openAPIResource;
+
+	@Context
+	private UriInfo _uriInfo;
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{

@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 function getLanguage(id) {
@@ -28,7 +29,7 @@ function getLanguage(id) {
 	};
 }
 
-export default function LanguageSelector({
+function LanguageSelector({
 	defaultLanguageId,
 	languageIds,
 	onChange,
@@ -79,3 +80,12 @@ export default function LanguageSelector({
 		</ClayDropDown>
 	);
 }
+
+LanguageSelector.propTypes = {
+	defaultLanguageId: PropTypes.string.isRequired,
+	languageIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+	onChange: PropTypes.func.isRequired,
+	selectedLanguageId: PropTypes.string.isRequired,
+};
+
+export default LanguageSelector;

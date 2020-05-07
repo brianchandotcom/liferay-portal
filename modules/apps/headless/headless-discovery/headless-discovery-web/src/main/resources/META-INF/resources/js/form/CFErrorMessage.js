@@ -12,18 +12,20 @@
  * details.
  */
 
+import {connect, getIn} from 'formik';
 import React from 'react';
 
-import APIGUI from './APIGUI';
-import {AppStateProvider} from './hooks/appState';
-import appReducer, {initialState} from './reducers/appReducer';
+const CFErrorMessage = (props) => {
+	const error = getIn(props.formik.errors, props.name);
+	const touch = getIn(props.formik.touched, props.name);
 
-const App = (props) => {
-	return (
-		<AppStateProvider initialState={initialState} reducer={appReducer}>
-			<APIGUI props={props} />
-		</AppStateProvider>
+	const errorDOM = (
+		<div className="form-feedback-group">
+			<div className="form-feedback-item">{error}</div>
+		</div>
 	);
+
+	return touch && error ? errorDOM : null;
 };
 
-export default App;
+export default connect(CFErrorMessage);

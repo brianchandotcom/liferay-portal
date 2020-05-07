@@ -12,18 +12,16 @@
  * details.
  */
 
-import React from 'react';
+import React, {createContext, useContext, useReducer} from 'react';
 
-import APIGUI from './APIGUI';
-import {AppStateProvider} from './hooks/appState';
-import appReducer, {initialState} from './reducers/appReducer';
+const Context = createContext();
 
-const App = (props) => {
-	return (
-		<AppStateProvider initialState={initialState} reducer={appReducer}>
-			<APIGUI props={props} />
-		</AppStateProvider>
-	);
-};
+export function AppStateProvider({reducer, initialState = {}, children}) {
+	const value = useReducer(reducer, initialState);
 
-export default App;
+	return <Context.Provider children={children} value={value} />;
+}
+
+export function useAppState() {
+	return useContext(Context);
+}

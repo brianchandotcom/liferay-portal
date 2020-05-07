@@ -62,10 +62,10 @@ export default function ({checkRedirectEntryChainURL, namespace}) {
 			(ChainedRedirections) => {
 				ChainedRedirections.open(
 					redirectEntryChainCause,
-					(updateReferences) => {
+					(updateChainedRedirectEntries) => {
 						Liferay.Util.postForm(form, {
 							data: {
-								updateReferences,
+								updateChainedRedirectEntries,
 							},
 						});
 					}

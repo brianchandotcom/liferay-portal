@@ -65,7 +65,7 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 		boolean permanent = ParamUtil.getBoolean(actionRequest, "permanent");
 		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
 		boolean updateChainedRedirectEntries = ParamUtil.getBoolean(
-			actionRequest, "updateReferences");
+			actionRequest, "updateChainedRedirectEntries");
 
 		try {
 			if (redirectEntryId == 0) {

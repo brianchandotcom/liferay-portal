@@ -27,11 +27,14 @@ const ChainedRedirectionsModal = ({
 	redirectEntryChainCause,
 	saveButtonLabel,
 }) => {
-	const [updateReferences, setUpdateReferences] = useState(true);
+	const [
+		updateChainedRedirectEntries,
+		setUpdateChainedRedirectEntries,
+	] = useState(true);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		callback(updateReferences);
+		callback(updateChainedRedirectEntries);
 	};
 
 	return (
@@ -80,13 +83,15 @@ const ChainedRedirectionsModal = ({
 					</div>
 					<fieldset className="fieldset">
 						<ClayCheckbox
-							checked={updateReferences}
+							checked={updateChainedRedirectEntries}
 							label={
 								redirectEntryChainCause === 'sourceURL'
 									? Liferay.Language.get('update-references')
 									: Liferay.Language.get('update-redirect')
 							}
-							onChange={() => setUpdateReferences((val) => !val)}
+							onChange={() =>
+								setUpdateChainedRedirectEntries((val) => !val)
+							}
 						/>
 					</fieldset>
 				</ClayModal.Body>

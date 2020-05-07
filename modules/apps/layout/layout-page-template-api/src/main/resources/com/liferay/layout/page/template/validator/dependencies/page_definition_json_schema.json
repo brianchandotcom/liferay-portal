@@ -3,10 +3,104 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"additionalProperties": false,
 	"definitions": {
+		"ClassNameReference": {
+			"additionalProperties": false,
+			"properties": {
+				"className": {
+					"title": "The className Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"className"
+			],
+			"title": "The ClassNameReference Schema",
+			"type": "object"
+		},
+		"ClassPKReference": {
+			"additionalProperties": false,
+			"properties": {
+				"className": {
+					"title": "The className Schema",
+					"type": "string"
+				},
+				"classPK": {
+					"title": "The classPK Schema",
+					"type": "integer"
+				}
+			},
+			"required": [
+				"className",
+				"classPK"
+			],
+			"title": "The ClassPKReference Schema",
+			"type": "object"
+		},
 		"CollectionDefinition": {
 			"additionalProperties": false,
 			"properties": {
 				"collectionConfig": {
+					"additionalProperties": false,
+					"allOf": [
+						{
+							"if": {
+								"properties": {
+									"collectionType": {
+										"const": "Collection"
+									}
+								}
+							},
+							"then": {
+								"properties": {
+									"collectionReference": {
+										"$ref": "#/definitions/ClassPKReference"
+									}
+								}
+							}
+						},
+						{
+							"if": {
+								"properties": {
+									"collectionType": {
+										"const": "CollectionProvider"
+									}
+								}
+							},
+							"then": {
+								"properties": {
+									"collectionReference": {
+										"$ref": "#/definitions/ClassNameReference"
+									}
+								}
+							}
+						}
+					],
+					"properties": {
+						"collectionReference": {
+							"oneOf": [
+								{
+									"$ref": "#/definitions/ClassNameReference"
+								},
+								{
+									"$ref": "#/definitions/ClassPKReference"
+								}
+							],
+							"title": "The collectionReference Schema",
+							"type": "object"
+						},
+						"collectionType": {
+							"enum": [
+								"Collection",
+								"CollectionProvider"
+							],
+							"title": "The collectionType Schema",
+							"type": "string"
+						}
+					},
+					"required": [
+						"collectionReference",
+						"collectionType"
+					],
 					"title": "The collectionConfig Schema",
 					"type": "object"
 				},
@@ -46,6 +140,24 @@
 				}
 			},
 			"title": "The ColumnDefinition Schema",
+			"type": "object"
+		},
+		"ContextReference": {
+			"additionalProperties": false,
+			"properties": {
+				"contextSource": {
+					"enum": [
+						"CollectionItem",
+						"DisplayPageItem"
+					],
+					"title": "The contextSource Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"contextSource"
+			],
+			"title": "The ContextReference Schema",
 			"type": "object"
 		},
 		"DropZoneDefinition": {
@@ -300,25 +412,23 @@
 				"mapping": {
 					"additionalProperties": false,
 					"properties": {
-						"collectionItemFieldKey": {
-							"title": "The collectionItemFieldKey Schema",
-							"type": "string"
-						},
 						"fieldKey": {
 							"title": "The fieldKey Schema",
 							"type": "string"
 						},
-						"itemClassName": {
-							"title": "The itemClassName Schema",
-							"type": "string"
-						},
-						"itemClassPK": {
-							"title": "The itemClassPK Schema",
-							"type": "integer"
+						"itemReference": {
+							"oneOf": [
+								{
+									"$ref": "#/definitions/ClassPKReference"
+								},
+								{
+									"$ref": "#/definitions/ContextReference"
+								}
+							],
+							"title": "The itemReference Schema",
+							"type": "object"
 						}
-					},
-					"title": "The mapping Schema",
-					"type": "object"
+					}
 				}
 			},
 			"required": [

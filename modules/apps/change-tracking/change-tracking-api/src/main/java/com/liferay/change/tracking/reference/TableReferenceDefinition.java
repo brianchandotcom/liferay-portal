@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.reference;
 
-import com.liferay.change.tracking.reference.helper.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 

@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.RoleTable;

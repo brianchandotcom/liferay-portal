@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.helper;
+package com.liferay.change.tracking.internal.reference.builder;
 
 import com.liferay.change.tracking.internal.reference.TableJoinHolder;
 import com.liferay.change.tracking.internal.reference.TableReferenceInfo;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;

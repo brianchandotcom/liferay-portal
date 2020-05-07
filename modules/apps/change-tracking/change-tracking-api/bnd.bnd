@@ -9,8 +9,8 @@ Export-Package:\
 	com.liferay.change.tracking.listener,\
 	com.liferay.change.tracking.model,\
 	com.liferay.change.tracking.reference,\
+	com.liferay.change.tracking.reference.builder,\
 	com.liferay.change.tracking.reference.closure,\
-	com.liferay.change.tracking.reference.helper,\
 	com.liferay.change.tracking.resolver,\
 	com.liferay.change.tracking.resolver.helper,\
 	com.liferay.change.tracking.service,\

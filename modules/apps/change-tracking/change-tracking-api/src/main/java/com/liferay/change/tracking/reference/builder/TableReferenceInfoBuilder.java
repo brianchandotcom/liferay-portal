@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.reference.helper;
+package com.liferay.change.tracking.reference.builder;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;

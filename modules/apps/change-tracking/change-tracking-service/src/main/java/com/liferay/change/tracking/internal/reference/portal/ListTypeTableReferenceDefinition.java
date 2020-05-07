@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.helper.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.ListTypeTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;

@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.internal.reference;
 
-import com.liferay.change.tracking.internal.reference.helper.TableReferenceInfoBuilderImpl;
+import com.liferay.change.tracking.internal.reference.builder.TableReferenceInfoBuilderImpl;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;

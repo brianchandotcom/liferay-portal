@@ -172,8 +172,8 @@ public interface LiferaySelenium {
 
 	public void echo(String message);
 
-	public void executeJavascript(
-		String javascript, String argument1, String argument2);
+	public void executeJavaScript(
+		String javaScript, String argument1, String argument2);
 
 	public void fail(String message);
 
@@ -203,8 +203,8 @@ public interface LiferaySelenium {
 
 	public String getHtmlSource();
 
-	public String getJavascriptResult(
-		String javascript, String argument1, String argument2);
+	public String getJavaScriptResult(
+		String javaScript, String argument1, String argument2);
 
 	public String getLocation() throws Exception;
 
@@ -507,8 +507,8 @@ public interface LiferaySelenium {
 	public void waitForElementPresent(String locator, String throwException)
 		throws Exception;
 
-	public void waitForJavascript(
-			String javascript, String message, String argument)
+	public void waitForJavaScript(
+			String javaScript, String message, String argument)
 		throws Exception;
 
 	public void waitForNotEditable(String locator) throws Exception;

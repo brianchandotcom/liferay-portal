@@ -997,8 +997,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void executeJavascript(
-		String javascript, String argument1, String argument2) {
+	public void executeJavaScript(
+		String javaScript, String argument1, String argument2) {
 
 		WebElement webElement = getWebElement("//body");
 
@@ -1009,7 +1009,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		JavascriptExecutor javascriptExecutor =
 			(JavascriptExecutor)wrappedWebDriver;
 
-		javascriptExecutor.executeScript(javascript, argument1, argument2);
+		javascriptExecutor.executeScript(javaScript, argument1, argument2);
 	}
 
 	@Override
@@ -1255,8 +1255,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public String getJavascriptResult(
-		String javascript, String argument1, String argument2) {
+	public String getJavaScriptResult(
+		String javaScript, String argument1, String argument2) {
 
 		WebElement webElement = getWebElement("//body");
 
@@ -1268,7 +1268,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			(JavascriptExecutor)wrappedWebDriver;
 
 		return (String)javascriptExecutor.executeScript(
-			javascript, argument1, argument2);
+			javaScript, argument1, argument2);
 	}
 
 	@Override
@@ -3303,14 +3303,14 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void waitForJavascript(
-			String javascript, String message, String argument)
+	public void waitForJavaScript(
+			String javaScript, String message, String argument)
 		throws Exception {
 
-		Condition javascriptCondition = getJavascriptCondition(
-			javascript, message, argument);
+		Condition javaScriptCondition = getJavaScriptCondition(
+			javaScript, message, argument);
 
-		javascriptCondition.waitFor();
+		javaScriptCondition.waitFor();
 	}
 
 	@Override
@@ -3817,8 +3817,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return new ImageTarget(file);
 	}
 
-	protected Condition getJavascriptCondition(
-		String javascript, String message, String argument) {
+	protected Condition getJavaScriptCondition(
+		String javaScript, String message, String argument) {
 
 		return new Condition(message) {
 
@@ -3833,15 +3833,15 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				JavascriptExecutor javascriptExecutor =
 					(JavascriptExecutor)wrappedWebDriver;
 
-				Boolean javascriptResult =
+				Boolean javaScriptResult =
 					(Boolean)javascriptExecutor.executeScript(
-						javascript, argument);
+						javaScript, argument);
 
-				if (javascriptResult == null) {
+				if (javaScriptResult == null) {
 					return false;
 				}
 
-				return javascriptResult;
+				return javaScriptResult;
 			}
 
 		};

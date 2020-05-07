@@ -33,7 +33,9 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 %>
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
+<clay:container
+	className="container-form-lg"
+>
 	<div class="sheet-lg table-responsive">
 		<table class="change-lists-conflicts-table table table-autofit table-list">
 			<tr>
@@ -267,4 +269,4 @@ portletDisplay.setURLBack(backURL);
 			</td></tr>
 		</table>
 	</div>
-</div>
+</clay:container>

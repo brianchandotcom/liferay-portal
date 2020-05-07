@@ -34,7 +34,7 @@ portletDisplay.setShowBackIcon(true);
 %>
 
 <nav class="change-lists-tbar component-tbar subnav-tbar-light tbar ">
-	<div class="container-fluid container-fluid-max-xl">
+	<clay:container>
 		<ul class="tbar-nav">
 			<c:choose>
 				<c:when test="<%= ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED %>">
@@ -141,7 +141,7 @@ portletDisplay.setShowBackIcon(true);
 				</c:otherwise>
 			</c:choose>
 		</ul>
-	</div>
+	</clay:container>
 </nav>
 
 <clay:management-toolbar
@@ -149,7 +149,7 @@ portletDisplay.setShowBackIcon(true);
 	id="viewChangesManagementToolbar"
 />
 
-<div class="container container-fluid-1280">
+<clay:container>
 	<liferay-ui:search-container
 		cssClass="change-lists-changes-table change-lists-table"
 		searchContainer="<%= searchContainer %>"
@@ -204,4 +204,4 @@ portletDisplay.setShowBackIcon(true);
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>

@@ -64,7 +64,7 @@ page import="com.liferay.taglib.search.DateSearchEntry" %>
 <portlet:defineObjects />
 
 <%
-WorkflowTaskDisplayContext workflowTaskDisplayContext = new WorkflowTaskDisplayContext(liferayPortletRequest, liferayPortletResponse);
+WorkflowTaskDisplayContext workflowTaskDisplayContext = (WorkflowTaskDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 String currentURL = workflowTaskDisplayContext.getCurrentURL();
 %>

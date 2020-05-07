@@ -103,4 +103,16 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "PortletDataException");
 	}
 
+	@description = "This is a use case for LPS-87237."
+	@priority = "5"
+	test ViewStagingDefaultSettingAfterUpgrade704 {
+		property data.archive.type = "data-archive-staging-with-default-setting";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Bookmarks,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Polls,Segments,Widget Templates,Wiki");
+	}
+
 }

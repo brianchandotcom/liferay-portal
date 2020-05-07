@@ -7407,10 +7407,10 @@ escodegen@^1.11.0, escodegen@^1.11.1, escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-liferay@21.0.0:
-  version "21.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-21.0.0.tgz#65749b5b2b58ffd1dd2395ad320720fd4b5909dc"
-  integrity sha512-FMXe/ajc2OWW5U+4nU2sWhYzDWJ/bleRXYzhJfXoJIU6MAutx8W/SLw4nnux1JxmhTXtNiZhPaKTAZivbo6sfw==
+eslint-config-liferay@21.1.0:
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-21.1.0.tgz#3b0b1405a4e9af1dea94b941930a5e387870b0cc"
+  integrity sha512-zTQpnrn8y5QK7UKqxjgKPjU+wDVdJkSsBRlDAr40jWWVqrII+tR1jAtbtItSCpT4SEt821fd6AYNaBlP8G2Y2w==
   dependencies:
     eslint-config-prettier "^6.5.0"
     eslint-plugin-no-for-of-loops "^1.0.0"
@@ -11374,10 +11374,10 @@ liferay-npm-bundler-plugin-resolve-linked-dependencies@2.18.4:
     read-json-sync "^2.0.1"
     semver "^6.3.0"
 
-liferay-npm-bundler-preset-liferay-dev@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-4.3.0.tgz#0a6c32a239917a6d2d59417cd065b2045007ece5"
-  integrity sha512-H5LgnqEGaIEoa+NGOpdrAkldmlSwialC88sglqPMq6WuYiafNWHbOc/AH3/FRFvs8mRQYMwnCf82YxBfg+6y4g==
+liferay-npm-bundler-preset-liferay-dev@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-4.3.1.tgz#3f8ae333457fbfc7f46ae6964af7b18e1a3ff405"
+  integrity sha512-0njZfREYD7sRUCpSELiue/WH4LYa/I32w0lAAUYe9lCtcWxprheq3tIBQKIYxnZIPhd6ftyY7Ea41gc5/ZhnbQ==
   dependencies:
     babel-preset-liferay-standard "2.18.4"
     liferay-npm-bundler-loader-css-loader "2.18.4"
@@ -11444,10 +11444,10 @@ liferay-npm-bundler@3.0.0-snapshot.dda6cd1:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-npm-scripts@32.0.0:
-  version "32.0.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-32.0.0.tgz#eaeb00e4626ad1da88d1907181b59bb85ec6ec44"
-  integrity sha512-nFfrJ4mRyVT8ZgcAT+7cNK4SuKP3K0W865Td7qPAZgmTs5+4wPhi6XZ1C2w0crke/Zfqrl8y28ucXFmsnBymMQ==
+liferay-npm-scripts@32.1.0:
+  version "32.1.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-32.1.0.tgz#4c34d66edb9994fbc52ba82020f659c70d539837"
+  integrity sha512-CI80k/vXUKcmTFNk57m+jvFxYgir5xmKuvyBJ1UgHM/Oi/7wLphpaVwh/TkCCiojUxBddhyDXzU32ZoismyCsA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -11476,7 +11476,7 @@ liferay-npm-scripts@32.0.0:
     css-loader "^3.0.0"
     deepmerge "^4.0.0"
     eslint "6.8.0"
-    eslint-config-liferay "21.0.0"
+    eslint-config-liferay "21.1.0"
     fs-extra "^8.1.0"
     globby "11.0.0"
     gulp "^4.0.2"
@@ -11488,7 +11488,7 @@ liferay-npm-scripts@32.0.0:
     liferay-lang-key-dev-loader "^1.0.3"
     liferay-npm-bridge-generator "2.18.4"
     liferay-npm-bundler "2.18.4"
-    liferay-npm-bundler-preset-liferay-dev "4.3.0"
+    liferay-npm-bundler-preset-liferay-dev "4.3.1"
     liferay-theme-tasks "10.0.2"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"

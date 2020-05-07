@@ -26,8 +26,10 @@
 			);
 
 			Liferay.Util.fetch(modalSignInURL)
-				.then((response) => response.text())
-				.then((response) => {
+				.then(function (response) {
+					return response.text();
+				})
+				.then(function (response) {
 					if (response) {
 						Liferay.Util.openModal({
 							bodyHTML: response,
@@ -38,7 +40,9 @@
 						redirectPage();
 					}
 				})
-				.catch(() => redirectPage());
+				.catch(function () {
+					redirectPage();
+				});
 		});
 	}
 

@@ -15,6 +15,8 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
 import java.io.File;
 
@@ -29,8 +31,12 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 
 		_checkMissingSchemaVersion(fileName, absolutePath, content);
 
-		if (content.contains("Liferay-Require-SchemaVersion:") &&
-			!content.contains("Liferay-Service: true")) {
+		String schemaVersion = BNDSourceUtil.getDefinitionValue(
+			content, "Liferay-Require-SchemaVersion");
+
+		if ((schemaVersion != null) &&
+			!GetterUtil.getBoolean(
+				BNDSourceUtil.getDefinitionValue(content, "Liferay-Service"))) {
 
 			addMessage(
 				fileName,
@@ -39,7 +45,7 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		}
 
 		if (fileName.endsWith("-web/bnd.bnd") &&
-			content.contains("Liferay-Require-SchemaVersion: 1.0.0")) {
+			schemaVersion.equals("1.0.0")) {
 
 			addMessage(
 				fileName,
@@ -53,9 +59,16 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 	private void _checkMissingSchemaVersion(
 		String fileName, String absolutePath, String content) {
 
-		if (content.contains("Liferay-Require-SchemaVersion:") ||
-			!content.contains("Liferay-Service: true")) {
+		if (!GetterUtil.getBoolean(
+				BNDSourceUtil.getDefinitionValue(content, "Liferay-Service"))) {
 
+			return;
+		}
+
+		String schemaVersion = BNDSourceUtil.getDefinitionValue(
+			content, "Liferay-Require-SchemaVersion");
+
+		if (schemaVersion != null) {
 			return;
 		}
 

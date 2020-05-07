@@ -37,9 +37,11 @@ describe('RatingsStars', () => {
 
 	describe('when rendered with the default props', () => {
 		let starsDropdownToggle;
+		let starsButtons;
 
 		beforeEach(() => {
-			starsDropdownToggle = renderComponent().getAllByRole('button')[0];
+			starsButtons = renderComponent().getAllByRole('button');
+			starsDropdownToggle = starsButtons[0];
 		});
 
 		it('is enabled', () => {
@@ -52,6 +54,10 @@ describe('RatingsStars', () => {
 
 		it('has vote title', () => {
 			expect(starsDropdownToggle.title).toBe('vote');
+		});
+
+		it('has delete option disabled', () => {
+			expect(starsButtons[6]).toHaveProperty('disabled', true);
 		});
 	});
 
@@ -107,6 +113,10 @@ describe('RatingsStars', () => {
 				expect(starsDropdownToggle.title).toBe(
 					'you-have-rated-this-x-stars-out-of-x'
 				);
+			});
+
+			it('has delete option enabled', () => {
+				expect(starsButtons[6]).toHaveProperty('disabled', false);
 			});
 
 			describe('and the user vote 5/5 stars', () => {

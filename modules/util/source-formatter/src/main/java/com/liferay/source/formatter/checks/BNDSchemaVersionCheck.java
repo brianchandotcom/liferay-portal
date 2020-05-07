@@ -20,6 +20,8 @@ import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
 import java.io.File;
 
+import java.util.Objects;
+
 /**
  * @author Hugo Huijser
  */
@@ -29,15 +31,25 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		_checkMissingSchemaVersion(fileName, absolutePath, content);
-
 		String schemaVersion = BNDSourceUtil.getDefinitionValue(
 			content, "Liferay-Require-SchemaVersion");
 
-		if ((schemaVersion != null) &&
-			!GetterUtil.getBoolean(
+		if (GetterUtil.getBoolean(
 				BNDSourceUtil.getDefinitionValue(content, "Liferay-Service"))) {
 
+			if (schemaVersion == null) {
+				int pos = absolutePath.lastIndexOf(CharPool.SLASH);
+
+				File serviceXMLfile = new File(
+					absolutePath.substring(0, pos + 1) + "service.xml");
+
+				if (serviceXMLfile.exists()) {
+					addMessage(
+						fileName, "Missing 'Liferay-Require-SchemaVersion'");
+				}
+			}
+		}
+		else if (schemaVersion != null) {
 			addMessage(
 				fileName,
 				"The header 'Liferay-Require-SchemaVersion' can only be used " +
@@ -45,7 +57,7 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		}
 
 		if (fileName.endsWith("-web/bnd.bnd") &&
-			schemaVersion.equals("1.0.0")) {
+			Objects.equals(schemaVersion, "1.0.0")) {
 
 			addMessage(
 				fileName,
@@ -54,32 +66,6 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		}
 
 		return content;
-	}
-
-	private void _checkMissingSchemaVersion(
-		String fileName, String absolutePath, String content) {
-
-		if (!GetterUtil.getBoolean(
-				BNDSourceUtil.getDefinitionValue(content, "Liferay-Service"))) {
-
-			return;
-		}
-
-		String schemaVersion = BNDSourceUtil.getDefinitionValue(
-			content, "Liferay-Require-SchemaVersion");
-
-		if (schemaVersion != null) {
-			return;
-		}
-
-		int pos = absolutePath.lastIndexOf(CharPool.SLASH);
-
-		File serviceXMLfile = new File(
-			absolutePath.substring(0, pos + 1) + "service.xml");
-
-		if (serviceXMLfile.exists()) {
-			addMessage(fileName, "Missing 'Liferay-Require-SchemaVersion'");
-		}
 	}
 
 }

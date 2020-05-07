@@ -84,23 +84,19 @@ const FragmentContent = React.forwardRef(
 			[isMounted]
 		);
 
-		const languageId = useSelector((state) => state.languageId);
+		const fragmentEntryLinks = useSelector(
+			(state) => state.fragmentEntryLinks
+		);
 
+		const fragmentEntryLink = fragmentEntryLinks[fragmentEntryLinkId];
+		const languageId = useSelector((state) => state.languageId);
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-		const fragmentEntryLink = useSelector(
-			(state) => state.fragmentEntryLinks[fragmentEntryLinkId]
-		);
-
 		const defaultContent = getContent(fragmentEntryLink);
-
-		const editableValues = useSelector((state) =>
-			state.fragmentEntryLinks[fragmentEntryLinkId]
-				? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues
-				: {}
-		);
-
 		const [content, setContent] = useState(defaultContent);
+		const editableValues = fragmentEntryLink
+			? fragmentEntryLink.editableValues
+			: {};
 
 		useEffect(() => {
 			renderFragmentContent({

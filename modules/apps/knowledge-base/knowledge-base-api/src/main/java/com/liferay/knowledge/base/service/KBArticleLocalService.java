@@ -179,6 +179,7 @@ public interface KBArticleLocalService
 			long groupId, long userId, String fileName, String tempFolderName)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

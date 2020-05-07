@@ -128,6 +128,7 @@ public interface SharepointOAuth2TokenEntryLocalService
 
 	public void deleteUserSharepointOAuth2TokenEntries(long userId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

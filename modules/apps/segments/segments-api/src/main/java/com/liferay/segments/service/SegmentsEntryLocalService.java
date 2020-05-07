@@ -153,6 +153,7 @@ public interface SegmentsEntryLocalService
 			long segmentsEntryId, long[] classPKs)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

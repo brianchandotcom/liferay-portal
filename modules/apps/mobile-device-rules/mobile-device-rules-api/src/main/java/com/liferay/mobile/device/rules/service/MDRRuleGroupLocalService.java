@@ -144,6 +144,7 @@ public interface MDRRuleGroupLocalService
 
 	public void deleteRuleGroups(long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

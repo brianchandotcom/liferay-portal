@@ -145,6 +145,7 @@ public interface VersionedEntryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public VersionedEntry deleteVersionedEntry(VersionedEntry versionedEntry);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

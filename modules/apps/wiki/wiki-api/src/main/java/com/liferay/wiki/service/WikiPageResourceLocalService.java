@@ -120,6 +120,7 @@ public interface WikiPageResourceLocalService
 	public WikiPageResource deleteWikiPageResource(
 		WikiPageResource wikiPageResource);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

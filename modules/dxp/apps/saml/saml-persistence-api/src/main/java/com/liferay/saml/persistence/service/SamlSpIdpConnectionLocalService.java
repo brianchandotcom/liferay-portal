@@ -145,6 +145,7 @@ public interface SamlSpIdpConnectionLocalService
 	public SamlSpIdpConnection deleteSamlSpIdpConnection(
 		SamlSpIdpConnection samlSpIdpConnection);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

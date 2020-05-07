@@ -133,6 +133,7 @@ public interface MBThreadFlagLocalService
 
 	public void deleteThreadFlagsByUserId(long userId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

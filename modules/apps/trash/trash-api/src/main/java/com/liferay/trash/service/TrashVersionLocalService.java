@@ -119,6 +119,7 @@ public interface TrashVersionLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public TrashVersion deleteTrashVersion(TrashVersion trashVersion);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

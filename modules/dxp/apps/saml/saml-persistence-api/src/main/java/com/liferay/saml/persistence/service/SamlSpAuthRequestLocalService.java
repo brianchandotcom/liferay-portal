@@ -122,6 +122,7 @@ public interface SamlSpAuthRequestLocalService
 	public SamlSpAuthRequest deleteSamlSpAuthRequest(
 		SamlSpAuthRequest samlSpAuthRequest);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

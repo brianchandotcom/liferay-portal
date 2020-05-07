@@ -147,6 +147,7 @@ public interface DDMStructureLayoutLocalService
 	public void deleteStructureLayout(long structureLayoutId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

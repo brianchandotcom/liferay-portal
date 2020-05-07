@@ -131,6 +131,7 @@ public interface ReadingTimeEntryLocalService
 	public ReadingTimeEntry deleteReadingTimeEntry(
 		ReadingTimeEntry readingTimeEntry);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

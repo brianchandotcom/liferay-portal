@@ -120,6 +120,7 @@ public interface PollsVoteLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public PollsVote deletePollsVote(PollsVote pollsVote);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

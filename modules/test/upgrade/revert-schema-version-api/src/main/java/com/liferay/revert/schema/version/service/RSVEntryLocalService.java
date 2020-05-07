@@ -112,6 +112,7 @@ public interface RSVEntryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public RSVEntry deleteRSVEntry(RSVEntry rsvEntry);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -129,6 +129,7 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	public WorkflowMetricsSLADefinition deleteWorkflowMetricsSLADefinition(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

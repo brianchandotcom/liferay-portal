@@ -125,6 +125,7 @@ public interface SAPEntryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

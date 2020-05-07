@@ -130,6 +130,7 @@ public interface WeDeployAuthTokenLocalService
 	public WeDeployAuthToken deleteWeDeployAuthToken(
 		WeDeployAuthToken weDeployAuthToken);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

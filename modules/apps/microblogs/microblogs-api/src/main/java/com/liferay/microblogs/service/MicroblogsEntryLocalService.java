@@ -133,6 +133,7 @@ public interface MicroblogsEntryLocalService
 
 	public void deleteUserMicroblogsEntries(long userId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

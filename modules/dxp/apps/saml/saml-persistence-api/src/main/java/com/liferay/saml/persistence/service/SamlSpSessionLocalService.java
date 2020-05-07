@@ -122,6 +122,7 @@ public interface SamlSpSessionLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public SamlSpSession deleteSamlSpSession(SamlSpSession samlSpSession);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

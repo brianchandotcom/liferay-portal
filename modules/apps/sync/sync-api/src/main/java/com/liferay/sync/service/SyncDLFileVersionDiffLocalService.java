@@ -129,6 +129,7 @@ public interface SyncDLFileVersionDiffLocalService
 	public void deleteSyncDLFileVersionDiffs(long fileEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

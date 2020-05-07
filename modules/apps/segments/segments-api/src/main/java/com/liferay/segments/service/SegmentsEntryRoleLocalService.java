@@ -134,6 +134,7 @@ public interface SegmentsEntryRoleLocalService
 	public void deleteSegmentsEntryRolesByRoleId(long roleId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

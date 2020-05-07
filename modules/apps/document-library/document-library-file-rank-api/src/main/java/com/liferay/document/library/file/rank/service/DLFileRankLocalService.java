@@ -135,6 +135,7 @@ public interface DLFileRankLocalService
 	public void disableFileRanksByFolderId(long folderId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

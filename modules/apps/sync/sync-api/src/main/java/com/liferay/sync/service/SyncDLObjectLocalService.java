@@ -125,6 +125,7 @@ public interface SyncDLObjectLocalService
 
 	public void deleteSyncDLObjects(String version, String type);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

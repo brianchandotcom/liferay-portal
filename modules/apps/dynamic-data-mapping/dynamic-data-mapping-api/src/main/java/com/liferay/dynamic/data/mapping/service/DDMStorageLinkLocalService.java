@@ -126,6 +126,7 @@ public interface DDMStorageLinkLocalService
 
 	public void deleteStructureStorageLinks(long structureId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

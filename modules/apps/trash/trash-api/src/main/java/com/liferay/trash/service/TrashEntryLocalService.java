@@ -167,6 +167,7 @@ public interface TrashEntryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public TrashEntry deleteTrashEntry(TrashEntry trashEntry);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

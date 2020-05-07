@@ -121,6 +121,7 @@ public interface SamlIdpSpSessionLocalService
 	public SamlIdpSpSession deleteSamlIdpSpSession(
 		SamlIdpSpSession samlIdpSpSession);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

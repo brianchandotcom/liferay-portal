@@ -134,6 +134,7 @@ public interface SegmentsExperimentRelLocalService
 	public void deleteSegmentsExperimentRels(long segmentsExperimentId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

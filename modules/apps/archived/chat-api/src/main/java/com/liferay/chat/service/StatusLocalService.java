@@ -112,6 +112,7 @@ public interface StatusLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public Status deleteStatus(Status status);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

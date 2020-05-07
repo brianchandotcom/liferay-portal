@@ -24,9 +24,12 @@
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
+				<action-key>MANAGE_ORGANIZATIONS</action-key>
 				<action-key>MANAGE_USERS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>VIEW_ORGANIZATIONS</action-key>
+				<action-key>VIEW_USERS</action-key>
 			</supports>
 		</permissions>
 	</model-resource>

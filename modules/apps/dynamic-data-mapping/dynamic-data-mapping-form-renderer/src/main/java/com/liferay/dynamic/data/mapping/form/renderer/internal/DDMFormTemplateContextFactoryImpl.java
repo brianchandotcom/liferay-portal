@@ -120,6 +120,14 @@ public class DDMFormTemplateContextFactoryImpl
 
 		Map<String, Object> templateContext = new HashMap<>();
 
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		String cancelLabel = GetterUtil.getString(
+			ddmFormRenderingContext.getCancelLabel(),
+			LanguageUtil.get(resourceBundle, "cancel"));
+
+		templateContext.put("cancelLabel", cancelLabel);
+
 		templateContext.put("containerId", containerId);
 		templateContext.put(
 			"currentPage",
@@ -151,26 +159,27 @@ public class DDMFormTemplateContextFactoryImpl
 			"showRequiredFieldsWarning",
 			ddmFormRenderingContext.isShowRequiredFieldsWarning());
 
+		String redirectURL = ddmFormRenderingContext.getRedirectURL();
+
+		templateContext.put("redirectURL", redirectURL);
+
 		boolean showCancelButton = ddmFormRenderingContext.isShowCancelButton();
+
+		if (ddmFormRenderingContext.isReadOnly() ||
+			Validator.isNull(redirectURL)) {
+
+			showCancelButton = false;
+		}
+
+		templateContext.put("showCancelButton", showCancelButton);
+
 		boolean showSubmitButton = ddmFormRenderingContext.isShowSubmitButton();
 
 		if (ddmFormRenderingContext.isReadOnly()) {
 			showSubmitButton = false;
-			showCancelButton = false;
 		}
 
-		String redirectURL = ddmFormRenderingContext.getRedirectURL();
-
-		if (Validator.isNull(redirectURL)) {
-			showCancelButton = false;
-		}
-
-		templateContext.put("redirectURL", redirectURL);
-
-		templateContext.put("showCancelButton", showCancelButton);
 		templateContext.put("showSubmitButton", showSubmitButton);
-
-		ResourceBundle resourceBundle = getResourceBundle(locale);
 
 		templateContext.put("strings", getLanguageStringsMap(resourceBundle));
 
@@ -179,12 +188,6 @@ public class DDMFormTemplateContextFactoryImpl
 			LanguageUtil.get(resourceBundle, "submit-form"));
 
 		templateContext.put("submitLabel", submitLabel);
-
-		String cancelLabel = GetterUtil.getString(
-			ddmFormRenderingContext.getCancelLabel(),
-			LanguageUtil.get(resourceBundle, "cancel"));
-
-		templateContext.put("cancelLabel", cancelLabel);
 
 		templateContext.put(
 			"templateNamespace", getTemplateNamespace(ddmFormLayout));

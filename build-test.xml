@@ -3947,70 +3947,117 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
 						<then>
-							<property name="app.server.fail.on.error" value="false" />
+							<parallel>
+								<if>
+									<istrue value="${test.docker.environment}" />
+									<then>
+										<echo>docker run -d -p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}</echo>
+
+										<parallel>
+											<exec executable="docker">
+												<arg line="run -d" />
+												<arg line="-p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080" />
+												<arg value="-v" />
+												<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
+												<arg value="--cidfile=docker.process.pid" />
+												<arg value="--network=@{docker.network.name}" />
+												<arg value="openjdk:8u191-jdk-alpine3.8" />
+												<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
+												<arg value="${app.server.start.executable.arg.line}" />
+											</exec>
+										</parallel>
+									</then>
+									<elseif>
+										<and>
+											<equals arg1="${operating.system.type}" arg2="centos" />
+											<equals arg1="${operating.system.centos.version}" arg2="8" />
+											<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+										</and>
+										<then>
+											<sequential>
+												<get-operating-system-property property.name="operating.system.host" />
+
+												<docker-execute container="${operating.system.host}">
+													chmod +x ${test.app.server.bin.dir}/${app.server.start.executable}
+
+													${test.app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}
+												</docker-execute>
+											</sequential>
+										</then>
+									</elseif>
+									<else>
+										<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" outputproperty="app.server.log" resolveexecutable="true">
+											<arg line="${app.server.start.executable.arg.line}" />
+											<env key="JAVA_HOME" path="${java.jdk.home}" />
+										</exec>
+									</else>
+								</if>
+
+								<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
+							</parallel>
 						</then>
 						<else>
-							<property name="app.server.fail.on.error" value="true" />
-						</else>
-					</if>
+							<get-testcase-property property.name="ext.plugins.includes" />
 
-					<get-testcase-property property.name="ext.plugins.includes" />
-
-					<parallel>
-						<if>
-							<not>
-								<isset property="ext.plugins.includes" />
-							</not>
-							<then>
-								<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
-							</then>
-						</if>
-
-						<daemons>
-							<if>
-								<istrue value="${test.docker.environment}" />
-								<then>
-									<echo>docker run -d -p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}</echo>
-
-									<exec executable="docker">
-										<arg line="run -d" />
-										<arg line="-p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080" />
-										<arg value="-v" />
-										<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
-										<arg value="--cidfile=docker.process.pid" />
-										<arg value="--network=@{docker.network.name}" />
-										<arg value="openjdk:8u191-jdk-alpine3.8" />
-										<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
-										<arg value="${app.server.start.executable.arg.line}" />
-									</exec>
-								</then>
-								<elseif>
-									<and>
-										<equals arg1="${operating.system.type}" arg2="centos" />
-										<equals arg1="${operating.system.centos.version}" arg2="8" />
-										<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-									</and>
+							<parallel>
+								<if>
+									<not>
+										<isset property="ext.plugins.includes" />
+									</not>
 									<then>
 										<sequential>
-											<get-operating-system-property property.name="operating.system.host" />
-
-											<docker-execute container="${operating.system.host}">
-												chmod +x ${test.app.server.bin.dir}/${app.server.start.executable}
-
-												${test.app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}
-											</docker-execute>
+											<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
 										</sequential>
 									</then>
-								</elseif>
-								<else>
-									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="${app.server.fail.on.error}" output="app.server.log" resolveexecutable="true">
-										<arg line="${app.server.start.executable.arg.line}" />
-										<env key="JAVA_HOME" path="${java.jdk.home}" />
-									</exec>
-								</else>
-							</if>
-						</daemons>
-					</parallel>
+								</if>
+
+								<daemons>
+									<if>
+										<istrue value="${test.docker.environment}" />
+										<then>
+											<echo>docker run -d -p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080 -v ${app.server.parent.dir}:${app.server.parent.dir} --cidfile=docker.process.pid --network=@{docker.network.name} openjdk:8-alpine ${app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}</echo>
+
+											<exec executable="docker">
+												<arg line="run -d" />
+												<arg line="-p ${test.app.server.leading.port.number}080:${test.app.server.leading.port.number}080" />
+												<arg value="-v" />
+												<arg value="${app.server.parent.dir}:${app.server.parent.dir}" />
+												<arg value="--cidfile=docker.process.pid" />
+												<arg value="--network=@{docker.network.name}" />
+												<arg value="openjdk:8u191-jdk-alpine3.8" />
+												<arg value="${app.server.bin.dir}/${app.server.start.executable}" />
+												<arg value="${app.server.start.executable.arg.line}" />
+											</exec>
+										</then>
+										<elseif>
+											<and>
+												<equals arg1="${operating.system.type}" arg2="centos" />
+												<equals arg1="${operating.system.centos.version}" arg2="8" />
+												<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+											</and>
+											<then>
+												<sequential>
+													<get-operating-system-property property.name="operating.system.host" />
+
+													<docker-execute container="${operating.system.host}">
+														chmod +x ${test.app.server.bin.dir}/${app.server.start.executable}
+
+														${test.app.server.bin.dir}/${app.server.start.executable} ${app.server.start.executable.arg.line}
+													</docker-execute>
+												</sequential>
+											</then>
+										</elseif>
+										<else>
+											<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" output="app.server.log" resolveexecutable="true">
+												<arg line="${app.server.start.executable.arg.line}" />
+												<env key="JAVA_HOME" path="${java.jdk.home}" />
+											</exec>
+										</else>
+									</if>
+								</daemons>
+							</parallel>
+						</else>
+					</if>
 				</then>
 			</if>
 		</sequential>

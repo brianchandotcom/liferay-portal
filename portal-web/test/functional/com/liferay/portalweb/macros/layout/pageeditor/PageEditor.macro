@@ -833,9 +833,16 @@ definition {
 					entryTitle = "${entryTitle}",
 					navItem = "${navItem}");
 
-				Select(
-					locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
-					value1 = "Image");
+				if ("${navItem}" == "Documents and Media") {
+					Select(
+						locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
+						value1 = "${fieldName}");
+				}
+				else {
+					Select(
+						locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
+						value1 = "Image");
+				}
 
 				SelectFrame(value1 = "relative=top");
 			}

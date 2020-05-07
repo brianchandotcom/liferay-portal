@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -221,6 +222,9 @@ public class UserGroupLocalServiceTest {
 
 		Assert.assertEquals(expectedUserGroups, userGroups);
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	private List<UserGroup> _search(
 		String keywords, LinkedHashMap<String, Object> params) {

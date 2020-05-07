@@ -977,6 +977,35 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the information related to the redirection can be viewed."
+	@priority = "5"
+	test ViewEntryInfo {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		for (var redirectURL : list "${portalURL}/web/test-site-name/test-source-page,${portalURL}/web/test-site-name/test-destination-page") {
+			Redirect.viewEntryFloatingURL(redirectURL = "${redirectURL}");
+
+			Pause(locator1 = "2000");
+		}
+
+		Check(
+			key_tableEntry = "${portalURL}/web/test-site-name/test-source-page",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		Click.clickAt(locator1 = "Icon#INFO");
+
+		Redirect.viewEntryInfo();
+	}
+
 	@description = "This ensures that an expired temporary redirect can be reactivated."
 	@priority = "5"
 	test ViewExpiredAndActiveEntries {

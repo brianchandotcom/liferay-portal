@@ -15,7 +15,6 @@
 package com.liferay.redirect.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -56,12 +55,20 @@ public class CheckRedirectEntryChainMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		hideDefaultSuccessMessage(actionRequest);
 
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse,
+			JSONUtil.put(
+				"redirectEntryChainCause",
+				_getRedirectEntryChainCause(actionRequest)));
+	}
+
+	private String _getRedirectEntryChainCause(ActionRequest actionRequest) {
 		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
 
-		JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		List<RedirectEntry> redirectEntries =
 			_redirectEntryLocalService.
@@ -69,6 +76,10 @@ public class CheckRedirectEntryChainMVCActionCommand
 					themeDisplay.getScopeGroupId(),
 					RedirectUtil.getGroupBaseURL(themeDisplay) +
 						StringPool.FORWARD_SLASH + sourceURL);
+
+		if (!ListUtil.isEmpty(redirectEntries)) {
+			return "sourceURL";
+		}
 
 		String destinationURL = ParamUtil.getString(
 			actionRequest, "destinationURL");
@@ -81,14 +92,11 @@ public class CheckRedirectEntryChainMVCActionCommand
 					RedirectUtil.getGroupBaseURL(themeDisplay) +
 						StringPool.SLASH));
 
-		if (!ListUtil.isEmpty(redirectEntries) || (redirectEntry != null)) {
-			jsonObject = JSONUtil.put("success", Boolean.FALSE);
+		if (redirectEntry != null) {
+			return "destinationURL";
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return null;
 	}
 
 	@Reference

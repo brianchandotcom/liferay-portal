@@ -90,8 +90,6 @@ public interface RedirectEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public RedirectEntry addRedirectEntry(RedirectEntry redirectEntry);
 
-	public boolean checkRedirectionChain(long groupId, String destinationURL);
-
 	/**
 	 * @throws PortalException
 	 */
@@ -134,6 +132,7 @@ public interface RedirectEntryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public RedirectEntry deleteRedirectEntry(RedirectEntry redirectEntry);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

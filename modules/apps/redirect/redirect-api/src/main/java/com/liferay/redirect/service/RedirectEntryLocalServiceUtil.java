@@ -78,12 +78,6 @@ public class RedirectEntryLocalServiceUtil {
 		return getService().addRedirectEntry(redirectEntry);
 	}
 
-	public static boolean checkRedirectionChain(
-		long groupId, String destinationURL) {
-
-		return getService().checkRedirectionChain(groupId, destinationURL);
-	}
-
 	/**
 	 * @throws PortalException
 	 */

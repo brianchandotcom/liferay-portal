@@ -78,12 +78,6 @@ public class RedirectEntryLocalServiceWrapper
 		return _redirectEntryLocalService.addRedirectEntry(redirectEntry);
 	}
 
-	@Override
-	public boolean checkRedirectionChain(long groupId, String destinationURL) {
-		return _redirectEntryLocalService.checkRedirectionChain(
-			groupId, destinationURL);
-	}
-
 	/**
 	 * @throws PortalException
 	 */

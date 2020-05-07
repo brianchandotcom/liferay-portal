@@ -122,6 +122,7 @@ public interface RedirectNotFoundEntryLocalService
 	public RedirectNotFoundEntry deleteRedirectNotFoundEntry(
 		RedirectNotFoundEntry redirectNotFoundEntry);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

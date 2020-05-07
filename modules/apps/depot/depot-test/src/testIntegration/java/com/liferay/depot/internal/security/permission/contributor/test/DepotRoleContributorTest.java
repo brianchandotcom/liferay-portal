@@ -47,7 +47,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class DepotMemberRoleContributorTest {
+public class DepotRoleContributorTest {
 
 	@ClassRule
 	@Rule

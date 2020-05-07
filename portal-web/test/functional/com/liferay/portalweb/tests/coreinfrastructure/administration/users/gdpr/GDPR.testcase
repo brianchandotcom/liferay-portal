@@ -596,6 +596,7 @@ definition {
 			userLastName = "userln");
 
 		GDPR.addExportProcessCP(
+			applications = "Wiki,Message Boards,Contacts Center,Blogs,Announcements,Documents and Media",
 			userFirstName = "userfn",
 			userLastName = "userln");
 

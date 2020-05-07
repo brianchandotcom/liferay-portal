@@ -36,6 +36,14 @@ definition {
 			Pause(locator1 = "3000");
 		}
 
+		if (isSet(applications)) {
+			for (var application : list "${applications}") {
+				AssertElementNotPresent(
+					key_application = "${application}",
+					locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_IN_PROGRESS");
+			}
+		}
+
 		AssertElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL");
 
 		if (isSet(applications)) {

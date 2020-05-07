@@ -1401,6 +1401,16 @@ definition {
 		}
 	}
 
+	macro viewUncheckContentNameList {
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
+
+		for (var contentName : list "${uncheckContentNameList}") {
+			AssertNotChecked(
+				key_contentName = "${contentName}",
+				locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL");
+			}
+	}
+
 	macro viewValidationError {
 		Click(locator1 = "Message#SEE_MORE_DETAILS_LINK");
 

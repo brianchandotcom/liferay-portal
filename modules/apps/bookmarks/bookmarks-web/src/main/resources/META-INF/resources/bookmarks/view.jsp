@@ -171,7 +171,10 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 	<liferay-util:param name="searchContainerId" value="entries" />
 </liferay-util:include>
 
-<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<clay:container
+	className="closed sidenav-container sidenav-right"
+	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
+>
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/bookmarks/info_panel" var="sidebarPanelURL">
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 	</liferay-portlet:resourceURL>
@@ -209,7 +212,7 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 			</liferay-util:include>
 		</aui:form>
 	</div>
-</div>
+</clay:container>
 
 <%
 if (navigation.equals("all") && !defaultFolderView && (folder != null) && (portletName.equals(BookmarksPortletKeys.BOOKMARKS) || portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN))) {

@@ -32,7 +32,7 @@ if (folder != null) {
 }
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form method="post" name="selectFolderFm">
 		<liferay-ui:breadcrumb
 			showCurrentGroup="<%= false %>"
@@ -139,7 +139,7 @@ if (folder != null) {
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

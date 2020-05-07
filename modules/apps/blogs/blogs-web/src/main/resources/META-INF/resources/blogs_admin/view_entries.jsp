@@ -44,7 +44,9 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<div class="container-fluid container-fluid-max-xl main-content-body">
+<clay:container
+	className="main-content-body"
+>
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -91,7 +93,7 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <liferay-frontend:component
 	componentId="<%= blogEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"

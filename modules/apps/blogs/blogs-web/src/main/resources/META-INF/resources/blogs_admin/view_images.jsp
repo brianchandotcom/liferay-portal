@@ -67,7 +67,9 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 	viewTypeItems="<%= blogImagesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<div class="container-fluid-1280 main-content-body">
+<clay:container
+	className="main-content-body"
+>
 	<portlet:actionURL name="/blogs/edit_image" var="editImageURL" />
 
 	<aui:form action="<%= editImageURL %>" name="fm">
@@ -106,7 +108,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	var deleteImages = function () {

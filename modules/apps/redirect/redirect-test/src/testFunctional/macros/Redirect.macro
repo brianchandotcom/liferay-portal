@@ -317,6 +317,43 @@ definition {
 		}
 	}
 
+	macro viewEntryFloatingURL {
+		MouseOver(
+			key_rowEntry = "${redirectURL}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		AssertElementPresent(
+			key_redirectURL = "${redirectURL}",
+			locator1 = "Redirect#FLOATING_TOOLTIP_URL");
+	}
+
+	macro viewEntryInfo {
+		AssertTextEquals(
+			key_itemName = "Created By",
+			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
+			value1 = "Created By");
+
+		AssertTextEquals(
+			key_itemName = "Type",
+			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
+			value1 = "Type");
+
+		AssertTextEquals(
+			key_itemName = "Create Date",
+			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
+			value1 = "Create Date");
+
+		AssertTextEquals(
+			key_itemName = "Latest Occurrence",
+			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
+			value1 = "Latest Occurrence");
+
+		AssertTextEquals(
+			key_itemName = "Expiration Date",
+			locator1 = "Redirect#SIDEBAR_INFO_ITEM",
+			value1 = "Expiration Date");
+	}
+
 	macro viewOrderedURLs {
 		AssertTextEquals(
 			key_rowNumber = "1",

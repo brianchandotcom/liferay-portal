@@ -115,4 +115,16 @@ definition {
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Bookmarks,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Polls,Segments,Widget Templates,Wiki");
 	}
 
+	@description = "This is a use case for LPS-87237."
+	@priority = "5"
+	test ViewStagingDefaultSettingAfterUpgrade70106 {
+		property data.archive.type = "data-archive-staging-with-default-setting";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.6";
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Bookmarks,Calendar,Dynamic Data Lists,Forms,Knowledge Base,Message Boards,Polls,Segments,Widget Templates,Wiki");
+	}
+
 }

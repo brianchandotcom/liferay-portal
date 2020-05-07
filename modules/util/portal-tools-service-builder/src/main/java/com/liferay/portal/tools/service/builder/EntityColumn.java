@@ -411,6 +411,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			return false;
 		}
 
+		return isPrimitiveTypeWrapper();
+	}
+
+	public boolean isPrimitiveTypeWrapper() {
 		if (_type.equals("Boolean")) {
 			return true;
 		}

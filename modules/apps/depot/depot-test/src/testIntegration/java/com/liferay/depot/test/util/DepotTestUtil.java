@@ -63,6 +63,16 @@ public class DepotTestUtil {
 			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, unsafeConsumer);
 	}
 
+	public static void withAssetLibraryMember(
+			DepotEntry depotEntry,
+			UnsafeConsumer<User, Exception> unsafeConsumer)
+		throws Exception {
+
+		_withGroupUser(
+			depotEntry.getGroupId(), DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+			unsafeConsumer);
+	}
+
 	public static void withAssetLibraryPermissions(
 			DepotEntry depotEntry, String roleName, String resourceName,
 			String actionId, UnsafeRunnable<Exception> unsafeRunnable)
@@ -147,6 +157,16 @@ public class DepotTestUtil {
 			group.getGroupId(), RoleConstants.SITE_MEMBER, unsafeConsumer);
 	}
 
+	private static boolean _isAsignableRole(String roleName) {
+		if (roleName.equals(DepotRolesConstants.ASSET_LIBRARY_MEMBER) ||
+			roleName.equals(RoleConstants.SITE_MEMBER)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private static void _withGroupUser(
 			long groupId, String roleName,
 			UnsafeConsumer<User, Exception> unsafeConsumer)
@@ -157,13 +177,17 @@ public class DepotTestUtil {
 
 		User user = UserTestUtil.addUser();
 
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			user.getUserId(), groupId, new long[] {role.getRoleId()});
+		if (_isAsignableRole(roleName)) {
+			UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+				user.getUserId(), groupId, new long[] {role.getRoleId()});
+		}
 
 		UserLocalServiceUtil.addGroupUsers(
 			groupId, new long[] {user.getUserId()});
 
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+		if (_isAsignableRole(roleName)) {
+			UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+		}
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

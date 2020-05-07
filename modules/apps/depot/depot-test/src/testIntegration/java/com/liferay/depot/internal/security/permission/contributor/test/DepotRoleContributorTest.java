@@ -20,20 +20,17 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.test.util.DepotTestUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -43,6 +40,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Collections;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,23 +57,20 @@ public class DepotRoleContributorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_depotEntry = _addDepotEntry();
+
+		_group = GroupTestUtil.addGroup();
+	}
+
 	@Test
 	public void testConnectedSiteMemberRoleAssignment() throws Exception {
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
-
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			_depotEntry.getDepotEntryId(), TestPropsValues.getGroupId());
-
-		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+			_depotEntry.getDepotEntryId(), _group.getGroupId());
 
 		DepotTestUtil.withSiteMember(
-			group,
+			_group,
 			user -> {
 				PermissionChecker permissionChecker =
 					_permissionCheckerFactory.create(user);
@@ -84,7 +79,7 @@ public class DepotRoleContributorTest {
 					user.getUserId(), _depotEntry.getGroupId());
 
 				Role role = _roleLocalService.getRole(
-					TestPropsValues.getCompanyId(),
+					_depotEntry.getCompanyId(),
 					DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER);
 
 				Assert.assertTrue(
@@ -94,35 +89,30 @@ public class DepotRoleContributorTest {
 
 	@Test
 	public void testGetRoles() throws Exception {
-		User user = UserTestUtil.addUser();
+		DepotTestUtil.withAssetLibraryMember(
+			_depotEntry,
+			user -> {
+				PermissionChecker permissionChecker =
+					_permissionCheckerFactory.create(user);
 
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
+				long[] roleIds = permissionChecker.getRoleIds(
+					user.getUserId(), _depotEntry.getGroupId());
+
+				Role role = _roleLocalService.getRole(
+					_depotEntry.getCompanyId(),
+					DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+
+				Assert.assertTrue(
+					ArrayUtil.contains(roleIds, role.getRoleId()));
+			});
+	}
+
+	private DepotEntry _addDepotEntry() throws PortalException {
+		return _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
-
-		try {
-			_userLocalService.addGroupUsers(
-				_depotEntry.getGroupId(), new long[] {user.getUserId()});
-
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			long[] roleIds = permissionChecker.getRoleIds(
-				user.getUserId(), _depotEntry.getGroupId());
-
-			Role role = _roleLocalService.getRole(
-				TestPropsValues.getCompanyId(),
-				DepotRolesConstants.ASSET_LIBRARY_MEMBER);
-
-			Assert.assertTrue(ArrayUtil.contains(roleIds, role.getRoleId()));
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-		}
+			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
 	}
 
 	@DeleteAfterTestRun
@@ -134,16 +124,13 @@ public class DepotRoleContributorTest {
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
-	@Inject
-	private GroupLocalService _groupLocalService;
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

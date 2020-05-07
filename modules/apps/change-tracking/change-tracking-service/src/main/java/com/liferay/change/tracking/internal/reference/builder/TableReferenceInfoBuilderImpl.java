@@ -95,7 +95,7 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 	}
 
 	@Override
-	public TableReferenceInfoBuilder<T> defineNonreferenceColumn(
+	public TableReferenceInfoBuilder<T> nonreferenceColumn(
 		Column<T, ?> column) {
 
 		if (_tableReferenceDefinition.getTable() != column.getTable()) {
@@ -109,7 +109,7 @@ public class TableReferenceInfoBuilderImpl<T extends Table<T>>
 	}
 
 	@Override
-	public TableReferenceInfoBuilder<T> defineReferenceInnerJoin(
+	public TableReferenceInfoBuilder<T> referenceInnerJoin(
 		Function<FromStep, JoinStep> joinFunction) {
 
 		JoinStep joinStep = joinFunction.apply(_validationFromStep);

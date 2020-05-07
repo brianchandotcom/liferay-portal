@@ -47,10 +47,10 @@ public class OrganizationTableReferenceDefinition
 		TableReferenceInfoBuilder<OrganizationTable>
 			tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.defineNonreferenceColumns(
+		tableReferenceInfoBuilder.nonreferenceColumns(
 			OrganizationTable.INSTANCE.uuid,
 			OrganizationTable.INSTANCE.externalReferenceCode
-		).defineReferenceInnerJoin(
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE
 			).innerJoinON(
@@ -66,28 +66,28 @@ public class OrganizationTableReferenceDefinition
 						Organization.class.getName())
 				)
 			)
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			OrganizationTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			OrganizationTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).defineNonreferenceColumns(
+		).nonreferenceColumns(
 			OrganizationTable.INSTANCE.userName,
 			OrganizationTable.INSTANCE.createDate,
 			OrganizationTable.INSTANCE.modifiedDate
-		).defineParentColumnReference(
+		).parentColumnReference(
 			OrganizationTable.INSTANCE.organizationId,
 			OrganizationTable.INSTANCE.parentOrganizationId
-		).defineNonreferenceColumns(
+		).nonreferenceColumns(
 			OrganizationTable.INSTANCE.treePath,
 			OrganizationTable.INSTANCE.name, OrganizationTable.INSTANCE.type,
 			OrganizationTable.INSTANCE.recursable
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			OrganizationTable.INSTANCE.regionId, RegionTable.INSTANCE.regionId
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			OrganizationTable.INSTANCE.countryId,
 			CountryTable.INSTANCE.countryId
-		).defineReferenceInnerJoin(
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ListTypeTable.INSTANCE
 			).innerJoinON(
@@ -99,11 +99,11 @@ public class OrganizationTableReferenceDefinition
 						ListTypeConstants.ORGANIZATION_STATUS)
 				)
 			)
-		).defineNonreferenceColumn(
+		).nonreferenceColumn(
 			OrganizationTable.INSTANCE.comments
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			OrganizationTable.INSTANCE.logoId, ImageTable.INSTANCE.imageId
-		).defineReferenceInnerJoin(
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourcePermissionTable.INSTANCE
 			).innerJoinON(
@@ -118,7 +118,7 @@ public class OrganizationTableReferenceDefinition
 						OrganizationTable.INSTANCE.organizationId)
 				)
 			)
-		).defineReferenceInnerJoin(
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				AssetEntryTable.INSTANCE
 			).innerJoinON(

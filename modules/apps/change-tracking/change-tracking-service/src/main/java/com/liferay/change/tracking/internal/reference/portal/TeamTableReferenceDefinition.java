@@ -38,12 +38,12 @@ public class TeamTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoBuilder<TeamTable> tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.defineGroupedModel(
+		tableReferenceInfoBuilder.groupedModel(
 			TeamTable.INSTANCE
-		).defineNonreferenceColumns(
+		).nonreferenceColumns(
 			TeamTable.INSTANCE.uuid, TeamTable.INSTANCE.name,
 			TeamTable.INSTANCE.description, TeamTable.INSTANCE.lastPublishDate
-		).defineReferenceInnerJoin(
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourcePermissionTable.INSTANCE
 			).innerJoinON(
@@ -58,7 +58,7 @@ public class TeamTableReferenceDefinition
 						TeamTable.INSTANCE.teamId)
 				)
 			)
-		).defineReferenceInnerJoin(
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				RoleTable.INSTANCE
 			).innerJoinON(

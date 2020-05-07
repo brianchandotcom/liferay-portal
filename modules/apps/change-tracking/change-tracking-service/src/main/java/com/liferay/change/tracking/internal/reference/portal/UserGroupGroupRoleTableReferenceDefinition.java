@@ -39,16 +39,16 @@ public class UserGroupGroupRoleTableReferenceDefinition
 		TableReferenceInfoBuilder<UserGroupGroupRoleTable>
 			tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.defineSingleColumnReference(
+		tableReferenceInfoBuilder.singleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.userGroupId,
 			UserGroupTable.INSTANCE.userGroupId
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.groupId,
 			GroupTable.INSTANCE.groupId
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			UserGroupGroupRoleTable.INSTANCE.roleId, RoleTable.INSTANCE.roleId
 		);
 	}

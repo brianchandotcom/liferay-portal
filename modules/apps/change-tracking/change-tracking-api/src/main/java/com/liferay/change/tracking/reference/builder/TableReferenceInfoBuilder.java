@@ -31,42 +31,41 @@ import java.util.function.Function;
  */
 public interface TableReferenceInfoBuilder<T extends Table<T>> {
 
-	public default TableReferenceInfoBuilder<T> defineGroupedModel(T table) {
-		defineSingleColumnReference(
+	public default TableReferenceInfoBuilder<T> groupedModel(T table) {
+		singleColumnReference(
 			table.getColumn("groupId", Long.class),
 			GroupTable.INSTANCE.groupId);
 
-		defineSingleColumnReference(
+		singleColumnReference(
 			table.getColumn("companyId", Long.class),
 			CompanyTable.INSTANCE.companyId);
 
-		defineSingleColumnReference(
+		singleColumnReference(
 			table.getColumn("userId", Long.class), UserTable.INSTANCE.userId);
 
-		defineNonreferenceColumn(table.getColumn("userName", String.class));
+		nonreferenceColumn(table.getColumn("userName", String.class));
 
-		defineNonreferenceColumn(table.getColumn("createDate", Date.class));
+		nonreferenceColumn(table.getColumn("createDate", Date.class));
 
-		defineNonreferenceColumn(table.getColumn("modifiedDate", Date.class));
+		nonreferenceColumn(table.getColumn("modifiedDate", Date.class));
 
 		return this;
 	}
 
-	public TableReferenceInfoBuilder<T> defineNonreferenceColumn(
-		Column<T, ?> column);
+	public TableReferenceInfoBuilder<T> nonreferenceColumn(Column<T, ?> column);
 
 	@SuppressWarnings("unchecked")
-	public default TableReferenceInfoBuilder<T> defineNonreferenceColumns(
+	public default TableReferenceInfoBuilder<T> nonreferenceColumns(
 		Column<?, ?>... columns) {
 
 		for (Column<?, ?> column : columns) {
-			defineNonreferenceColumn((Column<T, ?>)column);
+			nonreferenceColumn((Column<T, ?>)column);
 		}
 
 		return this;
 	}
 
-	public default <C> TableReferenceInfoBuilder<T> defineParentColumnReference(
+	public default <C> TableReferenceInfoBuilder<T> parentColumnReference(
 		Column<T, C> pkColumn, Column<T, C> parentPKColumn) {
 
 		if (!pkColumn.isPrimaryKey()) {
@@ -80,15 +79,15 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 		Column<T, C> aliasPKColumn = aliasParentTable.getColumn(
 			pkColumn.getName(), pkColumn.getJavaType());
 
-		defineSingleColumnReference(parentPKColumn, aliasPKColumn);
+		singleColumnReference(parentPKColumn, aliasPKColumn);
 
 		return this;
 	}
 
-	public TableReferenceInfoBuilder<T> defineReferenceInnerJoin(
+	public TableReferenceInfoBuilder<T> referenceInnerJoin(
 		Function<FromStep, JoinStep> joinFunction);
 
-	public default <C> TableReferenceInfoBuilder<T> defineSingleColumnReference(
+	public default <C> TableReferenceInfoBuilder<T> singleColumnReference(
 		Column<T, C> column1, Column<?, C> column2) {
 
 		if (column1.getTable() == column2.getTable()) {
@@ -97,7 +96,7 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 
 		Predicate predicate = column1.eq(column2);
 
-		defineReferenceInnerJoin(
+		referenceInnerJoin(
 			fromStep -> fromStep.from(
 				column2.getTable()
 			).innerJoinON(

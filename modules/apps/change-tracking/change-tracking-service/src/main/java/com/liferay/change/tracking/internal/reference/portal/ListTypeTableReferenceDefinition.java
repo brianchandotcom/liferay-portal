@@ -34,7 +34,7 @@ public class ListTypeTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoBuilder<ListTypeTable> tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.defineNonreferenceColumns(
+		tableReferenceInfoBuilder.nonreferenceColumns(
 			ListTypeTable.INSTANCE.name, ListTypeTable.INSTANCE.type);
 	}
 

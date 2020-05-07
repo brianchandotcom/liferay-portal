@@ -40,24 +40,24 @@ public class UserGroupTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoBuilder<UserGroupTable> tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.defineNonreferenceColumns(
+		tableReferenceInfoBuilder.nonreferenceColumns(
 			UserGroupTable.INSTANCE.uuid,
 			UserGroupTable.INSTANCE.externalReferenceCode
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			UserGroupTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).defineSingleColumnReference(
+		).singleColumnReference(
 			UserGroupTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).defineNonreferenceColumns(
+		).nonreferenceColumns(
 			UserGroupTable.INSTANCE.userName,
 			UserGroupTable.INSTANCE.createDate,
 			UserGroupTable.INSTANCE.modifiedDate
-		).defineParentColumnReference(
+		).parentColumnReference(
 			UserGroupTable.INSTANCE.userGroupId,
 			UserGroupTable.INSTANCE.parentUserGroupId
-		).defineNonreferenceColumns(
+		).nonreferenceColumns(
 			UserGroupTable.INSTANCE.name, UserGroupTable.INSTANCE.description,
 			UserGroupTable.INSTANCE.addedByLDAPImport
-		).defineReferenceInnerJoin(
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE
 			).innerJoinON(
@@ -76,7 +76,7 @@ public class UserGroupTableReferenceDefinition
 					ClassNameTable.INSTANCE.value.eq(UserGroup.class.getName())
 				)
 			)
-		).defineReferenceInnerJoin(
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				ResourcePermissionTable.INSTANCE
 			).innerJoinON(

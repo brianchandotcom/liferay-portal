@@ -66,16 +66,16 @@ public class TableReferenceInfoBuilderImplTest {
 
 		Consumer<TableReferenceInfoBuilder<MainExampleTable>> consumer =
 			tableReferenceDefinitionHelper -> {
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceDefinitionHelper.nonreferenceColumn(
 					MainExampleTable.INSTANCE.mvccVersion);
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceDefinitionHelper.nonreferenceColumn(
 					MainExampleTable.INSTANCE.description);
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceDefinitionHelper.nonreferenceColumn(
 					MainExampleTable.INSTANCE.flag);
-				tableReferenceDefinitionHelper.defineNonreferenceColumn(
+				tableReferenceDefinitionHelper.nonreferenceColumn(
 					MainExampleTable.INSTANCE.name);
 
-				tableReferenceDefinitionHelper.defineReferenceInnerJoin(
+				tableReferenceDefinitionHelper.referenceInnerJoin(
 					childJoinFunction);
 			};
 
@@ -166,20 +166,16 @@ public class TableReferenceInfoBuilderImplTest {
 
 		Consumer<TableReferenceInfoBuilder<ReferenceExampleTable>> consumer =
 			tableReferenceInfoDefiner -> {
-				tableReferenceInfoDefiner.defineReferenceInnerJoin(
+				tableReferenceInfoDefiner.referenceInnerJoin(
 					parentJoinFunction);
 
-				tableReferenceInfoDefiner.defineReferenceInnerJoin(
-					selfJoinFunction1);
+				tableReferenceInfoDefiner.referenceInnerJoin(selfJoinFunction1);
 
-				tableReferenceInfoDefiner.defineReferenceInnerJoin(
-					selfJoinFunction2);
+				tableReferenceInfoDefiner.referenceInnerJoin(selfJoinFunction2);
 
-				tableReferenceInfoDefiner.defineReferenceInnerJoin(
-					selfJoinFunction3);
+				tableReferenceInfoDefiner.referenceInnerJoin(selfJoinFunction3);
 
-				tableReferenceInfoDefiner.defineReferenceInnerJoin(
-					selfJoinFunction4);
+				tableReferenceInfoDefiner.referenceInnerJoin(selfJoinFunction4);
 			};
 
 		TableReferenceInfoBuilderImpl<ReferenceExampleTable>
@@ -293,17 +289,17 @@ public class TableReferenceInfoBuilderImplTest {
 	public void testTableReferenceDefinitionInnerJoinValidation() {
 		Consumer<TableReferenceInfoBuilder<MainExampleTable>> consumer =
 			tableReferenceInfoDefiner -> {
-				tableReferenceInfoDefiner.defineNonreferenceColumn(
+				tableReferenceInfoDefiner.nonreferenceColumn(
 					MainExampleTable.INSTANCE.flag);
 
-				tableReferenceInfoDefiner.defineNonreferenceColumn(
+				tableReferenceInfoDefiner.nonreferenceColumn(
 					MainExampleTable.INSTANCE.name);
 
-				tableReferenceInfoDefiner.defineNonreferenceColumn(
+				tableReferenceInfoDefiner.nonreferenceColumn(
 					MainExampleTable.INSTANCE.description);
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> DSLQueryFactoryUtil.select(
 						).from(
 							MainExampleTable.INSTANCE
@@ -318,7 +314,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> DSLQueryFactoryUtil.select(
 						).from(
 							MainExampleTable.INSTANCE
@@ -341,7 +337,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> fromStep.from(
 							ReferenceExampleTable.INSTANCE
 						).innerJoinON(
@@ -364,7 +360,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> fromStep.from(
 							MainExampleTable.INSTANCE
 						).innerJoinON(
@@ -387,7 +383,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> fromStep.from(
 							MainExampleTable.INSTANCE
 						).leftJoinOn(
@@ -409,7 +405,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> fromStep.from(
 							MainExampleTable.INSTANCE
 						).innerJoinON(
@@ -439,7 +435,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> fromStep.from(
 							MainExampleTable.INSTANCE
 						).innerJoinON(
@@ -464,7 +460,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> fromStep.from(
 							InvalidTable.INSTANCE
 						).innerJoinON(
@@ -485,7 +481,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> fromStep.from(
 							MainExampleTable.INSTANCE
 						).innerJoinON(
@@ -506,7 +502,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> {
 							fromStep.as("test");
 
@@ -522,7 +518,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> {
 							fromStep.union(null);
 
@@ -538,7 +534,7 @@ public class TableReferenceInfoBuilderImplTest {
 				}
 
 				try {
-					tableReferenceInfoDefiner.defineReferenceInnerJoin(
+					tableReferenceInfoDefiner.referenceInnerJoin(
 						fromStep -> {
 							fromStep.unionAll(null);
 
@@ -583,7 +579,7 @@ public class TableReferenceInfoBuilderImplTest {
 	public void testTableReferenceDefinitionNonreferenceColumnValidation() {
 		Consumer<TableReferenceInfoBuilder<MainExampleTable>> consumer =
 			tableTableReferenceInfoBuilder ->
-				tableTableReferenceInfoBuilder.defineNonreferenceColumn(
+				tableTableReferenceInfoBuilder.nonreferenceColumn(
 					(Column)ReferenceExampleTable.INSTANCE.mainExampleId);
 
 		try {
@@ -605,7 +601,7 @@ public class TableReferenceInfoBuilderImplTest {
 	public void testTableReferenceDefinitionTableColumnValidation() {
 		Consumer<TableReferenceInfoBuilder<MainExampleTable>> consumer =
 			tableReferenceInfoBuilder -> {
-				tableReferenceInfoBuilder.defineReferenceInnerJoin(
+				tableReferenceInfoBuilder.referenceInnerJoin(
 					fromStep -> fromStep.from(
 						ReferenceExampleTable.INSTANCE
 					).innerJoinON(
@@ -614,7 +610,7 @@ public class TableReferenceInfoBuilderImplTest {
 							MainExampleTable.INSTANCE.mainExampleId)
 					));
 
-				tableReferenceInfoBuilder.defineNonreferenceColumn(
+				tableReferenceInfoBuilder.nonreferenceColumn(
 					MainExampleTable.INSTANCE.name);
 			};
 

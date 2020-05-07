@@ -35,9 +35,9 @@ public class RegionTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoBuilder<RegionTable> tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.defineSingleColumnReference(
+		tableReferenceInfoBuilder.singleColumnReference(
 			RegionTable.INSTANCE.countryId, CountryTable.INSTANCE.countryId
-		).defineNonreferenceColumns(
+		).nonreferenceColumns(
 			RegionTable.INSTANCE.regionCode, RegionTable.INSTANCE.name,
 			RegionTable.INSTANCE.active
 		);

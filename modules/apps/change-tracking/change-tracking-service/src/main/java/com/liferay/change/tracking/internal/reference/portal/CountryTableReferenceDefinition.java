@@ -34,7 +34,7 @@ public class CountryTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoBuilder<CountryTable> tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.defineNonreferenceColumns(
+		tableReferenceInfoBuilder.nonreferenceColumns(
 			CountryTable.INSTANCE.name, CountryTable.INSTANCE.a2,
 			CountryTable.INSTANCE.a3, CountryTable.INSTANCE.number,
 			CountryTable.INSTANCE.idd, CountryTable.INSTANCE.zipRequired,

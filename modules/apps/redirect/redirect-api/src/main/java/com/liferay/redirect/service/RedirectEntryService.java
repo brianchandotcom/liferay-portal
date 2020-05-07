@@ -83,7 +83,8 @@ public interface RedirectEntryService extends BaseService {
 	public int getRedirectEntriesCount(long groupId) throws PortalException;
 
 	public void updateChainedRedirectEntries(
-			long groupId, String destinationURL, String sourceURL)
+			long groupId, String destinationURL, String groupBaseURL,
+			String sourceURL)
 		throws PortalException;
 
 	public RedirectEntry updateRedirectEntry(

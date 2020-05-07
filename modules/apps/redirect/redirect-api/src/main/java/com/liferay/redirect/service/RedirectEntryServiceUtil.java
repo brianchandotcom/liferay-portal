@@ -88,11 +88,12 @@ public class RedirectEntryServiceUtil {
 	}
 
 	public static void updateChainedRedirectEntries(
-			long groupId, String destinationURL, String sourceURL)
+			long groupId, String destinationURL, String groupBaseURL,
+			String sourceURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().updateChainedRedirectEntries(
-			groupId, destinationURL, sourceURL);
+			groupId, destinationURL, groupBaseURL, sourceURL);
 	}
 
 	public static com.liferay.redirect.model.RedirectEntry updateRedirectEntry(

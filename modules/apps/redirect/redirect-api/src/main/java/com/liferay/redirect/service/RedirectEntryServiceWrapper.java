@@ -91,11 +91,12 @@ public class RedirectEntryServiceWrapper
 
 	@Override
 	public void updateChainedRedirectEntries(
-			long groupId, String destinationURL, String sourceURL)
+			long groupId, String destinationURL, String groupBaseURL,
+			String sourceURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_redirectEntryService.updateChainedRedirectEntries(
-			groupId, destinationURL, sourceURL);
+			groupId, destinationURL, groupBaseURL, sourceURL);
 	}
 
 	@Override

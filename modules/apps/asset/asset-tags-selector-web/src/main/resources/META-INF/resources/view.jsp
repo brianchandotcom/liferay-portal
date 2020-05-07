@@ -20,7 +20,7 @@
 	displayContext="<%= new AssetTagsSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetTagsSelectorDisplayContext) %>"
 />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-ui:search-container
 		id="tags"
 		searchContainer="<%= assetTagsSelectorDisplayContext.getTagsSearchContainer() %>"
@@ -43,7 +43,7 @@
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />tags');

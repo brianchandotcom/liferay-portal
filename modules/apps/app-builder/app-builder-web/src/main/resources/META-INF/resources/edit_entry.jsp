@@ -21,7 +21,9 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 %>
 
 <div class="app-builder-root">
-	<div class="container edit-entry">
+	<clay:container
+		className="edit-entry"
+	>
 		<div id="<%= renderResponse.getNamespace() %>-control-menu"></div>
 
 		<clay:row
@@ -80,5 +82,5 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 				</div>
 			</clay:col>
 		</clay:row>
-	</div>
+	</clay:container>
 </div>

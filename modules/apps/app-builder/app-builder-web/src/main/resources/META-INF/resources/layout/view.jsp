@@ -32,7 +32,9 @@ if (mvcPath.startsWith("/edit_entry.jsp")) {
 
 <div class="app-builder-standalone">
 	<header class="app-builder-standalone-header">
-		<div class="container p-0">
+		<clay:container
+			className="p-0"
+		>
 			<div class="app-builder-standalone-menu autofit-row">
 				<div class="autofit-col autofit-col-expand">
 					<a class="company-link" href="<%= PortalUtil.addPreservedParameters(themeDisplay, themeDisplay.getURLPortal(), false, true) %>">
@@ -59,12 +61,14 @@ if (mvcPath.startsWith("/edit_entry.jsp")) {
 			</div>
 
 			<h1 class="app-builder-standalone-name <%= editEntryCssClass %>"><%= HtmlUtil.escape(appName) %></h1>
-		</div>
+		</clay:container>
 	</header>
 
-	<div class="app-builder-standalone-content container <%= editEntryCssClass %> sheet">
+	<clay:container
+		className="app-builder-standalone-content <%= editEntryCssClass %> sheet"
+	>
 		<liferay-portlet:runtime
 			portletName="<%= portletName %>"
 		/>
-	</div>
+	</clay:container>
 </div>

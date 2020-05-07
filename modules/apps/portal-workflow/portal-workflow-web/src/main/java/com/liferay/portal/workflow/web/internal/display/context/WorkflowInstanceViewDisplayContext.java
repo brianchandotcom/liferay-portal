@@ -286,6 +286,10 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public WorkflowInstanceSearch getSearchContainer() throws PortalException {
+		if (Objects.nonNull(_searchContainer)) {
+			return _searchContainer;
+		}
+
 		PortletURL portletURL = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
 

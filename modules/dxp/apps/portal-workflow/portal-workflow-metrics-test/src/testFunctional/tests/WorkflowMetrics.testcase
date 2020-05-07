@@ -40,13 +40,12 @@ definition {
 
 		WorkflowMetrics.tearDown();
 
-		WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
-
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
-		WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
+		else {
+			WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
+		}
 	}
 
 	@description = "LRQA-53648 Automate LPS-89014: [SLA] Create new SLA for total process resolution"
@@ -996,7 +995,9 @@ definition {
 
 	@description = "LRQA-55450 [Performance] Search assignees in the performance of all assignees screen"
 	test SearchPerformanceOfAllAssignees {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
+
+		property test.name.skip.portal.instance = "WorkflowMetrics#SearchPerformanceOfAllAssignees";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

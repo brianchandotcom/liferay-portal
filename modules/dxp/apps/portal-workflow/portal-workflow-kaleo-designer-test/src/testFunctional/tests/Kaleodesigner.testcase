@@ -21,7 +21,7 @@ definition {
 		else {
 			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
 
-			Workflow.tearDownWorkflowDefinitions();
+			Workflow.tearDownWorkflowDefinitions(workflowDefinitionTitle = "Edited Workflow Definition");
 		}
 	}
 

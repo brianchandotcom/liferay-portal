@@ -124,7 +124,11 @@ definition {
 	}
 
 	macro publish {
+		takeScreenshot();
+
 		Button.clickPublish();
+
+		takeScreenshot();
 
 		Alert.viewSuccessMessage();
 	}

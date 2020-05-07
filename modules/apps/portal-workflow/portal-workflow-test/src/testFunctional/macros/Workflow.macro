@@ -624,9 +624,9 @@ definition {
 
 	macro tearDownPortalWorkflow {
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Workflow");
+			portlet = "Process Builder");
 
 		Navigator.gotoNavItem(navItem = "Schemes");
 
@@ -666,9 +666,9 @@ definition {
 
 	macro tearDownSpecificWorkflowDefinition {
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Workflow");
+			portlet = "Process Builder");
 
 		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
 
@@ -680,15 +680,17 @@ definition {
 	}
 
 	macro tearDownWorkflowDefinitions {
+		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
+
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Workflow",
 			panel = "Control Panel",
-			portlet = "Workflow");
+			portlet = "Process Builder");
 
-		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS")) {
-			Workflow.unpublishWorkflowDefinition();
+		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE")) {
+			Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
 
-			Workflow.deleteWorkflowDefinition();
+			Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
 		}
 	}
 

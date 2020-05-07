@@ -55,6 +55,8 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 					<%
 					row.setData(HashMapBuilder.<String, Object>put("actions", redirectManagementToolbarDisplayContext.getAvailableActions(redirectEntry)).build());
 
+					String destinationUrl = HtmlUtil.escape(redirectEntry.getDestinationURL());
+
 					String sourceURL = RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL();
 					%>
 
@@ -71,24 +73,6 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						cssClass="table-cell-content"
 						name="destination-url"
 					>
-
-						<%
-						String destinationUrl = HtmlUtil.escape(redirectEntry.getDestinationURL());
-
-						Map<String, String> data = HashMapBuilder.put(
-							"href", sourceURL
-						).build();
-						%>
-
-						<clay:button
-							data="<%= data %>"
-							elementClasses="icon-shortcut"
-							icon="shortcut"
-							monospaced="<%= true %>"
-							size="sm"
-							style="unstyled"
-							title='<%= LanguageUtil.get(request, "try-redirection") %>'
-						/>
 
 						<span data-title="<%= destinationUrl %>">
 							<%= destinationUrl %>

@@ -503,7 +503,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 			DDMFormFieldValue ddmFormFieldValue = entry.getValue();
 
-			if (key.startsWith(entryKeyPrefix) &&
+			if ((key.startsWith(entryKeyPrefix) ||
+				 key.startsWith(fieldNameFilter)) &&
 				Objects.equals(ddmFormFieldValue.getName(), fieldNameFilter)) {
 
 				entryKeys.add(key);

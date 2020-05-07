@@ -20,7 +20,7 @@
 String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 
@@ -105,7 +105,7 @@ String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
-</div>
+</clay:container>
 
 <aui:script>
 	function <portlet:namespace />addAssetEntry() {

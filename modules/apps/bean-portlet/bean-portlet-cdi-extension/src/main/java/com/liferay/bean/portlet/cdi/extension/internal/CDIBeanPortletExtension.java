@@ -538,7 +538,7 @@ public class CDIBeanPortletExtension implements Extension {
 
 				if (requestDispatcher == null) {
 					_log.error(
-						"Unable to acquire dispatcher to include=" + include);
+						"Unable to acquire dispatcher to include " + include);
 				}
 				else {
 					requestDispatcher.include(portletRequest, portletResponse);

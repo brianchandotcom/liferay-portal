@@ -46,7 +46,7 @@ public class CDIScopedBean<T> implements ScopedBean<T>, Serializable {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Destroying @", _scopeName, " bean name=", _name));
+					"Destroying @", _scopeName, " bean named ", _name));
 		}
 
 		_creationalContext.release();

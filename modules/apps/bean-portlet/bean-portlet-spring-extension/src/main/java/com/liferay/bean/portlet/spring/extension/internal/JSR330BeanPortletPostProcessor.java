@@ -218,11 +218,11 @@ public class JSR330BeanPortletPostProcessor
 						continue;
 					}
 
-					boolean required = determineRequiredStatus(
-						annotationAttributes);
 					PropertyDescriptor propertyDescriptor =
 						BeanUtils.findPropertyForMethod(
 							bridgedMethod, beanClass);
+					boolean required = determineRequiredStatus(
+						annotationAttributes);
 
 					injectionElements.add(
 						new JSR330InjectedMethodElement(

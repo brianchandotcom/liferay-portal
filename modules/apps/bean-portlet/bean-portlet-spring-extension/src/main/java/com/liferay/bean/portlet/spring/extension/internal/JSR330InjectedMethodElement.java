@@ -63,8 +63,8 @@ public class JSR330InjectedMethodElement
 			return;
 		}
 
-		Method method = (Method)getMember();
 		Object[] dependencies;
+		Method method = (Method)getMember();
 
 		if (_cached) {
 			dependencies = _resolveCachedDependencies(beanName);

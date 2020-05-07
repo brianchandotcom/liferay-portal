@@ -1,5 +1,16 @@
 # Poshi Runner Change Log
 
+## 1.0.266
+
+### Other
+
+* [LPS-105380](https://issues.liferay.com/browse/LPS-105380) - SourceFormatter Improvements
+
+### WebDriver
+
+* [POSHI-71](https://issues.liferay.com/browse/POSHI-71) - Clear caches/history for IE before/after each test
+* [POSHI-75](https://issues.liferay.com/browse/POSHI-75) - As a test engineer / developer, I should be able to easily execute and wait for custom javascript test code
+
 ## 1.0.264
 
 ### Other

@@ -12,7 +12,6 @@
  * details.
  */
 
-import {ClaySelect} from '@clayui/form';
 import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
@@ -20,6 +19,8 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
+
+import LanguageSelector from './LanguageSelector';
 
 const FriendlyURLHistoryModal = ({
 	defaultLanguageId,
@@ -102,23 +103,16 @@ const FriendlyURLHistoryModal = ({
 					<ClayLoadingIndicator />
 				) : (
 					<>
-						<p>
-							<ClaySelect
-								disabled={availableLanguages.length < 2}
-								onChange={({target: {value}}) => {
+						<div className="pb-3 text-right">
+							<LanguageSelector
+								defaultLanguage={defaultLanguageId}
+								languageIds={availableLanguages}
+								onChange={(value) => {
 									setLanguageId(value);
 								}}
-								value={languageId}
-							>
-								{availableLanguages.map((localeId) => (
-									<ClaySelect.Option
-										key={localeId}
-										label={localeId}
-										value={localeId}
-									/>
-								))}
-							</ClaySelect>
-						</p>
+								selectedLanguage={languageId}
+							/>
+						</div>
 
 						<ClayList
 							className="show-quick-actions-one-line"

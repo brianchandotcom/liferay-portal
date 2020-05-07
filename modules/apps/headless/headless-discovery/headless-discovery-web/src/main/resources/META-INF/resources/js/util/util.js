@@ -12,10 +12,6 @@
  * details.
  */
 
-export const isObject = (tempVar) => {
-	return typeof tempVar === 'object' && tempVar !== null;
-};
-
 const REQUEST_BODY_TYPES = ['application/json', 'multipart/form-data'];
 
 export const getSchemaType = (requestBody) => {

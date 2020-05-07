@@ -26,7 +26,7 @@ const getContentType = (requestBody) =>
 		? 'application/json'
 		: null;
 
-const APIForm = (props) => {
+const APIForm = (_) => {
 	const [state, dispatch] = useAppState();
 
 	const {categories, categoryKey, method, path, paths, schemas} = state;

@@ -21,7 +21,7 @@ import {spritemap} from './Icon';
 import PathList from './PathList';
 import SchemaExplorer from './SchemaExplorer';
 import {useAppState} from './hooks/appState';
-import fetch from './util/fetch';
+import apiFetch from './util/apiFetch';
 import {setSearchParam} from './util/params';
 import {getCategoryURL} from './util/url';
 
@@ -67,7 +67,7 @@ const APIGUI = () => {
 	useEffect(() => {
 		let current = true;
 
-		fetch('http://localhost:8080/o/openapi', 'get', {}).then((res) => {
+		apiFetch('/o/openapi', 'get', {}).then((res) => {
 			if (current) {
 				var categories = {};
 
@@ -78,13 +78,15 @@ const APIGUI = () => {
 				});
 
 				dispatch({
-					type: 'LOAD_CATEGORIES',
 					categories,
+					type: 'LOAD_CATEGORIES',
 				});
 			}
 		});
 
-		return () => (current = false);
+		return () => {
+			current = false;
+		};
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -93,17 +95,19 @@ const APIGUI = () => {
 		const categoryURL = getCategoryURL(categories, categoryKey);
 
 		if (categoryURL) {
-			fetch(categoryURL).then((category) => {
+			apiFetch(categoryURL).then((category) => {
 				if (current) {
 					dispatch({
-						type: 'LOAD_CATEGORY',
 						category,
+						type: 'LOAD_CATEGORY',
 					});
 				}
 			});
 		}
 
-		return () => (current = false);
+		return () => {
+			current = false;
+		};
 	}, [categoryKey, categories, dispatch]);
 
 	return (
@@ -116,7 +120,11 @@ const APIGUI = () => {
 								className="d-flex justify-content-between"
 								htmlFor="categorySelect"
 							>
-								<span>{'Select API Category'}</span>
+								<span>
+									{Liferay.Language.get(
+										'select-api-category'
+									)}
+								</span>
 
 								{schemas && (
 									<button
@@ -127,8 +135,12 @@ const APIGUI = () => {
 										}}
 									>
 										{showSchemas
-											? 'Hide Schemas'
-											: 'Show Schemas'}
+											? Liferay.Language.get(
+													'hide-schemas'
+											  )
+											: Liferay.Language.get(
+													'show-schemas'
+											  )}
 									</button>
 								)}
 							</label>
@@ -136,8 +148,8 @@ const APIGUI = () => {
 								aria-label="Select API Category"
 								onChange={(e) => {
 									dispatch({
-										type: 'SELECT_CATEGORY',
 										categoryKey: e.currentTarget.value,
+										type: 'SELECT_CATEGORY',
 									});
 								}}
 								value={categoryKey}
@@ -201,9 +213,9 @@ const APIGUI = () => {
 								spritemap={spritemap}
 								title="Info"
 							>
-								{
-									'Please select an API from the list on the left.'
-								}
+								{Liferay.Language.get(
+									'please-select-an-api-from-the-list-on-the-left'
+								)}
 							</ClayAlert>
 						)}
 

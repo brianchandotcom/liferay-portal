@@ -44,19 +44,6 @@ const APIDisplay = () => {
 
 	const methodData = pathData[method];
 
-	const tabs = [
-		['Response', <ResponseDisplay response={apiResponse} />],
-		[
-			'Javascript Example',
-			<JavascriptExample
-				contentType={contentType}
-				data={requestBodyData}
-				method={method}
-				url={apiURL}
-			/>,
-		],
-	];
-
 	return (
 		<div>
 			<div className="mb-2 sheet-header">
@@ -98,29 +85,40 @@ const APIDisplay = () => {
 					<h3 className="sheet-subtitle">{'Response'}</h3>
 
 					<ClayTabs>
-						{tabs.map((tab, i) => (
-							<ClayTabs.Item
-								active={tabIndex === i}
-								innerProps={{
-									'aria-controls': `tabpanel-${i + 1}`,
-								}}
-								key={i}
-								onClick={() => setTabIndex(i)}
-							>
-								{tab[0]}
-							</ClayTabs.Item>
-						))}
+						<ClayTabs.Item
+							active={tabIndex === 0}
+							innerProps={{
+								'aria-controls': `tabpanel-1`,
+							}}
+							key={0}
+							onClick={() => setTabIndex(0)}
+						>
+							{Liferay.Language.get('response')}
+						</ClayTabs.Item>
+						<ClayTabs.Item
+							active={tabIndex === 1}
+							innerProps={{
+								'aria-controls': `tabpanel-2`,
+							}}
+							key={1}
+							onClick={() => setTabIndex(1)}
+						>
+							{Liferay.Language.get('javascript-example')}
+						</ClayTabs.Item>
 					</ClayTabs>
 
 					<ClayTabs.Content activeIndex={tabIndex}>
-						{tabs.map((tab, i) => (
-							<ClayTabs.TabPane
-								aria-labelledby={`tab-${i + 1}`}
-								key={i}
-							>
-								{tab[1]}
-							</ClayTabs.TabPane>
-						))}
+						<ClayTabs.TabPane aria-labelledby={`tab-1`} key={0}>
+							<ResponseDisplay response={apiResponse} />
+						</ClayTabs.TabPane>
+						<ClayTabs.TabPane aria-labelledby={`tab-2`} key={1}>
+							<JavascriptExample
+								contentType={contentType}
+								data={requestBodyData}
+								method={method}
+								url={apiURL}
+							/>
+						</ClayTabs.TabPane>
 					</ClayTabs.Content>
 				</div>
 			)}

@@ -12,12 +12,11 @@
  * details.
  */
 
-const fetch = (url, method = 'get', data, contentType) => {
+import {fetch} from 'frontend-js-web';
+
+const apiFetch = (url, method = 'get', data, contentType) => {
 	const request = {
 		method: method.toUpperCase(),
-		headers: {
-			Authorization: 'Basic dGVzdEBsaWZlcmF5LmNvbTp0ZXN0',
-		},
 	};
 
 	if (method === 'post' || method === 'put') {
@@ -27,7 +26,8 @@ const fetch = (url, method = 'get', data, contentType) => {
 		else if (contentType === 'multipart/form-data') {
 			const formData = new FormData();
 
-			for (const name of data) {
+			for (let i = 0; i < data.length; i++) {
+				const name = data[i];
 				formData.append(name, data[name]);
 			}
 
@@ -35,7 +35,7 @@ const fetch = (url, method = 'get', data, contentType) => {
 		}
 	}
 
-	return Liferay.Util.fetch(url, request).then((res) => {
+	return fetch(url, request).then((res) => {
 		let retVal;
 
 		if (method === 'delete' && res.status === 204) {
@@ -49,4 +49,4 @@ const fetch = (url, method = 'get', data, contentType) => {
 	});
 };
 
-export default fetch;
+export default apiFetch;

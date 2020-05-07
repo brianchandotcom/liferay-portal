@@ -1636,7 +1636,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 						${entity.varName}CacheModel.${entityColumn.name} = Long.MIN_VALUE;
 					}
 				<#else>
-					<#if serviceBuilder.isPrimitiveWrapper(entityColumn.type)>
+					<#if entityColumn.isPrimitiveTypeWrapper()>
 						${entityColumn.type} ${entityColumn.name} = get${entityColumn.methodName}();
 
 						if (${entityColumn.name} != null) {

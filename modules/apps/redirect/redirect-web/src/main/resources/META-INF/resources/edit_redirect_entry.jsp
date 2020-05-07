@@ -127,12 +127,12 @@ else {
 	/>
 </div>
 
-<portlet:actionURL name="/redirect/check_destination_url" var="checkDestinationURL" />
+<portlet:actionURL name="/redirect/check_redirect_entry_chain" var="checkRedirectEntryChainURL" />
 
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"checkDestinationURL", checkDestinationURL
+			"checkRedirectEntryChainURL", checkRedirectEntryChainURL
 		).build()
 	%>'
 	module="js/editRedirectEntry"

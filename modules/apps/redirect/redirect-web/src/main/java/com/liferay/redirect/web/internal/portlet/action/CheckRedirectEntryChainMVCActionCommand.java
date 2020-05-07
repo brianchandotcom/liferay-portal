@@ -44,11 +44,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + RedirectPortletKeys.REDIRECT,
-		"mvc.command.name=/redirect/check_destination_url"
+		"mvc.command.name=/redirect/check_redirect_entry_chain"
 	},
 	service = MVCActionCommand.class
 )
-public class CheckDestinationURLMVCActionCommand extends BaseMVCActionCommand {
+public class CheckRedirectEntryChainMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

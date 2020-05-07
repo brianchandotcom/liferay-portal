@@ -1084,7 +1084,7 @@ definition {
 	@description = "This is a use case for LPS-49037."
 	@priority = "2"
 	test EditProcessFieldSetPaginationAndViewSelectedForm {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		for (var kfFieldSetName : list "Field1,Field2,Field3,Field4,Field5,Field6") {
 			ProductMenu.gotoPortlet(
@@ -1154,7 +1154,7 @@ definition {
 
 		KaleoFormsAdmin.next();
 
-		KaleoFormsAdmin.editFieldSetPagination(paginationNumber = "5");
+		KaleoFormsAdmin.editFieldSetPagination(paginationNumber = "8");
 
 		KaleoFormsAdmin.viewNextFieldSetPage();
 

@@ -79,6 +79,11 @@ definition {
 	macro selectParentCP {
 		var key_kbArticleTitle = "${kbFolderName}";
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "KnowledgeBaseSelectParent#IFRAME");
 
 		if ("${kbFolderName}" == "Home") {

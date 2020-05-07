@@ -5,6 +5,11 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(
 			key_accountName = "${accountName}",
 			key_assigneeType = "${assigneeType}",

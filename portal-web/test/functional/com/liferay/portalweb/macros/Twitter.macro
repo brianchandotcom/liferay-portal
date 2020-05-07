@@ -5,6 +5,11 @@ definition {
 			locator1 = "Link#CONFIGURE_TWITTER",
 			value1 = "Please configure your Twitter screen name.");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.gotoNavTab(navTab = "Identification");

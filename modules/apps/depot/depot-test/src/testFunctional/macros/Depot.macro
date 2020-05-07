@@ -191,6 +191,11 @@ definition {
 		for (var siteName : list "${siteList}") {
 			Button.clickAdd();
 
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
 			Pause(locator1 = "3000");

@@ -68,6 +68,11 @@ definition {
 	}
 
 	macro gotoOptionalConfiguration {
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "DDLConfiguration#CONFIGURATION_IFRAME");
 
 		AssertClick(

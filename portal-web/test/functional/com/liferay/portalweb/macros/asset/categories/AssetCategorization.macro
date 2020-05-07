@@ -119,6 +119,11 @@ definition {
 		SelectFrameTop();
 
 		if (IsElementPresent(locator1 = "IFrame#SELECT_TAG")) {
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
 			SelectFrame(locator1 = "IFrame#SELECT_TAG");
 		}
 

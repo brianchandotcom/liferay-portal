@@ -36,6 +36,11 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Search.searchCP(searchTerm = "${userScreenName}");
@@ -86,6 +91,11 @@ definition {
 		Navigator.gotoNavItem(navItem = "User Groups");
 
 		LexiconEntry.gotoAdd();
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

@@ -94,6 +94,11 @@ definition {
 
 		var key_assetTitle = "${assetTitle}";
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "AssetRelatedAssets#SELECT_ASSET_IFRAME");
 
 		AssertClick(
@@ -334,6 +339,11 @@ definition {
 		Select(
 			locator1 = "ReportContent#REASON_SELECT",
 			value1 = "${flagReason}");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
 

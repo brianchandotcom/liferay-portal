@@ -3140,6 +3140,11 @@ definition {
 
 		Click(locator1 = "Staging#HISTORY_BUTTON");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
 
 		AssertElementPresent(locator1 = "Staging#HISTORY_VERSION");

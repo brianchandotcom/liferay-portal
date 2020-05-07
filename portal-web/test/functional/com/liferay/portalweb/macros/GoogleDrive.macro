@@ -41,6 +41,11 @@ definition {
 			Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
 		}
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "GoogleDrive#GOOGLE_DRIVE_IFRAME");
 	}
 

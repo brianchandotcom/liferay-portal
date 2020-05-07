@@ -75,4 +75,31 @@ window.LFR_JS_EVENTS_LOG = {
 		RunScript(locator1 = "${javascript}");
 	}
 
+	macro waitForLiferayEvent {
+		var javascript = '''
+try {
+	var eventValue = LFR_JS_EVENTS_LOG.getLastEvent("${eventName}").${attributeName};
+
+	if (eventValue.includes("${attributeValue}")) {
+		return "fired";
+	}
+	else {
+		return "pending";
+	}
+}
+catch(err) {
+	return "pending";
+}
+		''';
+		var liferayEventFired = "";
+
+		while ("${liferayEventFired}" != "fired" && (maxIterations = "5")) {
+			var liferayEventFired = selenium.getEval("${javascript}");
+
+			echo("${liferayEventFired}");
+
+			Pause(locator1 = "1000");
+		}
+	}
+
 }

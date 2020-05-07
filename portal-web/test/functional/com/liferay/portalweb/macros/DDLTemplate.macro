@@ -81,6 +81,11 @@ definition {
 	macro addDisplayTemplateTemplateViaDDLDisplayPG {
 		Click(locator1 = "DDL#PORTLET_ACTIONS_ADD_DISPLAY_TEMPLATE");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${ddlDisplayTemplateName}");
@@ -146,6 +151,11 @@ definition {
 
 	macro addFormTemplateViaDDLDisplayPG {
 		Click(locator1 = "DDL#PORTLET_ACTIONS_ADD_FORM_TEMPLATE");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

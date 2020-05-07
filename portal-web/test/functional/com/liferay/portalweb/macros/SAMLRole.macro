@@ -24,6 +24,11 @@ definition {
 			locator1 = "Button#CREATE_CERTIFICATE",
 			value1 = "Create Certificate");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Type(

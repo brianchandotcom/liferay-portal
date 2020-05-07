@@ -1753,6 +1753,11 @@ definition {
 
 		ClassicSearch.gotoOptions(portletOption = "Configuration");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertTextEquals(
@@ -2265,6 +2270,11 @@ definition {
 
 		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		FormFields.viewTextValue(
@@ -2276,6 +2286,11 @@ definition {
 		Portlet.gotoPortletOptions(
 			portletName = "Search Result",
 			portletOption = "Configuration");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -2289,6 +2304,11 @@ definition {
 			portletName = "Search Options",
 			portletOption = "Configuration");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		FormFields.viewCheckboxChecked(fieldName = "allowEmptySearches");
@@ -2299,6 +2319,11 @@ definition {
 			portletName = "Suggestion",
 			portletOption = "Configuration");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		FormFields.viewCheckboxChecked(fieldName = "spellCheckSuggestionEnabled");
@@ -2308,6 +2333,11 @@ definition {
 		Portlet.gotoPortletOptions(
 			portletName = "Type Facet",
 			portletOption = "Configuration");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

@@ -252,6 +252,11 @@ definition {
 			locator1 = "Portlet#H3_MODAL_TITLE",
 			value1 = "Select Asset Type");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
 		var key_assetType = "Document";
@@ -278,6 +283,11 @@ definition {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_MODAL_TITLE",
 			value1 = "Select Asset Type");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 

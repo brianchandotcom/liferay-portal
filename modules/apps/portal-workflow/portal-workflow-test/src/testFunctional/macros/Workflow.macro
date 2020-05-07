@@ -435,6 +435,11 @@ definition {
 		var editAsset = "IFrame#EDIT_ASSET";
 
 		if (IsElementPresent(locator1 = "${editAsset}")) {
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
 			SelectFrame(locator1 = "${editAsset}");
 		}
 	}
@@ -779,7 +784,17 @@ definition {
 		var currentYear = DateUtil.getCurrentYear();
 		var futureYear = ${currentYear} + 1;
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "WorkflowDefinition#DIALOG_BOX_BODY");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
 

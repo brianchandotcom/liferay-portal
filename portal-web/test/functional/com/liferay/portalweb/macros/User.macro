@@ -817,6 +817,11 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_ROLES_SELECT_LINK",
 			value1 = "Select");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#SELECT_ORGANIZATION_ROLE");
 
 		var key_roleTitle = "${roleTitle}";
@@ -849,6 +854,11 @@ definition {
 
 		Pause(locator1 = "5000");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#SELECT_REGULAR_ROLE");
 
 		var key_roleTitle = "${roleTitle}";
@@ -878,6 +888,11 @@ definition {
 		AssertClick(
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_SITE_ROLES_SELECT_LINK",
 			value1 = "Select");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#SELECT_SITE_ROLE");
 
@@ -1502,6 +1517,11 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#DEPOT_SELECT_LINK",
 			value1 = "SELECT");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.gotoEntry(rowEntry = "${depotName}");
@@ -1601,6 +1621,11 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#ORGANIZATIONS_SELECT_LINK",
 			value1 = "Select");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME");
 
 		Search.searchCP(searchTerm = "${orgName}");
@@ -1632,6 +1657,11 @@ definition {
 		AssertClick(
 			locator1 = "UsersAndOrganizationsEditUser#SITES_SELECT_LINK",
 			value1 = "SELECT");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#SELECT_USER_SITES");
 
@@ -1710,6 +1740,8 @@ definition {
 				specificURL = "${virtualHostsURL}",
 				userEmailAddress = "${userEmailAddress}");
 		}
+
+		LiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro forgotPasswordSendResetLink {

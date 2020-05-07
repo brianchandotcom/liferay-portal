@@ -261,6 +261,11 @@ definition {
 
 		ItemSelector.searchDMImages(imageFileName = "Document_2");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		var key_imageFileName = "Document_2.jpg";

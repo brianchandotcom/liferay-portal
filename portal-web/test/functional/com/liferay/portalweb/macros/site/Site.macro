@@ -20,6 +20,11 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.selectAll();
@@ -103,6 +108,11 @@ definition {
 				value1 = "Select");
 
 			var key_parentSiteName = "${parentSiteName}";
+
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
 
 			SelectFrame(locator1 = "SitesSelectSite#SELECT_SITE_IFRAME");
 
@@ -260,6 +270,11 @@ definition {
 			locator1 = "SiteSettingsDefaultUserAssociations#TEAMS_SELECT",
 			value1 = "Select");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "SiteSettingsDefaultUserAssociations#TEAMS_SELECT_IFRAME");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -290,6 +305,11 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
@@ -311,6 +331,11 @@ definition {
 		LexiconCard.clickEllipsisItem(
 			card = "${resourceName}",
 			item = "Assign Roles");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -341,6 +366,11 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Assign Roles");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
@@ -362,10 +392,20 @@ definition {
 		AssertVisible(locator1 = "Button#DONE");
 
 		if (isSet(depotName)) {
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_ASSET_LIBRARY");
 		}
 
 		else {
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 		}
 
@@ -393,6 +433,11 @@ definition {
 		Pause(locator1 = "5000");
 
 		LexiconEntry.gotoAdd();
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -423,6 +468,11 @@ definition {
 		AssertClick(
 			locator1 = "UsersAndOrganizationsEditUser#SITES_SELECT_LINK",
 			value1 = "Select");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#SELECT_USER_SITES");
 
@@ -1023,6 +1073,11 @@ definition {
 
 		var key_parentSiteName = "${parentSiteName}";
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "SitesSelectSite#SELECT_SITE_IFRAME");
 
 		Search.searchCP(searchTerm = "${parentSiteName}");
@@ -1081,6 +1136,11 @@ definition {
 		LexiconEntry.openEntryMenu(rowEntry = "${userGroupName}");
 
 		MenuItem.click(menuItem = "Unassign Roles");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1201,6 +1261,11 @@ definition {
 
 		ProductMenuHelper.openWorkspace();
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
@@ -1243,6 +1308,11 @@ definition {
 		Navigator.gotoNavItem(navItem = "Users");
 
 		LexiconEntry.gotoAdd();
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1380,6 +1450,11 @@ definition {
 		AssertTextEquals(
 			locator1 = "Sites#SELECT_SITE_MODAL_HEADER",
 			value1 = "Select Site");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

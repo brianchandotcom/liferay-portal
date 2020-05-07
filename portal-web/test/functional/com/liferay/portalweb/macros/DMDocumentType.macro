@@ -111,6 +111,11 @@ definition {
 
 	macro selectDocumentTypeFrame {
 		if (IsElementPresent(locator1 = "IFrame#DOCUMENT_TYPES")) {
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
 			SelectFrame(locator1 = "IFrame#DOCUMENT_TYPES");
 		}
 	}

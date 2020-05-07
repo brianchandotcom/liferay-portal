@@ -13,6 +13,11 @@ definition {
 			locator1 = "Button#INVITE_MEMBERS",
 			value1 = "Invite Members");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#INVITE_MEMBERS");
 
 		InviteMembers._selectUser(inviteUserFullName = "${inviteUserFullName}");

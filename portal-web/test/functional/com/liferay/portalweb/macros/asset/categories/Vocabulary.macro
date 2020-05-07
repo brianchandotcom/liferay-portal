@@ -263,6 +263,11 @@ definition {
 			menuItem = "Permissions",
 			rowEntry = "${vocabularyName}");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if ("${viewableBy}" == "Anyone (Guest Role)") {

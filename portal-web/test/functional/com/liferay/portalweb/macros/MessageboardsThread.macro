@@ -585,6 +585,11 @@ definition {
 
 		Pause(locator1 = "5000");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "MessageBoardsSelectCategory#IFRAME");
 
 		AssertClick(

@@ -596,9 +596,19 @@ definition {
 
 	macro selectDynamicDataMappingFrame {
 		if (IsElementPresent(locator1 = "DDMEditStructure#IFRAME")) {
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
 			SelectFrame(locator1 = "DDMEditStructure#IFRAME");
 		}
 		else if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 	}

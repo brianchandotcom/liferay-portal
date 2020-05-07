@@ -189,6 +189,11 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
 
 		LexiconEntry.gotoAdd();
@@ -202,6 +207,11 @@ definition {
 		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
 

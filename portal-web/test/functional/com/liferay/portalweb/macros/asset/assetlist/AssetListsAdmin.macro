@@ -130,6 +130,11 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
 			Navigator.gotoNavTab(navTab = "My Sites");
@@ -236,6 +241,11 @@ definition {
 
 		Click(locator1 = "AssetLists#ASSET_TYPE_DROPDOWN_ITEM");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
@@ -339,6 +349,11 @@ definition {
 			key_menuItem = "View Content",
 			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals(
@@ -366,6 +381,11 @@ definition {
 		Click(
 			key_menuItem = "View Content",
 			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

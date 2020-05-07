@@ -493,6 +493,11 @@ definition {
 			locator1 = "Wiki#HISTORY_ACTIVITIES_TABLE_COMPARE_TO_LINK",
 			value1 = "Compare to...");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "Wiki#COMPARE_VERSIONS_IFRAME");
 
 		var key_wikiPageVersion = "${wikiPageVersionNew}";

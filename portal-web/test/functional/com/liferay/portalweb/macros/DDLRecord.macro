@@ -252,6 +252,11 @@ definition {
 			Pause(locator1 = "1000");
 		}
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
 
 		if ("${userRole}" == "Guest") {
@@ -427,6 +432,11 @@ definition {
 		AssertClick(
 			locator1 = "Button#SELECT_CONTENT",
 			value1 = "Select");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

@@ -293,6 +293,10 @@
 				"mapping": {
 					"additionalProperties": false,
 					"properties": {
+						"collectionItemFieldKey": {
+							"title": "The collectionItemFieldKey Schema",
+							"type": "string"
+						},
 						"fieldKey": {
 							"title": "The fieldKey Schema",
 							"type": "string"
@@ -306,9 +310,6 @@
 							"type": "integer"
 						}
 					},
-					"required": [
-						"fieldKey"
-					],
 					"title": "The mapping Schema",
 					"type": "object"
 				}

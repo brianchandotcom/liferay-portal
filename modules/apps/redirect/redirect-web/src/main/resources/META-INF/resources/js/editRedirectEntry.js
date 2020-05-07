@@ -25,6 +25,7 @@ export default function ({checkDestinationURL, namespace}) {
 		if (destinationURL.value && sourceURL.value) {
 			Liferay.Util.fetch(checkDestinationURL, {
 				body: Liferay.Util.objectToFormData({
+					[`${namespace}destinationURL`]: destinationURL.value,
 					[`${namespace}sourceURL`]: sourceURL.value,
 				}),
 				method: 'POST',

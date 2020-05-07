@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
@@ -68,7 +69,18 @@ public class CheckDestinationURLMVCActionCommand extends BaseMVCActionCommand {
 					RedirectUtil.getGroupBaseURL(themeDisplay) +
 						StringPool.FORWARD_SLASH + sourceURL);
 
-		if (!ListUtil.isEmpty(redirectEntries)) {
+		String destinationURL = ParamUtil.getString(
+			actionRequest, "destinationURL");
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.fetchRedirectEntry(
+				themeDisplay.getScopeGroupId(),
+				StringUtil.removeSubstring(
+					destinationURL,
+					RedirectUtil.getGroupBaseURL(themeDisplay) +
+						StringPool.SLASH));
+
+		if (!ListUtil.isEmpty(redirectEntries) || (redirectEntry != null)) {
 			jsonObject = JSONUtil.put("success", Boolean.FALSE);
 		}
 

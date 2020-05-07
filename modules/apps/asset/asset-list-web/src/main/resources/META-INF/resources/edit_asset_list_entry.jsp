@@ -31,7 +31,9 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>
 
-<div class="container-fluid container-fluid-max-xl container-view">
+<clay:container
+	className="container-view"
+>
 	<clay:row>
 		<clay:col
 			lg="3"
@@ -136,7 +138,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 			</c:choose>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
 <script>
 	<portlet:actionURL name="/asset_list/add_asset_list_entry_variation" var="addAssetListEntryVariationURL">

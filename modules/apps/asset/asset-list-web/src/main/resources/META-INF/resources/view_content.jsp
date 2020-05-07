@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="container-fluid-1280 pt-3">
+<clay:container
+	className="pt-3"
+>
 	<liferay-ui:search-container
 		id="assetEntries"
 		searchContainer="<%= assetListDisplayContext.getAssetListContentSearchContainer() %>"
@@ -48,7 +50,7 @@
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>
 
 <aui:button-row>
 	<aui:button type="cancel" value="close" />

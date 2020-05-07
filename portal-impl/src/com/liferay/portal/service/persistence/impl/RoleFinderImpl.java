@@ -634,7 +634,8 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			String sql = CustomSQLUtil.get(FIND_BY_U_G);
 
 			sql = StringUtil.replace(
-				sql, "[$GROUP_ID$]", getGroupIds(groupIds, "Groups_Roles"));
+				sql, "[$GROUP_ID$]",
+				getGroupIdsStatementIN(groupIds, "Groups_Roles"));
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
@@ -643,7 +644,6 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			queryPos.add(userId);
-			queryPos.add(groupIds);
 
 			return sqlQuery.list(true);
 		}
@@ -1150,6 +1150,29 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				sb.append(" OR ");
 			}
 		}
+
+		return sb.toString();
+	}
+
+	protected String getGroupIdsStatementIN(long[] groupIds, String table) {
+		if (groupIds.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(groupIds.length * 2 + 2);
+
+		sb.append(table);
+		sb.append(".groupId IN (");
+
+		for (int i = 0; i < groupIds.length; i++) {
+			sb.append(groupIds[i]);
+
+			if ((i + 1) < groupIds.length) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}

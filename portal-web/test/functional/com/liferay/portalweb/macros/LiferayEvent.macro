@@ -1,0 +1,78 @@
+definition {
+
+	macro initializeLiferayEventLog {
+		var javascript = '''
+const TRACKED_EVENTS = [
+	'addPortlet',
+	'allPortletsReady',
+	'allUploadsComplete',
+	'beforeNavigate',
+	'beforeScreenFlip',
+	'closePortlet',
+	'dataLayoutConfigReady',
+	'destroyPortlet',
+	'editorAPIReady',
+	'endNavigate',
+	'form:registered',
+	'formNavigator:reveal',
+	'dropdownShow',
+	'entitySelectionRemoved',
+	'exitNavigation',
+	'hideNavigationMenu',
+	'initLayout',
+	'inputLocalized:localeChanged',
+	'modalIframeLoaded',
+	'noticeShow',
+	'noticeHide',
+	'popupReady',
+	'portletDragStart',
+	'portletMoved',
+	'portletReady',
+	'ratings:vote',
+	'screenActivate',
+	'screenDeactivate',
+	'screenFlip',
+	'screenLoad',
+	'search-container:registered',
+	'sessionExpired',
+	'showNavigationMenu',
+	'spaRequestTimeout',
+	'startNavigate',
+	'submitForm',
+	'tempFileRemoved',
+	'toggleControls',
+	'updatedLayout',
+];
+
+let __LFR_TRACKED_EVENTS__ = {};
+
+Liferay.on(TRACKED_EVENTS, (event) => {
+	const eventLog = __LFR_TRACKED_EVENTS__[event.type]
+		? [...__LFR_TRACKED_EVENTS__[event.type], event]
+		: [event];
+
+	__LFR_TRACKED_EVENTS__ = {
+		...__LFR_TRACKED_EVENTS__,
+		[event.type]: eventLog,
+	};
+});
+
+const getLastEvent = (eventName) =>
+	__LFR_TRACKED_EVENTS__[eventName]
+		? __LFR_TRACKED_EVENTS__[eventName][
+				__LFR_TRACKED_EVENTS__[eventName].length - 1
+		  ]
+		: {};
+
+const getLastEventDetails = (eventName) => getLastEvent(eventName).details[0];
+
+window.LFR_JS_EVENTS_LOG = {
+	getLastEvent,
+	getLastEventDetails,
+};
+		''';
+
+		RunScript(locator1 = "${javascript}");
+	}
+
+}

@@ -38,8 +38,12 @@
 		}
 	}
 
-	select.form-control:not([size]) {
-		height: 2rem;
+	select.form-control {
+		padding-right: 1.6rem;
+
+		&:not([size]) {
+			height: 2rem;
+		}
 	}
 
 	.article-content-description

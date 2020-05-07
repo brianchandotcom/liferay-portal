@@ -198,6 +198,97 @@ definition {
 			sourceURLVariation = "Duplicate");
 	}
 
+	@description = "This ensures that an entry can be added without update references."
+	@priority = "5"
+	test AddEntryWithoutReferences {
+		var portalURL = PropsUtil.get("portal.url");
+
+		for (var i : list "1,2,3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page${i}");
+		}
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			siteName = "test-site-name",
+			sourceURL = "test-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page3",
+			noUpdateReferences = "true",
+			redirectChain = "true",
+			siteName = "test-site-name",
+			sourceURL = "test-page2");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page1");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page3",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page2");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page1");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page3");
+	}
+
+	@description = "This ensures that an entry can be added with update references."
+	@priority = "5"
+	test AddEntryWithReferences {
+		var portalURL = PropsUtil.get("portal.url");
+
+		for (var i : list "1,2,3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page${i}");
+		}
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			siteName = "test-site-name",
+			sourceURL = "test-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page3",
+			redirectChain = "true",
+			siteName = "test-site-name",
+			sourceURL = "test-page2");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page3",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page1");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page3",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page2");
+
+		AssertElementNotPresent(
+			key_destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			locator1 = "ContentRow#ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page1");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page3");
+	}
+
 	@description = "This ensures that an expired permanent redirect can be added from an active 404 URL."
 	@priority = "4"
 	test AddExpiredEntryFromActive404 {

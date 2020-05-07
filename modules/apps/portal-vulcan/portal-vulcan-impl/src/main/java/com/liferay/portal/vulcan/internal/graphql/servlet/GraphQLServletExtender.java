@@ -1737,14 +1737,14 @@ public class GraphQLServletExtender {
 						return _getExtendedGraphQLError(
 							graphQLError, Response.Status.UNAUTHORIZED);
 					}
+					else if (_isNoSuchModelException(graphQLError)) {
+						return _getExtendedGraphQLError(
+							graphQLError, Response.Status.NOT_FOUND);
+					}
 					else if (!_isClientErrorException(graphQLError)) {
 						return _getExtendedGraphQLError(
 							graphQLError,
 							Response.Status.INTERNAL_SERVER_ERROR);
-					}
-					else if (_isNoSuchModelException(graphQLError)) {
-						return _getExtendedGraphQLError(
-							graphQLError, Response.Status.NOT_FOUND);
 					}
 
 					return _getExtendedGraphQLError(

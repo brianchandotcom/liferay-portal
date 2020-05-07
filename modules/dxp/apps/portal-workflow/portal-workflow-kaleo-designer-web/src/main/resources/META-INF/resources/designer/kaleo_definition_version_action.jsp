@@ -42,28 +42,33 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL">
-		<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
+	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="viewURL">
+		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 		<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+		<portlet:param name="<%= WorkflowWebKeys.WORKFLOW_JSP_STATE %>" value="view" />
 	</liferay-portlet:renderURL>
 
-	<c:choose>
-		<c:when test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
-			<liferay-ui:icon
-				message="edit"
-				method="get"
-				url="<%= editURL %>"
-			/>
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:icon
-				message="view"
-				url="<%= editURL %>"
-			/>
-		</c:otherwise>
-	</c:choose>
+	<liferay-ui:icon
+		message="view"
+		url="<%= viewURL %>"
+	/>
+
+	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
+		<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL">
+			<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+		</liferay-portlet:renderURL>
+
+		<liferay-ui:icon
+			message="edit"
+			method="get"
+			url="<%= editURL %>"
+		/>
+	</c:if>
 
 	<c:if test="<%= (kaleoDefinition != null) && kaleoDesignerDisplayContext.canPublishWorkflowDefinition() %>">
 		<liferay-ui:icon

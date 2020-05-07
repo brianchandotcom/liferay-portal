@@ -59,6 +59,10 @@ definition {
 				value1 = "Error:The destination URL must be specified.");
 		}
 
+		else if ("${redirectChain}" == "true") {
+			Redirect.configureRedirectChain(noUpdateReferences = "${noUpdateReferences}");
+		}
+
 		else {
 			Alert.viewSuccessMessage();
 		}
@@ -123,6 +127,20 @@ definition {
 		Button.click(button = "Create");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro configureRedirectChain {
+		AssertChecked.assertCheckedNotVisible(
+			checkboxName = "Update References",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		if ("${noUpdateReferences}" == "true") {
+			FormFields.disableCheckbox(fieldName = "Update References");
+		}
+
+		AssertClick(
+			locator1 = "Button#MODAL_ITEM_SUBMIT",
+			value1 = "Create");
 	}
 
 	macro deleteEntry {

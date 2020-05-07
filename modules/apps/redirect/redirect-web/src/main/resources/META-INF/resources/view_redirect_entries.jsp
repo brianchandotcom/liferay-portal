@@ -73,7 +73,6 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 						cssClass="table-cell-content"
 						name="destination-url"
 					>
-
 						<span data-title="<%= destinationUrl %>">
 							<%= destinationUrl %>
 						</span>

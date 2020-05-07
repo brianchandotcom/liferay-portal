@@ -122,7 +122,7 @@ if (organization != null) {
 	</clay:col>
 </clay:row>
 
-<aui:script use="liferay-dynamic-select">
+<aui:script>
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />countryId',

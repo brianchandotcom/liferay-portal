@@ -76,7 +76,7 @@ String userTokenName = tokenConfiguration.userTokenName();
 	</aui:fieldset>
 </aui:fieldset>
 
-<aui:script use="liferay-auto-fields,liferay-dynamic-select">
+<aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({
 		contentBox: '#<portlet:namespace />authenticationCookies',
 		fieldIndexes:

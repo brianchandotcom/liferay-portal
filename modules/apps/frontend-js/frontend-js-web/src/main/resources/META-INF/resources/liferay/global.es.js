@@ -17,6 +17,7 @@ import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
 import unescape from 'lodash.unescape';
 
+import DynamicSelect from './DynamicSelect';
 import BREAKPOINTS from './breakpoints';
 import {
 	component,
@@ -89,6 +90,11 @@ Liferay.Address = {
 	getCountries,
 	getRegions,
 };
+
+/**
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ */
+Liferay.DynamicSelect = DynamicSelect;
 
 Liferay.LayoutExporter = {
 	all: hideLayoutPane,

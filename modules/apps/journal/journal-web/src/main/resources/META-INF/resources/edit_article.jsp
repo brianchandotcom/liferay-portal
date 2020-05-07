@@ -141,120 +141,118 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		<clay:container-fluid
 			cssClass="container-view"
 		>
-			<clay:sheet>
-				<aui:model-context bean="<%= article %>" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" model="<%= JournalArticle.class %>" />
+			<aui:model-context bean="<%= article %>" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" model="<%= JournalArticle.class %>" />
 
-				<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
-				<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
-				<liferay-ui:error exception="<%= ArticleFriendlyURLException.class %>" message="you-must-define-a-friendly-url-for-the-default-language" />
-				<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
+			<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
+			<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
+			<liferay-ui:error exception="<%= ArticleFriendlyURLException.class %>" message="you-must-define-a-friendly-url-for-the-default-language" />
+			<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
 
-				<liferay-ui:error exception="<%= ArticleTitleException.class %>">
-					<liferay-ui:message arguments="<%= LocaleUtil.toW3cLanguageId(journalEditArticleDisplayContext.getDefaultArticleLanguageId()) %>" key="please-enter-a-valid-title-for-the-default-language-x" />
-				</liferay-ui:error>
+			<liferay-ui:error exception="<%= ArticleTitleException.class %>">
+				<liferay-ui:message arguments="<%= LocaleUtil.toW3cLanguageId(journalEditArticleDisplayContext.getDefaultArticleLanguageId()) %>" key="please-enter-a-valid-title-for-the-default-language-x" />
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= ArticleTitleException.MustNotExceedMaximumLength.class %>">
+			<liferay-ui:error exception="<%= ArticleTitleException.MustNotExceedMaximumLength.class %>">
 
-					<%
-					int titleMaxLength = ModelHintsUtil.getMaxLength(JournalArticleLocalization.class.getName(), "title");
-					%>
+				<%
+				int titleMaxLength = ModelHintsUtil.getMaxLength(JournalArticleLocalization.class.getName(), "title");
+				%>
 
-					<liferay-ui:message arguments="<%= String.valueOf(titleMaxLength) %>" key="please-enter-a-title-with-fewer-than-x-characters" />
-				</liferay-ui:error>
+				<liferay-ui:message arguments="<%= String.valueOf(titleMaxLength) %>" key="please-enter-a-title-with-fewer-than-x-characters" />
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= ArticleVersionException.class %>" message="another-user-has-made-changes-since-you-started-editing-please-copy-your-changes-and-try-again" />
-				<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
-				<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="a-file-with-that-name-already-exists" />
+			<liferay-ui:error exception="<%= ArticleVersionException.class %>" message="another-user-has-made-changes-since-you-started-editing-please-copy-your-changes-and-try-again" />
+			<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
+			<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="a-file-with-that-name-already-exists" />
 
-				<liferay-ui:error exception="<%= ExportImportContentValidationException.class %>">
+			<liferay-ui:error exception="<%= ExportImportContentValidationException.class %>">
 
-					<%
-					ExportImportContentValidationException eicve = (ExportImportContentValidationException)errorException;
-					%>
+				<%
+				ExportImportContentValidationException eicve = (ExportImportContentValidationException)errorException;
+				%>
 
-					<c:choose>
-						<c:when test="<%= eicve.getType() == ExportImportContentValidationException.ARTICLE_NOT_FOUND %>">
-							<liferay-ui:message key="unable-to-validate-referenced-journal-article" />
-						</c:when>
-						<c:when test="<%= eicve.getType() == ExportImportContentValidationException.FILE_ENTRY_NOT_FOUND %>">
-							<liferay-ui:message arguments="<%= new String[] {MapUtil.toString(eicve.getDlReferenceParameters()), eicve.getDlReference()} %>" key="unable-to-validate-referenced-document-because-it-cannot-be-found-with-the-following-parameters-x-when-analyzing-link-x" />
-						</c:when>
-						<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_GROUP_NOT_FOUND %>">
-							<liferay-ui:message arguments="<%= new String[] {eicve.getLayoutURL(), eicve.getGroupFriendlyURL()} %>" key="unable-to-validate-referenced-page-with-url-x-because-the-page-group-with-url-x-cannot-be-found" />
-						</c:when>
-						<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_NOT_FOUND %>">
-							<liferay-ui:message arguments="<%= MapUtil.toString(eicve.getLayoutReferenceParameters()) %>" key="unable-to-validate-referenced-page-because-it-cannot-be-found-with-the-following-parameters-x" />
-						</c:when>
-						<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_WITH_URL_NOT_FOUND %>">
-							<liferay-ui:message arguments="<%= eicve.getLayoutURL() %>" key="unable-to-validate-referenced-page-because-it-cannot-be-found-with-url-x" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="an-unexpected-error-occurred" />
-						</c:otherwise>
-					</c:choose>
-				</liferay-ui:error>
+				<c:choose>
+					<c:when test="<%= eicve.getType() == ExportImportContentValidationException.ARTICLE_NOT_FOUND %>">
+						<liferay-ui:message key="unable-to-validate-referenced-journal-article" />
+					</c:when>
+					<c:when test="<%= eicve.getType() == ExportImportContentValidationException.FILE_ENTRY_NOT_FOUND %>">
+						<liferay-ui:message arguments="<%= new String[] {MapUtil.toString(eicve.getDlReferenceParameters()), eicve.getDlReference()} %>" key="unable-to-validate-referenced-document-because-it-cannot-be-found-with-the-following-parameters-x-when-analyzing-link-x" />
+					</c:when>
+					<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_GROUP_NOT_FOUND %>">
+						<liferay-ui:message arguments="<%= new String[] {eicve.getLayoutURL(), eicve.getGroupFriendlyURL()} %>" key="unable-to-validate-referenced-page-with-url-x-because-the-page-group-with-url-x-cannot-be-found" />
+					</c:when>
+					<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_NOT_FOUND %>">
+						<liferay-ui:message arguments="<%= MapUtil.toString(eicve.getLayoutReferenceParameters()) %>" key="unable-to-validate-referenced-page-because-it-cannot-be-found-with-the-following-parameters-x" />
+					</c:when>
+					<c:when test="<%= eicve.getType() == ExportImportContentValidationException.LAYOUT_WITH_URL_NOT_FOUND %>">
+						<liferay-ui:message arguments="<%= eicve.getLayoutURL() %>" key="unable-to-validate-referenced-page-because-it-cannot-be-found-with-url-x" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="an-unexpected-error-occurred" />
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= FileSizeException.class %>">
-					<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-				</liferay-ui:error>
+			<liferay-ui:error exception="<%= FileSizeException.class %>">
+				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-structure-you-selected-is-not-valid-for-this-folder" />
+			<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-structure-you-selected-is-not-valid-for-this-folder" />
 
-				<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
-					<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
-				</liferay-ui:error>
+			<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
+				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= LocaleException.class %>">
+			<liferay-ui:error exception="<%= LocaleException.class %>">
 
-					<%
-					LocaleException le = (LocaleException)errorException;
-					%>
+				<%
+				LocaleException le = (LocaleException)errorException;
+				%>
 
-					<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
-						<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
-					</c:if>
-				</liferay-ui:error>
+				<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
+					<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
+				</c:if>
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-content-references-a-missing-file-entry" />
-				<liferay-ui:error exception="<%= NoSuchImageException.class %>" message="please-select-an-existing-small-image" />
+			<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-content-references-a-missing-file-entry" />
+			<liferay-ui:error exception="<%= NoSuchImageException.class %>" message="please-select-an-existing-small-image" />
 
-				<liferay-ui:error exception="<%= NoSuchLayoutException.class %>">
+			<liferay-ui:error exception="<%= NoSuchLayoutException.class %>">
 
-					<%
-					NoSuchLayoutException nsle = (NoSuchLayoutException)errorException;
+				<%
+				NoSuchLayoutException nsle = (NoSuchLayoutException)errorException;
 
-					String message = nsle.getMessage();
-					%>
+				String message = nsle.getMessage();
+				%>
 
-					<c:choose>
-						<c:when test="<%= Objects.equals(message, JournalArticleConstants.DISPLAY_PAGE) %>">
-							<liferay-ui:message key="please-select-an-existing-display-page-template" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="the-content-references-a-missing-page" />
-						</c:otherwise>
-					</c:choose>
-				</liferay-ui:error>
+				<c:choose>
+					<c:when test="<%= Objects.equals(message, JournalArticleConstants.DISPLAY_PAGE) %>">
+						<liferay-ui:message key="please-select-an-existing-display-page-template" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="the-content-references-a-missing-page" />
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="please-select-an-existing-structure" />
-				<liferay-ui:error exception="<%= NoSuchTemplateException.class %>" message="please-select-an-existing-template" />
-				<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
+			<liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="please-select-an-existing-structure" />
+			<liferay-ui:error exception="<%= NoSuchTemplateException.class %>" message="please-select-an-existing-template" />
+			<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
-				<div class="article-content-content">
-					<liferay-data-engine:data-layout-renderer
-						containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
-						dataDefinitionId="<%= ddmStructure.getStructureId() %>"
-						dataRecordValues="<%= journalEditArticleDisplayContext.getValues(ddmStructure) %>"
-						namespace="<%= liferayPortletResponse.getNamespace() %>"
-					/>
+			<div class="article-content-content">
+				<liferay-data-engine:data-layout-renderer
+					containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
+					dataDefinitionId="<%= ddmStructure.getStructureId() %>"
+					dataRecordValues="<%= journalEditArticleDisplayContext.getValues(ddmStructure) %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
+				/>
 
-					<liferay-frontend:component
-						componentId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRendererLanguageProxy" %>'
-						module="js/dataEngineLayoutRendererLanguageProxy.es"
-						servletContext="<%= application %>"
-					/>
-				</div>
-			</clay:sheet>
+				<liferay-frontend:component
+					componentId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRendererLanguageProxy" %>'
+					module="js/dataEngineLayoutRendererLanguageProxy.es"
+					servletContext="<%= application %>"
+				/>
+			</div>
 		</clay:container-fluid>
 	</div>
 </aui:form>

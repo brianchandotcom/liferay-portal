@@ -2028,7 +2028,6 @@ definition {
 			pathLocator = "PAGE");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewUpdateUserViaJSONWS {
 		property test.name.skip.portal.instance = "CPUsersandorganizations#ViewUpdateUserViaJSONWS";

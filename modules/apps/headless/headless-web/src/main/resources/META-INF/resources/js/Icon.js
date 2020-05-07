@@ -12,18 +12,16 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import APIGUI from './APIGUI';
-import {AppStateProvider} from './hooks/appState';
-import appReducer, {initialState} from './reducers/appReducer';
+export const spritemap =
+	themeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 
-const App = (props) => {
-	return (
-		<AppStateProvider initialState={initialState} reducer={appReducer}>
-			<APIGUI props={props} />
-		</AppStateProvider>
-	);
+const Icon = (props) => {
+	const {symbol, ...otherProps} = props;
+
+	return <ClayIcon spritemap={spritemap} symbol={symbol} {...otherProps} />;
 };
 
-export default App;
+export default Icon;

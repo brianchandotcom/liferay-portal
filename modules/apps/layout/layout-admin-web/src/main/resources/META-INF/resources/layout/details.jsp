@@ -80,7 +80,7 @@ String friendlyURLBase = StringPool.BLANK;
 <c:choose>
 	<c:when test="<%= !group.isLayoutPrototype() %>">
 		<c:if test="<%= !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
-			<aui:input name="name" />
+			<aui:input ignoreRequestValue="<%= SessionErrors.isEmpty(liferayPortletRequest) %>" name="name" />
 
 			<div class="form-group">
 				<aui:input helpMessage="hidden-from-navigation-menu-widget-help-message" label="hidden-from-navigation-menu-widget" name="hidden" type="toggle-switch" value="<%= selLayout.isHidden() %>" />
@@ -112,6 +112,7 @@ String friendlyURLBase = StringPool.BLANK;
 
 					<liferay-ui:input-localized
 						defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+						ignoreRequestValue="<%= SessionErrors.isEmpty(liferayPortletRequest) %>"
 						inputAddon="<%= friendlyURLBase.toString() %>"
 						name="friendlyURL"
 						xml="<%= HttpUtil.decodeURL(selLayout.getFriendlyURLsXML()) %>"

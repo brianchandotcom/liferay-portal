@@ -504,7 +504,13 @@ public class SourceFormatter {
 				buildPropertiesAdded = true;
 			}
 
-			if (recentChangesFileName.endsWith("ServiceImpl.java")) {
+			if (recentChangesFileName.endsWith(".java") &&
+				recentChangesFileName.contains("/upgrade/")) {
+
+				dependentFileNames = _addDependentFileName(
+					dependentFileNames, recentChangesFileName, "bnd.bnd");
+			}
+			else if (recentChangesFileName.endsWith("ServiceImpl.java")) {
 				dependentFileNames = _addDependentFileName(
 					dependentFileNames, recentChangesFileName, "service.xml");
 			}

@@ -26,7 +26,13 @@ DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_D
 
 long recordSetId = BeanParamUtil.getLong(recordSet, request, "recordSetId");
 
+Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
 long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId);
+
+if (scopeGroup.isStagingGroup() && !scopeGroup.isInStagingPortlet(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
+	groupId = scopeGroup.getLiveGroupId();
+}
 
 long ddmStructureId = ParamUtil.getLong(request, "ddmStructureId");
 
@@ -102,10 +108,6 @@ if (ddlDisplayContext.isAdminPortlet()) {
 					url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 				/>
 			</div>
-
-			<%
-			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
-			%>
 
 			<c:if test="<%= WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DDLRecord.class.getName()) != null) && !scopeGroup.isLayoutSetPrototype() %>">
 				<aui:select label="workflow" name="workflowDefinition">

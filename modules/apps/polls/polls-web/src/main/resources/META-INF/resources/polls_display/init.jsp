@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.model.Group" %>
+
 <%
 long questionId = GetterUtil.getLong(portletPreferences.getValue("questionId", StringPool.BLANK));
 %>

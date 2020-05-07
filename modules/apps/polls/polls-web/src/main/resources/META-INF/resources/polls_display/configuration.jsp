@@ -19,6 +19,12 @@
 <%
 questionId = ParamUtil.getLong(request, "questionId", questionId);
 
+Group scopeGroup = themeDisplay.getScopeGroup();
+
+if (scopeGroup.isStagingGroup() && !scopeGroup.isInStagingPortlet(PollsPortletKeys.POLLS)) {
+	scopeGroupId = scopeGroup.getLiveGroupId();
+}
+
 List<PollsQuestion> questions = PollsQuestionLocalServiceUtil.getQuestions(scopeGroupId);
 
 if (scopeGroupId != themeDisplay.getCompanyGroupId()) {

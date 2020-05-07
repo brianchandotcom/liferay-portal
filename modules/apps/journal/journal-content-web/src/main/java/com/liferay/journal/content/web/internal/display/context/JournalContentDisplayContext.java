@@ -506,6 +506,8 @@ public class JournalContentDisplayContext {
 	}
 
 	public PortletURL getItemSelectorURL() throws PortalException {
+		long groupId = getGroupId();
+
 		ItemSelector itemSelector = (ItemSelector)_portletRequest.getAttribute(
 			JournalWebKeys.ITEM_SELECTOR);
 
@@ -525,11 +527,9 @@ public class JournalContentDisplayContext {
 
 		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new AssetEntryItemSelectorReturnType());
-		assetEntryItemSelectorCriterion.setGroupId(
-			_themeDisplay.getScopeGroupId());
+		assetEntryItemSelectorCriterion.setGroupId(groupId);
 		assetEntryItemSelectorCriterion.setSelectedGroupIds(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				_themeDisplay.getScopeGroupId()));
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId));
 		assetEntryItemSelectorCriterion.setShowNonindexable(true);
 		assetEntryItemSelectorCriterion.setShowScheduled(true);
 		assetEntryItemSelectorCriterion.setSingleSelect(true);

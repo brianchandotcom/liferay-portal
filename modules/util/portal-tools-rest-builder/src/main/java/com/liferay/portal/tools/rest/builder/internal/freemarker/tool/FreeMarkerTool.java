@@ -34,6 +34,7 @@ import com.liferay.portal.vulcan.yaml.openapi.Info;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
+import com.liferay.portal.vulcan.yaml.openapi.PathItem;
 import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
@@ -58,6 +59,31 @@ public class FreeMarkerTool {
 
 	public static FreeMarkerTool getInstance() {
 		return _freeMarkerTool;
+	}
+
+	public Map<String, Schema> getAllSchemas(
+		OpenAPIYAML openAPIYAML, Map<String, Schema> schemas) {
+
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		Set<Map.Entry<String, PathItem>> entries = pathItems.entrySet();
+
+		for (Map.Entry<String, PathItem> entry : entries) {
+			List<Operation> operations = OpenAPIParserUtil.getOperations(
+				entry.getValue());
+
+			for (Operation operation : operations) {
+				List<String> tags = operation.getTags();
+
+				for (String tag : tags) {
+					if (!schemas.containsKey(tag)) {
+						schemas.put(tag, new Schema());
+					}
+				}
+			}
+		}
+
+		return schemas;
 	}
 
 	public String getClientParameters(

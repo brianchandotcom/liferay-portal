@@ -242,7 +242,7 @@ public class RESTBuilder {
 				}
 			}
 
-			_addTags(openAPIYAML, schemas);
+			schemas = freeMarkerTool.getAllSchemas(openAPIYAML, schemas);
 
 			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
 				String schemaName = entry.getKey();
@@ -357,29 +357,6 @@ public class RESTBuilder {
 					"    description:", yamlString.indexOf("info:")),
 				yamlString.indexOf("    license:")),
 			descriptionBlock);
-	}
-
-	private void _addTags(
-		OpenAPIYAML openAPIYAML, Map<String, Schema> schemas) {
-
-		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
-
-		Set<Map.Entry<String, PathItem>> entries = pathItems.entrySet();
-
-		for (Map.Entry<String, PathItem> entry : entries) {
-			List<Operation> operations = OpenAPIParserUtil.getOperations(
-				entry.getValue());
-
-			for (Operation operation : operations) {
-				List<String> tags = operation.getTags();
-
-				for (String tag : tags) {
-					if (!schemas.containsKey(tag)) {
-						schemas.put(tag, new Schema());
-					}
-				}
-			}
-		}
 	}
 
 	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)

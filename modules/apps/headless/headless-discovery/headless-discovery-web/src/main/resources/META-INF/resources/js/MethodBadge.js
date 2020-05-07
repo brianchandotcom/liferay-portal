@@ -12,18 +12,27 @@
  * details.
  */
 
+import ClayBadge from '@clayui/badge';
 import React from 'react';
 
-import APIGUI from './APIGUI';
-import {AppStateProvider} from './hooks/appState';
-import appReducer, {initialState} from './reducers/appReducer';
+const METHOD_DISPLAY_MAP = {
+	post: 'success',
+	get: 'primary',
+	put: 'warning',
+	patch: 'info',
+	delete: 'danger',
+};
 
-const App = (props) => {
+const MethodBadge = (props) => {
+	const {displayType, method, ...otherProps} = props;
+
 	return (
-		<AppStateProvider initialState={initialState} reducer={appReducer}>
-			<APIGUI props={props} />
-		</AppStateProvider>
+		<ClayBadge
+			displayType={displayType || METHOD_DISPLAY_MAP[method]}
+			label={method.toUpperCase()}
+			{...otherProps}
+		/>
 	);
 };
 
-export default App;
+export default MethodBadge;

@@ -12,18 +12,31 @@
  * details.
  */
 
+import ClayPanel from '@clayui/panel';
 import React from 'react';
 
-import APIGUI from './APIGUI';
-import {AppStateProvider} from './hooks/appState';
-import appReducer, {initialState} from './reducers/appReducer';
+import {spritemap} from './Icon';
 
-const App = (props) => {
+const style = {
+	overflow: 'visible',
+	tabSize: 4,
+};
+
+const SchemaDisplay = ({name, schema}) => {
 	return (
-		<AppStateProvider initialState={initialState} reducer={appReducer}>
-			<APIGUI props={props} />
-		</AppStateProvider>
+		<ClayPanel
+			className="schema-display-root"
+			collapsable
+			displayTitle={name}
+			displayType="secondary"
+			showCollapseIcon={true}
+			spritemap={spritemap}
+		>
+			<ClayPanel.Body className="overflow-auto">
+				<pre style={style}>{JSON.stringify(schema, null, 4)}</pre>
+			</ClayPanel.Body>
+		</ClayPanel>
 	);
 };
 
-export default App;
+export default SchemaDisplay;

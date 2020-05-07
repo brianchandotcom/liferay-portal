@@ -14,16 +14,25 @@
 
 import React from 'react';
 
-import APIGUI from './APIGUI';
-import {AppStateProvider} from './hooks/appState';
-import appReducer, {initialState} from './reducers/appReducer';
+import {stringify} from './util/util';
 
-const App = (props) => {
+const style = {
+	overflow: 'visible',
+	tabSize: 4,
+};
+
+const ResponseDisplay = (props) => {
+	const {response, ...otherProps} = props;
+
 	return (
-		<AppStateProvider initialState={initialState} reducer={appReducer}>
-			<APIGUI props={props} />
-		</AppStateProvider>
+		<div className="card overflow-auto vh-100">
+			<div className="p-3">
+				<pre style={style} {...otherProps}>
+					{stringify(response)}
+				</pre>
+			</div>
+		</div>
 	);
 };
 
-export default App;
+export default ResponseDisplay;

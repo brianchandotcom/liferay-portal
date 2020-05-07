@@ -228,8 +228,9 @@ public class RedirectEntryServiceTest {
 		throws Exception {
 
 		_redirectEntry = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), "intermediateDestinationURL", null, false,
-			"sourceURL", ServiceContextTestUtil.getServiceContext());
+			_group.getGroupId(), "groupBaseURL/intermediateDestinationURL",
+			null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 
 		_destinationRedirectEntry = _redirectEntryService.addRedirectEntry(
 			_group.getGroupId(), "finalDestinationURL", null, false,
@@ -245,7 +246,7 @@ public class RedirectEntryServiceTest {
 					ActionKeys.VIEW);
 
 				_redirectEntryService.updateChainedRedirectEntries(
-					_group.getGroupId(), "finalDestinationURL",
+					_group.getGroupId(), "finalDestinationURL", "groupBaseURL",
 					"intermediateDestinationURL");
 			});
 	}
@@ -255,8 +256,9 @@ public class RedirectEntryServiceTest {
 		throws Exception {
 
 		_redirectEntry = _redirectEntryService.addRedirectEntry(
-			_group.getGroupId(), "intermediateDestinationURL", null, false,
-			"sourceURL", ServiceContextTestUtil.getServiceContext());
+			_group.getGroupId(), "groupBaseURL/intermediateDestinationURL",
+			null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
 
 		_destinationRedirectEntry = _redirectEntryService.addRedirectEntry(
 			_group.getGroupId(), "finalDestinationURL", null, false,
@@ -278,7 +280,7 @@ public class RedirectEntryServiceTest {
 					ActionKeys.UPDATE);
 
 				_redirectEntryService.updateChainedRedirectEntries(
-					_group.getGroupId(), "finalDestinationURL",
+					_group.getGroupId(), "finalDestinationURL", "groupBaseURL",
 					"intermediateDestinationURL");
 
 				_redirectEntry = _redirectEntryService.fetchRedirectEntry(

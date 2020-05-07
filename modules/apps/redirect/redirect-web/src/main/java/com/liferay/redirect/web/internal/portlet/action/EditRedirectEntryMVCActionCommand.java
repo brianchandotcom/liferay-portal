@@ -14,7 +14,6 @@
 
 package com.liferay.redirect.web.internal.portlet.action;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -83,8 +82,7 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (ParamUtil.getBoolean(actionRequest, "updateReferences")) {
 				_redirectEntryService.updateChainedRedirectEntries(
 					themeDisplay.getScopeGroupId(), destinationURL,
-					RedirectUtil.getGroupBaseURL(themeDisplay) +
-						StringPool.SLASH + sourceURL);
+					RedirectUtil.getGroupBaseURL(themeDisplay), sourceURL);
 			}
 		}
 		catch (Exception exception) {

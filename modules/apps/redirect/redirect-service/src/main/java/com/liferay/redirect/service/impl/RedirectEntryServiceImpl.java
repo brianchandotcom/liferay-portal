@@ -14,6 +14,7 @@
 
 package com.liferay.redirect.service.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -125,13 +126,14 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 
 	@Override
 	public void updateChainedRedirectEntries(
-			long groupId, String destinationURL, String sourceURL)
+			long groupId, String destinationURL, String groupBaseURL,
+			String sourceURL)
 		throws PortalException {
 
 		List<RedirectEntry> redirectEntries =
 			redirectEntryLocalService.
 				getRedirectEntriesByGroupIdAndDestinationURL(
-					groupId, sourceURL);
+					groupId, groupBaseURL + StringPool.SLASH + sourceURL);
 
 		for (RedirectEntry redirectEntry : redirectEntries) {
 			updateRedirectEntry(

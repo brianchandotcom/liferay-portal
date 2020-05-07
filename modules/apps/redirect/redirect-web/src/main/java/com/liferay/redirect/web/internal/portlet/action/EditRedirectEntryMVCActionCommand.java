@@ -64,25 +64,23 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 		Date expirationDate = _getExpirationDate(actionRequest, themeDisplay);
 		boolean permanent = ParamUtil.getBoolean(actionRequest, "permanent");
 		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
+		boolean updateChainedRedirectEntries = ParamUtil.getBoolean(
+			actionRequest, "updateReferences");
 
 		try {
 			if (redirectEntryId == 0) {
 				_redirectEntryService.addRedirectEntry(
 					themeDisplay.getScopeGroupId(), destinationURL,
-					expirationDate, permanent, sourceURL,
+					expirationDate, RedirectUtil.getGroupBaseURL(themeDisplay),
+					permanent, sourceURL, updateChainedRedirectEntries,
 					ServiceContextFactory.getInstance(
 						RedirectEntry.class.getName(), actionRequest));
 			}
 			else {
 				_redirectEntryService.updateRedirectEntry(
-					redirectEntryId, destinationURL, expirationDate, permanent,
-					sourceURL);
-			}
-
-			if (ParamUtil.getBoolean(actionRequest, "updateReferences")) {
-				_redirectEntryService.updateChainedRedirectEntries(
-					themeDisplay.getScopeGroupId(), destinationURL,
-					RedirectUtil.getGroupBaseURL(themeDisplay), sourceURL);
+					redirectEntryId, destinationURL, expirationDate,
+					RedirectUtil.getGroupBaseURL(themeDisplay), permanent,
+					sourceURL, updateChainedRedirectEntries);
 			}
 		}
 		catch (Exception exception) {

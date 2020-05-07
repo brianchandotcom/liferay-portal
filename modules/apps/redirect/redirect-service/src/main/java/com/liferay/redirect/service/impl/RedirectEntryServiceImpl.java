@@ -14,7 +14,6 @@
 
 package com.liferay.redirect.service.impl;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.base.RedirectEntryServiceBaseImpl;
@@ -61,6 +59,21 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 		return redirectEntryLocalService.addRedirectEntry(
 			groupId, destinationURL, expirationDate, permanent, sourceURL,
 			serviceContext);
+	}
+
+	@Override
+	public RedirectEntry addRedirectEntry(
+			long groupId, String destinationURL, Date expirationDate,
+			String groupBaseURL, boolean permanent, String sourceURL,
+			boolean updateChainedRedirectEntries, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.ADD_ENTRY);
+
+		return redirectEntryLocalService.addRedirectEntry(
+			groupId, destinationURL, expirationDate, groupBaseURL, permanent,
+			sourceURL, updateChainedRedirectEntries, serviceContext);
 	}
 
 	@Override
@@ -126,43 +139,6 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void updateChainedRedirectEntries(
-			long groupId, String destinationURL, String groupBaseURL,
-			String sourceURL)
-		throws PortalException {
-
-		List<RedirectEntry> redirectEntries =
-			redirectEntryLocalService.
-				getRedirectEntriesByGroupIdAndDestinationURL(
-					groupId, groupBaseURL + StringPool.SLASH + sourceURL);
-
-		for (RedirectEntry redirectEntry : redirectEntries) {
-			updateRedirectEntry(
-				redirectEntry.getRedirectEntryId(), destinationURL,
-				redirectEntry.getExpirationDate(), redirectEntry.isPermanent(),
-				redirectEntry.getSourceURL());
-		}
-
-		RedirectEntry chainedRedirectEntry =
-			redirectEntryLocalService.fetchRedirectEntry(
-				groupId,
-				StringUtil.removeSubstring(
-					destinationURL, groupBaseURL + StringPool.SLASH));
-
-		if (chainedRedirectEntry != null) {
-			RedirectEntry redirectEntry =
-				redirectEntryLocalService.fetchRedirectEntry(
-					groupId, sourceURL);
-
-			updateRedirectEntry(
-				redirectEntry.getRedirectEntryId(),
-				chainedRedirectEntry.getDestinationURL(),
-				redirectEntry.getExpirationDate(), redirectEntry.isPermanent(),
-				redirectEntry.getSourceURL());
-		}
-	}
-
-	@Override
 	public RedirectEntry updateRedirectEntry(
 			long redirectEntryId, String destinationURL, Date expirationDate,
 			boolean permanent, String sourceURL)
@@ -174,6 +150,21 @@ public class RedirectEntryServiceImpl extends RedirectEntryServiceBaseImpl {
 		return redirectEntryLocalService.updateRedirectEntry(
 			redirectEntryId, destinationURL, expirationDate, permanent,
 			sourceURL);
+	}
+
+	@Override
+	public RedirectEntry updateRedirectEntry(
+			long redirectEntryId, String destinationURL, Date expirationDate,
+			String groupBaseURL, boolean permanent, String sourceURL,
+			boolean updateChainedRedirectEntries)
+		throws PortalException {
+
+		_redirectEntryModelResourcePermission.check(
+			getPermissionChecker(), redirectEntryId, ActionKeys.UPDATE);
+
+		return redirectEntryLocalService.updateRedirectEntry(
+			redirectEntryId, destinationURL, expirationDate, groupBaseURL,
+			permanent, sourceURL, updateChainedRedirectEntries);
 	}
 
 	@Reference(

@@ -340,11 +340,15 @@
 		class="lfr-ddm-form-page-title"
 	{/let}
 
-	<h3 {$pageTitleAttributes}>{$title}</h3>
+	{if $title}
+		<h3 {$pageTitleAttributes}>{$title}</h3>
+	{/if}
 
 	{let $pageDescriptionAttributes kind="attributes"}
 		class="lfr-ddm-form-page-description"
 	{/let}
 
-	<h4 {$pageDescriptionAttributes}>{$description}</h4>
+	{if $description}
+		<h4 {$pageDescriptionAttributes}>{$description}</h4>
+	{/if}
 {/deltemplate}

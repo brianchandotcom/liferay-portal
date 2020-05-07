@@ -23,7 +23,9 @@ String className = GetterUtil.getString(request.getAttribute("liferay-asset:asse
 AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUsagesDisplayContext(renderRequest, renderResponse, className, classPK);
 %>
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
+<clay:container
+	className="container-form-lg"
+>
 	<clay:row>
 		<clay:col
 			lg="3"
@@ -179,4 +181,4 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 			</div>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>

@@ -35,10 +35,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 /**
  * @author Inácio Nery
@@ -83,8 +81,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				continue;
 			}
 
-			visibilityExpression = _convertExpression(
-				ddmFormFieldsMap.values(), visibilityExpression);
+			visibilityExpression = _convertExpression(visibilityExpression);
 
 			DDMFormRule ddmFormRule = new DDMFormRule(
 				Arrays.asList(
@@ -172,28 +169,16 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		}
 	}
 
-	private String _convertExpression(
-		Collection<DDMFormField> ddmFormFields, String visibilityExpression) {
-
+	private String _convertExpression(String visibilityExpression) {
 		List<String> parameterValues =
 			ExpressionParameterValueExtractor.extractParameterValues(
 				visibilityExpression);
 
 		for (String parameterValue : parameterValues) {
-			if (Validator.isNull(parameterValue)) {
-				continue;
-			}
+			if (Validator.isNull(parameterValue) ||
+				Validator.isNumber(parameterValue) ||
+				StringUtil.startsWith(parameterValue, StringPool.QUOTE)) {
 
-			Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
-
-			boolean hasParameterValue = ddmFormFieldsStream.anyMatch(
-				ddmFormField -> ddmFormField.getProperty(
-					"name"
-				).equals(
-					parameterValue
-				));
-
-			if (!hasParameterValue) {
 				continue;
 			}
 

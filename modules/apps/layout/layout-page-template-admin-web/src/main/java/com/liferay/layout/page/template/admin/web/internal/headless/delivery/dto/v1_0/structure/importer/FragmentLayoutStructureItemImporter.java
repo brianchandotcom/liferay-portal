@@ -383,6 +383,14 @@ public class FragmentLayoutStructureItemImporter
 		JSONObject jsonObject, Map<String, String> map) {
 
 		if (map != null) {
+			String collectionItemFieldKey = map.get("collectionItemFieldKey");
+
+			if (Validator.isNotNull(collectionItemFieldKey)) {
+				jsonObject.put("collectionFieldId", collectionItemFieldKey);
+
+				return;
+			}
+
 			String fieldKey = map.get("fieldKey");
 
 			if (Validator.isNull(fieldKey)) {

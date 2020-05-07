@@ -17,13 +17,13 @@ import {getSearchParam} from '../util/params';
 const initialState = {
 	apiResponse: undefined,
 	apiURL: '',
-	categoryKey: getSearchParam('category'),
 	categories: undefined,
+	categoryKey: getSearchParam('category'),
 	contentType: undefined,
 	filter: getSearchParam('filter') || '',
+	method: getSearchParam('method'),
 	path: getSearchParam('path'),
 	paths: undefined,
-	method: getSearchParam('method'),
 	requestBodyData: undefined,
 	schemas: undefined,
 	showSchemas: getSearchParam('show-schemas') || false,
@@ -34,8 +34,8 @@ const appStateReducer = (state, action) => {
 		case 'LOAD_API_RESPONSE': {
 			return {
 				...state,
-				apiURL: action.apiURL,
 				apiResponse: action.response,
+				apiURL: action.apiURL,
 				contentType: action.contentType,
 				requestBodyData: action.data,
 			};
@@ -45,8 +45,8 @@ const appStateReducer = (state, action) => {
 
 			return {
 				...state,
-				categoryKey: state.categoryKey || Object.keys(categories)[0],
 				categories,
+				categoryKey: state.categoryKey || Object.keys(categories)[0],
 			};
 		}
 		case 'LOAD_CATEGORY': {
@@ -56,8 +56,8 @@ const appStateReducer = (state, action) => {
 
 			return {
 				...state,
-				paths,
 				method: state.method || undefined,
+				paths,
 				schemas: components.schemas,
 			};
 		}

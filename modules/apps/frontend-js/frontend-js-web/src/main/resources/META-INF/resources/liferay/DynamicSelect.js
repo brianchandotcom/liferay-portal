@@ -34,6 +34,11 @@ function sortByValue(a, b) {
 	}
 }
 
+/**
+ * For backwards compatibility, same semantics as YUI's `Array.test()`.
+ *
+ * @see https://github.com/yui/yui3/blob/25264e3629b1c07fb779d203c4a25c0879ec862c/src/yui/js/yui-array.js#L271-L306
+ */
 function isArrayLike(obj) {
 	if (Array.isArray(obj)) {
 		return true;

@@ -28,7 +28,7 @@ function getCollectionPrefix(collectionId, index) {
 	return `collection-${collectionId}-${index}${COLLECTION_ID_DIVIDER}`;
 }
 
-function getToControlsId(collectionId, index) {
+export function getToControlsId(collectionId, index) {
 	return (itemId) => {
 		if (!itemId) {
 			return null;

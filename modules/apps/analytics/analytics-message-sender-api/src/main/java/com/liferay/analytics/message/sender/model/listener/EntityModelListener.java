@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.message.sender.model;
+package com.liferay.analytics.message.sender.model.listener;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
@@ -21,10 +21,7 @@ import java.util.List;
 
 /**
  * @author Rachael Koestartyo
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- * 			   com.liferay.analytics.message.sender.model.listener.EntityModelListener}
  */
-@Deprecated
 public interface EntityModelListener<T extends BaseModel<T>> {
 
 	public void addAnalyticsMessage(

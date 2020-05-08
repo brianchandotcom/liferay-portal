@@ -20,7 +20,10 @@
 SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new SegmentsSimulationDisplayContext(request, renderResponse);
 %>
 
-<div class="container-fluid segments-simulation" id="<portlet:namespace />segmentsSimulationContainer">
+<clay:container
+	className="segments-simulation"
+	id='<%= renderResponse.getNamespace() + "segmentsSimulationContainer" %>'
+>
 	<c:choose>
 		<c:when test="<%= segmentsSimulationDisplayContext.isShowEmptyMessage() %>">
 			<p class="mb-4 mt-1 small">
@@ -69,4 +72,4 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 			</aui:script>
 		</c:otherwise>
 	</c:choose>
-</div>
+</clay:container>

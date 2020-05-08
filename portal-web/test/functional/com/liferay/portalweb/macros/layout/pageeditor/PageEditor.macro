@@ -882,11 +882,23 @@ definition {
 				}
 
 				else {
-					SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+					if (isSet(uploadFileName)) {
+						ItemSelector.uploadFile(
+							navTab = "Documents and Media",
+							uploadFileName = "${uploadFileName}");
+					}
+					else if (isSet(imageSourceURL)) {
+						ItemSelector.addFromURL(
+							imageSourceURL = "${imageSourceURL}",
+							navTab = "URL");
+					}
+					else {
+						SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-					Click(
-						key_card = "${entryTitle}",
-						locator1 = "LexiconCard#CARD_TITLE");
+						Click(
+							key_card = "${entryTitle}",
+							locator1 = "LexiconCard#CARD_TITLE");
+					}
 				}
 
 				SelectFrame(value1 = "relative=top");

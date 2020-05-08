@@ -53,6 +53,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	}
 
 	@Override
+	public void deserialize() {
+		jsonObject = new JSONObject(_jsonObjectString);
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (!Objects.equals(getClass(), o.getClass())) {
 			return false;
@@ -100,6 +105,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		JSONObject jsonObject = toJSONObject();
 
 		return jsonObject.hashCode();
+	}
+
+	@Override
+	public void serialize() {
+		_jsonObjectString = jsonObject.toString();
 	}
 
 	@Override
@@ -272,7 +282,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		this.jsonObject = jsonObject;
 	}
 
-	protected final JSONObject jsonObject;
+	protected transient JSONObject jsonObject;
 
 	private static Object _getClassField(
 		Class<? extends SpiraArtifact> spiraArtifactClass, String fieldName) {
@@ -422,5 +432,7 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	private static final Map<Class<?>, Map<String, PathSpiraArtifact>>
 		_pathSpiraArtifactsMap = Collections.synchronizedMap(
 			new HashMap<Class<?>, Map<String, PathSpiraArtifact>>());
+
+	private String _jsonObjectString;
 
 }

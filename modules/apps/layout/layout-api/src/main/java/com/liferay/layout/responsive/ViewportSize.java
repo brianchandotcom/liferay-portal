@@ -14,6 +14,8 @@
 
 package com.liferay.layout.responsive;
 
+import com.liferay.petra.string.StringPool;
+
 /**
  * @author Jürgen Kappler
  */
@@ -24,8 +26,8 @@ public enum ViewportSize {
 		"landscapeMobile", "-sm-", "mobile-landscape", "mobile-landscape", 767,
 		576, 2, 3),
 	PORTRAIT_MOBILE(
-		"portraitMobile", "-xs-", "mobile-portrait", "mobile-portrait", 575,
-		240, 1, 4),
+		"portraitMobile", StringPool.DASH, "mobile-portrait", "mobile-portrait",
+		575, 240, 1, 4),
 	TABLET("tablet", "-md-", "tablet-portrait", "tablet", 991, 768, 3, 2);
 
 	public String getCssClassPrefix() {

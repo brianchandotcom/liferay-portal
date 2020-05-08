@@ -39,23 +39,17 @@ function updateSelect(array, index, list) {
 
 	const select = document.getElementById(options.select);
 
-	const selectDesc = options.selectDesc;
-	const selectDisableOnEmpty = options.selectDisableOnEmpty;
-	const selectId = options.selectId;
-	const selectNullable = options.selectNullable !== false;
-	const selectSort = options.selectSort;
-
 	const selectVal = [options.selectVal];
 
 	let selectOptions = [];
 
-	if (selectNullable) {
+	if (options.selectNullable !== false) {
 		selectOptions.push('<option selected value="0"></option>');
 	}
 
 	list.forEach((item) => {
-		const key = item[selectId];
-		const value = item[selectDesc];
+		const key = item[options.selectId];
+		const value = item[options.selectDesc];
 
 		let selected = '';
 
@@ -68,7 +62,7 @@ function updateSelect(array, index, list) {
 		);
 	});
 
-	if (selectSort) {
+	if (options.selectSort) {
 		selectOptions = selectOptions.sort(sortByValue);
 	}
 
@@ -81,7 +75,7 @@ function updateSelect(array, index, list) {
 
 		select.innerHTML = selectOptions;
 
-		if (selectDisableOnEmpty) {
+		if (options.selectDisableOnEmpty) {
 			toggleDisabled(select, !list.length);
 		}
 	}

@@ -95,20 +95,16 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 					configurationJSONObject.getBoolean("gutters", _gutters)
 				).put(
 					"modulesPerRow",
-					configurationJSONObject.getInt(
-						"modulesPerRow", _modulesPerRow)
+					configurationJSONObject.get("modulesPerRow")
 				).put(
 					"numberOfColumns",
 					configurationJSONObject.getInt(
 						"numberOfColumns", _numberOfColumns)
 				).put(
-					"reverseOrder",
-					configurationJSONObject.getBoolean(
-						"reverseOrder", _reverseOrder)
+					"reverseOrder", configurationJSONObject.get("reverseOrder")
 				).put(
 					"verticalAlignment",
-					configurationJSONObject.getString(
-						"verticalAlignment", _verticalAlignment)
+					configurationJSONObject.get("verticalAlignment")
 				));
 		}
 

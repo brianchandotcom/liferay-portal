@@ -20,7 +20,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
 
@@ -51,13 +54,10 @@ public class ResponsiveLayoutStructureUtil {
 				continue;
 			}
 
-			JSONObject viewportSizeConfigurationJSONObject =
-				viewportSizeConfigurations.getOrDefault(
-					viewportSize.getViewportSizeId(),
-					JSONFactoryUtil.createJSONObject());
-
-			int modulesPerRow = viewportSizeConfigurationJSONObject.getInt(
-				"modulesPerRow", rowLayoutStructureItem.getModulesPerRow());
+			int modulesPerRow = GetterUtil.getInteger(
+				_getPropertyValue(
+					viewportSize, viewportSizeConfigurations, "modulesPerRow",
+					rowLayoutStructureItem.getModulesPerRow()));
 
 			columnSize =
 				columnLayoutStructureItem.getSize() *
@@ -90,15 +90,11 @@ public class ResponsiveLayoutStructureUtil {
 				continue;
 			}
 
-			JSONObject viewportSizeConfigurationJSONObject =
-				viewportSizeConfigurations.getOrDefault(
-					viewportSize.getViewportSizeId(),
-					JSONFactoryUtil.createJSONObject());
-
-			String verticalAlignment =
-				viewportSizeConfigurationJSONObject.getString(
+			String verticalAlignment = GetterUtil.getString(
+				_getPropertyValue(
+					viewportSize, viewportSizeConfigurations,
 					"verticalAlignment",
-					rowLayoutStructureItem.getVerticalAlignment());
+					rowLayoutStructureItem.getVerticalAlignment()));
 
 			sb.append(StringPool.SPACE);
 			sb.append("align-items");
@@ -127,17 +123,15 @@ public class ResponsiveLayoutStructureUtil {
 				continue;
 			}
 
-			JSONObject viewportSizeConfigurationJSONObject =
-				viewportSizeConfigurations.getOrDefault(
-					viewportSize.getViewportSizeId(),
-					JSONFactoryUtil.createJSONObject());
+			boolean reverseOrder = GetterUtil.getBoolean(
+				_getPropertyValue(
+					viewportSize, viewportSizeConfigurations, "reverseOrder",
+					rowLayoutStructureItem.isReverseOrder()));
 
-			boolean reverseOrder =
-				viewportSizeConfigurationJSONObject.getBoolean(
-					"reverseOrder", rowLayoutStructureItem.isReverseOrder());
-
-			int modulesPerRow = viewportSizeConfigurationJSONObject.getInt(
-				"modulesPerRow", rowLayoutStructureItem.getModulesPerRow());
+			int modulesPerRow = GetterUtil.getInteger(
+				_getPropertyValue(
+					viewportSize, viewportSizeConfigurations, "modulesPerRow",
+					rowLayoutStructureItem.getModulesPerRow()));
 
 			sb.append(StringPool.SPACE);
 
@@ -165,6 +159,42 @@ public class ResponsiveLayoutStructureUtil {
 		}
 
 		return sb.toString();
+	}
+
+	private static Object _getPropertyValue(
+		ViewportSize currentViewportSize,
+		Map<String, JSONObject> viewportSizeConfigurations, String propertyName,
+		Object defaultValue) {
+
+		JSONObject viewportSizeConfigurationJSONObject =
+			viewportSizeConfigurations.getOrDefault(
+				currentViewportSize.getViewportSizeId(),
+				JSONFactoryUtil.createJSONObject());
+
+		if (viewportSizeConfigurationJSONObject.has(propertyName)) {
+			return viewportSizeConfigurationJSONObject.get(propertyName);
+		}
+
+		ViewportSize[] viewportSizes = ViewportSize.values();
+
+		Comparator comparator = Comparator.comparingInt(ViewportSize::getOrder);
+
+		Arrays.sort(viewportSizes, comparator.reversed());
+
+		for (ViewportSize viewportSize : viewportSizes) {
+			viewportSizeConfigurationJSONObject =
+				viewportSizeConfigurations.getOrDefault(
+					viewportSize.getViewportSizeId(),
+					JSONFactoryUtil.createJSONObject());
+
+			if (viewportSizeConfigurationJSONObject.has(propertyName) &&
+				(viewportSize.getOrder() < currentViewportSize.getOrder())) {
+
+				return viewportSizeConfigurationJSONObject.get(propertyName);
+			}
+		}
+
+		return defaultValue;
 	}
 
 	private static String _getVerticalAlignmentCssClass(

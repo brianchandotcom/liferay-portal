@@ -1303,6 +1303,22 @@ definition {
 			locator1 = "Fragment#FRAGMENT_HEADER");
 	}
 
+	macro viewFragmentEditableImage {
+		if ("${contributed}" == "false") {
+			AssertVisible(
+				key_fragmentClass = "${fragmentClass}",
+				key_image = "${imageFileName}",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
+		}
+		else {
+			AssertVisible(
+				id = "${id}",
+				key_image = "${imageFileName}",
+				key_imageDescription = "${imageDescription}",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
+	}
+
 	macro viewFragmentEditableText {
 		if ("${contributed}" == "false") {
 			AssertTextEquals(

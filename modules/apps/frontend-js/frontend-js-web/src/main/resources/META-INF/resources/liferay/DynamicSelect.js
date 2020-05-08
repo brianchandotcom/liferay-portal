@@ -141,7 +141,7 @@ function process(array) {
 		if (select) {
 			select.setAttribute('data-componentType', 'dynamic_select');
 
-			let prevSelectVal = null;
+			let prevSelectVal;
 
 			if (index > 0) {
 				prevSelectVal = array[index - 1].selectVal;

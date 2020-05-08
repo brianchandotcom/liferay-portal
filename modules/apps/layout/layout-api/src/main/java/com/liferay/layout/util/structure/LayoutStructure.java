@@ -578,10 +578,12 @@ public class LayoutStructure {
 				viewportSizeId, JSONFactoryUtil.createJSONObject());
 
 		viewportSizeConfigurationJSONObject.put(
-			"modulesPerRow", numberOfColumns
-		).put(
-			"numberOfColumns", numberOfColumns
-		);
+			"numberOfColumns", numberOfColumns);
+
+		if (viewportSizeConfigurationJSONObject.has("modulesPerRow")) {
+			viewportSizeConfigurationJSONObject.put(
+				"modulesPerRow", numberOfColumns);
+		}
 	}
 
 	private static final int[][] _COLUMN_SIZES = {

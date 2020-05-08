@@ -26,6 +26,26 @@ definition {
 			item = "${item}");
 	}
 
+	macro importMastersFromTempFolder {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Import");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		var mastersZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "master-page-*.zip");
+
+		UploadTempFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${mastersZipFileName}");
+
+		Click(locator1 = "Button#IMPORT");
+
+		Alert.viewSuccessMessage();
+
+		IFrame.closeFrame();
+	}
+
 	macro openMastersAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&amp;_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=master-layouts");
 	}

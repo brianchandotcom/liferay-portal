@@ -43,7 +43,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 	sortingURL="<%= viewAppsManagerManagementToolbarDisplayContext.getSortingURL() %>"
 />
 
-<div class="container-fluid container-fluid-max-xl">
+<clay:container>
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"
 		showGuestGroup="<%= false %>"
@@ -69,4 +69,4 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 			resultRowSplitter="<%= new MarketplaceAppManagerResultRowSplitter() %>"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>

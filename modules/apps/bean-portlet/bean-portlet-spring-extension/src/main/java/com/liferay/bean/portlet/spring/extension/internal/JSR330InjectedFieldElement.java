@@ -54,7 +54,7 @@ public class JSR330InjectedFieldElement
 		throws Throwable {
 
 		Field field = (Field)getMember();
-		Object value;
+		Object value = null;
 
 		if (_cached) {
 			value = AutowiredUtil.resolveDependency(

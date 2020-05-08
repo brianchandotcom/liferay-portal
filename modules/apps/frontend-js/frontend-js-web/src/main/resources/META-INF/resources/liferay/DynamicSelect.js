@@ -63,9 +63,13 @@ function updateSelect(array, index, list) {
 
 	const select = document.getElementById(options.select);
 
+	if (!select) {
+		return;
+	}
+
 	const selectVal = toArray(options.selectVal);
 
-	let selectOptions = [];
+	const selectOptions = [];
 
 	if (options.selectNullable !== false) {
 		selectOptions.push('<option selected value="0"></option>');
@@ -87,21 +91,17 @@ function updateSelect(array, index, list) {
 	});
 
 	if (options.selectSort) {
-		selectOptions = selectOptions.sort(sortByValue);
+		selectOptions.sort(sortByValue);
 	}
 
-	selectOptions = selectOptions.join('');
+	while (select.lastChild) {
+		select.removeChild(select.lastChild);
+	}
 
-	if (select) {
-		while (select.lastChild) {
-			select.removeChild(select.lastChild);
-		}
+	select.innerHTML = selectOptions.join('');
 
-		select.innerHTML = selectOptions;
-
-		if (options.selectDisableOnEmpty) {
-			toggleDisabled(select, !list.length);
-		}
+	if (options.selectDisableOnEmpty) {
+		toggleDisabled(select, !list.length);
 	}
 }
 

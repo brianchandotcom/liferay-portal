@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
-	immediate = true, property = "operation.mode=EMBEDDED",
+	enabled = false, property = "operation.mode=EMBEDDED",
 	service = ElasticsearchConnection.class
 )
 public class EmbeddedElasticsearchConnection

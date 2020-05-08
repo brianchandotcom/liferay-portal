@@ -34,12 +34,52 @@ function sortByValue(a, b) {
 	}
 }
 
+function isArrayLike(obj) {
+	if (Array.isArray(obj)) {
+		return 1;
+	}
+	else if (obj === Object(obj)) {
+		try {
+			if (
+				'length' in obj &&
+				!obj.tagName &&
+				!(obj.scrollTo && obj.document) &&
+				!obj.apply
+			) {
+				return 2;
+			}
+		}
+		catch (ex) {}
+	}
+
+	return 0;
+}
+
+function toArray(obj) {
+	if (isArrayLike(obj)) {
+		try {
+			return Array.slice.call(obj, 0);
+		}
+		catch (ex) {
+			const result = [];
+
+			for (let i = 0; i < obj.length; i++) {
+				result.push(obj[i]);
+			}
+
+			return result;
+		}
+	}
+
+	return [obj];
+}
+
 function updateSelect(array, index, list) {
 	const options = array[index];
 
 	const select = document.getElementById(options.select);
 
-	const selectVal = [options.selectVal];
+	const selectVal = toArray(options.selectVal);
 
 	let selectOptions = [];
 

@@ -15,6 +15,7 @@
 package com.liferay.view.count.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
@@ -39,6 +40,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.view.count.model.ViewCountEntry",
 	service = AopService.class
 )
+@CTAware
 public class ViewCountEntryLocalServiceImpl
 	extends ViewCountEntryLocalServiceBaseImpl implements ViewCountManager {
 

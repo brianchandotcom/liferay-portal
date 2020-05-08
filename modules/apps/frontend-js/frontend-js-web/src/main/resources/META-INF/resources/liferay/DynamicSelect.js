@@ -55,22 +55,7 @@ function isArrayLike(value) {
 }
 
 function toArray(value) {
-	if (isArrayLike(value)) {
-		try {
-			return Array.slice.call(value, 0);
-		}
-		catch (ex) {
-			const result = [];
-
-			for (let i = 0; i < value.length; i++) {
-				result.push(value[i]);
-			}
-
-			return result;
-		}
-	}
-
-	return [value];
+	return isArrayLike(value) ? Array.from(value) : [value];
 }
 
 function updateSelect(array, index, list) {

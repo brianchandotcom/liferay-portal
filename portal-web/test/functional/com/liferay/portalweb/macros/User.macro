@@ -1876,6 +1876,8 @@ definition {
 				value1 = "${password}");
 
 			Button.click(button = "Sign In");
+
+			LiferayEvent.initializeLiferayEventLog();
 		}
 
 		Button.viewNotPresent(button = "Sign In");
@@ -2168,6 +2170,8 @@ definition {
 		}
 
 		UserBar.signOut();
+
+		LiferayEvent.initializeLiferayEventLog();
 	}
 
 	@description = "Log out of Liferay Portal."

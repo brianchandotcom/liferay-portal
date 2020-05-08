@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.configuration.RedirectConfiguration;
+import com.liferay.redirect.exception.CircularRedirectEntryException;
 import com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntryDestinationURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntrySourceURLException;
@@ -138,9 +139,14 @@ public class RedirectEntryLocalServiceImpl
 			boolean updateChainedRedirectEntries, ServiceContext serviceContext)
 		throws PortalException {
 
+		_checkDestinationURLMustNotBeEqualToSourceURL(
+			destinationURL, groupBaseURL, sourceURL);
+
 		RedirectEntry redirectEntry = addRedirectEntry(
 			groupId, destinationURL, expirationDate, permanent, sourceURL,
 			serviceContext);
+
+		_checkChainedRedirectEntries(groupBaseURL, redirectEntry);
 
 		if (updateChainedRedirectEntries) {
 			redirectEntry = _updateChainedRedirectEntries(
@@ -247,9 +253,14 @@ public class RedirectEntryLocalServiceImpl
 			boolean updateChainedRedirectEntries)
 		throws PortalException {
 
+		_checkDestinationURLMustNotBeEqualToSourceURL(
+			destinationURL, groupBaseURL, sourceURL);
+
 		RedirectEntry redirectEntry = updateRedirectEntry(
 			redirectEntryId, destinationURL, expirationDate, permanent,
 			sourceURL);
+
+		_checkChainedRedirectEntries(groupBaseURL, redirectEntry);
 
 		if (updateChainedRedirectEntries) {
 			redirectEntry = _updateChainedRedirectEntries(
@@ -263,6 +274,64 @@ public class RedirectEntryLocalServiceImpl
 		Instant instant = date.toInstant();
 
 		return instant.truncatedTo(ChronoUnit.DAYS);
+	}
+
+	private void _checkChainedRedirectEntries(
+			String groupBaseURL, RedirectEntry redirectEntry)
+		throws PortalException {
+
+		List<RedirectEntry> chainedRedirectEntries =
+			redirectEntryLocalService.
+				getRedirectEntriesByGroupIdAndDestinationURL(
+					redirectEntry.getGroupId(),
+					groupBaseURL + StringPool.SLASH +
+						redirectEntry.getSourceURL());
+
+		for (RedirectEntry chainedRedirectEntry : chainedRedirectEntries) {
+			_checkMustNotFormALoopWithAnotherRedirectEntry(
+				redirectEntry.getDestinationURL(), groupBaseURL,
+				chainedRedirectEntry.getSourceURL());
+		}
+
+		RedirectEntry chainedRedirectEntry =
+			redirectEntryLocalService.fetchRedirectEntry(
+				redirectEntry.getGroupId(),
+				StringUtil.removeSubstring(
+					redirectEntry.getDestinationURL(),
+					groupBaseURL + StringPool.SLASH));
+
+		if (chainedRedirectEntry != null) {
+			_checkMustNotFormALoopWithAnotherRedirectEntry(
+				chainedRedirectEntry.getDestinationURL(), groupBaseURL,
+				redirectEntry.getSourceURL());
+		}
+	}
+
+	private void _checkDestinationURLMustNotBeEqualToSourceURL(
+			String destinationURL, String groupBaseURL, String sourceURL)
+		throws CircularRedirectEntryException.
+			DestinationURLMustNotBeEqualToSourceURL {
+
+		String completeSourceURL = groupBaseURL + StringPool.SLASH + sourceURL;
+
+		if (StringUtil.equalsIgnoreCase(completeSourceURL, destinationURL)) {
+			throw new CircularRedirectEntryException.
+				DestinationURLMustNotBeEqualToSourceURL(
+					sourceURL, destinationURL);
+		}
+	}
+
+	private void _checkMustNotFormALoopWithAnotherRedirectEntry(
+			String destinationURL, String groupBaseURL, String sourceURL)
+		throws CircularRedirectEntryException.
+			MustNotFormALoopWithAnotherRedirectEntry {
+
+		String completeSourceURL = groupBaseURL + StringPool.SLASH + sourceURL;
+
+		if (StringUtil.equalsIgnoreCase(completeSourceURL, destinationURL)) {
+			throw new CircularRedirectEntryException.
+				MustNotFormALoopWithAnotherRedirectEntry();
+		}
 	}
 
 	private boolean _isExpired(RedirectEntry redirectEntry) {

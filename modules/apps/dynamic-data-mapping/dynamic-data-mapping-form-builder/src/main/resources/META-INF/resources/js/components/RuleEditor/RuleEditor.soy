@@ -473,10 +473,11 @@
 					</div>
 
 					<div action-type-index="{$index}" class="action-type form-group-item">
-						{delcall PageRenderer.RegisterFieldType variant="'select'"}
+						{call ReactFieldAdapter.render}
 							{param events: [
 								'fieldEdited': $_handleActionSelection
 							] /}
+							{param fieldType: 'select' /}
 							{param name: 'action' + $index /}
 							{param options: $actionTypes /}
 							{param placeholder kind="text"}
@@ -485,7 +486,7 @@
 							{param ref: 'action' + $index /}
 							{param spritemap: $spritemap /}
 							{param value: [$actionSelected] /}
-						{/delcall}
+						{/call}
 					</div>
 
 					{let $showTargetDefault: $actionSelected and (($actionSelected == 'show') or ($actionSelected == 'enable') or ($actionSelected == 'require')) /}
@@ -585,17 +586,18 @@
 	{@param? value: string}
 
 	<div class="form-group-item target-action" target-action-index="{$index}">
-		{delcall PageRenderer.RegisterFieldType variant="'select'"}
+		{call ReactFieldAdapter.render}
 			{param events: [
 				'fieldEdited': $_handleTargetSelection
 			] /}
+			{param fieldType: 'select' /}
 			{param name: $ref /}
 			{param options: $options /}
 			{param placeholder: $placeholder /}
 			{param ref: $ref /}
 			{param spritemap: $spritemap /}
 			{param value: [$value] /}
-		{/delcall}
+		{/call}
 	</div>
 {/template}
 
@@ -652,10 +654,11 @@
 					</div>
 
 					<div class="condition-if form-group-item" condition-if-index="{$index}">
-						{delcall PageRenderer.RegisterFieldType variant="'select'"}
+						{call ReactFieldAdapter.render}
 							{param events: [
 								'fieldEdited': $_handleFirstOperandFieldEdited
 							] /}
+							{param fieldType: 'select' /}
 							{param fixedOptions: $fixedOptions /}
 							{param name: 'firstOperand' + $index /}
 							{param options: $fieldOptions /}
@@ -665,7 +668,7 @@
 							{param ref: 'firstOperand' + $index /}
 							{param spritemap: $spritemap /}
 							{param value: [$firstOperandValueSelected] /}
-						{/delcall}
+						{/call}
 					</div>
 
 					{call .renderConditionOperators}
@@ -696,10 +699,11 @@
 
 								<div class="condition-type-value form-group-item" condition-type-value-index="{$index}">
 									{if $fieldHasOptions}
-										{delcall PageRenderer.RegisterFieldType variant="'select'"}
+										{call ReactFieldAdapter.render}
 											{param events: [
 												'fieldEdited': $_handleSecondOperandValueEdited
 											] /}
+											{param fieldType: 'select' /}
 											{param name: $secondOperandFieldName /}
 											{param options: $firstOperandOptions /}
 											{param placeholder kind="text"}
@@ -709,12 +713,13 @@
 											{param ref: 'secondOperand' + $index /}
 											{param spritemap: $spritemap /}
 											{param value: [$secondOperandValue] /}
-										{/delcall}
+										{/call}
 									{elseif $secondOperandType == 'field'}
-										{delcall PageRenderer.RegisterFieldType variant="'select'"}
+										{call ReactFieldAdapter.render}
 											{param events: [
 												'fieldEdited': $_handleSecondOperandValueEdited
 											] /}
+											{param fieldType: 'select' /}
 											{param name: 'secondOperand' + $index /}
 											{param options: $fieldOptions /}
 											{param placeholder kind="text"}
@@ -723,19 +728,20 @@
 											{param ref: 'secondOperand' + $index /}
 											{param spritemap: $spritemap /}
 											{param value: [$secondOperandValue] /}
-										{/delcall}
+										{/call}
 									{else}
-										{delcall PageRenderer.RegisterFieldType variant="$secondOperandType"}
+										{call ReactFieldAdapter.render}
 											{param dataType: $secondOperandDataType /}
 											{param events: [
 												'fieldEdited': $_handleSecondOperandValueEdited
 											] /}
+											{param fieldType: $secondOperandType /}
 											{param name: $secondOperandFieldName /}
 											{param readOnly: $readOnly /}
 											{param ref: 'secondOperand' + $index /}
 											{param spritemap: $spritemap /}
 											{param value: $secondOperandValue /}
-										{/delcall}
+										{/call}
 									{/if}
 								</div>
 							{/if}
@@ -798,10 +804,11 @@
 	{let $readOnly: $firstOperandType ? false : true /}
 
 	<div class="condition-operator form-group-item" condition-operator-index="{$index}">
-		{delcall PageRenderer.RegisterFieldType variant="'select'"}
+		{call ReactFieldAdapter.render}
 			{param events: [
 				'fieldEdited': $_handleOperatorEdited
 			] /}
+			{param fieldType: 'select' /}
 			{param name: 'conditionOperator' + $index /}
 			{param options: $operators /}
 			{param placeholder kind="text"}
@@ -811,7 +818,7 @@
 			{param ref: 'conditionOperator' + $index /}
 			{param spritemap: $spritemap /}
 			{param value: [$selectedOperator] /}
-		{/delcall}
+		{/call}
 	</div>
 {/template}
 
@@ -846,10 +853,11 @@
 
 	{if $visible}
 		<div class="condition-type form-group-item" condition-type-index="{$index}">
-			{delcall PageRenderer.RegisterFieldType variant="'select'"}
+			{call ReactFieldAdapter.render}
 				{param events: [
 					'fieldEdited': $_handleSecondOperandTypeEdited
 				] /}
+				{param fieldType: 'select' /}
 				{param name: 'secondOperandTypeSelector' + $index /}
 				{param options: $options /}
 				{param placeholder kind="text"}
@@ -859,7 +867,7 @@
 				{param spritemap: $spritemap /}
 				{param value: [$value] /}
 				{param visible: $visible /}
-			{/delcall}
+			{/call}
 		</div>
 	{/if}
 {/template}
@@ -879,10 +887,11 @@
 	{let $visible: $selectedOperator ? true : false /}
 
 	<div class="condition-user-role form-group-item {if not $visible}hide{/if}" condition-user-role-index="{$index}">
-		{delcall PageRenderer.RegisterFieldType variant="'select'"}
+		{call ReactFieldAdapter.render}
 			{param events: [
 				'fieldEdited': $_handleSecondOperandFieldEdited
 			] /}
+			{param fieldType: 'select' /}
 			{param name: 'roleSelector' + $index /}
 			{param options: $roles /}
 			{param placeholder kind="text"}
@@ -890,7 +899,7 @@
 			{/param}
 			{param spritemap: $spritemap /}
 			{param value: [$secondOperandValue] /}
-		{/delcall}
+		{/call}
 	</div>
 {/template}
 
@@ -1077,10 +1086,11 @@
 						</div>
 						{let $index: index($input) /}
 						<div class="col-md-9 container-input-field container-input-field-{$index}" container-input-field-index="{$index}">
-							{delcall PageRenderer.RegisterFieldType variant="'select'"}
+							{call ReactFieldAdapter.render}
 								{param events: [
 									'fieldEdited': $_handleDataProviderInputEdited
 								] /}
+								{param fieldType: 'select' /}
 								{param name: 'action' + $actionIndex + 'dataProviderInput' + $index /}
 								{param options: $input.fieldOptions /}
 								{param placeholder kind="text"}
@@ -1089,7 +1099,7 @@
 								{param ref: 'action' + $actionIndex + 'dataProviderInput' + $index /}
 								{param spritemap: $spritemap /}
 								{param value: [$input.value] /}
-							{/delcall}
+							{/call}
 						</div>
 					{/foreach}
 				</div>
@@ -1110,10 +1120,11 @@
 						</div>
 						{let $index: index($output) /}
 						<div class="col-md-9 container-output-field container-output-field-{$index}" container-output-field-index="{$index}">
-							{delcall PageRenderer.RegisterFieldType variant="'select'"}
+							{call ReactFieldAdapter.render}
 								{param events: [
 									'fieldEdited': $_handleDataProviderOutputEdited
 								] /}
+								{param fieldType: 'select' /}
 								{param name: 'action' + $actionIndex + 'dataProviderOutput' + $index /}
 								{param options: $output.fieldOptions /}
 								{param placeholder kind="text"}
@@ -1122,7 +1133,7 @@
 								{param ref: 'action' + $actionIndex + 'dataProviderOutput' + $index /}
 								{param spritemap: $spritemap /}
 								{param value: [$output.value] /}
-							{/delcall}
+							{/call}
 						</div>
 					{/foreach}
 				</div>

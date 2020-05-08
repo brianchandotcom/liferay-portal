@@ -20,7 +20,7 @@ import 'clay-button';
 
 import 'clay-modal';
 
-import 'dynamic-data-mapping-form-renderer/js/components/PageRenderer/PageRenderer.es';
+import 'dynamic-data-mapping-form-renderer/js/components/Field/ReactFieldAdapter.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import Component from 'metal-component';

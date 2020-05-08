@@ -21,6 +21,8 @@ public class AccountActionKeys {
 
 	public static final String ADD_ACCOUNT_ENTRY = "ADD_ACCOUNT_ENTRY";
 
+	public static final String MANAGE_ACCOUNTS = "MANAGE_ACCOUNTS";
+
 	public static final String MANAGE_ORGANIZATIONS = "MANAGE_ORGANIZATIONS";
 
 	public static final String VIEW_ORGANIZATIONS = "VIEW_ORGANIZATIONS";

@@ -93,10 +93,10 @@ catch(err) {
 		''';
 		var liferayEventFired = "";
 
-		while ("${liferayEventFired}" != "fired" && (maxIterations = "5")) {
+		while ("${liferayEventFired}" != "fired" && (maxIterations = "10")) {
 			var liferayEventFired = selenium.getEval("${javascript}");
 
-			echo("${liferayEventFired}");
+			echo("JS event ${liferayEventFired}");
 
 			Pause(locator1 = "1000");
 		}

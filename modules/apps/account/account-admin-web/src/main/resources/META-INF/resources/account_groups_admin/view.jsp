@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,24 +12,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.account.constants;
-
-/**
- * @author Albert Lee
- */
-public class AccountPortletKeys {
-
-	public static final String ACCOUNT_ENTRIES_ADMIN =
-		"com_liferay_account_admin_web_internal_portlet_" +
-			"AccountEntriesAdminPortlet";
-
-	public static final String ACCOUNT_GROUPS_ADMIN =
-		"com_liferay_account_admin_web_internal_portlet_" +
-			"AccountGroupsAdminPortlet";
-
-	public static final String ACCOUNT_USERS_ADMIN =
-		"com_liferay_account_admin_web_internal_portlet_" +
-			"AccountUsersAdminPortlet";
-
-}
+<%@ include file="/init.jsp" %>

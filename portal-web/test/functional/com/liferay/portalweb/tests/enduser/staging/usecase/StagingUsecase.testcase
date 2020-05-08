@@ -282,8 +282,6 @@ definition {
 	@description = "This is a use case for LPS-72145."
 	@priority = "4"
 	test AssertDeletedPollsOnLivingSiteWithoutPublishToLive {
-		property portal.upstream = "quarantine";
-
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");

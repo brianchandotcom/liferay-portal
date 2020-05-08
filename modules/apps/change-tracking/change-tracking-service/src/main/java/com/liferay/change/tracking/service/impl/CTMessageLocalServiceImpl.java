@@ -17,6 +17,7 @@ package com.liferay.change.tracking.service.impl;
 import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.service.base.CTMessageLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.Message;
 
@@ -34,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.change.tracking.model.CTMessage",
 	service = AopService.class
 )
+@CTAware
 public class CTMessageLocalServiceImpl extends CTMessageLocalServiceBaseImpl {
 
 	@Override

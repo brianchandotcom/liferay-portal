@@ -23,6 +23,7 @@ import com.liferay.change.tracking.service.base.CTEntryLocalServiceBaseImpl;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -46,6 +47,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.change.tracking.model.CTEntry",
 	service = AopService.class
 )
+@CTAware
 public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 	@Override

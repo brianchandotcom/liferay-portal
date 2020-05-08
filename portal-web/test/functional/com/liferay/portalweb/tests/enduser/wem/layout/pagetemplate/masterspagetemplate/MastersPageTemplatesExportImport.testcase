@@ -66,4 +66,114 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-102207. Can export a master page template containing the layout elements and nested elements and import."
+	@priority = "4"
+	test ExportImportMastersPageTemplateWithCompositionOfFragments {
+		task ("Add a custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+		}
+
+		task ("Add composition of fragments to custom master") {
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__drop-zone')]");
+
+			Click(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "Heading",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+
+			PageEditor.addLayoutRow(
+				dropTarget = "Footer",
+				scope = "Master");
+
+			PageEditor.gotoTab(tabName = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_columnNumber = "1",
+				key_fragmentName = "Button",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#ROW_COLUMN",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_position = "1",
+				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Export custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Export",
+				masterLayoutName = "Custom Masters Page Template");
+
+			DownloadTempFile();
+		}
+
+		task ("Import masters page template in new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
+
+			MastersPageTemplatesAdmin.importMastersFromTempFolder();
+		}
+
+		task ("Assert the composition of fragments are imported") {
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			AssertElementPresent(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			AssertElementPresent(
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+
+			AssertElementPresent(
+				key_elementType = "Row",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_position = "1",
+				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+		}
+	}
+
 }

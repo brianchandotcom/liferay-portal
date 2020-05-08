@@ -61,6 +61,8 @@ definition {
 
 		else if ("${redirectChain}" == "true") {
 			Redirect.configureRedirectChain(noUpdateReferences = "${noUpdateReferences}");
+
+			Alert.viewSuccessMessage();
 		}
 
 		else {

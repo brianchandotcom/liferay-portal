@@ -25,5 +25,11 @@
 		<suppress checks="BNDBundleInformationCheck" files="com/liferay/source/formatter/dependencies/IncorrectBundleActivator2/bnd\.bnd" />
 		<suppress checks="BNDBundleInformationCheck" files="com/liferay/source/formatter/dependencies/IncorrectBundleActivator3/bnd\.bnd" />
 		<suppress checks="JavaOSGiReferenceCheck" files="com/liferay/source/formatter/dependencies/.*" />
+		<suppress checks="JavaPackagePathCheck" files="com/liferay/source/formatter/dependencies/MajorUpgradeByAlterColumnName\.java" />
+		<suppress checks="JavaPackagePathCheck" files="com/liferay/source/formatter/dependencies/MajorUpgradeByAlterTableDropColumn\.java" />
+		<suppress checks="JavaPackagePathCheck" files="com/liferay/source/formatter/dependencies/MajorUpgradeByAlterTableDropColumnClause\.java" />
+		<suppress checks="JavaPackagePathCheck" files="com/liferay/source/formatter/dependencies/MajorUpgradeByDropTable\.java" />
+		<suppress checks="JavaPackagePathCheck" files="com/liferay/source/formatter/dependencies/MinorUpgradeByAlterTableAddColumn\.java" />
+		<suppress checks="JavaPackagePathCheck" files="com/liferay/source/formatter/dependencies/MinorUpgradeByAlterTableAddColumnClause\.java" />
 	</source-check>
 </suppressions>

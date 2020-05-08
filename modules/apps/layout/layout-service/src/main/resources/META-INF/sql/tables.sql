@@ -1,7 +1,8 @@
 create table LayoutClassedModelUsage (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	layoutClassedModelUsageId LONG not null primary key,
+	layoutClassedModelUsageId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	createDate DATE null,
@@ -12,5 +13,6 @@ create table LayoutClassedModelUsage (
 	containerType LONG,
 	plid LONG,
 	type_ INTEGER,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (layoutClassedModelUsageId, ctCollectionId)
 );

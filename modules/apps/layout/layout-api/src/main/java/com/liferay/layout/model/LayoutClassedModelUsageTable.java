@@ -37,6 +37,9 @@ public class LayoutClassedModelUsageTable
 	public final Column<LayoutClassedModelUsageTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<LayoutClassedModelUsageTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<LayoutClassedModelUsageTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutClassedModelUsageTable, Long>

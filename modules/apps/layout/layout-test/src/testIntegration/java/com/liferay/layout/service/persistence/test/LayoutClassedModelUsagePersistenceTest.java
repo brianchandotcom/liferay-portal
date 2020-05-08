@@ -131,6 +131,8 @@ public class LayoutClassedModelUsagePersistenceTest {
 
 		newLayoutClassedModelUsage.setMvccVersion(RandomTestUtil.nextLong());
 
+		newLayoutClassedModelUsage.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newLayoutClassedModelUsage.setUuid(RandomTestUtil.randomString());
 
 		newLayoutClassedModelUsage.setGroupId(RandomTestUtil.nextLong());
@@ -167,6 +169,9 @@ public class LayoutClassedModelUsagePersistenceTest {
 		Assert.assertEquals(
 			existingLayoutClassedModelUsage.getMvccVersion(),
 			newLayoutClassedModelUsage.getMvccVersion());
+		Assert.assertEquals(
+			existingLayoutClassedModelUsage.getCtCollectionId(),
+			newLayoutClassedModelUsage.getCtCollectionId());
 		Assert.assertEquals(
 			existingLayoutClassedModelUsage.getUuid(),
 			newLayoutClassedModelUsage.getUuid());
@@ -315,11 +320,12 @@ public class LayoutClassedModelUsagePersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"LayoutClassedModelUsage", "mvccVersion", true, "uuid", true,
-			"layoutClassedModelUsageId", true, "groupId", true, "companyId",
-			true, "createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "containerKey", true, "containerType", true,
-			"plid", true, "type", true, "lastPublishDate", true);
+			"LayoutClassedModelUsage", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "layoutClassedModelUsageId", true, "groupId",
+			true, "companyId", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "containerKey", true,
+			"containerType", true, "plid", true, "type", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -618,6 +624,8 @@ public class LayoutClassedModelUsagePersistenceTest {
 			pk);
 
 		layoutClassedModelUsage.setMvccVersion(RandomTestUtil.nextLong());
+
+		layoutClassedModelUsage.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layoutClassedModelUsage.setUuid(RandomTestUtil.randomString());
 

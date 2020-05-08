@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.layout.model.LayoutClassedModelUsage">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutClassedModelUsageId" type="long" />
 		<field name="groupId" type="long" />

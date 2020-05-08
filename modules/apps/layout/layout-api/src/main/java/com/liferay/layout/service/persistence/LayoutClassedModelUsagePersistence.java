@@ -17,6 +17,7 @@ package com.liferay.layout.service.persistence;
 import com.liferay.layout.exception.NoSuchClassedModelUsageException;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutClassedModelUsagePersistence
-	extends BasePersistence<LayoutClassedModelUsage> {
+	extends BasePersistence<LayoutClassedModelUsage>,
+			CTPersistence<LayoutClassedModelUsage> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

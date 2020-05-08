@@ -1,6 +1,8 @@
-create unique index IX_FA38EE24 on LayoutClassedModelUsage (classNameId, classPK, containerKey[$COLUMN_LENGTH:200$], containerType, plid);
-create index IX_B041F1F5 on LayoutClassedModelUsage (classNameId, classPK, type_);
-create index IX_DF750659 on LayoutClassedModelUsage (containerKey[$COLUMN_LENGTH:200$], containerType, plid);
-create index IX_19448DD6 on LayoutClassedModelUsage (plid);
-create index IX_F2FE8FF on LayoutClassedModelUsage (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_694CA341 on LayoutClassedModelUsage (uuid_[$COLUMN_LENGTH:75$], groupId);
+create unique index IX_63EAFC82 on LayoutClassedModelUsage (classNameId, classPK, containerKey[$COLUMN_LENGTH:200$], containerType, plid, ctCollectionId);
+create index IX_2644723E on LayoutClassedModelUsage (classNameId, classPK, ctCollectionId);
+create index IX_C03C3E53 on LayoutClassedModelUsage (classNameId, classPK, type_, ctCollectionId);
+create index IX_F1220AB7 on LayoutClassedModelUsage (containerKey[$COLUMN_LENGTH:200$], containerType, plid, ctCollectionId);
+create index IX_A3F4F834 on LayoutClassedModelUsage (plid, ctCollectionId);
+create index IX_B0FEE15D on LayoutClassedModelUsage (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_ACA55FE7 on LayoutClassedModelUsage (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_8A32D79F on LayoutClassedModelUsage (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);

@@ -49,14 +49,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-custom-field"), null);
 %>
 
-<div class="container-fluid container-fluid-max-xl">
+<clay:container>
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"
 		showGuestGroup="<%= false %>"
 		showLayout="<%= false %>"
 		showPortletBreadcrumb="<%= true %>"
 	/>
-</div>
+</clay:container>
 
 <liferay-frontend:edit-form>
 	<liferay-frontend:edit-form-body>

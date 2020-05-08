@@ -251,6 +251,36 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	@Override
+	public String getPortalURL(long groupId, String entryURL)
+		throws PortalException {
+
+		int portalPort = PortalUtil.getPortalServerPort(false);
+
+		String portalURL = PortalUtil.getPortalURL(
+			getVirtualHostname(), portalPort, false);
+
+		if (groupId <= 0) {
+			return portalURL;
+		}
+
+		boolean privateLayout = entryURL.contains(
+			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		if (!virtualHostnames.isEmpty()) {
+			portalURL = PortalUtil.getPortalURL(
+				virtualHostnames.firstKey(), portalPort, false);
+		}
+
+		return portalURL;
+	}
+
+	@Override
 	public String getShortName() throws PortalException {
 		return getName();
 	}

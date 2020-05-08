@@ -27,7 +27,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 <c:if test="<%= siteNavigationAdminDisplayContext.hasUpdatePermission() %>">
 	<nav class="management-bar management-bar-light navbar navbar-expand-md site-navigation-management-bar">
-		<div class="container">
+		<clay:container>
 			<ul class="navbar-nav"></ul>
 
 			<ul class="navbar-nav">
@@ -65,11 +65,13 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 					</div>
 				</li>
 			</ul>
-		</div>
+		</clay:container>
 	</nav>
 </c:if>
 
-<div class="container-fluid-1280 contextual-sidebar-content site-navigation-content">
+<clay:container
+	className="contextual-sidebar-content site-navigation-content"
+>
 	<div class="lfr-search-container-wrapper site-navigation-menu-container">
 		<liferay-ui:error embed="<%= false %>" key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="the-order-of-site-navigation-menu-items-is-invalid" />
 
@@ -109,7 +111,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			</c:otherwise>
 		</c:choose>
 	</div>
-</div>
+</clay:container>
 
 <c:if test="<%= siteNavigationAdminDisplayContext.hasUpdatePermission() %>">
 	<div>

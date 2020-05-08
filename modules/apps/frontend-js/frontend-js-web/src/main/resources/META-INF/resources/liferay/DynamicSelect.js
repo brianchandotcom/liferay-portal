@@ -69,7 +69,7 @@ function updateSelect(array, index, list) {
 	selectOptions = selectOptions.join('');
 
 	if (select) {
-		while (select.firstChild) {
+		while (select.lastChild) {
 			select.removeChild(select.lastChild);
 		}
 

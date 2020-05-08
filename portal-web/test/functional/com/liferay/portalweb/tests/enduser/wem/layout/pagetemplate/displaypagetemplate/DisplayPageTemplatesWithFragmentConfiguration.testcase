@@ -33,7 +33,7 @@ definition {
 	@priority = "5"
 	test AddCheckboxConfigurationFragmentToDisplayPageTemplate {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");

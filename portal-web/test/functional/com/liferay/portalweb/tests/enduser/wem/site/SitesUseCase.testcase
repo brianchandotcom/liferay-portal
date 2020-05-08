@@ -1013,7 +1013,7 @@ definition {
 	@description = "This ensures that the custom site logo can be viewed in cards and list views."
 	@priority = "4"
 	test ViewSiteLogo {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

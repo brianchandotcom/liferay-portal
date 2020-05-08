@@ -109,10 +109,8 @@ definition {
 	@priority = "4"
 	test DisableShowApplicationBreadcrumb {
 		property custom.properties = "default.layout.template.id=1_column";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 		property testray.component.names = "Breadcrumb";
-
-		// Quarantine for LPS-104367
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -313,11 +311,8 @@ definition {
 
 	@priority = "5"
 	test DisableShowPage {
-
-		// Quarantine for LPS-104367
-
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 		property testray.component.names = "Breadcrumb";
 
 		ProductMenu.gotoPortlet(
@@ -515,11 +510,9 @@ definition {
 
 	@priority = "4"
 	test EnableShowGuestSite {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Breadcrumb#EnableShowGuestSite";
 		property testray.component.names = "Breadcrumb";
-
-		// Quarantine for LPS-104367
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

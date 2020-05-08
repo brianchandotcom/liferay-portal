@@ -409,6 +409,7 @@ definition {
 		Redirect.addEntryVia404URLs(
 			activeIgnoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			noUpdateReferences = "true",
 			redirectType = "Permanent (301)",
 			siteName = "test-site-name",
 			sourceURL = "test-destination-page1");
@@ -523,6 +524,7 @@ definition {
 		Redirect.addEntryVia404URLs(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			ignoredURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			noUpdateReferences = "true",
 			siteName = "test-site-name",
 			sourceURL = "test-destination-page1");
 

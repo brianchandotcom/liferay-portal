@@ -22,7 +22,7 @@ import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageT
 import com.liferay.layout.page.template.internal.upgrade.v2_0_0.util.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.internal.upgrade.v2_1_0.UpgradeLayout;
 import com.liferay.layout.page.template.internal.upgrade.v3_0_1.util.LayoutPageTemplateStructureRelTable;
-import com.liferay.layout.page.template.internal.upgrade.v3_1_1.UpgradeResourcePermission;
+import com.liferay.layout.page.template.internal.upgrade.v3_1_2.UpgradeResourcePermission;
 import com.liferay.layout.page.template.internal.upgrade.v3_3_0.UpgradeLayoutPageTemplateStructureRel;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -102,14 +102,16 @@ public class LayoutPageTemplateServiceUpgrade
 
 			});
 
+		registry.register("3.1.0", "3.1.1", new DummyUpgradeStep());
+
 		registry.register(
-			"3.1.0", "3.1.1",
-			new com.liferay.layout.page.template.internal.upgrade.v3_1_1.
+			"3.1.1", "3.1.2",
+			new com.liferay.layout.page.template.internal.upgrade.v3_1_2.
 				UpgradeLayoutPageTemplateEntry(),
 			new UpgradeResourcePermission());
 
 		registry.register(
-			"3.1.1", "3.2.0",
+			"3.1.2", "3.2.0",
 			new com.liferay.layout.page.template.internal.upgrade.v3_2_0.
 				UpgradeLayoutPageTemplateCollection(),
 			new com.liferay.layout.page.template.internal.upgrade.v3_2_0.

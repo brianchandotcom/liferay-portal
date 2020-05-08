@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES</td>
+	<td>//img[contains(@alt,'${key_imageDescription}') and contains(@data-lfr-editable-id,'${id}') and contains(@src,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'page-editor')]//div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${id}')]</td>
 	<td></td>

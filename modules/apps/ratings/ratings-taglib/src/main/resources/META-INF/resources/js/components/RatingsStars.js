@@ -66,9 +66,10 @@ const RatingsStars = ({
 
 	const handleOnClick = (index) => {
 		let value, label;
-		const starScore = starScores[index];
 
 		if (index) {
+			const starScore = starScores[index];
+
 			value = starScore.value;
 			label = starScore.label;
 		}

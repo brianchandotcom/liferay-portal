@@ -44,17 +44,14 @@ function isArrayLike(obj) {
 		return true;
 	}
 	else if (obj && typeof obj === 'object') {
-		try {
-			if (
-				'length' in obj &&
-				!obj.tagName &&
-				!(obj.scrollTo && obj.document) &&
-				!obj.apply
-			) {
-				return true;
-			}
+		if (
+			'length' in obj &&
+			!obj.tagName &&
+			!(obj.scrollTo && obj.document) &&
+			!obj.apply
+		) {
+			return true;
 		}
-		catch (ex) {}
 	}
 
 	return false;

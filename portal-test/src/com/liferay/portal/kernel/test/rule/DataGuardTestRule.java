@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -532,6 +534,12 @@ public class DataGuardTestRule
 
 						return null;
 					});
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(modelClass);
+
+				if (indexer != null) {
+					indexer.delete(persistedModel);
+				}
 			}
 			catch (Throwable throwable2) {
 			}

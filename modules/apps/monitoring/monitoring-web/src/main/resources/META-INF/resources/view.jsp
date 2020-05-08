@@ -62,7 +62,7 @@ sortingURL.setParameter("orderByType", orderByType.equals("asc") ? "desc" : "asc
 	sortingURL="<%= sortingURL.toString() %>"
 />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<c:choose>
 		<c:when test="<%= userTrackers != null %>">
 			<liferay-ui:search-container
@@ -147,4 +147,4 @@ sortingURL.setParameter("orderByType", orderByType.equals("asc") ? "desc" : "asc
 			<liferay-ui:message arguments="<%= PropsKeys.SESSION_TRACKER_MEMORY_ENABLED %>" key="display-of-live-session-data-is-disabled" translateArguments="<%= false %>" />
 		</c:otherwise>
 	</c:choose>
-</div>
+</clay:container>

@@ -66,7 +66,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 </c:if>
 
 <clay:container
-	className="c-pt-md-5"
+	className="container-form-lg"
 	id='<%= renderResponse.getNamespace() + "permissionContainer" %>'
 >
 	<clay:row>

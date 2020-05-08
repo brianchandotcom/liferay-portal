@@ -20,7 +20,9 @@
 long segmentsEntryId = ParamUtil.getLong(request, "segmentsEntryId");
 %>
 
-<div class="container-fluid container-fluid-max-sm">
+<clay:container
+	size="sm"
+>
 	<liferay-ui:search-container
 		emptyResultsMessage="no-users-have-been-assigned-to-this-segment"
 		iteratorURL="<%= currentURLObj %>"
@@ -55,4 +57,4 @@ long segmentsEntryId = ParamUtil.getLong(request, "segmentsEntryId");
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>

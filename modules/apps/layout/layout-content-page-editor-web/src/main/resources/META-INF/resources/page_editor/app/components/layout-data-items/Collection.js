@@ -91,10 +91,6 @@ const Grid = ({
 							<CollectionItemContextProvider
 								key={index}
 								value={{
-									canElevate: {
-										bottom: i === numberOfRows - 1,
-										top: i === 0,
-									},
 									collectionFields,
 									collectionItem:
 										collection[i * numberOfColumns + j],

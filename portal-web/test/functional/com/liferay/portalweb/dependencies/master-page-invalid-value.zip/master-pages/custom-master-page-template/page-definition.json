@@ -1,0 +1,42 @@
+{
+  "pageElement" : {
+    "pageElements" : [ {
+      "definition" : {
+        "fragmentSettings" : {
+          "unallowedFragments" : [ ]
+        }
+      },
+      "type" : "DropZone"
+    }, {
+      "definition" : {
+        "fragment" : {
+          "collectionName" : "Basic Components",
+          "key" : "BASIC_COMPONENT-button",
+          "name" : Button
+        },
+        "fragmentConfig" : {
+          "buttonType" : "primary",
+          "buttonAlign" : "left",
+          "marginBottom" : "3",
+          "buttonSize" : "nm"
+        },
+        "fragmentFields" : [ {
+          "id" : "link",
+          "value" : { }
+        } ]
+      },
+      "type" : "Fragment"
+    } ],
+    "type" : "Root"
+  },
+  "settings" : {
+    "colorSchemeName" : "01",
+    "themeName" : "Classic",
+    "themeSettings" : {
+      "lfr-theme:regular:show-header" : "false",
+      "lfr-theme:regular:wrap-widget-page-content" : "false",
+      "lfr-theme:regular:show-header-search" : "false",
+      "lfr-theme:regular:show-footer" : "false"
+    }
+  }
+}

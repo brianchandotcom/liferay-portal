@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>CARD_SELECTED</td>
-	<td>//li[contains(@class,'active')]//div[contains(@class,'card')][contains(.,'${key_card}')]</td>
+	<td>//li[contains(@class,'active')]//div[contains(@class,'card')][contains(.,'${key_card}')] | //div[contains(@class,'card')][contains(@class,'active')][contains(.,'${key_card}')]</td>
 	<td></td>
 </tr>
 <tr>

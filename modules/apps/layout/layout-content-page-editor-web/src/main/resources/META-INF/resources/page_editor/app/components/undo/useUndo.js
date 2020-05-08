@@ -14,7 +14,11 @@
 
 import {useRef} from 'react';
 
-import {ADD_UNDO_ACTION} from '../../actions/types';
+import {
+	ADD_UNDO_ACTION,
+	CLEAN_UNDO_ACTIONS,
+	DELETE_ITEM,
+} from '../../actions/types';
 import {config} from '../../config/index';
 import {canUndoAction} from './undoActions';
 
@@ -25,6 +29,13 @@ export default function useUndo([state, dispatch]) {
 				...action,
 				actionType: action.type,
 				type: ADD_UNDO_ACTION,
+			});
+		}
+
+		if (action.type === DELETE_ITEM) {
+			dispatch({
+				itemId: action.itemId,
+				type: CLEAN_UNDO_ACTIONS,
 			});
 		}
 

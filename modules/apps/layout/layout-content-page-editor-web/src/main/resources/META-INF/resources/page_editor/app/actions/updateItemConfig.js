@@ -14,8 +14,9 @@
 
 import {UPDATE_ITEM_CONFIG} from './types';
 
-export default function updateItemConfig({layoutData}) {
+export default function updateItemConfig({itemId, layoutData}) {
 	return {
+		itemId,
 		layoutData,
 		type: UPDATE_ITEM_CONFIG,
 	};

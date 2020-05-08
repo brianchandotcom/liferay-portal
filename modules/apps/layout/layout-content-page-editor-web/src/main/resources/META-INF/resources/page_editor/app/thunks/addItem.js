@@ -32,7 +32,7 @@ export default function addItem({
 			position,
 			segmentsExperienceId,
 		}).then(({addedItemId, layoutData}) => {
-			dispatch(addItemAction({layoutData}));
+			dispatch(addItemAction({itemId: addedItemId, layoutData}));
 
 			if (addedItemId) {
 				selectItem(addedItemId);

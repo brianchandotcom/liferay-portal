@@ -26,7 +26,7 @@ export default function moveItem({itemId, parentItemId, position, store}) {
 			position,
 			segmentsExperienceId,
 		}).then((layoutData) => {
-			dispatch(moveItemAction({layoutData}));
+			dispatch(moveItemAction({itemId, layoutData}));
 		});
 	};
 }

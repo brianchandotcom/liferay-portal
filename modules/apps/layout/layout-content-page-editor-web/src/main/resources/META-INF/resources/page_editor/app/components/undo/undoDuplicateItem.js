@@ -19,7 +19,7 @@ function undoAction({action, store}) {
 }
 
 function getDerivedStateForUndo({action}) {
-	return {itemId: action.duplicatedItemId};
+	return {itemId: action.itemId};
 }
 
 export {undoAction, getDerivedStateForUndo};

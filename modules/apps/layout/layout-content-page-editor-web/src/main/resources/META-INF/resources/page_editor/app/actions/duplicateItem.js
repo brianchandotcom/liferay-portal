@@ -16,12 +16,12 @@ import {DUPLICATE_ITEM} from './types';
 
 export default function duplicateItem({
 	addedFragmentEntryLinks = [],
-	duplicatedItemId,
+	itemId,
 	layoutData,
 }) {
 	return {
 		addedFragmentEntryLinks,
-		duplicatedItemId,
+		itemId,
 		layoutData,
 		type: DUPLICATE_ITEM,
 	};

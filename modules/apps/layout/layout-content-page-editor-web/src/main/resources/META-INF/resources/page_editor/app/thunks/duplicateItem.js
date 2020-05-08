@@ -30,7 +30,7 @@ export default function duplicateItem({
 				dispatch(
 					duplicateItemAction({
 						addedFragmentEntryLinks: duplicatedFragmentEntryLinks,
-						duplicatedItemId,
+						itemId: duplicatedItemId,
 						layoutData,
 					})
 				);

@@ -30,7 +30,7 @@ export default function updateItemConfig({
 			segmentsExperienceId,
 		})
 			.then((layoutData) => {
-				dispatch(updateItemConfigAction({layoutData}));
+				dispatch(updateItemConfigAction({itemId, layoutData}));
 			})
 			.then(() => {
 				InfoItemService.getPageContents({

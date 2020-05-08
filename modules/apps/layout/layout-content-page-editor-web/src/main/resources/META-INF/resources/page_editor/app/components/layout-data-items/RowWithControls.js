@@ -108,7 +108,7 @@ const RowWithControls = React.forwardRef(
 		};
 
 		const onResizeStart = ({clientX}) => {
-			dispatch({type: UPDATE_COL_SIZE_START});
+			dispatch({itemId: item.itemId, type: UPDATE_COL_SIZE_START});
 			setHighLightedColumn(getHighlightedColumnIndex(clientX));
 			setShowOverlay(true);
 		};

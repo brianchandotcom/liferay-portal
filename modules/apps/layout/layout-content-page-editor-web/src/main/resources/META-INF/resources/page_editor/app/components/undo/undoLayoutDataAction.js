@@ -29,8 +29,8 @@ function undoAction({action, store}) {
 	};
 }
 
-function getDerivedStateForUndo({state}) {
-	return {layoutData: state.layoutData};
+function getDerivedStateForUndo({action, state}) {
+	return {itemId: action.itemId, layoutData: state.layoutData};
 }
 
 export {undoAction, getDerivedStateForUndo};

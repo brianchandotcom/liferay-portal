@@ -14,8 +14,9 @@
 
 import {ADD_ITEM} from './types';
 
-export default function addItem({layoutData}) {
+export default function addItem({itemId, layoutData}) {
 	return {
+		itemId,
 		layoutData,
 		type: ADD_ITEM,
 	};

@@ -14,8 +14,9 @@
 
 import {MOVE_ITEM} from './types';
 
-export default function moveItem({layoutData}) {
+export default function moveItem({itemId, layoutData}) {
 	return {
+		itemId,
 		layoutData,
 		type: MOVE_ITEM,
 	};

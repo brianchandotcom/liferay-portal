@@ -35,7 +35,9 @@ SearchEngineDisplayContext
 	searchEngineDisplayContext = (SearchEngineDisplayContext)request.getAttribute(SearchAdminWebKeys.SEARCH_ENGINE_DISPLAY_CONTEXT);
 %>
 
-<div class="container-fluid container-fluid-max-xl container-form-lg search-engine-page-container">
+<clay:container
+	className="container-form-lg search-engine-page-container"
+>
 	<c:choose>
 		<c:when test="<%= searchEngineDisplayContext.isMissingSearchEngine() %>">
 			<div class="alert alert-warning">
@@ -201,4 +203,4 @@ SearchEngineDisplayContext
 			</c:choose>
 		</c:otherwise>
 	</c:choose>
-</div>
+</clay:container>

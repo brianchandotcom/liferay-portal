@@ -14,6 +14,7 @@
 
 module.exports = {
 	rules: {
+		'liferay/no-arrow': 'error',
 		'prefer-arrow-callback': 'off',
 	},
 };

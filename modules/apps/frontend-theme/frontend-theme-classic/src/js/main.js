@@ -12,7 +12,6 @@
  * details.
  */
 
-/* eslint-disable prefer-arrow-callback */
 (function () {
 	var signInLink = document.querySelector('.sign-in > a');
 

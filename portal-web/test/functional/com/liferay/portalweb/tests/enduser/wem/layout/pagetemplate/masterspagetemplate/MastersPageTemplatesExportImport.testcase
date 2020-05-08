@@ -372,4 +372,50 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-102207. Can export a master page template with the thumbnail and import."
+	@priority = "4"
+	test ExportImportMastersPageTemplateWithThumbnail {
+		task ("Add a custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+		}
+
+		task ("Change thumbnail of custom master") {
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Change Thumbnail",
+				masterLayoutName = "Custom Masters Page Template");
+
+			ItemSelector.uploadFile(uploadFileName = "Document_1.png");
+
+			LexiconCard.viewCardThumbnail(card = "Custom Masters Page Template");
+
+			SelectFrameTop(value1 = "relative=top");
+		}
+
+		task ("Export custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Export",
+				masterLayoutName = "Custom Masters Page Template");
+
+			DownloadTempFile();
+		}
+
+		task ("Import masters page template in new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
+
+			MastersPageTemplatesAdmin.importMastersFromTempFolder();
+		}
+
+		task ("Assert the thumbnail of custom master is imported") {
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template");
+
+			LexiconCard.viewCardThumbnail(card = "Custom Masters Page Template");
+		}
+	}
+
 }

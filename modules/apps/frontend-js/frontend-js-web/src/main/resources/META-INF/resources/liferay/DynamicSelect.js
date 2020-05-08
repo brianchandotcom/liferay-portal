@@ -54,23 +54,23 @@ function isArrayLike(value) {
 	);
 }
 
-function toArray(obj) {
-	if (isArrayLike(obj)) {
+function toArray(value) {
+	if (isArrayLike(value)) {
 		try {
-			return Array.slice.call(obj, 0);
+			return Array.slice.call(value, 0);
 		}
 		catch (ex) {
 			const result = [];
 
-			for (let i = 0; i < obj.length; i++) {
-				result.push(obj[i]);
+			for (let i = 0; i < value.length; i++) {
+				result.push(value[i]);
 			}
 
 			return result;
 		}
 	}
 
-	return [obj];
+	return [value];
 }
 
 function updateSelect(array, index, list) {

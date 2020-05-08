@@ -19,6 +19,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
+import isNumber from '../utils/isNumber';
 import Lang from '../utils/lang';
 
 const SCORE_UNVOTE = -1;
@@ -81,7 +82,12 @@ const RatingsStars = ({
 		(score) => {
 			sendVoteRequest(score).then(
 				({averageScore, score, totalEntries} = {}) => {
-					if (isMounted()) {
+					if (
+						isMounted() &&
+						isNumber(averageScore) &&
+						isNumber(score) &&
+						isNumber(totalEntries)
+					) {
 						setTotalEntries(totalEntries);
 						setAverageScore(formatAverageScore(averageScore));
 						setScore(getLabelScore(score));
@@ -187,7 +193,6 @@ const RatingsStars = ({
 
 						<ClayDropDown.Item
 							disabled={score === 0}
-							key={starScores.length + 1}
 							onClick={() => {
 								handleDeleteClick();
 							}}

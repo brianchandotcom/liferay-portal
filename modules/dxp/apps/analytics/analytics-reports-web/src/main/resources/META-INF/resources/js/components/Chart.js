@@ -173,7 +173,7 @@ export default function Chart({
 					.then((data) => {
 						if (!gone) {
 							if (isMounted()) {
-								Object.entries(data).map((key) => {
+								Object.keys(data).map((key) => {
 									actions.addDataSetItem({
 										dataSetItem: data[key],
 										key,

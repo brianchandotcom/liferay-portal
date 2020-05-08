@@ -281,11 +281,9 @@ public class RedirectEntryLocalServiceImpl
 		throws PortalException {
 
 		List<RedirectEntry> chainedRedirectEntries =
-			redirectEntryLocalService.
-				getRedirectEntriesByGroupIdAndDestinationURL(
-					redirectEntry.getGroupId(),
-					groupBaseURL + StringPool.SLASH +
-						redirectEntry.getSourceURL());
+			redirectEntryLocalService.getRedirectEntries(
+				redirectEntry.getGroupId(),
+				groupBaseURL + StringPool.SLASH + redirectEntry.getSourceURL());
 
 		for (RedirectEntry chainedRedirectEntry : chainedRedirectEntries) {
 			_checkMustNotFormALoopWithAnotherRedirectEntry(
@@ -363,12 +361,25 @@ public class RedirectEntryLocalServiceImpl
 				groupBaseURL + StringPool.SLASH + redirectEntry.getSourceURL());
 
 		for (RedirectEntry chainedRedirectEntry : chainedRedirectEntries) {
-			updateRedirectEntry(
+			RedirectEntry updatedRedirectEntry = updateRedirectEntry(
 				chainedRedirectEntry.getRedirectEntryId(),
 				redirectEntry.getDestinationURL(),
 				chainedRedirectEntry.getExpirationDate(),
 				chainedRedirectEntry.isPermanent(),
 				chainedRedirectEntry.getSourceURL());
+
+			RedirectEntry destinationRedirectEntry =
+				redirectEntryLocalService.fetchRedirectEntry(
+					redirectEntry.getGroupId(),
+					StringUtil.removeSubstring(
+						updatedRedirectEntry.getDestinationURL(),
+						groupBaseURL + StringPool.SLASH));
+
+			if (destinationRedirectEntry != null) {
+				_checkMustNotFormALoopWithAnotherRedirectEntry(
+					updatedRedirectEntry.getDestinationURL(), groupBaseURL,
+					destinationRedirectEntry.getSourceURL());
+			}
 		}
 
 		RedirectEntry chainedRedirectEntry =

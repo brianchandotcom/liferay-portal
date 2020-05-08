@@ -1524,6 +1524,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101255. The saved composition entry is available in Page Fragments admin with specific actions."
+	@priority = "5"
+	test ViewSavedCompositionMenuItem {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		task ("Add a Section to page") {
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		}
+
+		task ("Add a Heading fragment into Section") {
+			Click(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "Heading",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
+
+		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
+
+		LexiconEntry.openEntryMenu(rowEntry = "New Fragment Name");
+
+		for (var menuItem : list "Rename,Move,Change Thumbnail,Export,Delete") {
+			MenuItem.viewPresent(menuItem = "${menuItem}");
+		}
+	}
+
 	@description = "This is a test for LPS-101328. Editable image name should be visible in the floating toolbar."
 	@priority = "5"
 	test ViewSelectedImageName {

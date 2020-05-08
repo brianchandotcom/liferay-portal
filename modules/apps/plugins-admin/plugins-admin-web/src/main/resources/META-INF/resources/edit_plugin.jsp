@@ -49,7 +49,7 @@ renderResponse.setTitle(title);
 
 <portlet:actionURL name="/plugins_admin/edit_plugin" var="editPluginURL" />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form action="<%= editPluginURL %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="pluginId" type="hidden" value="<%= pluginId %>" />
@@ -228,7 +228,7 @@ renderResponse.setTitle(title);
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</div>
+</clay:container>
 
 <%!
 private List<Role> _filterRoles(List<Role> roles, String portletId, String actionId) throws Exception {

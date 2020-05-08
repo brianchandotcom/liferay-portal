@@ -22,9 +22,9 @@
 	</aui:nav>
 </aui:nav-bar>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<iframe allowTransparency="true" frameborder="0" id="<portlet:namespace />iframe" scrolling="no" src="<%= themeDisplay.getPathMain() %>/portal/license?p_l_id=<%= themeDisplay.getPlid() %>&p_p_state=pop_up" style="border: none; width: 100%;"></iframe>
-</div>
+</clay:container>
 
 <aui:script use="aui-autosize-iframe">
 	var iframe = A.one('#<portlet:namespace />iframe');

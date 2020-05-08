@@ -70,7 +70,10 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 		</c:otherwise>
 	</c:choose>
 
-	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<clay:container
+		className="closed sidenav-container sidenav-right"
+		id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
+	>
 		<div id="breadcrumb">
 			<liferay-ui:breadcrumb
 				showCurrentGroup="<%= false %>"
@@ -180,7 +183,7 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 				/>
 			</liferay-ui:search-container>
 		</div>
-	</div>
+	</clay:container>
 </aui:form>
 
 <aui:script>

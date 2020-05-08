@@ -32,7 +32,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	<portlet:param name="mvcRenderCommandName" value="/view_uad_export_processes" />
 </portlet:renderURL>
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
+<clay:container
+	className="container-form-lg"
+>
 	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "exportApplicationData();" %>'>
 		<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 		<aui:input name="redirect" type="hidden" value="<%= viewUADExportProcesses.toString() %>" />
@@ -129,7 +131,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 		</div>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	function <portlet:namespace />exportApplicationData() {

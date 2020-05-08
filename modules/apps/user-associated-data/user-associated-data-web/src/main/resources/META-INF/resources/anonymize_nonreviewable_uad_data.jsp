@@ -31,7 +31,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <liferay-util:include page="/uad_data_navigation_bar.jsp" servletContext="<%= application %>" />
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
+<clay:container
+	className="container-form-lg"
+>
 	<aui:form method="post" name="nonreviewableUADDataForm">
 		<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -118,6 +120,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 		</div>
 	</aui:form>
-</div>
+</clay:container>
 
 <%@ include file="/action/confirm_action_js.jspf" %>

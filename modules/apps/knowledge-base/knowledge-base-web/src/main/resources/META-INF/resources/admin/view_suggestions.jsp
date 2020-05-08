@@ -77,7 +77,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 	sortingURL="<%= String.valueOf(kbSuggestionListManagementToolbarDisplayContext.getSortingURL()) %>"
 />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-ui:success key="suggestionDeleted" message="suggestion-deleted-successfully" />
 
 	<liferay-ui:success key="suggestionsDeleted" message="suggestions-deleted-successfully" />
@@ -87,7 +87,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 	<liferay-ui:success key="suggestionSaved" message="suggestion-saved-successfully" />
 
 	<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
-</div>
+</clay:container>
 
 <aui:script>
 	var deleteKBComments = function () {

@@ -37,7 +37,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 	sortingURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSortingURL()) %>"
 />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-portlet:renderURL varImpl="searchURL">
 		<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
 	</liferay-portlet:renderURL>
@@ -110,7 +110,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 			</liferay-ui:search-container>
 		</aui:fieldset>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	var deleteKBTemplates = function () {

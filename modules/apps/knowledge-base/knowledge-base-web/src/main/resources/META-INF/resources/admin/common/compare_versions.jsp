@@ -56,7 +56,7 @@ if (portletTitleBasedNavigation) {
 	<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 </liferay-portlet:resourceURL>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-frontend:diff-version-comparator
 		diffHtmlResults="<%= diffHtmlResults %>"
 		diffVersionsInfo="<%= AdminUtil.getDiffVersionsInfo(scopeGroupId, kbArticle.getResourcePrimKey(), GetterUtil.getInteger(sourceVersion), GetterUtil.getInteger(targetVersion)) %>"
@@ -65,4 +65,4 @@ if (portletTitleBasedNavigation) {
 		sourceVersion="<%= sourceVersion %>"
 		targetVersion="<%= targetVersion %>"
 	/>
-</div>
+</clay:container>

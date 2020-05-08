@@ -32,132 +32,115 @@ pageContext.setAttribute("assignedScopeAliases", assignedScopeAliases);
 pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptionsMap);
 %>
 
-<div class="container-fluid container-fluid-max-xl container-view">
+<clay:container
+	className="container-view"
+>
+	<div class="sheet">
+		<div class="sheet-header">
+			<h2 class="sheet-title"><liferay-ui:message key="scopes" /></h2>
 
-<div class="sheet">
-	<div class="sheet-header">
-		<h2 class="sheet-title"><liferay-ui:message key="scopes" /></h2>
+			<div class="sheet-text"><liferay-ui:message key="scopes-description" /></div>
+		</div>
 
-		<div class="sheet-text"><liferay-ui:message key="scopes-description" /></div>
+		<div class="sheet-section">
+			<liferay-ui:error exception="<%= OAuth2ApplicationClientCredentialUserIdException.class %>">
+
+				<%
+				OAuth2ApplicationClientCredentialUserIdException oAuth2ApplicationClientCredentialUserIdException = (OAuth2ApplicationClientCredentialUserIdException)errorException;
+				%>
+
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(oAuth2ApplicationClientCredentialUserIdException.getClientCredentialUserScreenName()) %>">
+						<liferay-ui:message arguments="<%= oAuth2ApplicationClientCredentialUserIdException.getClientCredentialUserScreenName() %>" key="this-operation-cannot-be-performed-because-you-cannot-impersonate-x" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= oAuth2ApplicationClientCredentialUserIdException.getClientCredentialUserId() %>" key="this-operation-cannot-be-performed-because-you-cannot-impersonate-x" />
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:error>
+
+			<clay:row>
+				<div class="col-lg-12">
+					<portlet:actionURL name="/admin/assign_scopes" var="assignScopesURL">
+						<portlet:param name="mvcRenderCommandName" value="/admin/assign_scopes" />
+						<portlet:param name="navigation" value="assign_scopes" />
+						<portlet:param name="backURL" value="<%= redirect %>" />
+						<portlet:param name="oAuth2ApplicationId" value="<%= String.valueOf(oAuth2Application.getOAuth2ApplicationId()) %>" />
+					</portlet:actionURL>
+
+					<aui:form action="<%= assignScopesURL %>" name="fm">
+						<ul class="list-group">
+							<oauth2-tree:tree
+								trees="<%= (Collection)scopeAliasTreeNode.getTrees() %>"
+							>
+								<jsp:attribute
+									name="nodeJspFragment"
+								>
+								<li class="borderless list-group-item<c:if test="${assignedDeletedScopeAliases.contains(tree.value)}"> removed-scope</c:if>" id="${tree.value}-container">
+									<clay:row>
+											<c:choose>
+												<c:when test="${parentNodes.size() > 0}">
+												<div class="col-md-6">
+													<div class="scope-children-${parentNodes.size()}">
+														<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-childrens="true" data-parent="${parentNodes.getFirst().value}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
+													</div>
+												</div>
+												</c:when>
+												<c:otherwise>
+												<div class="col-md-6">
+													<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-childrens="true" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
+												</div>
+												</c:otherwise>
+											</c:choose>
+										<div class="col-md-6 text-left">
+											${scopeAliasesDescriptionsMap.get(tree.value)}
+										</div>
+									</clay:row>
+								</li>
+
+								<oauth2-tree:render-children />
+								</jsp:attribute>
+
+								<jsp:attribute
+									name="leafJspFragment"
+								>
+								<li class="borderless list-group-item<c:if test="${assignedDeletedScopeAliases.contains(tree.value)}"> removed-scope</c:if>" id="${tree.value}-container">
+									<clay:row>
+											<c:choose>
+												<c:when test="${parentNodes.size() > 0}">
+												<div class="col-md-6">
+													<div class="scope-children-${parentNodes.size()}">
+														<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-parent="${parentNodes.getFirst().value}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
+													</div>
+												</div>
+												</c:when>
+												<c:otherwise>
+												<div class="col-md-6">
+													<aui:input checked="${assignedScopeAliases.contains(tree.value)}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
+												</div>
+												</c:otherwise>
+											</c:choose>
+										<div class="col-md-6 text-left">
+											${scopeAliasesDescriptionsMap.get(tree.value)}
+										</div>
+									</clay:row>
+								</li>
+								</jsp:attribute>
+							</oauth2-tree:tree>
+							</li>
+						</ul>
+
+						<aui:button-row>
+							<aui:button id="save" type="submit" value="save" />
+
+							<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" type="cancel" />
+						</aui:button-row>
+					</aui:form>
+				</div>
+			</clay:row>
+		</div>
 	</div>
-
-<div class="sheet-section">
-	<liferay-ui:error exception="<%= OAuth2ApplicationClientCredentialUserIdException.class %>">
-
-		<%
-		OAuth2ApplicationClientCredentialUserIdException oAuth2ApplicationClientCredentialUserIdException = (OAuth2ApplicationClientCredentialUserIdException)errorException;
-		%>
-
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(oAuth2ApplicationClientCredentialUserIdException.getClientCredentialUserScreenName()) %>">
-				<liferay-ui:message arguments="<%= oAuth2ApplicationClientCredentialUserIdException.getClientCredentialUserScreenName() %>" key="this-operation-cannot-be-performed-because-you-cannot-impersonate-x" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message arguments="<%= oAuth2ApplicationClientCredentialUserIdException.getClientCredentialUserId() %>" key="this-operation-cannot-be-performed-because-you-cannot-impersonate-x" />
-			</c:otherwise>
-		</c:choose>
-	</liferay-ui:error>
-
-	<clay:row>
-		<clay:col
-			lg="12"
-		>
-			<portlet:actionURL name="/admin/assign_scopes" var="assignScopesURL">
-				<portlet:param name="mvcRenderCommandName" value="/admin/assign_scopes" />
-				<portlet:param name="navigation" value="assign_scopes" />
-				<portlet:param name="backURL" value="<%= redirect %>" />
-				<portlet:param name="oAuth2ApplicationId" value="<%= String.valueOf(oAuth2Application.getOAuth2ApplicationId()) %>" />
-			</portlet:actionURL>
-
-			<aui:form action="<%= assignScopesURL %>" name="fm">
-				<ul class="list-group">
-					<oauth2-tree:tree
-						trees="<%= (Collection)scopeAliasTreeNode.getTrees() %>"
-					>
-						<jsp:attribute
-							name="nodeJspFragment"
-						>
-						<li class="borderless list-group-item<c:if test="${assignedDeletedScopeAliases.contains(tree.value)}"> removed-scope</c:if>" id="${tree.value}-container">
-							<clay:row>
-								<c:choose>
-									<c:when test="${parentNodes.size() > 0}">
-										<clay:col
-											md="6"
-										>
-											<div class="scope-children-${parentNodes.size()}">
-												<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-childrens="true" data-parent="${parentNodes.getFirst().value}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
-											</div>
-										</clay:col>
-									</c:when>
-									<c:otherwise>
-										<clay:col
-											md="6"
-										>
-											<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-has-childrens="true" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
-										</clay:col>
-									</c:otherwise>
-								</c:choose>
-
-								<clay:col
-									className="text-left"
-									md="6"
-								>
-									${scopeAliasesDescriptionsMap.get(tree.value)}
-								</clay:col>
-							</clay:row>
-						</li>
-
-						<oauth2-tree:render-children />
-						</jsp:attribute>
-
-						<jsp:attribute
-							name="leafJspFragment"
-						>
-						<li class="borderless list-group-item<c:if test="${assignedDeletedScopeAliases.contains(tree.value)}"> removed-scope</c:if>" id="${tree.value}-container">
-							<clay:row>
-								<c:choose>
-									<c:when test="${parentNodes.size() > 0}">
-										<clay:col
-											md="6"
-										>
-											<div class="scope-children-${parentNodes.size()}">
-												<aui:input checked="${assignedScopeAliases.contains(tree.value)}" data-parent="${parentNodes.getFirst().value}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
-											</div>
-										</clay:col>
-									</c:when>
-									<c:otherwise>
-										<clay:col
-											md="6"
-										>
-											<aui:input checked="${assignedScopeAliases.contains(tree.value)}" disabled="${assignedDeletedScopeAliases.contains(tree.value)}" id="${tree.value}" label="${tree.value}" name="scopeAliases" type="checkbox" value="${tree.value}" />
-										</clay:col>
-									</c:otherwise>
-								</c:choose>
-
-								<clay:col
-									className="text-left"
-									md="6"
-								>
-									${scopeAliasesDescriptionsMap.get(tree.value)}
-								</clay:col>
-							</clay:row>
-						</li>
-						</jsp:attribute>
-					</oauth2-tree:tree>
-					</li>
-				</ul>
-
-				<aui:button-row>
-					<aui:button id="save" type="submit" value="save" />
-
-					<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" type="cancel" />
-				</aui:button-row>
-			</aui:form>
-		</clay:col>
-	</clay:row>
-</div>
-</div>
-</div>
+</clay:container>
 
 <aui:script require="metal-dom/src/dom as dom">
 	AUI().use('node', 'aui-modal', function (A) {

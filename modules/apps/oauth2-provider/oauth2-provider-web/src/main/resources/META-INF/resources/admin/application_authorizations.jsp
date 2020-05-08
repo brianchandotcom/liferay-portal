@@ -48,7 +48,7 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 	<portlet:param name="oAuth2ApplicationId" value="<%= String.valueOf(oAuth2ApplicationId) %>" />
 </portlet:actionURL>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form action="<%= revokeOAuth2AuthorizationsURL %>" name="fm">
 		<aui:input name="oAuth2ApplicationId" type="hidden" value="<%= oAuth2ApplicationId %>" />
 		<aui:input name="oAuth2AuthorizationIds" type="hidden" />
@@ -118,7 +118,7 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	function <portlet:namespace />revokeOAuth2Authorizations() {

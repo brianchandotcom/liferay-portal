@@ -128,7 +128,9 @@ definition {
 
 		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
 
-		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
+		PageEditorComposition.saveAsFragment(
+			collectionName = "Collection Name",
+			fragmentName = "New Fragment Name");
 
 		PageEditor.clickPublish();
 

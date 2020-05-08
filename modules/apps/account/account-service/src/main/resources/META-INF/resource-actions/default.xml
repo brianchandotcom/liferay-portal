@@ -33,4 +33,18 @@
 			</supports>
 		</permissions>
 	</model-resource>
+	<model-resource organization="true" portal="true">
+		<model-name>com.liferay.portal.kernel.model.Organization</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_users_admin_web_portlet_UsersAdminPortlet</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_ACCOUNTS</action-key>
+			</supports>
+			<guest-unsupported>
+				<action-key>MANAGE_ACCOUNTS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
 </resource-action-mapping>

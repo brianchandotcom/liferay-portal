@@ -104,7 +104,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 	</c:if>
 </c:if>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<div id="<portlet:namespace />customConfiguration">
 		<portlet:actionURL name="editPublishConfiguration" var="updatePublishConfigurationURL">
 			<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
@@ -188,7 +188,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			</div>
 		</aui:form>
 	</div>
-</div>
+</clay:container>
 
 <aui:script>
 	function <portlet:namespace />publishPages() {

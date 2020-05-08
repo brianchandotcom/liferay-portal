@@ -16,6 +16,10 @@ package com.liferay.jenkins.results.parser.spira;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import java.lang.reflect.Field;
 
 import java.util.Calendar;
@@ -50,11 +54,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		Class<? extends SpiraArtifact> spiraArtifactClass) {
 
 		return (String)_getClassField(spiraArtifactClass, "ID_KEY");
-	}
-
-	@Override
-	public void deserialize() {
-		jsonObject = new JSONObject(_jsonObjectString);
 	}
 
 	@Override
@@ -105,11 +104,6 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		JSONObject jsonObject = toJSONObject();
 
 		return jsonObject.hashCode();
-	}
-
-	@Override
-	public void serialize() {
-		_jsonObjectString = jsonObject.toString();
 	}
 
 	@Override
@@ -423,6 +417,36 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		pathSpiraArtifactsMap.remove(pathSpiraArtifact.getPath());
 	}
 
+	private void readObject(ObjectInputStream in)
+		throws ClassNotFoundException, IOException {
+
+		ObjectInputStream.GetField getField = in.readFields();
+
+		Object object = getField.get(_FIELD_NAME_JSON_OBJECT, null);
+
+		if (object == null) {
+			jsonObject = null;
+
+			return;
+		}
+
+		jsonObject = new JSONObject(object.toString());
+	}
+
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		ObjectOutputStream.PutField putField = out.putFields();
+
+		if (jsonObject == null) {
+			putField.put(_FIELD_NAME_JSON_OBJECT, null);
+
+			return;
+		}
+
+		putField.put(_FIELD_NAME_JSON_OBJECT, jsonObject.toString());
+	}
+
+	private static final String _FIELD_NAME_JSON_OBJECT = "jsonObject";
+
 	private static final Map<Class<?>, Map<Integer, SpiraArtifact>>
 		_idSpiraArtifactsMap = Collections.synchronizedMap(
 			new HashMap<Class<?>, Map<Integer, SpiraArtifact>>());
@@ -432,7 +456,5 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	private static final Map<Class<?>, Map<String, PathSpiraArtifact>>
 		_pathSpiraArtifactsMap = Collections.synchronizedMap(
 			new HashMap<Class<?>, Map<String, PathSpiraArtifact>>());
-
-	private String _jsonObjectString;
 
 }

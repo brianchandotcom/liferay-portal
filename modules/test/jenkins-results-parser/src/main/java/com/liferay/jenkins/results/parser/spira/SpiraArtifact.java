@@ -23,15 +23,11 @@ import org.json.JSONObject;
  */
 public interface SpiraArtifact extends Serializable {
 
-	public void deserialize();
-
 	public int getID();
 
 	public String getName();
 
 	public SpiraProject getSpiraProject();
-
-	public void serialize();
 
 	public JSONObject toJSONObject();
 

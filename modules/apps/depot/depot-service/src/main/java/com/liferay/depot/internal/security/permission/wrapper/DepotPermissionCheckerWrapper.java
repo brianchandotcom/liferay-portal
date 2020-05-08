@@ -97,9 +97,11 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			Group depotGroup = null;
 
 			if (StringUtil.equals(name, Group.class.getName())) {
-				depotGroup = _groupLocalService.getGroup(primKey);
+				depotGroup = _groupLocalService.fetchGroup(primKey);
 
-				if (depotGroup.getType() != GroupConstants.TYPE_DEPOT) {
+				if ((depotGroup != null) &&
+					(depotGroup.getType() != GroupConstants.TYPE_DEPOT)) {
+
 					depotGroup = null;
 				}
 			}

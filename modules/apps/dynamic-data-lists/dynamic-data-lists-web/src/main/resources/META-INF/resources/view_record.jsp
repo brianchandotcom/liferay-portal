@@ -49,7 +49,7 @@ else {
 }
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<c:if test="<%= recordVersion != null %>">
 		<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
 
@@ -100,7 +100,7 @@ else {
 			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 		</aui:button-row>
 	</aui:fieldset>
-</div>
+</clay:container>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();

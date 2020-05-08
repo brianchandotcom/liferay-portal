@@ -96,7 +96,10 @@ else {
 	/>
 </c:if>
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<clay:container
+	className="closed sidenav-container sidenav-right"
+	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
+>
 	<c:if test="<%= recordVersion != null %>">
 		<div class="sidenav-menu-slider">
 			<div class="sidebar sidebar-default sidenav-menu">
@@ -264,7 +267,7 @@ else {
 			</aui:button-row>
 		</aui:form>
 	</div>
-</div>
+</clay:container>
 
 <aui:script>
 	function <portlet:namespace />setWorkflowAction(draft) {

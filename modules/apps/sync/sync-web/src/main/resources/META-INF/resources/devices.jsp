@@ -72,7 +72,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 	</c:if>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
@@ -163,4 +163,4 @@ portletURL.setParameter("delta", String.valueOf(delta));
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>

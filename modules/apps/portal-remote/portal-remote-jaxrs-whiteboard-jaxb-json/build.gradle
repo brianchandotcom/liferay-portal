@@ -1,10 +1,10 @@
 dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
-	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.3"
 	compileOnly group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-base", version: "2.9.8"
 	compileOnly group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.9.8"
 	compileOnly group: "com.fasterxml.jackson.module", name: "jackson-module-jaxb-annotations", version: "2.9.8"
+	compileOnly group: "com.liferay", name: "com.fasterxml.jackson.databind", version: "2.10.3.LIFERAY-PATCHED-1"
 	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.jackson", version: "1.0.2"
 }
 

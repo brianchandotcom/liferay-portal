@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -59,6 +59,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Pei-Jung Lan
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 
@@ -139,21 +140,21 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 		_userLocalService.addOrganizationUser(
 			rootOrganization.getOrganizationId(), _user);
 
-		_role = RoleTestUtil.addRole(
+		Role role = RoleTestUtil.addRole(
 			RandomTestUtil.randomString(), RoleConstants.TYPE_ORGANIZATION,
 			Organization.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 			AccountActionKeys.MANAGE_ACCOUNTS);
 
 		UserTestUtil.addUserGroupRole(
-			_user.getUserId(), rootOrganization.getGroupId(), _role.getName());
+			_user.getUserId(), rootOrganization.getGroupId(), role.getName());
 
 		_assertSearch(
 			ListUtil.toList(_accountEntries.get(_accountEntries.size() - 1)));
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_user.getCompanyId(), Organization.class.getName(),
-			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", _role.getRoleId(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", role.getRoleId(),
 			ActionKeys.MANAGE_SUBORGANIZATIONS);
 
 		_assertSearch(_accountEntries);
@@ -193,7 +194,6 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 			baseModelSearchResult.getBaseModels());
 	}
 
-	@DeleteAfterTestRun
 	private final List<AccountEntry> _accountEntries = new ArrayList<>();
 
 	@Inject
@@ -206,21 +206,15 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	@Inject
 	private AccountEntryService _accountEntryService;
 
-	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();
-
 	private PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
-	@DeleteAfterTestRun
-	private Role _role;
-
 	@Inject
 	private RoleLocalService _roleLocalService;
 
-	@DeleteAfterTestRun
 	private User _user;
 
 	@Inject

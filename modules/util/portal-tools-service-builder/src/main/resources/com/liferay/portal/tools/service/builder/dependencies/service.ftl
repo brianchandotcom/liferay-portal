@@ -3,6 +3,7 @@ package ${apiPackagePath}.service;
 import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -69,9 +70,15 @@ import ${import};
 <#if entity.hasRemoteService() && !stringUtil.equals(sessionTypeName, "Local")>
 	@AccessControlled
 
+	<#if entity.isChangeTrackingEnabled()>
+		@CTAware
+	</#if>
+
 	<#if entity.isJsonEnabled()>
 		@JSONWebService
 	</#if>
+<#elseif entity.isChangeTrackingEnabled()>
+	@CTAware
 </#if>
 
 <#if !dependencyInjectorDS>

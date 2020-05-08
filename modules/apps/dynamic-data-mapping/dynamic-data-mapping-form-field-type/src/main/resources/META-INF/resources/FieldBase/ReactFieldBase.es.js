@@ -148,13 +148,13 @@ function FieldBase({
 						)}
 
 						{tooltip && (
-							<div className="ddm-tooltip">
+							<span className="ddm-tooltip">
 								<ClayIcon
 									data-tooltip-align="right"
 									symbol="question-circle-full"
 									title={tooltip}
 								/>
-							</div>
+							</span>
 						)}
 					</p>
 				)}

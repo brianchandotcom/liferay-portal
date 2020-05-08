@@ -64,14 +64,18 @@ const RatingsStars = ({
 	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
 	const isMounted = useIsMounted();
 
-	const handleDeleteClick = () => {
-		setScore(SCORE_UNVOTE);
-		handleSendVoteRequest(SCORE_UNVOTE);
-		setIsDropdownOpen(false);
-	};
-
 	const handleOnClick = (index) => {
-		const {label, value} = starScores[index];
+		let value, label;
+		const starScore = starScores[index];
+
+		if (index) {
+			value = starScore.value;
+			label = starScore.label;
+		}
+		else {
+			value = SCORE_UNVOTE;
+			label = getLabelScore(SCORE_UNVOTE);
+		}
 
 		setScore(label);
 		handleSendVoteRequest(value);
@@ -194,7 +198,7 @@ const RatingsStars = ({
 						<ClayDropDown.Item
 							disabled={score === 0}
 							onClick={() => {
-								handleDeleteClick();
+								handleOnClick();
 							}}
 						>
 							{Liferay.Language.get('delete')}

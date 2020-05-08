@@ -172,6 +172,8 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
+		LiferayEvent.initializeLiferayEventLog();
+
 		User.assignRegularRoleCP(
 			roleTitle = "Administrator",
 			userScreenName = "usersn");

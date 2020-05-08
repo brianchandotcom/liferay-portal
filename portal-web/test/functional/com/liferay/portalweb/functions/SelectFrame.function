@@ -7,12 +7,6 @@ definition {
 
 			selenium.mouseOver();
 
-			if (contains("${locator1}", "dialog-iframe-node")) {
-				selenium.waitForElementPresent(
-					"${locator1}/../div[contains(@class,'overlaymask-hidden')]"
-				);
-			}
-
 			selenium.selectFrame();
 
 			selenium.waitForElementPresent("//body");
@@ -62,12 +56,6 @@ definition {
 			selenium.waitForVisible();
 
 			selenium.mouseOver();
-
-			if (contains("${locator1}", "dialog-iframe-node")) {
-				selenium.waitForElementPresent(
-					"xpath=(//div[contains(@class,'overlaymask-hidden')])[2]"
-				);
-			}
 
 			selenium.selectFrame();
 

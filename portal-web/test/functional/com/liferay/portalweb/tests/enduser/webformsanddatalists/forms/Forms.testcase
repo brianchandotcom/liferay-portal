@@ -1375,7 +1375,7 @@ definition {
 
 		FormFields.viewFieldName(fieldName = "ParagraphName");
 
-		FormFields.editParagraphBody(fieldValue = "Paragraph body text.");
+		FormFields.editParagraphBody(content = "Paragraph body text.");
 
 		Form.closeSidebar();
 
@@ -2384,7 +2384,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Paragraph");
 
-		FormFields.editParagraphBody(fieldValue = "Paragraph body text.");
+		FormFields.editParagraphBody(content = "Paragraph body text.");
 
 		Form.closeSidebar();
 
@@ -2519,7 +2519,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "New Paragraph");
 
-		FormFields.editParagraphBody(fieldValue = "New Paragraph body text.");
+		FormFields.editParagraphBody(content = "New Paragraph body text.");
 
 		Form.closeSidebar();
 
@@ -2916,7 +2916,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Paragraph");
 
-		FormFields.editParagraphBody(fieldValue = "Paragraph body text.");
+		FormFields.editParagraphBody(content = "Paragraph body text.");
 
 		Form.closeSidebar();
 

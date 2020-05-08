@@ -128,9 +128,13 @@ definition {
 
 	macro editParagraphBody {
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.clickAtType(
-			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_FIELD",
-			value1 = "${fieldValue}");
+			locator1 = "CKEditor#BODY",
+			value1 = "${content}");
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro editPassword {

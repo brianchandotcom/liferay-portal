@@ -27,7 +27,7 @@
 	}
 </style>
 
-<div class="container-fluid">
+<clay:container>
 	<clay:row>
 		<clay:col>
 			<chart:area-spline
@@ -43,9 +43,9 @@
 			/>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
-<div class="container-fluid">
+<clay:container>
 	<clay:row>
 		<clay:col>
 			<chart:line
@@ -75,9 +75,9 @@
 			/>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
-<div class="container-fluid">
+<clay:container>
 	<clay:row>
 		<clay:col>
 			<chart:bar
@@ -93,9 +93,9 @@
 			/>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
-<div class="container-fluid">
+<clay:container>
 	<clay:row>
 		<clay:col>
 			<chart:donut
@@ -111,9 +111,9 @@
 			/>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
-<div class="container-fluid">
+<clay:container>
 	<clay:row>
 		<clay:col>
 			<chart:gauge
@@ -122,9 +122,9 @@
 			/>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
-<div class="container-fluid">
+<clay:container>
 	<clay:row>
 		<clay:col
 			className="geomap"
@@ -144,9 +144,9 @@
 			/>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
-<div class="container-fluid">
+<clay:container>
 	<clay:row>
 		<clay:col
 			className="polling-interval"
@@ -158,9 +158,9 @@
 			/>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
-<div class="container-fluid">
+<clay:container>
 	<clay:row>
 		<clay:col
 			className="predictive"
@@ -172,7 +172,7 @@
 			/>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
 <aui:script>
 	Liferay.componentReady('polling-interval-line-chart').then(function (chart) {

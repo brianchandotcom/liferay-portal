@@ -39,22 +39,19 @@ function sortByValue(a, b) {
  *
  * @see https://github.com/yui/yui3/blob/25264e3629b1c07fb779d203c4a25c0879ec862c/src/yui/js/yui-array.js#L271-L306
  */
-function isArrayLike(obj) {
-	if (Array.isArray(obj)) {
+function isArrayLike(value) {
+	if (Array.isArray(value)) {
 		return true;
 	}
-	else if (obj && typeof obj === 'object') {
-		if (
-			'length' in obj &&
-			!obj.tagName &&
-			!(obj.scrollTo && obj.document) &&
-			!obj.apply
-		) {
-			return true;
-		}
-	}
 
-	return false;
+	return !!(
+		value &&
+		typeof value === 'object' &&
+		typeof value.length === 'number' &&
+		!value.tagName &&
+		!value.scrollTo &&
+		!value.document
+	);
 }
 
 function toArray(obj) {

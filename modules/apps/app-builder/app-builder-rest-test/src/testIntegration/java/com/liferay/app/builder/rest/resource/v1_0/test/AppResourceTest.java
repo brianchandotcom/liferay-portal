@@ -14,7 +14,6 @@
 
 package com.liferay.app.builder.rest.resource.v1_0.test;
 
-import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.rest.client.dto.v1_0.App;
 import com.liferay.app.builder.rest.client.dto.v1_0.AppDeployment;
 import com.liferay.app.builder.rest.client.pagination.Page;
@@ -31,7 +30,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureLayoutTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -42,7 +41,6 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +52,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Gabriel Albuquerque
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AppResourceTest extends BaseAppResourceTestCase {
 
@@ -72,21 +71,6 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 			testGroup.getCreatorUserId(), StringPool.BLANK,
 			_ddmStructure.getStructureId(), StringPool.BLANK, null,
 			StringPool.BLANK);
-	}
-
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		for (App app : _apps) {
-			AppBuilderApp appBuilderApp =
-				_appBuilderAppLocalService.fetchAppBuilderApp(app.getId());
-
-			if (appBuilderApp != null) {
-				_appBuilderAppLocalService.deleteAppBuilderApp(
-					appBuilderApp.getAppBuilderAppId());
-			}
-		}
 	}
 
 	@Override
@@ -276,7 +260,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 	@Override
 	protected App testGetAppsPage_addApp(App app) throws Exception {
 		return testGetDataDefinitionAppsPage_addApp(
-			_ddmStructure.getStructureId(), app);
+			app.getDataDefinitionId(), app);
 	}
 
 	@Override
@@ -284,11 +268,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 			Long dataDefinitionId, App app)
 		throws Exception {
 
-		app = appResource.postDataDefinitionApp(dataDefinitionId, app);
-
-		_apps.add(app);
-
-		return app;
+		return appResource.postDataDefinitionApp(dataDefinitionId, app);
 	}
 
 	@Override
@@ -360,21 +340,13 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 	@Inject
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
-	private final List<App> _apps = new ArrayList<>();
-
-	@DeleteAfterTestRun
 	private DDMStructure _ddmStructure;
-
-	@DeleteAfterTestRun
 	private DDMStructureLayout _ddmStructureLayout;
-
-	@DeleteAfterTestRun
 	private DEDataListView _deDataListView;
 
 	@Inject
 	private DEDataListViewLocalService _deDataListViewLocalService;
 
-	@DeleteAfterTestRun
 	private DDMStructure _irrelevantDDMStructure;
 
 }

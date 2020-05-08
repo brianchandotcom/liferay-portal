@@ -153,6 +153,10 @@ public class ResourceActionsDefinitionTest {
 	private void _collectResourceActionsErrorForModelResources(
 		Element rootElement, Bundle bundle, StringBundler sb) {
 
+		if (bundle.getBundleId() == 0) {
+			return;
+		}
+
 		List<Element> modelResourceElements = rootElement.elements(
 			"model-resource");
 
@@ -163,9 +167,7 @@ public class ResourceActionsDefinitionTest {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
-		if ((bundle.getBundleId() != 0) &&
-			(headers.get("Liferay-Service") == null)) {
-
+		if (headers.get("Liferay-Service") == null) {
 			sb.append("\n\t\tModel resources are defined in bundle ");
 			sb.append(bundle.getSymbolicName());
 			sb.append(" which is not liferay service bundle");

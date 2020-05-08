@@ -176,4 +176,116 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-102207. Can export a master page template containing the edited inline content of fragments and import."
+	@priority = "4"
+	test ExportImportMastersPageTemplateWithEditedInlineContentOfFragments {
+		task ("Add a custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+		}
+
+		task ("Add fragments to custom master and edit inline content") {
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "Heading",
+				scope = "Master");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Modified Text");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "HTML",
+				scope = "Master");
+
+			PageEditor.editFragmentHTML(
+				editableId = "element-html",
+				fileName = "fragment_static_text.html",
+				fragmentName = "HTML");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Footer",
+				fragmentName = "Image",
+				scope = "Master");
+
+			PageEditor.editFragmentImage(
+				fileName = "Document_1.png",
+				fragmentName = "Image",
+				id = "image",
+				imageDescription = "This is Document 1 png");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Modified Text",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "This is static text.",
+				fragmentName = "HTML",
+				id = "element-html");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image",
+				imageDescription = "This is Document 1 png",
+				imageFileName = "Document_1.png");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Export custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Export",
+				masterLayoutName = "Custom Masters Page Template");
+
+			DownloadTempFile();
+		}
+
+		task ("Import masters page template in new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
+
+			MastersPageTemplatesAdmin.importMastersFromTempFolder();
+		}
+
+		task ("Assert the edited inline content of fragments are imported") {
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			for (var fragmentName : list "Heading,HTML,Image") {
+				AssertElementPresent(
+					key_fragmentName = "${fragmentName}",
+					locator1 = "Fragment#FRAGMENT_HEADER");
+			}
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Modified Text",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "This is static text.",
+				fragmentName = "HTML",
+				id = "element-html");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image",
+				imageDescription = "This is Document 1 png",
+				imageFileName = "Document_1.png");
+		}
+	}
+
 }

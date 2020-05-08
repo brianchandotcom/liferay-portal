@@ -221,8 +221,9 @@ definition {
 			value1 = "No Custom Results Yet");
 	}
 
-	@ignore = "true"
 	test AssertResultRankingsWithSynonyms {
+		property portal.suite.search.engine = "disable";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SearchTuningES7#AssertResultRankingsWithSynonyms";
 
 		JSONWebcontent.addWebContent(

@@ -78,6 +78,12 @@ definition {
 			value1 = "${cardSubtitle}");
 	}
 
+	macro viewCardThumbnail {
+		AssertVisible(
+			key_card = "${card}",
+			locator1 = "LexiconCard#CARD_THUMBNAIL");
+	}
+
 	macro viewCardTitle {
 		AssertTextEquals(
 			key_card = "${card}",

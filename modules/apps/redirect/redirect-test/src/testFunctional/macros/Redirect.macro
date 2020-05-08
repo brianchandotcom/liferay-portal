@@ -126,6 +126,8 @@ definition {
 
 		Button.click(button = "Create");
 
+		Redirect.configureRedirectChain(noUpdateReferences = "${noUpdateReferences}");
+
 		Alert.viewSuccessMessage();
 	}
 

@@ -24,7 +24,10 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 	displayContext="<%= roleItemSelectorViewDisplayContext %>"
 />
 
-<div class="container-fluid container-fluid-max-xl container-form-lg container-view" id="<portlet:namespace />roleSelectorWrapper">
+<clay:container
+	className="container-form-lg"
+	id='<%= renderResponse.getNamespace() + "roleSelectorWrapper" %>'
+>
 	<liferay-ui:search-container
 		searchContainer="<%= roleItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
@@ -61,7 +64,7 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var selectItemHandler = dom.delegate(

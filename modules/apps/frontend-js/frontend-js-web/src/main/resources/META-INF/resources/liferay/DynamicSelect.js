@@ -36,7 +36,7 @@ function sortByValue(a, b) {
 
 function isArrayLike(obj) {
 	if (Array.isArray(obj)) {
-		return 1;
+		return true;
 	}
 	else if (obj === Object(obj)) {
 		try {
@@ -46,13 +46,13 @@ function isArrayLike(obj) {
 				!(obj.scrollTo && obj.document) &&
 				!obj.apply
 			) {
-				return 2;
+				return true;
 			}
 		}
 		catch (ex) {}
 	}
 
-	return 0;
+	return false;
 }
 
 function toArray(obj) {

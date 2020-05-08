@@ -37,7 +37,7 @@ function sortByValue(a, b) {
 function updateSelect(array, index, list) {
 	const options = array[index];
 
-	const select = document.querySelector(`#${options.select}`);
+	const select = document.getElementById(options.select);
 
 	const selectDesc = options.selectDesc;
 	const selectDisableOnEmpty = options.selectDisableOnEmpty;
@@ -89,7 +89,7 @@ function updateSelect(array, index, list) {
 
 function callSelectData(array, index) {
 	if (index + 1 < array.length) {
-		const curSelect = document.querySelector(`#${array[index].select}`);
+		const curSelect = document.getElementById(array[index].select);
 		const nextSelectData = array[index + 1].selectData;
 
 		nextSelectData((list) => {
@@ -101,7 +101,7 @@ function callSelectData(array, index) {
 function process(array) {
 	array.forEach((item, index) => {
 		const id = item.select;
-		const select = document.querySelector(`#${id}`);
+		const select = document.getElementById(id);
 		const selectData = item.selectData;
 
 		if (select) {

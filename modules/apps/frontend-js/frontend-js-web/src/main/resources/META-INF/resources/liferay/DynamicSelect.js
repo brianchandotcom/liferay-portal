@@ -35,7 +35,7 @@ function sortByValue(a, b) {
 	return retVal;
 }
 
-export default class DyamicSelect {
+export default class DynamicSelect {
 	constructor(array) {
 		this.array = array;
 		this._processArray(this.array);

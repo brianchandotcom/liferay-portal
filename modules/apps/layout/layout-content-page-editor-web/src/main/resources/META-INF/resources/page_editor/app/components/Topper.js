@@ -98,7 +98,7 @@ function Topper({children, item, itemRef, layoutData}) {
 		targetRef,
 	} = useDropTarget(item, layoutData);
 
-	const {handlerRef, isDraggingSource, sourceRef} = useDragItem(
+	const {handlerRef, isDraggingSource} = useDragItem(
 		item,
 		(parentItemId, position) =>
 			dispatch(
@@ -231,7 +231,7 @@ function Topper({children, item, itemRef, layoutData}) {
 
 				hoverItem(item.itemId);
 			}}
-			ref={sourceRef}
+			ref={handlerRef}
 		>
 			<div
 				className={classNames('page-editor__topper__bar', 'tbar', {
@@ -242,10 +242,7 @@ function Topper({children, item, itemRef, layoutData}) {
 				})}
 			>
 				<ul className="tbar-nav">
-					<TopperListItem
-						className="page-editor__topper__drag-handler"
-						ref={handlerRef}
-					>
+					<TopperListItem className="page-editor__topper__drag-handler">
 						<ClayIcon
 							className="page-editor__topper__drag-icon page-editor__topper__icon"
 							symbol="drag"

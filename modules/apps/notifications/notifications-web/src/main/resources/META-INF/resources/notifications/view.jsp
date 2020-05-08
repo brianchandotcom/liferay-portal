@@ -85,7 +85,9 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	sortingURL="<%= String.valueOf(notificationsManagementToolbarDisplayContext.getSortingURL()) %>"
 />
 
-<div class="container-fluid-1280 main-content-body">
+<clay:container
+	className="main-content-body"
+>
 	<aui:form action="<%= currentURL %>" method="get" name="fm">
 		<div class="user-notifications">
 			<liferay-ui:search-container
@@ -120,7 +122,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 			</liferay-ui:search-container>
 		</div>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script sandbox="<%= true %>">
 	var deleteNotifications = function () {

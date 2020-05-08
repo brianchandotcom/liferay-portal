@@ -44,7 +44,9 @@ SearchContainer sharingEntriesSearchContainer = new SearchContainer(renderReques
 sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 %>
 
-<div class="container-fluid-1280 main-content-body">
+<clay:container
+	className="main-content-body"
+>
 	<liferay-ui:search-container
 		id="sharingEntries"
 		searchContainer="<%= sharingEntriesSearchContainer %>"
@@ -105,7 +107,7 @@ sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>
 
 <%
 PortletURL viewAssetTypeURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);

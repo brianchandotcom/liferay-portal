@@ -49,136 +49,116 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 					</aui:validator>
 				</aui:input>
 
-				<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwrite" type="checkbox" />
+				<aui:input checked="<%= true %>" label="overwrite-existing-page-templates" name="overwrite" type="checkbox" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 
 		<%
-		Map<Integer, List<LayoutPageTemplatesImporterResultEntry>> importedLayoutPageTemplatesImporterResultEntriesMap = importDisplayContext.getImportedLayoutPageTemplatesImporterResultEntriesMap();
+		Map<LayoutPageTemplatesImporterResultEntry.Status, List<LayoutPageTemplatesImporterResultEntry>>
+			layoutPageTemplatesImporterResultEntryMap = importDisplayContext.getLayoutPageTemplatesImporterResultEntryMap();
 		%>
 
-		<c:if test="<%= MapUtil.isNotEmpty(importedLayoutPageTemplatesImporterResultEntriesMap) %>">
-			<div class="alert alert-success success-dialog">
-
-				<%
-				int importedLayoutPageTemplatesImporterResultEntriesSize = 0;
-
-				if (importedLayoutPageTemplatesImporterResultEntriesMap != null) {
-					for (List<LayoutPageTemplatesImporterResultEntry> layoutPageTemplatesImporterResultEntries :
-						importedLayoutPageTemplatesImporterResultEntriesMap.values()) {
-
-						if (ListUtil.isNotEmpty(layoutPageTemplatesImporterResultEntries)) {
-							importedLayoutPageTemplatesImporterResultEntriesSize =
-								importedLayoutPageTemplatesImporterResultEntriesSize +
-								layoutPageTemplatesImporterResultEntries.size();
-						}
-					}
-				}
-				%>
-
-				<c:if test="<%= importedLayoutPageTemplatesImporterResultEntriesSize == 1 %>">
-					<span class="success-message"><liferay-ui:message key="1-entry-was-imported-correctly" /></span>
-				</c:if>
-
-				<c:if test="<%= importedLayoutPageTemplatesImporterResultEntriesSize > 1 %>">
-					<span class="success-message"><liferay-ui:message arguments="<%= importedLayoutPageTemplatesImporterResultEntriesSize %>" key="x-entries-were-imported-correctly" /></span>
-				</c:if>
-
-				<ul class="success-list-items">
-
-					<%
-					for (Map.Entry <Integer, List<LayoutPageTemplatesImporterResultEntry>> entrySet :
-						importedLayoutPageTemplatesImporterResultEntriesMap.entrySet()) {
-					%>
-
-						<li>
-							<span class="success-info"><%= HtmlUtil.escape(importDisplayContext.getSuccessMessage(entrySet)) %></span>
-						</li>
-
-					<%
-					}
-					%>
-
-				</ul>
-			</div>
-		</c:if>
-
-		<%
-		List<LayoutPageTemplatesImporterResultEntry> layoutPageTemplatesImporterResultEntriesWithWarnings = importDisplayContext.getLayoutPageTemplatesImporterResultEntriesWithWarnings();
-		%>
-
-		<c:if test="<%= ListUtil.isNotEmpty(layoutPageTemplatesImporterResultEntriesWithWarnings) %>">
-			<div class="alert alert-warning warning-dialog">
-				<span class="error-message"><liferay-ui:message key="some-entries-were-imported-with-warnings" /></span>
-
-				<ul class="error-list-items">
-
-					<%
-					for (int i = 0; i < layoutPageTemplatesImporterResultEntriesWithWarnings.size(); i++) {
-						LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = layoutPageTemplatesImporterResultEntriesWithWarnings.get(i);
-
-						String[] warningMessages = layoutPageTemplatesImporterResultEntry.getWarningMessages();
-					%>
-
-						<li>
-							<span class="error-info"><%= HtmlUtil.escape(layoutPageTemplatesImporterResultEntry.getName()) %></span>
-
-							<ul>
-
-								<%
-								for (String warningMessage : warningMessages) {
-								%>
-
-									<li><span class="error-info"><%= HtmlUtil.escape(warningMessage) %></span></li>
-
-								<%
-								}
-								%>
-
-							</ul>
-						</li>
-
-					<%
-					}
-					%>
-
-				</ul>
-			</div>
-		</c:if>
-
-		<%
-		List<LayoutPageTemplatesImporterResultEntry> notImportedLayoutPageTemplatesImporterResultEntries = importDisplayContext.getNotImportedLayoutPageTemplatesImporterResultEntries();
-		%>
-
-		<c:if test="<%= ListUtil.isNotEmpty(notImportedLayoutPageTemplatesImporterResultEntries) %>">
+		<c:if test="<%= MapUtil.isNotEmpty(layoutPageTemplatesImporterResultEntryMap) %>">
 
 			<%
-			int total = notImportedLayoutPageTemplatesImporterResultEntries.size();
-			int viewTotal = (total > 10) ? 10 : total;
+			String dialogMessage = importDisplayContext.getDialogMessage();
+
+			String dialogType = importDisplayContext.getDialogType();
 			%>
 
-			<div class="alert alert-warning warning-dialog">
-				<span class="error-message"><liferay-ui:message key="some-entries-could-not-be-imported" /></span>
+			<div class="alert alert-<%= dialogType %> <%= dialogType %>-dialog">
+				<span class="<%= dialogType %>-message"><%= dialogMessage %></span>
 
-				<ul class="error-list-items">
-
-					<%
-					for (int i = 0; i < viewTotal; i++) {
-						LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = notImportedLayoutPageTemplatesImporterResultEntries.get(i);
-					%>
-
-						<li>
-							<span class="error-info"><%= HtmlUtil.escape(layoutPageTemplatesImporterResultEntry.getErrorMessage()) %></span>
-						</li>
+				<ul class="<%= dialogType %>-list-items">
 
 					<%
-					}
+					Map<Integer, List<LayoutPageTemplatesImporterResultEntry>> importedLayoutPageTemplatesImporterResultEntriesMap = importDisplayContext.getImportedLayoutPageTemplatesImporterResultEntriesMap();
 					%>
 
+					<c:if test="<%= MapUtil.isNotEmpty(importedLayoutPageTemplatesImporterResultEntriesMap) %>">
+
+						<%
+						for (Map.Entry <Integer, List<LayoutPageTemplatesImporterResultEntry>> entrySet :
+							importedLayoutPageTemplatesImporterResultEntriesMap.entrySet()) {
+						%>
+
+							<li>
+								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(importDisplayContext.getSuccessMessage(entrySet)) %></span>
+							</li>
+
+						<%
+						}
+						%>
+
+					</c:if>
+
+					<%
+					List<LayoutPageTemplatesImporterResultEntry> layoutPageTemplatesImporterResultEntriesWithWarnings = importDisplayContext.getLayoutPageTemplatesImporterResultEntriesWithWarnings();
+					%>
+
+					<c:if test="<%= ListUtil.isNotEmpty(layoutPageTemplatesImporterResultEntriesWithWarnings) %>">
+
+						<%
+						for (int i = 0; i < layoutPageTemplatesImporterResultEntriesWithWarnings.size(); i++) {
+							LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = layoutPageTemplatesImporterResultEntriesWithWarnings.get(i);
+
+							String[] warningMessages = layoutPageTemplatesImporterResultEntry.getWarningMessages();
+						%>
+
+							<li>
+								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(importDisplayContext.getWarningMessage(layoutPageTemplatesImporterResultEntry.getName())) %></span>
+
+								<ul>
+
+									<%
+									for (String warningMessage : warningMessages) {
+									%>
+
+										<li><span class="<%= dialogType %>-info"><%= HtmlUtil.escape(warningMessage) %></span></li>
+
+									<%
+									}
+									%>
+
+								</ul>
+							</li>
+
+						<%
+						}
+						%>
+
+					</c:if>
+
+					<%
+					int total = 0;
+					int viewTotal = 0;
+
+					List<LayoutPageTemplatesImporterResultEntry> notImportedLayoutPageTemplatesImporterResultEntries = importDisplayContext.getNotImportedLayoutPageTemplatesImporterResultEntries();
+					%>
+
+					<c:if test="<%= ListUtil.isNotEmpty(notImportedLayoutPageTemplatesImporterResultEntries) %>">
+
+						<%
+						total = notImportedLayoutPageTemplatesImporterResultEntries.size();
+						viewTotal = (total > 10) ? 10 : total;
+
+								for (int i = 0; i < viewTotal; i++) {
+									LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = notImportedLayoutPageTemplatesImporterResultEntries.get(i);
+						%>
+
+							<li>
+								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(layoutPageTemplatesImporterResultEntry.getErrorMessage()) %></span>
+							</li>
+
+						<%
+						}
+						%>
+
+					</c:if>
 				</ul>
 
 				<c:if test="<%= total > 10 %>">
-					<span class="error-info"><%= LanguageUtil.format(request, "x-more-entries-could-also-not-be-imported", "<strong>" + (total - viewTotal) + "</strong>", false) %></span>
+					<span class="<%= dialogType %>-info"><%= LanguageUtil.format(request, "x-more-entries-could-also-not-be-imported", "<strong>" + (total - viewTotal) + "</strong>", false) %></span>
 				</c:if>
 			</div>
 		</c:if>

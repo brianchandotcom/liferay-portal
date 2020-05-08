@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
@@ -45,14 +46,89 @@ public class ImportDisplayContext {
 		_renderRequest = renderRequest;
 	}
 
+	public String getDialogMessage() {
+		String dialogMessage =
+			"some-page-templates-could-not-be-imported-but-other-page-" +
+				"templates-were-imported-correctly-or-with-warnings";
+
+		Map<Integer, List<LayoutPageTemplatesImporterResultEntry>>
+			importedLayoutPageTemplatesImporterResultEntriesMap =
+				getImportedLayoutPageTemplatesImporterResultEntriesMap();
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntriesWithWarnings =
+				getLayoutPageTemplatesImporterResultEntriesWithWarnings();
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			notImportedLayoutPageTemplatesImporterResultEntries =
+				getNotImportedLayoutPageTemplatesImporterResultEntries();
+
+		if (MapUtil.isNotEmpty(
+				importedLayoutPageTemplatesImporterResultEntriesMap) &&
+			ListUtil.isNotEmpty(
+				layoutPageTemplatesImporterResultEntriesWithWarnings) &&
+			ListUtil.isEmpty(
+				notImportedLayoutPageTemplatesImporterResultEntries)) {
+
+			dialogMessage =
+				"some-page-templates-were-imported-correctly-and-other-page-" +
+					"templates-were-imported-with-warnings";
+		}
+		else if (ListUtil.isEmpty(
+					layoutPageTemplatesImporterResultEntriesWithWarnings) &&
+				 ListUtil.isEmpty(
+					 notImportedLayoutPageTemplatesImporterResultEntries)) {
+
+			dialogMessage = "all-page-templates-were-imported-correctly";
+		}
+		else if (MapUtil.isEmpty(
+					importedLayoutPageTemplatesImporterResultEntriesMap) &&
+				 ListUtil.isEmpty(
+					 layoutPageTemplatesImporterResultEntriesWithWarnings)) {
+
+			dialogMessage = "no-page-template-could-be-imported";
+		}
+		else if (MapUtil.isEmpty(
+					importedLayoutPageTemplatesImporterResultEntriesMap)) {
+
+			dialogMessage = "some-page-templates-were-imported-with-warnings";
+		}
+
+		return LanguageUtil.get(_httpServletRequest, dialogMessage);
+	}
+
+	public String getDialogType() {
+		if (MapUtil.isEmpty(
+				getImportedLayoutPageTemplatesImporterResultEntriesMap()) &&
+			ListUtil.isEmpty(
+				getLayoutPageTemplatesImporterResultEntriesWithWarnings())) {
+
+			return "danger";
+		}
+
+		if (ListUtil.isEmpty(
+				getNotImportedLayoutPageTemplatesImporterResultEntries()) &&
+			ListUtil.isEmpty(
+				getLayoutPageTemplatesImporterResultEntriesWithWarnings())) {
+
+			return "success";
+		}
+
+		return "warning";
+	}
+
 	public Map<Integer, List<LayoutPageTemplatesImporterResultEntry>>
 		getImportedLayoutPageTemplatesImporterResultEntriesMap() {
+
+		if (_importedLayoutPageTemplatesImporterResultEntriesMap != null) {
+			return _importedLayoutPageTemplatesImporterResultEntriesMap;
+		}
 
 		Map
 			<LayoutPageTemplatesImporterResultEntry.Status,
 			 List<LayoutPageTemplatesImporterResultEntry>>
 				layoutPageTemplatesImporterResultEntryMap =
-					_getLayoutPageTemplatesImporterResultEntryMap();
+					getLayoutPageTemplatesImporterResultEntryMap();
 
 		if (MapUtil.isEmpty(layoutPageTemplatesImporterResultEntryMap)) {
 			return null;
@@ -74,6 +150,13 @@ public class ImportDisplayContext {
 				layoutPageTemplatesImporterResultEntry :
 					layoutPageTemplatesImporterResultEntries) {
 
+			if (ArrayUtil.isNotEmpty(
+					layoutPageTemplatesImporterResultEntry.
+						getWarningMessages())) {
+
+				continue;
+			}
+
 			List<LayoutPageTemplatesImporterResultEntry>
 				typeLayoutPageTemplatesImporterResultEntries =
 					new ArrayList<>();
@@ -94,17 +177,24 @@ public class ImportDisplayContext {
 				type, typeLayoutPageTemplatesImporterResultEntries);
 		}
 
-		return typeLayoutPageTemplatesImporterResultEntryMap;
+		_importedLayoutPageTemplatesImporterResultEntriesMap =
+			typeLayoutPageTemplatesImporterResultEntryMap;
+
+		return _importedLayoutPageTemplatesImporterResultEntriesMap;
 	}
 
 	public List<LayoutPageTemplatesImporterResultEntry>
 		getLayoutPageTemplatesImporterResultEntriesWithWarnings() {
 
+		if (_layoutPageTemplatesImporterResultEntriesWithWarnings != null) {
+			return _layoutPageTemplatesImporterResultEntriesWithWarnings;
+		}
+
 		Map
 			<LayoutPageTemplatesImporterResultEntry.Status,
 			 List<LayoutPageTemplatesImporterResultEntry>>
 				layoutPageTemplatesImporterResultEntryMap =
-					_getLayoutPageTemplatesImporterResultEntryMap();
+					getLayoutPageTemplatesImporterResultEntryMap();
 
 		if (MapUtil.isEmpty(layoutPageTemplatesImporterResultEntryMap)) {
 			return null;
@@ -122,67 +212,20 @@ public class ImportDisplayContext {
 		Stream<LayoutPageTemplatesImporterResultEntry> stream =
 			layoutPageTemplatesImporterResultEntries.stream();
 
-		return stream.filter(
+		_layoutPageTemplatesImporterResultEntriesWithWarnings = stream.filter(
 			layoutPageTemplatesImporterResultEntry -> ArrayUtil.isNotEmpty(
 				layoutPageTemplatesImporterResultEntry.getWarningMessages())
 		).collect(
 			Collectors.toList()
 		);
+
+		return _layoutPageTemplatesImporterResultEntriesWithWarnings;
 	}
 
-	public List<LayoutPageTemplatesImporterResultEntry>
-		getNotImportedLayoutPageTemplatesImporterResultEntries() {
-
-		Map
-			<LayoutPageTemplatesImporterResultEntry.Status,
-			 List<LayoutPageTemplatesImporterResultEntry>>
-				layoutPageTemplatesImporterResultEntryMap =
-					_getLayoutPageTemplatesImporterResultEntryMap();
-
-		if (MapUtil.isEmpty(layoutPageTemplatesImporterResultEntryMap)) {
-			return null;
-		}
-
-		List<LayoutPageTemplatesImporterResultEntry>
-			notImportedLayoutPageTemplatesImporterResultEntries =
-				new ArrayList<>();
-
-		for (Map.Entry
-				<LayoutPageTemplatesImporterResultEntry.Status,
-				 List<LayoutPageTemplatesImporterResultEntry>> entrySet :
-					layoutPageTemplatesImporterResultEntryMap.entrySet()) {
-
-			if (entrySet.getKey() !=
-					LayoutPageTemplatesImporterResultEntry.Status.IMPORTED) {
-
-				notImportedLayoutPageTemplatesImporterResultEntries.addAll(
-					entrySet.getValue());
-			}
-		}
-
-		return notImportedLayoutPageTemplatesImporterResultEntries;
-	}
-
-	public String getSuccessMessage(
-		Map.Entry<Integer, List<LayoutPageTemplatesImporterResultEntry>>
-			entrySet) {
-
-		List<LayoutPageTemplatesImporterResultEntry>
-			layoutPageTemplatesImporterResultEntries = entrySet.getValue();
-
-		return LanguageUtil.format(
-			_httpServletRequest, "x-x-s-imported-correctly",
-			new Object[] {
-				layoutPageTemplatesImporterResultEntries.size(),
-				_getTypeLabelKey(entrySet.getKey())
-			},
-			true);
-	}
-
-	private Map
+	public Map
 		<LayoutPageTemplatesImporterResultEntry.Status,
 		 List<LayoutPageTemplatesImporterResultEntry>>
-			_getLayoutPageTemplatesImporterResultEntryMap() {
+			getLayoutPageTemplatesImporterResultEntryMap() {
 
 		if (MapUtil.isNotEmpty(_layoutPageTemplatesImporterResultEntryMap)) {
 			return _layoutPageTemplatesImporterResultEntryMap;
@@ -229,6 +272,67 @@ public class ImportDisplayContext {
 		return _layoutPageTemplatesImporterResultEntryMap;
 	}
 
+	public List<LayoutPageTemplatesImporterResultEntry>
+		getNotImportedLayoutPageTemplatesImporterResultEntries() {
+
+		if (_notImportedLayoutPageTemplatesImporterResultEntries != null) {
+			return _notImportedLayoutPageTemplatesImporterResultEntries;
+		}
+
+		Map
+			<LayoutPageTemplatesImporterResultEntry.Status,
+			 List<LayoutPageTemplatesImporterResultEntry>>
+				layoutPageTemplatesImporterResultEntryMap =
+					getLayoutPageTemplatesImporterResultEntryMap();
+
+		if (MapUtil.isEmpty(layoutPageTemplatesImporterResultEntryMap)) {
+			return null;
+		}
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			notImportedLayoutPageTemplatesImporterResultEntries =
+				new ArrayList<>();
+
+		for (Map.Entry
+				<LayoutPageTemplatesImporterResultEntry.Status,
+				 List<LayoutPageTemplatesImporterResultEntry>> entrySet :
+					layoutPageTemplatesImporterResultEntryMap.entrySet()) {
+
+			if (entrySet.getKey() !=
+					LayoutPageTemplatesImporterResultEntry.Status.IMPORTED) {
+
+				notImportedLayoutPageTemplatesImporterResultEntries.addAll(
+					entrySet.getValue());
+			}
+		}
+
+		return notImportedLayoutPageTemplatesImporterResultEntries;
+	}
+
+	public String getSuccessMessage(
+		Map.Entry<Integer, List<LayoutPageTemplatesImporterResultEntry>>
+			entrySet) {
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries = entrySet.getValue();
+
+		return LanguageUtil.format(
+			_httpServletRequest, "x-x-s-imported-correctly",
+			new Object[] {
+				layoutPageTemplatesImporterResultEntries.size(),
+				_getTypeLabelKey(entrySet.getKey())
+			},
+			true);
+	}
+
+	public String getWarningMessage(
+		String layoutPageTemplatesImporterResultEntryName) {
+
+		return LanguageUtil.format(
+			_httpServletRequest, "x-was-imported-with-warnings",
+			new Object[] {layoutPageTemplatesImporterResultEntryName}, true);
+	}
+
 	private String _getTypeLabelKey(int type) {
 		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
 			return "page-template";
@@ -248,10 +352,16 @@ public class ImportDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private Map<Integer, List<LayoutPageTemplatesImporterResultEntry>>
+		_importedLayoutPageTemplatesImporterResultEntriesMap;
+	private List<LayoutPageTemplatesImporterResultEntry>
+		_layoutPageTemplatesImporterResultEntriesWithWarnings;
 	private Map
 		<LayoutPageTemplatesImporterResultEntry.Status,
 		 List<LayoutPageTemplatesImporterResultEntry>>
 			_layoutPageTemplatesImporterResultEntryMap;
+	private List<LayoutPageTemplatesImporterResultEntry>
+		_notImportedLayoutPageTemplatesImporterResultEntries;
 	private final RenderRequest _renderRequest;
 
 }

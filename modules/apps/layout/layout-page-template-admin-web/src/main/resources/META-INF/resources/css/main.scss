@@ -1,4 +1,19 @@
 .portlet-layout-templates-admin {
+	.danger-dialog {
+		.danger-list-items li {
+			list-style: disc inside;
+		}
+
+		.danger-list-items .danger-info {
+			font-size: 0.8em;
+			font-style: italic;
+			margin-left: 0.5em;
+		}
+
+		.danger-message {
+			font-weight: bold;
+		}
+	}
 	.success-dialog {
 		.success-list-items li {
 			list-style: disc inside;
@@ -15,17 +30,17 @@
 		}
 	}
 	.warning-dialog {
-		.error-list-items li {
+		.warning-list-items li {
 			list-style: disc inside;
 		}
 
-		.error-list-items .error-info {
+		.warning-list-items .warning-info {
 			font-size: 0.8em;
 			font-style: italic;
 			margin-left: 0.5em;
 		}
 
-		.error-message {
+		.warning-message {
 			font-weight: bold;
 		}
 	}

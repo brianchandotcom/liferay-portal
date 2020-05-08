@@ -204,7 +204,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 	}
 
 	private Document _createWorkflowMetricsInstanceDocument(
-		long companyId, long kaleoDefinitionId) {
+		long companyId, long processId) {
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
@@ -217,9 +217,9 @@ public class ProcessWorkflowMetricsIndexerImpl
 		).setLong(
 			"instanceId", 0L
 		).setLong(
-			"processId", kaleoDefinitionId
+			"processId", processId
 		).setString(
-			"uid", digest(companyId, kaleoDefinitionId)
+			"uid", digest(companyId, processId)
 		);
 
 		return documentBuilder.build();

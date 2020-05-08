@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.notifications.internal.MessageListenerWrapper;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -155,6 +157,22 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		return internetAddress.getAddress();
 	}
 
+	protected List<String> getEmailAddresses(Address[] addresses) {
+		if (ArrayUtil.isEmpty(addresses)) {
+			return new ArrayList<>();
+		}
+
+		List<String> emailAddresses = new ArrayList<>();
+
+		for (Address address : addresses) {
+			InternetAddress internetAddress = (InternetAddress)address;
+
+			emailAddresses.add(internetAddress.getAddress());
+		}
+
+		return emailAddresses;
+	}
+
 	protected Folder getInboxFolder(Store store) throws MessagingException {
 		Folder defaultFolder = store.getDefaultFolder();
 
@@ -217,20 +235,21 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 			}
 
 			String from = getEmailAddress(message.getFrom());
-			String recipient = getEmailAddress(
+
+			List<String> recipients = getEmailAddresses(
 				message.getRecipients(Message.RecipientType.TO));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("From " + from);
-				_log.debug("Recipient " + recipient);
+				_log.debug("Recipient(s) " + recipients.toString());
 			}
 
 			for (MessageListener messageListener :
 					_messageListenerWrappers.values()) {
 
 				try {
-					if (messageListener.accept(from, recipient, message)) {
-						messageListener.deliver(from, recipient, message);
+					if (messageListener.accept(from, recipients, message)) {
+						messageListener.deliver(from, recipients, message);
 					}
 				}
 				catch (MessageListenerException messageListenerException) {

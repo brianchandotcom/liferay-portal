@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.List;
 
 import javax.mail.Message;
 
@@ -32,14 +35,16 @@ public class MessageListenerWrapper implements MessageListener {
 	}
 
 	@Override
-	public boolean accept(String from, String recipient, Message message) {
+	public boolean accept(
+		String from, List<String> recipients, Message message) {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Listener " + ClassUtil.getClassName(_messageListener));
 			_log.debug("From " + from);
-			_log.debug("Recipient " + recipient);
+			_log.debug("Recipient(s) " + recipients.toString());
 		}
 
-		boolean value = _messageListener.accept(from, recipient, message);
+		boolean value = _messageListener.accept(from, recipients, message);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Accept " + value);
@@ -48,18 +53,40 @@ public class MessageListenerWrapper implements MessageListener {
 		return value;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #accept(String, List, Message)}
+	 */
+	@Deprecated
 	@Override
-	public void deliver(String from, String recipient, Message message)
+	public boolean accept(String from, String recipient, Message message) {
+		return accept(from, ListUtil.toList(recipient), message);
+	}
+
+	@Override
+	public void deliver(String from, List<String> recipients, Message message)
 		throws MessageListenerException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Listener " + ClassUtil.getClassName(_messageListener));
 			_log.debug("From " + from);
-			_log.debug("Recipient " + recipient);
+			_log.debug("Recipient(s) " + recipients.toString());
 			_log.debug("Message " + message);
 		}
 
-		_messageListener.deliver(from, recipient, message);
+		_messageListener.deliver(from, recipients, message);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #deliver(String, List, Message)}
+	 */
+	@Deprecated
+	@Override
+	public void deliver(String from, String recipient, Message message)
+		throws MessageListenerException {
+
+		deliver(from, ListUtil.toList(recipient), message);
 	}
 
 	@Override

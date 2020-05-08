@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.pop;
 
+import java.util.List;
+
 import javax.mail.Message;
 
 /**
@@ -21,8 +23,24 @@ import javax.mail.Message;
  */
 public interface MessageListener {
 
+	public boolean accept(
+		String from, List<String> recipients, Message message);
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #accept(String, List, Message)}
+	 */
+	@Deprecated
 	public boolean accept(String from, String recipient, Message message);
 
+	public void deliver(String from, List<String> recipients, Message message)
+		throws MessageListenerException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #deliver(String, List, Message)}
+	 */
+	@Deprecated
 	public void deliver(String from, String recipient, Message message)
 		throws MessageListenerException;
 

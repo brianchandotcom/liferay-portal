@@ -37,6 +37,7 @@ export default function updateFragmentConfiguration({
 			dispatch(
 				updateFragmentEntryLinkConfiguration({
 					fragmentEntryLink,
+					fragmentEntryLinkId,
 					isUndo,
 					layoutData,
 				})

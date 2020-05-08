@@ -182,8 +182,7 @@ export default function fragmentEntryLinksReducer(
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
 			return {
 				...fragmentEntryLinks,
-				[action.fragmentEntryLink.fragmentEntryLinkId]:
-					action.fragmentEntryLink,
+				[action.fragmentEntryLinkId]: action.fragmentEntryLink,
 			};
 
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONTENT: {

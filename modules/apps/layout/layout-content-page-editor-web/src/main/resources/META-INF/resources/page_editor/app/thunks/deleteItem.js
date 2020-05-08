@@ -43,7 +43,11 @@ export default function deleteItem({itemId, store}) {
 				}
 
 				dispatch(
-					deleteItemAction({deletedFragmentEntryLinkIds, layoutData})
+					deleteItemAction({
+						deletedFragmentEntryLinkIds,
+						itemId,
+						layoutData,
+					})
 				);
 			})
 			.then(() => {

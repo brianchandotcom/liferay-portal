@@ -16,11 +16,13 @@ import {UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION} from './types';
 
 export default function updateFragmentEntryLinkConfiguration({
 	fragmentEntryLink,
+	fragmentEntryLinkId,
 	isUndo = false,
 	layoutData,
 }) {
 	return {
 		fragmentEntryLink,
+		fragmentEntryLinkId,
 		isUndo,
 		layoutData,
 		type: UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,

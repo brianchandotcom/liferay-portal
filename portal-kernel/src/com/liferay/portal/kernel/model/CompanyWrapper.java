@@ -286,6 +286,13 @@ public class CompanyWrapper
 		return model.getPortalURL(groupId);
 	}
 
+	@Override
+	public String getPortalURL(long groupId, String entryURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getPortalURL(groupId, entryURL);
+	}
+
 	/**
 	 * Returns the primary key of this company.
 	 *

@@ -175,6 +175,8 @@ public class DepotAdminSelectRoleDisplayContext {
 				_renderRequest,
 				_getPortletURL(_renderRequest, _renderResponse, _user));
 
+			groupSearch.setEmptyResultsMessage("no-asset-libraries-were-found");
+
 			GroupSearchTerms groupSearchTerms =
 				(GroupSearchTerms)groupSearch.getSearchTerms();
 

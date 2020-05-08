@@ -179,6 +179,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_INFO</td>
+	<td>//*[contains(@class,'error-info')][contains(.,'${key_errorInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_PUBLISH_UNSUCCESSFUL_EXTENSION</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'The source file does not have the same extension as the original file')]</td>
 	<td></td>

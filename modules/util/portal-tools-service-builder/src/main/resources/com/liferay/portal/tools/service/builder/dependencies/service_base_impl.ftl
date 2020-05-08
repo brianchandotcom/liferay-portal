@@ -1911,7 +1911,7 @@ import org.osgi.service.component.annotations.Reference;
 	}
 
 	<#if entity.hasEntityColumns()>
-		<#if entity.isChangeTrackingEnabled() && stringUtil.equals(sessionTypeName, "Local")>
+		<#if entity.isChangeTrackingEnabled() && stringUtil.equals(sessionTypeName, "Local") && entity.hasPersistence()>
 			@Override
 			public CTPersistence<${entity.name}> getCTPersistence() {
 				return ${entity.varName}Persistence;

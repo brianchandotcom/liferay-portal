@@ -88,7 +88,7 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 		</#if>
 	</#list>
 
-	<#if entity.isChangeTrackingEnabled() && stringUtil.equals(sessionTypeName, "Local")>
+	<#if entity.isChangeTrackingEnabled() && stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
 		@Override
 		public CTPersistence<${entity.name}> getCTPersistence() {
 			return _${entity.varName}LocalService.getCTPersistence();

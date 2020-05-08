@@ -2348,7 +2348,9 @@ public class ServiceBuilder {
 				_outputPath, "/service/impl/", entity.getName(),
 				"CTServiceImpl.java"));
 
-		if (!entity.isChangeTrackingEnabled() || entity.hasLocalService()) {
+		if (!entity.isChangeTrackingEnabled() || !entity.hasEntityColumns() ||
+			entity.hasLocalService()) {
+
 			if (file.exists()) {
 				System.out.println("Removing " + file);
 
@@ -6059,11 +6061,7 @@ public class ServiceBuilder {
 			derivedColumnElements.add(columnElement);
 		}
 
-		if (columnElements.isEmpty()) {
-			changeTrackingEnabled = false;
-		}
-
-		if (changeTrackingEnabled) {
+		if (changeTrackingEnabled && !columnElements.isEmpty()) {
 			Element columnElement = DocumentHelper.createElement("column");
 
 			columnElement.addAttribute(
@@ -6625,7 +6623,7 @@ public class ServiceBuilder {
 			unresolvedReferenceEntityNames, txRequiredMethodNames,
 			resourceActionModel);
 
-		if (changeTrackingEnabled) {
+		if (changeTrackingEnabled && !columnElements.isEmpty()) {
 			if (!mvccEnabled) {
 				throw new ServiceBuilderException(
 					"MVCC must be enabled to use change tracking for " +

@@ -51,7 +51,7 @@ SearchContainer<DDMTemplate> templateSearch = ddmDisplayContext.getTemplateSearc
 />
 
 <aui:form action="<%= ddmDisplayContext.getSelectTemplateSearchActionURL() %>" method="post" name="selectTemplateFm">
-	<div class="container-fluid-1280">
+	<clay:container>
 		<liferay-ui:search-container
 			searchContainer="<%= templateSearch %>"
 		>
@@ -113,7 +113,7 @@ SearchContainer<DDMTemplate> templateSearch = ddmDisplayContext.getTemplateSearc
 				markupView="lexicon"
 			/>
 		</liferay-ui:search-container>
-	</div>
+	</clay:container>
 </aui:form>
 
 <aui:script>

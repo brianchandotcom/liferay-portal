@@ -53,7 +53,9 @@ List<DDMDisplayTabItem> ddmDisplayTabItems = ddmDisplay.getTabItems();
 	<aui:input name="redirect" type="hidden" value="<%= ddmDisplayContext.getStructureSearchActionURL() %>" />
 	<aui:input name="deleteStructureIds" type="hidden" />
 
-	<div class="container-fluid container-fluid-max-xl" id="<portlet:namespace />entriesContainer">
+	<clay:container
+		id='<%= renderResponse.getNamespace() + "entriesContainer" %>'
+	>
 		<liferay-ui:search-container
 			id="ddmStructures"
 			rowChecker="<%= new DDMStructureRowChecker(renderResponse) %>"
@@ -148,5 +150,5 @@ List<DDMDisplayTabItem> ddmDisplayTabItems = ddmDisplay.getTabItems();
 				markupView="lexicon"
 			/>
 		</liferay-ui:search-container>
-	</div>
+	</clay:container>
 </aui:form>

@@ -23,16 +23,15 @@ function sortByValue(a, b) {
 
 	const nameB = b.substring(position);
 
-	let retVal = 0;
-
 	if (nameA < nameB) {
-		retVal = -1;
+		return -1;
 	}
 	else if (nameA > nameB) {
-		retVal = 1;
+		return 1;
 	}
-
-	return retVal;
+	else {
+		return 0;
+	}
 }
 
 export default class DynamicSelect {

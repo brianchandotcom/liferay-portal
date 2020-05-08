@@ -742,6 +742,26 @@ definition {
 		Click(locator1 = "Button#ADD");
 
 		PageEditor.waitForAutoSave();
+
+		if (isSet(imageDescription)) {
+			Pause(locator1 = "3000");
+
+			Type(
+				key_fieldName = "imageDescription",
+				locator1 = "FormFields#TEXT_FIELD",
+				value1 = "${imageDescription}");
+
+			Pause(locator1 = "3000");
+
+			AssertTextEquals(
+				key_fieldName = "imageDescription",
+				locator1 = "FormFields#TEXT_FIELD",
+				value1 = "${imageDescription}");
+
+			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
+
+			PageEditor.waitForAutoSave();
+		}
 	}
 
 	macro editFragmentText {

@@ -42,7 +42,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 		<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#pre" />
 
 		<div class="control-menu control-menu-level-1 d-print-none" data-qa-id="controlMenu" id="<portlet:namespace />ControlMenu">
-			<div class="container-fluid container-fluid-max-xl">
+			<clay:container>
 				<h1 class="sr-only"><liferay-ui:message key="admin-header" /></h1>
 
 				<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
@@ -87,7 +87,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 					%>
 
 				</ul>
-			</div>
+			</clay:container>
 
 			<div class="control-menu-body">
 

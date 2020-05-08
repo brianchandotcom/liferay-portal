@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Product Navigation Global Menu Web
+Bundle-SymbolicName: com.liferay.product.navigation.global.menu.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /product-navigation-global-menu-web

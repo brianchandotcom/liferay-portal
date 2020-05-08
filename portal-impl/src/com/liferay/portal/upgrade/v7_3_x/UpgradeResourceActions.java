@@ -23,15 +23,9 @@ public class UpgradeResourceActions extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String[] portletNames = {
-			"136", "150", "151", "152", "153", "157", "158"
-		};
-
-		for (String portletName : portletNames) {
-			runSQL(
-				"delete from ResourceAction where name = '" + portletName +
-					"'");
-		}
+		runSQL(
+			"delete from ResourceAction where name in ('136', '150', '151', " +
+				"'152', '153', '157', '158')");
 	}
 
 }

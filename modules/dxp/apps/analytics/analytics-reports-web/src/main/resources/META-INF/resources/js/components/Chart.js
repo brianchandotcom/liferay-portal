@@ -206,7 +206,7 @@ export default function Chart({
 			});
 		}
 		else {
-			var keys = ['analyticsReportsHistoricalViews'];
+			const keys = ['analyticsReportsHistoricalViews'];
 
 			if (readsEnabled) {
 				keys.push('analyticsReportsHistoricalReads');

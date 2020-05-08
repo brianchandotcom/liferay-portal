@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Validator;
@@ -274,22 +275,8 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	protected String getAndFilterString(String... filterStrings) {
-		StringBundler sb = new StringBundler(filterStrings.length + 3);
-
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(StringPool.AMPERSAND);
-
-		for (String filterString : filterStrings) {
-			if (Validator.isNull(filterString)) {
-				return StringPool.BLANK;
-			}
-
-			sb.append(filterString);
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		return sb.toString();
+		return getLogicalOperatorFilterString(
+			StringPool.AMPERSAND, filterStrings);
 	}
 
 	protected ConfigurationModel getConfigurationModel(
@@ -359,9 +346,14 @@ public class ConfigurationModelRetrieverImpl
 		else {
 			filterString = getAndFilterString(
 				filterString,
-				getExcludedPropertyFilterString(
-					ExtendedObjectClassDefinition.Scope.COMPANY.
-						getPropertyKey()),
+				getOrFilterString(
+					getExcludedPropertyFilterString(
+						ExtendedObjectClassDefinition.Scope.COMPANY.
+							getPropertyKey()),
+					getPropertyFilterString(
+						ExtendedObjectClassDefinition.Scope.COMPANY.
+							getPropertyKey(),
+						String.valueOf(CompanyConstants.SYSTEM))),
 				getExcludedPropertyFilterString(
 					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey()),
 				getExcludedPropertyFilterString(
@@ -378,6 +370,31 @@ public class ConfigurationModelRetrieverImpl
 		}
 
 		return configurations;
+	}
+
+	protected String getLogicalOperatorFilterString(
+		String logicalOperator, String... filterStrings) {
+
+		StringBundler sb = new StringBundler(filterStrings.length + 3);
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(logicalOperator);
+
+		for (String filterString : filterStrings) {
+			if (Validator.isNull(filterString)) {
+				return StringPool.BLANK;
+			}
+
+			sb.append(filterString);
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
+	protected String getOrFilterString(String... filterStrings) {
+		return getLogicalOperatorFilterString(StringPool.PIPE, filterStrings);
 	}
 
 	protected String getPidFilterString(

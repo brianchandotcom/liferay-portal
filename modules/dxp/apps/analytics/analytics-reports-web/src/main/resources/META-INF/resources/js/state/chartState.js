@@ -93,14 +93,11 @@ function reducer(state, action) {
 			break;
 		case ADD_DATA_SET_ITEMS:
 			nextState = action.payload.keys.reduce((state, key) => {
-				return {
-					...state,
-					...addDataSetItem(
-						state,
-						{...action.payload, key},
-						action.validAnalyticsConnection
-					),
-				};
+				return addDataSetItem(
+					state,
+					{...action.payload, key},
+					action.validAnalyticsConnection
+				);
 			}, state);
 			break;
 		case NEXT_TIME_SPAN:

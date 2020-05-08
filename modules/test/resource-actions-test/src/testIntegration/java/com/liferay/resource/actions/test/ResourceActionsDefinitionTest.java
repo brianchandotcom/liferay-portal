@@ -17,6 +17,8 @@ package com.liferay.resource.actions.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,7 +46,6 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.wiring.BundleWiring;
 
 /**
@@ -172,11 +173,8 @@ public class ResourceActionsDefinitionTest {
 	}
 
 	private void _collectResourceActionsErrorForPortletResources(
-			Element rootElement, Bundle bundle, ClassLoader bundleClassLoader,
-			StringBundler sb)
-		throws Exception {
-
-		BundleContext bundleContext = bundle.getBundleContext();
+		Element rootElement, Bundle bundle, ClassLoader bundleClassLoader,
+		StringBundler sb) {
 
 		for (Element portletResourceElement :
 				rootElement.elements("portlet-resource")) {
@@ -186,28 +184,21 @@ public class ResourceActionsDefinitionTest {
 
 			String portletName = portletNameElement.getTextTrim();
 
-			for (ServiceReference<Portlet> serviceReference :
-					bundleContext.getServiceReferences(
-						Portlet.class,
-						StringBundler.concat(
-							"(javax.portlet.name=", portletName, ")"))) {
+			PortletBag portletBag = PortletBagPool.get(portletName);
 
-				Portlet portlet = bundleContext.getService(serviceReference);
+			Portlet portlet = portletBag.getPortletInstance();
 
-				Class<?> clazz = portlet.getClass();
+			Class<?> clazz = portlet.getClass();
 
-				if (clazz.getClassLoader() != bundleClassLoader) {
-					sb.append("\n\t\t");
-					sb.append(bundle.getSymbolicName());
-					sb.append(": portlet resource ");
-					sb.append(portletName);
-					sb.append(" is defined in ");
-					sb.append(bundle.getSymbolicName());
-					sb.append(" but the portlet is in ");
-					sb.append(clazz.getClassLoader());
-				}
-
-				bundleContext.ungetService(serviceReference);
+			if (clazz.getClassLoader() != bundleClassLoader) {
+				sb.append("\n\t\t");
+				sb.append(bundle.getSymbolicName());
+				sb.append(": portlet resource ");
+				sb.append(portletName);
+				sb.append(" is defined in ");
+				sb.append(bundle.getSymbolicName());
+				sb.append(" but the portlet is in ");
+				sb.append(clazz.getClassLoader());
 			}
 		}
 	}

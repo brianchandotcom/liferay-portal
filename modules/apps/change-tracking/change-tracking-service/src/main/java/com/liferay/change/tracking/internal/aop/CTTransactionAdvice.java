@@ -1,0 +1,93 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.change.tracking.internal.aop;
+
+import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.petra.lang.SafeClosable;
+import com.liferay.portal.kernel.aop.AopMethodInvocation;
+import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
+import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.change.tracking.CTTransactionException;
+import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.spring.transaction.TransactionExecutorThreadLocal;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Preston Crary
+ */
+@Component(immediate = true, service = ChainableMethodAdvice.class)
+public class CTTransactionAdvice extends ChainableMethodAdvice {
+
+	@Override
+	public Object createMethodContext(
+		Class<?> targetClass, Method method,
+		Map<Class<? extends Annotation>, Annotation> annotations) {
+
+		Transactional transactional = (Transactional)annotations.get(
+			Transactional.class);
+
+		if ((transactional == null) || !transactional.enabled() ||
+			transactional.readOnly() ||
+			annotations.containsKey(CTAware.class)) {
+
+			return null;
+		}
+
+		if ((transactional.propagation() == Propagation.REQUIRES_NEW) ||
+			annotations.containsKey(MasterDataSource.class)) {
+
+			return Boolean.TRUE;
+		}
+
+		return Boolean.FALSE;
+	}
+
+	@Override
+	public Object invoke(
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
+		throws Throwable {
+
+		if (CTCollectionThreadLocal.isProductionMode()) {
+			return aopMethodInvocation.proceed(arguments);
+		}
+
+		if ((aopMethodInvocation.getAdviceMethodContext() == Boolean.TRUE) ||
+			(TransactionExecutorThreadLocal.getCurrentTransactionExecutor() ==
+				null)) {
+
+			try (SafeClosable safeClosable =
+					CTCollectionThreadLocal.setCTCollectionId(
+						CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
+				return aopMethodInvocation.proceed(arguments);
+			}
+		}
+
+		throw new CTTransactionException(
+			"CT transaction validation failure. Nested operation using " +
+				aopMethodInvocation.getThis() +
+					" can only be performed in production mode.");
+	}
+
+}

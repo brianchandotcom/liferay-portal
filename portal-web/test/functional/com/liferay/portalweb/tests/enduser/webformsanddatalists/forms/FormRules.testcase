@@ -267,7 +267,6 @@ definition {
 	test ConfigureRequireRule {
 		property test.name.skip.portal.instance = "FormRules#ConfigureRequireRule";
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openURL();

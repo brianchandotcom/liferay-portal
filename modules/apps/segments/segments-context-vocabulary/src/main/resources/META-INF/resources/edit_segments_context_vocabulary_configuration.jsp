@@ -31,20 +31,22 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 	<liferay-ui:message key="<%= cmle.causeMessage %>" localizeKey="<%= false %>" />
 </liferay-ui:error>
 
-<div class="container-fluid container-fluid-max-xl">
-	<clay:col
-		size="12"
-	>
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
-		/>
-	</clay:col>
-</div>
+<clay:container>
+	<clay:row>
+		<clay:col
+			size="12"
+		>
+			<liferay-ui:breadcrumb
+				showCurrentGroup="<%= false %>"
+				showGuestGroup="<%= false %>"
+				showLayout="<%= false %>"
+				showParentGroups="<%= false %>"
+			/>
+		</clay:col>
+	</clay:row>
+</clay:container>
 
-<div class="container-fluid container-fluid-max-xl">
+<clay:container>
 	<clay:row>
 		<clay:col
 			md="3"
@@ -155,4 +157,4 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 			</div>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>

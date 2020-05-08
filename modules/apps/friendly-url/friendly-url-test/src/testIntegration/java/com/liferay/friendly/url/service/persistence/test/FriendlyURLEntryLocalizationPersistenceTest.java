@@ -128,6 +128,9 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 		newFriendlyURLEntryLocalization.setMvccVersion(
 			RandomTestUtil.nextLong());
 
+		newFriendlyURLEntryLocalization.setCtCollectionId(
+			RandomTestUtil.nextLong());
+
 		newFriendlyURLEntryLocalization.setCompanyId(RandomTestUtil.nextLong());
 
 		newFriendlyURLEntryLocalization.setFriendlyURLEntryId(
@@ -156,6 +159,9 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 		Assert.assertEquals(
 			existingFriendlyURLEntryLocalization.getMvccVersion(),
 			newFriendlyURLEntryLocalization.getMvccVersion());
+		Assert.assertEquals(
+			existingFriendlyURLEntryLocalization.getCtCollectionId(),
+			newFriendlyURLEntryLocalization.getCtCollectionId());
 		Assert.assertEquals(
 			existingFriendlyURLEntryLocalization.
 				getFriendlyURLEntryLocalizationId(),
@@ -243,9 +249,10 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 
 		return OrderByComparatorFactoryUtil.create(
 			"FriendlyURLEntryLocalization", "mvccVersion", true,
-			"friendlyURLEntryLocalizationId", true, "companyId", true,
-			"friendlyURLEntryId", true, "languageId", true, "urlTitle", true,
-			"groupId", true, "classNameId", true, "classPK", true);
+			"ctCollectionId", true, "friendlyURLEntryLocalizationId", true,
+			"companyId", true, "friendlyURLEntryId", true, "languageId", true,
+			"urlTitle", true, "groupId", true, "classNameId", true, "classPK",
+			true);
 	}
 
 	@Test
@@ -518,6 +525,9 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 			_persistence.create(pk);
 
 		friendlyURLEntryLocalization.setMvccVersion(RandomTestUtil.nextLong());
+
+		friendlyURLEntryLocalization.setCtCollectionId(
+			RandomTestUtil.nextLong());
 
 		friendlyURLEntryLocalization.setCompanyId(RandomTestUtil.nextLong());
 

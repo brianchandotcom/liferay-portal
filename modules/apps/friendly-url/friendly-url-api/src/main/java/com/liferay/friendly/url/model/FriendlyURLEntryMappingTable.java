@@ -35,6 +35,9 @@ public class FriendlyURLEntryMappingTable
 	public final Column<FriendlyURLEntryMappingTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<FriendlyURLEntryMappingTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<FriendlyURLEntryMappingTable, Long>
 		friendlyURLEntryMappingId = createColumn(
 			"friendlyURLEntryMappingId", Long.class, Types.BIGINT,

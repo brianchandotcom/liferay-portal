@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -45,6 +47,7 @@ public class FriendlyURLEntryLocalizationWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put(
 			"friendlyURLEntryLocalizationId",
 			getFriendlyURLEntryLocalizationId());
@@ -65,6 +68,12 @@ public class FriendlyURLEntryLocalizationWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long friendlyURLEntryLocalizationId = (Long)attributes.get(
@@ -155,6 +164,16 @@ public class FriendlyURLEntryLocalizationWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this friendly url entry localization.
+	 *
+	 * @return the ct collection ID of this friendly url entry localization
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -263,6 +282,16 @@ public class FriendlyURLEntryLocalizationWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this friendly url entry localization.
+	 *
+	 * @param ctCollectionId the ct collection ID of this friendly url entry localization
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the friendly url entry ID of this friendly url entry localization.
 	 *
 	 * @param friendlyURLEntryId the friendly url entry ID of this friendly url entry localization
@@ -332,6 +361,20 @@ public class FriendlyURLEntryLocalizationWrapper
 	@Override
 	public void setUrlTitle(String urlTitle) {
 		model.setUrlTitle(urlTitle);
+	}
+
+	@Override
+	public Map<String, Function<FriendlyURLEntryLocalization, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<FriendlyURLEntryLocalization, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

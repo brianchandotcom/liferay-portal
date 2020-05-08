@@ -36,6 +36,9 @@ public class FriendlyURLEntryLocalizationTable
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<FriendlyURLEntryLocalizationTable, Long>
+		ctCollectionId = createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<FriendlyURLEntryLocalizationTable, Long>
 		friendlyURLEntryLocalizationId = createColumn(
 			"friendlyURLEntryLocalizationId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);

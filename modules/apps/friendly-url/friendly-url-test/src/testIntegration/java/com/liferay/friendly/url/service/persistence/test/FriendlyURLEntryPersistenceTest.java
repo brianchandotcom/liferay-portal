@@ -126,6 +126,8 @@ public class FriendlyURLEntryPersistenceTest {
 
 		newFriendlyURLEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newFriendlyURLEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newFriendlyURLEntry.setUuid(RandomTestUtil.randomString());
 
 		newFriendlyURLEntry.setDefaultLanguageId(RandomTestUtil.randomString());
@@ -150,6 +152,9 @@ public class FriendlyURLEntryPersistenceTest {
 		Assert.assertEquals(
 			existingFriendlyURLEntry.getMvccVersion(),
 			newFriendlyURLEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingFriendlyURLEntry.getCtCollectionId(),
+			newFriendlyURLEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingFriendlyURLEntry.getUuid(), newFriendlyURLEntry.getUuid());
 		Assert.assertEquals(
@@ -239,10 +244,10 @@ public class FriendlyURLEntryPersistenceTest {
 
 	protected OrderByComparator<FriendlyURLEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"FriendlyURLEntry", "mvccVersion", true, "uuid", true,
-			"defaultLanguageId", true, "friendlyURLEntryId", true, "groupId",
-			true, "companyId", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true);
+			"FriendlyURLEntry", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "defaultLanguageId", true, "friendlyURLEntryId", true,
+			"groupId", true, "companyId", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true);
 	}
 
 	@Test
@@ -490,6 +495,8 @@ public class FriendlyURLEntryPersistenceTest {
 		FriendlyURLEntry friendlyURLEntry = _persistence.create(pk);
 
 		friendlyURLEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		friendlyURLEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		friendlyURLEntry.setUuid(RandomTestUtil.randomString());
 

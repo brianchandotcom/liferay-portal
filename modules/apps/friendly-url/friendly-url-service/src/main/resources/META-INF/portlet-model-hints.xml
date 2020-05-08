@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.friendly.url.model.FriendlyURLEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="friendlyURLEntryId" type="long" />
@@ -15,6 +16,7 @@
 	</model>
 	<model name="com.liferay.friendly.url.model.FriendlyURLEntryLocalization">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="friendlyURLEntryLocalizationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="friendlyURLEntryId" type="long" />
@@ -28,6 +30,7 @@
 	</model>
 	<model name="com.liferay.friendly.url.model.FriendlyURLEntryMapping">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="friendlyURLEntryMappingId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="classNameId" type="long" />

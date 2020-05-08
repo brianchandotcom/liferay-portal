@@ -35,6 +35,9 @@ public class FriendlyURLEntryTable extends BaseTable<FriendlyURLEntryTable> {
 
 	public final Column<FriendlyURLEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<FriendlyURLEntryTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<FriendlyURLEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FriendlyURLEntryTable, String> defaultLanguageId =

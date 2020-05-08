@@ -126,6 +126,8 @@ public class FriendlyURLEntryMappingPersistenceTest {
 
 		newFriendlyURLEntryMapping.setMvccVersion(RandomTestUtil.nextLong());
 
+		newFriendlyURLEntryMapping.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newFriendlyURLEntryMapping.setCompanyId(RandomTestUtil.nextLong());
 
 		newFriendlyURLEntryMapping.setClassNameId(RandomTestUtil.nextLong());
@@ -145,6 +147,9 @@ public class FriendlyURLEntryMappingPersistenceTest {
 		Assert.assertEquals(
 			existingFriendlyURLEntryMapping.getMvccVersion(),
 			newFriendlyURLEntryMapping.getMvccVersion());
+		Assert.assertEquals(
+			existingFriendlyURLEntryMapping.getCtCollectionId(),
+			newFriendlyURLEntryMapping.getCtCollectionId());
 		Assert.assertEquals(
 			existingFriendlyURLEntryMapping.getFriendlyURLEntryMappingId(),
 			newFriendlyURLEntryMapping.getFriendlyURLEntryMappingId());
@@ -200,9 +205,9 @@ public class FriendlyURLEntryMappingPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"FriendlyURLEntryMapping", "mvccVersion", true,
-			"friendlyURLEntryMappingId", true, "companyId", true, "classNameId",
-			true, "classPK", true, "friendlyURLEntryId", true);
+			"FriendlyURLEntryMapping", "mvccVersion", true, "ctCollectionId",
+			true, "friendlyURLEntryMappingId", true, "companyId", true,
+			"classNameId", true, "classPK", true, "friendlyURLEntryId", true);
 	}
 
 	@Test
@@ -446,6 +451,8 @@ public class FriendlyURLEntryMappingPersistenceTest {
 			pk);
 
 		friendlyURLEntryMapping.setMvccVersion(RandomTestUtil.nextLong());
+
+		friendlyURLEntryMapping.setCtCollectionId(RandomTestUtil.nextLong());
 
 		friendlyURLEntryMapping.setCompanyId(RandomTestUtil.nextLong());
 

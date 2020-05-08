@@ -71,8 +71,8 @@ public class FriendlyURLEntryModelImpl
 	public static final String TABLE_NAME = "FriendlyURLEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"defaultLanguageId", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"defaultLanguageId", Types.VARCHAR},
 		{"friendlyURLEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
@@ -84,6 +84,7 @@ public class FriendlyURLEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("friendlyURLEntryId", Types.BIGINT);
@@ -96,7 +97,7 @@ public class FriendlyURLEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FriendlyURLEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,friendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG)";
+		"create table FriendlyURLEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,friendlyURLEntryId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,primary key (friendlyURLEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURLEntry";
 
@@ -267,6 +268,12 @@ public class FriendlyURLEntryModelImpl
 			"mvccVersion",
 			(BiConsumer<FriendlyURLEntry, Long>)
 				FriendlyURLEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", FriendlyURLEntry::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<FriendlyURLEntry, Long>)
+				FriendlyURLEntry::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", FriendlyURLEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -415,6 +422,16 @@ public class FriendlyURLEntryModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -645,6 +662,7 @@ public class FriendlyURLEntryModelImpl
 		FriendlyURLEntryImpl friendlyURLEntryImpl = new FriendlyURLEntryImpl();
 
 		friendlyURLEntryImpl.setMvccVersion(getMvccVersion());
+		friendlyURLEntryImpl.setCtCollectionId(getCtCollectionId());
 		friendlyURLEntryImpl.setUuid(getUuid());
 		friendlyURLEntryImpl.setDefaultLanguageId(getDefaultLanguageId());
 		friendlyURLEntryImpl.setFriendlyURLEntryId(getFriendlyURLEntryId());
@@ -750,6 +768,8 @@ public class FriendlyURLEntryModelImpl
 			new FriendlyURLEntryCacheModel();
 
 		friendlyURLEntryCacheModel.mvccVersion = getMvccVersion();
+
+		friendlyURLEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		friendlyURLEntryCacheModel.uuid = getUuid();
 
@@ -872,6 +892,7 @@ public class FriendlyURLEntryModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private String _defaultLanguageId;

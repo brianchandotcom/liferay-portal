@@ -80,10 +80,12 @@ public class FriendlyURLEntryLocalizationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", friendlyURLEntryLocalizationId=");
 		sb.append(friendlyURLEntryLocalizationId);
 		sb.append(", companyId=");
@@ -111,6 +113,7 @@ public class FriendlyURLEntryLocalizationCacheModel
 			new FriendlyURLEntryLocalizationImpl();
 
 		friendlyURLEntryLocalizationImpl.setMvccVersion(mvccVersion);
+		friendlyURLEntryLocalizationImpl.setCtCollectionId(ctCollectionId);
 		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryLocalizationId(
 			friendlyURLEntryLocalizationId);
 		friendlyURLEntryLocalizationImpl.setCompanyId(companyId);
@@ -144,6 +147,8 @@ public class FriendlyURLEntryLocalizationCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		friendlyURLEntryLocalizationId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -162,6 +167,8 @@ public class FriendlyURLEntryLocalizationCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(friendlyURLEntryLocalizationId);
 
@@ -191,6 +198,7 @@ public class FriendlyURLEntryLocalizationCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long friendlyURLEntryLocalizationId;
 	public long companyId;
 	public long friendlyURLEntryId;

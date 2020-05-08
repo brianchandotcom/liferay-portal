@@ -168,7 +168,6 @@ definition {
 		Upgrade.addUserAndSuborganization();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade730 {
 		property data.archive.type = "data-archive-admin-org-with-user";

@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARD_THUMBNAIL</td>
+	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_CUSTOM_LOGO</td>
 	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//span[contains(@class,'sticker')]/img</td>
 	<td></td>

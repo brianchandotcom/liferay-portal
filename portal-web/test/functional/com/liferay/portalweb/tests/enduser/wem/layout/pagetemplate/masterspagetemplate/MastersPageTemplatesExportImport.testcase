@@ -176,6 +176,90 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-102207. Can export a master page template containing the custom configuration settings of fragments and import."
+	@priority = "4"
+	test ExportImportMastersPageTemplateWithCustomConfigurationSettingOfFragments {
+		task ("Add a custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Section and a Heading to custom master and set up configuration settings of them") {
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__drop-zone')]");
+
+			PageEditor.editLayoutSection(
+				backgroundImage = "Manual Selection",
+				uploadFileName = "Document_1.png");
+
+			PageEditor.viewSectionStyle(
+				backgroundImage = "Document_1.png",
+				position = "1");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "Heading",
+				scope = "Master");
+
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+			PageEditor.configureFragment(
+				headingLevel = "H2",
+				marginBottom = "1",
+				textAlign = "Center",
+				textColor = "danger");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				marginBottom = "1",
+				textColor = "danger");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Export custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Export",
+				masterLayoutName = "Custom Masters Page Template");
+
+			DownloadTempFile();
+		}
+
+		task ("Import masters page template in new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
+
+			MastersPageTemplatesAdmin.importMastersFromTempFolder();
+		}
+
+		task ("Assert the custom configuration settings of fragments are imported") {
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.viewSectionStyle(
+				backgroundImage = "Document_1.png",
+				position = "1");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				marginBottom = "1",
+				textColor = "danger");
+		}
+	}
+
 	@description = "This is a use case for LPS-102207. Can export a master page template containing the edited inline content of fragments and import."
 	@priority = "4"
 	test ExportImportMastersPageTemplateWithEditedInlineContentOfFragments {

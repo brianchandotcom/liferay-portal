@@ -124,7 +124,9 @@ simplePublishURL.setParameter("targetGroupId", String.valueOf(liveGroupId));
 %>
 
 <c:if test='<%= !publishConfigurationButtons.equals("template") %>'>
-	<div class="container-fluid-1280 publish-navbar">
+	<clay:container
+		className="publish-navbar"
+	>
 		<div class="autofit-row autofit-row-center">
 			<div class="autofit-col autofit-col-expand">
 				<clay:navigation-bar
@@ -160,7 +162,7 @@ simplePublishURL.setParameter("targetGroupId", String.valueOf(liveGroupId));
 				/>
 			</div>
 		</div>
-	</div>
+	</clay:container>
 </c:if>
 
 <c:choose>

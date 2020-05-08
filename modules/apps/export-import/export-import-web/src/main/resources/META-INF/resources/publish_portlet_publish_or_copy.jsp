@@ -56,7 +56,7 @@ else {
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
 	<div class="export-dialog-tree portlet-export-import-publish-processes">
-		<div class="container-fluid-1280">
+		<clay:container>
 
 			<%
 			int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(StagingUtil.getStagingAndLiveGroupIds(themeDisplay.getScopeGroupId()), selPortlet.getPortletId(), BackgroundTaskExecutorNames.PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR, false);
@@ -411,7 +411,7 @@ else {
 					/>
 				</c:if>
 			</aui:fieldset-group>
-		</div>
+		</clay:container>
 	</div>
 
 	<aui:button-row>

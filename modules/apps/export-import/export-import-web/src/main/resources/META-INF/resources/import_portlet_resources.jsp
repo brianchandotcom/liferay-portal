@@ -50,7 +50,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
 	<div class="export-dialog-tree">
-		<div class="container-fluid-1280">
+		<clay:container>
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset cssClass="options-group" label="file">
 					<dl class="import-file-details options">
@@ -340,7 +340,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 					<aui:input data-name='<%= LanguageUtil.get(request, "always-use-my-user-id") %>' id="alwaysCurrentUserId" label="<%= taglibUseTheCurrentUserAsAuthorLabel %>" name="<%= PortletDataHandlerKeys.USER_ID_STRATEGY %>" type="radio" value="<%= UserIdStrategy.ALWAYS_CURRENT_USER_ID %>" />
 				</aui:fieldset>
 			</aui:fieldset-group>
-		</div>
+		</clay:container>
 	</div>
 
 	<aui:button-row>

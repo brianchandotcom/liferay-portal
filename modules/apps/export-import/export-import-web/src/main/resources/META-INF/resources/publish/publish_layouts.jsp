@@ -110,7 +110,7 @@ redirectURL.setParameter("privateLayout", String.valueOf(privateLayout));
 response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
 
 		<%
@@ -190,7 +190,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 		<div id="<portlet:namespace />publishOptions">
 			<div class="export-dialog-tree">
-				<div class="container-fluid-1280">
+				<clay:container>
 
 					<%
 					String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR : BackgroundTaskExecutorNames.LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
@@ -289,7 +289,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 							</aui:fieldset>
 						</c:if>
 					</aui:fieldset-group>
-				</div>
+				</clay:container>
 			</div>
 
 			<aui:button-row>
@@ -303,7 +303,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			</aui:button-row>
 		</div>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	function <portlet:namespace />publishPages() {

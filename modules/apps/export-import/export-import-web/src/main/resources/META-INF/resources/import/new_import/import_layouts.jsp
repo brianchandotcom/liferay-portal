@@ -33,7 +33,10 @@ portletDisplay.setURLBack(importProcessesURL.toString());
 renderResponse.setTitle(LanguageUtil.get(request, "new-import-process"));
 %>
 
-<div class="container-fluid-1280 container-view" id="<portlet:namespace />exportImportOptions">
+<clay:container
+	className="container-view"
+	id='<%= renderResponse.getNamespace() + "exportImportOptions" %>'
+>
 
 	<%
 	int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR, false);
@@ -53,4 +56,4 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-import-process"));
 			<liferay-util:include page="/import/new_import/import_layouts_validation.jsp" servletContext="<%= application %>" />
 		</c:otherwise>
 	</c:choose>
-</div>
+</clay:container>

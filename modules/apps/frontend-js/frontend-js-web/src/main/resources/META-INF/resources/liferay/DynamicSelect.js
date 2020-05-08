@@ -107,12 +107,12 @@ function updateSelect(array, index, list) {
 
 function callSelectData(array, index) {
 	if (index + 1 < array.length) {
-		const curSelect = document.getElementById(array[index].select);
+		const currentSelect = document.getElementById(array[index].select);
 		const nextSelectData = array[index + 1].selectData;
 
 		nextSelectData((list) => {
 			updateSelect(array, index + 1, list);
-		}, curSelect && curSelect.value);
+		}, currentSelect && currentSelect.value);
 	}
 }
 

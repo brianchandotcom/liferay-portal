@@ -12,8 +12,8 @@
  * details.
  */
 
+import deleteItemAction from '../actions/deleteItem';
 import deleteWidgets from '../actions/deleteWidgets';
-import updateLayoutData from '../actions/updateLayoutData';
 import updatePageContents from '../actions/updatePageContents';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
@@ -43,7 +43,7 @@ export default function deleteItem({itemId, store}) {
 				}
 
 				dispatch(
-					updateLayoutData({deletedFragmentEntryLinkIds, layoutData})
+					deleteItemAction({deletedFragmentEntryLinkIds, layoutData})
 				);
 			})
 			.then(() => {

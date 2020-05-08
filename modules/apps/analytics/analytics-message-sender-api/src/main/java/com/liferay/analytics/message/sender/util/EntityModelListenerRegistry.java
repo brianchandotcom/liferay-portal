@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.message.sender.util;
 
-import com.liferay.analytics.message.sender.model.EntityModelListener;
+import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 
 import java.util.Collection;
 

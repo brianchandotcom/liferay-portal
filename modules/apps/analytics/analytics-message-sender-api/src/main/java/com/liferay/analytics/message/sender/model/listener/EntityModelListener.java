@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.message.sender.model;
+package com.liferay.analytics.message.sender.model.listener;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;

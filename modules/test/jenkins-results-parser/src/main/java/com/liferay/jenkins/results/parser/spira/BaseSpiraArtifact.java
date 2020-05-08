@@ -420,32 +420,16 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	private void readObject(ObjectInputStream in)
 		throws ClassNotFoundException, IOException {
 
-		ObjectInputStream.GetField getField = in.readFields();
+		in.defaultReadObject();
 
-		Object object = getField.get(_FIELD_NAME_JSON_OBJECT, null);
-
-		if (object == null) {
-			jsonObject = null;
-
-			return;
-		}
-
-		jsonObject = new JSONObject(object.toString());
+		jsonObject = new JSONObject(in.readUTF());
 	}
 
 	private void writeObject(ObjectOutputStream out) throws IOException {
-		ObjectOutputStream.PutField putField = out.putFields();
+		out.defaultWriteObject();
 
-		if (jsonObject == null) {
-			putField.put(_FIELD_NAME_JSON_OBJECT, null);
-
-			return;
-		}
-
-		putField.put(_FIELD_NAME_JSON_OBJECT, jsonObject.toString());
+		out.writeUTF(jsonObject.toString());
 	}
-
-	private static final String _FIELD_NAME_JSON_OBJECT = "jsonObject";
 
 	private static final Map<Class<?>, Map<Integer, SpiraArtifact>>
 		_idSpiraArtifactsMap = Collections.synchronizedMap(

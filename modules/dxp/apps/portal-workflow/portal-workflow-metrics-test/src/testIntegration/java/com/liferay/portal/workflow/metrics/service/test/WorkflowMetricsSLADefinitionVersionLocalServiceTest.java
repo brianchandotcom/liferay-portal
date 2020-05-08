@@ -17,38 +17,34 @@ package com.liferay.portal.workflow.metrics.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalServiceUtil;
+import com.liferay.portal.workflow.metrics.service.util.BaseWorkflowMetricsTestCase;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Rafael Praxedes
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
-public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+public class WorkflowMetricsSLADefinitionVersionLocalServiceTest
+	extends BaseWorkflowMetricsTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_company = CompanyTestUtil.addCompany();
 	}
 
@@ -169,22 +165,11 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 		workflowMetricsSLADefinitionVersion.setWorkflowMetricsSLADefinitionId(
 			workflowMetricsSLADefinitionId);
 
-		workflowMetricsSLADefinitionVersion =
-			WorkflowMetricsSLADefinitionVersionLocalServiceUtil.
-				addWorkflowMetricsSLADefinitionVersion(
-					workflowMetricsSLADefinitionVersion);
-
-		_workflowMetricsSLADefinitionVersions.add(
-			workflowMetricsSLADefinitionVersion);
-
-		return workflowMetricsSLADefinitionVersion;
+		return WorkflowMetricsSLADefinitionVersionLocalServiceUtil.
+			addWorkflowMetricsSLADefinitionVersion(
+				workflowMetricsSLADefinitionVersion);
 	}
 
-	@DeleteAfterTestRun
 	private Company _company;
-
-	@DeleteAfterTestRun
-	private final List<WorkflowMetricsSLADefinitionVersion>
-		_workflowMetricsSLADefinitionVersions = new ArrayList<>();
 
 }

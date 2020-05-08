@@ -16,15 +16,12 @@ package com.liferay.portal.workflow.metrics.service.internal.search.index.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.State;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
@@ -32,8 +29,6 @@ import com.liferay.portal.workflow.metrics.service.util.BaseWorkflowMetricsIndex
 
 import java.util.Collections;
 
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,11 +38,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class NodeWorkflowMetricsIndexerTest
 	extends BaseWorkflowMetricsIndexerTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testAddStateNode() throws Exception {
@@ -60,28 +50,27 @@ public class NodeWorkflowMetricsIndexerTest
 
 		KaleoNode kaleoNode = addKaleoNode(startState);
 
-		KaleoDefinition kaleoDefinition = getKaleoDefinition();
+		retryAssertCount(
+			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
+				workflowDefinition.getCompanyId()),
+			"WorkflowMetricsNodeType", "companyId",
+			workflowDefinition.getCompanyId(), "deleted", false, "initial",
+			true, "name", "start", "nodeId", kaleoNode.getKaleoNodeId(),
+			"processId", workflowDefinition.getWorkflowDefinitionId(),
+			"terminal", false, "type", NodeType.STATE.toString(), "version",
+			"1.0");
+
+		kaleoNode = addKaleoNode(new State("end", StringPool.BLANK, false));
 
 		retryAssertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				kaleoDefinition.getCompanyId()),
+				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "initial", true,
-			"name", "start", "nodeId", kaleoNode.getKaleoNodeId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "terminal", false, "type",
-			NodeType.STATE.toString(), "version", "1.0");
-
-		kaleoNode = addKaleoNode(
-			kaleoDefinition, new State("end", StringPool.BLANK, false));
-
-		retryAssertCount(
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				kaleoDefinition.getCompanyId()),
-			"WorkflowMetricsNodeType", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "initial", false,
-			"name", "end", "nodeId", kaleoNode.getKaleoNodeId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "terminal", true, "type",
-			NodeType.STATE.toString(), "version", "1.0");
+			workflowDefinition.getCompanyId(), "deleted", false, "initial",
+			false, "name", "end", "nodeId", kaleoNode.getKaleoNodeId(),
+			"processId", workflowDefinition.getWorkflowDefinitionId(),
+			"terminal", true, "type", NodeType.STATE.toString(), "version",
+			"1.0");
 	}
 
 	@Test
@@ -92,31 +81,30 @@ public class NodeWorkflowMetricsIndexerTest
 
 		KaleoTask kaleoTask = addKaleoTask(reviewTask);
 
-		KaleoDefinition kaleoDefinition = getKaleoDefinition();
-
 		retryAssertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				kaleoDefinition.getCompanyId()),
+				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "initial", false,
-			"name", "review", "nodeId", kaleoTask.getKaleoTaskId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "terminal", false, "type",
-			NodeType.TASK.toString(), "version", "1.0");
+			workflowDefinition.getCompanyId(), "deleted", false, "initial",
+			false, "name", "review", "nodeId", kaleoTask.getKaleoTaskId(),
+			"processId", workflowDefinition.getWorkflowDefinitionId(),
+			"terminal", false, "type", NodeType.TASK.toString(), "version",
+			"1.0");
 		retryAssertCount(
 			_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
-				kaleoDefinition.getCompanyId()),
+				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsSLATaskResultType", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "instanceId", 0,
-			"processId", kaleoDefinition.getKaleoDefinitionId(),
+			workflowDefinition.getCompanyId(), "deleted", false, "instanceId",
+			0, "processId", workflowDefinition.getWorkflowDefinitionId(),
 			"slaDefinitionId", 0, "nodeId", kaleoTask.getKaleoTaskId(),
 			"taskName", "review");
 		retryAssertCount(
 			_taskWorkflowMetricsIndexNameBuilder.getIndexName(
-				kaleoDefinition.getCompanyId()),
+				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsTaskType", "companyId",
-			kaleoDefinition.getCompanyId(), "completed", false, "deleted",
+			workflowDefinition.getCompanyId(), "completed", false, "deleted",
 			false, "instanceId", 0, "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "nodeId",
+			workflowDefinition.getWorkflowDefinitionId(), "nodeId",
 			kaleoTask.getKaleoTaskId(), "name", "review", "taskId", 0,
 			"version", "1.0");
 	}
@@ -126,27 +114,27 @@ public class NodeWorkflowMetricsIndexerTest
 		KaleoNode kaleoNode = addKaleoNode(
 			new State("end", StringPool.BLANK, false));
 
-		KaleoDefinition kaleoDefinition = getKaleoDefinition();
-
 		retryAssertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				kaleoDefinition.getCompanyId()),
+				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "initial", false,
-			"name", "end", "nodeId", kaleoNode.getKaleoNodeId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "terminal", true, "type",
-			NodeType.STATE.toString(), "version", "1.0");
+			workflowDefinition.getCompanyId(), "deleted", false, "initial",
+			false, "name", "end", "nodeId", kaleoNode.getKaleoNodeId(),
+			"processId", workflowDefinition.getWorkflowDefinitionId(),
+			"terminal", true, "type", NodeType.STATE.toString(), "version",
+			"1.0");
 
 		deleteKaleoNode(kaleoNode);
 
 		retryAssertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				kaleoDefinition.getCompanyId()),
+				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", true, "initial", false,
-			"name", "end", "nodeId", kaleoNode.getKaleoNodeId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "terminal", true, "type",
-			NodeType.STATE.toString(), "version", "1.0");
+			workflowDefinition.getCompanyId(), "deleted", true, "initial",
+			false, "name", "end", "nodeId", kaleoNode.getKaleoNodeId(),
+			"processId", workflowDefinition.getWorkflowDefinitionId(),
+			"terminal", true, "type", NodeType.STATE.toString(), "version",
+			"1.0");
 	}
 
 	@Test
@@ -159,42 +147,39 @@ public class NodeWorkflowMetricsIndexerTest
 
 		deleteKaleoTask(kaleoTask);
 
-		KaleoDefinition kaleoDefinition = getKaleoDefinition();
-
 		retryAssertCount(
 			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-				kaleoDefinition.getCompanyId()),
+				workflowDefinition.getCompanyId()),
 			"WorkflowMetricsNodeType", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", true, "initial", false,
-			"name", "review", "nodeId", kaleoTask.getKaleoTaskId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "terminal", false, "type",
-			NodeType.TASK.toString(), "version", "1.0");
+			workflowDefinition.getCompanyId(), "deleted", true, "initial",
+			false, "name", "review", "nodeId", kaleoTask.getKaleoTaskId(),
+			"processId", workflowDefinition.getWorkflowDefinitionId(),
+			"terminal", false, "type", NodeType.TASK.toString(), "version",
+			"1.0");
 	}
 
 	@Test
 	public void testReindex() throws Exception {
-		KaleoDefinition kaleoDefinition = getKaleoDefinition();
-
 		assertReindex(
 			LinkedHashMapBuilder.put(
 				_nodeWorkflowMetricsIndexNameBuilder.getIndexName(
-					kaleoDefinition.getCompanyId()),
+					workflowDefinition.getCompanyId()),
 				4
 			).put(
 				_slaTaskResultWorkflowMetricsIndexNameBuilder.getIndexName(
-					kaleoDefinition.getCompanyId()),
+					workflowDefinition.getCompanyId()),
 				2
 			).put(
 				_taskWorkflowMetricsIndexNameBuilder.getIndexName(
-					kaleoDefinition.getCompanyId()),
+					workflowDefinition.getCompanyId()),
 				2
 			).build(),
 			new String[] {
 				"WorkflowMetricsNodeType", "WorkflowMetricsSLATaskResultType",
 				"WorkflowMetricsTaskType"
 			},
-			"companyId", kaleoDefinition.getCompanyId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId());
+			"companyId", workflowDefinition.getCompanyId(), "processId",
+			workflowDefinition.getWorkflowDefinitionId());
 	}
 
 	@Inject(filter = "workflow.metrics.index.entity.name=node")

@@ -153,7 +153,9 @@ if (privateVirtualHostnames.isEmpty()) {
 			String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 		%>
 
-			<div class="container-fluid lfr-form-row">
+			<clay:container
+				className="lfr-form-row"
+			>
 				<clay:row>
 					<aui:input inlineField="<%= true %>" label="public-pages" maxlength="200" name="publicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
@@ -173,7 +175,7 @@ if (privateVirtualHostnames.isEmpty()) {
 
 					</aui:select>
 				</clay:row>
-			</div>
+			</clay:container>
 
 		<%
 		}
@@ -190,7 +192,9 @@ if (privateVirtualHostnames.isEmpty()) {
 			String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 		%>
 
-			<div class="container-fluid lfr-form-row">
+			<clay:container
+				className="lfr-form-row"
+			>
 				<clay:row>
 					<aui:input inlineField="<%= true %>" label="private-pages" maxlength="200" name="privateVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
@@ -210,7 +214,7 @@ if (privateVirtualHostnames.isEmpty()) {
 
 					</aui:select>
 				</clay:row>
-			</div>
+			</clay:container>
 
 		<%
 		}
@@ -241,7 +245,9 @@ if (privateVirtualHostnames.isEmpty()) {
 				String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 			%>
 
-				<div class="container-fluid lfr-form-row">
+				<clay:container
+					className="lfr-form-row"
+				>
 					<clay:row>
 						<aui:input inlineField="<%= true %>" label="staging-public-pages" maxlength="200" name="stagingPublicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
@@ -261,7 +267,7 @@ if (privateVirtualHostnames.isEmpty()) {
 
 						</aui:select>
 					</clay:row>
-				</div>
+				</clay:container>
 
 			<%
 			}
@@ -290,7 +296,9 @@ if (privateVirtualHostnames.isEmpty()) {
 				String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 			%>
 
-				<div class="container-fluid lfr-form-row">
+				<clay:container
+					className="lfr-form-row"
+				>
 					<clay:row>
 						<aui:input inlineField="<%= true %>" label="staging-private-pages" maxlength="200" name="stagingPrivateVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
@@ -310,7 +318,7 @@ if (privateVirtualHostnames.isEmpty()) {
 
 						</aui:select>
 					</clay:row>
-				</div>
+				</clay:container>
 
 			<%
 			}

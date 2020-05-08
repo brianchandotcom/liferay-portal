@@ -28,7 +28,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 
 <div id="<%= portletNamespace %>customizationBar">
 	<div class="control-menu-level-2">
-		<div class="container-fluid container-fluid-max-xl">
+		<clay:container>
 			<div class="control-menu-level-2-heading d-block d-md-none">
 				<liferay-ui:message key="customization-options" />
 
@@ -181,6 +181,6 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 					}
 				</aui:script>
 			</ul>
-		</div>
+		</clay:container>
 	</div>
 </div>

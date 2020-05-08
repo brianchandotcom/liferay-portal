@@ -565,7 +565,6 @@ definition {
 		Form.save();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test AddFormWithSpanishAsDefaultPortalLanguage {
 		property test.name.skip.portal.instance = "Forms#AddFormWithSpanishAsDefaultPortalLanguage";

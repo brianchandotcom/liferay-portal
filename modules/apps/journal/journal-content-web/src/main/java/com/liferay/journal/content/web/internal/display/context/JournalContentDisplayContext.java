@@ -495,10 +495,14 @@ public class JournalContentDisplayContext {
 	public long getGroupId() {
 		long groupId = _themeDisplay.getScopeGroupId();
 
-		Group scopeGroup = _themeDisplay.getScopeGroup();
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (scopeGroup.isStaged() &&
-			!scopeGroup.isInStagingPortlet(JournalPortletKeys.JOURNAL)) {
+		if (stagingGroupHelper.isLocalStagingGroup(groupId) &&
+			!stagingGroupHelper.isStagedPortlet(
+				groupId, JournalPortletKeys.JOURNAL)) {
+
+			Group scopeGroup = _themeDisplay.getScopeGroup();
 
 			groupId = scopeGroup.getLiveGroupId();
 		}

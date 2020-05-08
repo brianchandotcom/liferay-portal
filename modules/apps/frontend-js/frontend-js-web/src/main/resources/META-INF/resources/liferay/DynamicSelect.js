@@ -43,7 +43,7 @@ function isArrayLike(obj) {
 	if (Array.isArray(obj)) {
 		return true;
 	}
-	else if (obj === Object(obj)) {
+	else if (obj && typeof obj === 'object') {
 		try {
 			if (
 				'length' in obj &&

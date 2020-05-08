@@ -41,6 +41,11 @@ public interface PanelCategoryKeys {
 	public static final String CONTROL_PANEL_WORKFLOW =
 		PortletCategoryKeys.CONTROL_PANEL_WORKFLOW;
 
+	public static final String GLOBAL_MENU = "global_menu";
+
+	public static final String GLOBAL_MENU_APPLICATIONS =
+		"global_menu.applications";
+
 	public static final String HIDDEN = "hidden";
 
 	public static final String ROOT = "root";

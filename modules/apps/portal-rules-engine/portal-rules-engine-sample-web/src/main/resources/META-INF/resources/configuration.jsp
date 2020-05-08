@@ -34,7 +34,7 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 	<liferay-ui:error key="rules" message="please-enter-valid-rules" />
 	<liferay-ui:error key="rulesEngineException" message="please-check-the-syntax-of-your-rules" />
 
-	<div class="container-fluid-1280">
+	<clay:container>
 		<aui:fieldset>
 			<aui:input name="domainName" value="<%= domainNameValue %>" wrapperCssClass="lfr-input-text-container" />
 
@@ -82,7 +82,7 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 				<aui:button type="submit" />
 			</aui:button-row>
 		</aui:fieldset>
-	</div>
+	</clay:container>
 </aui:form>
 
 <aui:script>

@@ -147,6 +147,10 @@ public class DDMFormTemplateContextFactoryImpl
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 		templateContext.put("readOnly", ddmFormRenderingContext.isReadOnly());
 
+		String redirectURL = ddmFormRenderingContext.getRedirectURL();
+
+		templateContext.put("redirectURL", redirectURL);
+
 		List<DDMFormRule> ddmFormRules = ddmFormLayout.getDDMFormRules();
 
 		if (ListUtil.isEmpty(ddmFormRules)) {
@@ -154,14 +158,6 @@ public class DDMFormTemplateContextFactoryImpl
 		}
 
 		templateContext.put("rules", toObjectList(ddmFormRules));
-
-		templateContext.put(
-			"showRequiredFieldsWarning",
-			ddmFormRenderingContext.isShowRequiredFieldsWarning());
-
-		String redirectURL = ddmFormRenderingContext.getRedirectURL();
-
-		templateContext.put("redirectURL", redirectURL);
 
 		boolean showCancelButton = ddmFormRenderingContext.isShowCancelButton();
 
@@ -172,6 +168,10 @@ public class DDMFormTemplateContextFactoryImpl
 		}
 
 		templateContext.put("showCancelButton", showCancelButton);
+
+		templateContext.put(
+			"showRequiredFieldsWarning",
+			ddmFormRenderingContext.isShowRequiredFieldsWarning());
 
 		boolean showSubmitButton = ddmFormRenderingContext.isShowSubmitButton();
 

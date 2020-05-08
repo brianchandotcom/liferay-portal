@@ -34,105 +34,105 @@ function sortByValue(a, b) {
 	}
 }
 
-export default class DynamicSelect {
-	constructor(array) {
-		this.array = array;
-		this._processArray(this.array);
+function updateSelect(array, index, list) {
+	const options = array[index];
+
+	const select = document.querySelector(`#${options.select}`);
+
+	const selectDesc = options.selectDesc;
+	const selectDisableOnEmpty = options.selectDisableOnEmpty;
+	const selectId = options.selectId;
+	const selectNullable = options.selectNullable !== false;
+	const selectSort = options.selectSort;
+
+	const selectVal = [options.selectVal];
+
+	let selectOptions = [];
+
+	if (selectNullable) {
+		selectOptions.push('<option selected value="0"></option>');
 	}
 
-	_processArray(array) {
-		array.forEach((item, index) => {
-			const id = item.select;
-			const select = document.querySelector(`#${id}`);
-			const selectData = item.selectData;
+	list.forEach((item) => {
+		const key = item[selectId];
+		const value = item[selectDesc];
 
-			if (select) {
-				select.setAttribute('data-componentType', 'dynamic_select');
+		let selected = '';
 
-				let prevSelectVal = null;
+		if (selectVal.indexOf(key) > -1) {
+			selected = 'selected="selected"';
+		}
 
-				if (index > 0) {
-					prevSelectVal = array[index - 1].selectVal;
-				}
+		selectOptions.push(
+			`<option ${selected} value="${key}">${value}</option>`
+		);
+	});
 
-				selectData((list) => {
-					this._updateSelect(index, list);
-				}, prevSelectVal);
-
-				if (!select.getAttribute('name')) {
-					select.setAttribute('name', id);
-				}
-
-				select.addEventListener('change', () => {
-					this._callSelectData(index);
-				});
-			}
-		});
+	if (selectSort) {
+		selectOptions = selectOptions.sort(sortByValue);
 	}
 
-	_callSelectData(index) {
-		if (index + 1 < this.array.length) {
-			const curSelect = document.querySelector(
-				`#${this.array[index].select}`
-			);
-			const nextSelectData = this.array[index + 1].selectData;
+	selectOptions = selectOptions.join('');
 
-			nextSelectData((list) => {
-				this._updateSelect(index + 1, list);
-			}, curSelect && curSelect.value);
+	if (select) {
+		while (select.firstChild) {
+			select.removeChild(select.lastChild);
+		}
+
+		select.innerHTML = selectOptions;
+
+		if (selectDisableOnEmpty) {
+			toggleDisabled(select, !list.length);
 		}
 	}
+}
 
-	_updateSelect(index, list) {
-		const options = this.array[index];
+function callSelectData(array, index) {
+	if (index + 1 < array.length) {
+		const curSelect = document.querySelector(`#${array[index].select}`);
+		const nextSelectData = array[index + 1].selectData;
 
-		const select = document.querySelector(`#${options.select}`);
+		nextSelectData((list) => {
+			updateSelect(array, index + 1, list);
+		}, curSelect && curSelect.value);
+	}
+}
 
-		const selectDesc = options.selectDesc;
-		const selectDisableOnEmpty = options.selectDisableOnEmpty;
-		const selectId = options.selectId;
-		const selectNullable = options.selectNullable !== false;
-		const selectSort = options.selectSort;
-
-		const selectVal = [options.selectVal];
-
-		let selectOptions = [];
-
-		if (selectNullable) {
-			selectOptions.push('<option selected value="0"></option>');
-		}
-
-		list.forEach((item) => {
-			const key = item[selectId];
-			const value = item[selectDesc];
-
-			let selected = '';
-
-			if (selectVal.indexOf(key) > -1) {
-				selected = 'selected="selected"';
-			}
-
-			selectOptions.push(
-				`<option ${selected} value="${key}">${value}</option>`
-			);
-		});
-
-		if (selectSort) {
-			selectOptions = selectOptions.sort(sortByValue);
-		}
-
-		selectOptions = selectOptions.join('');
+function process(array) {
+	array.forEach((item, index) => {
+		const id = item.select;
+		const select = document.querySelector(`#${id}`);
+		const selectData = item.selectData;
 
 		if (select) {
-			while (select.firstChild) {
-				select.removeChild(select.lastChild);
+			select.setAttribute('data-componentType', 'dynamic_select');
+
+			let prevSelectVal = null;
+
+			if (index > 0) {
+				prevSelectVal = array[index - 1].selectVal;
 			}
 
-			select.innerHTML = selectOptions;
+			selectData((list) => {
+				updateSelect(array, index, list);
+			}, prevSelectVal);
 
-			if (selectDisableOnEmpty) {
-				toggleDisabled(select, !list.length);
+			if (!select.getAttribute('name')) {
+				select.setAttribute('name', id);
 			}
+
+			select.addEventListener('change', () => {
+				callSelectData(array, index);
+			});
 		}
+	});
+}
+
+/**
+ * Ideally would be a function, but it is a class for backwards compatibility.
+ */
+export default class DynamicSelect {
+	constructor(array) {
+		process(array);
 	}
 }

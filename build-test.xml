@@ -6710,17 +6710,7 @@ go</echo>
 			<then>
 				<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
 
-				<local name="osgi.module.pattern" />
-
-				<if>
-					<equals arg1="${osgi.modules.includes}" arg2="revert-schema-version" />
-					<then>
-						<property name="osgi.module.pattern" value="**/test/**" />
-					</then>
-					<else>
-						<property name="osgi.module.pattern" value="**/apps/**" />
-					</else>
-				</if>
+				<property name="osgi.module.pattern" value="**" />
 
 				<antelope:stringutil property="osgi.modules.includes.pattern" string="${osgi.module.pattern}/${osgi.modules.includes}">
 					<antelope:replace regex="," replacement=",${osgi.module.pattern}/" />

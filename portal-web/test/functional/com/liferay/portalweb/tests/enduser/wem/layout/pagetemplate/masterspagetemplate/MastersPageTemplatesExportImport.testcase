@@ -1,0 +1,69 @@
+@component-name = "portal-wcm"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.layout.page.template.admin.web.internal.configuration.ExportImportMasterLayoutConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Layout Page Templates";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-102207. Can not export a master page template when it doesn't has published version."
+	@priority = "5"
+	test CannotExportMastersPageTemplateWithoutPublishedVersion {
+		task ("Add a custom master but not publish") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputName(name = "Custom Masters Page Template");
+
+			Button.clickSave();
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Assert custom master has a Draft label") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			LexiconCard.viewCardLabel(
+				card = "Custom Masters Page Template",
+				cardLabel = "Draft");
+		}
+
+		task ("Assert Export action is disabled") {
+			Click.waitForMenuToggleJSClick(
+				key_card = "Custom Masters Page Template",
+				locator1 = "LexiconCard#CARD_ELLIPSIS");
+
+			AssertVisible(
+				key_menuItem = "Export",
+				locator1 = "MenuItem#DISABLED_MENU_ITEM");
+		}
+
+		task ("Assert Export button is disabled") {
+			MastersPageTemplatesAdmin.selectMasters(masterLayoutName = "Custom Masters Page Template");
+
+			AssertElementPresent(locator1 = "Icon#EXPORT_DISABLED");
+		}
+	}
+
+}

@@ -23,7 +23,9 @@ String className = GetterUtil.getString(request.getAttribute("liferay-layout:lay
 LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = new LayoutClassedModelUsagesDisplayContext(renderRequest, renderResponse, className, classPK);
 %>
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
+<clay:container
+	className="container-form-lg"
+>
 	<clay:row>
 		<clay:col
 			lg="3"
@@ -179,4 +181,4 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 			</div>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>

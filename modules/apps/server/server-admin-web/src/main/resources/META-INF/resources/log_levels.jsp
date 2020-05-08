@@ -92,7 +92,7 @@ CreationMenu creationMenu = new CreationMenu() {
 	showSearch="<%= true %>"
 />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-ui:search-container
 		searchContainer="<%= loggerSearchContainer %>"
 	>
@@ -144,4 +144,4 @@ CreationMenu creationMenu = new CreationMenu() {
 	<aui:button-row>
 		<aui:button cssClass="save-server-button" data-cmd="updateLogLevels" value="save" />
 	</aui:button-row>
-</div>
+</clay:container>

@@ -77,6 +77,17 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		return super.generateLockKey(backgroundTask);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	public void setIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
+		_indexWriterHelper = indexWriterHelper;
+
+		_countDownLatch.countDown();
+	}
+
 	@Override
 	protected void reindex(String className, long[] companyIds)
 		throws Exception {
@@ -102,7 +113,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 					searchEngine.initialize(companyId);
 				}
 
-				indexWriterHelper.deleteEntityDocuments(
+				_indexWriterHelper.deleteEntityDocuments(
 					indexer.getSearchEngineId(), companyId, className, true);
 
 				indexer.reindex(new String[] {String.valueOf(companyId)});
@@ -118,25 +129,12 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
-		this.indexWriterHelper = indexWriterHelper;
-
-		_countDownLatch.countDown();
-	}
-
 	protected void unsetIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
 		_countDownLatch = new CountDownLatch(1);
 	}
 
 	@Reference
 	protected IndexerRegistry indexerRegistry;
-
-	protected IndexWriterHelper indexWriterHelper;
 
 	@Reference
 	protected ReindexStatusMessageSender reindexStatusMessageSender;
@@ -148,5 +146,6 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		ReindexSingleIndexerBackgroundTaskExecutor.class);
 
 	private volatile CountDownLatch _countDownLatch = new CountDownLatch(1);
+	private IndexWriterHelper _indexWriterHelper;
 
 }

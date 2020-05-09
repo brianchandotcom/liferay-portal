@@ -14,12 +14,12 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Rafael Praxedes
  */
-public class NoSuchInstanceException extends PortalException {
+public class NoSuchInstanceException extends NoSuchModelException {
 
 	public NoSuchInstanceException() {
 	}

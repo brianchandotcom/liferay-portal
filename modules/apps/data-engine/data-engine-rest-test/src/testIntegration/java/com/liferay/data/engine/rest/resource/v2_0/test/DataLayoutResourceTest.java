@@ -143,8 +143,11 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			MapUtil.getString(dataLayout.getName(), "en_US"),
 			JSONUtil.getValue(
 				dataLayoutJSONObject, "JSONObject/name", "Object/en_US"));
+	}
 
-		// Not Found
+	@Override
+	public void testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKeyNotFound()
+		throws Exception {
 
 		Assert.assertEquals(
 			"Not Found",

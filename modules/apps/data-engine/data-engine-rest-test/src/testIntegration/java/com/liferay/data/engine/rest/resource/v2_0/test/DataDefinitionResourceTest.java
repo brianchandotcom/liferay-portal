@@ -179,8 +179,11 @@ public class DataDefinitionResourceTest
 				"JSONObject/data",
 				"JSONObject/dataDefinitionByContentTypeByDataDefinitionKey",
 				"JSONObject/name", "Object/en_US"));
+	}
 
-		// Not Found
+	@Override
+	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKeyNotFound()
+		throws Exception {
 
 		Assert.assertEquals(
 			"Not Found",

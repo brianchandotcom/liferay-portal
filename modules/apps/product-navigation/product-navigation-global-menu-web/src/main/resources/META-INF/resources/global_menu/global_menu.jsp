@@ -21,9 +21,11 @@ GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext
 %>
 
 <div class="control-menu-icon lfr-portal-tooltip">
-	<clay:icon
+	<clay:button
+		icon="grid"
 		monospaced="<%= true %>"
-		symbol="grid"
+		style="unstyled"
+		title='<%= LanguageUtil.get(request, "global-menu") %>'
 	/>
 
 	<react:component

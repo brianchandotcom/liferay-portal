@@ -37,9 +37,14 @@ definition {
 		}
 
 		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				siteNavigationMenuName = "Test Navigation Menu Name");
+
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
 
-			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 		}
 	}
 

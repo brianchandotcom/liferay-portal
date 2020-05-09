@@ -418,6 +418,70 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-102207. The existing entry will be overwriten when import a master page template with thumbnail if check Overwrite Existing Entries."
+	@priority = "4"
+	test OverwriteExistingEntryWithThumbnailIfCheckOverwriteExistingEntries {
+		task ("Add a custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+		}
+
+		task ("Change thumbnail of custom master") {
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Change Thumbnail",
+				masterLayoutName = "Custom Masters Page Template");
+
+			ItemSelector.uploadFile(uploadFileName = "Document_1.png");
+
+			LexiconCard.viewCardThumbnail(card = "Custom Masters Page Template");
+
+			SelectFrameTop(value1 = "relative=top");
+		}
+
+		task ("Export custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Export",
+				masterLayoutName = "Custom Masters Page Template");
+
+			DownloadTempFile();
+		}
+
+		task ("Import masters page template in the current site") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			var mastersZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "master-page-*.zip");
+
+			UploadTempFile(
+				locator1 = "TextInput#FILE",
+				value1 = "${mastersZipFileName}");
+
+			AssertChecked(
+				checkboxName = "Overwrite Existing Page Templates",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Click(locator1 = "Button#IMPORT");
+
+			Alert.viewSuccessMessage();
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert the thumbnail of custom master is imported") {
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template");
+
+			LexiconCard.viewCardThumbnail(card = "Custom Masters Page Template");
+		}
+	}
+
 	@description = "This is a use case for LPS-102207. The specific error message should be shown when import a master page template with invalid value in json file."
 	@priority = "4"
 	test ShowSpecificErrorMessageWhenImportMastersPageTemplateWithInvalidValue {

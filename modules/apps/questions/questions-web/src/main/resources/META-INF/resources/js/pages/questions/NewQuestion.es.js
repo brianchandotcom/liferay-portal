@@ -15,6 +15,9 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {
+	AssetTagsSelector,
+} from 'asset-taglib';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -76,12 +79,26 @@ export default withRouter(
 			}
 		}, [section, section.parentSection]);
 
+		const [selectedItems, setSelectedItems] = useState([]);
+		const [inputValue, setInputValue] = useState();
+
 		return (
 			<section className="c-mt-5 questions-section questions-section-new">
 				<div className="questions-container">
 					<div className="row">
 						<div className="c-mx-auto col-xl-10">
 							<h1>{Liferay.Language.get('new-question')}</h1>
+
+							<AssetTagsSelector
+								groupIds={[20122]}
+								inputName={`NAME`}
+								eventName={'NAMEselectTag'}
+								inputValue={inputValue}
+								onInputValueChange={setInputValue}
+								onSelectedItemsChange={setSelectedItems}
+								showSelectButton={true}
+								selectedItems={selectedItems}
+							/>
 
 							<ClayForm className="c-mt-5">
 								<ClayForm.Group>

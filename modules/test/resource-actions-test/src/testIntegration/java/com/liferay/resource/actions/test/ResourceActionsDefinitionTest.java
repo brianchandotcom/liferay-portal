@@ -15,6 +15,7 @@
 package com.liferay.resource.actions.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletBag;
@@ -165,10 +166,9 @@ public class ResourceActionsDefinitionTest {
 		if ((bundle.getBundleId() != 0) &&
 			(headers.get("Liferay-Service") == null)) {
 
-			sb.append("\n\t\t");
+			sb.append("\n\t\tModel resources are defined in bundle ");
 			sb.append(bundle.getSymbolicName());
-			sb.append(": model resources are found but bundle is non-service ");
-			sb.append("bundle");
+			sb.append(" which is not liferay service bundle");
 		}
 	}
 
@@ -186,19 +186,29 @@ public class ResourceActionsDefinitionTest {
 
 			PortletBag portletBag = PortletBagPool.get(portletName);
 
+			if (portletBag == null) {
+				sb.append("\n\t\tPortlet resource ");
+				sb.append(portletName);
+				sb.append(" is defined in bundle ");
+				sb.append(bundle.getSymbolicName());
+				sb.append(", but the corresponding portlet does not exist");
+
+				continue;
+			}
+
 			Portlet portlet = portletBag.getPortletInstance();
 
 			Class<?> clazz = portlet.getClass();
 
 			if (clazz.getClassLoader() != bundleClassLoader) {
-				sb.append("\n\t\t");
-				sb.append(bundle.getSymbolicName());
-				sb.append(": portlet resource ");
+				sb.append("\n\t\tPortlet resource ");
 				sb.append(portletName);
-				sb.append(" is defined in ");
+				sb.append(" is defined in bundle ");
 				sb.append(bundle.getSymbolicName());
-				sb.append(" but the portlet is in ");
-				sb.append(clazz.getClassLoader());
+				sb.append(
+					", but the corresponding portlet is in another bundle ");
+				sb.append(
+					ClassLoaderPool.getContextName(clazz.getClassLoader()));
 			}
 		}
 	}

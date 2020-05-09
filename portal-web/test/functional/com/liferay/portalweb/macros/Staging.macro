@@ -839,7 +839,7 @@ definition {
 			locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
 			value1 = "Publish to Live");
 
-		Pause(locator1 = "8000");
+		Pause(locator1 = "10000");
 
 		if (IsElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
 			AssertTextEquals(

@@ -208,9 +208,9 @@ definition {
 					value1 = "${numberOfEntries}");
 
 				AssertTextEquals(
-					key_alertMessage = "Please enter a value greater than or equal to 1.",
+					key_alertMessage = "Only integers greater than or equal to 1 are allowed.",
 					locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-					value1 = "Please enter a value greater than or equal to 1.");
+					value1 = "Only integers greater than or equal to 1 are allowed.");
 
 				Button.clickSave();
 
@@ -239,9 +239,9 @@ definition {
 				value1 = "2.5");
 
 			AssertTextEquals(
-				key_alertMessage = "Please enter only digits.",
+				key_alertMessage = "Only integers are allowed.",
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-				value1 = "Please enter only digits.");
+				value1 = "Only integers are allowed.");
 
 			Button.clickSave();
 
@@ -270,7 +270,7 @@ definition {
 
 			Button.clickSave();
 
-			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+			AssertVisible(locator1 = "Message#ERROR");
 		}
 	}
 

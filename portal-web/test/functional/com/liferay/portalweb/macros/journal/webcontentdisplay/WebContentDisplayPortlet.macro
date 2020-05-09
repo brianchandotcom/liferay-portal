@@ -373,14 +373,16 @@ definition {
 		}
 
 		else {
+			var key_listEntry = "${webContentTitle}";
 			var key_webContentTitle = "${webContentTitle}";
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-			AssertClick(
-				key_listEntry = "${webContentTitle}",
-				locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
-				value1 = "${webContentTitle}");
+			if (IsElementPresent.pauseIsElementPresent(locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK")) {
+				AssertClick(
+					locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+					value1 = "${webContentTitle}");
+			}
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 

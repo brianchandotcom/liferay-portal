@@ -54,6 +54,8 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 				!isCommentsAlloyEditor(event.target) &&
 				!isWithinIframe()
 			) {
+				event.preventDefault();
+
 				onUndo();
 			}
 		},

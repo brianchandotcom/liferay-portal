@@ -1976,7 +1976,9 @@ public class GraphQLServletExtender {
 
 			GraphQLField graphQLField = field.getAnnotation(GraphQLField.class);
 
-			builder.description(graphQLField.description());
+			if (graphQLField != null) {
+				builder.description(graphQLField.description());
+			}
 
 			builder.name(
 				new FieldNameBuilder(
@@ -2021,7 +2023,9 @@ public class GraphQLServletExtender {
 			GraphQLField graphQLField = method.getAnnotation(
 				GraphQLField.class);
 
-			builder.description(graphQLField.description());
+			if (graphQLField != null) {
+				builder.description(graphQLField.description());
+			}
 
 			MethodNameBuilder methodNameBuilder = new MethodNameBuilder(method);
 

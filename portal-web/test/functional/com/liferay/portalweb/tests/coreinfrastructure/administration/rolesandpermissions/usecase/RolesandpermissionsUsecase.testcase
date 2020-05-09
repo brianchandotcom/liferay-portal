@@ -480,7 +480,7 @@ definition {
 			layoutName = "Documents and Media Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Organization Name",
+			groupName = "Organization Name LFR_ORGANIZATION",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 

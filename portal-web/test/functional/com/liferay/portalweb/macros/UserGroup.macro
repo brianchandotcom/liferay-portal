@@ -13,7 +13,9 @@ definition {
 				value1 = "${siteTemplateName}");
 		}
 
-		Button.clickSave();
+		Click(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		if (("${userGroupNameVariation}" == "Asterik") || ("${userGroupNameVariation}" == "Comma") || ("${userGroupNameVariation}" == "Number")) {
 			Alert.viewRequestFailedToComplete();

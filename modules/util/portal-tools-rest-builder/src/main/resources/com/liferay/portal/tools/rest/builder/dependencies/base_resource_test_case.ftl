@@ -1359,7 +1359,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}NotFound() throws Exception {
 				<#if javaMethodSignature.javaMethodParameters?size != 0 && properties?keys?seq_contains("id")>
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if !stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+						<#if !stringUtil.equals(javaMethodParameter.parameterName, "siteId") && freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 							${javaMethodParameter.parameterType} irrelevant${javaMethodParameter.parameterName?cap_first} =
 							<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Boolean")>
 								RandomTestUtil.randomBoolean();
@@ -1390,7 +1390,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 													<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
 														put("siteKey", "\"" + irrelevantGroup.getGroupId() + "\"");
 													<#else>
-														put("${javaMethodParameter.parameterName}",irrelevant${javaMethodParameter.parameterName?cap_first});
+														put("${javaMethodParameter.parameterName}", irrelevant${javaMethodParameter.parameterName?cap_first});
 													</#if>
 												</#if>
 											</#list>

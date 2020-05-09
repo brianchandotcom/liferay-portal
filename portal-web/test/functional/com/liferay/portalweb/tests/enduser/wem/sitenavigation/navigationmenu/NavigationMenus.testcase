@@ -48,9 +48,9 @@ definition {
 		}
 
 		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Navigate to the navigation menu") {
@@ -180,15 +180,15 @@ definition {
 	@priority = "4"
 	test ConfigurePrimaryNavigationMenu {
 		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Add a second navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 2");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 2");
 		}
 
 		task ("Navigate to navigation menus admin") {
@@ -225,15 +225,15 @@ definition {
 	@priority = "4"
 	test ConfigureSecondaryNavigationMenu {
 		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Add a second navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 2");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 2");
 		}
 
 		task ("Navigate to navigation menus admin") {
@@ -257,15 +257,15 @@ definition {
 	@priority = "4"
 	test ConfigureSocialNavigationMenu {
 		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Add a second navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 2");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 2");
 		}
 
 		task ("Navigate to navigation menus admin") {
@@ -291,9 +291,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Delete the navigation menu") {
@@ -313,9 +313,9 @@ definition {
 	@priority = "5"
 	test RenameNavigationMenu {
 		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Rename the navigation menu") {
@@ -339,17 +339,25 @@ definition {
 	@priority = "5"
 	test ToggleAutomaticallyAddNewPagesToNavigationMenu {
 		task ("Add a navigation menu with option to offer new pages flagged") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Single");
+
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Single");
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Single");
 
 			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(toggleValue = "enable");
 		}
 
 		task ("Add a second navigation menu with option to offer new pages flagged") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Both");
+
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Both");
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Both");
 
 			NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(toggleValue = "enable");
 		}
@@ -430,9 +438,13 @@ definition {
 		}
 
 		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name");
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
 		}
 
 		task ("Add the page to the navigation menu") {
@@ -534,9 +546,9 @@ definition {
 	@priority = "5"
 	test ViewNavigationMenuPropertiesSidebar {
 		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Navigate to the navigation menu") {
@@ -584,9 +596,13 @@ definition {
 		}
 
 		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name");
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
 		}
 
 		task ("Add the page to the navigation menu") {
@@ -624,9 +640,9 @@ definition {
 		}
 
 		task ("Add a navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Navigate to the navigation menu") {

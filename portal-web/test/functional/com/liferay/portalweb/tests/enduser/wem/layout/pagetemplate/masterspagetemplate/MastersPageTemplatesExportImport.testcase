@@ -418,4 +418,38 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-102207. The specific error message should be shown when import a master page template with invalid value in json file."
+	@priority = "4"
+	test ShowSpecificErrorMessageWhenImportMastersPageTemplateWithInvalidValue {
+		task ("Import masters page template with invalid value") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			UploadCommonFile(
+				locator1 = "TextInput#FILE",
+				value1 = "master-page-invalid-value.zip");
+
+			Click(locator1 = "Button#IMPORT");
+		}
+
+		task ("Assert the specific error message is shown on Import popup") {
+			Alert.viewErrorMessage(errorMessage = "No page template could be imported.");
+
+			AssertElementPresent(
+				key_errorInfo = "master-page.json could not be imported because its page definition is invalid.",
+				locator1 = "Message#ERROR_INFO");
+		}
+
+		task ("Assert custom master is not imported") {
+			IFrame.closeFrame();
+
+			LexiconCard.viewCardNotPresent(card = "Custom Masters Page Template");
+		}
+	}
+
 }

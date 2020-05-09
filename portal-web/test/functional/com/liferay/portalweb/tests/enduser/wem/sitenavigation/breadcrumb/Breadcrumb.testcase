@@ -28,16 +28,16 @@ definition {
 	test AddADTViaBreadcrumb {
 		property testray.component.names = "Breadcrumb,Content and Appliation Templates";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name");
 
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name",
+			widgetName = "Breadcrumb");
 
 		Navigator.gotoPage(pageName = "Page Name");
-
-		Portlet.addPG(portletName = "Breadcrumb");
 
 		ApplicationDisplayTemplates.addPortletADTWithFieldEntry(
 			fieldName = "Breadcrumb Entry",
@@ -65,31 +65,25 @@ definition {
 		property test.name.skip.portal.instance = "Breadcrumb#ConfigureNoSave";
 		property testray.component.names = "Breadcrumb";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Parent Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page Name",
+			parentLayoutName = "Parent Page Name");
 
-		SitePages.addPublicPage(pageName = "Parent Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page Name",
+			widgetName = "Breadcrumb");
 
-		SitePages.addPublicChildPage(
-			childPageName = "Child Page Name",
-			parentPageName = "Parent Page Name");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
-
-		Portlet.addPG(portletName = "Breadcrumb");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Site Name");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -118,11 +112,14 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Page Name");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Message Boards");
+
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Message Boards");
 
 		MessageboardsCategory.addPG(categoryName = "MB Category Name");
 
@@ -145,11 +142,10 @@ definition {
 			categoryDescription = "MB Subcategory Subcategory Description",
 			categoryName = "MB Subcategory Subcategory Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Breadcrumb");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Breadcrumb");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -175,7 +171,9 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+		Portlet.gotoPortletOptions(
+			portletName = "Breadcrumb",
+			portletOption = "Configuration");
 
 		Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Application Breadcrumb");
 
@@ -204,7 +202,9 @@ definition {
 			breadcrumbListVisible = "Site Name,Page Name",
 			pathLocator = "EMBEDDED");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+		Portlet.gotoPortletOptions(
+			portletName = "Breadcrumb",
+			portletOption = "Configuration");
 
 		Breadcrumb.configureBreadcrumb(checkSetupName = "Show Application Breadcrumb");
 
@@ -235,37 +235,27 @@ definition {
 
 	@priority = "5"
 	test DisableShowCurrentSite {
-
-		// Ignore test from acceptance until LRQA-49480 resolved
-
-		property portal.acceptance = "false";
 		property testray.component.names = "Breadcrumb";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Parent Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page Name",
+			parentLayoutName = "Parent Page Name");
 
-		SitePages.addPublicPage(pageName = "Parent Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page Name",
+			widgetName = "Breadcrumb");
 
-		SitePages.addPublicChildPage(
-			childPageName = "Child Page Name",
-			parentPageName = "Parent Page Name");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
-
-		Portlet.addPG(portletName = "Breadcrumb");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Site Name");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -279,11 +269,9 @@ definition {
 
 		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Parent Page Name,Child Page Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Site Name");
 
 		Breadcrumb.viewPG(
 			breadcrumbListNotVisible = "Site Name",
@@ -298,11 +286,9 @@ definition {
 
 		Breadcrumb.saveDisplayPreview();
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Site Name");
 
 		Breadcrumb.viewPG(
 			breadcrumbListVisible = "Site Name,Parent Page Name,Child Page Name",
@@ -315,22 +301,17 @@ definition {
 		property portal.upstream = "true";
 		property testray.component.names = "Breadcrumb";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Child Page Name",
+			parentLayoutName = "Home");
 
-		SitePages.addPublicChildPage(
-			childPageName = "Child Page Name",
-			parentPageName = "Home");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Child Page Name",
+			widgetName = "Breadcrumb");
 
-		ProductMenu.gotoSiteViaLink();
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Home");
-
-		Portlet.addPG(portletName = "Breadcrumb");
+		Navigator.gotoPage(pageName = "Child Page Name");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -348,11 +329,7 @@ definition {
 
 		Breadcrumb.saveDisplayPreview();
 
-		Navigator.openURL();
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Home");
+		Navigator.gotoPage(pageName = "Child Page Name");
 
 		Breadcrumb.viewPG(
 			breadcrumbListNotVisible = "Home,Child Page Name",
@@ -364,47 +341,36 @@ definition {
 	test DisableShowParentSite {
 		property testray.component.names = "Breadcrumb";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONGroup.addChildSite(
+			groupName = "Child SiteName",
+			parentGroupName = "Site Name");
 
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Child SiteName",
+			layoutName = "Parent Page Name",
+			parentGroupName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONLayout.addPublicLayout(
+			groupName = "Child SiteName",
+			layoutName = "Child Page Name",
+			parentGroupName = "Site Name",
+			parentLayoutName = "Parent Page Name");
 
-		Site.addBlankCP(
-			parentSiteName = "Site Name",
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Child SiteName",
+			layoutName = "Child Page Name",
+			parentGroupName = "Site Name",
+			widgetName = "Breadcrumb");
+
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
 			siteName = "Child SiteName");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Parent Page Name");
-
-		SitePages.addPublicChildPage(
-			childPageName = "Child Page Name",
-			parentPageName = "Parent Page Name");
-
-		Navigator.openSiteURL(siteName = "Child SiteName");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
-
-		Portlet.addPG(portletName = "Breadcrumb");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -416,11 +382,9 @@ definition {
 
 		Breadcrumb.saveDisplayPreview();
 
-		Navigator.openSiteURL(siteName = "Child SiteName");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Child SiteName");
 
 		Breadcrumb.viewPG(
 			breadcrumbListNotVisible = "Site Name",
@@ -432,22 +396,19 @@ definition {
 	test DisplayTemplateWithHorizontalStyle {
 		property testray.component.names = "Breadcrumb";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Child Page Name",
+			parentLayoutName = "Home");
 
-		SitePages.addPublicChildPage(
-			childPageName = "Child Page Name",
-			parentPageName = "Home");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Child Page Name",
+			widgetName = "Breadcrumb");
 
-		Navigator.openURL();
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Home");
-
-		Portlet.addPG(portletName = "Breadcrumb");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Guest");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -457,11 +418,9 @@ definition {
 
 		Breadcrumb.saveDisplayPreview();
 
-		Navigator.openURL();
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Home");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Guest");
 
 		Breadcrumb.viewPG(
 			breadcrumbListVisible = "Home,Child Page Name",
@@ -472,22 +431,19 @@ definition {
 	test DisplayTemplateWithVerticalStyle {
 		property testray.component.names = "Breadcrumb";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Child Page Name",
+			parentLayoutName = "Home");
 
-		SitePages.addPublicChildPage(
-			childPageName = "Child Page Name",
-			parentPageName = "Home");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Child Page Name",
+			widgetName = "Breadcrumb");
 
-		Navigator.openURL();
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Home");
-
-		Portlet.addPG(portletName = "Breadcrumb");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Guest");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -497,11 +453,9 @@ definition {
 
 		Breadcrumb.saveDisplayPreview();
 
-		Navigator.openURL();
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Home");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Guest");
 
 		Breadcrumb.viewPG(
 			breadcrumbListVisible = "Home,Child Page Name",
@@ -514,22 +468,19 @@ definition {
 		property test.name.skip.portal.instance = "Breadcrumb#EnableShowGuestSite";
 		property testray.component.names = "Breadcrumb";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Child Page Name",
+			parentLayoutName = "Home");
 
-		SitePages.addPublicChildPage(
-			childPageName = "Child Page Name",
-			parentPageName = "Home");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Child Page Name",
+			widgetName = "Breadcrumb");
 
-		Navigator.openURL();
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Home");
-
-		Portlet.addPG(portletName = "Breadcrumb");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Guest");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -547,11 +498,9 @@ definition {
 
 		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Home,Child Page Name");
 
-		Navigator.openURL();
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Home");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Guest");
 
 		Breadcrumb.viewPG(
 			breadcrumbListVisible = "${siteName},Home,Child Page Name",

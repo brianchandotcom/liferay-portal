@@ -5,7 +5,7 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Fragments");
 
-		PageEditor.expandFragmentCollection(collectionName = "Collection Display");
+		PageEditor.expandFragmentCollection(collectionName = "Content Display");
 
 		if ("${scope}" == "Master") {
 			if ("${dropTarget}" == "Header") {

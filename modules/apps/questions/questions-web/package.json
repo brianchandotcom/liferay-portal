@@ -17,7 +17,8 @@
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0",
-		"react-router-dom": "^5.0.1"
+		"react-router-dom": "^5.0.1",
+		"asset-taglib": "*"
 	},
 	"name": "questions-web",
 	"private": true,

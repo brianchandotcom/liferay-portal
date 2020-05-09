@@ -3,7 +3,7 @@ definition {
 	macro addSiteNavigationMenu {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
-		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONSitenavigationSetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
 		JSONSitenavigationAPI._addSiteNavigationMenu(
 			groupId = "${groupId}",

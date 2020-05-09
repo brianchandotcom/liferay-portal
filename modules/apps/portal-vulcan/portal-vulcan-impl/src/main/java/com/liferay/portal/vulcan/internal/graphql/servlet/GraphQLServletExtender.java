@@ -241,7 +241,7 @@ public class GraphQLServletExtender {
 						GraphQLField.class);
 
 					if (graphQLField == null) {
-						return null;
+						return false;
 					}
 
 					return graphQLField.value();
@@ -1055,7 +1055,7 @@ public class GraphQLServletExtender {
 			graphql.annotations.annotationTypes.GraphQLField.class);
 
 		if (value == null) {
-			return null;
+			return false;
 		}
 
 		return (Boolean)value;

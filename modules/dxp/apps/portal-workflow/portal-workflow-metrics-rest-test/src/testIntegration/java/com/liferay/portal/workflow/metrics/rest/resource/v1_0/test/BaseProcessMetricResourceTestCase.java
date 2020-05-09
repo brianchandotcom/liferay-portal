@@ -395,6 +395,11 @@ public abstract class BaseProcessMetricResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	@Test
+	public void testGraphQLGetProcessMetricNotFound() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {

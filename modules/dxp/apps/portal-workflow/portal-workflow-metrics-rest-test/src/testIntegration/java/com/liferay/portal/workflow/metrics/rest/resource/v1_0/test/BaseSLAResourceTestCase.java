@@ -399,6 +399,26 @@ public abstract class BaseSLAResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSLANotFound() throws Exception {
+		Long irrelevantSlaId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"sLA",
+						new HashMap<String, Object>() {
+							{
+								put("slaId", irrelevantSlaId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testPutSLA() throws Exception {
 		SLA postSLA = testPutSLA_addSLA();
 

@@ -194,6 +194,13 @@ public abstract class BaseHistogramMetricResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	@Test
+	public void testGraphQLGetProcessHistogramMetricNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {

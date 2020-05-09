@@ -302,6 +302,27 @@ public abstract class BaseExperimentResourceTestCase {
 						"JSONObject/data", "Object/experiment"))));
 	}
 
+	@Test
+	public void testGraphQLGetExperimentNotFound() throws Exception {
+		String irrelevantExperimentId =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"experiment",
+						new HashMap<String, Object>() {
+							{
+								put("experimentId", irrelevantExperimentId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
 	protected Experiment testGraphQLExperiment_addExperiment()
 		throws Exception {
 

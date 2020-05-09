@@ -332,6 +332,28 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProcessTaskNotFound() throws Exception {
+		Long irrelevantProcessId = RandomTestUtil.randomLong();
+		Long irrelevantTaskId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"processTask",
+						new HashMap<String, Object>() {
+							{
+								put("processId", irrelevantProcessId);
+								put("taskId", irrelevantTaskId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testPatchProcessTask() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Task task = testPatchProcessTask_addTask();

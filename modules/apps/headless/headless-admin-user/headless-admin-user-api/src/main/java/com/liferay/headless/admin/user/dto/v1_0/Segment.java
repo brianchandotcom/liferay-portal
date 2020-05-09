@@ -47,7 +47,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("Segment")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"criteria", "name"})
+@Schema(
+	requiredProperties = {"criteria", "name"},
+	description = "Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for users."
+)
 @XmlRootElement(name = "Segment")
 public class Segment {
 

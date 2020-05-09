@@ -310,6 +310,26 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProcessNotFound() throws Exception {
+		Long irrelevantProcessId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"process",
+						new HashMap<String, Object>() {
+							{
+								put("processId", irrelevantProcessId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testPutProcess() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Process process = testPutProcess_addProcess();

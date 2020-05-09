@@ -50,7 +50,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("BlogPosting")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"articleBody", "headline"})
+@Schema(
+	requiredProperties = {"articleBody", "headline"},
+	description = "Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information."
+)
 @XmlRootElement(name = "BlogPosting")
 public class BlogPosting {
 

@@ -12,11 +12,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
@@ -38,11 +33,10 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationUsecase#MoveCurrentLanguagesToAvailable";
 		property testray.component.names = "Localization";
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Language Selector");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Language Selector");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
@@ -71,11 +65,10 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewDisplayOptionsViaLanguagePortlet";
 		property testray.component.names = "Localization";
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Language Selector");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Language Selector");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
@@ -131,11 +124,14 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentPortalLanguagesViaLanguagePortlet";
 		property testray.component.names = "Localization";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Language Selector");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Language Selector");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -164,18 +160,12 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentSiteLanguageViaLanguagePortlet";
 		property testray.component.names = "Localization";
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Language Selector");
 
-		Portlet.addPG(portletName = "Language Selector");
-
-		Navigator.openSiteURL(siteName = "Test Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",

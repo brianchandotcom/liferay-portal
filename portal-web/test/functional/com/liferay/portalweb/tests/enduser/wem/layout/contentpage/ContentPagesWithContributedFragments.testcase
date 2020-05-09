@@ -62,6 +62,8 @@ definition {
 	@description = "This is a use case for LPS-86141. The fragment should be added to all cells of the Collection Display when add it to one cell."
 	@priority = "5"
 	test AddFragmentToOneCellOfCollectionDisplay {
+		property portal.acceptance = "true";
+
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
@@ -898,6 +900,8 @@ definition {
 	@description = "This is a use case for LPS-86141. The title of asset entries in selected collection should be shown as a list in the Collection Display."
 	@priority = "5"
 	test ShowTitleOfCollectionItemsInCollectionDisplay {
+		property portal.acceptance = "true";
+
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(

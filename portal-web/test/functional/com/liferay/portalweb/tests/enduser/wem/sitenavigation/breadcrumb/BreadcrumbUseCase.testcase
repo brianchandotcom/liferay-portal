@@ -32,31 +32,25 @@ definition {
 
 		// Quarantine for LPS-104367
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Parent Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page Name",
+			parentLayoutName = "Parent Page Name");
 
-		SitePages.addPublicPage(pageName = "Parent Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page Name",
+			widgetName = "Breadcrumb");
 
-		SitePages.addPublicChildPage(
-			childPageName = "Child Page Name",
-			parentPageName = "Parent Page Name");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
-
-		Portlet.addPG(portletName = "Breadcrumb");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Site Name");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -76,11 +70,9 @@ definition {
 			breadcrumbListNotVisible = "Site Name,Parent Page Name,Child Page Name",
 			breadcrumbListVisible = "${siteName}");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Site Name");
 
 		Breadcrumb.viewPG(
 			breadcrumbListNotVisible = "Site Name,Parent Page Name,Child Page Name",
@@ -95,11 +87,9 @@ definition {
 
 		Breadcrumb.viewConfigurationPreview(breadcrumbListNotVisible = "Parent Page Name,Child Page Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Site Name");
 
 		Breadcrumb.viewPG(
 			breadcrumbListNotVisible = "Parent Page Name,Child Page Name",
@@ -111,11 +101,9 @@ definition {
 
 		Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Site Name,Parent Page Name,Child Page Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page Name",
-			pageName = "Parent Page Name");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Site Name");
 
 		Breadcrumb.viewPG(
 			breadcrumbListVisible = "${siteName},Site Name,Parent Page Name,Child Page Name",
@@ -127,25 +115,20 @@ definition {
 		property test.name.skip.portal.instance = "BreadcrumbUsecase#BreadcrumbLinkPointsToLocalhost";
 		var portalURL = PropsUtil.get("portal.url");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "Breadcrumb");
 
-		SitePages.addPublicPage(pageName = "Site Page Name");
-
-		Navigator.gotoSpecificURLPage(
+		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
-			url = "${portalURL}/web/site-name");
-
-		Portlet.addPG(portletName = "Breadcrumb");
+			siteName = "Site Name");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 

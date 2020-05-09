@@ -46,9 +46,13 @@ definition {
 		}
 
 		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Test Navigation Menu Name");
+
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 		}
 
 		task ("Add a URL item to the navigation menu") {
@@ -217,9 +221,13 @@ definition {
 		}
 
 		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Test Navigation Menu Name");
+
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+			LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 		}
 
 		task ("Add the first page and second page to the navigation menu") {

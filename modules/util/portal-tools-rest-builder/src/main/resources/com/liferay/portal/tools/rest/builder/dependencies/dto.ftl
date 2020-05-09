@@ -74,15 +74,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @GraphQLName("${schemaName}")
 @JsonFilter("Liferay.Vulcan")
 <#if schema.requiredPropertySchemaNames?has_content>
-	@Schema(requiredProperties =
-		{
-			<#list schema.requiredPropertySchemaNames as requiredProperty>
-				"${requiredProperty}"
-				<#if requiredProperty_has_next>
-					,
-				</#if>
-			</#list>
-		}
+	@Schema(
+		requiredProperties =
+			{
+				<#list schema.requiredPropertySchemaNames as requiredProperty>
+					"${requiredProperty}"
+					<#if requiredProperty_has_next>
+						,
+					</#if>
+				</#list>
+			}
+		<#if schema.description??>
+			, description = "${schema.description}"
+		</#if>
 	)
 </#if>
 @XmlRootElement(name = "${schemaName}")

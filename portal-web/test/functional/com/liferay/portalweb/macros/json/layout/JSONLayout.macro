@@ -152,7 +152,7 @@ definition {
 	macro addWidgetToPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupKey}",groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",

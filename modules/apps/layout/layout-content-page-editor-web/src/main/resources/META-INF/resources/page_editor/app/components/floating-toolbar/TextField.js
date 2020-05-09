@@ -26,8 +26,8 @@ export const TextField = ({field, onValueSelect, value}) => {
 
 	useEffect(() => {
 		setCurrentValue((currentValue) => {
-			if (!currentValue || !value) {
-				return value || field.defaultValue || '';
+			if (currentValue !== value) {
+				return value;
 			}
 
 			return currentValue;

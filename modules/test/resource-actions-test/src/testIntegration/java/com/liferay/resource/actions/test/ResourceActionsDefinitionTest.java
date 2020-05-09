@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -202,7 +203,15 @@ public class ResourceActionsDefinitionTest {
 
 			Class<?> clazz = portlet.getClass();
 
-			if (clazz.getClassLoader() != bundleClassLoader) {
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			if ((bundle.getBundleId() == 0) &&
+				(classLoader == PortalClassLoaderUtil.getClassLoader())) {
+
+				return;
+			}
+
+			if (classLoader != bundleClassLoader) {
 				sb.append("\n\t\tPortlet resource ");
 				sb.append(portletName);
 				sb.append(" is defined in bundle ");

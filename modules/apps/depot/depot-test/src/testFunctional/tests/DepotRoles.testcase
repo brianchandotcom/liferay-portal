@@ -26,6 +26,71 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even it is automatically assigned to a new site member after connecting site."
+	@priority = "5"
+	test AddSiteMemberAfterConnectingSite {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "user1@liferay.com",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Site.assignUserSitesCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoRoles();
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_DEPOT_ROLE",
+			value1 = "This user is not assigned any asset library roles.");
+
+		Role.openRolesAdmin();
+
+		RoleNavigator.gotoRoleType(roleType = "Asset Library");
+
+		AssertTextEquals(
+			key_itemName = "Asset Library Connected Site Member",
+			locator1 = "ListGroupItem#ITEM_SUB_INFO",
+			value1 = "This role is automatically assigned.");
+	}
+
 	@description = "This ensures that the user can perform CRUD operations with an AL role that has all WC permissions."
 	@priority = "5"
 	test AssignALRoleWithAllWCPermissions {
@@ -297,6 +362,102 @@ definition {
 			roleTitle = "AL Role Name",
 			roleTitleEdit = "AL Role Name Edit",
 			roleType = "Asset Library");
+	}
+
+	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even it is automatically assigned to an existing site member after connecting site."
+	@priority = "5"
+	test ViewExistingSiteMemberAfterConnectingSite {
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "user1@liferay.com",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Site.assignUserSitesCP(
+			siteName = "Site Name",
+			userScreenName = "usersn");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoRoles();
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_DEPOT_ROLE",
+			value1 = "This user is not assigned any asset library roles.");
+
+		AssertClick(
+			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_SELECT_LINK",
+			value1 = "SELECT");
+
+		SelectFrame(locator1 = "IFrame#SELECT_DEPOT_ROLE");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_TAGLIB",
+			value1 = "No asset libraries were found.");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editUserAssetLibraryCP(
+			depotName = "Test Depot Name",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoRoles();
+
+		AssertClick(
+			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_SELECT_LINK",
+			value1 = "SELECT");
+
+		SelectFrame(locator1 = "IFrame#SELECT_DEPOT_ROLE");
+
+		AssertElementNotPresent(
+			key_roleTitle = "Asset Library Connected Site Member",
+			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_TITLE");
 	}
 
 }

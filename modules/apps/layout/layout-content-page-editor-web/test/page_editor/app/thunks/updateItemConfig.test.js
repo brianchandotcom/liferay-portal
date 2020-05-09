@@ -82,6 +82,7 @@ describe('updateItemConfig', () => {
 		await runThunk();
 
 		expect(updateItemConfigAction).toHaveBeenCalledWith({
+			itemId: '0',
 			layoutData: {
 				items: {},
 				version: 1,

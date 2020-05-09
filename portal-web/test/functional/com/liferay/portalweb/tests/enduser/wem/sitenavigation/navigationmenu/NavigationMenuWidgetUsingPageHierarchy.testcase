@@ -101,9 +101,11 @@ definition {
 	@priority = "4"
 	test EditSitePage {
 		task ("Add a page to the site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page");
 
-			SitePages.addPublicPage(pageName = "Site Page");
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Edit the name of the page") {

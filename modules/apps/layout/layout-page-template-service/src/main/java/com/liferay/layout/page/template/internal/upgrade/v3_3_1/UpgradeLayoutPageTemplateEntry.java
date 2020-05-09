@@ -62,7 +62,7 @@ public class UpgradeLayoutPageTemplateEntry extends UpgradeProcess {
 		Set<String> uniqueValues = _columnUniqueValues.get(column);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			UpgradeLayoutPageTemplateEntry.class.getName(), "name");
+			UpgradeLayoutPageTemplateEntry.class.getName(), column);
 
 		String currentValue = value;
 

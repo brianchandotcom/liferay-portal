@@ -733,7 +733,7 @@ definition {
 
 	@description = "This is a use case for LPS-86141. The changes will be propagated to others cells when edit inline content of fragment in one cell."
 	@priority = "4"
-	test PropagteChangesOfInlineContentToOtherCellsOfCollectionDisplay {
+	test PropagateChangesOfInlineContentToOtherCellsOfCollectionDisplay {
 		task ("Add three documents") {
 			for (var entryTitle : list "First Document,Second Document,Third Document") {
 				JSONDocument.addFile(

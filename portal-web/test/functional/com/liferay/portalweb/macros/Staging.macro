@@ -625,7 +625,9 @@ definition {
 
 		Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		while (IsElementPresent(locator1 = "IFrame#DIALOG")) {
+			SelectFrame(locator1 = "IFrame#DIALOG");
+		}
 	}
 
 	macro markAsReadyForPublication {

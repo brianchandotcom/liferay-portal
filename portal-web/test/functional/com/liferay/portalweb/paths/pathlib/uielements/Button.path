@@ -735,7 +735,7 @@
 </tr>
 <tr>
 	<td>TRY_REDIRECTION_DISABLED</td>
-	<td>//button[@type='button' and @title='Try Redirection'][@disabled='']</td>
+	<td>//button[@type='button' and @title='Check URL'][@disabled='']</td>
 	<td></td>
 </tr>
 <tr>

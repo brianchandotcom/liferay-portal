@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_DEPOT_ROLE</td>
+	<td>//div[contains(@id,'depotRoles')]/p[contains(@class,'text-muted')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_INFO</td>
 	<td>//div[contains(@class,'sheet')]/div[contains(@class,'sheet-text')]</td>
 	<td></td>

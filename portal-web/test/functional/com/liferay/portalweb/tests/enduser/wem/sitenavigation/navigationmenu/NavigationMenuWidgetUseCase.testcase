@@ -35,12 +35,9 @@ definition {
 		property testray.component.names = "Navigation";
 
 		task ("Add a page to the site") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Navigation Display Test Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Navigation Display Test Page");
 		}
 
 		task ("Navigate to the page") {
@@ -64,20 +61,18 @@ definition {
 	@priority = "5"
 	test NavigationMenuConfigureDisplayTemplate {
 		task ("Add a page to the site") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Navigation Test Page1");
-		}
-
-		task ("Navigate to the page") {
-			Navigator.gotoPage(pageName = "Navigation Test Page1");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Navigation Test Page1");
 		}
 
 		task ("Add a Navigation Menu widget to the page") {
-			Portlet.addPG(portletName = "Navigation Menu");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Navigation Test Page1",
+				widgetName = "Navigation Menu");
+
+			Navigator.gotoPage(pageName = "Navigation Test Page1");
 		}
 
 		task ("Configure the Navigation Menu widget to use the 'Split Button Dropdowns display template") {
@@ -97,12 +92,7 @@ definition {
 		}
 
 		task ("Navigate to pages admin") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
+			SitePages.openPagesAdmin(siteURLKey = "Guest");
 		}
 
 		task ("Assert user can add new pages to the site by adding a second page to the site") {
@@ -167,12 +157,9 @@ definition {
 		property testray.component.names = "Navigation";
 
 		task ("Add a page to the site") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Navigation Display Test Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Navigation Display Test Page");
 		}
 
 		task ("Navigate to the page") {
@@ -215,12 +202,9 @@ definition {
 		property testray.component.names = "Navigation,Permissions";
 
 		task ("Add a page to the site") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
-
-			SitePages.addPublicPage(pageName = "Navigation Page");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Navigation Page");
 		}
 
 		task ("Configure the page so the Power User has all permissions for that page") {
@@ -234,32 +218,17 @@ definition {
 		}
 
 		task ("Add a user with the Power User role") {
-			Navigator.gotoPage(pageName = "Navigation Page");
-
-			ProductMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.addCP(
+			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			ProductMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			User.openUsersAdmin();
 
 			User.editPasswordCP(
 				userEmailAddress = "userea@liferay.com",
 				userScreenName = "usersn");
-
-			ProductMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Power User",

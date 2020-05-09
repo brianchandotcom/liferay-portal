@@ -109,9 +109,9 @@ definition {
 
 			AssertConfirm(value1 = "Are you sure you want to activate local staging for ${siteName}?");
 
-			Pause(locator1 = "5000");
-
-			Refresh();
+			while (IsElementNotPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
+				Pause(locator1 = "3000");
+			}
 
 			AssertTextEquals(
 				locator1 = "Staging#PROCESS_RESULT",

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Headless Discovery Web
+Bundle-SymbolicName: com.liferay.headless.discovery.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /headless-discovery-web

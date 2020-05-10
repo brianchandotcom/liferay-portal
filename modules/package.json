@@ -47,6 +47,7 @@
 			"apps/frontend-theme/frontend-theme-classic",
 			"apps/frontend-theme/frontend-theme-styled",
 			"apps/frontend-theme/frontend-theme-unstyled",
+			"apps/headless/headless-discovery/headless-discovery-web",
 			"apps/journal/journal-article-dynamic-data-mapping-form-field-type",
 			"apps/layout/layout-dynamic-data-mapping-form-field-type",
 			"apps/map/map-common",

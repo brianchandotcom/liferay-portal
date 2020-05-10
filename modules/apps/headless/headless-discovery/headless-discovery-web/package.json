@@ -1,0 +1,22 @@
+{
+	"dependencies": {
+		"@clayui/alert": "3.3.1",
+		"@clayui/badge": "3.0.2",
+		"@clayui/button": "3.3.1",
+		"@clayui/form": "3.7.1",
+		"@clayui/icon": "3.0.5",
+		"@clayui/label": "3.3.0",
+		"@clayui/panel": "3.2.0",
+		"@clayui/tabs": "3.1.1",
+		"frontend-js-react-web": "*",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
+	},
+	"name": "headless-discovery-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

@@ -117,7 +117,12 @@ export default withRouter(
 									<Editor
 										config={getCKEditorConfig()}
 										data={articleBody}
-										onBeforeLoad={onBeforeLoadCKEditor}
+										onBeforeLoad={(editor) =>
+											onBeforeLoadCKEditor(
+												editor,
+												context.imageBrowseURL
+											)
+										}
 										onChange={(event) =>
 											setArticleBody(
 												event.editor.getData()

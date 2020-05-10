@@ -15,8 +15,9 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 
+import {AppContext} from '../AppContext.es';
 import {createComment} from '../utils/client.es';
 import lang from '../utils/lang.es';
 import {getCKEditorConfig, onBeforeLoadCKEditor} from '../utils/utils.es';
@@ -30,6 +31,8 @@ export default ({
 	showNewCommentChange,
 }) => {
 	const [comment, setComment] = useState('');
+
+	const context = useContext(AppContext);
 
 	const postComment = () => {
 		return createComment(comment, entityId).then((data) => {
@@ -68,7 +71,12 @@ export default ({
 						<Editor
 							config={getCKEditorConfig()}
 							data={comment}
-							onBeforeLoad={onBeforeLoadCKEditor}
+							onBeforeLoad={(editor) =>
+								onBeforeLoadCKEditor(
+									editor,
+									context.imageBrowseURL
+								)
+							}
 							onChange={(event) =>
 								setComment(event.editor.getData())
 							}

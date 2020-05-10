@@ -28,6 +28,8 @@ String questionsRootElementId = renderResponse.getNamespace() + "-questions-root
 	Map<String, Object> data = HashMapBuilder.<String, Object>put(
 		"defaultRank", renderRequest.getAttribute(QuestionsPortletKeys.DEFAULT_RANK)
 	).put(
+		"imageBrowseURL", renderRequest.getAttribute(QuestionsPortletKeys.IMAGE_BROWSE_URL)
+	).put(
 		"isOmniAdmin", permissionChecker.isOmniadmin()
 	).put(
 		"siteKey", String.valueOf(themeDisplay.getScopeGroupId())

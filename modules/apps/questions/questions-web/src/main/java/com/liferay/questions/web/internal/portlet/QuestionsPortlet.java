@@ -14,6 +14,12 @@
 
 package com.liferay.questions.web.internal.portlet;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
@@ -26,8 +32,11 @@ import java.util.stream.Stream;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,6 +71,23 @@ public class QuestionsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType(),
+			new URLItemSelectorReturnType());
+
+		PortletURL portletURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+			"EDITOR_NAME_selectItem", itemSelectorCriterion);
+
+		renderRequest.setAttribute(
+			QuestionsPortletKeys.IMAGE_BROWSE_URL, portletURL.toString());
+
 		String lowestRank = Stream.of(
 			_portal.getPortalProperties()
 		).map(
@@ -83,6 +109,13 @@ public class QuestionsPortlet extends MVCPortlet {
 
 		super.doView(renderRequest, renderResponse);
 	}
+
+	@Reference(unbind = "-")
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

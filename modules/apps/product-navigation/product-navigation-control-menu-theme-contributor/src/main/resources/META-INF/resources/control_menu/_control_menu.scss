@@ -210,6 +210,16 @@ a.control-menu-icon,
 	width: 32px;
 }
 
+.global-menu-app {
+	.control-menu-level-1 {
+		background-color: $white;
+	}
+
+	.control-menu-level-1-heading {
+		color: $black;
+	}
+}
+
 .tools-control-group {
 	flex: 1;
 	flex-wrap: wrap;

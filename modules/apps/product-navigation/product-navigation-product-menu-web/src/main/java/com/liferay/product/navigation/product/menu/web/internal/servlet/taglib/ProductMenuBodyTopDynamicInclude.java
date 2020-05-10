@@ -14,12 +14,18 @@
 
 package com.liferay.product.navigation.product.menu.web.internal.servlet.taglib;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
@@ -53,6 +59,19 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 
 		PageContext pageContext = PageContextFactoryUtil.create(
 			httpServletRequest, httpServletResponse);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		if (Validator.isNotNull(themeDisplay.getPpid()) &&
+			panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
+
+			return;
+		}
 
 		try {
 			JspWriter jspWriter = pageContext.getOut();
@@ -113,6 +132,12 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private Portal _portal;

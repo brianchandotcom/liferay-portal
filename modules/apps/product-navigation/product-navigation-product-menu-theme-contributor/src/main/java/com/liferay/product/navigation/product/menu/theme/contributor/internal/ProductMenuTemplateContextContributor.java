@@ -14,9 +14,11 @@
 
 package com.liferay.product.navigation.product.menu.theme.contributor.internal;
 
+import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -95,6 +98,15 @@ public class ProductMenuTemplateContextContributor
 			return false;
 		}
 
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		if (Validator.isNotNull(themeDisplay.getPpid()) &&
+			panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
+
+			return false;
+		}
+
 		List<PanelCategory> childPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
 				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
@@ -106,6 +118,9 @@ public class ProductMenuTemplateContextContributor
 
 		return true;
 	}
+
+	@Reference
+	private PanelAppRegistry _panelAppRegistry;
 
 	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;

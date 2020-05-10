@@ -26,7 +26,4 @@ public interface PortletConfigurationExporter {
 
 	public String getPortletName();
 
-	public void importPortletConfiguration(
-		long plid, String portletId, Map<String, Object> portletConfiguration);
-
 }

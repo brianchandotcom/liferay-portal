@@ -21,9 +21,6 @@ import java.util.Map;
  */
 public interface PortletConfigurationImporter {
 
-	public Map<String, Object> getPortletConfiguration(
-		long plid, String portletId);
-
 	public String getPortletName();
 
 	public void importPortletConfiguration(

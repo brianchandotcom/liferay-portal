@@ -14,8 +14,13 @@
 
 package com.liferay.product.navigation.taglib.servlet.taglib;
 
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -75,6 +80,35 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-product-navigation:control-menu:globalMenuApp",
+			_isGlobalMenuApp(httpServletRequest));
+	}
+
+	private boolean _isGlobalMenuApp(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNull(themeDisplay.getPpid())) {
+			return false;
+		}
+
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			ServletContextUtil.getPanelAppRegistry(),
+			ServletContextUtil.getPanelCategoryRegistry());
+
+		if (!panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
+			return false;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if ((layout != null) && !layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _PAGE = "/control_menu/page.jsp";

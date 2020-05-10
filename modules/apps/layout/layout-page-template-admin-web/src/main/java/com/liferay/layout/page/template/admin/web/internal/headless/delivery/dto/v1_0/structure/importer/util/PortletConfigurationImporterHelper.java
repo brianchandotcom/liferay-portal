@@ -16,18 +16,15 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.liferay.layout.page.template.admin.web.internal.importer.PortletConfigurationImporterTracker;
 import com.liferay.layout.page.template.importer.PortletConfigurationImporter;
+import com.liferay.layout.page.template.importer.PortletPreferencesPortletConfigurationImporter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Map;
-
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,40 +57,6 @@ public class PortletConfigurationImporterHelper {
 			return;
 		}
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-				portletId, portlet.getDefaultPreferences());
-
-		for (Map.Entry<String, Object> entrySet : widgetConfig.entrySet()) {
-			portletPreferences.setValue(
-				entrySet.getKey(), (String)entrySet.getValue());
-		}
-
-		String portletPreferencesXML = PortletPreferencesFactoryUtil.toXML(
-			portletPreferences);
-
-		com.liferay.portal.kernel.model.PortletPreferences
-			persistedPortletPreferences =
-				_portletPreferencesLocalService.fetchPortletPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-					portletId);
-
-		if (persistedPortletPreferences == null) {
-			_portletPreferencesLocalService.addPortletPreferences(
-				layout.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-				portletId, null, portletPreferencesXML);
-		}
-		else {
-			_portletPreferencesLocalService.updatePreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-				portletId, portletPreferencesXML);
-		}
-
 		PortletConfigurationImporter portletConfigurationImporter =
 			_portletConfigurationImporterTracker.
 				getPortletConfigurationImporter(portletName);
@@ -101,6 +64,11 @@ public class PortletConfigurationImporterHelper {
 		if (portletConfigurationImporter != null) {
 			portletConfigurationImporter.importPortletConfiguration(
 				layout.getPlid(), portletId, widgetConfig);
+		}
+		else {
+			_portletPreferencesPortletConfigurationImporter.
+				importPortletConfiguration(
+					layout.getPlid(), portletId, widgetConfig);
 		}
 	}
 
@@ -116,5 +84,9 @@ public class PortletConfigurationImporterHelper {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PortletPreferencesPortletConfigurationImporter
+		_portletPreferencesPortletConfigurationImporter;
 
 }

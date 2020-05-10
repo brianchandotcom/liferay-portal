@@ -19,7 +19,7 @@ import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
 import com.liferay.layout.page.template.admin.web.internal.exporter.PortletConfigurationExporterTracker;
 import com.liferay.layout.page.template.exporter.PortletConfigurationExporter;
-import com.liferay.petra.string.StringPool;
+import com.liferay.layout.page.template.exporter.PortletPreferencesPortletConfigurationExporter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -29,27 +29,20 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,49 +88,17 @@ public class WidgetInstanceDTOConverter {
 			return null;
 		}
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout.getPlid(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
-				portlet.getDefaultPreferences());
-
-		if (portletPreferences == null) {
-			return null;
-		}
-
-		Map<String, Object> widgetConfigMap = new HashMap<>();
-
-		Map<String, String[]> portletPreferencesMap =
-			portletPreferences.getMap();
-
-		for (Map.Entry<String, String[]> entrySet :
-				portletPreferencesMap.entrySet()) {
-
-			String[] values = entrySet.getValue();
-
-			if (ArrayUtil.isNotEmpty(values)) {
-				widgetConfigMap.put(entrySet.getKey(), values[0]);
-			}
-			else {
-				widgetConfigMap.put(entrySet.getKey(), StringPool.BLANK);
-			}
-		}
-
 		PortletConfigurationExporter portletConfigurationExporter =
 			_portletConfigurationExporterTracker.
 				getPortletConfigurationExporter(portletName);
 
 		if (portletConfigurationExporter != null) {
-			Map<String, Object> portletConfiguration =
-				portletConfigurationExporter.getPortletConfiguration(
-					plid, portletId);
-
-			if (MapUtil.isNotEmpty(portletConfiguration)) {
-				widgetConfigMap.putAll(portletConfiguration);
-			}
+			return portletConfigurationExporter.getPortletConfiguration(
+				plid, portletId);
 		}
 
-		return widgetConfigMap;
+		return _portletPreferencesPortletConfigurationExporter.
+			getPortletConfiguration(plid, portletId);
 	}
 
 	private String _getWidgetInstanceId(
@@ -248,6 +209,10 @@ public class WidgetInstanceDTOConverter {
 
 	@Reference
 	private PortletPermission _portletPermission;
+
+	@Reference
+	private PortletPreferencesPortletConfigurationExporter
+		_portletPreferencesPortletConfigurationExporter;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

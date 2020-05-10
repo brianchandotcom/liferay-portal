@@ -15,15 +15,28 @@
 package com.liferay.layout.page.template.admin.web.internal.exporter;
 
 import com.liferay.layout.page.template.exporter.PortletPreferencesPortletConfigurationExporter;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
-@Component(service = PortletPreferencesPortletConfigurationExporterImpl.class)
+@Component(service = PortletPreferencesPortletConfigurationExporter.class)
 public class PortletPreferencesPortletConfigurationExporterImpl
 	implements PortletPreferencesPortletConfigurationExporter {
 
@@ -31,7 +44,56 @@ public class PortletPreferencesPortletConfigurationExporterImpl
 	public Map<String, Object> getPortletConfiguration(
 		long plid, String portletId) {
 
-		return null;
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return null;
+		}
+
+		String portletName = PortletIdCodec.decodePortletName(portletId);
+
+		Portlet portlet = _portletLocalService.getPortletById(portletName);
+
+		if (portlet == null) {
+			return null;
+		}
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout.getPlid(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
+				portlet.getDefaultPreferences());
+
+		if (portletPreferences == null) {
+			return null;
+		}
+
+		Map<String, Object> portletConfigurationMap = new HashMap<>();
+
+		Map<String, String[]> portletPreferencesMap =
+			portletPreferences.getMap();
+
+		for (Map.Entry<String, String[]> entrySet :
+				portletPreferencesMap.entrySet()) {
+
+			String[] values = entrySet.getValue();
+
+			if (ArrayUtil.isNotEmpty(values)) {
+				portletConfigurationMap.put(entrySet.getKey(), values[0]);
+			}
+			else {
+				portletConfigurationMap.put(
+					entrySet.getKey(), StringPool.BLANK);
+			}
+		}
+
+		return portletConfigurationMap;
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

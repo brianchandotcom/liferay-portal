@@ -14,9 +14,11 @@
 
 package com.liferay.product.navigation.product.menu.web.internal.product.navigation.control.menu;
 
+import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
@@ -157,6 +160,15 @@ public class ProductMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		if (Validator.isNotNull(themeDisplay.getPpid()) &&
+			panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
+
+			return false;
+		}
+
 		List<PanelCategory> childPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
 				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
@@ -171,6 +183,9 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		ProductMenuProductNavigationControlMenuEntry.class, "icon.tmpl");
+
+	@Reference
+	private PanelAppRegistry _panelAppRegistry;
 
 	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;

@@ -29,7 +29,7 @@ const handleFocusedFieldEvaluationEnded = (
 		...state,
 		focusedField: {
 			...focusedField,
-			instanceId,
+			instanceId: instanceId || focusedField.instanceId,
 			settingsContext,
 		},
 	};

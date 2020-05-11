@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -112,11 +113,14 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		}
 	}
 
-	@Reference
-	protected IndexerRegistry indexerRegistry;
+	protected static volatile IndexWriterHelper indexWriterHelper =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			IndexWriterHelper.class,
+			ReindexSingleIndexerBackgroundTaskExecutor.class,
+			"indexWriterHelper", true);
 
 	@Reference
-	protected IndexWriterHelper indexWriterHelper;
+	protected IndexerRegistry indexerRegistry;
 
 	@Reference
 	protected ReindexStatusMessageSender reindexStatusMessageSender;

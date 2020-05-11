@@ -219,7 +219,7 @@ describe('RatingsStars', () => {
 			});
 
 			it('updates the average score of 2 votes', () => {
-				expect(result.queryByText(`2.5 (2 votes)`)).toBeTruthy();
+				expect(result.queryByText('2.5 (2 votes)')).toBeTruthy();
 			});
 
 			it('updates the user score with the one from the server', () => {
@@ -246,7 +246,7 @@ describe('RatingsStars', () => {
 				});
 
 				it('updates the average score of 1 vote', async () => {
-					expect(result.queryByText(`5.0 (1 vote)`)).toBeTruthy();
+					expect(result.queryByText('5.0 (1 vote)')).toBeTruthy();
 				});
 			});
 

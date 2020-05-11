@@ -251,15 +251,7 @@
 }
 
 .staging-bar-level-3-message {
-	display: inline-block;
-	position: static;
-
-	.staging-bar-level-3-message-container {
-		left: 0;
-		position: absolute;
-		right: 0;
-		top: 100%;
-	}
+	margin-top: 0.5rem;
 }
 
 .header-title-with-overflow {

@@ -64,6 +64,7 @@ if (layoutSetBranch != null) {
 </liferay-util:include>
 
 <clay:container
+	className="container-view"
 	id='<%= renderResponse.getNamespace() + ((layoutSetBranch != null) ? "updateBranch" : "addBranch") %>'
 >
 	<aui:model-context bean="<%= layoutSetBranch %>" model="<%= LayoutSetBranch.class %>" />

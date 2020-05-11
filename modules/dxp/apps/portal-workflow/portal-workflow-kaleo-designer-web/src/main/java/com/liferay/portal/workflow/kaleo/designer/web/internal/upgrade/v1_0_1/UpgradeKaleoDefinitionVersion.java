@@ -87,7 +87,7 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		kaleoDefinition.setName(name);
 		kaleoDefinition.setTitle(title);
 		kaleoDefinition.setContent(content);
-		kaleoDefinition.setVersion(version);
+		kaleoDefinition.setVersion((version == 0) ? 1 : version);
 		kaleoDefinition.setActive(false);
 
 		return _kaleoDefinitionLocalService.addKaleoDefinition(kaleoDefinition);

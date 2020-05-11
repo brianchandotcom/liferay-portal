@@ -89,21 +89,14 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 	protected ReindexSingleIndexerBackgroundTaskExecutor
 		getReindexSingleIndexerBackgroundTaskExecutor() {
 
-		ReindexSingleIndexerBackgroundTaskExecutor
-			reindexSingleIndexerBackgroundTaskExecutor =
-				new ReindexSingleIndexerBackgroundTaskExecutor() {
-					{
-						indexerRegistry = _indexerRegistry;
-						reindexStatusMessageSender =
-							_reindexStatusMessageSender;
-						searchEngineHelper = _searchEngineHelper;
-					}
-				};
-
-		reindexSingleIndexerBackgroundTaskExecutor.setIndexWriterHelper(
-			_indexWriterHelper);
-
-		return reindexSingleIndexerBackgroundTaskExecutor;
+		return new ReindexSingleIndexerBackgroundTaskExecutor() {
+			{
+				indexerRegistry = _indexerRegistry;
+				indexWriterHelper = _indexWriterHelper;
+				reindexStatusMessageSender = _reindexStatusMessageSender;
+				searchEngineHelper = _searchEngineHelper;
+			}
+		};
 	}
 
 	protected abstract SearchEngineFixture getSearchEngineFixture();

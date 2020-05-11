@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -30,6 +31,12 @@ public class EditableValuesTransformerUtil {
 
 	public static String getEditableValues(
 		String editableValues, long segmentsExperienceId) {
+
+		return getEditableValues(editableValues, null, segmentsExperienceId);
+	}
+
+	public static String getEditableValues(
+		String editableValues, String instanceId, long segmentsExperienceId) {
 
 		JSONObject newEditableValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -45,6 +52,19 @@ public class EditableValuesTransformerUtil {
 
 				Object editableProcessorObject = editableValuesJSONObject.get(
 					editableProcessorKey);
+
+				if (Objects.equals(editableProcessorKey, "instanceId")) {
+					if (Validator.isNotNull(instanceId)) {
+						newEditableValuesJSONObject.put(
+							"instanceId", instanceId);
+					}
+					else {
+						newEditableValuesJSONObject.put(
+							editableProcessorKey, editableProcessorObject);
+					}
+
+					continue;
+				}
 
 				if (!(editableProcessorObject instanceof JSONObject)) {
 					newEditableValuesJSONObject.put(

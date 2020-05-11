@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -51,7 +52,9 @@ rankingResultContentDisplayBuilder.setRenderResponse(renderResponse);
 RankingResultContentDisplayContext rankingResultContentDisplayContext = rankingResultContentDisplayBuilder.build();
 %>
 
-<div class="container container-no-gutters-sm-down container-view">
+<clay:container
+	className="container-no-gutters-sm-down container-view"
+>
 	<c:choose>
 		<c:when test="<%= rankingResultContentDisplayContext.isVisible() %>">
 			<div class="result-rankings-view-content-container sheet sheet-lg">
@@ -105,4 +108,4 @@ RankingResultContentDisplayContext rankingResultContentDisplayContext = rankingR
 			</div>
 		</c:otherwise>
 	</c:choose>
-</div>
+</clay:container>

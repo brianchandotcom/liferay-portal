@@ -93,11 +93,11 @@ public class DuplicateDefinitionPortletConfigurationIcon
 			(WorkflowDefinition)portletRequest.getAttribute(
 				WebKeys.WORKFLOW_DEFINITION);
 
-		if ((workflowDefinition != null) && workflowDefinition.isActive()) {
-			return true;
+		if (workflowDefinition == null) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Activate

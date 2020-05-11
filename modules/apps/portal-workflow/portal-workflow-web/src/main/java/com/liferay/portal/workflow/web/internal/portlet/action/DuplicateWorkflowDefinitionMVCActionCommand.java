@@ -15,20 +15,20 @@
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -60,6 +60,10 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		String randomNamespace = ParamUtil.getString(
 			actionRequest, "randomNamespace");
 
+		WorkflowDefinition workflowDefinition = _getWorkflowDefinition(
+			themeDisplay,
+			ParamUtil.getString(actionRequest, "duplicatedDefinitionName"));
+
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, randomNamespace + "title");
 
@@ -68,10 +72,20 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String content = ParamUtil.getString(actionRequest, "content");
 
-		WorkflowDefinition workflowDefinition =
-			workflowDefinitionManager.deployWorkflowDefinition(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(actionRequest, titleMap), name, content.getBytes());
+		if ((workflowDefinition != null) && workflowDefinition.isActive()) {
+			workflowDefinition =
+				workflowDefinitionManager.deployWorkflowDefinition(
+					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+					getTitle(actionRequest, titleMap), name,
+					content.getBytes());
+		}
+		else {
+			workflowDefinition =
+				workflowDefinitionManager.saveWorkflowDefinition(
+					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+					getTitle(actionRequest, titleMap), name,
+					content.getBytes());
+		}
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
 
@@ -80,14 +94,31 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
-		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
-
-		String duplicatedDefinitionName = ParamUtil.getString(
+		String duplicatedDefinitionTitle = ParamUtil.getString(
 			actionRequest, "duplicatedDefinitionTitle");
 
 		return LanguageUtil.format(
-			resourceBundle, "duplicated-from-x",
-			StringUtil.quote(duplicatedDefinitionName));
+			getResourceBundle(actionRequest), "duplicated-from-x",
+			StringUtil.quote(duplicatedDefinitionTitle));
 	}
+
+	private WorkflowDefinition _getWorkflowDefinition(
+		ThemeDisplay themeDisplay, String name) {
+
+		try {
+			return workflowDefinitionManager.getLatestWorkflowDefinition(
+				themeDisplay.getCompanyId(), name);
+		}
+		catch (WorkflowException workflowException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(workflowException, workflowException);
+			}
+
+			return null;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DuplicateWorkflowDefinitionMVCActionCommand.class);
 
 }

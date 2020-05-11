@@ -1,0 +1,62 @@
+definition {
+
+	@summary = "Add a Bookmarks entry with Name '${name}' and URL '${url}' to the Site '${groupName}' via JSON"
+	macro addBookmarks {
+		Variables.assertDefined(parameterList = "${groupName},${name},${url}");
+
+		var groupId = JSONBookmarksSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+
+		var folderId = JSONBookmarksSetter.setFolderId(
+			folderName = "${folderName}",
+			groupId = "${groupId}");
+
+		var url = StringUtil.replace("${url}", ":", "%3A");
+
+		var serviceContext = JSONBookmarksSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			workflowAction = "${workflowAction}");
+
+		JSONBookmarksAPI._addBookmarks(
+			description = "${description}",
+			folderId = "${folderId}",
+			groupId = "${groupId}",
+			name = "${name}",
+			serviceContext = "${serviceContext}",
+			url = "${url}");
+	}
+
+	@summary = "Add a Bookmarks Folder with Folder Name '${folderName}' to the Site '${groupName}'"
+	macro addFolder {
+		Variables.assertDefined(parameterList = "${folderName},${groupName}");
+
+		var groupId = JSONBookmarksSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+
+		var parentFolderId = JSONBookmarksSetter.setFolderId(
+			folderName = "${parentFolderName}",
+			groupId = "${groupId}");
+
+		if ("${groupName}" == "Guest") {
+			var serviceContext = JSONBookmarksSetter.setServiceContext(
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				groupName = "Guest",
+				workflowAction = "${workflowAction}");
+		}
+		else {
+			var serviceContext = JSONBookmarksSetter.setServiceContext(
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				groupName = "${groupName}",
+				site = "${site}",
+				workflowAction = "${workflowAction}");
+		}
+
+		JSONBookmarksAPI._addFolder(
+			folderDescription = "${folderDescription}",
+			folderName = "${folderName}",
+			parentFolderId = "${parentFolderId}",
+			serviceContext = "${serviceContext}");
+	}
+
+}

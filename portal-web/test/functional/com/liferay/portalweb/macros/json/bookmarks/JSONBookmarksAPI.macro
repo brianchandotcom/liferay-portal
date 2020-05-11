@@ -1,0 +1,80 @@
+definition {
+
+	@summary = "Helper function to add a Bookmarks entry via JSON"
+	macro _addBookmarks {
+		Variables.assertDefined(parameterList = "${groupId},${folderId},${serviceContext},${url}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(description)) {
+			var description = "${description}";
+		}
+		else {
+			var description = "";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/bookmarks.bookmarksentry/add-entry \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d folderId=${folderId} \
+				-d name=${name} \
+				-d url=${url}
+				-d description=${description}
+				-d serviceContext=${serviceContext}
+
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Helper function to add a Bookmarks Folder via JSON"
+	macro _addFolder {
+		Variables.assertDefined(parameterList = "${folderName},${parentFolderId},${serviceContext}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(folderDescription)) {
+			var description = "${folderDescription}";
+		}
+		else {
+			var description = "";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/bookmarks.bookmarksfolder/add-folder \
+				-u test@liferay.com:test \
+				-d parentFolderId=${parentFolderId} \
+				-d name=${folderName} \
+				-d description=${description} \
+				-d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Helper function to get the 'folderId' for the folder '${folderName}'"
+	macro _getFolderIdByFolderName {
+		Variables.assertDefined(parameterList = "${groupId},${folderName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/bookmarks.bookmarksfolder/get-folders \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+		''';
+
+		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['folderId']");
+		var folderId = StringUtil.replace("${folderId}", "[&quot;", "");
+		var folderId = StringUtil.replace("${folderId}", "&quot;]", "");
+
+		if ("${folderId}" == "[]") {
+			fail("FAIL. Cannot find folder.");
+		}
+		else {
+			return "${folderId}";
+		}
+	}
+
+}

@@ -22,27 +22,27 @@ definition {
 
 	@priority = "4"
 	test AssertHighestRatededAsset {
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		for (var n : list "1,2") {
-			SitePages.addPublicPage(pageName = "Test Page ${n}");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Test Page ${n}");
 		}
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page 1",
+			widgetName = "Asset Publisher");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page 2",
+			widgetName = "Highest Rated Assets");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page 1",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Ratings");
 
@@ -50,29 +50,15 @@ definition {
 			pageName = "Test Page 2",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Highest Rated Assets");
-
 		AssetPublisherPortlet.configureDisplaySettings(
 			displaySettings = "Ratings",
 			portletName = "Highest Rated Assets");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page 1",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
 		for (var n : list "1,2") {
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title ${n}");
-
-			PortletEntry.publish();
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Site Name",
+				title = "Web Content Title ${n}");
 		}
 
 		Navigator.gotoSitePage(

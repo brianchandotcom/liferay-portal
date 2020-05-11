@@ -395,6 +395,170 @@ definition {
 			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
 	}
 
+	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
+	@priority = "5"
+	test ExportImportSavedCompositionWithSaveInlineContent {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		task ("Add a Row to page") {
+			PageEditor.addLayoutRow();
+		}
+
+		task ("Add a Heading fragment to column 1") {
+			PageEditor.gotoTab(tabName = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_columnNumber = "1",
+				key_fragmentName = "Heading",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#ROW_COLUMN",
+				value1 = "");
+
+			Pause(locator1 = "5000");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+				key_position = "1",
+				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+		}
+
+		task ("Edit inline content of Heading") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
+
+		task ("Add an Image fragment to column 2") {
+			PageEditor.gotoTab(tabName = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_columnNumber = "2",
+				key_fragmentName = "Image",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#ROW_COLUMN",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "2",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Image')]",
+				key_position = "1",
+				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+		}
+
+		PageEditor.editFragmentImage(
+			contributed = "true",
+			fileName = "Document_1.png",
+			fragmentName = "Image",
+			id = "image");
+
+		task ("Add a HTML fragment to column 3") {
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_columnNumber = "3",
+				key_fragmentName = "HTML",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#ROW_COLUMN",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "3",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'HTML')]",
+				key_position = "1",
+				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+		}
+
+		PageEditor.editFragmentHTML(
+			editableId = "element-html",
+			fileName = "fragment_freemarker_basic.html",
+			fragmentName = "HTML");
+
+		PageEditor.gotoSaveAsFrgament(fragmentName = "Row");
+
+		PageEditorComposition.saveAsFragment(
+			fragmentName = "New Fragment Name",
+			saveInlineContent = "true");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
+
+		task ("Export the fragment collection") {
+			FragmentsAdmin.exportCollection(collectionName = "Saved Fragments");
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "New Site Name");
+		}
+
+		task ("Navigate to fragments admin in the new site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+		}
+
+		task ("Import the fragment collection into the new site") {
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "new-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		PageEditor.addFragment(
+			collectionName = "Saved Fragments",
+			fragmentName = "New Fragment Name",
+			withSection = "true");
+
+		PageEditor.clickEditableField(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		AssertElementPresent(
+			key_columnNumber = "1",
+			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]//h1[contains(.,'New editable fragment text')]",
+			key_position = "1",
+			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+
+		PageEditor.clickEditableField(
+			contributed = "true",
+			fragmentName = "Image",
+			id = "image");
+
+		AssertElementPresent(
+			key_columnNumber = "2",
+			key_elementHeader = "//div[contains(@class,'page-editor')]//img[contains(@src,'Document_1.png')]",
+			key_position = "1",
+			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+
+		PageEditor.clickEditableField(
+			contributed = "true",
+			fragmentName = "HTML",
+			id = "element-html");
+
+		AssertElementPresent(
+			key_columnNumber = "3",
+			key_elementHeader = "//div[contains(@class,'page-editor')]//*[contains(.,'Basic Text')]",
+			key_position = "1",
+			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+	}
+
 	@description = "This is a test case for LPS-101256. Can duplicate fragment in layout elements in composition."
 	@priority = "4"
 	test ImportFragmentWithDupicateFragmentComposition {

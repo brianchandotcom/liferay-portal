@@ -24,12 +24,12 @@ SamlIdpSpConnection samlIdpSpConnection = (SamlIdpSpConnection)request.getAttrib
 long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_ASSERTION_LIFETIME), samlProviderConfiguration.defaultAssertionLifetime());
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		title='<%= (samlIdpSpConnection != null) ? samlIdpSpConnection.getName() : "new-service-provider" %>'
 	/>
-</div>
+</clay:container>
 
 <portlet:actionURL name="/admin/updateServiceProviderConnection" var="updateServiceProviderConnectionURL">
 	<portlet:param name="mvcRenderCommandName" value="/admin/edit_service_provider_connection" />

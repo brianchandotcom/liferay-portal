@@ -24,12 +24,12 @@ SamlSpIdpConnection samlSpIdpConnection = (SamlSpIdpConnection)request.getAttrib
 long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_SKEW), samlProviderConfiguration.clockSkew());
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		title='<%= (samlSpIdpConnection != null) ? samlSpIdpConnection.getName() : "new-identity-provider" %>'
 	/>
-</div>
+</clay:container>
 
 <portlet:actionURL name="/admin/updateIdentityProviderConnection" var="updateIdentityProviderConnectionURL">
 	<portlet:param name="mvcRenderCommandName" value="/admin/edit_identity_provider_connection" />

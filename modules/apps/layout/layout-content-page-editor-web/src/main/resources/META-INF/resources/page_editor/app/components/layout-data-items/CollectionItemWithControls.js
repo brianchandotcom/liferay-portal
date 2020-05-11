@@ -23,17 +23,17 @@ const CollectionItemWithControls = React.forwardRef(
 
 		return (
 			<div className="page-editor__collection__block">
-				{React.Children.count(children) === 0 ? (
-					<TopperEmpty item={item} layoutData={layoutData}>
+				<TopperEmpty item={item} layoutData={layoutData}>
+					{React.Children.count(children) === 0 ? (
 						<div className="page-editor__collection-item" ref={ref}>
 							<p className="page-editor__collection-item__title">
 								{collectionItem.title}
 							</p>
 						</div>
-					</TopperEmpty>
-				) : (
-					children
-				)}
+					) : (
+						<div ref={ref}>{children}</div>
+					)}
+				</TopperEmpty>
 			</div>
 		);
 	}

@@ -37,6 +37,7 @@ export default function FloatingToolbar({
 	itemRef,
 	onButtonClick = () => {},
 }) {
+	const isActive = useIsActive();
 	const isMounted = useIsMounted();
 	const [panelId, setPanelId] = useState(null);
 	const panelRef = useRef(null);
@@ -45,6 +46,7 @@ export default function FloatingToolbar({
 	const [hidden, setHidden] = useState(true);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [windowWidth, setWindowWidth] = useState(0);
+	const [show, setShow] = useState(false);
 
 	const languageId = useSelector((state) => state.languageId);
 	const selectedViewportSize = useSelector(
@@ -52,8 +54,6 @@ export default function FloatingToolbar({
 	);
 
 	const itemElement = itemRef.current;
-
-	const show = useIsActive()(item.itemId) && itemElement;
 
 	const PanelComponent = useMemo(
 		() => FLOATING_TOOLBAR_CONFIGURATIONS[panelId] || null,
@@ -81,7 +81,9 @@ export default function FloatingToolbar({
 						false
 					);
 				}
-				catch (error) {}
+				catch (error) {
+					console.error(error);
+				}
 
 				if (callback) {
 					requestAnimationFrame(() => {
@@ -113,6 +115,10 @@ export default function FloatingToolbar({
 		},
 		[itemRef, onButtonClick, panelId]
 	);
+
+	useEffect(() => {
+		setShow(isActive(item.itemId) && itemElement);
+	}, [isActive, item.itemId, itemElement]);
 
 	useEffect(() => {
 		const handleWindowResize = debounceRAF(() => {

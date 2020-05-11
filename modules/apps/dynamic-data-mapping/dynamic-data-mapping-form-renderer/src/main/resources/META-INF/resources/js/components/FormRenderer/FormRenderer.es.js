@@ -45,6 +45,16 @@ class FormRenderer extends Component {
 		return defaultLanguageId;
 	}
 
+	_getDisplayableFn() {
+		const {containerId, readOnly, viewMode} = this;
+
+		return (
+			readOnly ||
+			!viewMode ||
+			document.getElementById(containerId) !== null
+		);
+	}
+
 	_handleFieldBlurred(event) {
 		this.emit('fieldBlurred', event);
 	}
@@ -59,16 +69,6 @@ class FormRenderer extends Component {
 
 	_handleFieldFocused(event) {
 		this.emit('fieldFocused', event);
-	}
-
-	_getDisplayableFn() {
-		const {containerId, readOnly, viewMode} = this;
-
-		return (
-			readOnly ||
-			!viewMode ||
-			document.getElementById(containerId) !== null
-		);
 	}
 }
 

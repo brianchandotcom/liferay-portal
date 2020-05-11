@@ -25,7 +25,7 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import updateRowColumns from '../../thunks/updateRowColumns';
-import {getViewportSize} from '../../utils/getViewportSize';
+import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {RowConfigurationCheckboxField} from './RowConfigurationCheckboxField';
 import {RowConfigurationSelectField} from './RowConfigurationSelectField';
 
@@ -59,15 +59,6 @@ export const RowConfigurationPanel = ({item}) => {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-
-	const rowConfig = {
-		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row],
-		...item.config,
-	};
-
-	const viewportRowConfig = (option) =>
-		(rowConfig[getViewportSize(rowConfig, selectedViewportSize, option)] ||
-			rowConfig)[option];
 
 	const handleConfigurationValueChanged = (identifier, value) => {
 		let itemConfig = {[identifier]: value};
@@ -120,24 +111,37 @@ export const RowConfigurationPanel = ({item}) => {
 			: Liferay.Language.get('x-module-per-row');
 	};
 
-	const numberOfColumnsConfig = viewportRowConfig('numberOfColumns');
-	const modulesPerRowConfig = viewportRowConfig('modulesPerRow');
-	const reverseOrderConfig = viewportRowConfig('reverseOrder');
-	const verticalAlignmentConfig = viewportRowConfig('verticalAlignment');
+	const rowConfig = getResponsiveConfig(
+		{
+			...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
+				LAYOUT_DATA_ITEM_TYPES.row
+			],
+			...item.config,
+		},
+		selectedViewportSize
+	);
+
+	const {
+		gutters,
+		modulesPerRow,
+		numberOfColumns,
+		reverseOrder,
+		verticalAlignment,
+	} = rowConfig;
 
 	return (
 		<>
 			<RowConfigurationSelectField
-				config={numberOfColumnsConfig}
+				fieldValue={numberOfColumns}
 				id="rowNumberOfColumns"
 				identifier={ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns}
 				label={Liferay.Language.get('number-of-columns')}
 				onValueChange={handleConfigurationValueChanged}
 				options={NUMBER_OF_COLUMNS_OPTIONS}
 			/>
-			{numberOfColumnsConfig > 1 && (
+			{numberOfColumns > 1 && (
 				<RowConfigurationCheckboxField
-					config={rowConfig.gutters}
+					fieldValue={gutters}
 					identifier={ROW_CONFIGURATION_IDENTIFIERS.gutters}
 					label={Liferay.Language.get('show-gutter')}
 					onValueChange={handleConfigurationValueChanged}
@@ -164,7 +168,7 @@ export const RowConfigurationPanel = ({item}) => {
 						</p>
 					</div>
 					<RowConfigurationSelectField
-						config={modulesPerRowConfig}
+						fieldValue={modulesPerRow}
 						getOptionLabel={getModulesPerRowOptionLabel}
 						id="rowModulesPerRow"
 						identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
@@ -176,19 +180,18 @@ export const RowConfigurationPanel = ({item}) => {
 							]
 						}
 					/>
-					{numberOfColumnsConfig === 2 &&
-						modulesPerRowConfig === 1 && (
-							<RowConfigurationCheckboxField
-								config={reverseOrderConfig}
-								identifier={
-									ROW_CONFIGURATION_IDENTIFIERS.reverseOrder
-								}
-								label={Liferay.Language.get('inverse-order')}
-								onValueChange={handleConfigurationValueChanged}
-							/>
-						)}
+					{numberOfColumns === 2 && modulesPerRow === 1 && (
+						<RowConfigurationCheckboxField
+							fieldValue={reverseOrder}
+							identifier={
+								ROW_CONFIGURATION_IDENTIFIERS.reverseOrder
+							}
+							label={Liferay.Language.get('inverse-order')}
+							onValueChange={handleConfigurationValueChanged}
+						/>
+					)}
 					<RowConfigurationSelectField
-						config={verticalAlignmentConfig}
+						fieldValue={verticalAlignment}
 						id="rowVerticalAlignment"
 						identifier={
 							ROW_CONFIGURATION_IDENTIFIERS.verticalAlignment

@@ -30,7 +30,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import resizeColumns from '../../thunks/resizeColumns';
-import {getViewportSize} from '../../utils/getViewportSize';
+import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import SaveFragmentCompositionModal from '../floating-toolbar/SaveFragmentCompositionModal';
@@ -69,9 +69,8 @@ const RowWithControls = React.forwardRef(
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
 		);
-		const viewportRowConfig = (option) =>
-			(config[getViewportSize(config, selectedViewportSize, option)] ||
-				config)[option];
+
+		const rowConfig = getResponsiveConfig(config, selectedViewportSize);
 
 		const rowRef = useRef(null);
 		const rowRect = getRect(rowRef.current);
@@ -186,7 +185,7 @@ const RowWithControls = React.forwardRef(
 
 		buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration);
 
-		const verticalAlignment = viewportRowConfig('verticalAlignment');
+		const {verticalAlignment} = rowConfig;
 
 		return (
 			<Topper item={item} itemRef={ref} layoutData={layoutData}>

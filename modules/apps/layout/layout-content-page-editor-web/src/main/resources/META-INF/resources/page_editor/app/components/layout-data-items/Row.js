@@ -22,21 +22,16 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
-import {getViewportSize} from '../../utils/getViewportSize';
+import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 
 const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
 
-	const itemConfig = (option) => {
-		return (item.config[
-			getViewportSize(item.config, selectedViewportSize, option)
-		] || item.config)[option];
-	};
+	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
-	const modulesPerRow = itemConfig('modulesPerRow');
-	const reverseOrder = itemConfig('reverseOrder');
+	const {modulesPerRow, reverseOrder} = itemConfig;
 
 	const rowContent = (
 		<div

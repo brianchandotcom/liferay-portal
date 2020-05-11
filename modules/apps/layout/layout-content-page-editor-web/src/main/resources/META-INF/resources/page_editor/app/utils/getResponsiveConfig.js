@@ -21,18 +21,22 @@ const ORDERED_VIEWPORT_SIZES = [
 	VIEWPORT_SIZES.portraitMobile,
 ];
 
-export function getViewportSize(config, viewportSize, option) {
-	const viewportSizePosition = ORDERED_VIEWPORT_SIZES.indexOf(viewportSize);
+export function getResponsiveConfig(config, viewportSize) {
+	const viewportSizeIndex = ORDERED_VIEWPORT_SIZES.indexOf(viewportSize);
 
-	if (viewportSize === VIEWPORT_SIZES.desktop) {
-		return VIEWPORT_SIZES.desktop;
+	let responsiveConfig = {};
+
+	for (let i = 0; i <= viewportSizeIndex; i++) {
+		const viewPortSizeConfig =
+			ORDERED_VIEWPORT_SIZES[i] === VIEWPORT_SIZES.desktop
+				? config
+				: config[ORDERED_VIEWPORT_SIZES[i]];
+
+		responsiveConfig = {
+			...responsiveConfig,
+			...viewPortSizeConfig,
+		};
 	}
 
-	return config[viewportSize] && config[viewportSize][option] !== undefined
-		? viewportSize
-		: getViewportSize(
-				config,
-				ORDERED_VIEWPORT_SIZES[viewportSizePosition - 1],
-				option
-		  );
+	return responsiveConfig;
 }

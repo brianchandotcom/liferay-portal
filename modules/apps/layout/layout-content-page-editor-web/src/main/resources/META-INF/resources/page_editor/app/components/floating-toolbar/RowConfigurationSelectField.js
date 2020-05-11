@@ -30,7 +30,7 @@ const selectOptions = (options, getOptionLabel) =>
 		  }));
 
 export const RowConfigurationSelectField = ({
-	config,
+	fieldValue,
 	getOptionLabel,
 	id,
 	identifier,
@@ -48,13 +48,13 @@ export const RowConfigurationSelectField = ({
 				onValueChange(identifier, parseValue);
 			}}
 			options={selectOptions(options, getOptionLabel)}
-			value={String(config)}
+			value={String(fieldValue)}
 		/>
 	</ClayForm.Group>
 );
 
 RowConfigurationSelectField.propTypes = {
-	config: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	fieldValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	id: PropTypes.string,
 	identifier: PropTypes.string,
 	label: PropTypes.string,

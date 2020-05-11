@@ -20,7 +20,7 @@ import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
-import {getViewportSize} from '../../utils/getViewportSize';
+import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 
 const Column = React.forwardRef(
 	({children, className, item, ...props}, ref) => {
@@ -38,14 +38,12 @@ const Column = React.forwardRef(
 			(state) => state.selectedViewportSize
 		);
 
-		const parentItemConfig = (option) => {
-			return (parentItem.config[
-				getViewportSize(parentItem.config, selectedViewportSize, option)
-			] || parentItem.config)[option];
-		};
+		const parentItemConfig = getResponsiveConfig(
+			parentItem.config,
+			selectedViewportSize
+		);
 
-		const modulesPerRow = parentItemConfig('modulesPerRow');
-		const numberOfColumns = parentItemConfig('numberOfColumns');
+		const {modulesPerRow, numberOfColumns} = parentItemConfig;
 
 		let columnSize = (size * numberOfColumns) / modulesPerRow;
 

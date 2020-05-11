@@ -32,7 +32,7 @@ const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
 };
 
 export const RowConfigurationCheckboxField = ({
-	config,
+	fieldValue,
 	identifier,
 	label,
 	onValueChange,
@@ -40,7 +40,7 @@ export const RowConfigurationCheckboxField = ({
 	<ClayForm.Group>
 		<ClayCheckboxWithState
 			aria-label={label}
-			checked={config}
+			checked={fieldValue}
 			label={label}
 			onValueChange={(value) => onValueChange(identifier, value)}
 		/>
@@ -48,7 +48,7 @@ export const RowConfigurationCheckboxField = ({
 );
 
 RowConfigurationCheckboxField.propTypes = {
-	config: PropTypes.bool,
+	fieldValue: PropTypes.bool,
 	identifier: PropTypes.string,
 	label: PropTypes.string,
 	onValueChange: PropTypes.func.isRequired,

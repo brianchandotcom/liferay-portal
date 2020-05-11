@@ -407,8 +407,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			return true;
 		}
 
-		if (includeWrappers) {
-			return isPrimitiveTypeWrapper();
+		if (includeWrappers && isPrimitiveTypeWrapper()) {
+			return true;
 		}
 
 		return false;

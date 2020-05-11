@@ -123,11 +123,15 @@ definition {
 
 	@priority = "3"
 	test RecycleBinBlogs {
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Blogs");
 
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -167,7 +171,14 @@ definition {
 	test RecycleBinBookmarks {
 		property portal.release = "false";
 
-		Portlet.addPG(portletName = "Bookmarks");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Bookmarks");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		BookmarksFolder.addPG(
 			folderDescription = "Folder Description",
@@ -295,11 +306,15 @@ definition {
 	test RecycleBinScheduledCleanup {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
 
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Blogs");
 
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -327,27 +342,17 @@ definition {
 
 	@priority = "3"
 	test RecycleBinSearchBlogsEntries {
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Blogs");
 
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content 1",
-			entryTitle = "Blogs Entry Title 1");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content 2",
-			entryTitle = "Blogs Entry Title 2");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content 3",
-			entryTitle = "Blogs Entry Title 3");
+		for (var n : list "1,2,3") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content ${n}",
+				entryTitle = "Blogs Entry Title ${n}",
+				groupName = "Site Name");
+		}
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -400,7 +405,14 @@ definition {
 	test RecycleBinSearchDMEntriesInFolder {
 		property custom.properties = "default.layout.template.id=1_column";
 
-		Portlet.addPG(portletName = "Documents and Media");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
@@ -438,8 +450,6 @@ definition {
 			dmDocumentFile = "Document_2.doc",
 			dmDocumentTitle = "DM Document Title 2");
 
-		Navigator.openURL();
-
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
@@ -467,7 +477,14 @@ definition {
 
 	@priority = "3"
 	test RecycleBinStaging {
-		Portlet.addPG(portletName = "Web Content Display");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
 		WebContent.addPGViaWCD(
 			webContentContent = "WC Content",
@@ -481,15 +498,17 @@ definition {
 			siteName = "Site Name",
 			uncheckContent = "Web Content");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name-staging",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
 
-		Portlet.addPG(portletName = "Blogs");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name (Staging)",
+			site = "false");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -739,9 +758,9 @@ definition {
 	test RestoreDMDocumentFromFolderCP {
 		property portal.acceptance = "true";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMFolder.addCP(dmFolderName = "DM Folder Name");
+		JSONDocument.addFolder(
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
 
 		for (var i : list "1,2,3") {
 			JSONDocument.addFile(

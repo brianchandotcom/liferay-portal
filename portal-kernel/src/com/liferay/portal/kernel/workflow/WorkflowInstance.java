@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  */
-public interface WorkflowInstance {
+public interface WorkflowInstance extends WorkflowModel {
 
 	public void addChildWorkflowInstance(
 		WorkflowInstance childWorkflowInstance);

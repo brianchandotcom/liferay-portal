@@ -10,4 +10,19 @@
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-info</short-name>
 	<uri>http://liferay.com/tld/info</uri>
+	<tag>
+		<name>info-list-basic-list</name>
+		<tag-class>com.liferay.info.taglib.servlet.taglib.InfoListBasicListTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>infoListObjects</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>itemRendererKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

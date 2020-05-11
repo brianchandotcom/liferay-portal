@@ -107,13 +107,13 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	private Map<String, Object> _getSidebarPanels() {
 		Map<String, Object> sidebarPanels =
 			LinkedHashMapBuilder.<String, Object>put(
-				"fields",
+				"builder",
 				HashMapBuilder.<String, Object>put(
 					"icon", "forms"
 				).put(
 					"isLink", false
 				).put(
-					"label", LanguageUtil.get(request, "fields")
+					"label", LanguageUtil.get(request, "builder")
 				).put(
 					"pluginEntryPoint",
 					DataLayoutTaglibUtil.resolveModule(

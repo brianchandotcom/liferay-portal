@@ -19,11 +19,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			Page.tearDownCP();
-
-			BlogsEntry.tearDownCP();
-		}
 	}
 
 	@priority = "5"

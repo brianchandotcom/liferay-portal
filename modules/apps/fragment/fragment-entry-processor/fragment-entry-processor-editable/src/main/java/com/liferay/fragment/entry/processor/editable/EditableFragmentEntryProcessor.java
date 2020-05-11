@@ -376,8 +376,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		JSONObject defaultEditableValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		Document document = _getDocument(
-			html.replaceAll("\\$\\{([^\\}]+)\\}", "$1"));
+		Document document = _getDocument(html);
 
 		for (Element element :
 				document.select("lfr-editable,*[data-lfr-editable-id]")) {

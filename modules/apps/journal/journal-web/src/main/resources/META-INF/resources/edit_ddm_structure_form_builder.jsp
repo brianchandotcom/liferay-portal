@@ -58,7 +58,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
-		<div class="container-fluid container-fluid-max-xl">
+		<clay:container>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "structure") %>' wrapperCssClass="article-content-title mb-0" />
@@ -79,7 +79,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 					</div>
 				</li>
 			</ul>
-		</div>
+		</clay:container>
 	</nav>
 
 	<div class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
@@ -100,7 +100,9 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	</div>
 
 	<div class="contextual-sidebar-content">
-		<div class="container-fluid container-fluid-max-xl container-view">
+		<clay:container
+			className="container-view"
+		>
 			<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 
 			<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">
@@ -179,7 +181,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 			<div class="sheet">
 				<%@ include file="/ddm_form_builder.jspf" %>
 			</div>
-		</div>
+		</clay:container>
 	</div>
 </aui:form>
 

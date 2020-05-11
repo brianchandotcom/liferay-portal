@@ -53,14 +53,14 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
-		<div class="container-fluid container-fluid-max-xl">
+
+		<%
+		DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
+		%>
+
+		<clay:container>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
-
-					<%
-					DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
-					%>
-
 					<aui:input autoFocus="<%= (article == null) || article.isNew() %>" cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
 				</li>
 				<li class="tbar-item">
@@ -97,7 +97,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					</div>
 				</li>
 			</ul>
-		</div>
+		</clay:container>
 	</nav>
 
 	<div class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
@@ -138,7 +138,9 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	</div>
 
 	<div class="contextual-sidebar-content">
-		<div class="container-fluid container-fluid-max-xl container-view">
+		<clay:container
+			className="container-view"
+		>
 			<div class="sheet sheet-lg">
 				<aui:model-context bean="<%= article %>" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" model="<%= JournalArticle.class %>" />
 
@@ -275,7 +277,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					</c:choose>
 				</div>
 			</div>
-		</div>
+		</clay:container>
 	</div>
 </aui:form>
 

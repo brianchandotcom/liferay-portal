@@ -60,7 +60,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
-		<div class="container-fluid container-fluid-max-xl">
+		<clay:container>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "structure") %>' wrapperCssClass="article-content-title mb-0" />
@@ -73,10 +73,12 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 					</div>
 				</li>
 			</ul>
-		</div>
+		</clay:container>
 	</nav>
 
-	<div class="container-fluid container-fluid-max-xl container-view">
+	<clay:container
+		className="container-view"
+	>
 		<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
 			<div class="alert alert-warning">
 				<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
@@ -105,7 +107,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 			namespace="<%= renderResponse.getNamespace() %>"
 			singlePage="<%= true %>"
 		/>
-	</div>
+	</clay:container>
 </aui:form>
 
 <aui:script>

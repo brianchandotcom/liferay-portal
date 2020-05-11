@@ -24,7 +24,10 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 	displayContext="<%= new JournalArticleItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalArticleItemSelectorViewDisplayContext) %>"
 />
 
-<div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<portlet:namespace />articlesContainer">
+<clay:container
+	className="item-selector lfr-item-viewer"
+	id='<%= renderResponse.getNamespace() + "articlesContainer" %>'
+>
 	<liferay-site-navigation:breadcrumb
 		breadcrumbEntries="<%= journalArticleItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>"
 	/>
@@ -282,7 +285,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var selectArticleHandler = dom.delegate(

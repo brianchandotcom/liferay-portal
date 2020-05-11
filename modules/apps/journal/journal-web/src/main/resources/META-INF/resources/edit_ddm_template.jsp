@@ -45,7 +45,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
-		<div class="container-fluid container-fluid-max-xl">
+		<clay:container>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmTemplate == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): ddmTemplate.getDefaultLanguageId() %>" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>' wrapperCssClass="article-content-title mb-0" />
@@ -76,7 +76,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 					</div>
 				</li>
 			</ul>
-		</div>
+		</clay:container>
 	</nav>
 
 	<div class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
@@ -97,7 +97,9 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	</div>
 
 	<div class="contextual-sidebar-content">
-		<div class="container-fluid container-fluid-max-xl container-view">
+		<clay:container
+			className="container-view"
+		>
 			<div class="sheet">
 				<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 				<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
@@ -110,7 +112,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 
 				<liferay-util:include page="/edit_ddm_template_display.jsp" servletContext="<%= application %>" />
 			</div>
-		</div>
+		</clay:container>
 	</div>
 </aui:form>
 

@@ -6,7 +6,6 @@ definition {
 	property portlet.plugins.includes = "test-localized-portlet";
 	property testray.component.names = "Site Localization";
 	property testray.main.component.name = "Site Localization";
-	var pageName = "Test Localization";
 	var portletName = "Test Localized Portlet";
 
 	setUp {
@@ -14,17 +13,14 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Localization");
 
-		SitePages.addPublicPage(pageName = "${pageName}");
-
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoPage(pageName = "Test Localization");
 
 		Portlet.addPG(
-			pageName = "${pageName}",
+			pageName = "Test Localization",
 			portletName = "${portletName}");
 	}
 

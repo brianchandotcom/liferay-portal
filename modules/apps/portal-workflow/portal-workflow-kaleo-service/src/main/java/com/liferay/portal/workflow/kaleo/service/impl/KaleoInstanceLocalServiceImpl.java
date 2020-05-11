@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -336,22 +337,13 @@ public class KaleoInstanceLocalServiceImpl
 		ServiceContext serviceContext) {
 
 		try {
-			List<KaleoInstance> kaleoInstances = new ArrayList<>();
+			BaseModelSearchResult<KaleoInstance> baseModelSearchResult =
+				searchKaleoInstances(
+					userId, assetClassName, assetTitle, assetDescription,
+					nodeName, kaleoDefinitionName, completed, start, end,
+					orderByComparator, serviceContext);
 
-			Hits hits = _kaleoInstanceTokenLocalService.search(
-				userId, assetClassName, assetTitle, assetDescription, nodeName,
-				kaleoDefinitionName, completed, start, end,
-				getSortsFromComparator(orderByComparator), serviceContext);
-
-			for (Document document : hits.getDocs()) {
-				long kaleoInstanceId = GetterUtil.getLong(
-					document.get(KaleoInstanceTokenField.KALEO_INSTANCE_ID));
-
-				kaleoInstances.add(
-					kaleoInstancePersistence.findByPrimaryKey(kaleoInstanceId));
-			}
-
-			return kaleoInstances;
+			return baseModelSearchResult.getBaseModels();
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -388,6 +380,33 @@ public class KaleoInstanceLocalServiceImpl
 		return _kaleoInstanceTokenLocalService.searchCount(
 			userId, assetClassName, assetTitle, assetDescription, nodeName,
 			kaleoDefinitionName, completed, serviceContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<KaleoInstance> searchKaleoInstances(
+			Long userId, String assetClassName, String assetTitle,
+			String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<KaleoInstance> orderByComparator,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<KaleoInstance> kaleoInstances = new ArrayList<>();
+
+		Hits hits = _kaleoInstanceTokenLocalService.search(
+			userId, assetClassName, assetTitle, assetDescription, nodeName,
+			kaleoDefinitionName, completed, start, end,
+			getSortsFromComparator(orderByComparator), serviceContext);
+
+		for (Document document : hits.getDocs()) {
+			long kaleoInstanceId = GetterUtil.getLong(
+				document.get(KaleoInstanceTokenField.KALEO_INSTANCE_ID));
+
+			kaleoInstances.add(
+				kaleoInstancePersistence.findByPrimaryKey(kaleoInstanceId));
+		}
+
+		return new BaseModelSearchResult<>(kaleoInstances, hits.getLength());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

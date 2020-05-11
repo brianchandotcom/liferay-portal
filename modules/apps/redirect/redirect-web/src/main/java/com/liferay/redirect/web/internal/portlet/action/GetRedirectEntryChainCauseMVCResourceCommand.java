@@ -43,11 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + RedirectPortletKeys.REDIRECT,
-		"mvc.command.name=/redirect/check_redirect_entry_chain"
+		"mvc.command.name=/redirect/get_redirect_entry_chain_cause"
 	},
 	service = MVCResourceCommand.class
 )
-public class CheckRedirectEntryChainMVCResourceCommand
+public class GetRedirectEntryChainCauseMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override

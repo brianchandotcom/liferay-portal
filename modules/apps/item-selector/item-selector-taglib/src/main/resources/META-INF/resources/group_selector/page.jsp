@@ -23,7 +23,7 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 %>
 
 <c:if test="<%= groupTypes.size() > 1 %>">
-	<div class="container-fluid-1280">
+	<clay:container>
 		<div class="btn-group btn-group-sm my-3" role="group">
 
 			<%
@@ -37,10 +37,12 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 			%>
 
 		</div>
-	</div>
+	</clay:container>
 </c:if>
 
-<div class="container-fluid-1280 lfr-item-viewer">
+<clay:container
+	className="lfr-item-viewer"
+>
 	<liferay-ui:search-container
 		searchContainer="<%= groupSelectorDisplayContext.getSearchContainer() %>"
 		var="listSearchContainer"
@@ -82,4 +84,4 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>

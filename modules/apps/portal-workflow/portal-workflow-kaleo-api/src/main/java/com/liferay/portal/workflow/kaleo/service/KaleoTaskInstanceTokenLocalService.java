@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -451,6 +452,19 @@ public interface KaleoTaskInstanceTokenLocalService
 		Boolean completed, Long kaleoDefinitionId, Long[] kaleoInstanceIds,
 		Boolean searchByUserRoles, boolean andOperator,
 		ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<KaleoTaskInstanceToken>
+			searchKaleoTaskInstanceTokens(
+				String assetTitle, String[] taskNames, String[] assetTypes,
+				Long[] assetPrimaryKeys, String assigneeClassName,
+				Long[] assigneeClassPKs, Date dueDateGT, Date dueDateLT,
+				Boolean completed, Long kaleoDefinitionId,
+				Long[] kaleoInstanceIds, Boolean searchByUserRoles,
+				boolean andOperator, int start, int end,
+				OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
+				ServiceContext serviceContext)
+		throws PortalException;
 
 	public KaleoTaskInstanceToken updateDueDate(
 			long kaleoTaskInstanceTokenId, Date dueDate,

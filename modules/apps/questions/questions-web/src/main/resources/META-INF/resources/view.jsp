@@ -34,6 +34,8 @@ String questionsRootElementId = renderResponse.getNamespace() + "-questions-root
 	).put(
 		"siteKey", String.valueOf(themeDisplay.getScopeGroupId())
 	).put(
+		"tagSelectorURL", renderRequest.getAttribute(QuestionsPortletKeys.TAG_SELECTOR_URL)
+	).put(
 		"userId", String.valueOf(themeDisplay.getUserId())
 	).build();
 	%>

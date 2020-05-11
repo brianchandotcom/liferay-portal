@@ -26,4 +26,6 @@ public class QuestionsPortletKeys {
 	public static final String QUESTIONS =
 		"com_liferay_questions_web_internal_portlet_QuestionsPortlet";
 
+	public static final String TAG_SELECTOR_URL = "TAG_SELECTOR_URL";
+
 }

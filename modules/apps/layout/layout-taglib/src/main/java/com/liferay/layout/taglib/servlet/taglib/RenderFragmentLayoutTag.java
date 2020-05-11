@@ -149,6 +149,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 				httpServletRequest,
 				(HttpServletResponse)pageContext.getResponse(),
 				ServletContextUtil.getInfoDisplayContributorTracker(),
+				ServletContextUtil.getInfoListRendererTracker(),
 				ServletContextUtil.getLayoutListRetrieverTracker(),
 				ServletContextUtil.getListObjectReferenceFactoryTracker()));
 		httpServletRequest.setAttribute(

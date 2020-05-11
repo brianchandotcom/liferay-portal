@@ -24,7 +24,7 @@ DLEditFileShortcutDisplayContext dlEditFileShortcutDisplayContext = (DLEditFileS
 renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form action="<%= dlEditFileShortcutDisplayContext.getEditFileShortcutURL() %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="fileShortcutId" type="hidden" value="<%= dlEditFileShortcutDisplayContext.getFileShortcutId() %>" />
@@ -63,7 +63,7 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var selectToFileEntryButton = document.getElementById(

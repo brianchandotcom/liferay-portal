@@ -36,7 +36,7 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 	<portlet:param name="version" value="<%= String.valueOf(fileVersion.getVersion()) %>" />
 </liferay-portlet:renderURL>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="selectFileVersionFm">
 		<liferay-ui:search-container
 			id="fileVersionSearchContainer"
@@ -92,7 +92,7 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

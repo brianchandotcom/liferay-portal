@@ -97,15 +97,10 @@ if (portletTitleBasedNavigation) {
 	<liferay-util:include page="/document_library/file_entry_upper_tbar.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<c:choose>
-	<c:when test="<%= portletTitleBasedNavigation %>">
-<div class="container-fluid-1280" id="<portlet:namespace />FileEntry">
-	</c:when>
-	<c:otherwise>
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	</c:otherwise>
-</c:choose>
-
+<clay:container
+	className='<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>'
+	id='<%= renderResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : "infoPanelId") %>'
+>
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 	<aui:form action="<%= editFileEntry %>" method="post" name="fm">
@@ -131,9 +126,9 @@ if (portletTitleBasedNavigation) {
 			<div class="contextual-sidebar sidebar-light sidebar-preview">
 
 				<%
-					request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
-					request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
-					request.setAttribute("info_panel_file_entry.jsp-hideActions", true);
+				request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
+				request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
+				request.setAttribute("info_panel_file_entry.jsp-hideActions", true);
 				%>
 
 				<liferay-util:include page="/document_library/info_panel_file_entry.jsp" servletContext="<%= application %>" />
@@ -143,8 +138,8 @@ if (portletTitleBasedNavigation) {
 			<liferay-frontend:sidebar-panel>
 
 				<%
-					request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
-					request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
+				request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
+				request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
 				%>
 
 				<liferay-util:include page="/document_library/info_panel_file_entry.jsp" servletContext="<%= application %>" />
@@ -164,15 +159,15 @@ if (portletTitleBasedNavigation) {
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 
 					<%
-						for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
+					for (ToolbarItem toolbarItem : dlViewFileVersionDisplayContext.getToolbarItems()) {
 					%>
 
-					<liferay-ui:toolbar-item
-						toolbarItem="<%= toolbarItem %>"
-					/>
+						<liferay-ui:toolbar-item
+							toolbarItem="<%= toolbarItem %>"
+						/>
 
 					<%
-						}
+					}
 					%>
 
 				</c:if>
@@ -231,7 +226,7 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 		</div>
 	</div>
-</div>
+</clay:container>
 
 <c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 

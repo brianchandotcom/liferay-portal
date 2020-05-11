@@ -45,7 +45,7 @@ List<Object> foldersAndFileEntriesAndFileShortcuts = DLAppServiceUtil.getFolders
 dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form method="post" name="selectFileEntryFm">
 		<liferay-ui:breadcrumb
 			showGuestGroup="<%= false %>"
@@ -131,7 +131,7 @@ dlSearchContainer.setResults(foldersAndFileEntriesAndFileShortcuts);
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

@@ -25,7 +25,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 
 <div class="upper-tbar-container-fixed">
 	<div class="tbar upper-tbar">
-		<div class="container-fluid container-fluid-max-xl">
+		<clay:container>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<div class="tbar-section text-left">
@@ -94,6 +94,6 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 					/>
 				</li>
 			</ul>
-		</div>
+		</clay:container>
 	</div>
 </div>

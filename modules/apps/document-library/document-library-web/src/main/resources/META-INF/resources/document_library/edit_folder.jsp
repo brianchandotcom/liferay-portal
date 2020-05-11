@@ -63,18 +63,18 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(headerTitle);
 %>
 
-<div class="container-fluid-1280">
-	<liferay-util:buffer
-		var="removeFileEntryTypeIcon"
-	>
-		<liferay-ui:icon
-			icon="times"
-			label="<%= true %>"
-			markupView="lexicon"
-			message="remove"
-		/>
-	</liferay-util:buffer>
+<liferay-util:buffer
+	var="removeFileEntryTypeIcon"
+>
+	<liferay-ui:icon
+		icon="times"
+		label="<%= true %>"
+		markupView="lexicon"
+		message="remove"
+	/>
+</liferay-util:buffer>
 
+<clay:container>
 	<portlet:actionURL name="/document_library/edit_folder" var="editFolderURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 	</portlet:actionURL>
@@ -307,7 +307,7 @@ renderResponse.setTitle(headerTitle);
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</div>
+</clay:container>
 
 <liferay-util:buffer
 	var="workflowDefinitionsBuffer"

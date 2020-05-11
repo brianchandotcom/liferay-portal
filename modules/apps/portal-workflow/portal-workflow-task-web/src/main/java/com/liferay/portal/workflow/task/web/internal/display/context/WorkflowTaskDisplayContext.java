@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -65,6 +66,7 @@ import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.workflow.task.web.internal.display.context.util.WorkflowTaskRequestHelper;
 import com.liferay.portal.workflow.task.web.internal.search.WorkflowTaskSearch;
 import com.liferay.portal.workflow.task.web.internal.util.WorkflowTaskPortletUtil;
@@ -634,25 +636,12 @@ public class WorkflowTaskDisplayContext {
 
 		DisplayTerms searchTerms = _workflowTaskSearch.getDisplayTerms();
 
-		int total = WorkflowTaskManagerUtil.searchCount(
-			_workflowTaskRequestHelper.getCompanyId(),
-			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			new String[] {searchTerms.getKeywords()},
-			_getAssetType(searchTerms.getKeywords()), null, null, null, null,
-			null, _getCompleted(), searchByUserRoles, null, null, false);
+		WorkflowModelSearchResult<WorkflowTask> workflowModelSearchResult =
+			_getWorkflowModelSearchResult(searchByUserRoles, searchTerms);
 
-		_workflowTaskSearch.setTotal(total);
-
-		List<WorkflowTask> results = WorkflowTaskManagerUtil.search(
-			_workflowTaskRequestHelper.getCompanyId(),
-			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			new String[] {searchTerms.getKeywords()},
-			_getAssetType(searchTerms.getKeywords()), null, null, null, null,
-			null, _getCompleted(), searchByUserRoles, null, null, false,
-			_workflowTaskSearch.getStart(), _workflowTaskSearch.getEnd(),
-			_workflowTaskSearch.getOrderByComparator());
-
-		_workflowTaskSearch.setResults(results);
+		_workflowTaskSearch.setResults(
+			workflowModelSearchResult.getWorkflowModels());
+		_workflowTaskSearch.setTotal(workflowModelSearchResult.getLength());
 
 		_setWorkflowTaskSearchEmptyResultsMessage(
 			_workflowTaskSearch, searchByUserRoles, _getCompleted());
@@ -1017,6 +1006,30 @@ public class WorkflowTaskDisplayContext {
 		return null;
 	}
 
+	private WorkflowModelSearchResult<WorkflowTask>
+			_getWorkflowModelSearchResult(
+				boolean searchByUserRoles, DisplayTerms searchTerms)
+		throws WorkflowException {
+
+		if (Objects.nonNull(_workflowModelSearchResult)) {
+			return _workflowModelSearchResult;
+		}
+
+		_workflowModelSearchResult =
+			WorkflowTaskManagerUtil.searchWorkflowTasks(
+				_workflowTaskRequestHelper.getCompanyId(),
+				_workflowTaskRequestHelper.getUserId(),
+				searchTerms.getKeywords(),
+				new String[] {searchTerms.getKeywords()},
+				_getAssetType(searchTerms.getKeywords()), null, null, null,
+				null, null, _getCompleted(), searchByUserRoles, null, null,
+				false, _workflowTaskSearch.getStart(),
+				_workflowTaskSearch.getEnd(),
+				_workflowTaskSearch.getOrderByComparator());
+
+		return _workflowModelSearchResult;
+	}
+
 	private boolean _isAssignedToMyRolesTabSelected() {
 		String tabs1 = _getTabs1();
 
@@ -1091,6 +1104,7 @@ public class WorkflowTaskDisplayContext {
 	private String _portletResource;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();
+	private WorkflowModelSearchResult<WorkflowTask> _workflowModelSearchResult;
 	private final WorkflowTaskRequestHelper _workflowTaskRequestHelper;
 	private WorkflowTaskSearch _workflowTaskSearch;
 

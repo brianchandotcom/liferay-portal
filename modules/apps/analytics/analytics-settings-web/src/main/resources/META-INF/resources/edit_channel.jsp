@@ -36,7 +36,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 
 <portlet:actionURL name="/analytics/edit_channel" var="editChannelURL" />
 
-<div class="container-fluid container-fluid-max-xl">
+<clay:container>
 	<clay:row>
 		<clay:col
 			size="12"
@@ -51,7 +51,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 			</div>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
 <aui:form action="<%= editChannelURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

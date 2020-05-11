@@ -33,7 +33,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 
 <portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
 
-<div class="container-fluid container-fluid-max-xl">
+<clay:container>
 	<clay:row>
 		<clay:col
 			size="12"
@@ -48,7 +48,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 			</div>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
 <div class="sheet sheet-lg">
 	<h2 class="autofit-row">

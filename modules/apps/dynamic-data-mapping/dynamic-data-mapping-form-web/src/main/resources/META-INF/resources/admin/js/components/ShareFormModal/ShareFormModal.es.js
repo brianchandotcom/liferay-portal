@@ -31,6 +31,10 @@ class ShareFormModal extends Component {
 		);
 	}
 
+	close() {
+		this.refs.shareFormModalRef.emit('hide');
+	}
+
 	created() {
 		this._eventHandler = new EventHandler();
 	}
@@ -41,7 +45,8 @@ class ShareFormModal extends Component {
 	}
 
 	open() {
-		this.refs.shareFormModalRef.show();
+		this.refs.shareFormModalRef.refs.emailRef.init();
+		this.refs.shareFormModalRef.visible = true;
 	}
 
 	render() {
@@ -73,6 +78,7 @@ class ShareFormModal extends Component {
 											localizedName={
 												this.props.localizedName
 											}
+											ref="emailRef"
 											spritemap={spritemap}
 											url={url}
 										/>
@@ -81,6 +87,10 @@ class ShareFormModal extends Component {
 							</div>
 						</div>
 					}
+					events={{
+						clickButton: this._handleClickFooterButton.bind(this),
+						hide: this._handleShareFormModalClosed.bind(this),
+					}}
 					footerButtons={[
 						{
 							alignment: 'right',
@@ -104,8 +114,18 @@ class ShareFormModal extends Component {
 		);
 	}
 
+	_handleClickFooterButton(event) {
+		if (event.target.classList.contains('btn-primary')) {
+			this.close();
+		}
+	}
+
 	_handleShareButtonClicked() {
 		this.open();
+	}
+
+	_handleShareFormModalClosed(event) {
+		this.emit('shareFormModalClosed', event);
 	}
 }
 

@@ -62,7 +62,7 @@ public class RedirectEntryLocalServiceTest {
 	@Test(
 		expected = CircularRedirectEntryException.MustNotFormALoopWithAnotherRedirectEntry.class
 	)
-	public void testAddRedirectEntriesLoopFailsWhenUpdateIntermediateEntry()
+	public void testAddRedirectEntryFailsWhenUpdateChainedRedirectEntriesCausesARedirectLoop()
 		throws Exception {
 
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
@@ -82,7 +82,7 @@ public class RedirectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddRedirectEntriesWithIndirectRedirectionLoop()
+	public void testAddRedirectEntryWithTwoStepRedirectLoop()
 		throws Exception {
 
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
@@ -197,7 +197,7 @@ public class RedirectEntryLocalServiceTest {
 	@Test(
 		expected = CircularRedirectEntryException.MustNotFormALoopWithAnotherRedirectEntry.class
 	)
-	public void testAddRedirectEntryFailsWhenCreateDirectRedirectionLoop()
+	public void testAddRedirectEntryFailsWhenRedirectLoop()
 		throws Exception {
 
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
@@ -299,7 +299,7 @@ public class RedirectEntryLocalServiceTest {
 	@Test(
 		expected = CircularRedirectEntryException.DestinationURLMustNotBeEqualToSourceURL.class
 	)
-	public void testAddRedirectEntrySameDestinationAndSourceURL()
+	public void testAddRedirectEntryFailsWhenSameDestinationAndSourceURL()
 		throws Exception {
 
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
@@ -540,7 +540,7 @@ public class RedirectEntryLocalServiceTest {
 	@Test(
 		expected = CircularRedirectEntryException.DestinationURLMustNotBeEqualToSourceURL.class
 	)
-	public void testUpdateRedirectEntrySameDestinationAndSourceURL()
+	public void testUpdateRedirectEntryFailsWhenSameDestinationAndSourceURL()
 		throws Exception {
 
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(

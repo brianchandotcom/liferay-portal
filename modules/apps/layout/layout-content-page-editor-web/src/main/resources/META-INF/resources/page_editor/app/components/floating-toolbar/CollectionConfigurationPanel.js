@@ -62,7 +62,12 @@ export const CollectionConfigurationPanel = ({item}) => {
 		);
 	};
 
-	const [availableListRenderers, setAvailableListRenderers] = useState([]);
+	const [availableListRenderers, setAvailableListRenderers] = useState([
+		{
+			label: Liferay.Language.get('grid'),
+			value: '',
+		},
+	]);
 
 	const collectionItemType = collectionConfig.collection
 		? collectionConfig.collection.itemType
@@ -81,6 +86,20 @@ export const CollectionConfigurationPanel = ({item}) => {
 				});
 		}
 	}, [collectionItemType]);
+
+	if (collectionConfig.collection) {
+		InfoItemService.getAvailableListRenderers({
+			className: collectionConfig.collection.itemType,
+		}).then((response) => {
+			setAvailableListRenderers([
+				{
+					label: Liferay.Language.get('grid'),
+					value: '',
+				},
+				...response,
+			]);
+		});
+	}
 
 	return (
 		<>

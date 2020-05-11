@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.WorkflowLockUtil;
@@ -245,6 +246,19 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 		return _workflowEngine.searchCount(
 			userId, assetClassName, assetTitle, assetDescription, nodeName,
 			kaleoDefinitionName, completed, serviceContext);
+	}
+
+	public WorkflowModelSearchResult<WorkflowInstance> searchWorkflowInstances(
+			long companyId, Long userId, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator)
+		throws WorkflowException {
+
+		return _workflowEngine.searchWorkflowInstances(
+			companyId, userId, assetClassName, assetTitle, assetDescription,
+			nodeName, kaleoDefinitionName, completed, start, end,
+			orderByComparator);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -852,23 +854,15 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		throws WorkflowException {
 
 		try {
-			ServiceContext serviceContext = new ServiceContext();
+			WorkflowModelSearchResult<WorkflowTask> workflowModelSearchResult =
+				searchWorkflowTasks(
+					companyId, userId, assetTitle, taskNames, assetTypes,
+					assetPrimaryKeys, assigneeClassName, assigneeIds, dueDateGT,
+					dueDateLT, completed, searchByUserRoles,
+					workflowDefinitionId, workflowInstanceIds, andOperator,
+					start, end, orderByComparator);
 
-			serviceContext.setCompanyId(companyId);
-			serviceContext.setUserId(userId);
-
-			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
-				_kaleoTaskInstanceTokenLocalService.search(
-					assetTitle, taskNames, assetTypes, assetPrimaryKeys,
-					assigneeClassName, assigneeIds, dueDateGT, dueDateLT,
-					completed, workflowDefinitionId, workflowInstanceIds,
-					searchByUserRoles, andOperator, start, end,
-					KaleoTaskInstanceTokenOrderByComparator.
-						getOrderByComparator(
-							orderByComparator, _kaleoWorkflowModelConverter),
-					serviceContext);
-
-			return _toWorkflowTasks(kaleoTaskInstanceTokens);
+			return workflowModelSearchResult.getWorkflowModels();
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
@@ -998,6 +992,47 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				assigneeClassName, assigneeIds, dueDateGT, dueDateLT, completed,
 				workflowDefinitionId, workflowInstanceIds, searchByUserRoles,
 				andOperator, serviceContext);
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
+	}
+
+	@Override
+	public WorkflowModelSearchResult<WorkflowTask> searchWorkflowTasks(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			String assigneeClassName, Long[] assigneeIds, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			Long workflowDefinitionId, Long[] workflowInstanceIds,
+			Boolean andOperator, int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException {
+
+		try {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(companyId);
+			serviceContext.setUserId(userId);
+
+			BaseModelSearchResult<KaleoTaskInstanceToken>
+				baseModelSearchResult =
+					_kaleoTaskInstanceTokenLocalService.
+						searchKaleoTaskInstanceTokens(
+							assetTitle, taskNames, assetTypes, assetPrimaryKeys,
+							assigneeClassName, assigneeIds, dueDateGT,
+							dueDateLT, completed, workflowDefinitionId,
+							workflowInstanceIds, searchByUserRoles, andOperator,
+							start, end,
+							KaleoTaskInstanceTokenOrderByComparator.
+								getOrderByComparator(
+									orderByComparator,
+									_kaleoWorkflowModelConverter),
+							serviceContext);
+
+			return new WorkflowModelSearchResult<>(
+				_toWorkflowTasks(baseModelSearchResult.getBaseModels()),
+				baseModelSearchResult.getLength());
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

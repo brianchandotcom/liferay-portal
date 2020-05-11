@@ -15,6 +15,7 @@
 package com.liferay.calendar.internal.upgrade.v1_0_4;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -34,6 +35,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 	public void doUpgrade() throws UpgradeException {
 		updateCalEventClassName();
 
+		deleteAssetEntryRelated();
 		deleteCalEventClassName();
 		deleteDuplicateResourcePermissions();
 		deleteDuplicateResources();
@@ -41,12 +43,44 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		super.doUpgrade();
 	}
 
+	protected void deleteAssetEntryRelated() throws UpgradeException {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select entryId from AssetEntry where classNameId = ?");
+			PreparedStatement ps1 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"delete from AssetLink where entryId1 = ? or entryId2 = " +
+						"?"));
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"delete from AssetEntry where entryId = ? "))) {
+
+			ps.setLong(1, PortalUtil.getClassNameId(_CLASS_NAME_CAL_EVENT));
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long entryId = rs.getLong("entryId");
+
+				ps1.setLong(1, entryId);
+				ps1.setLong(2, entryId);
+
+				ps1.addBatch();
+
+				ps2.setLong(1, entryId);
+				ps2.addBatch();
+			}
+
+			ps1.executeBatch();
+			ps2.executeBatch();
+		}
+		catch (SQLException sqlException) {
+			throw new UpgradeException(sqlException);
+		}
+	}
+
 	protected void deleteCalEventClassName() throws UpgradeException {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL(
-				"delete from AssetEntry where classNameId = " +
-					PortalUtil.getClassNameId(_CLASS_NAME_CAL_EVENT));
-
 			runSQL(
 				"delete from Counter where name like '" +
 					_CLASS_NAME_CAL_EVENT + "%'");

@@ -71,24 +71,26 @@ function FieldBase({
 						<div className="lfr-ddm-form-field-repeatable-toolbar">
 							{repeatable && repeatedIndex > 0 && (
 								<ClayButton
-									className="ddm-form-field-repeatable-delete-button p-0"
+									className="ddm-form-field-repeatable-delete-button lfr-portal-tooltip p-0"
 									disabled={readOnly}
 									onClick={onRemoveButton}
 									small
+									title={Liferay.Language.get('remove')}
 									type="button"
 								>
 									<ClayIcon
 										spritemap={spritemap}
-										symbol="trash"
+										symbol="hr"
 									/>
 								</ClayButton>
 							)}
 
 							<ClayButton
-								className="ddm-form-field-repeatable-add-button p-0"
+								className="ddm-form-field-repeatable-add-button lfr-portal-tooltip p-0"
 								disabled={readOnly}
 								onClick={onRepeatButton}
 								small
+								title={Liferay.Language.get('duplicate')}
 								type="button"
 							>
 								<ClayIcon spritemap={spritemap} symbol="plus" />

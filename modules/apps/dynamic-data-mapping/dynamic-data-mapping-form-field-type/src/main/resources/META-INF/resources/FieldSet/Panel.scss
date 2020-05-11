@@ -6,9 +6,12 @@
 
 		.ddm-form-field-repeatable-add-button,
 		.ddm-form-field-repeatable-delete-button {
-			margin-right: 9px !important;
 			position: relative;
 			right: 0;
+		}
+
+		.ddm-form-field-repeatable-delete-button {
+			margin-right: 4px !important;
 		}
 	}
 

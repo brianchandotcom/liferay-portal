@@ -17,8 +17,8 @@ package com.liferay.redirect.web.internal.portlet.action;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,8 +31,8 @@ import com.liferay.redirect.web.internal.util.RedirectUtil;
 
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,29 +45,29 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + RedirectPortletKeys.REDIRECT,
 		"mvc.command.name=/redirect/check_redirect_entry_chain"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class CheckRedirectEntryChainMVCActionCommand
-	extends BaseMVCActionCommand {
+public class CheckRedirectEntryChainMVCResourceCommand
+	extends BaseMVCResourceCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse,
+			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"redirectEntryChainCause",
-				_getRedirectEntryChainCause(actionRequest)));
+				_getRedirectEntryChainCause(resourceRequest)));
 	}
 
-	private String _getRedirectEntryChainCause(ActionRequest actionRequest) {
-		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
+	private String _getRedirectEntryChainCause(
+		ResourceRequest resourceRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		String sourceURL = ParamUtil.getString(resourceRequest, "sourceURL");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		List<RedirectEntry> redirectEntries =
@@ -81,7 +81,7 @@ public class CheckRedirectEntryChainMVCActionCommand
 		}
 
 		String destinationURL = ParamUtil.getString(
-			actionRequest, "destinationURL");
+			resourceRequest, "destinationURL");
 
 		RedirectEntry redirectEntry =
 			_redirectEntryLocalService.fetchRedirectEntry(

@@ -23,13 +23,15 @@ export default function ({checkRedirectEntryChainURL, namespace}) {
 		var sourceURL = form.elements[`${namespace}sourceURL`];
 
 		if (destinationURL.value && sourceURL.value) {
-			Liferay.Util.fetch(checkRedirectEntryChainURL, {
-				body: Liferay.Util.objectToFormData({
-					[`${namespace}destinationURL`]: destinationURL.value,
-					[`${namespace}sourceURL`]: sourceURL.value,
-				}),
-				method: 'POST',
-			})
+			Liferay.Util.fetch(
+				Liferay.Util.PortletURL.createResourceURL(
+					checkRedirectEntryChainURL,
+					{
+						destinationURL: destinationURL.value,
+						sourceURL: sourceURL.value,
+					}
+				)
+			)
 				.then((response) => {
 					return response.json();
 				})

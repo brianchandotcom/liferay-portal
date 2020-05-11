@@ -63,10 +63,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 			<ul class="navbar-nav toolbar-group-field">
 				<li class="nav-item">
-					<button class='btn btn-secondary <%= disableCopyButton ? "ddm-btn-disabled" : "" %> <%= (!ddmFormAdminDisplayContext.isFormPublished() && (formInstance == null)) ? "hide" : "" %> lfr-ddm-share-url-button nav-btn nav-btn-monospaced share-form-icon' data-original-title='<liferay-ui:message key="copy-url" />' id="<portlet:namespace />publishIcon" title='<%= disableCopyButton ? LanguageUtil.get(request, "publish-the-form-to-get-its-shareable-link") : LanguageUtil.get(request, "copy-url") %>' type="button">
-						<svg class="lexicon-icon">
-							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>link" />
-						</svg>
+					<button class='btn btn-secondary <%= disableCopyButton ? "ddm-btn-disabled" : "" %> <%= (!ddmFormAdminDisplayContext.isFormPublished() && (formInstance == null)) ? "hide" : "" %> lfr-ddm-share-url-button share-form-icon' data-original-title='<liferay-ui:message key="share" />' id="<portlet:namespace />publishIcon" title='<%= disableCopyButton ? LanguageUtil.get(request, "publish-the-form-to-get-its-shareable-link") : LanguageUtil.get(request, "share") %>' type="button">
+						<%= LanguageUtil.get(request, "share") %>
 					</button>
 				</li>
 				<li class="nav-item">

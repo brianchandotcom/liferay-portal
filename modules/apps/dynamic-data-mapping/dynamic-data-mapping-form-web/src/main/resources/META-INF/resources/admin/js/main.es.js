@@ -38,7 +38,7 @@ import {Config} from 'metal-state';
 
 import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
-import ShareFormPopover from './components/ShareFormPopover/ShareFormPopover.es';
+import ShareFormModal from './components/ShareFormModal/ShareFormModal.es';
 import AutoSave from './util/AutoSave.es';
 import FormURL from './util/FormURL.es';
 import Notifications from './util/Notifications.es';
@@ -401,6 +401,7 @@ class Form extends Component {
 			functionsMetadata,
 			functionsURL,
 			groupId,
+			localizedName,
 			namespace,
 			published,
 			redirectURL,
@@ -545,17 +546,14 @@ class Form extends Component {
 						spritemap={spritemap}
 						title={Liferay.Language.get('leave-form')}
 					/>
+					{published && (
+						<ShareFormModal
+							localizedName={localizedName}
+							spritemap={spritemap}
+							url={this._createFormURL()}
+						/>
+					)}
 				</div>
-				{published && (
-					<ShareFormPopover
-						alignElement={document.querySelector(
-							'.share-form-icon'
-						)}
-						spritemap={spritemap}
-						url={this._createFormURL()}
-						visible={false}
-					/>
-				)}
 			</div>
 		);
 	}

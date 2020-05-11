@@ -13,36 +13,16 @@
  */
 
 import ClayForm from '@clayui/form';
-import ClayMultiSelect from '@clayui/multi-select';
+import {AssetTagsSelector} from 'asset-taglib';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../AppContext.es';
-import {getAllTags} from '../utils/client.es';
 
-export default ({tagsChange, tagsLoaded, tags = [], ...props}) => {
+export default ({tagsChange, tagsLoaded, tags = []}) => {
 	const context = useContext(AppContext);
 
 	const [error, setError] = useState(false);
 	const [inputValue, setInputValue] = useState('');
-	const [items, setItems] = useState([]);
-	const [sourceItems, setSourceItems] = useState([]);
-
-	useEffect(() => {
-		getAllTags(context.siteKey).then((data) => {
-			setSourceItems(
-				data.items.map(({name}) => ({
-					label: name,
-					value: name,
-				}))
-			);
-		});
-	}, [context.siteKey]);
-
-	useEffect(() => {
-		if (tags.length) {
-			setItems(tags);
-		}
-	}, [tags]);
 
 	useEffect(() => {
 		if (inputValue) {
@@ -60,7 +40,6 @@ export default ({tagsChange, tagsLoaded, tags = [], ...props}) => {
 	const filterItems = (tags) => {
 		if (!maxTags(tags) && !duplicatedTags(tags)) {
 			setError(false);
-			setItems(tags);
 			tagsChange(tags);
 		}
 		else {
@@ -71,16 +50,15 @@ export default ({tagsChange, tagsLoaded, tags = [], ...props}) => {
 	return (
 		<>
 			<ClayForm.Group className="c-mt-4">
-				<label htmlFor="basicInput">
-					{Liferay.Language.get('tags')}
-				</label>
-				<ClayMultiSelect
-					{...props}
+				<AssetTagsSelector
+					eventName={`_${context.portletNamespace}_selectTag`}
+					groupIds={[context.siteKey]}
 					inputValue={inputValue}
-					items={items}
-					onChange={setInputValue}
-					onItemsChange={filterItems}
-					sourceItems={sourceItems}
+					onInputValueChange={setInputValue}
+					onSelectedItemsChange={filterItems}
+					portletURL={context.tagSelectorURL}
+					selectedItems={tags}
+					showSelectButton={true}
 				/>
 				<ClayForm.FeedbackGroup className={error && 'has-error'}>
 					<ClayForm.FeedbackItem>

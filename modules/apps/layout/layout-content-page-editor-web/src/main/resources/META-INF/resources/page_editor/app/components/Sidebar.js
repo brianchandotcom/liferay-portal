@@ -29,6 +29,7 @@ import {config} from '../config/index';
 import selectAvailablePanels from '../selectors/selectAvailablePanels';
 import selectAvailableSidebarPanels from '../selectors/selectAvailableSidebarPanels';
 import {useDispatch, useSelector} from '../store/index';
+import {useDropClear} from '../utils/useDragAndDrop';
 import {useId} from '../utils/useId';
 import {useSelectItem} from './Controls';
 
@@ -41,6 +42,7 @@ const {Suspense, useCallback, useEffect} = React;
 const swallow = [(value) => value, (_error) => undefined];
 
 export default function Sidebar() {
+	const dropClearRef = useDropClear();
 	const [hasError, setHasError] = useStateSafe(false);
 	const {getInstance, register} = usePlugins();
 	const dispatch = useDispatch();
@@ -182,7 +184,7 @@ export default function Sidebar() {
 
 	return (
 		<ClayTooltipProvider>
-			<div className="page-editor__sidebar">
+			<div className="page-editor__sidebar" ref={dropClearRef}>
 				<div
 					className="page-editor__sidebar__buttons"
 					onClick={deselectItem}

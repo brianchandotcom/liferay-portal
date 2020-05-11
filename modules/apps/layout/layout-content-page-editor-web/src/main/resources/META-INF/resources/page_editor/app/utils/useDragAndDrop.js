@@ -252,12 +252,6 @@ export function useDropTarget(_targetItem) {
 	});
 
 	useEffect(() => {
-		if (!isOverTarget) {
-			dispatch(initialDragDrop.state);
-		}
-	}, [dispatch, isOverTarget]);
-
-	useEffect(() => {
 		const itemId = toControlsId(layoutData, targetItem);
 
 		targetRefs.set(itemId, targetRef);

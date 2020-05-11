@@ -26,6 +26,7 @@ import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import undo from '../thunks/undo';
+import {useDropClear} from '../utils/useDragAndDrop';
 import {useSelectItem} from './Controls';
 import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';
@@ -38,6 +39,7 @@ const {Suspense, useCallback, useRef} = React;
 
 function ToolbarBody() {
 	const dispatch = useDispatch();
+	const dropClearRef = useDropClear();
 	const {getInstance, register} = usePlugins();
 	const isMounted = useIsMounted();
 	const load = useLoad();
@@ -175,6 +177,7 @@ function ToolbarBody() {
 		<div
 			className="container-fluid container-fluid-max-xl"
 			onClick={deselectItem}
+			ref={dropClearRef}
 		>
 			<ul
 				className={classNames('navbar-nav', {

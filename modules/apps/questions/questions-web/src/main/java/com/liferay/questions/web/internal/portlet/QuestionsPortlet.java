@@ -14,15 +14,21 @@
 
 package com.liferay.questions.web.internal.portlet;
 
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
+import com.liferay.questions.web.internal.constants.QuestionsWebKeys;
 
 import java.io.IOException;
 
@@ -85,7 +91,7 @@ public class QuestionsPortlet extends MVCPortlet {
 			"EDITOR_NAME_selectItem", itemSelectorCriterion);
 
 		renderRequest.setAttribute(
-			QuestionsPortletKeys.IMAGE_BROWSE_URL, portletURL.toString());
+			QuestionsWebKeys.IMAGE_BROWSE_URL, portletURL.toString());
 
 		String lowestRank = Stream.of(
 			_portal.getPortalProperties()
@@ -103,8 +109,11 @@ public class QuestionsPortlet extends MVCPortlet {
 			"Youngling"
 		);
 
+		renderRequest.setAttribute(QuestionsWebKeys.DEFAULT_RANK, lowestRank);
+
 		renderRequest.setAttribute(
-			QuestionsPortletKeys.DEFAULT_RANK, lowestRank);
+			QuestionsWebKeys.TAG_SELECTOR_URL,
+			_getTagSelectorURL(renderRequest, renderResponse));
 
 		super.doView(renderRequest, renderResponse);
 	}
@@ -112,6 +121,34 @@ public class QuestionsPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
+	}
+
+	private String _getTagSelectorURL(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				renderRequest, AssetTag.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			PortletURLWrapper portletURLWrapper = new PortletURLWrapper(
+				portletURL);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			portletURLWrapper.setParameter(
+				"eventName", renderResponse.getNamespace() + "selectTag");
+			portletURLWrapper.setParameter(
+				"selectedTagNames", "{selectedTagNames}");
+			portletURLWrapper.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURLWrapper.toString();
+		}
+		catch (Exception exception) {
+			return null;
+		}
 	}
 
 	private ItemSelector _itemSelector;

@@ -15,9 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {
-	AssetTagsSelector,
-} from 'asset-taglib';
+import {AssetTagsSelector} from 'asset-taglib';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -90,14 +88,14 @@ export default withRouter(
 							<h1>{Liferay.Language.get('new-question')}</h1>
 
 							<AssetTagsSelector
+								eventName={'NAMEselectTag'}
 								groupIds={[20122]}
 								inputName={`NAME`}
-								eventName={'NAMEselectTag'}
 								inputValue={inputValue}
 								onInputValueChange={setInputValue}
 								onSelectedItemsChange={setSelectedItems}
-								showSelectButton={true}
 								selectedItems={selectedItems}
+								showSelectButton={true}
 							/>
 
 							<ClayForm className="c-mt-5">

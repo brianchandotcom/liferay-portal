@@ -26,13 +26,15 @@ String questionsRootElementId = renderResponse.getNamespace() + "-questions-root
 
 	<%
 	Map<String, Object> data = HashMapBuilder.<String, Object>put(
-		"defaultRank", renderRequest.getAttribute(QuestionsPortletKeys.DEFAULT_RANK)
+		"defaultRank", renderRequest.getAttribute(QuestionsWebKeys.DEFAULT_RANK)
 	).put(
-		"imageBrowseURL", renderRequest.getAttribute(QuestionsPortletKeys.IMAGE_BROWSE_URL)
+		"imageBrowseURL", renderRequest.getAttribute(QuestionsWebKeys.IMAGE_BROWSE_URL)
 	).put(
 		"isOmniAdmin", permissionChecker.isOmniadmin()
 	).put(
 		"siteKey", String.valueOf(themeDisplay.getScopeGroupId())
+	).put(
+		"tagSelectorURL", renderRequest.getAttribute(QuestionsWebKeys.TAG_SELECTOR_URL)
 	).put(
 		"userId", String.valueOf(themeDisplay.getUserId())
 	).build();

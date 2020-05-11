@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -55,6 +56,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
@@ -315,6 +317,53 @@ public class LayoutPageTemplatesImporterTest {
 				"Layout Page Template One", "Layout Page Template Two"
 			},
 			actualLayoutPageTemplateEntryNames.toArray(new String[0]));
+	}
+
+	@Test
+	public void testImportLayoutPageTemplateWithCustomLookAndFeel()
+		throws Exception {
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries =
+				_getLayoutPageTemplatesImporterResultEntries(
+					"layout-page-template-custom-look-and-feel");
+
+		Assert.assertEquals(
+			layoutPageTemplatesImporterResultEntries.toString(), 1,
+			layoutPageTemplatesImporterResultEntries.size());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry(
+				layoutPageTemplatesImporterResultEntries, 0);
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertNotNull(layout);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		Assert.assertEquals(
+			"false",
+			typeSettingsUnicodeProperties.getProperty(
+				"lfr-theme:regular:show-footer"));
+		Assert.assertEquals(
+			"false",
+			typeSettingsUnicodeProperties.getProperty(
+				"lfr-theme:regular:show-header"));
+		Assert.assertEquals(
+			"false",
+			typeSettingsUnicodeProperties.getProperty(
+				"lfr-theme:regular:show-header-search"));
+		Assert.assertEquals(
+			"true",
+			typeSettingsUnicodeProperties.getProperty(
+				"lfr-theme:regular:show-maximize-minimize-application-links"));
+		Assert.assertEquals(
+			"false",
+			typeSettingsUnicodeProperties.getProperty(
+				"lfr-theme:regular:wrap-widget-page-content"));
 	}
 
 	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)
@@ -748,6 +797,9 @@ public class LayoutPageTemplatesImporterTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

@@ -392,52 +392,9 @@ definition {
 
 		Refresh();
 
-		takeScreenshot();
-
-		if (IsElementPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE", key_searchAssetTitle = "multiple connections is cool")) {
-			AssertElementPresent(
-				key_searchAssetTitle = "multiple connections is cool",
-				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
-		}
-		else {
-			Portlet.gotoPortletOptions(
-				portletName = "Low Level Search Options",
-				portletOption = "Configuration");
-
-			SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-			takeScreenshot();
-
-			IFrame.closeFrame();
-
-			Portlet.gotoPortletOptions(
-				portletName = "Search Results",
-				portletOption = "Configuration");
-
-			SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-			ScrollWebElementIntoView(
-				key_fieldLabel = "Fields to Display",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT");
-
-			takeScreenshot();
-
-			IFrame.closeFrame();
-
-			Portlet.gotoPortletOptions(
-				portletName = "Custom Filter",
-				portletOption = "Configuration");
-
-			SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-			ScrollWebElementIntoView(
-				key_fieldLabel = "Occur",
-				locator1 = "Select#GENERIC_SELECT_FIELD");
-
-			takeScreenshot();
-
-			fail("Search results unavailable. Please check the screenshots.");
-		}
+		AssertElementPresent(
+			key_searchAssetTitle = "multiple connections is cool",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 	}
 
 	@priority = "5"

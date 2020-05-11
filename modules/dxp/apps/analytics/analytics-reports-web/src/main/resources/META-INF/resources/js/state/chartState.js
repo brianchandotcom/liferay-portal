@@ -13,7 +13,6 @@ import {useContext, useReducer} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
 
-const ADD_DATA_SET_ITEM = 'add-data-key';
 const ADD_DATA_SET_ITEMS = 'add-data-keys';
 const NEXT_TIME_SPAN = 'next-time-span';
 const PREV_TIME_SPAN = 'previous-time-span';
@@ -32,12 +31,6 @@ export const useChartState = ({defaultTimeSpanOption, publishDate}) => {
 	});
 
 	const actions = {
-		addDataSetItem: (payload) =>
-			dispatch({
-				payload,
-				type: ADD_DATA_SET_ITEM,
-				validAnalyticsConnection,
-			}),
 		addDataSetItems: (payload) =>
 			dispatch({
 				payload,
@@ -84,13 +77,6 @@ function reducer(state, action) {
 	let nextState;
 
 	switch (action.type) {
-		case ADD_DATA_SET_ITEM:
-			nextState = addDataSetItem(
-				state,
-				action.payload,
-				action.validAnalyticsConnection
-			);
-			break;
 		case ADD_DATA_SET_ITEMS:
 			nextState = action.payload.keys.reduce((state, key) => {
 				return addDataSetItem(

@@ -434,6 +434,14 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	public String getTitle(WorkflowDefinition workflowDefinition) {
+		if (workflowDefinition == null) {
+			return getLanguage("new-workflow");
+		}
+
+		if (Validator.isNull(workflowDefinition.getTitle())) {
+			return getLanguage("untitled-workflow");
+		}
+
 		ThemeDisplay themeDisplay =
 			_workflowDefinitionRequestHelper.getThemeDisplay();
 
@@ -552,6 +560,10 @@ public class WorkflowDefinitionDisplayContext {
 	protected String getConfigureAssignementLink() {
 		return _buildErrorLink(
 			"configure-assignments", getWorkflowDefinitionLinkPortletURL());
+	}
+
+	protected String getLanguage(String key) {
+		return LanguageUtil.get(getResourceBundle(), key);
 	}
 
 	protected String getLocalizedAssetName(String className) {

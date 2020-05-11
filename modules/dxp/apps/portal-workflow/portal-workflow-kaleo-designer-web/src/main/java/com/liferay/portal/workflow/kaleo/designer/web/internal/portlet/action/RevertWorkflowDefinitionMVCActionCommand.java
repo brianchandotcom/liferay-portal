@@ -19,9 +19,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
@@ -81,6 +84,11 @@ public class RevertWorkflowDefinitionMVCActionCommand
 		WorkflowDefinition workflowDefinition = null;
 
 		if (kaleoDefinition.isActive()) {
+			validateWorkflowDefinition(
+				actionRequest, content.getBytes("UTF-8"),
+				themeDisplay.getLocale(),
+				kaleoDefinitionVersion.getModifiedDate());
+
 			workflowDefinition =
 				workflowDefinitionManager.deployWorkflowDefinition(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),

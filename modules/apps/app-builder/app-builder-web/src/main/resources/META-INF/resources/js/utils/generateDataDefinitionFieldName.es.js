@@ -15,7 +15,13 @@
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 
 const findFieldByName = (dataDefinitionFields, fieldName) =>
-	dataDefinitionFields.find(({name}) => name === fieldName);
+	dataDefinitionFields.find(({name, nestedDataDefinitionFields = []}) => {
+		if (name === fieldName) {
+			return true;
+		}
+
+		return findFieldByName(nestedDataDefinitionFields, fieldName);
+	});
 
 export default ({dataDefinitionFields}, fieldTypeName) => {
 	let counter = 0;

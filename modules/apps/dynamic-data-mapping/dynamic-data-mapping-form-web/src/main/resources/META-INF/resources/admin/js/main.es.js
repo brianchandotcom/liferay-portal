@@ -408,6 +408,7 @@ class Form extends Component {
 			redirectURL,
 			rolesURL,
 			rules,
+			shareFormInstanceURL,
 			spritemap,
 			view,
 		} = this.props;
@@ -551,6 +552,8 @@ class Form extends Component {
 						<ShareFormModal
 							emailAddressesURL={emailAddressesURL}
 							localizedName={localizedName}
+							portletNamespace={namespace}
+							shareFormInstanceURL={shareFormInstanceURL}
 							spritemap={spritemap}
 							url={this._createFormURL()}
 						/>
@@ -1285,6 +1288,15 @@ Form.PROPS = {
 	 */
 
 	saved: Config.bool(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Form
+	 * @type {!string}
+	 */
+
+	shareFormInstanceURL: Config.string(),
 
 	/**
 	 * Whether to show an alert telling the user about the result of the

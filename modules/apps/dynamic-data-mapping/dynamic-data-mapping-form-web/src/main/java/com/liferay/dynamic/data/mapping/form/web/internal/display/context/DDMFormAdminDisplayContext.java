@@ -116,6 +116,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -938,6 +939,15 @@ public class DDMFormAdminDisplayContext {
 	public String getSharedFormURL() {
 		return _addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
 			getFormLayoutURL(formAdminRequestHelper.getThemeDisplay(), false);
+	}
+
+	public String getShareFormInstanceURL() {
+		PortletURL shareFormInstanceURL = renderResponse.createActionURL();
+
+		shareFormInstanceURL.setParameter(
+			ActionRequest.ACTION_NAME, "/admin/share_form_instance");
+
+		return shareFormInstanceURL.toString();
 	}
 
 	public String getSortingURL() throws Exception {

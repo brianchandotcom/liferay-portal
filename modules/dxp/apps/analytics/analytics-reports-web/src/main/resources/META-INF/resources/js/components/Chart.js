@@ -61,7 +61,6 @@ const METRICS_STATIC_VALUES = {
 		iconType: 'square',
 		langKey: Liferay.Language.get('reads-metric'),
 	},
-
 	analyticsReportsHistoricalViews: {
 		color: CHART_COLORS.analyticsReportsHistoricalViews,
 		iconType: 'circle',
@@ -164,54 +163,54 @@ export default function Chart({
 				? HOUR_IN_MILLISECONDS
 				: DAY_IN_MILLISECONDS;
 
+		const keys = ['analyticsReportsHistoricalViews'];
+
+		if (readsEnabled) {
+			keys.push('analyticsReportsHistoricalReads');
+		}
+
 		if (validAnalyticsConnection) {
+			const promises = [];
+
 			dataProviders.map((getter) => {
-				getter({
+				const promise = getter({
 					timeSpanKey: chartState.timeSpanOption,
 					timeSpanOffset: chartState.timeSpanOffset,
-				})
-					.then((data) => {
-						if (!gone) {
-							if (isMounted()) {
-								Object.keys(data).map((key) => {
-									actions.addDataSetItem({
-										dataSetItem: data[key],
-										key,
-										timeSpanComparator,
-									});
-								});
+				});
+
+				promises.push(promise);
+			});
+
+			Promise.allSettled(promises).then((data) => {
+				if (!gone) {
+					if (isMounted()) {
+						var dataSetItems = {};
+
+						for (var i = 0; i < data.length; i++) {
+							if (data[i].status === 'fulfilled') {
+								dataSetItems = {
+									...dataSetItems,
+									...data[i].value,
+								};
+							}
+							else {
+								if (!hasHistoricalWarning) {
+									addHistoricalWarning();
+								}
 							}
 						}
-					})
-					.catch((_error) => {
-						let key = '';
 
-						if (getter.name === 'getHistoricalReads') {
-							key = 'analyticsReportsHistoricalReads';
-						}
-						else if (getter.name === 'getHistoricalViews') {
-							key = 'analyticsReportsHistoricalViews';
-						}
-
-						if (!hasHistoricalWarning) {
-							addHistoricalWarning();
-						}
-
-						actions.addDataSetItem({
+						actions.addDataSetItems({
 							dataSetItem: {histogram: [], value: null},
-							key,
+							dataSetItems,
+							keys,
 							timeSpanComparator,
 						});
-					});
+					}
+				}
 			});
 		}
 		else {
-			const keys = ['analyticsReportsHistoricalViews'];
-
-			if (readsEnabled) {
-				keys.push('analyticsReportsHistoricalReads');
-			}
-
 			actions.addDataSetItems({
 				dataSetItem: {histogram: [], value: null},
 				keys,

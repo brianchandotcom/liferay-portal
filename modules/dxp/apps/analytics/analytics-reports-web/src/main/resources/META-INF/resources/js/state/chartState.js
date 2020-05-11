@@ -95,7 +95,15 @@ function reducer(state, action) {
 			nextState = action.payload.keys.reduce((state, key) => {
 				return addDataSetItem(
 					state,
-					{...action.payload, key},
+					{
+						...action.payload,
+						dataSetItem:
+							action.payload.dataSetItems &&
+							action.payload.dataSetItems[key] !== undefined
+								? action.payload.dataSetItems[key]
+								: action.payload.dataSetItem,
+						key,
+					},
 					action.validAnalyticsConnection
 				);
 			}, state);

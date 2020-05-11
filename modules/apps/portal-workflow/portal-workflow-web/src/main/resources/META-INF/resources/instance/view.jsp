@@ -28,6 +28,8 @@ PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 	<liferay-util:include page="/instance/toolbar.jsp" servletContext="<%= application %>" />
 </aui:form>
 
-<div class="container-fluid-1280 main-content-body workflow-instance-container">
+<clay:container
+	className="main-content-body workflow-instance-container"
+>
 	<%@ include file="/instance/workflow_instance.jspf" %>
-</div>
+</clay:container>

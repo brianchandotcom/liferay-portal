@@ -191,16 +191,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 			'.modify-link'
 		);
 
-		Liferay.on('<portlet:namespace />enableRemovedOrganizations', function (event) {
-			event.selectors.each(function (item, index, collection) {
-				var organizationId = item.attr('data-entityid');
-
-				if (deleteOrganizationIds.indexOf(organizationId) != -1) {
-					Util.toggleDisabled(item, false);
-				}
-			});
-		});
-
 		var selectOrganizationLink = A.one(
 			'#<portlet:namespace />selectOrganizationLink'
 		);

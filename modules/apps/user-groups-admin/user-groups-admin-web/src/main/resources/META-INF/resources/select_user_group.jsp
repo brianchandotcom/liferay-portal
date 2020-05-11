@@ -97,15 +97,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 </aui:form>
 
 <aui:script use="aui-base">
-	var Util = Liferay.Util;
-
-	var openingLiferay = Util.getOpener().Liferay;
-
-	openingLiferay.fire('<portlet:namespace />enableRemovedUserGroups', {
-		selectors: A.all('.selector-button:disabled'),
-	});
-
-	Util.selectEntityHandler(
+	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectUserGroupFm',
 		'<%= HtmlUtil.escapeJS(eventName) %>'
 	);

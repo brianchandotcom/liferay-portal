@@ -104,8 +104,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 					).put(
 						"entityname", organization.getName()
 					).put(
-						"groupid", organization.getGroupId()
-					).put(
 						"type", LanguageUtil.get(request, organization.getType())
 					).build();
 
@@ -138,15 +136,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 </aui:form>
 
 <aui:script use="aui-base">
-	var Util = Liferay.Util;
-
-	var openingLiferay = Util.getOpener().Liferay;
-
-	openingLiferay.fire('<portlet:namespace />enableRemovedOrganizations', {
-		selectors: A.all('.selector-button:disabled'),
-	});
-
-	Util.selectEntityHandler(
+	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectOrganizationFm',
 		'<%= HtmlUtil.escapeJS(eventName) %>',
 		<%= selUser != null %>

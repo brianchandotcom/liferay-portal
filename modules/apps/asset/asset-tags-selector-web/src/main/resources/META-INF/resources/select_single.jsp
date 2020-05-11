@@ -63,9 +63,7 @@ assetTagsSelectorDisplayContext = new AssetTagsSelectorDisplayContext(request, r
 </aui:form>
 
 <aui:script>
-	var Util = Liferay.Util;
-
-	Util.selectEntityHandler(
+	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectAssetTagFm',
 		'<%= HtmlUtil.escapeJS(assetTagsSelectorDisplayContext.getEventName()) %>',
 		true

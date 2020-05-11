@@ -156,16 +156,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 			'.modify-link'
 		);
 
-		Liferay.on('<portlet:namespace />enableRemovedUserGroups', function (event) {
-			event.selectors.each(function (item, index, collection) {
-				var userGroupId = item.attr('data-usergroupid');
-
-				if (deleteUserGroupIds.indexOf(userGroupId) != -1) {
-					Util.toggleDisabled(item, false);
-				}
-			});
-		});
-
 		A.one('#<portlet:namespace />openUserGroupsLink').on('click', function (event) {
 			var searchContainerData = searchContainer.getData();
 

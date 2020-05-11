@@ -18,7 +18,6 @@
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 int step = ParamUtil.getInteger(request, "step", 1);
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectOrganizationRole");
-String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncOrganizationRoles");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -259,15 +258,7 @@ else {
 </aui:form>
 
 <aui:script use="aui-base">
-	var Util = Liferay.Util;
-
-	var openingLiferay = Util.getOpener().Liferay;
-
-	openingLiferay.fire('<%= HtmlUtil.escape(syncEntitiesEventName) %>', {
-		selectors: A.all('.selector-button'),
-	});
-
-	Util.selectEntityHandler(
+	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectOrganizationRoleFm',
 		'<%= HtmlUtil.escapeJS(eventName) %>'
 	);

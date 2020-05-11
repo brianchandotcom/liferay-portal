@@ -216,49 +216,6 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 			);
 		}
 
-		Liferay.on(
-			'<%= depotAdminRolesDisplayContext.getDepotRoleSyncEntitiesEventName() %>',
-			function (event) {
-				event.selectors.each(function (item, index, collection) {
-					var groupId = item.attr('data-groupid');
-					var roleId = item.attr('data-roleid');
-
-					for (
-						var k = 0;
-						k < <portlet:namespace />addDepotGroupRolesGroupIds.length;
-						k++
-					) {
-						if (
-							<portlet:namespace />addDepotGroupRolesGroupIds[k] ==
-								groupId &&
-							<portlet:namespace />addDepotGroupRolesRoleIds[k] == roleId
-						) {
-							Util.toggleDisabled(item, true);
-
-							break;
-						}
-					}
-
-					for (
-						var n = 0;
-						n < <portlet:namespace />deleteDepotGroupRolesGroupIds.length;
-						n++
-					) {
-						if (
-							<portlet:namespace />deleteDepotGroupRolesGroupIds[n] ==
-								groupId &&
-							<portlet:namespace />deleteDepotGroupRolesRoleIds[n] ==
-								roleId
-						) {
-							Util.toggleDisabled(item, false);
-
-							break;
-						}
-					}
-				});
-			}
-		);
-
 		A.one('#<portlet:namespace />selectDepotRoleLink').on('click', function (
 			event
 		) {

@@ -17,7 +17,6 @@
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectRegularRole");
-String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncRegularRoles");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -87,15 +86,7 @@ SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayCo
 </aui:form>
 
 <aui:script use="aui-base">
-	var Util = Liferay.Util;
-
-	var openingLiferay = Util.getOpener().Liferay;
-
-	openingLiferay.fire('<%= HtmlUtil.escape(syncEntitiesEventName) %>', {
-		selectors: A.all('.selector-button:disabled'),
-	});
-
-	Util.selectEntityHandler(
+	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectRegularRoleFm',
 		'<%= HtmlUtil.escapeJS(eventName) %>'
 	);

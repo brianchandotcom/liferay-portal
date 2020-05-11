@@ -162,9 +162,9 @@
     <td></td>
 </tr>
 <tr>
-    <td>PUBLISH_FORM_PUBLIC_URL</td>
-    <td>//div[contains(@class,'share-url-popover')]//input[@class='form-control' and @type='text']</td>
-    <td></td>
+	<td>PUBLISH_FORM_PUBLIC_URL</td>
+	<td>//div[contains(@class,'share-form-modal-item-link')]//input[@class='form-control' and @type='text']</td>
+	<td></td>
 </tr>
 <tr>
     <td>PUBLISH_URL_FORM_PAGE</td>
@@ -182,9 +182,9 @@
     <td></td>
 </tr>
 <tr>
-    <td>PUBLISH_URL_ICON</td>
-    <td>//button[contains(@class,'share-form-icon') and contains(@title,'Copy URL')]</td>
-    <td></td>
+	<td>PUBLISH_URL_ICON</td>
+	<td>//button[contains(@class,'share-form-icon') and contains(@title,'Share')]</td>
+	<td></td>
 </tr>
 
 

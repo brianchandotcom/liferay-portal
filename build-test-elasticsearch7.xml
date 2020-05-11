@@ -1035,13 +1035,44 @@ xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
 	<target name="print-elasticsearch-indices">
+		<get-testcase-property property.name="test.name.skip.portal.instance" />
+
+		<if>
+			<and>
+				<not>
+					<isset property="test.name.skip.portal.instance" />
+				</not>
+				<equals arg1="test.portal.instance" arg2="true" />
+			</and>
+			<then>
+				<var name="portalInstanceName" value="${env.HOSTNAME}" />
+			</then>
+			<else>
+				<var name="portalInstanceName" value="localhost" />
+			</else>
+		</if>
+
+		<exec executable="curl" outputproperty="companyId">
+			<arg value="http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName}" />
+			<arg value="-u" />
+			<arg value="test@liferay.com:test" />
+		</exec>
+
+		<propertyregex
+			input="${companyId}"
+			override="true"
+			property="companyId"
+			regexp="(?&lt;=companyId&quot;:&quot;)(.*)(?=&quot;,&quot;home)"
+			select="\1"
+		/>
+
 		<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 		<condition else="9201" property="elasticsearch.port" value="9200">
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 		</condition>
 
-		<property name="elasticsearch.print.query">
+		<property name="company.index.query">
 			<![CDATA[
 				{
 					"query": {
@@ -1076,24 +1107,23 @@ xpack.monitoring.collection.enabled: true</echo>
 			]]>
 		</property>
 
-		<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
+		<exec executable="curl" outputproperty="curl.output.company.index">
 			<arg value="-H" />
 			<arg value="Content-Type: application/json" />
 			<arg value="localhost:${elasticsearch.port}/liferay-${companyId}/_search?pretty" />
 			<arg value="-d" />
-			<arg value="${elasticsearch.print.query}" />
+			<arg value="${company.index.query}" />
 		</exec>
 
 		<echo></echo>
 		<echo>##</echo>
-		<echo>## Elasticsearch Indices</echo>
+		<echo>## Elasticsearch Liferay Company Index</echo>
 		<echo>##</echo>
 		<echo></echo>
-		<echo>${curl.output.elasticsearch.indices}</echo>
+		<echo>${curl.output.company.index}</echo>
 		<echo></echo>
 
 		<get-testcase-property property.name="remote.elasticsearch.clusters.enabled" />
-		<get-testcase-property property.name="test.name.skip.portal.instance" />
 
 		<if>
 			<and>
@@ -1103,20 +1133,20 @@ xpack.monitoring.collection.enabled: true</echo>
 				</not>
 			</and>
 			<then>
-				<exec executable="curl" outputproperty="curl.output.local.cluster.elasticsearch.indices">
+				<exec executable="curl" outputproperty="curl.output.local.cluster.company.index">
 					<arg value="-H" />
 					<arg value="Content-Type: application/json" />
 					<arg value="localhost:9202/liferay-${companyId}/_search?pretty" />
 					<arg value="-d" />
-					<arg value="${elasticsearch.print.query}" />
+					<arg value="${company.index.query}" />
 				</exec>
 
 				<echo></echo>
 				<echo>##</echo>
-				<echo>## Local Cluster Elasticsearch Indices</echo>
+				<echo>## Local Elasticsearch Cluster Liferay Company Index</echo>
 				<echo>##</echo>
 				<echo></echo>
-				<echo>${curl.output.local.cluster.elasticsearch.indices}</echo>
+				<echo>${curl.output.local.cluster.company.index}</echo>
 				<echo></echo>
 
 				<exec executable="curl" outputproperty="curl.output.local.cluster.indices">
@@ -1128,7 +1158,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 				<echo></echo>
 				<echo>##</echo>
-				<echo>## Local Cluster Indices</echo>
+				<echo>## Local Elasticsearch Cluster Indices</echo>
 				<echo>##</echo>
 				<echo></echo>
 				<echo>${curl.output.local.cluster.indices}</echo>

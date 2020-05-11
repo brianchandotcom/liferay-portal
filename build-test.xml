@@ -2856,51 +2856,7 @@ ${tomcat-gc-log}
 					<ant antfile="build-test-solr.xml" target="print-solr-indices" />
 				</then>
 				<else>
-					<get-testcase-property property.name="test.name.skip.portal.instance" />
-
-					<if>
-						<and>
-							<not>
-								<isset property="test.name.skip.portal.instance" />
-							</not>
-							<equals arg1="test.portal.instance" arg2="true" />
-						</and>
-						<then>
-							<var name="portalInstanceName" value="${env.HOSTNAME}" />
-						</then>
-						<else>
-							<var name="portalInstanceName" value="localhost" />
-						</else>
-					</if>
-
-					<exec executable="curl" outputproperty="companyId">
-						<arg value="http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName}" />
-						<arg value="-u" />
-						<arg value="test@liferay.com:test" />
-					</exec>
-
-					<propertyregex
-						input="${companyId}"
-						override="true"
-						property="companyId"
-						regexp="(?&lt;=companyId&quot;:&quot;)(.*)(?=&quot;,&quot;home)"
-						select="\1"
-					/>
-
-					<get-testcase-property property.name="osgi.app.includes" />
-
-					<if>
-						<or>
-							<equals arg1="${suite.search.engine}" arg2="elasticsearch7" />
-							<contains string="${osgi.app.includes}" substring="portal-search-elasticsearch7" />
-						</or>
-						<then>
-							<ant antfile="build-test-elasticsearch7.xml" target="print-elasticsearch-indices" />
-						</then>
-						<else>
-							<ant antfile="build-test-elasticsearch6.xml" target="print-elasticsearch-indices" />
-						</else>
-					</if>
+					<ant antfile="build-test-elasticsearch7.xml" target="print-elasticsearch-indices" />
 				</else>
 			</if>
 		</sequential>

@@ -411,9 +411,9 @@ public class TaxonomyCategoryResourceImpl
 			ProjectionFactoryUtil.alias(
 				ProjectionFactoryUtil.sqlProjection(
 					StringBundler.concat(
-						"(select count(assetEntryId) assetCount from ",
+						"COALESCE((select count(assetEntryId) assetCount from ",
 						"AssetEntryAssetCategoryRel where assetCategoryId = ",
-						"this_.categoryId group by assetCategoryId) AS ",
+						"this_.categoryId group by assetCategoryId), 0) AS ",
 						"assetCount"),
 					new String[] {"assetCount"}, new Type[] {Type.INTEGER}),
 				"assetCount"));

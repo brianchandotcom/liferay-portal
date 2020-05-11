@@ -165,9 +165,9 @@ public class KeywordResourceImpl
 		projectionList.add(
 			ProjectionFactoryUtil.alias(
 				ProjectionFactoryUtil.sqlProjection(
-					"(select count(entryId) assetCount from " +
+					"COALESCE((select count(entryId) assetCount from " +
 						"AssetEntries_AssetTags where tagId = this_.tagId " +
-							"group by tagId) AS assetCount",
+							"group by tagId), 0) AS assetCount",
 					new String[] {"assetCount"}, new Type[] {Type.INTEGER}),
 				"assetCount"));
 		projectionList.add(ProjectionFactoryUtil.property("companyId"));

@@ -30,7 +30,10 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 	/>
 </c:if>
 
-<div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<portlet:namespace />entriesContainer">
+<clay:container
+	className="item-selector lfr-item-viewer"
+	id='<%= renderResponse.getNamespace() + "entriesContainer" %>'
+>
 	<c:if test="<%= itemSelectorViewDescriptor.isShowBreadcrumb() %>">
 		<liferay-site-navigation:breadcrumb
 			breadcrumbEntries="<%= itemSelectorViewDescriptorRendererDisplayContext.getBreadcrumbEntries(currentURLObj) %>"
@@ -136,7 +139,7 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:container>
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var selectItemHandler = dom.delegate(

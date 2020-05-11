@@ -255,13 +255,10 @@ definition {
 			layoutName = "Bookmarks Page",
 			widgetName = "Bookmarks");
 
-		Navigator.gotoSitePage(
-			pageName = "Bookmarks Page",
-			siteName = "Test Site Name");
-
-		BookmarksFolder.addPG(
+		JSONBookmarks.addFolder(
 			folderDescription = "Test Folder Description",
-			folderName = "Test Folder Name");
+			folderName = "Test Folder Name",
+			groupName = "Test Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -317,22 +314,16 @@ definition {
 			layoutName = "Bookmarks Page",
 			widgetName = "Bookmarks");
 
-		Navigator.gotoSitePage(
-			pageName = "Bookmarks Page",
-			siteName = "Test Site Name");
-
-		BookmarksFolder.addPG(
+		JSONBookmarks.addFolder(
 			folderDescription = "Test Folder Description",
-			folderName = "Test Folder Name");
+			folderName = "Test Folder Name",
+			groupName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Bookmarks Page",
-			siteName = "Test Site Name");
-
-		Bookmark.addPG(
-			bookmarkDescription = "Test Bookmark Description",
-			bookmarkName = "Test Bookmark Name",
-			bookmarkURL = "https://www.liferay.com");
+		JSONBookmarks.addBookmarks(
+			description = "Test Bookmark Description",
+			groupName = "Test Site Name",
+			name = "Test Bookmark Name",
+			url = "https://www.liferay.com");
 
 		User.firstLoginPG();
 
@@ -553,22 +544,16 @@ definition {
 			layoutName = "Bookmarks Page",
 			widgetName = "Bookmarks");
 
-		Navigator.gotoSitePage(
-			pageName = "Bookmarks Page",
-			siteName = "Test Site Name");
-
-		BookmarksFolder.addPG(
+		JSONBookmarks.addFolder(
 			folderDescription = "Test Folder Description",
-			folderName = "Test Folder Name");
+			folderName = "Test Folder Name",
+			groupName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Bookmarks Page",
-			siteName = "Test Site Name");
-
-		Bookmark.addPG(
-			bookmarkDescription = "Test Bookmark Description",
-			bookmarkName = "Test Bookmark Name",
-			bookmarkURL = "https://www.liferay.com");
+		JSONBookmarks.addBookmarks(
+			description = "Test Bookmark Description",
+			groupName = "Test Site Name",
+			name = "Test Bookmark Name",
+			url = "https://www.liferay.com");
 
 		User.firstLoginPG();
 

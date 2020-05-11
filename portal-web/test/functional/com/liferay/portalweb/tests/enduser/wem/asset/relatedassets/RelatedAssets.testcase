@@ -259,16 +259,10 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Bookmarks");
-
-		BookmarksFolder.addCP(
+		JSONBookmarks.addFolder(
 			folderDescription = "Bookmarks Folder Description",
-			folderName = "Bookmarks Folder Name");
+			folderName = "Bookmarks Folder Name",
+			groupName = "Guest");
 
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",

@@ -25,52 +25,6 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-elasticsearch7-test-properties">
-		<sequential>
-			<var name="elastic.kibana.dir" unset="true" />
-			<var name="elastic.kibana.tar.name.linux" unset="true" />
-			<var name="elastic.kibana.tar.name.mac" unset="true" />
-			<var name="elastic.kibana.tar.url.linux" unset="true" />
-			<var name="elastic.kibana.tar.url.mac" unset="true" />
-			<var name="elastic.kibana.zip.name.windows" unset="true" />
-			<var name="elastic.kibana.zip.url.windows" unset="true" />
-			<var name="elasticsearch.version" unset="true" />
-			<var name="elasticsearch.dir" unset="true" />
-			<var name="elasticsearch.analysis-icu.zip.name" unset="true" />
-			<var name="elasticsearch.analysis-icu.zip.url" unset="true" />
-			<var name="elasticsearch.analysis-kuromoji.zip.name" unset="true" />
-			<var name="elasticsearch.analysis-kuromoji.zip.url" unset="true" />
-			<var name="elasticsearch.analysis-smartcn.zip.name" unset="true" />
-			<var name="elasticsearch.analysis-smartcn.zip.url" unset="true" />
-			<var name="elasticsearch.analysis-stempel.zip.name" unset="true" />
-			<var name="elasticsearch.analysis-stempel.zip.url" unset="true" />
-
-			<property name="elasticsearch.version" value="7.7.0" />
-			<property name="elastic.kibana.dir" value="${app.server.parent.dir}/kibana-${elasticsearch.version}" />
-			<property name="elastic.kibana.tar.name.linux" value="kibana-${elasticsearch.version}-linux-x86_64.tar.gz" />
-			<property name="elastic.kibana.tar.name.mac" value="kibana-${elasticsearch.version}-darwin-x86_64.tar.gz" />
-			<property name="elastic.kibana.tar.url.linux" value="https://artifacts.elastic.co/downloads/kibana/${elastic.kibana.tar.name.linux}" />
-			<property name="elastic.kibana.tar.url.mac" value="https://artifacts.elastic.co/downloads/kibana/${elastic.kibana.tar.name.mac}" />
-			<property name="elastic.kibana.zip.name.windows" value="kibana-${elasticsearch.version}-windows-x86_64.zip" />
-			<property name="elastic.kibana.zip.url.windows" value="https://artifacts.elastic.co/downloads/kibana/${elastic.kibana.zip.name.windows}" />
-			<property name="elasticsearch.dir" value="${app.server.parent.dir}/elasticsearch-${elasticsearch.version}" />
-			<property name="elasticsearch.analysis-icu.zip.name" value="analysis-icu-${elasticsearch.version}.zip" />
-			<property name="elasticsearch.analysis-icu.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/${elasticsearch.analysis-icu.zip.name}" />
-			<property name="elasticsearch.analysis-kuromoji.zip.name" value="analysis-kuromoji-${elasticsearch.version}.zip" />
-			<property name="elasticsearch.analysis-kuromoji.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/${elasticsearch.analysis-kuromoji.zip.name}" />
-			<property name="elasticsearch.analysis-smartcn.zip.name" value="analysis-smartcn-${elasticsearch.version}.zip" />
-			<property name="elasticsearch.analysis-smartcn.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/${elasticsearch.analysis-smartcn.zip.name}" />
-			<property name="elasticsearch.analysis-stempel.zip.name" value="analysis-stempel-${elasticsearch.version}.zip" />
-			<property name="elasticsearch.analysis-stempel.zip.url" value="https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/${elasticsearch.analysis-stempel.zip.name}" />
-			<property name="elasticsearch.tar.name.linux" value="elasticsearch-${elasticsearch.version}-linux-x86_64.tar.gz" />
-			<property name="elasticsearch.tar.name.mac" value="elasticsearch-${elasticsearch.version}-darwin-x86_64.tar.gz" />
-			<property name="elasticsearch.zip.name.windows" value="elasticsearch-${elasticsearch.version}-windows-x86_64.zip" />
-			<property name="elasticsearch.tar.url.linux" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.linux}" />
-			<property name="elasticsearch.tar.url.mac" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.tar.name.mac}" />
-			<property name="elasticsearch.zip.url.windows" value="https://artifacts.elastic.co/downloads/elasticsearch/${elasticsearch.zip.name.windows}" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="configure-elasticsearch76-ltr-test-properties">
 		<sequential>
 			<var name="elasticsearch.version" unset="true" />
@@ -1000,14 +954,6 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo>Created follower indices.</echo>
 	</target>
 
-	<target name="deploy-elasticsearch7">
-		<gradle-execute dir="${project.dir}/modules/apps/portal-search-elasticsearch7" task="deploy">
-			<arg value="clean" />
-		</gradle-execute>
-
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch6.spi,com.liferay.portal.search.elasticsearch6.api,com.liferay.portal.search.elasticsearch6.impl,com.liferay.portal.search.elasticsearch6.xpack.security.impl&quot;</echo>
-	</target>
-
 	<target name="prepare-additional-elasticsearch-dirs">
 		<var name="elasticsearch.node.number" value="0" />
 
@@ -1226,9 +1172,6 @@ xpack.monitoring.collection.enabled: true</echo>
 			<then>
 				<configure-elasticsearch76-ltr-test-properties />
 			</then>
-			<else>
-				<configure-elasticsearch7-test-properties />
-			</else>
 		</if>
 
 		<unzip-elasticsearch />
@@ -1381,15 +1324,6 @@ xpack.monitoring.collection.enabled: true</echo>
 
 			<get-java-jdk-home />
 
-			<get-testcase-property property.name="remote.elasticsearch.clusters.enabled" />
-
-			<if>
-				<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
-				<then>
-					<configure-elasticsearch7-test-properties />
-				</then>
-			</if>
-
 			<antelope:repeat count="${remote.elasticsearch.cluster.size}">
 				<math
 					datatype="int"
@@ -1445,8 +1379,6 @@ xpack.monitoring.collection.enabled: true</echo>
 	<target name="start-kibana">
 		<lstopwatch action="start" name="start.kibana" />
 
-		<configure-elasticsearch7-test-properties />
-
 		<unzip-kibana />
 
 		<chmod
@@ -1500,8 +1432,6 @@ xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
 	<target name="stop-elasticsearch">
-		<configure-elasticsearch7-test-properties />
-
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
 		<if>
@@ -1572,8 +1502,6 @@ xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
 	<target name="stop-elasticsearch-local-cluster">
-		<configure-elasticsearch7-test-properties />
-
 		<if>
 			<os family="unix" />
 			<then>
@@ -1610,8 +1538,6 @@ xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
 	<target name="stop-kibana">
-		<configure-elasticsearch7-test-properties />
-
 		<if>
 			<os family="unix" />
 			<then>

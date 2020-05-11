@@ -2282,7 +2282,6 @@ jdbc.default.password=${database.password}</echo>
 
 	<macrodef name="prepare-portal-elasticsearch-osgi-configuration">
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">logExceptionsOnly=B"false"</echo>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">logExceptionsOnly=B"false"${line.separator}sidecarShutdownTimeout=L"20000"</echo>
 		</sequential>
 	</macrodef>
@@ -8075,19 +8074,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 	<category name="com.liferay.portal.search.internal.SearchEngineInitializer">
-		<priority value="INFO" />
-	</category>
-</log4j:configuration>]]></echo>
-
-		<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.search.elasticsearch6.impl-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.portal.search.elasticsearch6.internal.connection.EmbeddedElasticsearchConnection">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.search.elasticsearch6.internal.index.CompanyIndexFactory">
 		<priority value="INFO" />
 	</category>
 </log4j:configuration>]]></echo>

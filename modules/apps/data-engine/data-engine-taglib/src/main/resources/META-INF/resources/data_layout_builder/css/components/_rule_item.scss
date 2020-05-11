@@ -6,6 +6,20 @@
 		width: 100%;
 	}
 
+	.collapsable-panel {
+		.collapse-icon-options {
+			position: absolute;
+			right: 16px;
+			top: 16px;
+			z-index: 1;
+		}
+
+		.collapse-icon-closed.actions,
+		.collapse-icon-open.actions {
+			right: 56px !important;
+		}
+	}
+
 	.panel-unstyled {
 		border-bottom-width: 1px;
 		border-color: #e7e7ed;

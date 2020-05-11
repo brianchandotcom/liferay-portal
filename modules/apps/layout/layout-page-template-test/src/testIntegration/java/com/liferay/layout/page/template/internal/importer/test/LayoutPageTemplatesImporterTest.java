@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -66,6 +67,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -282,6 +284,39 @@ public class LayoutPageTemplatesImporterTest {
 			fragmentEntryLink.getEditableValues());
 	}
 
+	@Test
+	public void testImportLayoutPageTemplates() throws Exception {
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries =
+				_getLayoutPageTemplatesImporterResultEntries(
+					"layout-page-template-multiple");
+
+		Assert.assertEquals(
+			layoutPageTemplatesImporterResultEntries.toString(), 2,
+			layoutPageTemplatesImporterResultEntries.size());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
+			_getLayoutPageTemplateEntry(
+				layoutPageTemplatesImporterResultEntries, 0);
+		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
+			_getLayoutPageTemplateEntry(
+				layoutPageTemplatesImporterResultEntries, 1);
+
+		List<String> actualLayoutPageTemplateEntryNames = ListUtil.sort(
+			new ArrayList() {
+				{
+					add(layoutPageTemplateEntry1.getName());
+					add(layoutPageTemplateEntry2.getName());
+				}
+			});
+
+		Assert.assertArrayEquals(
+			new String[] {
+				"Layout Page Template One", "Layout Page Template Two"
+			},
+			actualLayoutPageTemplateEntryNames.toArray(new String[0]));
+	}
+
 	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)
 		throws IOException {
 
@@ -428,6 +463,62 @@ public class LayoutPageTemplatesImporterTest {
 		Assert.assertNotNull(layoutPageTemplateEntry);
 
 		return layoutPageTemplateEntry;
+	}
+
+	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries,
+		int index) {
+
+		LayoutPageTemplatesImporterResultEntry
+			layoutPageTemplatesImporterResultEntry =
+				layoutPageTemplatesImporterResultEntries.get(index);
+
+		Assert.assertEquals(
+			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED,
+			layoutPageTemplatesImporterResultEntry.getStatus());
+
+		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
+			layoutPageTemplatesImporterResultEntry.getName());
+
+		layoutPageTemplateEntryKey = StringUtil.replace(
+			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(), layoutPageTemplateEntryKey);
+
+		Assert.assertNotNull(layoutPageTemplateEntry);
+
+		return layoutPageTemplateEntry;
+	}
+
+	private List<LayoutPageTemplatesImporterResultEntry>
+			_getLayoutPageTemplatesImporterResultEntries(String testCaseName)
+		throws Exception {
+
+		File file = _generateZipFile(testCaseName);
+
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries = null;
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			layoutPageTemplatesImporterResultEntries =
+				_layoutPageTemplatesImporter.importFile(
+					_user.getUserId(), _group.getGroupId(), 0, file, false);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		Assert.assertNotNull(layoutPageTemplatesImporterResultEntries);
+
+		return layoutPageTemplatesImporterResultEntries;
 	}
 
 	private LayoutStructureItem _getMainChildLayoutStructureItem(

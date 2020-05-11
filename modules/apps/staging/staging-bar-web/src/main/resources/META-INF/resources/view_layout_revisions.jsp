@@ -39,7 +39,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 	<liferay-util:param name="navigationName" value="history" />
 </liferay-util:include>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<c:if test="<%= !rootLayoutRevisions.isEmpty() %>">
 		<c:if test="<%= rootLayoutRevisions.size() > 1 %>">
 			<aui:select cssClass="variation-selector" inlineLabel="left" label="" name="variationsSelector">
@@ -169,7 +169,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 
 		</div>
 	</c:if>
-</div>
+</clay:container>
 
 <script>
 function <portlet:namespace />selectRevision(

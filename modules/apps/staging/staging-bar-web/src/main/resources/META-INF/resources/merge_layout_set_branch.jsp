@@ -32,7 +32,7 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 }
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<div class="site-pages-variation taglib-header">
 		<a class="icon-monospaced list-unstyled portlet-icon-back text-default" href="<%= HtmlUtil.escapeAttribute(redirect) %>" title="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(resourceBundle, "back")) %>">
 			<liferay-ui:icon
@@ -100,7 +100,7 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
-</div>
+</clay:container>
 
 <script>
 	function <portlet:namespace />selectLayoutSetBranch(layoutSetBranchId) {

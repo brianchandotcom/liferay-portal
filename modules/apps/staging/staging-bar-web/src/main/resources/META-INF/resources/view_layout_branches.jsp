@@ -43,7 +43,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 	<liferay-util:param name="navigationName" value="page-variations" />
 </liferay-util:include>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-ui:success key="pageVariationAdded" message="page-variation-was-added" />
 	<liferay-ui:success key="pageVariationDeleted" message="page-variation-was-deleted" />
 	<liferay-ui:success key="pageVariationUpdated" message="page-variation-was-updated" />
@@ -118,7 +118,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 			/>
 		</liferay-ui:search-container>
 	</div>
-</div>
+</clay:container>
 
 <aui:script position="inline" use="liferay-staging-branch">
 	Liferay.StagingBar.init({

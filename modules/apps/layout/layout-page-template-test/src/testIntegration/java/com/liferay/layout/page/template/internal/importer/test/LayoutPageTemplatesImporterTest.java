@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -366,6 +368,28 @@ public class LayoutPageTemplatesImporterTest {
 				"lfr-theme:regular:wrap-widget-page-content"));
 	}
 
+	@Test
+	public void testImportLayoutPageTemplateWithThumbnail() throws Exception {
+		List<LayoutPageTemplatesImporterResultEntry>
+			layoutPageTemplatesImporterResultEntries =
+				_getLayoutPageTemplatesImporterResultEntries(
+					"layout-page-template-thumbnail");
+
+		Assert.assertEquals(
+			layoutPageTemplatesImporterResultEntries.toString(), 1,
+			layoutPageTemplatesImporterResultEntries.size());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry(
+				layoutPageTemplatesImporterResultEntries, 0);
+
+		FileEntry portletFileEntry =
+			PortletFileRepositoryUtil.getPortletFileEntry(
+				layoutPageTemplateEntry.getPreviewFileEntryId());
+
+		Assert.assertNotNull(portletFileEntry);
+	}
+
 	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)
 		throws IOException {
 
@@ -612,6 +636,18 @@ public class LayoutPageTemplatesImporterTest {
 			path,
 			LayoutPageTemplateExportImportConstants.FILE_NAME_PAGE_DEFINITION,
 			true);
+
+		while (enumeration.hasMoreElements()) {
+			URL elementUrl = enumeration.nextElement();
+
+			_addZipWriterEntry(zipWriter, elementUrl);
+		}
+
+		enumeration = _bundle.findEntries(path, "thumbnail.png", true);
+
+		if (enumeration == null) {
+			return;
+		}
 
 		while (enumeration.hasMoreElements()) {
 			URL elementUrl = enumeration.nextElement();

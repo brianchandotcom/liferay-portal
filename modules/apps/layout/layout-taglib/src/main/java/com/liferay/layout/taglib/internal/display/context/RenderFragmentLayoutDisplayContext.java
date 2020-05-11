@@ -19,6 +19,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.list.renderer.InfoListRenderer;
+import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
@@ -65,12 +67,14 @@ public class RenderFragmentLayoutDisplayContext {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		InfoListRendererTracker infoListRendererTracker,
 		LayoutListRetrieverTracker layoutListRetrieverTracker,
 		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker) {
 
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 		_infoDisplayContributorTracker = infoDisplayContributorTracker;
+		_infoListRendererTracker = infoListRendererTracker;
 		_layoutListRetrieverTracker = layoutListRetrieverTracker;
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
 	}
@@ -214,6 +218,17 @@ public class RenderFragmentLayoutDisplayContext {
 			className);
 	}
 
+	public InfoListRenderer getInfoListRenderer(
+		CollectionLayoutStructureItem collectionLayoutStructureItem) {
+
+		if (Validator.isNull(collectionLayoutStructureItem.getListStyle())) {
+			return null;
+		}
+
+		return _infoListRendererTracker.getInfoListRenderer(
+			collectionLayoutStructureItem.getListStyle());
+	}
+
 	public String getPortletFooterPaths() {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -323,6 +338,7 @@ public class RenderFragmentLayoutDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private final InfoListRendererTracker _infoListRendererTracker;
 	private final LayoutListRetrieverTracker _layoutListRetrieverTracker;
 	private final ListObjectReferenceFactoryTracker
 		_listObjectReferenceFactoryTracker;

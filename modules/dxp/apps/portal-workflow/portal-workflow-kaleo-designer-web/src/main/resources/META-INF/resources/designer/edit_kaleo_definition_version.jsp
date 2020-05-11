@@ -83,7 +83,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 			<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
 
 			<liferay-frontend:info-bar>
-				<div class="container-fluid-1280">
+				<clay:container>
 					<c:if test="<%= !Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) %>">
 						<div class="info-bar-item">
 							<c:choose>
@@ -118,7 +118,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 							</c:otherwise>
 						</c:choose>
 					</span>
-				</div>
+				</clay:container>
 
 				<c:if test='<%= !Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) && !Objects.equals(state, "view") %>'>
 					<liferay-frontend:info-bar-buttons>
@@ -138,13 +138,13 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 					<div class="sidebar sidebar-light">
 						<div class="tbar-visible-xs">
 							<nav class="component-tbar tbar">
-								<div class="container-fluid">
+								<clay:container>
 									<ul class="tbar-nav">
 										<li class="tbar-item">
 											<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
 										</li>
 									</ul>
-								</div>
+								</clay:container>
 							</nav>
 						</div>
 
@@ -230,7 +230,9 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 				</div>
 			</c:if>
 
-			<div class="<%= Objects.equals(renderRequest.getWindowState(), LiferayWindowState.POP_UP) ? "" : "container-fluid-1280" %>">
+			<clay:container
+				size='<%= Objects.equals(renderRequest.getWindowState(), LiferayWindowState.POP_UP) ? "xl" : "lg" %>'
+			>
 				<div class="sidenav-content">
 					<aui:form method="post" name="fm" onSubmit="event.preventDefault();">
 						<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
@@ -777,7 +779,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 						</c:choose>
 					</aui:form>
 				</div>
-			</div>
+			</clay:container>
 		</div>
 
 		<c:if test="<%= kaleoDefinition != null %>">

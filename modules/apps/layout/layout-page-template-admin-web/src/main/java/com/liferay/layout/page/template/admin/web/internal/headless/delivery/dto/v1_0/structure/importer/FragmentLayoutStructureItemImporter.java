@@ -253,7 +253,7 @@ public class FragmentLayoutStructureItemImporter
 			jsonObject.put("defaultValue", defaultValueMap.get("value"));
 		}
 
-		_processMapping(jsonObject, (Map<String, String>)map.get("mapping"));
+		_processMapping(jsonObject, (Map<String, Object>)map.get("mapping"));
 
 		return jsonObject;
 	}
@@ -301,7 +301,7 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		_processMapping(
-			jsonObject, (Map<String, String>)hrefMap.get("mapping"));
+			jsonObject, (Map<String, Object>)hrefMap.get("mapping"));
 
 		return jsonObject;
 	}
@@ -444,10 +444,11 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private void _processMapping(
-		JSONObject jsonObject, Map<String, String> map) {
+		JSONObject jsonObject, Map<String, Object> map) {
 
 		if (map != null) {
-			String collectionItemFieldKey = map.get("collectionItemFieldKey");
+			String collectionItemFieldKey = (String)map.get(
+				"collectionItemFieldKey");
 
 			if (Validator.isNotNull(collectionItemFieldKey)) {
 				jsonObject.put("collectionFieldId", collectionItemFieldKey);
@@ -455,14 +456,14 @@ public class FragmentLayoutStructureItemImporter
 				return;
 			}
 
-			String fieldKey = map.get("fieldKey");
+			String fieldKey = (String)map.get("fieldKey");
 
 			if (Validator.isNull(fieldKey)) {
 				return;
 			}
 
-			String itemClassName = map.get("itemClassName");
-			String itemClassPK = map.get("itemClassPK");
+			String itemClassName = (String)map.get("itemClassName");
+			String itemClassPK = String.valueOf(map.get("itemClassPK"));
 
 			if (Validator.isNull(itemClassName) ||
 				Validator.isNull(itemClassPK)) {

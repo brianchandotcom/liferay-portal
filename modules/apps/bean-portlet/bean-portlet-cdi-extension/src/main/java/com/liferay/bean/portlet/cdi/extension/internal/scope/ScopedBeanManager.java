@@ -17,9 +17,12 @@ package com.liferay.bean.portlet.cdi.extension.internal.scope;
 import com.liferay.bean.portlet.extension.ScopedBean;
 
 import java.util.Enumeration;
+import java.util.Objects;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
+
+import javax.mvc.RedirectScoped;
 
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletConfig;
@@ -27,6 +30,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderParameters;
+import javax.portlet.RenderResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.annotations.PortletRequestScoped;
 import javax.portlet.annotations.PortletSerializable;
@@ -97,6 +101,37 @@ public class ScopedBeanManager {
 					portletSerializable.serialize());
 			}
 		}
+
+		// MVC BEGIN
+
+		if (_portletResponse instanceof RenderResponse) {
+			PortletSession portletSession = _portletRequest.getPortletSession(
+				true);
+
+			Enumeration<String> attributeNames =
+				portletSession.getAttributeNames();
+
+			while (attributeNames.hasMoreElements()) {
+				String name = attributeNames.nextElement();
+
+				Object value = portletSession.getAttribute(name);
+
+				if (value instanceof CDIScopedBean) {
+					CDIScopedBean<?> cdiScopedBean = (CDIScopedBean<?>)value;
+
+					if (Objects.equals(
+							cdiScopedBean.getScopeName(),
+							RedirectScoped.class.getSimpleName())) {
+
+						cdiScopedBean.destroy();
+
+						portletSession.removeAttribute(name);
+					}
+				}
+			}
+		}
+
+		// MVC END
 
 		Enumeration<String> enumeration = _portletRequest.getAttributeNames();
 
@@ -174,6 +209,32 @@ public class ScopedBeanManager {
 				PortletSessionScoped.class.getSimpleName());
 
 			portletSession.setAttribute(name, scopedBean, subscope);
+		}
+
+		return scopedBean.getContainerCreatedInstance();
+	}
+
+	public <T> T getRedirectScopedBean(
+		Bean<T> bean, CreationalContext<T> creationalContext) {
+
+		PortletSession portletSession = _portletRequest.getPortletSession(true);
+
+		String name = _getAttributeName(bean);
+
+		@SuppressWarnings("unchecked")
+		ScopedBean<T> scopedBean = (ScopedBean<T>)portletSession.getAttribute(
+			name);
+
+		if (scopedBean == null) {
+			if (creationalContext == null) {
+				return null;
+			}
+
+			scopedBean = new CDIScopedBean<>(
+				bean, creationalContext, name,
+				RedirectScoped.class.getSimpleName());
+
+			portletSession.setAttribute(name, scopedBean);
 		}
 
 		return scopedBean.getContainerCreatedInstance();

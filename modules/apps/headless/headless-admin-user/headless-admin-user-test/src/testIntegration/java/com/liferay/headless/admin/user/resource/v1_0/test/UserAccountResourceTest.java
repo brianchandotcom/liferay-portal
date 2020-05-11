@@ -494,7 +494,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				setPostalAddresses(
 					new PostalAddress[] {_randomPostalAddress()});
 				setSkype(RandomTestUtil.randomString());
-				setSms(RandomTestUtil.randomString());
+				setSms(RandomTestUtil.randomString() + "@liferay.com");
 				setTelephones(new Phone[] {_randomPhone()});
 				setTwitter(RandomTestUtil.randomString());
 				setWebUrls(new WebUrl[] {_randomWebUrl()});

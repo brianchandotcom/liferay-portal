@@ -410,11 +410,12 @@ class RuleEditor extends Component {
 	}
 
 	willUpdate() {
-		this.setState({
-			invalidRule:
-				!this._validateConditionsFilling() ||
-				!this._validateActionsFilling(),
-		});
+		const invalidRule =
+			!this._validateConditionsFilling() ||
+			!this._validateActionsFilling();
+		this.setState({invalidRule});
+
+		this.emit('ruleStatusChanged', invalidRule);
 	}
 
 	_calculatorResultOptionsValueFn() {

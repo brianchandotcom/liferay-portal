@@ -85,7 +85,7 @@ if (ddmFormInstance != null) {
 
 					<c:if test="<%= showFormBasicInfo %>">
 						<div class="ddm-form-basic-info">
-							<div class="container-fluid-1280">
+							<clay:container>
 								<h1 class="ddm-form-name"><%= HtmlUtil.escape(ddmFormInstance.getName(displayLocale)) %></h1>
 
 								<%
@@ -95,15 +95,17 @@ if (ddmFormInstance != null) {
 								<c:if test="<%= Validator.isNotNull(description) %>">
 									<h5 class="ddm-form-description"><%= description %></h5>
 								</c:if>
-							</div>
+							</clay:container>
 						</div>
 					</c:if>
 
-					<div class="container-fluid-1280 ddm-form-builder-app">
+					<clay:container
+						className="ddm-form-builder-app"
+					>
 						<%= ddmFormHTML %>
 
 						<aui:input name="empty" type="hidden" value="" />
-					</div>
+					</clay:container>
 				</div>
 			</c:when>
 			<c:when test="<%= !hasViewFormInstancePermission %>">

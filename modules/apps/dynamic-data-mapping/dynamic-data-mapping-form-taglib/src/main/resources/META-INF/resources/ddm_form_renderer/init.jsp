@@ -30,3 +30,5 @@ Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribut
 %>
 
 <%@ include file="/ddm_form_renderer/init-ext.jspf" %>
+
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>

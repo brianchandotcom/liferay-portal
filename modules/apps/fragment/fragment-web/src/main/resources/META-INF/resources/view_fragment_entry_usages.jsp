@@ -25,14 +25,13 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(fragmentEntryLinkDisplayContext.getRedirect());
 
 renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x", fragmentEntry.getName()));
+
+FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntryLinkDisplayContext.getSearchContainer());
 %>
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
-
-	<%
-	FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntryLinkDisplayContext.getSearchContainer());
-	%>
-
+<clay:container
+	className="container-form-lg"
+>
 	<clay:row>
 		<clay:col
 			lg="3"
@@ -176,7 +175,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 			</div>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
 <liferay-frontend:component
 	componentId="<%= fragmentEntryUsageManagementToolbarDisplayContext.getDefaultEventHandler() %>"

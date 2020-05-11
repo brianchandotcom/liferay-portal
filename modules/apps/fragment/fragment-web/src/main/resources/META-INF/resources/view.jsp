@@ -24,7 +24,9 @@ List<FragmentCollection> systemFragmentCollections = (List<FragmentCollection>)r
 List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDisplayContext.getFragmentCollectionContributors(locale);
 %>
 
-<div class="container-fluid container-fluid-max-xl container-view">
+<clay:container
+	className="container-view"
+>
 	<clay:row>
 		<clay:col
 			lg="3"
@@ -272,7 +274,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 			</c:if>
 		</clay:col>
 	</clay:row>
-</div>
+</clay:container>
 
 <aui:form cssClass="hide" name="fragmentCollectionsFm">
 </aui:form>

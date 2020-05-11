@@ -84,7 +84,7 @@ else {
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(
 			"autofocus", autoFocusDestination
 		).put(
-			"initialDestinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : StringPool.BLANK
+			"initialDestinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : ParamUtil.getString(request, "destinationURL")
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
 		).build();

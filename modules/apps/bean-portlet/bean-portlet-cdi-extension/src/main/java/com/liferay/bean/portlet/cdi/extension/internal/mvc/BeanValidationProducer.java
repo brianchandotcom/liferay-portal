@@ -68,9 +68,9 @@ public class BeanValidationProducer {
 		if (validatorFactory == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"ValidatorFactory was not injected. If using Hibernate " +
-						"Validator, please include the " +
-							"hibernate-validator-cdi dependency.");
+					"The ValidatorFactory was not injected. If you are using " +
+						"Hibernate Validator, then please include the " +
+							"hibernate-validator-cdi dependency");
 			}
 
 			try {
@@ -86,13 +86,13 @@ public class BeanValidationProducer {
 
 			if ((_messageInterpolator == null) && _log.isWarnEnabled()) {
 				_log.warn(
-					"Bean validation MessageInterpolator is not available");
+					"The bean validation MessageInterpolator is not available");
 			}
 
 			_validator = validatorFactory.getValidator();
 
 			if ((_validator == null) && _log.isWarnEnabled()) {
-				_log.warn("Bean validation validator is not available");
+				_log.warn("The bean validation validator is not available");
 			}
 		}
 	}

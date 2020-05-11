@@ -324,8 +324,8 @@ public class PortletParamProducer {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
 								StringBundler.concat(
-									"Injecting the default value=",
-									defaultValue, " into a field annotated ",
+									"Injecting the default value \"",
+									defaultValue, "\" into a field annotated ",
 									"with @CookieParam(\"", cookieParam.value(),
 									"\") because the cookie does not have a ",
 									"value"));
@@ -341,8 +341,8 @@ public class PortletParamProducer {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Injecting the default value=", defaultValue,
-						" into a field annotated with @CookieParam(\"",
+						"Injecting the default value \"", defaultValue,
+						"\" into a field annotated with @CookieParam(\"",
 						cookieParam.value(), "\") because there is no cookie ",
 						"with that name"));
 			}
@@ -376,8 +376,8 @@ public class PortletParamProducer {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
-								"Injecting the default value=", defaultValue,
-								" into a field annotated with @FormParam(\"",
+								"Injecting the default value \"", defaultValue,
+								"\" into a field annotated with @FormParam(\"",
 								formParam.value(), "\") because the request ",
 								"parameter does not have a value"));
 					}
@@ -426,8 +426,8 @@ public class PortletParamProducer {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
 								StringBundler.concat(
-									"Injecting the default value=",
-									defaultValue, " into a field annotated ",
+									"Injecting the default value \"",
+									defaultValue, "\" into a field annotated ",
 									"with @HeaderParam(\"", headerParam.value(),
 									"\") because the header does not have a ",
 									"value"));
@@ -443,8 +443,8 @@ public class PortletParamProducer {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Injecting the default value=", defaultValue,
-						" into a field annotated with @HeaderParam(\"",
+						"Injecting the default value \"", defaultValue,
+						"\" into a field annotated with @HeaderParam(\"",
 						headerParam.value(),
 						"\") because there is no header with that name"));
 			}
@@ -463,8 +463,8 @@ public class PortletParamProducer {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Injecting the default value=", defaultValue,
-							" into a field annotated with @QueryParam(\"",
+							"Injecting the default value \"", defaultValue,
+							"\" into a field annotated with @QueryParam(\"",
 							queryParam.value(),
 							"\") because the request parameter does not have ",
 							"a value"));
@@ -486,7 +486,7 @@ public class PortletParamProducer {
 			BeanUtil.getMutableBindingResult(_beanManager);
 
 		if (mutableBindingResult == null) {
-			_log.error("Unable to add binding error");
+			_log.error("Unable to add a binding error");
 		}
 		else {
 			mutableBindingResult.addBindingError(

@@ -160,7 +160,7 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"BindingResult error not processed for ",
+								"A BindingResult error was not processed for ",
 								paramError.getParamName(), ": ",
 								paramError.getMessage()));
 					}

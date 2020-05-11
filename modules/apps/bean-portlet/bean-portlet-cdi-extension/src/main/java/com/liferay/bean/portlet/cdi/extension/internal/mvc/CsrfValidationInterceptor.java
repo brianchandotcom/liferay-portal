@@ -112,7 +112,8 @@ public class CsrfValidationInterceptor implements Serializable {
 						proceed = true;
 					}
 					catch (PrincipalException principalException) {
-						_log.error("Invalid CSRF token", principalException);
+						_log.error(
+							"The CSRF token is invalid", principalException);
 					}
 				}
 				else {
@@ -121,14 +122,15 @@ public class CsrfValidationInterceptor implements Serializable {
 			}
 			else {
 				_log.error(
-					"First parameter of method signature must be " +
+					"The first parameter of the method signature must be an " +
 						"ActionRequest or ResourceRequest");
 			}
 		}
 		else {
 			_log.error(
-				"Method signature must include ActionRequest,ActionResponse " +
-					"or ResourceRequest,ResourceResponse");
+				"The method signature must include " +
+					"(ActionRequest,ActionResponse) or " +
+						"(ResourceRequest,ResourceResponse) as parameters");
 		}
 
 		if (proceed) {

@@ -188,9 +188,10 @@ public class MVCExtension {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"Removed unsupported @",
+								"Removed the @",
 								unsupportedAnnotationClass.getSimpleName(),
-								" annotation from ", annotatedField));
+								" annotation from ", annotatedField,
+								" because it is unsupported"));
 					}
 				}
 			}

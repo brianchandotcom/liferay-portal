@@ -680,6 +680,30 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 			andOperator, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken>
+				searchKaleoTaskInstanceTokens(
+					String assetTitle, String[] taskNames, String[] assetTypes,
+					Long[] assetPrimaryKeys, String assigneeClassName,
+					Long[] assigneeClassPKs, java.util.Date dueDateGT,
+					java.util.Date dueDateLT, Boolean completed,
+					Long kaleoDefinitionId, Long[] kaleoInstanceIds,
+					Boolean searchByUserRoles, boolean andOperator, int start,
+					int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.portal.workflow.kaleo.model.
+							KaleoTaskInstanceToken> orderByComparator,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchKaleoTaskInstanceTokens(
+			assetTitle, taskNames, assetTypes, assetPrimaryKeys,
+			assigneeClassName, assigneeClassPKs, dueDateGT, dueDateLT,
+			completed, kaleoDefinitionId, kaleoInstanceIds, searchByUserRoles,
+			andOperator, start, end, orderByComparator, serviceContext);
+	}
+
 	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken
 			updateDueDate(
 				long kaleoTaskInstanceTokenId, java.util.Date dueDate,

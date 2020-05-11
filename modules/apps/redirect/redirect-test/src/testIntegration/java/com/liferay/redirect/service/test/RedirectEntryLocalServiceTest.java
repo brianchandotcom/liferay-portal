@@ -103,17 +103,10 @@ public class RedirectEntryLocalServiceTest {
 		_redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
 			_redirectEntry.getRedirectEntryId());
 
-		_redirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
-			_redirectEntry.getRedirectEntryId());
-
 		Assert.assertEquals("sourceURL", _redirectEntry.getSourceURL());
 
 		Assert.assertEquals(
 			"groupBaseURL/intermediateURL", _redirectEntry.getDestinationURL());
-
-		_intermediateRedirectEntry =
-			_redirectEntryLocalService.fetchRedirectEntry(
-				_intermediateRedirectEntry.getRedirectEntryId());
 
 		Assert.assertEquals(
 			"intermediateURL", _intermediateRedirectEntry.getSourceURL());

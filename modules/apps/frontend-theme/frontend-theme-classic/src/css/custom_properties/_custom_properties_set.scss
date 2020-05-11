@@ -329,7 +329,7 @@
 
 // Alerts
 
-.alert {
+.alert:not(.alert-fluid) {
 	padding: var(--alert-padding-y) var(--alert-padding-x);
 }
 

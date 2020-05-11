@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -441,6 +442,16 @@ public class DDMFormAdminDisplayContext {
 					LanguageUtil.get(httpServletRequest, "builder"));
 			}
 		).build();
+	}
+
+	public String getEmailAddressesURL() {
+		LiferayPortletURL emailAddressesURL =
+			(LiferayPortletURL)renderResponse.createResourceURL();
+
+		emailAddressesURL.setCopyCurrentRenderParameters(false);
+		emailAddressesURL.setResourceID("/admin/email_addresses");
+
+		return emailAddressesURL.toString();
 	}
 
 	public List<DropdownItem> getEmptyResultMessageActionItemsDropdownItems() {

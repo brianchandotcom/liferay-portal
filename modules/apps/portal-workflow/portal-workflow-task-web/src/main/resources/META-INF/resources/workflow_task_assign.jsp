@@ -87,7 +87,7 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 				method: 'POST',
 			}).then(function () {
 				Liferay.Util.getOpener().<portlet:namespace />refreshPortlet(
-					'<%= redirect.toString() %>'
+					'<%= PortalUtil.escapeRedirect(redirect.toString()) %>'
 				);
 				Liferay.Util.getWindow(
 					'<portlet:namespace />assignToDialog'

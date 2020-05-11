@@ -36,7 +36,7 @@ portletDisplay.setURLBack(searchRequestURL.toString());
 renderResponse.setTitle(definition.getName(locale));
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<c:choose>
 		<c:when test="<%= status.equals(ReportStatus.ERROR.getValue()) %>">
 			<div class="portlet-msg-error">
@@ -226,4 +226,4 @@ renderResponse.setTitle(definition.getName(locale));
 			</liferay-ui:search-container>
 		</aui:fieldset>
 	</aui:fieldset-group>
-</div>
+</clay:container>

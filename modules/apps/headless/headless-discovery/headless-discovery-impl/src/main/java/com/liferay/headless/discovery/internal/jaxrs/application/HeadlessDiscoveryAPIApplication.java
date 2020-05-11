@@ -132,7 +132,7 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String templateId = "/headless-web.ftl";
+		String templateId = "/headless-discovery-web.ftl";
 
 		URLTemplateResource urlTemplateResource = new URLTemplateResource(
 			templateId, getClass().getResource(templateId));

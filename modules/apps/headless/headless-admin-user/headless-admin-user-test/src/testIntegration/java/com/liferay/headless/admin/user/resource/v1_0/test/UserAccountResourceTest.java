@@ -283,7 +283,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"familyName", "givenName"};
+		return new String[] {"alternateName", "familyName", "givenName"};
 	}
 
 	@Override

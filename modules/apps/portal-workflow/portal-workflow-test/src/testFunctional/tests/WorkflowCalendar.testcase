@@ -303,7 +303,7 @@ definition {
 			eventTitle = "Calendar Event Title",
 			siteCalendarName = "${siteName}");
 
-		CalendarEvent.viewNotVisibleUserInviteWithUnapprovedWorkflow(
+		CalendarEvent.viewNoUserInviteWithUnapprovedWorkflow(
 			eventTitle = "Calendar Event Title",
 			siteCalendarName = "${siteName}",
 			userCalendarName = "Test Test");

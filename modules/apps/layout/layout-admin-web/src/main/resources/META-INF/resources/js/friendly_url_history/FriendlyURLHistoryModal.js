@@ -153,8 +153,17 @@ const FriendlyURLHistoryModal = ({
 												</ClayList.ItemField>
 												<ClayList.ItemField>
 													<ClayList.QuickActionMenu>
-														<ClayList.QuickActionMenu.Item className="d-none" symbol="reload" />
-														<ClayList.QuickActionMenu.Item symbol="times-circle" />
+														<ClayList.QuickActionMenu.Item
+															className="d-none"
+															symbol="reload"
+														/>
+														<ClayList.QuickActionMenu.Item
+															className="lfr-portal-tooltip"
+															data-title={Liferay.Language.get(
+																'forget-url'
+															)}
+															symbol="times-circle"
+														/>
 													</ClayList.QuickActionMenu>
 												</ClayList.ItemField>
 											</ClayList.Item>

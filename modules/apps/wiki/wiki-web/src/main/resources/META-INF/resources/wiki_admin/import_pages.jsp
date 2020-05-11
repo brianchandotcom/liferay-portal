@@ -55,7 +55,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 
 <portlet:actionURL name="/wiki/import_pages" var="importPagesURL" />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form action="<%= importPagesURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "importPages();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -92,7 +92,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 		id="<%= importProgressId %>"
 		message="importing"
 	/>
-</div>
+</clay:container>
 
 <aui:script>
 	function <portlet:namespace />importPages() {

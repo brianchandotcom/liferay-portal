@@ -31,7 +31,7 @@ renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-nod
 
 <portlet:actionURL name="/wiki/edit_node" var="editNodeURL" />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form action="<%= editNodeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveNode();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -70,7 +70,7 @@ renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-nod
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script>
 	function <portlet:namespace />saveNode() {

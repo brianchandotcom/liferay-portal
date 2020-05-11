@@ -25,7 +25,7 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-trash:undo
 		portletURL="<%= undoTrashURL %>"
 	/>
@@ -69,4 +69,4 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 	%>
 
 	<%@ include file="/wiki/attachments_list.jspf" %>
-</div>
+</clay:container>

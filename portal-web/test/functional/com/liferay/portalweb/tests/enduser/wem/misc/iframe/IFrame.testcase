@@ -11,16 +11,14 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "IFrame Page");
 
-		SitePages.addPublicPage(pageName = "IFrame Page");
-
-		Navigator.gotoPage(pageName = "IFrame Page");
-
-		Portlet.addPG(portletName = "IFrame");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "IFrame Page",
+			widgetName = "IFrame");
 	}
 
 	tearDown {

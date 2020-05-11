@@ -42,7 +42,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 </portlet:actionURL>
 
 <div class="lfr-alert-container">
-	<div class="container-fluid-1280 lfr-alert-wrapper"></div>
+	<clay:container className="lfr-alert-wrapper"></clay:container>
 </div>
 
 <div class="portlet-forms" id="<portlet:namespace />formContainer">
@@ -54,7 +54,9 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	/>
 
 	<nav class="management-bar management-bar-light navbar navbar-expand-md toolbar-group-field" id="<portlet:namespace />managementToolbar">
-		<div class="autosave-bar container toolbar">
+		<clay:container
+			className="autosave-bar toolbar"
+		>
 			<div class="navbar-form navbar-form-autofit navbar-overlay toolbar-group-content">
 				<span class="autosave-feedback management-bar-text" id="<portlet:namespace />autosaveMessage"></span>
 			</div>
@@ -75,17 +77,19 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					</button>
 				</li>
 			</ul>
-		</div>
+		</clay:container>
 	</nav>
 
-	<div class="container-fluid-1280 ddm-translation-manager">
+	<clay:container
+		className="ddm-translation-manager"
+	>
 		<liferay-frontend:translation-manager
 			availableLocales="<%= ddmFormAdminDisplayContext.getAvailableLocales() %>"
 			changeableDefaultLanguage="<%= false %>"
 			defaultLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
 			id="translationManager"
 		/>
-	</div>
+	</clay:container>
 
 	<aui:form action="<%= saveFormInstanceURL %>" cssClass="ddm-form-builder-form" enctype="multipart/form-data" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -100,7 +104,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		<%@ include file="/admin/exceptions.jspf" %>
 
 		<div class="ddm-form-basic-info">
-			<div class="container-fluid-1280">
+			<clay:container>
 				<h1>
 					<liferay-editor:editor
 						autoCreate="<%= false %>"
@@ -124,15 +128,18 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 						showSource="<%= false %>"
 					/>
 				</h5>
-			</div>
+			</clay:container>
 		</div>
 
 		<div id="<portlet:namespace />-container"></div>
 	</aui:form>
 
-	<div class="container-fluid-1280 ddm-form-instance-settings hide" id="<portlet:namespace />settings">
+	<clay:container
+		className="ddm-form-instance-settings hide"
+		id='<%= renderResponse.getNamespace() + "settings" %>'
+	>
 		<%= ddmFormAdminDisplayContext.serializeSettingsForm(pageContext) %>
-	</div>
+	</clay:container>
 </div>
 
 <portlet:actionURL name="publishFormInstance" var="publishFormInstanceURL">

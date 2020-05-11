@@ -40,7 +40,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
+		<clay:container>
 			<div class="alert alert-info">
 				<span class="displaying-help-message-holder <%= (selFormInstance == null) ? StringPool.BLANK : "hide" %>">
 					<liferay-ui:message key="please-select-a-form-from-the-list-below" />
@@ -126,7 +126,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 					</div>
 				</div>
 			</aui:fieldset>
-		</div>
+		</clay:container>
 	</div>
 </aui:form>
 

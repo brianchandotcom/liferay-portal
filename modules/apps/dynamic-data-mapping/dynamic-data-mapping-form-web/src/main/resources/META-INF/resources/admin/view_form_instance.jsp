@@ -23,7 +23,9 @@ PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
 FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFormAdminDisplayContext.getPermissionCheckerHelper();
 %>
 
-<div class="container-fluid-1280" id="<portlet:namespace />formContainer">
+<clay:container
+	id='<%= renderResponse.getNamespace() + "formContainer" %>'
+>
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="deleteFormInstanceIds" type="hidden" />
@@ -102,7 +104,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script require='<%= mainRequire + "/admin/js/components/ShareFormPopover/ShareFormPopover.es as ShareFormPopover" %>'>
 	var spritemap = themeDisplay.getPathThemeImages() + '/lexicon/icons.svg';

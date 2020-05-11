@@ -37,7 +37,9 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 	sortingURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSortingURL() %>"
 />
 
-<div class="container-fluid-1280" id="<portlet:namespace />viewEntriesContainer">
+<clay:container
+	id='<%= renderResponse.getNamespace() + "viewEntriesContainer" %>'
+>
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="deleteFormInstanceRecordIds" type="hidden" />
 
@@ -113,13 +115,13 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-ui:search-paginator
 		searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>"
 	/>
-</div>
+</clay:container>
 
 <%@ include file="/admin/export_form_instance.jspf" %>
 

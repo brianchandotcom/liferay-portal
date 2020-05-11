@@ -26,7 +26,9 @@ portletURL.setParameter("displayStyle", displayStyle);
 FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDisplayContext.getPermissionCheckerHelper();
 %>
 
-<div class="container-fluid-1280" id="<portlet:namespace />formContainer">
+<clay:container
+	id='<%= renderResponse.getNamespace() + "formContainer" %>'
+>
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="deleteStructureIds" type="hidden" />
@@ -104,6 +106,6 @@ FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDi
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <aui:script use="liferay-ddm-form-portlet"></aui:script>

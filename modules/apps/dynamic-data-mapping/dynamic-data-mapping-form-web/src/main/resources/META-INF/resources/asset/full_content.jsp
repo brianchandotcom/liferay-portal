@@ -20,6 +20,6 @@
 DDMFormViewFormInstanceRecordDisplayContext ddmFormViewFormInstanceRecordDisplayContext = (DDMFormViewFormInstanceRecordDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<%= ddmFormViewFormInstanceRecordDisplayContext.getDDMFormHTML(renderRequest) %>
-</div>
+</clay:container>

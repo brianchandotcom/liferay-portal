@@ -170,49 +170,41 @@ export default function Chart({
 		}
 
 		if (validAnalyticsConnection) {
-			const promises = [];
-
-			dataProviders.map((getter) => {
-				const promise = getter({
+			const promises = dataProviders.map((getter) => {
+				return getter({
 					timeSpanKey: chartState.timeSpanOption,
 					timeSpanOffset: chartState.timeSpanOffset,
 				});
-
-				promises.push(promise);
 			});
 
 			Promise.allSettled(promises).then((data) => {
-				if (!gone) {
-					if (isMounted()) {
-						var dataSetItems = {};
+				if (gone || !isMounted()) {
+					return;
+				}
 
-						for (var i = 0; i < data.length; i++) {
-							if (data[i].status === 'fulfilled') {
-								dataSetItems = {
-									...dataSetItems,
-									...data[i].value,
-								};
-							}
-							else {
-								if (!hasHistoricalWarning) {
-									addHistoricalWarning();
-								}
-							}
-						}
+				var dataSetItems = {};
 
-						actions.addDataSetItems({
-							dataSetItem: {histogram: [], value: null},
-							dataSetItems,
-							keys,
-							timeSpanComparator,
-						});
+				for (var i = 0; i < data.length; i++) {
+					if (data[i].status === 'fulfilled') {
+						dataSetItems = {
+							...dataSetItems,
+							...data[i].value,
+						};
+					}
+					else if (!hasHistoricalWarning) {
+						addHistoricalWarning();
 					}
 				}
+
+				actions.addDataSetItems({
+					dataSetItems,
+					keys,
+					timeSpanComparator,
+				});
 			});
 		}
 		else {
 			actions.addDataSetItems({
-				dataSetItem: {histogram: [], value: null},
 				keys,
 				timeSpanComparator,
 			});

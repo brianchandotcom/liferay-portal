@@ -19,6 +19,8 @@ const PREV_TIME_SPAN = 'previous-time-span';
 const CHANGE_TIME_SPAN_OPTION = 'change-time-span-option';
 const SET_LOADING = 'set-loading';
 
+const FALLBACK_DATA_SET_ITEM = {histogram: [], value: null};
+
 export const useChartState = ({defaultTimeSpanOption, publishDate}) => {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
@@ -79,15 +81,17 @@ function reducer(state, action) {
 	switch (action.type) {
 		case ADD_DATA_SET_ITEMS:
 			nextState = action.payload.keys.reduce((state, key) => {
+				const dataSetItem =
+					action.payload.dataSetItems &&
+					action.payload.dataSetItems[key] !== undefined
+						? action.payload.dataSetItems[key]
+						: FALLBACK_DATA_SET_ITEM;
+
 				return addDataSetItem(
 					state,
 					{
 						...action.payload,
-						dataSetItem:
-							action.payload.dataSetItems &&
-							action.payload.dataSetItems[key] !== undefined
-								? action.payload.dataSetItems[key]
-								: action.payload.dataSetItem,
+						dataSetItem,
 						key,
 					},
 					action.validAnalyticsConnection

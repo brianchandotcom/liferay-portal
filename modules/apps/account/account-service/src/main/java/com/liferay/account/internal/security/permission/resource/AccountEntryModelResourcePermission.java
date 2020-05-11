@@ -17,6 +17,7 @@ package com.liferay.account.internal.security.permission.resource;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -104,7 +105,12 @@ public class AccountEntryModelResourcePermission
 			}
 		}
 
-		return false;
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		return permissionChecker.hasPermission(
+			accountEntry.getAccountEntryGroupId(), AccountEntry.class.getName(),
+			accountEntryId, actionId);
 	}
 
 	@Override
@@ -116,6 +122,9 @@ public class AccountEntryModelResourcePermission
 	public PortletResourcePermission getPortletResourcePermission() {
 		return _portletResourcePermission;
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private AccountEntryOrganizationRelLocalService

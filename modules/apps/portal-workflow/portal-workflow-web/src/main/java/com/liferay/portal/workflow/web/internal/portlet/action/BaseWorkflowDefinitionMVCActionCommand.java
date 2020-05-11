@@ -149,6 +149,36 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 		return value;
 	}
 
+	protected void setRedirectAttribute(
+			ActionRequest actionRequest, WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcPath", "/definition/edit_workflow_definition.jsp");
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		portletURL.setParameter("redirect", redirect, false);
+
+		String closeRedirect = ParamUtil.getString(
+			actionRequest, "closeRedirect");
+
+		portletURL.setParameter("closeRedirect", closeRedirect, false);
+
+		portletURL.setParameter("name", workflowDefinition.getName(), false);
+		portletURL.setParameter(
+			"version", String.valueOf(workflowDefinition.getVersion()), false);
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
+	}
+
 	@Reference
 	protected WorkflowDefinitionManager workflowDefinitionManager;
 

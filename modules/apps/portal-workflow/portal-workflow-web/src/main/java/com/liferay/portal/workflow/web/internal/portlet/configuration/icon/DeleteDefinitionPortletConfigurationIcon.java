@@ -102,13 +102,11 @@ public class DeleteDefinitionPortletConfigurationIcon
 			(WorkflowDefinition)portletRequest.getAttribute(
 				WebKeys.WORKFLOW_DEFINITION);
 
-		boolean unpublished = false;
-
 		if ((workflowDefinition != null) && !workflowDefinition.isActive()) {
-			unpublished = true;
+			return true;
 		}
 
-		return unpublished;
+		return false;
 	}
 
 	@Reference

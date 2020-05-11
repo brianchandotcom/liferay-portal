@@ -120,26 +120,47 @@ public class RevertWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale locale = themeDisplay.getLocale();
+		DateFormat dateFormat = _getDateFormat(themeDisplay.getLocale());
 
-		DateFormat dateTimeFormat = null;
-
-		if (DateUtil.isFormatAmPm(locale)) {
-			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"MMM d, yyyy, hh:mm a", locale);
-		}
-		else {
-			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"MMM d, yyyy, HH:mm", locale);
-		}
-
-		Date workflowDefinitionModifiedDate = (Date)actionRequest.getAttribute(
-			WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE);
-
-		String dateTime = dateTimeFormat.format(workflowDefinitionModifiedDate);
+		Date workflowDefinitionModifiedDate = GetterUtil.getDate(
+			actionRequest.getAttribute(
+				WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE),
+			dateFormat);
 
 		return LanguageUtil.format(
-			resourceBundle, "restored-to-revision-from-x", dateTime);
+			resourceBundle, "restored-to-revision-from-x",
+			dateFormat.format(workflowDefinitionModifiedDate));
+	}
+
+	protected void validateWorkflowDefinition(
+			ActionRequest actionRequest, byte[] bytes, Locale locale,
+			Date previousDateModification)
+		throws WorkflowDefinitionFileException {
+
+		try {
+			workflowDefinitionManager.validateWorkflowDefinition(bytes);
+		}
+		catch (WorkflowException workflowException) {
+			DateFormat dateFormat = _getDateFormat(locale);
+
+			String message = LanguageUtil.format(
+				getResourceBundle(actionRequest),
+				"the-version-from-x-is-not-valid-for-publication",
+				dateFormat.format(previousDateModification));
+
+			throw new WorkflowDefinitionFileException(
+				message, workflowException);
+		}
+	}
+
+	private DateFormat _getDateFormat(Locale locale) {
+		if (DateUtil.isFormatAmPm(locale)) {
+			return DateFormatFactoryUtil.getSimpleDateFormat(
+				"MMM d, yyyy, hh:mm a", locale);
+		}
+
+		return DateFormatFactoryUtil.getSimpleDateFormat(
+			"MMM d, yyyy, HH:mm", locale);
 	}
 
 }

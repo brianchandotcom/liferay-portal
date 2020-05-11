@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.web.internal.portlet.action;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -42,7 +40,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -137,31 +134,6 @@ public class DeployWorkflowDefinitionMVCActionCommand
 
 		return LanguageUtil.get(
 			resourceBundle, "workflow-updated-successfully");
-	}
-
-	protected void setRedirectAttribute(
-			ActionRequest actionRequest, WorkflowDefinition workflowDefinition)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcPath", "/definition/edit_workflow_definition.jsp");
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		portletURL.setParameter("redirect", redirect, false);
-
-		portletURL.setParameter("name", workflowDefinition.getName(), false);
-		portletURL.setParameter(
-			"version", String.valueOf(workflowDefinition.getVersion()), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
 
 	protected void validateTitle(

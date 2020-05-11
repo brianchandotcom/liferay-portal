@@ -69,6 +69,7 @@ import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionT
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
@@ -194,9 +195,12 @@ public class KaleoDesignerDisplayContext {
 		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 			kaleoDefinition.getTitle());
 
-		return LanguageUtil.format(
+		String newTitle = LanguageUtil.format(
 			getResourceBundle(), "copy-of-x",
-			HtmlUtil.escape(kaleoDefinition.getTitle(defaultLanguageId)));
+			kaleoDefinition.getTitle(defaultLanguageId));
+
+		return LocalizationUtil.updateLocalization(
+			kaleoDefinition.getTitle(), "title", newTitle, defaultLanguageId);
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
@@ -488,27 +492,29 @@ public class KaleoDesignerDisplayContext {
 		return "kaleoDefinitionVersions";
 	}
 
-	public String getSortingURL() throws Exception {
+	public String getSortingURL() throws PortletException {
 		PortletURL sortingURL = PortletURLUtil.clone(
 			getPortletURL(),
 			_kaleoDesignerRequestHelper.getLiferayPortletResponse());
 
-		String orderByType = ParamUtil.getString(
-			_kaleoDesignerRequestHelper.getRequest(), "orderByType");
+		String orderByType = getOrderByType();
 
-		sortingURL.setParameter(
-			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
+		if (Validator.isNotNull(orderByType)) {
+			sortingURL.setParameter(
+				"orderByType",
+				Objects.equals(orderByType, "asc") ? "desc" : "asc");
+		}
 
 		return sortingURL.toString();
 	}
 
 	public String getTitle(KaleoDefinitionVersion kaleoDefinitionVersion) {
 		if (kaleoDefinitionVersion == null) {
-			return HtmlUtil.escape(getLanguage("new-workflow"));
+			return getLanguage("new-workflow");
 		}
 
 		if (Validator.isNull(kaleoDefinitionVersion.getTitle())) {
-			return HtmlUtil.escape(getLanguage("untitled-workflow"));
+			return getLanguage("untitled-workflow");
 		}
 
 		ThemeDisplay themeDisplay =

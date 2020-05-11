@@ -16,9 +16,14 @@ package com.liferay.portal.workflow.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,18 +39,31 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class DeactivateWorkflowDefinitionMVCActionCommand
-	extends RestoreWorkflowDefinitionMVCActionCommand {
+	extends BaseWorkflowDefinitionMVCActionCommand {
+
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		int version = ParamUtil.getInteger(actionRequest, "version");
+
+		WorkflowDefinition workflowDefinition =
+			workflowDefinitionManager.updateActive(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
+				version, false);
+
+		setRedirectAttribute(actionRequest, workflowDefinition);
+	}
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
 		return LanguageUtil.get(
 			getResourceBundle(actionRequest),
 			"workflow-unpublished-successfully");
-	}
-
-	@Override
-	protected boolean isActive() {
-		return false;
 	}
 
 }

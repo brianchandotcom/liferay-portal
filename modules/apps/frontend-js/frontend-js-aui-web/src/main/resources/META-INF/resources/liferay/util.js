@@ -1504,35 +1504,33 @@
 				}
 			};
 
-			var disableSelectedAssets = function (event) {
-				if (selectedData && selectedData.length) {
-					var currentWindow = event.currentTarget.node.get(
-						'contentWindow.document'
+			var syncAssets = function (event) {
+				var currentWindow = event.currentTarget.node.get(
+					'contentWindow.document'
+				);
+
+				var selectorButtons = currentWindow.all(
+					'.lfr-search-container-wrapper .selector-button'
+				);
+
+				A.some(selectorButtons, (item) => {
+					var assetEntryId =
+						item.attr('data-entityid') ||
+						item.attr('data-entityname');
+
+					var assetEntryIndex = selectedData.indexOf(
+						assetEntryId
 					);
 
-					var selectorButtons = currentWindow.all(
-						'.lfr-search-container-wrapper .selector-button'
-					);
-
-					A.some(selectorButtons, (item) => {
-						var assetEntryId =
-							item.attr('data-entityid') ||
-							item.attr('data-entityname');
-
-						var assetEntryIndex = selectedData.indexOf(
-							assetEntryId
-						);
-
-						if (assetEntryIndex > -1) {
-							item.attr('data-prevent-selection', true);
-							item.attr('disabled', true);
-
-							selectedData.splice(assetEntryIndex, 1);
-						}
-
-						return !selectedData.length;
-					});
-				}
+					if (assetEntryIndex > -1) {
+						item.attr('data-prevent-selection', true);
+						item.attr('disabled', true);
+					} else {
+						item.removeAttribute('data-prevent-selection');
+						item.removeAttribute('disabled'); 
+						item.removeClass('disabled')
+					}
+				});
 			};
 
 			if (dialog) {
@@ -1569,7 +1567,7 @@
 						),
 						dialogWindow.iframe.after(
 							['load'],
-							disableSelectedAssets
+							syncAssets
 						)
 					);
 

@@ -43,7 +43,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 	showSearch="<%= false %>"
 />
 
-<div class="container-fluid-1280">
+<clay:container>
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -129,7 +129,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format("banned-users", TextFormatter.O)), portletURL.toString());

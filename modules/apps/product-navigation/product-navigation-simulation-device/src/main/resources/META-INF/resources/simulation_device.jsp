@@ -18,7 +18,9 @@
 
 <div id="<portlet:namespace />simulationDeviceContainer">
 	<div class="list-group-panel">
-		<div class="container-fluid devices">
+		<clay:container
+			className="devices"
+		>
 			<clay:row
 				className="default-devices"
 			>
@@ -59,13 +61,13 @@
 
 			<clay:row
 				className="custom-devices d-lg-flex d-none hide"
-				id="<portlet:namespace />customDeviceContainer"
+				id='<%= renderResponse.getNamespace() + "customDeviceContainer" %>'
 			>
 				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="col-6" />
 
 				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="col-6" />
 			</clay:row>
-		</div>
+		</clay:container>
 	</div>
 </div>
 

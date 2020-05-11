@@ -232,6 +232,34 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Replaces the user account with information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	public UserAccount updateUserAccount(
+			@GraphQLName("userAccountId") Long userAccountId,
+			@GraphQLName("userAccount") UserAccount userAccount)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> userAccountResource.putUserAccount(
+				userAccountId, userAccount));
+	}
+
+	@GraphQLField
+	public Response updateUserAccountBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> userAccountResource.putUserAccountBatch(
+				callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

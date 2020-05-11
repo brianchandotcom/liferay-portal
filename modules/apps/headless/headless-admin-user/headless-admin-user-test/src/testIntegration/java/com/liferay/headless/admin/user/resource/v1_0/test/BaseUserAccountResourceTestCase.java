@@ -1286,6 +1286,30 @@ public abstract class BaseUserAccountResourceTestCase {
 				"Object/code"));
 	}
 
+	@Test
+	public void testPutUserAccount() throws Exception {
+		UserAccount postUserAccount = testPutUserAccount_addUserAccount();
+
+		UserAccount randomUserAccount = randomUserAccount();
+
+		UserAccount putUserAccount = userAccountResource.putUserAccount(
+			postUserAccount.getId(), randomUserAccount);
+
+		assertEquals(randomUserAccount, putUserAccount);
+		assertValid(putUserAccount);
+
+		UserAccount getUserAccount = userAccountResource.getUserAccount(
+			putUserAccount.getId());
+
+		assertEquals(randomUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected UserAccount testPutUserAccount_addUserAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

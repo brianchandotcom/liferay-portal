@@ -1,0 +1,12 @@
+{
+	"pageElement": {
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "test-master-page"
+		},
+		"themeName": "Classic"
+	}
+}

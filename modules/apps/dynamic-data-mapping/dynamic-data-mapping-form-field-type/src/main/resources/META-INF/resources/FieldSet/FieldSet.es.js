@@ -214,7 +214,7 @@ const FieldSetProxy = connectStore(
 				dispatch={dispatch}
 				name={name}
 				readOnly={readOnly}
-				repeatable={repeatable}
+				repeatable={collapsible ? false : repeatable}
 				showLabel={false}
 				spritemap={spritemap}
 			>

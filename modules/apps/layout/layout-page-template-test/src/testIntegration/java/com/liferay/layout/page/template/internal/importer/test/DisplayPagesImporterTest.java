@@ -15,7 +15,6 @@
 package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
@@ -339,9 +338,6 @@ public class DisplayPagesImporterTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

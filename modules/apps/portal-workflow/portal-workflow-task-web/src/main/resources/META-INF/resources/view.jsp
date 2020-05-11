@@ -26,6 +26,8 @@ portletDisplay.setShowBackIcon(false);
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
-<div class="container-fluid-1280 main-content-body">
+<clay:container
+	className="main-content-body"
+>
 	<%@ include file="/workflow_tasks.jspf" %>
-</div>
+</clay:container>

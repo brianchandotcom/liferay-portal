@@ -152,3 +152,12 @@
 .questions-disabled-link {
 	pointer-events: none;
 }
+
+.questions-tag-selector {
+	.form-group {
+		margin-bottom: 1rem;
+		.form-control-tag-group.input-group {
+			padding: 0 1rem;
+		}
+	}
+}

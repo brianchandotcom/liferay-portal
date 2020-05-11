@@ -50,16 +50,18 @@ export default ({tagsChange, tagsLoaded, tags = []}) => {
 	return (
 		<>
 			<ClayForm.Group className="c-mt-4">
-				<AssetTagsSelector
-					eventName={`_${context.portletNamespace}_selectTag`}
-					groupIds={[context.siteKey]}
-					inputValue={inputValue}
-					onInputValueChange={setInputValue}
-					onSelectedItemsChange={filterItems}
-					portletURL={context.tagSelectorURL}
-					selectedItems={tags}
-					showSelectButton={true}
-				/>
+				<div className="questions-tag-selector">
+					<AssetTagsSelector
+						eventName={`_${context.portletNamespace}_selectTag`}
+						groupIds={[context.siteKey]}
+						inputValue={inputValue}
+						onInputValueChange={setInputValue}
+						onSelectedItemsChange={filterItems}
+						portletURL={context.tagSelectorURL}
+						selectedItems={tags}
+						showSelectButton={true}
+					/>
+				</div>
 				<ClayForm.FeedbackGroup className={error && 'has-error'}>
 					<ClayForm.FeedbackItem>
 						<span className="small text-secondary">

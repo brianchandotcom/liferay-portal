@@ -151,9 +151,9 @@ const FriendlyURLHistoryModal = ({
 														{urlTitle}
 													</ClayList.ItemText>
 												</ClayList.ItemField>
-												<ClayList.ItemField className="d-none">
+												<ClayList.ItemField>
 													<ClayList.QuickActionMenu>
-														<ClayList.QuickActionMenu.Item symbol="reload" />
+														<ClayList.QuickActionMenu.Item className="d-none" symbol="reload" />
 														<ClayList.QuickActionMenu.Item symbol="times-circle" />
 													</ClayList.QuickActionMenu>
 												</ClayList.ItemField>

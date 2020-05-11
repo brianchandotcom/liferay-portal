@@ -5187,7 +5187,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="stop-remote-search-engine">
 		<sequential>
-			<get-testcase-property property.name="osgi.app.includes" />
 			<get-testcase-property property.name="remote.elasticsearch.clusters.enabled" />
 			<get-testcase-property property.name="remote.elasticsearch.enabled" />
 			<get-testcase-property property.name="test.name.skip.portal.instance" />
@@ -5195,26 +5194,18 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<if>
 				<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 				<then>
-					<if>
-						<contains string="${osgi.app.includes}" substring="portal-search-elasticsearch7" />
-						<then>
-							<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
+					<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
 
-							<if>
-								<and>
-									<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
-									<not>
-										<contains string="${test.name.skip.portal.instance}" substring="CrossCluster" />
-									</not>
-								</and>
-								<then>
-									<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch-local-cluster" />
-								</then>
-							</if>
+					<if>
+						<and>
+							<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
+							<not>
+								<contains string="${test.name.skip.portal.instance}" substring="CrossCluster" />
+							</not>
+						</and>
+						<then>
+							<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch-local-cluster" />
 						</then>
-						<else>
-							<ant antfile="build-test-elasticsearch6.xml" target="stop-elasticsearch" />
-						</else>
 					</if>
 				</then>
 			</if>
@@ -12337,44 +12328,12 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.suite.search.engine" />
 		<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 		<if>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
-				<if>
-					<contains string="${env.CI_TEST_SUITE}" substring="search" />
-					<then>
-						<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
-						<if>
-							<equals arg1="${suite.search.engine}" arg2="elasticsearch7" />
-							<then>
-								<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
-							</then>
-							<else>
-								<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
-							</else>
-						</if>
-					</then>
-					<else>
-						<if>
-							<or>
-								<contains string="${portal.suite.search.engine}" substring="elasticsearch6" />
-								<not>
-									<isset property="portal.suite.search.engine" />
-								</not>
-							</or>
-							<then>
-								<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
-							</then>
-							<else>
-								<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
-							</else>
-						</if>
-					</else>
-				</if>
+				<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
 			</then>
 		</if>
 
@@ -12910,7 +12869,7 @@ url=${short.hostname}:8080</echo>
 				<equals arg1="${app.server.bundles.size}" arg2="0" />
 			</not>
 			<then>
-				<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
+				<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
 
 				<prepare-additional-bundles />
 			</then>

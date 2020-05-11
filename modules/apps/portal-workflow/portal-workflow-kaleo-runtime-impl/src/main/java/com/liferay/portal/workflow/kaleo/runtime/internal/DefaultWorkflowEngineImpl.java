@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.deployment.WorkflowDeployer;
@@ -454,16 +456,13 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			List<KaleoInstance> kaleoInstances =
-				kaleoInstanceLocalService.search(
-					userId, assetClassName, assetTitle, assetDescription,
-					nodeName, kaleoDefinitionName, completed, start, end,
-					KaleoInstanceOrderByComparator.getOrderByComparator(
-						orderByComparator, _kaleoWorkflowModelConverter,
-						serviceContext),
-					serviceContext);
+			WorkflowModelSearchResult<WorkflowInstance>
+				workflowModelSearchResult = searchWorkflowInstances(
+					serviceContext.getCompanyId(), userId, assetClassName,
+					assetTitle, assetDescription, nodeName, kaleoDefinitionName,
+					completed, start, end, orderByComparator);
 
-			return toWorkflowInstances(kaleoInstances, serviceContext);
+			return workflowModelSearchResult.getWorkflowModels();
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -503,6 +502,41 @@ public class DefaultWorkflowEngineImpl
 			return kaleoInstanceLocalService.searchCount(
 				userId, assetClassName, assetTitle, assetDescription, nodeName,
 				kaleoDefinitionName, completed, serviceContext);
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
+	}
+
+	@Override
+	public WorkflowModelSearchResult<WorkflowInstance> searchWorkflowInstances(
+			long companyId, Long userId, String assetClassName,
+			String assetTitle, String assetDescription, String nodeName,
+			String kaleoDefinitionName, Boolean completed, int start, int end,
+			OrderByComparator<WorkflowInstance> orderByComparator)
+		throws WorkflowException {
+
+		try {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(companyId);
+
+			BaseModelSearchResult<KaleoInstance> baseModelSearchResult =
+				kaleoInstanceLocalService.searchKaleoInstances(
+					userId, assetClassName, assetTitle, assetDescription,
+					nodeName, kaleoDefinitionName, completed, start, end,
+					KaleoInstanceOrderByComparator.getOrderByComparator(
+						orderByComparator, _kaleoWorkflowModelConverter,
+						serviceContext),
+					serviceContext);
+
+			return new WorkflowModelSearchResult<>(
+				toWorkflowInstances(
+					baseModelSearchResult.getBaseModels(), serviceContext),
+				baseModelSearchResult.getLength());
+		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

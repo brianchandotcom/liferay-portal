@@ -51,7 +51,9 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 				_numberOfColumns,
 				collectionLayoutStructureItem._numberOfColumns) ||
 			!Objects.equals(
-				_numberOfItems, collectionLayoutStructureItem._numberOfItems)) {
+				_numberOfItems, collectionLayoutStructureItem._numberOfItems) ||
+			!Objects.equals(
+				_listStyle, collectionLayoutStructureItem._listStyle)) {
 
 			return false;
 		}
@@ -67,6 +69,8 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 	public JSONObject getItemConfigJSONObject() {
 		return JSONUtil.put(
 			"collection", _collectionJSONObject
+		).put(
+			"listStyle", _listStyle
 		).put(
 			"numberOfColumns", _numberOfColumns
 		).put(
@@ -85,6 +89,10 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 	@Deprecated
 	public String getListFormat() {
 		return StringPool.BLANK;
+	}
+
+	public String getListStyle() {
+		return _listStyle;
 	}
 
 	public int getNumberOfColumns() {
@@ -111,6 +119,10 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 	public void setListFormat(String listFormat) {
 	}
 
+	public void setListStyle(String listStyle) {
+		_listStyle = listStyle;
+	}
+
 	public void setNumberOfColumns(int numberOfColumns) {
 		_numberOfColumns = numberOfColumns;
 	}
@@ -133,9 +145,14 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 		if (itemConfigJSONObject.has("numberOfItems")) {
 			setNumberOfItems(itemConfigJSONObject.getInt("numberOfItems"));
 		}
+
+		if (itemConfigJSONObject.has("listStyle")) {
+			setListStyle(itemConfigJSONObject.getString("listStyle"));
+		}
 	}
 
 	private JSONObject _collectionJSONObject;
+	private String _listStyle;
 	private int _numberOfColumns = 1;
 	private int _numberOfItems = 5;
 

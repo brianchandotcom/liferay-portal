@@ -240,9 +240,10 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 				render: true,
 			});
 
-			if (!defaultLanguageSiteName &&
-				<%= !liveGroup.isGuest() && !liveGroup.isOrganization() %>) {
-
+			if (
+				!defaultLanguageSiteName &&
+				<%= !liveGroup.isGuest() && !liveGroup.isOrganization() %>
+			) {
 				new A.Alert({
 					bodyContent:
 						'<liferay-ui:message key="site-name-will-display-a-generic-text-until-a-translation-is-added" />',

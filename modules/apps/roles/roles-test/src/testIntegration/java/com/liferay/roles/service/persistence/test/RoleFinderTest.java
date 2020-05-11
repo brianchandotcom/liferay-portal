@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -126,6 +127,21 @@ public class RoleFinderTest {
 			"The method findByC_N_S_P_A should have returned the role " +
 				_arbitraryRole.getRoleId(),
 			roles.contains(_arbitraryRole));
+	}
+
+	@Test
+	public void testSQLServerFindByU_G() {
+		long userId = RandomTestUtil.nextLong();
+
+		int sqlServerParamLimit = 2100;
+
+		long[] groupIds = new long[sqlServerParamLimit];
+
+		for (int i = 0; i < sqlServerParamLimit; i++) {
+			groupIds[i] = RandomTestUtil.nextLong();
+		}
+
+		_roleFinder.findByU_G(userId, groupIds);
 	}
 
 	private static ResourceAction _arbitraryResourceAction;

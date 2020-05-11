@@ -545,7 +545,7 @@ definition {
 			attributeValue = "dialog-iframe-popup",
 			eventName = "modalIframeLoaded");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(assetListName)) {
 			NavItem.click(navItem = "Collections");

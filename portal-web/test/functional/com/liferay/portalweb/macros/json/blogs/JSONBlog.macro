@@ -17,6 +17,7 @@ definition {
 				assetCategoryIds = "${assetCategoryIds}",
 				assetTagNames = "${assetTagNames}",
 				groupName = "${groupName}",
+				site = "${site}",
 				workflowAction = "${workflowAction}");
 		}
 		else {

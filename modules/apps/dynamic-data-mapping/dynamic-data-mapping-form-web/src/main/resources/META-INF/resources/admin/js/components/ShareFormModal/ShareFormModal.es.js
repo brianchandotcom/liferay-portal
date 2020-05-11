@@ -13,10 +13,15 @@
  */
 
 import ClayModal from 'clay-modal';
+import {
+	convertToFormData,
+	makeFetch,
+} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Component, {Config} from 'metal-jsx';
 
+import Notifications from '../../util/Notifications.es';
 import Email from './Email.es';
 import Link from './Link.es';
 
@@ -114,8 +119,41 @@ class ShareFormModal extends Component {
 		);
 	}
 
+	submitEmailContent() {
+		const {portletNamespace, shareFormInstanceURL} = this.props;
+		const {emailContent} = this.refs.shareFormModalRef.refs.emailRef.state;
+		const {addresses} = emailContent;
+
+		if (!addresses || !addresses.length) {
+			return;
+		}
+
+		const data = {
+			[`${portletNamespace}addresses`]: addresses
+				.map(({label}) => label)
+				.join(','),
+			[`${portletNamespace}message`]: emailContent.message,
+			[`${portletNamespace}subject`]: emailContent.subject,
+		};
+
+		makeFetch({
+			body: convertToFormData(data),
+			method: 'POST',
+			url: shareFormInstanceURL,
+		})
+			.then((response) => {
+				return response.successMessage
+					? Notifications.showAlert(response.successMessage)
+					: Notifications.showError(response.errorMessage);
+			})
+			.catch((error) => {
+				throw new Error(error);
+			});
+	}
+
 	_handleClickFooterButton(event) {
 		if (event.target.classList.contains('btn-primary')) {
+			this.submitEmailContent();
 			this.close();
 		}
 	}

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 
 import java.io.Serializable;
 
@@ -483,6 +484,23 @@ public class WorkflowTaskManagerUtil {
 			assetPrimaryKeys, assigneeClassName, assigneeUserIds, dueDateGT,
 			dueDateLT, completed, searchByUserRoles, workflowDefinitionId,
 			workflowInstanceIds, andOperator);
+	}
+
+	public static WorkflowModelSearchResult<WorkflowTask> searchWorkflowTasks(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			String assigneeClassName, Long[] assigneeUserIds, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			Long workflowDefinitionId, Long[] workflowInstanceIds,
+			Boolean andOperator, int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().searchWorkflowTasks(
+			companyId, userId, assetTitle, taskNames, assetTypes,
+			assetPrimaryKeys, assigneeClassName, assigneeUserIds, dueDateGT,
+			dueDateLT, completed, searchByUserRoles, workflowDefinitionId,
+			workflowInstanceIds, andOperator, start, end, orderByComparator);
 	}
 
 	public static WorkflowTask updateDueDate(

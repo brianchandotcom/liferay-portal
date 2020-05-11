@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 
 import java.io.Serializable;
 
@@ -173,6 +174,20 @@ public class WorkflowInstanceManagerUtil {
 		return getWorkflowInstanceManager().searchCount(
 			companyId, userId, assetClassName, assetTitle, assetDescription,
 			nodeName, kaleoDefinitionName, completed);
+	}
+
+	public static WorkflowModelSearchResult<WorkflowInstance>
+			searchWorkflowInstances(
+				long companyId, Long userId, String assetClassName,
+				String assetTitle, String assetDescription, String nodeName,
+				String kaleoDefinitionName, Boolean completed, int start,
+				int end, OrderByComparator<WorkflowInstance> orderByComparator)
+		throws WorkflowException {
+
+		return getWorkflowInstanceManager().searchWorkflowInstances(
+			companyId, userId, assetClassName, assetTitle, assetDescription,
+			nodeName, kaleoDefinitionName, completed, start, end,
+			orderByComparator);
 	}
 
 	public static WorkflowInstance signalWorkflowInstance(

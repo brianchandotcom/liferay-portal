@@ -35,48 +35,13 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 	public void doUpgrade() throws UpgradeException {
 		updateCalEventClassName();
 
-		deleteAssetEntryRelated();
+		deleteRelatedAssetEntries();
+
 		deleteCalEventClassName();
 		deleteDuplicateResourcePermissions();
 		deleteDuplicateResources();
 
 		super.doUpgrade();
-	}
-
-	protected void deleteAssetEntryRelated() throws UpgradeException {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select entryId from AssetEntry where classNameId = ?");
-			PreparedStatement ps1 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(
-					"delete from AssetLink where entryId1 = ? or entryId2 = " +
-						"?"));
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(
-					"delete from AssetEntry where entryId = ? "))) {
-
-			ps.setLong(1, PortalUtil.getClassNameId(_CLASS_NAME_CAL_EVENT));
-
-			ResultSet rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long entryId = rs.getLong("entryId");
-
-				ps1.setLong(1, entryId);
-				ps1.setLong(2, entryId);
-
-				ps1.addBatch();
-
-				ps2.setLong(1, entryId);
-				ps2.addBatch();
-			}
-
-			ps1.executeBatch();
-			ps2.executeBatch();
-		}
-		catch (SQLException sqlException) {
-			throw new UpgradeException(sqlException);
-		}
 	}
 
 	protected void deleteCalEventClassName() throws UpgradeException {
@@ -164,6 +129,42 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 			catch (Exception exception) {
 				throw new UpgradeException(exception);
 			}
+		}
+	}
+
+	protected void deleteRelatedAssetEntries() throws UpgradeException {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select entryId from AssetEntry where classNameId = ?");
+			PreparedStatement ps1 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"delete from AssetLink where entryId1 = ? or entryId2 = " +
+						"?"));
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"delete from AssetEntry where entryId = ? "))) {
+
+			ps.setLong(1, PortalUtil.getClassNameId(_CLASS_NAME_CAL_EVENT));
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long entryId = rs.getLong("entryId");
+
+				ps1.setLong(1, entryId);
+				ps1.setLong(2, entryId);
+
+				ps1.addBatch();
+
+				ps2.setLong(1, entryId);
+				ps2.addBatch();
+			}
+
+			ps1.executeBatch();
+			ps2.executeBatch();
+		}
+		catch (SQLException sqlException) {
+			throw new UpgradeException(sqlException);
 		}
 	}
 

@@ -56,7 +56,9 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 	<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 </portlet:actionURL>
 
-<div class="container-fluid-1280 sidenav-container sidenav-right">
+<clay:container
+	className="sidenav-container sidenav-right"
+>
 	<div class="lfr-form-content">
 		<aui:form action="<%= updateDDLRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" onSubmit='<%= "event.preventDefault(); submitForm(event.target);" %>'>
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -104,7 +106,7 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 			</aui:button-row>
 		</aui:form>
 	</div>
-</div>
+</clay:container>
 
 <%
 if (ddlRecord != null) {

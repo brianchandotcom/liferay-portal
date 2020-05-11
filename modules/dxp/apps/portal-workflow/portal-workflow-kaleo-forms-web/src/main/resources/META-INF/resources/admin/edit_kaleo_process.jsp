@@ -64,9 +64,11 @@ renderResponse.setTitle(title);
 %>
 
 <c:if test="<%= kaleoProcessStarted %>">
-	<div class="alert alert-info container-fluid-1280">
+	<clay:container
+		className="alert alert-info"
+	>
 		<liferay-ui:message key="updating-the-field-set-or-workflow-will-cause-loss-of-data" />
-	</div>
+	</clay:container>
 </c:if>
 
 <portlet:actionURL name="updateKaleoProcess" var="editKaleoProcessURL">

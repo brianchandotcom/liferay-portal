@@ -33,7 +33,9 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.format(request, "new-x", kaleoProcess.getName(locale), false));
 %>
 
-<div class="container-fluid-1280 sidenav-container sidenav-right">
+<clay:container
+	className="sidenav-container sidenav-right"
+>
 	<portlet:actionURL name="startWorkflowInstance" var="startWorkflowInstanceURL" />
 
 	<aui:form action="<%= startWorkflowInstanceURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm1">
@@ -66,7 +68,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "new-x", kaleoProcess.getNa
 			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</div>
+</clay:container>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "add-x", kaleoProcess.getName(locale), false), currentURL);

@@ -60,7 +60,9 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 	sortingURL="<%= kaleoFormsViewRecordsDisplayContext.getSortingURL() %>"
 />
 
-<div class="container-fluid-1280" id="<portlet:namespace />formContainer">
+<clay:container
+	id='<%= renderResponse.getNamespace() + "formContainer" %>'
+>
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="ddlRecordIds" type="hidden" />
 
@@ -146,13 +148,13 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</div>
+</clay:container>
 
-<div class="container-fluid-1280">
+<clay:container>
 	<liferay-ui:search-paginator
 		searchContainer="<%= kaleoFormsViewRecordsDisplayContext.getSearch() %>"
 	/>
-</div>
+</clay:container>
 
 <%@ include file="/admin/export_kaleo_process.jspf" %>
 

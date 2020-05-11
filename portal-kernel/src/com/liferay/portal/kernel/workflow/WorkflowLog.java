@@ -22,7 +22,7 @@ import java.util.Date;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
-public interface WorkflowLog {
+public interface WorkflowLog extends WorkflowModel {
 
 	public static final int TASK_ASSIGN = 1;
 

@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
-public interface WorkflowTask {
+public interface WorkflowTask extends WorkflowModel {
 
 	public long getAssigneeUserId();
 

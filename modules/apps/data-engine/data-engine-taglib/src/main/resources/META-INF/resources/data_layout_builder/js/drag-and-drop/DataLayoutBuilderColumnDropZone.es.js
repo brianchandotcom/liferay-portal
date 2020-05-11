@@ -38,7 +38,11 @@ const replaceColumn = (node) => {
 export default ({dataLayoutBuilder, node}) => {
 	const [{dataDefinition}] = useContext(AppContext);
 	const onDrop = useCallback(
-		({data, type}) => {
+		({data, type}, monitor) => {
+			if (monitor.didDrop()) {
+				return;
+			}
+
 			const {fieldName} = node.dataset;
 			const indexes = getIndexes(node.parentElement);
 			let parentFieldName;

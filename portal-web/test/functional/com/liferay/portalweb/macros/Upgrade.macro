@@ -835,12 +835,12 @@ definition {
 
 			ContentPages.clickPencil();
 
-			AssertVisible(
+			AssertElementPresent(
 				key_elementType = "Section",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
-			AssertVisible(
+			AssertElementPresent(
 				key_elementType = "Row",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");

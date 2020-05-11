@@ -634,8 +634,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			String sql = CustomSQLUtil.get(FIND_BY_U_G);
 
 			sql = StringUtil.replace(
-				sql, "[$GROUP_ID$]",
-				getGroupIdsStatementIN(groupIds, "Groups_Roles"));
+				sql, "[$GROUP_ID$]", getGroupIds(groupIds, "Groups_Roles"));
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
@@ -1136,25 +1135,6 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 	}
 
 	protected String getGroupIds(long[] groupIds, String table) {
-		if (groupIds.length == 0) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(groupIds.length * 3 - 1);
-
-		for (int i = 0; i < groupIds.length; i++) {
-			sb.append(table);
-			sb.append(".groupId = ?");
-
-			if ((i + 1) < groupIds.length) {
-				sb.append(" OR ");
-			}
-		}
-
-		return sb.toString();
-	}
-
-	protected String getGroupIdsStatementIN(long[] groupIds, String table) {
 		if (groupIds.length == 0) {
 			return StringPool.BLANK;
 		}

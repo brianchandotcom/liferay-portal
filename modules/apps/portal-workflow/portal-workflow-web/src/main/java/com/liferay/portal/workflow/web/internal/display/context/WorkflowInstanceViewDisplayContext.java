@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.search.WorkflowInstanceSearch;
@@ -296,12 +297,15 @@ public class WorkflowInstanceViewDisplayContext
 		_searchContainer = new WorkflowInstanceSearch(
 			liferayPortletRequest, portletURL);
 
-		_searchContainer.setResults(
-			getSearchContainerResults(
+		WorkflowModelSearchResult<WorkflowInstance> workflowModelSearchResult =
+			getWorkflowModelSearchResult(
 				_searchContainer.getStart(), _searchContainer.getEnd(),
-				_searchContainer.getOrderByComparator()));
+				_searchContainer.getOrderByComparator());
 
-		_searchContainer.setTotal(getSearchContainerTotal());
+		_searchContainer.setResults(
+			workflowModelSearchResult.getWorkflowModels());
+
+		_searchContainer.setTotal(workflowModelSearchResult.getLength());
 
 		setSearchContainerEmptyResultsMessage(_searchContainer);
 
@@ -459,23 +463,6 @@ public class WorkflowInstanceViewDisplayContext
 		return workflowLogs.get(0);
 	}
 
-	protected List<WorkflowInstance> getSearchContainerResults(
-			int start, int end, OrderByComparator<WorkflowInstance> comparator)
-		throws PortalException {
-
-		return WorkflowInstanceManagerUtil.search(
-			workflowInstanceRequestHelper.getCompanyId(), null, getKeywords(),
-			getKeywords(), getAssetType(getKeywords()), getKeywords(),
-			getKeywords(), getCompleted(), start, end, comparator);
-	}
-
-	protected int getSearchContainerTotal() throws PortalException {
-		return WorkflowInstanceManagerUtil.searchCount(
-			workflowInstanceRequestHelper.getCompanyId(), null, getKeywords(),
-			getKeywords(), getAssetType(getKeywords()), getKeywords(),
-			getKeywords(), getCompleted());
-	}
-
 	protected String getWorkflowContextEntryClassName(
 		Map<String, Serializable> workflowContext) {
 
@@ -498,6 +485,26 @@ public class WorkflowInstanceViewDisplayContext
 			workflowInstance.getWorkflowContext());
 
 		return WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
+	}
+
+	protected WorkflowModelSearchResult<WorkflowInstance>
+			getWorkflowModelSearchResult(
+				int start, int end,
+				OrderByComparator<WorkflowInstance> comparator)
+		throws PortalException {
+
+		if (Objects.nonNull(workflowModelSearchResult)) {
+			return workflowModelSearchResult;
+		}
+
+		workflowModelSearchResult =
+			WorkflowInstanceManagerUtil.searchWorkflowInstances(
+				workflowInstanceRequestHelper.getCompanyId(), null,
+				getKeywords(), getKeywords(), getAssetType(getKeywords()),
+				getKeywords(), getKeywords(), getCompleted(), start, end,
+				comparator);
+
+		return workflowModelSearchResult;
 	}
 
 	protected void setSearchContainerEmptyResultsMessage(
@@ -523,6 +530,9 @@ public class WorkflowInstanceViewDisplayContext
 					"-with-the-specified-search-criteria");
 		}
 	}
+
+	protected WorkflowModelSearchResult<WorkflowInstance>
+		workflowModelSearchResult;
 
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getFilterNavigationDropdownItem(String navigation) {

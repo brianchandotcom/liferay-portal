@@ -22,9 +22,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.workflow.web.internal.search.WorkflowInstanceSearch;
 
-import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -46,25 +47,24 @@ public class MyWorkflowInstanceViewDisplayContext
 	}
 
 	@Override
-	protected List<WorkflowInstance> getSearchContainerResults(
-			int start, int end,
-			OrderByComparator<WorkflowInstance> orderByComparator)
+	protected WorkflowModelSearchResult<WorkflowInstance>
+			getWorkflowModelSearchResult(
+				int start, int end,
+				OrderByComparator<WorkflowInstance> comparator)
 		throws PortalException {
 
-		return WorkflowInstanceManagerUtil.search(
-			workflowInstanceRequestHelper.getCompanyId(),
-			workflowInstanceRequestHelper.getUserId(), getKeywords(),
-			getKeywords(), getAssetType(getKeywords()), getKeywords(),
-			getKeywords(), getCompleted(), start, end, orderByComparator);
-	}
+		if (Objects.nonNull(workflowModelSearchResult)) {
+			return workflowModelSearchResult;
+		}
 
-	@Override
-	protected int getSearchContainerTotal() throws PortalException {
-		return WorkflowInstanceManagerUtil.searchCount(
-			workflowInstanceRequestHelper.getCompanyId(),
-			workflowInstanceRequestHelper.getUserId(), getKeywords(),
-			getKeywords(), getAssetType(getKeywords()), getKeywords(),
-			getKeywords(), getCompleted());
+		workflowModelSearchResult =
+			WorkflowInstanceManagerUtil.searchWorkflowInstances(
+				workflowInstanceRequestHelper.getCompanyId(),
+				workflowInstanceRequestHelper.getUserId(), getKeywords(),
+				getKeywords(), getAssetType(getKeywords()), getKeywords(),
+				getKeywords(), getCompleted(), start, end, comparator);
+
+		return workflowModelSearchResult;
 	}
 
 	@Override

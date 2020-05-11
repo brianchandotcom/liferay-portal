@@ -6,7 +6,7 @@ definition {
 
 		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}");
+		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
 
 		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
 			groupId = "${groupId}",
@@ -68,7 +68,7 @@ definition {
 
 		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
 
 		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
 			groupId = "${groupId}",
@@ -128,7 +128,7 @@ definition {
 	macro addWidgetToPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",
@@ -152,7 +152,7 @@ definition {
 	macro addWidgetToPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
+		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",

@@ -36,7 +36,11 @@ export default ({
 	useEffect(() => {
 		getItem(
 			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-		).then((dataDefinition) => setTitle(dataDefinition.name.en_US));
+		).then((dataDefinition) =>
+			setTitle(
+				dataDefinition.name[Liferay.ThemeDisplay.getDefaultLanguageId()]
+			)
+		);
 	}, [dataDefinitionId]);
 
 	return (

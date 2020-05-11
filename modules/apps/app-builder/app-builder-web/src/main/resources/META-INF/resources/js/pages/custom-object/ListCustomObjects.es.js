@@ -55,6 +55,7 @@ const COLUMNS = [
 export default ({history}) => {
 	const {basePortletURL} = useContext(AppContext);
 	const addButtonRef = useRef();
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 	const emptyStateButtonRef = useRef();
 	const popoverRef = useRef();
 
@@ -85,10 +86,11 @@ export default ({history}) => {
 		const addURL = `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`;
 
 		addItem(addURL, {
-			availableLanguageIds: ['en_US'],
+			availableLanguageIds: [defaultLanguageId],
 			dataDefinitionFields: [],
+			defaultLanguageId,
 			name: {
-				value: name,
+				[defaultLanguageId]: name,
 			},
 		}).then(({id}) => {
 			if (isAddFormView) {
@@ -249,7 +251,7 @@ export default ({history}) => {
 					dateModified: fromNow(item.dateModified),
 					name: (
 						<Link to={`/custom-object/${item.id}/form-views`}>
-							{item.name.en_US}
+							{item.name[defaultLanguageId]}
 						</Link>
 					),
 				})}

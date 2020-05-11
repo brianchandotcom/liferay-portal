@@ -55,7 +55,7 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 	}
 
 	public default TableReferenceInfoBuilder<T> groupedModel(T table) {
-		singleColumnReference(
+		return singleColumnReference(
 			table.getColumn("groupId", Long.class), GroupTable.INSTANCE.groupId
 		).singleColumnReference(
 			table.getColumn("companyId", Long.class),
@@ -67,8 +67,6 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 			table.getColumn("createDate", Date.class),
 			table.getColumn("modifiedDate", Date.class)
 		);
-
-		return this;
 	}
 
 	public TableReferenceInfoBuilder<T> nonreferenceColumn(Column<T, ?> column);
@@ -98,9 +96,7 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 		Column<T, C> aliasPKColumn = aliasParentTable.getColumn(
 			pkColumn.getName(), pkColumn.getJavaType());
 
-		singleColumnReference(parentPKColumn, aliasPKColumn);
-
-		return this;
+		return singleColumnReference(parentPKColumn, aliasPKColumn);
 	}
 
 	public TableReferenceInfoBuilder<T> referenceInnerJoin(
@@ -139,14 +135,12 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 
 		Predicate predicate = column1.eq(column2);
 
-		referenceInnerJoin(
+		return referenceInnerJoin(
 			fromStep -> fromStep.from(
 				column2.getTable()
 			).innerJoinON(
 				column1.getTable(), predicate
 			));
-
-		return this;
 	}
 
 }

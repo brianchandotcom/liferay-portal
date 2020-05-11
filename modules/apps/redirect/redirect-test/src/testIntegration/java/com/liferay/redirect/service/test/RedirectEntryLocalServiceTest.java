@@ -108,13 +108,6 @@ public class RedirectEntryLocalServiceTest {
 		Assert.assertEquals(
 			"groupBaseURL/intermediateURL", _redirectEntry.getDestinationURL());
 
-		Assert.assertEquals(
-			"intermediateURL", _intermediateRedirectEntry.getSourceURL());
-
-		Assert.assertEquals(
-			"groupBaseURL/destinationURL",
-			_intermediateRedirectEntry.getDestinationURL());
-
 		_chainedRedirectEntry = _redirectEntryLocalService.fetchRedirectEntry(
 			_chainedRedirectEntry.getRedirectEntryId());
 
@@ -124,6 +117,13 @@ public class RedirectEntryLocalServiceTest {
 		Assert.assertEquals(
 			"groupBaseURL/sourceURL",
 			_chainedRedirectEntry.getDestinationURL());
+
+		Assert.assertEquals(
+			"intermediateURL", _intermediateRedirectEntry.getSourceURL());
+
+		Assert.assertEquals(
+			"groupBaseURL/destinationURL",
+			_intermediateRedirectEntry.getDestinationURL());
 	}
 
 	@Test

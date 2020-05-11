@@ -36,11 +36,14 @@ definition {
 	test AddFeedBetweenFeeds {
 		property testray.component.names = "RSS";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "RSS Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
@@ -101,11 +104,14 @@ definition {
 	test AddFeedWithWrongUrl {
 		property testray.component.names = "RSS";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "RSS Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
@@ -148,11 +154,14 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "RSS";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "RSS Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		RSSPortlet.viewPortletConfigurationInfo();
 
@@ -180,11 +189,14 @@ definition {
 	test CannotChangeNumberOfEntriesPerFeedToInvalidValue {
 		property testray.component.names = "RSS";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "RSS Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		task ("Assert the input field of Entries Per Feed shouldn't allow 0 value and negative value") {
 			for (var numberOfEntries : list "0,-1") {
@@ -278,11 +290,14 @@ definition {
 	test ChangeDefaultToNavigationDisplay {
 		property testray.component.names = "RSS";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "RSS Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
@@ -320,11 +335,14 @@ definition {
 	test ChangeNumberOfEntriesPerFeedToEleven {
 		property testray.component.names = "RSS";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "RSS Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
@@ -344,11 +362,14 @@ definition {
 	test ChangeOrderOfRSSFeeds {
 		property testray.component.names = "RSS";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "RSS Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
@@ -427,18 +448,16 @@ definition {
 	test DeleteFeedFromRSS {
 		property testray.component.names = "RSS";
 
-		Navigator.gotoPage(pageName = "Home");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name",
+			widgetName = "RSS Publisher");
 
 		Navigator.gotoPage(pageName = "Page Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
@@ -473,11 +492,14 @@ definition {
 	test DisabledFeedTitle {
 		property testray.component.names = "RSS";
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "RSS Publisher");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.viewSpecificPG(portletName = "RSS Publisher");
 
@@ -518,18 +540,16 @@ definition {
 	test RemoveRSSPortlet {
 		property testray.component.names = "RSS";
 
-		Navigator.gotoPage(pageName = "Home");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Name",
+			widgetName = "RSS Publisher");
 
 		Navigator.gotoPage(pageName = "Page Name");
-
-		Portlet.addPG(portletName = "RSS Publisher");
 
 		Portlet.viewSpecificPG(portletName = "RSS Publisher");
 
@@ -563,17 +583,19 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Asset Publisher Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "RSS Publisher");
 
-		Portlet.addPG(portletName = "RSS Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		WebContent.addPGViaAPWithoutAsserts(
 			webContentContent = "This is the web content test for rss feed",

@@ -389,6 +389,11 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return _addUserAccount(testGroup.getGroupId(), userAccount);
 	}
 
+	@Override
+	protected UserAccount testPutUserAccount_addUserAccount() throws Exception {
+		return _addUserAccount(testGroup.getGroupId(), randomUserAccount());
+	}
+
 	private UserAccount _addUserAccount(long siteId, UserAccount userAccount)
 		throws Exception {
 

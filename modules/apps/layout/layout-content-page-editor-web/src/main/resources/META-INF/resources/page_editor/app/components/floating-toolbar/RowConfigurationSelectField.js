@@ -16,22 +16,8 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const selectOptions = (options, getOptionLabel) =>
-	Array.isArray(options)
-		? options.map((value) => ({
-				label: getOptionLabel
-					? Liferay.Util.sub(getOptionLabel(value), value)
-					: Number(value),
-				value,
-		  }))
-		: Object.keys(options).map((key) => ({
-				label: options[key],
-				value: key,
-		  }));
-
 export const RowConfigurationSelectField = ({
 	fieldValue,
-	getOptionLabel,
 	id,
 	identifier,
 	label,
@@ -47,7 +33,7 @@ export const RowConfigurationSelectField = ({
 				const parseValue = Number(value) || value;
 				onValueChange(identifier, parseValue);
 			}}
-			options={selectOptions(options, getOptionLabel)}
+			options={options}
 			value={String(fieldValue)}
 		/>
 	</ClayForm.Group>

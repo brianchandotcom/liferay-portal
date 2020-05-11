@@ -37,12 +37,14 @@ const MODULES_PER_ROW_OPTIONS = [
 	[2, 5],
 	[2, 3, 6],
 ];
+
 const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
-const VERTICAL_ALIGNMENT = {
-	bottom: Liferay.Language.get('bottom'),
-	middle: Liferay.Language.get('middle'),
-	top: Liferay.Language.get('top'),
-};
+
+const VERTICAL_ALIGNMENT_OPTIONS = [
+	{label: Liferay.Language.get('top'), value: 'top'},
+	{label: Liferay.Language.get('middle'), value: 'middle'},
+	{label: Liferay.Language.get('bottom'), value: 'bottom'},
+];
 
 const ROW_CONFIGURATION_IDENTIFIERS = {
 	gutters: 'gutters',
@@ -137,7 +139,9 @@ export const RowConfigurationPanel = ({item}) => {
 				identifier={ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns}
 				label={Liferay.Language.get('number-of-columns')}
 				onValueChange={handleConfigurationValueChanged}
-				options={NUMBER_OF_COLUMNS_OPTIONS}
+				options={NUMBER_OF_COLUMNS_OPTIONS.map((option) => ({
+					label: option,
+				}))}
 			/>
 			{numberOfColumns > 1 && (
 				<RowConfigurationCheckboxField
@@ -174,11 +178,15 @@ export const RowConfigurationPanel = ({item}) => {
 						identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
 						label={Liferay.Language.get('layout')}
 						onValueChange={handleConfigurationValueChanged}
-						options={
-							MODULES_PER_ROW_OPTIONS[
-								rowConfig.numberOfColumns - 1
-							]
-						}
+						options={MODULES_PER_ROW_OPTIONS[
+							rowConfig.numberOfColumns - 1
+						].map((option) => ({
+							label: Liferay.Util.sub(
+								getModulesPerRowOptionLabel(option),
+								option
+							),
+							value: option,
+						}))}
 					/>
 					{numberOfColumns === 2 && modulesPerRow === 1 && (
 						<RowConfigurationCheckboxField
@@ -198,7 +206,7 @@ export const RowConfigurationPanel = ({item}) => {
 						}
 						label={Liferay.Language.get('vertical-alignment')}
 						onValueChange={handleConfigurationValueChanged}
-						options={VERTICAL_ALIGNMENT}
+						options={VERTICAL_ALIGNMENT_OPTIONS}
 					/>
 				</>
 			)}

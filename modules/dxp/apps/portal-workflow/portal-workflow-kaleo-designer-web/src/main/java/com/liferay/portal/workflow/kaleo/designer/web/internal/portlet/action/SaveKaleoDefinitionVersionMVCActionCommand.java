@@ -63,7 +63,7 @@ public class SaveKaleoDefinitionVersionMVCActionCommand
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.saveWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(titleMap), name, content.getBytes());
+				getTitle(actionRequest, titleMap), name, content.getBytes());
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(

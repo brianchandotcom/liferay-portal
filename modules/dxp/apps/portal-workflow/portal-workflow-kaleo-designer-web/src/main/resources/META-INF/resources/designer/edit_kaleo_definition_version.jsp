@@ -802,8 +802,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 							<aui:field-wrapper label="title">
 								<liferay-ui:input-localized
 									name='<%= randomNamespace + "title" %>'
-									placeholder="<%= duplicateTitle %>"
-									xml=""
+									xml="<%= duplicateTitle %>"
 								/>
 							</aui:field-wrapper>
 						</clay:col>

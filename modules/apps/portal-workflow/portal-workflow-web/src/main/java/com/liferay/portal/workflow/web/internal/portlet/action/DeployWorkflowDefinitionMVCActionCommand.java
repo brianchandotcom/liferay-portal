@@ -37,6 +37,7 @@ import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -71,13 +72,7 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 
-		String title = titleMap.get(LocaleUtil.getDefault());
-
-		if (titleMap.isEmpty() || Validator.isNull(title)) {
-			throw new WorkflowDefinitionTitleException();
-		}
-
-		String name = ParamUtil.getString(actionRequest, "name");
+		validateTitle(actionRequest, titleMap);
 
 		String content = ParamUtil.getString(actionRequest, "content");
 
@@ -87,6 +82,8 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		}
 
 		validateWorkflowDefinition(actionRequest, content.getBytes());
+
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		WorkflowDefinition latestWorkflowDefinition =
 			getLatestWorkflowDefinition(themeDisplay.getCompanyId(), name);
@@ -165,6 +162,22 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
+	}
+
+	protected void validateTitle(
+			ActionRequest actionRequest, Map<Locale, String> titleMap)
+		throws WorkflowDefinitionTitleException {
+
+		String title = titleMap.get(LocaleUtil.getDefault());
+
+		String defaultTitle = LanguageUtil.get(
+			getResourceBundle(actionRequest), "untitled-workflow");
+
+		if (titleMap.isEmpty() || Validator.isNull(title) ||
+			Objects.equals(title, defaultTitle)) {
+
+			throw new WorkflowDefinitionTitleException();
+		}
 	}
 
 	protected void validateWorkflowDefinition(

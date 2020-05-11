@@ -50,20 +50,6 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 	extends DeployWorkflowDefinitionMVCActionCommand {
 
 	@Override
-	protected void addDefaultTitle(
-		ActionRequest actionRequest, Map<Locale, String> titleMap) {
-
-		String title = titleMap.get(LocaleUtil.getDefault());
-
-		if (titleMap.isEmpty() || Validator.isNull(title)) {
-			title = ParamUtil.getString(
-				actionRequest, "defaultDuplicationTitle");
-
-			titleMap.put(LocaleUtil.getDefault(), title);
-		}
-	}
-
-	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -76,6 +62,8 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, randomNamespace + "title");
+
+		validateTitle(actionRequest, titleMap);
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String content = ParamUtil.getString(actionRequest, "content");

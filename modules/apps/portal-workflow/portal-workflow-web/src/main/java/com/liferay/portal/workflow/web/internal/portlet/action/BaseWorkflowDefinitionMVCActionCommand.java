@@ -75,16 +75,21 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 	protected void addDefaultTitle(
 		ActionRequest actionRequest, Map<Locale, String> titleMap) {
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		if (Validator.isNull(titleMap.get(defaultLocale))) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				defaultLocale, BaseWorkflowDefinitionMVCActionCommand.class);
+		String title = titleMap.get(themeDisplay.getLocale());
 
-			String defaultTitle = LanguageUtil.get(
-				resourceBundle, "untitled-workflow");
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
+			title = ParamUtil.getString(
+				actionRequest, "defaultDuplicationTitle");
 
-			titleMap.put(defaultLocale, defaultTitle);
+			if (Validator.isNull(title)) {
+				title = LanguageUtil.get(
+					getResourceBundle(actionRequest), "untitled-workflow");
+			}
+
+			titleMap.put(themeDisplay.getLocale(), title);
 		}
 	}
 

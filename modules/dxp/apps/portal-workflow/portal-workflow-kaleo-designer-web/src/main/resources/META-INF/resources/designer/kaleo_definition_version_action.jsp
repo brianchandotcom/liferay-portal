@@ -143,7 +143,12 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 				<clay:col
 					size="12"
 				>
-					<aui:input label="title" name='<%= randomNamespace + "title" %>' placeholder="<%= duplicateTitle %>" type="text" />
+					<aui:field-wrapper label="title">
+						<liferay-ui:input-localized
+							name='<%= randomNamespace + "title" %>'
+							xml="<%= duplicateTitle %>"
+						/>
+					</aui:field-wrapper>
 				</clay:col>
 
 				<clay:col

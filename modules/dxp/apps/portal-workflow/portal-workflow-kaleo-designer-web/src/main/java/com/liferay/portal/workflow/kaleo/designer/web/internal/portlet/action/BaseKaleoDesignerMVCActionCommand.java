@@ -33,12 +33,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.util.Locale;
@@ -112,6 +109,27 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		}
 	}
 
+	protected void addDefaultTitle(
+		ActionRequest actionRequest, Map<Locale, String> titleMap) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String title = titleMap.get(themeDisplay.getLocale());
+
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
+			title = ParamUtil.getString(
+				actionRequest, "defaultDuplicationTitle");
+
+			if (Validator.isNull(title)) {
+				title = LanguageUtil.get(
+					getResourceBundle(actionRequest), "untitled-workflow");
+			}
+
+			titleMap.put(themeDisplay.getLocale(), title);
+		}
+	}
+
 	@Override
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
@@ -125,7 +143,7 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return ResourceBundleUtil.getBundle(
+		return ResourceBundleUtil.getModuleAndPortalResourceBundle(
 			themeDisplay.getLocale(), getClass());
 	}
 
@@ -137,14 +155,20 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 		return getRootThrowable(throwable.getCause());
 	}
 
-	protected abstract String getSuccessMessage(ActionRequest actionRequest);
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		return LanguageUtil.get(
+			getResourceBundle(actionRequest), "workflow-updated-successfully");
+	}
 
-	protected String getTitle(Map<Locale, String> titleMap)
+	protected String getTitle(
+			ActionRequest actionRequest, Map<Locale, String> titleMap)
 		throws WorkflowException {
 
 		if (titleMap == null) {
 			return null;
 		}
+
+		addDefaultTitle(actionRequest, titleMap);
 
 		String value = StringPool.BLANK;
 
@@ -214,9 +238,6 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 	}
 
 	@Reference
-	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
-
-	@Reference
 	protected KaleoDefinitionVersionLocalService
 		kaleoDefinitionVersionLocalService;
 
@@ -224,13 +245,7 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 	protected Portal portal;
 
 	@Reference
-	protected PortalUUID portalUUID;
-
-	@Reference
 	protected WorkflowDefinitionManager workflowDefinitionManager;
-
-	@Reference
-	protected WorkflowModelParser workflowModelParser;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseKaleoDesignerMVCActionCommand.class);

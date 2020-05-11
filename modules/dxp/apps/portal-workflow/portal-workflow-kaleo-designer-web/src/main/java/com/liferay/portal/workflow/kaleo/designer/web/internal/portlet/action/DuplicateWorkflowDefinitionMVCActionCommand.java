@@ -15,18 +15,17 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.Locale;
@@ -59,28 +58,30 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String randomNamespace = ParamUtil.getString(
+			actionRequest, "randomNamespace");
+
+		WorkflowDefinition workflowDefinition = _getWorkflowDefinition(
+			themeDisplay,
+			ParamUtil.getString(actionRequest, "duplicatedDefinitionName"));
+
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, randomNamespace + "title");
+
+		validateTitle(actionRequest, titleMap);
+
 		String name = ParamUtil.getString(actionRequest, "name");
 		String content = ParamUtil.getString(actionRequest, "content");
-		String duplicatedDefinitionName = ParamUtil.getString(
-			actionRequest, "duplicatedDefinitionName");
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(themeDisplay.getCompanyId());
-
-		KaleoDefinition kaleoDefinition =
-			kaleoDefinitionLocalService.fetchKaleoDefinition(
-				duplicatedDefinitionName, serviceContext);
-
-		if ((kaleoDefinition != null) && kaleoDefinition.isActive()) {
+		if ((workflowDefinition != null) && workflowDefinition.isActive()) {
 			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(actionRequest), name, content.getBytes());
+				getTitle(actionRequest, titleMap), name, content.getBytes());
 		}
 		else {
 			workflowDefinitionManager.saveWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(actionRequest), name, content.getBytes());
+				getTitle(actionRequest, titleMap), name, content.getBytes());
 		}
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
@@ -94,36 +95,31 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
-		String duplicatedDefinitionName = ParamUtil.getString(
+		String duplicatedDefinitionTitle = ParamUtil.getString(
 			actionRequest, "duplicatedDefinitionTitle");
 
 		return LanguageUtil.format(
 			getResourceBundle(actionRequest), "duplicated-from-x",
-			StringUtil.quote(duplicatedDefinitionName));
+			StringUtil.quote(duplicatedDefinitionTitle));
 	}
 
-	protected String getTitle(ActionRequest actionRequest) {
-		String randomNamespace = ParamUtil.getString(
-			actionRequest, "randomNamespace");
+	private WorkflowDefinition _getWorkflowDefinition(
+		ThemeDisplay themeDisplay, String name) {
 
-		String titleParameterName = randomNamespace + "title";
-
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, titleParameterName);
-
-		String title = titleMap.get(LocaleUtil.getDefault());
-
-		if (titleMap.isEmpty() || Validator.isNull(title)) {
-			title = ParamUtil.getString(actionRequest, titleParameterName);
-
-			if (Validator.isNull(title)) {
-				title = HtmlUtil.unescape(
-					ParamUtil.getString(
-						actionRequest, "defaultDuplicationTitle"));
-			}
+		try {
+			return workflowDefinitionManager.getLatestWorkflowDefinition(
+				themeDisplay.getCompanyId(), name);
 		}
+		catch (WorkflowException workflowException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(workflowException, workflowException);
+			}
 
-		return title;
+			return null;
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DuplicateWorkflowDefinitionMVCActionCommand.class);
 
 }

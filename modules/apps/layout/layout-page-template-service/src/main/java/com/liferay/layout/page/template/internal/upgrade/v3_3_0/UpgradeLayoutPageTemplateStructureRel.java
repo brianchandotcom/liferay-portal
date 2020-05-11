@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.sql.PreparedStatement;
@@ -74,14 +76,24 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					fragmentLayoutStructureItem.getFragmentEntryLinkId());
 
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
+			fragmentEntryLink.setEditableValues(
+				EditableValuesTransformerUtil.getEditableValues(
+					fragmentEntryLink.getEditableValues(),
+					segmentsExperienceId));
+
+			if (Validator.isNull(fragmentEntryLink.getNamespace())) {
+				fragmentEntryLink.setNamespace(StringUtil.randomId());
+			}
+
 			if (segmentsExperienceId ==
 					SegmentsExperienceConstants.ID_DEFAULT) {
 
 				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-					fragmentLayoutStructureItem.getFragmentEntryLinkId(),
-					EditableValuesTransformerUtil.getEditableValues(
-						fragmentEntryLink.getEditableValues(),
-						segmentsExperienceId));
+					fragmentEntryLink);
 
 				continue;
 			}
@@ -96,9 +108,7 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 					fragmentEntryLink.getClassPK(), fragmentEntryLink.getCss(),
 					fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
 					fragmentEntryLink.getConfiguration(),
-					EditableValuesTransformerUtil.getEditableValues(
-						fragmentEntryLink.getEditableValues(),
-						segmentsExperienceId),
+					fragmentEntryLink.getEditableValues(),
 					fragmentEntryLink.getNamespace(),
 					fragmentEntryLink.getPosition(),
 					fragmentEntryLink.getRendererKey(), new ServiceContext());

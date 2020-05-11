@@ -730,7 +730,7 @@
 </tr>
 <tr>
 	<td>TRY_REDIRECTION</td>
-	<td>//button[@type='button' and @title='Try Redirection']</td>
+	<td>//button[@type='button' and @title='Check URL']</td>
 	<td></td>
 </tr>
 <tr>

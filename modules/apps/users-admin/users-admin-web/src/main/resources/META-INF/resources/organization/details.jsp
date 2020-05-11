@@ -122,7 +122,7 @@ if (organization != null) {
 	</clay:col>
 </clay:row>
 
-<aui:script>
+<script>
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />countryId',
@@ -141,7 +141,7 @@ if (organization != null) {
 			selectVal: '<%= regionId %>',
 		},
 	]);
-</aui:script>
+</script>
 
 <c:if test="<%= organization == null %>">
 	<aui:script sandbox="<%= true %>">

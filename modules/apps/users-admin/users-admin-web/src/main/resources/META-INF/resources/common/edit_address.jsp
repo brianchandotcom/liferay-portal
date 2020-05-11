@@ -120,7 +120,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 		</div>
 	</div>
 
-	<aui:script>
+	<script>
 		new Liferay.DynamicSelect([
 			{
 				select: '<portlet:namespace />addressCountryId',
@@ -138,7 +138,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 				selectVal: '<%= regionId %>',
 			},
 		]);
-	</aui:script>
+	</script>
 </aui:form>
 
 <aui:script use="liferay-form">

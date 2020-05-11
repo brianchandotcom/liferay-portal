@@ -99,7 +99,7 @@
 					</div>
 				</div>
 
-				<aui:script>
+				<script>
 					new Liferay.DynamicSelect([
 						{
 							select: '<portlet:namespace />addressCountryId<%= addressesIndex %>',
@@ -117,7 +117,7 @@
 							selectVal: '<%= regionId %>',
 						},
 					]);
-				</aui:script>
+				</script>
 
 			<%
 			}

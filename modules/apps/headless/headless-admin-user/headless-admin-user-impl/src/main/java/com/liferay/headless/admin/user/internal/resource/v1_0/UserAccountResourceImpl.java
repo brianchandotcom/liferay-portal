@@ -197,7 +197,7 @@ public class UserAccountResourceImpl
 
 		User user = _userService.addUser(
 			contextCompany.getCompanyId(), true, null, null, false,
-			userAccount.getAdditionalName(), userAccount.getEmailAddress(), 0,
+			userAccount.getAlternateName(), userAccount.getEmailAddress(), 0,
 			null, contextAcceptLanguage.getPreferredLocale(),
 			userAccount.getGivenName(), userAccount.getAdditionalName(),
 			userAccount.getFamilyName(), _getPrefixId(userAccount),

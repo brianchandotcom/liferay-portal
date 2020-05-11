@@ -1745,6 +1745,38 @@ paths:
                     description:
                         ""
             tags: ["UserAccount"]
+        put:
+            # @review
+            description:
+                Replaces the user account with information sent in the request body. Any missing fields are deleted
+                unless they are required.
+            operationId: putUserAccount
+            parameters:
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/UserAccount"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description:
+                        "UserAccount successfully updated"
     "/user-accounts/{userAccountId}/email-addresses":
         get:
             description:

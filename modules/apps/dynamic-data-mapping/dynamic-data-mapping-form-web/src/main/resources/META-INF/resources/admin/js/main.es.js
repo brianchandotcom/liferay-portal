@@ -395,6 +395,7 @@ class Form extends Component {
 			dataProviderInstancesURL,
 			defaultLanguageId,
 			editingLanguageId,
+			emailAddressesURL,
 			fieldSetDefinitionURL,
 			fieldSets,
 			fieldTypes,
@@ -548,6 +549,7 @@ class Form extends Component {
 					/>
 					{published && (
 						<ShareFormModal
+							emailAddressesURL={emailAddressesURL}
 							localizedName={localizedName}
 							spritemap={spritemap}
 							url={this._createFormURL()}
@@ -1137,6 +1139,15 @@ Form.PROPS = {
 	editingLanguageId: Config.string().value(
 		themeDisplay.getDefaultLanguageId()
 	),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Form
+	 * @type {!string}
+	 */
+
+	emailAddressesURL: Config.string(),
 
 	/**
 	 * @default undefined

@@ -45,7 +45,7 @@ class ShareFormModal extends Component {
 	}
 
 	render() {
-		const {spritemap} = this.props;
+		const {emailAddressesURL, spritemap, url} = this.props;
 
 		return (
 			<div class="share-form-modal">
@@ -57,12 +57,7 @@ class ShareFormModal extends Component {
 									{Liferay.Language.get('link')}
 								</div>
 								<div class="popover-body">
-									{
-										<Link
-											spritemap={spritemap}
-											url={this.props.url}
-										/>
-									}
+									{<Link spritemap={spritemap} url={url} />}
 								</div>
 							</div>
 							<div class="share-form-modal-item">
@@ -72,10 +67,14 @@ class ShareFormModal extends Component {
 								<div class="popover-body">
 									{
 										<Email
+											emailAddressesURL={
+												emailAddressesURL
+											}
 											localizedName={
 												this.props.localizedName
 											}
 											spritemap={spritemap}
+											url={url}
 										/>
 									}
 								</div>
@@ -111,6 +110,14 @@ class ShareFormModal extends Component {
 }
 
 ShareFormModal.PROPS = {
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof ShareFormModal
+	 * @type {!string}
+	 */
+	emailAddressesURL: Config.string(),
 
 	/**
 	 * @default undefined

@@ -13,10 +13,15 @@
  */
 
 import ClayMultiSelect from 'clay-multi-select';
+import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 class Email extends Component {
+	created() {
+		this._fetchEmailAddresses();
+	}
+
 	render() {
 		const {emailAddresses} = this.state;
 
@@ -68,9 +73,41 @@ class Email extends Component {
 			</div>
 		);
 	}
+
+	_fetchEmailAddresses() {
+		const {emailAddressesURL} = this.props;
+
+		makeFetch({
+			method: 'GET',
+			url: emailAddressesURL,
+		})
+			.then((responseData) => {
+				if (!this.isDisposed()) {
+					this.setState({
+						emailAddresses: responseData.map((data) => {
+							return {
+								label: data.emailAddress,
+								value: data.emailAddress,
+							};
+						}),
+					});
+				}
+			})
+			.catch((error) => {
+				throw new Error(error);
+			});
+	}
 }
 
 Email.PROPS = {
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Email
+	 * @type {!string}
+	 */
+	emailAddressesURL: Config.string(),
 
 	/**
 	 * @default undefined

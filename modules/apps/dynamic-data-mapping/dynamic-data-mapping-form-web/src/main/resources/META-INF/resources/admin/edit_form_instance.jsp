@@ -202,6 +202,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 								'<%= dataProviderInstancesURL %>',
 							defaultLanguageId:
 								'<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							emailAddressesURL:
+								'<%= ddmFormAdminDisplayContext.getEmailAddressesURL() %>',
 							fieldSetDefinitionURL:
 								'<%= ddmFormAdminDisplayContext.getFieldSetDefinitionURL() %>',
 							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSetsJSONArray() %>,

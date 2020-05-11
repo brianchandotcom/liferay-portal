@@ -104,8 +104,6 @@ public class RevertWorkflowDefinitionMVCActionCommand
 			kaleoDefinitionVersion);
 
 		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
-
-		sendRedirect(actionRequest, actionResponse);
 	}
 
 	/**

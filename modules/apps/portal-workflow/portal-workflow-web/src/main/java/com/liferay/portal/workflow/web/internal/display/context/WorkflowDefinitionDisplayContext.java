@@ -103,17 +103,6 @@ public class WorkflowDefinitionDisplayContext {
 		return false;
 	}
 
-	public String getActive(WorkflowDefinition workflowDefinition) {
-		HttpServletRequest httpServletRequest =
-			_workflowDefinitionRequestHelper.getRequest();
-
-		if (workflowDefinition.isActive()) {
-			return LanguageUtil.get(httpServletRequest, "yes");
-		}
-
-		return LanguageUtil.get(httpServletRequest, "no");
-	}
-
 	public String getClearResultsURL(HttpServletRequest httpServletRequest) {
 		PortletURL clearResultsURL = _getPortletURL(httpServletRequest);
 

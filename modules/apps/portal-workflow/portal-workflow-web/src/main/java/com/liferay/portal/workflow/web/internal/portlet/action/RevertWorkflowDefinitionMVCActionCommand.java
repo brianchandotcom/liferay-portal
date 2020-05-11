@@ -14,10 +14,8 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -39,7 +37,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -56,37 +53,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class RevertWorkflowDefinitionMVCActionCommand
 	extends DeployWorkflowDefinitionMVCActionCommand {
-
-	@Override
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		try {
-			doProcessAction(actionRequest, actionResponse);
-
-			addSuccessMessage(actionRequest, actionResponse);
-
-			return SessionErrors.isEmpty(actionRequest);
-		}
-		catch (WorkflowException workflowException) {
-			hideDefaultErrorMessage(actionRequest);
-
-			SessionErrors.add(
-				actionRequest, workflowException.getClass(), workflowException);
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/definition/edit_workflow_definition.jsp");
-
-			return false;
-		}
-		catch (PortletException portletException) {
-			throw portletException;
-		}
-		catch (Exception exception) {
-			throw new PortletException(exception);
-		}
-	}
 
 	/**
 	 * Reverts a workflow definition to the published state, creating a new
@@ -117,8 +83,7 @@ public class RevertWorkflowDefinitionMVCActionCommand
 			WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE,
 			previousWorkflowDefinition.getModifiedDate());
 
-		String content = GetterUtil.get(
-			previousWorkflowDefinition.getContent(), StringPool.BLANK);
+		String content = previousWorkflowDefinition.getContent();
 
 		WorkflowDefinition workflowDefinition = null;
 
@@ -143,8 +108,6 @@ public class RevertWorkflowDefinitionMVCActionCommand
 		}
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
-
-		sendRedirect(actionRequest, actionResponse);
 	}
 
 	/**

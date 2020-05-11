@@ -90,8 +90,6 @@ public class KaleoDesignerDisplayContext {
 		ResourceBundleLoader resourceBundleLoader,
 		UserLocalService userLocalService) {
 
-		_renderRequest = renderRequest;
-
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -840,7 +838,6 @@ public class KaleoDesignerDisplayContext {
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 	private KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;
-	private final RenderRequest _renderRequest;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;

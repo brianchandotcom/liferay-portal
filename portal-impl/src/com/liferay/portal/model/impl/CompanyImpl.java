@@ -251,7 +251,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	@Override
-	public String getPortalURL(long groupId, String entryURL)
+	public String getPortalURL(long groupId, boolean privateLayout)
 		throws PortalException {
 
 		int portalPort = PortalUtil.getPortalServerPort(false);
@@ -262,9 +262,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 		if (groupId <= 0) {
 			return portalURL;
 		}
-
-		boolean privateLayout = entryURL.contains(
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);

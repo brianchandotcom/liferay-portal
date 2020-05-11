@@ -287,10 +287,10 @@ public class CompanyWrapper
 	}
 
 	@Override
-	public String getPortalURL(long groupId, String entryURL)
+	public String getPortalURL(long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return model.getPortalURL(groupId, entryURL);
+		return model.getPortalURL(groupId, privateLayout);
 	}
 
 	/**

@@ -69,7 +69,7 @@ public class BeanValidationProducer {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"The ValidatorFactory was not injected. If you are using " +
-						"Hibernate Validator, then please include the " +
+						"Hibernate Validator, then include the " +
 							"hibernate-validator-cdi dependency");
 			}
 

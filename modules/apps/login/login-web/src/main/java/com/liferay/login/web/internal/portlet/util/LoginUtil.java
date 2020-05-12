@@ -210,8 +210,6 @@ public class LoginUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
-		serviceContext.setPortalURL(themeDisplay.getPortalURL());
-
 		UserLocalServiceUtil.sendPassword(
 			company.getCompanyId(), toAddress, fromName, fromAddress, subject,
 			body, serviceContext);

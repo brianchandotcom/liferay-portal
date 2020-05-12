@@ -28,20 +28,21 @@ public class SpringRenderStateScope extends BaseScope {
 
 	@Override
 	protected SpringScopedBean getSpringScopedBean(String name) {
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		return scopedBeanManager.getRenderStateScopedBean(name);
+		return springScopedBeanManager.getRenderStateScopedBean(name);
 	}
 
 	@Override
 	protected void setSpringScopedBean(
 		String name, SpringScopedBean springScopedBean) {
 
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		scopedBeanManager.setRenderStateScopedBean(name, springScopedBean);
+		springScopedBeanManager.setRenderStateScopedBean(
+			name, springScopedBean);
 	}
 
 }

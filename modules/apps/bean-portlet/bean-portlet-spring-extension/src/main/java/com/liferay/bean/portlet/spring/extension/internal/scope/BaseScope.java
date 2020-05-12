@@ -26,13 +26,13 @@ public abstract class BaseScope implements Scope {
 	public Object get(String name, ObjectFactory<?> objectFactory) {
 		SpringScopedBean springScopedBean = getSpringScopedBean(name);
 
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
 		if (springScopedBean == null) {
 			springScopedBean = new SpringScopedBean(
 				objectFactory.getObject(),
-				scopedBeanManager.unsetDestructionCallback(name),
+				springScopedBeanManager.unsetDestructionCallback(name),
 				getScopeName());
 
 			setSpringScopedBean(name, springScopedBean);
@@ -52,10 +52,11 @@ public abstract class BaseScope implements Scope {
 	public void registerDestructionCallback(
 		String name, Runnable destructionCallback) {
 
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		scopedBeanManager.setDestructionCallback(name, destructionCallback);
+		springScopedBeanManager.setDestructionCallback(
+			name, destructionCallback);
 	}
 
 	@Override

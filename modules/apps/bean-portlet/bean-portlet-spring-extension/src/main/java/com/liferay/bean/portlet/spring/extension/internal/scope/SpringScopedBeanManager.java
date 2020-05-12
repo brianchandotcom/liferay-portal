@@ -227,10 +227,11 @@ public class SpringScopedBeanManager {
 
 		String parameterName = _getParameterName(portletSerializable);
 
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		PortletRequest portletRequest = scopedBeanManager.getPortletRequest();
+		PortletRequest portletRequest =
+			springScopedBeanManager.getPortletRequest();
 
 		RenderParameters renderParameters =
 			portletRequest.getRenderParameters();

@@ -28,20 +28,20 @@ public class SpringRedirectScope extends BaseScope {
 
 	@Override
 	protected SpringScopedBean getSpringScopedBean(String name) {
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		return scopedBeanManager.getRedirectScopedBean(name);
+		return springScopedBeanManager.getRedirectScopedBean(name);
 	}
 
 	@Override
 	protected void setSpringScopedBean(
 		String name, SpringScopedBean springScopedBean) {
 
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		scopedBeanManager.setRedirectScopedBean(name, springScopedBean);
+		springScopedBeanManager.setRedirectScopedBean(name, springScopedBean);
 	}
 
 }

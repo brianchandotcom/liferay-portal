@@ -31,10 +31,10 @@ public class SpringPortletRequestScope extends BaseScope {
 
 	@Override
 	protected SpringScopedBean getSpringScopedBean(String name) {
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		if (scopedBeanManager == null) {
+		if (springScopedBeanManager == null) {
 			_log.error(
 				"Attempted to get a @PortletRequestScoped bean named " + name +
 					" outside the scope of a portlet request");
@@ -42,17 +42,18 @@ public class SpringPortletRequestScope extends BaseScope {
 			return null;
 		}
 
-		return scopedBeanManager.getPortletRequestScopedBean(name);
+		return springScopedBeanManager.getPortletRequestScopedBean(name);
 	}
 
 	@Override
 	protected void setSpringScopedBean(
 		String name, SpringScopedBean springScopedBean) {
 
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		scopedBeanManager.setPortletRequestScopedBean(name, springScopedBean);
+		springScopedBeanManager.setPortletRequestScopedBean(
+			name, springScopedBean);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

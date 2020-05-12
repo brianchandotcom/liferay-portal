@@ -32,20 +32,21 @@ public class SpringPortletSessionScope extends BaseScope {
 
 	@Override
 	protected SpringScopedBean getSpringScopedBean(String name) {
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		return scopedBeanManager.getPortletSessionScopedBean(_subscope, name);
+		return springScopedBeanManager.getPortletSessionScopedBean(
+			_subscope, name);
 	}
 
 	@Override
 	protected void setSpringScopedBean(
 		String name, SpringScopedBean springScopedBean) {
 
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		scopedBeanManager.setPortletSessionScopedBean(
+		springScopedBeanManager.setPortletSessionScopedBean(
 			_subscope, name, springScopedBean);
 	}
 

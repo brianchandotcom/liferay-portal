@@ -409,14 +409,14 @@ public class JSR362SpringBeanProducer {
 	}
 
 	private PortletConfig _getPortletConfig() {
-		SpringScopedBeanManager scopedBeanManager =
+		SpringScopedBeanManager springScopedBeanManager =
 			SpringScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
-		if (scopedBeanManager == null) {
+		if (springScopedBeanManager == null) {
 			return null;
 		}
 
-		return scopedBeanManager.getPortletConfig();
+		return springScopedBeanManager.getPortletConfig();
 	}
 
 	private PortletRequest _getPortletRequest() {

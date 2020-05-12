@@ -42,10 +42,12 @@ public class SpringScopedBeanManagerThreadLocal {
 		return scopedBeanManagers.peek();
 	}
 
-	public static Closeable install(SpringScopedBeanManager scopedBeanManager) {
+	public static Closeable install(
+		SpringScopedBeanManager springScopedBeanManager) {
+
 		Deque<SpringScopedBeanManager> scopedBeanManagerStack = _instance.get();
 
-		scopedBeanManagerStack.push(scopedBeanManager);
+		scopedBeanManagerStack.push(springScopedBeanManager);
 
 		return () -> {
 			if (scopedBeanManagerStack.isEmpty()) {
@@ -78,11 +80,11 @@ public class SpringScopedBeanManagerThreadLocal {
 			unsafeRunnable.run();
 		}
 		finally {
-			SpringScopedBeanManager scopedBeanManager =
+			SpringScopedBeanManager springScopedBeanManager =
 				scopedBeanManagers.pop();
 
 			if (scopedBeanManagers.isEmpty()) {
-				scopedBeanManager.destroyScopedBeans();
+				springScopedBeanManager.destroyScopedBeans();
 			}
 		}
 	}

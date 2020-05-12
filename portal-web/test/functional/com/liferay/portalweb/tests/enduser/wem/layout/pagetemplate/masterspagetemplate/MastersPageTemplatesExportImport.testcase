@@ -505,8 +505,8 @@ definition {
 			Alert.viewErrorMessage(errorMessage = "No page template could be imported.");
 
 			AssertElementPresent(
-				key_errorInfo = "master-page.json could not be imported because its page definition is invalid.",
-				locator1 = "Message#ERROR_INFO");
+				key_dangerInfo = "master-page.json could not be imported because its page definition is invalid.",
+				locator1 = "Message#DANGER_INFO");
 		}
 
 		task ("Assert custom master is not imported") {

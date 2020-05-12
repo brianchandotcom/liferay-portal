@@ -868,10 +868,11 @@ definition {
 			fragmentName = "New Fragment Name",
 			withSection = "true");
 
-		AssertElementPresent(
-			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Modify Text')]//li[contains(@class,'title')]",
+		AssertTextEquals(
+			key_elementHeader = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
 			key_position = "1",
-			locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+			locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT",
+			value1 = "Modify Text");
 	}
 
 	@description = "This is a testcase for LPS-96113. All fragments in dependencies should validate successfully."

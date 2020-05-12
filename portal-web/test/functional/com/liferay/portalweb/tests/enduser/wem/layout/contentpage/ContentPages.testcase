@@ -1568,6 +1568,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-109717. The restriction visual feedback is shown when the Section draggable card is placed over the column of Row."
+	@priority = "5"
+	test ViewRestrictionVisualFeedbackWhenDragSectionCardOverColumnOfRow {
+		task ("Add a Row to page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+
+			PageEditor.addLayoutRow();
+		}
+
+		task ("Assert restriction visual feedback shown when drag Section card over column of Row") {
+			DragAndDrop.javaScriptDragOver(
+				key_columnNumber = "1",
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "PageEditor#ROW_COLUMN",
+				value1 = "");
+
+			AssertVisible(
+				key_columnNumber = "1",
+				key_position = "1",
+				locator1 = "PageEditor#ROW_COLUMN_RESTRICTION_VISUAL_FEEDBACK");
+		}
+
+		task ("Assert column is empty after drop section in column of Row") {
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_columnNumber = "1",
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "PageEditor#ROW_COLUMN",
+				value1 = "");
+
+			AssertElementPresent(
+				key_position = "1",
+				locator1 = "PageEditor#ROW_COLUMN_EMPTY");
+		}
+	}
+
 	@description = "This is a test for LPS-101255. The saved composition entry is available in Page Fragments admin with specific actions."
 	@priority = "5"
 	test ViewSavedCompositionMenuItem {

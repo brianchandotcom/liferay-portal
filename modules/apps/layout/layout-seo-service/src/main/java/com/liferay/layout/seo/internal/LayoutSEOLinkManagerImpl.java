@@ -93,7 +93,8 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 					LocaleUtil.toW3cLanguageId(urlLocale),
 					LayoutSEOLink.Relationship.ALTERNATE)));
 
-		String defaultLocaleURL = alternateURLs.get(LocaleUtil.getDefault());
+		String defaultLocaleURL = alternateURLs.get(
+			_portal.getSiteDefaultLocale(layout.getGroupId()));
 
 		if (defaultLocaleURL == null) {
 			return layoutSEOLinks;

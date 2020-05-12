@@ -44,7 +44,7 @@ public class DisplayPageTemplateDTOConverter {
 
 						return new ContentSubtype() {
 							{
-								classTypeId =
+								subtypeId =
 									layoutPageTemplateEntry.getClassTypeId();
 							}
 						};

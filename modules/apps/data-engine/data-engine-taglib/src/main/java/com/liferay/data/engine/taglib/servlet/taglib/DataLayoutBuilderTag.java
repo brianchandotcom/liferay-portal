@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -105,15 +107,18 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	}
 
 	private Map<String, Object> _getSidebarPanels() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", request.getLocale(), getClass());
+
 		Map<String, Object> sidebarPanels =
 			LinkedHashMapBuilder.<String, Object>put(
-				"builder",
+				"fields",
 				HashMapBuilder.<String, Object>put(
 					"icon", "forms"
 				).put(
 					"isLink", false
 				).put(
-					"label", LanguageUtil.get(request, "builder")
+					"label", LanguageUtil.get(resourceBundle, "builder")
 				).put(
 					"pluginEntryPoint",
 					DataLayoutTaglibUtil.resolveModule(

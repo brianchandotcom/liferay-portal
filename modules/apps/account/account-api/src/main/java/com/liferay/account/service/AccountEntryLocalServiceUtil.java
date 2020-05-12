@@ -78,6 +78,17 @@ public class AccountEntryLocalServiceUtil {
 			status);
 	}
 
+	public static com.liferay.account.model.AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, logoBytes,
+			status, serviceContext);
+	}
+
 	/**
 	 * Creates a new account entry with the primary key. Does not add the account entry to the database.
 	 *
@@ -382,6 +393,18 @@ public class AccountEntryLocalServiceUtil {
 		return getService().updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
 			domains, logoBytes, status);
+	}
+
+	public static com.liferay.account.model.AccountEntry updateAccountEntry(
+			Long accountEntryId, long parentAccountEntryId, String name,
+			String description, boolean deleteLogo, String[] domains,
+			byte[] logoBytes, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateAccountEntry(
+			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
+			domains, logoBytes, status, serviceContext);
 	}
 
 	public static com.liferay.account.model.AccountEntry updateStatus(

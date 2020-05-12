@@ -8,17 +8,19 @@
 		"@clayui/label": "3.3.0",
 		"@clayui/panel": "3.2.0",
 		"@clayui/tabs": "3.2.0",
-		"frontend-js-react-web": "*",
-		"frontend-js-web": "*",
-		"graphiql": "0.11.10",
-		"graphql": "0.12.0",
-		"react": "16.12.0"
+		"graphiql": "1.0.0-alpha.8",
+		"graphql": "^15.0.0",
+		"react": "16.12.0",
+		"react-dom": "16.12.0",
+		"script-ext-html-webpack-plugin": "2.1.1",
+		"swagger-ui-react": "^3.25.2"
 	},
 	"name": "headless-discovery-web",
 	"scripts": {
-		"build": "liferay-npm-scripts build",
+		"build": "liferay-npm-scripts webpack",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"start": "liferay-npm-scripts webpack --env=development"
 	},
 	"version": "3.0.5"
 }

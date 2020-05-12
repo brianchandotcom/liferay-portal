@@ -12,6 +12,7 @@
  * details.
  */
 
+import updateLayoutData from '../actions/updateLayoutData';
 import LayoutService from '../services/LayoutService';
 
 export default function resizeColumns({layoutData, segmentsExperienceId}) {
@@ -20,6 +21,8 @@ export default function resizeColumns({layoutData, segmentsExperienceId}) {
 			layoutData,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
+		}).then(() => {
+			dispatch(updateLayoutData({layoutData}));
 		});
 	};
 }

@@ -12,8 +12,9 @@
  * details.
  */
 
+import classNames from 'classnames';
 import {useEventListener} from 'frontend-js-react-web';
-import React, {useMemo, useRef} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -27,6 +28,7 @@ import resizeColumns from '../../thunks/resizeColumns';
 import {useIsActive} from '../Controls';
 import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
+import {useResizeContext, useSetResizeContext} from './RowWithControls';
 
 const ROW_SIZE = 12;
 
@@ -36,6 +38,10 @@ const ColumnWithControls = React.forwardRef(
 		const parentItem = layoutData.items[item.parentId];
 		const resizeInfo = useRef();
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+		const [selectedColumn, setColumnSelected] = useState(null);
+
+		const resizing = useResizeContext();
+		const setResizing = useSetResizeContext();
 
 		const columnIndex = parentItem.children.indexOf(item.itemId);
 
@@ -56,6 +62,9 @@ const ColumnWithControls = React.forwardRef(
 			columnRangeIsComplete(parentItem.children.slice(0, columnIndex));
 
 		const handleMouseDown = (event) => {
+			setColumnSelected(item);
+			setResizing(true);
+
 			const leftColumn =
 				layoutData.items[
 					parentItem.children[
@@ -101,8 +110,12 @@ const ColumnWithControls = React.forwardRef(
 					const clientXDiff = event.clientX - initialClientX;
 
 					if (rightColumnIsFirst && clientXDiff < 0) {
-						const leftColumnSize = leftColumnSize - 1;
+						const leftColumnSize = leftColumnInitialSize - 1;
 						const rightColumnSize = 1;
+
+						resizeInfo.current = null;
+						setResizing(false);
+						setColumnSelected(null);
 
 						dispatch(
 							resizeColumns({
@@ -118,8 +131,6 @@ const ColumnWithControls = React.forwardRef(
 								segmentsExperienceId,
 							})
 						);
-
-						resizeInfo.current = null;
 					}
 					else {
 						const columnDiff = Math.min(
@@ -159,8 +170,10 @@ const ColumnWithControls = React.forwardRef(
 			'mouseup',
 			() => {
 				if (resizeInfo.current) {
-					dispatch(resizeColumns({layoutData, segmentsExperienceId}));
 					resizeInfo.current = null;
+					setColumnSelected(null);
+					setResizing(false);
+					dispatch(resizeColumns({layoutData, segmentsExperienceId}));
 				}
 			},
 			false,
@@ -179,7 +192,16 @@ const ColumnWithControls = React.forwardRef(
 
 		return (
 			<TopperEmpty item={item} layoutData={layoutData}>
-				<Column className="page-editor__col" item={item} ref={ref}>
+				<Column
+					className={classNames('page-editor__col', {
+						'page-editor__row-overlay-grid__border':
+							resizing &&
+							selectedColumn &&
+							selectedColumn.itemId === item.itemId,
+					})}
+					item={item}
+					ref={ref}
+				>
 					{parentItemIsActive && columnIndex !== 0 ? (
 						<div>
 							<button

@@ -16,7 +16,7 @@ import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {
@@ -38,6 +38,7 @@ const RowWithControls = React.forwardRef(
 		const {config} = layoutData.items[item.itemId];
 		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
+		const [resizing, setResizing] = useState(false);
 
 		const [
 			openSaveFragmentCompositionModal,
@@ -109,6 +110,7 @@ const RowWithControls = React.forwardRef(
 					className={classNames('page-editor__row', {
 						'align-bottom': verticalAlignment === 'bottom',
 						'align-middle': verticalAlignment === 'middle',
+						'page-editor__row-overlay-grid': resizing,
 					})}
 					item={item}
 					layoutData={layoutData}
@@ -121,7 +123,9 @@ const RowWithControls = React.forwardRef(
 						onButtonClick={handleButtonClick}
 					/>
 
-					{children}
+					<ResizeContext.Provider value={{resizing, setResizing}}>
+						{children}
+					</ResizeContext.Provider>
 
 					{openSaveFragmentCompositionModal && (
 						<SaveFragmentCompositionModal
@@ -144,5 +148,18 @@ RowWithControls.propTypes = {
 	}).isRequired,
 	layoutData: LayoutDataPropTypes.isRequired,
 };
+
+const ResizeContext = React.createContext({
+	resizing: false,
+	setResizing: () => {},
+});
+
+export function useResizeContext() {
+	return useContext(ResizeContext).resizing;
+}
+
+export function useSetResizeContext() {
+	return useContext(ResizeContext).setResizing;
+}
 
 export default RowWithControls;

@@ -1527,9 +1527,20 @@ definition {
 	@description = "This is a test for LPS-101255. The saved composition entry is available in Page Fragments admin with specific actions."
 	@priority = "5"
 	test ViewSavedCompositionMenuItem {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Site Name");
+		}
 
 		task ("Add a Section to page") {
 			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
@@ -1561,7 +1572,7 @@ definition {
 
 		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
 
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
 

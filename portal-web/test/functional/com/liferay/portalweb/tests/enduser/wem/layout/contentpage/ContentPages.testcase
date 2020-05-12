@@ -1524,6 +1524,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-109717. The restriction visual feedback is shown when the Section draggable card is placed over the container of another Section."
+	@priority = "5"
+	test ViewRestrictionVisualFeedbackWhenDragSectionCardOverAnotherOne {
+		task ("Add a Section to page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		}
+
+		task ("Assert restriction visual feedback shown when drag Section card over another one") {
+			DragAndDrop.javaScriptDragOver(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "");
+
+			AssertVisible(
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_RESTRICTION_VISUAL_FEEDBACK");
+		}
+
+		task ("Assert container is empty after drop section in another one") {
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "");
+
+			AssertElementPresent(
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_EMPTY");
+		}
+	}
+
 	@description = "This is a test for LPS-101255. The saved composition entry is available in Page Fragments admin with specific actions."
 	@priority = "5"
 	test ViewSavedCompositionMenuItem {

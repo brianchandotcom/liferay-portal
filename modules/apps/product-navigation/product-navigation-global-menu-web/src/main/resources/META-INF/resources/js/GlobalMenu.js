@@ -117,7 +117,7 @@ function GlobalMenu({panelAppsURL}) {
 }
 
 GlobalMenu.propTypes = {
-	itemsURL: PropTypes.string,
+	panelAppsURL: PropTypes.string,
 };
 
 export default GlobalMenu;

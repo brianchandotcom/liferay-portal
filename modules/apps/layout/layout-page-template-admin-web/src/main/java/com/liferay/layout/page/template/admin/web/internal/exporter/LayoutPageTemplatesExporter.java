@@ -36,10 +36,12 @@ import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.PageDefinitionDTOConverter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.PageTemplateCollectionDTOConverter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.PageTemplateDTOConverter;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -84,6 +86,62 @@ public class LayoutPageTemplatesExporter {
 
 				_populateDisplayPagesZipWriter(
 					layoutPageTemplateEntry, zipWriter);
+			}
+
+			zipWriter.finish();
+
+			return zipWriter.getFile();
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
+	}
+
+	public File exportGroupLayoutPageTemplates(long groupId)
+		throws PortletException {
+
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+				groupId);
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		Map<Long, LayoutPageTemplateCollection>
+			layoutPageTemplateCollectionKeyMap = new HashMap<>();
+
+		try {
+			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+					layoutPageTemplateEntries) {
+
+				if (layoutPageTemplateEntry.isDraft()) {
+					continue;
+				}
+
+				if (layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+
+					_populateLayoutPageTemplateCollectionKeyMap(
+						layoutPageTemplateCollectionKeyMap,
+						layoutPageTemplateEntry);
+
+					_populatePageTemplatesZipWriter(
+						layoutPageTemplateEntry,
+						layoutPageTemplateCollectionKeyMap, zipWriter);
+				}
+				else if (layoutPageTemplateEntry.getType() ==
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_DISPLAY_PAGE) {
+
+					_populateDisplayPagesZipWriter(
+						layoutPageTemplateEntry, zipWriter);
+				}
+				else if (layoutPageTemplateEntry.getType() ==
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_MASTER_LAYOUT) {
+
+					_populateMasterLayoutsZipWriter(
+						layoutPageTemplateEntry, zipWriter);
+				}
 			}
 
 			zipWriter.finish();
@@ -391,6 +449,10 @@ public class LayoutPageTemplatesExporter {
 	@Reference
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private PageDefinitionDTOConverter _pageDefinitionDTOConverter;

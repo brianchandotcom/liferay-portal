@@ -14,16 +14,10 @@
 
 package com.liferay.product.navigation.product.menu.web.internal.product.navigation.control.menu;
 
-import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategory;
-import com.liferay.application.list.PanelCategoryRegistry;
-import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -33,17 +27,16 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
+import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuUtil;
 
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -146,51 +139,22 @@ public class ProductMenuProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (_productNavigationProductMenuUtil.isShowProductMenu(
+				httpServletRequest)) {
 
-		if (!themeDisplay.isSignedIn()) {
-			return false;
+			return true;
 		}
 
-		User user = themeDisplay.getUser();
-
-		if (!themeDisplay.isImpersonated() && !user.isSetupComplete()) {
-			return false;
-		}
-
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
-		if (Validator.isNotNull(themeDisplay.getPpid()) &&
-			panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
-
-			return false;
-		}
-
-		List<PanelCategory> childPanelCategories =
-			_panelCategoryRegistry.getChildPanelCategories(
-				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroup());
-
-		if (childPanelCategories.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		ProductMenuProductNavigationControlMenuEntry.class, "icon.tmpl");
 
 	@Reference
-	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
-
-	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ProductNavigationProductMenuUtil _productNavigationProductMenuUtil;
 
 }

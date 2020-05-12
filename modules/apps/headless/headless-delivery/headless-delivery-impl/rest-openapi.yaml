@@ -1916,8 +1916,14 @@ components:
             properties:
                 gutters:
                     type: boolean
+                modulesPerRow:
+                    type: integer
                 numberOfColumns:
                     type: integer
+                reverseOrder:
+                    type: boolean
+                verticalAlignment:
+                    type: string
             type: object
         PageSectionDefinition:
             properties:

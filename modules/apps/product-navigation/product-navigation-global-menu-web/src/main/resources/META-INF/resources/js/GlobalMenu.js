@@ -73,7 +73,7 @@ function GlobalMenu({panelAppsURL}) {
 						<ClayTabs modern>
 							{items.map(({key, label}, index) => (
 								<ClayTabs.Item
-									active={activeTab == index}
+									active={activeTab === index}
 									key={key}
 									onClick={() => setActiveTab(index)}
 								>

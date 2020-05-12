@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DANGER_INFO</td>
+	<td>//*[contains(@class,'danger-info')][contains(.,'${key_dangerInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DRAFT_AUTO_SAVE</td>
 	<td>//div/small[contains(@id,'saveStatus') and contains(.,'Draft Saved at')]</td>
 	<td></td>
@@ -181,11 +186,6 @@
 <tr>
 	<td>ERROR_FORM_VALIDATION</td>
 	<td>//div[contains(@class,'form-validator-stack')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ERROR_INFO</td>
-	<td>//*[contains(@class,'danger-info') or contains(@class,'error-info')][contains(.,'${key_errorInfo}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -133,8 +133,6 @@ public class CDIBeanPortletExtension implements Extension {
 		beforeBeanDiscovery.addScope(PortletSessionScoped.class, true, true);
 		beforeBeanDiscovery.addScope(RenderStateScoped.class, true, false);
 
-		// MVC
-
 		MVCExtension.step1BeforeBeanDiscovery(beanManager, beforeBeanDiscovery);
 	}
 
@@ -229,8 +227,6 @@ public class CDIBeanPortletExtension implements Extension {
 
 		_discoveredClasses.add(discoveredClass);
 
-		// MVC
-
 		MVCExtension.step2ProcessAnnotatedType(processAnnotatedType);
 	}
 
@@ -240,8 +236,6 @@ public class CDIBeanPortletExtension implements Extension {
 		afterBeanDiscovery.addContext(new PortletRequestBeanContext());
 		afterBeanDiscovery.addContext(new PortletSessionBeanContext());
 		afterBeanDiscovery.addContext(new RenderStateBeanContext());
-
-		// MVC
 
 		MVCExtension.step3AfterBeanDiscovery(afterBeanDiscovery);
 	}
@@ -378,8 +372,6 @@ public class CDIBeanPortletExtension implements Extension {
 							portletRequest, portletResponse);
 					}
 
-					// MVC
-
 					if (portletResponse instanceof RenderResponse ||
 						portletResponse instanceof ResourceResponse) {
 
@@ -397,8 +389,6 @@ public class CDIBeanPortletExtension implements Extension {
 				beanFilterMethodInvoker,
 				new CDIBeanPortletMethodFactory(beanManager),
 				beanPortletMethodInvoker, _discoveredClasses, servletContext));
-
-		// MVC
 
 		Bean<?> bean = beanManager.resolve(
 			beanManager.getBeans(ViewRenderer.class));
@@ -476,9 +466,6 @@ public class CDIBeanPortletExtension implements Extension {
 		throws PortletException {
 
 		try {
-
-			// MVC
-
 			Bean<?> bean = beanManager.resolve(
 				beanManager.getBeans(BeanPortletMethodDecorator.class));
 

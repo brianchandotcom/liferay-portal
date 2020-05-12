@@ -102,8 +102,6 @@ public class ScopedBeanManager {
 			}
 		}
 
-		// MVC BEGIN
-
 		if (_portletResponse instanceof RenderResponse) {
 			PortletSession portletSession = _portletRequest.getPortletSession(
 				true);
@@ -130,8 +128,6 @@ public class ScopedBeanManager {
 				}
 			}
 		}
-
-		// MVC END
 
 		Enumeration<String> enumeration = _portletRequest.getAttributeNames();
 

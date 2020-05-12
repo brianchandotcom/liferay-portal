@@ -138,7 +138,14 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
 	public void populateZipWriter(ZipWriter zipWriter) throws Exception {
-		String path = StringPool.SLASH + getFragmentCollectionKey();
+		populateZipWriter(zipWriter, StringPool.BLANK);
+	}
+
+	@Override
+	public void populateZipWriter(ZipWriter zipWriter, String path)
+		throws Exception {
+
+		path = path + StringPool.SLASH + getFragmentCollectionKey();
 
 		JSONObject jsonObject = JSONUtil.put(
 			"description", getDescription()

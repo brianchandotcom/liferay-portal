@@ -467,6 +467,8 @@ definition {
 
 	@priority = "4"
 	test ViewSiteManagePagesRegRole {
+		property test.name.skip.portal.instance = "CPRolesCPSites#ViewSiteManagePagesRegRole";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Permissions.setUpRegRoleLoginUserCP(

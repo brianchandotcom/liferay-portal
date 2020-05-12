@@ -45,6 +45,8 @@ public class FormatSourceTask extends ExecuteJavaTask {
 	@Inject
 	public FormatSourceTask(WorkerExecutor workerExecutor) {
 		super(workerExecutor);
+
+		setFork(true);
 	}
 
 	public File getBaseDir() {

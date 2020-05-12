@@ -374,6 +374,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WARNING_INFO</td>
+	<td>//*[contains(@class,'warning-info')][contains(.,'${key_warningInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WARNING_SPECIFIC</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-warning'))][contains(.,'${key_warningMessage}')]</td>
 	<td></td>

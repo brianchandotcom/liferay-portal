@@ -102,11 +102,11 @@ String friendlyURLBase = StringPool.BLANK;
 								"defaultLanguageId",
 								LocaleUtil.toLanguageId(company.getDefaultUser().getLocale())
 							).put(
-								"friendlyURLEntryLocalizationsURL",
-								friendlyURLEntryLocalizationsURL
-							).put(
 								"deleteFriendlyURLEntryLocalizationURL",
 								deleteFriendlyURLEntryLocalizationURL
+							).put(
+								"friendlyURLEntryLocalizationsURL",
+								friendlyURLEntryLocalizationsURL
 							).build() %>'
 						module="js/friendly_url_history/FriendlyURLHistory"
 					/>

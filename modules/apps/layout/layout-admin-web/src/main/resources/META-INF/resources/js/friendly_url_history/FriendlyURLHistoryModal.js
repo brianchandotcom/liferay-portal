@@ -114,7 +114,8 @@ const FriendlyURLHistoryModal = ({
 								languageId
 							].history.filter(
 								({friendlyURLEntryId}) =>
-									friendlyURLEntryId != deleteFriendlyURLEntryId
+									friendlyURLEntryId !=
+									deleteFriendlyURLEntryId
 							);
 
 							return {...friendlyURLEntryLocalizations};

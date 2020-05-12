@@ -80,22 +80,27 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 		pages: visitor.mapColumns((column) => {
 			return {
 				...column,
-				fields: column.fields
-					.filter(
-						({fieldName}) =>
-							!unsupportedProperties.includes(fieldName)
-					)
-					.map((field) => {
-						if (field.fieldName === 'dataSourceType') {
-							field = {
-								...field,
-								predefinedValue: '["manual"]',
-								readOnly: true,
-							};
-						}
+				fields: column.fields.map((field) => {
+					const {fieldName} = field;
 
-						return field;
-					}),
+					if (unsupportedProperties.includes(fieldName)) {
+						return {
+							...field,
+							visibilityExpression: 'FALSE',
+							visible: false,
+						};
+					}
+
+					if (fieldName === 'dataSourceType') {
+						return {
+							...field,
+							predefinedValue: '["manual"]',
+							readOnly: true,
+						};
+					}
+
+					return field;
+				}),
 			};
 		}),
 	};

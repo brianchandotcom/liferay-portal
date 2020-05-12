@@ -263,8 +263,6 @@ public class SpringBeanPortletExtension {
 							portletResponse);
 					}
 
-					// MVC
-
 					if (portletResponse instanceof RenderResponse ||
 						portletResponse instanceof ResourceResponse) {
 
@@ -317,9 +315,6 @@ public class SpringBeanPortletExtension {
 		throws PortletException {
 
 		try {
-
-			// MVC
-
 			@SuppressWarnings("unchecked")
 			BeanPortletMethodDecorator beanPortletMethodDecorator =
 				_applicationContext.getBean(

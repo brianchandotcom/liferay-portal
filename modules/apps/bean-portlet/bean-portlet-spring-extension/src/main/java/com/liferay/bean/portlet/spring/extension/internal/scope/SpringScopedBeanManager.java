@@ -99,8 +99,6 @@ public class SpringScopedBeanManager {
 			}
 		}
 
-		// MVC BEGIN
-
 		if (_portletResponse instanceof RenderResponse) {
 			PortletSession portletSession = _portletRequest.getPortletSession(
 				true);
@@ -127,8 +125,6 @@ public class SpringScopedBeanManager {
 				}
 			}
 		}
-
-		// MVC END
 
 		Enumeration<String> enumeration = _portletRequest.getAttributeNames();
 

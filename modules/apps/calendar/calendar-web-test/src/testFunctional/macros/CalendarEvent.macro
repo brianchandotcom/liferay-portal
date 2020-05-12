@@ -1530,9 +1530,10 @@ definition {
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
 			value1 = "${siteCalendarName}");
 
-		if (IsElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC")){
+		if (IsElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC")) {
 			CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "${eventTitle}");
-		}else{
+		}
+		else {
 			CalendarScheduler.viewSpecificEventNotVisible(eventTitle = "${eventTitle}");
 		}
 

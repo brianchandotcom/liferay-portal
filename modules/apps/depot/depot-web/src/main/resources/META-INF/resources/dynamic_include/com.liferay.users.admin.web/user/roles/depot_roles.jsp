@@ -124,7 +124,23 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 			'<portlet:namespace />depotRolesSearchContainer'
 		);
 
+		var searchContainerDataStore = [];
+
 		var searchContainerContentBox = searchContainer.get('contentBox');
+
+		var modifyLinkList = searchContainerContentBox._node.querySelectorAll(
+			'.modify-link'
+		);
+
+		for (var i = 0; i < modifyLinkList.length; i++) {
+			var groupId = modifyLinkList[i].getAttribute('data-groupId');
+			var rowId = modifyLinkList[i].getAttribute('data-rowId');
+			var id = groupId + '-' + rowId;
+
+			searchContainerDataStore.push(id);
+		}
+
+		searchContainer.updateDataStore(searchContainerDataStore.join(','));
 
 		searchContainerContentBox.delegate(
 			'click',
@@ -134,6 +150,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 
 				var groupId = link.getAttribute('data-groupId');
 				var rowId = link.getAttribute('data-rowId');
+				var id = groupId + '-' + rowId;
 
 				var selectDepotRole = Util.getWindow(
 					'<portlet:namespace />selectDepotRole'
@@ -153,7 +170,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 					Util.toggleDisabled(selectButton, false);
 				}
 
-				searchContainer.deleteRow(tr, rowId);
+				searchContainer.deleteRow(tr, id);
 
 				<portlet:namespace />deleteDepotGroupRole(rowId, groupId);
 			},
@@ -245,6 +262,15 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 		A.one('#<portlet:namespace />selectDepotRoleLink').on('click', function (
 			event
 		) {
+			var searchContainerData = searchContainer.getData();
+
+			if (!searchContainerData.length) {
+				searchContainerData = [];
+			}
+			else {
+				searchContainerData = searchContainerData.split(',');
+			}
+
 			Util.selectEntity(
 				{
 					dialog: {
@@ -254,7 +280,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 
 					id:
 						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesEventName() %>',
-					selectedData: [],
+					selectedData: searchContainerData,
 					title: '<liferay-ui:message arguments="role" key="select-x" />',
 					uri:
 						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesURL() %>',
@@ -262,6 +288,8 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 				function (event) {
 					var A = AUI();
 					var LString = A.Lang.String;
+
+					var id = event.groupid + '-' + event.roleid;
 
 					var rowColumns = [];
 
@@ -322,7 +350,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 						','
 					);
 
-					searchContainer.addRow(rowColumns, event.roleid);
+					searchContainer.addRow(rowColumns, id);
 
 					searchContainer.updateDataStore();
 				}

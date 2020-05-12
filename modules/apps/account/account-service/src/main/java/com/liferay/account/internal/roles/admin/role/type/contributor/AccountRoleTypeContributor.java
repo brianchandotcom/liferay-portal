@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
@@ -100,10 +99,7 @@ public class AccountRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public boolean isAutomaticallyAssigned(Role role) {
-		if (Objects.equals(
-				role.getName(),
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
-
+		if (AccountRoleConstants.isImpliedRole(role)) {
 			return true;
 		}
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -100,6 +103,18 @@ public class AccountEntryLocalServiceImpl
 			String description, String[] domains, byte[] logoBytes, int status)
 		throws PortalException {
 
+		return addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, logoBytes,
+			status, null);
+	}
+
+	@Override
+	public AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Account entry
 
 		long accountEntryId = counterLocalService.increment();
@@ -139,6 +154,12 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setStatus(status);
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
+
+		// Asset
+
+		if (serviceContext != null) {
+			_updateAsset(accountEntry, serviceContext);
+		}
 
 		// Group
 
@@ -208,6 +229,11 @@ public class AccountEntryLocalServiceImpl
 		// Account entry
 
 		accountEntry = super.deleteAccountEntry(accountEntry);
+
+		// Asset
+
+		assetEntryLocalService.deleteEntry(
+			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
 
 		// Group
 
@@ -288,6 +314,18 @@ public class AccountEntryLocalServiceImpl
 			byte[] logoBytes, int status)
 		throws PortalException {
 
+		return updateAccountEntry(
+			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
+			domains, logoBytes, status, null);
+	}
+
+	@Override
+	public AccountEntry updateAccountEntry(
+			Long accountEntryId, long parentAccountEntryId, String name,
+			String description, boolean deleteLogo, String[] domains,
+			byte[] logoBytes, int status, ServiceContext serviceContext)
+		throws PortalException {
+
 		AccountEntry accountEntry = accountEntryPersistence.fetchByPrimaryKey(
 			accountEntryId);
 
@@ -310,6 +348,12 @@ public class AccountEntryLocalServiceImpl
 			_userFileUploadsSettings.getImageMaxWidth());
 
 		accountEntry.setStatus(status);
+
+		// Asset
+
+		if (serviceContext != null) {
+			_updateAsset(accountEntry, serviceContext);
+		}
 
 		return accountEntryPersistence.update(accountEntry);
 	}
@@ -427,6 +471,23 @@ public class AccountEntryLocalServiceImpl
 		searchContext.setAttribute("status", status);
 	}
 
+	private void _updateAsset(
+			AccountEntry accountEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(
+			serviceContext.getCompanyId());
+
+		assetEntryLocalService.updateEntry(
+			serviceContext.getUserId(), company.getGroupId(),
+			accountEntry.getCreateDate(), accountEntry.getModifiedDate(),
+			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
+			null, 0, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(), true, true, null, null, null,
+			null, null, accountEntry.getName(), accountEntry.getDescription(),
+			null, null, null, 0, 0, null);
+	}
+
 	private String[] _validateDomains(String[] domains) throws PortalException {
 		if (ArrayUtil.isEmpty(domains)) {
 			return domains;
@@ -448,6 +509,9 @@ public class AccountEntryLocalServiceImpl
 			throw new AccountEntryNameException();
 		}
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private Portal _portal;

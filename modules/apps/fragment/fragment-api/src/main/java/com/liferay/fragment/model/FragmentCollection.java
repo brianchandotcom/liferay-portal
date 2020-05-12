@@ -77,4 +77,8 @@ public interface FragmentCollection
 			com.liferay.portal.kernel.zip.ZipWriter zipWriter)
 		throws Exception;
 
+	public void populateZipWriter(
+			com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
+		throws Exception;
+
 }

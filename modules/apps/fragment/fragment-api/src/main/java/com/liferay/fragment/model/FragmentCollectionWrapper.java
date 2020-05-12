@@ -335,6 +335,14 @@ public class FragmentCollectionWrapper
 		model.populateZipWriter(zipWriter);
 	}
 
+	@Override
+	public void populateZipWriter(
+			com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
+		throws Exception {
+
+		model.populateZipWriter(zipWriter, path);
+	}
+
 	/**
 	 * Sets the company ID of this fragment collection.
 	 *

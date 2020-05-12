@@ -15,6 +15,7 @@
 package com.liferay.friendly.url.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.petra.function.UnsafeFunction;
@@ -143,6 +144,10 @@ public interface FriendlyURLEntryLocalService
 
 	public void deleteFriendlyURLEntry(
 		long groupId, long classNameId, long classPK);
+
+	public void deleteFriendlyURLLocalizationEntry(
+			long friendlyURLEntryId, String languageId)
+		throws NoSuchFriendlyURLEntryLocalizationException;
 
 	public void deleteGroupFriendlyURLEntries(long groupId, long classNameId);
 

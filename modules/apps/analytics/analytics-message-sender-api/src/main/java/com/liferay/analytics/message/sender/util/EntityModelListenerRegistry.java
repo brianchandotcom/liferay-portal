@@ -14,13 +14,15 @@
 
 package com.liferay.analytics.message.sender.util;
 
-import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.analytics.message.sender.model.EntityModelListener;
 
 import java.util.Collection;
 
 /**
- * @author Rachael Koestartyo
+ * @author     Rachael Koestartyo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public interface EntityModelListenerRegistry {
 
 	public EntityModelListener getEntityModelListener(String className);

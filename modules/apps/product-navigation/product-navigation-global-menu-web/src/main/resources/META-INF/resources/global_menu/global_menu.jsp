@@ -20,8 +20,9 @@
 GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext(request);
 %>
 
-<div class="control-menu-icon lfr-portal-tooltip">
+<div>
 	<clay:button
+		elementClasses="lfr-portal-tooltip"
 		icon="grid"
 		monospaced="<%= true %>"
 		style="unstyled"

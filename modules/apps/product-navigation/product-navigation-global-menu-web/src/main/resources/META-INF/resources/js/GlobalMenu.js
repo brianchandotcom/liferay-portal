@@ -101,6 +101,7 @@ function GlobalMenu({panelAppsURL}) {
 			)}
 
 			<ClayButtonWithIcon
+				className={'lfr-portal-tooltip'}
 				displayType="unstyled"
 				onClick={() => {
 					preloadItems();

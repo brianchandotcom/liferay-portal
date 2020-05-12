@@ -177,7 +177,7 @@ export default function Chart({
 				});
 			});
 
-			Promise.allSettled(promises).then((data) => {
+			allSettled(promises).then((data) => {
 				if (gone || !isMounted()) {
 					return;
 				}
@@ -488,6 +488,20 @@ export default function Chart({
 				</div>
 			) : null}
 		</>
+	);
+}
+
+function allSettled(promises) {
+	return Promise.all(
+		promises.map((promise) => {
+			return promise
+				.then((value) => {
+					return {status: 'fulfilled', value};
+				})
+				.catch((reason) => {
+					return {reason, status: 'rejected'};
+				});
+		})
 	);
 }
 

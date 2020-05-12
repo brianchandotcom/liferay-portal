@@ -65,6 +65,16 @@ public class PageRowDefinitionSerDes {
 			sb.append(pageRowDefinition.getGutters());
 		}
 
+		if (pageRowDefinition.getModulesPerRow() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modulesPerRow\": ");
+
+			sb.append(pageRowDefinition.getModulesPerRow());
+		}
+
 		if (pageRowDefinition.getNumberOfColumns() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -73,6 +83,30 @@ public class PageRowDefinitionSerDes {
 			sb.append("\"numberOfColumns\": ");
 
 			sb.append(pageRowDefinition.getNumberOfColumns());
+		}
+
+		if (pageRowDefinition.getReverseOrder() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"reverseOrder\": ");
+
+			sb.append(pageRowDefinition.getReverseOrder());
+		}
+
+		if (pageRowDefinition.getVerticalAlignment() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"verticalAlignment\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageRowDefinition.getVerticalAlignment()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -103,6 +137,15 @@ public class PageRowDefinitionSerDes {
 			map.put("gutters", String.valueOf(pageRowDefinition.getGutters()));
 		}
 
+		if (pageRowDefinition.getModulesPerRow() == null) {
+			map.put("modulesPerRow", null);
+		}
+		else {
+			map.put(
+				"modulesPerRow",
+				String.valueOf(pageRowDefinition.getModulesPerRow()));
+		}
+
 		if (pageRowDefinition.getNumberOfColumns() == null) {
 			map.put("numberOfColumns", null);
 		}
@@ -110,6 +153,24 @@ public class PageRowDefinitionSerDes {
 			map.put(
 				"numberOfColumns",
 				String.valueOf(pageRowDefinition.getNumberOfColumns()));
+		}
+
+		if (pageRowDefinition.getReverseOrder() == null) {
+			map.put("reverseOrder", null);
+		}
+		else {
+			map.put(
+				"reverseOrder",
+				String.valueOf(pageRowDefinition.getReverseOrder()));
+		}
+
+		if (pageRowDefinition.getVerticalAlignment() == null) {
+			map.put("verticalAlignment", null);
+		}
+		else {
+			map.put(
+				"verticalAlignment",
+				String.valueOf(pageRowDefinition.getVerticalAlignment()));
 		}
 
 		return map;
@@ -138,10 +199,28 @@ public class PageRowDefinitionSerDes {
 					pageRowDefinition.setGutters((Boolean)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "modulesPerRow")) {
+				if (jsonParserFieldValue != null) {
+					pageRowDefinition.setModulesPerRow(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfColumns")) {
 				if (jsonParserFieldValue != null) {
 					pageRowDefinition.setNumberOfColumns(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "reverseOrder")) {
+				if (jsonParserFieldValue != null) {
+					pageRowDefinition.setReverseOrder(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {
+				if (jsonParserFieldValue != null) {
+					pageRowDefinition.setVerticalAlignment(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else {

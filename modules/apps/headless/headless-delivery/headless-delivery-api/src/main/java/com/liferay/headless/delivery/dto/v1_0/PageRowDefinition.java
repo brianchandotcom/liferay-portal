@@ -78,6 +78,34 @@ public class PageRowDefinition {
 	protected Boolean gutters;
 
 	@Schema
+	public Integer getModulesPerRow() {
+		return modulesPerRow;
+	}
+
+	public void setModulesPerRow(Integer modulesPerRow) {
+		this.modulesPerRow = modulesPerRow;
+	}
+
+	@JsonIgnore
+	public void setModulesPerRow(
+		UnsafeSupplier<Integer, Exception> modulesPerRowUnsafeSupplier) {
+
+		try {
+			modulesPerRow = modulesPerRowUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer modulesPerRow;
+
+	@Schema
 	public Integer getNumberOfColumns() {
 		return numberOfColumns;
 	}
@@ -104,6 +132,62 @@ public class PageRowDefinition {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfColumns;
+
+	@Schema
+	public Boolean getReverseOrder() {
+		return reverseOrder;
+	}
+
+	public void setReverseOrder(Boolean reverseOrder) {
+		this.reverseOrder = reverseOrder;
+	}
+
+	@JsonIgnore
+	public void setReverseOrder(
+		UnsafeSupplier<Boolean, Exception> reverseOrderUnsafeSupplier) {
+
+		try {
+			reverseOrder = reverseOrderUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean reverseOrder;
+
+	@Schema
+	public String getVerticalAlignment() {
+		return verticalAlignment;
+	}
+
+	public void setVerticalAlignment(String verticalAlignment) {
+		this.verticalAlignment = verticalAlignment;
+	}
+
+	@JsonIgnore
+	public void setVerticalAlignment(
+		UnsafeSupplier<String, Exception> verticalAlignmentUnsafeSupplier) {
+
+		try {
+			verticalAlignment = verticalAlignmentUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String verticalAlignment;
 
 	@Override
 	public boolean equals(Object object) {
@@ -142,6 +226,16 @@ public class PageRowDefinition {
 			sb.append(gutters);
 		}
 
+		if (modulesPerRow != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modulesPerRow\": ");
+
+			sb.append(modulesPerRow);
+		}
+
 		if (numberOfColumns != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -150,6 +244,30 @@ public class PageRowDefinition {
 			sb.append("\"numberOfColumns\": ");
 
 			sb.append(numberOfColumns);
+		}
+
+		if (reverseOrder != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"reverseOrder\": ");
+
+			sb.append(reverseOrder);
+		}
+
+		if (verticalAlignment != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"verticalAlignment\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(verticalAlignment));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

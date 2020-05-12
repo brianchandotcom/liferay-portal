@@ -1469,7 +1469,7 @@ public class LayoutPageTemplatesImporterImpl
 				displayPageTemplate.getContentSubtype();
 
 			if (contentSubtype != null) {
-				classTypeId = contentSubtype.getClassTypeId();
+				classTypeId = contentSubtype.getSubtypeId();
 			}
 
 			LayoutPageTemplateEntry layoutPageTemplateEntry =

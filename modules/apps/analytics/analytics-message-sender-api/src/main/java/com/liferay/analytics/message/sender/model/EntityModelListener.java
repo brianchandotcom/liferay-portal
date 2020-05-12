@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.model.User;
 import java.util.List;
 
 /**
- * @author Rachael Koestartyo
+ * @author     Rachael Koestartyo
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
- * 			   com.liferay.analytics.message.sender.model.listener.EntityModelListener}
+ *             com.liferay.analytics.message.sender.model.listener.EntityModelListener}
  */
 @Deprecated
 public interface EntityModelListener<T extends BaseModel<T>> {
@@ -37,8 +37,7 @@ public interface EntityModelListener<T extends BaseModel<T>> {
 	public String getModelClassName();
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #syncAll(long)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #syncAll(long)}
 	 */
 	@Deprecated
 	public default void syncAll() throws Exception {

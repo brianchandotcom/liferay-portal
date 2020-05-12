@@ -34,8 +34,7 @@ public interface EntityModelListener<T extends BaseModel<T>> {
 	public String getModelClassName();
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #syncAll(long)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #syncAll(long)}
 	 */
 	@Deprecated
 	public default void syncAll() throws Exception {

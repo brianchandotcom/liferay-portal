@@ -17,12 +17,12 @@ package com.liferay.analytics.settings.internal.configuration;
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesDestinationNames;
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesProcessorCommand;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
-import com.liferay.analytics.message.sender.util.EntityModelListenerRegistry;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.analytics.settings.internal.model.AnalyticsUserImpl;
 import com.liferay.analytics.settings.internal.security.auth.verifier.AnalyticsSecurityAuthVerifier;
+import com.liferay.analytics.settings.internal.util.EntityModelListenerTracker;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -278,7 +278,7 @@ public class AnalyticsConfigurationTrackerImpl
 
 		message.put(
 			"entityModelListener",
-			_entityModelListenerRegistry.getEntityModelListener(
+			_entityModelListenerTracker.getEntityModelListener(
 				baseModel.getModelClassName()));
 
 		message.setPayload(baseModels);
@@ -324,7 +324,7 @@ public class AnalyticsConfigurationTrackerImpl
 			Map<String, long[]> memberships = new HashMap<>();
 
 			for (EntityModelListener entityModelListener :
-					_entityModelListenerRegistry.getEntityModelListeners()) {
+					_entityModelListenerTracker.getEntityModelListeners()) {
 
 				try {
 					long[] membershipIds = entityModelListener.getMembershipIds(
@@ -450,7 +450,7 @@ public class AnalyticsConfigurationTrackerImpl
 			Validator.isNull(dictionary.get("previousToken"))) {
 
 			Collection<EntityModelListener> entityModelListeners =
-				_entityModelListenerRegistry.getEntityModelListeners();
+				_entityModelListenerTracker.getEntityModelListeners();
 
 			for (EntityModelListener entityModelListener :
 					entityModelListeners) {
@@ -619,7 +619,7 @@ public class AnalyticsConfigurationTrackerImpl
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
-	private EntityModelListenerRegistry _entityModelListenerRegistry;
+	private EntityModelListenerTracker _entityModelListenerTracker;
 
 	private final Set<Long> _initializedCompanyIds = new HashSet<>();
 

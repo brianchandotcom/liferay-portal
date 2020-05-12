@@ -69,12 +69,12 @@ public class PortletParamProducer {
 			return null;
 		}
 
-		Annotated field = injectionPoint.getAnnotated();
+		Annotated annotated = injectionPoint.getAnnotated();
 
-		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
+		Annotation[] fieldAnnotations = _getFieldAnnotations(annotated);
 
 		ParamConverter<Boolean> paramConverter = _getParamConverter(
-			fieldAnnotations, field.getBaseType(), Boolean.class);
+			fieldAnnotations, annotated.getBaseType(), Boolean.class);
 
 		if (paramConverter != null) {
 			try {
@@ -109,12 +109,12 @@ public class PortletParamProducer {
 			return null;
 		}
 
-		Annotated field = injectionPoint.getAnnotated();
+		Annotated annotated = injectionPoint.getAnnotated();
 
-		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
+		Annotation[] fieldAnnotations = _getFieldAnnotations(annotated);
 
 		ParamConverter<Date> paramConverter = _getParamConverter(
-			fieldAnnotations, field.getBaseType(), Date.class);
+			fieldAnnotations, annotated.getBaseType(), Date.class);
 
 		if (paramConverter != null) {
 			try {
@@ -148,12 +148,12 @@ public class PortletParamProducer {
 			return null;
 		}
 
-		Annotated field = injectionPoint.getAnnotated();
+		Annotated annotated = injectionPoint.getAnnotated();
 
-		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
+		Annotation[] fieldAnnotations = _getFieldAnnotations(annotated);
 
 		ParamConverter<Double> paramConverter = _getParamConverter(
-			fieldAnnotations, field.getBaseType(), Double.class);
+			fieldAnnotations, annotated.getBaseType(), Double.class);
 
 		if (paramConverter != null) {
 			try {
@@ -188,12 +188,12 @@ public class PortletParamProducer {
 			return null;
 		}
 
-		Annotated field = injectionPoint.getAnnotated();
+		Annotated annotated = injectionPoint.getAnnotated();
 
-		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
+		Annotation[] fieldAnnotations = _getFieldAnnotations(annotated);
 
 		ParamConverter<Float> paramConverter = _getParamConverter(
-			fieldAnnotations, field.getBaseType(), Float.class);
+			fieldAnnotations, annotated.getBaseType(), Float.class);
 
 		if (paramConverter != null) {
 			try {
@@ -227,12 +227,12 @@ public class PortletParamProducer {
 			return null;
 		}
 
-		Annotated field = injectionPoint.getAnnotated();
+		Annotated annotated = injectionPoint.getAnnotated();
 
-		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
+		Annotation[] fieldAnnotations = _getFieldAnnotations(annotated);
 
 		ParamConverter<Integer> paramConverter = _getParamConverter(
-			fieldAnnotations, field.getBaseType(), Integer.class);
+			fieldAnnotations, annotated.getBaseType(), Integer.class);
 
 		if (paramConverter != null) {
 			try {
@@ -267,12 +267,12 @@ public class PortletParamProducer {
 			return null;
 		}
 
-		Annotated field = injectionPoint.getAnnotated();
+		Annotated annotated = injectionPoint.getAnnotated();
 
-		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
+		Annotation[] fieldAnnotations = _getFieldAnnotations(annotated);
 
 		ParamConverter<Long> paramConverter = _getParamConverter(
-			fieldAnnotations, field.getBaseType(), Long.class);
+			fieldAnnotations, annotated.getBaseType(), Long.class);
 
 		if (paramConverter != null) {
 			try {
@@ -300,18 +300,18 @@ public class PortletParamProducer {
 	public String getStringParam(
 		InjectionPoint injectionPoint, PortletRequest portletRequest) {
 
-		Annotated field = injectionPoint.getAnnotated();
+		Annotated annotated = injectionPoint.getAnnotated();
 
 		String defaultValue = null;
 
-		DefaultValue defaultValueAnnotation = field.getAnnotation(
+		DefaultValue defaultValueAnnotation = annotated.getAnnotation(
 			DefaultValue.class);
 
 		if (defaultValueAnnotation != null) {
 			defaultValue = defaultValueAnnotation.value();
 		}
 
-		CookieParam cookieParam = field.getAnnotation(CookieParam.class);
+		CookieParam cookieParam = annotated.getAnnotation(CookieParam.class);
 
 		if (cookieParam != null) {
 			Cookie[] cookies = portletRequest.getCookies();
@@ -325,8 +325,9 @@ public class PortletParamProducer {
 							_log.debug(
 								StringBundler.concat(
 									"Injecting the default value \"",
-									defaultValue, "\" into a field annotated ",
-									"with @CookieParam(\"", cookieParam.value(),
+									defaultValue,
+									"\" into a annotated annotated with ",
+									"@CookieParam(\"", cookieParam.value(),
 									"\") because the cookie does not have a ",
 									"value"));
 						}
@@ -342,7 +343,7 @@ public class PortletParamProducer {
 				_log.debug(
 					StringBundler.concat(
 						"Injecting the default value \"", defaultValue,
-						"\" into a field annotated with @CookieParam(\"",
+						"\" into a annotated annotated with @CookieParam(\"",
 						cookieParam.value(), "\") because there is no cookie ",
 						"with that name"));
 			}
@@ -350,7 +351,7 @@ public class PortletParamProducer {
 			return defaultValue;
 		}
 
-		FormParam formParam = field.getAnnotation(FormParam.class);
+		FormParam formParam = annotated.getAnnotation(FormParam.class);
 
 		if (formParam != null) {
 			String lifecyclePhase = (String)portletRequest.getAttribute(
@@ -377,9 +378,10 @@ public class PortletParamProducer {
 						_log.debug(
 							StringBundler.concat(
 								"Injecting the default value \"", defaultValue,
-								"\" into a field annotated with @FormParam(\"",
-								formParam.value(), "\") because the request ",
-								"parameter does not have a value"));
+								"\" into a annotated annotated with ",
+								"@FormParam(\"", formParam.value(),
+								"\") because the request parameter does not ",
+								"have a value"));
 					}
 
 					return defaultValue;
@@ -392,14 +394,14 @@ public class PortletParamProducer {
 				if (lifecyclePhase.equals(PortletRequest.RENDER_PHASE)) {
 					_log.debug(
 						StringBundler.concat(
-							"Injection into a field annotated with ",
+							"Injection into a annotated annotated with ",
 							"@FormParam(\"", formParam.value(), "\") is ",
 							"invalid during the RENDER_PHASE"));
 				}
 				else {
 					_log.debug(
 						StringBundler.concat(
-							"Injection into a field annotated with ",
+							"Injection into a annotated annotated with ",
 							"@FormParam(\"", formParam.value(), "\") is ",
 							"invalid during the ", lifecyclePhase, " (HTTP ",
 							httpMethod, ") request"));
@@ -409,7 +411,7 @@ public class PortletParamProducer {
 			return null;
 		}
 
-		HeaderParam headerParam = field.getAnnotation(HeaderParam.class);
+		HeaderParam headerParam = annotated.getAnnotation(HeaderParam.class);
 
 		if (headerParam != null) {
 			Enumeration<String> propertyNames =
@@ -427,8 +429,9 @@ public class PortletParamProducer {
 							_log.debug(
 								StringBundler.concat(
 									"Injecting the default value \"",
-									defaultValue, "\" into a field annotated ",
-									"with @HeaderParam(\"", headerParam.value(),
+									defaultValue,
+									"\" into a annotated annotated with ",
+									"@HeaderParam(\"", headerParam.value(),
 									"\") because the header does not have a ",
 									"value"));
 						}
@@ -444,7 +447,7 @@ public class PortletParamProducer {
 				_log.debug(
 					StringBundler.concat(
 						"Injecting the default value \"", defaultValue,
-						"\" into a field annotated with @HeaderParam(\"",
+						"\" into a annotated annotated with @HeaderParam(\"",
 						headerParam.value(),
 						"\") because there is no header with that name"));
 			}
@@ -452,7 +455,7 @@ public class PortletParamProducer {
 			return defaultValue;
 		}
 
-		QueryParam queryParam = field.getAnnotation(QueryParam.class);
+		QueryParam queryParam = annotated.getAnnotation(QueryParam.class);
 
 		if (queryParam != null) {
 			@SuppressWarnings("deprecation")
@@ -464,7 +467,7 @@ public class PortletParamProducer {
 					_log.debug(
 						StringBundler.concat(
 							"Injecting the default value \"", defaultValue,
-							"\" into a field annotated with @QueryParam(\"",
+							"\" into a annotated annotated with @QueryParam(\"",
 							queryParam.value(),
 							"\") because the request parameter does not have ",
 							"a value"));
@@ -495,8 +498,8 @@ public class PortletParamProducer {
 		}
 	}
 
-	private Annotation[] _getFieldAnnotations(Annotated field) {
-		Set<Annotation> annotations = field.getAnnotations();
+	private Annotation[] _getFieldAnnotations(Annotated annotated) {
+		Set<Annotation> annotations = annotated.getAnnotations();
 
 		return annotations.toArray(new Annotation[0]);
 	}

@@ -32,7 +32,7 @@ import com.liferay.product.navigation.control.menu.BaseProductNavigationControlM
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
-import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuUtil;
+import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuHelper;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -139,7 +139,7 @@ public class ProductMenuProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (_productNavigationProductMenuUtil.isShowProductMenu(
+		if (_productNavigationProductMenuHelper.isShowProductMenu(
 				httpServletRequest)) {
 
 			return true;
@@ -155,6 +155,7 @@ public class ProductMenuProductNavigationControlMenuEntry
 	private Portal _portal;
 
 	@Reference
-	private ProductNavigationProductMenuUtil _productNavigationProductMenuUtil;
+	private ProductNavigationProductMenuHelper
+		_productNavigationProductMenuHelper;
 
 }

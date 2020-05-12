@@ -237,12 +237,13 @@ public class UserAccountResourceImpl
 			Long userAccountId, UserAccount userAccount)
 		throws Exception {
 
+		User user = _userService.getUserById(userAccountId);
+
 		String sms = null;
 		String facebook = null;
 		String jabber = null;
 		String skype = null;
 		String twitter = null;
-		User user = _userService.getUserById(userAccountId);
 
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
@@ -255,26 +256,27 @@ public class UserAccountResourceImpl
 			twitter = userAccountContactInformation.getTwitter();
 		}
 
-		user = _userService.updateUser(
-			userAccountId, null, null, null, false, null, null,
-			userAccount.getAlternateName(), userAccount.getEmailAddress(),
-			user.getFacebookId(), user.getOpenId(), false, null,
-			user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
-			user.getComments(), userAccount.getGivenName(),
-			userAccount.getAdditionalName(), userAccount.getFamilyName(),
-			_getPrefixId(userAccount), _getSuffixId(userAccount), true,
-			_getBirthdayMonth(userAccount), _getBirthdayDay(userAccount),
-			_getBirthdayYear(userAccount), sms, facebook, jabber, skype,
-			twitter, userAccount.getJobTitle(), user.getGroupIds(),
-			user.getOrganizationIds(), user.getRoleIds(),
-			_userGroupRoleLocalService.getUserGroupRoles(userAccountId),
-			user.getUserGroupIds(), _getAddresses(userAccount),
-			_getServiceBuilderEmailAddresses(userAccount),
-			_getServiceBuilderPhones(userAccount), _getWebsites(userAccount),
-			_announcementsDeliveryLocalService.getUserDeliveries(userAccountId),
-			ServiceContextFactory.getInstance(contextHttpServletRequest));
-
-		return _toUserAccount(user);
+		return _toUserAccount(
+			_userService.updateUser(
+				userAccountId, null, null, null, false, null, null,
+				userAccount.getAlternateName(), userAccount.getEmailAddress(),
+				user.getFacebookId(), user.getOpenId(), false, null,
+				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
+				user.getComments(), userAccount.getGivenName(),
+				userAccount.getAdditionalName(), userAccount.getFamilyName(),
+				_getPrefixId(userAccount), _getSuffixId(userAccount), true,
+				_getBirthdayMonth(userAccount), _getBirthdayDay(userAccount),
+				_getBirthdayYear(userAccount), sms, facebook, jabber, skype,
+				twitter, userAccount.getJobTitle(), user.getGroupIds(),
+				user.getOrganizationIds(), user.getRoleIds(),
+				_userGroupRoleLocalService.getUserGroupRoles(userAccountId),
+				user.getUserGroupIds(), _getAddresses(userAccount),
+				_getServiceBuilderEmailAddresses(userAccount),
+				_getServiceBuilderPhones(userAccount),
+				_getWebsites(userAccount),
+				_announcementsDeliveryLocalService.getUserDeliveries(
+					userAccountId),
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	private List<Address> _getAddresses(UserAccount userAccount) {

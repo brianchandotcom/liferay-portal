@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.internal.upgrade;
 
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.internal.upgrade.v1_1_0.UpgradeLayoutPrototype;
 import com.liferay.layout.page.template.internal.upgrade.v1_1_1.UpgradeLayoutPageTemplateEntry;
@@ -121,8 +122,8 @@ public class LayoutPageTemplateServiceUpgrade
 		registry.register(
 			"3.2.0", "3.3.0",
 			new UpgradeLayoutPageTemplateStructureRel(
-				_fragmentEntryLinkLocalService,
-				_portletPreferencesLocalService));
+				_fragmentEntryLinkLocalService, _portletPreferencesLocalService,
+				_portletRegistry));
 
 		registry.register(
 			"3.3.0", "3.3.1",
@@ -144,5 +145,8 @@ public class LayoutPageTemplateServiceUpgrade
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 }

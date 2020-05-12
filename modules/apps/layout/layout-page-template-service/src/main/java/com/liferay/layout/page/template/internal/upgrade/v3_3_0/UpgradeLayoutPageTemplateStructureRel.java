@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.internal.upgrade.v3_3_0;
 
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.internal.upgrade.v3_3_0.util.EditableValuesTransformerUtil;
 import com.liferay.layout.page.template.util.LayoutDataConverter;
@@ -50,10 +51,12 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 
 	public UpgradeLayoutPageTemplateStructureRel(
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
-		PortletPreferencesLocalService portletPreferencesLocalService) {
+		PortletPreferencesLocalService portletPreferencesLocalService,
+		PortletRegistry portletRegistry) {
 
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_portletPreferencesLocalService = portletPreferencesLocalService;
+		_portletRegistry = portletRegistry;
 	}
 
 	@Override
@@ -103,7 +106,7 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 	}
 
 	private PortletPreferences _updatePortletPreferences(
-		String instanceId, String namespace, long plid, String portletId,
+		String instanceId, String newInstanceId, long plid, String portletId,
 		long segmentsExperienceId) {
 
 		Optional<PortletPreferences> portletPreferencesOptional =
@@ -118,7 +121,7 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 				PortletIdCodec.encode(
 					PortletIdCodec.decodePortletName(
 						portletPreferences.getPortletId()),
-					namespace));
+					newInstanceId));
 
 			return _portletPreferencesLocalService.updatePortletPreferences(
 				portletPreferences);
@@ -156,12 +159,18 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 				continue;
 			}
 
-			fragmentEntryLink.setNamespace(StringUtil.randomId());
+			String newNamespace = StringUtil.randomId();
 
 			PortletPreferences portletPreferences = _upgradePortletPreferences(
-				fragmentEntryLink.getEditableValues(),
-				fragmentEntryLink.getNamespace(),
+				fragmentEntryLink.getEditableValues(), newNamespace,
 				fragmentEntryLink.getClassPK(), segmentsExperienceId);
+
+			if (portletPreferences == null) {
+				_upgradePortletPreferences(
+					fragmentEntryLink, newNamespace, segmentsExperienceId);
+			}
+
+			fragmentEntryLink.setNamespace(newNamespace);
 
 			if (portletPreferences != null) {
 				fragmentEntryLink.setEditableValues(
@@ -240,6 +249,26 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 		}
 	}
 
+	private void _upgradePortletPreferences(
+		FragmentEntryLink fragmentEntryLink, String namespace,
+		long segmentsExperienceId) {
+
+		for (String portletId :
+				_portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink)) {
+
+			String instanceId = PortletIdCodec.decodeInstanceId(portletId);
+			String newInstanceId = StringUtil.replace(
+				PortletIdCodec.decodeInstanceId(portletId),
+				fragmentEntryLink.getNamespace(), namespace);
+
+			_updatePortletPreferences(
+				instanceId, newInstanceId, fragmentEntryLink.getClassPK(),
+				PortletIdCodec.decodePortletName(portletId),
+				segmentsExperienceId);
+		}
+	}
+
 	private PortletPreferences _upgradePortletPreferences(
 			String editableValues, String namespace, long plid,
 			long segmentsExperienceId)
@@ -268,5 +297,6 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 	private final PortletPreferencesLocalService
 		_portletPreferencesLocalService;
+	private final PortletRegistry _portletRegistry;
 
 }

@@ -454,6 +454,153 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-107748. Can export a content page template with custom fragments and import."
+	@priority = "4"
+	test IgnoreFragmentNotExistInSiteWhenImportContentPageTemplate {
+		task ("Add a fragment collection via JSON") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
+		}
+
+		task ("Edit content of new fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.html");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.css");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		}
+
+		task ("Add the new fragment to content page template") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "Lorem ipsum dolor sit amet",
+				fragmentName = "Fragment Name",
+				id = "title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Export content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Export",
+				pageTemplateName = "Page Template Name");
+
+			DownloadTempFile();
+		}
+
+		task ("Export new fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.exportCollection(collectionName = "Collection Name");
+
+			DownloadTempFile();
+		}
+
+		task ("Import content page template to the new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			var pageTemplateZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "page-template-*.zip");
+
+			UploadTempFile(
+				locator1 = "TextInput#FILE",
+				value1 = "${pageTemplateZipFileName}");
+
+			Click(locator1 = "Button#IMPORT");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert specific warning message is shown in Import popup") {
+			Alert.viewWarningSpecific(warningMessage = "Some page templates were imported with warnings.");
+
+			AssertElementPresent(
+				key_warningInfo = "Fragment with key fragment-name was ignored because it does not exist.",
+				locator1 = "Message#WARNING_INFO");
+		}
+
+		task ("Assert new fragment is not shown in content page template") {
+			IFrame.closeFrame();
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementNotPresent(
+				key_fragmentName = "Fragment Name",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		task ("Import new fragment to a new site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+
+			FragmentsAdmin.importCollectionFromTempFolder();
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
+		}
+
+		task ("Assert new fragment is not shown in content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementNotPresent(
+				key_fragmentName = "Fragment Name",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+	}
+
 	@description = "This is a use case for LPS-106212. Can export a content page template in draft status when it has published version and only the published version is exported."
 	@priority = "4"
 	test OnlyPublishedVersionIsExported {

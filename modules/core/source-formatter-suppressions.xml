@@ -7,6 +7,7 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDefinitionKeysCheck" files="portal-bootstrap/system.packages.extra.bnd" />
+		<suppress checks="GradleDependencyArtifactsCheck" files="portal-bootstrap/build.gradle" />
 		<suppress checks="JavaDiamondOperatorCheck" files="registry-impl/src/main/java/com/liferay/registry/internal/RegistryImpl\.java" />
 	</source-check>
 </suppressions>

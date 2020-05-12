@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.product.navigation.product.menu.api
 Bundle-Version: 3.0.2
 Export-Package:\
 	com.liferay.product.navigation.product.menu.constants,\
-	com.liferay.product.navigation.product.menu.display.context
+	com.liferay.product.navigation.product.menu.display.context,\
+	com.liferay.product.navigation.product.menu.util

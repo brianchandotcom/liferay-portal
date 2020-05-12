@@ -985,6 +985,20 @@ definition {
 
 		Button.clickSave();
 
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Source Page",
+			siteName = "Test Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Source Page");
+
 		Page.addFriendlyURLLocalizedPG(
 			friendlyUrlLocalized = "es_ES",
 			localizedFriendlyURL = "/nueva-pagina-de-prueba");

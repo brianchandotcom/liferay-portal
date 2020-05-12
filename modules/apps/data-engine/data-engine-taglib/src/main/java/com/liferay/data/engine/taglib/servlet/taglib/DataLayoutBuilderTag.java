@@ -107,6 +107,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	}
 
 	private Map<String, Object> _getSidebarPanels() {
+		HttpServletRequest request = getRequest();
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", request.getLocale(), getClass());
 
@@ -134,7 +136,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				).put(
 					"isLink", false
 				).put(
-					"label", LanguageUtil.get(request, "rules")
+					"label", LanguageUtil.get(resourceBundle, "rules")
 				).put(
 					"pluginEntryPoint",
 					DataLayoutTaglibUtil.resolveModule(

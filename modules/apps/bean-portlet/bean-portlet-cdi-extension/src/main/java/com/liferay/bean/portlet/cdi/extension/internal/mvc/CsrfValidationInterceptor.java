@@ -128,9 +128,9 @@ public class CsrfValidationInterceptor implements Serializable {
 		}
 		else {
 			_log.error(
-				"The method signature must include " +
-					"(ActionRequest, ActionResponse) or " +
-						"(ResourceRequest, ResourceResponse) as parameters");
+				"The method signature must include (ActionRequest, " +
+					"ActionResponse) or (ResourceRequest, ResourceResponse) " +
+						"as parameters");
 		}
 
 		if (proceed) {

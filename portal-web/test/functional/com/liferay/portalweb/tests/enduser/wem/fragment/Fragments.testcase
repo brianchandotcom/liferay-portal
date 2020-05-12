@@ -77,9 +77,14 @@ definition {
 	@priority = "5"
 	test AddRowToSection {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert add a Row fragment to Section") {
@@ -121,9 +126,14 @@ definition {
 	@priority = "4"
 	test ConfigureBasicComponentButton {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a basic component") {
@@ -174,9 +184,14 @@ definition {
 	@priority = "3"
 	test ConfigureBasicComponentCard {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a basic component") {
@@ -231,9 +246,14 @@ definition {
 	@priority = "4"
 	test ConfigureBasicComponentHeading {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a basic component") {
@@ -284,9 +304,14 @@ definition {
 	@priority = "3"
 	test ConfigureBasicComponentImage {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a basic component") {
@@ -337,9 +362,14 @@ definition {
 	@priority = "4"
 	test ConfigureBasicComponentParagraph {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a basic component") {
@@ -388,9 +418,14 @@ definition {
 	@priority = "4"
 	test ConfigureBasicComponentSeparator {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a basic component") {
@@ -439,9 +474,14 @@ definition {
 	@priority = "4"
 	test ConfigureBasicComponentSpacer {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a basic component") {
@@ -485,9 +525,14 @@ definition {
 	@priority = "5"
 	test ConfigureLayoutElements {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a section") {
@@ -679,16 +724,10 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.fragment.web.internal.configuration.FragmentGlobalPanelAppConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
-		}
-
-		task ("Add a fragment collection") {
-			FragmentsAdmin.addCollection(collectionName = "Global Collection Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+		task ("Add a fragment collection in Global site") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Global",
+				name = "Global Collection Name");
 		}
 
 		task ("Add a section fragment to the fragment collection via JSON") {
@@ -705,9 +744,14 @@ definition {
 				name = "Global Fragment Name 2");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Global Collection Name",
@@ -850,12 +894,10 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.fragment.web.internal.configuration.FragmentGlobalPanelAppConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
-		}
-
-		task ("Add a fragment collection") {
-			FragmentsAdmin.addCollection(collectionName = "Global Collection Name");
+		task ("Add a fragment collection in Global site") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Global",
+				name = "Global Collection Name");
 		}
 
 		task ("Navigate to the fragment collection") {
@@ -913,16 +955,10 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.fragment.web.internal.configuration.FragmentGlobalPanelAppConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
-		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
-		}
-
-		task ("Add a fragment collection") {
-			FragmentsAdmin.addCollection(collectionName = "Global Collection Name");
-		}
-
-		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+		task ("Add a fragment collection in Global site") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Global",
+				name = "Global Collection Name");
 		}
 
 		task ("Add a section fragment to the fragment collection via JSON") {
@@ -939,9 +975,14 @@ definition {
 				name = "Global Fragment Name 2");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Global Collection Name",
@@ -953,9 +994,14 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name 2",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name 2");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name 2",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Global Collection Name",
@@ -969,9 +1015,14 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name 2");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-2");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name 2",
+			layoutName = "Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name 2");
 
 		PageEditor.addFragment(
 			collectionName = "Global Collection Name",

@@ -103,24 +103,30 @@ const FriendlyURLHistoryModal = ({
 		fetch(deleteFriendlyURLEntryLocalizationURL, {
 			body: formData,
 			method: 'POST',
-		}).then((response) => {
-			if (response.ok) {
-				setFriendlyURLEntryLocalizations(
-					(friendlyURLEntryLocalizations) => {
-						friendlyURLEntryLocalizations[
-							languageId
-						].history = friendlyURLEntryLocalizations[
-							languageId
-						].history.filter(
-							({friendlyURLEntryId}) =>
-								friendlyURLEntryId != deleteFriendlyURLEntryId
-						);
+		})
+			.then((response) => {
+				if (response.ok && isMounted()) {
+					setFriendlyURLEntryLocalizations(
+						(friendlyURLEntryLocalizations) => {
+							friendlyURLEntryLocalizations[
+								languageId
+							].history = friendlyURLEntryLocalizations[
+								languageId
+							].history.filter(
+								({friendlyURLEntryId}) =>
+									friendlyURLEntryId != deleteFriendlyURLEntryId
+							);
 
-						return {...friendlyURLEntryLocalizations};
-					}
-				);
-			}
-		});
+							return {...friendlyURLEntryLocalizations};
+						}
+					);
+				}
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+			});
 	};
 
 	return (

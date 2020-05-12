@@ -475,8 +475,8 @@ public class DDMFormEmailNotificationSender {
 
 		Locale locale = getLocale(ddmFormInstance);
 
-		template.put("authorName", ddmFormInstance.getUserName());
 		template.put("formName", ddmFormInstance.getName(locale));
+
 		template.put("pages", getPages(ddmFormInstance, ddmFormInstanceRecord));
 		template.put(
 			"siteName", getSiteName(ddmFormInstance.getGroupId(), locale));

@@ -29,7 +29,6 @@
  * Print a form entry.
  */
 {template .form_entry}
-	{@param authorName: string}
 	{@param formName: string}
 	{@param pages: ?}
 	{@param siteName: string}
@@ -54,7 +53,7 @@
 							<div id="introduction" style="background-color: #fff; border-radius: 4px; margin: 0 auto 24px auto; padding: 40px;">
 							<h1 align="center" style="margin-bottom: 24px; margin-top: 0;">{$siteName}</h1>
 
-							<h2 align="center" style="margin-bottom: 24px; margin-top: 0;">Hi, {$authorName}</h2>
+							<h2 align="center" style="margin-bottom: 24px; margin-top: 0;">Hi,</h2>
 
 							<p style="line-height: 30px; margin-bottom: 24px; margin-top: 0;">
 								<b>{$userName}</b> submitted an entry for the {$formName} form in the {$siteName} site. View all the form's entries by clicking <a href="{$viewFormEntriesURL}" style="color: #7bc4f4; text-decoration: none;" target="_blank">here</a>.

@@ -67,12 +67,15 @@ definition {
 			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
 		}
 
-		task ("Navigate to pages admin") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-		}
-
 		task ("Add a content page") {
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add the section fragment to the content page") {

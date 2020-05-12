@@ -928,6 +928,86 @@ definition {
 			value1 = "Temporary (302)");
 	}
 
+	@description = "This ensures that accessing an old friendlyURL in the default language after publishing the new friendly URL will redirect the user to the new URL."
+	@priority = "5"
+	test StagingFriendlyURLRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Source Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Source Page",
+			siteName = "Test Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
+
+		AssertLocation(value1 = "${portalURL}/en/web/test-site-name/new-test-page");
+
+		AssertVisible(
+			key_pageName = "Test Source Page",
+			locator1 = "Home#PAGE_ACTIVE");
+	}
+
+	@description = "This ensures that accessing an old localized friendlyURL after publishing the new friendly URL will redirect the user to the new URL."
+	@priority = "5"
+	test StagingLocalizedFriendlyURLRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Source Page");
+
+		Page.addFriendlyURLLocalizedPG(
+			friendlyUrlLocalized = "es_ES",
+			localizedFriendlyURL = "/pagina-de-prueba");
+
+		PortletEntry.inputName(name = "Pagina de prueba");
+
+		Button.clickSave();
+
+		Page.addFriendlyURLLocalizedPG(
+			friendlyUrlLocalized = "es_ES",
+			localizedFriendlyURL = "/nueva-pagina-de-prueba");
+
+		Button.clickSave();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Source Page",
+			siteName = "Test Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name/pagina-de-prueba");
+
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/nueva-pagina-de-prueba");
+
+		AssertVisible(
+			key_pageName = "Pagina de prueba",
+			locator1 = "Home#PAGE_ACTIVE");
+	}
+
 	@description = "This ensures that the 404 URLs can be viewed after reactivating."
 	@priority = "5"
 	test View404URLsAfterReactivating {

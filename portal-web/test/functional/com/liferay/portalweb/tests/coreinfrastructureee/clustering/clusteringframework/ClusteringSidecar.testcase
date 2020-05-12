@@ -26,7 +26,7 @@ definition {
 	test AddAndRemoveSidecarNodes {
 		property app.server.bundles.size = "2";
 		property skip.start.app.server.index = "2";
-		property test.name.skip.portal.instance = "ClusterSidecar#AddAndRemoveSidecarNodes";
+		property test.name.skip.portal.instance = "ClusteringSidecar#AddAndRemoveSidecarNodes";
 
 		User.loginPG(
 			password = "test",
@@ -108,7 +108,7 @@ definition {
 
 	@priority = "5"
 	test AssertClusterSidecarStarted {
-		property test.name.skip.portal.instance = "ClusterSidecar#AssertClusterSidecarStarted";
+		property test.name.skip.portal.instance = "ClusteringSidecar#AssertClusterSidecarStarted";
 
 		var sidecarNode1Name = Clustering.getClusterSidecarNodeName(nodePort = "8080");
 		var sidecarNode2Name = Clustering.getClusterSidecarNodeName(nodePort = "9080");

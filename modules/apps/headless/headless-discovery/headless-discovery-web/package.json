@@ -10,6 +10,8 @@
 		"@clayui/tabs": "3.1.1",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
+		"graphiql": "0.11.10",
+		"graphql": "0.12.0",
 		"react": "16.12.0"
 	},
 	"name": "headless-discovery-web",

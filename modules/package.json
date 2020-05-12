@@ -10,7 +10,10 @@
 	},
 	"private": true,
 	"resolutions": {
-		"dnd-core": "10.0.1"
+		"dnd-core": "10.0.1",
+		"graphql-language-service-interface": "1.0.16",
+		"graphql-language-service-parser": "0.1.14",
+		"graphql-language-service-utils": "1.2.0"
 	},
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",

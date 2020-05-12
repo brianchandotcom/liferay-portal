@@ -41,6 +41,7 @@ const Validation = ({
 	validation,
 	validations,
 	value,
+	visible,
 	...otherProps
 }) => {
 	const [
@@ -112,7 +113,7 @@ const Validation = ({
 				showAsSwitcher
 				spritemap={spritemap}
 				value={enableValidation}
-				visible
+				visible={visible}
 			/>
 
 			{enableValidation && (
@@ -133,7 +134,7 @@ const Validation = ({
 						readOnly={readOnly || localizationMode}
 						spritemap={spritemap}
 						value={[selectedValidation.name]}
-						visible
+						visible={visible}
 					/>
 					{selectedValidation.parameterMessage && (
 						<DynamicComponent
@@ -149,7 +150,7 @@ const Validation = ({
 							required={false}
 							spritemap={spritemap}
 							value={parameter}
-							visible
+							visible={visible}
 						/>
 					)}
 					<Text
@@ -164,7 +165,7 @@ const Validation = ({
 						required={false}
 						spritemap={spritemap}
 						value={errorMessage}
-						visible
+						visible={visible}
 					/>
 				</>
 			)}
@@ -187,6 +188,7 @@ const ValidationProxy = connectStore(
 		validation,
 		validations: initialValidations,
 		value = {},
+		visible,
 	}) => {
 		const data = transformData({
 			defaultLanguageId,
@@ -210,6 +212,7 @@ const ValidationProxy = connectStore(
 				store={store}
 				validation={validation}
 				value={value}
+				visible={visible}
 			/>
 		);
 	}

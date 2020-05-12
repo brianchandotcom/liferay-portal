@@ -19,13 +19,16 @@ import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -63,19 +66,24 @@ public class LayoutSEOLinkManagerTest {
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"default-language-url",
-			() -> {
-				List<LayoutSEOLink> layoutSEOLinks =
-					_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-						_layout, LocaleUtil.US, _CANONICAL_URL, _alternateURLs);
+			() -> _testWithSiteDefaultLanguage(
+				_layout.getGroupId(), LocaleUtil.US,
+				() -> {
+					List<LayoutSEOLink> layoutSEOLinks =
+						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+							_layout, LocaleUtil.US, _CANONICAL_URL,
+							_alternateURLs);
 
-				Assert.assertEquals(
-					layoutSEOLinks.toString(), _alternateURLs.size() + 2,
-					layoutSEOLinks.size());
+					Assert.assertEquals(
+						layoutSEOLinks.toString(), _alternateURLs.size() + 2,
+						layoutSEOLinks.size());
 
-				_assertCanonicalLayoutSEOLink(layoutSEOLinks, _CANONICAL_URL);
+					_assertCanonicalLayoutSEOLink(
+						layoutSEOLinks, _CANONICAL_URL);
 
-				_assertAlternateLayoutSEOLinks(layoutSEOLinks, _alternateURLs);
-			});
+					_assertAlternateLayoutSEOLinks(
+						layoutSEOLinks, _alternateURLs);
+				}));
 	}
 
 	@Test
@@ -84,20 +92,24 @@ public class LayoutSEOLinkManagerTest {
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"default-language-url",
-			() -> {
-				List<LayoutSEOLink> layoutSEOLinks =
-					_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-						_layout, LocaleUtil.SPAIN, _CANONICAL_URL,
-						_alternateURLs);
+			() -> _testWithSiteDefaultLanguage(
+				_layout.getGroupId(), LocaleUtil.US,
+				() -> {
+					List<LayoutSEOLink> layoutSEOLinks =
+						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+							_layout, LocaleUtil.SPAIN, _CANONICAL_URL,
+							_alternateURLs);
 
-				Assert.assertEquals(
-					layoutSEOLinks.toString(), _alternateURLs.size() + 2,
-					layoutSEOLinks.size());
+					Assert.assertEquals(
+						layoutSEOLinks.toString(), _alternateURLs.size() + 2,
+						layoutSEOLinks.size());
 
-				_assertCanonicalLayoutSEOLink(layoutSEOLinks, _CANONICAL_URL);
+					_assertCanonicalLayoutSEOLink(
+						layoutSEOLinks, _CANONICAL_URL);
 
-				_assertAlternateLayoutSEOLinks(layoutSEOLinks, _alternateURLs);
-			});
+					_assertAlternateLayoutSEOLinks(
+						layoutSEOLinks, _alternateURLs);
+				}));
 	}
 
 	@Test
@@ -106,18 +118,23 @@ public class LayoutSEOLinkManagerTest {
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"localized-url",
-			() -> {
-				List<LayoutSEOLink> layoutSEOLinks =
-					_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-						_layout, LocaleUtil.US, _CANONICAL_URL, _alternateURLs);
+			() -> _testWithSiteDefaultLanguage(
+				_layout.getGroupId(), LocaleUtil.US,
+				() -> {
+					List<LayoutSEOLink> layoutSEOLinks =
+						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+							_layout, LocaleUtil.US, _CANONICAL_URL,
+							_alternateURLs);
 
-				Assert.assertEquals(
-					layoutSEOLinks.toString(), _alternateURLs.size() + 2,
-					layoutSEOLinks.size());
+					Assert.assertEquals(
+						layoutSEOLinks.toString(), _alternateURLs.size() + 2,
+						layoutSEOLinks.size());
 
-				_assertAlternateLayoutSEOLinks(layoutSEOLinks, _alternateURLs);
-				_assertCanonicalLayoutSEOLink(layoutSEOLinks, _CANONICAL_URL);
-			});
+					_assertAlternateLayoutSEOLinks(
+						layoutSEOLinks, _alternateURLs);
+					_assertCanonicalLayoutSEOLink(
+						layoutSEOLinks, _CANONICAL_URL);
+				}));
 	}
 
 	@Test
@@ -126,20 +143,23 @@ public class LayoutSEOLinkManagerTest {
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"localized-url",
-			() -> {
-				List<LayoutSEOLink> layoutSEOLinks =
-					_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-						_layout, LocaleUtil.SPAIN, _CANONICAL_URL,
-						_alternateURLs);
+			() -> _testWithSiteDefaultLanguage(
+				_layout.getGroupId(), LocaleUtil.US,
+				() -> {
+					List<LayoutSEOLink> layoutSEOLinks =
+						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+							_layout, LocaleUtil.SPAIN, _CANONICAL_URL,
+							_alternateURLs);
 
-				Assert.assertEquals(
-					layoutSEOLinks.toString(), _alternateURLs.size() + 2,
-					layoutSEOLinks.size());
+					Assert.assertEquals(
+						layoutSEOLinks.toString(), _alternateURLs.size() + 2,
+						layoutSEOLinks.size());
 
-				_assertAlternateLayoutSEOLinks(layoutSEOLinks, _alternateURLs);
-				_assertCanonicalLayoutSEOLink(
-					layoutSEOLinks, _alternateURLs.get(LocaleUtil.SPAIN));
-			});
+					_assertAlternateLayoutSEOLinks(
+						layoutSEOLinks, _alternateURLs);
+					_assertCanonicalLayoutSEOLink(
+						layoutSEOLinks, _alternateURLs.get(LocaleUtil.SPAIN));
+				}));
 	}
 
 	private void _assertAlternateLayoutSEOLink(
@@ -259,6 +279,34 @@ public class LayoutSEOLinkManagerTest {
 					})) {
 
 			unsafeRunnable.run();
+		}
+	}
+
+	private void _testWithSiteDefaultLanguage(
+			long groupId, Locale locale,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		String oldLanguageId = unicodeProperties.getProperty("languageId");
+
+		try {
+			unicodeProperties.setProperty(
+				"languageId", LocaleUtil.toLanguageId(locale));
+
+			GroupLocalServiceUtil.updateGroup(
+				groupId, unicodeProperties.toString());
+
+			unsafeRunnable.run();
+		}
+		finally {
+			unicodeProperties.setProperty("languageId", oldLanguageId);
+
+			GroupLocalServiceUtil.updateGroup(
+				groupId, unicodeProperties.toString());
 		}
 	}
 

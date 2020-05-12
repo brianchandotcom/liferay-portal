@@ -28,6 +28,8 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.internal.SearchEngineHelperImpl;
 import com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor;
 import com.liferay.portal.search.test.util.search.engine.SearchEngineFixture;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -88,6 +90,8 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 
 	protected ReindexSingleIndexerBackgroundTaskExecutor
 		getReindexSingleIndexerBackgroundTaskExecutor() {
+
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		return new ReindexSingleIndexerBackgroundTaskExecutor() {
 			{

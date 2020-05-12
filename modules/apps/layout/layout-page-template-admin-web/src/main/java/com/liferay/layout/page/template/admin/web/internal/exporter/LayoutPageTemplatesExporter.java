@@ -80,7 +80,11 @@ public class LayoutPageTemplatesExporter {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 					layoutPageTemplateEntries) {
 
-				if (layoutPageTemplateEntry.isDraft()) {
+				if (layoutPageTemplateEntry.isDraft() ||
+					(layoutPageTemplateEntry.getType() !=
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_DISPLAY_PAGE)) {
+
 					continue;
 				}
 
@@ -163,7 +167,11 @@ public class LayoutPageTemplatesExporter {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 					layoutPageTemplateEntries) {
 
-				if (layoutPageTemplateEntry.isDraft()) {
+				if (layoutPageTemplateEntry.isDraft() ||
+					(layoutPageTemplateEntry.getType() !=
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_MASTER_LAYOUT)) {
+
 					continue;
 				}
 
@@ -193,7 +201,10 @@ public class LayoutPageTemplatesExporter {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 					layoutPageTemplateEntries) {
 
-				if (layoutPageTemplateEntry.isDraft()) {
+				if (layoutPageTemplateEntry.isDraft() ||
+					(layoutPageTemplateEntry.getType() !=
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
+
 					continue;
 				}
 

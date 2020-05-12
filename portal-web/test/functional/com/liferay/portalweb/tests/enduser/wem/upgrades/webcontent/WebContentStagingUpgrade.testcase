@@ -48,6 +48,15 @@ definition {
 	}
 
 	@priority = "5"
+	test PublishStagingArchiveAfterUpgrade721 {
+		property data.archive.type = "data-archive-staging-unpublished";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		Upgrade.publishStagedSite();
+	}
+
+	@priority = "5"
 	test PublishStagingArchiveAfterUpgrade7110 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -61,6 +70,15 @@ definition {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.6";
+
+		Upgrade.publishStagedSite();
+	}
+
+	@priority = "5"
+	test PublishStagingArchiveAfterUpgrade72101 {
+		property data.archive.type = "data-archive-staging-unpublished";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
 
 		Upgrade.publishStagedSite();
 	}

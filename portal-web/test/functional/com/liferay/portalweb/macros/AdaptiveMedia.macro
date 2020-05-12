@@ -19,7 +19,7 @@ definition {
 
 		AssertElementPresent(locator1 = "AdaptiveMediaTable#PROGRESS_SUCCESS");
 
-		Alert.closeMessage(messageType = "GENERIC");
+		Alert.closeMessage(messageType = "SUCCESS");
 	}
 
 	macro addImageResolution {

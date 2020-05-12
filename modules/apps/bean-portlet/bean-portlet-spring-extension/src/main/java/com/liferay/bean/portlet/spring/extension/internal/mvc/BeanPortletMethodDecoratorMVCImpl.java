@@ -91,9 +91,9 @@ public class BeanPortletMethodDecoratorMVCImpl
 				String propertyDescriptorName = propertyDescriptor.getName();
 
 				if (propertyDescriptorName.equals("targetObject")) {
-					Method readMethod = propertyDescriptor.getReadMethod();
+					Method method = propertyDescriptor.getReadMethod();
 
-					eventObject = readMethod.invoke(eventObject);
+					eventObject = method.invoke(eventObject);
 
 					break;
 				}

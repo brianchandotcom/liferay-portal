@@ -75,20 +75,20 @@ public class JSR330InjectedFieldElement
 
 			boolean nullInjectionPermitted = false;
 
-			Annotation[] fieldAnnotations = field.getAnnotations();
+			Annotation[] annotations = field.getAnnotations();
 
-			for (Annotation fieldAnnotation : fieldAnnotations) {
+			for (Annotation annotation : annotations) {
 				Class<? extends Annotation> annotationType =
-					fieldAnnotation.annotationType();
+					annotation.annotationType();
 
-				String annotationTypeName = annotationType.getName();
+				String name = annotationType.getName();
 
-				if (annotationTypeName.equals("javax.ws.rs.CookieParam") ||
-					annotationTypeName.equals("javax.ws.rs.FormParam") ||
-					annotationTypeName.equals("javax.ws.rs.HeaderParam") ||
-					annotationTypeName.equals("javax.ws.rs.MatrixParam") ||
-					annotationTypeName.equals("javax.ws.rs.PathParam") ||
-					annotationTypeName.equals("javax.ws.rs.QueryParam")) {
+				if (name.equals("javax.ws.rs.CookieParam") ||
+					name.equals("javax.ws.rs.FormParam") ||
+					name.equals("javax.ws.rs.HeaderParam") ||
+					name.equals("javax.ws.rs.MatrixParam") ||
+					name.equals("javax.ws.rs.PathParam") ||
+					name.equals("javax.ws.rs.QueryParam")) {
 
 					nullInjectionPermitted = true;
 

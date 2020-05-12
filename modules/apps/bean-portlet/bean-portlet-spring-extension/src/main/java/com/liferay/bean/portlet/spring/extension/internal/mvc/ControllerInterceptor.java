@@ -217,11 +217,11 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 
 		if (redirectURL != null) {
 			try {
-				URI location = new URI(redirectURL.toString());
+				URI uri = new URI(redirectURL.toString());
 
 				_applicationEventPublisher.publishEvent(
 					new ControllerRedirectEventImpl(
-						_eventObject, location,
+						_eventObject, uri,
 						new ResourceInfoImpl(
 							beanPortletMethod.getBeanClass(),
 							beanPortletMethod.getMethod()),

@@ -175,9 +175,9 @@ public class JSR330BeanPortletPostProcessor
 			List<InjectionMetadata.InjectedElement> injectionElements =
 				new ArrayList<>();
 
-			Field[] declaredFields = curClass.getDeclaredFields();
+			Field[] fields = curClass.getDeclaredFields();
 
-			for (Field field : declaredFields) {
+			for (Field field : fields) {
 				AnnotationAttributes annotationAttributes =
 					_getAnnotationAttributes(field);
 

@@ -44,7 +44,7 @@ public class CsrfValidationInterceptor extends BeanPortletMethodInterceptor {
 		super(beanPortletMethod, controller);
 
 		_configuration = configuration;
-		_targetMethod = beanPortletMethod.getMethod();
+		_method = beanPortletMethod.getMethod();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class CsrfValidationInterceptor extends BeanPortletMethodInterceptor {
 		}
 
 		if ((csrfOptions == Csrf.CsrfOptions.EXPLICIT) &&
-			!_targetMethod.isAnnotationPresent(CsrfProtected.class)) {
+			!_method.isAnnotationPresent(CsrfProtected.class)) {
 
 			return super.invoke(args);
 		}
@@ -139,6 +139,6 @@ public class CsrfValidationInterceptor extends BeanPortletMethodInterceptor {
 		CsrfValidationInterceptor.class);
 
 	private final Configuration _configuration;
-	private final Method _targetMethod;
+	private final Method _method;
 
 }

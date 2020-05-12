@@ -81,12 +81,12 @@ public class BeanValidationInterceptor extends BeanPortletMethodInterceptor {
 
 				Class<?> leafBeanClass = leafBean.getClass();
 
-				Field declaredField = leafBeanClass.getDeclaredField(
+				Field field = leafBeanClass.getDeclaredField(
 					lastPathNode.getName());
 
 				String paramName = null;
 
-				Annotation[] annotations = declaredField.getAnnotations();
+				Annotation[] annotations = field.getAnnotations();
 
 				for (Annotation annotation : annotations) {
 					if (annotation instanceof CookieParam) {

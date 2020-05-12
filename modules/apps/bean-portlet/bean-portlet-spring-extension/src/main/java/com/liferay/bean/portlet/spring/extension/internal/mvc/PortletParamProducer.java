@@ -481,7 +481,7 @@ public class PortletParamProducer implements ApplicationContextAware {
 	}
 
 	private void _addBindingError(
-		Annotation[] fieldAnnotations, String message, String value) {
+		Annotation[] annotations, String message, String value) {
 
 		MutableBindingResult mutableBindingResult =
 			(MutableBindingResult)_bindingResult;
@@ -492,7 +492,7 @@ public class PortletParamProducer implements ApplicationContextAware {
 		else {
 			mutableBindingResult.addBindingError(
 				new BindingErrorImpl(
-					message, _getParamName(fieldAnnotations), value));
+					message, _getParamName(annotations), value));
 		}
 	}
 

@@ -311,7 +311,9 @@ definition {
 			layoutName = "Child Page Name",
 			widgetName = "Breadcrumb");
 
-		Navigator.gotoPage(pageName = "Child Page Name");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Guest");
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
@@ -329,7 +331,9 @@ definition {
 
 		Breadcrumb.saveDisplayPreview();
 
-		Navigator.gotoPage(pageName = "Child Page Name");
+		Navigator.openSitePage(
+			pageName = "Child Page Name",
+			siteName = "Guest");
 
 		Breadcrumb.viewPG(
 			breadcrumbListNotVisible = "Home,Child Page Name",

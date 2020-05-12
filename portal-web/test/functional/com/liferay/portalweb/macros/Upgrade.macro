@@ -918,7 +918,7 @@ definition {
 				fragmentName = "Paragraph");
 		}
 
-		task ("Assert button frgamnet configuration survived") {
+		task ("Assert button fragment configuration survived") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-configuration-content-page");
 
 			ContentPages.clickPencil();

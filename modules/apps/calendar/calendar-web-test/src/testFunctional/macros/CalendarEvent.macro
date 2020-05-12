@@ -1313,7 +1313,7 @@ definition {
 	macro viewApprovedRSVP {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		CalendarScheduler.selectSpecificEvent(eventTitle = "${eventTitle}");
+		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = "${eventTitle}");
 
 		AssertTextEquals(
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE",
@@ -1530,11 +1530,11 @@ definition {
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
 			value1 = "${siteCalendarName}");
 
-		if (IsElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC")) {
-			CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "${eventTitle}");
+		if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC")) {
+			CalendarScheduler.viewSpecificEventNotVisible(eventTitle = "${eventTitle}");
 		}
 		else {
-			CalendarScheduler.viewSpecificEventNotVisible(eventTitle = "${eventTitle}");
+			CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "${eventTitle}");
 		}
 
 		AssertClick(

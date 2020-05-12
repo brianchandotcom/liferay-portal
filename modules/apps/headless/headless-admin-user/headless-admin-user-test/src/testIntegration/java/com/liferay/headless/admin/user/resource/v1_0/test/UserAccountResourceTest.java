@@ -383,6 +383,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
+	protected UserAccount testPatchUserAccount_addUserAccount()
+		throws Exception {
+
+		return _addUserAccount(testGroup.getGroupId(), randomUserAccount());
+	}
+
+	@Override
 	protected UserAccount testPostUserAccount_addUserAccount(
 			UserAccount userAccount)
 		throws Exception {

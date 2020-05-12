@@ -19,6 +19,9 @@ import com.liferay.bean.portlet.extension.ScopedBean;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
+import javax.mvc.RedirectScoped;
 
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletConfig;
@@ -26,6 +29,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderParameters;
+import javax.portlet.RenderResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.RenderStateScoped;
@@ -95,6 +99,37 @@ public class SpringScopedBeanManager {
 			}
 		}
 
+		// MVC BEGIN
+
+		if (_portletResponse instanceof RenderResponse) {
+			PortletSession portletSession = _portletRequest.getPortletSession(
+				true);
+
+			Enumeration<String> attributeNames =
+				portletSession.getAttributeNames();
+
+			while (attributeNames.hasMoreElements()) {
+				String name = attributeNames.nextElement();
+
+				Object value = portletSession.getAttribute(name);
+
+				if (value instanceof ScopedBean) {
+					SpringScopedBean springScopedBean = (SpringScopedBean)value;
+
+					if (Objects.equals(
+							springScopedBean.getScopeName(),
+							RedirectScoped.class.getSimpleName())) {
+
+						springScopedBean.destroy();
+
+						portletSession.removeAttribute(name);
+					}
+				}
+			}
+		}
+
+		// MVC END
+
 		Enumeration<String> enumeration = _portletRequest.getAttributeNames();
 
 		while (enumeration.hasMoreElements()) {
@@ -141,6 +176,13 @@ public class SpringScopedBeanManager {
 			_ATTRIBUTE_NAME_PREFIX.concat(name), subscope);
 	}
 
+	public SpringScopedBean getRedirectScopedBean(String name) {
+		PortletSession portletSession = _portletRequest.getPortletSession(true);
+
+		return (SpringScopedBean)portletSession.getAttribute(
+			_ATTRIBUTE_NAME_PREFIX.concat(name));
+	}
+
 	public SpringScopedBean getRenderStateScopedBean(String name) {
 		return getPortletRequestScopedBean(name);
 	}
@@ -166,6 +208,15 @@ public class SpringScopedBeanManager {
 
 		portletSession.setAttribute(
 			_ATTRIBUTE_NAME_PREFIX.concat(name), springScopedBean, subscope);
+	}
+
+	public void setRedirectScopedBean(
+		String name, SpringScopedBean springScopedBean) {
+
+		PortletSession portletSession = _portletRequest.getPortletSession(true);
+
+		portletSession.setAttribute(
+			_ATTRIBUTE_NAME_PREFIX.concat(name), springScopedBean);
 	}
 
 	public void setRenderStateScopedBean(

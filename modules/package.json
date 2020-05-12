@@ -10,7 +10,10 @@
 	},
 	"private": true,
 	"resolutions": {
-		"dnd-core": "10.0.1"
+		"codemirror-graphql": "0.9.0",
+		"dnd-core": "10.0.1",
+		"graphql-language-service-interface": "2.1.0",
+		"graphql-language-service-parser": "1.3.0"
 	},
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",

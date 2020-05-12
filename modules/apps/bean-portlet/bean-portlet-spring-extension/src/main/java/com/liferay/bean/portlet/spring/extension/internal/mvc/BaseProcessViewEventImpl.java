@@ -24,9 +24,10 @@ import org.springframework.context.ApplicationEvent;
 public class BaseProcessViewEventImpl extends ApplicationEvent {
 
 	public BaseProcessViewEventImpl(
-		Object source, String view, Class<? extends ViewEngine> viewEngine) {
+		Object eventObject, String view,
+		Class<? extends ViewEngine> viewEngine) {
 
-		super(source);
+		super(eventObject);
 
 		_view = view;
 		_viewEngine = viewEngine;

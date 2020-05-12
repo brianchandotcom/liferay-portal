@@ -59,7 +59,7 @@ public class BeanPortletMethodDecoratorMVCImpl
 
 		boolean controller = _isController(beanPortletMethod);
 
-		Object target = _getTarget(beanPortletMethod.getBeanClass());
+		Object eventObject = _getEventObject(beanPortletMethod.getBeanClass());
 
 		return new ControllerInterceptor(
 			_applicationEventPublisher,
@@ -67,9 +67,9 @@ public class BeanPortletMethodDecoratorMVCImpl
 				new CsrfValidationInterceptor(
 					beanPortletMethod, _configuration, controller),
 				controller, _messageInterpolator,
-				(MutableBindingResult)_bindingResult, _mvcContext, target,
+				(MutableBindingResult)_bindingResult, _mvcContext, eventObject,
 				_validator),
-			controller, portletRequest, portletResponse, target);
+			controller, eventObject, portletRequest, portletResponse);
 	}
 
 	@Override
@@ -77,11 +77,12 @@ public class BeanPortletMethodDecoratorMVCImpl
 		_applicationContext = applicationContext;
 	}
 
-	private Object _getTarget(Class<?> beanClass) {
-		Object target = _applicationContext.getBean(beanClass);
+	private Object _getEventObject(Class<?> beanClass) {
+		Object eventObject = _applicationContext.getBean(beanClass);
 
 		try {
-			BeanInfo beanInfo = Introspector.getBeanInfo(target.getClass());
+			BeanInfo beanInfo = Introspector.getBeanInfo(
+				eventObject.getClass());
 
 			PropertyDescriptor[] propertyDescriptors =
 				beanInfo.getPropertyDescriptors();
@@ -92,7 +93,7 @@ public class BeanPortletMethodDecoratorMVCImpl
 				if (propertyDescriptorName.equals("targetObject")) {
 					Method readMethod = propertyDescriptor.getReadMethod();
 
-					target = readMethod.invoke(target);
+					eventObject = readMethod.invoke(eventObject);
 
 					break;
 				}
@@ -102,7 +103,7 @@ public class BeanPortletMethodDecoratorMVCImpl
 			_log.error(exception, exception);
 		}
 
-		return target;
+		return eventObject;
 	}
 
 	private boolean _isController(BeanPortletMethod beanPortletMethod) {

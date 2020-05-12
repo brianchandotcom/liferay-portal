@@ -24,9 +24,10 @@ public class AfterProcessViewEventImpl
 	extends BaseProcessViewEventImpl implements AfterProcessViewEvent {
 
 	public AfterProcessViewEventImpl(
-		Object source, String view, Class<? extends ViewEngine> viewEngine) {
+		Object eventObject, String view,
+		Class<? extends ViewEngine> viewEngine) {
 
-		super(source, view, viewEngine);
+		super(eventObject, view, viewEngine);
 	}
 
 }

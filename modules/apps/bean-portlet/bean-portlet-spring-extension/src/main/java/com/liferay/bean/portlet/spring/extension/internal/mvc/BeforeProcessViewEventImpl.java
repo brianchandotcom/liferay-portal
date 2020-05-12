@@ -24,9 +24,10 @@ public class BeforeProcessViewEventImpl
 	extends BaseProcessViewEventImpl implements BeforeProcessViewEvent {
 
 	public BeforeProcessViewEventImpl(
-		Object source, String view, Class<? extends ViewEngine> viewEngine) {
+		Object eventObject, String view,
+		Class<? extends ViewEngine> viewEngine) {
 
-		super(source, view, viewEngine);
+		super(eventObject, view, viewEngine);
 	}
 
 }

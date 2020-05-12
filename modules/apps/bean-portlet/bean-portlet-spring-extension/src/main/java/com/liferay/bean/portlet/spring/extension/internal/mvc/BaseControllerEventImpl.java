@@ -25,9 +25,9 @@ import org.springframework.context.ApplicationEvent;
 public class BaseControllerEventImpl extends ApplicationEvent {
 
 	public BaseControllerEventImpl(
-		ResourceInfo resourceInfo, Object source, UriInfo uriInfo) {
+		Object eventObject, ResourceInfo resourceInfo, UriInfo uriInfo) {
 
-		super(source);
+		super(eventObject);
 
 		_resourceInfo = resourceInfo;
 		_uriInfo = uriInfo;

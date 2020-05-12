@@ -26,9 +26,9 @@ public class BeforeControllerEventImpl
 	extends BaseControllerEventImpl implements BeforeControllerEvent {
 
 	public BeforeControllerEventImpl(
-		Object source, ResourceInfo resourceInfo, UriInfo uriInfo) {
+		Object eventObject, ResourceInfo resourceInfo, UriInfo uriInfo) {
 
-		super(resourceInfo, source, uriInfo);
+		super(eventObject, resourceInfo, uriInfo);
 	}
 
 }

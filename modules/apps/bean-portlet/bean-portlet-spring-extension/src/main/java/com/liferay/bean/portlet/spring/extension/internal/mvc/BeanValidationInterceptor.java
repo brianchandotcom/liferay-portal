@@ -43,14 +43,14 @@ public class BeanValidationInterceptor extends BeanPortletMethodInterceptor {
 		BeanPortletMethod beanPortletMethod, boolean controller,
 		MessageInterpolator messageInterpolator,
 		MutableBindingResult mutableBindingResult, MvcContext mvcContext,
-		Object target, Validator validator) {
+		Object validationObject, Validator validator) {
 
 		super(beanPortletMethod, controller);
 
 		_messageInterpolator = messageInterpolator;
 		_mutableBindingResult = mutableBindingResult;
 		_mvcContext = mvcContext;
-		_target = target;
+		_validationObject = validationObject;
 		_validator = validator;
 	}
 
@@ -61,7 +61,7 @@ public class BeanValidationInterceptor extends BeanPortletMethodInterceptor {
 		}
 
 		Set<ConstraintViolation<Object>> constraintViolations =
-			_validator.validate(_target);
+			_validator.validate(_validationObject);
 
 		for (ConstraintViolation<Object> constraintViolation :
 				constraintViolations) {
@@ -138,7 +138,7 @@ public class BeanValidationInterceptor extends BeanPortletMethodInterceptor {
 	private final MessageInterpolator _messageInterpolator;
 	private final MutableBindingResult _mutableBindingResult;
 	private final MvcContext _mvcContext;
-	private final Object _target;
+	private final Object _validationObject;
 	private final Validator _validator;
 
 }

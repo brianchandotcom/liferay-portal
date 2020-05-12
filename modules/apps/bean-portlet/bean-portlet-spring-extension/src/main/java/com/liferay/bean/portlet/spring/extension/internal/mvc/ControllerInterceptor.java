@@ -56,15 +56,15 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 	public ControllerInterceptor(
 		ApplicationEventPublisher applicationEventPublisher,
 		BeanPortletMethod beanPortletMethod, boolean controller,
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		Object target) {
+		Object eventObject, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
 
 		super(beanPortletMethod, controller);
 
 		_applicationEventPublisher = applicationEventPublisher;
+		_eventObject = eventObject;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
-		_target = target;
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 
 		_applicationEventPublisher.publishEvent(
 			new BeforeControllerEventImpl(
-				_target,
+				_eventObject,
 				new ResourceInfoImpl(
 					beanPortletMethod.getBeanClass(),
 					beanPortletMethod.getMethod()),
@@ -209,10 +209,11 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 
 		_applicationEventPublisher.publishEvent(
 			new AfterControllerEventImpl(
+				_eventObject,
 				new ResourceInfoImpl(
 					beanPortletMethod.getBeanClass(),
 					beanPortletMethod.getMethod()),
-				_target, new UriInfoImpl()));
+				new UriInfoImpl()));
 
 		if (redirectURL != null) {
 			try {
@@ -220,11 +221,11 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 
 				_applicationEventPublisher.publishEvent(
 					new ControllerRedirectEventImpl(
-						location,
+						_eventObject, location,
 						new ResourceInfoImpl(
 							beanPortletMethod.getBeanClass(),
 							beanPortletMethod.getMethod()),
-						_target, new UriInfoImpl()));
+						new UriInfoImpl()));
 			}
 			catch (URISyntaxException uriSyntaxException) {
 				_log.error(uriSyntaxException, uriSyntaxException);
@@ -238,9 +239,9 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 		ControllerInterceptor.class);
 
 	private final ApplicationEventPublisher _applicationEventPublisher;
+	private final Object _eventObject;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
-	private final Object _target;
 
 	private static class ActionRedirectURL extends RenderURLWrapper {
 

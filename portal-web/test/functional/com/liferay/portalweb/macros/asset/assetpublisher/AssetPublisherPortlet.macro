@@ -533,6 +533,10 @@ definition {
 
 			ClickNoError(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
 
+			if (IsElementPresent(locator1 = "IFrame#SELECT_SITES")) {
+				IFrame.closeFrame();
+			}
+
 			SelectFrame(value1 = "relative=top");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");

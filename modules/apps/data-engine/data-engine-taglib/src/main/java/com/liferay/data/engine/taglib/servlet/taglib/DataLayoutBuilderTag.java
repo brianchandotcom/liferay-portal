@@ -45,21 +45,23 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	public int doStartTag() throws JspException {
 		int result = super.doStartTag();
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		try {
 			setNamespacedAttribute(
-				request, "dataLayoutBuilderModule",
+				httpServletRequest, "dataLayoutBuilderModule",
 				DataLayoutTaglibUtil.resolveModule(
 					"data-engine-taglib/data_layout_builder/js" +
 						"/DataLayoutBuilder.es"));
 			setNamespacedAttribute(
-				request, "fieldTypes",
+				httpServletRequest, "fieldTypes",
 				DataLayoutTaglibUtil.getFieldTypesJSONArray(
-					request, getScopes()));
+					httpServletRequest, getScopes()));
 			setNamespacedAttribute(
-				request, "fieldTypesModules",
+				httpServletRequest, "fieldTypesModules",
 				DataLayoutTaglibUtil.resolveFieldTypesModules());
 			setNamespacedAttribute(
-				request, "sidebarPanels", _getSidebarPanels());
+				httpServletRequest, "sidebarPanels", _getSidebarPanels());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -84,10 +86,13 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			httpServletRequest, "availableLocales",
 			availableLocales.toArray(new Locale[0]));
 
+		HttpServletRequest tagHttpServletRequest = getRequest();
+
 		setNamespacedAttribute(
 			httpServletRequest, "config",
 			DataLayoutTaglibUtil.getDataLayoutConfigJSONObject(
-				getContentType(), request.getLocale()));
+				getContentType(), tagHttpServletRequest.getLocale()));
+
 		setNamespacedAttribute(
 			httpServletRequest, "dataLayout",
 			DataLayoutTaglibUtil.getDataLayoutJSONObject(
@@ -107,10 +112,10 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	}
 
 	private Map<String, Object> _getSidebarPanels() {
-		HttpServletRequest request = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", request.getLocale(), getClass());
+			"content.Language", httpServletRequest.getLocale(), getClass());
 
 		Map<String, Object> sidebarPanels =
 			LinkedHashMapBuilder.<String, Object>put(

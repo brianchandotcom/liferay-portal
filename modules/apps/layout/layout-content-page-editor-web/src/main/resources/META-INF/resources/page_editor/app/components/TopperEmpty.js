@@ -93,6 +93,9 @@ function TopperEmpty({children, item, layoutData}) {
 						if (typeof child.ref === 'function') {
 							child.ref(node);
 						}
+						else if (child.ref && 'current' in child.ref) {
+							child.ref.current = node;
+						}
 					},
 				})}
 			</>

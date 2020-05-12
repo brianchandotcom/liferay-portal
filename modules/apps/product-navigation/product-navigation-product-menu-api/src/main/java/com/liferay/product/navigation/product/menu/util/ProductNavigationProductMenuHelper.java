@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public interface ProductNavigationProductMenuUtil {
+public interface ProductNavigationProductMenuHelper {
 
 	public boolean isShowProductMenu(HttpServletRequest httpServletRequest);
 

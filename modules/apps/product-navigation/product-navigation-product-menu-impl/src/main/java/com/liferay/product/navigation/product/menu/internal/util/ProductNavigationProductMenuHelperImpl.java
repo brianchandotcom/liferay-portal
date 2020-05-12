@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuUtil;
+import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuHelper;
 
 import java.util.List;
 
@@ -37,9 +37,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ProductNavigationProductMenuUtil.class)
-public class ProductNavigationProductMenuUtilImpl
-	implements ProductNavigationProductMenuUtil {
+@Component(immediate = true, service = ProductNavigationProductMenuHelper.class)
+public class ProductNavigationProductMenuHelperImpl
+	implements ProductNavigationProductMenuHelper {
 
 	@Override
 	public boolean isShowProductMenu(HttpServletRequest httpServletRequest) {

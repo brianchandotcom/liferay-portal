@@ -2,6 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaAPISignatureCheck" files="src/main/java/com/liferay/product/navigation/product/menu/internal/util/ProductNavigationProductMenuUtilImpl\.java" />
+		<suppress checks="JavaAPISignatureCheck" files="src/main/java/com/liferay/product/navigation/product/menu/internal/util/ProductNavigationProductMenuHelperImpl\.java" />
 	</source-check>
 </suppressions>

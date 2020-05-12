@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuUtil;
+import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuHelper;
 
 import java.util.Map;
 import java.util.Objects;
@@ -44,7 +44,7 @@ public class ProductMenuTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		if (!_productNavigationProductMenuUtil.isShowProductMenu(
+		if (!_productNavigationProductMenuHelper.isShowProductMenu(
 				httpServletRequest)) {
 
 			return;
@@ -68,6 +68,7 @@ public class ProductMenuTemplateContextContributor
 	}
 
 	@Reference
-	private ProductNavigationProductMenuUtil _productNavigationProductMenuUtil;
+	private ProductNavigationProductMenuHelper
+		_productNavigationProductMenuHelper;
 
 }

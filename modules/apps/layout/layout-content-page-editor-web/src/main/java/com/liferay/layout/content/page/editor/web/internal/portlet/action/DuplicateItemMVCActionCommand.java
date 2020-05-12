@@ -264,13 +264,11 @@ public class DuplicateItemMVCActionCommand
 			String oldInstanceId = editableValuesJSONObject.getString(
 				"instanceId");
 
-			String newInstanceId = PortletIdCodec.encode(portletId, namespace);
-
-			editableValuesJSONObject.put("instanceId", newInstanceId);
+			editableValuesJSONObject.put("instanceId", namespace);
 
 			_copyPortletPreferences(
 				serviceContext.getRequest(), portletId, oldInstanceId,
-				newInstanceId);
+				namespace);
 		}
 
 		FragmentEntryLink duplicateFragmentEntryLink =

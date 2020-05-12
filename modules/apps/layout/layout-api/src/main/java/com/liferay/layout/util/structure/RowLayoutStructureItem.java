@@ -69,7 +69,7 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 		JSONObject jsonObject = JSONUtil.put(
 			"gutters", _gutters
 		).put(
-			"modulesPerRow", _modulesPerRow
+			"modulesPerRow", getModulesPerRow()
 		).put(
 			"numberOfColumns", _numberOfColumns
 		).put(
@@ -110,6 +110,10 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public int getModulesPerRow() {
+		if (_modulesPerRow == null) {
+			return _numberOfColumns;
+		}
+
 		return _modulesPerRow;
 	}
 
@@ -225,7 +229,7 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	private boolean _gutters = true;
-	private int _modulesPerRow = 3;
+	private Integer _modulesPerRow;
 	private int _numberOfColumns;
 	private boolean _reverseOrder;
 	private String _verticalAlignment = "top";

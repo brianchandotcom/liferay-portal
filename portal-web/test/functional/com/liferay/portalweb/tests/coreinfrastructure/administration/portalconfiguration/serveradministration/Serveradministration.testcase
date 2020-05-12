@@ -16,22 +16,36 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		var script = '''
-			import com.liferay.portal.kernel.util.PortalUtil;
-			import java.nio.file.Paths;
+		for (var propsKey : list "LIFERAY_LIB_GLOBAL_DIR,LIFERAY_LIB_PORTAL_DIR,LIFERAY_WEB_PORTAL_DIR") {
+			var script = '''
+				import com.liferay.portal.kernel.util.PropsKeys;
+				import com.liferay.portal.util.PropsUtil;
 
-			out.println(Paths.get(PortalUtil.getGlobalLibDir()));
-		''';
+				out.println(PropsUtil.get(PropsKeys.${propsKey}));
+			''';
 
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = "${script}");
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = "${script}");
 
-		var globalLibDir = PropsUtil.get("liferay.app.server.global.lib.dir");
+			var globalLibDir = PropsUtil.get("liferay.app.server.global.lib.dir");
+			var portalLibDir = PropsUtil.get("liferay.app.server.portal.lib.dir");
+			var portalWebDir = PropsUtil.get("liferay.app.server.portal.web.dir");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "${globalLibDir}");
+			if ("${propsKey}" == "LIFERAY_LIB_GLOBAL_DIR") {
+				var dirName = "${globalLibDir}";
+			}
+			else if ("${propsKey}" == "LIFERAY_LIB_PORTAL_DIR") {
+				var dirName = "${portalLibDir}";
+			}
+			else {
+				var dirName = "${portalWebDir}";
+			}
+
+			AssertTextEquals(
+				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+				value1 = "${dirName}/");
+		}
 	}
 
 	@description = "This is a use case for LPS-102790"

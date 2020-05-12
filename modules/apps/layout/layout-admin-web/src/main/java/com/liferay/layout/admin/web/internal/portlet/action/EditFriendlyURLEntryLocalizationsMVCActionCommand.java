@@ -1,7 +1,5 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -9,17 +7,18 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
@@ -32,11 +31,12 @@ import javax.servlet.http.HttpServletRequest;
 	},
 	service = MVCActionCommand.class
 )
-public class EditFriendlyURLEntryLocalizationsMVCActionCommand extends
-	BaseMVCActionCommand {
+public class EditFriendlyURLEntryLocalizationsMVCActionCommand
+	extends BaseMVCActionCommand {
+
 	@Override
 	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
@@ -53,11 +53,20 @@ public class EditFriendlyURLEntryLocalizationsMVCActionCommand extends
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String friendlyURLEntryId = ParamUtil.getString(
+		long friendlyURLEntryId = ParamUtil.getLong(
 			actionRequest, "friendlyURLEntryId");
 
+		String languageId = ParamUtil.getString(
+			actionRequest, "languageId");
+
 		if (cmd.equals(Constants.DELETE)) {
-			System.out.println("delete friendlyURLEntryId: " + friendlyURLEntryId);
+			System.out.println(
+				"delete friendlyURLEntryId: " + friendlyURLEntryId);
+			System.out.println(
+				"languageId: " + languageId);
+
+			_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
+				friendlyURLEntryId, languageId);
 		}
 	}
 
@@ -69,4 +78,5 @@ public class EditFriendlyURLEntryLocalizationsMVCActionCommand extends
 
 	@Reference
 	private Portal _portal;
+
 }

@@ -90,17 +90,38 @@ const FriendlyURLHistoryModal = ({
 		}
 	}, [friendlyURLEntryLocalizations, loading, languageId]);
 
-	const handleDeleteFriendlyUrl = (friendlyURLEntryId) => {
+	const handleDeleteFriendlyUrl = (deleteFriendlyURLEntryId) => {
 		const formData = new FormData();
 
-		formData.append(`${portletNamespace}friendlyURLEntryId`, friendlyURLEntryId);
+		formData.append(
+			`${portletNamespace}friendlyURLEntryId`,
+			deleteFriendlyURLEntryId
+		);
+
+		formData.append(`${portletNamespace}languageId`, languageId);
 
 		fetch(editFriendlyURLEntryLocalizationsURL, {
 			body: formData,
 			method: 'POST',
-		})
-			.then((xhr) => console.log(xhr))
-	}
+		}).then((response) => {
+			if (response.ok) {
+				setFriendlyURLEntryLocalizations(
+					(friendlyURLEntryLocalizations) => {
+						friendlyURLEntryLocalizations[
+							languageId
+						].history = friendlyURLEntryLocalizations[
+							languageId
+						].history.filter(
+							({friendlyURLEntryId}) =>
+								friendlyURLEntryId != deleteFriendlyURLEntryId
+						);
+
+						return {...friendlyURLEntryLocalizations};
+					}
+				);
+			}
+		});
+	};
 
 	return (
 		<ClayModal
@@ -176,7 +197,11 @@ const FriendlyURLHistoryModal = ({
 															data-title={Liferay.Language.get(
 																'forget-url'
 															)}
-															onClick={() => {handleDeleteFriendlyUrl(friendlyURLEntryId)}}
+															onClick={() => {
+																handleDeleteFriendlyUrl(
+																	friendlyURLEntryId
+																);
+															}}
 															symbol="times-circle"
 														/>
 													</ClayList.QuickActionMenu>

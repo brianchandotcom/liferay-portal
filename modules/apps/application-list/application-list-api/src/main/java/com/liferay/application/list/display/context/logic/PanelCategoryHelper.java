@@ -147,6 +147,14 @@ public class PanelCategoryHelper {
 		return containsPortlet(portletId, PanelCategoryKeys.ROOT);
 	}
 
+	public boolean isControlPanelApp(String portletId) {
+		return containsPortlet(portletId, PanelCategoryKeys.CONTROL_PANEL);
+	}
+
+	public boolean isGlobalMenuApp(String portletId) {
+		return containsPortlet(portletId, PanelCategoryKeys.GLOBAL_MENU);
+	}
+
 	protected boolean hasPortlet(String portletId, String panelCategoryKey) {
 		Iterable<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			panelCategoryKey);

@@ -5,8 +5,8 @@
 	"properties": {
 		"contentSubtype": {
 			"properties": {
-				"classTypeId": {
-					"title": "The classTypeId Schema",
+				"subtypeId": {
+					"title": "The subtypeId Schema",
 					"type": "integer"
 				}
 			},

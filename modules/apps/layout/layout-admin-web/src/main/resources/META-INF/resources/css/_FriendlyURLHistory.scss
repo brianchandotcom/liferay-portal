@@ -17,4 +17,19 @@
 	.show-quick-actions-one-line .quick-action-menu {
 		align-items: center;
 	}
+
+	.language-selector-container {
+		margin-bottom: -2.5rem;
+		text-align: right;
+	}
+
+	.active-url {
+		padding-right: 3rem;
+	}
+	.active-url-tite {
+		font-weight: 600;
+	}
+	.active-url-text {
+		font-size: 0.875rem;
+	}
 }

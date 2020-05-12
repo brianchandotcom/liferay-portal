@@ -103,7 +103,7 @@ const FriendlyURLHistoryModal = ({
 					<ClayLoadingIndicator />
 				) : (
 					<>
-						<div className="pb-3 text-right">
+						<div className="language-selector-container">
 							<LanguageSelector
 								defaultLanguageId={defaultLanguageId}
 								languageIds={availableLanguages}
@@ -114,24 +114,22 @@ const FriendlyURLHistoryModal = ({
 							/>
 						</div>
 
+						<div className="active-url">
+							<div className="active-url-tite">
+								{Liferay.Language.get('active-url')}
+							</div>
+							<p className="active-url-text">
+								{
+									friendlyURLEntryLocalizations[languageId]
+										.current.urlTitle
+								}
+							</p>
+						</div>
+
 						<ClayList
 							className="show-quick-actions-one-line"
 							showQuickActionsOnHover
 						>
-							<ClayList.Header>
-								{Liferay.Language.get('active-url')}
-							</ClayList.Header>
-							<ClayList.Item flex>
-								<ClayList.ItemField expand>
-									<ClayList.ItemText className="text-truncate">
-										{
-											friendlyURLEntryLocalizations[
-												languageId
-											].current.urlTitle
-										}
-									</ClayList.ItemText>
-								</ClayList.ItemField>
-							</ClayList.Item>
 							{friendlyURLEntryLocalizations[languageId].history
 								.length > 0 && (
 								<>

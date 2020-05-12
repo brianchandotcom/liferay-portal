@@ -50,20 +50,20 @@ public class ContentSubtype {
 	}
 
 	@Schema
-	public Long getClassTypeId() {
-		return classTypeId;
+	public Long getSubtypeId() {
+		return subtypeId;
 	}
 
-	public void setClassTypeId(Long classTypeId) {
-		this.classTypeId = classTypeId;
+	public void setSubtypeId(Long subtypeId) {
+		this.subtypeId = subtypeId;
 	}
 
 	@JsonIgnore
-	public void setClassTypeId(
-		UnsafeSupplier<Long, Exception> classTypeIdUnsafeSupplier) {
+	public void setSubtypeId(
+		UnsafeSupplier<Long, Exception> subtypeIdUnsafeSupplier) {
 
 		try {
-			classTypeId = classTypeIdUnsafeSupplier.get();
+			subtypeId = subtypeIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -75,7 +75,7 @@ public class ContentSubtype {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long classTypeId;
+	protected Long subtypeId;
 
 	@Override
 	public boolean equals(Object object) {
@@ -104,14 +104,14 @@ public class ContentSubtype {
 
 		sb.append("{");
 
-		if (classTypeId != null) {
+		if (subtypeId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"classTypeId\": ");
+			sb.append("\"subtypeId\": ");
 
-			sb.append(classTypeId);
+			sb.append(subtypeId);
 		}
 
 		sb.append("}");

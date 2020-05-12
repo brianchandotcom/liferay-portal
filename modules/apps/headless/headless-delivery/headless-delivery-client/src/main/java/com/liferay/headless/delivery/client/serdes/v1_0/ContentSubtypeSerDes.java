@@ -55,14 +55,14 @@ public class ContentSubtypeSerDes {
 
 		sb.append("{");
 
-		if (contentSubtype.getClassTypeId() != null) {
+		if (contentSubtype.getSubtypeId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"classTypeId\": ");
+			sb.append("\"subtypeId\": ");
 
-			sb.append(contentSubtype.getClassTypeId());
+			sb.append(contentSubtype.getSubtypeId());
 		}
 
 		sb.append("}");
@@ -84,12 +84,11 @@ public class ContentSubtypeSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (contentSubtype.getClassTypeId() == null) {
-			map.put("classTypeId", null);
+		if (contentSubtype.getSubtypeId() == null) {
+			map.put("subtypeId", null);
 		}
 		else {
-			map.put(
-				"classTypeId", String.valueOf(contentSubtype.getClassTypeId()));
+			map.put("subtypeId", String.valueOf(contentSubtype.getSubtypeId()));
 		}
 
 		return map;
@@ -113,9 +112,9 @@ public class ContentSubtypeSerDes {
 			ContentSubtype contentSubtype, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "classTypeId")) {
+			if (Objects.equals(jsonParserFieldName, "subtypeId")) {
 				if (jsonParserFieldValue != null) {
-					contentSubtype.setClassTypeId(
+					contentSubtype.setSubtypeId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

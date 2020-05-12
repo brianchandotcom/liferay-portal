@@ -32,26 +32,26 @@ public class ContentSubtype implements Cloneable {
 		return ContentSubtypeSerDes.toDTO(json);
 	}
 
-	public Long getClassTypeId() {
-		return classTypeId;
+	public Long getSubtypeId() {
+		return subtypeId;
 	}
 
-	public void setClassTypeId(Long classTypeId) {
-		this.classTypeId = classTypeId;
+	public void setSubtypeId(Long subtypeId) {
+		this.subtypeId = subtypeId;
 	}
 
-	public void setClassTypeId(
-		UnsafeSupplier<Long, Exception> classTypeIdUnsafeSupplier) {
+	public void setSubtypeId(
+		UnsafeSupplier<Long, Exception> subtypeIdUnsafeSupplier) {
 
 		try {
-			classTypeId = classTypeIdUnsafeSupplier.get();
+			subtypeId = subtypeIdUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long classTypeId;
+	protected Long subtypeId;
 
 	@Override
 	public ContentSubtype clone() throws CloneNotSupportedException {

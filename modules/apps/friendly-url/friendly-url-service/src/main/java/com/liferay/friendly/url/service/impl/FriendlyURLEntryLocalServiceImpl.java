@@ -16,6 +16,7 @@ package com.liferay.friendly.url.service.impl;
 
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
+import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
@@ -234,6 +235,16 @@ public class FriendlyURLEntryLocalServiceImpl
 		}
 
 		friendlyURLEntryMappingPersistence.remove(friendlyURLEntryMapping);
+	}
+
+	@Override
+	public void deleteFriendlyURLLocalizationEntry(
+			long friendlyURLEntryId, String languageId)
+		throws NoSuchFriendlyURLEntryLocalizationException {
+
+		friendlyURLEntryLocalizationPersistence.
+			removeByFriendlyURLEntryId_LanguageId(
+				friendlyURLEntryId, languageId);
 	}
 
 	@Override

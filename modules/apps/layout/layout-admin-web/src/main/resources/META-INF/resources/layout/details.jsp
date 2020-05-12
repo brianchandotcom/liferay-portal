@@ -89,7 +89,7 @@ String friendlyURLBase = StringPool.BLANK;
 
 		<c:choose>
 			<c:when test="<%= selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/layout/get_friendly_url_entry_localizations" var="friendlyURLEntryLocalizationslURL">
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/layout/get_friendly_url_entry_localizations" var="friendlyURLEntryLocalizationsURL">
 					<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
 				</liferay-portlet:resourceURL>
 
@@ -102,8 +102,8 @@ String friendlyURLBase = StringPool.BLANK;
 								"defaultLanguageId",
 								LocaleUtil.toLanguageId(company.getDefaultUser().getLocale())
 							).put(
-								"friendlyURLEntryLocalizationslURL",
-								friendlyURLEntryLocalizationslURL
+								"friendlyURLEntryLocalizationsURL",
+								friendlyURLEntryLocalizationsURL
 							).put(
 								"deleteFriendlyURLEntryLocalizationURL",
 								deleteFriendlyURLEntryLocalizationURL

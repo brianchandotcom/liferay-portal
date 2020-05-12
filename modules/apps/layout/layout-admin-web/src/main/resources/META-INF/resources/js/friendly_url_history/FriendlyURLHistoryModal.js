@@ -25,7 +25,7 @@ import LanguageSelector from './LanguageSelector';
 const FriendlyURLHistoryModal = ({
 	defaultLanguageId,
 	deleteFriendlyURLEntryLocalizationURL,
-	friendlyURLEntryLocalizationslURL,
+	friendlyURLEntryLocalizationsURL,
 	initialLanguageId,
 	observer,
 	portletNamespace,
@@ -40,7 +40,7 @@ const FriendlyURLHistoryModal = ({
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		fetch(friendlyURLEntryLocalizationslURL)
+		fetch(friendlyURLEntryLocalizationsURL)
 			.then((response) => response.json())
 			.then((response) => {
 				if (isMounted()) {
@@ -53,7 +53,7 @@ const FriendlyURLHistoryModal = ({
 					console.error(error);
 				}
 			});
-	}, [friendlyURLEntryLocalizationslURL, isMounted]);
+	}, [friendlyURLEntryLocalizationsURL, isMounted]);
 
 	useEffect(() => {
 		if (loading) {
@@ -222,7 +222,7 @@ const FriendlyURLHistoryModal = ({
 FriendlyURLHistoryModal.propTypes = {
 	defaultLanguageId: PropTypes.string.isRequired,
 	deleteFriendlyURLEntryLocalizationURL: PropTypes.string.isRequired,
-	friendlyURLEntryLocalizationslURL: PropTypes.string.isRequired,
+	friendlyURLEntryLocalizationsURL: PropTypes.string.isRequired,
 	observer: PropTypes.object.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 };

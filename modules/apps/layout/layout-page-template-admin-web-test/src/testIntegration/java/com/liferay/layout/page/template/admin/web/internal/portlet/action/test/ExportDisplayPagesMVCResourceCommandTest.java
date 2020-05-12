@@ -358,7 +358,7 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 			}
 
 			HashMap<String, String> valuesMap = HashMapBuilder.put(
-				"CONTENT_SUBTYPE_CLASS_TYPE_ID", String.valueOf(classTypeId)
+				"CONTENT_SUBTYPE_SUBTYPE_ID", String.valueOf(classTypeId)
 			).build();
 
 			_validateContent(

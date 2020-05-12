@@ -12,23 +12,23 @@
  * details.
  */
 
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
+export const findFieldByName = (dataDefinitionFields, fieldName) => {
+	let result;
 
-import {findFieldByName} from './findFieldByName.es';
+	const traverse = (dataDefinitionFields) =>
+		dataDefinitionFields.forEach((dataDefinition) => {
+			const {name, nestedDataDefinitionFields = []} = dataDefinition;
 
-export default ({dataDefinitionFields}, desiredName, currentName = null) => {
-	let counter = 0;
-	let name = normalizeFieldName(desiredName);
+			if (name === fieldName) {
+				result = dataDefinition;
 
-	let existingField;
+				return;
+			}
 
-	while (
-		(existingField = findFieldByName(dataDefinitionFields, name)) &&
-		existingField &&
-		existingField.name !== currentName
-	) {
-		name = normalizeFieldName(`${desiredName}${++counter}`);
-	}
+			traverse(nestedDataDefinitionFields);
+		});
 
-	return name;
+	traverse(dataDefinitionFields);
+
+	return result;
 };

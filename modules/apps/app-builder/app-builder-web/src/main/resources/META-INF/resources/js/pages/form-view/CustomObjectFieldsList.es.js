@@ -22,6 +22,7 @@ import {
 import React, {useContext} from 'react';
 
 import useDoubleClick from '../../hooks/useDoubleClick.es';
+import {findFieldByName} from '../../utils/findFieldByName.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';
@@ -74,9 +75,7 @@ export default ({keywords}) => {
 	const {dataDefinitionFields} = dataDefinition;
 	const fieldTypes = getFieldTypes(state);
 	const onClick = ({name}) => {
-		const dataDefinitionField = dataDefinitionFields.find(
-			({name: currentName}) => currentName === name
-		);
+		const dataDefinitionField = findFieldByName(dataDefinitionFields, name);
 
 		dispatch({
 			payload: {dataDefinitionField},

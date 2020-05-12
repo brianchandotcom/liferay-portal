@@ -138,6 +138,30 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-111274. The selected Tabs fragment should always stay selected when click on the tabs of it."
+	@priority = "5"
+	test ClickTabsFragmentTabAndViewHeader {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		AssertVisible(
+			key_fragmentName = "Tabs",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		for (var navItem : list "Tab 2,Tab 3,Tab 4") {
+			PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
+
+			AssertVisible(
+				key_fragmentName = "Tabs",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+	}
+
 	@description = "This is a use case for LPS-86141. The collections with multiple asset type are unavailable to the Collection Display."
 	@priority = "4"
 	test CollectionsWithMultipleAssetTypeAreUnavailableToCollectionDisplay {

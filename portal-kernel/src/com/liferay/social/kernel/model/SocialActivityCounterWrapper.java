@@ -43,6 +43,7 @@ public class SocialActivityCounterWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("activityCounterId", getActivityCounterId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -62,6 +63,12 @@ public class SocialActivityCounterWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long activityCounterId = (Long)attributes.get("activityCounterId");
 
 		if (activityCounterId != null) {
@@ -242,6 +249,16 @@ public class SocialActivityCounterWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this social activity counter.
+	 *
+	 * @return the mvcc version of this social activity counter
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the name of this social activity counter.
 	 *
 	 * @return the name of this social activity counter
@@ -404,6 +421,16 @@ public class SocialActivityCounterWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the mvcc version of this social activity counter.
+	 *
+	 * @param mvccVersion the mvcc version of this social activity counter
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

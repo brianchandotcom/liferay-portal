@@ -67,16 +67,17 @@ public class SocialActivityAchievementModelImpl
 	public static final String TABLE_NAME = "SocialActivityAchievement";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"activityAchievementId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"createDate", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"firstInGroup", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"activityAchievementId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"createDate", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"firstInGroup", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activityAchievementId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -87,7 +88,7 @@ public class SocialActivityAchievementModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivityAchievement (activityAchievementId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,name VARCHAR(75) null,firstInGroup BOOLEAN)";
+		"create table SocialActivityAchievement (mvccVersion LONG default 0 not null,activityAchievementId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,name VARCHAR(75) null,firstInGroup BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivityAchievement";
@@ -268,6 +269,12 @@ public class SocialActivityAchievementModelImpl
 					<String, BiConsumer<SocialActivityAchievement, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", SocialActivityAchievement::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<SocialActivityAchievement, Long>)
+				SocialActivityAchievement::setMvccVersion);
+		attributeGetterFunctions.put(
 			"activityAchievementId",
 			SocialActivityAchievement::getActivityAchievementId);
 		attributeSetterBiConsumers.put(
@@ -315,6 +322,16 @@ public class SocialActivityAchievementModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -497,6 +514,7 @@ public class SocialActivityAchievementModelImpl
 		SocialActivityAchievementImpl socialActivityAchievementImpl =
 			new SocialActivityAchievementImpl();
 
+		socialActivityAchievementImpl.setMvccVersion(getMvccVersion());
 		socialActivityAchievementImpl.setActivityAchievementId(
 			getActivityAchievementId());
 		socialActivityAchievementImpl.setGroupId(getGroupId());
@@ -596,6 +614,8 @@ public class SocialActivityAchievementModelImpl
 			socialActivityAchievementCacheModel =
 				new SocialActivityAchievementCacheModel();
 
+		socialActivityAchievementCacheModel.mvccVersion = getMvccVersion();
+
 		socialActivityAchievementCacheModel.activityAchievementId =
 			getActivityAchievementId();
 
@@ -694,6 +714,7 @@ public class SocialActivityAchievementModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _activityAchievementId;
 	private long _groupId;
 	private long _originalGroupId;

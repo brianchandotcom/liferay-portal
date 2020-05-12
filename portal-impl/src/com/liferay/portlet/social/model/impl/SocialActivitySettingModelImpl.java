@@ -71,16 +71,17 @@ public class SocialActivitySettingModelImpl
 	public static final String TABLE_NAME = "SocialActivitySetting";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"activitySettingId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"activityType", Types.INTEGER}, {"name", Types.VARCHAR},
-		{"value", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"activitySettingId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"activityType", Types.INTEGER},
+		{"name", Types.VARCHAR}, {"value", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activitySettingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -91,7 +92,7 @@ public class SocialActivitySettingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivitySetting (activitySettingId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,activityType INTEGER,name VARCHAR(75) null,value VARCHAR(1024) null)";
+		"create table SocialActivitySetting (mvccVersion LONG default 0 not null,activitySettingId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,activityType INTEGER,name VARCHAR(75) null,value VARCHAR(1024) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivitySetting";
@@ -148,6 +149,7 @@ public class SocialActivitySettingModelImpl
 
 		SocialActivitySetting model = new SocialActivitySettingImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setActivitySettingId(soapModel.getActivitySettingId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -319,6 +321,12 @@ public class SocialActivitySettingModelImpl
 					<String, BiConsumer<SocialActivitySetting, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", SocialActivitySetting::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<SocialActivitySetting, Long>)
+				SocialActivitySetting::setMvccVersion);
+		attributeGetterFunctions.put(
 			"activitySettingId", SocialActivitySetting::getActivitySettingId);
 		attributeSetterBiConsumers.put(
 			"activitySettingId",
@@ -363,6 +371,17 @@ public class SocialActivitySettingModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -556,6 +575,7 @@ public class SocialActivitySettingModelImpl
 		SocialActivitySettingImpl socialActivitySettingImpl =
 			new SocialActivitySettingImpl();
 
+		socialActivitySettingImpl.setMvccVersion(getMvccVersion());
 		socialActivitySettingImpl.setActivitySettingId(getActivitySettingId());
 		socialActivitySettingImpl.setGroupId(getGroupId());
 		socialActivitySettingImpl.setCompanyId(getCompanyId());
@@ -651,6 +671,8 @@ public class SocialActivitySettingModelImpl
 	public CacheModel<SocialActivitySetting> toCacheModel() {
 		SocialActivitySettingCacheModel socialActivitySettingCacheModel =
 			new SocialActivitySettingCacheModel();
+
+		socialActivitySettingCacheModel.mvccVersion = getMvccVersion();
 
 		socialActivitySettingCacheModel.activitySettingId =
 			getActivitySettingId();
@@ -754,6 +776,7 @@ public class SocialActivitySettingModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _activitySettingId;
 	private long _groupId;
 	private long _originalGroupId;

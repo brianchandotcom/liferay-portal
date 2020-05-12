@@ -41,6 +41,7 @@ public class SocialActivityLimitWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("activityLimitId", getActivityLimitId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -56,6 +57,12 @@ public class SocialActivityLimitWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long activityLimitId = (Long)attributes.get("activityLimitId");
 
 		if (activityLimitId != null) {
@@ -203,6 +210,16 @@ public class SocialActivityLimitWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this social activity limit.
+	 *
+	 * @return the mvcc version of this social activity limit
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this social activity limit.
 	 *
 	 * @return the primary key of this social activity limit
@@ -325,6 +342,16 @@ public class SocialActivityLimitWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the mvcc version of this social activity limit.
+	 *
+	 * @param mvccVersion the mvcc version of this social activity limit
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

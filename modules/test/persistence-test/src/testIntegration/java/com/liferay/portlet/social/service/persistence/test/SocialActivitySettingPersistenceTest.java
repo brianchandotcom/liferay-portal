@@ -126,6 +126,8 @@ public class SocialActivitySettingPersistenceTest {
 		SocialActivitySetting newSocialActivitySetting = _persistence.create(
 			pk);
 
+		newSocialActivitySetting.setMvccVersion(RandomTestUtil.nextLong());
+
 		newSocialActivitySetting.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivitySetting.setCompanyId(RandomTestUtil.nextLong());
@@ -145,6 +147,9 @@ public class SocialActivitySettingPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newSocialActivitySetting.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingSocialActivitySetting.getMvccVersion(),
+			newSocialActivitySetting.getMvccVersion());
 		Assert.assertEquals(
 			existingSocialActivitySetting.getActivitySettingId(),
 			newSocialActivitySetting.getActivitySettingId());
@@ -239,9 +244,9 @@ public class SocialActivitySettingPersistenceTest {
 
 	protected OrderByComparator<SocialActivitySetting> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SocialActivitySetting", "activitySettingId", true, "groupId", true,
-			"companyId", true, "classNameId", true, "activityType", true,
-			"name", true, "value", true);
+			"SocialActivitySetting", "mvccVersion", true, "activitySettingId",
+			true, "groupId", true, "companyId", true, "classNameId", true,
+			"activityType", true, "name", true, "value", true);
 	}
 
 	@Test
@@ -517,6 +522,8 @@ public class SocialActivitySettingPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SocialActivitySetting socialActivitySetting = _persistence.create(pk);
+
+		socialActivitySetting.setMvccVersion(RandomTestUtil.nextLong());
 
 		socialActivitySetting.setGroupId(RandomTestUtil.nextLong());
 

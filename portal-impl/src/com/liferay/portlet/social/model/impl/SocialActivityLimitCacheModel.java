@@ -17,6 +17,7 @@ package com.liferay.portlet.social.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.social.kernel.model.SocialActivityLimit;
 
 import java.io.Externalizable;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class SocialActivityLimitCacheModel
-	implements CacheModel<SocialActivityLimit>, Externalizable {
+	implements CacheModel<SocialActivityLimit>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -46,7 +47,10 @@ public class SocialActivityLimitCacheModel
 		SocialActivityLimitCacheModel socialActivityLimitCacheModel =
 			(SocialActivityLimitCacheModel)obj;
 
-		if (activityLimitId == socialActivityLimitCacheModel.activityLimitId) {
+		if ((activityLimitId ==
+				socialActivityLimitCacheModel.activityLimitId) &&
+			(mvccVersion == socialActivityLimitCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -55,14 +59,28 @@ public class SocialActivityLimitCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, activityLimitId);
+		int hashCode = HashUtil.hash(0, activityLimitId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{activityLimitId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", activityLimitId=");
 		sb.append(activityLimitId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -90,6 +108,7 @@ public class SocialActivityLimitCacheModel
 		SocialActivityLimitImpl socialActivityLimitImpl =
 			new SocialActivityLimitImpl();
 
+		socialActivityLimitImpl.setMvccVersion(mvccVersion);
 		socialActivityLimitImpl.setActivityLimitId(activityLimitId);
 		socialActivityLimitImpl.setGroupId(groupId);
 		socialActivityLimitImpl.setCompanyId(companyId);
@@ -119,6 +138,8 @@ public class SocialActivityLimitCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		activityLimitId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -138,6 +159,8 @@ public class SocialActivityLimitCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(activityLimitId);
 
 		objectOutput.writeLong(groupId);
@@ -167,6 +190,7 @@ public class SocialActivityLimitCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long activityLimitId;
 	public long groupId;
 	public long companyId;

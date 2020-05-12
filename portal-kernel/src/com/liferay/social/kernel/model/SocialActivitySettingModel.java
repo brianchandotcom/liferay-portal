@@ -16,6 +16,7 @@ package com.liferay.social.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.TypedModel;
 
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SocialActivitySettingModel
-	extends BaseModel<SocialActivitySetting>, ShardedModel, TypedModel {
+	extends BaseModel<SocialActivitySetting>, MVCCModel, ShardedModel,
+			TypedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +57,22 @@ public interface SocialActivitySettingModel
 	 * @param primaryKey the primary key of this social activity setting
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this social activity setting.
+	 *
+	 * @return the mvcc version of this social activity setting
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this social activity setting.
+	 *
+	 * @param mvccVersion the mvcc version of this social activity setting
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the activity setting ID of this social activity setting.

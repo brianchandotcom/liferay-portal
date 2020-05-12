@@ -1143,6 +1143,7 @@ create table ServiceComponent (
 );
 
 create table SocialActivity (
+	mvccVersion LONG default 0 not null,
 	activityId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -1160,6 +1161,7 @@ create table SocialActivity (
 );
 
 create table SocialActivityAchievement (
+	mvccVersion LONG default 0 not null,
 	activityAchievementId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -1170,6 +1172,7 @@ create table SocialActivityAchievement (
 );
 
 create table SocialActivityCounter (
+	mvccVersion LONG default 0 not null,
 	activityCounterId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -1186,6 +1189,7 @@ create table SocialActivityCounter (
 );
 
 create table SocialActivityLimit (
+	mvccVersion LONG default 0 not null,
 	activityLimitId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -1198,6 +1202,7 @@ create table SocialActivityLimit (
 );
 
 create table SocialActivitySet (
+	mvccVersion LONG default 0 not null,
 	activitySetId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -1212,6 +1217,7 @@ create table SocialActivitySet (
 );
 
 create table SocialActivitySetting (
+	mvccVersion LONG default 0 not null,
 	activitySettingId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -1222,6 +1228,7 @@ create table SocialActivitySetting (
 );
 
 create table SocialRelation (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	relationId LONG not null primary key,
 	companyId LONG,
@@ -1232,6 +1239,7 @@ create table SocialRelation (
 );
 
 create table SocialRequest (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	requestId LONG not null primary key,
 	groupId LONG,

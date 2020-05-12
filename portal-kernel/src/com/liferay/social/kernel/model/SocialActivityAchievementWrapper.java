@@ -44,6 +44,7 @@ public class SocialActivityAchievementWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("activityAchievementId", getActivityAchievementId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -57,6 +58,12 @@ public class SocialActivityAchievementWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long activityAchievementId = (Long)attributes.get(
 			"activityAchievementId");
 
@@ -149,6 +156,16 @@ public class SocialActivityAchievementWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the mvcc version of this social activity achievement.
+	 *
+	 * @return the mvcc version of this social activity achievement
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -254,6 +271,16 @@ public class SocialActivityAchievementWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the mvcc version of this social activity achievement.
+	 *
+	 * @param mvccVersion the mvcc version of this social activity achievement
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

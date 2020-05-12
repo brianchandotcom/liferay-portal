@@ -122,6 +122,8 @@ public class SocialRequestPersistenceTest {
 
 		SocialRequest newSocialRequest = _persistence.create(pk);
 
+		newSocialRequest.setMvccVersion(RandomTestUtil.nextLong());
+
 		newSocialRequest.setUuid(RandomTestUtil.randomString());
 
 		newSocialRequest.setGroupId(RandomTestUtil.nextLong());
@@ -151,6 +153,9 @@ public class SocialRequestPersistenceTest {
 		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(
 			newSocialRequest.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingSocialRequest.getMvccVersion(),
+			newSocialRequest.getMvccVersion());
 		Assert.assertEquals(
 			existingSocialRequest.getUuid(), newSocialRequest.getUuid());
 		Assert.assertEquals(
@@ -313,10 +318,11 @@ public class SocialRequestPersistenceTest {
 
 	protected OrderByComparator<SocialRequest> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SocialRequest", "uuid", true, "requestId", true, "groupId", true,
-			"companyId", true, "userId", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true, "type",
-			true, "extraData", true, "receiverUserId", true, "status", true);
+			"SocialRequest", "mvccVersion", true, "uuid", true, "requestId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "type", true, "extraData", true, "receiverUserId",
+			true, "status", true);
 	}
 
 	@Test
@@ -577,6 +583,8 @@ public class SocialRequestPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SocialRequest socialRequest = _persistence.create(pk);
+
+		socialRequest.setMvccVersion(RandomTestUtil.nextLong());
 
 		socialRequest.setUuid(RandomTestUtil.randomString());
 

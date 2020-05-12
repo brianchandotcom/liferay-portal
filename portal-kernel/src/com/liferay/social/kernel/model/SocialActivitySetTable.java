@@ -31,6 +31,9 @@ public class SocialActivitySetTable extends BaseTable<SocialActivitySetTable> {
 	public static final SocialActivitySetTable INSTANCE =
 		new SocialActivitySetTable();
 
+	public final Column<SocialActivitySetTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<SocialActivitySetTable, Long> activitySetId =
 		createColumn(
 			"activitySetId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

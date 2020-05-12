@@ -69,17 +69,18 @@ public class SocialActivityLimitModelImpl
 	public static final String TABLE_NAME = "SocialActivityLimit";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"activityLimitId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"activityType", Types.INTEGER}, {"activityCounterName", Types.VARCHAR},
-		{"value", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"activityLimitId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"activityType", Types.INTEGER},
+		{"activityCounterName", Types.VARCHAR}, {"value", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activityLimitId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -92,7 +93,7 @@ public class SocialActivityLimitModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivityLimit (activityLimitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
+		"create table SocialActivityLimit (mvccVersion LONG default 0 not null,activityLimitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivityLimit";
@@ -273,6 +274,12 @@ public class SocialActivityLimitModelImpl
 				new LinkedHashMap<String, BiConsumer<SocialActivityLimit, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", SocialActivityLimit::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<SocialActivityLimit, Long>)
+				SocialActivityLimit::setMvccVersion);
+		attributeGetterFunctions.put(
 			"activityLimitId", SocialActivityLimit::getActivityLimitId);
 		attributeSetterBiConsumers.put(
 			"activityLimitId",
@@ -329,6 +336,16 @@ public class SocialActivityLimitModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -575,6 +592,7 @@ public class SocialActivityLimitModelImpl
 		SocialActivityLimitImpl socialActivityLimitImpl =
 			new SocialActivityLimitImpl();
 
+		socialActivityLimitImpl.setMvccVersion(getMvccVersion());
 		socialActivityLimitImpl.setActivityLimitId(getActivityLimitId());
 		socialActivityLimitImpl.setGroupId(getGroupId());
 		socialActivityLimitImpl.setCompanyId(getCompanyId());
@@ -683,6 +701,8 @@ public class SocialActivityLimitModelImpl
 		SocialActivityLimitCacheModel socialActivityLimitCacheModel =
 			new SocialActivityLimitCacheModel();
 
+		socialActivityLimitCacheModel.mvccVersion = getMvccVersion();
+
 		socialActivityLimitCacheModel.activityLimitId = getActivityLimitId();
 
 		socialActivityLimitCacheModel.groupId = getGroupId();
@@ -790,6 +810,7 @@ public class SocialActivityLimitModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _activityLimitId;
 	private long _groupId;
 	private long _originalGroupId;

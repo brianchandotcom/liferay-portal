@@ -41,6 +41,7 @@ public class SocialRequestWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("requestId", getRequestId());
 		attributes.put("groupId", getGroupId());
@@ -60,6 +61,12 @@ public class SocialRequestWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -217,6 +224,16 @@ public class SocialRequestWrapper
 	@Override
 	public long getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this social request.
+	 *
+	 * @return the mvcc version of this social request
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -387,6 +404,16 @@ public class SocialRequestWrapper
 	@Override
 	public void setModifiedDate(long modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this social request.
+	 *
+	 * @param mvccVersion the mvcc version of this social request
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

@@ -32,6 +32,7 @@ public class SocialActivityCounterSoap implements Serializable {
 
 		SocialActivityCounterSoap soapModel = new SocialActivityCounterSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setActivityCounterId(model.getActivityCounterId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -105,6 +106,14 @@ public class SocialActivityCounterSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setActivityCounterId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getActivityCounterId() {
@@ -215,6 +224,7 @@ public class SocialActivityCounterSoap implements Serializable {
 		_active = active;
 	}
 
+	private long _mvccVersion;
 	private long _activityCounterId;
 	private long _groupId;
 	private long _companyId;

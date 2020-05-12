@@ -16,6 +16,7 @@ package com.liferay.social.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SocialRelationModel
-	extends BaseModel<SocialRelation>, ShardedModel {
+	extends BaseModel<SocialRelation>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +55,22 @@ public interface SocialRelationModel
 	 * @param primaryKey the primary key of this social relation
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this social relation.
+	 *
+	 * @return the mvcc version of this social relation
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this social relation.
+	 *
+	 * @param mvccVersion the mvcc version of this social relation
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this social relation.

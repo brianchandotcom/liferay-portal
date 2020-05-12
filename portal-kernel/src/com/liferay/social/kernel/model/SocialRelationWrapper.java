@@ -41,6 +41,7 @@ public class SocialRelationWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("relationId", getRelationId());
 		attributes.put("companyId", getCompanyId());
@@ -54,6 +55,12 @@ public class SocialRelationWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -115,6 +122,16 @@ public class SocialRelationWrapper
 	@Override
 	public long getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this social relation.
+	 *
+	 * @return the mvcc version of this social relation
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -200,6 +217,16 @@ public class SocialRelationWrapper
 	@Override
 	public void setCreateDate(long createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this social relation.
+	 *
+	 * @param mvccVersion the mvcc version of this social relation
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

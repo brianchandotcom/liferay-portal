@@ -17,6 +17,7 @@ package com.liferay.portlet.social.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.social.kernel.model.SocialActivity;
 
 import java.io.Externalizable;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class SocialActivityCacheModel
-	implements CacheModel<SocialActivity>, Externalizable {
+	implements CacheModel<SocialActivity>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -46,7 +47,9 @@ public class SocialActivityCacheModel
 		SocialActivityCacheModel socialActivityCacheModel =
 			(SocialActivityCacheModel)obj;
 
-		if (activityId == socialActivityCacheModel.activityId) {
+		if ((activityId == socialActivityCacheModel.activityId) &&
+			(mvccVersion == socialActivityCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -55,14 +58,28 @@ public class SocialActivityCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, activityId);
+		int hashCode = HashUtil.hash(0, activityId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
-		sb.append("{activityId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", activityId=");
 		sb.append(activityId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -99,6 +116,7 @@ public class SocialActivityCacheModel
 	public SocialActivity toEntityModel() {
 		SocialActivityImpl socialActivityImpl = new SocialActivityImpl();
 
+		socialActivityImpl.setMvccVersion(mvccVersion);
 		socialActivityImpl.setActivityId(activityId);
 		socialActivityImpl.setGroupId(groupId);
 		socialActivityImpl.setCompanyId(companyId);
@@ -128,6 +146,8 @@ public class SocialActivityCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		activityId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -158,6 +178,8 @@ public class SocialActivityCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(activityId);
 
 		objectOutput.writeLong(groupId);
@@ -192,6 +214,7 @@ public class SocialActivityCacheModel
 		objectOutput.writeLong(receiverUserId);
 	}
 
+	public long mvccVersion;
 	public long activityId;
 	public long groupId;
 	public long companyId;

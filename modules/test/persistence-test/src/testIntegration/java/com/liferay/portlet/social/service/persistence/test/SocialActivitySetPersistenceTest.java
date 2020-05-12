@@ -121,6 +121,8 @@ public class SocialActivitySetPersistenceTest {
 
 		SocialActivitySet newSocialActivitySet = _persistence.create(pk);
 
+		newSocialActivitySet.setMvccVersion(RandomTestUtil.nextLong());
+
 		newSocialActivitySet.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivitySet.setCompanyId(RandomTestUtil.nextLong());
@@ -146,6 +148,9 @@ public class SocialActivitySetPersistenceTest {
 		SocialActivitySet existingSocialActivitySet =
 			_persistence.findByPrimaryKey(newSocialActivitySet.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingSocialActivitySet.getMvccVersion(),
+			newSocialActivitySet.getMvccVersion());
 		Assert.assertEquals(
 			existingSocialActivitySet.getActivitySetId(),
 			newSocialActivitySet.getActivitySetId());
@@ -256,10 +261,10 @@ public class SocialActivitySetPersistenceTest {
 
 	protected OrderByComparator<SocialActivitySet> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SocialActivitySet", "activitySetId", true, "groupId", true,
-			"companyId", true, "userId", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true, "type",
-			true, "extraData", true, "activityCount", true);
+			"SocialActivitySet", "mvccVersion", true, "activitySetId", true,
+			"groupId", true, "companyId", true, "userId", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"type", true, "extraData", true, "activityCount", true);
 	}
 
 	@Test
@@ -482,6 +487,8 @@ public class SocialActivitySetPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SocialActivitySet socialActivitySet = _persistence.create(pk);
+
+		socialActivitySet.setMvccVersion(RandomTestUtil.nextLong());
 
 		socialActivitySet.setGroupId(RandomTestUtil.nextLong());
 

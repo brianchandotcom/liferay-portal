@@ -43,6 +43,7 @@ public class SocialActivitySettingWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("activitySettingId", getActivitySettingId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -56,6 +57,12 @@ public class SocialActivitySettingWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long activitySettingId = (Long)attributes.get("activitySettingId");
 
 		if (activitySettingId != null) {
@@ -160,6 +167,16 @@ public class SocialActivitySettingWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this social activity setting.
+	 *
+	 * @return the mvcc version of this social activity setting
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the name of this social activity setting.
 	 *
 	 * @return the name of this social activity setting
@@ -247,6 +264,16 @@ public class SocialActivitySettingWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the mvcc version of this social activity setting.
+	 *
+	 * @param mvccVersion the mvcc version of this social activity setting
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

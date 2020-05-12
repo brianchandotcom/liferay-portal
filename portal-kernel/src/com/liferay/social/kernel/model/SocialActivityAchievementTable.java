@@ -32,6 +32,9 @@ public class SocialActivityAchievementTable
 	public static final SocialActivityAchievementTable INSTANCE =
 		new SocialActivityAchievementTable();
 
+	public final Column<SocialActivityAchievementTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<SocialActivityAchievementTable, Long>
 		activityAchievementId = createColumn(
 			"activityAchievementId", Long.class, Types.BIGINT,

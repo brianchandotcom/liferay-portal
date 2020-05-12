@@ -32,6 +32,9 @@ public class SocialActivitySettingTable
 	public static final SocialActivitySettingTable INSTANCE =
 		new SocialActivitySettingTable();
 
+	public final Column<SocialActivitySettingTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<SocialActivitySettingTable, Long> activitySettingId =
 		createColumn(
 			"activitySettingId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

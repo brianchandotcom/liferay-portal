@@ -63,16 +63,17 @@ public class SocialRelationModelImpl
 	public static final String TABLE_NAME = "SocialRelation";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"relationId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.BIGINT},
-		{"userId1", Types.BIGINT}, {"userId2", Types.BIGINT},
-		{"type_", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"relationId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createDate", Types.BIGINT}, {"userId1", Types.BIGINT},
+		{"userId2", Types.BIGINT}, {"type_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("relationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -83,7 +84,7 @@ public class SocialRelationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null primary key,companyId LONG,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
+		"create table SocialRelation (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,relationId LONG not null primary key,companyId LONG,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table SocialRelation";
 
@@ -257,6 +258,11 @@ public class SocialRelationModelImpl
 		Map<String, BiConsumer<SocialRelation, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<SocialRelation, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", SocialRelation::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<SocialRelation, Long>)SocialRelation::setMvccVersion);
 		attributeGetterFunctions.put("uuid", SocialRelation::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -292,6 +298,16 @@ public class SocialRelationModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -463,6 +479,7 @@ public class SocialRelationModelImpl
 	public Object clone() {
 		SocialRelationImpl socialRelationImpl = new SocialRelationImpl();
 
+		socialRelationImpl.setMvccVersion(getMvccVersion());
 		socialRelationImpl.setUuid(getUuid());
 		socialRelationImpl.setRelationId(getRelationId());
 		socialRelationImpl.setCompanyId(getCompanyId());
@@ -561,6 +578,8 @@ public class SocialRelationModelImpl
 		SocialRelationCacheModel socialRelationCacheModel =
 			new SocialRelationCacheModel();
 
+		socialRelationCacheModel.mvccVersion = getMvccVersion();
+
 		socialRelationCacheModel.uuid = getUuid();
 
 		String uuid = socialRelationCacheModel.uuid;
@@ -654,6 +673,7 @@ public class SocialRelationModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _relationId;

@@ -16,6 +16,7 @@ package com.liferay.social.kernel.model;
 
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SocialActivityModel
-	extends AttachedModel, BaseModel<SocialActivity>, ShardedModel {
+	extends AttachedModel, BaseModel<SocialActivity>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +55,22 @@ public interface SocialActivityModel
 	 * @param primaryKey the primary key of this social activity
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this social activity.
+	 *
+	 * @return the mvcc version of this social activity
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this social activity.
+	 *
+	 * @param mvccVersion the mvcc version of this social activity
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the activity ID of this social activity.

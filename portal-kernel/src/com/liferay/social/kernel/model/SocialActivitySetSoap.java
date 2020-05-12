@@ -30,6 +30,7 @@ public class SocialActivitySetSoap implements Serializable {
 	public static SocialActivitySetSoap toSoapModel(SocialActivitySet model) {
 		SocialActivitySetSoap soapModel = new SocialActivitySetSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setActivitySetId(model.getActivitySetId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -100,6 +101,14 @@ public class SocialActivitySetSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setActivitySetId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getActivitySetId() {
@@ -190,6 +199,7 @@ public class SocialActivitySetSoap implements Serializable {
 		_activityCount = activityCount;
 	}
 
+	private long _mvccVersion;
 	private long _activitySetId;
 	private long _groupId;
 	private long _companyId;

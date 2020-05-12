@@ -32,6 +32,7 @@ public class SocialActivityLimitSoap implements Serializable {
 
 		SocialActivityLimitSoap soapModel = new SocialActivityLimitSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setActivityLimitId(model.getActivityLimitId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -101,6 +102,14 @@ public class SocialActivityLimitSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setActivityLimitId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getActivityLimitId() {
@@ -175,6 +184,7 @@ public class SocialActivityLimitSoap implements Serializable {
 		_value = value;
 	}
 
+	private long _mvccVersion;
 	private long _activityLimitId;
 	private long _groupId;
 	private long _companyId;

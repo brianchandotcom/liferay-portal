@@ -32,6 +32,9 @@ public class SocialActivityCounterTable
 	public static final SocialActivityCounterTable INSTANCE =
 		new SocialActivityCounterTable();
 
+	public final Column<SocialActivityCounterTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<SocialActivityCounterTable, Long> activityCounterId =
 		createColumn(
 			"activityCounterId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

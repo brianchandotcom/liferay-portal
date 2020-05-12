@@ -30,6 +30,7 @@ public class SocialRequestSoap implements Serializable {
 	public static SocialRequestSoap toSoapModel(SocialRequest model) {
 		SocialRequestSoap soapModel = new SocialRequestSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setRequestId(model.getRequestId());
 		soapModel.setGroupId(model.getGroupId());
@@ -94,6 +95,14 @@ public class SocialRequestSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setRequestId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -200,6 +209,7 @@ public class SocialRequestSoap implements Serializable {
 		_status = status;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _requestId;
 	private long _groupId;

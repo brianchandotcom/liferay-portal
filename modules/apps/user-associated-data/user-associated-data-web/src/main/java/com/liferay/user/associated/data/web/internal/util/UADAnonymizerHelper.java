@@ -111,7 +111,7 @@ public class UADAnonymizerHelper {
 		boolean sendEmail = false;
 		ServiceContext serviceContext = null;
 
-		User anonymousUser = _userLocalService.addUserWithWorkflow(
+		User anonymousUser = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,

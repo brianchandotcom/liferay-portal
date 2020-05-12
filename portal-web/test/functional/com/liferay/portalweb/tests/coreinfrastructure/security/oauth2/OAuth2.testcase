@@ -671,6 +671,70 @@ definition {
 			value1 = "test@liferay.com");
 	}
 
+	@description = "This is a use case for LPS-105156."
+	test RemoveExpiredAuthorization {
+		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
+		property osgi.module.configurations = "access.token.expires.in=&quot;5&quot;${line.separator}refresh.token.expires.in=&quot;10&quot;:oauth2.expired.authorizations.afterlife.duration=&quot;5&quot;${line.separator}oauth2.expired.authorizations.check.interval=&quot;1&quot;";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		var clientId = "abc123";
+		var clientSecret = "abc123";
+		var portalURL = PropsUtil.get("portal.url");
+
+		OAuth2.addApplication(
+			applicationName = "Test Expired Application",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''');
+
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(
+			applicationName = "Test Expired Application",
+			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
+			resourcePanels = "Portal Services");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Test Expired Application");
+
+		OAuth2.inputApplicationValues(
+			clientId = "${clientId}",
+			clientSecret = "${clientSecret}");
+
+		var authorizationCode = OAuth2.getAuthorizationCode();
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
+			value1 = "${clientSecret}");
+
+		Button.click(button = "Obtain OAuth2 Access");
+
+		AssertElementPresent(
+			key_text = "Launch Request",
+			locator1 = "Button#ANY");
+
+		Navigator.openURL();
+
+		OAuth2.viewGrantedAuthViaUser(applicationName = "Test Expired Application");
+
+		AssertElementPresent(
+			key_activity = "Last Access",
+			locator1 = "OAuth2#USER_CONNECTED_APP_ACTIVITY");
+
+		Pause(locator1 = "17000");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		AssertElementNotPresent(
+			key_appName = "Test Expired Application",
+			locator1 = "OAuth2#USER_CONNECTED_APP_TABLE_NAME");
+	}
+
 	test UpdateScopeBundlePrefixes {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 

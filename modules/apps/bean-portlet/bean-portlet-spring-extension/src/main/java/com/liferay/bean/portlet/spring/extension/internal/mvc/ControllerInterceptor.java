@@ -114,7 +114,7 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 			new BeforeControllerEventImpl(
 				_target,
 				new ResourceInfoImpl(
-					beanPortletMethod.getBeanType(),
+					beanPortletMethod.getBeanClass(),
 					beanPortletMethod.getMethod()),
 				new UriInfoImpl()));
 
@@ -210,7 +210,7 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 		_applicationEventPublisher.publishEvent(
 			new AfterControllerEventImpl(
 				new ResourceInfoImpl(
-					beanPortletMethod.getBeanType(),
+					beanPortletMethod.getBeanClass(),
 					beanPortletMethod.getMethod()),
 				_target, new UriInfoImpl()));
 
@@ -222,7 +222,7 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 					new ControllerRedirectEventImpl(
 						location,
 						new ResourceInfoImpl(
-							beanPortletMethod.getBeanType(),
+							beanPortletMethod.getBeanClass(),
 							beanPortletMethod.getMethod()),
 						_target, new UriInfoImpl()));
 			}

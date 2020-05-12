@@ -59,7 +59,7 @@ public class BeanPortletMethodDecoratorMVCImpl
 
 		boolean controller = _isController(beanPortletMethod);
 
-		Object target = _getTarget(beanPortletMethod.getBeanType());
+		Object target = _getTarget(beanPortletMethod.getBeanClass());
 
 		return new ControllerInterceptor(
 			_applicationEventPublisher,

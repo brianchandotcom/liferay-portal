@@ -41,17 +41,17 @@ public class ParamConverterProviderImpl implements ParamConverterProvider {
 
 	@Override
 	public <T> ParamConverter<T> getConverter(
-		Class<T> rawType, Type genericType, Annotation[] annotations) {
+		Class<T> clazz, Type genericType, Annotation[] annotations) {
 
-		if (rawType == null) {
+		if (clazz == null) {
 			return null;
 		}
 
-		if (rawType.equals(Integer.class) || rawType.equals(Integer.TYPE) ||
-			rawType.equals(Long.class) || rawType.equals(Long.TYPE) ||
-			rawType.equals(Double.class) || rawType.equals(Double.TYPE) ||
-			rawType.equals(Float.class) || rawType.equals(Float.TYPE) ||
-			rawType.equals(Boolean.class) || rawType.equals(Boolean.TYPE)) {
+		if (clazz.equals(Integer.class) || clazz.equals(Integer.TYPE) ||
+			clazz.equals(Long.class) || clazz.equals(Long.TYPE) ||
+			clazz.equals(Double.class) || clazz.equals(Double.TYPE) ||
+			clazz.equals(Float.class) || clazz.equals(Float.TYPE) ||
+			clazz.equals(Boolean.class) || clazz.equals(Boolean.TYPE)) {
 
 			return new ParamConverter<T>() {
 
@@ -62,38 +62,38 @@ public class ParamConverterProviderImpl implements ParamConverterProvider {
 							"Unable to convert a null parameter value");
 					}
 
-					if (rawType.equals(Integer.class) ||
-						rawType.equals(Integer.TYPE)) {
+					if (clazz.equals(Integer.class) ||
+						clazz.equals(Integer.TYPE)) {
 
 						return _getNumber(value, number -> number.intValue());
 					}
-					else if (rawType.equals(Long.class) ||
-							 rawType.equals(Long.TYPE)) {
+					else if (clazz.equals(Long.class) ||
+							 clazz.equals(Long.TYPE)) {
 
 						return _getNumber(value, number -> number.longValue());
 					}
-					else if (rawType.equals(Double.class) ||
-							 rawType.equals(Double.TYPE)) {
+					else if (clazz.equals(Double.class) ||
+							 clazz.equals(Double.TYPE)) {
 
 						return _getNumber(
 							value, number -> number.doubleValue());
 					}
-					else if (rawType.equals(Float.class) ||
-							 rawType.equals(Float.TYPE)) {
+					else if (clazz.equals(Float.class) ||
+							 clazz.equals(Float.TYPE)) {
 
 						return _getNumber(value, number -> number.floatValue());
 					}
-					else if (rawType.equals(Boolean.class) ||
-							 rawType.equals(Boolean.TYPE)) {
+					else if (clazz.equals(Boolean.class) ||
+							 clazz.equals(Boolean.TYPE)) {
 
 						value = value.trim();
 						value = StringUtil.toLowerCase(value);
 
 						if (Boolean.valueOf(value)) {
-							return rawType.cast(Boolean.TRUE);
+							return clazz.cast(Boolean.TRUE);
 						}
 
-						return rawType.cast(value.equals("on"));
+						return clazz.cast(value.equals("on"));
 					}
 
 					return null;
@@ -117,7 +117,7 @@ public class ParamConverterProviderImpl implements ParamConverterProvider {
 					try {
 						Number number = numberFormat.parse(value);
 
-						return rawType.cast(getNumberFunction.apply(number));
+						return clazz.cast(getNumberFunction.apply(number));
 					}
 					catch (ParseException parseException) {
 						throw new IllegalArgumentException(parseException);

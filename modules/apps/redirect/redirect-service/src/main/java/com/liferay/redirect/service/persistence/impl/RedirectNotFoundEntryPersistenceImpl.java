@@ -1591,8 +1591,7 @@ public class RedirectNotFoundEntryPersistenceImpl
 			RedirectNotFoundEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			RedirectNotFoundEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			RedirectNotFoundEntryModelImpl.HITS_COLUMN_BITMASK);
+			RedirectNotFoundEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,

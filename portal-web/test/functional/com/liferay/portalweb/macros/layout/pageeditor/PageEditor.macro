@@ -1126,6 +1126,16 @@ definition {
 		}
 	}
 
+	macro gotoTabsFragmentNavItem {
+		var key_navItem = "${navItem}";
+
+		Click.javaScriptClick(
+			locator1 = "Fragment#NAV_ITEM_TAB",
+			value1 = "${navItem}");
+
+		AssertElementPresent(locator1 = "Fragment#ACTIVE_NAV_ITEM_TAB");
+	}
+
 	macro removeFragment {
 		var key_fragmentName = "${fragmentName}";
 

@@ -129,6 +129,17 @@
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//button[*[name()='svg'][*[contains(@class,'comments-borde')]]]</td>
 	<td></td>
 </tr>
+<!--FRAGMENT_TABS-->
+<tr>
+	<td>ACTIVE_NAV_ITEM_TAB</td>
+	<td>//div[contains(@class,'navbar')]//button[contains(@aria-selected,'true') and normalize-space()='${key_navItem}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAV_ITEM_TAB</td>
+	<td>//div[contains(@class,'navbar')]//button[normalize-space()='${key_navItem}']</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_CONFIGURAION-->
 <tr>
 	<td>FRAGMENT_CONFIGURATION_ALIGNMENT</td>

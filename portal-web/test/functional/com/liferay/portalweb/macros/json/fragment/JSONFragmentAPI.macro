@@ -6,12 +6,19 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (isSet(description)) {
+			var description = "${description}";
+		}
+		else {
+			var description = "";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
 			-u test@liferay.com:test \
 			-d groupId=${groupId} \
 			-d name=${name} \
-			-d description=
+			-d description=${description}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

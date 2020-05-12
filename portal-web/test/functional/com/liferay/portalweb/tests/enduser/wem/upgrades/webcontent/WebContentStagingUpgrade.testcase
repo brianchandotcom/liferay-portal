@@ -39,6 +39,24 @@ definition {
 	}
 
 	@priority = "5"
+	test PublishStagingArchiveAfterUpgrade713 {
+		property data.archive.type = "data-archive-staging-unpublished";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
+
+		Upgrade.publishStagedSite();
+	}
+
+	@priority = "5"
+	test PublishStagingArchiveAfterUpgrade7110 {
+		property data.archive.type = "data-archive-staging-unpublished";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10";
+
+		Upgrade.publishStagedSite();
+	}
+
+	@priority = "5"
 	test PublishStagingArchiveAfterUpgrade70106 {
 		property data.archive.type = "data-archive-staging-unpublished";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";

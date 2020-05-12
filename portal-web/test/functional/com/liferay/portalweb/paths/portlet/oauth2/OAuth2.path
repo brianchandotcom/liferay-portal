@@ -188,6 +188,11 @@
 </tr>
 <!--USER-->
 <tr>
+	<td>USER_CONNECTED_APP_ACTIVITY</td>
+	<td>//span[contains(.,'${key_activity}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON</td>
 	<td>//button[contains(@id,'removeAccess')]</td>
 	<td></td>

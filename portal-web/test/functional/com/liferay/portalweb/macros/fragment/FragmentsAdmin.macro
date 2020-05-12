@@ -83,7 +83,11 @@ definition {
 			key_text = "Import",
 			locator1 = "Modal#ANY_BUTTON");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
 		Alert.viewSuccessMessage();
+
+		SelectFrameTop();
 
 		IFrame.closeFrame();
 	}

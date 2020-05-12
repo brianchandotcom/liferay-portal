@@ -572,11 +572,23 @@
 					"title": "The gutters Schema",
 					"type": "boolean"
 				},
+				"modulesPerRow": {
+					"title": "The modulesPerRow Schema",
+					"type": "integer"
+				},
 				"numberOfColumns": {
 					"maximum": 6,
 					"minimum": 1,
-					"title": "The backgroundImage Schema",
+					"title": "The numberOfColumns Schema",
 					"type": "integer"
+				},
+				"reverseOrder": {
+					"title": "The reverseOrder Schema",
+					"type": "boolean"
+				},
+				"verticalAlignment": {
+					"title": "The verticalAlignment Schema",
+					"type": "string"
 				}
 			},
 			"title": "The RowDefinition Schema",

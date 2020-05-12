@@ -49,8 +49,24 @@ public class RowLayoutStructureItemImporter
 		if (definitionMap != null) {
 			rowLayoutStructureItem.setGutters(
 				(Boolean)definitionMap.get("gutters"));
+
+			if (definitionMap.containsKey("reverseOrder")) {
+				rowLayoutStructureItem.setModulesPerRow(
+					(Integer)definitionMap.get("modulesPerRow"));
+			}
+
 			rowLayoutStructureItem.setNumberOfColumns(
 				(Integer)definitionMap.get("numberOfColumns"));
+
+			if (definitionMap.containsKey("reverseOrder")) {
+				rowLayoutStructureItem.setReverseOrder(
+					(Boolean)definitionMap.get("reverseOrder"));
+			}
+
+			if (definitionMap.containsKey("verticalAlignment")) {
+				rowLayoutStructureItem.setVerticalAlignment(
+					(String)definitionMap.get("verticalAlignment"));
+			}
 		}
 
 		return rowLayoutStructureItem;

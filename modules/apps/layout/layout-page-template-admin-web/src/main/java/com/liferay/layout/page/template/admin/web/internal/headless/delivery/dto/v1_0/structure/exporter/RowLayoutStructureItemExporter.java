@@ -46,8 +46,12 @@ public class RowLayoutStructureItemExporter
 				definition = new PageRowDefinition() {
 					{
 						gutters = rowLayoutStructureItem.isGutters();
+						modulesPerRow =
+							rowLayoutStructureItem.getModulesPerRow();
 						numberOfColumns =
 							rowLayoutStructureItem.getNumberOfColumns();
+						reverseOrder = getReverseOrder();
+						verticalAlignment = getVerticalAlignment();
 					}
 				};
 				type = PageElement.Type.ROW;

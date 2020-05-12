@@ -185,7 +185,26 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				}
 			}
 
-			Select select = _getSelect(dslQuery);
+			Select select = null;
+
+			ASTNode astNode = dslQuery;
+
+			while (astNode instanceof BaseASTNode) {
+				if (astNode instanceof Select) {
+					select = (Select)astNode;
+
+					break;
+				}
+
+				BaseASTNode baseASTNode = (BaseASTNode)astNode;
+
+				astNode = baseASTNode.getChild();
+			}
+
+			if (select == null) {
+				throw new IllegalArgumentException(
+					"No Select found for " + dslQuery);
+			}
 
 			ProjectionType projectionType = _getProjectionType(
 				tableNames, select.getExpressions());
@@ -878,22 +897,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected Map<String, String> dbColumnNames;
 	protected boolean entityCacheEnabled;
 	protected boolean finderCacheEnabled;
-
-	private static Select _getSelect(DSLQuery dslQuery) {
-		ASTNode astNode = dslQuery;
-
-		while (astNode instanceof BaseASTNode) {
-			if (astNode instanceof Select) {
-				return (Select)astNode;
-			}
-
-			BaseASTNode baseASTNode = (BaseASTNode)astNode;
-
-			astNode = baseASTNode.getChild();
-		}
-
-		throw new IllegalArgumentException("No Select found for " + dslQuery);
-	}
 
 	private static Type _getType(Expression<?> expression) {
 		if (expression instanceof Column) {

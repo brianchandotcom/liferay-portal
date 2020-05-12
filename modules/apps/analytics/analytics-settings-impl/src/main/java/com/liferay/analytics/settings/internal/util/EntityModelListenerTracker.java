@@ -15,7 +15,6 @@
 package com.liferay.analytics.settings.internal.util;
 
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
-import com.liferay.analytics.message.sender.util.EntityModelListenerRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -35,16 +34,13 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Rachael Koestartyo
  */
-@Component(immediate = true, service = EntityModelListenerRegistry.class)
-public class EntityModelListenerRegistryImpl
-	implements EntityModelListenerRegistry {
+@Component(immediate = true, service = EntityModelListenerTracker.class)
+public class EntityModelListenerTracker {
 
-	@Override
 	public EntityModelListener getEntityModelListener(String className) {
 		return _serviceTrackerMap.getService(className);
 	}
 
-	@Override
 	public Collection<EntityModelListener> getEntityModelListeners() {
 		return _serviceTrackerMap.values();
 	}

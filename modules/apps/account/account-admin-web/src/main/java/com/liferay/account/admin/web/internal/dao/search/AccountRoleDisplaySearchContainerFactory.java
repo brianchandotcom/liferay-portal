@@ -70,11 +70,16 @@ public class AccountRoleDisplaySearchContainerFactory {
 
 		List<AccountRoleDisplay> accountRoleDisplayList =
 			TransformUtil.transform(
-				baseModelSearchResult.getBaseModels(), AccountRoleDisplay::of);
+				baseModelSearchResult.getBaseModels(),
+				accountRole -> {
+					if (!AccountRoleConstants.isImpliedRole(
+							accountRole.getRole())) {
 
-		accountRoleDisplayList.removeIf(
-			AccountRoleDisplay -> AccountRoleConstants.isImpliedRole(
-				AccountRoleDisplay.getRole()));
+						return AccountRoleDisplay.of(accountRole);
+					}
+
+					return null;
+				});
 
 		searchContainer.setResults(accountRoleDisplayList);
 		searchContainer.setTotal(accountRoleDisplayList.size());

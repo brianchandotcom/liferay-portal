@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.Objects;
+
 /**
  * @author Drew Brokke
  */
@@ -61,9 +63,7 @@ public class AccountRoleConstants {
 	};
 
 	public static boolean isImpliedRole(Role role) {
-		String roleName = role.getName();
-
-		if (roleName.equals(REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
+		if (Objects.equals(REQUIRED_ROLE_NAME_ACCOUNT_MEMBER, role.getName())) {
 			return true;
 		}
 

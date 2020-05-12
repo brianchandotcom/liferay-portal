@@ -279,6 +279,66 @@ public class UserAccountResourceImpl
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
+	@Override
+	protected void preparePatch(
+		UserAccount userAccount, UserAccount existingUserAccount) {
+
+		UserAccountContactInformation userAccountContactInformation =
+			userAccount.getUserAccountContactInformation();
+
+		if (userAccountContactInformation != null) {
+			UserAccountContactInformation
+				existingUserAccountContactInformation =
+					existingUserAccount.getUserAccountContactInformation();
+
+			Optional.ofNullable(
+				userAccountContactInformation.getEmailAddresses()
+			).ifPresent(
+				existingUserAccountContactInformation::setEmailAddresses
+			);
+			Optional.ofNullable(
+				userAccountContactInformation.getFacebook()
+			).ifPresent(
+				existingUserAccountContactInformation::setFacebook
+			);
+			Optional.ofNullable(
+				userAccountContactInformation.getJabber()
+			).ifPresent(
+				existingUserAccountContactInformation::setJabber
+			);
+			Optional.ofNullable(
+				userAccountContactInformation.getPostalAddresses()
+			).ifPresent(
+				existingUserAccountContactInformation::setPostalAddresses
+			);
+			Optional.ofNullable(
+				userAccountContactInformation.getSkype()
+			).ifPresent(
+				existingUserAccountContactInformation::setSkype
+			);
+			Optional.ofNullable(
+				userAccountContactInformation.getSms()
+			).ifPresent(
+				existingUserAccountContactInformation::setSms
+			);
+			Optional.ofNullable(
+				userAccountContactInformation.getTelephones()
+			).ifPresent(
+				existingUserAccountContactInformation::setTelephones
+			);
+			Optional.ofNullable(
+				userAccountContactInformation.getTwitter()
+			).ifPresent(
+				existingUserAccountContactInformation::setTwitter
+			);
+			Optional.ofNullable(
+				userAccountContactInformation.getWebUrls()
+			).ifPresent(
+				existingUserAccountContactInformation::setWebUrls
+			);
+		}
+	}
+
 	private List<Address> _getAddresses(UserAccount userAccount) {
 		return Optional.ofNullable(
 			userAccount.getUserAccountContactInformation()

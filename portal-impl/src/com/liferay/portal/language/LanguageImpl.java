@@ -1544,7 +1544,11 @@ public class LanguageImpl implements Language, Serializable {
 
 		try {
 			if (isInheritLocales(groupId)) {
-				return isAvailableLocale(languageId);
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+				CompanyLocalesBag companyLocalesBag = _getCompanyLocalesBag(
+					group.getCompanyId());
+
+				return companyLocalesBag.containsLanguageId(languageId);
 			}
 		}
 		catch (Exception exception) {

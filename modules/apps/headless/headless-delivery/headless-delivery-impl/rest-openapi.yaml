@@ -739,7 +739,7 @@ components:
             properties:
                 contentSubtype:
                     properties:
-                        classTypeId:
+                        subtypeId:
                             format: int64
                             type: integer
                     type: object

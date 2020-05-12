@@ -19,6 +19,8 @@ definition {
 		}
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}?p_l_mode=edit");
+
+		PageEditor.assertFragmentSidebarLoaded();
 	}
 
 	macro openViewContentPage {

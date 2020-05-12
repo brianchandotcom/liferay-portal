@@ -1516,7 +1516,14 @@
 				A.some(selectorButtons, (item) => {
 					var assetEntryId =
 						item.attr('data-entityid') ||
-						item.attr('data-entityname');
+						item.attr('data-entityname') ||
+						item.attr('data-roleid');
+
+					var assetGroupId = item.attr('data-groupid');
+
+					if (assetGroupId) {
+						assetEntryId =  assetGroupId + '-' + assetEntryId;
+					}	
 
 					var assetEntryIndex = selectedData.indexOf(
 						assetEntryId

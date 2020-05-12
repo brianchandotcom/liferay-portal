@@ -24,7 +24,7 @@ import LanguageSelector from './LanguageSelector';
 
 const FriendlyURLHistoryModal = ({
 	defaultLanguageId,
-	editFriendlyURLEntryLocalizationsURL,
+	deleteFriendlyURLEntryLocalizationURL,
 	friendlyURLEntryLocalizationslURL,
 	initialLanguageId,
 	observer,
@@ -100,7 +100,7 @@ const FriendlyURLHistoryModal = ({
 
 		formData.append(`${portletNamespace}languageId`, languageId);
 
-		fetch(editFriendlyURLEntryLocalizationsURL, {
+		fetch(deleteFriendlyURLEntryLocalizationURL, {
 			body: formData,
 			method: 'POST',
 		}).then((response) => {
@@ -221,7 +221,7 @@ const FriendlyURLHistoryModal = ({
 
 FriendlyURLHistoryModal.propTypes = {
 	defaultLanguageId: PropTypes.string.isRequired,
-	editFriendlyURLEntryLocalizationsURL: PropTypes.string.isRequired,
+	deleteFriendlyURLEntryLocalizationURL: PropTypes.string.isRequired,
 	friendlyURLEntryLocalizationslURL: PropTypes.string.isRequired,
 	observer: PropTypes.object.isRequired,
 	portletNamespace: PropTypes.string.isRequired,

@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -27,11 +28,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/edit_friendly_url_entry_localization"
+		"mvc.command.name=/layout/delete_friendly_url_entry_localization"
 	},
 	service = MVCActionCommand.class
 )
-public class EditFriendlyURLEntryLocalizationsMVCActionCommand
+public class DeleteFriendlyURLEntryLocalizationMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -51,20 +52,14 @@ public class EditFriendlyURLEntryLocalizationsMVCActionCommand
 				themeDisplay.getUserId());
 		}
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
 		long friendlyURLEntryId = ParamUtil.getLong(
 			actionRequest, "friendlyURLEntryId");
 
 		String languageId = ParamUtil.getString(
 			actionRequest, "languageId");
 
-		if (cmd.equals(Constants.DELETE)) {
-			System.out.println(
-				"delete friendlyURLEntryId: " + friendlyURLEntryId);
-			System.out.println(
-				"languageId: " + languageId);
-
+		if (Validator.isNotNull(friendlyURLEntryId)
+			&& Validator.isNotNull(languageId)) {
 			_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
 				friendlyURLEntryId, languageId);
 		}

@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
@@ -86,14 +87,24 @@ public class ScreenNavigationRegistry {
 		_screenNavigationCategoriesMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ScreenNavigationCategory.class, null,
-				new ScreenNavigationCategoriesServiceReferenceMapper(),
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(screenNavigationCategory, emitter) ->
+						emitter.emit(
+							screenNavigationCategory.getScreenNavigationKey())),
 				Collections.reverseOrder(
 					new PropertyServiceReferenceComparator(
 						"screen.navigation.category.order")));
 		_screenNavigationEntriesMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ScreenNavigationEntry.class, null,
-				new ScreenNavigationEntriesServiceReferenceMapper(),
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(screenNavigationEntry, emitter) ->
+						emitter.emit(
+							_getKey(
+								screenNavigationEntry.getScreenNavigationKey(),
+								screenNavigationEntry.getCategoryKey()))),
 				Collections.reverseOrder(
 					new PropertyServiceReferenceComparator(
 						"screen.navigation.entry.order")));
@@ -116,51 +127,5 @@ public class ScreenNavigationRegistry {
 		_screenNavigationCategoriesMap;
 	private ServiceTrackerMap<String, List<ScreenNavigationEntry>>
 		_screenNavigationEntriesMap;
-
-	private class ScreenNavigationCategoriesServiceReferenceMapper
-		implements ServiceReferenceMapper<String, ScreenNavigationCategory> {
-
-		@Override
-		public void map(
-			ServiceReference<ScreenNavigationCategory> serviceReference,
-			Emitter<String> emitter) {
-
-			ScreenNavigationCategory screenNavigationCategory =
-				_bundleContext.getService(serviceReference);
-
-			try {
-				emitter.emit(screenNavigationCategory.getScreenNavigationKey());
-			}
-			finally {
-				_bundleContext.ungetService(serviceReference);
-			}
-		}
-
-	}
-
-	private class ScreenNavigationEntriesServiceReferenceMapper
-		implements ServiceReferenceMapper<String, ScreenNavigationEntry> {
-
-		@Override
-		public void map(
-			ServiceReference<ScreenNavigationEntry> serviceReference,
-			Emitter<String> emitter) {
-
-			ScreenNavigationEntry screenNavigationEntry =
-				_bundleContext.getService(serviceReference);
-
-			try {
-				String key = _getKey(
-					screenNavigationEntry.getScreenNavigationKey(),
-					screenNavigationEntry.getCategoryKey());
-
-				emitter.emit(key);
-			}
-			finally {
-				_bundleContext.ungetService(serviceReference);
-			}
-		}
-
-	}
 
 }

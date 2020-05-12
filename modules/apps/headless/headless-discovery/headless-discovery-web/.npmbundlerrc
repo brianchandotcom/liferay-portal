@@ -1,0 +1,12 @@
+{
+	"rules": [
+		{
+			"test": "\\.css$",
+			"use": ["css-loader"]
+		},
+		{
+			"test": "entities\\.json$",
+			"use": ["json-loader"]
+		}
+  ]
+}

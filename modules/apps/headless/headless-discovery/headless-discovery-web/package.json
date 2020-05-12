@@ -14,6 +14,10 @@
 		"graphql": "14.0.0",
 		"react": "16.12.0"
 	},
+	"devDependencies": {
+		"liferay-npm-bundler-loader-css-loader": "2.18.4",
+		"liferay-npm-bundler-loader-json-loader": "2.18.4"
+	},
 	"name": "headless-discovery-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

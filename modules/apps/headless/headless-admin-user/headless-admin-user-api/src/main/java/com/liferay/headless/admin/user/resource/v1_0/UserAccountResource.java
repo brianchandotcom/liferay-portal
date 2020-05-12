@@ -78,6 +78,10 @@ public interface UserAccountResource {
 
 	public UserAccount getUserAccount(Long userAccountId) throws Exception;
 
+	public UserAccount patchUserAccount(
+			Long userAccountId, UserAccount userAccount)
+		throws Exception;
+
 	public UserAccount putUserAccount(
 			Long userAccountId, UserAccount userAccount)
 		throws Exception;

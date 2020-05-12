@@ -59,6 +59,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -331,6 +332,104 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "customFields": ___, "emailAddress": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "jobTitle": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates the user account with information sent in the request body. Only the provided fields are updated."
+	)
+	@PATCH
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
+	)
+	@Path("/user-accounts/{userAccountId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {})
+	public UserAccount patchUserAccount(
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId,
+			UserAccount userAccount)
+		throws Exception {
+
+		UserAccount existingUserAccount = getUserAccount(userAccountId);
+
+		if (userAccount.getActions() != null) {
+			existingUserAccount.setActions(userAccount.getActions());
+		}
+
+		if (userAccount.getAdditionalName() != null) {
+			existingUserAccount.setAdditionalName(
+				userAccount.getAdditionalName());
+		}
+
+		if (userAccount.getAlternateName() != null) {
+			existingUserAccount.setAlternateName(
+				userAccount.getAlternateName());
+		}
+
+		if (userAccount.getBirthDate() != null) {
+			existingUserAccount.setBirthDate(userAccount.getBirthDate());
+		}
+
+		if (userAccount.getDashboardURL() != null) {
+			existingUserAccount.setDashboardURL(userAccount.getDashboardURL());
+		}
+
+		if (userAccount.getDateCreated() != null) {
+			existingUserAccount.setDateCreated(userAccount.getDateCreated());
+		}
+
+		if (userAccount.getDateModified() != null) {
+			existingUserAccount.setDateModified(userAccount.getDateModified());
+		}
+
+		if (userAccount.getFamilyName() != null) {
+			existingUserAccount.setFamilyName(userAccount.getFamilyName());
+		}
+
+		if (userAccount.getGivenName() != null) {
+			existingUserAccount.setGivenName(userAccount.getGivenName());
+		}
+
+		if (userAccount.getHonorificPrefix() != null) {
+			existingUserAccount.setHonorificPrefix(
+				userAccount.getHonorificPrefix());
+		}
+
+		if (userAccount.getHonorificSuffix() != null) {
+			existingUserAccount.setHonorificSuffix(
+				userAccount.getHonorificSuffix());
+		}
+
+		if (userAccount.getImage() != null) {
+			existingUserAccount.setImage(userAccount.getImage());
+		}
+
+		if (userAccount.getJobTitle() != null) {
+			existingUserAccount.setJobTitle(userAccount.getJobTitle());
+		}
+
+		if (userAccount.getKeywords() != null) {
+			existingUserAccount.setKeywords(userAccount.getKeywords());
+		}
+
+		if (userAccount.getName() != null) {
+			existingUserAccount.setName(userAccount.getName());
+		}
+
+		if (userAccount.getProfileURL() != null) {
+			existingUserAccount.setProfileURL(userAccount.getProfileURL());
+		}
+
+		preparePatch(userAccount, existingUserAccount);
+
+		return putUserAccount(userAccountId, existingUserAccount);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "customFields": ___, "emailAddress": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "jobTitle": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -529,6 +628,10 @@ public abstract class BaseUserAccountResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		UserAccount userAccount, UserAccount existingUserAccount) {
 	}
 
 	protected <T, R> List<R> transform(

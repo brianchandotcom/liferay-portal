@@ -108,6 +108,14 @@ public interface UserAccountResource {
 			Long userAccountId)
 		throws Exception;
 
+	public UserAccount patchUserAccount(
+			Long userAccountId, UserAccount userAccount)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse patchUserAccountHttpResponse(
+			Long userAccountId, UserAccount userAccount)
+		throws Exception;
+
 	public UserAccount putUserAccount(
 			Long userAccountId, UserAccount userAccount)
 		throws Exception;
@@ -783,6 +791,72 @@ public interface UserAccountResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}",
+				userAccountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public UserAccount patchUserAccount(
+				Long userAccountId, UserAccount userAccount)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchUserAccountHttpResponse(userAccountId, userAccount);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return UserAccountSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse patchUserAccountHttpResponse(
+				Long userAccountId, UserAccount userAccount)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(userAccount.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

@@ -237,6 +237,119 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-107748. Can export a content page template with custom fragments and import."
+	@priority = "4"
+	test ExportImportContentPageTemplateWithCustomFragment {
+		task ("Add a fragment collection via JSON") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
+		}
+
+		task ("Edit content of new fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.html");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_title.css");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		}
+
+		task ("Add the new fragment to content page template") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "Lorem ipsum dolor sit amet",
+				fragmentName = "Fragment Name",
+				id = "title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Export content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Export",
+				pageTemplateName = "Page Template Name");
+
+			DownloadTempFile();
+		}
+
+		task ("Export new fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.exportCollection(collectionName = "Collection Name");
+
+			DownloadTempFile();
+		}
+
+		task ("Import new fragment to a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+
+			FragmentsAdmin.importCollectionFromTempFolder();
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name");
+		}
+
+		task ("Import content page template to the new site") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name");
+		}
+
+		task ("Assert new fragment is shown in content page template") {
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "Lorem ipsum dolor sit amet",
+				fragmentName = "Fragment Name",
+				id = "title");
+		}
+	}
+
 	@description = "This is a use case for LPS-106212. Can export a content page template with the custom Look and Feel and import."
 	@priority = "4"
 	test ExportImportContentPageTemplateWithCustomLookAndFeel {

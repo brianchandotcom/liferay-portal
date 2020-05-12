@@ -23,7 +23,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -63,18 +62,8 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 	}
 
 	private Optional<PortletPreferences> _getPortletPreferencesOptional(
-			String editableValues, long plid, long segmentsExperienceId)
-		throws JSONException {
-
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			editableValues);
-
-		String instanceId = editableValuesJSONObject.getString("instanceId");
-		String portletId = editableValuesJSONObject.getString("portletId");
-
-		if (Validator.isNull(instanceId) || Validator.isNull(portletId)) {
-			return Optional.empty();
-		}
+		String instanceId, long plid, String portletId,
+		long segmentsExperienceId) {
 
 		try {
 			return Optional.of(
@@ -113,6 +102,31 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 			segmentsExperienceId;
 	}
 
+	private PortletPreferences _updatePortletPreferences(
+		String instanceId, String namespace, long plid, String portletId,
+		long segmentsExperienceId) {
+
+		Optional<PortletPreferences> portletPreferencesOptional =
+			_getPortletPreferencesOptional(
+				instanceId, plid, portletId, segmentsExperienceId);
+
+		if (portletPreferencesOptional.isPresent()) {
+			PortletPreferences portletPreferences =
+				portletPreferencesOptional.get();
+
+			portletPreferences.setPortletId(
+				PortletIdCodec.encode(
+					PortletIdCodec.decodePortletName(
+						portletPreferences.getPortletId()),
+					namespace));
+
+			return _portletPreferencesLocalService.updatePortletPreferences(
+				portletPreferences);
+		}
+
+		return null;
+	}
+
 	private String _upgradeLayoutData(String data, long segmentsExperienceId)
 		throws PortalException {
 
@@ -142,31 +156,14 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 				continue;
 			}
 
-			Optional<PortletPreferences> portletPreferencesOptional =
-				_getPortletPreferencesOptional(
-					fragmentEntryLink.getEditableValues(),
-					fragmentEntryLink.getClassPK(), segmentsExperienceId);
+			fragmentEntryLink.setNamespace(StringUtil.randomId());
 
-			if (portletPreferencesOptional.isPresent()) {
-				fragmentEntryLink.setNamespace(StringUtil.randomId());
+			PortletPreferences portletPreferences = _upgradePortletPreferences(
+				fragmentEntryLink.getEditableValues(),
+				fragmentEntryLink.getNamespace(),
+				fragmentEntryLink.getClassPK(), segmentsExperienceId);
 
-				PortletPreferences portletPreferences =
-					portletPreferencesOptional.get();
-
-				portletPreferences.setPortletId(
-					PortletIdCodec.encode(
-						PortletIdCodec.decodePortletName(
-							portletPreferences.getPortletId()),
-						fragmentEntryLink.getNamespace()));
-
-				try {
-					_portletPreferencesLocalService.updatePortletPreferences(
-						portletPreferences);
-				}
-				catch (Exception exception) {
-					_log.error(exception, exception);
-				}
-
+			if (portletPreferences != null) {
 				fragmentEntryLink.setEditableValues(
 					EditableValuesTransformerUtil.getEditableValues(
 						fragmentEntryLink.getEditableValues(),
@@ -241,6 +238,25 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 
 			ps.executeBatch();
 		}
+	}
+
+	private PortletPreferences _upgradePortletPreferences(
+			String editableValues, String namespace, long plid,
+			long segmentsExperienceId)
+		throws PortalException {
+
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			editableValues);
+
+		String instanceId = editableValuesJSONObject.getString("instanceId");
+		String portletId = editableValuesJSONObject.getString("portletId");
+
+		if (Validator.isNull(instanceId) || Validator.isNull(portletId)) {
+			return null;
+		}
+
+		return _updatePortletPreferences(
+			instanceId, namespace, plid, portletId, segmentsExperienceId);
 	}
 
 	private static final String _SEGMENTS_EXPERIENCE_SEPARATOR =

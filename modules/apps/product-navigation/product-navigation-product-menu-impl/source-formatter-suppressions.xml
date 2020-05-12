@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaAPISignatureCheck" files="src/main/java/com/liferay/product/navigation/product/menu/internal/util/ProductNavigationProductMenuUtilImpl\.java" />
+	</source-check>
+</suppressions>

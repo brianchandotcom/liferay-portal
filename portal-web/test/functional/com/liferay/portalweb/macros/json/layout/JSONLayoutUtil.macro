@@ -21,6 +21,11 @@ definition {
 			var typeSettings = '''${typeSettings}=${widget}''';
 		}
 
+		var newLine= '''
+''';
+
+		var typeSettings = StringUtil.regexReplaceAll("${typeSettings}","\\r\\n|\\r|\\n","${newLine}");
+
 		return "${typeSettings}";
 	}
 

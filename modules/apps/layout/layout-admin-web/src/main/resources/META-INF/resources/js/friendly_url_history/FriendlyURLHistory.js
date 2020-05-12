@@ -55,6 +55,7 @@ function FriendlyURLHistory({portletNamespace, ...restProps}) {
 					initialLanguageId={selectedLanguageId}
 					observer={observer}
 					onModalClose={onClose}
+					portletNamespace={portletNamespace}
 				/>
 			)}
 		</>

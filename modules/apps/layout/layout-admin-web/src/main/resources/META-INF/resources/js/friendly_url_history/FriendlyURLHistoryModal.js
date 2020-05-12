@@ -24,9 +24,11 @@ import LanguageSelector from './LanguageSelector';
 
 const FriendlyURLHistoryModal = ({
 	defaultLanguageId,
+	editFriendlyURLEntryLocalizationsURL,
 	friendlyURLEntryLocalizationslURL,
 	initialLanguageId,
 	observer,
+	portletNamespace,
 }) => {
 	const [languageId, setLanguageId] = useState();
 	const [loading, setLoading] = useState(true);
@@ -87,6 +89,18 @@ const FriendlyURLHistoryModal = ({
 			setLoading(false);
 		}
 	}, [friendlyURLEntryLocalizations, loading, languageId]);
+
+	const handleDeleteFriendlyUrl = (friendlyURLEntryId) => {
+		const formData = new FormData();
+
+		formData.append(`${portletNamespace}friendlyURLEntryId`, friendlyURLEntryId);
+
+		fetch(editFriendlyURLEntryLocalizationsURL, {
+			body: formData,
+			method: 'POST',
+		})
+			.then((xhr) => console.log(xhr))
+	}
 
 	return (
 		<ClayModal
@@ -162,6 +176,7 @@ const FriendlyURLHistoryModal = ({
 															data-title={Liferay.Language.get(
 																'forget-url'
 															)}
+															onClick={() => {handleDeleteFriendlyUrl(friendlyURLEntryId)}}
 															symbol="times-circle"
 														/>
 													</ClayList.QuickActionMenu>
@@ -181,8 +196,10 @@ const FriendlyURLHistoryModal = ({
 
 FriendlyURLHistoryModal.propTypes = {
 	defaultLanguageId: PropTypes.string.isRequired,
+	editFriendlyURLEntryLocalizationsURL: PropTypes.string.isRequired,
 	friendlyURLEntryLocalizationslURL: PropTypes.string.isRequired,
 	observer: PropTypes.object.isRequired,
+	portletNamespace: PropTypes.string.isRequired,
 };
 
 export default FriendlyURLHistoryModal;

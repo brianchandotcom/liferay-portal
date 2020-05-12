@@ -66,12 +66,15 @@ definition {
 	@priority = "4"
 	test ExportFragmentCompositionAndImport {
 		task ("Add a fragment collection") {
-			FragmentsAdmin.addCollection(
-				collectionDescription = "Collection Description",
-				collectionName = "Collection Name");
+			JSONFragment.addFragmentCollection(
+				description = "Collection Description",
+				groupName = "Test Site Name",
+				name = "Collection Name");
 		}
 
 		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
@@ -94,9 +97,14 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a Section to page") {
@@ -155,9 +163,14 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "new-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "New Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "New Site Name");
 		}
 
 		PageEditor.addFragment(
@@ -177,12 +190,15 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a fragment collection") {
-			FragmentsAdmin.addCollection(
-				collectionDescription = "Collection Description",
-				collectionName = "Collection Name");
+			JSONFragment.addFragmentCollection(
+				description = "Collection Description",
+				groupName = "Test Site Name",
+				name = "Collection Name");
 		}
 
 		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
@@ -237,9 +253,14 @@ definition {
 	@priority = "4"
 	test ExportImportFragmentCompositionWithCustomConfigurations {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a Section to page") {
@@ -316,9 +337,14 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "new-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "New Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "New Site Name");
 		}
 
 		PageEditor.addFragment(
@@ -343,9 +369,16 @@ definition {
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
 	@priority = "5"
 	test ExportImportSavedCompositionWithoutSaveInlineContent {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
 
 		task ("Add a Row to page") {
 			PageEditor.addLayoutRow();
@@ -458,9 +491,14 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "new-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "New Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "New Site Name");
 		}
 
 		PageEditor.addFragment(
@@ -505,9 +543,16 @@ definition {
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
 	@priority = "5"
 	test ExportImportSavedCompositionWithSaveInlineContent {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
 
 		task ("Add a Row to page") {
 			PageEditor.addLayoutRow();
@@ -622,9 +667,14 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "new-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "New Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "New Site Name");
 		}
 
 		PageEditor.addFragment(
@@ -690,9 +740,14 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		PageEditor.addFragment(
@@ -731,9 +786,14 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		PageEditor.addFragment(
@@ -793,9 +853,14 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		PageEditor.addFragment(

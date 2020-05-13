@@ -118,21 +118,23 @@ function GlobalMenu({panelAppsURL}) {
 	});
 
 	const [activeTab, setActiveTab] = useState(0);
-	const [items, setItems] = useState([]);
-	const [portletNamespace, setPortletNamespace] = useState([]);
-	const [recentSites, setRecentSites] = useState([]);
-	const [viewAllURL, setViewAllURL] = useState([]);
+	const [context, setContext] = useState({});
+
 	const preloadPromise = useRef();
+
+	const {items = [], portletNamespace, recentSites, viewAllURL} = context;
 
 	function preloadItems() {
 		if (!preloadPromise.current) {
 			preloadPromise.current = fetch(panelAppsURL)
 				.then((response) => response.json())
 				.then(({items, portletNamespace, recentSites, viewAllURL}) => {
-					setItems(items);
-					setRecentSites(recentSites);
-					setPortletNamespace(portletNamespace);
-					setViewAllURL(viewAllURL);
+					setContext({
+						items,
+						portletNamespace,
+						recentSites,
+						viewAllURL,
+					});
 				});
 		}
 	}

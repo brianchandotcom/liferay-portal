@@ -38,21 +38,6 @@ PortletURL sortingURL = PortletURLUtil.clone(portletURL, renderResponse);
 sortingURL.setParameter("orderByType", orderByType.equals("asc") ? "desc" : "asc");
 %>
 
-<clay:navigation-bar
-	navigationItems='<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(LanguageUtil.get(request, "live-sessions"));
-					});
-			}
-		}
-	%>'
-/>
-
 <clay:management-toolbar
 	disabled="<%= ListUtil.isEmpty(userTrackers) %>"
 	selectable="<%= false %>"

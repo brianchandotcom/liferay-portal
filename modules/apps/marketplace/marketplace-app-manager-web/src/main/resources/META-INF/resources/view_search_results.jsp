@@ -32,10 +32,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 
 <portlet:renderURL var="viewURL" />
 
-<clay:navigation-bar
-	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "search") %>'
-/>
-
 <%
 AppManagerSearchResultsManagementToolbarDisplayContext
 	appManagerSearchResultsManagementToolbarDisplayContext = new AppManagerSearchResultsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);

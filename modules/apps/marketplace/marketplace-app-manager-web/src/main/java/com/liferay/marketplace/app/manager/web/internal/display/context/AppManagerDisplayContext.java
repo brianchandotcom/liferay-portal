@@ -59,17 +59,6 @@ public class AppManagerDisplayContext {
 		).build();
 	}
 
-	public List<NavigationItem> getNavigationItems(String url, String label) {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(true);
-				navigationItem.setHref(url);
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, label));
-			}
-		).build();
-	}
-
 	private String _getViewModuleURL(String pluginType) {
 		String app = ParamUtil.getString(_httpServletRequest, "app");
 		String moduleGroup = ParamUtil.getString(

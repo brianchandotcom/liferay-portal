@@ -152,21 +152,6 @@ public class PasswordPolicyDisplayContext {
 		return navigationItems;
 	}
 
-	public List<NavigationItem> getViewPasswordPoliciesNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-		entriesNavigationItem.setHref(StringPool.BLANK);
-		entriesNavigationItem.setLabel(
-			LanguageUtil.get(_httpServletRequest, "password-policies"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
-	}
-
 	public boolean hasPermission(String actionId, long passwordPolicyId) {
 		return _hasPermission(actionId, passwordPolicyId);
 	}

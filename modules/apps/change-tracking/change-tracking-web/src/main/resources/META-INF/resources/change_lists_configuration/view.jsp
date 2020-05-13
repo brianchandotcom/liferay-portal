@@ -16,10 +16,6 @@
 
 <%@ include file="/change_lists_configuration/init.jsp" %>
 
-<clay:navigation-bar
-	navigationItems="<%= changeListsConfigurationDisplayContext.getViewNavigationItems() %>"
-/>
-
 <clay:container-fluid
 	className="container-form-lg"
 >

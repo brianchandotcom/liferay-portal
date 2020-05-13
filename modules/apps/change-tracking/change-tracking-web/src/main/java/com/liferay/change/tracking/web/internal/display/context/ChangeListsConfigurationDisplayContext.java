@@ -16,14 +16,10 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -87,22 +83,6 @@ public class ChangeListsConfigurationDisplayContext {
 		}
 
 		return _navigation;
-	}
-
-	public List<NavigationItem> getViewNavigationItems() {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				String navigation = getNavigation();
-
-				navigationItem.setActive(navigation.equals("global-settings"));
-
-				navigationItem.setHref(
-					_renderResponse.createRenderURL(), "navigation",
-					"global-settings");
-				navigationItem.setLabel(
-					_language.get(_httpServletRequest, "global-settings"));
-			}
-		).build();
 	}
 
 	public boolean isChangeListsEnabled() {

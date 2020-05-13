@@ -42,10 +42,6 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 	<portlet:param name="app" value="<%= app %>" />
 </portlet:renderURL>
 
-<clay:navigation-bar
-	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "modules") %>'
-/>
-
 <clay:management-toolbar
 	filterDropdownItems="<%= viewModulesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= viewModulesManagementToolbarDisplayContext.getSearchActionURL() %>"

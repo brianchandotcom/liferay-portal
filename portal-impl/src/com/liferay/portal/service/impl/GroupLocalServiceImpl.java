@@ -3810,7 +3810,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					"languageId",
 					LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
-			validateLanguageIds(groupId, defaultLanguageId, newLanguageIds);
+			validateLanguageIds(defaultLanguageId, newLanguageIds);
 
 			if (!Objects.equals(
 					group.getDefaultLanguageId(), defaultLanguageId)) {
@@ -4893,14 +4893,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateLanguageIds( long groupId,
+	protected void validateLanguageIds(
 			String defaultLanguageId, String languageIds)
 		throws PortalException {
 
 		String[] languageIdsArray = StringUtil.split(languageIds);
 
 		for (String languageId : languageIdsArray) {
-			if (!LanguageUtil.isAvailableLocale( groupId,
+			if (!LanguageUtil.isAvailableLocale(
 					LocaleUtil.fromLanguageId(languageId))) {
 
 				LocaleException localeException = new LocaleException(

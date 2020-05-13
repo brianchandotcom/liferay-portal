@@ -28,19 +28,9 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	copyToContributedFragmentEntry(itemData) {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
-				},
-				eventName: this.ns('selectFragmentCollection'),
-				id: this.ns('selectFragmentCollection'),
-				title: Liferay.Language.get('select-collection'),
-				uri: itemData.selectFragmentCollectionURL,
-			},
-			(selectedItem) => {
+		Liferay.Util.openModal({
+			id: this.ns('selectFragmentCollection'),
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					this.one('#fragmentCollectionId').value = selectedItem.id;
 					this.one('#fragmentEntryKeys').value =
@@ -51,8 +41,11 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 						itemData.copyContributedFragmentEntryURL
 					);
 				}
-			}
-		);
+			},
+			selectEventName: this.ns('selectFragmentCollection'),
+			title: Liferay.Language.get('select-collection'),
+			url: itemData.selectFragmentCollectionURL,
+		});
 	}
 
 	copyToFragmentEntry(itemData) {
@@ -129,19 +122,9 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 		selectFragmentCollectionURL,
 		targetFragmentEntryURL
 	) {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
-				},
-				eventName: this.ns('selectFragmentCollection'),
-				id: this.ns('selectFragmentCollection'),
-				title: Liferay.Language.get('select-collection'),
-				uri: selectFragmentCollectionURL,
-			},
-			(selectedItem) => {
+		Liferay.Util.openModal({
+			id: this.ns('selectFragmentCollection'),
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					const form = this.one('#fragmentEntryFm');
 
@@ -155,8 +138,11 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 
 					submitForm(form, targetFragmentEntryURL);
 				}
-			}
-		);
+			},
+			selectEventName: this.ns('selectFragmentCollection'),
+			title: Liferay.Language.get('select-collection'),
+			url: selectFragmentCollectionURL,
+		});
 	}
 
 	_send(url) {

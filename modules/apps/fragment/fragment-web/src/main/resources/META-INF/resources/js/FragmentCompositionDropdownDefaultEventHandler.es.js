@@ -87,19 +87,9 @@ class FragmentCompositionDropdownDefaultEventHandler extends DefaultEventHandler
 		selectFragmentCollectionURL,
 		targetFragmentCompositionURL
 	) {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
-				},
-				eventName: this.ns('selectFragmentCollection'),
-				id: this.ns('selectFragmentCollection'),
-				title: Liferay.Language.get('select-collection'),
-				uri: selectFragmentCollectionURL,
-			},
-			(selectedItem) => {
+		Liferay.Util.openModal({
+			id: this.ns('selectFragmentCollection'),
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					const form = this.one('#fragmentEntryFm');
 
@@ -113,8 +103,11 @@ class FragmentCompositionDropdownDefaultEventHandler extends DefaultEventHandler
 
 					submitForm(form, targetFragmentCompositionURL);
 				}
-			}
-		);
+			},
+			selectEventName: this.ns('selectFragmentCollection'),
+			title: Liferay.Language.get('select-collection'),
+			url: selectFragmentCollectionURL,
+		});
 	}
 
 	_send(url) {

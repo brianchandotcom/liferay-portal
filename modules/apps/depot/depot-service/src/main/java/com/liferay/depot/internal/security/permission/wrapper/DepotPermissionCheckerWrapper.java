@@ -255,28 +255,8 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				return false;
 			}
 
-			if (_userGroupRoleLocalService.hasUserGroupRole(
-					getUserId(), group.getGroupId(),
-					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true) ||
-				_userGroupRoleLocalService.hasUserGroupRole(
-					getUserId(), group.getGroupId(),
-					DepotRolesConstants.ASSET_LIBRARY_OWNER, true)) {
-
+			if (_isGroupAdmin(group)) {
 				return true;
-			}
-
-			Group parentGroup = group;
-
-			while (!parentGroup.isRoot()) {
-				parentGroup = parentGroup.getParentGroup();
-
-				if (super.hasPermission(
-						parentGroup, Group.class.getName(),
-						String.valueOf(parentGroup.getGroupId()),
-						ActionKeys.MANAGE_SUBGROUPS)) {
-
-					return true;
-				}
 			}
 
 			return _depotEntryModelResourcePermission.contains(

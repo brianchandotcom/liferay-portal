@@ -79,7 +79,7 @@ definition {
 			locator1 = "TextArea#ANY",
 			value1 = "${configurationResource}");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Navigator.openURL();
 

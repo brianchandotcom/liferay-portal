@@ -220,6 +220,23 @@ components:
                     type: string
                     writeOnly: true
             type: object
+        ClassNameReference:
+            properties:
+                className:
+                    type: string
+            required:
+                - className
+        ClassPKReference:
+            properties:
+                className:
+                    type: string
+                classPK:
+                    format: int64
+                    type: integer
+            required:
+                - className
+                - classPK
+            type: object
         Comment:
             description:
                 Represents a comment. See [Comment](https://www.schema.org/Comment) for more details.
@@ -613,6 +630,14 @@ components:
                         A flag that indicates whether the structure's end target should render the field label.
                     readOnly: true
                     type: boolean
+            type: object
+        ContextReference:
+            properties:
+                contextSource:
+                    enum: [CollectionItem, DisplayPageItem]
+                    type: string
+            required:
+                - contextSource
             type: object
         Creator:
             description:
@@ -1068,15 +1093,12 @@ components:
                     $ref: "#/components/schemas/FragmentInlineValue"
                 mapping:
                     properties:
-                        collectionItemFieldKey:
-                            type: string
                         fieldKey:
                             type: string
-                        itemClassName:
-                            type: string
-                        itemClassPK:
-                            format: int64
-                            type: integer
+                        itemReference:
+                            oneOf:
+                                - $ref: "#/components/schemas/ClassPKReference"
+                                - $ref: "#/components/schemas/ContextReference"
                     type: object
             type: object
         FragmentSettingsAllowed:
@@ -1823,6 +1845,17 @@ components:
                 ""
             properties:
                 collectionConfig:
+                    properties:
+                        collectionReference:
+                            oneOf:
+                                - $ref: "#/components/schemas/ClassNameReference"
+                                - $ref: "#/components/schemas/ClassPKReference"
+                        collectionType:
+                            enum: [Collection, CollectionProvider]
+                            type: string
+                    required:
+                        - collectionReference
+                        - collectionType
                     type: object
                 numberOfColumns:
                     type: integer

@@ -220,6 +220,50 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@description = "This is for LPS-110108. Reorder pages in same level via drag and drop."
+	@priority = "5"
+	test MovePageInSameLevel {
+		property testray.component.names = "Site Pages Administration";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name 1",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name 1",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name 2",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		Page.viewPagesOrder(
+			pageName1 = "Test Content Page Name 1",
+			pageName2 = "Test Content Page Name 2");
+
+		ContentPages.movePageToPageUp(
+			pageName = "Test Content Page Name 2",
+			pageNameTo = "Test Content Page Name 1");
+
+		Page.viewPagesOrder(
+			pageName1 = "Test Content Page Name 2",
+			pageName2 = "Test Content Page Name 1");
+	}
+
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {

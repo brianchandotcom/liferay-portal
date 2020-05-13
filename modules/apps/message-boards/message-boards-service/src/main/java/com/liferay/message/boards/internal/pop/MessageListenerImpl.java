@@ -75,7 +75,7 @@ public class MessageListenerImpl implements MessageListener {
 		String from, List<String> recipients, Message message) {
 
 		try {
-			if (isAutoReply(message)) {
+			if (_isAutoReply(message)) {
 				return false;
 			}
 
@@ -85,7 +85,7 @@ public class MessageListenerImpl implements MessageListener {
 				return false;
 			}
 
-			Company company = getCompany(messageIdString);
+			Company company = _getCompany(messageIdString);
 
 			MBCategory category = _mbCategoryLocalService.getCategory(
 				MBMailUtil.getCategoryId(messageIdString));
@@ -155,7 +155,7 @@ public class MessageListenerImpl implements MessageListener {
 				return;
 			}
 
-			Company company = getCompany(messageIdString);
+			Company company = _getCompany(messageIdString);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Message id " + messageIdString);
@@ -299,7 +299,7 @@ public class MessageListenerImpl implements MessageListener {
 		return MessageListenerImpl.class.getName();
 	}
 
-	protected Company getCompany(String messageIdString) throws Exception {
+	private Company _getCompany(String messageIdString) throws Exception {
 		int pos =
 			messageIdString.indexOf(CharPool.AT) +
 				PropsValues.POP_SERVER_SUBDOMAIN.length() + 1;
@@ -319,7 +319,7 @@ public class MessageListenerImpl implements MessageListener {
 		return _companyLocalService.getCompanyByMx(mx);
 	}
 
-	protected boolean isAutoReply(Message message) throws MessagingException {
+	private boolean _isAutoReply(Message message) throws MessagingException {
 		String[] autoReply = message.getHeader("X-Autoreply");
 
 		if (ArrayUtil.isNotEmpty(autoReply)) {
@@ -339,37 +339,6 @@ public class MessageListenerImpl implements MessageListener {
 		}
 
 		return false;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageService(MBMessageService mbMessageService) {
-		_mbMessageService = mbMessageService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private String _getMessageIdString(List<String> recipients, Message message)
@@ -395,14 +364,22 @@ public class MessageListenerImpl implements MessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MessageListenerImpl.class);
 
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
 	private MBMessageService _mbMessageService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -43,20 +43,22 @@ const Content = ({
 		<div className="row">
 			{childCategories.map(({key, label, panelApps}) => (
 				<div className="col p-4" key={key}>
-					<h5 className="text-secondary text-uppercase">{label}</h5>
+					<h2 className="h5 text-secondary text-uppercase">
+						{label}
+					</h2>
 
 					<Column panelApps={panelApps} />
 				</div>
 			))}
 
 			<div className="bg-lighter col p-4 rounded-sm" key="sites">
-				<h5 className="mb-5 text-secondary text-uppercase">
+				<h2 className="h5 mb-5 text-secondary text-uppercase">
 					{Liferay.Language.get('sites')}
-				</h5>
+				</h2>
 
-				<h6 className="text-secondary text-uppercase">
+				<p className="h6 mb-0 text-secondary text-uppercase">
 					{Liferay.Language.get('recently-visited')}
-				</h6>
+				</p>
 
 				<ul className="list-unstyled mt-3" role="list">
 					{recentSites.map(({key, label, logoURL, url}) => (

@@ -319,16 +319,6 @@ public class MessageListenerImpl implements MessageListener {
 		return _companyLocalService.getCompanyByMx(mx);
 	}
 
-	protected String getMessageIdString(String recipient, Message message)
-		throws Exception {
-
-		if (PropsValues.POP_SERVER_SUBDOMAIN.length() > 0) {
-			return recipient;
-		}
-
-		return MBMailUtil.getParentMessageIdString(message);
-	}
-
 	protected boolean isAutoReply(Message message) throws MessagingException {
 		String[] autoReply = message.getHeader("X-Autoreply");
 
@@ -385,15 +375,17 @@ public class MessageListenerImpl implements MessageListener {
 	private String _getMessageIdString(List<String> recipients, Message message)
 		throws Exception {
 
-		for (String recipient : recipients) {
-			String messageIdString = getMessageIdString(recipient, message);
+		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
+			return MBMailUtil.getParentMessageIdString(message);
+		}
 
-			if ((messageIdString != null) &&
-				messageIdString.startsWith(
+		for (String recipient : recipients) {
+			if ((recipient != null) &&
+				recipient.startsWith(
 					MBMailUtil.MESSAGE_POP_PORTLET_PREFIX,
 					MBMailUtil.getMessageIdStringOffset())) {
 
-				return messageIdString;
+				return recipient;
 			}
 		}
 

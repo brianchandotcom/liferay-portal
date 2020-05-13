@@ -27,7 +27,7 @@ const PathList = (props) => {
 		}
 	}, []);
 
-	let pathKeys = Object.keys(paths);
+	let pathKeys = Object.keys(paths).sort();
 
 	if (filter.trim().length > 0) {
 		pathKeys = pathKeys.filter((pathkey) =>

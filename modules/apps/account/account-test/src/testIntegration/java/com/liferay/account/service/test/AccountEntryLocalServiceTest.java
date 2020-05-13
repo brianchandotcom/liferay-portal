@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
@@ -21,6 +22,8 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -36,9 +39,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -84,6 +89,29 @@ public class AccountEntryLocalServiceTest {
 				_accountEntryLocalService.deleteAccountEntry(accountEntry);
 			}
 		}
+	}
+
+	@Test
+	public void testAccountEntryAssetTags() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAssetTagNames(new String[] {"tag1", "tag2"});
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		_accountEntries.add(accountEntry);
+
+		List<AssetTag> assetTags = _assetTagLocalService.getTags(
+			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
+
+		Assert.assertArrayEquals(
+			serviceContext.getAssetTagNames(),
+			ListUtil.toArray(assetTags, AssetTag.NAME_ACCESSOR));
 	}
 
 	@Test
@@ -714,6 +742,9 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private AccountUserRetriever _accountUserRetriever;
+
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

@@ -319,6 +319,26 @@ public class MessageListenerImpl implements MessageListener {
 		return _companyLocalService.getCompanyByMx(mx);
 	}
 
+	private String _getMessageIdString(List<String> recipients, Message message)
+		throws Exception {
+
+		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
+			return MBMailUtil.getParentMessageIdString(message);
+		}
+
+		for (String recipient : recipients) {
+			if ((recipient != null) &&
+				recipient.startsWith(
+					MBMailUtil.MESSAGE_POP_PORTLET_PREFIX,
+					MBMailUtil.getMessageIdStringOffset())) {
+
+				return recipient;
+			}
+		}
+
+		return null;
+	}
+
 	private boolean _isAutoReply(Message message) throws MessagingException {
 		String[] autoReply = message.getHeader("X-Autoreply");
 
@@ -339,26 +359,6 @@ public class MessageListenerImpl implements MessageListener {
 		}
 
 		return false;
-	}
-
-	private String _getMessageIdString(List<String> recipients, Message message)
-		throws Exception {
-
-		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
-			return MBMailUtil.getParentMessageIdString(message);
-		}
-
-		for (String recipient : recipients) {
-			if ((recipient != null) &&
-				recipient.startsWith(
-					MBMailUtil.MESSAGE_POP_PORTLET_PREFIX,
-					MBMailUtil.getMessageIdStringOffset())) {
-
-				return recipient;
-			}
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

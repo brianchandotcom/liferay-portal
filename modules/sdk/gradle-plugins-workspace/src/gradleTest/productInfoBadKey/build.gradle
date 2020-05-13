@@ -2,14 +2,6 @@ task runGradleTest
 
 runGradleTest {
 	doLast {
-		String tomcatVersion = null
-
-		try {
-			tomcatVersion = gradle.liferayWorkspace.appServerTomcatVersion
-		}
-		catch (Exception exception) {
-		}
-
-		assert tomcatVersion == null
+		assert gradle.liferayWorkspace.appServerTomcatVersion == null
 	}
 }

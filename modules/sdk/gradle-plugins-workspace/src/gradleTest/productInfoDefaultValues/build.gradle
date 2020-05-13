@@ -2,23 +2,9 @@ task runGradleTest
 
 runGradleTest {
 	doLast {
-		String tomcatVersion = null
-		String bundleUrl = null
-		String targetPlatformVersion = null
-		String dockerImageLiferay = null
-
-		try {
-			tomcatVersion = gradle.liferayWorkspace.appServerTomcatVersion
-			bundleUrl = gradle.liferayWorkspace.bundleUrl
-			targetPlatformVersion = gradle.liferayWorkspace.targetPlatformVersion
-			dockerImageLiferay = gradle.liferayWorkspace.dockerImageLiferay
-		}
-		catch (Exception exception) {
-		}
-
-		assert targetPlatformVersion == 7.2.10
-		assert bundleUrl == https://api.liferay.com/downloads/portal/7.2.10/liferay-dxp-tomcat-7.2.10-ga1-20190531140450482.tar.gz
-		assert tomcatVersion == "9.0.17"
-		assert dockerImageLiferay == "liferay/dxp:7.2.10"
+		assert gradle.liferayWorkspace.appServerTomcatVersion == "9.0.17"
+		assert gradle.liferayWorkspace.bundleUrl == "https://api.liferay.com/downloads/portal/7.2.10/liferay-dxp-tomcat-7.2.10-ga1-20190531140450482.tar.gz"
+		assert gradle.liferayWorkspace.targetPlatformVersion == "7.2.10"
+		assert gradle.liferayWorkspace.dockerImageLiferay == "liferay/dxp:7.2.10"
 	}
 }

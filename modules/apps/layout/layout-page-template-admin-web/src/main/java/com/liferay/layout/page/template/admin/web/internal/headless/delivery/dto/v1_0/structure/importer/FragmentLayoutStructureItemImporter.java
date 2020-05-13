@@ -15,11 +15,14 @@
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
 import com.liferay.document.library.util.DLURLHelperUtil;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -47,6 +50,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -164,7 +168,10 @@ public class FragmentLayoutStructureItemImporter
 
 		JSONObject defaultEditableValuesJSONObject =
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				_replaceResources(fragmentCollection, html), configuration);
+				_getProcessedHTML(
+					fragmentEntry.getCompanyId(), configuration,
+					fragmentCollection, html),
+				configuration);
 
 		Map<String, String> editableTypes =
 			EditableFragmentEntryProcessorUtil.getEditableTypes(html);
@@ -417,6 +424,37 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		return fragmentEntry;
+	}
+
+	private String _getProcessedHTML(
+			long companyId, String configuration,
+			FragmentCollection fragmentCollection, String html)
+		throws Exception {
+
+		String processedHTML = _replaceResources(fragmentCollection, html);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0L);
+
+		fragmentEntryLink.setCompanyId(companyId);
+		fragmentEntryLink.setHtml(processedHTML);
+		fragmentEntryLink.setConfiguration(configuration);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return processedHTML;
+		}
+
+		FragmentEntryProcessorContext fragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(
+				serviceContext.getRequest(), serviceContext.getResponse(),
+				FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.getMostRelevantLocale());
+
+		return _fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+			fragmentEntryLink, fragmentEntryProcessorContext);
 	}
 
 	private String _getWarningMessage(long groupId, String fragmentKey)

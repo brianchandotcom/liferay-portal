@@ -31,7 +31,6 @@
 		position: absolute;
 		text-align: center;
 		transform: translate(-50%);
-		width: 100%;
 
 		@include media-breakpoint-up(sm) {
 			margin-top: 20px;

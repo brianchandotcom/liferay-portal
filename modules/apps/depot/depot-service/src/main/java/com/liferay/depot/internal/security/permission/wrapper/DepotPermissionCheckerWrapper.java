@@ -118,11 +118,34 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	@Override
 	public boolean isContentReviewer(long companyId, long groupId) {
 		try {
-			if (super.isContentReviewer(companyId, groupId) ||
-				_isContentReviewer(companyId, groupId)) {
+			if (!isSignedIn()) {
+				return false;
+			}
 
+			if (super.isContentReviewer(companyId, groupId)) {
 				return true;
 			}
+
+			if (isOmniadmin()) {
+				return true;
+			}
+
+			if (isCompanyAdmin(companyId)) {
+				return true;
+			}
+
+			if (groupId <= 0) {
+				return false;
+			}
+
+			if (isGroupAdmin(groupId)) {
+				return true;
+			}
+
+			return _getOrAddToPermissionCache(
+				_groupLocalService.fetchGroup(groupId),
+				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+				this::_isContentReviewer);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -308,35 +331,6 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 
 		return false;
-	}
-
-	private boolean _isContentReviewer(long companyId, long groupId)
-		throws Exception {
-
-		if (!isSignedIn()) {
-			return false;
-		}
-
-		if (isOmniadmin()) {
-			return true;
-		}
-
-		if (isCompanyAdmin(companyId)) {
-			return true;
-		}
-
-		if (groupId <= 0) {
-			return false;
-		}
-
-		if (isGroupAdmin(groupId)) {
-			return true;
-		}
-
-		return _getOrAddToPermissionCache(
-			_groupLocalService.fetchGroup(groupId),
-			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
-			this::_isContentReviewer);
 	}
 
 	private boolean _isDepotGroupOwner(Group group) {

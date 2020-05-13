@@ -14,24 +14,12 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
-import org.elasticsearch.analysis.common.CommonAnalysisPlugin;
-import org.elasticsearch.common.logging.LogConfigurator;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
-import org.elasticsearch.index.reindex.ReindexPlugin;
-import org.elasticsearch.node.InternalSettingsPreparer;
 import org.elasticsearch.node.Node;
-import org.elasticsearch.painless.PainlessPlugin;
 import org.elasticsearch.plugins.Plugin;
-import org.elasticsearch.transport.Netty4Plugin;
 
 /**
  * @author André de Oliveira
@@ -39,26 +27,7 @@ import org.elasticsearch.transport.Netty4Plugin;
 public class EmbeddedElasticsearchNode extends Node {
 
 	public static Node newInstance(Settings settings) {
-		Environment environment = InternalSettingsPreparer.prepareEnvironment(
-			settings, Collections.emptyMap(), null, null);
-
-		List<Class<? extends Plugin>> classpathPlugins = Arrays.asList(
-			CommonAnalysisPlugin.class, Netty4Plugin.class,
-			PainlessPlugin.class, ReindexPlugin.class);
-
-		try {
-			LogConfigurator.registerErrorListener();
-
-			LogConfigurator.configure(environment);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to find log4j2.properties", exception);
-			}
-		}
-
-		return PluginJarConflictCheckSuppression.execute(
-			() -> new EmbeddedElasticsearchNode(environment, classpathPlugins));
+		return null;
 	}
 
 	public EmbeddedElasticsearchNode(
@@ -67,8 +36,5 @@ public class EmbeddedElasticsearchNode extends Node {
 
 		super(environment, classpathPlugins, false);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EmbeddedElasticsearchNode.class);
 
 }

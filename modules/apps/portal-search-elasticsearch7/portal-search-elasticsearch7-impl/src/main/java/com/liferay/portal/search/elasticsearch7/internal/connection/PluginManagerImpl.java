@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import java.io.IOException;
 
-import java.lang.reflect.Constructor;
-
 import java.net.URL;
 
 import java.nio.file.DirectoryStream;
@@ -30,10 +28,8 @@ import java.nio.file.Path;
 import org.apache.commons.collections.IteratorUtils;
 
 import org.elasticsearch.Version;
-import org.elasticsearch.cli.Terminal;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
-import org.elasticsearch.plugins.PluginCli;
 import org.elasticsearch.plugins.PluginInfo;
 
 /**
@@ -126,15 +122,6 @@ public class PluginManagerImpl implements PluginManager {
 		if (value == null) {
 			System.setProperty(key, StringPool.BLANK);
 		}
-
-		Constructor<PluginCli> constructor =
-			PluginCli.class.getDeclaredConstructor();
-
-		constructor.setAccessible(true);
-
-		PluginCli pluginCli = constructor.newInstance();
-
-		pluginCli.main(args, Terminal.DEFAULT);
 	}
 
 	private final Environment _environment;

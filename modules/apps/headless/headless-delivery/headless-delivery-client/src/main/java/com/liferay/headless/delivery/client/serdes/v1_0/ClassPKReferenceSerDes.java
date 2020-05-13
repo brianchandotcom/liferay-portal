@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.Mapping;
+import com.liferay.headless.delivery.client.dto.v1_0.ClassPKReference;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MappingSerDes {
+public class ClassPKReferenceSerDes {
 
-	public static Mapping toDTO(String json) {
-		MappingJSONParser mappingJSONParser = new MappingJSONParser();
+	public static ClassPKReference toDTO(String json) {
+		ClassPKReferenceJSONParser classPKReferenceJSONParser =
+			new ClassPKReferenceJSONParser();
 
-		return mappingJSONParser.parseToDTO(json);
+		return classPKReferenceJSONParser.parseToDTO(json);
 	}
 
-	public static Mapping[] toDTOs(String json) {
-		MappingJSONParser mappingJSONParser = new MappingJSONParser();
+	public static ClassPKReference[] toDTOs(String json) {
+		ClassPKReferenceJSONParser classPKReferenceJSONParser =
+			new ClassPKReferenceJSONParser();
 
-		return mappingJSONParser.parseToDTOs(json);
+		return classPKReferenceJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Mapping mapping) {
-		if (mapping == null) {
+	public static String toJSON(ClassPKReference classPKReference) {
+		if (classPKReference == null) {
 			return "null";
 		}
 
@@ -53,32 +55,28 @@ public class MappingSerDes {
 
 		sb.append("{");
 
-		if (mapping.getFieldKey() != null) {
+		if (classPKReference.getClassName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fieldKey\": ");
+			sb.append("\"className\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(mapping.getFieldKey()));
+			sb.append(_escape(classPKReference.getClassName()));
 
 			sb.append("\"");
 		}
 
-		if (mapping.getItemReference() != null) {
+		if (classPKReference.getClassPK() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"itemReference\": ");
+			sb.append("\"classPK\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(mapping.getItemReference()));
-
-			sb.append("\"");
+			sb.append(classPKReference.getClassPK());
 		}
 
 		sb.append("}");
@@ -87,61 +85,64 @@ public class MappingSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		MappingJSONParser mappingJSONParser = new MappingJSONParser();
+		ClassPKReferenceJSONParser classPKReferenceJSONParser =
+			new ClassPKReferenceJSONParser();
 
-		return mappingJSONParser.parseToMap(json);
+		return classPKReferenceJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Mapping mapping) {
-		if (mapping == null) {
+	public static Map<String, String> toMap(ClassPKReference classPKReference) {
+		if (classPKReference == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (mapping.getFieldKey() == null) {
-			map.put("fieldKey", null);
-		}
-		else {
-			map.put("fieldKey", String.valueOf(mapping.getFieldKey()));
-		}
-
-		if (mapping.getItemReference() == null) {
-			map.put("itemReference", null);
+		if (classPKReference.getClassName() == null) {
+			map.put("className", null);
 		}
 		else {
 			map.put(
-				"itemReference", String.valueOf(mapping.getItemReference()));
+				"className", String.valueOf(classPKReference.getClassName()));
+		}
+
+		if (classPKReference.getClassPK() == null) {
+			map.put("classPK", null);
+		}
+		else {
+			map.put("classPK", String.valueOf(classPKReference.getClassPK()));
 		}
 
 		return map;
 	}
 
-	public static class MappingJSONParser extends BaseJSONParser<Mapping> {
+	public static class ClassPKReferenceJSONParser
+		extends BaseJSONParser<ClassPKReference> {
 
 		@Override
-		protected Mapping createDTO() {
-			return new Mapping();
+		protected ClassPKReference createDTO() {
+			return new ClassPKReference();
 		}
 
 		@Override
-		protected Mapping[] createDTOArray(int size) {
-			return new Mapping[size];
+		protected ClassPKReference[] createDTOArray(int size) {
+			return new ClassPKReference[size];
 		}
 
 		@Override
 		protected void setField(
-			Mapping mapping, String jsonParserFieldName,
+			ClassPKReference classPKReference, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fieldKey")) {
+			if (Objects.equals(jsonParserFieldName, "className")) {
 				if (jsonParserFieldValue != null) {
-					mapping.setFieldKey((String)jsonParserFieldValue);
+					classPKReference.setClassName((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "itemReference")) {
+			else if (Objects.equals(jsonParserFieldName, "classPK")) {
 				if (jsonParserFieldValue != null) {
-					mapping.setItemReference((Object)jsonParserFieldValue);
+					classPKReference.setClassPK(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

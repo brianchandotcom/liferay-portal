@@ -33,7 +33,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -42,30 +43,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Mapping")
+@GraphQLName("ClassPKReference")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Mapping")
-public class Mapping {
+@Schema(requiredProperties = {"className", "classPK"})
+@XmlRootElement(name = "ClassPKReference")
+public class ClassPKReference {
 
-	public static Mapping toDTO(String json) {
-		return ObjectMapperUtil.readValue(Mapping.class, json);
+	public static ClassPKReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(ClassPKReference.class, json);
 	}
 
 	@Schema
-	public String getFieldKey() {
-		return fieldKey;
+	public String getClassName() {
+		return className;
 	}
 
-	public void setFieldKey(String fieldKey) {
-		this.fieldKey = fieldKey;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
 	@JsonIgnore
-	public void setFieldKey(
-		UnsafeSupplier<String, Exception> fieldKeyUnsafeSupplier) {
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
 		try {
-			fieldKey = fieldKeyUnsafeSupplier.get();
+			className = classNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -77,24 +79,24 @@ public class Mapping {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String fieldKey;
+	@NotEmpty
+	protected String className;
 
 	@Schema
-	@Valid
-	public Object getItemReference() {
-		return itemReference;
+	public Long getClassPK() {
+		return classPK;
 	}
 
-	public void setItemReference(Object itemReference) {
-		this.itemReference = itemReference;
+	public void setClassPK(Long classPK) {
+		this.classPK = classPK;
 	}
 
 	@JsonIgnore
-	public void setItemReference(
-		UnsafeSupplier<Object, Exception> itemReferenceUnsafeSupplier) {
+	public void setClassPK(
+		UnsafeSupplier<Long, Exception> classPKUnsafeSupplier) {
 
 		try {
-			itemReference = itemReferenceUnsafeSupplier.get();
+			classPK = classPKUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -106,7 +108,8 @@ public class Mapping {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object itemReference;
+	@NotNull
+	protected Long classPK;
 
 	@Override
 	public boolean equals(Object object) {
@@ -114,13 +117,13 @@ public class Mapping {
 			return true;
 		}
 
-		if (!(object instanceof Mapping)) {
+		if (!(object instanceof ClassPKReference)) {
 			return false;
 		}
 
-		Mapping mapping = (Mapping)object;
+		ClassPKReference classPKReference = (ClassPKReference)object;
 
-		return Objects.equals(toString(), mapping.toString());
+		return Objects.equals(toString(), classPKReference.toString());
 	}
 
 	@Override
@@ -135,28 +138,28 @@ public class Mapping {
 
 		sb.append("{");
 
-		if (fieldKey != null) {
+		if (className != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fieldKey\": ");
+			sb.append("\"className\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(fieldKey));
+			sb.append(_escape(className));
 
 			sb.append("\"");
 		}
 
-		if (itemReference != null) {
+		if (classPK != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"itemReference\": ");
+			sb.append("\"classPK\": ");
 
-			sb.append(String.valueOf(itemReference));
+			sb.append(classPK);
 		}
 
 		sb.append("}");
@@ -165,7 +168,7 @@ public class Mapping {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Mapping",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ClassPKReference",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.MappingSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.ClassNameReferenceSerDes;
 
 import java.util.Objects;
 
@@ -26,57 +26,36 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Mapping implements Cloneable {
+public class ClassNameReference implements Cloneable {
 
-	public static Mapping toDTO(String json) {
-		return MappingSerDes.toDTO(json);
+	public static ClassNameReference toDTO(String json) {
+		return ClassNameReferenceSerDes.toDTO(json);
 	}
 
-	public String getFieldKey() {
-		return fieldKey;
+	public String getClassName() {
+		return className;
 	}
 
-	public void setFieldKey(String fieldKey) {
-		this.fieldKey = fieldKey;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
-	public void setFieldKey(
-		UnsafeSupplier<String, Exception> fieldKeyUnsafeSupplier) {
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
 		try {
-			fieldKey = fieldKeyUnsafeSupplier.get();
+			className = classNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String fieldKey;
-
-	public Object getItemReference() {
-		return itemReference;
-	}
-
-	public void setItemReference(Object itemReference) {
-		this.itemReference = itemReference;
-	}
-
-	public void setItemReference(
-		UnsafeSupplier<Object, Exception> itemReferenceUnsafeSupplier) {
-
-		try {
-			itemReference = itemReferenceUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object itemReference;
+	protected String className;
 
 	@Override
-	public Mapping clone() throws CloneNotSupportedException {
-		return (Mapping)super.clone();
+	public ClassNameReference clone() throws CloneNotSupportedException {
+		return (ClassNameReference)super.clone();
 	}
 
 	@Override
@@ -85,13 +64,13 @@ public class Mapping implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof Mapping)) {
+		if (!(object instanceof ClassNameReference)) {
 			return false;
 		}
 
-		Mapping mapping = (Mapping)object;
+		ClassNameReference classNameReference = (ClassNameReference)object;
 
-		return Objects.equals(toString(), mapping.toString());
+		return Objects.equals(toString(), classNameReference.toString());
 	}
 
 	@Override
@@ -102,7 +81,7 @@ public class Mapping implements Cloneable {
 	}
 
 	public String toString() {
-		return MappingSerDes.toJSON(this);
+		return ClassNameReferenceSerDes.toJSON(this);
 	}
 
 }

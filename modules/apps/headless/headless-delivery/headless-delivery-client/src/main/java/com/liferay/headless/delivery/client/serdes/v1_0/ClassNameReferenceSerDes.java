@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.Mapping;
+import com.liferay.headless.delivery.client.dto.v1_0.ClassNameReference;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MappingSerDes {
+public class ClassNameReferenceSerDes {
 
-	public static Mapping toDTO(String json) {
-		MappingJSONParser mappingJSONParser = new MappingJSONParser();
+	public static ClassNameReference toDTO(String json) {
+		ClassNameReferenceJSONParser classNameReferenceJSONParser =
+			new ClassNameReferenceJSONParser();
 
-		return mappingJSONParser.parseToDTO(json);
+		return classNameReferenceJSONParser.parseToDTO(json);
 	}
 
-	public static Mapping[] toDTOs(String json) {
-		MappingJSONParser mappingJSONParser = new MappingJSONParser();
+	public static ClassNameReference[] toDTOs(String json) {
+		ClassNameReferenceJSONParser classNameReferenceJSONParser =
+			new ClassNameReferenceJSONParser();
 
-		return mappingJSONParser.parseToDTOs(json);
+		return classNameReferenceJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Mapping mapping) {
-		if (mapping == null) {
+	public static String toJSON(ClassNameReference classNameReference) {
+		if (classNameReference == null) {
 			return "null";
 		}
 
@@ -53,30 +55,16 @@ public class MappingSerDes {
 
 		sb.append("{");
 
-		if (mapping.getFieldKey() != null) {
+		if (classNameReference.getClassName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fieldKey\": ");
+			sb.append("\"className\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(mapping.getFieldKey()));
-
-			sb.append("\"");
-		}
-
-		if (mapping.getItemReference() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"itemReference\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(mapping.getItemReference()));
+			sb.append(_escape(classNameReference.getClassName()));
 
 			sb.append("\"");
 		}
@@ -87,61 +75,54 @@ public class MappingSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		MappingJSONParser mappingJSONParser = new MappingJSONParser();
+		ClassNameReferenceJSONParser classNameReferenceJSONParser =
+			new ClassNameReferenceJSONParser();
 
-		return mappingJSONParser.parseToMap(json);
+		return classNameReferenceJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Mapping mapping) {
-		if (mapping == null) {
+	public static Map<String, String> toMap(
+		ClassNameReference classNameReference) {
+
+		if (classNameReference == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (mapping.getFieldKey() == null) {
-			map.put("fieldKey", null);
-		}
-		else {
-			map.put("fieldKey", String.valueOf(mapping.getFieldKey()));
-		}
-
-		if (mapping.getItemReference() == null) {
-			map.put("itemReference", null);
+		if (classNameReference.getClassName() == null) {
+			map.put("className", null);
 		}
 		else {
 			map.put(
-				"itemReference", String.valueOf(mapping.getItemReference()));
+				"className", String.valueOf(classNameReference.getClassName()));
 		}
 
 		return map;
 	}
 
-	public static class MappingJSONParser extends BaseJSONParser<Mapping> {
+	public static class ClassNameReferenceJSONParser
+		extends BaseJSONParser<ClassNameReference> {
 
 		@Override
-		protected Mapping createDTO() {
-			return new Mapping();
+		protected ClassNameReference createDTO() {
+			return new ClassNameReference();
 		}
 
 		@Override
-		protected Mapping[] createDTOArray(int size) {
-			return new Mapping[size];
+		protected ClassNameReference[] createDTOArray(int size) {
+			return new ClassNameReference[size];
 		}
 
 		@Override
 		protected void setField(
-			Mapping mapping, String jsonParserFieldName,
+			ClassNameReference classNameReference, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fieldKey")) {
+			if (Objects.equals(jsonParserFieldName, "className")) {
 				if (jsonParserFieldValue != null) {
-					mapping.setFieldKey((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "itemReference")) {
-				if (jsonParserFieldValue != null) {
-					mapping.setItemReference((Object)jsonParserFieldValue);
+					classNameReference.setClassName(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else {

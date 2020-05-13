@@ -32,16 +32,17 @@ public class PageCollectionDefinition implements Cloneable {
 		return PageCollectionDefinitionSerDes.toDTO(json);
 	}
 
-	public Object getCollectionConfig() {
+	public CollectionConfig getCollectionConfig() {
 		return collectionConfig;
 	}
 
-	public void setCollectionConfig(Object collectionConfig) {
+	public void setCollectionConfig(CollectionConfig collectionConfig) {
 		this.collectionConfig = collectionConfig;
 	}
 
 	public void setCollectionConfig(
-		UnsafeSupplier<Object, Exception> collectionConfigUnsafeSupplier) {
+		UnsafeSupplier<CollectionConfig, Exception>
+			collectionConfigUnsafeSupplier) {
 
 		try {
 			collectionConfig = collectionConfigUnsafeSupplier.get();
@@ -51,7 +52,7 @@ public class PageCollectionDefinition implements Cloneable {
 		}
 	}
 
-	protected Object collectionConfig;
+	protected CollectionConfig collectionConfig;
 
 	public Integer getNumberOfColumns() {
 		return numberOfColumns;

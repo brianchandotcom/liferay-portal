@@ -14,9 +14,11 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -34,6 +36,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -42,59 +45,41 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Mapping")
+@GraphQLName("ContextReference")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Mapping")
-public class Mapping {
+@Schema(requiredProperties = {"contextSource"})
+@XmlRootElement(name = "ContextReference")
+public class ContextReference {
 
-	public static Mapping toDTO(String json) {
-		return ObjectMapperUtil.readValue(Mapping.class, json);
+	public static ContextReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(ContextReference.class, json);
 	}
-
-	@Schema
-	public String getFieldKey() {
-		return fieldKey;
-	}
-
-	public void setFieldKey(String fieldKey) {
-		this.fieldKey = fieldKey;
-	}
-
-	@JsonIgnore
-	public void setFieldKey(
-		UnsafeSupplier<String, Exception> fieldKeyUnsafeSupplier) {
-
-		try {
-			fieldKey = fieldKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String fieldKey;
 
 	@Schema
 	@Valid
-	public Object getItemReference() {
-		return itemReference;
-	}
-
-	public void setItemReference(Object itemReference) {
-		this.itemReference = itemReference;
+	public ContextSource getContextSource() {
+		return contextSource;
 	}
 
 	@JsonIgnore
-	public void setItemReference(
-		UnsafeSupplier<Object, Exception> itemReferenceUnsafeSupplier) {
+	public String getContextSourceAsString() {
+		if (contextSource == null) {
+			return null;
+		}
+
+		return contextSource.toString();
+	}
+
+	public void setContextSource(ContextSource contextSource) {
+		this.contextSource = contextSource;
+	}
+
+	@JsonIgnore
+	public void setContextSource(
+		UnsafeSupplier<ContextSource, Exception> contextSourceUnsafeSupplier) {
 
 		try {
-			itemReference = itemReferenceUnsafeSupplier.get();
+			contextSource = contextSourceUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -106,7 +91,8 @@ public class Mapping {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object itemReference;
+	@NotNull
+	protected ContextSource contextSource;
 
 	@Override
 	public boolean equals(Object object) {
@@ -114,13 +100,13 @@ public class Mapping {
 			return true;
 		}
 
-		if (!(object instanceof Mapping)) {
+		if (!(object instanceof ContextReference)) {
 			return false;
 		}
 
-		Mapping mapping = (Mapping)object;
+		ContextReference contextReference = (ContextReference)object;
 
-		return Objects.equals(toString(), mapping.toString());
+		return Objects.equals(toString(), contextReference.toString());
 	}
 
 	@Override
@@ -135,28 +121,18 @@ public class Mapping {
 
 		sb.append("{");
 
-		if (fieldKey != null) {
+		if (contextSource != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fieldKey\": ");
+			sb.append("\"contextSource\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(fieldKey));
+			sb.append(contextSource);
 
 			sb.append("\"");
-		}
-
-		if (itemReference != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"itemReference\": ");
-
-			sb.append(String.valueOf(itemReference));
 		}
 
 		sb.append("}");
@@ -165,10 +141,44 @@ public class Mapping {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Mapping",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContextReference",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("ContextSource")
+	public static enum ContextSource {
+
+		COLLECTION_ITEM("CollectionItem"), DISPLAY_PAGE_ITEM("DisplayPageItem");
+
+		@JsonCreator
+		public static ContextSource create(String value) {
+			for (ContextSource contextSource : values()) {
+				if (Objects.equals(contextSource.getValue(), value)) {
+					return contextSource;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ContextSource(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

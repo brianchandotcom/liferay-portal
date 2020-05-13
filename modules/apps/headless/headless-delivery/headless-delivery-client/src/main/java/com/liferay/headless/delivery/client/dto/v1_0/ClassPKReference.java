@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.MappingSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.ClassPKReferenceSerDes;
 
 import java.util.Objects;
 
@@ -26,57 +26,57 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Mapping implements Cloneable {
+public class ClassPKReference implements Cloneable {
 
-	public static Mapping toDTO(String json) {
-		return MappingSerDes.toDTO(json);
+	public static ClassPKReference toDTO(String json) {
+		return ClassPKReferenceSerDes.toDTO(json);
 	}
 
-	public String getFieldKey() {
-		return fieldKey;
+	public String getClassName() {
+		return className;
 	}
 
-	public void setFieldKey(String fieldKey) {
-		this.fieldKey = fieldKey;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
-	public void setFieldKey(
-		UnsafeSupplier<String, Exception> fieldKeyUnsafeSupplier) {
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
 		try {
-			fieldKey = fieldKeyUnsafeSupplier.get();
+			className = classNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String fieldKey;
+	protected String className;
 
-	public Object getItemReference() {
-		return itemReference;
+	public Long getClassPK() {
+		return classPK;
 	}
 
-	public void setItemReference(Object itemReference) {
-		this.itemReference = itemReference;
+	public void setClassPK(Long classPK) {
+		this.classPK = classPK;
 	}
 
-	public void setItemReference(
-		UnsafeSupplier<Object, Exception> itemReferenceUnsafeSupplier) {
+	public void setClassPK(
+		UnsafeSupplier<Long, Exception> classPKUnsafeSupplier) {
 
 		try {
-			itemReference = itemReferenceUnsafeSupplier.get();
+			classPK = classPKUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object itemReference;
+	protected Long classPK;
 
 	@Override
-	public Mapping clone() throws CloneNotSupportedException {
-		return (Mapping)super.clone();
+	public ClassPKReference clone() throws CloneNotSupportedException {
+		return (ClassPKReference)super.clone();
 	}
 
 	@Override
@@ -85,13 +85,13 @@ public class Mapping implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof Mapping)) {
+		if (!(object instanceof ClassPKReference)) {
 			return false;
 		}
 
-		Mapping mapping = (Mapping)object;
+		ClassPKReference classPKReference = (ClassPKReference)object;
 
-		return Objects.equals(toString(), mapping.toString());
+		return Objects.equals(toString(), classPKReference.toString());
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class Mapping implements Cloneable {
 	}
 
 	public String toString() {
-		return MappingSerDes.toJSON(this);
+		return ClassPKReferenceSerDes.toJSON(this);
 	}
 
 }

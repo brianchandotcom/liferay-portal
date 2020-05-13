@@ -14,9 +14,11 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -34,6 +36,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -42,59 +45,32 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Mapping")
+@GraphQLName("CollectionConfig")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Mapping")
-public class Mapping {
+@Schema(requiredProperties = {"collectionReference", "collectionType"})
+@XmlRootElement(name = "CollectionConfig")
+public class CollectionConfig {
 
-	public static Mapping toDTO(String json) {
-		return ObjectMapperUtil.readValue(Mapping.class, json);
+	public static CollectionConfig toDTO(String json) {
+		return ObjectMapperUtil.readValue(CollectionConfig.class, json);
 	}
-
-	@Schema
-	public String getFieldKey() {
-		return fieldKey;
-	}
-
-	public void setFieldKey(String fieldKey) {
-		this.fieldKey = fieldKey;
-	}
-
-	@JsonIgnore
-	public void setFieldKey(
-		UnsafeSupplier<String, Exception> fieldKeyUnsafeSupplier) {
-
-		try {
-			fieldKey = fieldKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String fieldKey;
 
 	@Schema
 	@Valid
-	public Object getItemReference() {
-		return itemReference;
+	public Object getCollectionReference() {
+		return collectionReference;
 	}
 
-	public void setItemReference(Object itemReference) {
-		this.itemReference = itemReference;
+	public void setCollectionReference(Object collectionReference) {
+		this.collectionReference = collectionReference;
 	}
 
 	@JsonIgnore
-	public void setItemReference(
-		UnsafeSupplier<Object, Exception> itemReferenceUnsafeSupplier) {
+	public void setCollectionReference(
+		UnsafeSupplier<Object, Exception> collectionReferenceUnsafeSupplier) {
 
 		try {
-			itemReference = itemReferenceUnsafeSupplier.get();
+			collectionReference = collectionReferenceUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -106,7 +82,48 @@ public class Mapping {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object itemReference;
+	@NotNull
+	protected Object collectionReference;
+
+	@Schema
+	@Valid
+	public CollectionType getCollectionType() {
+		return collectionType;
+	}
+
+	@JsonIgnore
+	public String getCollectionTypeAsString() {
+		if (collectionType == null) {
+			return null;
+		}
+
+		return collectionType.toString();
+	}
+
+	public void setCollectionType(CollectionType collectionType) {
+		this.collectionType = collectionType;
+	}
+
+	@JsonIgnore
+	public void setCollectionType(
+		UnsafeSupplier<CollectionType, Exception>
+			collectionTypeUnsafeSupplier) {
+
+		try {
+			collectionType = collectionTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
+	protected CollectionType collectionType;
 
 	@Override
 	public boolean equals(Object object) {
@@ -114,13 +131,13 @@ public class Mapping {
 			return true;
 		}
 
-		if (!(object instanceof Mapping)) {
+		if (!(object instanceof CollectionConfig)) {
 			return false;
 		}
 
-		Mapping mapping = (Mapping)object;
+		CollectionConfig collectionConfig = (CollectionConfig)object;
 
-		return Objects.equals(toString(), mapping.toString());
+		return Objects.equals(toString(), collectionConfig.toString());
 	}
 
 	@Override
@@ -135,28 +152,28 @@ public class Mapping {
 
 		sb.append("{");
 
-		if (fieldKey != null) {
+		if (collectionReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fieldKey\": ");
+			sb.append("\"collectionReference\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(fieldKey));
-
-			sb.append("\"");
+			sb.append(String.valueOf(collectionReference));
 		}
 
-		if (itemReference != null) {
+		if (collectionType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"itemReference\": ");
+			sb.append("\"collectionType\": ");
 
-			sb.append(String.valueOf(itemReference));
+			sb.append("\"");
+
+			sb.append(collectionType);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -165,10 +182,44 @@ public class Mapping {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Mapping",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.CollectionConfig",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("CollectionType")
+	public static enum CollectionType {
+
+		COLLECTION("Collection"), COLLECTION_PROVIDER("CollectionProvider");
+
+		@JsonCreator
+		public static CollectionType create(String value) {
+			for (CollectionType collectionType : values()) {
+				if (Objects.equals(collectionType.getValue(), value)) {
+					return collectionType;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private CollectionType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

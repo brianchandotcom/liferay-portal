@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.Mapping;
+import com.liferay.headless.delivery.client.dto.v1_0.CollectionConfig;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class MappingSerDes {
+public class CollectionConfigSerDes {
 
-	public static Mapping toDTO(String json) {
-		MappingJSONParser mappingJSONParser = new MappingJSONParser();
+	public static CollectionConfig toDTO(String json) {
+		CollectionConfigJSONParser collectionConfigJSONParser =
+			new CollectionConfigJSONParser();
 
-		return mappingJSONParser.parseToDTO(json);
+		return collectionConfigJSONParser.parseToDTO(json);
 	}
 
-	public static Mapping[] toDTOs(String json) {
-		MappingJSONParser mappingJSONParser = new MappingJSONParser();
+	public static CollectionConfig[] toDTOs(String json) {
+		CollectionConfigJSONParser collectionConfigJSONParser =
+			new CollectionConfigJSONParser();
 
-		return mappingJSONParser.parseToDTOs(json);
+		return collectionConfigJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Mapping mapping) {
-		if (mapping == null) {
+	public static String toJSON(CollectionConfig collectionConfig) {
+		if (collectionConfig == null) {
 			return "null";
 		}
 
@@ -53,30 +55,30 @@ public class MappingSerDes {
 
 		sb.append("{");
 
-		if (mapping.getFieldKey() != null) {
+		if (collectionConfig.getCollectionReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fieldKey\": ");
+			sb.append("\"collectionReference\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(mapping.getFieldKey()));
+			sb.append(_escape(collectionConfig.getCollectionReference()));
 
 			sb.append("\"");
 		}
 
-		if (mapping.getItemReference() != null) {
+		if (collectionConfig.getCollectionType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"itemReference\": ");
+			sb.append("\"collectionType\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(mapping.getItemReference()));
+			sb.append(collectionConfig.getCollectionType());
 
 			sb.append("\"");
 		}
@@ -87,61 +89,69 @@ public class MappingSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		MappingJSONParser mappingJSONParser = new MappingJSONParser();
+		CollectionConfigJSONParser collectionConfigJSONParser =
+			new CollectionConfigJSONParser();
 
-		return mappingJSONParser.parseToMap(json);
+		return collectionConfigJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Mapping mapping) {
-		if (mapping == null) {
+	public static Map<String, String> toMap(CollectionConfig collectionConfig) {
+		if (collectionConfig == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (mapping.getFieldKey() == null) {
-			map.put("fieldKey", null);
-		}
-		else {
-			map.put("fieldKey", String.valueOf(mapping.getFieldKey()));
-		}
-
-		if (mapping.getItemReference() == null) {
-			map.put("itemReference", null);
+		if (collectionConfig.getCollectionReference() == null) {
+			map.put("collectionReference", null);
 		}
 		else {
 			map.put(
-				"itemReference", String.valueOf(mapping.getItemReference()));
+				"collectionReference",
+				String.valueOf(collectionConfig.getCollectionReference()));
+		}
+
+		if (collectionConfig.getCollectionType() == null) {
+			map.put("collectionType", null);
+		}
+		else {
+			map.put(
+				"collectionType",
+				String.valueOf(collectionConfig.getCollectionType()));
 		}
 
 		return map;
 	}
 
-	public static class MappingJSONParser extends BaseJSONParser<Mapping> {
+	public static class CollectionConfigJSONParser
+		extends BaseJSONParser<CollectionConfig> {
 
 		@Override
-		protected Mapping createDTO() {
-			return new Mapping();
+		protected CollectionConfig createDTO() {
+			return new CollectionConfig();
 		}
 
 		@Override
-		protected Mapping[] createDTOArray(int size) {
-			return new Mapping[size];
+		protected CollectionConfig[] createDTOArray(int size) {
+			return new CollectionConfig[size];
 		}
 
 		@Override
 		protected void setField(
-			Mapping mapping, String jsonParserFieldName,
+			CollectionConfig collectionConfig, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fieldKey")) {
+			if (Objects.equals(jsonParserFieldName, "collectionReference")) {
 				if (jsonParserFieldValue != null) {
-					mapping.setFieldKey((String)jsonParserFieldValue);
+					collectionConfig.setCollectionReference(
+						(Object)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "itemReference")) {
+			else if (Objects.equals(jsonParserFieldName, "collectionType")) {
 				if (jsonParserFieldValue != null) {
-					mapping.setItemReference((Object)jsonParserFieldValue);
+					collectionConfig.setCollectionType(
+						CollectionConfig.CollectionType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

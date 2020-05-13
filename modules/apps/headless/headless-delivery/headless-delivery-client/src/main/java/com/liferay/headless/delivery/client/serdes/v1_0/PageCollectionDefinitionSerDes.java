@@ -64,11 +64,8 @@ public class PageCollectionDefinitionSerDes {
 
 			sb.append("\"collectionConfig\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(pageCollectionDefinition.getCollectionConfig()));
-
-			sb.append("\"");
+			sb.append(
+				String.valueOf(pageCollectionDefinition.getCollectionConfig()));
 		}
 
 		if (pageCollectionDefinition.getNumberOfColumns() != null) {
@@ -163,7 +160,8 @@ public class PageCollectionDefinitionSerDes {
 			if (Objects.equals(jsonParserFieldName, "collectionConfig")) {
 				if (jsonParserFieldValue != null) {
 					pageCollectionDefinition.setCollectionConfig(
-						(Object)jsonParserFieldValue);
+						CollectionConfigSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfColumns")) {

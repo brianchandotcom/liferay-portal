@@ -53,17 +53,18 @@ public class PageCollectionDefinition {
 
 	@Schema
 	@Valid
-	public Object getCollectionConfig() {
+	public CollectionConfig getCollectionConfig() {
 		return collectionConfig;
 	}
 
-	public void setCollectionConfig(Object collectionConfig) {
+	public void setCollectionConfig(CollectionConfig collectionConfig) {
 		this.collectionConfig = collectionConfig;
 	}
 
 	@JsonIgnore
 	public void setCollectionConfig(
-		UnsafeSupplier<Object, Exception> collectionConfigUnsafeSupplier) {
+		UnsafeSupplier<CollectionConfig, Exception>
+			collectionConfigUnsafeSupplier) {
 
 		try {
 			collectionConfig = collectionConfigUnsafeSupplier.get();
@@ -78,7 +79,7 @@ public class PageCollectionDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object collectionConfig;
+	protected CollectionConfig collectionConfig;
 
 	@Schema
 	public Integer getNumberOfColumns() {

@@ -1,0 +1,21 @@
+diff --git a/org/apache/felix/utils/properties/InterpolationHelper.java b/org/apache/felix/utils/properties/InterpolationHelper.java
+index 4ee01df..b0e2678 100644
+--- a/org/apache/felix/utils/properties/InterpolationHelper.java
++++ b/org/apache/felix/utils/properties/InterpolationHelper.java
+@@ -283,14 +283,14 @@ public class InterpolationHelper {
+ 		Matcher escapedClosingCurlyMatcher = _escapedClosingCurly.matcher(
+ 			value);
+ 
+-		int escapedOpeningCurlyMatcherIndex = -1;
++		int escapedOpeningCurlyMatcherIndex = Integer.MAX_VALUE;
+ 
+ 		if (escapedOpeningCurlyMatcher.find(fromIndex)) {
+ 			escapedOpeningCurlyMatcherIndex =
+ 				escapedOpeningCurlyMatcher.start();
+ 		}
+ 
+-		int escapedClosingCurlyMatcherIndex = -1;
++		int escapedClosingCurlyMatcherIndex = Integer.MAX_VALUE;
+ 
+ 		if (escapedClosingCurlyMatcher.find(fromIndex)) {
+ 			escapedClosingCurlyMatcherIndex =

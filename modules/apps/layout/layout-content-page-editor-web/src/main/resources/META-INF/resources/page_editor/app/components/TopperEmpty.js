@@ -21,8 +21,8 @@ import {
 } from '../../prop-types/index';
 import selectCanUpdate from '../selectors/selectCanUpdate';
 import {useSelector} from '../store/index';
+import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
 import {TARGET_POSITION, useDropTarget} from '../utils/useDragAndDrop';
-import getLabelName from './layout-data-items/getLabelName';
 
 export default function ({children, ...props}) {
 	const canUpdate = useSelector(selectCanUpdate);
@@ -55,8 +55,8 @@ function TopperEmpty({children, item, layoutData}) {
 			? Liferay.Util.sub(
 					Liferay.Language.get('a-x-cannot-be-dropped-inside-a-x'),
 					[
-						getLabelName(sourceItem, fragmentEntryLinks),
-						getLabelName(item, fragmentEntryLinks),
+						getLayoutDataItemLabel(sourceItem, fragmentEntryLinks),
+						getLayoutDataItemLabel(item, fragmentEntryLinks),
 					]
 			  )
 			: null;

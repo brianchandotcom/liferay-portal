@@ -313,6 +313,8 @@ definition {
 			configurationName = "Authentication",
 			configurationScope = "Virtual Instance Scope");
 
+		SystemSettings.gotoAddEntry();
+
 		FormFields.enableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();

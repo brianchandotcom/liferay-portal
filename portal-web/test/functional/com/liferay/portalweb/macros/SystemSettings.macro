@@ -102,6 +102,16 @@ definition {
 		DownloadTempFile();
 	}
 
+	macro gotoAddEntry {
+		AssertClick(
+			locator1 = "Button#ADD",
+			value1 = "Add");
+
+		AssertElementPresent(
+			key_title = "Add",
+			locator1 = "Header#H2_TITLE");
+	}
+
 	macro gotoConfiguration {
 		Click(
 			key_itemName = "${configurationCategory}",

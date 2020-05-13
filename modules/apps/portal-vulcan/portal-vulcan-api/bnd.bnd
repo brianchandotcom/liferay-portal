@@ -18,6 +18,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.util,\
 	com.liferay.portal.vulcan.yaml,\
 	com.liferay.portal.vulcan.yaml.config,\
+	com.liferay.portal.vulcan.yaml.exception,\
 	com.liferay.portal.vulcan.yaml.graphql,\
 	com.liferay.portal.vulcan.yaml.openapi,\
 	\

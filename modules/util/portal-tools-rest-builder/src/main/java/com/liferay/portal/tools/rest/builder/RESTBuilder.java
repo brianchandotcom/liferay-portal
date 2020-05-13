@@ -115,9 +115,13 @@ public class RESTBuilder {
 			}
 		}
 		catch (ParameterException parameterException) {
-			System.err.println(parameterException.getMessage());
-
 			_printHelp(jCommander);
+
+			throw new RuntimeException(parameterException.getMessage());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Error generating REST API\n" + exception.getMessage());
 		}
 	}
 

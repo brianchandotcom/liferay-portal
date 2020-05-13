@@ -11,3 +11,8 @@
 	font-family: monospace;
 	white-space: pre;
 }
+
+.graphiql-container .doc-explorer-title-bar,
+.graphiql-container .history-title-bar {
+	height: 100% !important;
+}

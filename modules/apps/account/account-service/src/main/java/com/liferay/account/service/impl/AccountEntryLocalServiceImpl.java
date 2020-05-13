@@ -97,6 +97,12 @@ public class AccountEntryLocalServiceImpl
 		return activateAccountEntry(getAccountEntry(accountEntryId));
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addAccountEntry(long, long, String, String, String[],
+	 *             byte[], int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
@@ -307,6 +313,12 @@ public class AccountEntryLocalServiceImpl
 			accountEntries, searchResponse.getTotalHits());
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateAccountEntry(Long, long, String, String, boolean,
+	 *             String[], byte[], int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,

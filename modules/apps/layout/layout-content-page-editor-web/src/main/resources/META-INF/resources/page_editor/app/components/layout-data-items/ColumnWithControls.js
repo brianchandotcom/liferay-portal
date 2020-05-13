@@ -20,8 +20,6 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import updateColSize from '../../actions/updateColSize';
-import layoutDataReducer from '../../reducers/layoutDataReducer';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import resizeColumns from '../../thunks/resizeColumns';
@@ -160,18 +158,9 @@ const ColumnWithControls = React.forwardRef(
 
 						dispatch(
 							resizeColumns({
-								layoutData: layoutDataReducer(
-									layoutData,
-									updateColSize({
-										itemId: rightColumnId,
-										nextColumnItemId: leftColumnId,
-										nextColumnSize: leftColumnSize,
-										size: rightColumnSize,
-									})
-								),
-								segmentsExperienceId,
+								layoutData: layoutDataContext,
 							})
-						);
+						).then(() => setUpdatedLayoutData(null));
 					}
 					else if (!rightColumnIsFirst) {
 						const columnDiff = Math.min(
@@ -220,7 +209,7 @@ const ColumnWithControls = React.forwardRef(
 							layoutData: layoutDataContext,
 							segmentsExperienceId,
 						})
-					);
+					).then(() => setUpdatedLayoutData(null));
 				}
 			},
 			false,

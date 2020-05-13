@@ -12,7 +12,7 @@
  * details.
  */
 
-import updateLayoutData from '../actions/updateLayoutData';
+import updateColSize from '../actions/updateColSize';
 import LayoutService from '../services/LayoutService';
 
 export default function resizeColumns({layoutData, segmentsExperienceId}) {
@@ -22,7 +22,7 @@ export default function resizeColumns({layoutData, segmentsExperienceId}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
 		}).then(() => {
-			dispatch(updateLayoutData({layoutData}));
+			dispatch(updateColSize({layoutData}));
 		});
 	};
 }

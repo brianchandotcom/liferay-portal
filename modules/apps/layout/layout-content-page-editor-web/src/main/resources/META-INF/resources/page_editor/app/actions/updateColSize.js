@@ -14,17 +14,9 @@
 
 import {UPDATE_COL_SIZE} from './types';
 
-export default function updateColSize({
-	itemId,
-	nextColumnItemId,
-	nextColumnSize,
-	size,
-}) {
+export default function updateColSize({layoutData}) {
 	return {
-		itemId,
-		nextColumnItemId,
-		nextColumnSize,
-		size,
+		layoutData,
 		type: UPDATE_COL_SIZE,
 	};
 }

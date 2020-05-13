@@ -67,6 +67,7 @@
 				{foreach $page in $pages}
 					{call PageRenderer.render}
 						{param activePage: $activePage /}
+						{param cancelLabel: $cancelLabel ?: 'cancel' /}
 						{param editable: $editable /}
 						{param editingLanguageId: $editingLanguageId /}
 						{param events: [
@@ -82,6 +83,7 @@
 						{param paginationMode: $currentPaginationMode /}
 						{param readOnly: $readOnly /}
 						{param ref: 'pageRenderer' + index($page) /}
+						{param showCancelButton: $showCancelButton != false /}
 						{param showSubmitButton: $showSubmitButton != false /}
 						{param spritemap: $spritemap /}
 						{param strings: $strings /}

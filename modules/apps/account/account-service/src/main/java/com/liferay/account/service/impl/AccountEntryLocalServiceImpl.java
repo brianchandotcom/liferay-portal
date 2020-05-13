@@ -161,12 +161,6 @@ public class AccountEntryLocalServiceImpl
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
 
-		// Asset
-
-		if (serviceContext != null) {
-			_updateAsset(accountEntry, serviceContext);
-		}
-
 		// Group
 
 		groupLocalService.addGroup(
@@ -182,6 +176,12 @@ public class AccountEntryLocalServiceImpl
 		resourceLocalService.addResources(
 			user.getCompanyId(), 0, user.getUserId(),
 			AccountEntry.class.getName(), accountEntryId, false, false, false);
+
+		// Asset
+
+		if (serviceContext != null) {
+			_updateAsset(accountEntry, serviceContext);
+		}
 
 		return accountEntry;
 	}
@@ -236,11 +236,6 @@ public class AccountEntryLocalServiceImpl
 
 		accountEntry = super.deleteAccountEntry(accountEntry);
 
-		// Asset
-
-		assetEntryLocalService.deleteEntry(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
-
 		// Group
 
 		groupLocalService.deleteGroup(accountEntry.getAccountEntryGroup());
@@ -251,6 +246,11 @@ public class AccountEntryLocalServiceImpl
 			accountEntry.getCompanyId(), AccountEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			accountEntry.getAccountEntryId());
+
+		// Asset
+
+		assetEntryLocalService.deleteEntry(
+			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
 
 		return accountEntry;
 	}

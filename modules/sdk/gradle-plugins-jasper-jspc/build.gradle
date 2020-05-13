@@ -15,7 +15,7 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.39"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.40"
 	compile(group: "com.liferay", name: "com.liferay.portal.servlet.jsp.compiler", version: "1.0.5") {
 		exclude group: "com.liferay.portal"
 		exclude group: "javax.servlet"

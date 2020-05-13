@@ -34,8 +34,10 @@
 									},
 									"mapping": {
 										"fieldKey": "title",
-										"itemClassName": "${MAPPED_LINK_CLASS_NAME}",
-										"itemClassPK": "${MAPPED_LINK_CLASS_PK}"
+										"itemReference": {
+											"className": "${MAPPED_LINK_CLASS_NAME}",
+											"classPK": "${MAPPED_LINK_CLASS_PK}"
+										}
 									}
 								},
 								"target": "Top"
@@ -46,8 +48,10 @@
 								},
 								"mapping": {
 									"fieldKey": "title",
-									"itemClassName": "${MAPPED_TEXT_CLASS_NAME}",
-									"itemClassPK": "${MAPPED_TEXT_CLASS_PK}"
+									"itemReference": {
+										"className": "${MAPPED_TEXT_CLASS_NAME}",
+										"classPK": "${MAPPED_TEXT_CLASS_PK}"
+									}
 								}
 							}
 						}

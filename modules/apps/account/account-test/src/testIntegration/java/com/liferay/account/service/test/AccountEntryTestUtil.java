@@ -17,6 +17,7 @@ package com.liferay.account.service.test;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -39,7 +40,8 @@ public class AccountEntryTestUtil {
 
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), null, null, status);
+			RandomTestUtil.randomString(50), null, null, status,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static AccountEntry addAccountEntry(
@@ -49,7 +51,8 @@ public class AccountEntryTestUtil {
 
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, name, description, null, null,
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static AccountEntry addAccountEntry(
@@ -59,7 +62,8 @@ public class AccountEntryTestUtil {
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
 			RandomTestUtil.randomString(50), domains, null,
-			WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 }

@@ -606,7 +606,8 @@ public class AccountEntryLocalServiceTest {
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), parentAccountEntryId,
 			RandomTestUtil.randomString(50), RandomTestUtil.randomString(50),
-			null, null, WorkflowConstants.STATUS_APPROVED);
+			null, null, WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
 
 		_accountEntries.add(accountEntry);
 

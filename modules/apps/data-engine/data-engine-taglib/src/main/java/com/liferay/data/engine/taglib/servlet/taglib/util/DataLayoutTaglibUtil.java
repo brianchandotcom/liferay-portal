@@ -72,6 +72,8 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -814,6 +816,43 @@ public class DataLayoutTaglibUtil {
 			return _deserializeDDMFormLayout(jsonObject.toJSONString());
 		}
 
+		private List<Map<String, Object>> _getNestedFields(
+			Map<String, Object> field) {
+
+			List<Map<String, Object>> nestedFields =
+				(List<Map<String, Object>>)field.get("nestedFields");
+
+			if (nestedFields != null) {
+				Stream<Map<String, Object>> stream = nestedFields.stream();
+
+				return stream.flatMap(
+					nestedField -> {
+						List<Map<String, Object>> nestedFieldsList =
+							new ArrayList<>(Arrays.asList(nestedField));
+
+						if (_isFieldSet(nestedField)) {
+							nestedFieldsList.addAll(
+								_getNestedFields(nestedField));
+						}
+
+						return nestedFieldsList.stream();
+					}
+				).collect(
+					Collectors.toList()
+				);
+			}
+
+			return new ArrayList<>();
+		}
+
+		private boolean _isFieldSet(Map<String, Object> field) {
+			if (Objects.equals(field.get("type"), "fieldset")) {
+				return true;
+			}
+
+			return false;
+		}
+
 		private void _populateDDMFormFieldSettingsContext(
 				Map<String, DDMFormField> ddmFormFieldsMap,
 				Map<String, Object> ddmFormTemplateContext)
@@ -821,12 +860,16 @@ public class DataLayoutTaglibUtil {
 
 			UnsafeConsumer<Map<String, Object>, Exception> unsafeConsumer =
 				field -> {
-					String fieldName = MapUtil.getString(field, "fieldName");
+					DDMFormField ddmFormField = ddmFormFieldsMap.get(
+						MapUtil.getString(field, "fieldName"));
+
+					if (_isFieldSet(field)) {
+						ddmFormField.setProperty("rows", field.get("rows"));
+					}
 
 					field.put(
 						"settingsContext",
-						_createDDMFormFieldSettingContext(
-							ddmFormFieldsMap.get(fieldName)));
+						_createDDMFormFieldSettingContext(ddmFormField));
 				};
 
 			List<Map<String, Object>> pages =
@@ -848,15 +891,12 @@ public class DataLayoutTaglibUtil {
 							unsafeConsumer.accept(field);
 
 							List<Map<String, Object>> nestedFields =
-								(List<Map<String, Object>>)field.get(
-									"nestedFields");
+								_getNestedFields(field);
 
-							if (nestedFields != null) {
-								for (Map<String, Object> nestedField :
-										nestedFields) {
+							for (Map<String, Object> nestedField :
+									nestedFields) {
 
-									unsafeConsumer.accept(nestedField);
-								}
+								unsafeConsumer.accept(nestedField);
 							}
 						}
 					}

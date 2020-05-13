@@ -597,7 +597,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 			if (parentDDMStructure != null) {
 				ddmFormFields.removeIf(
 					ddmFormField ->
-						Objects.equals(ddmFormField.getType(), "fieldset") &&
+						_isFieldSet(ddmFormField) &&
 						Objects.equals(
 							GetterUtil.getLong(
 								ddmFormField.getProperty("ddmStructureId")),

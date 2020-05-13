@@ -15,25 +15,22 @@
 package com.liferay.layout.page.template.internal.upgrade.v3_3_0;
 
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.internal.upgrade.v3_3_0.util.EditableValuesTransformerUtil;
 import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -42,7 +39,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * @author Eudaldo Alonso
@@ -51,12 +48,10 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 
 	public UpgradeLayoutPageTemplateStructureRel(
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
-		PortletPreferencesLocalService portletPreferencesLocalService,
-		PortletRegistry portletRegistry) {
+		PortletPreferencesLocalService portletPreferencesLocalService) {
 
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_portletPreferencesLocalService = portletPreferencesLocalService;
-		_portletRegistry = portletRegistry;
 	}
 
 	@Override
@@ -64,70 +59,37 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 		_upgradeLayoutPageTemplateStructureRel();
 	}
 
-	private Optional<PortletPreferences> _getPortletPreferencesOptional(
-		String instanceId, long plid, String portletId,
+	private void _updatePortletPreferences(
+		String newNamespace, String oldNamespace, long plid,
 		long segmentsExperienceId) {
 
-		try {
-			return Optional.of(
-				_portletPreferencesLocalService.getPortletPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
-					PortletIdCodec.encode(
-						portletId,
-						_setSegmentsExperienceId(
-							instanceId, segmentsExperienceId))));
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+		List<PortletPreferences> portletPreferencesList =
+			PortletPreferencesLocalServiceUtil.getPortletPreferencesByPlid(
+				plid);
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			String portletId = portletPreferences.getPortletId();
+
+			if (!portletId.contains(oldNamespace) ||
+				!portletId.contains(
+					_SEGMENTS_EXPERIENCE_SEPARATOR + segmentsExperienceId)) {
+
+				continue;
 			}
 
-			return Optional.empty();
-		}
-	}
+			String newPortletId = StringUtil.replace(
+				portletId,
+				new String[] {
+					oldNamespace,
+					_SEGMENTS_EXPERIENCE_SEPARATOR + segmentsExperienceId
+				},
+				new String[] {newNamespace, StringPool.BLANK});
 
-	private String _setSegmentsExperienceId(
-		String instanceId, long segmentsExperienceId) {
+			portletPreferences.setPortletId(newPortletId);
 
-		if (segmentsExperienceId == SegmentsExperienceConstants.ID_DEFAULT) {
-			return instanceId;
-		}
-
-		int index = instanceId.indexOf(_SEGMENTS_EXPERIENCE_SEPARATOR);
-
-		if (index == -1) {
-			return instanceId + _SEGMENTS_EXPERIENCE_SEPARATOR +
-				segmentsExperienceId;
-		}
-
-		return instanceId.substring(0, index) + _SEGMENTS_EXPERIENCE_SEPARATOR +
-			segmentsExperienceId;
-	}
-
-	private PortletPreferences _updatePortletPreferences(
-		String instanceId, String newInstanceId, long plid, String portletId,
-		long segmentsExperienceId) {
-
-		Optional<PortletPreferences> portletPreferencesOptional =
-			_getPortletPreferencesOptional(
-				instanceId, plid, portletId, segmentsExperienceId);
-
-		if (portletPreferencesOptional.isPresent()) {
-			PortletPreferences portletPreferences =
-				portletPreferencesOptional.get();
-
-			portletPreferences.setPortletId(
-				PortletIdCodec.encode(
-					PortletIdCodec.decodePortletName(
-						portletPreferences.getPortletId()),
-					newInstanceId));
-
-			return _portletPreferencesLocalService.updatePortletPreferences(
+			_portletPreferencesLocalService.updatePortletPreferences(
 				portletPreferences);
 		}
-
-		return null;
 	}
 
 	private String _upgradeLayoutData(String data, long segmentsExperienceId)
@@ -159,41 +121,42 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 				continue;
 			}
 
-			String newNamespace = StringUtil.randomId();
-
-			PortletPreferences portletPreferences = _upgradePortletPreferences(
-				fragmentEntryLink.getEditableValues(), newNamespace,
-				fragmentEntryLink.getClassPK(), segmentsExperienceId);
-
-			if (portletPreferences == null) {
-				_upgradePortletPreferences(
-					fragmentEntryLink, newNamespace, segmentsExperienceId);
-			}
-
-			fragmentEntryLink.setNamespace(newNamespace);
-
-			if (portletPreferences != null) {
-				fragmentEntryLink.setEditableValues(
-					EditableValuesTransformerUtil.getEditableValues(
-						fragmentEntryLink.getEditableValues(),
-						fragmentEntryLink.getNamespace(),
-						segmentsExperienceId));
-			}
-			else {
-				fragmentEntryLink.setEditableValues(
-					EditableValuesTransformerUtil.getEditableValues(
-						fragmentEntryLink.getEditableValues(),
-						segmentsExperienceId));
-			}
-
 			if (segmentsExperienceId ==
 					SegmentsExperienceConstants.ID_DEFAULT) {
 
 				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-					fragmentEntryLink);
+					fragmentLayoutStructureItem.getFragmentEntryLinkId(),
+					EditableValuesTransformerUtil.getEditableValues(
+						fragmentEntryLink.getEditableValues(),
+						segmentsExperienceId));
 
 				continue;
 			}
+
+			String newNamespace = StringUtil.randomId();
+			String oldNamespace = fragmentEntryLink.getNamespace();
+
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+			String instanceId = editableValuesJSONObject.getString(
+				"instanceId");
+			String portletId = editableValuesJSONObject.getString("portletId");
+
+			if (Validator.isNotNull(instanceId) &&
+				Validator.isNotNull(portletId)) {
+
+				editableValuesJSONObject.remove("instanceId");
+
+				editableValuesJSONObject.put("instanceId", newNamespace);
+
+				oldNamespace = instanceId;
+			}
+
+			_updatePortletPreferences(
+				newNamespace, oldNamespace, fragmentEntryLink.getClassPK(),
+				segmentsExperienceId);
 
 			FragmentEntryLink newFragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -205,9 +168,10 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 					fragmentEntryLink.getClassPK(), fragmentEntryLink.getCss(),
 					fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
 					fragmentEntryLink.getConfiguration(),
-					fragmentEntryLink.getEditableValues(),
-					fragmentEntryLink.getNamespace(),
-					fragmentEntryLink.getPosition(),
+					EditableValuesTransformerUtil.getEditableValues(
+						editableValuesJSONObject.toString(),
+						segmentsExperienceId),
+					newNamespace, fragmentEntryLink.getPosition(),
 					fragmentEntryLink.getRendererKey(), new ServiceContext());
 
 			fragmentLayoutStructureItem.setFragmentEntryLinkId(
@@ -249,54 +213,11 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradePortletPreferences(
-		FragmentEntryLink fragmentEntryLink, String namespace,
-		long segmentsExperienceId) {
-
-		for (String portletId :
-				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink)) {
-
-			String instanceId = PortletIdCodec.decodeInstanceId(portletId);
-			String newInstanceId = StringUtil.replace(
-				PortletIdCodec.decodeInstanceId(portletId),
-				fragmentEntryLink.getNamespace(), namespace);
-
-			_updatePortletPreferences(
-				instanceId, newInstanceId, fragmentEntryLink.getClassPK(),
-				PortletIdCodec.decodePortletName(portletId),
-				segmentsExperienceId);
-		}
-	}
-
-	private PortletPreferences _upgradePortletPreferences(
-			String editableValues, String namespace, long plid,
-			long segmentsExperienceId)
-		throws PortalException {
-
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			editableValues);
-
-		String instanceId = editableValuesJSONObject.getString("instanceId");
-		String portletId = editableValuesJSONObject.getString("portletId");
-
-		if (Validator.isNull(instanceId) || Validator.isNull(portletId)) {
-			return null;
-		}
-
-		return _updatePortletPreferences(
-			instanceId, namespace, plid, portletId, segmentsExperienceId);
-	}
-
 	private static final String _SEGMENTS_EXPERIENCE_SEPARATOR =
 		"_SEGMENTS_EXPERIENCE_";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeLayoutPageTemplateStructureRel.class);
 
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 	private final PortletPreferencesLocalService
 		_portletPreferencesLocalService;
-	private final PortletRegistry _portletRegistry;
 
 }

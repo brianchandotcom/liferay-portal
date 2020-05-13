@@ -60,10 +60,11 @@ const appStateReducer = (state, action) => {
 		case 'LOAD_CATEGORY': {
 			const {category} = action;
 
-			const {components, paths} = category;
+			const {components, info, paths} = category;
 
 			return {
 				...state,
+				info,
 				method: state.method || undefined,
 				paths,
 				schemas: components.schemas,

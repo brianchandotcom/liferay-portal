@@ -42,6 +42,7 @@ const APIGUI = () => {
 		categories,
 		categoryKey,
 		filter,
+		info,
 		method,
 		path,
 		paths,
@@ -309,6 +310,16 @@ const APIGUI = () => {
 											/>
 										))}
 								</ClaySelect>
+							</ClayForm.Group>
+
+							<ClayForm.Group className="pt-3 px-3">
+								<label
+									className="d-flex justify-content-between"
+									htmlFor="categorySelect"
+								>
+									{Liferay.Language.get('description')}
+								</label>
+								<p>{info && info.description}</p>
 							</ClayForm.Group>
 
 							<ClayForm.Group className="pt-0 px-3">

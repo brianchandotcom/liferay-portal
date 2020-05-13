@@ -24,12 +24,10 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -64,8 +62,6 @@ public abstract class BaseAssetAutoTaggerTestCase {
 	@Before
 	public void setUp() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
-
-		company = CompanyTestUtil.addCompany();
 
 		group = GroupTestUtil.addGroup();
 
@@ -156,8 +152,6 @@ public abstract class BaseAssetAutoTaggerTestCase {
 	}
 
 	@DeleteAfterTestRun
-	protected Company company;
-
 	protected Group group;
 
 	private void _withAutoTagger(

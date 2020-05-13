@@ -16,6 +16,8 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {useSelectItem} from '../../../app/components/Controls';
+import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../app/config/constants/layoutDataItemTypeLabels';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addItem from '../../../app/thunks/addItem';
 import {useDragSymbol} from '../../../app/utils/useDragAndDrop';
@@ -24,13 +26,13 @@ import Collapse from '../../../common/components/Collapse';
 const layoutElements = [
 	{
 		columns: ['12'],
-		label: Liferay.Language.get('section'),
-		type: 'container',
+		label: LAYOUT_DATA_ITEM_TYPE_LABELS.container,
+		type: LAYOUT_DATA_ITEM_TYPES.container,
 	},
 	{
 		columns: ['4', '4', '4'],
-		label: Liferay.Language.get('row'),
-		type: 'row',
+		label: LAYOUT_DATA_ITEM_TYPE_LABELS.row,
+		type: LAYOUT_DATA_ITEM_TYPES.row,
 	},
 ];
 

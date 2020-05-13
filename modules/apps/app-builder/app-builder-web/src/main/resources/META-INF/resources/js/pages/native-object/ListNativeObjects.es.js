@@ -12,33 +12,63 @@
  * details.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 
 import {AppNavigationBar} from '../../App.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
-import ListView from '../../components/list-view/ListView.es';
-import {fromNow} from '../../utils/time.es';
+import ListObjects from '../../components/list-objects/ListObjects.es';
 
-const COLUMNS = [
-	{
-		key: 'name',
-		sortable: true,
-		value: Liferay.Language.get('name'),
-	},
-	{
-		key: 'dateCreated',
-		sortable: true,
-		value: Liferay.Language.get('create-date'),
-	},
-	{
-		asc: false,
-		key: 'dateModified',
-		sortable: true,
-		value: Liferay.Language.get('modified-date'),
-	},
-];
+export default ({history, ...props}) => {
+	const [
+		customObjectPermissionsModalState,
+		setCustomObjectPermissionsModalState,
+	] = useState({
+		dataDefinitionId: null,
+		endpoint: null,
+	});
 
-export default () => {
+	const listViewProps = {
+		actions: [
+			{
+				action: ({id}) =>
+					Promise.resolve(
+						history.push(`/native-object/${id}/form-views`)
+					),
+				name: Liferay.Language.get('form-views'),
+			},
+			{
+				action: ({id}) =>
+					Promise.resolve(
+						history.push(`/native-object/${id}/table-views`)
+					),
+				name: Liferay.Language.get('table-views'),
+			},
+			{
+				action: ({id}) =>
+					Promise.resolve(history.push(`/native-object/${id}/apps`)),
+				name: Liferay.Language.get('apps'),
+			},
+			{
+				name: 'divider',
+			},
+			{
+				action: ({id}) =>
+					Promise.resolve(
+						setCustomObjectPermissionsModalState((prevState) => ({
+							...prevState,
+							dataDefinitionId: id,
+						}))
+					),
+				name: Liferay.Language.get('app-permissions'),
+			},
+		],
+		emptyState: {
+			title: Liferay.Language.get('there-are-no-native-objects-yet'),
+		},
+		endpoint:
+			'/o/data-engine/v2.0/data-definitions/by-content-type/native-object',
+	};
+
 	return (
 		<>
 			<ControlMenu
@@ -46,25 +76,19 @@ export default () => {
 					'javax.portlet.title.com_liferay_app_builder_web_internal_portlet_ObjectsPortlet'
 				)}
 			/>
-
 			<AppNavigationBar />
 
-			<ListView
-				columns={COLUMNS}
-				emptyState={{
-					title: Liferay.Language.get(
-						'there-are-no-native-objects-yet'
-					),
-				}}
-				endpoint={`/o/data-engine/v2.0/data-definitions/by-content-type/native-object`}
-			>
-				{(item) => ({
-					...item,
-					dateCreated: fromNow(item.dateCreated),
-					dateModified: fromNow(item.dateModified),
-					name: item.name.en_US,
-				})}
-			</ListView>
+			<ListObjects
+				{...props}
+				customObjectPermissionsModalState={
+					customObjectPermissionsModalState
+				}
+				listViewProps={listViewProps}
+				objectType="native-object"
+				setCustomObjectPermissionsModalState={
+					setCustomObjectPermissionsModalState
+				}
+			/>
 		</>
 	);
 };

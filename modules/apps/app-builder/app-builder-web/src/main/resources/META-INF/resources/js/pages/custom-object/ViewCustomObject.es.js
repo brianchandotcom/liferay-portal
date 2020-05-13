@@ -27,7 +27,7 @@ import ListTableViews from '../table-view/ListTableViews.es';
 
 export default ({
 	match: {
-		params: {dataDefinitionId},
+		params: {dataDefinitionId, objectType},
 		path,
 	},
 }) => {
@@ -70,7 +70,14 @@ export default ({
 				path={path}
 				render={() => (
 					<>
-						<ControlMenu backURL="/" title={title} />
+						<ControlMenu
+							backURL={
+								objectType === 'custom-object'
+									? '/'
+									: `/${objectType}s`
+							}
+							title={title}
+						/>
 						<NavigationBar
 							tabs={[
 								{

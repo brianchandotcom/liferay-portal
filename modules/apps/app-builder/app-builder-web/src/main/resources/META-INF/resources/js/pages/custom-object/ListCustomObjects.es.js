@@ -13,44 +13,16 @@
  */
 
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Link} from 'react-router-dom';
 
 import {AppNavigationBar} from '../../App.es';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
-import ListView from '../../components/list-view/ListView.es';
-import PermissionsModal from '../../components/permissions/PermissionsModal.es';
+import ListObjects from '../../components/list-objects/ListObjects.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
-import {
-	addItem,
-	confirmDelete,
-	getItem,
-	updateItem,
-} from '../../utils/client.es';
-import {fromNow} from '../../utils/time.es';
-import {ACTIONS} from '../entry/PermissionsContext.es';
+import {addItem, confirmDelete} from '../../utils/client.es';
 import CustomObjectPopover from './CustomObjectPopover.es';
-
-const COLUMNS = [
-	{
-		key: 'name',
-		sortable: true,
-		value: Liferay.Language.get('name'),
-	},
-	{
-		key: 'dateCreated',
-		sortable: true,
-		value: Liferay.Language.get('create-date'),
-	},
-	{
-		asc: false,
-		key: 'dateModified',
-		sortable: true,
-		value: Liferay.Language.get('modified-date'),
-	},
-];
 
 export default ({history}) => {
 	const {basePortletURL} = useContext(AppContext);
@@ -108,30 +80,6 @@ export default ({history}) => {
 		});
 	};
 
-	const rolesFilter = ({name, roleType}) =>
-		name !== 'Administrator' &&
-		name !== 'Guest' &&
-		name !== 'Owner' &&
-		roleType !== 'organization' &&
-		roleType !== 'site';
-
-	const {dataDefinitionId} = customObjectPermissionsModalState;
-
-	useEffect(() => {
-		if (!dataDefinitionId) {
-			return;
-		}
-
-		getItem(
-			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-record-collection`
-		).then(({id: dataRecordCollectionId}) => {
-			setCustomObjectPermissionsModalState((prevState) => ({
-				...prevState,
-				endpoint: `/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/permissions`,
-			}));
-		});
-	}, [dataDefinitionId]);
-
 	useEffect(() => {
 		const handler = ({target}) => {
 			const isOutside = isClickOutside(
@@ -157,6 +105,76 @@ export default ({history}) => {
 		}
 	}, 27);
 
+	const listViewProps = {
+		actions: [
+			{
+				action: ({id}) =>
+					Promise.resolve(
+						history.push(`/custom-object/${id}/form-views`)
+					),
+				name: Liferay.Language.get('form-views'),
+			},
+			{
+				action: ({id}) =>
+					Promise.resolve(
+						history.push(`/custom-object/${id}/table-views`)
+					),
+				name: Liferay.Language.get('table-views'),
+			},
+			{
+				action: ({id}) =>
+					Promise.resolve(history.push(`/custom-object/${id}/apps`)),
+				name: Liferay.Language.get('apps'),
+			},
+			{
+				name: 'divider',
+			},
+			{
+				action: ({id}) =>
+					Promise.resolve(
+						setCustomObjectPermissionsModalState((prevState) => ({
+							...prevState,
+							dataDefinitionId: id,
+						}))
+					),
+				name: Liferay.Language.get('app-permissions'),
+			},
+			{
+				name: 'divider',
+			},
+			{
+				action: confirmDelete('/o/data-engine/v2.0/data-definitions/'),
+				name: Liferay.Language.get('delete'),
+			},
+		],
+		addButton: () => (
+			<div ref={addButtonRef}>
+				<Button
+					className="nav-btn nav-btn-monospaced"
+					onClick={onClickAddButton}
+					symbol="plus"
+					tooltip={Liferay.Language.get('new-custom-object')}
+				/>
+			</div>
+		),
+		emptyState: {
+			button: () => (
+				<Button
+					displayType="secondary"
+					onClick={onClickAddButton}
+					ref={emptyStateButtonRef}
+				>
+					{Liferay.Language.get('new-custom-object')}
+				</Button>
+			),
+			description: Liferay.Language.get(
+				'custom-objects-define-the-types-of-data-your-business-application-needs'
+			),
+			title: Liferay.Language.get('there-are-no-custom-objects-yet'),
+		},
+		endpoint: `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`,
+	};
+
 	return (
 		<>
 			<ControlMenu
@@ -167,95 +185,16 @@ export default ({history}) => {
 
 			<AppNavigationBar />
 
-			<ListView
-				actions={[
-					{
-						action: ({id}) =>
-							Promise.resolve(
-								history.push(`/custom-object/${id}/form-views`)
-							),
-						name: Liferay.Language.get('form-views'),
-					},
-					{
-						action: ({id}) =>
-							Promise.resolve(
-								history.push(`/custom-object/${id}/table-views`)
-							),
-						name: Liferay.Language.get('table-views'),
-					},
-					{
-						action: ({id}) =>
-							Promise.resolve(
-								history.push(`/custom-object/${id}/apps`)
-							),
-						name: Liferay.Language.get('apps'),
-					},
-					{
-						name: 'divider',
-					},
-					{
-						action: ({id}) =>
-							Promise.resolve(
-								setCustomObjectPermissionsModalState(
-									(prevState) => ({
-										...prevState,
-										dataDefinitionId: id,
-									})
-								)
-							),
-						name: Liferay.Language.get('app-permissions'),
-					},
-					{
-						name: 'divider',
-					},
-					{
-						action: confirmDelete(
-							'/o/data-engine/v2.0/data-definitions/'
-						),
-						name: Liferay.Language.get('delete'),
-					},
-				]}
-				addButton={() => (
-					<div ref={addButtonRef}>
-						<Button
-							className="nav-btn nav-btn-monospaced"
-							onClick={onClickAddButton}
-							symbol="plus"
-							tooltip={Liferay.Language.get('new-custom-object')}
-						/>
-					</div>
-				)}
-				columns={COLUMNS}
-				emptyState={{
-					button: () => (
-						<Button
-							displayType="secondary"
-							onClick={onClickAddButton}
-							ref={emptyStateButtonRef}
-						>
-							{Liferay.Language.get('new-custom-object')}
-						</Button>
-					),
-					description: Liferay.Language.get(
-						'custom-objects-define-the-types-of-data-your-business-application-needs'
-					),
-					title: Liferay.Language.get(
-						'there-are-no-custom-objects-yet'
-					),
-				}}
-				endpoint={`/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`}
-			>
-				{(item) => ({
-					...item,
-					dateCreated: fromNow(item.dateCreated),
-					dateModified: fromNow(item.dateModified),
-					name: (
-						<Link to={`/custom-object/${item.id}/form-views`}>
-							{item.name[defaultLanguageId]}
-						</Link>
-					),
-				})}
-			</ListView>
+			<ListObjects
+				customObjectPermissionsModalState={
+					customObjectPermissionsModalState
+				}
+				listViewProps={listViewProps}
+				objectType="custom-object"
+				setCustomObjectPermissionsModalState={
+					setCustomObjectPermissionsModalState
+				}
+			/>
 
 			<CustomObjectPopover
 				alignElement={alignElement}
@@ -263,60 +202,6 @@ export default ({history}) => {
 				onSubmit={onSubmit}
 				ref={popoverRef}
 				visible={isPopoverVisible}
-			/>
-
-			<PermissionsModal
-				actions={[
-					{
-						key: ACTIONS.ADD_DATA_RECORD,
-						sortable: false,
-						value: Liferay.Language.get('add-entry'),
-					},
-					{
-						key: ACTIONS.DELETE_DATA_RECORD,
-						sortable: false,
-						value: Liferay.Language.get('delete-entry'),
-					},
-					{
-						key: ACTIONS.UPDATE_DATA_RECORD,
-						sortable: false,
-						value: Liferay.Language.get('update-entry'),
-					},
-					{
-						key: ACTIONS.VIEW_DATA_RECORD,
-						sortable: false,
-						value: Liferay.Language.get('view-entries'),
-					},
-				]}
-				endpoint={customObjectPermissionsModalState.endpoint}
-				isOpen={dataDefinitionId !== null}
-				onClose={() =>
-					setCustomObjectPermissionsModalState({
-						dataDefinitionId: null,
-						endpoint: null,
-					})
-				}
-				onSave={(permissions) => {
-					const dataDefinitionPermissions = [];
-
-					Object.values(permissions).forEach(
-						({actionIds, roleName}) => {
-							if (actionIds.length > 0) {
-								dataDefinitionPermissions.push({
-									actionIds: [ACTIONS.VIEW],
-									roleName,
-								});
-							}
-						}
-					);
-
-					return updateItem(
-						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/permissions`,
-						dataDefinitionPermissions
-					);
-				}}
-				rolesFilter={rolesFilter}
-				title={Liferay.Language.get('app-permissions')}
 			/>
 		</>
 	);

@@ -61,7 +61,7 @@ export default (props) => (
 
 							<Route
 								component={ViewCustomObject}
-								path="/custom-object/:dataDefinitionId(\d+)"
+								path="/:objectType/:dataDefinitionId(\d+)"
 							/>
 						</Switch>
 					</div>

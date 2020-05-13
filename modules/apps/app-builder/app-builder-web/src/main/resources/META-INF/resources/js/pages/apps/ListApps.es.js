@@ -27,7 +27,7 @@ import {DEPLOYMENT_ACTION, DEPLOYMENT_TYPES, STATUSES} from './constants.es';
 
 export default ({
 	match: {
-		params: {dataDefinitionId},
+		params: {dataDefinitionId, objectType},
 		url,
 	},
 }) => {
@@ -171,7 +171,7 @@ export default ({
 				dateModified: fromNow(item.dateModified),
 				name: dataDefinitionId ? (
 					<Link
-						to={`/custom-object/${dataDefinitionId}/apps/${item.id}`}
+						to={`/${objectType}/${dataDefinitionId}/apps/${item.id}`}
 					>
 						{item.name.en_US}
 					</Link>

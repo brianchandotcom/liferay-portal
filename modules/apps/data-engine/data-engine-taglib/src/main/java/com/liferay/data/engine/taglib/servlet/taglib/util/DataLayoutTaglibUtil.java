@@ -826,23 +826,26 @@ public class DataLayoutTaglibUtil {
 				Stream<Map<String, Object>> stream = nestedFields.stream();
 
 				return stream.flatMap(
-					nestedField -> {
-						List<Map<String, Object>> nestedFieldsList =
-							new ArrayList<>(Arrays.asList(nestedField));
-
-						if (_isFieldSet(nestedField)) {
-							nestedFieldsList.addAll(
-								_getNestedFields(nestedField));
-						}
-
-						return nestedFieldsList.stream();
-					}
+					this::_getNestedFieldsStream
 				).collect(
 					Collectors.toList()
 				);
 			}
 
 			return new ArrayList<>();
+		}
+
+		private Stream<Map<String, Object>> _getNestedFieldsStream(
+			Map<String, Object> field) {
+
+			List<Map<String, Object>> nestedFieldsList = new ArrayList<>(
+				Arrays.asList(field));
+
+			if (_isFieldSet(field)) {
+				nestedFieldsList.addAll(_getNestedFields(field));
+			}
+
+			return nestedFieldsList.stream();
 		}
 
 		private boolean _isFieldSet(Map<String, Object> field) {

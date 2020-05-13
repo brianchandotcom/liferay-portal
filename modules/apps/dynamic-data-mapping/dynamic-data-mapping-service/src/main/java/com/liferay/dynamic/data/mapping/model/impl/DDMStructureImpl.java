@@ -292,7 +292,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		DDMForm ddmForm = getFullHierarchyDDMForm();
 
 		return getDDMFormFieldNames(
-			_removeParentFieldSetDDMFormField(ddmForm.getDDMFormFields()));
+			_removeFieldSetDDMFormField(ddmForm.getDDMFormFields()));
 	}
 
 	@Override
@@ -588,7 +588,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		return false;
 	}
 
-	private List<DDMFormField> _removeParentFieldSetDDMFormField(
+	private List<DDMFormField> _removeFieldSetDDMFormField(
 		List<DDMFormField> ddmFormFields) {
 
 		try {

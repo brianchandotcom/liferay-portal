@@ -60,9 +60,6 @@ import org.gradle.api.invocation.Gradle;
  */
 public class WorkspaceExtension {
 
-	private static final String _DEFAULT_PRODUCT_CACHE_DIR_NAME =
-		".liferay/product";
-
 	@SuppressWarnings("serial")
 	public WorkspaceExtension(Settings settings) {
 		_gradle = settings.getGradle();
@@ -366,8 +363,8 @@ public class WorkspaceExtension {
 		try {
 			DownloadCommand download = new DownloadCommand();
 
-			download.setCacheDir(_cacheDir);
-			download.setUrl(new URL(_PRODUCT_INFO_URI));
+			download.setCacheDir(_workspaceCacheDir);
+			download.setUrl(new URL(_PRODUCT_INFO_URL));
 			download.setToken(false);
 			download.setUserName(null);
 			download.setPassword(null);
@@ -446,13 +443,16 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
 
+	private static final String _DEFAULT_WORKSPACE_CACHE_DIR_NAME =
+		".liferay/workspace";
+
 	private static final File _DOCKER_DIR = new File(
 		Project.DEFAULT_BUILD_DIR_NAME + File.separator + "docker");
 
 	private static final String _DOCKER_IMAGE_LIFERAY =
 		"liferay/portal:7.2.0-ga1";
 
-	private static final String _PRODUCT_INFO_URI =
+	private static final String _PRODUCT_INFO_URL =
 		"https://releases.liferay.com/tools/workspace/.product_info.json";
 
 	private final Object _appServerTomcatVersion;
@@ -464,8 +464,6 @@ public class WorkspaceExtension {
 	private Object _bundleTokenPassword;
 	private Object _bundleTokenPasswordFile;
 	private Object _bundleUrl;
-	private File _cacheDir = new File(
-		System.getProperty("user.home"), _DEFAULT_PRODUCT_CACHE_DIR_NAME);
 	private Object _configsDir;
 	private Object _dockerContainerId;
 	private Object _dockerDir;
@@ -480,6 +478,8 @@ public class WorkspaceExtension {
 		new HashSet<>();
 	private final Plugin<Project> _rootProjectConfigurator;
 	private Object _targetPlatformVersion;
+	private File _workspaceCacheDir = new File(
+		System.getProperty("user.home"), _DEFAULT_WORKSPACE_CACHE_DIR_NAME);
 
 	@SuppressWarnings("unused")
 	private class ProductInfo {

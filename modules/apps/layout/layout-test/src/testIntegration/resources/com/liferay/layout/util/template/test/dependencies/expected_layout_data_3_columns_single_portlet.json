@@ -35,26 +35,20 @@
 			"config": {
 				"gutters": true,
 				"landscapeMobile": {
-					"gutters": true,
 					"modulesPerRow": 3,
-					"numberOfColumns": 3,
 					"reverseOrder": false,
 					"verticalAlignment": "top"
 				},
 				"modulesPerRow": 3,
 				"numberOfColumns": 3,
 				"portraitMobile": {
-					"gutters": true,
 					"modulesPerRow": 3,
-					"numberOfColumns": 3,
 					"reverseOrder": false,
 					"verticalAlignment": "top"
 				},
 				"reverseOrder": false,
 				"tablet": {
-					"gutters": true,
 					"modulesPerRow": 3,
-					"numberOfColumns": 3,
 					"reverseOrder": false,
 					"verticalAlignment": "top"
 				},

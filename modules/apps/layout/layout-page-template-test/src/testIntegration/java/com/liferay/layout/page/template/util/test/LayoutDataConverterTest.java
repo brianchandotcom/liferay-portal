@@ -14,6 +14,9 @@
 
 package com.liferay.layout.page.template.util.test;
 
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -155,7 +158,9 @@ public class LayoutDataConverterTest {
 		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
 			expectedLayoutData);
 
-		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
+		Assert.assertEquals(
+			_objectMapper.readTree(expectedLayoutStructure.toString()),
+			_objectMapper.readTree(actualLayoutStructure.toString()));
 	}
 
 	@Test
@@ -173,7 +178,9 @@ public class LayoutDataConverterTest {
 		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
 			expectedLayoutData);
 
-		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
+		Assert.assertEquals(
+			_objectMapper.readTree(expectedLayoutStructure.toString()),
+			_objectMapper.readTree(actualLayoutStructure.toString()));
 	}
 
 	@Test
@@ -238,12 +245,20 @@ public class LayoutDataConverterTest {
 		LayoutStructure expectedLayoutStructure = LayoutStructure.of(
 			expectedLayoutData);
 
-		Assert.assertEquals(expectedLayoutStructure, actualLayoutStructure);
+		Assert.assertEquals(
+			_objectMapper.readTree(expectedLayoutStructure.toString()),
+			_objectMapper.readTree(actualLayoutStructure.toString()));
 	}
 
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+		}
+	};
 
 }

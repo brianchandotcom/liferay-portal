@@ -53,7 +53,7 @@
 				"reverseOrder": false,
 				"tablet": {
 					"gutters": true,
-					"modulesPerRow": 3,
+					"modulesPerRow": 1,
 					"numberOfColumns": 3,
 					"reverseOrder": false,
 					"verticalAlignment": "top"

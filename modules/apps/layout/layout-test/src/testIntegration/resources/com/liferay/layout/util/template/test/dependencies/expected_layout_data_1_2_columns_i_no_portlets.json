@@ -35,16 +35,16 @@
 				"gutters": true,
 				"landscapeMobile": {
 					"gutters": true,
-					"modulesPerRow": 3,
+					"modulesPerRow": 1,
 					"numberOfColumns": 1,
 					"reverseOrder": false,
 					"verticalAlignment": "top"
 				},
-				"modulesPerRow": 3,
+				"modulesPerRow": 1,
 				"numberOfColumns": 1,
 				"portraitMobile": {
 					"gutters": true,
-					"modulesPerRow": 3,
+					"modulesPerRow": 1,
 					"numberOfColumns": 1,
 					"reverseOrder": false,
 					"verticalAlignment": "top"
@@ -52,7 +52,7 @@
 				"reverseOrder": false,
 				"tablet": {
 					"gutters": true,
-					"modulesPerRow": 3,
+					"modulesPerRow": 1,
 					"numberOfColumns": 1,
 					"reverseOrder": false,
 					"verticalAlignment": "top"
@@ -98,16 +98,16 @@
 				"gutters": true,
 				"landscapeMobile": {
 					"gutters": true,
-					"modulesPerRow": 3,
+					"modulesPerRow": 2,
 					"numberOfColumns": 2,
 					"reverseOrder": false,
 					"verticalAlignment": "top"
 				},
-				"modulesPerRow": 3,
+				"modulesPerRow": 2,
 				"numberOfColumns": 2,
 				"portraitMobile": {
 					"gutters": true,
-					"modulesPerRow": 3,
+					"modulesPerRow": 2,
 					"numberOfColumns": 2,
 					"reverseOrder": false,
 					"verticalAlignment": "top"
@@ -115,7 +115,7 @@
 				"reverseOrder": false,
 				"tablet": {
 					"gutters": true,
-					"modulesPerRow": 3,
+					"modulesPerRow": 2,
 					"numberOfColumns": 2,
 					"reverseOrder": false,
 					"verticalAlignment": "top"

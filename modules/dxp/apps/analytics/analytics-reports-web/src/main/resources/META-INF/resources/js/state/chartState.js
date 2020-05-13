@@ -82,10 +82,8 @@ function reducer(state, action) {
 		case ADD_DATA_SET_ITEMS:
 			nextState = action.payload.keys.reduce((state, key) => {
 				const dataSetItem =
-					action.payload.dataSetItems &&
-					action.payload.dataSetItems[key] !== undefined
-						? action.payload.dataSetItems[key]
-						: FALLBACK_DATA_SET_ITEM;
+					action.payload.dataSetItems?.[key] ??
+					FALLBACK_DATA_SET_ITEM;
 
 				return addDataSetItem(
 					state,

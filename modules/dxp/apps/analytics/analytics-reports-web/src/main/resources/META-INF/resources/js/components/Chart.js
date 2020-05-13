@@ -69,21 +69,15 @@ const METRICS_STATIC_VALUES = {
 };
 
 function keyToTranslatedLabelValue(key) {
-	const metricValues = METRICS_STATIC_VALUES[key];
-
-	return metricValues ? metricValues.langKey : key;
+	return METRICS_STATIC_VALUES[key]?.langKey ?? key;
 }
 
 function keyToHexColor(key) {
-	const metricValues = METRICS_STATIC_VALUES[key];
-
-	return metricValues ? metricValues.color : '#666666';
+	return METRICS_STATIC_VALUES[key]?.color ?? '#666666';
 }
 
 function keyToIconType(key) {
-	const metricValues = METRICS_STATIC_VALUES[key];
-
-	return metricValues ? metricValues.iconType : 'line';
+	return METRICS_STATIC_VALUES[key]?.iconType ?? 'line';
 }
 
 /*

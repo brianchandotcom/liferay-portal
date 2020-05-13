@@ -69,7 +69,7 @@ export default function Navigation({
 			return trafficSource['name'] === trafficSourceName;
 		});
 
-		return Promise.resolve(trafficSource ? trafficSource.share : '-');
+		return Promise.resolve(trafficSource?.share ?? '-');
 	}, [trafficSourceName, trafficSources]);
 
 	const handleTrafficSourceClick = useCallback(
@@ -97,7 +97,7 @@ export default function Navigation({
 			return trafficSource['name'] === trafficSourceName;
 		});
 
-		return Promise.resolve(trafficSource ? trafficSource.value : '-');
+		return Promise.resolve(trafficSource?.value ?? '-');
 	}, [trafficSourceName, trafficSources]);
 
 	const [{readsEnabled}] = useContext(StoreContext);

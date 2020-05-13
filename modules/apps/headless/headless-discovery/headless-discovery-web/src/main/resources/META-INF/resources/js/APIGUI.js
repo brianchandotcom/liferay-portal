@@ -13,12 +13,14 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
+import ClayModal, {useModal} from '@clayui/modal';
 import GraphiQL from 'graphiql';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import APIDisplay from './APIDisplay';
-import {spritemap} from './Icon';
+import Icon, {spritemap} from './Icon';
 import PathList from './PathList';
 import SchemaExplorer from './SchemaExplorer';
 import {useAppState} from './hooks/appState';
@@ -48,6 +50,17 @@ const APIGUI = () => {
 	} = state;
 
 	const [showGraphQL, setShowGraphQL] = useState(false);
+	const [showHeaders, setShowHeaders] = useState(false);
+	const {observer, onClose} = useModal({
+		onClose: () => setShowHeaders(false),
+	});
+	const [headers, setHeaders] = useState([{key: '', value: ''}]);
+
+	const handleInputChange = (index, event) => {
+		const values = [...headers];
+		values[index][event.target.name] = event.target.value;
+		setHeaders(values);
+	};
 
 	useEffect(() => {
 		setSearchParam('category', categoryKey);
@@ -119,18 +132,115 @@ const APIGUI = () => {
 
 	const graphQLFetcher = useCallback(
 		(graphQLParams) =>
-			apiFetch('/o/graphql', 'post', graphQLParams, 'application/json'),
-		[]
+			apiFetch(
+				'/o/graphql',
+				'post',
+				graphQLParams,
+				'application/json',
+				headers
+			),
+		[headers]
 	);
 
 	return (
 		<div className="api-gui-root">
 			<div className="container container-fluid">
+				{showHeaders && (
+					<ClayModal observer={observer} size="lg" status="info">
+						<ClayModal.Header>{'Headers'}</ClayModal.Header>
+						<ClayModal.Body>
+							<h1>
+								{
+									'Add, edit and remove headers in your request.'
+								}
+							</h1>
+
+							{headers.map((header, i) => (
+								<div className="form-group-autofit" key={i}>
+									<div className="form-group-item">
+										<input
+											className="form-control"
+											name="key"
+											onChange={(event) =>
+												handleInputChange(i, event)
+											}
+											placeholder="Header Key"
+											type="text"
+											value={header.key}
+										/>
+									</div>
+									<div className="form-group-item">
+										<input
+											className="form-control"
+											name="value"
+											onChange={(event) =>
+												handleInputChange(i, event)
+											}
+											placeholder="Header Value"
+											type="text"
+											value={header.value}
+										/>
+									</div>
+									<ClayButton
+										className="btn btn-warning"
+										displayType={'secondary'}
+										onClick={() => {
+											const values = [...headers];
+											values.splice(i, 1);
+											setHeaders(values);
+										}}
+									>
+										<Icon symbol="minus-circle" />
+									</ClayButton>
+								</div>
+							))}
+						</ClayModal.Body>
+						<ClayModal.Footer
+							first={
+								<ClayButton.Group spaced>
+									<ClayButton
+										displayType="secondary"
+										onClick={() => {
+											setHeaders([
+												...headers,
+												{key: '', value: ''},
+											]);
+										}}
+									>
+										{'Add Header'}
+									</ClayButton>
+								</ClayButton.Group>
+							}
+							last={
+								<ClayButton
+									onClick={() => {
+										dispatch({
+											headers,
+											type: 'ADD_HEADERS',
+										});
+										onClose();
+									}}
+								>
+									{'Save'}
+								</ClayButton>
+							}
+						/>
+					</ClayModal>
+				)}
+
 				<div className="row">
 					<div
 						className="col col-push-3"
 						style={{textAlign: 'right'}}
 					>
+						<button
+							onClick={() => {
+								setShowHeaders(true);
+							}}
+						>
+							{Liferay.Language.get('headers')}
+						</button>
+
 						<button
 							onClick={() => {
 								setShowGraphQL(!showGraphQL);

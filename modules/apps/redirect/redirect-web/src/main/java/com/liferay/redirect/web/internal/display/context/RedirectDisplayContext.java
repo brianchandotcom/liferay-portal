@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -60,6 +61,7 @@ import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
 
@@ -170,9 +172,7 @@ public class RedirectDisplayContext {
 		return "redirectEntries";
 	}
 
-	public SearchContainer<RedirectEntry> searchContainer()
-		throws PortalException {
-
+	public SearchContainer<RedirectEntry> searchContainer() throws Exception {
 		if (_redirectEntrySearch != null) {
 			return _redirectEntrySearch;
 		}
@@ -232,8 +232,11 @@ public class RedirectDisplayContext {
 			!orderByAsc);
 	}
 
-	private PortletURL _getPortletURL() {
-		return _liferayPortletResponse.createRenderURL();
+	private PortletURL _getPortletURL() throws PortletException {
+		return PortletURLUtil.clone(
+			PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse),
+			_liferayPortletResponse);
 	}
 
 	private Sort _getSorts() {

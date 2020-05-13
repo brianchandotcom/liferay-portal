@@ -239,19 +239,15 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		Supplier<Boolean> hasPermissionSupplier) {
 
 		try {
-			Group depotGroup = null;
-
-			if (StringUtil.equals(name, Group.class.getName())) {
-				depotGroup = _groupLocalService.fetchGroup(primKey);
-
-				if ((depotGroup != null) &&
-					(depotGroup.getType() != GroupConstants.TYPE_DEPOT)) {
-
-					depotGroup = null;
-				}
+			if (!StringUtil.equals(name, Group.class.getName())) {
+				return hasPermissionSupplier.get();
 			}
 
-			if (depotGroup == null) {
+			Group group = _groupLocalService.fetchGroup(primKey);
+
+			if ((group == null) ||
+				(group.getType() != GroupConstants.TYPE_DEPOT)) {
+
 				return hasPermissionSupplier.get();
 			}
 
@@ -260,16 +256,16 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			}
 
 			if (_userGroupRoleLocalService.hasUserGroupRole(
-					getUserId(), depotGroup.getGroupId(),
+					getUserId(), group.getGroupId(),
 					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true) ||
 				_userGroupRoleLocalService.hasUserGroupRole(
-					getUserId(), depotGroup.getGroupId(),
+					getUserId(), group.getGroupId(),
 					DepotRolesConstants.ASSET_LIBRARY_OWNER, true)) {
 
 				return true;
 			}
 
-			Group parentGroup = depotGroup;
+			Group parentGroup = group;
 
 			while (!parentGroup.isRoot()) {
 				parentGroup = parentGroup.getParentGroup();
@@ -284,7 +280,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			}
 
 			return _depotEntryModelResourcePermission.contains(
-				this, depotGroup.getClassPK(), actionId);
+				this, group.getClassPK(), actionId);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);

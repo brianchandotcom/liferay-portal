@@ -76,6 +76,22 @@ const useLazy = () => {
 	}, []);
 };
 
+class FieldEventStruct {
+	constructor(event, field, value = null) {
+		this.fieldInstance = {
+			...field,
+
+			// This is a fake function that maintains compatibility with the use
+			// of Metal+Soy fields.
+
+			isDisposed: () => false,
+		};
+
+		this.originalEvent = event;
+		this.value = value !== null ? value : event.target.value;
+	}
+}
+
 /**
  * This only assembles the expected structure of the Forms field
  * event, creates a makeup to maintain compatibility with the
@@ -83,18 +99,16 @@ const useLazy = () => {
  * structure, they must only provide a native event or value in
  * the case of an onChange
  */
-const mountStruct = (event, field, value = null) => {
-	return {
-		fieldInstance: {
-			...field,
+const mountStruct = (event, field, value) => {
 
-			// Fake Function
+	// A field event struct may have been declared before, for cases of nested
+	// fields with the FieldSet field.
 
-			isDisposed: () => false,
-		},
-		originalEvent: event,
-		value: value !== null ? value : event.target.value,
-	};
+	if (event instanceof FieldEventStruct) {
+		return event;
+	}
+
+	return new FieldEventStruct(event, field, value);
 };
 
 export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {

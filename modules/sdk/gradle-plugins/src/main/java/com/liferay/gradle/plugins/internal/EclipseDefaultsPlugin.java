@@ -36,6 +36,7 @@ import org.gradle.api.XmlProvider;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.plugins.ide.api.FileContentMerger;
 import org.gradle.plugins.ide.api.XmlFileContentMerger;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
@@ -57,12 +58,15 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	protected void applyPluginDefaults(
 		Project project, EclipsePlugin eclipsePlugin) {
 
+		TaskProvider<Task> eclipseTaskProvider = GradleUtil.getTaskProvider(
+			project, _ECLIPSE_TASK_NAME);
+
 		final File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
 
 		_configureEclipseClasspathFile(project);
-		_configureEclipseProject(project, portalRootDir);
-		_configureTaskEclipse(project);
+		_configureEclipseProject(project, eclipseTaskProvider, portalRootDir);
+		_configureTaskEclipseProvider(eclipseTaskProvider);
 	}
 
 	@Override
@@ -140,7 +144,10 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		configurations.add(configuration);
 	}
 
-	private void _configureEclipseProject(Project project, File portalRootDir) {
+	private void _configureEclipseProject(
+		Project project, TaskProvider<Task> eclipseTaskProvider,
+		File portalRootDir) {
+
 		EclipseModel eclipseModel = GradleUtil.getExtension(
 			project, EclipseModel.class);
 
@@ -148,10 +155,8 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 		String name = project.getName();
 
-		Task task = GradleUtil.getTask(project, _ECLIPSE_TASK_NAME);
-
 		String gitWorkingBranch = GradleUtil.getTaskPrefixedProperty(
-			task, "git.working.branch");
+			eclipseTaskProvider.get(), "git.working.branch");
 
 		if (Boolean.parseBoolean(gitWorkingBranch) && (portalRootDir != null) &&
 			portalRootDir.exists()) {
@@ -210,10 +215,18 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		xmlFileContentMerger.withXml(action);
 	}
 
-	private void _configureTaskEclipse(Project project) {
-		Task task = GradleUtil.getTask(project, _ECLIPSE_TASK_NAME);
+	private void _configureTaskEclipseProvider(
+		TaskProvider<Task> eclipseTaskProvider) {
 
-		task.dependsOn(_CLEAN_ECLIPSE_TASK_NAME);
+		eclipseTaskProvider.configure(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task eclipseTask) {
+					eclipseTask.dependsOn(_CLEAN_ECLIPSE_TASK_NAME);
+				}
+
+			});
 	}
 
 	private static final String _CLEAN_ECLIPSE_TASK_NAME = "cleanEclipse";

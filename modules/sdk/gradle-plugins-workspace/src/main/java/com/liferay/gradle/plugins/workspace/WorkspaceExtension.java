@@ -226,7 +226,7 @@ public class WorkspaceExtension {
 		return GradleUtil.toString(_targetPlatformVersion);
 	}
 
-	public String getWorkspaceProductKey() {
+	public String getProduct() {
 		return GradleUtil.toString(_product);
 	}
 
@@ -318,7 +318,7 @@ public class WorkspaceExtension {
 
 	private String _getDefaultAppServerVersion() {
 		return Optional.ofNullable(
-			_getProductInfo(getWorkspaceProductKey())
+			_getProductInfo(getProduct())
 		).map(
 			ProductInfo::getAppServerTomcatVersion
 		).orElse(
@@ -328,7 +328,7 @@ public class WorkspaceExtension {
 
 	private String _getDefaultDockerImage() {
 		return Optional.ofNullable(
-			_getProductInfo(getWorkspaceProductKey())
+			_getProductInfo(getProduct())
 		).map(
 			ProductInfo::getLiferayDockerImage
 		).orElse(
@@ -338,7 +338,7 @@ public class WorkspaceExtension {
 
 	private String _getDefaultProductBundleUrl() {
 		return Optional.ofNullable(
-			_getProductInfo(getWorkspaceProductKey())
+			_getProductInfo(getProduct())
 		).map(
 			ProductInfo::getBundleUrl
 		).map(
@@ -354,7 +354,7 @@ public class WorkspaceExtension {
 
 	private String _getDefaultTargetplatformVersion() {
 		return Optional.ofNullable(
-			_getProductInfo(getWorkspaceProductKey())
+			_getProductInfo(getProduct())
 		).map(
 			ProductInfo::getTargetPlatformVersion
 		).orElse(

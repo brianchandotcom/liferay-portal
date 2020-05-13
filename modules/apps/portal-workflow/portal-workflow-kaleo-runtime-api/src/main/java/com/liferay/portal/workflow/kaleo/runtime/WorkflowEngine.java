@@ -156,10 +156,11 @@ public interface WorkflowEngine {
 
 	public default WorkflowModelSearchResult<WorkflowInstance>
 			searchWorkflowInstances(
-				long companyId, Long userId, String assetClassName,
-				String assetTitle, String assetDescription, String nodeName,
+				Long userId, String assetClassName, String assetTitle,
+				String assetDescription, String nodeName,
 				String kaleoDefinitionName, Boolean completed, int start,
-				int end, OrderByComparator<WorkflowInstance> orderByComparator)
+				int end, OrderByComparator<WorkflowInstance> orderByComparator,
+				ServiceContext serviceContext)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();

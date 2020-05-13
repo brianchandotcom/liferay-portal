@@ -50,7 +50,7 @@ public class MyWorkflowInstanceViewDisplayContext
 	protected WorkflowModelSearchResult<WorkflowInstance>
 			getWorkflowModelSearchResult(
 				int start, int end,
-				OrderByComparator<WorkflowInstance> comparator)
+				OrderByComparator<WorkflowInstance> orderByComparator)
 		throws PortalException {
 
 		if (Objects.nonNull(workflowModelSearchResult)) {
@@ -62,7 +62,7 @@ public class MyWorkflowInstanceViewDisplayContext
 				workflowInstanceRequestHelper.getCompanyId(),
 				workflowInstanceRequestHelper.getUserId(), getKeywords(),
 				getKeywords(), getAssetType(getKeywords()), getKeywords(),
-				getKeywords(), getCompleted(), start, end, comparator);
+				getKeywords(), getCompleted(), start, end, orderByComparator);
 
 		return workflowModelSearchResult;
 	}

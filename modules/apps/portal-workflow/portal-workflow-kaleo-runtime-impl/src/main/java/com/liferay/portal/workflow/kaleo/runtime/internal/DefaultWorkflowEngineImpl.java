@@ -458,9 +458,9 @@ public class DefaultWorkflowEngineImpl
 		try {
 			WorkflowModelSearchResult<WorkflowInstance>
 				workflowModelSearchResult = searchWorkflowInstances(
-					serviceContext.getCompanyId(), userId, assetClassName,
-					assetTitle, assetDescription, nodeName, kaleoDefinitionName,
-					completed, start, end, orderByComparator);
+					userId, assetClassName, assetTitle, assetDescription,
+					nodeName, kaleoDefinitionName, completed, start, end,
+					orderByComparator, serviceContext);
 
 			return workflowModelSearchResult.getWorkflowModels();
 		}
@@ -510,17 +510,14 @@ public class DefaultWorkflowEngineImpl
 
 	@Override
 	public WorkflowModelSearchResult<WorkflowInstance> searchWorkflowInstances(
-			long companyId, Long userId, String assetClassName,
-			String assetTitle, String assetDescription, String nodeName,
+			Long userId, String assetClassName, String assetTitle,
+			String assetDescription, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
-			OrderByComparator<WorkflowInstance> orderByComparator)
+			OrderByComparator<WorkflowInstance> orderByComparator,
+			ServiceContext serviceContext)
 		throws WorkflowException {
 
 		try {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-
 			BaseModelSearchResult<KaleoInstance> baseModelSearchResult =
 				kaleoInstanceLocalService.searchKaleoInstances(
 					userId, assetClassName, assetTitle, assetDescription,

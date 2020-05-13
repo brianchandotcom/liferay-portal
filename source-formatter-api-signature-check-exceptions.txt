@@ -384,6 +384,7 @@ com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine#search(Long,String,Stri
 com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine#search(Long,String,String,String,String,String,Boolean,int,int,OrderByComparator<WorkflowInstance>,ServiceContext)
 com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine#searchCount(Long,String,String,String,Boolean,ServiceContext)
 com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine#searchCount(Long,String,String,String,String,String,Boolean,ServiceContext)
+com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine#searchWorkflowInstances(Long,String,String,String,String,String,Boolean,int,int,OrderByComparator<WorkflowInstance>,ServiceContext)
 com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine#signalWorkflowInstance(long,String,Map<String, Serializable>,ServiceContext)
 com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine#startWorkflowInstance(String,Integer,String,Map<String, Serializable>,ServiceContext)
 com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine#updateContext(long,Map<String, Serializable>,ServiceContext)

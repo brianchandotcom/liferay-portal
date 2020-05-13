@@ -634,10 +634,9 @@ public class WorkflowTaskDisplayContext {
 			_liferayPortletRequest, _getCurParam(searchByUserRoles),
 			_getPortletURL());
 
-		DisplayTerms searchTerms = _workflowTaskSearch.getDisplayTerms();
-
 		WorkflowModelSearchResult<WorkflowTask> workflowModelSearchResult =
-			_getWorkflowModelSearchResult(searchByUserRoles, searchTerms);
+			_getWorkflowModelSearchResult(
+				_workflowTaskSearch.getDisplayTerms(), searchByUserRoles);
 
 		_workflowTaskSearch.setResults(
 			workflowModelSearchResult.getWorkflowModels());
@@ -1008,7 +1007,7 @@ public class WorkflowTaskDisplayContext {
 
 	private WorkflowModelSearchResult<WorkflowTask>
 			_getWorkflowModelSearchResult(
-				boolean searchByUserRoles, DisplayTerms searchTerms)
+				DisplayTerms displayTerms, boolean searchByUserRoles)
 		throws WorkflowException {
 
 		if (Objects.nonNull(_workflowModelSearchResult)) {
@@ -1019,9 +1018,9 @@ public class WorkflowTaskDisplayContext {
 			WorkflowTaskManagerUtil.searchWorkflowTasks(
 				_workflowTaskRequestHelper.getCompanyId(),
 				_workflowTaskRequestHelper.getUserId(),
-				searchTerms.getKeywords(),
-				new String[] {searchTerms.getKeywords()},
-				_getAssetType(searchTerms.getKeywords()), null, null, null,
+				displayTerms.getKeywords(),
+				new String[] {displayTerms.getKeywords()},
+				_getAssetType(displayTerms.getKeywords()), null, null, null,
 				null, null, _getCompleted(), searchByUserRoles, null, null,
 				false, _workflowTaskSearch.getStart(),
 				_workflowTaskSearch.getEnd(),

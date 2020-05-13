@@ -304,7 +304,6 @@ public class WorkflowInstanceViewDisplayContext
 
 		_searchContainer.setResults(
 			workflowModelSearchResult.getWorkflowModels());
-
 		_searchContainer.setTotal(workflowModelSearchResult.getLength());
 
 		setSearchContainerEmptyResultsMessage(_searchContainer);
@@ -490,7 +489,7 @@ public class WorkflowInstanceViewDisplayContext
 	protected WorkflowModelSearchResult<WorkflowInstance>
 			getWorkflowModelSearchResult(
 				int start, int end,
-				OrderByComparator<WorkflowInstance> comparator)
+				OrderByComparator<WorkflowInstance> orderByComparator)
 		throws PortalException {
 
 		if (Objects.nonNull(workflowModelSearchResult)) {
@@ -502,7 +501,7 @@ public class WorkflowInstanceViewDisplayContext
 				workflowInstanceRequestHelper.getCompanyId(), null,
 				getKeywords(), getKeywords(), getAssetType(getKeywords()),
 				getKeywords(), getKeywords(), getCompleted(), start, end,
-				comparator);
+				orderByComparator);
 
 		return workflowModelSearchResult;
 	}

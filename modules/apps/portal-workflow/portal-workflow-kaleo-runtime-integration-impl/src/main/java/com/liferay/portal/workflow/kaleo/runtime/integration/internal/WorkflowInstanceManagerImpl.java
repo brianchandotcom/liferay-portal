@@ -255,10 +255,14 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 			OrderByComparator<WorkflowInstance> orderByComparator)
 		throws WorkflowException {
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+
 		return _workflowEngine.searchWorkflowInstances(
-			companyId, userId, assetClassName, assetTitle, assetDescription,
-			nodeName, kaleoDefinitionName, completed, start, end,
-			orderByComparator);
+			userId, assetClassName, assetTitle, assetDescription, nodeName,
+			kaleoDefinitionName, completed, start, end, orderByComparator,
+			serviceContext);
 	}
 
 	@Override

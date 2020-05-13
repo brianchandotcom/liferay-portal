@@ -25,6 +25,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -42,7 +43,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -103,14 +109,31 @@ public class CTCollectionLocalServiceTest {
 		Assert.assertTrue(
 			conflictInfoMap.toString(), conflictInfoMap.isEmpty());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
+			true,
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
+			).build(),
+			null, LocaleUtil.getSiteDefault(), null, false, false,
+			serviceContext);
 
 		JournalArticle ctJournalArticle1 = null;
 		JournalArticle ctJournalArticle2 = null;
-
-		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(_group.getGroupId());
 

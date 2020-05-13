@@ -6322,30 +6322,56 @@ go</echo>
 					<then>
 						<delete dir="${test.app.server.liferay.home}/osgi/state" />
 					</then>
-					<else>
+					<elseif>
+						<not>
+							<equals arg1="${delete.index.data}" arg2="true" />
+						</not>
+						<then>
+							<if>
+								<not>
+									<equals arg1="${keep.cached.app.server.data}" arg2="true" />
+								</not>
+								<then>
+									<delete failonerror="false" includeemptydirs="true">
+										<fileset
+											dir="${test.app.server.liferay.home}/data"
+										>
+											<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.lobs" />
+											<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.properties" />
+											<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.script" />
+										</fileset>
+									</delete>
+								</then>
+							</if>
+
+							<delete dir="${test.app.server.liferay.home}/logs" />
+							<delete dir="${test.app.server.liferay.home}/osgi/state" />
+							<delete dir="${test.app.server.liferay.home}/work" />
+
+							<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
+						</then>
+					</elseif>
+				</if>
+
+				<if>
+					<equals arg1="${delete.index.data}" arg2="true" />
+					<then>
 						<if>
-							<not>
-								<equals arg1="${keep.cached.app.server.data}" arg2="true" />
-							</not>
+							<contains string="${env.CI_TEST_SUITE}" substring="search" />
 							<then>
-								<delete failonerror="false" includeemptydirs="true">
-									<fileset
-										dir="${test.app.server.liferay.home}/data"
-									>
-										<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.lobs" />
-										<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.properties" />
-										<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.script" />
-									</fileset>
-								</delete>
+								<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+								<if>
+									<equals arg1="${suite.search.engine}" arg2="elasticsearch7" />
+									<then>
+										<delete dir="${test.app.server.liferay.home}/data/elasticsearch7" />
+									</then>
+									<else>
+										<delete dir="${test.app.server.liferay.home}/data/elasticsearch6" />
+									</else>
+								</if>
 							</then>
 						</if>
-
-						<delete dir="${test.app.server.liferay.home}/logs" />
-						<delete dir="${test.app.server.liferay.home}/osgi/state" />
-						<delete dir="${test.app.server.liferay.home}/work" />
-
-						<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
-					</else>
+					</then>
 				</if>
 			</then>
 		</if>

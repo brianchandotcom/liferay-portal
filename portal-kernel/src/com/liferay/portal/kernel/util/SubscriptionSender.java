@@ -302,12 +302,19 @@ public class SubscriptionSender implements Serializable {
 		setContextAttribute("[$COMPANY_ID$]", company.getCompanyId());
 		setContextAttribute("[$COMPANY_MX$]", company.getMx());
 		setContextAttribute("[$COMPANY_NAME$]", company.getName());
-		setContextAttribute(
-			"[$PORTAL_URL$]",
-			company.getPortalURL(
-				groupId,
-				_entryURL.contains(
-					_LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING)));
+
+		if (Validator.isNotNull(_entryURL)) {
+			setContextAttribute(
+				"[$PORTAL_URL$]",
+				company.getPortalURL(
+					groupId,
+					_entryURL.contains(
+						_LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING)));
+		}
+		else {
+			setContextAttribute(
+				"[$PORTAL_URL$]", company.getPortalURL(groupId));
+		}
 
 		if (groupId > 0) {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);

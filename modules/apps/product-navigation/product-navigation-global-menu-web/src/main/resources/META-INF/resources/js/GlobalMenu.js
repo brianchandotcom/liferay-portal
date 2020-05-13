@@ -61,7 +61,7 @@ function GlobalMenu({panelAppsURL}) {
 		if (!preloadPromise.current) {
 			preloadPromise.current = fetch(panelAppsURL)
 				.then((response) => response.json())
-				.then((items) => setItems(items));
+				.then(({items}) => setItems(items));
 		}
 	}
 

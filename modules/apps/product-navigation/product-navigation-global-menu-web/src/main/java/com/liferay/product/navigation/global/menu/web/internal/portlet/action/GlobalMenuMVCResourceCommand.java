@@ -22,6 +22,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -61,15 +62,9 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			_getPanelCategoriesJSONArray(httpServletRequest, themeDisplay));
+			_getGlobalMenuContextJSONObject(resourceRequest));
 	}
 
 	private JSONArray _getChildPanelCategoriesJSONArray(
@@ -107,6 +102,21 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		return childPanelCategoriesJSONArray;
+	}
+
+	private JSONObject _getGlobalMenuContextJSONObject(
+			ResourceRequest resourceRequest)
+		throws PortalException {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return JSONUtil.put(
+			"items",
+			_getPanelCategoriesJSONArray(httpServletRequest, themeDisplay));
 	}
 
 	private JSONArray _getPanelAppsJSONArray(

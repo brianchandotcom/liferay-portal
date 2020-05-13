@@ -25,23 +25,27 @@ import Collapse from '../../../common/components/Collapse';
 
 const layoutElements = [
 	{
-		columns: ['12'],
-		label: LAYOUT_DATA_ITEM_TYPE_LABELS.section,
-		type: LAYOUT_DATA_ITEM_TYPES.section,
-	},
-	{
-		columns: ['12'],
+		Preview: () => (
+			<div className="px-0 row">
+				<div className="border-left-0 border-right-0 col col-12 mx-0"></div>
+			</div>
+		),
 		label: LAYOUT_DATA_ITEM_TYPE_LABELS.container,
 		type: LAYOUT_DATA_ITEM_TYPES.container,
 	},
 	{
-		columns: ['4', '4', '4'],
+		Preview: () => (
+			<div className="row">
+				<div className="col col-6"></div>
+				<div className="col col-6"></div>
+			</div>
+		),
 		label: LAYOUT_DATA_ITEM_TYPE_LABELS.row,
 		type: LAYOUT_DATA_ITEM_TYPES.row,
 	},
 ];
 
-const LayoutElementCard = ({label, layoutColumns, type}) => {
+const LayoutElementCard = ({Preview, label, type}) => {
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
 	const selectItem = useSelectItem();
@@ -79,14 +83,7 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 		>
 			<div className="card-body px-2 py-3" role="image">
 				<div className="container p-0">
-					<div className="row">
-						{layoutColumns.map((column, index) => (
-							<div
-								className={`col col-${column}`}
-								key={`${index}-${column}`}
-							></div>
-						))}
-					</div>
+					<Preview />
 				</div>
 				<div className="card-title pt-3 text-truncate">{label}</div>
 			</div>
@@ -107,7 +104,7 @@ export default function LayoutElements() {
 							<LayoutElementCard
 								key={layoutElement.label}
 								label={layoutElement.label}
-								layoutColumns={layoutElement.columns}
+								Preview={layoutElement.Preview}
 								type={layoutElement.type}
 							/>
 						);

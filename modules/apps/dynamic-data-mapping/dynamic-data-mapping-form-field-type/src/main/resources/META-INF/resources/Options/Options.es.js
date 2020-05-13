@@ -146,9 +146,43 @@ const Options = ({
 
 		if (defaultLanguageId === editingLanguageId) {
 			_fields.splice(_fields.length - 1, 1);
+
+			let _normalizedValue = {...normalizedValue};
+
+			const availableLanguageIds = Object.getOwnPropertyNames(
+				normalizedValue
+			);
+
+			availableLanguageIds.forEach((languageId) => {
+				_normalizedValue = {
+					..._normalizedValue,
+					[languageId]: synchroniseValue(_fields, languageId),
+				};
+			});
+
+			return _normalizedValue;
 		}
 
 		return {...normalizedValue, [editingLanguageId]: _fields};
+	};
+
+	const synchroniseValue = (fields, languageId) => {
+		if (defaultLanguageId === editingLanguageId) {
+			return [...fields];
+		}
+
+		const _values = [];
+
+		fields.forEach((localizedValue) => {
+			_values.push(
+				normalizedValue[languageId].find(
+					(_localizedValue) =>
+						_localizedValue.value == localizedValue.value
+				) || localizedValue
+			);
+		});
+
+		return _values;
 	};
 
 	const clone = (...args) => {

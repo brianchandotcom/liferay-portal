@@ -202,9 +202,9 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 		if (reference instanceof List) {
 			List<?> list = (List)reference;
 
-			for (Object o : list) {
-				if (o instanceof ViewEngine) {
-					viewEngines.add((ViewEngine)o);
+			for (Object object : list) {
+				if (object instanceof ViewEngine) {
+					viewEngines.add((ViewEngine)object);
 				}
 			}
 		}

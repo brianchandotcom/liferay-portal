@@ -202,11 +202,11 @@ public class ControllerInterceptor implements Serializable {
 
 		if (redirectURL != null) {
 			try {
-				URI location = new URI(redirectURL.toString());
+				URI uri = new URI(redirectURL.toString());
 
 				_mvcEvent.fire(
 					new ControllerRedirectEventImpl(
-						location,
+						uri,
 						new ResourceInfoImpl(
 							target.getClass(), invocationContextMethod),
 						new UriInfoImpl()));

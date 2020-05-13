@@ -99,18 +99,18 @@ public class BeanValidationInterceptor implements Serializable {
 						propertyDescriptor.getName();
 
 					if (propertyDescriptorName.equals("targetClass")) {
-						Method readMethod = propertyDescriptor.getReadMethod();
+						Method method = propertyDescriptor.getReadMethod();
 
-						leafBeanClass = (Class<?>)readMethod.invoke(leafBean);
+						leafBeanClass = (Class<?>)method.invoke(leafBean);
 					}
 				}
 
-				Field leafBeanField = leafBeanClass.getDeclaredField(
+				Field field = leafBeanClass.getDeclaredField(
 					lastPathNode.getName());
 
 				String paramName = null;
 
-				Annotation[] annotations = leafBeanField.getAnnotations();
+				Annotation[] annotations = field.getAnnotations();
 
 				for (Annotation annotation : annotations) {
 					if (annotation instanceof CookieParam) {

@@ -79,10 +79,10 @@ public class CsrfValidationInterceptor implements Serializable {
 			return invocationContext.proceed();
 		}
 
-		Method targetMethod = invocationContext.getMethod();
+		Method method = invocationContext.getMethod();
 
 		if ((csrfOptions == Csrf.CsrfOptions.EXPLICIT) &&
-			!targetMethod.isAnnotationPresent(CsrfProtected.class)) {
+			!method.isAnnotationPresent(CsrfProtected.class)) {
 
 			return invocationContext.proceed();
 		}
@@ -100,10 +100,10 @@ public class CsrfValidationInterceptor implements Serializable {
 					(ThemeDisplay)clientDataRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				String method = StringUtil.toLowerCase(
+				String requestMethod = StringUtil.toLowerCase(
 					clientDataRequest.getMethod());
 
-				if (method.equals("post")) {
+				if (requestMethod.equals("post")) {
 					try {
 						AuthTokenUtil.checkCSRFToken(
 							themeDisplay.getRequest(),

@@ -83,9 +83,9 @@ public class BeanUtil {
 				String propertyDescriptorName = propertyDescriptor.getName();
 
 				if (propertyDescriptorName.equals("targetInstance")) {
-					Method readMethod = propertyDescriptor.getReadMethod();
+					Method method = propertyDescriptor.getReadMethod();
 
-					targetInstance = readMethod.invoke(bindingResult);
+					targetInstance = method.invoke(bindingResult);
 				}
 			}
 

@@ -1,0 +1,54 @@
+@import 'atlas-variables';
+
+@keyframes RowOverlayGridFadeIn {
+	to {
+		opacity: 1;
+	}
+}
+
+.page-editor__row-overlay-grid {
+	&:before {
+		animation: RowOverlayGridFadeIn ease 0.3s;
+		animation-fill-mode: forwards;
+		opacity: 0;
+		background: repeating-linear-gradient(
+			to right,
+			$white,
+			$white 12px,
+			fade_out($red, 0.92) 12px,
+			fade_out($red, 0.92) 13px,
+			$white 13px,
+			$white 24px,
+			fade_out($red, 0.96) 24px,
+			fade_out($red, 0.96) 8.33%
+		);
+		background-size: calc(100% + 24px);
+		background-position: -24px 0;
+	}
+
+	&.no-gutters:before {
+		background: repeating-linear-gradient(
+			to right,
+			fade_out($red, 0.96),
+			fade_out($red, 0.96) 12px,
+			fade_out($red, 0.92) 12px,
+			fade_out($red, 0.92) 13px,
+			fade_out($red, 0.96) 13px,
+			fade_out($red, 0.96) 8.33%
+		);
+		background-size: calc(100% + 1px);
+		background-position: -11px 0;
+	}
+
+	&__border:after {
+		animation: RowOverlayGridFadeIn ease 0.3s;
+		animation-fill-mode: forwards;
+		opacity: 0;
+		content: '';
+		position: absolute;
+		border-left: dashed $red thin;
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+}

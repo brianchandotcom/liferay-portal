@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.product.menu.util;
+package com.liferay.product.navigation.product.menu.helper;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuHelper;
+import com.liferay.product.navigation.product.menu.helper.ProductNavigationProductMenuHelper;
 
 import java.util.Map;
 import java.util.Objects;

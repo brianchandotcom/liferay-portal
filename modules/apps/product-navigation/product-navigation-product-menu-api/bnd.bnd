@@ -4,4 +4,4 @@ Bundle-Version: 3.1.0
 Export-Package:\
 	com.liferay.product.navigation.product.menu.constants,\
 	com.liferay.product.navigation.product.menu.display.context,\
-	com.liferay.product.navigation.product.menu.util
+	com.liferay.product.navigation.product.menu.helper

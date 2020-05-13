@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.product.menu.internal.util;
+package com.liferay.product.navigation.product.menu.internal.helper;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuHelper;
+import com.liferay.product.navigation.product.menu.helper.ProductNavigationProductMenuHelper;
 
 import java.util.List;
 

@@ -32,7 +32,7 @@ import com.liferay.product.navigation.control.menu.BaseProductNavigationControlM
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
-import com.liferay.product.navigation.product.menu.util.ProductNavigationProductMenuHelper;
+import com.liferay.product.navigation.product.menu.helper.ProductNavigationProductMenuHelper;
 
 import java.io.IOException;
 import java.io.Writer;

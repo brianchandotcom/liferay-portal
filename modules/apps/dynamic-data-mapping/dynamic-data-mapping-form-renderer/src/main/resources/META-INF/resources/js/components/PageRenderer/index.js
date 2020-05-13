@@ -162,7 +162,7 @@ const Renderer = ({
 	onChange,
 	onFocus,
 	overrides = {},
-	page: pageUnnormalized,
+	page: defaultPage,
 	pageIndex = 0,
 	pages,
 	paginationMode,
@@ -173,8 +173,8 @@ const Renderer = ({
 	view,
 	viewMode,
 }) => {
-	const empty = isEmptyPage(pageUnnormalized);
-	const page = normalizePage(pageUnnormalized, editingLanguageId);
+	const empty = isEmptyPage(defaultPage);
+	const page = normalizePage(defaultPage, editingLanguageId);
 
 	const variant = getVariant({page, pages, paginationMode, view, viewMode});
 	const variantComponents = LAYOUT_COMPONENTS_TYPES[variant] || {};

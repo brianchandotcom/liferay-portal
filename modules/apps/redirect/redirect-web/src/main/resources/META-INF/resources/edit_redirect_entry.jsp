@@ -99,7 +99,7 @@ else {
 			/>
 		</div>
 
-		<aui:select label="type" name="permanent">
+		<aui:select helpMessage="the-redirect-type-affects-how-search-engines-and-users-browsers-cache-treat-it" label="type" name="permanent">
 			<aui:option selected="<%= (redirectEntry != null) ? redirectEntry.isPermanent() : false %>" value="<%= true %>">
 				<liferay-ui:message arguments="<%= HttpServletResponse.SC_MOVED_PERMANENTLY %>" key="permanent-x" />
 			</aui:option>

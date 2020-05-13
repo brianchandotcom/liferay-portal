@@ -98,7 +98,7 @@ export default function LayoutElements() {
 					{layoutElements.map((layoutElement) => {
 						return (
 							<LayoutElementCard
-								key={layoutElement.columns.join()}
+								key={layoutElement.label}
 								label={layoutElement.label}
 								layoutColumns={layoutElement.columns}
 								type={layoutElement.type}

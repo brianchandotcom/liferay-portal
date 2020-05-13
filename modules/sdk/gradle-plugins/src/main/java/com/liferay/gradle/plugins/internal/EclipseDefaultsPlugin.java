@@ -67,8 +67,9 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		final File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
 
-		_configureEclipseClasspathFile(project);
-		_configureEclipseProject(project, eclipseTaskProvider, portalRootDir);
+		_configureEclipseClasspathFile(project, eclipseModelExtension);
+		_configureEclipseProject(
+			project, eclipseModelExtension, eclipseTaskProvider, portalRootDir);
 		_configureTaskEclipseProvider(eclipseTaskProvider);
 
 		PluginContainer pluginContainer = project.getPlugins();
@@ -94,11 +95,11 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	private EclipseDefaultsPlugin() {
 	}
 
-	private void _configureEclipseClasspathFile(final Project project) {
-		EclipseModel eclipseModel = GradleUtil.getExtension(
-			project, EclipseModel.class);
+	private void _configureEclipseClasspathFile(
+		final Project project, EclipseModel eclipseModelExtension) {
 
-		final EclipseClasspath eclipseClasspath = eclipseModel.getClasspath();
+		final EclipseClasspath eclipseClasspath =
+			eclipseModelExtension.getClasspath();
 
 		FileContentMerger fileContentMerger = eclipseClasspath.getFile();
 
@@ -151,13 +152,10 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	}
 
 	private void _configureEclipseProject(
-		Project project, TaskProvider<Task> eclipseTaskProvider,
-		File portalRootDir) {
+		Project project, EclipseModel eclipseModelExtension,
+		TaskProvider<Task> eclipseTaskProvider, File portalRootDir) {
 
-		EclipseModel eclipseModel = GradleUtil.getExtension(
-			project, EclipseModel.class);
-
-		EclipseProject eclipseProject = eclipseModel.getProject();
+		EclipseProject eclipseProject = eclipseModelExtension.getProject();
 
 		String name = project.getName();
 

@@ -89,53 +89,16 @@ public class UserImportMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		long time =
-			System.currentTimeMillis() - _ldapUserImporter.getLastImportTime();
-
-		time = Math.round(time / 60000.0);
-
 		List<Company> companies = _companyLocalService.getCompanies(false);
 
 		for (Company company : companies) {
-			long companyId = company.getCompanyId();
-
-			LDAPImportConfiguration ldapImportConfiguration =
-				_ldapImportConfigurationProvider.getConfiguration(companyId);
-
-			if (!ldapImportConfiguration.importEnabled()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipping LDAP user import for company " + companyId +
-							" because LDAP import is disabled");
-				}
-
-				continue;
-			}
-
-			if (ldapImportConfiguration.importInterval() <= 0) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipping LDAP user import for company " + companyId +
-							" because LDAP import interval is less than 1");
-				}
-
-				continue;
-			}
-
-			if (time < ldapImportConfiguration.importInterval()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Skipping LDAP user import for company ", companyId,
-							" because LDAP import interval has not been ",
-							"reached"));
-				}
-
-				continue;
-			}
-
-			_ldapUserImporter.importUsers(companyId);
+			_importUsers(company.getCompanyId(), _getLastImportTime());
 		}
+	}
+
+	@Override
+	protected void doReceive(Message message, long companyId) throws Exception {
+		_importUsers(companyId, _getLastImportTime());
 	}
 
 	@Reference(unbind = "-")
@@ -179,6 +142,52 @@ public class UserImportMessageListener
 		calendar.add(Calendar.MINUTE, interval);
 
 		return calendar.getTime();
+	}
+
+	private long _getLastImportTime() throws Exception {
+		long time =
+			System.currentTimeMillis() - _ldapUserImporter.getLastImportTime();
+
+		return Math.round(time / 60000.0);
+	}
+
+	private void _importUsers(long companyId, long time) throws Exception {
+		LDAPImportConfiguration ldapImportConfiguration =
+			_ldapImportConfigurationProvider.getConfiguration(companyId);
+
+		if (!ldapImportConfiguration.importEnabled()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping LDAP user import for company " + companyId +
+						" because LDAP import is disabled");
+			}
+
+			return;
+		}
+
+		if (ldapImportConfiguration.importInterval() <= 0) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping LDAP user import for company " + companyId +
+						" because LDAP import interval is less than 1");
+			}
+
+			return;
+		}
+
+		if (time < ldapImportConfiguration.importInterval()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Skipping LDAP user import for company ", companyId,
+						" because LDAP import interval has not been ",
+						"reached"));
+			}
+
+			return;
+		}
+
+		_ldapUserImporter.importUsers(companyId);
 	}
 
 	private void _updateDefaultImportInterval(int interval) {

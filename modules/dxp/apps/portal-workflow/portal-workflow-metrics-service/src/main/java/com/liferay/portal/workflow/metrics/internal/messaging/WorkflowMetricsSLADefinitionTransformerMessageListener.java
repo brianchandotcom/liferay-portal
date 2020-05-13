@@ -101,52 +101,18 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 			_companyLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(Company company) -> {
-				if (!_hasIndex(company.getCompanyId())) {
-					return;
-				}
-
-				SearchSearchRequest searchSearchRequest =
-					new SearchSearchRequest();
-
-				searchSearchRequest.setIndexNames(
-					_processWorkflowMetricsIndexNameBuilder.getIndexName(
-						company.getCompanyId()));
-
-				BooleanQuery booleanQuery = _queries.booleanQuery();
-
-				searchSearchRequest.setQuery(
-					booleanQuery.addFilterQueryClauses(
-						_createBooleanQuery(company.getCompanyId())));
-
-				searchSearchRequest.setSize(10000);
-
-				Stream.of(
-					_searchEngineAdapter.execute(searchSearchRequest)
-				).map(
-					SearchSearchResponse::getSearchHits
-				).map(
-					SearchHits::getSearchHits
-				).flatMap(
-					List::stream
-				).map(
-					SearchHit::getDocument
-				).forEach(
-					document -> {
-						try {
-							_workflowMetricsSLADefinitionTransformer.transform(
-								document.getLong("companyId"),
-								document.getString("version"),
-								document.getLong("processId"));
-						}
-						catch (PortalException portalException) {
-							_log.error(portalException, portalException);
-						}
-					}
-				);
-			});
+			(Company company) -> _transform(company.getCompanyId()));
 
 		actionableDynamicQuery.performActions();
+	}
+
+	@Override
+	protected void doReceive(Message message, long companyId) throws Exception {
+		if (_searchEngineAdapter == null) {
+			return;
+		}
+
+		_transform(companyId);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -173,6 +139,48 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 			_searchEngineAdapter.execute(indicesExistsIndexRequest);
 
 		return indicesExistsIndexResponse.isExists();
+	}
+
+	private void _transform(long companyId) {
+		if (!_hasIndex(companyId)) {
+			return;
+		}
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(
+			_processWorkflowMetricsIndexNameBuilder.getIndexName(companyId));
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addFilterQueryClauses(_createBooleanQuery(companyId)));
+
+		searchSearchRequest.setSize(10000);
+
+		Stream.of(
+			_searchEngineAdapter.execute(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).forEach(
+			document -> {
+				try {
+					_workflowMetricsSLADefinitionTransformer.transform(
+						document.getLong("companyId"),
+						document.getString("version"),
+						document.getLong("processId"));
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+				}
+			}
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

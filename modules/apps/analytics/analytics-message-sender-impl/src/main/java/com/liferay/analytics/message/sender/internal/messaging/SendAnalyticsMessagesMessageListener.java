@@ -81,25 +81,7 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (!_analyticsConfigurationTracker.isActive()) {
-			return;
-		}
-
-		AnalyticsMessagesProcessorCommand analyticsMessagesProcessorCommand =
-			(AnalyticsMessagesProcessorCommand)message.get("command");
-
-		if ((analyticsMessagesProcessorCommand != null) &&
-			(analyticsMessagesProcessorCommand !=
-				AnalyticsMessagesProcessorCommand.SEND)) {
-
-			return;
-		}
-
-		long companyId = message.getLong("companyId");
-
-		if (companyId != 0) {
-			_process(companyId);
-
+		if (_skipProcess(message)) {
 			return;
 		}
 
@@ -108,6 +90,15 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 
 			_process(curCompanyId);
 		}
+	}
+
+	@Override
+	protected void doReceive(Message message, long companyId) throws Exception {
+		if (_skipProcess(message)) {
+			return;
+		}
+
+		_process(companyId);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -166,6 +157,24 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 						" analytics messages");
 			}
 		}
+	}
+
+	private boolean _skipProcess(Message message) {
+		if (!_analyticsConfigurationTracker.isActive()) {
+			return false;
+		}
+
+		AnalyticsMessagesProcessorCommand analyticsMessagesProcessorCommand =
+			(AnalyticsMessagesProcessorCommand)message.get("command");
+
+		if ((analyticsMessagesProcessorCommand != null) &&
+			(analyticsMessagesProcessorCommand !=
+				AnalyticsMessagesProcessorCommand.SEND)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final int _BATCH_SIZE = 100;

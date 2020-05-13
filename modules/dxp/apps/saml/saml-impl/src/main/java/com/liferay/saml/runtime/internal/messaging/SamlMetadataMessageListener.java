@@ -92,40 +92,13 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 				continue;
 			}
 
-			Long companyId = CompanyThreadLocal.getCompanyId();
-
-			CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
-			try {
-				if (!_samlProviderConfigurationHelper.isEnabled()) {
-					continue;
-				}
-
-				try {
-					if (_samlProviderConfigurationHelper.isRoleIdp()) {
-						updateSpMetadata(company.getCompanyId());
-					}
-					else if (_samlProviderConfigurationHelper.isRoleSp()) {
-						updateIdpMetadata(company.getCompanyId());
-					}
-				}
-				catch (Exception exception) {
-					String msg = StringBundler.concat(
-						"Unable to refresh metadata for company ",
-						company.getCompanyId(), ": ", exception.getMessage());
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(msg, exception);
-					}
-					else if (_log.isWarnEnabled()) {
-						_log.warn(msg);
-					}
-				}
-			}
-			finally {
-				CompanyThreadLocal.setCompanyId(companyId);
-			}
+			_updateMetadata(company.getCompanyId());
 		}
+	}
+
+	@Override
+	protected void doReceive(Message message, long companyId) throws Exception {
+		_updateMetadata(companyId);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -192,6 +165,42 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 					_log.warn(message);
 				}
 			}
+		}
+	}
+
+	private void _updateMetadata(long companyId) {
+		Long currentCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(companyId);
+
+		try {
+			if (!_samlProviderConfigurationHelper.isEnabled()) {
+				return;
+			}
+
+			try {
+				if (_samlProviderConfigurationHelper.isRoleIdp()) {
+					updateSpMetadata(companyId);
+				}
+				else if (_samlProviderConfigurationHelper.isRoleSp()) {
+					updateIdpMetadata(companyId);
+				}
+			}
+			catch (Exception exception) {
+				String msg = StringBundler.concat(
+					"Unable to refresh metadata for company ", companyId, ": ",
+					exception.getMessage());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(msg, exception);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(msg);
+				}
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(currentCompanyId);
 		}
 	}
 

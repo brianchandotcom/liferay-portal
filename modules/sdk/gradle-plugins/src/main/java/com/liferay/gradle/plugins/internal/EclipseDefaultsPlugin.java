@@ -143,21 +143,6 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		fileContentMerger.whenMerged(closure);
 	}
 
-	private void _configurePluginJava(
-		Project project, EclipseModel eclipseModelExtension) {
-
-		EclipseClasspath eclipseClasspath =
-			eclipseModelExtension.getClasspath();
-
-		Collection<Configuration> configurations =
-			eclipseClasspath.getPlusConfigurations();
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
-
-		configurations.add(configuration);
-	}
-
 	private void _configureEclipseProject(
 		Project project, EclipseModel eclipseModelExtension,
 		TaskProvider<Task> eclipseTaskProvider, File portalRootDir) {
@@ -226,6 +211,21 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		XmlFileContentMerger xmlFileContentMerger = eclipseProject.getFile();
 
 		xmlFileContentMerger.withXml(action);
+	}
+
+	private void _configurePluginJava(
+		Project project, EclipseModel eclipseModelExtension) {
+
+		EclipseClasspath eclipseClasspath =
+			eclipseModelExtension.getClasspath();
+
+		Collection<Configuration> configurations =
+			eclipseClasspath.getPlusConfigurations();
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+
+		configurations.add(configuration);
 	}
 
 	private void _configureTaskEclipseProvider(

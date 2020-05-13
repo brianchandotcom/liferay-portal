@@ -280,7 +280,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public List<String> getRootFieldNames() {
 		DDMForm ddmForm = getFullHierarchyDDMForm();
 
-		return getDDMFormFieldNames(ddmForm.getDDMFormFields());
+		return getDDMFormFieldNames(
+			_removeParentFieldSetDDMFormField(ddmForm.getDDMFormFields()));
 	}
 
 	@Override
@@ -574,6 +575,29 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		}
 
 		return false;
+	}
+
+	private List<DDMFormField> _removeParentFieldSetDDMFormField(
+		List<DDMFormField> ddmFormFields) {
+
+		try {
+			DDMStructure parentDDMStructure = getParentDDMStructure();
+
+			if (parentDDMStructure != null) {
+				ddmFormFields.removeIf(
+					ddmFormField ->
+						Objects.equals(ddmFormField.getType(), "fieldset") &&
+						Objects.equals(
+							GetterUtil.getLong(
+								ddmFormField.getProperty("ddmStructureId")),
+							parentDDMStructure.getStructureId()));
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+
+		return ddmFormFields;
 	}
 
 	private void _setNestedDDMFormFields(DDMFormField ddmFormField) {

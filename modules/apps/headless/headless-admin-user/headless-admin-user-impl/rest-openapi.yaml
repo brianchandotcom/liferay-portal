@@ -1437,6 +1437,189 @@ paths:
                     description:
                         ""
             tags: ["Role"]
+    "/roles/{roleId}/association/user-account/{userAccountId}":
+        delete:
+            # @review
+            description:
+                Unassociates a role with a user account
+            operationId: deleteRoleUserAccountAssociation
+            parameters:
+                - in: path
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Role"]
+        post:
+            # @review
+            description:
+                Associates a role with a user account
+            operationId: postRoleUserAccountAssociation
+            parameters:
+                - in: path
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Role"]
+    "/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}":
+        delete:
+            # @review
+            description:
+                Unassociates an organization role with a user account
+            operationId: deleteOrganizationRoleUserAccountAssociation
+            parameters:
+                - in: path
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Role"]
+        post:
+            # @review
+            description:
+                Associates a organization role with a user account
+            operationId: postOrganizationRoleUserAccountAssociation
+            parameters:
+                - in: path
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Role"]
+    "/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}":
+        delete:
+            # @review
+            description:
+                Unassociates a site role with a user account
+            operationId: deleteSiteRoleUserAccountAssociation
+            parameters:
+                - in: path
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Role"]
+        post:
+            # @review
+            description:
+                Associates a site role with a user account
+            operationId: postSiteRoleUserAccountAssociation
+            parameters:
+                - in: path
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userAccountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Role"]
     "/segments/{segmentId}/user-accounts":
         get:
             description:

@@ -28,8 +28,6 @@ import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfi
 import com.liferay.portal.search.elasticsearch7.internal.util.SearchLogHelperUtil;
 import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 
-import io.netty.buffer.ByteBufUtil;
-
 import java.io.IOException;
 
 import java.nio.file.Paths;
@@ -79,20 +77,6 @@ public class EmbeddedElasticsearchConnection
 
 		if (_node == null) {
 			return;
-		}
-
-		try {
-			Class.forName(ByteBufUtil.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to preload ", ByteBufUtil.class,
-						" to prevent Netty shutdown concurrent class loading ",
-						"interruption issue"),
-					classNotFoundException);
-			}
 		}
 
 		if (PortalRunMode.isTestMode()) {

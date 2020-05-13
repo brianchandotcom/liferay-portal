@@ -27,13 +27,17 @@ String remoteSiteURL = (String)renderRequest.getAttribute(StagingProcessesWebKey
 stagingGroup = (Group)renderRequest.getAttribute(StagingProcessesWebKeys.STAGING_GROUP);
 String stagingURL = (String)renderRequest.getAttribute(StagingProcessesWebKeys.STAGING_URL);
 
+String layoutSetBranchName = null;
+
 LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute(StagingProcessesWebKeys.LAYOUT_SET_BRANCH);
 
-if (layoutSetBranch == null) {
+if ((layoutSetBranch == null) && (layoutRevision != null)) {
 	layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
 }
 
-String layoutSetBranchName = HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(layoutSetBranch));
+if (layoutSetBranch != null) {
+	layoutSetBranchName = HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(layoutSetBranch));
+}
 
 if (liveLayout != null) {
 	request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
@@ -233,7 +237,7 @@ if (liveLayout != null) {
 					</clay:row>
 				</clay:container>
 
-				<c:if test="<%= layoutRevision.isIncomplete() || (layoutRevision.isPending() && StagingUtil.hasWorkflowTask(user.getUserId(), layoutRevision)) %>">
+				<c:if test="<%= (layoutRevision != null) && (layoutRevision.isIncomplete() || (layoutRevision.isPending() && StagingUtil.hasWorkflowTask(user.getUserId(), layoutRevision))) %>">
 					<div class="staging-bar-level-3-message">
 						<div class="staging-bar-level-3-message-container">
 							<div class="alert alert-fluid alert-info" role="alert">

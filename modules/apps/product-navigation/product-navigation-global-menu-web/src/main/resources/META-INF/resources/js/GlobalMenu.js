@@ -33,16 +33,49 @@ const Column = ({panelApps}) => {
 	);
 };
 
-const Content = ({childCategories}) => {
+const Content = ({childCategories, recentSites}) => {
 	return (
 		<div className="row">
 			{childCategories.map(({key, label, panelApps}) => (
-				<div className="col" key={key}>
+				<div className="col p-4" key={key}>
 					<h5 className="text-secondary text-uppercase">{label}</h5>
 
 					<Column panelApps={panelApps} />
 				</div>
 			))}
+
+			<div className="bg-lighter col p-4 rounded-sm" key="sites">
+				<h5 className="mb-5 text-secondary text-uppercase">
+					{Liferay.Language.get('sites')}
+				</h5>
+
+				<h6 className="text-secondary text-uppercase">
+					{Liferay.Language.get('recently-visited')}
+				</h6>
+
+				<ul className="list-unstyled mt-3" role="list">
+					{recentSites.map(({key, label, logoURL, url}) => (
+						<li className="mb-2" key={key}>
+							<div className="autofit-row autofit-row-center">
+								<div className="autofit-col mr-2">
+									<div className="sticker sticker-secondary">
+										<img
+											className="sticker-img"
+											src={logoURL}
+										/>
+									</div>
+								</div>
+
+								<div className="autofit-col autofit-col-expand">
+									<a className="text-secondary" href={url}>
+										{label}
+									</a>
+								</div>
+							</div>
+						</li>
+					))}
+				</ul>
+			</div>
 		</div>
 	);
 };
@@ -55,13 +88,17 @@ function GlobalMenu({panelAppsURL}) {
 
 	const [activeTab, setActiveTab] = useState(0);
 	const [items, setItems] = useState([]);
+	const [recentSites, setRecentSites] = useState([]);
 	const preloadPromise = useRef();
 
 	function preloadItems() {
 		if (!preloadPromise.current) {
 			preloadPromise.current = fetch(panelAppsURL)
 				.then((response) => response.json())
-				.then(({items}) => setItems(items));
+				.then(({items, recentSites}) => {
+					setItems(items);
+					setRecentSites(recentSites);
+				});
 		}
 	}
 
@@ -91,6 +128,7 @@ function GlobalMenu({panelAppsURL}) {
 									>
 										<Content
 											childCategories={childCategories}
+											recentSites={recentSites}
 										/>
 									</ClayTabs.TabPane>
 								))}

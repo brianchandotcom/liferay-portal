@@ -26,9 +26,9 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even it is automatically assigned to a new site member after connecting site."
+	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even it is automatically assigned to a new site member after connecting site. This test also covers permissions and making sure the asset of library can be updated by the role."
 	@priority = "5"
-	test AddSiteMemberAfterConnectingSite {
+	test AddSiteMemberWithPermissionsAfterConnectingSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

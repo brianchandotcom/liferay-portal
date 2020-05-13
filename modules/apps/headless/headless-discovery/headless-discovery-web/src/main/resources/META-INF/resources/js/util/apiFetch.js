@@ -22,6 +22,7 @@ const apiFetch = (url, method = 'get', data, contentType) => {
 	if (method === 'post' || method === 'put') {
 		if (contentType === 'application/json') {
 			request.body = JSON.stringify(data);
+			request.headers = {'Content-Type': 'application/json'};
 		}
 		else if (contentType === 'multipart/form-data') {
 			const formData = new FormData();

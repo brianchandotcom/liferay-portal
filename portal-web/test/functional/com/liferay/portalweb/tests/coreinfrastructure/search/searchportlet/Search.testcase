@@ -244,9 +244,11 @@ definition {
 			assetContent = "WC WebContent Content",
 			assetTitle = "WC WebContent Title");
 
-		AssetPublisherPortlet.viewAssetPG(
+		// Wrokaround LPS-113094
+
+		/*AssetPublisherPortlet.viewAssetPG(
 			assetContent = "DM Document Description",
-			assetTitle = "DM Document Title");
+			assetTitle = "DM Document Title");*/
 
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Blogs Entry Content",
@@ -254,8 +256,10 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
+		// Wrokaround LPS-89026 and LPS-113094
+
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC WebContent Title/Web Content Article,Blogs Entry Content/Blogs Entry,DM Document Title/Document,test test/User",
+			resultsList = "WC WebContent Title/Web Content Article,Blogs Entry Content/Blogs Entry",
 			searchTerm = "test");
 	}
 

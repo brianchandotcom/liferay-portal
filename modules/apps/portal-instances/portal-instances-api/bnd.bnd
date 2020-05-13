@@ -1,4 +1,7 @@
 Bundle-Name: Liferay Portal Instances API
 Bundle-SymbolicName: com.liferay.portal.instances.api
 Bundle-Version: 4.0.3
-Export-Package: com.liferay.portal.instances.service
+Export-Package:\
+	com.liferay.portal.instances.exception,\
+	com.liferay.portal.instances.initalizer,\
+	com.liferay.portal.instances.service

@@ -44,94 +44,92 @@ public class ParamConverterProviderImpl implements ParamConverterProvider {
 			return null;
 		}
 
-		if (rawType.equals(Integer.class) || rawType.equals(Integer.TYPE) ||
-			rawType.equals(Long.class) || rawType.equals(Long.TYPE) ||
-			rawType.equals(Double.class) || rawType.equals(Double.TYPE) ||
-			rawType.equals(Float.class) || rawType.equals(Float.TYPE) ||
-			rawType.equals(Boolean.class) || rawType.equals(Boolean.TYPE)) {
+		if (!rawType.equals(Integer.class) && !rawType.equals(Integer.TYPE) &&
+			!rawType.equals(Long.class) && !rawType.equals(Long.TYPE) &&
+			!rawType.equals(Double.class) && !rawType.equals(Double.TYPE) &&
+			!rawType.equals(Float.class) && !rawType.equals(Float.TYPE) &&
+			!rawType.equals(Boolean.class) && !rawType.equals(Boolean.TYPE)) {
 
-			return new ParamConverter<T>() {
-
-				@Override
-				public T fromString(String value) {
-					if (value == null) {
-						throw new IllegalArgumentException(
-							"Unable to convert a null parameter value");
-					}
-
-					if (rawType.equals(Integer.class) ||
-						rawType.equals(Integer.TYPE)) {
-
-						return _getNumber(value, number -> number.intValue());
-					}
-					else if (rawType.equals(Long.class) ||
-							 rawType.equals(Long.TYPE)) {
-
-						return _getNumber(value, number -> number.longValue());
-					}
-					else if (rawType.equals(Double.class) ||
-							 rawType.equals(Double.TYPE)) {
-
-						return _getNumber(
-							value, number -> number.doubleValue());
-					}
-					else if (rawType.equals(Float.class) ||
-							 rawType.equals(Float.TYPE)) {
-
-						return _getNumber(value, number -> number.floatValue());
-					}
-					else if (rawType.equals(Boolean.class) ||
-							 rawType.equals(Boolean.TYPE)) {
-
-						value = value.trim();
-						value = StringUtil.toLowerCase(value);
-
-						if (Boolean.valueOf(value)) {
-							return rawType.cast(Boolean.TRUE);
-						}
-
-						return rawType.cast(value.equals("on"));
-					}
-
-					return null;
-				}
-
-				@Override
-				public String toString(T value) {
-					if (value == null) {
-						return "";
-					}
-
-					return value.toString();
-				}
-
-				private T _getNumber(
-					String value, Function<Number, ?> getNumberFunction) {
-
-					ScopedBeanManager scopedBeanManager =
-						ScopedBeanManagerThreadLocal.
-							getCurrentScopedBeanManager();
-
-					PortletRequest portletRequest =
-						scopedBeanManager.getPortletRequest();
-
-					NumberFormat numberFormat = NumberFormat.getInstance(
-						portletRequest.getLocale());
-
-					try {
-						Number number = numberFormat.parse(value);
-
-						return rawType.cast(getNumberFunction.apply(number));
-					}
-					catch (ParseException parseException) {
-						throw new IllegalArgumentException(parseException);
-					}
-				}
-
-			};
+			return null;
 		}
 
-		return null;
+		return new ParamConverter<T>() {
+
+			@Override
+			public T fromString(String value) {
+				if (value == null) {
+					throw new IllegalArgumentException(
+						"Unable to convert a null parameter value");
+				}
+
+				if (rawType.equals(Integer.class) ||
+					rawType.equals(Integer.TYPE)) {
+
+					return _getNumber(value, number -> number.intValue());
+				}
+				else if (rawType.equals(Long.class) ||
+						 rawType.equals(Long.TYPE)) {
+
+					return _getNumber(value, number -> number.longValue());
+				}
+				else if (rawType.equals(Double.class) ||
+						 rawType.equals(Double.TYPE)) {
+
+					return _getNumber(value, number -> number.doubleValue());
+				}
+				else if (rawType.equals(Float.class) ||
+						 rawType.equals(Float.TYPE)) {
+
+					return _getNumber(value, number -> number.floatValue());
+				}
+				else if (rawType.equals(Boolean.class) ||
+						 rawType.equals(Boolean.TYPE)) {
+
+					value = value.trim();
+					value = StringUtil.toLowerCase(value);
+
+					if (Boolean.valueOf(value)) {
+						return rawType.cast(Boolean.TRUE);
+					}
+
+					return rawType.cast(value.equals("on"));
+				}
+
+				return null;
+			}
+
+			@Override
+			public String toString(T value) {
+				if (value == null) {
+					return "";
+				}
+
+				return value.toString();
+			}
+
+			private T _getNumber(
+				String value, Function<Number, ?> getNumberFunction) {
+
+				ScopedBeanManager scopedBeanManager =
+					ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
+
+				PortletRequest portletRequest =
+					scopedBeanManager.getPortletRequest();
+
+				NumberFormat numberFormat = NumberFormat.getInstance(
+					portletRequest.getLocale());
+
+				try {
+					Number number = numberFormat.parse(value);
+
+					return rawType.cast(getNumberFunction.apply(number));
+				}
+				catch (ParseException parseException) {
+					throw new IllegalArgumentException(parseException);
+				}
+			}
+
+		};
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayTabs from '@clayui/tabs';
 import {fetch} from 'frontend-js-web';
@@ -33,7 +33,12 @@ const Column = ({panelApps}) => {
 	);
 };
 
-const Content = ({childCategories, recentSites}) => {
+const Content = ({
+	childCategories,
+	portletNamespace,
+	recentSites,
+	viewAllURL,
+}) => {
 	return (
 		<div className="row">
 			{childCategories.map(({key, label, panelApps}) => (
@@ -75,6 +80,32 @@ const Content = ({childCategories, recentSites}) => {
 						</li>
 					))}
 				</ul>
+
+				<ClayButton
+					displayType="link"
+					onClick={() => {
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true,
+								},
+								eventName: `${portletNamespace}selectSite`,
+								id: `${portletNamespace}selectSite`,
+								title: Liferay.Language.get(
+									'select-site-or-asset-library'
+								),
+								uri: viewAllURL,
+							},
+							(event) => {
+								location.href = event.url;
+							}
+						);
+					}}
+				>
+					{Liferay.Language.get('view-all')}
+				</ClayButton>
 			</div>
 		</div>
 	);
@@ -88,16 +119,20 @@ function GlobalMenu({panelAppsURL}) {
 
 	const [activeTab, setActiveTab] = useState(0);
 	const [items, setItems] = useState([]);
+	const [portletNamespace, setPortletNamespace] = useState([]);
 	const [recentSites, setRecentSites] = useState([]);
+	const [viewAllURL, setViewAllURL] = useState([]);
 	const preloadPromise = useRef();
 
 	function preloadItems() {
 		if (!preloadPromise.current) {
 			preloadPromise.current = fetch(panelAppsURL)
 				.then((response) => response.json())
-				.then(({items, recentSites}) => {
+				.then(({items, portletNamespace, recentSites, viewAllURL}) => {
 					setItems(items);
 					setRecentSites(recentSites);
+					setPortletNamespace(portletNamespace);
+					setViewAllURL(viewAllURL);
 				});
 		}
 	}
@@ -128,7 +163,9 @@ function GlobalMenu({panelAppsURL}) {
 									>
 										<Content
 											childCategories={childCategories}
+											portletNamespace={portletNamespace}
 											recentSites={recentSites}
+											viewAllURL={viewAllURL}
 										/>
 									</ClayTabs.TabPane>
 								))}

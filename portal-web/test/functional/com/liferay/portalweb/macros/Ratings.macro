@@ -50,6 +50,10 @@ definition {
 	macro rateStar {
 		Click(locator1 = "Ratings#YOUR_RATING_STAR");
 
+		if (isSet(checkDeleteButton)) {
+			AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DELETE_DISABLE");
+		}
+
 		Click.clickNoMouseOver(
 			key_ratingStarCount = "${ratingStarCount}",
 			locator1 = "Ratings#YOUR_RATING_STAR_COUNT");

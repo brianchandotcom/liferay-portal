@@ -58,6 +58,9 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	protected void applyPluginDefaults(
 		Project project, EclipsePlugin eclipsePlugin) {
 
+		final EclipseModel eclipseModelExtension = GradleUtil.getExtension(
+			project, EclipseModel.class);
+
 		TaskProvider<Task> eclipseTaskProvider = GradleUtil.getTaskProvider(
 			project, _ECLIPSE_TASK_NAME);
 
@@ -67,6 +70,20 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		_configureEclipseClasspathFile(project);
 		_configureEclipseProject(project, eclipseTaskProvider, portalRootDir);
 		_configureTaskEclipseProvider(eclipseTaskProvider);
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.configureEach(
+			new Action<Plugin>() {
+
+				@Override
+				public void execute(Plugin plugin) {
+					if (plugin instanceof JavaPlugin) {
+						_configurePluginJava(project, eclipseModelExtension);
+					}
+				}
+
+			});
 	}
 
 	@Override
@@ -116,24 +133,13 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		};
 
 		fileContentMerger.whenMerged(closure);
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
-
-				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureEclipseClasspathFileForJavaPlugin(
-						project, eclipseClasspath);
-				}
-
-			});
 	}
 
-	private void _configureEclipseClasspathFileForJavaPlugin(
-		Project project, EclipseClasspath eclipseClasspath) {
+	private void _configurePluginJava(
+		Project project, EclipseModel eclipseModelExtension) {
+
+		EclipseClasspath eclipseClasspath =
+			eclipseModelExtension.getClasspath();
 
 		Collection<Configuration> configurations =
 			eclipseClasspath.getPlusConfigurations();

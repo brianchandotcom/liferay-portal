@@ -34,6 +34,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.internal.jvm.Jvm;
 import org.gradle.util.GUtil;
 import org.gradle.workers.ClassLoaderWorkerSpec;
 import org.gradle.workers.ProcessWorkerSpec;
@@ -116,7 +117,15 @@ public abstract class ExecuteJavaTask extends DefaultTask {
 					@Override
 					public void execute(ProcessWorkerSpec processWorkerSpec) {
 						processWorkerSpec.forkOptions(
-							forkOptions -> forkOptions.jvmArgs(jvmArgs));
+							forkOptions -> {
+								forkOptions.jvmArgs(jvmArgs);
+
+								Jvm jvm = Jvm.current();
+
+								forkOptions.setEnvironment(
+									jvm.getInheritableEnvironmentVariables(
+										System.getenv()));
+							});
 
 						if ((classpath != null) && !classpath.isEmpty()) {
 							ConfigurableFileCollection processWorkerClasspath =

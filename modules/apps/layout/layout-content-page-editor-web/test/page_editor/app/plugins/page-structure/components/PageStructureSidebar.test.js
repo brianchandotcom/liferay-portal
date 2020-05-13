@@ -215,7 +215,7 @@ describe('PageStructureSidebar', () => {
 			activeItemId: '11-container',
 		});
 
-		expect(getByLabelText('Collapse section')).toHaveAttribute(
+		expect(getByLabelText('Collapse container')).toHaveAttribute(
 			'aria-expanded',
 			'true'
 		);
@@ -223,7 +223,7 @@ describe('PageStructureSidebar', () => {
 
 	it('disables items that are in masterLayout', () => {
 		const {getByLabelText} = renderComponent();
-		const button = getByLabelText('select-x-section');
+		const button = getByLabelText('select-x-container');
 		expect(button).toBeDisabled();
 	});
 
@@ -238,7 +238,7 @@ describe('PageStructureSidebar', () => {
 			],
 		});
 
-		expect(queryByLabelText('remove-x-section')).toBeInTheDocument();
+		expect(queryByLabelText('remove-x-container')).toBeInTheDocument();
 		expect(queryByLabelText('remove-x-row')).toBeInTheDocument();
 		expect(queryByLabelText('remove-x-column')).toBe(null);
 		expect(queryByLabelText('remove-x-Fragment 1')).toBeInTheDocument();

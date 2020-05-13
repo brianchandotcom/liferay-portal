@@ -63,7 +63,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.http.HttpHeaders;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -93,6 +92,7 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
  * @author Andrea Di Giorgi
  * @author David Truong
  */
+@SuppressWarnings("deprecation")
 public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String BUILD_DOCKER_IMAGE_TASK_NAME =
@@ -184,11 +184,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		TargetPlatformRootProjectConfigurator.INSTANCE.apply(project);
 
-		CreateTokenTask createTokenTask = _addTaskCreateToken(
-			project, workspaceExtension);
+		_addTaskCreateToken(project);
 
 		Download downloadBundleTask = _addTaskDownloadBundle(
-			createTokenTask, workspaceExtension);
+			project, workspaceExtension);
 
 		Copy distBundleTask = _addTaskDistBundle(
 			project, downloadBundleTask, workspaceExtension,
@@ -600,55 +599,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerfile;
 	}
 
-	private CreateTokenTask _addTaskCreateToken(
-		Project project, final WorkspaceExtension workspaceExtension) {
-
+	/**
+	 * @deprecated The token is no longer being used
+	 */
+	@Deprecated
+	private CreateTokenTask _addTaskCreateToken(Project project) {
 		CreateTokenTask createTokenTask = GradleUtil.addTask(
 			project, CREATE_TOKEN_TASK_NAME, CreateTokenTask.class);
 
-		createTokenTask.setDescription("Creates a liferay.com download token.");
-
-		createTokenTask.setEmailAddress(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return workspaceExtension.getBundleTokenEmailAddress();
-				}
-
-			});
-
-		createTokenTask.setForce(
-			new Callable<Boolean>() {
-
-				@Override
-				public Boolean call() throws Exception {
-					return workspaceExtension.isBundleTokenForce();
-				}
-
-			});
-
-		createTokenTask.setGroup(BUNDLE_GROUP);
-
-		createTokenTask.setPassword(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return workspaceExtension.getBundleTokenPassword();
-				}
-
-			});
-
-		createTokenTask.setPasswordFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return workspaceExtension.getBundleTokenPasswordFile();
-				}
-
-			});
+		createTokenTask.setDescription(
+			"This task is deprecated and it will be removed in future.");
 
 		return createTokenTask;
 	}
@@ -828,10 +788,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private Download _addTaskDownloadBundle(
-		final CreateTokenTask createTokenTask,
-		final WorkspaceExtension workspaceExtension) {
-
-		Project project = createTokenTask.getProject();
+		final Project project, final WorkspaceExtension workspaceExtension) {
 
 		final Download download = GradleUtil.addTask(
 			project, DOWNLOAD_BUNDLE_TASK_NAME, Download.class);
@@ -845,13 +802,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					Project project = download.getProject();
 
 					if (workspaceExtension.isBundleTokenDownload()) {
-						String token = FileUtil.read(
-							createTokenTask.getTokenFile());
-
-						token = token.trim();
-
-						download.header(
-							HttpHeaders.AUTHORIZATION, "Bearer " + token);
+						logger.warn(
+							"The token is no longer being used, you can " +
+								"remove all the related properties.");
 					}
 
 					for (Object src : _getSrcList(download)) {
@@ -899,7 +852,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					if (workspaceExtension.isBundleTokenDownload()) {
-						download.dependsOn(createTokenTask);
+						download.dependsOn();
 					}
 
 					File destinationDir =

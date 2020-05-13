@@ -1,0 +1,9 @@
+task runGradleTest
+
+runGradleTest {
+	def taskList = tasks.toList()
+
+	def taksNames = taskList.toString()
+
+	assert taksNames.contains("createToken") == true
+}

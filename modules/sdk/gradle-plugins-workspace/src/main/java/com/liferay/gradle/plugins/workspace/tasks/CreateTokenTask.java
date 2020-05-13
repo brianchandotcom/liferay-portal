@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins.workspace.tasks;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
-import com.liferay.portal.tools.bundle.support.commands.CreateTokenCommand;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 
 import groovy.lang.Closure;
@@ -43,7 +42,9 @@ import org.gradle.api.tasks.TaskAction;
 /**
  * @author Andrea Di Giorgi
  * @author Gregory Amerson
+ * @deprecated The token is no longer being used
  */
+@Deprecated
 public class CreateTokenTask extends DefaultTask {
 
 	public CreateTokenTask() {
@@ -68,17 +69,6 @@ public class CreateTokenTask extends DefaultTask {
 
 	@TaskAction
 	public void createToken() throws Exception {
-		_setCredentials();
-
-		CreateTokenCommand createTokenCommand = new CreateTokenCommand();
-
-		createTokenCommand.setEmailAddress(getEmailAddress());
-		createTokenCommand.setForce(isForce());
-		createTokenCommand.setPassword(getPassword());
-		createTokenCommand.setTokenFile(getTokenFile());
-		createTokenCommand.setTokenUrl(getTokenUrl());
-
-		createTokenCommand.execute();
 	}
 
 	@Input
@@ -168,6 +158,7 @@ public class CreateTokenTask extends DefaultTask {
 		return (String)antBuilder.getProperty(propertyName);
 	}
 
+	@SuppressWarnings("unused")
 	private void _setCredentials() {
 		String emailAddress = getEmailAddress();
 		String password = getPassword();

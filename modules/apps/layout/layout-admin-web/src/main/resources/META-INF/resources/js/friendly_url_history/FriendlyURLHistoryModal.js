@@ -16,7 +16,7 @@ import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -104,8 +104,9 @@ const FriendlyURLHistoryModal = ({
 			body: formData,
 			method: 'POST',
 		})
+			.then((response) => response.json())
 			.then((response) => {
-				if (response.ok && isMounted()) {
+				if (response.success) {
 					setFriendlyURLEntryLocalizations(
 						(friendlyURLEntryLocalizations) => {
 							friendlyURLEntryLocalizations[
@@ -122,12 +123,24 @@ const FriendlyURLHistoryModal = ({
 						}
 					);
 				}
+				else {
+					showToastError();
+				}
 			})
 			.catch((error) => {
 				if (process.env.NODE_ENV === 'development') {
 					console.error(error);
 				}
+				showToastError();
 			});
+	};
+
+	const showToastError = () => {
+		openToast({
+			message: Liferay.Language.get('an-unexpected-error-occurred'),
+			title: Liferay.Language.get('error'),
+			type: 'danger',
+		});
 	};
 
 	return (

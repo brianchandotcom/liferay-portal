@@ -28,9 +28,37 @@ import resizeColumns from '../../thunks/resizeColumns';
 import {useIsActive} from '../Controls';
 import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
-import {useResizeContext, useSetResizeContext} from './RowWithControls';
+import {
+	useResizeContext,
+	useSetResizeContext,
+	useSetUpdatedLayoutDataContext,
+	useUpdatedLayoutDataContext,
+} from './RowWithControls';
 
 const ROW_SIZE = 12;
+
+const updateNewLayoutDataContext = ({
+	layoutDataContext,
+	leftColumnId,
+	leftColumnSize,
+	rightColumnId,
+	rightColumnSize,
+}) => {
+	return {
+		...layoutDataContext,
+		items: {
+			...layoutDataContext.items,
+			[leftColumnId]: {
+				...layoutDataContext.items[leftColumnId],
+				config: {size: leftColumnSize},
+			},
+			[rightColumnId]: {
+				...layoutDataContext.items[rightColumnId],
+				config: {size: rightColumnSize},
+			},
+		},
+	};
+};
 
 const ColumnWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
@@ -42,8 +70,11 @@ const ColumnWithControls = React.forwardRef(
 
 		const resizing = useResizeContext();
 		const setResizing = useSetResizeContext();
+		const setUpdatedLayoutData = useSetUpdatedLayoutDataContext();
+		const updatedLayoutData = useUpdatedLayoutDataContext();
 
 		const columnIndex = parentItem.children.indexOf(item.itemId);
+		let layoutDataContext = updatedLayoutData || layoutData;
 
 		const columnRangeIsComplete = (columnRange) => {
 			const sum = columnRange
@@ -113,6 +144,16 @@ const ColumnWithControls = React.forwardRef(
 						const leftColumnSize = leftColumnInitialSize - 1;
 						const rightColumnSize = 1;
 
+						layoutDataContext = updateNewLayoutDataContext({
+							layoutDataContext,
+							leftColumnId,
+							leftColumnSize,
+							rightColumnId,
+							rightColumnSize,
+						});
+
+						setUpdatedLayoutData(layoutDataContext);
+
 						resizeInfo.current = null;
 						setResizing(false);
 						setColumnSelected(null);
@@ -132,7 +173,7 @@ const ColumnWithControls = React.forwardRef(
 							})
 						);
 					}
-					else {
+					else if (!rightColumnIsFirst) {
 						const columnDiff = Math.min(
 							maxColumnDiff,
 							Math.max(
@@ -151,14 +192,15 @@ const ColumnWithControls = React.forwardRef(
 							rightColumnSize = ROW_SIZE;
 						}
 
-						dispatch(
-							updateColSize({
-								itemId: rightColumnId,
-								nextColumnItemId: leftColumnId,
-								nextColumnSize: leftColumnSize,
-								size: rightColumnSize,
-							})
-						);
+						layoutDataContext = updateNewLayoutDataContext({
+							layoutDataContext,
+							leftColumnId,
+							leftColumnSize,
+							rightColumnId,
+							rightColumnSize,
+						});
+
+						setUpdatedLayoutData(layoutDataContext);
 					}
 				}
 			},
@@ -173,7 +215,12 @@ const ColumnWithControls = React.forwardRef(
 					resizeInfo.current = null;
 					setColumnSelected(null);
 					setResizing(false);
-					dispatch(resizeColumns({layoutData, segmentsExperienceId}));
+					dispatch(
+						resizeColumns({
+							layoutData: layoutDataContext,
+							segmentsExperienceId,
+						})
+					);
 				}
 			},
 			false,

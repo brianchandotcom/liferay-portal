@@ -19,6 +19,7 @@ import React from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {useSelector} from '../../store/index';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import {useUpdatedLayoutDataContext} from './RowWithControls';
 
 const Column = React.forwardRef(
 	({children, className, item, ...props}, ref) => {
@@ -27,6 +28,7 @@ const Column = React.forwardRef(
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
 		);
+		const updatedLayoutData = useUpdatedLayoutDataContext();
 
 		const parentItemConfig = getResponsiveConfig(
 			parentItem.config,
@@ -39,6 +41,10 @@ const Column = React.forwardRef(
 
 		if (numberOfColumns === 5 && modulesPerRow !== numberOfColumns) {
 			columnSize = parentItem.children.indexOf(item.itemId) > 2 ? 6 : 4;
+		}
+
+		if (updatedLayoutData && updatedLayoutData.items[item.itemId]) {
+			columnSize = updatedLayoutData.items[item.itemId].config.size;
 		}
 
 		return (

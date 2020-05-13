@@ -39,6 +39,7 @@ const RowWithControls = React.forwardRef(
 		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const [resizing, setResizing] = useState(false);
+		const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
 
 		const [
 			openSaveFragmentCompositionModal,
@@ -123,7 +124,14 @@ const RowWithControls = React.forwardRef(
 						onButtonClick={handleButtonClick}
 					/>
 
-					<ResizeContext.Provider value={{resizing, setResizing}}>
+					<ResizeContext.Provider
+						value={{
+							resizing,
+							setResizing,
+							setUpdatedLayoutData,
+							updatedLayoutData,
+						}}
+					>
 						{children}
 					</ResizeContext.Provider>
 
@@ -152,6 +160,8 @@ RowWithControls.propTypes = {
 const ResizeContext = React.createContext({
 	resizing: false,
 	setResizing: () => {},
+	setUpdatedLayoutData: () => {},
+	updatedLayoutData: null,
 });
 
 export function useResizeContext() {
@@ -160,6 +170,14 @@ export function useResizeContext() {
 
 export function useSetResizeContext() {
 	return useContext(ResizeContext).setResizing;
+}
+
+export function useSetUpdatedLayoutDataContext() {
+	return useContext(ResizeContext).setUpdatedLayoutData;
+}
+
+export function useUpdatedLayoutDataContext() {
+	return useContext(ResizeContext).updatedLayoutData;
 }
 
 export default RowWithControls;

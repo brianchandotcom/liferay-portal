@@ -50,6 +50,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM_DRAG_HANDLER</td>
+	<td>//div[contains(@class,'miller-columns')]//li[contains(.,'${key_pageName}')]/div[contains(@class,'drag-handler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_DROP_TARGET</td>
+	<td>//li[contains(.,'${key_pageNameTo}')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM_PAGE_INFO</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_itemName}')]//*[contains(@class,'list-group-subtitle')]</td>
 	<td></td>

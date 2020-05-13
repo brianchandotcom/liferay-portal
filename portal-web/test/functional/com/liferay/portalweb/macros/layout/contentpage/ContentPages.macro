@@ -117,4 +117,14 @@ definition {
 		Pause(locator1 = "3000");
 	}
 
+	macro movePageToPageUp {
+		var key_pageName = "${pageName}";
+		var key_pageNameTo = "${pageNameTo}";
+
+		DragAndDrop.javaScriptDragAndDropPageToUp(
+			locator1 = "SitePages#LIST_GROUP_ITEM_DRAG_HANDLER",
+			locator2 = "SitePages#LIST_GROUP_ITEM_DROP_TARGET",
+			value1 = "");
+	}
+
 }

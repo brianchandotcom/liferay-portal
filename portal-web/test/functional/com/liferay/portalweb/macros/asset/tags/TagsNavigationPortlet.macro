@@ -99,7 +99,7 @@ definition {
 			attributeValue = "dialog-iframe-popup",
 			eventName = "modalIframeLoaded");
 
-		SelectFrame(locator1 = "TagsNavigationConfiguration#TAG_CLOUD_IFRAME");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(displayTemplate)) {
 			AssertSelectedLabel(

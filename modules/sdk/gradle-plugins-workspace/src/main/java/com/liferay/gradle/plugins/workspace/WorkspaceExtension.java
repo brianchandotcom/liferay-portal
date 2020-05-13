@@ -42,9 +42,11 @@ import java.nio.file.Path;
 
 import java.util.Base64;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.gradle.api.GradleException;
@@ -66,13 +68,15 @@ public class WorkspaceExtension {
 
 		_product = _getProperty(settings, "product", (String)null);
 
-		_productInfo = _getProductInfo(GradleUtil.toString(_product));
-
 		_projectConfigurators.add(new ExtProjectConfigurator(settings));
 		_projectConfigurators.add(new ModulesProjectConfigurator(settings));
 		_projectConfigurators.add(new PluginsProjectConfigurator(settings));
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
 		_projectConfigurators.add(new WarsProjectConfigurator(settings));
+
+		_appServerTomcatVersion = GradleUtil.getProperty(
+			settings, "app.server.tomcat.version",
+			_getDefaultAppServerVersion());
 
 		_bundleCacheDir = _getProperty(
 			settings, "bundle.cache.dir", _BUNDLE_CACHE_DIR);
@@ -90,10 +94,6 @@ public class WorkspaceExtension {
 		_bundleTokenPasswordFile = _getProperty(
 			settings, "bundle.token.password.file",
 			_BUNDLE_TOKEN_PASSWORD_FILE);
-
-		_appServerTomcatVersion = GradleUtil.getProperty(
-			settings, "app.server.tomcat.version",
-			_getDefaultAppServerVersion());
 
 		_bundleUrl = _getProperty(
 			settings, "bundle.url", _getDefaultProductBundleUrl());
@@ -317,42 +317,49 @@ public class WorkspaceExtension {
 	}
 
 	private String _getDefaultAppServerVersion() {
-		if (_productInfo != null) {
-			return _productInfo.getAppServerTomcatVersion();
-		}
-
-		return null;
+		return Optional.ofNullable(
+			_getProductInfo(getWorkspaceProductKey())
+		).map(
+			ProductInfo::getAppServerTomcatVersion
+		).orElse(
+			null
+		);
 	}
 
 	private String _getDefaultDockerImage() {
-		String defaultDockerImage = _DOCKER_IMAGE_LIFERAY;
-
-		if (_productInfo != null) {
-			defaultDockerImage = _productInfo.getLiferayDockerImage();
-		}
-
-		return defaultDockerImage;
+		return Optional.ofNullable(
+			_getProductInfo(getWorkspaceProductKey())
+		).map(
+			ProductInfo::getLiferayDockerImage
+		).orElse(
+			_DOCKER_IMAGE_LIFERAY
+		);
 	}
 
 	private String _getDefaultProductBundleUrl() {
-		String defaultBundleUrl = BundleSupportConstants.DEFAULT_BUNDLE_URL;
+		return Optional.ofNullable(
+			_getProductInfo(getWorkspaceProductKey())
+		).map(
+			ProductInfo::getBundleUrl
+		).map(
+			url -> {
+				Base64.Decoder decoder = Base64.getDecoder();
 
-		if (_productInfo != null) {
-			Base64.Decoder decoder = Base64.getDecoder();
-
-			defaultBundleUrl = new String(
-				decoder.decode(_productInfo.getBundleUrl()));
-		}
-
-		return defaultBundleUrl;
+				return new String(decoder.decode(url));
+			}
+		).orElse(
+			BundleSupportConstants.DEFAULT_BUNDLE_URL
+		);
 	}
 
 	private String _getDefaultTargetplatformVersion() {
-		if (_productInfo != null) {
-			return _productInfo.getTargetPlatformVersion();
-		}
-
-		return null;
+		return Optional.ofNullable(
+			_getProductInfo(getWorkspaceProductKey())
+		).map(
+			ProductInfo::getTargetPlatformVersion
+		).orElse(
+			null
+		);
 	}
 
 	private ProductInfo _getProductInfo(String productKey) {
@@ -360,40 +367,43 @@ public class WorkspaceExtension {
 			return null;
 		}
 
-		try {
-			DownloadCommand download = new DownloadCommand();
+		return _productInfos.computeIfAbsent(
+			productKey,
+			key -> {
+				try {
+					DownloadCommand download = new DownloadCommand();
 
-			download.setCacheDir(_workspaceCacheDir);
-			download.setUrl(new URL(_PRODUCT_INFO_URL));
-			download.setToken(false);
-			download.setUserName(null);
-			download.setPassword(null);
+					download.setCacheDir(_workspaceCacheDir);
+					download.setUrl(new URL(_PRODUCT_INFO_URL));
+					download.setToken(false);
+					download.setUserName(null);
+					download.setPassword(null);
 
-			download.execute();
+					download.execute();
 
-			Path productJsonPath = download.getDownloadPath();
+					Path downloadPath = download.getDownloadPath();
 
-			try (JsonReader reader = new JsonReader(
-					Files.newBufferedReader(productJsonPath))) {
+					try (JsonReader reader = new JsonReader(
+							Files.newBufferedReader(downloadPath))) {
 
-				Gson gson = new Gson();
+						Gson gson = new Gson();
 
-				Map<String, ProductInfo> productInfos = gson.fromJson(
-					reader,
-					new TypeToken<Map<String, ProductInfo>>() {
-					}.getType());
+						TypeToken<Map<String, ProductInfo>> typeToken =
+							new TypeToken<Map<String, ProductInfo>>() {
+							};
 
-				if (productInfos != null) {
-					return productInfos.get(productKey);
+						Map<String, ProductInfo> productInfos = gson.fromJson(
+							reader, typeToken.getType());
+
+						return productInfos.get(productKey);
+					}
 				}
-			}
-		}
-		catch (Exception exception) {
-			throw new GradleException(
-				"Unable to get product info for :" + productKey, exception);
-		}
-
-		return null;
+				catch (Exception exception) {
+					throw new GradleException(
+						"Unable to get product info for :" + productKey,
+						exception);
+				}
+			});
 	}
 
 	private boolean _getProperty(
@@ -473,7 +483,7 @@ public class WorkspaceExtension {
 	private final Gradle _gradle;
 	private Object _homeDir;
 	private Object _product;
-	private final ProductInfo _productInfo;
+	private final Map<String, ProductInfo> _productInfos = new HashMap<>();
 	private final Set<ProjectConfigurator> _projectConfigurators =
 		new HashSet<>();
 	private final Plugin<Project> _rootProjectConfigurator;

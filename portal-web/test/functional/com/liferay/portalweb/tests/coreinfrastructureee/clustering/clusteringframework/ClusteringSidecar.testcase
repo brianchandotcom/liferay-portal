@@ -59,11 +59,11 @@ definition {
 
 		Clustering.viewSidecarInfoViaSidecarURL(
 			sidecarInfo = '''"status" : "green"''',
-			url = "http://127.0.0.1:9201/_cluster/health?pretty");
+			url = "http://127.0.0.1:9202/_cluster/health?pretty");
 
 		Clustering.viewSidecarInfoViaSidecarURL(
 			sidecarInfo = '''"number_of_nodes" : 1''',
-			url = "http://127.0.0.1:9201/_cluster/health?pretty");
+			url = "http://127.0.0.1:9202/_cluster/health?pretty");
 
 		User.loginPG(
 			nodePort = "9080",
@@ -116,28 +116,28 @@ definition {
 		Clustering.viewClusterStatusInConsole();
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Sidecar ${sidecarNode1Name} is at 127.0.0.1:9200",
+			expectedText = "Sidecar ${sidecarNode1Name} is at 127.0.0.1:9201",
 			nodePort = "8080");
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "Sidecar ${sidecarNode2Name} is at 127.0.0.1:9201",
+			expectedText = "Sidecar ${sidecarNode2Name} is at 127.0.0.1:9202",
 			nodePort = "9080");
 
 		Clustering.viewSidecarInfoViaSidecarURL(
 			sidecarInfo = "${sidecarNode1Name}",
-			url = "http://127.0.0.1:9200");
-
-		Clustering.viewSidecarInfoViaSidecarURL(
-			sidecarInfo = "${sidecarNode2Name}",
 			url = "http://127.0.0.1:9201");
 
 		Clustering.viewSidecarInfoViaSidecarURL(
+			sidecarInfo = "${sidecarNode2Name}",
+			url = "http://127.0.0.1:9202");
+
+		Clustering.viewSidecarInfoViaSidecarURL(
 			sidecarInfo = '''"status" : "green"''',
-			url = "http://127.0.0.1:9200/_cluster/health?pretty");
+			url = "http://127.0.0.1:9201/_cluster/health?pretty");
 
 		Clustering.viewSidecarInfoViaSidecarURL(
 			sidecarInfo = '''"number_of_nodes" : 2''',
-			url = "http://127.0.0.1:9200/_cluster/health?pretty");
+			url = "http://127.0.0.1:9201/_cluster/health?pretty");
 
 		User.loginPG(
 			password = "test",

@@ -475,9 +475,10 @@ public class CDIBeanPortletExtension implements Extension {
 						bean, BeanPortletMethodDecorator.class,
 						beanManager.createCreationalContext(bean));
 
-				beanPortletMethod = beanPortletMethodDecorator.getBeanMethod(
-					beanPortletMethod, portletConfig, portletRequest,
-					portletResponse);
+				beanPortletMethod =
+					beanPortletMethodDecorator.getBeanPortletMethod(
+						beanPortletMethod, portletConfig, portletRequest,
+						portletResponse);
 			}
 
 			String include = null;

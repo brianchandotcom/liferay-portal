@@ -53,7 +53,7 @@ public class BeanPortletMethodDecoratorMVCImpl
 	implements ApplicationContextAware, BeanPortletMethodDecorator {
 
 	@Override
-	public BeanPortletMethod getBeanMethod(
+	public BeanPortletMethod getBeanPortletMethod(
 		BeanPortletMethod beanPortletMethod, PortletConfig portletConfig,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

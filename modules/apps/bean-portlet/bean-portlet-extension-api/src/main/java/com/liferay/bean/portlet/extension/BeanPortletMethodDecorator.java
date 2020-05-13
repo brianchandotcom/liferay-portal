@@ -26,7 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BeanPortletMethodDecorator {
 
-	public BeanPortletMethod getBeanMethod(
+	public BeanPortletMethod getBeanPortletMethod(
 		BeanPortletMethod beanPortletMethod, PortletConfig portletConfig,
 		PortletRequest portletRequest, PortletResponse portletResponse);
 

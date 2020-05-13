@@ -321,7 +321,7 @@ public class SpringBeanPortletExtension {
 					"beanPortletMethodDecorator",
 					BeanPortletMethodDecorator.class);
 
-			beanPortletMethod = beanPortletMethodDecorator.getBeanMethod(
+			beanPortletMethod = beanPortletMethodDecorator.getBeanPortletMethod(
 				beanPortletMethod, portletConfig, portletRequest,
 				portletResponse);
 

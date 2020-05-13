@@ -2,6 +2,10 @@
 
 @import 'variables';
 
+#wrapper .control-menu-container {
+	padding-left: 0;
+}
+
 #wrapper,
 .control-menu-container {
 	@include media-breakpoint-up(sm) {
@@ -11,10 +15,6 @@
 
 		body.open & {
 			padding-left: $product-menu-width;
-		}
-
-		#wrapper & {
-			padding-left: 0;
 		}
 	}
 }

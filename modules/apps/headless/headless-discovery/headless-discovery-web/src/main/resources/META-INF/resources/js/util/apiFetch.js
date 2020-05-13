@@ -17,8 +17,11 @@ import {fetch} from 'frontend-js-web';
 const apiFetch = (url, method = 'get', data, contentType, headers) => {
 	const request = {
 		headers:
-			headers &&
-			Object.assign(...headers.map((obj) => ({[obj.key]: obj.value}))),
+			(headers &&
+				Object.assign(
+					...headers.map((obj) => ({[obj.key]: obj.value}))
+				)) ||
+			{},
 		method: method.toUpperCase(),
 	};
 

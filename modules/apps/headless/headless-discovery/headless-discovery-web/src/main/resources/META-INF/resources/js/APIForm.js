@@ -29,7 +29,15 @@ const getContentType = (requestBody) =>
 const APIForm = (_) => {
 	const [state, dispatch] = useAppState();
 
-	const {categories, categoryKey, method, path, paths, schemas} = state;
+	const {
+		categories,
+		categoryKey,
+		headers,
+		method,
+		path,
+		paths,
+		schemas,
+	} = state;
 
 	const methodData = paths[path][method];
 
@@ -47,6 +55,7 @@ const APIForm = (_) => {
 		<APIFormBase
 			baseURL={baseURL}
 			contentType={contentType}
+			headers={headers}
 			key={operationId}
 			method={method}
 			methodData={methodData}

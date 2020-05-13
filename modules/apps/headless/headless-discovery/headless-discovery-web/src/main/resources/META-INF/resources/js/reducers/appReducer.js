@@ -31,6 +31,14 @@ const initialState = {
 
 const appStateReducer = (state, action) => {
 	switch (action.type) {
+		case 'ADD_HEADERS': {
+			const {headers} = action;
+
+			return {
+				...state,
+				headers,
+			};
+		}
 		case 'LOAD_API_RESPONSE': {
 			return {
 				...state,

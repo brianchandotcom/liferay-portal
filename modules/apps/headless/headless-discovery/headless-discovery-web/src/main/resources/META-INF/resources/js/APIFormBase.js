@@ -128,6 +128,7 @@ const formikAPIForm = withFormik({
 		const {
 			baseURL,
 			contentType,
+			headers,
 			method,
 			methodData,
 			onResponse,
@@ -149,15 +150,17 @@ const formikAPIForm = withFormik({
 
 		const apiURL = getURL({baseURL, params: parameters, path, values});
 
-		apiFetch(apiURL, method, data, contentType).then((response) => {
-			onResponse({
-				apiURL,
-				data,
-				response,
-			});
+		apiFetch(apiURL, method, data, contentType, headers).then(
+			(response) => {
+				onResponse({
+					apiURL,
+					data,
+					response,
+				});
 
-			setSubmitting(false);
-		});
+				setSubmitting(false);
+			}
+		);
 	},
 	mapPropsToValues: ({methodData, schema}) => {
 		const {operationId, parameters} = methodData;

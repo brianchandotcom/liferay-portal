@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -285,6 +286,9 @@ public class AssetInfoListProviderTest {
 			Long.valueOf(article3.getResourcePrimKey()),
 			_CLASS_PK_ACCESSOR.get(assetEntries.get(0)));
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	private static final Accessor<AssetEntry, Long> _CLASS_PK_ACCESSOR =
 		new Accessor<AssetEntry, Long>() {

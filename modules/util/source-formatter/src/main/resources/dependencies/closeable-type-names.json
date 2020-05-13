@@ -31,6 +31,9 @@
 			"name": "com.github.scribejava.core.oauth.OAuth20Service"
 		},
 		{
+			"name": "com.google.gson.stream.JsonReader"
+		},
+		{
 			"name": "com.liferay.adaptive.media.document.library.thumbnails.internal.test.util.PropsValuesReplacer"
 		},
 		{

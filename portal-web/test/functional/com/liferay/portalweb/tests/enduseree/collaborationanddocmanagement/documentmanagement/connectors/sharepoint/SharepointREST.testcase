@@ -140,7 +140,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test CheckinDocument {
 		property test.name.skip.portal.instance = "SharepointREST#CheckinDocument";
@@ -196,7 +195,6 @@ definition {
 			dmRepositoryName = "true");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test DeleteDocumentInSubfolder {
 		property test.name.skip.portal.instance = "SharepointREST#DeleteDocumentInSubfolder";
@@ -257,7 +255,6 @@ definition {
 		DMDocument.viewDefaultCP();
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test DeleteSubfolder {
 		property test.name.skip.portal.instance = "SharepointREST#DeleteSubfolder";
@@ -282,7 +279,6 @@ definition {
 		DMFolder.cannotViewCP(dmFolderName = "DM Folder Name");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test EditDocumentFile {
 		property test.name.skip.portal.instance = "SharepointREST#EditDocumentFile";
@@ -334,7 +330,6 @@ definition {
 			metadataLabel = "Content Encoding");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test MoveCheckedoutDocumentToFolder {
 		property test.name.skip.portal.instance = "SharepointREST#MoveCheckedoutDocumentToFolder";
@@ -404,7 +399,6 @@ definition {
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test MoveDocumentToHome {
 		property test.name.skip.portal.instance = "SharepointREST#MoveDocumentToHome";
@@ -442,7 +436,6 @@ definition {
 		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchDocumentViaHome {
 		property test.name.skip.portal.instance = "SharepointREST#SearchDocumentViaHome";
@@ -467,7 +460,6 @@ definition {
 			dmRepositoryName = "Collaboration Test Application");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewDocumentAsGuest {
 		property test.name.skip.portal.instance = "SharepointREST#ViewDocumentAsGuest";
@@ -519,7 +511,6 @@ definition {
 		AssertElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewEditedCheckedoutDocument {
 		property test.name.skip.portal.instance = "SharepointREST#ViewEditedCheckedoutDocument";
@@ -571,7 +562,6 @@ definition {
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
 		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange";
@@ -610,7 +600,6 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
 		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval";
@@ -649,7 +638,6 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_3.docx");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewRepository {
 		property test.name.skip.portal.instance = "SharepointREST#ViewRepository";

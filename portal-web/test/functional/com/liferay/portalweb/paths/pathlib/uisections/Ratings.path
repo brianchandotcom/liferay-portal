@@ -86,6 +86,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>YOUR_RATING_STAR_DELETE</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[@class='dropdown-item' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_DELETE_DISABLE</td>
+	<td>//div[contains(@class,'ratings-stars')]//button[contains(@class,'dropdown-item disabled') and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>YOUR_RATING_STAR_DISABLE</td>
 	<td>//div[contains(@class,'ratings-stars')]//button[@title='Ratings are disabled in Staging']</td>
 	<td></td>

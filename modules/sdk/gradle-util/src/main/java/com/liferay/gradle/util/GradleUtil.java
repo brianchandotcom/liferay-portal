@@ -453,6 +453,19 @@ public class GradleUtil {
 		return fullyQualifiedTaskNames;
 	}
 
+	public static String getTaskPrefixedProperty(
+		String projectPath, String taskName, String suffix) {
+
+		String value = System.getProperty(
+			projectPath + ':' + taskName + '.' + suffix);
+
+		if (Validator.isNull(value)) {
+			value = System.getProperty(taskName + '.' + suffix);
+		}
+
+		return value;
+	}
+
 	public static String getTaskPrefixedProperty(Task task, String name) {
 		String suffix = "." + name;
 

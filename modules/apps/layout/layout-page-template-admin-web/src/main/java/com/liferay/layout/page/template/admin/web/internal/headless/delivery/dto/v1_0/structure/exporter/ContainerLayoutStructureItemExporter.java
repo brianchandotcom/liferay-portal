@@ -14,6 +14,8 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.exporter;
 
+import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
+import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue;
@@ -262,8 +264,7 @@ public class ContainerLayoutStructureItemExporter
 				mapping = new Mapping() {
 					{
 						defaultValue = fragmentInlineValue;
-						itemClassName = _toItemClassName(jsonObject);
-						itemClassPK = _toitemClassPK(jsonObject);
+						itemReference = _toItemReference(jsonObject);
 
 						setFieldKey(
 							() -> {
@@ -352,6 +353,30 @@ public class ContainerLayoutStructureItemExporter
 		}
 
 		return classPK;
+	}
+
+	private Object _toItemReference(JSONObject jsonObject) {
+		String fieldId = jsonObject.getString("fieldId");
+		String mappedField = jsonObject.getString("mappedField");
+
+		if (Validator.isNull(fieldId) && Validator.isNull(mappedField)) {
+			return null;
+		}
+
+		if (Validator.isNotNull(mappedField)) {
+			return new ContextReference() {
+				{
+					contextSource = ContextSource.DISPLAY_PAGE_ITEM;
+				}
+			};
+		}
+
+		return new ClassPKReference() {
+			{
+				className = _toItemClassName(jsonObject);
+				classPK = _toitemClassPK(jsonObject);
+			}
+		};
 	}
 
 	private FragmentInlineValue _toTitleFragmentInlineValue(

@@ -28,6 +28,8 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
+import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldBackgroundImage;
@@ -744,14 +746,18 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 			{
 				mapping = new Mapping() {
 					{
-						collectionItemFieldKey = jsonObject.getString(
-							"collectionFieldId", null);
 						defaultValue = fragmentInlineValue;
-						itemClassName = _toItemClassName(jsonObject);
-						itemClassPK = _toitemClassPK(jsonObject);
+						itemReference = _toItemReference(jsonObject);
 
 						setFieldKey(
 							() -> {
+								String collectionFieldId = jsonObject.getString(
+									"collectionFieldId");
+
+								if (Validator.isNotNull(collectionFieldId)) {
+									return collectionFieldId;
+								}
+
 								String fieldId = jsonObject.getString(
 									"fieldId");
 
@@ -844,6 +850,41 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 		}
 
 		return classPK;
+	}
+
+	private Object _toItemReference(JSONObject jsonObject) {
+		String collectionFieldId = jsonObject.getString("collectionFieldId");
+		String fieldId = jsonObject.getString("fieldId");
+		String mappedField = jsonObject.getString("mappedField");
+
+		if (Validator.isNull(collectionFieldId) && Validator.isNull(fieldId) &&
+			Validator.isNull(mappedField)) {
+
+			return null;
+		}
+
+		if (Validator.isNotNull(collectionFieldId)) {
+			return new ContextReference() {
+				{
+					contextSource = ContextSource.COLLECTION_ITEM;
+				}
+			};
+		}
+
+		if (Validator.isNotNull(mappedField)) {
+			return new ContextReference() {
+				{
+					contextSource = ContextSource.DISPLAY_PAGE_ITEM;
+				}
+			};
+		}
+
+		return new ClassPKReference() {
+			{
+				className = _toItemClassName(jsonObject);
+				classPK = _toitemClassPK(jsonObject);
+			}
+		};
 	}
 
 	private Map<String, String> _toLocaleMap(JSONObject jsonObject) {

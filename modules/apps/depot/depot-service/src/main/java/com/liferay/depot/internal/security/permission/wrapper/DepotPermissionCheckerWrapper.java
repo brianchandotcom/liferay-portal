@@ -295,15 +295,13 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 	}
 
-	private boolean _isContentReviewer(long groupId) throws PortalException {
-		Group group = _groupLocalService.getGroup(groupId);
-
+	private boolean _isContentReviewer(Group group) throws PortalException {
 		if (group.getType() != GroupConstants.TYPE_DEPOT) {
 			return false;
 		}
 
 		if (_userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), groupId,
+				getUserId(), group.getGroupId(),
 				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
 
 			return true;
@@ -335,28 +333,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return true;
 		}
 
-		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
-			getUserId(), groupId,
+		return _getOrAddToPermissionCache(
+			_groupLocalService.fetchGroup(groupId), this::_isContentReviewer,
 			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
-
-		try {
-			if (value == null) {
-				value = _isContentReviewer(groupId);
-
-				PermissionCacheUtil.putUserPrimaryKeyRole(
-					getUserId(), groupId,
-					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, value);
-			}
-		}
-		catch (Exception exception) {
-			PermissionCacheUtil.removeUserPrimaryKeyRole(
-				getUserId(), groupId,
-				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
-
-			throw exception;
-		}
-
-		return value;
 	}
 
 	private boolean _isDepotGroupOwner(Group group) {

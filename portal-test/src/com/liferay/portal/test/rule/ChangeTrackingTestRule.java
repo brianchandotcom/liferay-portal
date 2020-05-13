@@ -1,0 +1,163 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.test.rule;
+
+import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeClosable;
+import com.liferay.portal.kernel.aop.AopMethodInvocation;
+import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
+import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.change.tracking.CTTransactionException;
+import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
+import com.liferay.portal.kernel.test.rule.ClassTestRule;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+import java.util.Deque;
+import java.util.Map;
+
+import org.junit.runner.Description;
+
+/**
+ * @author Preston Crary
+ */
+public class ChangeTrackingTestRule extends ClassTestRule<AutoCloseable> {
+
+	public static final ChangeTrackingTestRule INSTANCE =
+		new ChangeTrackingTestRule();
+
+	@Override
+	protected void afterClass(
+			Description description, AutoCloseable autoCloseable)
+		throws Exception {
+
+		autoCloseable.close();
+	}
+
+	@Override
+	protected AutoCloseable beforeClass(Description description)
+		throws Exception {
+
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		Class<?> clazz = classLoader.loadClass(
+			"com.liferay.portal.spring.transaction." +
+				"TransactionExecutorThreadLocal");
+
+		Field field = clazz.getDeclaredField("_transactionExecutorThreadLocal");
+
+		field.setAccessible(true);
+
+		ThreadLocal<Deque<Object>> transactionExecutorsThreadLocal =
+			(ThreadLocal<Deque<Object>>)field.get(null);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<?> serviceRegistration = registry.registerService(
+			ChainableMethodAdvice.class,
+			new CTTestRuleAdvice(transactionExecutorsThreadLocal), null);
+
+		return serviceRegistration::unregister;
+	}
+
+	private ChangeTrackingTestRule() {
+	}
+
+	private static final CentralizedThreadLocal<Boolean> _ctSafe =
+		new CentralizedThreadLocal<>(
+			ChangeTrackingTestRule.class + "._ctSafe", () -> Boolean.FALSE);
+
+	private static class CTTestRuleAdvice extends ChainableMethodAdvice {
+
+		@Override
+		public Object createMethodContext(
+			Class<?> targetClass, Method method,
+			Map<Class<? extends Annotation>, Annotation> annotations) {
+
+			Transactional transactional = (Transactional)annotations.get(
+				Transactional.class);
+
+			if ((transactional == null) || !transactional.enabled() ||
+				transactional.readOnly() ||
+				annotations.containsKey(CTAware.class)) {
+
+				return null;
+			}
+
+			if ((transactional.propagation() == Propagation.REQUIRES_NEW) ||
+				annotations.containsKey(MasterDataSource.class)) {
+
+				return Boolean.TRUE;
+			}
+
+			return Boolean.FALSE;
+		}
+
+		@Override
+		public Object invoke(
+				AopMethodInvocation aopMethodInvocation, Object[] arguments)
+			throws Throwable {
+
+			if (_ctSafe.get()) {
+				return aopMethodInvocation.proceed(arguments);
+			}
+
+			if ((aopMethodInvocation.getAdviceMethodContext() ==
+					Boolean.TRUE) ||
+				!_hasCurrentTransactionExecutor()) {
+
+				try (SafeClosable safeClosable = _ctSafe.setWithSafeClosable(
+						Boolean.TRUE)) {
+
+					return aopMethodInvocation.proceed(arguments);
+				}
+			}
+
+			throw new CTTransactionException(
+				"CT transaction validation failure. Nested operation using " +
+					aopMethodInvocation.getThis() +
+						" can only be performed in production mode.");
+		}
+
+		private CTTestRuleAdvice(
+			ThreadLocal<Deque<Object>> transactionExecutorsThreadLocal) {
+
+			_transactionExecutorsThreadLocal = transactionExecutorsThreadLocal;
+		}
+
+		private boolean _hasCurrentTransactionExecutor() {
+			Deque<Object> deque = _transactionExecutorsThreadLocal.get();
+
+			if (deque.peek() == null) {
+				return false;
+			}
+
+			return true;
+		}
+
+		private final ThreadLocal<Deque<Object>>
+			_transactionExecutorsThreadLocal;
+
+	}
+
+}

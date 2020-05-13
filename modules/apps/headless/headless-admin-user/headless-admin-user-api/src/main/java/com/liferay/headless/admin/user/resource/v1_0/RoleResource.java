@@ -50,6 +50,29 @@ public interface RoleResource {
 
 	public Role getRole(Long roleId) throws Exception;
 
+	public void deleteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId)
+		throws Exception;
+
+	public void postRoleUserAccountAssociation(Long roleId, Long userAccountId)
+		throws Exception;
+
+	public void deleteOrganizationRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long organizationId)
+		throws Exception;
+
+	public void postOrganizationRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long organizationId)
+		throws Exception;
+
+	public void deleteSiteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long siteId)
+		throws Exception;
+
+	public void postSiteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long siteId)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

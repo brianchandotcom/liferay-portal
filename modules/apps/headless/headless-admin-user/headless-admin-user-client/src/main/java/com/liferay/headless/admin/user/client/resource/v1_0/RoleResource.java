@@ -51,6 +51,58 @@ public interface RoleResource {
 	public HttpInvoker.HttpResponse getRoleHttpResponse(Long roleId)
 		throws Exception;
 
+	public void deleteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteRoleUserAccountAssociationHttpResponse(
+				Long roleId, Long userAccountId)
+		throws Exception;
+
+	public void postRoleUserAccountAssociation(Long roleId, Long userAccountId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postRoleUserAccountAssociationHttpResponse(
+			Long roleId, Long userAccountId)
+		throws Exception;
+
+	public void deleteOrganizationRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long organizationId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteOrganizationRoleUserAccountAssociationHttpResponse(
+				Long roleId, Long userAccountId, Long organizationId)
+		throws Exception;
+
+	public void postOrganizationRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long organizationId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postOrganizationRoleUserAccountAssociationHttpResponse(
+				Long roleId, Long userAccountId, Long organizationId)
+		throws Exception;
+
+	public void deleteSiteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long siteId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			deleteSiteRoleUserAccountAssociationHttpResponse(
+				Long roleId, Long userAccountId, Long siteId)
+		throws Exception;
+
+	public void postSiteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long siteId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postSiteRoleUserAccountAssociationHttpResponse(
+				Long roleId, Long userAccountId, Long siteId)
+		throws Exception;
+
 	public static class Builder {
 
 		public Builder authentication(String login, String password) {
@@ -224,6 +276,408 @@ public interface RoleResource {
 					_builder._port +
 						"/o/headless-admin-user/v1.0/roles/{roleId}",
 				roleId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteRoleUserAccountAssociation(
+				Long roleId, Long userAccountId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteRoleUserAccountAssociationHttpResponse(
+					roleId, userAccountId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteRoleUserAccountAssociationHttpResponse(
+					Long roleId, Long userAccountId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}",
+				roleId, userAccountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postRoleUserAccountAssociation(
+				Long roleId, Long userAccountId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postRoleUserAccountAssociationHttpResponse(
+					roleId, userAccountId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postRoleUserAccountAssociationHttpResponse(
+					Long roleId, Long userAccountId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(userAccountId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}",
+				roleId, userAccountId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteOrganizationRoleUserAccountAssociation(
+				Long roleId, Long userAccountId, Long organizationId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteOrganizationRoleUserAccountAssociationHttpResponse(
+					roleId, userAccountId, organizationId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteOrganizationRoleUserAccountAssociationHttpResponse(
+					Long roleId, Long userAccountId, Long organizationId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}",
+				roleId, userAccountId, organizationId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postOrganizationRoleUserAccountAssociation(
+				Long roleId, Long userAccountId, Long organizationId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postOrganizationRoleUserAccountAssociationHttpResponse(
+					roleId, userAccountId, organizationId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postOrganizationRoleUserAccountAssociationHttpResponse(
+					Long roleId, Long userAccountId, Long organizationId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(organizationId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}",
+				roleId, userAccountId, organizationId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteSiteRoleUserAccountAssociation(
+				Long roleId, Long userAccountId, Long siteId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteSiteRoleUserAccountAssociationHttpResponse(
+					roleId, userAccountId, siteId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteSiteRoleUserAccountAssociationHttpResponse(
+					Long roleId, Long userAccountId, Long siteId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}",
+				roleId, userAccountId, siteId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postSiteRoleUserAccountAssociation(
+				Long roleId, Long userAccountId, Long siteId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postSiteRoleUserAccountAssociationHttpResponse(
+					roleId, userAccountId, siteId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postSiteRoleUserAccountAssociationHttpResponse(
+					Long roleId, Long userAccountId, Long siteId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(siteId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}",
+				roleId, userAccountId, siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -46,7 +46,7 @@ public class PermissionCheckerFactoryImpl
 
 		return new DepotPermissionCheckerWrapper(
 			permissionChecker, _depotEntryModelResourcePermission,
-			_groupLocalService, _userGroupRoleLocalService);
+			_groupLocalService, _roleLocalService, _userGroupRoleLocalService);
 	}
 
 	@Reference

@@ -387,6 +387,8 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		try {
 			updatePortletId(oldRootPortletId, newRootPortletId);
 
+			updatePortletItem(oldRootPortletId, newRootPortletId);
+
 			updateResourceAction(oldRootPortletId, newRootPortletId);
 
 			updateResourcePermission(oldRootPortletId, newRootPortletId, true);
@@ -412,6 +414,16 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		runSQL(
 			StringBundler.concat(
 				"update Portlet set portletId = '", newRootPortletId,
+				"' where portletId = '", oldRootPortletId, "'"));
+	}
+
+	protected void updatePortletItem(
+			String oldRootPortletId, String newRootPortletId)
+		throws Exception {
+
+		runSQL(
+			StringBundler.concat(
+				"update PortletItem set portletId = '", newRootPortletId,
 				"' where portletId = '", oldRootPortletId, "'"));
 	}
 

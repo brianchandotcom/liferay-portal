@@ -1542,11 +1542,10 @@ definition {
 		}
 
 		task ("Assert restriction visual feedback shown when drag the second Section over the first one") {
-			DragAndDrop.javaScriptDragOver(
+			DragOver(
 				key_position = "1",
 				locator1 = "//div[contains(@class,'page-editor__root page-editor__topper')]/div[contains(.,'Section')][2]//li[contains(@class,'drag-handler')]",
-				locator2 = "PageEditor#SECTION_CONTAINER",
-				value1 = "");
+				locator2 = "PageEditor#SECTION_CONTAINER");
 
 			AssertVisible(
 				key_position = "1",
@@ -1587,12 +1586,11 @@ definition {
 		}
 
 		task ("Assert restriction visual feedback shown when drag Section card over another one") {
-			DragAndDrop.javaScriptDragOver(
+			DragOver(
 				key_elementType = "Section",
 				key_position = "1",
 				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
-				locator2 = "PageEditor#SECTION_CONTAINER",
-				value1 = "");
+				locator2 = "PageEditor#SECTION_CONTAINER");
 
 			AssertVisible(
 				key_position = "1",
@@ -1631,13 +1629,12 @@ definition {
 		}
 
 		task ("Assert restriction visual feedback shown when drag Section card over column of Row") {
-			DragAndDrop.javaScriptDragOver(
+			DragOver(
 				key_columnNumber = "1",
 				key_elementType = "Section",
 				key_position = "1",
 				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
-				locator2 = "PageEditor#ROW_COLUMN",
-				value1 = "");
+				locator2 = "PageEditor#ROW_COLUMN");
 
 			AssertVisible(
 				key_columnNumber = "1",
@@ -1702,12 +1699,11 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
-			DragAndDrop.javaScriptDragOver(
+			DragOver(
 				key_columnNumber = "1",
 				key_position = "1",
 				locator1 = "//div[contains(@class,'page-editor__root page-editor__topper')]/div[contains(.,'Section')][1]//li[contains(@class,'drag-handler')]",
-				locator2 = "PageEditor#ROW_COLUMN",
-				value1 = "");
+				locator2 = "PageEditor#ROW_COLUMN");
 
 			AssertVisible(
 				key_columnNumber = "1",

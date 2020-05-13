@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -68,7 +69,9 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		return _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,
 			StringUtil.split(domains), _getLogoBytes(actionRequest),
-			_getStatus(actionRequest));
+			_getStatus(actionRequest),
+			ServiceContextFactory.getInstance(
+				AccountEntry.class.getName(), actionRequest));
 	}
 
 	@Override
@@ -131,7 +134,9 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		_accountEntryLocalService.updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
 			StringUtil.split(domains), _getLogoBytes(actionRequest),
-			_getStatus(actionRequest));
+			_getStatus(actionRequest),
+			ServiceContextFactory.getInstance(
+				AccountEntry.class.getName(), actionRequest));
 	}
 
 	private byte[] _getLogoBytes(ActionRequest actionRequest) throws Exception {

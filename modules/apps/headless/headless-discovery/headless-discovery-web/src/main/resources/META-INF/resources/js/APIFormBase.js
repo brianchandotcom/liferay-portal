@@ -150,8 +150,8 @@ const formikAPIForm = withFormik({
 
 		const apiURL = getURL({baseURL, params: parameters, path, values});
 
-		apiFetch(apiURL, method, data, contentType, headers).then(
-			(response) => {
+		apiFetch(apiURL, method, data, contentType, headers)
+			.then((response) => {
 				onResponse({
 					apiURL,
 					data,
@@ -159,8 +159,13 @@ const formikAPIForm = withFormik({
 				});
 
 				setSubmitting(false);
-			}
-		);
+			})
+			.catch((err) => {
+				setSubmitting(false);
+				if (process.env.NODE_ENV === 'development') {
+					console.error(err);
+				}
+			});
 	},
 	mapPropsToValues: ({methodData, schema}) => {
 		const {operationId, parameters} = methodData;
@@ -184,11 +189,13 @@ const formikAPIForm = withFormik({
 	validate: (values, {methodData, schema}) => {
 		const errors = {};
 
-		methodData.parameters.forEach(({name, required}) => {
-			if (!!required && !values[name]) {
-				errors[name] = 'Required';
-			}
-		});
+		if (methodData.parameters) {
+			methodData.parameters.forEach(({name, required}) => {
+				if (!!required && !values[name]) {
+					errors[name] = 'Required';
+				}
+			});
+		}
 
 		schemaIterator(schema, ({name, required}) => {
 			if (!!required && !values[name]) {

@@ -185,6 +185,41 @@ definition {
 			value1 = "Test Content Page Name 1");
 	}
 
+	@description = "This is for LPS-110108. Move child page to parent page level via drag and drop."
+	@priority = "4"
+	test MoveChildPageToParentLevel {
+		property testray.component.names = "Site Pages Administration";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Parent Content Page Name");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addChildPage(
+			childPageName = "Child Content Page Name",
+			parentPageName = "Parent Content Page Name");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		Page.view(
+			depth = "2",
+			pageName = "Child Content Page Name",
+			privacy = "Public Pages");
+
+		ContentPages.movePageToPageUp(
+			pageName = "Child Content Page Name",
+			pageNameTo = "Parent Content Page Name");
+
+		Page.view(
+			pageName = "Child Content Page Name",
+			privacy = "Public Pages");
+	}
+
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {

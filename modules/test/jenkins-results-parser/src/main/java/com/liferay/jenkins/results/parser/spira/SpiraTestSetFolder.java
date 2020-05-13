@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -180,6 +181,15 @@ public class SpiraTestSetFolder extends PathSpiraArtifact {
 			(Integer)parentTestSetFolderID);
 
 		return _parentSpiraTestSetFolder;
+	}
+
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()),
+			"/TestSet/List/", String.valueOf(getID()), ".aspx");
 	}
 
 	protected static List<SpiraTestSetFolder> getSpiraTestSetFolders(

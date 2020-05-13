@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -162,6 +163,10 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		}
 	}
 
+	public int getArtifactTypeId() {
+		return jsonObject.getInt("ArtifactTypeId");
+	}
+
 	public int getPropertyNumber() {
 		return jsonObject.getInt("PropertyNumber");
 	}
@@ -224,6 +229,17 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		return Type.get(jsonObject.getInt("CustomPropertyTypeId"));
 	}
 
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, "/pt/",
+			String.valueOf(spiraProject.getProjectTemplateID()),
+			"/Administration/CustomProperties.aspx?artifactTypeId=",
+			String.valueOf(getArtifactTypeId()));
+	}
+
 	public static enum Type {
 
 		BOOLEAN(4), DATE(5), DECIMAL(3), INTEGER(2), LIST(6), MULTILIST(7),
@@ -257,6 +273,13 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 
 		public SpiraCustomProperty getSpiraCustomProperty() {
 			return _spiraCustomProperty;
+		}
+
+		@Override
+		public String getURL() {
+			SpiraCustomProperty spiraCustomProperty = getSpiraCustomProperty();
+
+			return spiraCustomProperty.getURL();
 		}
 
 		protected Value(

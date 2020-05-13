@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -179,6 +180,15 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			jsonObject.getInt("TestCaseTypeId"));
 	}
 
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()), "/TestCase/",
+			String.valueOf(getID()), ".aspx");
+	}
+
 	public static enum Status {
 
 		APPROVED(4), DRAFT(1), OBSOLETE(9), READY_FOR_REVIEW(2),
@@ -338,7 +348,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		Map<String, String> urlParameters = new HashMap<>();
 
-		urlParameters.put("number_of_rows", String.valueOf(15000));
+		urlParameters.put("number_of_rows", String.valueOf(30000));
 		urlParameters.put("starting_row", String.valueOf(1));
 
 		JSONArray requestJSONArray = new JSONArray();

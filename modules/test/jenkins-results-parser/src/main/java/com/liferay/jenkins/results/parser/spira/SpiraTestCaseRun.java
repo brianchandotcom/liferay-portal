@@ -237,6 +237,15 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		return spiraTestCaseRuns;
 	}
 
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()), "/TestRun/",
+			String.valueOf(getID()), ".aspx");
+	}
+
 	public static class Result {
 
 		public Result(

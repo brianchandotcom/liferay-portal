@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -480,6 +481,12 @@ public class SpiraProject extends BaseSpiraArtifact {
 		}
 
 		return spiraTestSets;
+	}
+
+	@Override
+	public String getURL() {
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, String.valueOf(getID()), "/Dev.aspx");
 	}
 
 	protected static final String ARTIFACT_TYPE_NAME = "project";

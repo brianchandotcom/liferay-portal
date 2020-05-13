@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -78,6 +79,15 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()), "/Build/",
+			String.valueOf(getID()), ".aspx");
 	}
 
 	public static enum Status {

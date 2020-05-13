@@ -23,11 +23,16 @@ import org.json.JSONObject;
  */
 public interface SpiraArtifact extends Serializable {
 
+	public static final String SPIRA_BASE_URL =
+		"https://liferay.spiraservice.net/";
+
 	public int getID();
 
 	public String getName();
 
 	public SpiraProject getSpiraProject();
+
+	public String getURL();
 
 	public JSONObject toJSONObject();
 

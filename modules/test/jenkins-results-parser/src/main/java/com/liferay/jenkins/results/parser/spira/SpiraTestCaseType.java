@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -32,6 +33,16 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SpiraTestCaseType extends BaseSpiraArtifact {
+
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, "/pt/",
+			String.valueOf(spiraProject.getProjectTemplateID()),
+			"/Administration/TestCaseTypes.aspx");
+	}
 
 	protected static List<SpiraTestCaseType> getSpiraTestCaseTypes(
 		final SpiraProject spiraProject,

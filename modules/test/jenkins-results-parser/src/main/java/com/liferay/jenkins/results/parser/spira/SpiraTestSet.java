@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -102,6 +103,15 @@ public class SpiraTestSet extends PathSpiraArtifact {
 			(Integer)testSetFolderID);
 
 		return _parentSpiraTestSetFolder;
+	}
+
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()), "/TestSet/",
+			String.valueOf(getID()), ".aspx");
 	}
 
 	public static enum Status {
@@ -218,6 +228,19 @@ public class SpiraTestSet extends PathSpiraArtifact {
 	protected static final String ID_KEY = "TestSetId";
 
 	protected static class SpiraTestSetTestCase extends BaseSpiraArtifact {
+
+		@Override
+		public String getURL() {
+			SpiraTestCaseObject spiraTestCase = getSpiraTestCase();
+
+			return spiraTestCase.getURL();
+		}
+
+		protected SpiraTestCaseObject getSpiraTestCase() {
+			SpiraProject spiraProject = getSpiraProject();
+
+			return spiraProject.getSpiraTestCaseByID(getTestCaseID());
+		}
 
 		protected Integer getTestCaseID() {
 			return jsonObject.getInt(SpiraTestCaseObject.ID_KEY);

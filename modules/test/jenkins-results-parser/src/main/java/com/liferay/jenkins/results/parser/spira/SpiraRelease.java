@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -188,6 +189,15 @@ public class SpiraRelease extends IndentLevelSpiraArtifact {
 		}
 
 		return spiraReleaseBuilds.get(0);
+	}
+
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, String.valueOf(spiraProject.getID()), "/Release/",
+			String.valueOf(getID()), ".aspx");
 	}
 
 	public static enum Status {

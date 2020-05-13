@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -168,10 +169,28 @@ public class SpiraCustomList extends BaseSpiraArtifact {
 		return _spiraCustomListValues;
 	}
 
+	@Override
+	public String getURL() {
+		SpiraProject spiraProject = getSpiraProject();
+
+		return JenkinsResultsParserUtil.combine(
+			SPIRA_BASE_URL, "/pt/",
+			String.valueOf(spiraProject.getProjectTemplateID()),
+			"/Administration/CustomListDetails.aspx?customPropertyListId=",
+			String.valueOf(getID()));
+	}
+
 	public static class Value extends BaseSpiraArtifact {
 
 		public SpiraCustomList getSpiraCustomList() {
 			return _spiraCustomList;
+		}
+
+		@Override
+		public String getURL() {
+			SpiraCustomList spiraCustomList = getSpiraCustomList();
+
+			return spiraCustomList.getURL();
 		}
 
 		protected Value(

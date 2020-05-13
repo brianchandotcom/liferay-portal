@@ -901,6 +901,8 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
 		}
 

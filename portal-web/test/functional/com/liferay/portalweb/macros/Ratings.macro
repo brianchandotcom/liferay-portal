@@ -1,10 +1,12 @@
 definition {
 
 	macro configureRatingType {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+		if (isSet(siteName)) {
+			Site.openSiteSettingsAdmin(siteURLKey = "${siteName}");
+		}
+		else {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+		}
 
 		Navigator.gotoNavTab(navTab = "Social");
 

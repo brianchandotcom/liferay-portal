@@ -20,10 +20,12 @@ import {getBaseURL, getCategoryURL} from './util/url';
 import {getSchemaType} from './util/util';
 
 const getContentType = (requestBody) =>
-	Liferay.Util.fetch(requestBody, 'content.multipart/form-data')
-		? 'multipart/form-data'
-		: Liferay.Util.fetch(requestBody, 'content.application/json')
-		? 'application/json'
+	requestBody
+		? requestBody.content['multipart/form-data']
+			? 'multipart/form-data'
+			: requestBody.content['application/json']
+			? 'application/json'
+			: null
 		: null;
 
 const APIForm = (_) => {

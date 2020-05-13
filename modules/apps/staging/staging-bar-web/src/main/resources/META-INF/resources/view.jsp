@@ -27,6 +27,14 @@ String remoteSiteURL = (String)renderRequest.getAttribute(StagingProcessesWebKey
 stagingGroup = (Group)renderRequest.getAttribute(StagingProcessesWebKeys.STAGING_GROUP);
 String stagingURL = (String)renderRequest.getAttribute(StagingProcessesWebKeys.STAGING_URL);
 
+LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute(StagingProcessesWebKeys.LAYOUT_SET_BRANCH);
+
+if (layoutSetBranch == null) {
+	layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
+}
+
+String layoutSetBranchName = HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(layoutSetBranch));
+
 if (liveLayout != null) {
 	request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
 }

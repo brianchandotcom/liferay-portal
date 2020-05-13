@@ -22,32 +22,6 @@ LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute(WebKeys.LAY
 if ((layoutRevision == null) && (layout != null)) {
 	layoutRevision = LayoutStagingUtil.getLayoutRevision(layout);
 }
-
-LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute(StagingProcessesWebKeys.LAYOUT_SET_BRANCH);
-
-if (layoutSetBranch == null) {
-	layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
-}
-
-boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
-boolean hasWorkflowTask = false;
-
-if (workflowEnabled) {
-	hasWorkflowTask = StagingUtil.hasWorkflowTask(user.getUserId(), layoutRevision);
-}
-
-String taglibHelpMessage = null;
-String layoutSetBranchName = HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(layoutSetBranch));
-
-if (layoutRevision.isHead()) {
-	taglibHelpMessage = LanguageUtil.format(request, "this-version-will-be-published-when-x-is-published-to-live", layoutSetBranchName, false);
-}
-else if (hasWorkflowTask) {
-	taglibHelpMessage = "you-are-currently-reviewing-this-page.-you-can-make-changes-and-send-them-to-the-next-step-in-the-workflow-when-ready";
-}
-else {
-	taglibHelpMessage = "a-new-version-is-created-automatically-if-this-page-is-modified";
-}
 %>
 
 <span class="staging-bar-workflow-text text-center">

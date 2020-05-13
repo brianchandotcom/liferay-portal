@@ -147,8 +147,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			}
 
 			return _getOrAddToPermissionCache(
-				_groupLocalService.fetchGroup(groupId), this::_isGroupAdmin,
-				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
+				_groupLocalService.fetchGroup(groupId),
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+				this::_isGroupAdmin);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -193,8 +194,8 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			}
 
 			return _getOrAddToPermissionCache(
-				_groupLocalService.fetchGroup(groupId), this::_isGroupOwner,
-				DepotRolesConstants.ASSET_LIBRARY_OWNER);
+				_groupLocalService.fetchGroup(groupId),
+				DepotRolesConstants.ASSET_LIBRARY_OWNER, this::_isGroupOwner);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -204,9 +205,8 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	}
 
 	private boolean _getOrAddToPermissionCache(
-			Group group,
-			UnsafeFunction<Group, Boolean, Exception> unsafeFunction,
-			String roleName)
+			Group group, String roleName,
+			UnsafeFunction<Group, Boolean, Exception> unsafeFunction)
 		throws Exception {
 
 		if (group == null) {
@@ -334,8 +334,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 
 		return _getOrAddToPermissionCache(
-			_groupLocalService.fetchGroup(groupId), this::_isContentReviewer,
-			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
+			_groupLocalService.fetchGroup(groupId),
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+			this::_isContentReviewer);
 	}
 
 	private boolean _isDepotGroupOwner(Group group) {

@@ -56,7 +56,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -117,6 +119,172 @@ public abstract class BaseRoleResourceImpl
 		throws Exception {
 
 		return new Role();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Operation(description = "Unassociates a role with a user account")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "roleId"),
+			@Parameter(in = ParameterIn.PATH, name = "userAccountId")
+		}
+	)
+	@Path("/roles/{roleId}/association/user-account/{userAccountId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Role")})
+	public void deleteRoleUserAccountAssociation(
+			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Operation(description = "Associates a role with a user account")
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "roleId"),
+			@Parameter(in = ParameterIn.PATH, name = "userAccountId")
+		}
+	)
+	@Path("/roles/{roleId}/association/user-account/{userAccountId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Role")})
+	public void postRoleUserAccountAssociation(
+			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Operation(
+		description = "Unassociates an organization role with a user account"
+	)
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "roleId"),
+			@Parameter(in = ParameterIn.PATH, name = "userAccountId"),
+			@Parameter(in = ParameterIn.PATH, name = "organizationId")
+		}
+	)
+	@Path(
+		"/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Role")})
+	public void deleteOrganizationRoleUserAccountAssociation(
+			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId,
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
+				organizationId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Operation(
+		description = "Associates a organization role with a user account"
+	)
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "roleId"),
+			@Parameter(in = ParameterIn.PATH, name = "userAccountId"),
+			@Parameter(in = ParameterIn.PATH, name = "organizationId")
+		}
+	)
+	@Path(
+		"/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Role")})
+	public void postOrganizationRoleUserAccountAssociation(
+			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId,
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
+				organizationId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Operation(description = "Unassociates a site role with a user account")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "roleId"),
+			@Parameter(in = ParameterIn.PATH, name = "userAccountId"),
+			@Parameter(in = ParameterIn.PATH, name = "siteId")
+		}
+	)
+	@Path(
+		"/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Role")})
+	public void deleteSiteRoleUserAccountAssociation(
+			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Operation(description = "Associates a site role with a user account")
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "roleId"),
+			@Parameter(in = ParameterIn.PATH, name = "userAccountId"),
+			@Parameter(in = ParameterIn.PATH, name = "siteId")
+		}
+	)
+	@Path(
+		"/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Role")})
+	public void postSiteRoleUserAccountAssociation(
+			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
+			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
+				userAccountId,
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
+		throws Exception {
 	}
 
 	@Override

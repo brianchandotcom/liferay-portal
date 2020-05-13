@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.internal.graphql.mutation.v1_0;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
+import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -32,6 +33,8 @@ import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.validation.constraints.NotEmpty;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -51,6 +54,14 @@ public class Mutation {
 
 		_organizationResourceComponentServiceObjects =
 			organizationResourceComponentServiceObjects;
+	}
+
+	public static void setRoleResourceComponentServiceObjects(
+		ComponentServiceObjects<RoleResource>
+			roleResourceComponentServiceObjects) {
+
+		_roleResourceComponentServiceObjects =
+			roleResourceComponentServiceObjects;
 	}
 
 	public static void setSubscriptionResourceComponentServiceObjects(
@@ -163,6 +174,106 @@ public class Mutation {
 			this::_populateResourceContext,
 			organizationResource -> organizationResource.putOrganizationBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField(description = "Unassociates a role with a user account")
+	public boolean deleteRoleUserAccountAssociation(
+			@GraphQLName("roleId") Long roleId,
+			@GraphQLName("userAccountId") Long userAccountId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.deleteRoleUserAccountAssociation(
+				roleId, userAccountId));
+
+		return true;
+	}
+
+	@GraphQLField(description = "Associates a role with a user account")
+	public boolean createRoleUserAccountAssociation(
+			@GraphQLName("roleId") Long roleId,
+			@GraphQLName("userAccountId") Long userAccountId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.postRoleUserAccountAssociation(
+				roleId, userAccountId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Unassociates an organization role with a user account"
+	)
+	public boolean deleteOrganizationRoleUserAccountAssociation(
+			@GraphQLName("roleId") Long roleId,
+			@GraphQLName("userAccountId") Long userAccountId,
+			@GraphQLName("organizationId") Long organizationId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource ->
+				roleResource.deleteOrganizationRoleUserAccountAssociation(
+					roleId, userAccountId, organizationId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Associates a organization role with a user account"
+	)
+	public boolean createOrganizationRoleUserAccountAssociation(
+			@GraphQLName("roleId") Long roleId,
+			@GraphQLName("userAccountId") Long userAccountId,
+			@GraphQLName("organizationId") Long organizationId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource ->
+				roleResource.postOrganizationRoleUserAccountAssociation(
+					roleId, userAccountId, organizationId));
+
+		return true;
+	}
+
+	@GraphQLField(description = "Unassociates a site role with a user account")
+	public boolean deleteSiteRoleUserAccountAssociation(
+			@GraphQLName("roleId") Long roleId,
+			@GraphQLName("userAccountId") Long userAccountId,
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.deleteSiteRoleUserAccountAssociation(
+				roleId, userAccountId, Long.valueOf(siteKey)));
+
+		return true;
+	}
+
+	@GraphQLField(description = "Associates a site role with a user account")
+	public boolean createSiteRoleUserAccountAssociation(
+			@GraphQLName("roleId") Long roleId,
+			@GraphQLName("userAccountId") Long userAccountId,
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_roleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			roleResource -> roleResource.postSiteRoleUserAccountAssociation(
+				roleId, userAccountId, Long.valueOf(siteKey)));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -326,6 +437,17 @@ public class Mutation {
 		organizationResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(RoleResource roleResource)
+		throws Exception {
+
+		roleResource.setContextAcceptLanguage(_acceptLanguage);
+		roleResource.setContextCompany(_company);
+		roleResource.setContextHttpServletRequest(_httpServletRequest);
+		roleResource.setContextHttpServletResponse(_httpServletResponse);
+		roleResource.setContextUriInfo(_uriInfo);
+		roleResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(
 			SubscriptionResource subscriptionResource)
 		throws Exception {
@@ -353,6 +475,8 @@ public class Mutation {
 
 	private static ComponentServiceObjects<OrganizationResource>
 		_organizationResourceComponentServiceObjects;
+	private static ComponentServiceObjects<RoleResource>
+		_roleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SubscriptionResource>
 		_subscriptionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<UserAccountResource>

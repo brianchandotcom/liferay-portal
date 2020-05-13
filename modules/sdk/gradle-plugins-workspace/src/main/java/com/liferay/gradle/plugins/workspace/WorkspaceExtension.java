@@ -60,7 +60,7 @@ import org.gradle.api.invocation.Gradle;
  */
 public class WorkspaceExtension {
 
-	public static final String DEFAULT_PRODUCT_CACHE_DIR_NAME =
+	private static final String _DEFAULT_PRODUCT_CACHE_DIR_NAME =
 		".liferay/product";
 
 	@SuppressWarnings("serial")
@@ -465,7 +465,7 @@ public class WorkspaceExtension {
 	private Object _bundleTokenPasswordFile;
 	private Object _bundleUrl;
 	private File _cacheDir = new File(
-		System.getProperty("user.home"), DEFAULT_PRODUCT_CACHE_DIR_NAME);
+		System.getProperty("user.home"), _DEFAULT_PRODUCT_CACHE_DIR_NAME);
 	private Object _configsDir;
 	private Object _dockerContainerId;
 	private Object _dockerDir;

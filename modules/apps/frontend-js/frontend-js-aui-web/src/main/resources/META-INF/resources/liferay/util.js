@@ -1336,7 +1336,11 @@
 
 						openingLiferay.fire(selectEventName, result);
 
-						Util.getWindow().hide();
+						const window = Util.getWindow();
+
+						if (window) {
+							window.hide();
+						}
 					}
 				},
 				'.selector-button'

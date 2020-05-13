@@ -1528,9 +1528,14 @@ definition {
 	@priority = "4"
 	test ViewRestrictionVisualFeedbackWhenDragExistingSectionOverAnotherOne {
 		task ("Add the first Section to page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 		}
@@ -1578,9 +1583,14 @@ definition {
 	@priority = "5"
 	test ViewRestrictionVisualFeedbackWhenDragSectionCardOverAnotherOne {
 		task ("Add a Section to page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 		}
@@ -1621,9 +1631,14 @@ definition {
 	@priority = "5"
 	test ViewRestrictionVisualFeedbackWhenDragSectionCardOverColumnOfRow {
 		task ("Add a Row to page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addLayoutRow();
 		}
@@ -1667,9 +1682,14 @@ definition {
 	@priority = "4"
 	test ViewRestrictionVisualFeedbackWhenDragSectionContainingHeadingOverColumnOfRow {
 		task ("Add a Row to page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addLayoutRow();
 		}

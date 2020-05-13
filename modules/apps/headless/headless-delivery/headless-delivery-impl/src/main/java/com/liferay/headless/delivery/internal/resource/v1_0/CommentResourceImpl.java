@@ -37,7 +37,13 @@ import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,9 +61,14 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.NotFoundException;
@@ -325,8 +336,7 @@ public class CommentResourceImpl
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
-			actions,
+		SearchContext searchContext = SearchUtil.getSearchContext(
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -336,20 +346,38 @@ public class CommentResourceImpl
 						"parentMessageId", String.valueOf(commentId)),
 					BooleanClauseOccur.MUST);
 			},
-			filter, MBMessage.class, search, pagination,
+			filter, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute("discussion", Boolean.TRUE);
-				searchContext.setAttribute(
-					"searchPermissionContext", StringPool.BLANK);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> CommentUtil.toComment(
-				_commentManager.fetchComment(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				_commentManager, _portal));
+			sorts);
+
+		searchContext.setAttribute("discussion", Boolean.TRUE);
+		searchContext.setAttribute("searchPermissionContext", StringPool.BLANK);
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+
+		BooleanQuery booleanQuery = indexer.getFullQuery(searchContext);
+
+		Hits hits = IndexSearcherHelperUtil.search(searchContext, booleanQuery);
+
+		List<Comment> items = Stream.of(
+			transform(
+				Arrays.asList(hits.getDocs()),
+				document -> CommentUtil.toComment(
+					_commentManager.fetchComment(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+					_commentManager, _portal))
+		).flatMap(
+			List::stream
+		).filter(
+			Objects::nonNull
+		).collect(
+			Collectors.toList()
+		);
+
+		return Page.of(
+			actions, items, pagination, indexer.searchCount(searchContext));
 	}
 
 	private DiscussionPermission _getDiscussionPermission() {

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -72,6 +73,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -108,6 +110,8 @@ public class PageDefinitionDTOConverterTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, TestPropsValues.getUserId());
 
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
@@ -129,6 +133,11 @@ public class PageDefinitionDTOConverterTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -295,11 +304,41 @@ public class PageDefinitionDTOConverterTest {
 	}
 
 	@Test
+	public void testToPageDefinitionFragmentFieldHTMLDataEditable()
+		throws Exception {
+
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_html.json", "my-html",
+			"<div data-lfr-editable-id=\"my-html\" data-lfr-editable-type=" +
+				"\"html\" id=\"my-html-id\"><h1>Example</h1></div>");
+
+		FragmentFieldHTML fragmentFieldHTML =
+			(FragmentFieldHTML)fragmentField.getValue();
+
+		_validateFragmentFieldHTML(fragmentFieldHTML);
+	}
+
+	@Test
 	public void testToPageDefinitionFragmentFieldImage() throws Exception {
 		FragmentField fragmentField = _getFragmentField(
 			"editable_values_fragment_field_image.json", "my-image",
 			"<lfr-editable id=\"my-image\" type=\"image\"><img/>" +
 				"</lfr-editable>");
+
+		FragmentFieldImage fragmentFieldImage =
+			(FragmentFieldImage)fragmentField.getValue();
+
+		_validateFragmentImage(fragmentFieldImage.getFragmentImage());
+	}
+
+	@Test
+	public void testToPageDefinitionFragmentFieldImageDataEditable()
+		throws Exception {
+
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_image.json", "my-image",
+			"<div data-lfr-editable-id=\"my-image\" data-lfr-editable-type=" +
+				"\"image\" id=\"my-image-id\"><img/></div>");
 
 		FragmentFieldImage fragmentFieldImage =
 			(FragmentFieldImage)fragmentField.getValue();
@@ -322,11 +361,43 @@ public class PageDefinitionDTOConverterTest {
 	}
 
 	@Test
+	public void testToPageDefinitionFragmentFieldImageTitleDataEditable()
+		throws Exception {
+
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_image_title.json", "my-image",
+			"<div data-lfr-editable-id=\"my-image\" data-lfr-editable-type=" +
+				"\"image\" id=\"my-image-id\"><img/></div>");
+
+		FragmentFieldImage fragmentFieldImage =
+			(FragmentFieldImage)fragmentField.getValue();
+
+		_validateFragmentImageWithTitle(
+			fragmentFieldImage.getFragmentImage(), "My Image Title");
+	}
+
+	@Test
 	public void testToPageDefinitionFragmentFieldLink() throws Exception {
 		FragmentField fragmentField = _getFragmentField(
 			"editable_values_fragment_field_link.json", "my-link",
 			"<lfr-editable id=\"my-link\" type=\"link\"><a href=\"\" " +
 				"id=\"my-link\">Go here</a></lfr-editable>");
+
+		FragmentFieldText fragmentFieldText =
+			(FragmentFieldText)fragmentField.getValue();
+
+		_validateFragmentFieldText(fragmentFieldText);
+	}
+
+	@Test
+	public void testToPageDefinitionFragmentFieldLinkDataEditable()
+		throws Exception {
+
+		FragmentField fragmentField = _getFragmentField(
+			"editable_values_fragment_field_link.json", "my-link",
+			"<a href=\"\" data-lfr-editable-id=\"my-link\" " +
+				"data-lfr-editable-type=\"link\" id=\"link-id\">Go here</a>" +
+					"</lfr-editable>");
 
 		FragmentFieldText fragmentFieldText =
 			(FragmentFieldText)fragmentField.getValue();

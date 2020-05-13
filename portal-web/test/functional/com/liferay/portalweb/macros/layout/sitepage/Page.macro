@@ -889,10 +889,12 @@ definition {
 			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY",
 			value1 = "${pageName2}");
 
-		AssertTextEquals.assertPartialText(
-			key_index = "4",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY",
-			value1 = "${pageName3}");
+		if (isSet(pageName3)) {
+			AssertTextEquals.assertPartialText(
+				key_index = "4",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ROW_ENTRY",
+				value1 = "${pageName3}");
+		}
 
 		if (isSet(pageName4)) {
 			AssertTextEquals.assertPartialText(

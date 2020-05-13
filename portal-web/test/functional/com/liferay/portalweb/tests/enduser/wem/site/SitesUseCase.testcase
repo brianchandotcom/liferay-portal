@@ -221,7 +221,9 @@ definition {
 			siteName = "Organization Name 2",
 			successMessage = "true");
 
-		Navigator.openSiteURL(siteName = "Organization Name 2");
+		var baseURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${baseURL}/web/organization-name-2");
 
 		Page.viewInactiveRequestMessage(resource = "site");
 
@@ -683,7 +685,9 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openSiteURL(siteName = "Site1 Name");
+		var baseURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${baseURL}/web/site1-name");
 
 		Page.viewInactiveRequestMessage(resource = "site");
 

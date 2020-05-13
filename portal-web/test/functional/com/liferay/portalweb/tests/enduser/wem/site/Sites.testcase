@@ -48,7 +48,9 @@ definition {
 
 		Site.inactivateCP(siteName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		var baseURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${baseURL}/web/site-name");
 
 		Page.viewInactiveRequestMessage(resource = "site");
 

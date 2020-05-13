@@ -14,14 +14,18 @@
 
 import {fetch} from 'frontend-js-web';
 
-const apiFetch = (url, method = 'get', data, contentType) => {
+const apiFetch = (url, method = 'get', data, contentType, headers) => {
 	const request = {
+		headers:
+			headers &&
+			Object.assign(...headers.map((obj) => ({[obj.key]: obj.value}))),
 		method: method.toUpperCase(),
 	};
 
 	if (method === 'post' || method === 'put') {
 		if (contentType === 'application/json') {
 			request.body = JSON.stringify(data);
+			request.headers['Content-Type'] = 'application/json';
 		}
 		else if (contentType === 'multipart/form-data') {
 			const formData = new FormData();

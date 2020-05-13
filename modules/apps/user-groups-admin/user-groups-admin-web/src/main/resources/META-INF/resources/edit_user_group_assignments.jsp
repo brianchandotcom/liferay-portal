@@ -62,7 +62,6 @@ navigationItems.add(entriesNavigationItem);
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= navigationItems %>"
 />
 

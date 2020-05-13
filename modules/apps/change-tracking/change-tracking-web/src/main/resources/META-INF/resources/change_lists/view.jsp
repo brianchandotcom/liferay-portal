@@ -23,7 +23,6 @@ ChangeListsManagementToolbarDisplayContext changeListsManagementToolbarDisplayCo
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= changeListsDisplayContext.getViewNavigationItems() %>"
 />
 

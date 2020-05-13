@@ -36,7 +36,6 @@ portletDisplay.setDescription(description);
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= passwordPolicyDisplayContext.getViewPasswordPoliciesNavigationItems() %>"
 />
 

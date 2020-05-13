@@ -60,7 +60,6 @@ else {
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= appManagerDisplayContext.getModuleNavigationItems() %>"
 />
 

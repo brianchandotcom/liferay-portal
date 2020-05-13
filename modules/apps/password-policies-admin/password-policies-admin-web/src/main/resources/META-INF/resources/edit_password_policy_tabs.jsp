@@ -17,6 +17,5 @@
 <%@ include file="/init.jsp" %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= passwordPolicyDisplayContext.getEditPasswordPolicyNavigationItems() %>"
 />

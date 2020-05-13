@@ -36,7 +36,6 @@ PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL()
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= roleDisplayContext.getViewRoleNavigationItems(liferayPortletResponse, portletURL) %>"
 />
 

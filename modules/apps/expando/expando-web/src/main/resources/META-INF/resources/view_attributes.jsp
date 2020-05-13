@@ -46,7 +46,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "view-at
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%= expandoDisplayContext.getNavigationItems("fields") %>'
 />
 

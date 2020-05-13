@@ -17,7 +17,6 @@
 <%@ include file="/change_lists_configuration/init.jsp" %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= changeListsConfigurationDisplayContext.getViewNavigationItems() %>"
 />
 

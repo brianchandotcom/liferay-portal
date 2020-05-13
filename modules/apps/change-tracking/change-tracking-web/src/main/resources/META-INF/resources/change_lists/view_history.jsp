@@ -27,7 +27,6 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= viewHistoryDisplayContext.getViewNavigationItems() %>"
 />
 

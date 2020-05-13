@@ -39,7 +39,6 @@ sortingURL.setParameter("orderByType", orderByType.equals("asc") ? "desc" : "asc
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{

@@ -25,7 +25,6 @@ portletURL.setParameter("tabs1", tabs1);
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{

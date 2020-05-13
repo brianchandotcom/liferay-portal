@@ -35,7 +35,6 @@ String selectedTab = searchAdminDisplayContext.getSelectedTab();
 %>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems="<%= searchAdminDisplayContext.getNavigationItemList() %>"
 />
 

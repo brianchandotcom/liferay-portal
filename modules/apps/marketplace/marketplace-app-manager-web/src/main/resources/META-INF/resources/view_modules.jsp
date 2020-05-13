@@ -43,7 +43,6 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 </portlet:renderURL>
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "modules") %>'
 />
 

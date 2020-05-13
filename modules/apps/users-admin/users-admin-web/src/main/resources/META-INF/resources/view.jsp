@@ -60,7 +60,6 @@ else {
 
 <c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) && !usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
 	<clay:navigation-bar
-		inverted="<%= true %>"
 		navigationItems="<%= userDisplayContext.getViewNavigationItems() %>"
 	/>
 </c:if>

@@ -33,7 +33,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 <portlet:renderURL var="viewURL" />
 
 <clay:navigation-bar
-	inverted="<%= true %>"
 	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "search") %>'
 />
 

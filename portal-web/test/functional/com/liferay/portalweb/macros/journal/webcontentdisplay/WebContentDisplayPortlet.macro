@@ -215,6 +215,12 @@ definition {
 		MenuItem.click(menuItem = "Edit Template");
 	}
 
+	macro gotoPermissions {
+		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
+
+		MenuItem.click(menuItem = "Permissions");
+	}
+
 	macro removeWebContent {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",

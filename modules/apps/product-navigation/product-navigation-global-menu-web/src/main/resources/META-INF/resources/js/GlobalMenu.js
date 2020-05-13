@@ -148,6 +148,7 @@ function GlobalMenu({panelAppsURL}) {
 							{items.map(({key, label}, index) => (
 								<ClayTabs.Item
 									active={activeTab === index}
+									id={`${portletNamespace}tab_${index}`}
 									key={key}
 									onClick={() => setActiveTab(index)}
 								>
@@ -160,7 +161,7 @@ function GlobalMenu({panelAppsURL}) {
 							<ClayTabs.Content activeIndex={activeTab}>
 								{items.map(({childCategories}, index) => (
 									<ClayTabs.TabPane
-										aria-labelledby={`tab-${index}`}
+										aria-labelledby={`${portletNamespace}tab_${index}`}
 										key={`tabPane-${index}`}
 									>
 										<Content

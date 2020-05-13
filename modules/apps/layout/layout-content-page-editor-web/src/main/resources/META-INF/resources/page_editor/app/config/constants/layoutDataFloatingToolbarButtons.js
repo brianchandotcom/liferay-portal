@@ -28,7 +28,7 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		icon: 'cog',
 		id: 'container_configuration',
 		panelId: 'container_configuration',
-		title: Liferay.Language.get('section-configuration'),
+		title: Liferay.Language.get('container-configuration'),
 		type: 'panel',
 	},
 
@@ -69,6 +69,14 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		id: 'save_fragment_composition',
 		panelId: 'save_fragment_compositionn',
 		title: Liferay.Language.get('save-as-fragment'),
+		type: 'panel',
+	},
+
+	sectionConfiguration: {
+		icon: 'cog',
+		id: 'section_configuration',
+		panelId: 'section_configuration',
+		title: Liferay.Language.get('section-configuration'),
 		type: 'panel',
 	},
 };

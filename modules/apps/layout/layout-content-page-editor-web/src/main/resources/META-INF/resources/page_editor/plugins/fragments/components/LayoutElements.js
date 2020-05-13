@@ -26,6 +26,11 @@ import Collapse from '../../../common/components/Collapse';
 const layoutElements = [
 	{
 		columns: ['12'],
+		label: LAYOUT_DATA_ITEM_TYPE_LABELS.section,
+		type: LAYOUT_DATA_ITEM_TYPES.section,
+	},
+	{
+		columns: ['12'],
 		label: LAYOUT_DATA_ITEM_TYPE_LABELS.container,
 		type: LAYOUT_DATA_ITEM_TYPES.container,
 	},

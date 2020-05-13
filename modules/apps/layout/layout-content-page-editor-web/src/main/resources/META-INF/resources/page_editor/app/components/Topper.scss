@@ -111,6 +111,8 @@
 
 	&.drag-over-middle .page-editor__container > .container:before,
 	&.drag-over-middle .page-editor__container > .container-fluid:before,
+	&.drag-over-middle .page-editor__section > .container:before,
+	&.drag-over-middle .page-editor__section > .container-fluid:before,
 	&.drag-over-middle.page-editor__col:before,
 	&.drag-over-middle.page-editor__collection-item:before {
 		box-shadow: inset 0 0 0 4px $primary-l1;
@@ -125,6 +127,7 @@
 	}
 
 	&.not-droppable .page-editor__container > .container:before,
+	&.not-droppable .page-editor__section > .container:before,
 	&.not-droppable.page-editor__col:before,
 	&.not-droppable.page-editor__collection-item:before {
 		box-shadow: inset 0 0 0 1px $danger;
@@ -132,7 +135,8 @@
 	}
 	&.not-droppable.page-editor__col[data-advice]:before,
 	&.not-droppable.page-editor__collection-item[data-advice]:before,
-	&.not-droppable .page-editor__container[data-advice]:before {
+	&.not-droppable .page-editor__container[data-advice]:before,
+	&.not-droppable .page-editor__section[data-advice]:before {
 		background-color: $danger;
 		border-radius: 2px;
 		color: $white;

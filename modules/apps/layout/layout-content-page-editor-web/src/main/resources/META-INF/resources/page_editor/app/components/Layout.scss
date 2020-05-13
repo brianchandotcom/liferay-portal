@@ -68,6 +68,9 @@
 	&__container,
 	&__container > .container:before,
 	&__container > .container-fluid:before,
+	&__section,
+	&__section > .container:before,
+	&__section > .container-fluid:before,
 	&__row:before {
 		box-shadow: inset 0 0 0 1px $primary-l2;
 	}
@@ -75,6 +78,8 @@
 	&__col,
 	&__container > .container,
 	&__container > .container-fluid,
+	&__section > .container,
+	&__section > .container-fluid,
 	&__row,
 	&__collection-item {
 		position: relative;
@@ -123,6 +128,8 @@
 
 	&__container.empty > .container,
 	&__container.empty > .container-fluid,
+	&__section.empty > .container,
+	&__section.empty > .container-fluid,
 	&__row.empty {
 		height: 10em;
 	}

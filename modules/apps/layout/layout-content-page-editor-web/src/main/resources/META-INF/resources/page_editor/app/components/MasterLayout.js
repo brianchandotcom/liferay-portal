@@ -31,7 +31,13 @@ import Layout from './Layout';
 import UnsafeHTML from './UnsafeHTML';
 import getAllEditables from './fragment-content/getAllEditables';
 import resolveEditableValue from './fragment-content/resolveEditableValue';
-import {Collection, Column, Container, Row} from './layout-data-items/index';
+import {
+	Collection,
+	Column,
+	Container,
+	Row,
+	Section,
+} from './layout-data-items/index';
 
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: Collection,
@@ -43,6 +49,7 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: Root,
 	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
 	[LAYOUT_DATA_ITEM_TYPES.row]: Row,
+	[LAYOUT_DATA_ITEM_TYPES.section]: Section,
 };
 
 export default function MasterPage() {

@@ -22,4 +22,5 @@ export const LAYOUT_DATA_ITEM_TYPES = {
 	fragmentDropZone: 'fragment-drop-zone',
 	root: 'root',
 	row: 'row',
+	section: 'section',
 };

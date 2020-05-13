@@ -67,7 +67,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		final File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
 
-		_configureEclipseClasspathFile(project, eclipseModelExtension);
+		_configureEclipseClasspath(project, eclipseModelExtension);
 		_configureEclipseProject(
 			project, eclipseModelExtension, eclipseTaskProvider, portalRootDir);
 		_configureTaskEclipseProvider(eclipseTaskProvider);
@@ -95,7 +95,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	private EclipseDefaultsPlugin() {
 	}
 
-	private void _configureEclipseClasspathFile(
+	private void _configureEclipseClasspath(
 		final Project project, EclipseModel eclipseModelExtension) {
 
 		final EclipseClasspath eclipseClasspath =
@@ -157,7 +157,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 		EclipseProject eclipseProject = eclipseModelExtension.getProject();
 
-		String name = project.getName();
+		String eclipseProjectName = project.getName();
 
 		String gitWorkingBranch = GradleUtil.getTaskPrefixedProperty(
 			project.getPath(), eclipseTaskProvider.getName(),
@@ -170,11 +170,12 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 				project, "git.working.branch.name", (String)null);
 
 			if (Validator.isNotNull(gitWorkingBranchName)) {
-				name = name + '-' + gitWorkingBranchName;
+				eclipseProjectName =
+					eclipseProjectName + '-' + gitWorkingBranchName;
 			}
 		}
 
-		eclipseProject.setName(name);
+		eclipseProject.setName(eclipseProjectName);
 
 		List<String> natures = eclipseProject.getNatures();
 

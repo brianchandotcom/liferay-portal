@@ -136,6 +136,11 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 	}
 
 	@Override
+	public long getMvccVersion() {
+		return _expandoColumn.getMvccVersion();
+	}
+
+	@Override
 	public String getName() {
 		return _expandoColumn.getName();
 	}
@@ -265,6 +270,11 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 	@Override
 	public void setModifiedDate(Date date) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_expandoColumn.setMvccVersion(mvccVersion);
 	}
 
 	@Override

@@ -106,6 +106,11 @@ public class StagedExpandoTableImpl implements StagedExpandoTable {
 	}
 
 	@Override
+	public long getMvccVersion() {
+		return _expandoTable.getMvccVersion();
+	}
+
+	@Override
 	public String getName() {
 		return _expandoTable.getName();
 	}
@@ -223,6 +228,11 @@ public class StagedExpandoTableImpl implements StagedExpandoTable {
 	@Override
 	public void setModifiedDate(Date date) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_expandoTable.setMvccVersion(mvccVersion);
 	}
 
 	@Override

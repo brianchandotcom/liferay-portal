@@ -44,6 +44,7 @@ public class ExpandoValueWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("valueId", getValueId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("tableId", getTableId());
@@ -58,6 +59,12 @@ public class ExpandoValueWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long valueId = (Long)attributes.get("valueId");
 
 		if (valueId != null) {
@@ -277,6 +284,16 @@ public class ExpandoValueWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getLongArray();
+	}
+
+	/**
+	 * Returns the mvcc version of this expando value.
+	 *
+	 * @return the mvcc version of this expando value
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	@Override
@@ -551,6 +568,16 @@ public class ExpandoValueWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		model.setLongArray(data);
+	}
+
+	/**
+	 * Sets the mvcc version of this expando value.
+	 *
+	 * @param mvccVersion the mvcc version of this expando value
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	@Override

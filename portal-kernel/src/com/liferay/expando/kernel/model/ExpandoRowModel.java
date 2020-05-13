@@ -15,6 +15,7 @@
 package com.liferay.expando.kernel.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface ExpandoRowModel extends BaseModel<ExpandoRow>, ShardedModel {
+public interface ExpandoRowModel
+	extends BaseModel<ExpandoRow>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +56,22 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow>, ShardedModel {
 	 * @param primaryKey the primary key of this expando row
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this expando row.
+	 *
+	 * @return the mvcc version of this expando row
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this expando row.
+	 *
+	 * @param mvccVersion the mvcc version of this expando row
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the row ID of this expando row.

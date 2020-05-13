@@ -469,6 +469,7 @@ create table EmailAddress (
 );
 
 create table ExpandoColumn (
+	mvccVersion LONG default 0 not null,
 	columnId LONG not null primary key,
 	companyId LONG,
 	tableId LONG,
@@ -479,6 +480,7 @@ create table ExpandoColumn (
 );
 
 create table ExpandoRow (
+	mvccVersion LONG default 0 not null,
 	rowId_ LONG not null primary key,
 	companyId LONG,
 	modifiedDate DATE null,
@@ -487,6 +489,7 @@ create table ExpandoRow (
 );
 
 create table ExpandoTable (
+	mvccVersion LONG default 0 not null,
 	tableId LONG not null primary key,
 	companyId LONG,
 	classNameId LONG,
@@ -494,6 +497,7 @@ create table ExpandoTable (
 );
 
 create table ExpandoValue (
+	mvccVersion LONG default 0 not null,
 	valueId LONG not null primary key,
 	companyId LONG,
 	tableId LONG,

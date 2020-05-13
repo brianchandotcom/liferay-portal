@@ -30,6 +30,7 @@ public class ExpandoColumnSoap implements Serializable {
 	public static ExpandoColumnSoap toSoapModel(ExpandoColumn model) {
 		ExpandoColumnSoap soapModel = new ExpandoColumnSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setColumnId(model.getColumnId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setTableId(model.getTableId());
@@ -90,6 +91,14 @@ public class ExpandoColumnSoap implements Serializable {
 		setColumnId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnId() {
 		return _columnId;
 	}
@@ -146,6 +155,7 @@ public class ExpandoColumnSoap implements Serializable {
 		_typeSettings = typeSettings;
 	}
 
+	private long _mvccVersion;
 	private long _columnId;
 	private long _companyId;
 	private long _tableId;

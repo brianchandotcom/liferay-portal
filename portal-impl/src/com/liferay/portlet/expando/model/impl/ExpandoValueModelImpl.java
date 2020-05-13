@@ -67,16 +67,18 @@ public class ExpandoValueModelImpl
 	public static final String TABLE_NAME = "ExpandoValue";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"valueId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"tableId", Types.BIGINT}, {"columnId", Types.BIGINT},
-		{"rowId_", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"data_", Types.CLOB}
+		{"mvccVersion", Types.BIGINT}, {"valueId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"tableId", Types.BIGINT},
+		{"columnId", Types.BIGINT}, {"rowId_", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"data_", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("valueId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
@@ -88,7 +90,7 @@ public class ExpandoValueModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExpandoValue (valueId LONG not null primary key,companyId LONG,tableId LONG,columnId LONG,rowId_ LONG,classNameId LONG,classPK LONG,data_ TEXT null)";
+		"create table ExpandoValue (mvccVersion LONG default 0 not null,valueId LONG not null primary key,companyId LONG,tableId LONG,columnId LONG,rowId_ LONG,classNameId LONG,classPK LONG,data_ TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoValue";
 
@@ -144,6 +146,7 @@ public class ExpandoValueModelImpl
 
 		ExpandoValue model = new ExpandoValueImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setValueId(soapModel.getValueId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setTableId(soapModel.getTableId());
@@ -308,6 +311,11 @@ public class ExpandoValueModelImpl
 		Map<String, BiConsumer<ExpandoValue, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<ExpandoValue, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", ExpandoValue::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<ExpandoValue, Long>)ExpandoValue::setMvccVersion);
 		attributeGetterFunctions.put("valueId", ExpandoValue::getValueId);
 		attributeSetterBiConsumers.put(
 			"valueId",
@@ -344,6 +352,17 @@ public class ExpandoValueModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -552,6 +571,7 @@ public class ExpandoValueModelImpl
 	public Object clone() {
 		ExpandoValueImpl expandoValueImpl = new ExpandoValueImpl();
 
+		expandoValueImpl.setMvccVersion(getMvccVersion());
 		expandoValueImpl.setValueId(getValueId());
 		expandoValueImpl.setCompanyId(getCompanyId());
 		expandoValueImpl.setTableId(getTableId());
@@ -688,6 +708,8 @@ public class ExpandoValueModelImpl
 		ExpandoValueCacheModel expandoValueCacheModel =
 			new ExpandoValueCacheModel();
 
+		expandoValueCacheModel.mvccVersion = getMvccVersion();
+
 		expandoValueCacheModel.valueId = getValueId();
 
 		expandoValueCacheModel.companyId = getCompanyId();
@@ -783,6 +805,7 @@ public class ExpandoValueModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _valueId;
 	private long _companyId;
 	private long _tableId;

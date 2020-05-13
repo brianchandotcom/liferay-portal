@@ -64,14 +64,16 @@ public class ExpandoTableModelImpl
 	public static final String TABLE_NAME = "ExpandoTable";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"tableId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"name", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"tableId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"name", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
@@ -79,7 +81,7 @@ public class ExpandoTableModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExpandoTable (tableId LONG not null primary key,companyId LONG,classNameId LONG,name VARCHAR(75) null)";
+		"create table ExpandoTable (mvccVersion LONG default 0 not null,tableId LONG not null primary key,companyId LONG,classNameId LONG,name VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoTable";
 
@@ -249,6 +251,11 @@ public class ExpandoTableModelImpl
 		Map<String, BiConsumer<ExpandoTable, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<ExpandoTable, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", ExpandoTable::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<ExpandoTable, Long>)ExpandoTable::setMvccVersion);
 		attributeGetterFunctions.put("tableId", ExpandoTable::getTableId);
 		attributeSetterBiConsumers.put(
 			"tableId",
@@ -270,6 +277,17 @@ public class ExpandoTableModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -398,6 +416,7 @@ public class ExpandoTableModelImpl
 	public Object clone() {
 		ExpandoTableImpl expandoTableImpl = new ExpandoTableImpl();
 
+		expandoTableImpl.setMvccVersion(getMvccVersion());
 		expandoTableImpl.setTableId(getTableId());
 		expandoTableImpl.setCompanyId(getCompanyId());
 		expandoTableImpl.setClassNameId(getClassNameId());
@@ -483,6 +502,8 @@ public class ExpandoTableModelImpl
 	public CacheModel<ExpandoTable> toCacheModel() {
 		ExpandoTableCacheModel expandoTableCacheModel =
 			new ExpandoTableCacheModel();
+
+		expandoTableCacheModel.mvccVersion = getMvccVersion();
 
 		expandoTableCacheModel.tableId = getTableId();
 
@@ -571,6 +592,7 @@ public class ExpandoTableModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _tableId;
 	private long _companyId;
 	private long _originalCompanyId;

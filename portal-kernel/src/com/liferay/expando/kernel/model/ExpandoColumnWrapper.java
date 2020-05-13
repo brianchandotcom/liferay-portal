@@ -43,6 +43,7 @@ public class ExpandoColumnWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("columnId", getColumnId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("tableId", getTableId());
@@ -56,6 +57,12 @@ public class ExpandoColumnWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long columnId = (Long)attributes.get("columnId");
 
 		if (columnId != null) {
@@ -137,6 +144,16 @@ public class ExpandoColumnWrapper
 	@Override
 	public String getDisplayName(java.util.Locale locale) {
 		return model.getDisplayName(locale);
+	}
+
+	/**
+	 * Returns the mvcc version of this expando column.
+	 *
+	 * @return the mvcc version of this expando column
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -229,6 +246,16 @@ public class ExpandoColumnWrapper
 	@Override
 	public void setDefaultData(String defaultData) {
 		model.setDefaultData(defaultData);
+	}
+
+	/**
+	 * Sets the mvcc version of this expando column.
+	 *
+	 * @param mvccVersion the mvcc version of this expando column
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

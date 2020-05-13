@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class ExpandoRowCacheModel
-	implements CacheModel<ExpandoRow>, Externalizable {
+	implements CacheModel<ExpandoRow>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -47,7 +48,9 @@ public class ExpandoRowCacheModel
 
 		ExpandoRowCacheModel expandoRowCacheModel = (ExpandoRowCacheModel)obj;
 
-		if (rowId == expandoRowCacheModel.rowId) {
+		if ((rowId == expandoRowCacheModel.rowId) &&
+			(mvccVersion == expandoRowCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -56,14 +59,28 @@ public class ExpandoRowCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, rowId);
+		int hashCode = HashUtil.hash(0, rowId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{rowId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", rowId=");
 		sb.append(rowId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -82,6 +99,7 @@ public class ExpandoRowCacheModel
 	public ExpandoRow toEntityModel() {
 		ExpandoRowImpl expandoRowImpl = new ExpandoRowImpl();
 
+		expandoRowImpl.setMvccVersion(mvccVersion);
 		expandoRowImpl.setRowId(rowId);
 		expandoRowImpl.setCompanyId(companyId);
 
@@ -102,6 +120,8 @@ public class ExpandoRowCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		rowId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -114,6 +134,8 @@ public class ExpandoRowCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(rowId);
 
 		objectOutput.writeLong(companyId);
@@ -124,6 +146,7 @@ public class ExpandoRowCacheModel
 		objectOutput.writeLong(classPK);
 	}
 
+	public long mvccVersion;
 	public long rowId;
 	public long companyId;
 	public long modifiedDate;

@@ -16,6 +16,7 @@ package com.liferay.expando.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.TypedModel;
 
@@ -34,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ExpandoTableModel
-	extends BaseModel<ExpandoTable>, ShardedModel, TypedModel {
+	extends BaseModel<ExpandoTable>, MVCCModel, ShardedModel, TypedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +56,22 @@ public interface ExpandoTableModel
 	 * @param primaryKey the primary key of this expando table
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this expando table.
+	 *
+	 * @return the mvcc version of this expando table
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this expando table.
+	 *
+	 * @param mvccVersion the mvcc version of this expando table
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the table ID of this expando table.

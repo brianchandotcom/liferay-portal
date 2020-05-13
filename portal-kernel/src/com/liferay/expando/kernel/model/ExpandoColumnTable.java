@@ -31,6 +31,8 @@ public class ExpandoColumnTable extends BaseTable<ExpandoColumnTable> {
 
 	public static final ExpandoColumnTable INSTANCE = new ExpandoColumnTable();
 
+	public final Column<ExpandoColumnTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<ExpandoColumnTable, Long> columnId = createColumn(
 		"columnId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<ExpandoColumnTable, Long> companyId = createColumn(

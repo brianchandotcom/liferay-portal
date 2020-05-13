@@ -37,6 +37,13 @@ public class AccountEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAccountEntry(long, long, String, String, String[],
+	 byte[], int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes, int status)
@@ -45,6 +52,17 @@ public class AccountEntryServiceUtil {
 		return getService().addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
 			status);
+	}
+
+	public static com.liferay.account.model.AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, logoBytes,
+			status, serviceContext);
 	}
 
 	public static java.util.List<com.liferay.account.model.AccountEntry>

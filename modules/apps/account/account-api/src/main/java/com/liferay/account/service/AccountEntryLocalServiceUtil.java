@@ -68,6 +68,12 @@ public class AccountEntryLocalServiceUtil {
 		return getService().addAccountEntry(accountEntry);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAccountEntry(long, long, String, String, String[],
+	 byte[], int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes, int status)
@@ -384,6 +390,12 @@ public class AccountEntryLocalServiceUtil {
 		return getService().updateAccountEntry(accountEntry);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateAccountEntry(Long, long, String, String, boolean,
+	 String[], byte[], int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.account.model.AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,

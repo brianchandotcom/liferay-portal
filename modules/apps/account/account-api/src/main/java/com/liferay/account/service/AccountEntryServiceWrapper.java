@@ -30,6 +30,12 @@ public class AccountEntryServiceWrapper
 		_accountEntryService = accountEntryService;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAccountEntry(long, long, String, String, String[],
+	 byte[], int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
@@ -39,6 +45,18 @@ public class AccountEntryServiceWrapper
 		return _accountEntryService.addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
 			status);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, logoBytes,
+			status, serviceContext);
 	}
 
 	@Override

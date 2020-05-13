@@ -68,6 +68,12 @@ public class AccountEntryLocalServiceWrapper
 		return _accountEntryLocalService.addAccountEntry(accountEntry);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAccountEntry(long, long, String, String, String[],
+	 byte[], int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
@@ -411,6 +417,12 @@ public class AccountEntryLocalServiceWrapper
 		return _accountEntryLocalService.updateAccountEntry(accountEntry);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateAccountEntry(Long, long, String, String, boolean,
+	 String[], byte[], int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.account.model.AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,

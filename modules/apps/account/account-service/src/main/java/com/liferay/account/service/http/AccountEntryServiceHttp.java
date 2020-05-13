@@ -94,6 +94,50 @@ public class AccountEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountEntry addAccountEntry(
+			HttpPrincipal httpPrincipal, long userId, long parentAccountEntryId,
+			String name, String description, String[] domains, byte[] logoBytes,
+			int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryServiceUtil.class, "addAccountEntry",
+				_addAccountEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, parentAccountEntryId, name, description,
+				domains, logoBytes, status, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List<com.liferay.account.model.AccountEntry>
 			getAccountEntries(
 				HttpPrincipal httpPrincipal, long companyId, int status,
@@ -105,7 +149,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "getAccountEntries",
-				_getAccountEntriesParameterTypes1);
+				_getAccountEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, status, start, end, obc);
@@ -148,7 +192,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "search",
-				_searchParameterTypes2);
+				_searchParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, keywords, params, cur, delta, orderByField, reverse);
@@ -183,12 +227,18 @@ public class AccountEntryServiceHttp {
 			long.class, long.class, String.class, String.class, String[].class,
 			byte[].class, int.class
 		};
-	private static final Class<?>[] _getAccountEntriesParameterTypes1 =
+	private static final Class<?>[] _addAccountEntryParameterTypes1 =
+		new Class[] {
+			long.class, long.class, String.class, String.class, String[].class,
+			byte[].class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _getAccountEntriesParameterTypes2 =
 		new Class[] {
 			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _searchParameterTypes2 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes3 = new Class[] {
 		String.class, java.util.LinkedHashMap.class, int.class, int.class,
 		String.class, boolean.class
 	};

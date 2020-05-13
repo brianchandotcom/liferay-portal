@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -78,25 +79,9 @@ public class MessageListenerImpl implements MessageListener {
 				return false;
 			}
 
-			String messageIdString = null;
+			String messageIdString = _getMessageIdString(recipients, message);
 
-			boolean valid = false;
-
-			for (String recipient : recipients) {
-				messageIdString = getMessageIdString(recipient, message);
-
-				if ((messageIdString != null) &&
-					messageIdString.startsWith(
-						MBMailUtil.MESSAGE_POP_PORTLET_PREFIX,
-						MBMailUtil.getMessageIdStringOffset())) {
-
-					valid = true;
-
-					break;
-				}
-			}
-
-			if (!valid) {
+			if (Validator.isNull(messageIdString)) {
 				return false;
 			}
 
@@ -156,25 +141,18 @@ public class MessageListenerImpl implements MessageListener {
 
 			stopWatch.start();
 
-			String messageIdString = null;
+			String messageIdString = _getMessageIdString(recipients, message);
 
-			for (String recipient : recipients) {
-				messageIdString = getMessageIdString(recipient, message);
-
-				if ((messageIdString != null) &&
-					messageIdString.startsWith(
-						MBMailUtil.MESSAGE_POP_PORTLET_PREFIX,
-						MBMailUtil.getMessageIdStringOffset())) {
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Deliver message from ", from, " to ",
-								recipient));
-					}
-
-					break;
+			if (Validator.isNull(messageIdString)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Cannot deliver message ", message.toString(),
+							", none of the recipients contain a message ID: ",
+							recipients.toString()));
 				}
+
+				return;
 			}
 
 			Company company = getCompany(messageIdString);
@@ -402,6 +380,24 @@ public class MessageListenerImpl implements MessageListener {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	private String _getMessageIdString(List<String> recipients, Message message)
+		throws Exception {
+
+		for (String recipient : recipients) {
+			String messageIdString = getMessageIdString(recipient, message);
+
+			if ((messageIdString != null) &&
+				messageIdString.startsWith(
+					MBMailUtil.MESSAGE_POP_PORTLET_PREFIX,
+					MBMailUtil.getMessageIdStringOffset())) {
+
+				return messageIdString;
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

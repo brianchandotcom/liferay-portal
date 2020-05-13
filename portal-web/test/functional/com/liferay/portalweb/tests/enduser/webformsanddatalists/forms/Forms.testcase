@@ -1690,7 +1690,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Forms");
 
-		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1704,11 +1704,11 @@ definition {
 
 		FormFields.viewSelectOption(
 			fieldName = "Default Display View",
-			selectOption = "List");
+			selectOption = "Table");
 
 		FormFields.selectSelectOption(
 			fieldName = "Default Display View",
-			selectOption = "Table");
+			selectOption = "List");
 
 		SystemSettings.saveConfiguration();
 
@@ -1717,7 +1717,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Forms");
 
-		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1736,7 +1736,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Forms");
 
-		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
 	}
 
 	@description = "This is a use case for LPS-69100 and LPS-69334."

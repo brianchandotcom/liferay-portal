@@ -117,6 +117,10 @@ public class MenuItemProvider {
 			String.valueOf(_getRepositoryId(folder, themeDisplay)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
+		portletURL.setParameter(
+			"fileEntryTypeId",
+			String.valueOf(DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT));
+
 		urlMenuItem.setURL(portletURL.toString());
 
 		return urlMenuItem;

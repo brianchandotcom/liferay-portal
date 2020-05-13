@@ -25,13 +25,10 @@ definition {
 		var userName = PropsUtil.get("sharepoint.oauth.user.name");
 		var userPassword = PropsUtil.get("sharepoint.oauth.user.password");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
-			configurationCategory = "Collaboration",
+			configurationCategory = "Documents and Media",
 			configurationName = "Sharepoint OAuth2",
 			configurationScope = "System Scope");
 

@@ -543,7 +543,10 @@ public class ResourceActionsImpl implements ResourceActions {
 	@Deprecated
 	@Override
 	public String[] getRootModelResources() {
-		return _rootModelResources.toArray(new String[0]);
+		Collection<String> rootModelResources =
+			_portletRootModelResources.values();
+
+		return ArrayUtil.unique(rootModelResources.toArray(new String[0]));
 	}
 
 	/**
@@ -588,7 +591,10 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public boolean isRootModelResource(String modelResource) {
-		if (_rootModelResources.contains(modelResource)) {
+		Collection<String> rootModelResources =
+			_portletRootModelResources.values();
+
+		if (rootModelResources.contains(modelResource)) {
 			return true;
 		}
 
@@ -1195,8 +1201,6 @@ public class ResourceActionsImpl implements ResourceActions {
 				modelResourceElement.elementText("root"));
 
 			if (root) {
-				_rootModelResources.add(name);
-
 				_portletRootModelResources.put(portletName, name);
 			}
 		}
@@ -1341,7 +1345,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		new HashMap<>();
 	private final Map<String, Set<String>> _resourceReferences =
 		new HashMap<>();
-	private final Set<String> _rootModelResources = new HashSet<>();
 
 	private static class ResourceActionsBag {
 

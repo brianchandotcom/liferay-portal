@@ -164,13 +164,13 @@ public class GCloudNaturalLanguageUtilTest {
 		int size = _randomSize();
 
 		String text =
-			RandomTestUtil.randomString(size - 1) + StringPool.SPACE +
-				RandomTestUtil.randomString(size - 1);
+			RandomTestUtil.randomString(size) + StringPool.SPACE +
+				RandomTestUtil.randomString(size);
 
 		Assert.assertEquals(
 			text,
 			GCloudNaturalLanguageUtil.truncateToSize(
-				text + StringPool.SPACE + RandomTestUtil.randomString(size - 1),
+				text + StringPool.SPACE + RandomTestUtil.randomString(size),
 				text.length() + 1));
 	}
 
@@ -178,12 +178,12 @@ public class GCloudNaturalLanguageUtilTest {
 	public void testTruncateToSizeTextGreaterThanMaxWithWordSmallerThanSize() {
 		int size = _randomSize();
 
-		String text = RandomTestUtil.randomString(size - 1);
+		String text = RandomTestUtil.randomString(size);
 
 		Assert.assertEquals(
 			text,
 			GCloudNaturalLanguageUtil.truncateToSize(
-				text + StringPool.SPACE + text, size));
+				text + StringPool.SPACE + text, size + 1));
 	}
 
 	@Test
@@ -191,11 +191,11 @@ public class GCloudNaturalLanguageUtilTest {
 		int size = _randomSize();
 
 		String text =
-			RandomTestUtil.randomString((size / 2) - 1) + StringPool.SPACE +
-				RandomTestUtil.randomString((size / 2) - 1);
+			RandomTestUtil.randomString(size / 2) + StringPool.SPACE +
+				RandomTestUtil.randomString(size / 2);
 
 		Assert.assertEquals(
-			text, GCloudNaturalLanguageUtil.truncateToSize(text, size));
+			text, GCloudNaturalLanguageUtil.truncateToSize(text, size + 1));
 	}
 
 	@Test

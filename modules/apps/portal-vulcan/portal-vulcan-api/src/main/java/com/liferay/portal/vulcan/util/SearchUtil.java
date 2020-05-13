@@ -78,6 +78,18 @@ public class SearchUtil {
 		return queryDefinition;
 	}
 
+	public static SearchContext getSearchContext(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, String keywords, Pagination pagination,
+			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			Sort[] sorts)
+		throws Exception {
+
+		return _createSearchContext(
+			_getBooleanClause(booleanQueryUnsafeConsumer, filter), keywords,
+			pagination, queryConfigUnsafeConsumer, sorts);
+	}
+
 	public static <T> Page<T> search(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,

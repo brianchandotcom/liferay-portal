@@ -90,6 +90,14 @@ definition {
 		}
 	}
 
+	macro revokeStarsRating {
+		Click(locator1 = "Ratings#YOUR_RATING_STAR");
+
+		Click.clickNoMouseOver(locator1 = "Ratings#YOUR_RATING_STAR_DELETE");
+
+		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
+	}
+
 	macro viewRateLike {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
 

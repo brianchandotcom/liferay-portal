@@ -73,7 +73,7 @@ public class DataRecordValuesUtil {
 		Map<String, DDMFormField> ddmFormFields = ddmForm.getDDMFormFieldsMap(
 			true);
 
-		if ((dataRecordValues != null) && !dataRecordValues.isEmpty()) {
+		if (MapUtil.isNotEmpty(dataRecordValues)) {
 			for (Map.Entry<String, DDMFormField> entry :
 					ddmFormFields.entrySet()) {
 

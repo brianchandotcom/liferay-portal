@@ -2707,6 +2707,9 @@ log.sanitizer.enabled=false</echo>
 		<attribute default="" name="test.sql.zip.url" />
 
 		<sequential>
+			<var name="app.server.type" value="@{app.server.type}" />
+			<var name="app.server.version" value="@{app.server.version}" />
+
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
 					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" stop.app.server="true">
@@ -2859,7 +2862,10 @@ log.sanitizer.enabled=false</echo>
 						</then>
 						<elseif>
 							<and>
-								<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+								<or>
+									<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+									<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+								</or>
 								<available file="liferay-portal-source.tar.gz" />
 							</and>
 							<then>
@@ -3126,10 +3132,17 @@ log.sanitizer.enabled=false</echo>
 	</macrodef>
 
 	<macrodef name="setup-test-environment">
+		<attribute default="${app.server.${app.server.type}.version}" name="app.server.version" />
+
 		<sequential>
+			<var name="app.server.version" value="@{app.server.version}" />
+
 			<if>
 				<and>
-					<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+					<or>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+					</or>
 					<available file="liferay-portal-source.tar.gz" />
 				</and>
 				<then>
@@ -3498,6 +3511,8 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="blade-samples-jdk8">
+		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
+
 		<run-batch-test>
 			<test-action>
 				<execute dir="${blade.samples.dir}">
@@ -3531,7 +3546,10 @@ log.sanitizer.enabled=false</echo>
 					</elseif>
 					<elseif>
 						<and>
-							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<or>
+								<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+								<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+							</or>
 							<available file="liferay-portal-source.tar.gz" />
 						</and>
 						<then>
@@ -5246,6 +5264,8 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="modules-semantic-versioning-jdk8">
+		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
+
 		<run-batch-test>
 			<test-action>
 				<loadresource property="modules.baseline.task.groups">
@@ -5304,14 +5324,23 @@ log.sanitizer.enabled=false</echo>
 
 				<if>
 					<and>
-						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<or>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+						</or>
 						<available file="liferay-portal-source.tar.gz" />
 					</and>
 					<then>
+						<local name="bundle.src.file.name" />
+
+						<condition else="liferay-portal-bundle-${app.server.type}.tar.gz" property="bundle.src.file.name" value="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz">
+							<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+						</condition>
+
 						<untar
 							compression="gzip"
 							dest="."
-							src="liferay-portal-bundle-${app.server.type}.tar.gz"
+							src="${bundle.src.file.name}"
 						/>
 
 						<antcall inheritAll="false" target="compile" />
@@ -5728,6 +5757,8 @@ ${output.content}</echo>
 	</target>
 
 	<target name="portal-startup-space-in-path-jdk8">
+		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
+
 		<sequential>
 			<run-batch-test>
 				<test-action>
@@ -5812,7 +5843,10 @@ ${output.content}</echo>
 						</then>
 						<elseif>
 							<and>
-								<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+								<or>
+									<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+									<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+								</or>
 								<available file="liferay-portal-source.tar.gz" />
 							</and>
 							<then>

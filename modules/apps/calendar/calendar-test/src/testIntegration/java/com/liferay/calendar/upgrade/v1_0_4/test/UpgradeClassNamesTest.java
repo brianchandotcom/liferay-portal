@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
@@ -49,6 +49,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Adam Brandizzi
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class UpgradeClassNamesTest {
 
@@ -284,16 +285,12 @@ public class UpgradeClassNamesTest {
 			"v1_0_4.UpgradeClassNames");
 	}
 
-	@DeleteAfterTestRun
 	private AssetVocabulary _assetVocabulary;
 
-	@DeleteAfterTestRun
 	private ClassName _calEventClassName;
 
-	@DeleteAfterTestRun
-	private ResourcePermission _newResourcePermission;
 
-	@DeleteAfterTestRun
+	private ResourcePermission _newResourcePermission;
 	private ResourcePermission _oldResourcePermission;
 
 	private UpgradeProcess _upgradeProcess;

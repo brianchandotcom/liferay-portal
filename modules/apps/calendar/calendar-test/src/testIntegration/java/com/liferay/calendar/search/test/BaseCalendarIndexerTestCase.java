@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
 import com.liferay.portal.test.rule.Inject;
 
@@ -96,16 +95,6 @@ public abstract class BaseCalendarIndexerTestCase {
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
 
-	@DeleteAfterTestRun
-	private final List<CalendarBooking> _calendarBookings = new ArrayList<>(1);
 
-	@DeleteAfterTestRun
-	private final List<Calendar> _calendars = new ArrayList<>(1);
-
-	@DeleteAfterTestRun
-	private final List<Group> _groups = new ArrayList<>(1);
-
-	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<>(1);
 
 }

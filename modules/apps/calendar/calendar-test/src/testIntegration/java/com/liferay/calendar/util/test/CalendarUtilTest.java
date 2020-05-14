@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -70,6 +70,7 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Adam Brandizzi
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CalendarUtilTest {
 
@@ -377,15 +378,11 @@ public class CalendarUtilTest {
 
 	private static Class<?> _calendarUtilClass;
 
-	@DeleteAfterTestRun
+
+
 	private Group _group;
-
 	private PermissionChecker _permissionChecker;
-
-	@DeleteAfterTestRun
 	private User _privateUser;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

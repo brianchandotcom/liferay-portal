@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -59,6 +59,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Lino Alves
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CalendarBookingServiceTest {
 
@@ -242,18 +243,14 @@ public class CalendarBookingServiceTest {
 			new String[0]);
 	}
 
-	@DeleteAfterTestRun
+
+
 	private Group _liveGroup;
-
-	@DeleteAfterTestRun
 	private User _omnidminUser;
-
 	private PermissionChecker _permissionChecker;
 
-	@DeleteAfterTestRun
-	private User _user1;
 
-	@DeleteAfterTestRun
+	private User _user1;
 	private User _user2;
 
 }

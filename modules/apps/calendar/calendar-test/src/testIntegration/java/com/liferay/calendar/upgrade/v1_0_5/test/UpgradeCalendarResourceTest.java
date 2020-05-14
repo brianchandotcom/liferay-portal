@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Adam Brandizzi
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class UpgradeCalendarResourceTest {
 
@@ -179,7 +180,6 @@ public class UpgradeCalendarResourceTest {
 			"v1_0_5.UpgradeCalendarResource");
 	}
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	private UpgradeProcess _upgradeProcess;

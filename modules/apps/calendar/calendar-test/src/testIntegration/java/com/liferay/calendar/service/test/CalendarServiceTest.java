@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -48,6 +48,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Adam Brandizzi
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CalendarServiceTest {
 
@@ -136,13 +137,10 @@ public class CalendarServiceTest {
 		return calendarResource.getDefaultCalendar();
 	}
 
-	@DeleteAfterTestRun
 	private User _adminUser;
 
-	@DeleteAfterTestRun
-	private Group _liveGroup;
 
-	@DeleteAfterTestRun
+	private Group _liveGroup;
 	private Group _notStagedGroup;
 
 }

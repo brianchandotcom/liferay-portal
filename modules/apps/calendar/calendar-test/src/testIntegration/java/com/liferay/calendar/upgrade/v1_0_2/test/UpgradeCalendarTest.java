@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -44,6 +44,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Adam Brandizzi
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class UpgradeCalendarTest {
 
@@ -120,13 +121,10 @@ public class UpgradeCalendarTest {
 		UserLocalServiceUtil.updateUser(_user);
 	}
 
-	@DeleteAfterTestRun
-	private Group _group;
 
+	private Group _group;
 	private UpgradeDatabaseTestHelper _upgradeDatabaseTestHelper;
 	private UpgradeProcess _upgradeProcess;
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -44,6 +44,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Adam Brandizzi
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class UpgradeSchemaTest {
 
@@ -139,12 +140,10 @@ public class UpgradeSchemaTest {
 			"CalendarBooking", "recurringCalendarBookingId");
 	}
 
-	@DeleteAfterTestRun
 	private Calendar _calendar;
 
-	@DeleteAfterTestRun
-	private Group _group;
 
+	private Group _group;
 	private UpgradeDatabaseTestHelper _upgradeDatabaseTestHelper;
 	private UpgradeProcess _upgradeProcess;
 

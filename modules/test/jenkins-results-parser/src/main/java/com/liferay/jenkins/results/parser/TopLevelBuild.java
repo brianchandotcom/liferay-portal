@@ -586,7 +586,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	protected Element[] getBuildFailureElements() {
 		Map<Build, Element> downstreamBuildFailureMessages =
-			getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
+			getDownstreamBuildMessages(getDownstreamBuildFailures());
 
 		List<Element> allCurrentBuildFailureElements = new ArrayList<>();
 		List<Element> upstreamBuildFailureElements = new ArrayList<>();

@@ -29,7 +29,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -2475,29 +2474,31 @@ public abstract class BaseBuild implements Build {
 		return count;
 	}
 
-	protected Map<Build, Element> getDownstreamBuildMessages(
-		String... results) {
+	protected List<Build> getDownstreamBuildFailures() {
+		List<Build> downstreamBuildFailures = new ArrayList<>();
 
-		List<String> resultList = Arrays.asList(results);
-		List<Build> matchingBuilds = new ArrayList<>();
+		downstreamBuildFailures.addAll(getDownstreamBuilds("ABORTED", null));
+		downstreamBuildFailures.addAll(getDownstreamBuilds("FAILURE", null));
+		downstreamBuildFailures.addAll(getDownstreamBuilds("UNSTABLE", null));
+
+		return downstreamBuildFailures;
+	}
+
+	protected Map<Build, Element> getDownstreamBuildMessages(
+		List<Build> downstreamBuilds) {
+
 		List<Callable<Element>> callables = new ArrayList<>();
 
-		for (final Build downstreamBuild : getDownstreamBuilds(null)) {
-			String downstreamBuildResult = downstreamBuild.getResult();
+		for (final Build downstreamBuild : downstreamBuilds) {
+			Callable<Element> callable = new Callable<Element>() {
 
-			if (resultList.contains(downstreamBuildResult)) {
-				matchingBuilds.add(downstreamBuild);
+				public Element call() {
+					return downstreamBuild.getGitHubMessageElement();
+				}
 
-				Callable<Element> callable = new Callable<Element>() {
+			};
 
-					public Element call() {
-						return downstreamBuild.getGitHubMessageElement();
-					}
-
-				};
-
-				callables.add(callable);
-			}
+			callables.add(callable);
 		}
 
 		ParallelExecutor<Element> parallelExecutor = new ParallelExecutor<>(
@@ -2508,7 +2509,7 @@ public abstract class BaseBuild implements Build {
 		Map<Build, Element> elementsMap = new LinkedHashMap<>();
 
 		for (int i = 0; i < elements.size(); i++) {
-			elementsMap.put(matchingBuilds.get(i), elements.get(i));
+			elementsMap.put(downstreamBuilds.get(i), elements.get(i));
 		}
 
 		return elementsMap;

@@ -83,7 +83,7 @@ public class BatchBuild extends BaseBuild {
 		}
 
 		Map<Build, Element> downstreamBuildFailureMessages =
-			getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
+			getDownstreamBuildMessages(getDownstreamBuildFailures());
 
 		List<Element> failureElements = new ArrayList<>();
 		List<Element> upstreamJobFailureElements = new ArrayList<>();

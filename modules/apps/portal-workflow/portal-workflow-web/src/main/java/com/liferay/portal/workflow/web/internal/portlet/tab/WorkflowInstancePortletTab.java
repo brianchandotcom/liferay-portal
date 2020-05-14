@@ -86,7 +86,8 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 
 	@Override
 	public void prepareProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 
 		String actionName = ParamUtil.getString(
 			actionRequest, ActionRequest.ACTION_NAME);

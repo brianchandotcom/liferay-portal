@@ -147,8 +147,14 @@ public class DDMFormInstanceRecordServiceImpl
 			ddmFormInstanceRecordLocalService.getFormInstanceRecord(
 				ddmFormInstanceRecordId);
 
-		_ddmFormInstanceRecordModelResourcePermission.check(
-			getPermissionChecker(), ddmFormInstanceRecord, ActionKeys.UPDATE);
+		if (!_ddmFormInstanceRecordModelResourcePermission.contains(
+				getPermissionChecker(), ddmFormInstanceRecordId,
+				DDMActionKeys.ADD_FORM_INSTANCE_RECORD)) {
+
+			_ddmFormInstanceRecordModelResourcePermission.check(
+				getPermissionChecker(), ddmFormInstanceRecord,
+				ActionKeys.UPDATE);
+		}
 
 		return ddmFormInstanceRecordLocalService.updateFormInstanceRecord(
 			getUserId(), ddmFormInstanceRecordId, majorVersion, ddmFormValues,

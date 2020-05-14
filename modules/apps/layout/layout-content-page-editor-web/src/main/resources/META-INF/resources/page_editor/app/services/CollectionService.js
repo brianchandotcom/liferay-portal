@@ -25,6 +25,7 @@ export default {
 	 */
 	getCollectionField({
 		collection,
+		listStyle,
 		onNetworkStatus,
 		segmentsExperienceId,
 		size,
@@ -34,6 +35,7 @@ export default {
 			{
 				body: {
 					layoutObjectReference: JSON.stringify(collection),
+					listStyle,
 					segmentsExperienceId,
 					size,
 				},

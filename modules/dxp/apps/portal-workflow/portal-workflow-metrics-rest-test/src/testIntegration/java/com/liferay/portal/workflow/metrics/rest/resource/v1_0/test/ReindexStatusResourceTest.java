@@ -15,12 +15,14 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.ReindexStatus;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,5 +45,8 @@ public class ReindexStatusResourceTest
 		Assert.assertEquals(
 			reindexStatuses.toString(), 0, reindexStatuses.size());
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 }

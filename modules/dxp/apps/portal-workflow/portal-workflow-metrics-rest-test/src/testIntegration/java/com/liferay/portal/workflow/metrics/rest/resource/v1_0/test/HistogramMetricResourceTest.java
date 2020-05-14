@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Histogram;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.HistogramMetric;
@@ -43,6 +44,7 @@ import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -108,6 +110,9 @@ public class HistogramMetricResourceTest
 			LocalDateTime.of(nowlocalDate.minusDays(1), LocalTime.MAX),
 			LocalDateTime.of(nowlocalDate.minusDays(1), LocalTime.MIDNIGHT));
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

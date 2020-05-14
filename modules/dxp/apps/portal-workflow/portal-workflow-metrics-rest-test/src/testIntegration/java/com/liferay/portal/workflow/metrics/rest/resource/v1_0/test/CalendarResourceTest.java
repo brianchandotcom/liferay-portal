@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.CalendarSerDes;
@@ -35,6 +36,7 @@ import java.util.Locale;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -127,6 +129,9 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 			Arrays.asList(
 				CalendarSerDes.toDTOs(calendarsJSONObject.getString("items"))));
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

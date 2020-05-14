@@ -17,6 +17,7 @@ import React, {useEffect, useState} from 'react';
 import CollectionService from '../../services/CollectionService';
 import {useDispatch, useSelector} from '../../store/index';
 import {CollectionItemContextProvider} from '../CollectionItemContext';
+import UnsafeHTML from '../UnsafeHTML';
 
 const COLLECTION_ID_DIVIDER = '$';
 
@@ -146,6 +147,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		if (collectionConfig.collection) {
 			CollectionService.getCollectionField({
 				collection: collectionConfig.collection,
+				listStyle: collectionConfig.listStyle,
 				onNetworkStatus: dispatch,
 				segmentsExperienceId,
 				size: collectionConfig.numberOfItems,
@@ -161,6 +163,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		}
 	}, [
 		collectionConfig.collection,
+		collectionConfig.listStyle,
 		collectionConfig.numberOfItems,
 		dispatch,
 		segmentsExperienceId,
@@ -189,6 +192,7 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 	return (
 		<div className="page-editor__collection" ref={ref}>
 			{collectionIsMapped(collectionConfig) &&
+			!collection.content &&
 			collection.items.length > 0 ? (
 				<Grid
 					child={child}
@@ -199,6 +203,8 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 					numberOfColumns={collectionConfig.numberOfColumns}
 					numberOfItems={collectionConfig.numberOfItems}
 				/>
+			) : collectionIsMapped(collectionConfig) && collection.content ? (
+				<UnsafeHTML markup={collection.content} />
 			) : collectionIsMapped(collectionConfig) ? (
 				<NoItemsMessage />
 			) : (

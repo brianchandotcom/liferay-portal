@@ -18,6 +18,8 @@ import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.list.renderer.InfoListRenderer;
+import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
@@ -27,6 +29,7 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -37,7 +40,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +51,9 @@ import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,13 +84,16 @@ public class GetCollectionFieldMVCResourceCommand
 
 		String layoutObjectReference = ParamUtil.getString(
 			resourceRequest, "layoutObjectReference");
+		String listStyle = ParamUtil.getString(resourceRequest, "listStyle");
 		long segmentsExperienceId = ParamUtil.getLong(
 			resourceRequest, "segmentsExperienceId");
 		int size = ParamUtil.getInteger(resourceRequest, "size");
 
 		try {
 			jsonObject = _getCollectionFieldsJSONObject(
-				layoutObjectReference, themeDisplay.getLocale(),
+				_portal.getHttpServletRequest(resourceRequest),
+				_portal.getHttpServletResponse(resourceResponse),
+				layoutObjectReference, listStyle, themeDisplay.getLocale(),
 				segmentsExperienceId, size);
 		}
 		catch (Exception exception) {
@@ -97,7 +108,9 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private JSONObject _getCollectionFieldsJSONObject(
-			String layoutObjectReference, Locale locale,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			String layoutObjectReference, String listStyle, Locale locale,
 			long segmentsExperienceId, int size)
 		throws PortalException {
 
@@ -155,6 +168,23 @@ public class GetCollectionFieldMVCResourceCommand
 							infoDisplayContributor, object, locale));
 				}
 
+				InfoListRenderer infoListRenderer =
+					_infoListRendererTracker.getInfoListRenderer(listStyle);
+
+				if (infoListRenderer != null) {
+					UnsyncStringWriter unsyncStringWriter =
+						new UnsyncStringWriter();
+
+					PipingServletResponse pipingServletResponse =
+						new PipingServletResponse(
+							httpServletResponse, unsyncStringWriter);
+
+					infoListRenderer.render(
+						list, httpServletRequest, pipingServletResponse);
+
+					jsonObject.put("content", unsyncStringWriter.toString());
+				}
+
 				jsonObject.put(
 					"items", jsonArray
 				).put(
@@ -206,10 +236,16 @@ public class GetCollectionFieldMVCResourceCommand
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
+	private InfoListRendererTracker _infoListRendererTracker;
+
+	@Reference
 	private LayoutListRetrieverTracker _layoutListRetrieverTracker;
 
 	@Reference
 	private ListObjectReferenceFactoryTracker
 		_listObjectReferenceFactoryTracker;
+
+	@Reference
+	private Portal _portal;
 
 }

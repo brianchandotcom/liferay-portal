@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -334,10 +335,12 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public List<FriendlyURLEntryLocalization> getFriendlyURLEntryLocalizations(
-		long groupId, long classNameId, long classPK, String languageId) {
+		long groupId, long classNameId, long classPK, String languageId,
+		int start, int end,
+		OrderByComparator<FriendlyURLEntryLocalization> obc) {
 
 		return friendlyURLEntryLocalizationPersistence.findByG_C_C_L(
-			groupId, classNameId, classPK, languageId);
+			groupId, classNameId, classPK, languageId, start, end, obc);
 	}
 
 	@Override

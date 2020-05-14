@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.reports.web.internal.model;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
@@ -84,9 +85,13 @@ public class TrafficSource {
 		_trafficShare = trafficShare;
 	}
 
-	public JSONObject toJSONObject(String helpMessage, String title) {
+	public JSONObject toJSONObject(
+		String helpMessage, JSONArray keywordsJSONArray, String title) {
+
 		return JSONUtil.put(
 			"helpMessage", helpMessage
+		).put(
+			"keywords", keywordsJSONArray
 		).put(
 			"name", getName()
 		).put(

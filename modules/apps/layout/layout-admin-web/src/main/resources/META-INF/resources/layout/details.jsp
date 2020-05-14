@@ -93,7 +93,9 @@ String friendlyURLBase = StringPool.BLANK;
 					<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
 				</liferay-portlet:resourceURL>
 
-				<portlet:actionURL name="/layout/delete_friendly_url_entry_localization" var="deleteFriendlyURLEntryLocalizationURL" />
+				<portlet:actionURL name="/layout/delete_friendly_url_entry_localization" var="deleteFriendlyURLEntryLocalizationURL">
+					<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+				</portlet:actionURL>
 
 				<div class="btn-url-history-wrapper">
 					<react:component

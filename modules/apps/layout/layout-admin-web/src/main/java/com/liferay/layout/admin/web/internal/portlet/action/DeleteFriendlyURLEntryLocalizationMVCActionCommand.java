@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -54,10 +55,9 @@ public class DeleteFriendlyURLEntryLocalizationMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isSignedIn()) {
-			throw new PrincipalException.MustBeAuthenticated(
-				themeDisplay.getUserId());
-		}
+		LayoutPermissionUtil.check(
+			themeDisplay.getPermissionChecker(),
+			ParamUtil.getLong(actionRequest, "plid"), ActionKeys.UPDATE);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

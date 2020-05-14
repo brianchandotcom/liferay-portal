@@ -49,7 +49,7 @@ public class SourceBuild extends BaseBuild {
 	}
 
 	@Override
-	public JSONObject getTestReportJSONObject() {
+	public JSONObject getTestReportJSONObject(boolean cache) {
 		return null;
 	}
 

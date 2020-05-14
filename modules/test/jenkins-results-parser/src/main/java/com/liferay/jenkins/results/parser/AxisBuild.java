@@ -413,7 +413,7 @@ public class AxisBuild extends BaseBuild {
 			return Collections.emptyList();
 		}
 
-		JSONObject testReportJSONObject = getTestReportJSONObject();
+		JSONObject testReportJSONObject = getTestReportJSONObject(false);
 
 		if (testReportJSONObject == null) {
 			System.out.println(

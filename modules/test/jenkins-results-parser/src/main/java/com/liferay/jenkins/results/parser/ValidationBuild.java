@@ -126,7 +126,7 @@ public class ValidationBuild extends BaseBuild {
 			return Collections.emptyList();
 		}
 
-		JSONObject testReportJSONObject = getTestReportJSONObject();
+		JSONObject testReportJSONObject = getTestReportJSONObject(false);
 
 		return getTestResults(
 			this, testReportJSONObject.getJSONArray("suites"), testStatus);

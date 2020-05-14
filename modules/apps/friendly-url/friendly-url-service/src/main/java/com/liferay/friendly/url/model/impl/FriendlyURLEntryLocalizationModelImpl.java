@@ -110,16 +110,18 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
-	public static final long FRIENDLYURLENTRYID_COLUMN_BITMASK = 2L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long FRIENDLYURLENTRYID_COLUMN_BITMASK = 4L;
 
-	public static final long LANGUAGEID_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	public static final long URLTITLE_COLUMN_BITMASK = 16L;
+	public static final long LANGUAGEID_COLUMN_BITMASK = 16L;
+
+	public static final long URLTITLE_COLUMN_BITMASK = 32L;
 
 	public static final long FRIENDLYURLENTRYLOCALIZATIONID_COLUMN_BITMASK =
-		32L;
+		64L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -519,7 +521,19 @@ public class FriendlyURLEntryLocalizationModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	public long getColumnBitmask() {
@@ -659,6 +673,11 @@ public class FriendlyURLEntryLocalizationModelImpl
 			friendlyURLEntryLocalizationModelImpl._classNameId;
 
 		friendlyURLEntryLocalizationModelImpl._setOriginalClassNameId = false;
+
+		friendlyURLEntryLocalizationModelImpl._originalClassPK =
+			friendlyURLEntryLocalizationModelImpl._classPK;
+
+		friendlyURLEntryLocalizationModelImpl._setOriginalClassPK = false;
 
 		friendlyURLEntryLocalizationModelImpl._columnBitmask = 0;
 	}
@@ -804,6 +823,8 @@ public class FriendlyURLEntryLocalizationModelImpl
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private long _columnBitmask;
 	private FriendlyURLEntryLocalization _escapedModel;
 

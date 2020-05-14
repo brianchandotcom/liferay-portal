@@ -218,6 +218,17 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_C_L() throws Exception {
+		_persistence.countByG_C_C_L(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_C_C_L(0L, 0L, 0L, "null");
+
+		_persistence.countByG_C_C_L(0L, 0L, 0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		FriendlyURLEntryLocalization newFriendlyURLEntryLocalization =
 			addFriendlyURLEntryLocalization();

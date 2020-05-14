@@ -99,7 +99,7 @@ public class KeywordResourceImpl
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", siteId));
 		}
 
-		if (Validator.isBlank(search)) {
+		if (!Validator.isBlank(search)) {
 			dynamicQuery.add(
 				RestrictionsFactoryUtil.ilike(
 					"name", StringUtil.quote(search, StringPool.PERCENT)));

@@ -464,7 +464,12 @@ definition {
 			larFileName = "${larFileName}",
 			portletName = "${portletName}");
 
-		Click(locator1 = "Icon#CLOSE");
+		if (isSet(wikiPortlet)) {
+			Click(locator1 = "Icon#TIMES");
+		}
+		else {
+			Click(locator1 = "Icon#CLOSE");
+		}
 	}
 
 	macro exportSiteCP {
@@ -532,7 +537,12 @@ definition {
 			portletName = "${portletName}",
 			uploadFrom = "${uploadFrom}");
 
-		IFrame.closeFrame();
+		if (isSet(wikiPortlet)) {
+			Click(locator1 = "Icon#TIMES");
+		}
+		else {
+			IFrame.closeFrame();
+		}
 	}
 
 	macro importSiteCP {

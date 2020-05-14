@@ -14,17 +14,31 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.headless.delivery.dto.v1_0.CollectionConfig;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.info.list.provider.InfoListProvider;
+import com.liferay.info.list.provider.InfoListProviderTracker;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.layout.page.template.admin.web.internal.util.GenericsUtil;
 import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -74,13 +88,93 @@ public class CollectionLayoutStructureItemImporter
 	private JSONObject _getCollectionConfigAsJSONObject(
 		Map<String, Object> collectionConfig) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		String type = (String)collectionConfig.get("collectionType");
 
-		for (Map.Entry<String, Object> entry : collectionConfig.entrySet()) {
-			jsonObject.put(entry.getKey(), entry.getValue());
+		if (Validator.isNull(type)) {
+			return null;
 		}
 
-		return jsonObject;
+		Map<String, Object> collectionReference =
+			(Map<String, Object>)collectionConfig.get("collectionReference");
+
+		if (MapUtil.isEmpty(collectionConfig)) {
+			return null;
+		}
+
+		if (Objects.equals(
+				type, CollectionConfig.CollectionType.COLLECTION.getValue())) {
+
+			return _getCollectionJSONObject(collectionReference);
+		}
+		else if (Objects.equals(
+					type,
+					CollectionConfig.CollectionType.COLLECTION_PROVIDER.
+						getValue())) {
+
+			return _getCollectionProviderJSONObject(collectionReference);
+		}
+
+		return null;
 	}
+
+	private JSONObject _getCollectionJSONObject(
+		Map<String, Object> collectionReference) {
+
+		int classPK = (int)collectionReference.get("classPK");
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.fetchAssetListEntry(classPK);
+
+		if (assetListEntry == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"classNameId",
+			_portal.getClassNameId(AssetListEntry.class.getName())
+		).put(
+			"classPK", classPK
+		).put(
+			"itemSubtype", assetListEntry.getAssetEntrySubtype()
+		).put(
+			"itemType", assetListEntry.getAssetEntryType()
+		).put(
+			"title", assetListEntry.getTitle()
+		).put(
+			"type", InfoListItemSelectorReturnType.class.getName()
+		);
+	}
+
+	private JSONObject _getCollectionProviderJSONObject(
+		Map<String, Object> collectionReference) {
+
+		String className = (String)collectionReference.get("className");
+
+		InfoListProvider infoListProvider =
+			_infoListProviderTracker.getInfoListProvider(className);
+
+		if (infoListProvider == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"itemType", GenericsUtil.getItemClassName(infoListProvider)
+		).put(
+			"key", className
+		).put(
+			"title", infoListProvider.getLabel(LocaleUtil.getDefault())
+		).put(
+			"type", InfoListProviderItemSelectorReturnType.class.getName()
+		);
+	}
+
+	@Reference
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private InfoListProviderTracker _infoListProviderTracker;
+
+	@Reference
+	private Portal _portal;
 
 }

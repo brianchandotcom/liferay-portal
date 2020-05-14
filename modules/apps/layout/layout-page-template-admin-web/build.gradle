@@ -13,6 +13,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:asset:asset-display-page-api")
+	compileOnly project(":apps:asset:asset-list-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:fragment:fragment-api")
@@ -23,6 +24,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:headless:headless-delivery:headless-delivery-api")
 	compileOnly project(":apps:info:info-api")
+	compileOnly project(":apps:info:info-list-provider-item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:layout:layout-admin-api")

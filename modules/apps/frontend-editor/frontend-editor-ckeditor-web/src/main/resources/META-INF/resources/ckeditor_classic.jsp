@@ -17,9 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
+Map<String, Object> editorData = (Map<String, Object>)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":data");
 String name = namespace + GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
+String toolbarSet = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
+
+JSONObject editorConfigJSONObject = null;
+
+if (editorData != null) {
+	editorConfigJSONObject = (JSONObject)editorData.get("editorConfig");
+}
 
 Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"editorConfig", editorConfigJSONObject
+).put(
+	"initialToolbarSet", toolbarSet
+).put(
 	"name", HtmlUtil.escapeAttribute(name)
 ).build();
 %>

@@ -37,6 +37,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -64,6 +65,22 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		}
 
 		_roles = new ArrayList<>();
+	}
+
+	@Ignore
+	@Override
+	public void testDeleteOrganizationRoleUserAccountAssociation()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	public void testDeleteRoleUserAccountAssociation() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	public void testDeleteSiteRoleUserAccountAssociation() throws Exception {
 	}
 
 	@Override
@@ -110,6 +127,22 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			JSONUtil.getValueAsInt(
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
 				"JSONObject/roles", "Object/totalCount"));
+	}
+
+	@Ignore
+	@Override
+	public void testPostOrganizationRoleUserAccountAssociation()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	public void testPostRoleUserAccountAssociation() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	public void testPostSiteRoleUserAccountAssociation() throws Exception {
 	}
 
 	@Override

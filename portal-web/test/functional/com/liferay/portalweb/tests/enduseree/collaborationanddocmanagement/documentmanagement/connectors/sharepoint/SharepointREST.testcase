@@ -95,7 +95,7 @@ definition {
 		Type(
 			key_fieldLabel = "Name",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${configurationName}");
+			value1 = "Collaboration Test Application");
 
 		DMRepository.addSharepoint(
 			dmRepositoryLibraryPath = "Documentos compartidos",
@@ -114,15 +114,15 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertClick(
-			key_dmRepositoryName = "${configurationName}",
+			key_dmRepositoryName = "Collaboration Test Application",
 			locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW",
-			value1 = "${configurationName}");
+			value1 = "Collaboration Test Application");
 
 		MicrosoftLogin.accountSignIn(
 			userEmail = "${userName}",
 			userPassword = "${userPassword}");
 
-		MicrosoftLogin.confirmSharepointApp(dmRepositoryName = "${configurationName}");
+		MicrosoftLogin.confirmSharepointApp(dmRepositoryName = "Collaboration Test Application");
 
 		Navigator.openSpecificURL(url = "https://localhost:8443");
 

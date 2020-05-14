@@ -106,6 +106,10 @@ public class WidgetInstanceDTOConverter {
 
 		String instanceId = PortletIdCodec.decodeInstanceId(portletId);
 
+		if (Validator.isNull(instanceId)) {
+			return null;
+		}
+
 		String namespace = fragmentEntryLink.getNamespace();
 
 		if (instanceId.startsWith(namespace)) {

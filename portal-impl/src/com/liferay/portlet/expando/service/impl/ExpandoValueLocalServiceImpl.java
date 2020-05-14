@@ -1710,20 +1710,24 @@ public class ExpandoValueLocalServiceImpl
 
 		ExpandoRow row = expandoRowPersistence.fetchByT_C(tableId, classPK);
 
+		ExpandoValue value = null;
+
 		if (row == null) {
 			long rowId = counterLocalService.increment();
 
 			row = expandoRowPersistence.create(rowId);
 
 			row.setCompanyId(companyId);
+			row.setModifiedDate(new Date());
 			row.setTableId(tableId);
 			row.setClassPK(classPK);
 
 			row = expandoRowPersistence.update(row);
 		}
-
-		ExpandoValue value = expandoValuePersistence.fetchByC_R(
-			columnId, row.getRowId());
+		else {
+			value = expandoValuePersistence.fetchByC_R(
+				columnId, row.getRowId());
+		}
 
 		if (value == null) {
 			long valueId = counterLocalService.increment();
@@ -1736,9 +1740,12 @@ public class ExpandoValueLocalServiceImpl
 			value.setRowId(row.getRowId());
 			value.setClassNameId(classNameId);
 			value.setClassPK(classPK);
+			value.setData(data);
+
+			return expandoValuePersistence.update(value);
 		}
 
-		if (value.isNew() || !Objects.equals(value.getData(), data)) {
+		if (!Objects.equals(value.getData(), data)) {
 			value.setData(data);
 
 			value = expandoValuePersistence.update(value);

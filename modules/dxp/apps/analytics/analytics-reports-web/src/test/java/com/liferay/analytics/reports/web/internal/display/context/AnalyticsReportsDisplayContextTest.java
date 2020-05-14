@@ -276,6 +276,8 @@ public class AnalyticsReportsDisplayContextTest {
 				JSONUtil.put(
 					"helpMessage", _titles.get(_MESSAGE_KEY_HELP_PAID)
 				).put(
+					"keywords", _getKeywordsJSONArray()
+				).put(
 					"name", _TITLE_KEY_PAID
 				).put(
 					"share", paidTrafficShare
@@ -286,6 +288,8 @@ public class AnalyticsReportsDisplayContextTest {
 				),
 				JSONUtil.put(
 					"helpMessage", _titles.get(_MESSAGE_KEY_HELP_ORGANIC)
+				).put(
+					"keywords", _getKeywordsJSONArray()
 				).put(
 					"name", _TITLE_KEY_ORGANIC
 				).put(
@@ -367,6 +371,55 @@ public class AnalyticsReportsDisplayContextTest {
 			}
 
 		};
+	}
+
+	private JSONArray _getKeywordsJSONArray() {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"keyword", "commerce"
+			).put(
+				"position", 1
+			).put(
+				"searchVolume", 12300
+			).put(
+				"traffic", 90000
+			),
+			JSONUtil.put(
+				"keyword", "e-commerce"
+			).put(
+				"position", 2
+			).put(
+				"searchVolume", 9800
+			).put(
+				"traffic", 14800
+			),
+			JSONUtil.put(
+				"keyword", "what is commerce"
+			).put(
+				"position", 3
+			).put(
+				"searchVolume", 9500
+			).put(
+				"traffic", 14000
+			),
+			JSONUtil.put(
+				"keyword", "what is e-commerce"
+			).put(
+				"position", 4
+			).put(
+				"searchVolume", 8700
+			).put(
+				"traffic", 12100
+			),
+			JSONUtil.put(
+				"keyword", "commerce definition for new business strategy"
+			).put(
+				"position", 5
+			).put(
+				"searchVolume", 7100
+			).put(
+				"traffic", 10100
+			));
 	}
 
 	private Layout _getLayout() {

@@ -15,6 +15,7 @@
 package com.liferay.analytics.reports.web.internal.model;
 
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -42,11 +43,24 @@ public class TrafficSourceTest {
 			RandomTestUtil.randomDouble());
 
 		String helpMessage = RandomTestUtil.randomString();
+		JSONArray keywordsJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"position", 1
+			).put(
+				"title", "commerce"
+			).put(
+				"value", 900
+			).put(
+				"volume", 12300
+			));
+
 		String title = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			JSONUtil.put(
 				"helpMessage", helpMessage
+			).put(
+				"keywords", keywordsJSONArray
 			).put(
 				"name", trafficSource.getName()
 			).put(
@@ -56,7 +70,9 @@ public class TrafficSourceTest {
 			).put(
 				"value", trafficSource.getTrafficAmount()
 			).toString(),
-			String.valueOf(trafficSource.toJSONObject(helpMessage, title)));
+			String.valueOf(
+				trafficSource.toJSONObject(
+					helpMessage, keywordsJSONArray, title)));
 	}
 
 }

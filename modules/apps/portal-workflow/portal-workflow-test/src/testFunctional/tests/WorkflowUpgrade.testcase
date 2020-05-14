@@ -101,7 +101,6 @@ definition {
 	test ViewWorkflowArchive70106 {
 		property data.archive.type = "data-archive-workflow";
 		property portal.version = "7.0.10.6";
-		property portal.upstream = "quarantine";
 
 		Upgrade.approveWorkflow();
 
@@ -112,7 +111,6 @@ definition {
 	test ViewWorkflowArchive621015 {
 		property data.archive.type = "data-archive-workflow";
 		property portal.version = "6.2.10.15";
-		property portal.upstream = "quarantine";
 
 		Upgrade.approveWorkflow();
 
@@ -123,7 +121,6 @@ definition {
 	test ViewWorkflowArchive621021 {
 		property data.archive.type = "data-archive-workflow";
 		property portal.version = "6.2.10.21";
-		property portal.upstream = "quarantine";
 
 		Upgrade.approveWorkflow();
 

@@ -106,6 +106,8 @@ const Modal = ({
 	id,
 	iframeBodyCssClass,
 	onClose,
+	onSelect,
+	selectEventName,
 	size,
 	title,
 	url,
@@ -173,6 +175,20 @@ const Modal = ({
 
 		return <div ref={bodyRef}></div>;
 	};
+
+	useEffect(() => {
+		let eventHandler;
+
+		if (onSelect && selectEventName) {
+			eventHandler = Liferay.on(selectEventName, onSelect);
+		}
+
+		return () => {
+			if (eventHandler) {
+				eventHandler.detach();
+			}
+		};
+	}, [onSelect, selectEventName]);
 
 	return (
 		<>
@@ -337,6 +353,8 @@ Modal.propTypes = {
 	headerHTML: PropTypes.string,
 	id: PropTypes.string,
 	onClose: PropTypes.func,
+	onSelect: PropTypes.func,
+	selectEventName: PropTypes.string,
 	size: PropTypes.oneOf(['full-screen', 'lg', 'sm']),
 	title: PropTypes.string,
 	url: PropTypes.string,

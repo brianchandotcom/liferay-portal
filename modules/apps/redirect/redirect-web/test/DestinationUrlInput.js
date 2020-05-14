@@ -41,14 +41,18 @@ describe('DestinationUrlInput', () => {
 		expect(checkButton).toHaveProperty('disabled', true);
 	});
 
-	it('check url button is enabled if url is not empty', () => {
+	it('check url button is enabled with a valid url', () => {
 		const {getByLabelText, getByTitle} = renderComponent();
 
 		const inputElement = getByLabelText('destination-url');
 
-		fireEvent.change(inputElement, {target: {value: 'test'}});
+		fireEvent.change(inputElement, {target: {value: '/test'}});
 
 		const checkButton = getByTitle('check-url');
+
+		expect(checkButton.disabled).toBe(true);
+
+		fireEvent.change(inputElement, {target: {value: 'www.test.com'}});
 
 		expect(checkButton.disabled).toBe(false);
 	});
@@ -68,5 +72,24 @@ describe('DestinationUrlInput', () => {
 		fireEvent.click(checkButton);
 
 		expect(global.open).toBeCalledWith(testingUrl, '_blank');
+	});
+
+	it('window open appends the http protocol it not present in the url', () => {
+		global.open = jest.fn();
+
+		const testingUrl = 'www.test.com';
+
+		const {getByTitle} = renderComponent({
+			initialDestinationUrl: testingUrl,
+			...defaultProps,
+		});
+
+		const checkButton = getByTitle('check-url');
+
+		fireEvent.click(checkButton);
+
+		const finalUrl = 'http://' + testingUrl;
+
+		expect(global.open).toBeCalledWith(finalUrl, '_blank');
 	});
 });

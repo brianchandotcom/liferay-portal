@@ -483,6 +483,17 @@ public class FriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.friendly.url.model.FriendlyURLEntryLocalization>
+			getFriendlyURLEntryLocalizations(
+				long groupId, long classNameId, long classPK,
+				String languageId) {
+
+		return _friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+			groupId, classNameId, classPK, languageId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

@@ -36,8 +36,6 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#BlockedAfterReachAllowedFailedAttempts";
 
-		var portalURL = PropsUtil.get("portal.url");
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -67,6 +65,8 @@ definition {
 		SignIn.signIn(userEmailAddress = "test@liferay.com");
 
 		MultiFactorAuthentication.sendOTPEmailPG();
+
+		var portalURL = PropsUtil.get("portal.url");
 
 		MultiFactorAuthentication.verifyOTP(
 			otp = "123456",

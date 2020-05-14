@@ -35,7 +35,6 @@ definition {
 
 	macro emailOTPConfiguration {
 		var failedAttemptsAllowed = "${failedAttemptsAllowed}";
-		var retryTimeout = "${retryTimeout}";
 
 		if (isSet(failedAttemptsAllowed)) {
 			Type(
@@ -43,6 +42,8 @@ definition {
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_CONFIG_FIELD",
 				value1 = "${failedAttemptsAllowed}");
 		}
+
+		var retryTimeout = "${retryTimeout}";
 
 		if (isSet(retryTimeout)) {
 			Type(
@@ -74,15 +75,6 @@ definition {
 	}
 
 	macro verifyOTP {
-		var bodySpecificText = MockMock.getBodySpecificText(
-			asset = "${portalURL}: Your One-Time Password",
-			content = "Your one-time password is:",
-			enableOTP = "true",
-			recipient = "${recipient}",
-			sender = "Joe Bloggs",
-			specificText = "Your one-time password is: <pre>",
-			subject = "${portalURL}: Your One-Time Password");
-
 		if (isSet(specificURL)) {
 			Navigator.openSpecificURL(url = "${specificURL}");
 		}
@@ -111,6 +103,14 @@ definition {
 		}
 		else if ("${validOTP}" == "false") {
 			var otp = "${otp}";
+			var bodySpecificText = MockMock.getBodySpecificText(
+				asset = "${portalURL}: Your One-Time Password",
+				content = "Your one-time password is:",
+				enableOTP = "true",
+				recipient = "${recipient}",
+				sender = "Joe Bloggs",
+				specificText = "Your one-time password is: <pre>",
+				subject = "${portalURL}: Your One-Time Password");
 
 			Type(
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD",

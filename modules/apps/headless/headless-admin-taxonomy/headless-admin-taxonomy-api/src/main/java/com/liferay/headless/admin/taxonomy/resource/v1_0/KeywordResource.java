@@ -50,7 +50,7 @@ public interface KeywordResource {
 	}
 
 	public Page<Keyword> getKeywordsRankedPage(
-			Long siteId, Pagination pagination)
+			Long siteId, String search, Pagination pagination)
 		throws Exception;
 
 	public void deleteKeyword(Long keywordId) throws Exception;

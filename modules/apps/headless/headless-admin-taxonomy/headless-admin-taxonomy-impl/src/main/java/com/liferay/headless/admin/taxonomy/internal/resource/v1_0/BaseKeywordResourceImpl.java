@@ -91,6 +91,7 @@ public abstract class BaseKeywordResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -100,6 +101,7 @@ public abstract class BaseKeywordResourceImpl
 	@Tags(value = {@Tag(name = "Keyword")})
 	public Page<Keyword> getKeywordsRankedPage(
 			@Parameter(hidden = true) @QueryParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Pagination pagination)
 		throws Exception {
 

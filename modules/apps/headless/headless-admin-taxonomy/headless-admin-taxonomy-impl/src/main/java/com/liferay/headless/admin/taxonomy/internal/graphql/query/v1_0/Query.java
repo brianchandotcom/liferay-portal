@@ -79,11 +79,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keywordsRanked(page: ___, pageSize: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keywordsRanked(page: ___, pageSize: ___, search: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public KeywordPage keywordsRanked(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -93,7 +94,8 @@ public class Query {
 			this::_populateResourceContext,
 			keywordResource -> new KeywordPage(
 				keywordResource.getKeywordsRankedPage(
-					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
+					Long.valueOf(siteKey), search,
+					Pagination.of(page, pageSize))));
 	}
 
 	/**

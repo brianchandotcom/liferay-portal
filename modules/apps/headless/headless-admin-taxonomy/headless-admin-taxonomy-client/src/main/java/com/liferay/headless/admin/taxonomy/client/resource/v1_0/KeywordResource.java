@@ -41,11 +41,11 @@ public interface KeywordResource {
 	}
 
 	public Page<Keyword> getKeywordsRankedPage(
-			Long siteId, Pagination pagination)
+			Long siteId, String search, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getKeywordsRankedPageHttpResponse(
-			Long siteId, Pagination pagination)
+			Long siteId, String search, Pagination pagination)
 		throws Exception;
 
 	public void deleteKeyword(Long keywordId) throws Exception;
@@ -159,11 +159,11 @@ public interface KeywordResource {
 	public static class KeywordResourceImpl implements KeywordResource {
 
 		public Page<Keyword> getKeywordsRankedPage(
-				Long siteId, Pagination pagination)
+				Long siteId, String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getKeywordsRankedPageHttpResponse(siteId, pagination);
+				getKeywordsRankedPageHttpResponse(siteId, search, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -186,7 +186,7 @@ public interface KeywordResource {
 		}
 
 		public HttpInvoker.HttpResponse getKeywordsRankedPageHttpResponse(
-				Long siteId, Pagination pagination)
+				Long siteId, String search, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -212,6 +212,10 @@ public interface KeywordResource {
 
 			if (siteId != null) {
 				httpInvoker.parameter("siteId", String.valueOf(siteId));
+			}
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
 			if (pagination != null) {

@@ -18,6 +18,7 @@ AUI.add(
 
 		var KaleoDesignerRemoteServices = Liferay.KaleoDesignerRemoteServices;
 
+		var isArray = Lang.isArray;
 		var isObject = Lang.isObject;
 		var isValue = Lang.isValue;
 
@@ -47,8 +48,55 @@ AUI.add(
 		};
 
 		var populateUser = function (assignments) {
-			if (isValue(assignments.userId)) {
+			if (
+				isArray(assignments.emailAddress) &&
+				assignments.emailAddress.filter(isValue).length !== 0
+			) {
 				KaleoDesignerRemoteServices.getUser(
+					assignments.emailAddress,
+					null,
+					null,
+					(data) => {
+						AArray.each(data, (item) => {
+							if (item) {
+								var index = assignments.emailAddress.indexOf(
+									item.emailAddress
+								);
+
+								assignments.fullName[index] = item.fullName;
+							}
+						});
+					}
+				);
+			}
+			else if (
+				isArray(assignments.screenName) &&
+				assignments.screenName.filter(isValue).length !== 0
+			) {
+				KaleoDesignerRemoteServices.getUser(
+					null,
+					assignments.screenName,
+					null,
+					(data) => {
+						AArray.each(data, (item) => {
+							if (item) {
+								var index = assignments.screenName.indexOf(
+									item.screenName
+								);
+
+								assignments.fullName[index] = item.fullName;
+							}
+						});
+					}
+				);
+			}
+			else if (
+				isArray(assignments.userId) &&
+				assignments.userId.filter(isValue).length !== 0
+			) {
+				KaleoDesignerRemoteServices.getUser(
+					null,
+					null,
 					assignments.userId,
 					(data) => {
 						AArray.each(data, (item) => {
@@ -57,10 +105,7 @@ AUI.add(
 									item.userId
 								);
 
-								assignments.emailAddress[index] =
-									item.emailAddress;
 								assignments.fullName[index] = item.fullName;
-								assignments.screenName[index] = item.screenName;
 							}
 						});
 					}

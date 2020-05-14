@@ -90,6 +90,18 @@ const ColumnWithControls = React.forwardRef(
 		const isFirstColumnOfRow = () =>
 			columnRangeIsComplete(parentItem.children.slice(0, columnIndex));
 
+		const getPreviousResizableColumnId = () => {
+			const previousResizableColumns = parentItem.children
+				.slice(0, columnIndex)
+				.filter(
+					(columnId) => layoutData.items[columnId].config.size > 1
+				);
+
+			return previousResizableColumns[
+				previousResizableColumns.length - 1
+			];
+		};
+
 		const handleMouseDown = (event) => {
 			setColumnSelected(item);
 			setResizing(true);
@@ -139,12 +151,21 @@ const ColumnWithControls = React.forwardRef(
 					const clientXDiff = event.clientX - initialClientX;
 
 					if (rightColumnIsFirst && clientXDiff < 0) {
-						const leftColumnSize = leftColumnInitialSize - 1;
+						let leftColumnSize = leftColumnInitialSize - 1;
+						let newLeftColumnId = leftColumnId;
 						const rightColumnSize = 1;
+
+						if (leftColumnInitialSize === 1) {
+							newLeftColumnId = getPreviousResizableColumnId();
+
+							leftColumnSize =
+								layoutData.items[newLeftColumnId].config.size -
+								1;
+						}
 
 						layoutDataContext = updateNewLayoutDataContext({
 							layoutDataContext,
-							leftColumnId,
+							leftColumnId: newLeftColumnId,
 							leftColumnSize,
 							rightColumnId,
 							rightColumnSize,
@@ -155,7 +176,6 @@ const ColumnWithControls = React.forwardRef(
 						resizeInfo.current = null;
 						setResizing(false);
 						setColumnSelected(null);
-
 						dispatch(
 							resizeColumns({
 								layoutData: layoutDataContext,

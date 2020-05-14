@@ -65,12 +65,14 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 	public List<SiteInitializer> getSiteInitializers(
 		long companyId, boolean activeOnly) {
 
+		if (!activeOnly) {
+			return new ArrayList<>(_serviceTrackerMap.values());
+		}
+
 		List<SiteInitializer> siteInitializers = new ArrayList<>();
 
 		for (SiteInitializer siteInitializer : _serviceTrackerMap.values()) {
-			if (!activeOnly ||
-				(activeOnly && siteInitializer.isActive(companyId))) {
-
+			if (siteInitializer.isActive(companyId)) {
 				siteInitializers.add(siteInitializer);
 			}
 		}

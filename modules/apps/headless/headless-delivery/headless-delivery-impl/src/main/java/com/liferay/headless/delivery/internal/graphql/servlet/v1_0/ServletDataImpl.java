@@ -81,6 +81,8 @@ public class ServletDataImpl implements ServletData {
 			_messageBoardSectionResourceComponentServiceObjects);
 		Mutation.setMessageBoardThreadResourceComponentServiceObjects(
 			_messageBoardThreadResourceComponentServiceObjects);
+		Mutation.setNavigationMenuResourceComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects);
 		Mutation.setStructuredContentResourceComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects);
 		Mutation.setStructuredContentFolderResourceComponentServiceObjects(
@@ -198,6 +200,10 @@ public class ServletDataImpl implements ServletData {
 		_messageBoardThreadResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<NavigationMenuResource>
+		_navigationMenuResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
 
@@ -224,9 +230,5 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ContentStructureResource>
 		_contentStructureResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<NavigationMenuResource>
-		_navigationMenuResourceComponentServiceObjects;
 
 }

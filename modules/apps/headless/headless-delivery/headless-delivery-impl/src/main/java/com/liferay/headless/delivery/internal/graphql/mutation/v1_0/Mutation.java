@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
@@ -44,6 +45,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResourc
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
+import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
@@ -173,6 +175,14 @@ public class Mutation {
 
 		_messageBoardThreadResourceComponentServiceObjects =
 			messageBoardThreadResourceComponentServiceObjects;
+	}
+
+	public static void setNavigationMenuResourceComponentServiceObjects(
+		ComponentServiceObjects<NavigationMenuResource>
+			navigationMenuResourceComponentServiceObjects) {
+
+		_navigationMenuResourceComponentServiceObjects =
+			navigationMenuResourceComponentServiceObjects;
 	}
 
 	public static void setStructuredContentResourceComponentServiceObjects(
@@ -2129,6 +2139,94 @@ public class Mutation {
 					Long.valueOf(siteKey), callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Deletes the navigation menu and returns a 204 if the operation succeeds"
+	)
+	public boolean deleteNavigationMenu(
+			@GraphQLName("navigationMenuId") Long navigationMenuId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.deleteNavigationMenu(navigationMenuId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteNavigationMenuBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.deleteNavigationMenuBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Replaces the navigation menu with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public NavigationMenu updateNavigationMenu(
+			@GraphQLName("navigationMenuId") Long navigationMenuId,
+			@GraphQLName("navigationMenu") NavigationMenu navigationMenu)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource -> navigationMenuResource.putNavigationMenu(
+				navigationMenuId, navigationMenu));
+	}
+
+	@GraphQLField
+	public Response updateNavigationMenuBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.putNavigationMenuBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(description = "Creates a new navigation menu.")
+	public NavigationMenu createSiteNavigationMenu(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("navigationMenu") NavigationMenu navigationMenu)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.postSiteNavigationMenu(
+					Long.valueOf(siteKey), navigationMenu));
+	}
+
+	@GraphQLField
+	public Response createSiteNavigationMenuBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource ->
+				navigationMenuResource.postSiteNavigationMenuBatch(
+					Long.valueOf(siteKey), callbackURL, object));
+	}
+
 	@GraphQLField(description = "Creates a new structured content.")
 	public StructuredContent createSiteStructuredContent(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -3056,6 +3154,20 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			NavigationMenuResource navigationMenuResource)
+		throws Exception {
+
+		navigationMenuResource.setContextAcceptLanguage(_acceptLanguage);
+		navigationMenuResource.setContextCompany(_company);
+		navigationMenuResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		navigationMenuResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		navigationMenuResource.setContextUriInfo(_uriInfo);
+		navigationMenuResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(
 			StructuredContentResource structuredContentResource)
 		throws Exception {
 
@@ -3144,6 +3256,8 @@ public class Mutation {
 		_messageBoardSectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MessageBoardThreadResource>
 		_messageBoardThreadResourceComponentServiceObjects;
+	private static ComponentServiceObjects<NavigationMenuResource>
+		_navigationMenuResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentFolderResource>

@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -46,11 +47,31 @@ public interface NavigationMenuResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public void deleteNavigationMenu(Long navigationMenuId) throws Exception;
+
+	public Response deleteNavigationMenuBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public NavigationMenu getNavigationMenu(Long navigationMenuId)
+		throws Exception;
+
+	public NavigationMenu putNavigationMenu(
+			Long navigationMenuId, NavigationMenu navigationMenu)
+		throws Exception;
+
+	public Response putNavigationMenuBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Page<NavigationMenu> getSiteNavigationMenusPage(
 			Long siteId, Pagination pagination)
+		throws Exception;
+
+	public NavigationMenu postSiteNavigationMenu(
+			Long siteId, NavigationMenu navigationMenu)
+		throws Exception;
+
+	public Response postSiteNavigationMenuBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

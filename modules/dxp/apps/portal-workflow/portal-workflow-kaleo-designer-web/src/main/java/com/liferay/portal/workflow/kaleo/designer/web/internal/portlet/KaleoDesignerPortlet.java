@@ -63,6 +63,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -399,27 +400,50 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<User> users = new ArrayList<>();
+		Set<User> users = new HashSet<>();
 
-		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
+		for (String emailAddress :
+				ParamUtil.getStringValues(resourceRequest, "emailAddresses")) {
 
-		if (ArrayUtil.isNotEmpty(userIds)) {
-			for (long userId : userIds) {
-				User user = _userLocalService.fetchUser(userId);
+			User user = _userLocalService.fetchUserByEmailAddress(
+				themeDisplay.getCompanyId(), emailAddress);
 
-				if (user != null) {
-					users.add(user);
-				}
+			if (user != null) {
+				users.add(user);
 			}
 		}
-		else {
-			String keywords = ParamUtil.getString(resourceRequest, "keywords");
 
-			users = _userLocalService.search(
-				themeDisplay.getCompanyId(), keywords,
-				WorkflowConstants.STATUS_APPROVED,
-				new LinkedHashMap<String, Object>(), 0,
-				SearchContainer.DEFAULT_DELTA, new UserFirstNameComparator());
+		String keywords = ParamUtil.getString(resourceRequest, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			users.addAll(
+				_userLocalService.search(
+					themeDisplay.getCompanyId(), keywords,
+					WorkflowConstants.STATUS_APPROVED,
+					new LinkedHashMap<String, Object>(), 0,
+					SearchContainer.DEFAULT_DELTA,
+					new UserFirstNameComparator()));
+		}
+
+		for (String screenName :
+				ParamUtil.getStringValues(resourceRequest, "screenNames")) {
+
+			User user = _userLocalService.fetchUserByScreenName(
+				themeDisplay.getCompanyId(), screenName);
+
+			if (user != null) {
+				users.add(user);
+			}
+		}
+
+		for (long userId :
+				ParamUtil.getLongValues(resourceRequest, "userIds")) {
+
+			User user = _userLocalService.fetchUser(userId);
+
+			if (user != null) {
+				users.add(user);
+			}
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

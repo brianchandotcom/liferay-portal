@@ -111,7 +111,7 @@ class LayoutProvider extends Component {
 			ruleAdded: this._handleRuleAdded.bind(this),
 			ruleDeleted: this._handleRuleDeleted.bind(this),
 			ruleSaved: this._handleRuleSaved.bind(this),
-			ruleStatusChanged: this._handleRuleStatusChanged.bind(this),
+			ruleValidatorChanged: this._handleRuleValidatorChanged.bind(this),
 			sectionAdded: this._handleSectionAdded.bind(this),
 			sidebarFieldBlurred: this._handleSidebarFieldBlurred.bind(this),
 			successPageChanged: this._handleSuccessPageChanged.bind(this),
@@ -498,8 +498,8 @@ class LayoutProvider extends Component {
 		this.emit('rulesModified');
 	}
 
-	_handleRuleStatusChanged(invalidRule) {
-		this.emit('ruleStatusChanged', invalidRule);
+	_handleRuleValidatorChanged(invalidRule) {
+		this.emit('ruleValidatorChanged', invalidRule);
 	}
 
 	_handleRuleSaved(event) {

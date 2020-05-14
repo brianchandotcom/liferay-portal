@@ -40,8 +40,8 @@ class RuleEditorWrapper extends RuleEditor {
 
 const RuleEditorModalContent = ({onClose, rule}) => {
 	const ruleEditorRef = useRef();
-	const [ruleEditor, setRuleEditor] = useState(null);
 	const [invalidRule, setInvalidRule] = useState(true);
+	const [ruleEditor, setRuleEditor] = useState(null);
 	const [ruleName, setRuleName] = useState('');
 
 	const [
@@ -92,7 +92,8 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 						dataLayoutBuilder.dispatch('ruleEdited', rule);
 						onClose();
 					},
-					ruleStatusChanged: (status) => setInvalidRule(status),
+					ruleValidatorChanged: (isInvalid) =>
+						setInvalidRule(isInvalid),
 				},
 				key: 'create',
 				pages,

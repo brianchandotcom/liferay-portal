@@ -17,10 +17,16 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
+import com.liferay.portal.kernel.exception.RoleAssignmentException;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -39,6 +45,38 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = RoleResource.class
 )
 public class RoleResourceImpl extends BaseRoleResourceImpl {
+
+	@Override
+	public void deleteOrganizationRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long organizationId)
+		throws Exception {
+
+		_checkRoleType(roleId, RoleConstants.TYPE_ORGANIZATION);
+		Organization organization = _organizationService.getOrganization(
+			organizationId);
+
+		_userGroupRoleService.deleteUserGroupRoles(
+			userAccountId, organization.getGroupId(), new long[] {roleId});
+	}
+
+	@Override
+	public void deleteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId)
+		throws Exception {
+
+		_userService.deleteRoleUser(roleId, userAccountId);
+	}
+
+	@Override
+	public void deleteSiteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long siteId)
+		throws Exception {
+
+		_checkRoleType(roleId, RoleConstants.TYPE_SITE);
+
+		_userGroupRoleService.deleteUserGroupRoles(
+			userAccountId, siteId, new long[] {roleId});
+	}
 
 	@Override
 	public Role getRole(Long roleId) throws Exception {
@@ -72,6 +110,53 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				contextCompany.getCompanyId(), null, types, null));
 	}
 
+	@Override
+	public void postOrganizationRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long organizationId)
+		throws Exception {
+
+		_checkRoleType(roleId, RoleConstants.TYPE_ORGANIZATION);
+		Organization organization = _organizationService.getOrganization(
+			organizationId);
+
+		_userGroupRoleService.addUserGroupRoles(
+			userAccountId, organization.getGroupId(), new long[] {roleId});
+	}
+
+	@Override
+	public void postRoleUserAccountAssociation(Long roleId, Long userAccountId)
+		throws Exception {
+
+		_checkRoleType(roleId, RoleConstants.TYPE_REGULAR);
+
+		_userService.addRoleUsers(roleId, new long[] {userAccountId});
+	}
+
+	@Override
+	public void postSiteRoleUserAccountAssociation(
+			Long roleId, Long userAccountId, Long siteId)
+		throws Exception {
+
+		_checkRoleType(roleId, RoleConstants.TYPE_SITE);
+
+		_userGroupRoleService.addUserGroupRoles(
+			userAccountId, siteId, new long[] {roleId});
+	}
+
+	private void _checkRoleType(long roleId, int type) throws Exception {
+		com.liferay.portal.kernel.model.Role serviceBuilderRole =
+			_roleService.getRole(roleId);
+
+		if (serviceBuilderRole.getType() != type) {
+			throw new RoleAssignmentException(
+				StringBundler.concat(
+					"Invalid role type: ",
+					RoleConstants.getTypeLabel(serviceBuilderRole.getType()),
+					". Role should be of type: ",
+					RoleConstants.getTypeLabel(type)));
+		}
+	}
+
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
 		throws Exception {
 
@@ -100,12 +185,21 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	}
 
 	@Reference
+	private OrganizationService _organizationService;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference
 	private RoleService _roleService;
 
 	@Reference
+	private UserGroupRoleService _userGroupRoleService;
+
+	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserService _userService;
 
 }

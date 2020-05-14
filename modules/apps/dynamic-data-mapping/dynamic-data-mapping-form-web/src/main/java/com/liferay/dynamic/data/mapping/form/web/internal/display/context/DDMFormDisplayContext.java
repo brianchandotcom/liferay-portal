@@ -568,6 +568,18 @@ public class DDMFormDisplayContext {
 		ddmFormRenderingContext.setSharedURL(isSharedURL());
 		ddmFormRenderingContext.setViewMode(true);
 
+		String redirectURL = ParamUtil.getString(_renderRequest, "redirect");
+
+		if (Validator.isNotNull(redirectURL)) {
+			ddmFormRenderingContext.setRedirectURL(redirectURL);
+
+			ddmFormRenderingContext.setCancelLabel(
+				LanguageUtil.get(ddmForm.getDefaultLocale(), "cancel"));
+		}
+		else {
+			ddmFormRenderingContext.setShowCancelButton(false);
+		}
+
 		return ddmFormRenderingContext;
 	}
 

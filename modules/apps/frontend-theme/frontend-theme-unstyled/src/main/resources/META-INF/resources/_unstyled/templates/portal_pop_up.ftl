@@ -10,7 +10,7 @@
 	<@liferay_util["include"] page=top_head_include />
 </head>
 
-<body class="dialog-iframe-popup dialog-with-footer portal-popup ${css_class}">
+<body class="dialog-iframe-popup portal-popup ${css_class}">
 
 <@liferay_util["include"] page=content_include />
 

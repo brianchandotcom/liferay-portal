@@ -136,42 +136,31 @@
 	.portlet-export-import-publish-processes {
 		top: 0;
 	}
-}
 
-.dialog-with-footer {
-	#main-content,
-	#wrapper {
-		@include media-breakpoint-up(md) {
-			height: calc(100% - #{$dialog-footer-height});
+	.dialog-footer {
+		background-color: $dialog-footer-bg;
+		border-top: 1px solid $dialog-footer-border-color;
+		bottom: 0;
+
+		@if (variable-exists(dialog-footer-box-shadow)) {
+			box-shadow: $dialog-footer-box-shadow;
 		}
-	}
 
-	.button-holder,
-	.sheet-footer {
-		&.dialog-footer {
-			background-color: $dialog-footer-bg;
-			border-top: 1px solid $dialog-footer-border-color;
-			bottom: 0;
+		display: flex;
+		flex-direction: row-reverse;
+		left: 0;
+		margin: 0;
+		padding: 10px 24px;
+		width: 100%;
+		z-index: $zindex-sticky;
 
-			@if (variable-exists(dialog-footer-box-shadow)) {
-				box-shadow: $dialog-footer-box-shadow;
-			}
+		@include media-breakpoint-up(md) {
+			position: fixed;
+		}
 
-			display: flex;
-			flex-direction: row-reverse;
-			left: 0;
-			margin: 0;
-			padding: 10px 24px;
-			width: 100%;
-
-			@include media-breakpoint-up(md) {
-				position: fixed;
-			}
-
-			.btn {
-				margin-left: 1rem;
-				margin-right: 0;
-			}
+		.btn {
+			margin-left: 1rem;
+			margin-right: 0;
 		}
 	}
 
@@ -181,7 +170,9 @@
 	.portlet-configuration-body-content,
 	.roles-selector-body {
 		@include media-breakpoint-up(md) {
-			padding-bottom: $dialog-footer-height;
+			&:not(:last-child) {
+				padding-bottom: $dialog-footer-height;
+			}
 		}
 	}
 

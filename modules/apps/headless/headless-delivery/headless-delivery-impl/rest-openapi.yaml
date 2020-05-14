@@ -1785,7 +1785,6 @@ components:
                     readOnly: true
                     type: integer
                 name:
-                    readOnly: true
                     type: string
                 navigationMenuItems:
                     items:
@@ -1816,7 +1815,10 @@ components:
                     readOnly: true
                     type: integer
                 link:
-                    readOnly: true
+                    # @review
+                    description:
+                        A link to a page on the server.
+                    format: uri
                     type: string
                 name:
                     readOnly: true
@@ -6790,6 +6792,38 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/NavigationMenu"
                                 type: array
+                    description:
+                        ""
+            tags: ["NavigationMenu"]
+        post:
+            # @review
+            description:
+                Creates a new navigation menu.
+            operationId: postSiteNavigationMenu
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/NavigationMenu"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/NavigationMenu"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
                     description:
                         ""
             tags: ["NavigationMenu"]

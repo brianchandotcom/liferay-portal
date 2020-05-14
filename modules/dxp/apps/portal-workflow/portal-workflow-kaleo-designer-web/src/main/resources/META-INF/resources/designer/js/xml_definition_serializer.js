@@ -117,7 +117,7 @@ AUI.add(
 
 			buffer.push(xmlWorkflowDefinition.close);
 
-			return buffer.join(STR_BLANK);
+			return buffer.join('\r\n');
 		};
 
 		var appendXMLActions = function (

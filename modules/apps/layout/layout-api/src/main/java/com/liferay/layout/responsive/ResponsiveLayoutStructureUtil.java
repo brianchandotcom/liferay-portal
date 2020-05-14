@@ -55,7 +55,7 @@ public class ResponsiveLayoutStructureUtil {
 			}
 
 			int modulesPerRow = GetterUtil.getInteger(
-				_getPropertyValue(
+				getResponsivePropertyValue(
 					viewportSize, viewportSizeConfigurations, "modulesPerRow",
 					rowLayoutStructureItem.getModulesPerRow()));
 
@@ -72,96 +72,7 @@ public class ResponsiveLayoutStructureUtil {
 		return sb.toString();
 	}
 
-	public static String getRowCssClass(
-		RowLayoutStructureItem rowLayoutStructureItem) {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("align-items-lg-");
-		sb.append(
-			_getVerticalAlignmentCssClass(
-				rowLayoutStructureItem.getVerticalAlignment()));
-
-		Map<String, JSONObject> viewportSizeConfigurations =
-			rowLayoutStructureItem.getViewportSizeConfigurations();
-
-		for (ViewportSize viewportSize : ViewportSize.values()) {
-			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
-				continue;
-			}
-
-			String verticalAlignment = GetterUtil.getString(
-				_getPropertyValue(
-					viewportSize, viewportSizeConfigurations,
-					"verticalAlignment",
-					rowLayoutStructureItem.getVerticalAlignment()));
-
-			sb.append(StringPool.SPACE);
-			sb.append("align-items");
-			sb.append(viewportSize.getCssClassPrefix());
-			sb.append(_getVerticalAlignmentCssClass(verticalAlignment));
-		}
-
-		sb.append(StringPool.SPACE);
-
-		if (rowLayoutStructureItem.isReverseOrder() &&
-			(rowLayoutStructureItem.getModulesPerRow() > 1)) {
-
-			sb.append("flex-lg-row-reverse");
-		}
-		else if (rowLayoutStructureItem.isReverseOrder() &&
-				 (rowLayoutStructureItem.getModulesPerRow() == 1)) {
-
-			sb.append("flex-lg-column-reverse");
-		}
-		else {
-			sb.append("flex-lg-row");
-		}
-
-		for (ViewportSize viewportSize : ViewportSize.values()) {
-			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
-				continue;
-			}
-
-			boolean reverseOrder = GetterUtil.getBoolean(
-				_getPropertyValue(
-					viewportSize, viewportSizeConfigurations, "reverseOrder",
-					rowLayoutStructureItem.isReverseOrder()));
-
-			int modulesPerRow = GetterUtil.getInteger(
-				_getPropertyValue(
-					viewportSize, viewportSizeConfigurations, "modulesPerRow",
-					rowLayoutStructureItem.getModulesPerRow()));
-
-			sb.append(StringPool.SPACE);
-
-			if (reverseOrder) {
-				sb.append("flex");
-				sb.append(viewportSize.getCssClassPrefix());
-
-				if (modulesPerRow > 1) {
-					sb.append("row-reverse");
-				}
-				else if (modulesPerRow == 1) {
-					sb.append("column-reverse");
-				}
-			}
-			else {
-				sb.append("flex");
-				sb.append(viewportSize.getCssClassPrefix());
-				sb.append("row");
-			}
-		}
-
-		if (!rowLayoutStructureItem.isGutters()) {
-			sb.append(StringPool.SPACE);
-			sb.append("no-gutters");
-		}
-
-		return sb.toString();
-	}
-
-	private static Object _getPropertyValue(
+	public static Object getResponsivePropertyValue(
 		ViewportSize currentViewportSize,
 		Map<String, JSONObject> viewportSizeConfigurations, String propertyName,
 		Object defaultValue) {
@@ -195,6 +106,95 @@ public class ResponsiveLayoutStructureUtil {
 		}
 
 		return defaultValue;
+	}
+
+	public static String getRowCssClass(
+		RowLayoutStructureItem rowLayoutStructureItem) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("align-items-lg-");
+		sb.append(
+			_getVerticalAlignmentCssClass(
+				rowLayoutStructureItem.getVerticalAlignment()));
+
+		Map<String, JSONObject> viewportSizeConfigurations =
+			rowLayoutStructureItem.getViewportSizeConfigurations();
+
+		for (ViewportSize viewportSize : ViewportSize.values()) {
+			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
+				continue;
+			}
+
+			String verticalAlignment = GetterUtil.getString(
+				getResponsivePropertyValue(
+					viewportSize, viewportSizeConfigurations,
+					"verticalAlignment",
+					rowLayoutStructureItem.getVerticalAlignment()));
+
+			sb.append(StringPool.SPACE);
+			sb.append("align-items");
+			sb.append(viewportSize.getCssClassPrefix());
+			sb.append(_getVerticalAlignmentCssClass(verticalAlignment));
+		}
+
+		sb.append(StringPool.SPACE);
+
+		if (rowLayoutStructureItem.isReverseOrder() &&
+			(rowLayoutStructureItem.getModulesPerRow() > 1)) {
+
+			sb.append("flex-lg-row-reverse");
+		}
+		else if (rowLayoutStructureItem.isReverseOrder() &&
+				 (rowLayoutStructureItem.getModulesPerRow() == 1)) {
+
+			sb.append("flex-lg-column-reverse");
+		}
+		else {
+			sb.append("flex-lg-row");
+		}
+
+		for (ViewportSize viewportSize : ViewportSize.values()) {
+			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
+				continue;
+			}
+
+			boolean reverseOrder = GetterUtil.getBoolean(
+				getResponsivePropertyValue(
+					viewportSize, viewportSizeConfigurations, "reverseOrder",
+					rowLayoutStructureItem.isReverseOrder()));
+
+			int modulesPerRow = GetterUtil.getInteger(
+				getResponsivePropertyValue(
+					viewportSize, viewportSizeConfigurations, "modulesPerRow",
+					rowLayoutStructureItem.getModulesPerRow()));
+
+			sb.append(StringPool.SPACE);
+
+			if (reverseOrder) {
+				sb.append("flex");
+				sb.append(viewportSize.getCssClassPrefix());
+
+				if (modulesPerRow > 1) {
+					sb.append("row-reverse");
+				}
+				else if (modulesPerRow == 1) {
+					sb.append("column-reverse");
+				}
+			}
+			else {
+				sb.append("flex");
+				sb.append(viewportSize.getCssClassPrefix());
+				sb.append("row");
+			}
+		}
+
+		if (!rowLayoutStructureItem.isGutters()) {
+			sb.append(StringPool.SPACE);
+			sb.append("no-gutters");
+		}
+
+		return sb.toString();
 	}
 
 	private static String _getVerticalAlignmentCssClass(

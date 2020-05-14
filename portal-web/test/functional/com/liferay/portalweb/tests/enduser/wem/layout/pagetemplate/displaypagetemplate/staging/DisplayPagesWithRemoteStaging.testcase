@@ -70,12 +70,6 @@ definition {
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
-		AssetPublisherPortlet.configureDisplaySettings(
-			displaySettings = "Set as the Default Asset Publisher for This Page",
-			portletName = "Asset Publisher");
-
-		Refresh();
-
 		PageEditor.clickPublish();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

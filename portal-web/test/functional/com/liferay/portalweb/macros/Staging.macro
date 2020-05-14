@@ -965,7 +965,9 @@ definition {
 	}
 
 	macro redoStagingPageVersioningPG {
-		Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+		while (IsElementNotPresent(locator1 = "Staging#STAGING_MENU_REDO_BUTTON")) {
+			Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
+		}
 
 		ClickNoError(locator1 = "Staging#STAGING_MENU_REDO_BUTTON");
 

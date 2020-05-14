@@ -34,10 +34,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
@@ -46,9 +44,6 @@ import java.util.function.Function;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,34 +67,25 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
 			throw new PrincipalException.MustBeAuthenticated(
 				themeDisplay.getUserId());
 		}
 
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(resourceResponse);
-
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			_getFriendlyURLEntryLocalizationsJSONObject(httpServletRequest));
+			_getFriendlyURLEntryLocalizationsJSONObject(resourceRequest));
 	}
 
 	private JSONObject _getFriendlyURLEntryLocalizationsJSONObject(
-			HttpServletRequest httpServletRequest)
+			ResourceRequest resourceRequest)
 		throws PortalException {
 
 		Layout layout = _layoutLocalService.getLayout(
-			ParamUtil.getLong(httpServletRequest, "plid"));
+			ParamUtil.getLong(resourceRequest, "plid"));
 
 		FriendlyURLEntry mainFriendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -179,8 +165,5 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

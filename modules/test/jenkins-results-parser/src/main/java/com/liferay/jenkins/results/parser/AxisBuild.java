@@ -413,7 +413,7 @@ public class AxisBuild extends BaseBuild {
 			return Collections.emptyList();
 		}
 
-		JSONObject testReportJSONObject = getTestReportJSONObject(false);
+		JSONObject testReportJSONObject = getTestReportJSONObject(true);
 
 		if (testReportJSONObject == null) {
 			System.out.println(
@@ -424,6 +424,38 @@ public class AxisBuild extends BaseBuild {
 
 		return getTestResults(
 			this, testReportJSONObject.getJSONArray("suites"), testStatus);
+	}
+
+	public List<TestResult> getUniqueFailureTestResults() {
+		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
+
+		for (TestResult testResult : getTestResults(null)) {
+			if (!testResult.isFailing()) {
+				continue;
+			}
+
+			if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(testResult)) {
+				uniqueFailureTestResults.add(testResult);
+			}
+		}
+
+		return uniqueFailureTestResults;
+	}
+
+	public List<TestResult> getUpstreamJobFailureTestResults() {
+		List<TestResult> upstreamFailureTestResults = new ArrayList<>();
+
+		for (TestResult testResult : getTestResults(null)) {
+			if (!testResult.isFailing()) {
+				continue;
+			}
+
+			if (UpstreamFailureUtil.isTestFailingInUpstreamJob(testResult)) {
+				upstreamFailureTestResults.add(testResult);
+			}
+		}
+
+		return upstreamFailureTestResults;
 	}
 
 	@Override

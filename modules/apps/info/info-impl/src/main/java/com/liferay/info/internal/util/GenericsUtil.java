@@ -21,6 +21,7 @@ import java.lang.reflect.Type;
  * @author Jorge Ferrer
  * @see com.liferay.analytics.reports.internal.util.GenericsUtil
  * @see com.liferay.layout.internal.list.retriever.util.GenericsUtil
+ * @see com.liferay.layout.page.template.admin.web.internal.util.GenericsUtil
  */
 public class GenericsUtil {
 

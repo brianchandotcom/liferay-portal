@@ -269,28 +269,6 @@ public class DDMFormTemplateContextProcessor {
 		ddmFormField.setDataType(GetterUtil.getString(dataType));
 	}
 
-	protected void setDDMFormFieldPropertyDDMStructureId(
-		JSONObject jsonObject, DDMFormField ddmFormField) {
-
-		if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
-			return;
-		}
-
-		ddmFormField.setProperty(
-			"ddmStructureId", jsonObject.getLong("ddmStructureId"));
-	}
-
-	protected void setDDMFormFieldPropertyDDMStructureLayoutId(
-		JSONObject jsonObject, DDMFormField ddmFormField) {
-
-		if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
-			return;
-		}
-
-		ddmFormField.setProperty(
-			"ddmStructureLayoutId", jsonObject.getLong("ddmStructureLayoutId"));
-	}
-
 	protected void setDDMFormFieldFieldName(
 		String fieldName, DDMFormField ddmFormField) {
 
@@ -364,6 +342,28 @@ public class DDMFormTemplateContextProcessor {
 		ddmFormField.setProperty(
 			"placeholder",
 			getLocalizedValue(GetterUtil.getString(placeholder)));
+	}
+
+	protected void setDDMFormFieldPropertyDDMStructureId(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
+
+		if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
+			return;
+		}
+
+		ddmFormField.setProperty(
+			"ddmStructureId", jsonObject.getLong("ddmStructureId"));
+	}
+
+	protected void setDDMFormFieldPropertyDDMStructureLayoutId(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
+
+		if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
+			return;
+		}
+
+		ddmFormField.setProperty(
+			"ddmStructureLayoutId", jsonObject.getLong("ddmStructureLayoutId"));
 	}
 
 	protected void setDDMFormFieldReadOnly(

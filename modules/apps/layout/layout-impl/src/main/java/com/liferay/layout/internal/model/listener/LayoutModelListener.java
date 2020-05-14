@@ -14,6 +14,8 @@
 
 package com.liferay.layout.internal.model.listener;
 
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -30,13 +32,28 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
+	public void onAfterRemove(Layout layout) {
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+			layout.getGroupId(),
+			_layoutFriendlyURLEntryHelper.getClassNameId(
+				layout.isPrivateLayout()),
+			layout.getPlid());
+	}
+
+	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		_layoutClassedModelUsageLocalService.
 			deleteLayoutClassedModelUsagesByPlid(layout.getPlid());
 	}
 
 	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
+
+	@Reference
+	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
 
 }

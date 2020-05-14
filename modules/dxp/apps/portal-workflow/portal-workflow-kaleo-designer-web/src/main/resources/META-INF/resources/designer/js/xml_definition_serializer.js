@@ -319,38 +319,101 @@ AUI.add(
 				}
 				else if (assignmentType === 'user') {
 					if (
+						isArray(dataAssignments.emailAddress) &&
+						dataAssignments.emailAddress.filter(isValue).length !==
+							0
+					) {
+						const xmlUser = XMLUtil.createObj('user');
+
+						dataAssignments.emailAddress.forEach((item, index) => {
+							buffer.push(xmlUser.open);
+
+							if (isValue(item)) {
+								buffer.push(
+									XMLUtil.create('emailAddress', item)
+								);
+							}
+							if (isValue(dataAssignments.screenName[index])) {
+								buffer.push(
+									XMLUtil.create(
+										'screenName',
+										dataAssignments.screenName[index]
+									)
+								);
+							}
+							if (isValue(dataAssignments.userId[index])) {
+								buffer.push(
+									XMLUtil.create(
+										'userId',
+										dataAssignments.userId[index]
+									)
+								);
+							}
+
+							buffer.push(xmlUser.close);
+						});
+					}
+					else if (
+						isArray(dataAssignments.screenName) &&
+						dataAssignments.screenName.filter(isValue).length !== 0
+					) {
+						const xmlUser = XMLUtil.createObj('user');
+
+						dataAssignments.screenName.forEach((item, index) => {
+							buffer.push(xmlUser.open);
+
+							if (isValue(item)) {
+								buffer.push(XMLUtil.create('screenName', item));
+							}
+
+							if (isValue(dataAssignments.emailAddress[index])) {
+								buffer.push(
+									XMLUtil.create(
+										'emailAddress',
+										dataAssignments.emailAddress[index]
+									)
+								);
+							}
+
+							if (isValue(dataAssignments.userId[index])) {
+								buffer.push(
+									XMLUtil.create(
+										'userId',
+										dataAssignments.userId[index]
+									)
+								);
+							}
+
+							buffer.push(xmlUser.close);
+						});
+					}
+					else if (
 						isArray(dataAssignments.userId) &&
 						dataAssignments.userId.filter(isValue).length !== 0
 					) {
-						var xmlUser = XMLUtil.createObj('user');
+						const xmlUser = XMLUtil.createObj('user');
 
 						dataAssignments.userId.forEach((item, index) => {
 							buffer.push(xmlUser.open);
 
-							var userContent = null;
-
 							if (isValue(item)) {
-								userContent = XMLUtil.create('userId', item);
+								buffer.push(XMLUtil.create('userId', item));
 							}
-							else if (
-								isValue(dataAssignments.emailAddress[index])
-							) {
-								userContent = XMLUtil.create(
-									'emailAddress',
-									dataAssignments.emailAddress[index]
+							if (isValue(dataAssignments.emailAddress[index])) {
+								buffer.push(
+									XMLUtil.create(
+										'emailAddress',
+										dataAssignments.emailAddress[index]
+									)
 								);
 							}
-							else if (
-								isValue(dataAssignments.screenName[index])
-							) {
-								userContent = XMLUtil.create(
-									'screenName',
-									dataAssignments.screenName[index]
+							if (isValue(dataAssignments.screenName[index])) {
+								buffer.push(
+									XMLUtil.create(
+										'screenName',
+										dataAssignments.screenName[index]
+									)
 								);
-							}
-
-							if (userContent) {
-								buffer.push(userContent);
 							}
 
 							buffer.push(xmlUser.close);

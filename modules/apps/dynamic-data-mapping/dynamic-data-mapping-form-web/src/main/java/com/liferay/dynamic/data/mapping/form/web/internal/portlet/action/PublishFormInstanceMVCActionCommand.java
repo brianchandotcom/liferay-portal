@@ -150,10 +150,24 @@ public class PublishFormInstanceMVCActionCommand
 			_portal.getCompanyId(actionRequest), RoleConstants.GUEST);
 
 		ResourcePermission resourcePermission =
-			_resourcePermissionLocalService.getResourcePermission(
+			_resourcePermissionLocalService.fetchResourcePermission(
 				role.getCompanyId(), DDMFormInstance.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(formInstanceId), role.getRoleId());
+
+		if (resourcePermission == null) {
+			_resourcePermissionLocalService.setResourcePermissions(
+				role.getCompanyId(), DDMFormInstance.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(formInstanceId), role.getRoleId(),
+				new String[] {DDMActionKeys.ADD_FORM_INSTANCE_RECORD});
+
+			resourcePermission =
+				_resourcePermissionLocalService.fetchResourcePermission(
+					role.getCompanyId(), DDMFormInstance.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(formInstanceId), role.getRoleId());
+		}
 
 		if (published) {
 			resourcePermission.addResourceAction(

@@ -81,11 +81,7 @@
 					},
 					'liferay-kaleo-designer-xml-definition-serializer': {
 						path: 'xml_definition_serializer.js',
-						requires: [
-							'escape',
-							'liferay-kaleo-designer-xml-util',
-							'liferay-xml-formatter',
-						],
+						requires: ['escape', 'liferay-kaleo-designer-xml-util'],
 					},
 					'liferay-kaleo-designer-xml-util': {
 						path: 'xml_util.js',
@@ -109,7 +105,6 @@
 							'liferay-kaleo-designer-utils',
 							'liferay-kaleo-designer-xml-util',
 							'liferay-util-window',
-							'liferay-xml-formatter',
 						],
 					},
 				},

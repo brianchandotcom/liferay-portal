@@ -152,10 +152,10 @@ export const deleteMessageBoardThread = (messageBoardThreadId) =>
 		}
 	`);
 
-export const getTags = (page = 1, siteKey) =>
+export const getTags = (page = 1, siteKey, search = '') =>
 	request(gql`
         query {
-            keywordsRanked(page: ${page}, pageSize: 20, siteKey: ${siteKey}){
+            keywordsRanked(page: ${page}, pageSize: 20, siteKey: ${siteKey}, search: ${search}){
                 items {
                     dateCreated
                     id

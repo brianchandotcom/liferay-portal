@@ -22,10 +22,8 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -80,11 +78,5 @@ public class DeleteFriendlyURLEntryLocalizationMVCActionCommand
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

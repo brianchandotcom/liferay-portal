@@ -12,25 +12,24 @@
  * details.
  */
 
- 
 const fieldTypes = [
 	{
 		icon: 'calendar',
-        javaScriptModule:
-        'dynamic-data-mapping-form-field-type@5.0.20/DatePicker/DatePicker.es',
-        name: 'date',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/DatePicker/DatePicker.es',
+		name: 'date',
 	},
 	{
 		icon: 'list',
-        javaScriptModule:
-        'dynamic-data-mapping-form-field-type@5.0.20/Select/Select.es',
-        name: 'select',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/Select/Select.es',
+		name: 'select',
 	},
 	{
 		icon: 'adjust',
-        javaScriptModule:
-        'dynamic-data-mapping-form-field-type@5.0.20/FieldSet/FieldSet.es',
-        name: 'fieldset',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/FieldSet/FieldSet.es',
+		name: 'fieldset',
 	},
 	{
 		icon: 'integer',
@@ -41,13 +40,13 @@ const fieldTypes = [
 	{
 		icon: 'check-circle-full',
 		javaScriptModule:
-        'dynamic-data-mapping-form-field-type@5.0.20/CheckboxMultiple/CheckboxMultiple.es',
+			'dynamic-data-mapping-form-field-type@5.0.20/CheckboxMultiple/CheckboxMultiple.es',
 		name: 'checkbox_multiple',
 	},
 	{
 		icon: 'radio-button',
 		javaScriptModule:
-        'dynamic-data-mapping-form-field-type@5.0.20/Radio/Radio.es',
+			'dynamic-data-mapping-form-field-type@5.0.20/Radio/Radio.es',
 		name: 'radio',
 	},
 	{
@@ -65,13 +64,13 @@ const fieldTypes = [
 ];
 
 export const fieldTypeResponse = fieldTypes.map((fieldType, index) => ({
-    ...fieldType,
-    displayOrder: index,
-    group: 'basic',
-    label: fieldType.name.toUpperCase(),
-    scope: 'app-builder,forms',
-    system: false
-}))
+	...fieldType,
+	displayOrder: index,
+	group: 'basic',
+	label: fieldType.name.toUpperCase(),
+	scope: 'app-builder,forms',
+	system: false,
+}));
 
 export const tableViewResponseOneItem = {
 	availableLanguageIds: ['en_US'],
@@ -79,39 +78,39 @@ export const tableViewResponseOneItem = {
 		{
 			customProperties: {
 				autocomplete: false,
-                dataSourceType: 'manual',
+				dataSourceType: 'manual',
 				dataType: 'string',
 				ddmDataProviderInstanceId: '[]',
 				ddmDataProviderInstanceOutput: '[]',
 				displayStyle: 'singleline',
 				fieldNamespace: '',
 				options: {
-                    en_US: [
-                        {
-                            label: 'Option',
+					en_US: [
+						{
+							label: 'Option',
 							value: 'Option',
 						},
 					],
 				},
-                placeholder: {
-                    en_US: '',
-                },
-				tooltip: {
-                    en_US: '',
+				placeholder: {
+					en_US: '',
 				},
-                visibilityExpression: '',
+				tooltip: {
+					en_US: '',
+				},
+				visibilityExpression: '',
 			},
 			defaultValue: {
 				en_US: '',
 			},
 			description: {
-				en_US: 'Say your name Player',
+				en_US: 'Enter your name',
 			},
 			fieldType: 'text',
 			indexType: 'keyword',
 			indexable: true,
 			label: {
-				en_US: 'Player',
+				en_US: 'Name',
 			},
 			localizable: true,
 			name: 'Text',
@@ -132,7 +131,7 @@ export const tableViewResponseOneItem = {
 	description: {},
 	id: 36602,
 	name: {
-		en_US: 'teste',
+		en_US: 'My Custom Object',
 	},
 	siteId: 20125,
 	storageType: 'json',
@@ -145,27 +144,27 @@ export const tableViewResponseTwoItens = {
 		{
 			customProperties: {
 				autocomplete: false,
-                dataSourceType: 'manual',
+				dataSourceType: 'manual',
 				dataType: 'string',
 				ddmDataProviderInstanceId: '[]',
 				ddmDataProviderInstanceOutput: '[]',
 				displayStyle: 'singleline',
 				fieldNamespace: '',
 				options: {
-                    en_US: [
-                        {
-                            label: 'Option',
+					en_US: [
+						{
+							label: 'Option',
 							value: 'Option',
 						},
 					],
 				},
 				placeholder: {
-                    en_US: '',
+					en_US: '',
 				},
-                tooltip: {
-                    en_US: '',
-                },
-                visibilityExpression: '',
+				tooltip: {
+					en_US: '',
+				},
+				visibilityExpression: '',
 			},
 			defaultValue: {
 				en_US: '',
@@ -174,7 +173,7 @@ export const tableViewResponseTwoItens = {
 			indexType: 'keyword',
 			indexable: true,
 			label: {
-				en_US: 'Player',
+				en_US: 'Name',
 			},
 			localizable: true,
 			name: 'Text',
@@ -188,30 +187,30 @@ export const tableViewResponseTwoItens = {
 			},
 		},
 		{
-            customProperties: {
-                dataSourceType: '[manual]',
+			customProperties: {
+				dataSourceType: '[manual]',
 				dataType: 'string',
 				ddmDataProviderInstanceId: '[]',
 				ddmDataProviderInstanceOutput: '[]',
-                fieldNamespace: '',
-                multiple: false,
+				fieldNamespace: '',
+				multiple: false,
 				options: {
-                    en_US: [
-                        {
-                            label: 'INTZ',
-							value: 'INTZ',
+					en_US: [
+						{
+							label: 'Option1',
+							value: 'Option1',
 						},
 						{
-                            label: 'PAIN',
-							value: 'PAIN',
+							label: 'Option2',
+							value: 'Option2',
 						},
 						{
-                            label: 'SKT',
-							value: 'SKT',
+							label: 'Option3',
+							value: 'Option3',
 						},
 					],
 				},
-                visibilityExpression: '',
+				visibilityExpression: '',
 			},
 			defaultValue: {
 				en_US: [],
@@ -220,7 +219,7 @@ export const tableViewResponseTwoItens = {
 			indexType: 'keyword',
 			indexable: true,
 			label: {
-				en_US: 'Team',
+				en_US: 'Options',
 			},
 			localizable: true,
 			name: 'SelectFromList',
@@ -241,9 +240,24 @@ export const tableViewResponseTwoItens = {
 	description: {},
 	id: 36716,
 	name: {
-		en_US: 'teste',
+		en_US: 'My Custom Object',
 	},
 	siteId: 20125,
 	storageType: 'json',
+	userId: 20127,
+};
+
+export const tableViewWithId = {
+	appliedFilters: {},
+	dataDefinitionId: 36716,
+	dateCreated: '2020-05-12T18:49:56Z',
+	dateModified: '2020-05-12T18:49:56Z',
+	fieldNames: ['Text'],
+	id: 36516,
+	name: {
+		en_US: 'Name',
+	},
+	siteId: 20125,
+	sortField: '',
 	userId: 20127,
 };

@@ -13,32 +13,26 @@
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {Router} from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import {createMemoryHistory} from 'history';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import {HashRouter} from 'react-router-dom';
-
-import {AppContextProvider} from '../../../../src/main/resources/META-INF/resources/js/AppContext.es';
+import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import EditTableView from '../../../../src/main/resources/META-INF/resources/js/pages/table-view/EditTableView.es';
 import * as time from '../../../../src/main/resources/META-INF/resources/js/utils/time.es';
 import * as toast from '../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
-import { fieldTypeResponse, tableViewResponseOneItem, tableViewResponseTwoItens } from '../../mock';
+import {
+	fieldTypeResponse,
+	tableViewResponseOneItem,
+	tableViewResponseTwoItens,
+	tableViewWithId,
+} from '../../mock';
 
 describe('EditTableView', () => {
-	const EditTableViewWithRouter = ({history = createMemoryHistory()}) => (
-		<AppContextProvider value={{}}>
-			<div className="tools-control-group">
-				<div className="control-menu-level-1-heading" />
-			</div>
-			<HashRouter>
-				<EditTableView history={history} />
-			</HashRouter>
-		</AppContextProvider>
-	);
-
 	let spySuccessToast;
+	let spyErrorToast;
 	let spyFromNow;
 
 	beforeEach(() => {
@@ -49,6 +43,7 @@ describe('EditTableView', () => {
 		spySuccessToast = jest
 			.spyOn(toast, 'successToast')
 			.mockImplementation();
+		spyErrorToast = jest.spyOn(toast, 'errorToast').mockImplementation();
 	});
 
 	afterEach(() => {
@@ -64,13 +59,14 @@ describe('EditTableView', () => {
 	it('renders', async () => {
 		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
 		fetch.mockResponseOnce(JSON.stringify(tableViewResponseOneItem));
-		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
-		fetch.mockResponseOnce(JSON.stringify(tableViewResponseOneItem));
 
 		const {asFragment} = render(
 			<DndProvider backend={HTML5Backend}>
-				<EditTableViewWithRouter />
-			</DndProvider>
+				<EditTableView />
+			</DndProvider>,
+			{
+				wrapper: AppContextProviderWrapper,
+			}
 		);
 
 		await act(async () => {
@@ -80,127 +76,147 @@ describe('EditTableView', () => {
 		expect(asFragment()).toMatchSnapshot();
 	});
 
-	it('renders with one item', async () => {
+	it('renders with two fields in the sidebar and saves successfully', async () => {
 		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
-		fetch.mockResponseOnce(JSON.stringify(tableViewResponseOneItem));
-		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
-		fetch.mockResponseOnce(JSON.stringify(tableViewResponseOneItem));
+		fetch.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens));
+		fetch.mockResponseOnce();
 
-		const {
-			container,
-			debug,
-			queryAllByText,
-			queryByPlaceholderText,
-			queryByText,
-		} = render(
+		const {queryAllByText, queryByPlaceholderText, queryByText} = render(
 			<DndProvider backend={HTML5Backend}>
-				<EditTableViewWithRouter />
-			</DndProvider>
+				<EditTableView />
+			</DndProvider>,
+			{
+				wrapper: AppContextProviderWrapper,
+			}
 		);
 
 		await act(async () => {
 			jest.runAllTimers();
 		});
 
-		expect(queryAllByText('Player').length).toBe(1);
+		expect(queryAllByText('Name').length).toBe(1);
+		expect(queryAllByText('Options').length).toBe(1);
 
-		const [column] = queryAllByText('Player');
-		expect(column).toBeTruthy();
+		const [columnName] = queryAllByText('Name');
+		expect(columnName).toBeTruthy();
+
+		const [columnOptions] = queryAllByText('Options');
+		expect(columnOptions).toBeTruthy();
 
 		expect(
 			queryByText('drag-columns-from-the-sidebar-and-drop-here')
 		).toBeTruthy();
 
-		userEvent.dblClick(column);
+		userEvent.dblClick(columnName);
+		userEvent.dblClick(columnOptions);
 
 		expect(
 			queryByText('drag-columns-from-the-sidebar-and-drop-here')
 		).toBeFalsy();
 
-		expect(queryAllByText('Player').length).toBe(2);
+		expect(queryAllByText('Name').length).toBe(2);
+		expect(queryAllByText('Options').length).toBe(2);
 
 		const tableName = queryByPlaceholderText('untitled-table-view');
-		const saveButton = queryByText('save');
 
 		expect(tableName.value).toBe('');
 
-		// aqui um teste para ver se o disabled do save button está true
+		fireEvent.change(tableName, {target: {value: 'My Table View'}});
 
-		// console.log(saveButton);
+		expect(tableName.value).toBe('My Table View');
 
-		fireEvent.change(tableName, {target: {value: 'Players'}});
+		const save = queryByText('save');
 
-		expect(tableName.value).toBe('Players');
+		await act(async () => {
+			fireEvent.click(save);
+		});
 
-		// debug();
-
-		//fazer um teste para ver se o disabled do botão está falso
-
-		//salvar
-
-		//debug();
+		expect(spySuccessToast.mock.calls.length).toBe(1);
 	});
 
-	it('renders with two itens, search for one field and set filters', async () => {
+	it('renders with two fields in the sidebar and does not save successfully', async () => {
 		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
 		fetch.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens));
+		fetch.mockRejectOnce(() =>
+			Promise.reject(
+				JSON.stringify({status: 'BAD_REQUEST', title: 'View is empty'})
+			)
+		);
+
+		const {queryByPlaceholderText, queryByText} = render(
+			<DndProvider backend={HTML5Backend}>
+				<EditTableView />
+			</DndProvider>,
+			{
+				wrapper: AppContextProviderWrapper,
+			}
+		);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		expect(
+			queryByText('drag-columns-from-the-sidebar-and-drop-here')
+		).toBeTruthy();
+
+		const tableName = queryByPlaceholderText('untitled-table-view');
+
+		fireEvent.change(tableName, {target: {value: 'My Table View'}});
+
+		const save = queryByText('save');
+
+		await act(async () => {
+			fireEvent.click(save);
+		});
+
+		expect(spyErrorToast.mock.calls.length).toBe(1);
+
+		const cancel = queryByText('cancel');
+
+		fireEvent.click(cancel);
+	});
+
+	it('renders with two fields in the sidebar and make actions', async () => {
 		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
 		fetch.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens));
 
 		const {
 			container,
-			debug,
 			queryAllByPlaceholderText,
 			queryAllByText,
 			queryByText,
 		} = render(
 			<DndProvider backend={HTML5Backend}>
-				<EditTableViewWithRouter />
-			</DndProvider>
+				<EditTableView />
+			</DndProvider>,
+			{
+				wrapper: AppContextProviderWrapper,
+			}
 		);
 
 		await act(async () => {
 			jest.runAllTimers();
 		});
 
-		expect(queryAllByText('Player').length).toBe(1);
-		expect(queryAllByText('Team').length).toBe(1);
+		const [columnName] = queryAllByText('Name');
+		const [columnOptions] = queryAllByText('Options');
 
-		const [columnPlayer] = queryAllByText('Player');
-		expect(columnPlayer).toBeTruthy();
-		const [columnTeam] = queryAllByText('Team');
-		expect(columnTeam).toBeTruthy();
-
-		expect(
-			queryByText('drag-columns-from-the-sidebar-and-drop-here')
-		).toBeTruthy();
-
-		userEvent.dblClick(columnPlayer);
-		userEvent.dblClick(columnTeam);
-
-		expect(
-			queryByText('drag-columns-from-the-sidebar-and-drop-here')
-		).toBeFalsy();
-
-		expect(queryAllByText('Player').length).toBe(2);
-		expect(queryAllByText('Team').length).toBe(2);
+		userEvent.dblClick(columnName);
+		userEvent.dblClick(columnOptions);
 
 		const [search] = queryAllByPlaceholderText('search...');
 		expect(search.value).toBe('');
 
-		fireEvent.change(search, {target: {value: 'Player'}});
+		fireEvent.change(search, {target: {value: 'Name'}});
 
-		expect(queryAllByText('Player').length).toBe(2);
-		expect(queryAllByText('Team').length).toBe(1);
+		expect(queryAllByText('Name').length).toBe(2);
+		expect(queryAllByText('Options').length).toBe(1);
 
 		const [filtersButton] = queryAllByText('filters');
 		expect(filtersButton).toBeTruthy();
 
 		fireEvent.click(filtersButton);
-
-		// não tá aparecendo no html os outros filtros como INTZ, SKT, PAIN
-		// só aparece o select all
-		// o label ta como SelectFromList mas deveria ser Team
 
 		expect(queryByText('filter-entries-by-columns')).toBeTruthy();
 
@@ -213,11 +229,71 @@ describe('EditTableView', () => {
 		const selectAll = queryByText('select-all');
 		expect(selectAll).toBeTruthy();
 		fireEvent.click(selectAll);
+	});
 
-		//não está aparecendo a opção clear depois de colocar select all
+	it('renders with one field already inside the table and saves', async () => {
+		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
+		fetch.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens));
+		fetch.mockResponseOnce(JSON.stringify(tableViewWithId));
 
-		//console.log(chooseOptionsButton);
+		const history = createMemoryHistory();
+		//console.log(history);
+		history.push('/abc/ebc');
 
-		// debug();
+		const {
+			debug,
+			queryByPlaceholderText,
+			queryByText,
+			queryAllByText,
+		} = render(
+			<DndProvider backend={HTML5Backend}>
+				<EditTableView
+					location={{
+						match: {
+							params: {
+								dataDefinitionId: 1,
+							},
+							url: 'table-views',
+						},
+					}}
+				/>
+			</DndProvider>,
+			{
+				wrapper: (props) => (
+					<Router history={history}>
+						<AppContextProviderWrapper
+							history={history}
+							{...props}
+						/>
+					</Router>
+				),
+			}
+		);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		//linhas para apagar depois que o mock do id estiver pegando ----------------
+		const [columnName] = queryAllByText('Name');
+		userEvent.dblClick(columnName);
+		// fim ----------------------------------------------------------------
+
+		expect(
+			queryByText('drag-columns-from-the-sidebar-and-drop-here')
+		).toBeFalsy();
+
+		expect(queryAllByText('Name').length).toBe(2);
+		expect(queryAllByText('Options').length).toBe(1);
+
+		const tableName = queryByPlaceholderText('untitled-table-view');
+		//descomentar linha abaixo quando o mock do id estiver pegando
+		//expect(tableName.value).toBe('Name');
+
+		fireEvent.change(tableName, {target: {value: 'My Edited Table View'}});
+
+		fireEvent.submit(tableName);
+
+		//debug();
 	});
 });

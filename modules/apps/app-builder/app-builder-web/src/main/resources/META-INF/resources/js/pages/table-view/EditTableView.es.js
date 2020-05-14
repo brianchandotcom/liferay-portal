@@ -63,10 +63,6 @@ const EditTableView = withRouter(({history}) => {
 	const validate = () => {
 		const name = dataListView.name.en_US.trim();
 
-		if (!name) {
-			return null;
-		}
-
 		return {
 			...dataListView,
 			name: {
@@ -78,10 +74,6 @@ const EditTableView = withRouter(({history}) => {
 	const handleSubmit = () => {
 		const dataListView = validate();
 
-		if (dataListView === null) {
-			return;
-		}
-
 		if (dataListView.id) {
 			updateItem(
 				`/o/data-engine/v2.0/data-list-views/${dataListView.id}`,
@@ -91,8 +83,7 @@ const EditTableView = withRouter(({history}) => {
 				.catch((error) => {
 					onError(error);
 				});
-		}
-		else {
+		} else {
 			addItem(
 				`/o/data-engine/v2.0/data-definitions/${dataDefinition.id}/data-list-views`,
 				dataListView

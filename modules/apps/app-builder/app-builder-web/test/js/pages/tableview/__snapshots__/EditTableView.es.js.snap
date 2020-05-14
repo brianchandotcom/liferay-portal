@@ -225,7 +225,7 @@ exports[`EditTableView renders 1`] = `
                     class="list-group-title text-truncate"
                   >
                     <span>
-                      Player
+                      Name
                     </span>
                   </h4>
                   <p

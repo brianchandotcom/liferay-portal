@@ -24,51 +24,46 @@ import EditTableViewContext, {
 	reducer,
 } from './EditTableViewContext.es';
 
-export default withRouter(
-	({
-		children,
-		match: {
-			params: {dataDefinitionId, dataListViewId},
-		},
-	}) => {
-		const [state, dispatch] = useReducer(reducer, initialState);
+export default withRouter(({children, match, ...props}) => {
+	const [state, dispatch] = useReducer(reducer, initialState);
 
-		useEffect(() => {
-			getItem(
-				`/o/data-engine/v2.0/data-definitions/data-definition-fields/field-types`
-			).then((fieldTypes) => {
-				dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
+	const {dataDefinitionId, dataListViewId} = match.params;
+
+	useEffect(() => {
+		getItem(
+			`/o/data-engine/v2.0/data-definitions/data-definition-fields/field-types`
+		).then((fieldTypes) => {
+			dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
+		});
+	}, []);
+
+	useEffect(() => {
+		getItem(
+			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
+		).then((dataDefinition) => {
+			dispatch({
+				payload: {dataDefinition},
+				type: UPDATE_DATA_DEFINITION,
 			});
-		}, []);
+		});
+	}, [dataDefinitionId]);
 
-		useEffect(() => {
+	useEffect(() => {
+		if (dataListViewId) {
 			getItem(
-				`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-			).then((dataDefinition) => {
+				`/o/data-engine/v2.0/data-list-views/${dataListViewId}`
+			).then((dataListView) => {
 				dispatch({
-					payload: {dataDefinition},
-					type: UPDATE_DATA_DEFINITION,
+					payload: {dataListView},
+					type: UPDATE_DATA_LIST_VIEW,
 				});
 			});
-		}, [dataDefinitionId]);
+		}
+	}, [dataListViewId]);
 
-		useEffect(() => {
-			if (dataListViewId) {
-				getItem(
-					`/o/data-engine/v2.0/data-list-views/${dataListViewId}`
-				).then((dataListView) => {
-					dispatch({
-						payload: {dataListView},
-						type: UPDATE_DATA_LIST_VIEW,
-					});
-				});
-			}
-		}, [dataListViewId]);
-
-		return (
-			<EditTableViewContext.Provider value={[state, dispatch]}>
-				{children}
-			</EditTableViewContext.Provider>
-		);
-	}
-);
+	return (
+		<EditTableViewContext.Provider value={[state, dispatch]}>
+			{children}
+		</EditTableViewContext.Provider>
+	);
+});

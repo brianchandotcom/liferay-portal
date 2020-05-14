@@ -79,10 +79,10 @@ public class DDMFormInstanceRecordUADDisplay
 				WebKeys.THEME_DISPLAY);
 
 		String portletNamespace = _portal.getPortletNamespace(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
 
 		return _portal.getSiteAdminURL(
-			themeDisplay, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			themeDisplay, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
 			HashMapBuilder.put(
 				portletNamespace.concat("formInstanceId"),
 				new String[] {
@@ -96,7 +96,7 @@ public class DDMFormInstanceRecordUADDisplay
 				}
 			).put(
 				portletNamespace.concat("mvcPath"),
-				new String[] {"/admin/edit_form_instance_record.jsp"}
+				new String[] {"/display/edit_form_instance_record.jsp"}
 			).put(
 				portletNamespace.concat("redirect"),
 				new String[] {_portal.getCurrentURL(httpServletRequest)}

@@ -60,11 +60,13 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
@@ -76,6 +78,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -175,6 +178,18 @@ public class LayoutPageTemplatesImporterImpl
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);
 
 		return fragmentEntryLinks;
+	}
+
+	private void _deleteExistingPortletPreferences(long plid) {
+		List<PortletPreferences> portletPreferencesList =
+			_portletPreferencesLocalService.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid);
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			_portletPreferencesLocalService.deletePortletPreferences(
+				portletPreferences);
+		}
 	}
 
 	private PageTemplateCollectionEntry
@@ -900,6 +915,9 @@ public class LayoutPageTemplatesImporterImpl
 				added = true;
 			}
 			else if (overwrite) {
+				_deleteExistingPortletPreferences(
+					layoutPageTemplateEntry.getPlid());
+
 				layoutPageTemplateEntry =
 					_layoutPageTemplateEntryService.
 						updateLayoutPageTemplateEntry(
@@ -1316,6 +1334,9 @@ public class LayoutPageTemplatesImporterImpl
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

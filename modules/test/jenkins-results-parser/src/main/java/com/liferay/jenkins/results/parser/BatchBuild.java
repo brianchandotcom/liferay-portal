@@ -242,7 +242,7 @@ public class BatchBuild extends BaseBuild {
 			return Collections.emptyList();
 		}
 
-		JSONObject testReportJSONObject = getTestReportJSONObject();
+		JSONObject testReportJSONObject = getTestReportJSONObject(false);
 
 		JSONArray childReportsJSONArray = testReportJSONObject.optJSONArray(
 			"childReports");
@@ -535,7 +535,7 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	protected int getTestCountByStatus(String status) {
-		JSONObject testReportJSONObject = getTestReportJSONObject();
+		JSONObject testReportJSONObject = getTestReportJSONObject(false);
 
 		int failCount = testReportJSONObject.getInt("failCount");
 

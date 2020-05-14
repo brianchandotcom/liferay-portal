@@ -18,7 +18,9 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.util.comparator.FriendlyURLEntryLocalizationComparator;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -143,7 +145,9 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 									_layoutFriendlyURLEntryHelper.
 										getClassNameId(
 											layout.isPrivateLayout()),
-									layout.getPlid(), languageId),
+									layout.getPlid(), languageId,
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+									_friendlyURLEntryLocalizationComparator),
 							Arrays.asList(mainFriendlyURLEntryLocalization)),
 						this::_serializeFriendlyURLEntryLocalization)
 				));
@@ -176,6 +180,10 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 			"urlTitle", friendlyEntryLocalization.getUrlTitle()
 		);
 	}
+
+	private final FriendlyURLEntryLocalizationComparator
+		_friendlyURLEntryLocalizationComparator =
+			new FriendlyURLEntryLocalizationComparator();
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

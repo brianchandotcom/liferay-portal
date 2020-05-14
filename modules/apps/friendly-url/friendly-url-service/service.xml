@@ -39,6 +39,12 @@
 				<finder-column name="classNameId" />
 				<finder-column name="urlTitle" />
 			</finder>
+			<finder name="G_C_C_L" return-type="Collection">
+				<finder-column name="groupId" />
+				<finder-column name="classNameId" />
+				<finder-column name="classPK" />
+				<finder-column name="languageId" />
+			</finder>
 		</localized-entity>
 
 		<!-- Finder methods -->

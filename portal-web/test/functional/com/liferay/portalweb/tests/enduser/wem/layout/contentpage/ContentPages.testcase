@@ -391,7 +391,7 @@ definition {
 		}
 
 		task ("Add a section layout") {
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__row')]");
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 		}
 
 		task ("Assert the Section has Fixed Width, padding bottom x1 and padding top x1") {

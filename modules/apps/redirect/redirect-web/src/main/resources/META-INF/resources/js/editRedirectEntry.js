@@ -34,13 +34,13 @@ export default function ({
 	}
 
 	function showTypeInfoAlert() {
-		let hide = true;
+		let hide = false;
 
 		if (
-			permanentSelect.value !== 'true' ||
-			destinationURLInput.value !== initialDestinationURL
+			permanentSelect.value === 'true' &&
+			destinationURLInput.value === initialDestinationURL
 		) {
-			hide = false;
+			hide = true;
 		}
 
 		typeInfo.classList.toggle('hide', hide);

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyWrapper;
 import com.liferay.portal.kernel.model.Group;
@@ -30,12 +32,15 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Collections;
+import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -125,6 +130,48 @@ public class SubscriptionSenderTest {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(ProxyFactory.newDummyInstance(Portal.class));
+
+		PropsUtil.setProps(
+			new Props() {
+
+				@Override
+				public boolean contains(String key) {
+					return false;
+				}
+
+				@Override
+				public String get(String key) {
+					return StringPool.BLANK;
+				}
+
+				@Override
+				public String get(String key, Filter filter) {
+					return StringPool.BLANK;
+				}
+
+				@Override
+				public String[] getArray(String key) {
+					return new String[0];
+				}
+
+				@Override
+				public String[] getArray(String key, Filter filter) {
+					return new String[0];
+				}
+
+				@Override
+				public Properties getProperties() {
+					return new Properties();
+				}
+
+				@Override
+				public Properties getProperties(
+					String prefix, boolean removePrefix) {
+
+					return new Properties();
+				}
+
+			});
 	}
 
 	@Test

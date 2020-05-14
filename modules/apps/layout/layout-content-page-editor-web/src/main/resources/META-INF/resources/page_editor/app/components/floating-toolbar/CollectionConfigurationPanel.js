@@ -136,22 +136,24 @@ export const CollectionConfigurationPanel = ({item}) => {
 						</ClayForm.Group>
 					)}
 
-					<ClayForm.Group small>
-						<label htmlFor={collectionLayoutId}>
-							{Liferay.Language.get('layout')}
-						</label>
-						<ClaySelectWithOption
-							aria-label={Liferay.Language.get('layout')}
-							id={collectionLayoutId}
-							onChange={({target: {value}}) =>
-								handleConfigurationChanged({
-									numberOfColumns: value,
-								})
-							}
-							options={LAYOUT_OPTIONS}
-							value={item.config.numberOfColumns}
-						/>
-					</ClayForm.Group>
+					{item.config.listStyle === '' && (
+						<ClayForm.Group small>
+							<label htmlFor={collectionLayoutId}>
+								{Liferay.Language.get('layout')}
+							</label>
+							<ClaySelectWithOption
+								aria-label={Liferay.Language.get('layout')}
+								id={collectionLayoutId}
+								onChange={({target: {value}}) =>
+									handleConfigurationChanged({
+										numberOfColumns: value,
+									})
+								}
+								options={LAYOUT_OPTIONS}
+								value={item.config.numberOfColumns}
+							/>
+						</ClayForm.Group>
+					)}
 
 					<ClayForm.Group small>
 						<label htmlFor={collectionNumberOfItemsId}>

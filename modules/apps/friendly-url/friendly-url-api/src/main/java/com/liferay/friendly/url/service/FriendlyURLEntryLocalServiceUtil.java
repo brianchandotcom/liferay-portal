@@ -458,11 +458,14 @@ public class FriendlyURLEntryLocalServiceUtil {
 	public static java.util.List
 		<com.liferay.friendly.url.model.FriendlyURLEntryLocalization>
 			getFriendlyURLEntryLocalizations(
-				long groupId, long classNameId, long classPK,
-				String languageId) {
+				long groupId, long classNameId, long classPK, String languageId,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.friendly.url.model.
+						FriendlyURLEntryLocalization> obc) {
 
 		return getService().getFriendlyURLEntryLocalizations(
-			groupId, classNameId, classPK, languageId);
+			groupId, classNameId, classPK, languageId, start, end, obc);
 	}
 
 	public static

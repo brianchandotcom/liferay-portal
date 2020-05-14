@@ -486,11 +486,14 @@ public class FriendlyURLEntryLocalServiceWrapper
 	public java.util.List
 		<com.liferay.friendly.url.model.FriendlyURLEntryLocalization>
 			getFriendlyURLEntryLocalizations(
-				long groupId, long classNameId, long classPK,
-				String languageId) {
+				long groupId, long classNameId, long classPK, String languageId,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.friendly.url.model.
+						FriendlyURLEntryLocalization> obc) {
 
 		return _friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
-			groupId, classNameId, classPK, languageId);
+			groupId, classNameId, classPK, languageId, start, end, obc);
 	}
 
 	@Override

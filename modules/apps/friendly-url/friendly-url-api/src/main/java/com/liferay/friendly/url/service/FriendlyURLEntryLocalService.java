@@ -351,7 +351,9 @@ public interface FriendlyURLEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FriendlyURLEntryLocalization> getFriendlyURLEntryLocalizations(
-		long groupId, long classNameId, long classPK, String languageId);
+		long groupId, long classNameId, long classPK, String languageId,
+		int start, int end,
+		OrderByComparator<FriendlyURLEntryLocalization> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

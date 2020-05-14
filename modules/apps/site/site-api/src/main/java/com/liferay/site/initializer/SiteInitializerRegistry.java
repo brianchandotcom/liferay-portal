@@ -29,6 +29,6 @@ public interface SiteInitializerRegistry {
 	public List<SiteInitializer> getSiteInitializers(long companyId);
 
 	public List<SiteInitializer> getSiteInitializers(
-		long companyId, boolean active);
+		long companyId, boolean activeOnly);
 
 }

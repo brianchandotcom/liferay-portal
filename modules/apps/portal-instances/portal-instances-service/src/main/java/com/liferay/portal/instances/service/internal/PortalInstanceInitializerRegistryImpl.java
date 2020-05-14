@@ -67,7 +67,7 @@ public class PortalInstanceInitializerRegistryImpl
 
 	@Override
 	public List<PortalInstanceInitializer> getPortalInstanceInitializers(
-		boolean active) {
+		boolean activeOnly) {
 
 		List<PortalInstanceInitializer> portalInstanceInitializers =
 			new ArrayList<>();
@@ -75,7 +75,9 @@ public class PortalInstanceInitializerRegistryImpl
 		for (PortalInstanceInitializer portalInstanceInitializer :
 				_serviceTrackerMap.values()) {
 
-			if (!active || (active && portalInstanceInitializer.isActive())) {
+			if (!activeOnly ||
+				(activeOnly && portalInstanceInitializer.isActive())) {
+
 				portalInstanceInitializers.add(portalInstanceInitializer);
 			}
 		}

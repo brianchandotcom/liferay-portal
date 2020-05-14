@@ -15,12 +15,12 @@
 import {openToast} from 'frontend-js-web';
 
 export default function ({getRedirectEntryChainCauseURL, namespace}) {
-	var form = document[`${namespace}fm`];
+	const form = document[`${namespace}fm`];
 	form.addEventListener('submit', saveRedirectEntry);
 
 	function saveRedirectEntry() {
-		var destinationURL = form.elements[`${namespace}destinationURL`];
-		var sourceURL = form.elements[`${namespace}sourceURL`];
+		const destinationURL = form.elements[`${namespace}destinationURL`];
+		const sourceURL = form.elements[`${namespace}sourceURL`];
 
 		if (destinationURL.value && sourceURL.value) {
 			Liferay.Util.fetch(

@@ -333,6 +333,14 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<FriendlyURLEntryLocalization> getFriendlyURLEntryLocalizations(
+		long groupId, long classNameId, long classPK, String languageId) {
+
+		return friendlyURLEntryLocalizationPersistence.findByG_C_C_L(
+			groupId, classNameId, classPK, languageId);
+	}
+
+	@Override
 	public FriendlyURLEntry getMainFriendlyURLEntry(
 			Class<?> clazz, long classPK)
 		throws PortalException {

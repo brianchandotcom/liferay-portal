@@ -350,7 +350,7 @@ public class ElasticsearchConnectionFixture
 		return elasticsearchConnection;
 	}
 
-	private static final boolean _SIDECAR_REPLACES_EMBEDDED = false;
+	private static final boolean _SIDECAR_REPLACES_EMBEDDED = true;
 
 	private static final Path _TMP_PATH = Paths.get("tmp");
 

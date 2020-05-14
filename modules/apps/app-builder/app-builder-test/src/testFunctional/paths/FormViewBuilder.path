@@ -174,7 +174,7 @@
 
 <tr>
 	<td>PREDEFINED_VALUE_AT_FORM_DATE_FIELD</td>
-	<td>//p[contains(text(),'${key_fieldName}')]/../following-sibling::div[contains(@class,'input')]//input[contains(@value,'${key_fieldValue}')]</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[contains(@value,'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 
@@ -186,7 +186,7 @@
 
 <tr>
 	<td>PREDEFINED_VALUE_AT_FORM_SELECTLIST</td>
-	<td>//p[contains(text(),'${key_fieldName}')]/../following-sibling::div[contains(@class,'ddm-select-dropdown')]//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')]</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//div[contains(@class,'option-selected') and contains(text(),'${key_fieldValue}')]</td>
 	<td></td>
 </tr>
 

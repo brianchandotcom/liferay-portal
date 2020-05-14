@@ -69,8 +69,6 @@ page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%
 Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
 %>

@@ -14,15 +14,12 @@
 
 package com.liferay.portal.instances.service.internal;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.instances.initalizer.PortalInstanceInitializer;
 import com.liferay.portal.instances.initalizer.PortalInstanceInitializerRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -47,10 +44,10 @@ public class PortalInstanceInitializerRegistryImpl
 			return null;
 		}
 
-		ServiceWrapper<PortalInstanceInitializer> serviceWrapper =
+		PortalInstanceInitializer portalInstanceInitializer =
 			_serviceTrackerMap.getService(key);
 
-		if (serviceWrapper == null) {
+		if (portalInstanceInitializer == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No portal instance initializer registered with key " +
@@ -60,7 +57,7 @@ public class PortalInstanceInitializerRegistryImpl
 			return null;
 		}
 
-		return serviceWrapper.getService();
+		return portalInstanceInitializer;
 	}
 
 	@Override
@@ -75,14 +72,8 @@ public class PortalInstanceInitializerRegistryImpl
 		List<PortalInstanceInitializer> portalInstanceInitializers =
 			new ArrayList<>();
 
-		List<ServiceWrapper<PortalInstanceInitializer>> serviceWrappers =
-			ListUtil.fromCollection(_serviceTrackerMap.values());
-
-		for (ServiceWrapper<PortalInstanceInitializer> serviceWrapper :
-				serviceWrappers) {
-
-			PortalInstanceInitializer portalInstanceInitializer =
-				serviceWrapper.getService();
+		for (PortalInstanceInitializer portalInstanceInitializer :
+				_serviceTrackerMap.values()) {
 
 			if (!active || (active && portalInstanceInitializer.isActive())) {
 				portalInstanceInitializers.add(portalInstanceInitializer);
@@ -96,9 +87,7 @@ public class PortalInstanceInitializerRegistryImpl
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, PortalInstanceInitializer.class,
-			"portal.instance.initializer.key",
-			ServiceTrackerCustomizerFactory.
-				<PortalInstanceInitializer>serviceWrapper(bundleContext));
+			"portal.instance.initializer.key");
 	}
 
 	@Deactivate
@@ -109,7 +98,7 @@ public class PortalInstanceInitializerRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstanceInitializerRegistryImpl.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<PortalInstanceInitializer>>
+	private ServiceTrackerMap<String, PortalInstanceInitializer>
 		_serviceTrackerMap;
 
 }

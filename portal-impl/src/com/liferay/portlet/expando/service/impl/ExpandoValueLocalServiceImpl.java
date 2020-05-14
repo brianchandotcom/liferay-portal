@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.expando.service.impl;
 
-import com.liferay.expando.kernel.exception.NoSuchRowException;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoRow;
@@ -26,8 +25,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.typeconverter.DateArrayConverter;
 import com.liferay.portal.typeconverter.NumberArrayConverter;
@@ -903,15 +900,11 @@ public class ExpandoValueLocalServiceImpl
 			value.getRowId());
 
 		if (values.isEmpty()) {
-			try {
-				expandoRowPersistence.remove(value.getRowId());
-			}
-			catch (NoSuchRowException noSuchRowException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Row " + value.getRowId() + " does not exist",
-						noSuchRowException);
-				}
+			ExpandoRow row = expandoRowPersistence.fetchByPrimaryKey(
+				value.getRowId());
+
+			if (row != null) {
+				expandoRowPersistence.remove(row);
 			}
 		}
 	}
@@ -1906,8 +1899,5 @@ public class ExpandoValueLocalServiceImpl
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExpandoValueLocalServiceImpl.class);
 
 }

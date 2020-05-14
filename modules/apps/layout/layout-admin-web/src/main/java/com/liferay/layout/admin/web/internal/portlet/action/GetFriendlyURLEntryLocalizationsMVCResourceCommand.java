@@ -22,7 +22,6 @@ import com.liferay.layout.admin.web.internal.util.comparator.FriendlyURLEntryLoc
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -95,19 +94,6 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 			_getFriendlyURLEntryLocalizationsJSONObject(httpServletRequest));
 	}
 
-	private FriendlyURLEntryLocalization _getFriendlyURLEntryLocalization(
-		FriendlyURLEntry friendlyURLEntry, String languageId) {
-
-		try {
-			return _friendlyURLEntryLocalService.
-				getFriendlyURLEntryLocalization(
-					friendlyURLEntry.getFriendlyURLEntryId(), languageId);
-		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
-	}
-
 	private JSONObject _getFriendlyURLEntryLocalizationsJSONObject(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -126,8 +112,8 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 
 		for (String languageId : layout.getAvailableLanguageIds()) {
 			FriendlyURLEntryLocalization mainFriendlyURLEntryLocalization =
-				_getFriendlyURLEntryLocalization(
-					mainFriendlyURLEntry, languageId);
+				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
+					mainFriendlyURLEntry.getFriendlyURLEntryId(), languageId);
 
 			friendlyURLEntryLocalizationsJSONObject.put(
 				languageId,

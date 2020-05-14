@@ -69,7 +69,6 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		MultiFactorAuthentication.verifyOTP(
-			otp = "123456",
 			portalURL = "${portalURL}",
 			recipient = "test test",
 			userEmailAddress = "test@liferay.com",
@@ -80,8 +79,7 @@ definition {
 			portalURL = "${portalURL}",
 			recipient = "Test Test",
 			userEmailAddress = "test@liferay.com",
-			userPassword = "test",
-			validOTP = "true");
+			userPassword = "test");
 
 		MultiFactorAuthentication.sendOTPEmailPG();
 
@@ -89,8 +87,7 @@ definition {
 			portalURL = "${portalURL}",
 			recipient = "Test Test",
 			userEmailAddress = "test@liferay.com",
-			userPassword = "test",
-			validOTP = "true");
+			userPassword = "test");
 	}
 
 	@description = "This is a use case for LPS-101720"

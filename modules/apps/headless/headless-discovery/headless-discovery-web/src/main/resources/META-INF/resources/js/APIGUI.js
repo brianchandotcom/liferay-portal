@@ -150,9 +150,9 @@ const APIGUI = () => {
 						<ClayModal.Header>{'Headers'}</ClayModal.Header>
 						<ClayModal.Body>
 							<h1>
-								{
-									'Add, edit and remove headers in your request.'
-								}
+								{Liferay.Language.get(
+									'add-edit-and-remove-headers-in-your-request'
+								)}
 							</h1>
 
 							{headers.map((header, i) => (
@@ -207,7 +207,7 @@ const APIGUI = () => {
 											]);
 										}}
 									>
-										{'Add Header'}
+										{Liferay.Language.get('add-header')}
 									</ClayButton>
 								</ClayButton.Group>
 							}
@@ -221,7 +221,7 @@ const APIGUI = () => {
 										onClose();
 									}}
 								>
-									{'Save'}
+									{Liferay.Language.get('save')}
 								</ClayButton>
 							}
 						/>

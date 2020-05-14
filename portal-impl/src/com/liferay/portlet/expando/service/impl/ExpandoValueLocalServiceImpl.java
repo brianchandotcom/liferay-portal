@@ -32,7 +32,7 @@ import com.liferay.portal.typeconverter.NumberConverter;
 import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import com.liferay.portlet.expando.service.base.ExpandoValueLocalServiceBaseImpl;
 import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.Serializable;
 
@@ -885,15 +885,16 @@ public class ExpandoValueLocalServiceImpl
 
 		// Notify delete handlers
 
-		ServiceTrackerList<ExpandoValueDeleteHandler> serviceTrackerList =
-			ServiceTrackerCollections.openList(
-				ExpandoValueDeleteHandler.class,
-				"(model.class.name=" + value.getClassName() + ")");
+		List<ExpandoValueDeleteHandler> expandoValueDeleteHandlers =
+			ExpandoValueDeleteHandlerHolder.getService(value.getClassName());
 
-		for (ExpandoValueDeleteHandler expandoValueDeleteHandler :
-				serviceTrackerList) {
+		if (expandoValueDeleteHandlers != null) {
+			for (ExpandoValueDeleteHandler expandoValueDeleteHandler :
+					expandoValueDeleteHandlers) {
 
-			expandoValueDeleteHandler.deletedExpandoValue(value.getClassPK());
+				expandoValueDeleteHandler.deletedExpandoValue(
+					value.getClassPK());
+			}
 		}
 
 		List<ExpandoValue> values = expandoValuePersistence.findByRowId(
@@ -1898,6 +1899,19 @@ public class ExpandoValueLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private static class ExpandoValueDeleteHandlerHolder {
+
+		public static List<ExpandoValueDeleteHandler> getService(String key) {
+			return _serviceTrackerMap.getService(key);
+		}
+
+		private static final ServiceTrackerMap
+			<String, List<ExpandoValueDeleteHandler>> _serviceTrackerMap =
+				ServiceTrackerCollections.openMultiValueMap(
+					ExpandoValueDeleteHandler.class, "model.class.name");
+
 	}
 
 }

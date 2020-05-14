@@ -14,21 +14,26 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
+import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -76,7 +81,7 @@ public class ContainerLayoutStructureItemImporter
 					jsonObject.put("url", _getLocalizedValue(urlMap));
 
 					_processMapping(
-						jsonObject, (Map<String, String>)urlMap.get("mapping"));
+						jsonObject, (Map<String, Object>)urlMap.get("mapping"));
 				}
 
 				containerLayoutStructureItem.setBackgroundImageJSONObject(
@@ -131,35 +136,70 @@ public class ContainerLayoutStructureItemImporter
 	}
 
 	private void _processMapping(
-		JSONObject jsonObject, Map<String, String> map) {
+		JSONObject jsonObject, Map<String, Object> map) {
 
-		if (map != null) {
-			String fieldKey = map.get("fieldKey");
+		if (map == null) {
+			return;
+		}
 
-			if (Validator.isNull(fieldKey)) {
-				return;
+		String fieldKey = (String)map.get("fieldKey");
+
+		if (Validator.isNull(fieldKey)) {
+			return;
+		}
+
+		Map<String, Object> itemReferenceMap = (Map<String, Object>)map.get(
+			"itemReference");
+
+		if (itemReferenceMap == null) {
+			return;
+		}
+
+		String contextSource = (String)itemReferenceMap.get("contextSource");
+
+		if (Objects.equals(
+				ContextReference.ContextSource.DISPLAY_PAGE_ITEM.getValue(),
+				contextSource)) {
+
+			jsonObject.put("mappedField", fieldKey);
+
+			return;
+		}
+
+		jsonObject.put("fieldId", fieldKey);
+
+		String classNameId = null;
+
+		String className = (String)itemReferenceMap.get("className");
+
+		try {
+			classNameId = String.valueOf(_portal.getClassNameId(className));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Mapping could not be processed since no class name ID " +
+						"could be obtained for class name " + className);
 			}
 
-			String itemKey = map.get("itemKey");
+			return;
+		}
 
-			if (Validator.isNull(itemKey)) {
-				jsonObject.put("mappedField", fieldKey);
+		String classPK = String.valueOf(itemReferenceMap.get("classPK"));
 
-				return;
-			}
-
-			String[] itemKeyParts = itemKey.split(StringPool.POUND);
-
-			if (itemKeyParts.length == 2) {
-				jsonObject.put(
-					"classNameId", itemKeyParts[0]
-				).put(
-					"classPK", itemKeyParts[1]
-				).put(
-					"fieldId", fieldKey
-				);
-			}
+		if (Validator.isNotNull(classNameId) && Validator.isNotNull(classPK)) {
+			jsonObject.put(
+				"classNameId", classNameId
+			).put(
+				"classPK", classPK
+			);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContainerLayoutStructureItemImporter.class);
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -28,6 +28,7 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
+import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.util.PortletConfigurationImporterHelper;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.util.PortletPermissionsImporterHelper;
@@ -484,56 +485,69 @@ public class FragmentLayoutStructureItemImporter
 	private void _processMapping(
 		JSONObject jsonObject, Map<String, Object> map) {
 
-		if (map != null) {
-			String collectionItemFieldKey = (String)map.get(
-				"collectionItemFieldKey");
+		if (map == null) {
+			return;
+		}
 
-			if (Validator.isNotNull(collectionItemFieldKey)) {
-				jsonObject.put("collectionFieldId", collectionItemFieldKey);
+		String fieldKey = (String)map.get("fieldKey");
 
-				return;
+		if (Validator.isNull(fieldKey)) {
+			return;
+		}
+
+		Map<String, Object> itemReferenceMap = (Map<String, Object>)map.get(
+			"itemReference");
+
+		if (itemReferenceMap == null) {
+			return;
+		}
+
+		String contextSource = (String)itemReferenceMap.get("contextSource");
+
+		if (Objects.equals(
+				ContextReference.ContextSource.COLLECTION_ITEM.getValue(),
+				contextSource)) {
+
+			jsonObject.put("collectionFieldId", fieldKey);
+
+			return;
+		}
+
+		if (Objects.equals(
+				ContextReference.ContextSource.DISPLAY_PAGE_ITEM.getValue(),
+				contextSource)) {
+
+			jsonObject.put("mappedField", fieldKey);
+
+			return;
+		}
+
+		jsonObject.put("fieldId", fieldKey);
+
+		String classNameId = null;
+
+		String className = (String)itemReferenceMap.get("className");
+
+		try {
+			classNameId = String.valueOf(_portal.getClassNameId(className));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Mapping could not be processed since no class name ID " +
+						"could be obtained for class name " + className);
 			}
 
-			String fieldKey = (String)map.get("fieldKey");
+			return;
+		}
 
-			if (Validator.isNull(fieldKey)) {
-				return;
-			}
+		String classPK = String.valueOf(itemReferenceMap.get("classPK"));
 
-			String itemClassName = (String)map.get("itemClassName");
-			String itemClassPK = String.valueOf(map.get("itemClassPK"));
-
-			if (Validator.isNull(itemClassName) ||
-				Validator.isNull(itemClassPK)) {
-
-				jsonObject.put("mappedField", fieldKey);
-
-				return;
-			}
-
-			String classNameId = null;
-
-			try {
-				classNameId = String.valueOf(
-					_portal.getClassNameId(itemClassName));
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Mapping could not be processed since no class name " +
-							"ID could be obtained for class name " +
-								itemClassName);
-				}
-
-				return;
-			}
-
+		if (Validator.isNotNull(classNameId) && Validator.isNotNull(classPK)) {
 			jsonObject.put(
 				"classNameId", classNameId
 			).put(
-				"classPK", itemClassPK
-			).put(
-				"fieldId", fieldKey
+				"classPK", classPK
 			);
 		}
 	}

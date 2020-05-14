@@ -82,22 +82,7 @@ public class CollectionLayoutStructureItemExporter
 		}
 
 		if (Objects.equals(
-				type, InfoListProviderItemSelectorReturnType.class.getName())) {
-
-			return new CollectionConfig() {
-				{
-					collectionReference = new ClassNameReference() {
-						{
-							className = jsonObject.getString("key");
-						}
-					};
-					collectionType =
-						CollectionConfig.CollectionType.COLLECTION_PROVIDER;
-				}
-			};
-		}
-		else if (Objects.equals(
-					type, InfoListItemSelectorReturnType.class.getName())) {
+				type, InfoListItemSelectorReturnType.class.getName())) {
 
 			return new CollectionConfig() {
 				{
@@ -109,6 +94,22 @@ public class CollectionLayoutStructureItemExporter
 						}
 					};
 					collectionType = CollectionType.COLLECTION;
+				}
+			};
+		}
+		else if (Objects.equals(
+					type,
+					InfoListProviderItemSelectorReturnType.class.getName())) {
+
+			return new CollectionConfig() {
+				{
+					collectionReference = new ClassNameReference() {
+						{
+							className = jsonObject.getString("key");
+						}
+					};
+					collectionType =
+						CollectionConfig.CollectionType.COLLECTION_PROVIDER;
 				}
 			};
 		}

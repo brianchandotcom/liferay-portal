@@ -12,15 +12,12 @@
  * details.
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
 import core from 'metal';
-import Soy from 'metal-soy';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import {PageProvider} from '../../hooks/usePage.es';
-import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
 import * as DefaultVariant from './DefaultVariant.es';
 import * as EditablePageHeader from './EditablePageHeader.es';
 import {Layout} from './Layout.es';
@@ -29,7 +26,6 @@ import * as Paginated from './PaginatedVariant.es';
 import * as SuccessPage from './SuccessVariant.es';
 import * as Tabbed from './TabbedVariant.es';
 import * as Wizard from './WizardVariant.es';
-import templates from './index.soy';
 
 const LAYOUT_TYPES = {
 	MULTI_PAGES: 'multi_pages',
@@ -223,22 +219,12 @@ const Renderer = ({
 	);
 };
 
-const RendererProxy = ({instance, ...otherProps}) => (
+export default (props) => (
 	<DndProvider backend={HTML5Backend} context={window}>
-		<PageProvider
-			dispatch={instance.context.dispatch}
-			emit={(...args) => instance.emit(...args)}
-			value={otherProps}
-		>
-			<ClayIconSpriteContext.Provider value={otherProps.spritemap}>
-				<Renderer {...otherProps} />
+		<PageProvider value={props}>
+			<ClayIconSpriteContext.Provider value={props.spritemap}>
+				<Renderer {...props} />
 			</ClayIconSpriteContext.Provider>
 		</PageProvider>
 	</DndProvider>
 );
-
-const ReactComponentAdapter = getConnectedReactComponentAdapter(RendererProxy);
-
-Soy.register(ReactComponentAdapter, templates);
-
-export default ReactComponentAdapter;

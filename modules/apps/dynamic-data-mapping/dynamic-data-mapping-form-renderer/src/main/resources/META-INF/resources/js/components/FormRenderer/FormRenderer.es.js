@@ -12,186 +12,161 @@
  * details.
  */
 
-import '../PageRenderer/index';
+import './PageRenderer.soy';
 
-import 'clay-button';
-import Component from 'metal-component';
+import {ClayIconSpriteContext} from '@clayui/icon';
+import classNames from 'classnames';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import React from 'react';
 
-import templates from './FormRenderer.soy';
+import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
+import {DispatchProvider} from '../DispatchContext.es';
+import PageRenderer from '../PageRenderer/index';
+import templates from './index.soy';
 
-/**
- * FormRenderer.
- * @extends Component
- */
+const noop = () => {};
 
-class FormRenderer extends Component {
-	_defaultLanguageIdValueFn() {
-		return themeDisplay.getLanguageId();
-	}
-
-	_editingLanguageIdValueFn() {
-		const {defaultLanguageId} = this;
-
-		return defaultLanguageId;
-	}
-
-	_getDisplayableFn() {
-		const {containerId, readOnly, viewMode} = this;
+function PageRendererComponent({
+	activePage,
+	cancelLabel,
+	currentPage,
+	currentPaginationMode,
+	onBlur,
+	onChange,
+	onClick,
+	onFocus,
+	pages,
+	submitLabel,
+	...otherProps
+}) {
+	if (currentPaginationMode === 'tabbed') {
+		const page = pages[currentPage];
 
 		return (
-			readOnly ||
-			!viewMode ||
-			document.getElementById(containerId) !== null
+			<PageRenderer
+				{...otherProps}
+				activePage={activePage}
+				cancelLabel={cancelLabel}
+				onBlur={onBlur}
+				onChange={onChange}
+				onClick={onClick}
+				onFocus={onFocus}
+				page={page}
+				pageIndex={activePage}
+				pages={pages}
+				paginationMode={currentPaginationMode}
+				submitLabel={submitLabel}
+			/>
 		);
 	}
 
-	_handleFieldBlurred(event) {
-		this.emit('fieldBlurred', event);
-	}
-
-	_handleFieldClicked(event) {
-		this.emit('fieldClicked', event);
-	}
-
-	_handleFieldEdited(event) {
-		this.emit('fieldEdited', event);
-	}
-
-	_handleFieldFocused(event) {
-		this.emit('fieldFocused', event);
-	}
+	return pages.map((page, pageIndex) => (
+		<PageRenderer
+			{...otherProps}
+			activePage={activePage}
+			cancelLabel={cancelLabel}
+			key={`pageIndex${pageIndex}`}
+			onBlur={onBlur}
+			onChange={onChange}
+			onClick={onClick}
+			onFocus={onFocus}
+			page={page}
+			pageIndex={pageIndex}
+			pages={pages}
+			paginationMode={currentPaginationMode}
+			submitLabel={submitLabel}
+		/>
+	));
 }
 
-FormRenderer.STATE = {
+function getDisplayableValue({containerId, readOnly, viewMode}) {
+	return (
+		readOnly || !viewMode || document.getElementById(containerId) !== null
+	);
+}
 
-	/**
-	 * @default
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?number}
-	 */
+function FormRenderer({
+	activePage = 0,
+	cancelLabel = Liferay.Language.get('cancel'),
+	containerId,
+	displayable: initialDisplayableValue,
+	editable,
+	editingLanguageId = themeDisplay.getLanguageId(),
+	onBlur = noop,
+	onClick = noop,
+	onChange = noop,
+	onFocus = noop,
+	pages = [],
+	paginationMode,
+	readOnly,
+	showSubmitButton,
+	strings,
+	submitLabel = Liferay.Language.get('submit'),
+	viewMode,
+	...otherProps
+}) {
+	const currentPaginationMode = paginationMode || 'wizard';
+	const currentPage = activePage || 0;
+	const displayable =
+		initialDisplayableValue ||
+		getDisplayableValue({containerId, readOnly, viewMode});
+	const total = Array.isArray(pages) ? pages.length : 0;
 
-	activePage: Config.number().value(0),
+	if (displayable) {
+		return (
+			<div
+				className={classNames(
+					'lfr-ddm-form-container position-relative',
+					{
+						'ddm-user-view-content': !editable,
+					}
+				)}
+			>
+				<PageRendererComponent
+					{...otherProps}
+					activePage={activePage}
+					cancelLabel={cancelLabel}
+					containerId={containerId}
+					currentPage={currentPage}
+					currentPaginationMode={currentPaginationMode}
+					editable={editable}
+					editingLanguageId={editingLanguageId}
+					onBlur={onBlur}
+					onChange={onChange}
+					onClick={onClick}
+					onFocus={onFocus}
+					pages={pages}
+					readOnly={readOnly}
+					showSubmitButton={showSubmitButton}
+					strings={strings}
+					submitLabel={submitLabel}
+					total={total}
+					viewMode={viewMode}
+				/>
+			</div>
+		);
+	}
 
-	/**
-	 * @default true
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?bool}
-	 */
+	return null;
+}
 
-	allowNestedFields: Config.bool().value(true),
+const FormRendererProxy = ({instance, ...otherProps}) => (
+	<DispatchProvider dispatch={instance.context.dispatch}>
+		<ClayIconSpriteContext.Provider value={otherProps.spritemap}>
+			<FormRenderer
+				{...otherProps}
+				onBlur={(event) => instance.emit('fieldBlurred', event)}
+				onChange={(event) => instance.emit('fieldEdited', event)}
+				onFocus={(event) => instance.emit('fieldFocused', event)}
+			/>
+		</ClayIconSpriteContext.Provider>
+	</DispatchProvider>
+);
 
-	/**
-	 * @default undefined
-	 * @memberof FormRenderer
-	 * @type {string}
-	 * @required
-	 */
+const ReactComponentAdapter = getConnectedReactComponentAdapter(
+	FormRendererProxy
+);
 
-	containerId: Config.string().value(''),
+Soy.register(ReactComponentAdapter, templates);
 
-	/**
-	 * @default undefined
-	 * @memberof FormRenderer
-	 * @type {string}
-	 * @required
-	 */
-
-	defaultLanguageId: Config.string().valueFn('_defaultLanguageIdValueFn'),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?bool}
-	 */
-
-	displayable: Config.bool().valueFn('_getDisplayableFn'),
-
-	/**
-	 * @default undefined
-	 * @memberof FormRenderer
-	 * @type {?(object|undefined)}
-	 * @required
-	 */
-
-	dnd: Config.object(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?bool}
-	 */
-
-	editable: Config.bool().value(false),
-
-	/**
-	 * @default undefined
-	 * @memberof FormRenderer
-	 * @type {string}
-	 * @required
-	 */
-
-	editingLanguageId: Config.string().valueFn('_editingLanguageIdValueFn'),
-
-	/**
-	 * @default []
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?array<object>}
-	 */
-
-	pages: Config.array().value([]),
-
-	/**
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {string}
-	 */
-
-	portletNamespace: Config.string().required(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?bool}
-	 */
-
-	readOnly: Config.bool().value(false),
-
-	/**
-	 * @default []
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?array<object>}
-	 */
-
-	rules: Config.array().value([]),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {!string}
-	 */
-
-	spritemap: Config.string().required(),
-
-	/**
-	 * @default false
-	 * @instance
-	 * @memberof FormRenderer
-	 * @type {?bool}
-	 */
-
-	viewMode: Config.bool().value(false),
-};
-
-Soy.register(FormRenderer, templates);
-
-export default FormRenderer;
+export default ReactComponentAdapter;

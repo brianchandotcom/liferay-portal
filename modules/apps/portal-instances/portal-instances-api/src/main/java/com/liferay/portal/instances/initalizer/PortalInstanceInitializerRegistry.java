@@ -29,6 +29,6 @@ public interface PortalInstanceInitializerRegistry {
 	public List<PortalInstanceInitializer> getPortalInstanceInitializers();
 
 	public List<PortalInstanceInitializer> getPortalInstanceInitializers(
-		boolean active);
+		boolean activeOnly);
 
 }

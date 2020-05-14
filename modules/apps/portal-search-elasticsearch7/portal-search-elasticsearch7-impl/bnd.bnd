@@ -32,6 +32,8 @@ Import-Package:\
 	!com.sun.jna.*,\
 	!com.sun.nio.sctp.*,\
 	\
+	!com.tdunning.math.stats.*,\
+	\
 	!com.thoughtworks.qdox.*,\
 	!com.thoughtworks.xstream.*,\
 	\
@@ -46,6 +48,8 @@ Import-Package:\
 	!javassist.*,\
 	\
 	!jline.*,\
+	\
+	!joptsimple.*,\
 	\
 	!junit.*,\
 	\
@@ -68,8 +72,11 @@ Import-Package:\
 	!org.apache.ivy.*,\
 	!org.apache.kafka.clients.producer.*,\
 	!org.apache.log.*,\
+	!org.apache.lucene.analysis.*,\
 	!org.apache.lucene.expressions.*,\
 	!org.apache.lucene.geo3d.*,\
+	!org.apache.lucene.index.memory.*,\
+	!org.apache.lucene.search.similarity.*,\
 	!org.apache.lucene.spatial.*,\
 	!org.apache.tomcat.jni.*,\
 	\
@@ -85,6 +92,7 @@ Import-Package:\
 	!org.eclipse.jetty.npn.*,\
 	\
 	!org.elasticsearch.index.shard.service.*,\
+	!org.elasticsearch.secure_sm.*,\
 	\
 	!org.fusesource.*,\
 	\

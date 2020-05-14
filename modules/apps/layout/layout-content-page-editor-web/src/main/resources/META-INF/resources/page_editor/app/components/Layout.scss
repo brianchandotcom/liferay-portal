@@ -58,6 +58,10 @@
 		html.rtl & {
 			transform: translate(50%, -50%);
 		}
+
+		&-first {
+			left: 13px;
+		}
 	}
 
 	&__collection-item__border {
@@ -106,7 +110,7 @@
 
 	&__col.empty {
 		flex-basis: unset;
-		min-height: 5em;
+		min-height: 10em;
 	}
 
 	&__row.align-bottom,
@@ -137,7 +141,7 @@
 	&__section.empty > .container,
 	&__section.empty > .container-fluid,
 	&__row.empty {
-		height: 10em;
+		min-height: 10em;
 	}
 
 	&__editable {
@@ -189,6 +193,10 @@
 	&__row.no-gutters:before {
 		left: 0;
 		width: 100%;
+	}
+
+	&__row.no-gutters .page-editor__col__resizer-first {
+		left: 1px;
 	}
 
 	&__no-fragments-message {

@@ -35,25 +35,22 @@ import {
 
 const ROW_SIZE = 12;
 
-const updateNewLayoutDataContext = ({
-	layoutDataContext,
-	leftColumnId,
-	leftColumnSize,
-	rightColumnId,
-	rightColumnSize,
-}) => {
+const updateNewLayoutDataContext = (layoutDataContext, columnInfo) => {
+	const newColumnInfo = Object.keys(columnInfo).reduce((acc, key) => {
+		return {
+			...acc,
+			[key]: {
+				...layoutDataContext.items[key],
+				config: {size: columnInfo[key]},
+			},
+		};
+	}, {});
+
 	return {
 		...layoutDataContext,
 		items: {
 			...layoutDataContext.items,
-			[leftColumnId]: {
-				...layoutDataContext.items[leftColumnId],
-				config: {size: leftColumnSize},
-			},
-			[rightColumnId]: {
-				...layoutDataContext.items[rightColumnId],
-				config: {size: rightColumnSize},
-			},
+			...newColumnInfo,
 		},
 	};
 };
@@ -76,7 +73,9 @@ const ColumnWithControls = React.forwardRef(
 
 		const columnRangeIsComplete = (columnRange) => {
 			const sum = columnRange
-				.map((columnId) => layoutData.items[columnId].config.size)
+				.map(
+					(columnId) => layoutDataContext.items[columnId].config.size
+				)
 				.reduce((acc, value) => {
 					return acc + value;
 				}, 0);
@@ -87,8 +86,10 @@ const ColumnWithControls = React.forwardRef(
 		const isLastColumnOfRow = () =>
 			columnRangeIsComplete(parentItem.children.slice(columnIndex + 1));
 
-		const isFirstColumnOfRow = () =>
-			columnRangeIsComplete(parentItem.children.slice(0, columnIndex));
+		const isFirstColumnOfRow = (newColumnIndex) =>
+			columnRangeIsComplete(
+				parentItem.children.slice(0, newColumnIndex || columnIndex)
+			);
 
 		const getPreviousResizableColumnId = () => {
 			const previousResizableColumns = parentItem.children
@@ -107,11 +108,7 @@ const ColumnWithControls = React.forwardRef(
 			setResizing(true);
 
 			const leftColumn =
-				layoutData.items[
-					parentItem.children[
-						parentItem.children.indexOf(item.itemId) - 1
-					]
-				];
+				layoutData.items[parentItem.children[columnIndex - 1]];
 
 			const rightColumn = item;
 
@@ -163,24 +160,43 @@ const ColumnWithControls = React.forwardRef(
 								1;
 						}
 
-						layoutDataContext = updateNewLayoutDataContext({
-							layoutDataContext,
-							leftColumnId: newLeftColumnId,
-							leftColumnSize,
-							rightColumnId,
-							rightColumnSize,
-						});
+						if (!isLastColumnOfRow()) {
+							const nextColumnId =
+								layoutData.items[
+									parentItem.children[columnIndex + 1]
+								].itemId;
 
+							const nextColumnSize =
+								layoutDataContext.items[nextColumnId].config
+									.size + rightColumnInitialSize;
+							layoutDataContext = updateNewLayoutDataContext(
+								layoutDataContext,
+								{
+									[nextColumnId]: nextColumnSize,
+								}
+							);
+						}
+
+						layoutDataContext = updateNewLayoutDataContext(
+							layoutDataContext,
+							{
+								[newLeftColumnId]: leftColumnSize,
+								[rightColumnId]: rightColumnSize,
+							}
+						);
 						setUpdatedLayoutData(layoutDataContext);
 
 						resizeInfo.current = null;
 						setResizing(false);
 						setColumnSelected(null);
+
 						dispatch(
 							resizeColumns({
 								layoutData: layoutDataContext,
 							})
-						).then(() => setUpdatedLayoutData(null));
+						).then(() => {
+							setUpdatedLayoutData(null);
+						});
 					}
 					else if (!rightColumnIsFirst) {
 						const columnDiff = Math.min(
@@ -200,14 +216,13 @@ const ColumnWithControls = React.forwardRef(
 								leftColumnInitialSize + rightColumnInitialSize;
 							rightColumnSize = ROW_SIZE;
 						}
-
-						layoutDataContext = updateNewLayoutDataContext({
+						layoutDataContext = updateNewLayoutDataContext(
 							layoutDataContext,
-							leftColumnId,
-							leftColumnSize,
-							rightColumnId,
-							rightColumnSize,
-						});
+							{
+								[leftColumnId]: leftColumnSize,
+								[rightColumnId]: rightColumnSize,
+							}
+						);
 
 						setUpdatedLayoutData(layoutDataContext);
 					}
@@ -246,11 +261,14 @@ const ColumnWithControls = React.forwardRef(
 			[isActive, item, layoutData]
 		);
 
+		const firstColumnOfRow = isFirstColumnOfRow(columnIndex);
+
 		return (
 			<TopperEmpty item={item} layoutData={layoutData}>
 				<Column
 					className={classNames('page-editor__col', {
 						'page-editor__row-overlay-grid__border':
+							!firstColumnOfRow &&
 							resizing &&
 							selectedColumn &&
 							selectedColumn.itemId === item.itemId,
@@ -261,7 +279,12 @@ const ColumnWithControls = React.forwardRef(
 					{parentItemIsActive && columnIndex !== 0 ? (
 						<div>
 							<button
-								className="btn-primary page-editor__col__resizer"
+								className={classNames(
+									'btn-primary page-editor__col__resizer',
+									{
+										'page-editor__col__resizer-first': firstColumnOfRow,
+									}
+								)}
 								onMouseDown={handleMouseDown}
 							/>
 							{children}

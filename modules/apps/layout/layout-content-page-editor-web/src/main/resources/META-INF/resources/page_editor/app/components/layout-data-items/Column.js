@@ -52,9 +52,7 @@ const Column = React.forwardRef(
 				{...props}
 				className={classNames(className, 'col', {
 					[`col-${columnSize}`]: columnSize,
-					empty:
-						modulesPerRow !== numberOfColumns &&
-						!item.children.length,
+					empty: !item.children.length,
 				})}
 				ref={ref}
 			>

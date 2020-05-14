@@ -69,15 +69,17 @@ public class PortalInstanceInitializerRegistryImpl
 	public List<PortalInstanceInitializer> getPortalInstanceInitializers(
 		boolean activeOnly) {
 
+		if (!activeOnly) {
+			return new ArrayList<>(_serviceTrackerMap.values());
+		}
+
 		List<PortalInstanceInitializer> portalInstanceInitializers =
 			new ArrayList<>();
 
 		for (PortalInstanceInitializer portalInstanceInitializer :
 				_serviceTrackerMap.values()) {
 
-			if (!activeOnly ||
-				(activeOnly && portalInstanceInitializer.isActive())) {
-
+			if (portalInstanceInitializer.isActive()) {
 				portalInstanceInitializers.add(portalInstanceInitializer);
 			}
 		}

@@ -16,30 +16,26 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
+		var script = '''
+			import com.liferay.portal.kernel.util.PropsKeys;
+			import com.liferay.portal.util.PropsUtil;
+
+			out.println(PropsUtil.get(PropsKeys.${propsKey}));
+		''';
+
 		for (var propsKey : list "LIFERAY_LIB_GLOBAL_DIR,LIFERAY_LIB_PORTAL_DIR,LIFERAY_WEB_PORTAL_DIR") {
-			var script = '''
-				import com.liferay.portal.kernel.util.PropsKeys;
-				import com.liferay.portal.util.PropsUtil;
-
-				out.println(PropsUtil.get(PropsKeys.${propsKey}));
-			''';
-
 			ServerAdministration.executeScript(
 				language = "Groovy",
 				script = "${script}");
 
-			var globalLibDir = PropsUtil.get("liferay.app.server.global.lib.dir");
-			var portalLibDir = PropsUtil.get("liferay.app.server.portal.lib.dir");
-			var portalWebDir = PropsUtil.get("liferay.app.server.portal.web.dir");
-
 			if ("${propsKey}" == "LIFERAY_LIB_GLOBAL_DIR") {
-				var dirName = "${globalLibDir}";
+				var dirName = PropsUtil.get("liferay.app.server.global.lib.dir");
 			}
 			else if ("${propsKey}" == "LIFERAY_LIB_PORTAL_DIR") {
-				var dirName = "${portalLibDir}";
+				var dirName = PropsUtil.get("liferay.app.server.portal.lib.dir");
 			}
 			else {
-				var dirName = "${portalWebDir}";
+				var dirName = PropsUtil.get("liferay.app.server.portal.web.dir");
 			}
 
 			AssertTextEquals(

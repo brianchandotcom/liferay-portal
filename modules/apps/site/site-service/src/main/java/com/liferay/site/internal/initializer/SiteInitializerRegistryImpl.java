@@ -63,12 +63,14 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 
 	@Override
 	public List<SiteInitializer> getSiteInitializers(
-		long companyId, boolean active) {
+		long companyId, boolean activeOnly) {
 
 		List<SiteInitializer> siteInitializers = new ArrayList<>();
 
 		for (SiteInitializer siteInitializer : _serviceTrackerMap.values()) {
-			if (!active || (active && siteInitializer.isActive(companyId))) {
+			if (!activeOnly ||
+				(activeOnly && siteInitializer.isActive(companyId))) {
+
 				siteInitializers.add(siteInitializer);
 			}
 		}

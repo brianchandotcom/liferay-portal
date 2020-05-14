@@ -499,12 +499,12 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page",
-			widgetName = "Message Boards");
+			widgetName = "Blogs");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		Portlet.selectScopePG(
-			portletName = "Message Boards",
+			portletName = "Blogs",
 			scope = "Staging Test Page");
 
 		Navigator.openSiteURL(siteName = "Site Name");

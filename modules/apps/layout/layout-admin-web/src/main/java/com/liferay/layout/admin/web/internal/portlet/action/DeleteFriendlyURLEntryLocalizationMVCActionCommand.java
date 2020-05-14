@@ -63,14 +63,10 @@ public class DeleteFriendlyURLEntryLocalizationMVCActionCommand
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		long friendlyURLEntryId = ParamUtil.getLong(
-			actionRequest, "friendlyURLEntryId");
-
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
-
 		try {
 			_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
-				friendlyURLEntryId, languageId);
+				ParamUtil.getLong(actionRequest, "friendlyURLEntryId"),
+				ParamUtil.getString(actionRequest, "languageId"));
 
 			jsonObject.put("success", true);
 		}

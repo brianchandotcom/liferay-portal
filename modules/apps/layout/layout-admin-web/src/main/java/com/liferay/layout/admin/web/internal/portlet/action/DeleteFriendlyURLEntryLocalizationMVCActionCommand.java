@@ -24,15 +24,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,11 +60,6 @@ public class DeleteFriendlyURLEntryLocalizationMVCActionCommand
 			throw new PrincipalException.MustBeAuthenticated(
 				themeDisplay.getUserId());
 		}
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(actionResponse);
-
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

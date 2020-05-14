@@ -14,13 +14,10 @@
 
 package com.liferay.site.internal.initializer;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
@@ -46,10 +43,9 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 			return null;
 		}
 
-		ServiceWrapper<SiteInitializer> serviceWrapper =
-			_serviceTrackerMap.getService(key);
+		SiteInitializer siteInitializer = _serviceTrackerMap.getService(key);
 
-		if (serviceWrapper == null) {
+		if (siteInitializer == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No site initializer registered with key " + key);
 			}
@@ -57,7 +53,7 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 			return null;
 		}
 
-		return serviceWrapper.getService();
+		return siteInitializer;
 	}
 
 	@Override
@@ -71,12 +67,7 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 
 		List<SiteInitializer> siteInitializers = new ArrayList<>();
 
-		List<ServiceWrapper<SiteInitializer>> serviceWrappers =
-			ListUtil.fromCollection(_serviceTrackerMap.values());
-
-		for (ServiceWrapper<SiteInitializer> serviceWrapper : serviceWrappers) {
-			SiteInitializer siteInitializer = serviceWrapper.getService();
-
+		for (SiteInitializer siteInitializer : _serviceTrackerMap.values()) {
 			if (!active || (active && siteInitializer.isActive(companyId))) {
 				siteInitializers.add(siteInitializer);
 			}
@@ -88,9 +79,7 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, SiteInitializer.class, "site.initializer.key",
-			ServiceTrackerCustomizerFactory.<SiteInitializer>serviceWrapper(
-				bundleContext));
+			bundleContext, SiteInitializer.class, "site.initializer.key");
 	}
 
 	@Deactivate
@@ -101,7 +90,6 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerRegistryImpl.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<SiteInitializer>>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, SiteInitializer> _serviceTrackerMap;
 
 }

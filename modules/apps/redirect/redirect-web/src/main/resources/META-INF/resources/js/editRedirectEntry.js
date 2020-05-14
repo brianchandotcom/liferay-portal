@@ -14,9 +14,37 @@
 
 import {openToast} from 'frontend-js-web';
 
-export default function ({getRedirectEntryChainCauseURL, namespace}) {
+export default function ({
+	getRedirectEntryChainCauseURL,
+	initialDestinationURL,
+	initialIsPermanent,
+	namespace,
+}) {
 	const form = document[`${namespace}fm`];
 	form.addEventListener('submit', saveRedirectEntry);
+	const typeInfo = document.getElementById(`${namespace}typeInfo`);
+	const destinationURLInput = document.getElementById(
+		`${namespace}destinationURL`
+	);
+	const permanentSelect = document.getElementById(`${namespace}permanent`);
+
+	if (typeInfo && initialIsPermanent) {
+		destinationURLInput.addEventListener('input', showTypeInfoAlert);
+		permanentSelect.addEventListener('input', showTypeInfoAlert);
+	}
+
+	function showTypeInfoAlert() {
+		let hide = true;
+
+		if (
+			permanentSelect.value !== 'true' ||
+			destinationURLInput.value !== initialDestinationURL
+		) {
+			hide = false;
+		}
+
+		typeInfo.classList.toggle('hide', hide);
+	}
 
 	function saveRedirectEntry() {
 		const destinationURL = form.elements[`${namespace}destinationURL`];

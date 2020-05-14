@@ -216,9 +216,9 @@ definition {
 			larFileName = "site-template-content-page.lar",
 			portletName = "Site Templates");
 
-		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
-
 		Refresh();
+
+		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage",

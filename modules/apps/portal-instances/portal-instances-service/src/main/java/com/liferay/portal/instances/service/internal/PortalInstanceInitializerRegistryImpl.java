@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -84,7 +83,7 @@ public class PortalInstanceInitializerRegistryImpl
 			}
 		}
 
-		return Collections.unmodifiableList(portalInstanceInitializers);
+		return portalInstanceInitializers;
 	}
 
 	@Activate

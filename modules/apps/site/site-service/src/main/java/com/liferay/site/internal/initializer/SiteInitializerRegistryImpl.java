@@ -23,7 +23,6 @@ import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -77,7 +76,7 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 			}
 		}
 
-		return Collections.unmodifiableList(siteInitializers);
+		return siteInitializers;
 	}
 
 	@Activate

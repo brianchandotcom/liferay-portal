@@ -210,7 +210,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 
 		_resourceActions.read(
 			null, UpgradeKaleoProcess.class.getClassLoader(),
-			"/META-INF/resource-actions/default.xml");
+			"/resource-actions/default.xml");
 
 		List<String> modelNames = _resourceActions.getPortletModelResources(
 			KaleoFormsPortletKeys.KALEO_FORMS_ADMIN);

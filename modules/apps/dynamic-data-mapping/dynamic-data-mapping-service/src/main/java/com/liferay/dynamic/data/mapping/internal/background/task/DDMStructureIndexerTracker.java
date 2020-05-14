@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.background.task;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,10 +36,10 @@ public class DDMStructureIndexerTracker {
 	public DDMStructureIndexer getDDMStructureIndexer(String className)
 		throws PortalException {
 
-		ServiceWrapper<DDMStructureIndexer> serviceWrapper =
-			_serviceTrackerMap.getService(className);
+		DDMStructureIndexer ddmStructureIndexer = _serviceTrackerMap.getService(
+			className);
 
-		if (serviceWrapper == null) {
+		if (ddmStructureIndexer == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No dynamic data mapping structure indexer exists for " +
@@ -51,16 +49,14 @@ public class DDMStructureIndexerTracker {
 			return null;
 		}
 
-		return serviceWrapper.getService();
+		return ddmStructureIndexer;
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, DDMStructureIndexer.class,
-			"ddm.structure.indexer.class.name",
-			ServiceTrackerCustomizerFactory.<DDMStructureIndexer>serviceWrapper(
-				bundleContext));
+			"ddm.structure.indexer.class.name");
 	}
 
 	@Deactivate
@@ -71,7 +67,6 @@ public class DDMStructureIndexerTracker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureIndexerTracker.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<DDMStructureIndexer>>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, DDMStructureIndexer> _serviceTrackerMap;
 
 }

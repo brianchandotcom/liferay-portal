@@ -38,8 +38,9 @@ import org.osgi.service.component.annotations.Component;
 		"init.param.auth.verifier.OAuth2JSONWSAuthVerifier.urls.includes=/*",
 		"servlet-context-name=",
 		"servlet-filter-name=OAuth2 Web Server Servlet Auth Verifier Filter",
-		"url-pattern=/c/portal/fragment/*", "url-pattern=/documents/*",
-		"url-pattern=/image/*"
+		"url-pattern=/c/portal/fragment/*",
+		"url-pattern=/c/portal/layout_page_template/*",
+		"url-pattern=/documents/*", "url-pattern=/image/*"
 	},
 	service = Filter.class
 )

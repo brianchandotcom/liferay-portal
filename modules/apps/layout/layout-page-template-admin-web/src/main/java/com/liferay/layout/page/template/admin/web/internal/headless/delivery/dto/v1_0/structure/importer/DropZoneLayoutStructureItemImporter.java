@@ -51,7 +51,8 @@ public class DropZoneLayoutStructureItemImporter
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
 			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position)
+			PageElement pageElement, String parentItemId, int position,
+			Set<String> warningMessages)
 		throws Exception {
 
 		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =

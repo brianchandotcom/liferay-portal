@@ -1054,18 +1054,10 @@ public class LayoutPageTemplatesImporterImpl
 		LayoutStructureItem layoutStructureItem = null;
 
 		if (layoutStructureItemImporter != null) {
-			List<String> layoutStructureItemWarningMessages =
-				layoutStructureItemImporter.validateLayoutStructureItem(
-					layout.getGroupId(), pageElement);
-
-			if (ListUtil.isNotEmpty(layoutStructureItemWarningMessages)) {
-				warningMessages.addAll(layoutStructureItemWarningMessages);
-			}
-
 			layoutStructureItem =
 				layoutStructureItemImporter.addLayoutStructureItem(
 					layout, layoutStructure, pageElement, parentItemId,
-					position);
+					position, warningMessages);
 		}
 		else if (pageElement.getType() == PageElement.Type.ROOT) {
 			layoutStructureItem = layoutStructure.getMainLayoutStructureItem();

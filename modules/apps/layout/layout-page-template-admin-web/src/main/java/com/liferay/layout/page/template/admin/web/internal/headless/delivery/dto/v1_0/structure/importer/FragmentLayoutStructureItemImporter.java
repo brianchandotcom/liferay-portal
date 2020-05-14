@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -64,6 +63,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -81,11 +81,12 @@ public class FragmentLayoutStructureItemImporter
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
 			Layout layout, LayoutStructure layoutStructure,
-			PageElement pageElement, String parentItemId, int position)
+			PageElement pageElement, String parentItemId, int position,
+			Set<String> warningMessages)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			layout, pageElement, position);
+			layout, pageElement, position, warningMessages);
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -100,38 +101,9 @@ public class FragmentLayoutStructureItemImporter
 		return PageElement.Type.FRAGMENT;
 	}
 
-	@Override
-	public List<String> validateLayoutStructureItem(
-			long groupId, PageElement pageElement)
-		throws Exception {
-
-		Map<String, Object> definitionMap = getDefinitionMap(
-			pageElement.getDefinition());
-
-		if (definitionMap == null) {
-			return null;
-		}
-
-		Map<String, Object> fragmentDefinitionMap =
-			(Map<String, Object>)definitionMap.get("fragment");
-
-		String fragmentKey = (String)fragmentDefinitionMap.get("key");
-
-		if (Validator.isNull(fragmentKey)) {
-			return null;
-		}
-
-		FragmentEntry fragmentEntry = _getFragmentEntry(fragmentKey, groupId);
-
-		if (fragmentEntry != null) {
-			return null;
-		}
-
-		return ListUtil.fromArray(_getWarningMessage(groupId, fragmentKey));
-	}
-
 	private FragmentEntryLink _addFragmentEntryLink(
-			Layout layout, PageElement pageElement, int position)
+			Layout layout, PageElement pageElement, int position,
+			Set<String> warningMessages)
 		throws Exception {
 
 		Map<String, Object> definitionMap = getDefinitionMap(
@@ -154,6 +126,9 @@ public class FragmentLayoutStructureItemImporter
 			fragmentKey, layout.getGroupId());
 
 		if (fragmentEntry == null) {
+			warningMessages.add(
+				_getWarningMessage(layout.getGroupId(), fragmentKey));
+
 			return null;
 		}
 
@@ -228,7 +203,8 @@ public class FragmentLayoutStructureItemImporter
 			"widgetInstances");
 
 		if (widgetInstances != null) {
-			_processWidgetInstances(fragmentEntryLink, layout, widgetInstances);
+			_processWidgetInstances(
+				fragmentEntryLink, layout, warningMessages, widgetInstances);
 		}
 
 		return fragmentEntryLink;
@@ -554,7 +530,7 @@ public class FragmentLayoutStructureItemImporter
 
 	private void _processWidgetInstances(
 			FragmentEntryLink fragmentEntryLink, Layout layout,
-			List<Object> widgetInstances)
+			Set<String> warningMessages, List<Object> widgetInstances)
 		throws Exception {
 
 		for (Object widgetInstance : widgetInstances) {

@@ -34,16 +34,11 @@ export default function ({
 	}
 
 	function showTypeInfoAlert() {
-		let hide = false;
-
-		if (
+		typeInfo.classList.toggle(
+			'hide',
 			permanentSelect.value === 'true' &&
-			destinationURLInput.value === initialDestinationURL
-		) {
-			hide = true;
-		}
-
-		typeInfo.classList.toggle('hide', hide);
+				destinationURLInput.value === initialDestinationURL
+		);
 	}
 
 	function saveRedirectEntry() {

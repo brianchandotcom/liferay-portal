@@ -47,7 +47,7 @@ export default function Widget({instanceable, portletId, title, used}) {
 		<button
 			className="btn btn-sm btn-unstyled d-block mb-1 px-2 py-1"
 			disabled={disabled}
-			ref={disabled ? sourceRef : () => {}}
+			ref={disabled ? () => {} : sourceRef}
 			type="button"
 		>
 			<ClayIcon

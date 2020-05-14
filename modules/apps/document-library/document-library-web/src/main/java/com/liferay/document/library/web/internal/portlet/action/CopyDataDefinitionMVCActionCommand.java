@@ -21,7 +21,6 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
@@ -95,11 +94,6 @@ public class CopyDataDefinitionMVCActionCommand
 				themeDisplay.getScopeGroupId(), "document-library",
 				dataDefinition);
 
-		DDMStructure ddmStructure = _ddmStructureService.getStructure(
-			themeDisplay.getScopeGroupId(),
-			_portal.getClassNameId(DLFileEntryMetadata.class.getName()),
-			dataDefinition.getDataDefinitionKey());
-
 		boolean copyTemplates = ParamUtil.getBoolean(
 			actionRequest, "copyTemplates");
 
@@ -110,13 +104,10 @@ public class CopyDataDefinitionMVCActionCommand
 			_ddmTemplateService.copyTemplates(
 				_portal.getClassNameId(DDMStructure.class), ddmStructureId,
 				_portal.getClassNameId(DLFileEntryMetadata.class.getName()),
-				ddmStructure.getStructureId(),
+				dataDefinition.getId(),
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, serviceContext);
 		}
 	}
-
-	@Reference
-	private DDMStructureService _ddmStructureService;
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;

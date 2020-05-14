@@ -1336,9 +1336,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		var key_modalTitle = "Configuration";
-
-		Click(locator1 = "Button#CLOSE_MODAL");
+		Click(locator1 = "Icon#TIMES");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

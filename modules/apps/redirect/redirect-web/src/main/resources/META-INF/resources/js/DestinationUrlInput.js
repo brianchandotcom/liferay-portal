@@ -18,6 +18,8 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+const REGEX_URL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
+
 const STR_BLANK = '';
 
 const DestinationUrlInput = ({
@@ -26,6 +28,7 @@ const DestinationUrlInput = ({
 	namespace,
 }) => {
 	const [requiredError, setRequiredError] = useState(false);
+	const [urlError, setUrlError] = useState(false);
 	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
 
 	const handleTryRedirection = () => {

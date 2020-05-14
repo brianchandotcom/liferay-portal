@@ -122,7 +122,7 @@ definition {
 				attributeValue = "dialog-iframe-popup",
 				eventName = "modalIframeLoaded");
 
-			SelectFrame(locator1 = "IFrame#DIALOG");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			Navigator.gotoNavTab(navTab = "Asset Selection");
 

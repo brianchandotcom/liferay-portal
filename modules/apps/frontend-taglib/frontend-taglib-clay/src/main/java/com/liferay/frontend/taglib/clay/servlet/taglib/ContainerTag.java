@@ -45,6 +45,10 @@ public class ContainerTag extends IncludeTag {
 		return _className;
 	}
 
+	public boolean getFluid() {
+		return _fluid;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -55,6 +59,10 @@ public class ContainerTag extends IncludeTag {
 
 	public void setClassName(String className) {
 		_className = className;
+	}
+
+	public void setFluid(boolean fluid) {
+		_fluid = fluid;
 	}
 
 	public void setId(String id) {
@@ -77,8 +85,9 @@ public class ContainerTag extends IncludeTag {
 		super.cleanUp();
 
 		_className = null;
+		_fluid = false;
 		_id = null;
-		_size = "xl";
+		_size = null;
 	}
 
 	@Override
@@ -127,24 +136,30 @@ public class ContainerTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute("clay:container:className", _className);
+		httpServletRequest.setAttribute("clay:container:fluid", _fluid);
 		httpServletRequest.setAttribute("clay:container:id", _id);
 		httpServletRequest.setAttribute("clay:container:size", _size);
 	}
 
 	private String _getClassName() {
-		Set<String> classNames = new LinkedHashSet<>();
+		Set className = new LinkedHashSet();
 
-		classNames.add("container-fluid");
+		if (!_fluid) {
+			className.add("container");
+		}
+		else {
+			className.add("container-fluid");
 
-		if (Validator.isNotNull(_size)) {
-			classNames.add("container-fluid-max-" + _size);
+			if (Validator.isNotNull(_size)) {
+				className.add("container-fluid-max-" + _size);
+			}
 		}
 
 		if (Validator.isNotNull(_className)) {
-			classNames.addAll(StringUtil.split(_className, CharPool.SPACE));
+			className.addAll(StringUtil.split(_className, CharPool.SPACE));
 		}
 
-		return StringUtil.merge(classNames, StringPool.SPACE);
+		return StringUtil.merge(className, StringPool.SPACE);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:container:";
@@ -156,7 +171,8 @@ public class ContainerTag extends IncludeTag {
 	private static final String _START_PAGE = "/container/start.jsp";
 
 	private String _className;
+	private boolean _fluid;
 	private String _id;
-	private String _size = "xl";
+	private String _size;
 
 }

@@ -61,6 +61,12 @@ definition {
 
 		var app_name = "Collaboration Test Application";
 
+		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_STAY_SIGNED_IN_CONFIRMATION")) {
+			AssertClick(
+				locator1 = "MicrosoftLogin#LOGIN_YES_BUTTON",
+				value1 = "Yes");
+		}
+
 		if (IsElementPresent(locator1 = "MicrosoftLogin#SHAREPOINT_NOTIFICATION")) {
 			AssertClick(
 				locator1 = "MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON",

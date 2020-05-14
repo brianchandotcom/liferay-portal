@@ -28,6 +28,8 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -120,7 +122,12 @@ public class CollectionLayoutStructureItemImporter
 	private JSONObject _getCollectionJSONObject(
 		Map<String, Object> collectionReference) {
 
-		int classPK = (int)collectionReference.get("classPK");
+		Long classPK = _toClassPK(
+			String.valueOf(collectionReference.get("classPK")));
+
+		if (classPK == null) {
+			return null;
+		}
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.fetchAssetListEntry(classPK);
@@ -133,7 +140,7 @@ public class CollectionLayoutStructureItemImporter
 			"classNameId",
 			_portal.getClassNameId(AssetListEntry.class.getName())
 		).put(
-			"classPK", classPK
+			"classPK", String.valueOf(classPK)
 		).put(
 			"itemSubtype", assetListEntry.getAssetEntrySubtype()
 		).put(
@@ -167,6 +174,35 @@ public class CollectionLayoutStructureItemImporter
 			"type", InfoListProviderItemSelectorReturnType.class.getName()
 		);
 	}
+
+	private Long _toClassPK(String classPKString) {
+		if (Validator.isNull(classPKString)) {
+			return null;
+		}
+
+		Long classPK = null;
+
+		try {
+			classPK = Long.parseLong(classPKString);
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					String.format(
+						"Class PK could not be set since class PK %s could " +
+							"not be parsed to a long",
+						classPKString),
+					numberFormatException);
+			}
+
+			return null;
+		}
+
+		return classPK;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CollectionLayoutStructureItemImporter.class);
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;

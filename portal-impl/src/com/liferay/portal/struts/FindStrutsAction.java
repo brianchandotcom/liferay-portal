@@ -95,14 +95,9 @@ public abstract class FindStrutsAction implements StrutsAction {
 					ActionKeys.VIEW)) {
 
 				if (!themeDisplay.isSignedIn() && result.isSignInRequired()) {
-					String currentCompleteURL =
-						PortalUtil.getCurrentCompleteURL(httpServletRequest);
-
-					String redirect =
-						PortalUtil.getPathMain() + "/portal/login?redirect=" +
-							currentCompleteURL;
-
-					redirect = HttpUtil.encodeParameters(redirect);
+					String redirect = HttpUtil.addParameter(
+						PortalUtil.getPathMain() + "/portal/login", "redirect",
+						PortalUtil.getCurrentCompleteURL(httpServletRequest));
 
 					httpServletResponse.sendRedirect(redirect);
 

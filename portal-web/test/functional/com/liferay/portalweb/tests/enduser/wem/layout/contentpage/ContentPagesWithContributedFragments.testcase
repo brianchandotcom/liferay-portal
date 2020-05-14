@@ -165,9 +165,9 @@ definition {
 	@description = "This is a use case for LPS-111274. The light blue frame is shown when hover on unmapped editable field of selected fragments but the dark blue frame is shown when click on unmapped editable field of selected fragments."
 	@priority = "5"
 	test ClickUnmappedEditableFieldAndMouseOver {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -181,20 +181,31 @@ definition {
 		Pause(locator1 = "1000");
 
 		AssertCssValue(
-			locator1 = "//h1[contains(.,'Heading Example')]",
+			id = "element-text",
+			key_fragmentName = "Heading",
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
 			locator2 = "boxShadow",
 			value1 = "rgb(11, 95, 255) 0px 0px 0px 1px inset");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
-		ContentPages.clickPencil();
+		Click.clickNoWaitForVisible(
+			key_fragmentName = "Heading",
+			locator1 = "Fragment#FRAGMENT_HEADER");
 
-		MouseOver(
-			id = "element",
+		MouseOver.mouseOverNotVisible(
+			id = "element-text",
 			key_fragmentName = "Heading",
 			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD");
 
-		SikuliAssertElementPresent(locator1 = "portal/screenshots/page/heading_frgament_blue_frame.jpg");
+		Pause(locator1 = "1000");
+
+		AssertCssValue(
+			id = "element-text",
+			key_fragmentName = "Heading",
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+			locator2 = "boxShadow",
+			value1 = "rgb(128, 172, 255) 0px 0px 0px 1px inset");
 	}
 
 	@description = "This is a use case for LPS-86141. The collections with multiple asset type are unavailable to the Collection Display."

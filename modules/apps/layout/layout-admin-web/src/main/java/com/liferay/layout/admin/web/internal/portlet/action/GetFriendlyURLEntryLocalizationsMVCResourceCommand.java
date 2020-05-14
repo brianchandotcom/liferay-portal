@@ -39,11 +39,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 import javax.portlet.ResourceRequest;
@@ -125,66 +122,34 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 		JSONObject friendlyURLEntryLocalizationsJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		Map<String, List<FriendlyURLEntryLocalization>>
-			friendlyURLEntryLocalizationsMap =
-				_getFriendlyURLEntryLocalizationsMap(mainFriendlyURLEntry);
+		for (String languageId : layout.getAvailableLanguageIds()) {
+			FriendlyURLEntryLocalization mainFriendlyURLEntryLocalization =
+				_getFriendlyURLEntryLocalization(
+					mainFriendlyURLEntry, languageId);
 
-		friendlyURLEntryLocalizationsMap.forEach(
-			(languageId, friendlyEntryURLLocalizations) -> {
-				FriendlyURLEntryLocalization mainFriendlyURLEntryLocalization =
-					_getFriendlyURLEntryLocalization(
-						mainFriendlyURLEntry, languageId);
-
-				friendlyURLEntryLocalizationsJSONObject.put(
-					languageId,
-					JSONUtil.put(
-						"current",
-						_serializeFriendlyURLEntryLocalization(
-							mainFriendlyURLEntryLocalization)
-					).put(
-						"history",
-						_getJSONJArray(
-							ListUtil.remove(
-								friendlyEntryURLLocalizations,
-								Arrays.asList(
-									mainFriendlyURLEntryLocalization)),
-							this::_serializeFriendlyURLEntryLocalization)
-					));
-			});
-
-		return friendlyURLEntryLocalizationsJSONObject;
-	}
-
-	private Map<String, List<FriendlyURLEntryLocalization>>
-		_getFriendlyURLEntryLocalizationsMap(
-			FriendlyURLEntry mainFriendlyURLEntry) {
-
-		Map<String, List<FriendlyURLEntryLocalization>>
-			friendlyURLEntryLocalizationsMap = new HashMap<>();
-
-		for (FriendlyURLEntry friendlyURLEntry :
-				_friendlyURLEntryLocalService.getFriendlyURLEntries(
-					mainFriendlyURLEntry.getGroupId(),
-					mainFriendlyURLEntry.getClassNameId(),
-					mainFriendlyURLEntry.getClassPK())) {
-
-			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-					_friendlyURLEntryLocalService.
-						getFriendlyURLEntryLocalizations(
-							friendlyURLEntry.getFriendlyURLEntryId())) {
-
-				List<FriendlyURLEntryLocalization>
-					currentFriendlyURLEntryLocalizations =
-						friendlyURLEntryLocalizationsMap.computeIfAbsent(
-							friendlyURLEntryLocalization.getLanguageId(),
-							key -> new ArrayList<>());
-
-				currentFriendlyURLEntryLocalizations.add(
-					friendlyURLEntryLocalization);
-			}
+			friendlyURLEntryLocalizationsJSONObject.put(
+				languageId,
+				JSONUtil.put(
+					"current",
+					_serializeFriendlyURLEntryLocalization(
+						mainFriendlyURLEntryLocalization)
+				).put(
+					"history",
+					_getJSONJArray(
+						ListUtil.remove(
+							_friendlyURLEntryLocalService.
+								getFriendlyURLEntryLocalizations(
+									layout.getGroupId(),
+									_layoutFriendlyURLEntryHelper.
+										getClassNameId(
+											layout.isPrivateLayout()),
+									layout.getPlid(), languageId),
+							Arrays.asList(mainFriendlyURLEntryLocalization)),
+						this::_serializeFriendlyURLEntryLocalization)
+				));
 		}
 
-		return friendlyURLEntryLocalizationsMap;
+		return friendlyURLEntryLocalizationsJSONObject;
 	}
 
 	private <T> JSONArray _getJSONJArray(

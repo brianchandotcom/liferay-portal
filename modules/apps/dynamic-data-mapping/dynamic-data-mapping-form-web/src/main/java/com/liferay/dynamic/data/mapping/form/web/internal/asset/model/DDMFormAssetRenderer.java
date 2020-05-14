@@ -171,14 +171,13 @@ public class DDMFormAssetRenderer
 		HttpServletRequest httpServletRequest =
 			liferayPortletRequest.getHttpServletRequest();
 
-		String portletNamespace =
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN;
+		String portletNamespace = DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM;
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, portletNamespace, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"mvcPath", "/admin/edit_form_instance_record.jsp");
+			"mvcPath", "/display/edit_form_instance_record.jsp");
 		portletURL.setParameter(
 			"redirect", _portal.getCurrentURL(httpServletRequest));
 		portletURL.setParameter(

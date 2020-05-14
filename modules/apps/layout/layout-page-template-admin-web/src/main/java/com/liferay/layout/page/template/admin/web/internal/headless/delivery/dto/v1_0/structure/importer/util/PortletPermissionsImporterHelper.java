@@ -14,6 +14,8 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -24,14 +26,21 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletPermissionsImporterHelper {
 
 	public void importPortletPermissions(
-			long plid, String portletId,
+			long plid, String portletId, Set<String> warningMessages,
 			List<Map<String, Object>> widgetPermissionsMaps)
 		throws Exception {
 
@@ -73,11 +82,15 @@ public class PortletPermissionsImporterHelper {
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
 
 		for (Map<String, Object> widgetPermissionsMap : widgetPermissionsMaps) {
+			String roleKey = (String)widgetPermissionsMap.get("roleKey");
+
 			Role role = _roleLocalService.fetchRole(
-				layout.getCompanyId(),
-				(String)widgetPermissionsMap.get("roleKey"));
+				layout.getCompanyId(), roleKey);
 
 			if (role == null) {
+				warningMessages.add(
+					_getWarningMessage(layout.getGroupId(), roleKey));
+
 				continue;
 			}
 
@@ -122,8 +135,38 @@ public class PortletPermissionsImporterHelper {
 		}
 	}
 
+	private String _getWarningMessage(long groupId, String roleKey)
+		throws PortalException {
+
+		Locale locale = null;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			locale = serviceContext.getLocale();
+		}
+		else {
+			locale = _portal.getSiteDefaultLocale(groupId);
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return _language.format(
+			resourceBundle,
+			"role-with-key-x-was-ignored-because-it-does-not-exist",
+			new String[] {roleKey});
+	}
+
+	@Reference
+	private Language _language;
+
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

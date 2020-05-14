@@ -60,7 +60,7 @@ public class WidgetLayoutStructureItemImporter
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			layout, pageElement);
+			layout, pageElement, warningMessages);
 
 		if (fragmentEntryLink == null) {
 			return null;
@@ -76,7 +76,7 @@ public class WidgetLayoutStructureItemImporter
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
-			Layout layout, PageElement pageElement)
+			Layout layout, PageElement pageElement, Set<String> warningMessages)
 		throws Exception {
 
 		Map<String, Object> definitionMap = getDefinitionMap(
@@ -133,7 +133,7 @@ public class WidgetLayoutStructureItemImporter
 		_portletPermissionsImporterHelper.importPortletPermissions(
 			layout.getPlid(),
 			PortletIdCodec.encode(widgetName, widgetInstanceId),
-			widgetPermissionsMaps);
+			warningMessages, widgetPermissionsMaps);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			layout.getUserId(), layout.getGroupId(), 0, 0, 0,

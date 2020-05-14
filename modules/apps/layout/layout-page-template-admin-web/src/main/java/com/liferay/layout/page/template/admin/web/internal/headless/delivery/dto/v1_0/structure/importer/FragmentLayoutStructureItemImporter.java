@@ -566,7 +566,7 @@ public class FragmentLayoutStructureItemImporter
 			_portletPermissionsImporterHelper.importPortletPermissions(
 				layout.getPlid(),
 				PortletIdCodec.encode(widgetName, widgetInstanceId),
-				widgetPermissionsMaps);
+				warningMessages, widgetPermissionsMaps);
 		}
 	}
 

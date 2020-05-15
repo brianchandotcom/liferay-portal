@@ -29,7 +29,6 @@ import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarNotificationTemplateTestUtil;
 import com.liferay.calendar.test.util.CalendarStagingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
-import com.liferay.calendar.test.util.CalendarWorkflowTestUtil;
 import com.liferay.calendar.test.util.CheckBookingsMessageListenerTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
 import com.liferay.calendar.util.JCalendarUtil;
@@ -38,23 +37,34 @@ import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -68,6 +78,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -1311,7 +1323,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		CalendarWorkflowTestUtil.activateWorkflow(liveGroup);
+		_activateWorkflow(liveGroup);
 
 		Calendar invitedCalendar = CalendarTestUtil.addCalendar(_user);
 
@@ -1335,7 +1347,7 @@ public class CalendarBookingLocalServiceTest {
 
 		assertStatus(calendarBooking, WorkflowConstants.STATUS_PENDING);
 
-		CalendarWorkflowTestUtil.completeWorkflow(liveGroup);
+		_completeWorkflow(liveGroup);
 
 		childCalendarBooking =
 			_calendarBookingLocalService.fetchCalendarBooking(
@@ -1366,7 +1378,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		CalendarWorkflowTestUtil.activateWorkflow(liveGroup);
+		_activateWorkflow(liveGroup);
 
 		Calendar invitedCalendar = CalendarTestUtil.addCalendar(_user);
 
@@ -1415,7 +1427,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		CalendarWorkflowTestUtil.activateWorkflow(group);
+		_activateWorkflow(group);
 
 		User invitingUser = UserTestUtil.addUser();
 
@@ -1435,7 +1447,7 @@ public class CalendarBookingLocalServiceTest {
 
 		assertMailSubjectCount(mailMessageSubject, 0);
 
-		CalendarWorkflowTestUtil.completeWorkflow(group);
+		_completeWorkflow(group);
 
 		assertMailSubjectCount(mailMessageSubject, 1);
 	}
@@ -3274,6 +3286,48 @@ public class CalendarBookingLocalServiceTest {
 		}
 	}
 
+	private void _activateWorkflow(Group group) throws Exception {
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			group.getGroupId(), CalendarBooking.class.getName(), 0, 0,
+			"Single Approver", 1);
+	}
+
+	private void _completeWorkflow(Group group) throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
+
+			WorkflowTask workflowTask = _getWorkflowTask();
+
+			PermissionChecker userPermissionChecker =
+				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
+
+			PermissionThreadLocal.setPermissionChecker(userPermissionChecker);
+
+			_workflowTaskManager.assignWorkflowTaskToUser(
+				group.getCompanyId(), TestPropsValues.getUserId(),
+				workflowTask.getWorkflowTaskId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, null, null);
+
+			_workflowTaskManager.completeWorkflowTask(
+				group.getCompanyId(), TestPropsValues.getUserId(),
+				workflowTask.getWorkflowTaskId(), Constants.APPROVE,
+				StringPool.BLANK, null);
+		}
+	}
+
+	private WorkflowTask _getWorkflowTask() throws Exception {
+		List<WorkflowTask> workflowTasks =
+			_workflowTaskManager.getWorkflowTasksByUserRoles(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(workflowTasks.toString(), 1, workflowTasks.size());
+
+		return workflowTasks.get(0);
+	}
+
 	private static final TimeZone _losAngelesTimeZone = TimeZone.getTimeZone(
 		"America/Los_Angeles");
 	private static final TimeZone _utcTimeZone = TimeZoneUtil.getTimeZone(
@@ -3289,5 +3343,12 @@ public class CalendarBookingLocalServiceTest {
 	private CalendarResourceLocalService _calendarResourceLocalService;
 
 	private User _user;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Inject
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

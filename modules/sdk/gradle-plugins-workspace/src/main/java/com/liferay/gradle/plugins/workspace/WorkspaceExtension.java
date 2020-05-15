@@ -371,19 +371,19 @@ public class WorkspaceExtension {
 			product,
 			key -> {
 				try {
-					DownloadCommand download = new DownloadCommand();
+					DownloadCommand downloadCommand = new DownloadCommand();
 
-					download.setCacheDir(_workspaceCacheDir);
-					download.setUrl(new URL(_PRODUCT_INFO_URL));
-					download.setToken(false);
-					download.setUserName(null);
-					download.setPassword(null);
+					downloadCommand.setCacheDir(_workspaceCacheDir);
+					downloadCommand.setUrl(new URL(_PRODUCT_INFO_URL));
+					downloadCommand.setToken(false);
+					downloadCommand.setUserName(null);
+					downloadCommand.setPassword(null);
 
-					download.execute();
+					downloadCommand.execute();
 
-					Path downloadPath = download.getDownloadPath();
+					Path downloadPath = downloadCommand.getDownloadPath();
 
-					try (JsonReader reader = new JsonReader(
+					try (JsonReader jsonReader = new JsonReader(
 							Files.newBufferedReader(downloadPath))) {
 
 						Gson gson = new Gson();
@@ -393,7 +393,7 @@ public class WorkspaceExtension {
 							};
 
 						Map<String, ProductInfo> productInfos = gson.fromJson(
-							reader, typeToken.getType());
+							jsonReader, typeToken.getType());
 
 						return productInfos.get(product);
 					}

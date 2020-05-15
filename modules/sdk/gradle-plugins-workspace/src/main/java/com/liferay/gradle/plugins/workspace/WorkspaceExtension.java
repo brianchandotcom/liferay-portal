@@ -308,12 +308,12 @@ public class WorkspaceExtension {
 		_homeDir = homeDir;
 	}
 
-	public void setTargetPlatformVersion(Object targetPlatformVersion) {
-		_targetPlatformVersion = targetPlatformVersion;
-	}
-
 	public void setProduct(Object product) {
 		_product = product;
+	}
+
+	public void setTargetPlatformVersion(Object targetPlatformVersion) {
+		_targetPlatformVersion = targetPlatformVersion;
 	}
 
 	private String _getDefaultAppServerVersion() {
@@ -374,10 +374,10 @@ public class WorkspaceExtension {
 					DownloadCommand downloadCommand = new DownloadCommand();
 
 					downloadCommand.setCacheDir(_workspaceCacheDir);
-					downloadCommand.setUrl(new URL(_PRODUCT_INFO_URL));
-					downloadCommand.setToken(false);
-					downloadCommand.setUserName(null);
 					downloadCommand.setPassword(null);
+					downloadCommand.setToken(false);
+					downloadCommand.setUrl(new URL(_PRODUCT_INFO_URL));
+					downloadCommand.setUserName(null);
 
 					downloadCommand.execute();
 

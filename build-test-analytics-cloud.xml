@@ -90,7 +90,14 @@ networks:
 				replace="network \&quot;${analytics.cloud.project.name}_default\&quot;"
 			/>
 
-			<echo file="${analytics.cloud.asah.dir}/local.env">OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}</echo>
+			<replaceregexp
+				file="${analytics.cloud.faro.dir}/osb-faro-docker/asah-local/Dockerfile"
+				match="FARO_URL=http://localhost:8080"
+				replace="FARO_URL=${analytics.cloud.faro.frontend.url}"
+			/>
+
+			<echo file="${analytics.cloud.asah.dir}/local.env">OSB_ASAH_BACKEND_URL=${analytics.cloud.asah.backend.url}
+OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}</echo>
 
 			<if>
 				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />

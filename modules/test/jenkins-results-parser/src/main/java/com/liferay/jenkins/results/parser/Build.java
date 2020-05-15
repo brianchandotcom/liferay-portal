@@ -181,6 +181,8 @@ public interface Build {
 
 	public boolean isFromCompletedBuild();
 
+	public boolean isUniqueFailure();
+
 	public void reinvoke();
 
 	public void reinvoke(ReinvokeRule reinvokeRule);

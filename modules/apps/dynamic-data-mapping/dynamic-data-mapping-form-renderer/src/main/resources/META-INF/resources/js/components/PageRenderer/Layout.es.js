@@ -53,7 +53,7 @@ export const Layout = ({
 									{...fieldProps}
 									activePage={activePage}
 									editable={editable}
-									key={fieldProps.index}
+									key={fieldProps.field.instanceId}
 									onBlur={onBlur}
 									onChange={onChange}
 									onFocus={onFocus}

@@ -29,12 +29,6 @@ import {
 	DRAG_FIELD_TYPE,
 } from './dragTypes.es';
 
-const replaceColumn = (node) => {
-	if (node.parentNode) {
-		node.parentNode.replaceChild(node.cloneNode(true), node);
-	}
-};
-
 export default ({dataLayoutBuilder, node}) => {
 	const [{dataDefinition}] = useContext(AppContext);
 	const onDrop = useCallback(
@@ -131,8 +125,6 @@ export default ({dataLayoutBuilder, node}) => {
 
 	useEffect(() => {
 		dropColumn(node);
-
-		return () => replaceColumn(node);
 	}, [dropColumn, node]);
 
 	useEffect(() => {

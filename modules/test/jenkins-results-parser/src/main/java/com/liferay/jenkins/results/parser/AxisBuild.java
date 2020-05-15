@@ -285,25 +285,10 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		if (result.equals("UNSTABLE")) {
-			List<Element> failureElements = new ArrayList<>();
-			List<Element> upstreamJobFailureElements = new ArrayList<>();
-
-			for (TestResult testResult : getTestResults(null)) {
-				if (!testResult.isFailing()) {
-					continue;
-				}
-
-				if (UpstreamFailureUtil.isTestFailingInUpstreamJob(
-						testResult)) {
-
-					upstreamJobFailureElements.add(
-						testResult.getGitHubElement());
-
-					continue;
-				}
-
-				failureElements.add(testResult.getGitHubElement());
-			}
+			List<Element> failureElements = getTestResultGitHubElements(
+				getUniqueFailureTestResults());
+			List<Element> upstreamJobFailureElements =
+				getTestResultGitHubElements(getUpstreamJobFailureTestResults());
 
 			if (!upstreamJobFailureElements.isEmpty()) {
 				upstreamJobFailureMessageElement = messageElement.createCopy();
@@ -519,6 +504,18 @@ public class AxisBuild extends BaseBuild {
 			String.valueOf(topLevelBuild.getBuildNumber()), "/", getJobName(),
 			"/", getAxisVariable(), "/", getParameterValue("JOB_VARIANT"), "/",
 			"stop.properties");
+	}
+
+	protected List<Element> getTestResultGitHubElements(
+		List<TestResult> testResults) {
+
+		List<Element> testResultGitHubElements = new ArrayList<>();
+
+		for (TestResult testResult : testResults) {
+			testResultGitHubElements.add(testResult.getGitHubElement());
+		}
+
+		return testResultGitHubElements;
 	}
 
 	protected static final Pattern archiveBuildURLPattern = Pattern.compile(

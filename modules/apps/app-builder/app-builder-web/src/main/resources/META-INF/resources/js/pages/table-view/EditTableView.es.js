@@ -54,7 +54,7 @@ const EditTableView = withRouter(({history}) => {
 		history.goBack();
 	};
 
-	const onInput = (event) => {
+	const onChange = (event) => {
 		const name = event.target.value;
 
 		dispatch({payload: {name}, type: UPDATE_DATA_LIST_VIEW_NAME});
@@ -132,7 +132,7 @@ const EditTableView = withRouter(({history}) => {
 				>
 					<UpperToolbar>
 						<UpperToolbar.Input
-							onChange={onInput}
+							onChange={onChange}
 							placeholder={Liferay.Language.get(
 								'untitled-table-view'
 							)}

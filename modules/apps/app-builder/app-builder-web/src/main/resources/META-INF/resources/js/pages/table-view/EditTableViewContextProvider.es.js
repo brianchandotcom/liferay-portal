@@ -24,7 +24,7 @@ import EditTableViewContext, {
 	reducer,
 } from './EditTableViewContext.es';
 
-export default withRouter(({children, match, ...props}) => {
+export default withRouter(({children, match}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const {dataDefinitionId, dataListViewId} = match.params;

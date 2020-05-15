@@ -201,6 +201,17 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 				<div class="card-horizontal main-content-card">
 					<div class="card-row-padded">
+						<liferay-ui:error exception="<%= IllegalArgumentException.class %>">
+
+							<%
+							IllegalArgumentException iae = (IllegalArgumentException)errorException;
+							%>
+
+							<liferay-ui:message key="<%= iae.getMessage() %>" />
+						</liferay-ui:error>
+
+						<liferay-ui:error exception="<%= NoSuchRoleException.class %>" message="the-role-could-not-be-found" />
+
 						<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
 							<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>" translateArguments="<%= false %>" />
 						</liferay-ui:error>

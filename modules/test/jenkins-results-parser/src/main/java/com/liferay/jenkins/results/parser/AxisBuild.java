@@ -287,6 +287,7 @@ public class AxisBuild extends BaseBuild {
 		if (result.equals("UNSTABLE")) {
 			List<Element> failureElements = getTestResultGitHubElements(
 				getUniqueFailureTestResults());
+
 			List<Element> upstreamJobFailureElements =
 				getTestResultGitHubElements(getUpstreamJobFailureTestResults());
 
@@ -415,11 +416,7 @@ public class AxisBuild extends BaseBuild {
 		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
 
 		for (TestResult testResult : getTestResults(null)) {
-			if (!testResult.isFailing()) {
-				continue;
-			}
-
-			if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(testResult)) {
+			if (testResult.isUniqueFailure()) {
 				uniqueFailureTestResults.add(testResult);
 			}
 		}
@@ -431,11 +428,7 @@ public class AxisBuild extends BaseBuild {
 		List<TestResult> upstreamFailureTestResults = new ArrayList<>();
 
 		for (TestResult testResult : getTestResults(null)) {
-			if (!testResult.isFailing()) {
-				continue;
-			}
-
-			if (UpstreamFailureUtil.isTestFailingInUpstreamJob(testResult)) {
+			if (!testResult.isUniqueFailure()) {
 				upstreamFailureTestResults.add(testResult);
 			}
 		}

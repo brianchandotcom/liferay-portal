@@ -466,13 +466,7 @@ public class BatchBuild extends BaseBuild {
 
 			if (isCompareToUpstream()) {
 				for (TestResult testResult : getTestResults(null)) {
-					if (!testResult.isFailing()) {
-						continue;
-					}
-
-					if (UpstreamFailureUtil.isTestFailingInUpstreamJob(
-							testResult)) {
-
+					if (!testResult.isUniqueFailure()) {
 						upstreamFailCount++;
 					}
 				}

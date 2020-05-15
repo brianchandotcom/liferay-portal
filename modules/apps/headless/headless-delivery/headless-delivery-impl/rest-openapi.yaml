@@ -336,6 +336,35 @@ components:
                         The document's title.
                     type: string
             type: object
+        ContentElement:
+            # @review
+            properties:
+                content:
+                    description:
+                        The content's fields.
+                    readOnly: true
+                    type: object
+                contentType:
+                    description:
+                        The content set element's type.
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        The content set element's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                title:
+                    description:
+                        The content's title.
+                    readOnly: true
+                    type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
         ContentField:
             description:
                 Represents the value of each field in structured content. Fields can contain different information types
@@ -6058,6 +6087,52 @@ paths:
                     description:
                         ""
             tags: ["BlogPosting"]
+    "/sites/{siteId}/content-elements":
+        get:
+            operationId: getSiteContentElementsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentElement"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentElement"
+                                type: array
+                    description:
+                        ""
+            tags: ["ContentElement"]
     "/sites/{siteId}/content-sets/by-key/{key}/content-set-elements":
         get:
             description:

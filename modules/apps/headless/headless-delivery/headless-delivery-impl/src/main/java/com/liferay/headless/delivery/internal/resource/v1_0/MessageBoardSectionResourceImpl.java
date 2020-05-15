@@ -310,7 +310,7 @@ public class MessageBoardSectionResourceImpl
 				).build();
 				creator = CreatorUtil.toCreator(
 					_portal,
-					_userLocalService.getUserById(mbCategory.getUserId()));
+					_userLocalService.fetchUser(mbCategory.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					MBCategory.class.getName(), mbCategory.getCategoryId(),

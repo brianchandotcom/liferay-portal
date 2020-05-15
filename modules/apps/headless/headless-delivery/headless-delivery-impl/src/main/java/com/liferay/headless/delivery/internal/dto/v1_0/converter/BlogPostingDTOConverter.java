@@ -75,7 +75,8 @@ public class BlogPostingDTOConverter
 				alternativeHeadline = blogsEntry.getSubtitle();
 				articleBody = blogsEntry.getContent();
 				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.getUser(blogsEntry.getUserId()));
+					_portal,
+					_userLocalService.fetchUser(blogsEntry.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					BlogsEntry.class.getName(), blogsEntry.getEntryId(),

@@ -75,7 +75,7 @@ public class StructureUtil {
 					ddmStructure.getAvailableLanguageIds());
 				creator = CreatorUtil.toCreator(
 					portal,
-					userLocalService.getUserById(ddmStructure.getUserId()));
+					userLocalService.fetchUser(ddmStructure.getUserId()));
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
 				description = ddmStructure.getDescription(locale);

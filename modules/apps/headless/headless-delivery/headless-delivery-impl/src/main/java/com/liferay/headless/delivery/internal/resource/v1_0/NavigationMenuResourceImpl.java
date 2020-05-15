@@ -180,7 +180,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			{
 				creator = CreatorUtil.toCreator(
 					_portal,
-					_userLocalService.getUser(siteNavigationMenu.getUserId()));
+					_userLocalService.fetchUser(
+						siteNavigationMenu.getUserId()));
 				dateCreated = siteNavigationMenu.getCreateDate();
 				dateModified = siteNavigationMenu.getModifiedDate();
 				id = siteNavigationMenu.getSiteNavigationMenuId();
@@ -213,7 +214,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			{
 				creator = CreatorUtil.toCreator(
 					_portal,
-					_userLocalService.getUser(
+					_userLocalService.fetchUser(
 						siteNavigationMenuItem.getUserId()));
 				dateCreated = siteNavigationMenuItem.getCreateDate();
 				dateModified = siteNavigationMenuItem.getModifiedDate();

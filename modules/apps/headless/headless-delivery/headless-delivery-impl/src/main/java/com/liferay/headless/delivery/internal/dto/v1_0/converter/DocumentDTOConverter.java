@@ -38,7 +38,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -79,8 +78,6 @@ public class DocumentDTOConverter
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		User user = _userLocalService.getUserById(fileEntry.getUserId());
-
 		return new Document() {
 			{
 				actions = dtoConverterContext.getActions();
@@ -91,7 +88,9 @@ public class DocumentDTOConverter
 						fileEntry.getFileEntryId()));
 				contentUrl = _dlURLHelper.getPreviewURL(
 					fileEntry, fileVersion, null, "");
-				creator = CreatorUtil.toCreator(_portal, user);
+				creator = CreatorUtil.toCreator(
+					_portal,
+					_userLocalService.fetchUser(fileEntry.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					DLFileEntry.class.getName(), fileVersion.getFileVersionId(),

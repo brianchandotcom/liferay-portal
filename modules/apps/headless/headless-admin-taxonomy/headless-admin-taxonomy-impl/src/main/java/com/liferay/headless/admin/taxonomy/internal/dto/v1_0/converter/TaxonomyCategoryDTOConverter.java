@@ -96,7 +96,7 @@ public class TaxonomyCategoryDTOConverter
 					assetCategory.getAvailableLanguageIds());
 				creator = CreatorUtil.toCreator(
 					_portal,
-					_userLocalService.getUserById(assetCategory.getUserId()));
+					_userLocalService.fetchUser(assetCategory.getUserId()));
 				dateCreated = assetCategory.getCreateDate();
 				dateModified = assetCategory.getModifiedDate();
 				description = assetCategory.getDescription(

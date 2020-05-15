@@ -498,7 +498,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		return RoleUtil.toRole(
 			contextAcceptLanguage.isAcceptAllLanguages(),
 			contextAcceptLanguage.getPreferredLocale(), _portal, role,
-			_userLocalService.getUserById(role.getUserId()));
+			_userLocalService.fetchUser(role.getUserId()));
 	}
 
 	private WorkflowTask _toWorkflowTask(
@@ -510,7 +510,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				if (workflowTask.getAssigneeUserId() > 0) {
 					assigneePerson = CreatorUtil.toCreator(
 						_portal,
-						_userLocalService.getUser(
+						_userLocalService.fetchUser(
 							workflowTask.getAssigneeUserId()));
 					assigneeRoles = _getRoles(
 						workflowTask.getWorkflowTaskAssignees());

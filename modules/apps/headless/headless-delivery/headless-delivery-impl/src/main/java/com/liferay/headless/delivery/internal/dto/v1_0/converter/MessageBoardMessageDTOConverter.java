@@ -68,7 +68,7 @@ public class MessageBoardMessageDTOConverter
 		MBMessage mbMessage = _mbMessageService.getMessage(
 			(Long)dtoConverterContext.getId());
 
-		User user = _userLocalService.getUserById(mbMessage.getUserId());
+		User user = _userLocalService.fetchUser(mbMessage.getUserId());
 
 		return new MessageBoardMessage() {
 			{

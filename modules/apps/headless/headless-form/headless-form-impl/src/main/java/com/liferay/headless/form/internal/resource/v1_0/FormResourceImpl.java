@@ -135,7 +135,7 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 					ddmFormInstance.getAvailableLanguageIds());
 				creator = CreatorUtil.toCreator(
 					_portal,
-					_userLocalService.getUser(ddmFormInstance.getUserId()));
+					_userLocalService.fetchUser(ddmFormInstance.getUserId()));
 				dateCreated = ddmFormInstance.getCreateDate();
 				dateModified = ddmFormInstance.getModifiedDate();
 				datePublished = ddmFormInstance.getLastPublishDate();

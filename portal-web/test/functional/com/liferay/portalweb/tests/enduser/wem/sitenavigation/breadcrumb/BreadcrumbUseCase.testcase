@@ -27,10 +27,7 @@ definition {
 
 	@priority = "3"
 	test BreadcrumbConfiguration {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "BreadcrumbUsecase#BreadcrumbConfiguration";
-
-		// Quarantine for LPS-104367
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

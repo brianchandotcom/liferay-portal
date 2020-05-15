@@ -29,6 +29,16 @@ import EditTableViewContext, {
 import TableViewFiltersList from './TableViewFilters.es';
 import {getFieldTypeLabel} from './utils.es';
 
+const BtnAction = ({angle = 'left', className, onClick}) => (
+	<Button
+		className={className}
+		displayType="secondary"
+		monospaced={false}
+		onClick={onClick}
+		symbol={`angle-${angle}`}
+	/>
+);
+
 const FiltersSidebarHeader = () => {
 	const [{dataDefinition, fieldTypes, focusedColumn}, dispatch] = useContext(
 		EditTableViewContext
@@ -47,13 +57,7 @@ const FiltersSidebarHeader = () => {
 		<Sidebar.Header className="d-flex table-view-filters-sidebar-header">
 			<div className="align-items-center autofit-row">
 				<div className="autofit-col">
-					<Button
-						className="mr-2"
-						displayType="secondary"
-						monospaced={false}
-						onClick={onClickBack}
-						symbol="angle-left"
-					/>
+					<BtnAction className="mr-2" onClick={onClickBack} />
 				</div>
 				<div className="autofit-col-expand">
 					<FieldType
@@ -102,54 +106,83 @@ const FieldsTabContent = ({keywords, onAddFieldName}) => {
 	);
 };
 
-export default ({onAddFieldName}) => {
+export default ({className, onAddFieldName, onToggle}) => {
 	const [{focusedColumn}] = useContext(EditTableViewContext);
 	const [keywords, setKeywords] = useState('');
 
 	const displayFieldFilters = !!focusedColumn;
 
 	return (
-		<Sidebar className="app-builder-sidebar main">
-			{displayFieldFilters ? (
-				<>
-					<FiltersSidebarHeader />
-					<Sidebar.Body>
-						<TableViewFiltersList />
-					</Sidebar.Body>
-				</>
-			) : (
-				<>
-					<Sidebar.Header>
-						<ClayForm onSubmit={(event) => event.preventDefault()}>
-							<Sidebar.SearchInput
-								onSearch={(keywords) => setKeywords(keywords)}
-							/>
-						</ClayForm>
-					</Sidebar.Header>
+		<div className={className}>
+			<Sidebar className="default">
+				{displayFieldFilters ? (
+					<>
+						<FiltersSidebarHeader />
+						<Sidebar.Body>
+							<TableViewFiltersList />
+						</Sidebar.Body>
+					</>
+				) : (
+					<>
+						<Sidebar.Header>
+							<ClayForm
+								onSubmit={(event) => event.preventDefault()}
+							>
+								<Sidebar.SearchInput
+									onSearch={(keywords) =>
+										setKeywords(keywords)
+									}
+								>
+									<div className="autofit-col">
+										<BtnAction
+											angle="right"
+											className="close-sidebar-btn ml-2"
+											onClick={onToggle}
+										/>
+									</div>
+								</Sidebar.SearchInput>
+							</ClayForm>
+						</Sidebar.Header>
 
-					<Sidebar.Body>
-						{!displayFieldFilters && (
-							<Sidebar.Tabs
-								tabs={[
-									{
-										label: Liferay.Language.get('columns'),
-										render: () => (
-											<FieldsTabContent
-												keywords={keywords}
-												onAddFieldName={onAddFieldName}
-											/>
-										),
-									},
-									{
-										label: Liferay.Language.get('filters'),
-										render: () => <TableViewFiltersList />,
-									},
-								]}
-							/>
-						)}
-					</Sidebar.Body>
-				</>
-			)}
-		</Sidebar>
+						<Sidebar.Body>
+							{!displayFieldFilters && (
+								<Sidebar.Tabs
+									tabs={[
+										{
+											label: Liferay.Language.get(
+												'columns'
+											),
+											render: () => (
+												<FieldsTabContent
+													keywords={keywords}
+													onAddFieldName={
+														onAddFieldName
+													}
+												/>
+											),
+										},
+										{
+											label: Liferay.Language.get(
+												'filters'
+											),
+											render: () => (
+												<TableViewFiltersList />
+											),
+										},
+									]}
+								/>
+							)}
+						</Sidebar.Body>
+					</>
+				)}
+			</Sidebar>
+
+			<Sidebar className="secondary">
+				<BtnAction
+					className="m-3 open-sidebar-btn"
+					onClick={onToggle}
+				/>
+			</Sidebar>
+		</div>
 	);
 };

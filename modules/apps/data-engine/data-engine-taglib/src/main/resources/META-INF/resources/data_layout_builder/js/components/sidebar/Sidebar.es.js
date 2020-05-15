@@ -46,13 +46,15 @@ const SidebarHeader = ({children, className}) => {
 	);
 };
 
-const SidebarSearchInput = ({onSearch}) => (
+const SidebarSearchInput = ({children, onSearch}) => (
 	<div className="autofit-row sidebar-section">
 		<div className="autofit-col autofit-col-expand">
 			{onSearch && (
 				<SearchInput onChange={(searchText) => onSearch(searchText)} />
 			)}
 		</div>
+
+		{children}
 	</div>
 );
 

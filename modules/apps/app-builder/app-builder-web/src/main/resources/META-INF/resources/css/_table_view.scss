@@ -1,14 +1,52 @@
-.app-builder-table-view {
-	.data-layout-builder-sidebar {
-		background: white;
-		border-top-width: 0;
-		display: flex;
-		flex-flow: column;
-		height: 100%;
-		position: fixed;
-		right: 0;
-		top: 120px;
+$appBuilderTableViewSidebarWidth: 340px;
+$appBuilderTableViewTransitionTime: 0.5s;
 
+.app-builder-table-view {
+	margin-top: 64px;
+
+	&__content {
+		margin: 1rem $appBuilderTableViewSidebarWidth 0 0;
+		transition: margin ease $appBuilderTableViewTransitionTime;
+
+		&--sidebar-closed {
+			margin-right: 0;
+		}
+	}
+
+	&__sidebar {
+		.default,
+		.secondary {
+			border-left: 1px solid #e7e7ed;
+			flex-flow: column;
+			height: 100%;
+			position: fixed;
+			right: 0;
+			top: 120px;
+			transition: transform ease $appBuilderTableViewTransitionTime;
+			width: $appBuilderTableViewSidebarWidth;
+		}
+
+		.default {
+			transform: translateX(0%);
+		}
+
+		.secondary {
+			transform: translateX(100%);
+			width: 73px;
+		}
+
+		&--closed {
+			.default {
+				transform: translateX(100%);
+			}
+
+			.secondary {
+				transform: translateX(0%);
+			}
+		}
+	}
+
+	.data-layout-builder-sidebar {
 		.sidebar-header {
 			padding-bottom: 1rem;
 
@@ -48,6 +86,7 @@
 
 		.sidebar-body {
 			padding-top: 0;
+			height: calc(100vh - 192px);
 
 			.table-view-filters-header {
 				margin-bottom: 0;

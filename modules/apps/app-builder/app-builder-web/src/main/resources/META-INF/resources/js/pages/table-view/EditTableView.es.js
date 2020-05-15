@@ -83,7 +83,8 @@ const EditTableView = withRouter(({history}) => {
 				.catch((error) => {
 					onError(error);
 				});
-		} else {
+		}
+		else {
 			addItem(
 				`/o/data-engine/v2.0/data-definitions/${dataDefinition.id}/data-list-views`,
 				dataListView
@@ -110,8 +111,6 @@ const EditTableView = withRouter(({history}) => {
 			type: ADD_DATA_LIST_VIEW_FIELD,
 		});
 	};
-
-	const onCloseSidebar = (closed) => setSidebarClosed(closed);
 
 	const onRemoveFieldName = (fieldName) => {
 		dispatch({payload: {fieldName}, type: REMOVE_DATA_LIST_VIEW_FIELD});
@@ -158,17 +157,17 @@ const EditTableView = withRouter(({history}) => {
 				</form>
 
 				<TableViewSidebar
+					className={classNames('app-builder-table-view__sidebar', {
+						'app-builder-table-view__sidebar--closed': isSidebarClosed,
+					})}
 					onAddFieldName={onAddFieldName}
-					onClose={onCloseSidebar}
+					onToggle={() => setSidebarClosed(!isSidebarClosed)}
 				/>
 
 				<div
-					className={classNames(
-						'data-layout-builder-sidebar-content',
-						{
-							closed: isSidebarClosed,
-						}
-					)}
+					className={classNames('app-builder-table-view__content', {
+						'app-builder-table-view__content--sidebar-closed': isSidebarClosed,
+					})}
 				>
 					<div className="container table-view-container">
 						<DropZone

@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardThreadSerDes;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
@@ -32,10 +34,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -61,16 +63,40 @@ public class MessageBoardThreadResourceTest
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	@Ignore
 	@Override
-	@Test
-	public void testGetMessageBoardThreadsRankedPageWithSortDateTime() {
-	}
+	public void testGetMessageBoardThreadsRankedPageWithSortString()
+		throws Exception {
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetMessageBoardThreadsRankedPageWithSortString() {
+		MessageBoardThread messageBoardThread1 =
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				randomMessageBoardThread());
+
+		MessageBoardThread messageBoardThread2 =
+			testGetMessageBoardThreadsRankedPage_addMessageBoardThread(
+				randomMessageBoardThread());
+
+		MBThread mbThread = MBThreadLocalServiceUtil.getThread(
+			messageBoardThread1.getId());
+
+		RatingsEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), MBMessage.class.getName(),
+			mbThread.getRootMessageId(), 0.5, new ServiceContext());
+
+		Page<MessageBoardThread> ascPage =
+			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+				null, null, null, Pagination.of(1, 2), "ratingValue:asc");
+
+		assertEquals(
+			Arrays.asList(messageBoardThread1, messageBoardThread2),
+			(List<MessageBoardThread>)ascPage.getItems());
+
+		Page<MessageBoardThread> descPage =
+			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
+				null, null, null, Pagination.of(1, 2), "ratingValue:desc");
+
+		assertEquals(
+			Arrays.asList(messageBoardThread2, messageBoardThread1),
+			(List<MessageBoardThread>)descPage.getItems());
 	}
 
 	@Test

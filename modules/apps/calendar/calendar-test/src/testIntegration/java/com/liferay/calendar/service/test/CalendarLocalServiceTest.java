@@ -17,7 +17,7 @@ package com.liferay.calendar.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarLocalServiceUtil;
+import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.calendar.util.comparator.CalendarNameComparator;
 import com.liferay.petra.string.StringPool;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -75,14 +76,14 @@ public class CalendarLocalServiceTest {
 		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap(
 			locale);
 
-		Calendar expectedCalendar = CalendarLocalServiceUtil.addCalendar(
+		Calendar expectedCalendar = _calendarLocalService.addCalendar(
 			_user.getUserId(), _group.getGroupId(),
 			calendarResource.getCalendarResourceId(), nameMap,
 			RandomTestUtil.randomLocaleStringMap(), StringPool.UTC,
 			RandomTestUtil.randomInt(0, 255), false, false, false,
 			serviceContext);
 
-		CalendarLocalServiceUtil.addCalendar(
+		_calendarLocalService.addCalendar(
 			_user.getUserId(), _group.getGroupId(),
 			calendarResource.getCalendarResourceId(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -90,7 +91,7 @@ public class CalendarLocalServiceTest {
 			RandomTestUtil.randomInt(0, 255), false, false, false,
 			serviceContext);
 
-		List<Calendar> actualCalendars = CalendarLocalServiceUtil.search(
+		List<Calendar> actualCalendars = _calendarLocalService.search(
 			_group.getCompanyId(), new long[] {_group.getGroupId()},
 			new long[] {calendarResource.getCalendarResourceId()},
 			nameMap.get(locale), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -107,6 +108,8 @@ public class CalendarLocalServiceTest {
 			expectedCalendar.getNameMap(), actualCalendar.getNameMap());
 	}
 
+	@Inject
+	private CalendarLocalService _calendarLocalService;
 
 	private Group _group;
 	private User _user;

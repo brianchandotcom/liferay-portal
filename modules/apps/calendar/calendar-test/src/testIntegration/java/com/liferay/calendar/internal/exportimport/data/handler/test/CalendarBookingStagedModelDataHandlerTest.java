@@ -19,7 +19,7 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingModel;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class CalendarBookingStagedModelDataHandlerTest
 				RecurrenceTestUtil.getDailyRecurrence(), serviceContext);
 
 		CalendarBooking calendarBookingInstance =
-			CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
+			_calendarBookingLocalService.updateCalendarBookingInstance(
 				TestPropsValues.getUserId(),
 				calendarBooking.getCalendarBookingId(), 2,
 				calendar.getCalendarId(), calendarBooking.getTitleMap(),
@@ -108,7 +109,7 @@ public class CalendarBookingStagedModelDataHandlerTest
 				exportedCalendarBooking.getUuid(), liveGroup);
 
 		List<CalendarBooking> importedCalendarBookingInstances =
-			CalendarBookingLocalServiceUtil.getRecurringCalendarBookings(
+			_calendarBookingLocalService.getRecurringCalendarBookings(
 				importedCalendarBooking);
 
 		CalendarBookingModel importedCalendarBookingInstance =
@@ -197,8 +198,8 @@ public class CalendarBookingStagedModelDataHandlerTest
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
-		return CalendarBookingLocalServiceUtil.
-			getCalendarBookingByUuidAndGroupId(uuid, group.getGroupId());
+		return _calendarBookingLocalService.getCalendarBookingByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override
@@ -210,5 +211,8 @@ public class CalendarBookingStagedModelDataHandlerTest
 	protected boolean isCommentableStagedModel() {
 		return true;
 	}
+
+	@Inject
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }

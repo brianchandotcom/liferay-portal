@@ -16,8 +16,8 @@ package com.liferay.calendar.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
-import com.liferay.calendar.service.CalendarResourceServiceUtil;
+import com.liferay.calendar.service.CalendarResourceLocalService;
+import com.liferay.calendar.service.CalendarResourceService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Locale;
@@ -84,7 +85,7 @@ public class CalendarResourceServiceTest {
 		serviceContext.setModelPermissions(modelPermissions);
 
 		CalendarResource calendarResource =
-			CalendarResourceLocalServiceUtil.addCalendarResource(
+			_calendarResourceLocalService.addCalendarResource(
 				user.getUserId(), user.getGroupId(), classNameId, 0,
 				PortalUUIDUtil.generate(), RandomTestUtil.randomString(8),
 				RandomTestUtil.randomLocaleStringMap(),
@@ -99,12 +100,12 @@ public class CalendarResourceServiceTest {
 
 		Map<Locale, String> nameMap = createNameMap();
 
-		CalendarResourceLocalServiceUtil.addCalendarResource(
+		_calendarResourceLocalService.addCalendarResource(
 			_user.getUserId(), _user.getGroupId(), classNameId, 0,
 			PortalUUIDUtil.generate(), RandomTestUtil.randomString(8), nameMap,
 			RandomTestUtil.randomLocaleStringMap(), true, new ServiceContext());
 
-		int count = CalendarResourceServiceUtil.searchCount(
+		int count = _calendarResourceService.searchCount(
 			_user.getCompanyId(), new long[] {_user.getGroupId()},
 			new long[] {classNameId}, nameMap.get(LocaleUtil.getSiteDefault()),
 			true);
@@ -124,6 +125,12 @@ public class CalendarResourceServiceTest {
 	private static final String[] _CALENDAR_RESOURCE_GROUP_PERMISSIONS = {
 		"ADD_CALENDAR", "DELETE", "PERMISSIONS", "UPDATE", "VIEW"
 	};
+
+	@Inject
+	private CalendarResourceLocalService _calendarResourceLocalService;
+
+	@Inject
+	private CalendarResourceService _calendarResourceService;
 
 	private User _user;
 

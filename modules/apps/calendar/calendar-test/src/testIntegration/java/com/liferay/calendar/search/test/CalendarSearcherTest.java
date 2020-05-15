@@ -16,7 +16,7 @@ package com.liferay.calendar.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarLocalServiceUtil;
+import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -232,7 +232,7 @@ public class CalendarSearcherTest {
 			LocaleUtil.getSiteDefault(), description
 		).build();
 
-		CalendarLocalServiceUtil.addCalendar(
+		_calendarLocalService.addCalendar(
 			_user.getUserId(), _group.getGroupId(),
 			calendarResource.getCalendarResourceId(), nameMap, descriptionMap,
 			StringPool.UTC, RandomTestUtil.randomInt(0, 255), false, false,
@@ -263,6 +263,8 @@ public class CalendarSearcherTest {
 	@Inject(filter = "model.class.name=com.liferay.calendar.model.Calendar")
 	private BaseSearcher _baseSearcher;
 
+	@Inject
+	private CalendarLocalService _calendarLocalService;
 
 	private Group _group;
 	private SearchContext _searchContext;

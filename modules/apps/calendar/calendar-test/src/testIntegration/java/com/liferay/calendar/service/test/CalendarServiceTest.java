@@ -17,8 +17,8 @@ package com.liferay.calendar.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
-import com.liferay.calendar.service.CalendarServiceUtil;
+import com.liferay.calendar.service.CalendarResourceLocalService;
+import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.test.util.CalendarStagingTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -101,7 +102,7 @@ public class CalendarServiceTest {
 		throws PortalException {
 
 		Assert.assertTrue(
-			CalendarServiceUtil.isManageableFromGroup(
+			_calendarService.isManageableFromGroup(
 				calendar.getCalendarId(), group.getGroupId()));
 	}
 
@@ -109,13 +110,13 @@ public class CalendarServiceTest {
 		throws PortalException {
 
 		Assert.assertFalse(
-			CalendarServiceUtil.isManageableFromGroup(
+			_calendarService.isManageableFromGroup(
 				calendar.getCalendarId(), group.getGroupId()));
 	}
 
 	protected Calendar getGroupCalendar(Group group) throws Exception {
 		CalendarResource calendarResource =
-			CalendarResourceLocalServiceUtil.fetchCalendarResource(
+			_calendarResourceLocalService.fetchCalendarResource(
 				PortalUtil.getClassNameId(Group.class), group.getGroupId());
 
 		if (calendarResource == null) {
@@ -128,7 +129,7 @@ public class CalendarServiceTest {
 			ServiceContext serviceContext = new ServiceContext();
 
 			calendarResource =
-				CalendarResourceLocalServiceUtil.addCalendarResource(
+				_calendarResourceLocalService.addCalendarResource(
 					group.getCreatorUserId(), group.getGroupId(),
 					PortalUtil.getClassNameId(Group.class), group.getGroupId(),
 					null, null, nameMap, descriptionMap, true, serviceContext);
@@ -139,6 +140,11 @@ public class CalendarServiceTest {
 
 	private User _adminUser;
 
+	@Inject
+	private CalendarResourceLocalService _calendarResourceLocalService;
+
+	@Inject
+	private CalendarService _calendarService;
 
 	private Group _liveGroup;
 	private Group _notStagedGroup;

@@ -19,7 +19,7 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
-import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
@@ -153,7 +154,7 @@ public class CalendarUtilTest {
 			getCalendarBookingChildAllFollowingInstnace();
 
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			_calendarBookingLocalService.fetchCalendarBooking(
 				calendarBookingInstance.getRecurringCalendarBookingId());
 
 		Method method = _calendarUtilClass.getMethod(
@@ -200,7 +201,7 @@ public class CalendarUtilTest {
 			getCalendarBookingChildSingleInstance();
 
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			_calendarBookingLocalService.fetchCalendarBooking(
 				calendarBookingInstance.getRecurringCalendarBookingId());
 
 		Method method = _calendarUtilClass.getMethod(
@@ -300,7 +301,7 @@ public class CalendarUtilTest {
 	protected ThemeDisplay createThemeDisplay() throws PortalException {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Company company = CompanyLocalServiceUtil.getCompany(
+		Company company = _companyLocalService.getCompany(
 			_group.getCompanyId());
 
 		themeDisplay.setCompany(company);
@@ -378,7 +379,11 @@ public class CalendarUtilTest {
 
 	private static Class<?> _calendarUtilClass;
 
+	@Inject
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	private Group _group;
 	private PermissionChecker _permissionChecker;

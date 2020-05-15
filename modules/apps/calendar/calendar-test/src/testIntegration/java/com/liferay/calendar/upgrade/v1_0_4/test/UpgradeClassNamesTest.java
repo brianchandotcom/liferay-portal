@@ -16,9 +16,9 @@ package com.liferay.calendar.upgrade.v1_0_4.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.After;
@@ -207,7 +208,7 @@ public class UpgradeClassNamesTest {
 		sb.append(classNameId);
 		sb.append(":-1");
 
-		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
+		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -216,12 +217,12 @@ public class UpgradeClassNamesTest {
 	}
 
 	protected ClassName addClassName(String value) {
-		ClassName className = ClassNameLocalServiceUtil.createClassName(
-			CounterLocalServiceUtil.increment());
+		ClassName className = _classNameLocalService.createClassName(
+			_counterLocalService.increment());
 
 		className.setValue(value);
 
-		return ClassNameLocalServiceUtil.addClassName(className);
+		return _classNameLocalService.addClassName(className);
 	}
 
 	protected ResourcePermission addResourcePermission(
@@ -233,13 +234,13 @@ public class UpgradeClassNamesTest {
 	}
 
 	protected void assertNewClassNameIdExists() {
-		long calBookingClassNameId = ClassNameLocalServiceUtil.getClassNameId(
+		long calBookingClassNameId = _classNameLocalService.getClassNameId(
 			"com.liferay.calendar.model.CalendarBooking");
 
 		EntityCacheUtil.clearCache();
 
 		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+			_assetVocabularyLocalService.fetchAssetVocabulary(
 				_assetVocabulary.getVocabularyId());
 
 		String settings = assetVocabulary.getSettings();
@@ -254,7 +255,7 @@ public class UpgradeClassNamesTest {
 		EntityCacheUtil.clearCache(ResourcePermissionImpl.class);
 
 		_newResourcePermission =
-			ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+			_resourcePermissionLocalService.fetchResourcePermission(
 				_newResourcePermission.getResourcePermissionId());
 
 		Assert.assertNotNull(_newResourcePermission);
@@ -264,7 +265,7 @@ public class UpgradeClassNamesTest {
 		EntityCacheUtil.clearCache(ResourcePermissionImpl.class);
 
 		_oldResourcePermission =
-			ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+			_resourcePermissionLocalService.fetchResourcePermission(
 				_oldResourcePermission.getResourcePermissionId());
 
 		Assert.assertNotNull(_oldResourcePermission);
@@ -274,7 +275,7 @@ public class UpgradeClassNamesTest {
 		EntityCacheUtil.clearCache(ResourcePermissionImpl.class);
 
 		_oldResourcePermission =
-			ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+			_resourcePermissionLocalService.fetchResourcePermission(
 				_oldResourcePermission.getResourcePermissionId());
 
 		Assert.assertNull(_oldResourcePermission);
@@ -287,11 +288,22 @@ public class UpgradeClassNamesTest {
 
 	private AssetVocabulary _assetVocabulary;
 
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
 	private ClassName _calEventClassName;
 
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	private ResourcePermission _newResourcePermission;
 	private ResourcePermission _oldResourcePermission;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	private UpgradeProcess _upgradeProcess;
 

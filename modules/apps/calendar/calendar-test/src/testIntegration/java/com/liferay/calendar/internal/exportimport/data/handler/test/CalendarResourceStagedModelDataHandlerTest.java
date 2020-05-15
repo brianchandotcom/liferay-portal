@@ -16,7 +16,7 @@ package com.liferay.calendar.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.test.util.CalendarResourceTestUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -131,7 +132,7 @@ public class CalendarResourceStagedModelDataHandlerTest
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
-		return CalendarResourceLocalServiceUtil.
+		return _calendarResourceLocalService.
 			getCalendarResourceByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
@@ -144,5 +145,8 @@ public class CalendarResourceStagedModelDataHandlerTest
 	protected boolean isCommentableStagedModel() {
 		return false;
 	}
+
+	@Inject
+	private CalendarResourceLocalService _calendarResourceLocalService;
 
 }

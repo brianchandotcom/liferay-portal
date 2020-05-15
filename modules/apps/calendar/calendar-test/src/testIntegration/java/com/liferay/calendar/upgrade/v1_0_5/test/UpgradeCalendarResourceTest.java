@@ -17,8 +17,8 @@ package com.liferay.calendar.upgrade.v1_0_5.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarLocalServiceUtil;
-import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
+import com.liferay.calendar.service.CalendarLocalService;
+import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -27,12 +27,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
@@ -101,20 +102,20 @@ public class UpgradeCalendarResourceTest {
 	protected void assertUserIsAdministrator(long userId)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		Assert.assertFalse(user.isDefaultUser());
 
-		Role administratorRole = RoleLocalServiceUtil.getRole(
+		Role administratorRole = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 		Assert.assertTrue(
-			RoleLocalServiceUtil.hasUserRole(
+			_roleLocalService.hasUserRole(
 				user.getUserId(), administratorRole.getRoleId()));
 	}
 
 	protected void assertUserIsDefault(long userId) throws PortalException {
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		Assert.assertTrue(user.isDefaultUser());
 	}
@@ -163,15 +164,15 @@ public class UpgradeCalendarResourceTest {
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+		long defaultUserId = _userLocalService.getDefaultUserId(
 			_group.getCompanyId());
 
 		calendar.setUserId(defaultUserId);
 		calendarResource.setUserId(defaultUserId);
 
-		CalendarLocalServiceUtil.updateCalendar(calendar);
+		_calendarLocalService.updateCalendar(calendar);
 
-		return CalendarResourceLocalServiceUtil.updateCalendarResource(
+		return _calendarResourceLocalService.updateCalendarResource(
 			calendarResource);
 	}
 
@@ -180,8 +181,20 @@ public class UpgradeCalendarResourceTest {
 			"v1_0_5.UpgradeCalendarResource");
 	}
 
+	@Inject
+	private CalendarLocalService _calendarLocalService;
+
+	@Inject
+	private CalendarResourceLocalService _calendarResourceLocalService;
+
 	private Group _group;
 
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	private UpgradeProcess _upgradeProcess;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

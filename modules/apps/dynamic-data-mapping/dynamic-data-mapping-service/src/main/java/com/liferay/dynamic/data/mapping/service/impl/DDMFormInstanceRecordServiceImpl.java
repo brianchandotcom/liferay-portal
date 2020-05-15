@@ -143,16 +143,12 @@ public class DDMFormInstanceRecordServiceImpl
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord =
-			ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				ddmFormInstanceRecordId);
-
 		if (!_ddmFormInstanceRecordModelResourcePermission.contains(
 				getPermissionChecker(), ddmFormInstanceRecordId,
 				DDMActionKeys.ADD_FORM_INSTANCE_RECORD)) {
 
 			_ddmFormInstanceRecordModelResourcePermission.check(
-				getPermissionChecker(), ddmFormInstanceRecord,
+				getPermissionChecker(), ddmFormInstanceRecordId,
 				ActionKeys.UPDATE);
 		}
 

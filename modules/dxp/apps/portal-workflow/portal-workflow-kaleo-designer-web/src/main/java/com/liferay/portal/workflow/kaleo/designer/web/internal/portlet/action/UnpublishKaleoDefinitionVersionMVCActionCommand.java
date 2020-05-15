@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
@@ -79,7 +80,11 @@ public class UnpublishKaleoDefinitionVersionMVCActionCommand
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
 			kaleoDefinitionVersion);
 
-		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (redirect.equals(StringPool.BLANK)) {
+			setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
+		}
 	}
 
 	@Override

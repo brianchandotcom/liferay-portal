@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -56,7 +57,11 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
 				version, false);
 
-		setRedirectAttribute(actionRequest, workflowDefinition);
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (redirect.equals(StringPool.BLANK)) {
+			setRedirectAttribute(actionRequest, workflowDefinition);
+		}
 	}
 
 	@Override

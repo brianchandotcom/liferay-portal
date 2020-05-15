@@ -19,11 +19,13 @@ import com.liferay.headless.admin.user.client.dto.v1_0.Role;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -113,10 +115,35 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 				"JSONObject/roles", "Object/totalCount"));
 	}
 
-	@Ignore
 	@Override
+	@Test
 	public void testPostOrganizationRoleUserAccountAssociation()
 		throws Exception {
+
+		Role role = testPostOrganizationRoleUserAccountAssociation_addRole();
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.postOrganizationRoleUserAccountAssociationHttpResponse(
+				role.getId(), _user.getUserId(),
+				organization.getOrganizationId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.postOrganizationRoleUserAccountAssociationHttpResponse(
+				0L, _user.getUserId(), organization.getOrganizationId()));
+
+		assertHttpResponseStatusCode(
+			500,
+			roleResource.postOrganizationRoleUserAccountAssociationHttpResponse(
+				_getRoleId(_addRole(RoleConstants.TYPE_REGULAR)),
+				_user.getUserId(), organization.getOrganizationId()));
+		assertHttpResponseStatusCode(
+			500,
+			roleResource.postOrganizationRoleUserAccountAssociationHttpResponse(
+				_getRoleId(_addRole(RoleConstants.TYPE_SITE)),
+				_user.getUserId(), organization.getOrganizationId()));
 	}
 
 	@Override
@@ -176,6 +203,13 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	@Override
 	protected Role testGraphQLRole_addRole() throws Exception {
 		return testGetRole_addRole();
+	}
+
+	@Override
+	protected Role testPostOrganizationRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		return _addRole(RoleConstants.TYPE_ORGANIZATION);
 	}
 
 	@Override

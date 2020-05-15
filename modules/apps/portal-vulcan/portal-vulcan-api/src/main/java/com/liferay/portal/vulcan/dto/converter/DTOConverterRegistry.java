@@ -14,11 +14,18 @@
 
 package com.liferay.portal.vulcan.dto.converter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Rubén Pulido
  * @author Víctor Galán
  */
 public interface DTOConverterRegistry {
+
+	public default Set<String> getDTOClassNames() {
+		return new HashSet<>();
+	}
 
 	public DTOConverter getDTOConverter(String dtoClassName);
 

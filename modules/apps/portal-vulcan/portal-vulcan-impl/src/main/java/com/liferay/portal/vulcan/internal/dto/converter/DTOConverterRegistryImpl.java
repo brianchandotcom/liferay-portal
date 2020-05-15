@@ -19,6 +19,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.Set;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -30,6 +32,10 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(service = DTOConverterRegistry.class)
 public class DTOConverterRegistryImpl implements DTOConverterRegistry {
+
+	public Set<String> getDTOClassNames() {
+		return _serviceTrackerMap.keySet();
+	}
 
 	public DTOConverter getDTOConverter(String dtoClassName) {
 		return _serviceTrackerMap.getService(dtoClassName);

@@ -363,9 +363,7 @@ public class AutoCloseUtil {
 					downstreamBuild.getTestResults("REGRESSION"));
 
 				for (TestResult testResult : testResults) {
-					if (UpstreamFailureUtil.isTestFailingInUpstreamJob(
-							testResult)) {
-
+					if (!testResult.isUniqueFailure()) {
 						continue;
 					}
 
@@ -672,9 +670,7 @@ public class AutoCloseUtil {
 					}
 					else {
 						for (TestResult testResult : testResults) {
-							if (!UpstreamFailureUtil.isTestFailingInUpstreamJob(
-									testResult)) {
-
+							if (testResult.isUniqueFailure()) {
 								containsUniqueTestFailure = true;
 
 								break;

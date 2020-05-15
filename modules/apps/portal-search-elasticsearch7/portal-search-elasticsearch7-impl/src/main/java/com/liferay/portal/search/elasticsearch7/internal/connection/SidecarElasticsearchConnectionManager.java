@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
@@ -77,7 +78,7 @@ public class SidecarElasticsearchConnectionManager {
 				_log.warn(sb.toString());
 			}
 
-			if (_clusterExecutor.isEnabled()) {
+			if (_clusterExecutor.isEnabled() && PortalRunMode.isTestMode()) {
 				ClusterableSidecar clusterableSidecar = new ClusterableSidecar(
 					_clusterExecutor, _clusterMasterExecutor,
 					elasticsearchConfiguration, _jsonFactory, _processExecutor,

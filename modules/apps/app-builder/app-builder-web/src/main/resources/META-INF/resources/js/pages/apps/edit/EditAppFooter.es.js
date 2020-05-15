@@ -85,7 +85,7 @@ export default withRouter(
 		};
 
 		const onCancel = () => {
-			history.push(`/custom-object/${dataDefinitionId}/apps`);
+			history.goBack();
 		};
 
 		const onDeploy = () => {

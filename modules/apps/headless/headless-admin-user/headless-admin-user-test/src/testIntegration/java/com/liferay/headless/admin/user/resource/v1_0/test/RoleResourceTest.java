@@ -119,9 +119,31 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		throws Exception {
 	}
 
-	@Ignore
 	@Override
+	@Test
 	public void testPostRoleUserAccountAssociation() throws Exception {
+		Role role = testPostRoleUserAccountAssociation_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.postRoleUserAccountAssociationHttpResponse(
+				role.getId(), _user.getUserId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.postRoleUserAccountAssociationHttpResponse(
+				0L, _user.getUserId()));
+
+		assertHttpResponseStatusCode(
+			500,
+			roleResource.postRoleUserAccountAssociationHttpResponse(
+				_getRoleId(_addRole(RoleConstants.TYPE_ORGANIZATION)),
+				_user.getUserId()));
+		assertHttpResponseStatusCode(
+			500,
+			roleResource.postRoleUserAccountAssociationHttpResponse(
+				_getRoleId(_addRole(RoleConstants.TYPE_SITE)),
+				_user.getUserId()));
 	}
 
 	@Ignore
@@ -156,6 +178,21 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		return testGetRole_addRole();
 	}
 
+	@Override
+	protected Role testPostRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		return _addRole(RoleConstants.TYPE_REGULAR);
+	}
+
+	private Role _addRole(int type) throws Exception {
+		Role role = randomRole();
+
+		role.setRoleType(RoleConstants.getTypeLabel(type));
+
+		return _addRole(role);
+	}
+
 	private Role _addRole(Role role) throws Exception {
 		RoleLocalServiceUtil.deleteUserRole(
 			_user.getUserId(),
@@ -179,6 +216,10 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		RoleLocalServiceUtil.addUserRole(_user.getUserId(), serviceBuilderRole);
 
 		return _toRole(serviceBuilderRole);
+	}
+
+	private long _getRoleId(Role role) {
+		return role.getId();
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role) {

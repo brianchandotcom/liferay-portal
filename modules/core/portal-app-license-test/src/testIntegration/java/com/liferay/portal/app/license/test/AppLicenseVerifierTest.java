@@ -93,8 +93,10 @@ public class AppLicenseVerifierTest {
 		AppLicenseVerifier appLicenseVerifier = _bundleContext.getService(
 			serviceReference);
 
+		Bundle bundle = _bundleContext.getBundle();
+
 		try {
-			appLicenseVerifier.verify(_bundleContext.getBundle(), "", "", "");
+			appLicenseVerifier.verify("", "", "", bundle.getSymbolicName());
 
 			Assert.fail();
 		}
@@ -123,8 +125,10 @@ public class AppLicenseVerifierTest {
 		AppLicenseVerifier appLicenseVerifier = _bundleContext.getService(
 			serviceReference);
 
+		Bundle bundle = _bundleContext.getBundle();
+
 		try {
-			appLicenseVerifier.verify(_bundleContext.getBundle(), "", "", "");
+			appLicenseVerifier.verify("", "", "", bundle.getSymbolicName());
 		}
 		finally {
 			_bundleContext.ungetService(serviceReference);

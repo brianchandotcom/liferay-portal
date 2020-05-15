@@ -165,7 +165,8 @@ public class AppResolverHook implements ResolverHook {
 				"product-version-id");
 
 			appLicenseVerifier.verify(
-				bundle, productId, productType, productVersionId);
+				productId, productType, productVersionId,
+				bundle.getSymbolicName());
 
 			verified = true;
 

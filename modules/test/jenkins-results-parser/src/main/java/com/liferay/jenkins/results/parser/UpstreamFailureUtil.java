@@ -106,44 +106,21 @@ public class UpstreamFailureUtil {
 		}
 
 		try {
-			List<TestResult> testResults = new ArrayList<>();
+			if (!_isBuildFailingInUpstreamJob(build)) {
+				return false;
+			}
 
-			testResults.addAll(build.getTestResults("FAILED"));
-			testResults.addAll(build.getTestResults("REGRESSION"));
+			for (TestResult testResult : build.getTestResults(null)) {
+				if (!testResult.isFailing()) {
+					continue;
+				}
 
-			if (testResults.isEmpty()) {
-				String jobVariant = build.getJobVariant();
-
-				if (jobVariant == null) {
+				if (testResult.isUniqueFailure()) {
 					return false;
-				}
-
-				String result = build.getResult();
-
-				if (result == null) {
-					return false;
-				}
-
-				if (jobVariant.contains("/")) {
-					int index = jobVariant.lastIndexOf("/");
-
-					jobVariant = jobVariant.substring(0, index);
-				}
-
-				TopLevelBuild topLevelBuild = build.getTopLevelBuild();
-
-				for (String upstreamJobFailure :
-						getUpstreamJobFailures("build", topLevelBuild)) {
-
-					if (upstreamJobFailure.contains(jobVariant) &&
-						upstreamJobFailure.contains(result)) {
-
-						return true;
-					}
 				}
 			}
 
-			return false;
+			return true;
 		}
 		catch (Exception exception) {
 			System.out.println(
@@ -256,6 +233,40 @@ public class UpstreamFailureUtil {
 
 			_upstreamComparisonAvailable = false;
 		}
+	}
+
+	private static boolean _isBuildFailingInUpstreamJob(Build build) {
+		String jobVariant = build.getJobVariant();
+
+		if (jobVariant == null) {
+			return false;
+		}
+
+		String result = build.getResult();
+
+		if (result == null) {
+			return false;
+		}
+
+		if (jobVariant.contains("/")) {
+			int index = jobVariant.lastIndexOf("/");
+
+			jobVariant = jobVariant.substring(0, index);
+		}
+
+		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
+
+		for (String upstreamJobFailure :
+				getUpstreamJobFailures("build", topLevelBuild)) {
+
+			if (upstreamJobFailure.contains(jobVariant) &&
+				upstreamJobFailure.contains(result)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _URL_BASE_UPSTREAM_FAILURES_JOB =

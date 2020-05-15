@@ -1,0 +1,13 @@
+diff --git a/org/apache/felix/utils/properties/TypedProperties.java b/org/apache/felix/utils/properties/TypedProperties.java
+index fe23179674f24..b3c210df4d5fe 100644
+--- a/org/apache/felix/utils/properties/TypedProperties.java
++++ b/org/apache/felix/utils/properties/TypedProperties.java
+@@ -224,7 +224,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
+ 
+ 	@Override
+ 	public Object put(String key, Object value) {
+-		if ((value instanceof String) && !_storage.isEmpty()) {
++		if ((value instanceof String) && !_storage.isTyped()) {
+ 			return _storage.put(key, (String)value);
+ 		}
+ 

@@ -224,7 +224,7 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 	@Override
 	public Object put(String key, Object value) {
-		if ((value instanceof String) && !_storage.isEmpty()) {
+		if ((value instanceof String) && !_storage.isTyped()) {
 			return _storage.put(key, (String)value);
 		}
 

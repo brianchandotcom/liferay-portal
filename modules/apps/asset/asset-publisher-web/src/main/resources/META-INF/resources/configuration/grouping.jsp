@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:row
-	id='<%= renderResponse.getNamespace() + "grouping" %>'
+	id='<%= liferayPortletResponse.getNamespace() + "grouping" %>'
 >
 	<clay:col
 		md="4"

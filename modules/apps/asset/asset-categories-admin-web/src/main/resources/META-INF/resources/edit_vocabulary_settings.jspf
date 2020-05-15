@@ -33,7 +33,7 @@ if (vocabulary != null) {
 <liferay-frontend:fieldset
 	collapsed="<%= true %>"
 	collapsible="<%= true %>"
-	id='<%= renderResponse.getNamespace() + "extraFields" %>'
+	id='<%= liferayPortletResponse.getNamespace() + "extraFields" %>'
 	label="associated-asset-types"
 >
 

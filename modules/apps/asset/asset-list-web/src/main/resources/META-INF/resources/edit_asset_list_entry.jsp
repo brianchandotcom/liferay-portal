@@ -70,7 +70,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 														iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
 														id="addAssetListEntryVariationIcon"
 														markupView="lexicon"
-														url='<%= "javascript:" + renderResponse.getNamespace() + "openSelectSegmentsEntryDialog();" %>'
+														url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "openSelectSegmentsEntryDialog();" %>'
 													/>
 												</c:if>
 											</li>
@@ -113,7 +113,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 								<liferay-frontend:empty-result-message
 									actionDropdownItems="<%= (availableSegmentsEntries.size() > 0) ? editAssetListDisplayContext.getAssetListEntryVariationActionDropdownItems() : null %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
-									componentId='<%= renderResponse.getNamespace() + "emptyResultMessageComponent" %>'
+									componentId='<%= liferayPortletResponse.getNamespace() + "emptyResultMessageComponent" %>'
 									description='<%= LanguageUtil.get(request, "no-personalized-variations-were-found") %>'
 									elementType='<%= LanguageUtil.get(request, "personalized-variations") %>'
 								/>

@@ -42,7 +42,7 @@ portletURL.setParameter("eventName", eventName);
 </div>
 
 <clay:container-fluid
-	id='<%= renderResponse.getNamespace() + "selectDDMStructureFieldForm" %>'
+	id='<%= liferayPortletResponse.getNamespace() + "selectDDMStructureFieldForm" %>'
 >
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
@@ -57,7 +57,7 @@ portletURL.setParameter("eventName", eventName);
 			modelVar="field"
 		>
 			<liferay-ui:search-container-column-text>
-				<input data-button-id="<%= renderResponse.getNamespace() + "applyButton" + field.getName() %>" data-form-id="<%= renderResponse.getNamespace() + field.getName() + "fieldForm" %>" name="<portlet:namespace />selectStructureFieldSubtype" type="radio" <%= Objects.equals(field.getName(), ddmStructureFieldName) ? "checked" : StringPool.BLANK %> />
+				<input data-button-id="<%= liferayPortletResponse.getNamespace() + "applyButton" + field.getName() %>" data-form-id="<%= liferayPortletResponse.getNamespace() + field.getName() + "fieldForm" %>" name="<portlet:namespace />selectStructureFieldSubtype" type="radio" <%= Objects.equals(field.getName(), ddmStructureFieldName) ? "checked" : StringPool.BLANK %> />
 			</liferay-ui:search-container-column-text>
 
 			<%
@@ -74,7 +74,7 @@ portletURL.setParameter("eventName", eventName);
 				</liferay-portlet:resourceURL>
 
 				<aui:form action="<%= structureFieldURL %>" disabled="<%= !Objects.equals(field.getName(), ddmStructureFieldName) %>" name='<%= field.getName() + "fieldForm" %>' onSubmit="event.preventDefault()">
-					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= renderResponse.getNamespace() + "applyButton" + field.getName() %>' />
+					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= liferayPortletResponse.getNamespace() + "applyButton" + field.getName() %>' />
 
 					<%
 					Field ddmField = new com.liferay.dynamic.data.mapping.storage.Field();
@@ -103,7 +103,7 @@ portletURL.setParameter("eventName", eventName);
 				Map<String, Object> data = HashMapBuilder.<String, Object>put(
 					"fieldsnamespace", fieldsNamespace
 				).put(
-					"form", renderResponse.getNamespace() + field.getName() + "fieldForm"
+					"form", liferayPortletResponse.getNamespace() + field.getName() + "fieldForm"
 				).put(
 					"label", field.getLabel()
 				).put(

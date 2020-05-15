@@ -19,7 +19,7 @@
 <liferay-frontend:fieldset-group>
 	<liferay-frontend:fieldset>
 		<clay:row
-			id='<%= renderResponse.getNamespace() + "ordering" %>'
+			id='<%= liferayPortletResponse.getNamespace() + "ordering" %>'
 		>
 			<clay:col
 				md="6"

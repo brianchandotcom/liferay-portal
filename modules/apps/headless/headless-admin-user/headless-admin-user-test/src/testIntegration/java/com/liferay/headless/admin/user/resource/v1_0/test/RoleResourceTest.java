@@ -173,9 +173,31 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 				_user.getUserId()));
 	}
 
-	@Ignore
 	@Override
+	@Test
 	public void testPostSiteRoleUserAccountAssociation() throws Exception {
+		Role role = testPostSiteRoleUserAccountAssociation_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.postSiteRoleUserAccountAssociationHttpResponse(
+				role.getId(), _user.getUserId(), testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			roleResource.postSiteRoleUserAccountAssociationHttpResponse(
+				0L, _user.getUserId(), testGroup.getGroupId()));
+
+		assertHttpResponseStatusCode(
+			500,
+			roleResource.postSiteRoleUserAccountAssociationHttpResponse(
+				_getRoleId(_addRole(RoleConstants.TYPE_REGULAR)),
+				_user.getUserId(), testGroup.getGroupId()));
+		assertHttpResponseStatusCode(
+			500,
+			roleResource.postSiteRoleUserAccountAssociationHttpResponse(
+				_getRoleId(_addRole(RoleConstants.TYPE_ORGANIZATION)),
+				_user.getUserId(), testGroup.getGroupId()));
 	}
 
 	@Override
@@ -217,6 +239,13 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		throws Exception {
 
 		return _addRole(RoleConstants.TYPE_REGULAR);
+	}
+
+	@Override
+	protected Role testPostSiteRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		return _addRole(RoleConstants.TYPE_SITE);
 	}
 
 	private Role _addRole(int type) throws Exception {

@@ -382,6 +382,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>containerElement</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -430,6 +436,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>containerElement</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>fluid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -455,6 +467,12 @@
 		<attribute>
 			<description></description>
 			<name>className</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>containerElement</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2021,6 +2039,12 @@
 		<attribute>
 			<description></description>
 			<name>className</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>containerElement</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

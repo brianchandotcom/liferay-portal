@@ -36,12 +36,20 @@ public class BaseContainerTag extends IncludeTag {
 		return _className;
 	}
 
+	public String getContainerElement() {
+		return _containerElement;
+	}
+
 	public String getId() {
 		return _id;
 	}
 
 	public void setClassName(String className) {
 		_className = className;
+	}
+
+	public void setContainerElement(String containerElement) {
+		_containerElement = containerElement;
 	}
 
 	public void setId(String id) {
@@ -72,6 +80,7 @@ public class BaseContainerTag extends IncludeTag {
 		super.cleanUp();
 
 		_className = null;
+		_containerElement = "div";
 		_id = null;
 	}
 
@@ -84,7 +93,9 @@ public class BaseContainerTag extends IncludeTag {
 	protected int processEndTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("</div>");
+		jspWriter.write("</");
+		jspWriter.write(_containerElement);
+		jspWriter.write(">");
 
 		return EVAL_BODY_INCLUDE;
 	}
@@ -93,7 +104,9 @@ public class BaseContainerTag extends IncludeTag {
 	protected int processStartTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<div class=\"");
+		jspWriter.write("<");
+		jspWriter.write(_containerElement);
+		jspWriter.write(" class=\"");
 		jspWriter.write(String.valueOf(_getClassName(new LinkedHashSet())));
 		jspWriter.write("\"");
 
@@ -111,6 +124,7 @@ public class BaseContainerTag extends IncludeTag {
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private String _className;
+	private String _containerElement = "div";
 	private String _id;
 
 }

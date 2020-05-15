@@ -37,7 +37,7 @@ import java.util.function.Function;
 public interface TableReferenceInfoBuilder<T extends Table<T>> {
 
 	public default TableReferenceInfoBuilder<T> assetEntryReference(
-		Column<T, Long> pkColumn, Class<?> modelClass) {
+		Column<T, Long> pkColumn, Class<? extends BaseModel<?>> modelClass) {
 
 		return referenceInnerJoin(
 			fromStep -> fromStep.from(
@@ -124,7 +124,7 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 		Function<FromStep, JoinStep> joinFunction);
 
 	public default TableReferenceInfoBuilder<T> resourcePermissionReference(
-		Column<T, Long> pkColumn, Class<?> modelClass) {
+		Column<T, Long> pkColumn, Class<? extends BaseModel<?>> modelClass) {
 
 		T table = pkColumn.getTable();
 

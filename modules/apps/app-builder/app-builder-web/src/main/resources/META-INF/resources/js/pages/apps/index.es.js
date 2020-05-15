@@ -18,6 +18,7 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from '../../AppContext.es';
 import ListApps from './ListApps.es';
+import EditApp from './edit/EditApp.es';
 
 export default (props) => {
 	return (
@@ -25,7 +26,12 @@ export default (props) => {
 			<ClayModalProvider>
 				<Router>
 					<Switch>
-						<Route component={ListApps} path="/" />
+						<Route component={ListApps} exact path="/" />
+
+						<Route
+							component={EditApp}
+							path="/standard/deploy/:dataDefinitionId"
+						/>
 					</Switch>
 				</Router>
 			</ClayModalProvider>

@@ -133,14 +133,6 @@ public class ContainerTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute("clay:container:className", _className);
-		httpServletRequest.setAttribute("clay:container:fluid", _fluid);
-		httpServletRequest.setAttribute("clay:container:id", _id);
-		httpServletRequest.setAttribute("clay:container:size", _size);
-	}
-
 	private String _getClassName() {
 		Set className = new LinkedHashSet();
 

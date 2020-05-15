@@ -52,15 +52,6 @@ public class ContainerFluidTag extends ContainerTag {
 		return _START_PAGE;
 	}
 
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute(
-			"clay:container-fluid:className", getClassName());
-
-		httpServletRequest.setAttribute("clay:container-fluid:id", getId());
-		httpServletRequest.setAttribute("clay:container-fluid:size", getSize());
-	}
-
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:container-fluid:";
 
 	private static final String _END_PAGE = "/container_fluid/end.jsp";

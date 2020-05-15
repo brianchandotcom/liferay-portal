@@ -160,17 +160,6 @@ public class ColTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute("clay:col:className", _className);
-		httpServletRequest.setAttribute("clay:col:id", _id);
-		httpServletRequest.setAttribute("clay:col:lg", _size);
-		httpServletRequest.setAttribute("clay:col:md", _size);
-		httpServletRequest.setAttribute("clay:col:size", _size);
-		httpServletRequest.setAttribute("clay:col:sm", _size);
-		httpServletRequest.setAttribute("clay:col:xl", _size);
-	}
-
 	private String _getClassName() {
 		Set<String> classNames = new LinkedHashSet<>();
 

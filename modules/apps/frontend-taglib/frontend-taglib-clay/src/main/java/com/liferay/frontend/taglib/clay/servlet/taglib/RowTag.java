@@ -115,12 +115,6 @@ public class RowTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.setAttribute("clay:container:className", _className);
-		httpServletRequest.setAttribute("clay:container:id", _id);
-	}
-
 	private String _getClassName() {
 		Set<String> classNames = new LinkedHashSet<>();
 

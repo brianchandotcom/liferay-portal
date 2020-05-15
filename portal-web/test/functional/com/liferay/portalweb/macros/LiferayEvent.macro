@@ -46,25 +46,30 @@ const TRACKED_EVENTS = [
 
 let __LFR_TRACKED_EVENTS__ = {};
 
-Liferay.on(TRACKED_EVENTS, (event) => {
-	const eventLog = __LFR_TRACKED_EVENTS__[event.type]
-		? [...__LFR_TRACKED_EVENTS__[event.type], event]
-		: [event];
+Liferay.on(TRACKED_EVENTS, function(event){
+	{
+		const eventLog = __LFR_TRACKED_EVENTS__[event.type]
+			? [...__LFR_TRACKED_EVENTS__[event.type], event]
+			: [event];
 
-	__LFR_TRACKED_EVENTS__ = {
-		...__LFR_TRACKED_EVENTS__,
-		[event.type]: eventLog,
+		__LFR_TRACKED_EVENTS__ = {
+			...__LFR_TRACKED_EVENTS__,
+			[event.type]: eventLog,
+		};
 	};
 });
 
-const getLastEvent = (eventName) =>
-	__LFR_TRACKED_EVENTS__[eventName]
+function getLastEvent(eventName) {
+	return __LFR_TRACKED_EVENTS__[eventName]
 		? __LFR_TRACKED_EVENTS__[eventName][
 				__LFR_TRACKED_EVENTS__[eventName].length - 1
 		  ]
 		: {};
+};
 
-const getLastEventDetails = (eventName) => getLastEvent(eventName).details[0];
+function getLastEventDetails(eventName){
+	return getLastEvent(eventName).details[0];
+};
 
 window.LFR_JS_EVENTS_LOG = {
 	getLastEvent,

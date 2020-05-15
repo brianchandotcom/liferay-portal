@@ -14,6 +14,8 @@
 
 package com.liferay.portal.messaging.internal;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -214,12 +216,14 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	public void sendMessage(String destinationName, Message message) {
 		MessageBusThreadLocalUtil.populateMessageFromThreadLocals(message);
 
-		MessageBusInterceptor messageBusInterceptor = _messageBusInterceptor;
+		for (MessageBusInterceptor messageBusInterceptor :
+				_serviceTrackerList) {
 
-		if ((messageBusInterceptor != null) &&
-			messageBusInterceptor.intercept(this, destinationName, message)) {
+			if (messageBusInterceptor.intercept(
+					this, destinationName, message)) {
 
-			return;
+				return;
+			}
 		}
 
 		Destination destination = _destinations.get(destinationName);
@@ -373,11 +377,16 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			});
 
 		_messageListenerServiceTracker.open();
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, MessageBusInterceptor.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_messageListenerServiceTracker.close();
+
+		_serviceTrackerList.close();
 
 		shutdown(true);
 
@@ -594,18 +603,12 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		new ConcurrentHashMap<>();
 	private final Set<MessageBusEventListener> _messageBusEventListeners =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile MessageBusInterceptor _messageBusInterceptor;
-
 	private ServiceTracker
 		<MessageListener, ObjectValuePair<String, MessageListener>>
 			_messageListenerServiceTracker;
 	private final Map<String, List<MessageListener>> _queuedMessageListeners =
 		new HashMap<>();
+	private ServiceTrackerList<MessageBusInterceptor, MessageBusInterceptor>
+		_serviceTrackerList;
 
 }

@@ -1343,6 +1343,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public boolean isUniqueFailure() {
+		return !UpstreamFailureUtil.isBuildFailingInUpstreamJob(this);
+	}
+
+	@Override
 	public void reinvoke() {
 		reinvoke(null);
 	}

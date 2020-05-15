@@ -550,6 +550,14 @@ public class DDMFormDisplayContext {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
+		String redirectURL = ParamUtil.getString(_renderRequest, "redirect");
+
+		if (Validator.isNotNull(redirectURL)) {
+			ddmFormRenderingContext.setCancelLabel(
+				LanguageUtil.get(ddmForm.getDefaultLocale(), "cancel"));
+			ddmFormRenderingContext.setRedirectURL(redirectURL);
+		}
+
 		ddmFormRenderingContext.setContainerId(_containerId);
 		ddmFormRenderingContext.setDDMFormValues(
 			_ddmFormValuesFactory.create(_renderRequest, ddmForm));
@@ -566,19 +574,12 @@ public class DDMFormDisplayContext {
 		ddmFormRenderingContext.setPortletNamespace(
 			_renderResponse.getNamespace());
 		ddmFormRenderingContext.setSharedURL(isSharedURL());
-		ddmFormRenderingContext.setViewMode(true);
 
-		String redirectURL = ParamUtil.getString(_renderRequest, "redirect");
-
-		if (Validator.isNotNull(redirectURL)) {
-			ddmFormRenderingContext.setRedirectURL(redirectURL);
-
-			ddmFormRenderingContext.setCancelLabel(
-				LanguageUtil.get(ddmForm.getDefaultLocale(), "cancel"));
-		}
-		else {
+		if (Validator.isNull(redirectURL)) {
 			ddmFormRenderingContext.setShowCancelButton(false);
 		}
+
+		ddmFormRenderingContext.setViewMode(true);
 
 		return ddmFormRenderingContext;
 	}

@@ -184,54 +184,15 @@ public class JournalArticleTableReferenceDefinition
 		).nonreferenceColumns(
 			JournalArticleTable.INSTANCE.statusByUserName,
 			JournalArticleTable.INSTANCE.statusDate
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				DDMStorageLinkTable.INSTANCE
-			).innerJoinON(
-				JournalArticleTable.INSTANCE,
-				JournalArticleTable.INSTANCE.id.eq(
-					DDMStorageLinkTable.INSTANCE.classPK)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.value.eq(
-					JournalArticle.class.getName()
-				).and(
-					ClassNameTable.INSTANCE.classNameId.eq(
-						DDMStorageLinkTable.INSTANCE.classNameId)
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				DDMStructureLinkTable.INSTANCE
-			).innerJoinON(
-				JournalArticleTable.INSTANCE,
-				JournalArticleTable.INSTANCE.id.eq(
-					DDMStructureLinkTable.INSTANCE.classPK)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.value.eq(
-					JournalArticle.class.getName()
-				).and(
-					ClassNameTable.INSTANCE.classNameId.eq(
-						DDMStructureLinkTable.INSTANCE.classNameId)
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				DDMTemplateLinkTable.INSTANCE
-			).innerJoinON(
-				JournalArticleTable.INSTANCE,
-				JournalArticleTable.INSTANCE.id.eq(
-					DDMTemplateLinkTable.INSTANCE.classPK)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.value.eq(
-					JournalArticle.class.getName()
-				).and(
-					ClassNameTable.INSTANCE.classNameId.eq(
-						DDMTemplateLinkTable.INSTANCE.classNameId)
-				)
-			)
+		).classNameReference(
+			JournalArticleTable.INSTANCE.id,
+			DDMStorageLinkTable.INSTANCE.classPK, JournalArticle.class
+		).classNameReference(
+			JournalArticleTable.INSTANCE.id,
+			DDMStructureLinkTable.INSTANCE.classPK, JournalArticle.class
+		).classNameReference(
+			JournalArticleTable.INSTANCE.id,
+			DDMTemplateLinkTable.INSTANCE.classPK, JournalArticle.class
 		).assetEntryReference(
 			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
 		).resourcePermissionReference(

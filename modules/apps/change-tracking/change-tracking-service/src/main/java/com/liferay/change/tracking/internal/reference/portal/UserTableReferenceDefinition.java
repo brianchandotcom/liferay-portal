@@ -16,7 +16,6 @@ package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactTable;
@@ -41,21 +40,9 @@ public class UserTableReferenceDefinition
 
 		tableReferenceInfoBuilder.nonreferenceColumns(
 			UserTable.INSTANCE.uuid, UserTable.INSTANCE.externalReferenceCode
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				ContactTable.INSTANCE
-			).innerJoinON(
-				UserTable.INSTANCE,
-				UserTable.INSTANCE.userId.eq(ContactTable.INSTANCE.classPK)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.value.eq(
-					Contact.class.getName()
-				).and(
-					ClassNameTable.INSTANCE.classNameId.eq(
-						ContactTable.INSTANCE.classNameId)
-				)
-			)
+		).classNameReference(
+			UserTable.INSTANCE.userId, ContactTable.INSTANCE.classPK,
+			Contact.class
 		).singleColumnReference(
 			UserTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).nonreferenceColumns(

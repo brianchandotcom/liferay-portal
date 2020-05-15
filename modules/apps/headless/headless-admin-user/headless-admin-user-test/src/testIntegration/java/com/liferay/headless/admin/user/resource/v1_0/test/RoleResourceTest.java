@@ -62,9 +62,14 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		throws Exception {
 	}
 
-	@Ignore
 	@Override
 	public void testDeleteRoleUserAccountAssociation() throws Exception {
+		Role role = testDeleteRoleUserAccountAssociation_addRole();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.deleteRoleUserAccountAssociationHttpResponse(
+				role.getId(), _user.getUserId()));
 	}
 
 	@Override
@@ -217,6 +222,13 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 					[RandomTestUtil.randomInt(0, 2)]));
 
 		return role;
+	}
+
+	@Override
+	protected Role testDeleteRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		return _addRole(RoleConstants.TYPE_REGULAR);
 	}
 
 	@Override

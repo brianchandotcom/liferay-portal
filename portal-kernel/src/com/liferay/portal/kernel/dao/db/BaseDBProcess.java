@@ -106,6 +106,14 @@ public abstract class BaseDBProcess implements DBProcess {
 			}
 
 			if (is == null) {
+				Thread currentThread = Thread.currentThread();
+
+				classLoader = currentThread.getContextClassLoader();
+
+				is = classLoader.getResourceAsStream(path);
+			}
+
+			if (is == null) {
 				_log.error("Invalid path " + path);
 
 				if (failOnError) {

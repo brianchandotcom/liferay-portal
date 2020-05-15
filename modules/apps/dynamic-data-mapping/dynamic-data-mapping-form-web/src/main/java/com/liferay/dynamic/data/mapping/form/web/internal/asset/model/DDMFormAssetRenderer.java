@@ -64,8 +64,6 @@ public class DDMFormAssetRenderer
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger,
-		ModelResourcePermission<DDMFormInstance>
-			ddmFormInstanceModelResourcePermission,
 		ModelResourcePermission<DDMFormInstanceRecord>
 			ddmFormInstanceRecordModelResourcePermission,
 		Portal portal) {
@@ -78,8 +76,6 @@ public class DDMFormAssetRenderer
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
-		_ddmFormInstanceModelResourcePermission =
-			ddmFormInstanceModelResourcePermission;
 		_ddmFormInstanceRecordModelResourcePermission =
 			ddmFormInstanceRecordModelResourcePermission;
 		_portal = portal;
@@ -220,8 +216,9 @@ public class DDMFormAssetRenderer
 		throws PortalException {
 
 		try {
-			if (_ddmFormInstanceModelResourcePermission.contains(
-					permissionChecker, _ddmFormInstance, ActionKeys.UPDATE) ||
+			if (_ddmFormInstanceRecordModelResourcePermission.contains(
+					permissionChecker, _ddmFormInstanceRecord,
+					ActionKeys.UPDATE) ||
 				_ddmFormInstanceRecordModelResourcePermission.contains(
 					permissionChecker, _ddmFormInstanceRecord,
 					DDMActionKeys.ADD_FORM_INSTANCE_RECORD)) {
@@ -241,8 +238,8 @@ public class DDMFormAssetRenderer
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 		try {
-			return _ddmFormInstanceModelResourcePermission.contains(
-				permissionChecker, _ddmFormInstance, ActionKeys.VIEW);
+			return _ddmFormInstanceRecordModelResourcePermission.contains(
+				permissionChecker, _ddmFormInstanceRecord, ActionKeys.VIEW);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -280,8 +277,6 @@ public class DDMFormAssetRenderer
 		DDMFormAssetRenderer.class);
 
 	private final DDMFormInstance _ddmFormInstance;
-	private final ModelResourcePermission<DDMFormInstance>
-		_ddmFormInstanceModelResourcePermission;
 	private final DDMFormInstanceRecord _ddmFormInstanceRecord;
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;

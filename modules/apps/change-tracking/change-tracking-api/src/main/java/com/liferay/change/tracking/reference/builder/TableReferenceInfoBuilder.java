@@ -39,19 +39,32 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 	public default TableReferenceInfoBuilder<T> assetEntryReference(
 		Column<T, Long> pkColumn, Class<? extends BaseModel<?>> modelClass) {
 
+		return classNameReference(
+			pkColumn, AssetEntryTable.INSTANCE.classPK, modelClass);
+	}
+
+	public default TableReferenceInfoBuilder<T> classNameReference(
+		Column<T, Long> pkColumn, Column<?, Long> classPKColumn,
+		Class<? extends BaseModel<?>> modelClass) {
+
+		if (pkColumn.getTable() == classPKColumn.getTable()) {
+			throw new IllegalArgumentException();
+		}
+
+		Table<?> table = classPKColumn.getTable();
+
 		return referenceInnerJoin(
 			fromStep -> fromStep.from(
-				AssetEntryTable.INSTANCE
+				table
 			).innerJoinON(
-				pkColumn.getTable(),
-				pkColumn.eq(AssetEntryTable.INSTANCE.classPK)
+				pkColumn.getTable(), pkColumn.eq(classPKColumn)
 			).innerJoinON(
 				ClassNameTable.INSTANCE,
 				ClassNameTable.INSTANCE.value.eq(
 					modelClass.getName()
 				).and(
 					ClassNameTable.INSTANCE.classNameId.eq(
-						AssetEntryTable.INSTANCE.classNameId)
+						table.getColumn("classNameId", Long.class))
 				)
 			));
 	}

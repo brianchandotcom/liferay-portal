@@ -16,7 +16,6 @@ package com.liferay.change.tracking.internal.reference.portal;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -56,25 +55,9 @@ public class UserGroupTableReferenceDefinition
 		).nonreferenceColumns(
 			UserGroupTable.INSTANCE.name, UserGroupTable.INSTANCE.description,
 			UserGroupTable.INSTANCE.addedByLDAPImport
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				GroupTable.INSTANCE
-			).innerJoinON(
-				UserGroupTable.INSTANCE,
-				UserGroupTable.INSTANCE.companyId.eq(
-					GroupTable.INSTANCE.companyId
-				).and(
-					UserGroupTable.INSTANCE.userGroupId.eq(
-						GroupTable.INSTANCE.classPK)
-				)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.classNameId.eq(
-					GroupTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(UserGroup.class.getName())
-				)
-			)
+		).classNameReference(
+			UserGroupTable.INSTANCE.userGroupId, GroupTable.INSTANCE.classPK,
+			UserGroup.class
 		).resourcePermissionReference(
 			UserGroupTable.INSTANCE.userGroupId, UserGroup.class
 		).systemEventReference(

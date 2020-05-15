@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportGroupedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -474,7 +475,10 @@ public class FolderStagedModelDataHandler
 		throws PortletDataException {
 
 		if ((folder.getGroupId() != portletDataContext.getGroupId()) &&
-			(folder.getGroupId() != portletDataContext.getScopeGroupId())) {
+			(folder.getGroupId() != portletDataContext.getScopeGroupId()) &&
+			!ExportImportGroupedModelUtil.
+				isReferenceInLayoutGroupWithinExportScope(
+					portletDataContext, folder)) {
 
 			PortletDataException portletDataException =
 				new PortletDataException(PortletDataException.INVALID_GROUP);

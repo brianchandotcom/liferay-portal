@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportGroupedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -748,33 +749,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return true;
 		}
 
-		Group group = null;
-
-		try {
-			group = _groupLocalService.getGroup(groupedModel.getGroupId());
-		}
-		catch (Exception exception) {
-			return false;
-		}
-
-		String className = group.getClassName();
-
-		if (className.equals(Layout.class.getName())) {
-			Layout scopeLayout = null;
-
-			try {
-				scopeLayout = _layoutLocalService.getLayout(group.getClassPK());
-			}
-			catch (Exception exception) {
-				return false;
-			}
-
-			if (scopeLayout.getGroupId() == portletDataContext.getGroupId()) {
-				return true;
-			}
-		}
-
-		return false;
+		return ExportImportGroupedModelUtil.
+			isReferenceInLayoutGroupWithinExportScope(
+				portletDataContext, groupedModel);
 	}
 
 	@Override

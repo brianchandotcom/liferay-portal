@@ -48,6 +48,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportGroupedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -886,7 +887,10 @@ public class FileEntryStagedModelDataHandler
 		throws PortletDataException {
 
 		if ((fileEntry.getGroupId() != portletDataContext.getGroupId()) &&
-			(fileEntry.getGroupId() != portletDataContext.getScopeGroupId())) {
+			(fileEntry.getGroupId() != portletDataContext.getScopeGroupId()) &&
+			!ExportImportGroupedModelUtil.
+				isReferenceInLayoutGroupWithinExportScope(
+					portletDataContext, fileEntry)) {
 
 			PortletDataException portletDataException =
 				new PortletDataException(PortletDataException.INVALID_GROUP);

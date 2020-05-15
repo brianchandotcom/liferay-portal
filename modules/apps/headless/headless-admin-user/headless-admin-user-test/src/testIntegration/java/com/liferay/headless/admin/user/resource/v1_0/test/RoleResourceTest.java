@@ -23,18 +23,16 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -44,6 +42,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class RoleResourceTest extends BaseRoleResourceTestCase {
 
@@ -53,18 +52,6 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		super.setUp();
 
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		for (Role role : _roles) {
-			RoleLocalServiceUtil.deleteRole(role.getId());
-		}
-
-		_roles = new ArrayList<>();
 	}
 
 	@Ignore
@@ -89,18 +76,15 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		Page<Role> page = roleResource.getRolesPage(Pagination.of(1, 100));
 
 		List<Role> roles = new ArrayList<>(page.getItems());
-		long totalCount = page.getTotalCount();
 
-		_addRole(randomRole());
-		_addRole(randomRole());
+		roles.add(_addRole(randomRole()));
+		roles.add(_addRole(randomRole()));
 
-		page = roleResource.getRolesPage(
-			Pagination.of(1, (int)totalCount + _roles.size()));
+		page = roleResource.getRolesPage(Pagination.of(1, roles.size()));
 
-		Assert.assertEquals(totalCount + _roles.size(), page.getTotalCount());
+		Assert.assertEquals(roles.size(), page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			ListUtil.concat(roles, _roles), (List<Role>)page.getItems());
+		assertEqualsIgnoringOrder(roles, (List<Role>)page.getItems());
 		assertValid(page);
 	}
 
@@ -194,11 +178,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		RoleLocalServiceUtil.addUserRole(_user.getUserId(), serviceBuilderRole);
 
-		Role newRole = _toRole(serviceBuilderRole);
-
-		_roles.add(newRole);
-
-		return newRole;
+		return _toRole(serviceBuilderRole);
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role) {
@@ -226,9 +206,6 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			"Invalid role type label " + roleTypeLabel);
 	}
 
-	private List<Role> _roles = new ArrayList<>();
-
-	@DeleteAfterTestRun
 	private User _user;
 
 }

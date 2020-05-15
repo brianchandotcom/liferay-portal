@@ -24,8 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOOTER_DROP_TARGET</td>
-	<td>//button[contains(.,'Configure Allowed Fragments')]</td>
+	<td>HEADER_DROP_TARGET</td>
+	<td>//div[contains(@class,'page-editor__drop-zone')]</td>
 	<td></td>
 </tr>
 <tr>

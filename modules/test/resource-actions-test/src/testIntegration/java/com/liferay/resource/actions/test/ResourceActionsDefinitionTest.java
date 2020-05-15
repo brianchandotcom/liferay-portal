@@ -117,6 +117,19 @@ public class ResourceActionsDefinitionTest {
 			ClassLoader bundleClassLoader, StringBundler sb)
 		throws Exception {
 
+		if (!resourceActionConfig.startsWith("resource-actions/") &&
+			(bundle.getBundleId() != 0)) {
+
+			sb.append("\n\t\t");
+			sb.append(bundle.getSymbolicName());
+			sb.append(": resource action definition file ");
+			sb.append(resourceActionConfig);
+			sb.append(" is not placed in resource-actions folder at the root ");
+			sb.append("of the module.");
+
+			return;
+		}
+
 		URL url = bundleClassLoader.getResource(resourceActionConfig);
 
 		if (url == null) {
@@ -127,19 +140,6 @@ public class ResourceActionsDefinitionTest {
 				sb.append(resourceActionConfig);
 				sb.append(" is not found.");
 			}
-
-			return;
-		}
-
-		if (!resourceActionConfig.startsWith("resource-actions/") &&
-			(bundle.getBundleId() != 0)) {
-
-			sb.append("\n\t\t");
-			sb.append(bundle.getSymbolicName());
-			sb.append(": resource action definition file ");
-			sb.append(resourceActionConfig);
-			sb.append(" is not placed in resource-actions folder at the root ");
-			sb.append("of the module.");
 
 			return;
 		}

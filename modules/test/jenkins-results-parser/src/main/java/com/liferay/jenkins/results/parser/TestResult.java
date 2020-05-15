@@ -47,4 +47,6 @@ public interface TestResult {
 
 	public boolean isFailing();
 
+	public boolean isUniqueFailure();
+
 }

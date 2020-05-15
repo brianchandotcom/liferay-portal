@@ -9,17 +9,17 @@ definition {
 
 		if ("${scope}" == "Master") {
 			if ("${dropTarget}" == "Header") {
-				DragAndDrop.javaScriptDragAndDropToObject(
+				DragAndDrop.javaScriptDragAndDropPageToUp(
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+					locator2 = "PageEditor#HEADER_DROP_TARGET",
 					value1 = "");
 			}
 			else if ("${dropTarget}" == "Footer") {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-					locator2 = "PageEditor#FOOTER_DROP_TARGET",
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
 		}
@@ -114,17 +114,17 @@ definition {
 
 		if ("${scope}" == "Master") {
 			if ("${dropTarget}" == "Header") {
-				DragAndDrop.javaScriptDragAndDropToObject(
+				DragAndDrop.javaScriptDragAndDropPageToUp(
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+					locator2 = "PageEditor#HEADER_DROP_TARGET",
 					value1 = "");
 			}
 			else if ("${dropTarget}" == "Footer") {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-					locator2 = "PageEditor#FOOTER_DROP_TARGET",
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
 		}
@@ -179,17 +179,17 @@ definition {
 
 		if ("${scope}" == "Master") {
 			if ("${dropTarget}" == "Header") {
-				DragAndDrop.javaScriptDragAndDropToObject(
+				DragAndDrop.javaScriptDragAndDropPageToUp(
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+					locator2 = "PageEditor#HEADER_DROP_TARGET",
 					value1 = "");
 			}
 			else if ("${dropTarget}" == "Footer") {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_fragmentName = "${fragmentName}",
 					locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
-					locator2 = "PageEditor#FOOTER_DROP_TARGET",
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
 		}
@@ -219,17 +219,17 @@ definition {
 
 		if ("${scope}" == "Master") {
 			if ("${dropTarget}" == "Header") {
-				DragAndDrop.javaScriptDragAndDropToObject(
+				DragAndDrop.javaScriptDragAndDropPageToUp(
 					key_elementType = "Row",
 					locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+					locator2 = "PageEditor#HEADER_DROP_TARGET",
 					value1 = "");
 			}
 			else if ("${dropTarget}" == "Footer") {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_elementType = "Row",
 					locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
-					locator2 = "PageEditor#FOOTER_DROP_TARGET",
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
 		}
@@ -300,15 +300,15 @@ definition {
 
 		if ("${scope}" == "Master") {
 			if ("${dropTarget}" == "Header") {
-				DragAndDrop.javaScriptDragAndDropToObject(
+				DragAndDrop.javaScriptDragAndDropPageToUp(
 					locator1 = "PageEditor#WIDGETS_ADD_PORTLET_DRAG_BUTTON",
-					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+					locator2 = "PageEditor#HEADER_DROP_TARGET",
 					value1 = "");
 			}
 			else if ("${dropTarget}" == "Footer") {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					locator1 = "PageEditor#WIDGETS_ADD_PORTLET_DRAG_BUTTON",
-					locator2 = "PageEditor#FOOTER_DROP_TARGET",
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
 		}

@@ -37,7 +37,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,10 +55,20 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
 	}
 
-	@Ignore
 	@Override
+	@Test
 	public void testDeleteOrganizationRoleUserAccountAssociation()
 		throws Exception {
+
+		Role role = testDeleteOrganizationRoleUserAccountAssociation_addRole();
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			roleResource.
+				deleteOrganizationRoleUserAccountAssociationHttpResponse(
+					role.getId(), _user.getUserId(),
+					organization.getOrganizationId()));
 	}
 
 	@Override
@@ -227,6 +236,13 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 					[RandomTestUtil.randomInt(0, 2)]));
 
 		return role;
+	}
+
+	@Override
+	protected Role testDeleteOrganizationRoleUserAccountAssociation_addRole()
+		throws Exception {
+
+		return _addRole(RoleConstants.TYPE_ORGANIZATION);
 	}
 
 	@Override

@@ -185,7 +185,7 @@ const DatePicker = ({
 					setValue(value);
 
 					if (moment(value).isValid()) {
-						onChange(value);
+						onChange(moment(value).format(dateMask));
 					}
 				}}
 				ref={inputRef}

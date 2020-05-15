@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENTS</td>
-	<td>//div[contains(@class,'alloy-editor-container') and contains(@id,'pageEditorCommentEditor')]/div[contains(@data-placeholder,'Type your comment here.')]</td>
+	<td>//div[contains(@class,'alloy-editor-container')]/div[contains(@data-placeholder,'Type your comment here.')]</td>
 	<td></td>
 </tr>
 <tr>

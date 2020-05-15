@@ -165,16 +165,16 @@ public class UpstreamFailureUtil {
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
 		try {
+			String jobVariant = build.getJobVariant();
+
+			if (jobVariant.contains("/")) {
+				int index = jobVariant.lastIndexOf("/");
+
+				jobVariant = jobVariant.substring(0, index);
+			}
+
 			for (String failure :
 					getUpstreamJobFailures("test", topLevelBuild)) {
-
-				String jobVariant = build.getJobVariant();
-
-				if (jobVariant.contains("/")) {
-					int index = jobVariant.lastIndexOf("/");
-
-					jobVariant = jobVariant.substring(0, index);
-				}
 
 				if (failure.contains(jobVariant) &&
 					failure.contains(testResult.getDisplayName())) {

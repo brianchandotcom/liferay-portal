@@ -109,8 +109,6 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getString("ddmDataProviderInstanceOutput"),
 			ddmFormField);
 		setDDMFormFieldDataType(jsonObject.getString("dataType"), ddmFormField);
-		setDDMFormFieldPropertyDDMStructureId(jsonObject, ddmFormField);
-		setDDMFormFieldPropertyDDMStructureLayoutId(jsonObject, ddmFormField);
 		setDDMFormFieldFieldName(
 			jsonObject.getString("fieldName"), ddmFormField);
 		setDDMFormFieldInline(jsonObject.getBoolean("inline"), ddmFormField);
@@ -121,16 +119,18 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getBoolean("multiple"), ddmFormField);
 		setDDMFormFieldOptions(
 			jsonObject.getJSONArray("options"), ddmFormField);
-		setDDMFormFieldOptionsProperty(jsonObject, ddmFormField, "columns");
 		setDDMFormFieldPlaceholder(
 			jsonObject.getString("placeholder"), ddmFormField);
+		setDDMFormFieldPropertyDDMStructureId(jsonObject, ddmFormField);
+		setDDMFormFieldPropertyDDMStructureLayoutId(jsonObject, ddmFormField);
+		setDDMFormFieldPropertyOptions(jsonObject, ddmFormField, "columns");
+		setDDMFormFieldPropertyRows(jsonObject, ddmFormField);
 		setDDMFormFieldReadOnly(
 			jsonObject.getBoolean("readOnly", false), ddmFormField);
 		setDDMFormFieldRepeatable(
 			jsonObject.getBoolean("repeatable", false), ddmFormField);
 		setDDMFormFieldRequired(
 			jsonObject.getBoolean("required", false), ddmFormField);
-		setDDMFormFieldRowsProperty(jsonObject, ddmFormField);
 		setDDMFormFieldShowAsSwitcher(
 			jsonObject.getBoolean("showAsSwitcher"), ddmFormField);
 		setDDMFormFieldText(jsonObject.getJSONObject("text"), ddmFormField);
@@ -231,18 +231,6 @@ public class DDMFormTemplateContextProcessor {
 		traversePages(_jsonObject.getJSONArray("pages"));
 	}
 
-	protected void setdDDMFormFieldSetRowsProperty(
-		JSONObject jsonObject, DDMFormField ddmFormField) {
-
-		JSONArray jsonArray = jsonObject.getJSONArray("rows");
-
-		if (jsonArray == null) {
-			return;
-		}
-
-		ddmFormField.setProperty("rows", jsonArray.toString());
-	}
-
 	protected void setDDMFormDefaultLocale() {
 		_ddmForm.setDefaultLocale(_locale);
 	}
@@ -324,18 +312,6 @@ public class DDMFormTemplateContextProcessor {
 		ddmFormField.setDDMFormFieldOptions(getDDMFormFieldOptions(jsonArray));
 	}
 
-	protected void setDDMFormFieldOptionsProperty(
-		JSONObject jsonObject, DDMFormField ddmFormField, String property) {
-
-		JSONArray jsonArray = jsonObject.getJSONArray(property);
-
-		if (jsonArray == null) {
-			return;
-		}
-
-		ddmFormField.setProperty(property, getDDMFormFieldOptions(jsonArray));
-	}
-
 	protected void setDDMFormFieldPlaceholder(
 		String placeholder, DDMFormField ddmFormField) {
 
@@ -366,6 +342,43 @@ public class DDMFormTemplateContextProcessor {
 			"ddmStructureLayoutId", jsonObject.getLong("ddmStructureLayoutId"));
 	}
 
+	protected void setDDMFormFieldPropertyFieldSetRows(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
+
+		JSONArray jsonArray = jsonObject.getJSONArray("rows");
+
+		if (jsonArray == null) {
+			return;
+		}
+
+		ddmFormField.setProperty("rows", jsonArray.toString());
+	}
+
+	protected void setDDMFormFieldPropertyOptions(
+		JSONObject jsonObject, DDMFormField ddmFormField, String property) {
+
+		JSONArray jsonArray = jsonObject.getJSONArray(property);
+
+		if (jsonArray == null) {
+			return;
+		}
+
+		ddmFormField.setProperty(property, getDDMFormFieldOptions(jsonArray));
+	}
+
+	protected void setDDMFormFieldPropertyRows(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
+
+		String type = jsonObject.getString("type");
+
+		if (type.equals("grid")) {
+			setDDMFormFieldPropertyOptions(jsonObject, ddmFormField, "rows");
+		}
+		else if (type.equals("fieldset")) {
+			setDDMFormFieldPropertyFieldSetRows(jsonObject, ddmFormField);
+		}
+	}
+
 	protected void setDDMFormFieldReadOnly(
 		boolean readOnly, DDMFormField ddmFormField) {
 
@@ -382,19 +395,6 @@ public class DDMFormTemplateContextProcessor {
 		boolean required, DDMFormField ddmFormField) {
 
 		ddmFormField.setRequired(required);
-	}
-
-	protected void setDDMFormFieldRowsProperty(
-		JSONObject jsonObject, DDMFormField ddmFormField) {
-
-		String type = jsonObject.getString("type");
-
-		if (type.equals("grid")) {
-			setDDMFormFieldOptionsProperty(jsonObject, ddmFormField, "rows");
-		}
-		else if (type.equals("fieldset")) {
-			setdDDMFormFieldSetRowsProperty(jsonObject, ddmFormField);
-		}
 	}
 
 	protected void setDDMFormFieldShowAsSwitcher(

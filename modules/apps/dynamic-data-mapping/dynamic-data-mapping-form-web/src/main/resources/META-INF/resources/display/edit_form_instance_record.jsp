@@ -37,7 +37,7 @@ String title = ParamUtil.getString(request, "title");
 renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-form")));
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<c:if test="<%= formInstanceRecordVersion != null %>">
 		<aui:model-context bean="<%= formInstanceRecordVersion %>" model="<%= DDMFormInstanceRecordVersion.class %>" />
 
@@ -45,9 +45,9 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 			<aui:workflow-status markupView="lexicon" model="<%= DDMFormInstanceRecord.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= formInstanceRecordVersion.getStatus() %>" version="<%= formInstanceRecordVersion.getVersion() %>" />
 		</div>
 	</c:if>
-</clay:container>
+</clay:container-fluid>
 
-<clay:container
+<clay:container-fluid
 	className="ddm-form-builder-app editing-form-entry"
 >
 	<portlet:actionURL name="addFormInstanceRecord" var="editFormInstanceRecordActionURL" />
@@ -78,4 +78,4 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 
 		<%= ddmFormDisplayContext.getDDMFormHTML() %>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>

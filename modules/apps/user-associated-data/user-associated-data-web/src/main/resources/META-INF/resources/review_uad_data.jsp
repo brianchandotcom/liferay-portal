@@ -37,7 +37,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <liferay-util:include page="/uad_data_navigation_bar.jsp" servletContext="<%= application %>" />
 
-<clay:container
+<clay:container-fluid
 	className="container-form-lg"
 >
 	<clay:row>
@@ -215,7 +215,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>
 
 <portlet:renderURL var="reviewUADDataURL">
 	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />

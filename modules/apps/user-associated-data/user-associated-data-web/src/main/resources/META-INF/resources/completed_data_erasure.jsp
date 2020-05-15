@@ -26,13 +26,13 @@ portletDisplay.setURLBack(usersAdminURL.toString());
 renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", LanguageUtil.get(request, "personal-data-erasure")));
 %>
 
-<clay:container
+<clay:container-fluid
 	className="container-form-lg"
 >
 	<liferay-ui:empty-result-message
 		message="you-have-successfully-anonymized-all-remaining-data"
 	/>
-</clay:container>
+</clay:container-fluid>
 
 <portlet:actionURL name="/delete_user" var="deleteUserURL">
 	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />

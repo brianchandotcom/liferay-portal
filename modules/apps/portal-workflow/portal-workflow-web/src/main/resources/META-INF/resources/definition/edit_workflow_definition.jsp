@@ -56,7 +56,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 <c:if test="<%= workflowDefinition != null %>">
 	<liferay-frontend:info-bar>
-		<clay:container>
+		<clay:container-fluid>
 			<div class="info-bar-item">
 				<c:choose>
 					<c:when test="<%= active %>">
@@ -86,7 +86,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 					</c:otherwise>
 				</c:choose>
 			</span>
-		</clay:container>
+		</clay:container-fluid>
 
 		<liferay-frontend:info-bar-buttons>
 			<liferay-frontend:info-bar-sidenav-toggler-button
@@ -104,13 +104,13 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<div class="sidebar sidebar-light">
 				<div class="tbar-visible-xs">
 					<nav class="component-tbar tbar">
-						<clay:container>
+						<clay:container-fluid>
 							<ul class="tbar-nav">
 								<li class="tbar-item">
 									<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
 								</li>
 							</ul>
-						</clay:container>
+						</clay:container-fluid>
 					</nav>
 				</div>
 
@@ -190,7 +190,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		</div>
 	</c:if>
 
-	<clay:container>
+	<clay:container-fluid>
 		<div class="sidenav-content">
 			<aui:form method="post" name="fm">
 				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -280,7 +280,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 				</aui:button-row>
 			</aui:form>
 		</div>
-	</clay:container>
+	</clay:container-fluid>
 </div>
 
 <div class="hide" id="<%= randomNamespace %>titleInputLocalized">

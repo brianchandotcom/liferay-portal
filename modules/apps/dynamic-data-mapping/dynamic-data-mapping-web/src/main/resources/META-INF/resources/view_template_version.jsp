@@ -34,7 +34,7 @@ backURL.setParameter("redirect", redirect);
 backURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<c:choose>
 		<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
 
@@ -88,4 +88,4 @@ backURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
 	<aui:button-row>
 		<aui:button href="<%= backURL.toString() %>" type="cancel" />
 	</aui:button-row>
-</clay:container>
+</clay:container-fluid>

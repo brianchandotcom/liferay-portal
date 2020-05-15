@@ -20,7 +20,7 @@
 DepotApplicationDisplayContext depotApplicationDisplayContext = (DepotApplicationDisplayContext)request.getAttribute(DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT);
 %>
 
-<clay:container
+<clay:container-fluid
 	className="pt-4"
 >
 	<div class="alert alert-info">
@@ -32,4 +32,4 @@ DepotApplicationDisplayContext depotApplicationDisplayContext = (DepotApplicatio
 
 		<strong class="lead">Info:</strong><%= depotApplicationDisplayContext.getMessage() %>
 	</div>
-</clay:container>
+</clay:container-fluid>

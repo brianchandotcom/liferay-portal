@@ -60,7 +60,7 @@ if (Validator.isNotNull(title)) {
 	module="js/ManagementToolbarDefaultEventHandler.es"
 />
 
-<clay:container
+<clay:container-fluid
 	className="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
@@ -146,4 +146,4 @@ if (Validator.isNotNull(title)) {
 			</c:choose>
 		</aui:form>
 	</div>
-</clay:container>
+</clay:container-fluid>

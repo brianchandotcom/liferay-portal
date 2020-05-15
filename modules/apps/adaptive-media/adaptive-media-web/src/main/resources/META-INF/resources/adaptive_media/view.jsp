@@ -35,7 +35,7 @@ AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMMana
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<clay:container
+<clay:container-fluid
 	className="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
@@ -212,7 +212,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	function <portlet:namespace />adaptRemaining(uuid, backgroundTaskUrl) {

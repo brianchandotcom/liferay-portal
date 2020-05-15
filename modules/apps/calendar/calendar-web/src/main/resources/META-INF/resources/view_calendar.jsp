@@ -81,7 +81,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	});
 </aui:script>
 
-<clay:container
+<clay:container-fluid
 	className="calendar-portlet-column-parent"
 >
 	<clay:row>
@@ -214,7 +214,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			</liferay-util:include>
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>
 
 <div id="<portlet:namespace />message"></div>
 

@@ -34,7 +34,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<clay:col
 		className="lfr-asset-column lfr-asset-column-details"
 	>
@@ -201,4 +201,4 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 			</liferay-ui:panel-container>
 		</aui:fieldset-group>
 	</clay:col>
-</clay:container>
+</clay:container-fluid>

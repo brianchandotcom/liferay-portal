@@ -70,7 +70,7 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 		</c:otherwise>
 	</c:choose>
 
-	<clay:container
+	<clay:container-fluid
 		className="closed sidenav-container sidenav-right"
 		id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 	>
@@ -183,7 +183,7 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 				/>
 			</liferay-ui:search-container>
 		</div>
-	</clay:container>
+	</clay:container-fluid>
 </aui:form>
 
 <aui:script>

@@ -32,7 +32,7 @@ pageContext.setAttribute("assignedScopeAliases", assignedScopeAliases);
 pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptionsMap);
 %>
 
-<clay:container
+<clay:container-fluid
 	className="container-view"
 >
 	<div class="sheet">
@@ -140,7 +140,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 			</clay:row>
 		</div>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script require="metal-dom/src/dom as dom">
 	AUI().use('node', 'aui-modal', function (A) {

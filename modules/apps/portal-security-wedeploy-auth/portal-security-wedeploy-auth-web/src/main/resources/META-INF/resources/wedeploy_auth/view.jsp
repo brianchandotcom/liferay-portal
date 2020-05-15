@@ -24,7 +24,7 @@ String clientId = ParamUtil.getString(request, "clientId");
 WeDeployAuthApp weDeployAuthApp = WeDeployAuthAppLocalServiceUtil.fetchWeDeployAuthApp(redirectURI, clientId);
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<c:choose>
 		<c:when test="<%= weDeployAuthApp == null %>">
 			<div class="alert alert-info">
@@ -64,4 +64,4 @@ WeDeployAuthApp weDeployAuthApp = WeDeployAuthAppLocalServiceUtil.fetchWeDeployA
 			</div>
 		</c:otherwise>
 	</c:choose>
-</clay:container>
+</clay:container-fluid>

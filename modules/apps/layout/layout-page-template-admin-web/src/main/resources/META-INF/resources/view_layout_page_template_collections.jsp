@@ -29,7 +29,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 
 <liferay-ui:success key="layoutPageTemplatePublished" message="the-page-template-was-published-succesfully" />
 
-<clay:container
+<clay:container-fluid
 	className="container-view"
 >
 	<clay:row>
@@ -151,7 +151,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 			</c:if>
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>
 
 <aui:form cssClass="hide" name="layoutPageTemplateCollectionsFm">
 </aui:form>

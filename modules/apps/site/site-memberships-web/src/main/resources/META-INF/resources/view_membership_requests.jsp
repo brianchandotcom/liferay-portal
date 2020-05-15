@@ -37,7 +37,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:search-container
 		searchContainer="<%= viewMembershipRequestsDisplayContext.getSiteMembershipSearchContainer() %>"
 	>
@@ -65,4 +65,4 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

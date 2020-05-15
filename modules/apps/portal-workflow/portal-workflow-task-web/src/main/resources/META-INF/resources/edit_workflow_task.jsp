@@ -65,7 +65,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(headerTitle);
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<clay:col
 		className="lfr-asset-column lfr-asset-column-details"
 	>
@@ -292,7 +292,7 @@ renderResponse.setTitle(headerTitle);
 			</liferay-ui:panel-container>
 		</aui:fieldset-group>
 	</clay:col>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script use="liferay-workflow-tasks">
 	var onTaskClickFn = A.rbind('onTaskClick', Liferay.WorkflowTasks, '');

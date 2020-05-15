@@ -74,7 +74,7 @@ renderResponse.setTitle(headerTitle);
 	/>
 </liferay-util:buffer>
 
-<clay:container>
+<clay:container-fluid>
 	<portlet:actionURL name="/document_library/edit_folder" var="editFolderURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 	</portlet:actionURL>
@@ -307,7 +307,7 @@ renderResponse.setTitle(headerTitle);
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <liferay-util:buffer
 	var="workflowDefinitionsBuffer"

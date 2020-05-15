@@ -74,7 +74,7 @@ else {
 	sortingURL="<%= viewModuleManagementToolbarDisplayContext.getSortingURL() %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"
 		showGuestGroup="<%= false %>"
@@ -147,4 +147,4 @@ else {
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

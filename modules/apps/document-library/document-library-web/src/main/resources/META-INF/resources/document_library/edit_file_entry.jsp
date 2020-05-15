@@ -137,7 +137,7 @@ renderResponse.setTitle(headerTitle);
 	</liferay-frontend:info-bar>
 </c:if>
 
-<clay:container>
+<clay:container-fluid>
 	<c:if test="<%= checkedOut %>">
 
 		<%
@@ -555,7 +555,7 @@ renderResponse.setTitle(headerTitle);
 		id="<%= uploadProgressId %>"
 		message="uploading"
 	/>
-</clay:container>
+</clay:container-fluid>
 
 <c:if test="<%= (fileEntry != null) && checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 

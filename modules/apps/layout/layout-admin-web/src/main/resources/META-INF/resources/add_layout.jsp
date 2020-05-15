@@ -22,7 +22,7 @@ long sourcePlid = ParamUtil.getLong(request, "sourcePlid");
 List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.getAutoSiteNavigationMenus();
 %>
 
-<clay:container
+<clay:container-fluid
 	className="pt-2"
 >
 	<liferay-frontend:edit-form
@@ -40,7 +40,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 					<liferay-ui:message key="add-this-page-to-the-following-menus" />
 
-					<clay:container
+					<clay:container-fluid
 						className="auto-site-navigation-menus mt-3"
 					>
 						<clay:row>
@@ -60,7 +60,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 							%>
 
 						</clay:row>
-					</clay:container>
+					</clay:container-fluid>
 				</c:when>
 				<c:when test="<%= autoSiteNavigationMenus.size() == 1 %>">
 
@@ -68,13 +68,13 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 					SiteNavigationMenu autoSiteNavigationMenu = autoSiteNavigationMenus.get(0);
 					%>
 
-					<clay:container
+					<clay:container-fluid
 						className="auto-site-navigation-menus mt-3"
 					>
 						<clay:row>
 							<aui:input id='<%= "menu_" + autoSiteNavigationMenu.getSiteNavigationMenuId() %>' label='<%= LanguageUtil.format(request, "add-this-page-to-x", HtmlUtil.escape(autoSiteNavigationMenu.getName())) %>' name="TypeSettingsProperties--siteNavigationMenuId--" type="checkbox" value="<%= autoSiteNavigationMenu.getSiteNavigationMenuId() %>" />
 						</clay:row>
-					</clay:container>
+					</clay:container-fluid>
 				</c:when>
 			</c:choose>
 
@@ -112,7 +112,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 			/>
 		</liferay-frontend:edit-form-footer>
 	</liferay-frontend:edit-form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script use="liferay-alert">
 	var form = document.<portlet:namespace />fm;

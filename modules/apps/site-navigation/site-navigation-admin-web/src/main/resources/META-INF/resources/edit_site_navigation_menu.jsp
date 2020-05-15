@@ -27,7 +27,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 <c:if test="<%= siteNavigationAdminDisplayContext.hasUpdatePermission() %>">
 	<nav class="management-bar management-bar-light navbar navbar-expand-md site-navigation-management-bar">
-		<clay:container>
+		<clay:container-fluid>
 			<ul class="navbar-nav"></ul>
 
 			<ul class="navbar-nav">
@@ -65,11 +65,11 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 					</div>
 				</li>
 			</ul>
-		</clay:container>
+		</clay:container-fluid>
 	</nav>
 </c:if>
 
-<clay:container
+<clay:container-fluid
 	className="contextual-sidebar-content site-navigation-content"
 >
 	<div class="lfr-search-container-wrapper site-navigation-menu-container">
@@ -111,7 +111,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			</c:otherwise>
 		</c:choose>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <c:if test="<%= siteNavigationAdminDisplayContext.hasUpdatePermission() %>">
 	<div>

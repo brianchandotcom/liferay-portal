@@ -16,7 +16,7 @@
 
 <%@ include file="/process_summary/init.jsp" %>
 
-<clay:container>
+<clay:container-fluid>
 	<%@ include file="/process_summary/process_summary_pages.jspf" %>
 
 	<%@ include file="/process_summary/process_summary_dates.jspf" %>
@@ -26,4 +26,4 @@
 	<%@ include file="/process_summary/process_summary_deletions.jspf" %>
 
 	<%@ include file="/process_summary/process_summary_permissions.jspf" %>
-</clay:container>
+</clay:container-fluid>

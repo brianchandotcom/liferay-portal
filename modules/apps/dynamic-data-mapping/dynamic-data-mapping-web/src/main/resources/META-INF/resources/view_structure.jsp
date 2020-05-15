@@ -46,7 +46,7 @@ backURL.setParameter("redirect", redirect);
 backURL.setParameter("structureId", String.valueOf(structureVersion.getStructureId()));
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<c:choose>
 		<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
 
@@ -78,4 +78,4 @@ backURL.setParameter("structureId", String.valueOf(structureVersion.getStructure
 	<aui:button-row>
 		<aui:button href="<%= backURL.toString() %>" type="cancel" />
 	</aui:button-row>
-</clay:container>
+</clay:container-fluid>

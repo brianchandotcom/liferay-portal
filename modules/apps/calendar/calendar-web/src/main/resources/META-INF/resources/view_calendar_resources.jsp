@@ -38,7 +38,7 @@ CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(ren
 	<portlet:param name="tabs1" value="resources" />
 </liferay-portlet:renderURL>
 
-<clay:container>
+<clay:container-fluid>
 	<c:choose>
 		<c:when test="<%= displayTerms.getScope() == themeDisplay.getCompanyGroupId() %>">
 			<h3><liferay-ui:message key="users" /></h3>
@@ -53,4 +53,4 @@ CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(ren
 			<%@ include file="/calendar_resource_search_container.jspf" %>
 		</c:otherwise>
 	</c:choose>
-</clay:container>
+</clay:container-fluid>

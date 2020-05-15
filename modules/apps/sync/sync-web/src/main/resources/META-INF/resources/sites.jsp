@@ -86,7 +86,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="enabled" type="hidden" />
@@ -204,7 +204,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	function <portlet:namespace />disableSites() {

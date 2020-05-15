@@ -54,7 +54,7 @@ advancedPublishURL.setParameter("selPlid", String.valueOf(selPlid));
 advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 %>
 
-<clay:container
+<clay:container-fluid
 	className="mt-2 publish-navbar text-right"
 >
 	<clay:link
@@ -63,7 +63,7 @@ advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 		href="<%= advancedPublishURL.toString() %>"
 		label='<%= LanguageUtil.get(request, "switch-to-advanced-publication") %>'
 	/>
-</clay:container>
+</clay:container-fluid>
 
 <portlet:actionURL name="editPublishConfiguration" var="confirmedActionURL">
 	<portlet:param name="mvcRenderCommandName" value="editPublishConfigurationSimple" />
@@ -94,7 +94,7 @@ advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 		}
 		%>
 
-		<clay:container>
+		<clay:container-fluid>
 			<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
 				<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
 					<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
@@ -237,7 +237,7 @@ advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 					<liferay-ui:message key="simple-publication-help" />
 				</span>
 			</ul>
-		</clay:container>
+		</clay:container-fluid>
 	</div>
 
 	<aui:button-row>

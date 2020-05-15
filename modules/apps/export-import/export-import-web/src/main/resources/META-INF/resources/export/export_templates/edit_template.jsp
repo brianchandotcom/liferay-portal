@@ -82,7 +82,7 @@ portletDisplay.setURLBack(portletURL.toString());
 renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(request, "new-export-template") : exportImportConfiguration.getName());
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<portlet:actionURL name="editExportConfiguration" var="updateExportConfigurationURL">
 		<portlet:param name="mvcRenderCommandName" value="editExportConfiguration" />
 	</portlet:actionURL>
@@ -147,7 +147,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 			<aui:button href="<%= portletURL.toString() %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script use="liferay-export-import-export-import">
 	var exportImport = new Liferay.ExportImport({

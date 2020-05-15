@@ -45,7 +45,7 @@ portletDisplay.setURLBack(portletURL.toString());
 renderResponse.setTitle(categoryDisplayName);
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<clay:col
 		size="12"
 	>
@@ -56,9 +56,9 @@ renderResponse.setTitle(categoryDisplayName);
 			showParentGroups="<%= false %>"
 		/>
 	</clay:col>
-</clay:container>
+</clay:container-fluid>
 
-<clay:container>
+<clay:container-fluid>
 	<clay:row>
 		<clay:col
 			md="3"
@@ -76,4 +76,4 @@ renderResponse.setTitle(categoryDisplayName);
 
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>

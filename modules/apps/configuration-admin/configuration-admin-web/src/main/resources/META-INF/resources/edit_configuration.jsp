@@ -81,7 +81,7 @@ renderResponse.setTitle(categoryDisplayName);
 <portlet:actionURL name="bindConfiguration" var="bindConfigurationActionURL" />
 <portlet:actionURL name="deleteConfiguration" var="deleteConfigurationActionURL" />
 
-<clay:container>
+<clay:container-fluid>
 	<clay:col
 		size="12"
 	>
@@ -92,9 +92,9 @@ renderResponse.setTitle(categoryDisplayName);
 			showParentGroups="<%= false %>"
 		/>
 	</clay:col>
-</clay:container>
+</clay:container-fluid>
 
-<clay:container>
+<clay:container-fluid>
 	<clay:row>
 		<clay:col
 			md="3"
@@ -246,4 +246,4 @@ renderResponse.setTitle(categoryDisplayName);
 			</div>
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>

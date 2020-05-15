@@ -56,7 +56,7 @@ SearchContainer<Object> searchContainer = appManagerSearchResultsManagementToolb
 	sortingURL="<%= appManagerSearchResultsManagementToolbarDisplayContext.getSortingURL() %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"
 		showGuestGroup="<%= false %>"
@@ -101,4 +101,4 @@ SearchContainer<Object> searchContainer = appManagerSearchResultsManagementToolb
 			resultRowSplitter="<%= new MarketplaceAppManagerResultRowSplitter() %>"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

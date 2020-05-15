@@ -35,7 +35,7 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 	sortingURL="<%= String.valueOf(oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getSortingURL()) %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form action="<%= currentURLObj %>" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="oAuth2AuthorizationIds" type="hidden" />
@@ -99,7 +99,7 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <script>
 	function <portlet:namespace />removeAccess() {

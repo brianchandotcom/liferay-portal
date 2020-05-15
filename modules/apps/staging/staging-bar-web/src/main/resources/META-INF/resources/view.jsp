@@ -35,7 +35,7 @@ if (liveLayout != null) {
 <c:if test="<%= themeDisplay.isShowStagingIcon() %>">
 	<c:if test="<%= liveGroup != null %>">
 		<nav class="navbar navbar-collapse-absolute navbar-expand navbar-underline navigation-bar navigation-bar-secondary staging-navbar">
-			<clay:container>
+			<clay:container-fluid>
 				<ul class="navbar-nav">
 					<c:choose>
 						<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
@@ -134,12 +134,12 @@ if (liveLayout != null) {
 						markupView="lexicon"
 					/>
 				</button>
-			</clay:container>
+			</clay:container-fluid>
 		</nav>
 
 		<c:if test="<%= !layout.isSystem() || layout.isTypeControlPanel() || !Objects.equals(layout.getFriendlyURL(), PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL) %>">
 			<div class="staging-bar">
-				<clay:container>
+				<clay:container-fluid>
 					<clay:row>
 						<c:choose>
 							<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
@@ -223,7 +223,7 @@ if (liveLayout != null) {
 							</c:otherwise>
 						</c:choose>
 					</clay:row>
-				</clay:container>
+				</clay:container-fluid>
 
 				<c:if test="<%= (layoutRevision != null) && (layoutRevision.isIncomplete() || (layoutRevision.isPending() && StagingUtil.hasWorkflowTask(user.getUserId(), layoutRevision))) %>">
 					<div class="staging-bar-level-3-message">

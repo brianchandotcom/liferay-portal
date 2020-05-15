@@ -61,7 +61,7 @@ sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 	sortingURL="<%= sortingURL.toString() %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-service-access-policies"
 		iteratorURL="<%= portletURL %>"
@@ -116,4 +116,4 @@ sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

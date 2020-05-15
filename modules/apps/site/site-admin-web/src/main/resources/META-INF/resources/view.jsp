@@ -37,7 +37,7 @@ if (group != null) {
 	displayContext="<%= siteAdminManagementToolbarDisplayContext %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
@@ -90,7 +90,7 @@ if (group != null) {
 			<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
 		</aui:form>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <liferay-frontend:component
 	componentId="<%= siteAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"

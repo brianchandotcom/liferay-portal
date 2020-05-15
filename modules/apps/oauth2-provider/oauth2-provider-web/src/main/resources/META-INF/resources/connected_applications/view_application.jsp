@@ -30,7 +30,7 @@ OAuth2Application oAuth2Application = oAuth2ConnectedApplicationsPortletDisplayC
 renderResponse.setTitle(oAuth2Application.getName());
 %>
 
-<clay:container
+<clay:container-fluid
 	className="view-application"
 >
 	<portlet:actionURL name="/connected_applications/revoke_oauth2_authorizations" var="revokeOAuth2AuthorizationURL" />
@@ -143,7 +143,7 @@ renderResponse.setTitle(oAuth2Application.getName());
 			</div>
 		</aui:fieldset-group>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <script>
 	var removeAccessButton = document.getElementById(

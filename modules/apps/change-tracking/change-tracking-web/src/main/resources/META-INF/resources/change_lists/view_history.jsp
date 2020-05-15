@@ -35,7 +35,7 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 	displayContext="<%= viewHistoryManagementToolbarDisplayContext %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:search-container
 		cssClass="change-lists-table"
 		searchContainer="<%= searchContainer %>"
@@ -159,4 +159,4 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

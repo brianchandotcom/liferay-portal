@@ -29,7 +29,7 @@ List<CustomAttributesDisplay> customAttributesDisplays = PortletLocalServiceUtil
 Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator(locale));
 %>
 
-<clay:container
+<clay:container-fluid
 	className="container-view"
 >
 	<liferay-ui:search-container
@@ -80,4 +80,4 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 			paginate="<%= false %>"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

@@ -52,7 +52,7 @@ rankingResultContentDisplayBuilder.setRenderResponse(renderResponse);
 RankingResultContentDisplayContext rankingResultContentDisplayContext = rankingResultContentDisplayBuilder.build();
 %>
 
-<clay:container
+<clay:container-fluid
 	className="container-no-gutters-sm-down container-view"
 >
 	<c:choose>
@@ -108,4 +108,4 @@ RankingResultContentDisplayContext rankingResultContentDisplayContext = rankingR
 			</div>
 		</c:otherwise>
 	</c:choose>
-</clay:container>
+</clay:container-fluid>

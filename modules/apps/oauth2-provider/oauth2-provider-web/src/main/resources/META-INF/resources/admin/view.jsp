@@ -40,7 +40,7 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 	viewTypeItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="closed"
 >
 	<aui:form action="<%= currentURLObj %>" method="get" name="fm">
@@ -146,7 +146,7 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <script>
 	function <portlet:namespace />deleteOAuth2Applications() {

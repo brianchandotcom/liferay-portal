@@ -38,7 +38,7 @@ else {
 OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:search-container
 		emptyResultsMessage="no-import-processes-were-found"
 		iteratorURL="<%= portletURL %>"
@@ -138,4 +138,4 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 		</liferay-util:include>
 	</div>
-</clay:container>
+</clay:container-fluid>

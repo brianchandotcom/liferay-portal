@@ -55,7 +55,7 @@ clearResultsURL.setParameter("keywords", StringPool.BLANK);
 %>
 
 <div class="export-dialog-tree">
-	<clay:container>
+	<clay:container-fluid>
 		<div class="alert alert-info">
 			<liferay-ui:message key="publish-templates-can-be-administered-in-the-control-menu" />
 		</div>
@@ -130,5 +130,5 @@ clearResultsURL.setParameter("keywords", StringPool.BLANK);
 				/>
 			</liferay-ui:search-container>
 		</aui:form>
-	</clay:container>
+	</clay:container-fluid>
 </div>

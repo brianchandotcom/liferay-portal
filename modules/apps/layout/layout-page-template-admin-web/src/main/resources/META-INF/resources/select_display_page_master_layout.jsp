@@ -27,7 +27,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 %>
 
-<clay:container
+<clay:container-fluid
 	className="mt-4"
 >
 	<div class="lfr-search-container-wrapper">
@@ -49,7 +49,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 
 		</ul>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <%
 StringBundler sb = new StringBundler(3);

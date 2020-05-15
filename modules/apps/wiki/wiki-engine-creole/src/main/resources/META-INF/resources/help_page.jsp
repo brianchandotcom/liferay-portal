@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:container>
+<clay:container-fluid>
 	<h4>
 		<liferay-ui:message key="text-styles" />
 	</h4>
@@ -79,4 +79,4 @@
 	%>
 
 	<aui:a href="<%= baseWikiEngine.getHelpURL() %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
-</clay:container>
+</clay:container-fluid>

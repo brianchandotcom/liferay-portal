@@ -83,7 +83,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 			<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
 
 			<liferay-frontend:info-bar>
-				<clay:container>
+				<clay:container-fluid>
 					<c:if test="<%= !Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) %>">
 						<div class="info-bar-item">
 							<c:choose>
@@ -118,7 +118,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 							</c:otherwise>
 						</c:choose>
 					</span>
-				</clay:container>
+				</clay:container-fluid>
 
 				<c:if test='<%= !Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) && !Objects.equals(state, "view") %>'>
 					<liferay-frontend:info-bar-buttons>
@@ -138,13 +138,13 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 					<div class="sidebar sidebar-light">
 						<div class="tbar-visible-xs">
 							<nav class="component-tbar tbar">
-								<clay:container>
+								<clay:container-fluid>
 									<ul class="tbar-nav">
 										<li class="tbar-item">
 											<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
 										</li>
 									</ul>
-								</clay:container>
+								</clay:container-fluid>
 							</nav>
 						</div>
 
@@ -230,7 +230,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 				</div>
 			</c:if>
 
-			<clay:container
+			<clay:container-fluid
 				size='<%= Objects.equals(renderRequest.getWindowState(), LiferayWindowState.POP_UP) ? "xl" : "lg" %>'
 			>
 				<div class="sidenav-content">
@@ -779,7 +779,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 						</c:choose>
 					</aui:form>
 				</div>
-			</clay:container>
+			</clay:container-fluid>
 		</div>
 
 		<c:if test="<%= kaleoDefinition != null %>">

@@ -23,9 +23,9 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 <aui:form cssClass="lfr-export-dialog" method="post" name="fm1">
 	<div class="lfr-dynamic-uploader">
-		<clay:container>
+		<clay:container-fluid>
 			<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
-		</clay:container>
+		</clay:container-fluid>
 	</div>
 
 	<%

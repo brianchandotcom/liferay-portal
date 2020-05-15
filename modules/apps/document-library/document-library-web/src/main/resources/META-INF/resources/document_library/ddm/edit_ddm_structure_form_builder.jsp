@@ -49,7 +49,7 @@ renderResponse.setTitle(title);
 
 <portlet:actionURL name="/document_library/ddm/update_ddm_structure" var="updateDDMStructureURL" />
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form action="<%= (ddmStructure == null) ? addDDMStructureURL : updateDDMStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
@@ -191,7 +191,7 @@ renderResponse.setTitle(title);
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	function <portlet:namespace />openParentDDMStructureSelector() {

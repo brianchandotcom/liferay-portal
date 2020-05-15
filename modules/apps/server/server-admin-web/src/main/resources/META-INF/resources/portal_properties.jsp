@@ -94,7 +94,7 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 	showSearch="<%= true %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:search-container
 		emptyResultsMessage='<%= tabs2.equals("portal-properties") ? "no-portal-properties-were-found-that-matched-the-keywords" : "no-system-properties-were-found-that-matched-the-keywords" %>'
 		iteratorURL="<%= serverURL %>"
@@ -152,4 +152,4 @@ propertiesSearchContainer.setTotal(filteredPropertiesList.size());
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

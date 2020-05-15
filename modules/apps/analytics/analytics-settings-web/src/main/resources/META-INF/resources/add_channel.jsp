@@ -33,7 +33,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 
 <portlet:actionURL name="/analytics/add_channel" var="addChannelURL" />
 
-<clay:container>
+<clay:container-fluid>
 	<clay:row>
 		<clay:col
 			size="12"
@@ -48,7 +48,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 			</div>
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>
 
 <aui:form action="<%= addChannelURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

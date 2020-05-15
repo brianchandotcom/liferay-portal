@@ -47,7 +47,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 	<aui:model-context bean="<%= action %>" model="<%= MDRAction.class %>" />
 
 	<div class="portlet-configuration-body-content">
-		<clay:container>
+		<clay:container-fluid>
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 					<c:if test="<%= action == null %>">
@@ -81,7 +81,7 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 					</div>
 				</aui:fieldset>
 			</aui:fieldset-group>
-		</clay:container>
+		</clay:container-fluid>
 	</div>
 
 	<aui:button-row>

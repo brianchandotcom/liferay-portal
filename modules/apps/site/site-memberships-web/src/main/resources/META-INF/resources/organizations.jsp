@@ -31,7 +31,7 @@ OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDispl
 	displayContext="<%= organizationsManagementToolbarDisplayContext %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
@@ -82,7 +82,7 @@ OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDispl
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <portlet:actionURL name="addGroupOrganizations" var="addGroupOrganizationsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />

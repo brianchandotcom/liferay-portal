@@ -34,7 +34,7 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 	showSearch="<%= mySubscriptionsManagementToolbarDisplayContext.isShowSearch() %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form action="<%= unsubscribeURL %>" method="get" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "unsubscribe();" %>'>
 		<liferay-portlet:renderURLParams varImpl="portletURL" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -111,7 +111,7 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 			</liferay-ui:search-container>
 		</aui:fieldset>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	Liferay.provide(

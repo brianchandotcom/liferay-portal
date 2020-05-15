@@ -28,7 +28,7 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 	displayContext="<%= selectAccountEntryManagementToolbarDisplayContext %>"
 />
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "selectAccountEntry" %>'
 >
 	<liferay-ui:search-container
@@ -71,7 +71,7 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

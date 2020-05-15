@@ -22,7 +22,7 @@ PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
 FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFormAdminDisplayContext.getPermissionCheckerHelper();
 %>
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "formContainer" %>'
 >
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
@@ -116,7 +116,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 			</c:otherwise>
 		</c:choose>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script require='<%= mainRequire + "/admin/js/components/ShareFormPopover/ShareFormPopover.es as ShareFormPopover" %>'>
 	var spritemap = themeDisplay.getPathThemeImages() + '/lexicon/icons.svg';

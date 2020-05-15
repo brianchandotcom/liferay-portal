@@ -18,7 +18,7 @@
 
 <div class="management-bar-container" data-qa-id="managementBar" id="<%= namespace %>managementBarContainerId">
 	<div class="management-bar management-bar-default">
-		<clay:container>
+		<clay:container-fluid>
 			<div class="management-bar-header">
 				<c:if test="<%= includeCheckBox %>">
 					<div class="checkbox">
@@ -50,12 +50,12 @@
 					<%= buttons %>
 				</div>
 			</c:if>
-		</clay:container>
+		</clay:container-fluid>
 	</div>
 
 	<c:if test="<%= Validator.isNotNull(actionButtons) || includeCheckBox %>">
 		<div class="management-bar management-bar-default management-bar-no-collapse management-bar-secondary-bar" id="<%= namespace %>actionButtons">
-			<clay:container>
+			<clay:container-fluid>
 				<div class="management-bar-header">
 					<c:if test="<%= includeCheckBox %>">
 						<div class="checkbox">
@@ -81,7 +81,7 @@
 						<%= actionButtons %>
 					</c:if>
 				</div>
-			</clay:container>
+			</clay:container-fluid>
 		</div>
 	</c:if>
 </div>

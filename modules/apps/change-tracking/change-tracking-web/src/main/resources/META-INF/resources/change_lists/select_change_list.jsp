@@ -36,7 +36,7 @@ SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolba
 	</div>
 </c:if>
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "selectChangeListContainer" %>'
 >
 	<div class="table-responsive">
@@ -96,7 +96,7 @@ SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolba
 		markupView="lexicon"
 		searchContainer="<%= searchContainer %>"
 	/>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

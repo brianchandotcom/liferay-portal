@@ -28,7 +28,7 @@ SelectAccountOrganizationsManagementToolbarDisplayContext selectAccountOrganizat
 	displayContext="<%= selectAccountOrganizationsManagementToolbarDisplayContext %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:search-container
 		searchContainer="<%= organizationSearchContainer %>"
 	>
@@ -54,7 +54,7 @@ SelectAccountOrganizationsManagementToolbarDisplayContext selectAccountOrganizat
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get(

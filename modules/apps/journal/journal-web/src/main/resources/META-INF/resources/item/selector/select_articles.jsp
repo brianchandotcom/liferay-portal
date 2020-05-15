@@ -24,7 +24,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 	displayContext="<%= new JournalArticleItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalArticleItemSelectorViewDisplayContext) %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="item-selector lfr-item-viewer"
 	id='<%= renderResponse.getNamespace() + "articlesContainer" %>'
 >
@@ -285,7 +285,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var selectArticleHandler = dom.delegate(

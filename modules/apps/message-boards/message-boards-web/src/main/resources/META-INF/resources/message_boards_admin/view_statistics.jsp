@@ -32,7 +32,7 @@ long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId")
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<div class="statistics-panel">
 		<h3><liferay-ui:message key="overview" /></h3>
 
@@ -113,7 +113,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			/>
 		</liferay-ui:search-container>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <%
 PortalUtil.setPageSubtitle(LanguageUtil.get(request, "statistics"), request);

@@ -54,7 +54,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 	sortingURL="<%= ddlViewRecordsDisplayContext.getSortingURL() %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="view-records-container"
 	id='<%= renderResponse.getNamespace() + "formContainer" %>'
 >
@@ -159,7 +159,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <%@ include file="/export_record_set.jspf" %>
 

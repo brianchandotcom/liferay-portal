@@ -33,7 +33,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
-<clay:container
+<clay:container-fluid
 	className="container-view"
 	id='<%= renderResponse.getNamespace() + "layoutPageTemplateEntries" %>'
 >
@@ -159,7 +159,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 			</div>
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var layoutPageTemplateEntries = document.getElementById(

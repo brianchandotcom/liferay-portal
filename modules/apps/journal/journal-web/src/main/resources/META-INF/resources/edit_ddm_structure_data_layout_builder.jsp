@@ -60,7 +60,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
-		<clay:container>
+		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmForm == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()) %>" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "structure") %>' wrapperCssClass="article-content-title mb-0" />
@@ -73,10 +73,10 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 					</div>
 				</li>
 			</ul>
-		</clay:container>
+		</clay:container-fluid>
 	</nav>
 
-	<clay:container
+	<clay:container-fluid
 		className="container-view"
 	>
 		<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
@@ -107,7 +107,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 			namespace="<%= renderResponse.getNamespace() %>"
 			singlePage="<%= true %>"
 		/>
-	</clay:container>
+	</clay:container-fluid>
 </aui:form>
 
 <aui:script>

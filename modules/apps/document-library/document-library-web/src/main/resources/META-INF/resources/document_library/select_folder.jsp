@@ -36,7 +36,7 @@ if (folder != null) {
 DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form method="post" name="selectFolderFm">
 		<liferay-ui:breadcrumb
 			showCurrentGroup="<%= false %>"
@@ -176,7 +176,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

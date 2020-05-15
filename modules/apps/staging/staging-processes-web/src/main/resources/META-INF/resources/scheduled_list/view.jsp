@@ -16,8 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "scheduledProcessesContainer" %>'
 >
 	<liferay-util:include page="/scheduled_list/scheduled_publish_processes.jsp" servletContext="<%= application %>" />
-</clay:container>
+</clay:container-fluid>

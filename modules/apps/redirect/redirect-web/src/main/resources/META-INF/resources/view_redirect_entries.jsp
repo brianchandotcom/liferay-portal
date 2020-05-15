@@ -28,7 +28,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 	displayContext="<%= redirectManagementToolbarDisplayContext %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="closed redirect-entries sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
@@ -125,7 +125,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <liferay-frontend:component
 	componentId="<%= redirectManagementToolbarDisplayContext.getDefaultEventHandler() %>"

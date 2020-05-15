@@ -70,7 +70,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 	viewTypeItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="item-selector lfr-item-viewer"
 	id='<%= randomNamespace + "ItemSelectorContainer" %>'
 >
@@ -511,7 +511,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 	</c:if>
 
 	<div class="item-selector-preview-container"></div>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script require='<%= npmResolvedPackageName + "/repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es as ItemSelectorRepositoryEntryBrowser" %>'>
 	var itemSelector = new ItemSelectorRepositoryEntryBrowser.default({

@@ -29,7 +29,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntryLinkDisplayContext.getSearchContainer());
 %>
 
-<clay:container
+<clay:container-fluid
 	className="container-form-lg"
 >
 	<clay:row>
@@ -175,7 +175,7 @@ FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementTo
 			</div>
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>
 
 <liferay-frontend:component
 	componentId="<%= fragmentEntryUsageManagementToolbarDisplayContext.getDefaultEventHandler() %>"

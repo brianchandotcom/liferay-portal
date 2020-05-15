@@ -26,7 +26,7 @@ SelectAccountEntriesManagementToolbarDisplayContext selectAccountEntriesManageme
 	displayContext="<%= selectAccountEntriesManagementToolbarDisplayContext %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:search-container
 		searchContainer="<%= accountEntryDisplaySearchContainer %>"
 	>
@@ -62,7 +62,7 @@ SelectAccountEntriesManagementToolbarDisplayContext selectAccountEntriesManageme
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get(

@@ -30,7 +30,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptor.getSearchCo
 	/>
 </c:if>
 
-<clay:container
+<clay:container-fluid
 	className="item-selector lfr-item-viewer"
 	id='<%= renderResponse.getNamespace() + "entriesContainer" %>'
 >
@@ -139,7 +139,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptor.getSearchCo
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var selectItemHandler = dom.delegate(

@@ -39,7 +39,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(userName);
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<h4 class="text-default">
@@ -126,4 +126,4 @@ renderResponse.setTitle(userName);
 			</c:choose>
 		</aui:fieldset>
 	</aui:fieldset-group>
-</clay:container>
+</clay:container-fluid>

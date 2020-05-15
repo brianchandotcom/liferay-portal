@@ -33,7 +33,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.format(request, "new-x", kaleoProcess.getName(locale), false));
 %>
 
-<clay:container
+<clay:container-fluid
 	className="sidenav-container sidenav-right"
 >
 	<portlet:actionURL name="startWorkflowInstance" var="startWorkflowInstanceURL" />
@@ -68,7 +68,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "new-x", kaleoProcess.getNa
 			<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(request, "add-x", kaleoProcess.getName(locale), false), currentURL);

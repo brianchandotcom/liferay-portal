@@ -35,7 +35,7 @@ SearchEngineDisplayContext
 	searchEngineDisplayContext = (SearchEngineDisplayContext)request.getAttribute(SearchAdminWebKeys.SEARCH_ENGINE_DISPLAY_CONTEXT);
 %>
 
-<clay:container
+<clay:container-fluid
 	className="container-form-lg search-engine-page-container"
 >
 	<c:choose>
@@ -203,4 +203,4 @@ SearchEngineDisplayContext
 			</c:choose>
 		</c:otherwise>
 	</c:choose>
-</clay:container>
+</clay:container-fluid>

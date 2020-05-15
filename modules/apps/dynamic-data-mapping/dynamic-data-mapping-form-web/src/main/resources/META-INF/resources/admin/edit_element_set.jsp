@@ -47,7 +47,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	/>
 
 	<nav class="management-bar management-bar-light navbar navbar-expand-md toolbar-group-field">
-		<clay:container
+		<clay:container-fluid
 			className="toolbar"
 		>
 			<ul class="navbar-nav toolbar-group-field"></ul>
@@ -60,10 +60,10 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 					</button>
 				</li>
 			</ul>
-		</clay:container>
+		</clay:container-fluid>
 	</nav>
 
-	<clay:container
+	<clay:container-fluid
 		className="ddm-translation-manager"
 	>
 		<liferay-frontend:translation-manager
@@ -72,7 +72,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 			defaultLanguageId="<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>"
 			id="translationManager"
 		/>
-	</clay:container>
+	</clay:container-fluid>
 
 	<aui:form action="<%= saveStructureURL %>" cssClass="ddm-form-builder-form" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -85,7 +85,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		<%@ include file="/admin/exceptions.jspf" %>
 
 		<div class="ddm-form-basic-info">
-			<clay:container>
+			<clay:container-fluid>
 				<h1>
 					<liferay-editor:editor
 						autoCreate="<%= false %>"
@@ -113,7 +113,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 				</h5>
 
 				<aui:input name="description" type="hidden" />
-			</clay:container>
+			</clay:container-fluid>
 		</div>
 
 		<div id="<portlet:namespace />-container"></div>

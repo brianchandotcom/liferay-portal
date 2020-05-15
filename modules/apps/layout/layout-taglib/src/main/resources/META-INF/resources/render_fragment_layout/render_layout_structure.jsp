@@ -224,7 +224,7 @@ for (String childrenItemId : childrenItemIds) {
 
 			<c:choose>
 				<c:when test="<%= includeContainer %>">
-					<clay:container
+					<clay:container-fluid
 						className="p-0"
 					>
 						<clay:row
@@ -237,7 +237,7 @@ for (String childrenItemId : childrenItemIds) {
 
 							<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 						</clay:row>
-					</clay:container>
+					</clay:container-fluid>
 				</c:when>
 				<c:otherwise>
 					<clay:row

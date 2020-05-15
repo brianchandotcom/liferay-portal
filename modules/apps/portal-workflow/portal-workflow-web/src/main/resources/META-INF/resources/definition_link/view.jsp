@@ -24,7 +24,7 @@ boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessa
 
 <liferay-util:include page="/definition_link/management_bar.jsp" servletContext="<%= application %>" />
 
-<clay:container
+<clay:container-fluid
 	className="workflow-definition-link-container"
 	id='<%= renderResponse.getNamespace() + "Container" %>'
 >
@@ -88,4 +88,4 @@ boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessa
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

@@ -27,7 +27,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<c:if test="<%= formInstanceRecordVersion != null %>">
 		<aui:model-context bean="<%= formInstanceRecordVersion %>" model="<%= DDMFormInstanceRecordVersion.class %>" />
 
@@ -35,10 +35,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 			<aui:workflow-status markupView="lexicon" model="<%= DDMFormInstanceRecord.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= formInstanceRecordVersion.getStatus() %>" version="<%= formInstanceRecordVersion.getVersion() %>" />
 		</div>
 	</c:if>
-</clay:container>
+</clay:container-fluid>
 
-<clay:container
+<clay:container-fluid
 	className="ddm-form-builder-app form-entry"
 >
 	<%= ddmFormAdminDisplayContext.getDDMFormHTML(renderRequest) %>
-</clay:container>
+</clay:container-fluid>

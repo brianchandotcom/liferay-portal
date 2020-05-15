@@ -28,7 +28,7 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 	displayContext="<%= selectAccountUsersManagementToolbarDisplayContext %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<c:if test='<%= !Objects.equals(selectAccountUsersManagementToolbarDisplayContext.getNavigation(), "all-users") %>'>
 		<clay:alert
 			message='<%= LanguageUtil.get(request, "showing-users-with-valid-domains-only") %>'
@@ -67,7 +67,7 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get(

@@ -16,7 +16,7 @@
 
 <%@ include file="/change_lists/init.jsp" %>
 
-<clay:container>
+<clay:container-fluid>
 
 	<%
 	long ctEntryId = ParamUtil.getLong(request, "ctEntryId");
@@ -26,4 +26,4 @@
 	ctDisplayRendererRegistry.renderCTEntry(request, response, ctEntry, ctEntry.getCtCollectionId());
 	%>
 
-</clay:container>
+</clay:container-fluid>

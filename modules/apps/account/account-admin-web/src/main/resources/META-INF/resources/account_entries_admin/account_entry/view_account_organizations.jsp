@@ -33,7 +33,7 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 	displayContext="<%= viewAccountOrganizationsManagementToolbarDisplayContext %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form method="post" name="fm">
 		<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryDisplay.getAccountEntryId() %>" />
 		<aui:input name="accountOrganizationIds" type="hidden" />
@@ -80,7 +80,7 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <liferay-frontend:component
 	componentId="<%= viewAccountOrganizationsManagementToolbarDisplayContext.getDefaultEventHandler() %>"

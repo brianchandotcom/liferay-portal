@@ -47,7 +47,7 @@ portletURL.setParameter("tabs1", tabs1);
 	%>'
 />
 
-<clay:container>
+<clay:container-fluid>
 	<c:choose>
 		<c:when test='<%= tabs1.equals("test") %>'>
 			<%@ include file="/test.jspf" %>
@@ -56,4 +56,4 @@ portletURL.setParameter("tabs1", tabs1);
 			<%@ include file="/devices.jspf" %>
 		</c:otherwise>
 	</c:choose>
-</clay:container>
+</clay:container-fluid>

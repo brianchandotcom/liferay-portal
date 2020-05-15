@@ -47,7 +47,7 @@ renderResponse.setTitle(title);
 
 <portlet:actionURL name="/document_library/ddm/update_data_definition" var="updateDataDefinitionURL" />
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form action="<%= (ddmStructure == null) ? addDataDefinitionURL : updateDataDefinitionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="dataDefinitionId" type="hidden" value="<%= ddmStructureId %>" />
@@ -131,7 +131,7 @@ renderResponse.setTitle(title);
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	function <portlet:namespace />getInputLocalizedValues(field) {

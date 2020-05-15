@@ -35,7 +35,7 @@ Role role = usersDisplayContext.getRole();
 
 <liferay-ui:error embed="<%= false %>" exception="<%= RequiredUserException.class %>" message="one-or-more-users-were-not-removed-since-they-belong-to-a-user-group" />
 
-<clay:container
+<clay:container-fluid
 	className="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
@@ -97,7 +97,7 @@ Role role = usersDisplayContext.getRole();
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <portlet:actionURL name="addGroupUsers" var="addGroupUsersURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />

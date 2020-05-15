@@ -36,7 +36,7 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 				displayContext="<%= portletConfigurationTemplatesManagementToolbarDisplayContext %>"
 			/>
 
-			<clay:container>
+			<clay:container-fluid>
 				<liferay-ui:error exception="<%= NoSuchPortletItemException.class %>" message="the-setup-could-not-be-found" />
 
 				<div class="button-holder text-center">
@@ -130,7 +130,7 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 						markupView="lexicon"
 					/>
 				</liferay-ui:search-container>
-			</clay:container>
+			</clay:container-fluid>
 		</div>
 	</aui:form>
 </div>

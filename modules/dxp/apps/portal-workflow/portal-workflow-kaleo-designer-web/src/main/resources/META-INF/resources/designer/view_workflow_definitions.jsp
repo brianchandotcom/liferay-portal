@@ -24,7 +24,7 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplay
 
 <liferay-util:include page="/designer/management_bar.jsp" servletContext="<%= application %>" />
 
-<clay:container
+<clay:container-fluid
 	className="main-content-body"
 >
 	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
@@ -91,4 +91,4 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplay
 			searchContainer="<%= kaleoDefinitionVersionSearch %>"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

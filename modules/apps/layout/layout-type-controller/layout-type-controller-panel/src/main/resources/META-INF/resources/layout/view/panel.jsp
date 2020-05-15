@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= !themeDisplay.isStatePopUp() %>">
-		<clay:container
+		<clay:container-fluid
 			className="lfr-panel-page"
 			id="main-content"
 		>
@@ -74,7 +74,7 @@
 					<%@ include file="/layout/view/panel_description.jspf" %>
 				</clay:col>
 			</clay:row>
-		</clay:container>
+		</clay:container-fluid>
 	</c:when>
 	<c:otherwise>
 		<%@ include file="/layout/view/panel_description.jspf" %>

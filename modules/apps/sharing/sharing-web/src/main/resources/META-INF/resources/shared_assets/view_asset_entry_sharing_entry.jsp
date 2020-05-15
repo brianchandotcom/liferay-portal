@@ -48,7 +48,7 @@ else {
 %>
 
 <div class="tbar upper-tbar">
-	<clay:container>
+	<clay:container-fluid>
 		<ul class="tbar-nav">
 			<c:if test="<%= !scopeGroup.equals(themeDisplay.getControlPanelGroup()) %>">
 				<li class="d-none d-sm-flex tbar-item">
@@ -73,7 +73,7 @@ else {
 				/>
 			</li>
 		</ul>
-	</clay:container>
+	</clay:container-fluid>
 </div>
 
 <liferay-util:buffer
@@ -95,7 +95,7 @@ else {
 	</c:if>
 </liferay-util:buffer>
 
-<clay:container>
+<clay:container-fluid>
 	<c:choose>
 		<c:when test="<%= scopeGroup.equals(themeDisplay.getControlPanelGroup()) %>">
 			<aui:fieldset-group markupView="lexicon">
@@ -108,4 +108,4 @@ else {
 			<%= assetContent %>
 		</c:otherwise>
 	</c:choose>
-</clay:container>
+</clay:container-fluid>

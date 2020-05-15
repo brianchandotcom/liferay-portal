@@ -43,7 +43,7 @@ portletDisplay.setURLBack(backToNodeURL.toString());
 renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<portlet:actionURL name="/wiki/edit_node_attachment" var="emptyTrashURL">
 		<portlet:param name="nodeId" value="<%= String.valueOf(node.getPrimaryKey()) %>" />
 	</portlet:actionURL>
@@ -77,4 +77,4 @@ renderResponse.setTitle(LanguageUtil.get(request, "removed-attachments"));
 	%>
 
 	<%@ include file="/wiki/attachments_list.jspf" %>
-</clay:container>
+</clay:container-fluid>

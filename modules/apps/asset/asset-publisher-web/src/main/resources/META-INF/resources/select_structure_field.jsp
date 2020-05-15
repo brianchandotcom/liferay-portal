@@ -43,7 +43,7 @@ portletURL.setParameter("eventName", eventName);
 	<span class="error-message"><liferay-ui:message key="the-field-value-is-invalid" /></span>
 </div>
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "selectDDMStructureFieldForm" %>'
 >
 	<liferay-ui:search-container
@@ -129,7 +129,7 @@ portletURL.setParameter("eventName", eventName);
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script use="aui-base">
 	var Util = Liferay.Util;

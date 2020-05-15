@@ -36,7 +36,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		<aui:input name="invitedTeamId" type="hidden" value="" />
 
 		<div class="dialog-body">
-			<clay:container
+			<clay:container-fluid
 				className="main-content-body"
 			>
 				<aui:fieldset-group markupView="lexicon">
@@ -120,7 +120,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 						</c:if>
 					</aui:fieldset>
 				</aui:fieldset-group>
-			</clay:container>
+			</clay:container-fluid>
 		</div>
 
 		<aui:button-row>

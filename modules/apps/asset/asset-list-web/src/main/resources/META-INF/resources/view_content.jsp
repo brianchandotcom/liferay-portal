@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:container
+<clay:container-fluid
 	className="pt-3"
 >
 	<liferay-ui:search-container
@@ -50,7 +50,7 @@
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>
 
 <aui:button-row>
 	<aui:button type="cancel" value="close" />

@@ -41,7 +41,7 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 </liferay-portlet:renderURL>
 
 <liferay-frontend:info-bar>
-	<clay:container>
+	<clay:container-fluid>
 		<c:if test="<%= !previewBeforeRestore %>">
 			<div class="info-bar-item">
 				<c:choose>
@@ -76,7 +76,7 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 				</c:otherwise>
 			</c:choose>
 		</span>
-	</clay:container>
+	</clay:container-fluid>
 </liferay-frontend:info-bar>
 
 <div class="<%= previewBeforeRestore ? "" : "container-fluid-1280" %>" id="container">

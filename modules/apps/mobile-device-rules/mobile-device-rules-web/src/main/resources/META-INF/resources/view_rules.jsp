@@ -126,7 +126,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:search-container
 		searchContainer="<%= rulesSearchContainer %>"
 	>
@@ -206,4 +206,4 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 			type="more"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

@@ -64,7 +64,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	<aui:model-context bean="<%= fileEntryType %>" model="<%= DLFileEntryType.class %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
-		<clay:container>
+		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand"></li>
 				<li class="tbar-item">
@@ -75,10 +75,10 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 					</div>
 				</li>
 			</ul>
-		</clay:container>
+		</clay:container-fluid>
 	</nav>
 
-	<clay:container
+	<clay:container-fluid
 		className="container-view"
 	>
 
@@ -96,7 +96,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			localizable="<%= true %>"
 			namespace="<%= renderResponse.getNamespace() %>"
 		/>
-	</clay:container>
+	</clay:container-fluid>
 </aui:form>
 
 <aui:script>

@@ -18,7 +18,7 @@
 
 <liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>" />
 
-<clay:container
+<clay:container-fluid
 	className="main-content-body"
 >
 	<c:choose>
@@ -32,4 +32,4 @@
 			<liferay-util:include page="/admin/report/entries.jsp" servletContext="<%= application %>" />
 		</c:otherwise>
 	</c:choose>
-</clay:container>
+</clay:container-fluid>

@@ -33,7 +33,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>
 
-<clay:container
+<clay:container-fluid
 	className="container-form-lg"
 >
 	<clay:row>
@@ -166,4 +166,4 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 			</div>
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>

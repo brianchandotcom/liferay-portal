@@ -36,7 +36,7 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 	<portlet:param name="mvcPath" value="/view.jsp" />
 </liferay-portlet:renderURL>
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:tabs
 		names="public-pages,private-pages"
 		param="tabs1"
@@ -69,4 +69,4 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 			<aui:nav-item href="<%= importPagesURL %>" label="import" />
 		</aui:nav>
 	</aui:nav-bar>
-</clay:container>
+</clay:container-fluid>

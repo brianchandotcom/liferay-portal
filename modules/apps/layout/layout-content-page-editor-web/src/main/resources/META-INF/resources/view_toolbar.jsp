@@ -21,7 +21,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 %>
 
 <div class="management-bar navbar navbar-expand-md page-editor__toolbar <%= contentPageEditorDisplayContext.isMasterLayout() ? "page-editor__toolbar--master-layout" : StringPool.BLANK %>" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
-	<clay:container>
+	<clay:container-fluid>
 		<ul class="navbar-nav">
 		</ul>
 
@@ -60,5 +60,5 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 				</button>
 			</li>
 		</ul>
-	</clay:container>
+	</clay:container-fluid>
 </div>

@@ -43,7 +43,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.WEBSITE %>" />
 	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(editContactInformationDisplayContext.getPrimaryKey()) %>" />
 
-	<clay:container>
+	<clay:container-fluid>
 		<div class="sheet-lg" id="breadcrumb">
 			<liferay-ui:breadcrumb
 				showCurrentGroup="<%= false %>"
@@ -84,5 +84,5 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 				<aui:button href="<%= editContactInformationDisplayContext.getRedirect() %>" type="cancel" />
 			</div>
 		</div>
-	</clay:container>
+	</clay:container-fluid>
 </aui:form>

@@ -26,7 +26,7 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
-<clay:container
+<clay:container-fluid
 	className="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
@@ -289,7 +289,7 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <liferay-frontend:component
 	componentId="<%= trashManagementToolbarDisplayContext.getDefaultEventHandler() %>"

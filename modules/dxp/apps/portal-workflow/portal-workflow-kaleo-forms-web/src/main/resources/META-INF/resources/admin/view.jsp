@@ -26,7 +26,7 @@ KaleoProcessSearch kaleoProcessSearch = kaleoFormsAdminDisplayContext.getKaleoPr
 
 <liferay-util:include page="/admin/management_bar.jsp" servletContext="<%= application %>" />
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "formContainer" %>'
 >
 	<aui:form action="<%= kaleoFormsAdminDisplayContext.getSearchActionURL() %>" method="post" name="fm">
@@ -92,7 +92,7 @@ KaleoProcessSearch kaleoProcessSearch = kaleoFormsAdminDisplayContext.getKaleoPr
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <%@ include file="/admin/export_kaleo_process.jspf" %>
 

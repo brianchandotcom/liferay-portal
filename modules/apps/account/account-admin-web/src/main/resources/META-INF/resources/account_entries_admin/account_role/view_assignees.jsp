@@ -38,7 +38,7 @@ ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssignees
 	displayContext="<%= viewAccountRoleAssigneesManagementToolbarDisplayContext %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form method="post" name="fm">
 		<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryId %>" />
 		<aui:input name="accountRoleId" type="hidden" value="<%= accountRoleId %>" />
@@ -76,7 +76,7 @@ ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssignees
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <liferay-frontend:component
 	componentId="<%= viewAccountRoleAssigneesManagementToolbarDisplayContext.getDefaultEventHandler() %>"

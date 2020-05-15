@@ -37,7 +37,7 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 	displayContext="<%= accountUsersAdminManagementToolbarDisplayContext %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="accountUserIds" type="hidden" />
@@ -103,7 +103,7 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <liferay-frontend:component
 	componentId="<%= accountUsersAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"

@@ -97,7 +97,7 @@ if (portletTitleBasedNavigation) {
 	<liferay-util:include page="/document_library/file_entry_upper_tbar.jsp" servletContext="<%= application %>" />
 </c:if>
 
-<clay:container
+<clay:container-fluid
 	className='<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>'
 	id='<%= renderResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : "infoPanelId") %>'
 >
@@ -226,7 +226,7 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 		</div>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 

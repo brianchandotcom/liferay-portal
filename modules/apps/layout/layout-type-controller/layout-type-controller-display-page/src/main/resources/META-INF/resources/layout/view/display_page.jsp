@@ -64,13 +64,13 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 		<c:choose>
 			<c:when test="<%= (assetRendererFactory != null) && !assetRendererFactory.hasPermission(permissionChecker, infoDisplayObjectProvider.getClassPK(), ActionKeys.VIEW) %>">
 				<div class="layout-content" id="main-content" role="main">
-					<clay:container
+					<clay:container-fluid
 						className="pt-3"
 					>
 						<div class="alert alert-danger">
 							<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
 						</div>
-					</clay:container>
+					</clay:container-fluid>
 				</div>
 			</c:when>
 			<c:when test="<%= infoDisplayObjectProvider != null %>">

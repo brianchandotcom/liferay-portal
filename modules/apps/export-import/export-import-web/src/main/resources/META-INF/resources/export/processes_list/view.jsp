@@ -27,7 +27,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <div id="<portlet:namespace />exportProcessesSearchContainer">
-	<clay:container
+	<clay:container-fluid
 		id='<%= liferayPortletResponse.getNamespace() + "processesContainer" %>'
 	>
 		<liferay-util:include page="/export/processes_list/export_layouts_processes.jsp" servletContext="<%= application %>">
@@ -39,5 +39,5 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
 			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
 		</liferay-util:include>
-	</clay:container>
+	</clay:container-fluid>
 </div>

@@ -89,7 +89,7 @@ portletURL.setParameter("portletResource", portletResource);
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
 
 			<div class="export-dialog-tree">
-				<clay:container>
+				<clay:container-fluid>
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset>
 							<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" required="<%= true %>" showRequiredLabel="<%= false %>" size="50" value="<%= ExportImportHelperUtil.getPortletExportFileName(selPortlet) %>" />
@@ -452,7 +452,7 @@ portletURL.setParameter("portletResource", portletResource);
 							/>
 						</c:if>
 					</aui:fieldset-group>
-				</clay:container>
+				</clay:container-fluid>
 			</div>
 
 			<aui:button-row>

@@ -112,7 +112,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "mbEditPageContainer" %>'
 >
 	<c:if test="<%= !portletTitleBasedNavigation %>">
@@ -451,7 +451,7 @@ if (portletTitleBasedNavigation) {
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script require='<%= npmResolvedPackageName + "/message_boards/js/MBPortlet.es as MBPortlet" %>'>
 	new MBPortlet.default({

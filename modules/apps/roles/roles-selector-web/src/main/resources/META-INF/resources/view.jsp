@@ -153,7 +153,7 @@ else {
 	%>
 
 	<div class="roles-selector-body">
-		<clay:container>
+		<clay:container-fluid>
 			<c:choose>
 				<c:when test="<%= role == null %>">
 					<liferay-util:include page="/edit_roles.jsp" servletContext="<%= application %>" />
@@ -179,7 +179,7 @@ else {
 					</c:choose>
 				</c:otherwise>
 			</c:choose>
-		</clay:container>
+		</clay:container-fluid>
 	</div>
 
 	<aui:button-row>

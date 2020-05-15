@@ -20,7 +20,7 @@
 SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new SegmentsSimulationDisplayContext(request, renderResponse);
 %>
 
-<clay:container
+<clay:container-fluid
 	className="segments-simulation"
 	id='<%= renderResponse.getNamespace() + "segmentsSimulationContainer" %>'
 >
@@ -72,4 +72,4 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 			</aui:script>
 		</c:otherwise>
 	</c:choose>
-</clay:container>
+</clay:container-fluid>

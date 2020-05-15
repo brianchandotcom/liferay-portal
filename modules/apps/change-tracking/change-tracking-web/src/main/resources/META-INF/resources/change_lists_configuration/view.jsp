@@ -21,7 +21,7 @@
 	navigationItems="<%= changeListsConfigurationDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="container-form-lg"
 >
 	<aui:form action="<%= changeListsConfigurationDisplayContext.getActionURL() %>" method="post" name="fm">
@@ -32,4 +32,4 @@
 			<%@ include file="/change_lists_configuration/global_settings.jspf" %>
 		</div>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>

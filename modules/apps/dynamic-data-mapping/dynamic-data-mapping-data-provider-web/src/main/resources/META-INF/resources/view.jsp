@@ -35,7 +35,7 @@ renderResponse.setTitle(ddmDataProviderDisplayContext.getTitle());
 
 <liferay-util:include page="/management_bar.jsp" servletContext="<%= application %>" />
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "formContainer" %>'
 >
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
@@ -109,4 +109,4 @@ renderResponse.setTitle(ddmDataProviderDisplayContext.getTitle());
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>

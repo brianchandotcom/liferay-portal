@@ -47,7 +47,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 	showSearch="<%= true %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="container-view"
 >
 	<liferay-ui:search-container
@@ -180,4 +180,4 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

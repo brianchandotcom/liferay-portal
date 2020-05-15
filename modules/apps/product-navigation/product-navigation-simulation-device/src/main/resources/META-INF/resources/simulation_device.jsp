@@ -18,7 +18,7 @@
 
 <div id="<portlet:namespace />simulationDeviceContainer">
 	<div class="list-group-panel">
-		<clay:container
+		<clay:container-fluid
 			className="devices"
 		>
 			<clay:row
@@ -67,7 +67,7 @@
 
 				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="col-6" />
 			</clay:row>
-		</clay:container>
+		</clay:container-fluid>
 	</div>
 </div>
 

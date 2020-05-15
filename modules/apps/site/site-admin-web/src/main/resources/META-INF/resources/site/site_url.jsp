@@ -153,7 +153,7 @@ if (privateVirtualHostnames.isEmpty()) {
 			String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 		%>
 
-			<clay:container
+			<clay:container-fluid
 				className="lfr-form-row"
 			>
 				<clay:row>
@@ -175,7 +175,7 @@ if (privateVirtualHostnames.isEmpty()) {
 
 					</aui:select>
 				</clay:row>
-			</clay:container>
+			</clay:container-fluid>
 
 		<%
 		}
@@ -192,7 +192,7 @@ if (privateVirtualHostnames.isEmpty()) {
 			String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 		%>
 
-			<clay:container
+			<clay:container-fluid
 				className="lfr-form-row"
 			>
 				<clay:row>
@@ -214,7 +214,7 @@ if (privateVirtualHostnames.isEmpty()) {
 
 					</aui:select>
 				</clay:row>
-			</clay:container>
+			</clay:container-fluid>
 
 		<%
 		}
@@ -245,7 +245,7 @@ if (privateVirtualHostnames.isEmpty()) {
 				String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 			%>
 
-				<clay:container
+				<clay:container-fluid
 					className="lfr-form-row"
 				>
 					<clay:row>
@@ -267,7 +267,7 @@ if (privateVirtualHostnames.isEmpty()) {
 
 						</aui:select>
 					</clay:row>
-				</clay:container>
+				</clay:container-fluid>
 
 			<%
 			}
@@ -296,7 +296,7 @@ if (privateVirtualHostnames.isEmpty()) {
 				String virtualHostLanguageId = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 			%>
 
-				<clay:container
+				<clay:container-fluid
 					className="lfr-form-row"
 				>
 					<clay:row>
@@ -318,7 +318,7 @@ if (privateVirtualHostnames.isEmpty()) {
 
 						</aui:select>
 					</clay:row>
-				</clay:container>
+				</clay:container-fluid>
 
 			<%
 			}

@@ -35,7 +35,7 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 	showSearch="<%= true %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="container-view"
 >
 	<c:if test="<%= configurationCategorySectionDisplays.isEmpty() %>">
@@ -94,4 +94,4 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 		%>
 
 	</ul>
-</clay:container>
+</clay:container-fluid>

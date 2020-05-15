@@ -49,7 +49,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 	sortingURL="<%= workflowDefinitionDisplayContext.getSortingURL(request) %>"
 />
 
-<clay:container
+<clay:container-fluid
 	className="workflow-definition-container"
 >
 	<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
@@ -118,4 +118,4 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			searchContainer="<%= workflowDefinitionSearch %>"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

@@ -90,7 +90,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 }
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form action="<%= (structure == null) ? addStructureURL : updateStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>" />
 		<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
@@ -344,7 +344,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 		<aui:button href="<%= PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)) %>" type="cancel" />
 	</aui:button-row>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	function <portlet:namespace />openParentStructureSelector() {

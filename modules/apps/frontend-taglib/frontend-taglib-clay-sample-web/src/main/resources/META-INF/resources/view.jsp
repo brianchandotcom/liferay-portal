@@ -29,9 +29,9 @@
 	%>
 
 		<liferay-ui:section>
-			<clay:container>
+			<clay:container-fluid>
 				<liferay-util:include page="<%= partial %>" servletContext="<%= application %>" />
-			</clay:container>
+			</clay:container-fluid>
 		</liferay-ui:section>
 
 	<%

@@ -31,7 +31,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <liferay-util:include page="/uad_data_navigation_bar.jsp" servletContext="<%= application %>" />
 
-<clay:container
+<clay:container-fluid
 	className="container-form-lg"
 >
 	<aui:form method="post" name="nonreviewableUADDataForm">
@@ -120,6 +120,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 		</div>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <%@ include file="/action/confirm_action_js.jspf" %>

@@ -42,7 +42,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			</c:choose>
 		</portlet:renderURL>
 
-		<clay:container
+		<clay:container-fluid
 			className="widget-mode-detail-header"
 		>
 			<liferay-asset:asset-categories-available
@@ -155,7 +155,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					</div>
 				</clay:col>
 			</clay:row>
-		</clay:container>
+		</clay:container-fluid>
 
 		<%
 		String coverImageURL = entry.getCoverImageURL(themeDisplay);
@@ -167,7 +167,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 		<!-- text resume -->
 
-		<clay:container
+		<clay:container-fluid
 			className="widget-mode-detail-header"
 			id="<%= renderResponse.getNamespace() + entry.getEntryId() %>"
 		>
@@ -237,9 +237,9 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					</clay:col>
 				</clay:row>
 			</liferay-asset:asset-tags-available>
-		</clay:container>
+		</clay:container-fluid>
 
-		<clay:container>
+		<clay:container-fluid>
 			<clay:row>
 				<clay:col
 					className="mx-auto widget-mode-detail-text"
@@ -277,7 +277,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					</clay:col>
 				</clay:row>
 			</c:if>
-		</clay:container>
+		</clay:container-fluid>
 	</c:when>
 	<c:otherwise>
 

@@ -20,7 +20,7 @@
 
 <liferay-util:include page="/polls/management_bar.jsp" servletContext="<%= application %>" />
 
-<clay:container
+<clay:container-fluid
 	className="main-content-body"
 >
 	<aui:form method="post" name="fm">
@@ -126,4 +126,4 @@
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>

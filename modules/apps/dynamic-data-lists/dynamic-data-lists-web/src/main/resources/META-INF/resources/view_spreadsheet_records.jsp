@@ -28,7 +28,7 @@ if (editable || ddlDisplayContext.isAdminPortlet()) {
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 %>
 
-<clay:container
+<clay:container-fluid
 	className="lfr-spreadsheet-container"
 >
 	<div id="<portlet:namespace />spreadsheet">
@@ -50,7 +50,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 			<aui:button inlineField="<%= true %>" name="addRecords" value="add" />
 		</div>
 	</c:if>
-</clay:container>
+</clay:container-fluid>
 
 <%@ include file="/custom_spreadsheet_editors.jspf" %>
 

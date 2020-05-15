@@ -31,7 +31,7 @@ ChangeListsManagementToolbarDisplayContext changeListsManagementToolbarDisplayCo
 	displayContext="<%= changeListsManagementToolbarDisplayContext %>"
 />
 
-<clay:container>
+<clay:container-fluid>
 	<liferay-ui:search-container
 		cssClass="change-lists-table"
 		searchContainer="<%= searchContainer %>"
@@ -127,4 +127,4 @@ ChangeListsManagementToolbarDisplayContext changeListsManagementToolbarDisplayCo
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

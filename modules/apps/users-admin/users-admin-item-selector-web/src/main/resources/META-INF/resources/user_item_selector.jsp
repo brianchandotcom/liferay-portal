@@ -55,7 +55,7 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "userSelectorWrapper" %>'
 >
 	<liferay-ui:search-container
@@ -100,7 +100,7 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 			searchContainer="<%= userItemSelectorViewDisplayContext.getSearchContainer() %>"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');

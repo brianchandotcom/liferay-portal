@@ -36,7 +36,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 %>
 
-<clay:container
+<clay:container-fluid
 	className="mt-4"
 >
 	<div class="lfr-search-container-wrapper">
@@ -58,7 +58,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 
 		</ul>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal" sandbox="<%= true %>">
 	var addPageTemplateClickHandler = dom.delegate(

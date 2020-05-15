@@ -24,7 +24,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<clay:management-toolbar
 		clearResultsURL="<%= portletURL.toString() %>"
 		searchActionURL="<%= portletURL.toString() %>"
@@ -141,7 +141,7 @@ portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

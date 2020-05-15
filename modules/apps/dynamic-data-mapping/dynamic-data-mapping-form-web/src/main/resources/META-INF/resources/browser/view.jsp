@@ -34,7 +34,7 @@
 	sortingURL="<%= ddmFormBrowserDisplayContext.getSortingURL() %>"
 />
 
-<clay:container
+<clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "formContainer" %>'
 >
 	<aui:form action="<%= String.valueOf(ddmFormBrowserDisplayContext.getPortletURL()) %>" method="post" name="selectDDMFormFm">
@@ -87,7 +87,7 @@
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

@@ -26,7 +26,7 @@ DDLRecordVersion ddlRecordVersion = (DDLRecordVersion)request.getAttribute(DDLWe
 KaleoProcessLink kaleoProcessLink = (KaleoProcessLink)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS_LINK);
 %>
 
-<clay:container
+<clay:container-fluid
 	className="main-content-body"
 >
 	<aui:fieldset>
@@ -55,4 +55,4 @@ KaleoProcessLink kaleoProcessLink = (KaleoProcessLink)request.getAttribute(Kaleo
 			requestedLocale="<%= locale %>"
 		/>
 	</aui:fieldset>
-</clay:container>
+</clay:container-fluid>

@@ -38,7 +38,7 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 				<liferay-util:param name="tabs1" value="supported-clients" />
 			</liferay-util:include>
 
-			<clay:container>
+			<clay:container-fluid>
 				<aui:fieldset-group markupView="lexicon">
 
 					<%
@@ -63,7 +63,7 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 					%>
 
 				</aui:fieldset-group>
-			</clay:container>
+			</clay:container-fluid>
 		</div>
 
 		<aui:button-row>

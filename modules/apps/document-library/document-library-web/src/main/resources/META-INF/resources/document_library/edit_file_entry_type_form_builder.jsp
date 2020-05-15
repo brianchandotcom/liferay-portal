@@ -33,7 +33,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new-document-type") : fileEntryType.getName(locale));
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<portlet:actionURL name="/document_library/edit_file_entry_type" var="editFileEntryTypeURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
 	</portlet:actionURL>
@@ -81,7 +81,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	function <portlet:namespace />saveStructure() {

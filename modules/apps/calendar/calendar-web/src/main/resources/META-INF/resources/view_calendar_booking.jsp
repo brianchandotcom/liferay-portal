@@ -38,7 +38,7 @@ java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(endTime, userTi
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBooking.class.getName(), calendarBooking.getCalendarBookingId());
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<div class="panel panel-default">
 		<liferay-ui:header
 			backURL="<%= backURL %>"
@@ -306,4 +306,4 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 			}
 		}
 	</aui:script>
-</clay:container>
+</clay:container-fluid>

@@ -74,7 +74,7 @@ if (layout != null) {
 	<aui:input name="redirect" type="hidden" value="<%= ddmDisplayContext.getTemplateSearchActionURL() %>" />
 	<aui:input name="deleteTemplateIds" type="hidden" />
 
-	<clay:container
+	<clay:container-fluid
 		id='<%= renderResponse.getNamespace() + "entriesContainer" %>'
 	>
 		<liferay-ui:search-container
@@ -220,5 +220,5 @@ if (layout != null) {
 				markupView="lexicon"
 			/>
 		</liferay-ui:search-container>
-	</clay:container>
+	</clay:container-fluid>
 </aui:form>

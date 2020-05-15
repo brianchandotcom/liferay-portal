@@ -16,7 +16,7 @@
 
 <%@ include file="/process_info/init.jsp" %>
 
-<clay:container
+<clay:container-fluid
 	className="text-secondary"
 >
 	<clay:row>
@@ -75,4 +75,4 @@
 			/>
 		</clay:col>
 	</clay:row>
-</clay:container>
+</clay:container-fluid>

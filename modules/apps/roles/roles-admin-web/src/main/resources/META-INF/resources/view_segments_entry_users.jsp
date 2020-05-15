@@ -20,7 +20,7 @@
 long segmentsEntryId = ParamUtil.getLong(request, "segmentsEntryId");
 %>
 
-<clay:container
+<clay:container-fluid
 	size="sm"
 >
 	<liferay-ui:search-container
@@ -57,4 +57,4 @@ long segmentsEntryId = ParamUtil.getLong(request, "segmentsEntryId");
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</clay:container>
+</clay:container-fluid>

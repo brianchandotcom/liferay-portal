@@ -76,7 +76,7 @@ else {
 }
 %>
 
-<clay:container>
+<clay:container-fluid>
 	<aui:form method="post" name="fm">
 
 		<%
@@ -275,7 +275,7 @@ else {
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler(

@@ -18,7 +18,7 @@
 
 <liferay-portlet:renderURL varImpl="searchURL" />
 
-<clay:container
+<clay:container-fluid
 	className="container-view"
 >
 	<aui:form action="<%= searchURL %>" method="get" name="fm">
@@ -110,4 +110,4 @@
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
-</clay:container>
+</clay:container-fluid>

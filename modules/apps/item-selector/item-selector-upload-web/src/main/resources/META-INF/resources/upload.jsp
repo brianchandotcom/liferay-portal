@@ -48,7 +48,7 @@ Map<String, Object> context = HashMapBuilder.<String, Object>put(
 ).build();
 %>
 
-<clay:container
+<clay:container-fluid
 	className="lfr-item-viewer"
 	id="itemSelectorUploadContainer"
 >
@@ -73,7 +73,7 @@ Map<String, Object> context = HashMapBuilder.<String, Object>put(
 	/>
 
 	<div class="item-selector-preview-container"></div>
-</clay:container>
+</clay:container-fluid>
 
 <liferay-frontend:component
 	context="<%= context %>"

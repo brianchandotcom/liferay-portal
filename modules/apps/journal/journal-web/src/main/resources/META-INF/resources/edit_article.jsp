@@ -58,7 +58,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		%>
 
-		<clay:container>
+		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<aui:input autoFocus="<%= (article == null) || article.isNew() %>" cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
@@ -97,7 +97,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					</div>
 				</li>
 			</ul>
-		</clay:container>
+		</clay:container-fluid>
 	</nav>
 
 	<div class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
@@ -138,7 +138,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	</div>
 
 	<div class="contextual-sidebar-content">
-		<clay:container
+		<clay:container-fluid
 			className="container-view"
 		>
 			<div class="sheet sheet-lg">
@@ -277,7 +277,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					</c:choose>
 				</div>
 			</div>
-		</clay:container>
+		</clay:container-fluid>
 	</div>
 </aui:form>
 

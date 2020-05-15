@@ -96,7 +96,7 @@ else {
 	/>
 </c:if>
 
-<clay:container
+<clay:container-fluid
 	className="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
@@ -267,7 +267,7 @@ else {
 			</aui:button-row>
 		</aui:form>
 	</div>
-</clay:container>
+</clay:container-fluid>
 
 <aui:script>
 	function <portlet:namespace />setWorkflowAction(draft) {

@@ -37,7 +37,7 @@ else if (samlProviderConfigurationHelper.isRoleSp()) {
 	names="<%= tabs1Names %>"
 	url="<%= portletURL.toString() %>"
 >
-	<clay:container>
+	<clay:container-fluid>
 		<c:choose>
 			<c:when test='<%= tabs1.equals("general") %>'>
 				<liferay-util:include page="/admin/general.jsp" servletContext="<%= pageContext.getServletContext() %>" />
@@ -55,5 +55,5 @@ else if (samlProviderConfigurationHelper.isRoleSp()) {
 				<liferay-util:include page="/admin/view_service_provider_connections.jsp" servletContext="<%= pageContext.getServletContext() %>" />
 			</c:when>
 		</c:choose>
-	</clay:container>
+	</clay:container-fluid>
 </liferay-ui:tabs>

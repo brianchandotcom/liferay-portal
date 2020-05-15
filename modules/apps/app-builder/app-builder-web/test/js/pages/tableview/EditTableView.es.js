@@ -282,5 +282,48 @@ describe('EditTableView', () => {
 		expect(spySuccessToast.mock.calls.length).toBe(1);
 	});
 
+	it('renders and toggle sidebar by clicking in the toggle button', async () => {
+		fetch
+			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
+			.mockResponseOnce(JSON.stringify(tableViewResponseOneItem));
+
+		render(
+			<DndProvider backend={HTML5Backend}>
+				<EditTableView />
+			</DndProvider>,
+			{
+				wrapper: AppContextProviderWrapper,
+			}
+		);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		const closeSidebarButton = document.querySelector('.close-sidebar-btn');
+
+		fireEvent.click(closeSidebarButton);
+
+		expect(
+			document.querySelector(
+				'.app-builder-table-view__content--sidebar-closed'
+			)
+		).toBeTruthy();
+		expect(
+			document.querySelector('.app-builder-table-view__sidebar--closed')
+		).toBeTruthy();
+
+		const openSidebarButton = document.querySelector('.open-sidebar-btn');
+
+		fireEvent.click(openSidebarButton);
+
+		expect(
+			document.querySelector(
+				'.app-builder-table-view__content--sidebar-closed'
+			)
+		).toBeFalsy();
+		expect(
+			document.querySelector('.app-builder-table-view__sidebar--closed')
+		).toBeFalsy();
 	});
 });

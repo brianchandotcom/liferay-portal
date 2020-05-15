@@ -164,7 +164,7 @@ if (liveLayout != null) {
 
 											<clay:col
 												cssClass="staging-alert-container"
-												id='<%= renderResponse.getNamespace() + "layoutRevisionStatus" %>'
+												id='<%= liferayPortletResponse.getNamespace() + "layoutRevisionStatus" %>'
 											>
 												<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
@@ -173,7 +173,7 @@ if (liveLayout != null) {
 
 											<clay:col
 												cssClass="col-auto staging-alert-container"
-												id='<%= renderResponse.getNamespace() + "layoutRevisionDetails" %>'
+												id='<%= liferayPortletResponse.getNamespace() + "layoutRevisionDetails" %>'
 											>
 												<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 

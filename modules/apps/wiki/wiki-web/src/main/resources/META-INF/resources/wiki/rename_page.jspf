@@ -18,7 +18,7 @@
 	<liferay-ui:message key="use-the-form-below-to-rename-a-page,-moving-all-of-its-history-to-the-new-name" />
 </div>
 
-<aui:form action="<%= movePageURL %>" method="post" name="renameFm" onSubmit='<%= renderResponse.getNamespace() + "renamePage();" %>'>
+<aui:form action="<%= movePageURL %>" method="post" name="renameFm" onSubmit='<%= liferayPortletResponse.getNamespace() + "renamePage();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 	<aui:input name="title" type="hidden" value="<%= title %>" />

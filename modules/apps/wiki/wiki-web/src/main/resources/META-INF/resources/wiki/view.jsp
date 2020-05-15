@@ -274,7 +274,7 @@ if (portletTitleBasedNavigation) {
 									label="<%= true %>"
 									markupView="lexicon"
 									message="print"
-									url='<%= "javascript:" + renderResponse.getNamespace() + "printPage();" %>'
+									url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage();" %>'
 								/>
 							</div>
 						</c:if>

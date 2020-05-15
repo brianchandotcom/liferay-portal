@@ -38,9 +38,9 @@ PortletURL searchURL = wikiURLHelper.getSearchURL();
 	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 
 	<liferay-ui:input-search
-		id='<%= portletResponse.getNamespace() + "keywords1" %>'
+		id='<%= (PortalUtil.getLiferayPortletResponse(portletResponse)).getNamespace() + "keywords1" %>'
 		markupView="lexicon"
-		name='<%= portletResponse.getNamespace() + "keywords" %>'
+		name='<%= (PortalUtil.getLiferayPortletResponse(portletResponse)).getNamespace() + "keywords" %>'
 		useNamespace="<%= false %>"
 	/>
 </aui:form>

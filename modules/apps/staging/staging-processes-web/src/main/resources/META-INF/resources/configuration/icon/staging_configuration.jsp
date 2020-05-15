@@ -22,7 +22,7 @@ PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, liveGroup,
 
 <liferay-ui:icon
 	message="staging-configuration"
-	onClick='<%= renderResponse.getNamespace() + "openStagingConfigurationPortlet();" %>'
+	onClick='<%= liferayPortletResponse.getNamespace() + "openStagingConfigurationPortlet();" %>'
 	url="javascript:;"
 />
 

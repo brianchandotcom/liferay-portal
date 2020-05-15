@@ -32,7 +32,7 @@ renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-nod
 <portlet:actionURL name="/wiki/edit_node" var="editNodeURL" />
 
 <clay:container-fluid>
-	<aui:form action="<%= editNodeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveNode();" %>'>
+	<aui:form action="<%= editNodeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveNode();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />

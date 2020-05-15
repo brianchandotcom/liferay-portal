@@ -56,7 +56,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 <portlet:actionURL name="/wiki/import_pages" var="importPagesURL" />
 
 <clay:container-fluid>
-	<aui:form action="<%= importPagesURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "importPages();" %>'>
+	<aui:form action="<%= importPagesURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "importPages();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="importProgressId" type="hidden" value="<%= importProgressId %>" />

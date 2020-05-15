@@ -65,7 +65,7 @@ if (layoutSetBranch != null) {
 
 <clay:container-fluid
 	cssClass="container-view"
-	id='<%= renderResponse.getNamespace() + ((layoutSetBranch != null) ? "updateBranch" : "addBranch") %>'
+	id='<%= liferayPortletResponse.getNamespace() + ((layoutSetBranch != null) ? "updateBranch" : "addBranch") %>'
 >
 	<aui:model-context bean="<%= layoutSetBranch %>" model="<%= LayoutSetBranch.class %>" />
 

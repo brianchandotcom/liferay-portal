@@ -26,4 +26,9 @@ public interface AppLicenseVerifier {
 			String productVersion)
 		throws Exception;
 
+	public void verify(
+			String productId, String productType, String productVersion,
+			String... bundleSymbolicNames)
+		throws Exception;
+
 }

@@ -30,4 +30,10 @@ public class PassAppLicenseVerifier implements AppLicenseVerifier {
 		throws Exception {
 	}
 
+	public void verify(
+			String productId, String productType, String productVersion,
+			String... bundleSymbolicNames)
+		throws Exception {
+	}
+
 }

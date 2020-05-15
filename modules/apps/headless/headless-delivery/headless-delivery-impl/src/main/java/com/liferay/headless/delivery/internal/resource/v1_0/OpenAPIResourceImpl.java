@@ -75,6 +75,8 @@ public class OpenAPIResourceImpl {
 
 			add(CommentResourceImpl.class);
 
+			add(ContentElementResourceImpl.class);
+
 			add(ContentSetElementResourceImpl.class);
 
 			add(ContentStructureResourceImpl.class);

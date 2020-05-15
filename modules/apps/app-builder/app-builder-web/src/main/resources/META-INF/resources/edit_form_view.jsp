@@ -24,6 +24,7 @@ String editFormViewRootElementId = renderResponse.getNamespace() + "-app-builder
 
 long dataDefinitionId = ParamUtil.getLong(request, "dataDefinitionId");
 long dataLayoutId = ParamUtil.getLong(request, "dataLayoutId");
+boolean isAppsPortlet = ParamUtil.getBoolean(request, "isAppsPortlet");
 boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 %>
 
@@ -49,6 +50,8 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 				"dataLayoutBuilderId", componentId
 			).put(
 				"dataLayoutId", dataLayoutId
+			).put(
+				"isAppsPortlet", isAppsPortlet
 			).put(
 				"newCustomObject", newCustomObject
 			).build();

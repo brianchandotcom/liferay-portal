@@ -37,20 +37,21 @@ public class LayoutPrototypeTableReferenceDefinition
 		TableReferenceInfoBuilder<LayoutPrototypeTable>
 			tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.nonreferenceColumns(
-			LayoutPrototypeTable.INSTANCE.active,
-			LayoutPrototypeTable.INSTANCE.createDate,
-			LayoutPrototypeTable.INSTANCE.description,
-			LayoutPrototypeTable.INSTANCE.modifiedDate,
-			LayoutPrototypeTable.INSTANCE.name,
-			LayoutPrototypeTable.INSTANCE.settings,
-			LayoutPrototypeTable.INSTANCE.userName,
+		tableReferenceInfoBuilder.nonreferenceColumn(
 			LayoutPrototypeTable.INSTANCE.uuid
 		).singleColumnReference(
 			LayoutPrototypeTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			LayoutPrototypeTable.INSTANCE.userId, UserTable.INSTANCE.userId
+		).nonreferenceColumns(
+			LayoutPrototypeTable.INSTANCE.userName,
+			LayoutPrototypeTable.INSTANCE.createDate,
+			LayoutPrototypeTable.INSTANCE.modifiedDate,
+			LayoutPrototypeTable.INSTANCE.name,
+			LayoutPrototypeTable.INSTANCE.description,
+			LayoutPrototypeTable.INSTANCE.settings,
+			LayoutPrototypeTable.INSTANCE.active
 		);
 	}
 

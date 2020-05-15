@@ -16,10 +16,11 @@ package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutTable;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileShortcutPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -41,33 +42,32 @@ public class DLFileShortcutTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			DLFileShortcutTable.INSTANCE
-		).nonreferenceColumns(
-			DLFileShortcutTable.INSTANCE.active,
-			DLFileShortcutTable.INSTANCE.createDate,
-			DLFileShortcutTable.INSTANCE.lastPublishDate,
-			DLFileShortcutTable.INSTANCE.modifiedDate,
-			DLFileShortcutTable.INSTANCE.status,
-			DLFileShortcutTable.INSTANCE.statusByUserId,
-			DLFileShortcutTable.INSTANCE.statusByUserName,
-			DLFileShortcutTable.INSTANCE.statusDate,
-			DLFileShortcutTable.INSTANCE.toFileEntryId,
-			DLFileShortcutTable.INSTANCE.treePath,
-			DLFileShortcutTable.INSTANCE.userName,
+		).nonreferenceColumn(
 			DLFileShortcutTable.INSTANCE.uuid
-		).singleColumnReference(
-			DLFileShortcutTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DLFileShortcutTable.INSTANCE.userId, UserTable.INSTANCE.userId
 		).singleColumnReference(
 			DLFileShortcutTable.INSTANCE.repositoryId,
 			RepositoryTable.INSTANCE.repositoryId
 		).singleColumnReference(
 			DLFileShortcutTable.INSTANCE.folderId,
 			DLFolderTable.INSTANCE.folderId
+		).singleColumnReference(
+			DLFileShortcutTable.INSTANCE.toFileEntryId,
+			DLFileEntryTable.INSTANCE.fileEntryId
+		).nonreferenceColumns(
+			DLFileShortcutTable.INSTANCE.treePath,
+			DLFileShortcutTable.INSTANCE.active,
+			DLFileShortcutTable.INSTANCE.lastPublishDate,
+			DLFileShortcutTable.INSTANCE.status
+		).singleColumnReference(
+			DLFileShortcutTable.INSTANCE.statusByUserId,
+			UserTable.INSTANCE.userId
+		).nonreferenceColumns(
+			DLFileShortcutTable.INSTANCE.statusByUserName,
+			DLFileShortcutTable.INSTANCE.statusDate
+		).assetEntryReference(
+			DLFileShortcutTable.INSTANCE.fileShortcutId, DLFileShortcut.class
 		).resourcePermissionReference(
-			DLFileShortcutTable.INSTANCE.fileShortcutId,
-			DLFileShortcutTable.class
+			DLFileShortcutTable.INSTANCE.fileShortcutId, DLFileShortcut.class
 		);
 	}
 

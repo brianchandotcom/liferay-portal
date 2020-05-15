@@ -16,12 +16,14 @@ package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.store.model.CTSContentTable;
+import com.liferay.document.library.content.model.DLContentTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.model.DLFileVersionTable;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -43,32 +45,8 @@ public class DLFileVersionTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			DLFileVersionTable.INSTANCE
-		).nonreferenceColumns(
-			DLFileVersionTable.INSTANCE.changeLog,
-			DLFileVersionTable.INSTANCE.checksum,
-			DLFileVersionTable.INSTANCE.createDate,
-			DLFileVersionTable.INSTANCE.description,
-			DLFileVersionTable.INSTANCE.extension,
-			DLFileVersionTable.INSTANCE.extraSettings,
-			DLFileVersionTable.INSTANCE.fileName,
-			DLFileVersionTable.INSTANCE.lastPublishDate,
-			DLFileVersionTable.INSTANCE.mimeType,
-			DLFileVersionTable.INSTANCE.modifiedDate,
-			DLFileVersionTable.INSTANCE.size,
-			DLFileVersionTable.INSTANCE.status,
-			DLFileVersionTable.INSTANCE.statusByUserId,
-			DLFileVersionTable.INSTANCE.statusByUserName,
-			DLFileVersionTable.INSTANCE.statusDate,
-			DLFileVersionTable.INSTANCE.title,
-			DLFileVersionTable.INSTANCE.treePath,
-			DLFileVersionTable.INSTANCE.userName,
-			DLFileVersionTable.INSTANCE.uuid,
-			DLFileVersionTable.INSTANCE.version
-		).singleColumnReference(
-			DLFileVersionTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DLFileVersionTable.INSTANCE.userId, UserTable.INSTANCE.userId
+		).nonreferenceColumn(
+			DLFileVersionTable.INSTANCE.uuid
 		).singleColumnReference(
 			DLFileVersionTable.INSTANCE.repositoryId,
 			RepositoryTable.INSTANCE.repositoryId
@@ -78,9 +56,102 @@ public class DLFileVersionTableReferenceDefinition
 		).singleColumnReference(
 			DLFileVersionTable.INSTANCE.fileEntryId,
 			DLFileEntryTable.INSTANCE.fileEntryId
+		).nonreferenceColumns(
+			DLFileVersionTable.INSTANCE.treePath,
+			DLFileVersionTable.INSTANCE.fileName,
+			DLFileVersionTable.INSTANCE.extension,
+			DLFileVersionTable.INSTANCE.mimeType,
+			DLFileVersionTable.INSTANCE.title,
+			DLFileVersionTable.INSTANCE.description,
+			DLFileVersionTable.INSTANCE.changeLog,
+			DLFileVersionTable.INSTANCE.extraSettings
 		).singleColumnReference(
 			DLFileVersionTable.INSTANCE.fileEntryTypeId,
 			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId
+		).nonreferenceColumns(
+			DLFileVersionTable.INSTANCE.version,
+			DLFileVersionTable.INSTANCE.size,
+			DLFileVersionTable.INSTANCE.checksum,
+			DLFileVersionTable.INSTANCE.lastPublishDate,
+			DLFileVersionTable.INSTANCE.status
+		).singleColumnReference(
+			DLFileVersionTable.INSTANCE.statusByUserId,
+			UserTable.INSTANCE.userId
+		).nonreferenceColumns(
+			DLFileVersionTable.INSTANCE.statusByUserName,
+			DLFileVersionTable.INSTANCE.statusDate
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				CTSContentTable.INSTANCE
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.companyId.eq(
+					CTSContentTable.INSTANCE.companyId
+				).and(
+					DLFileEntryTable.INSTANCE.repositoryId.eq(
+						CTSContentTable.INSTANCE.repositoryId)
+				).and(
+					DLFileEntryTable.INSTANCE.folderId.eq(
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+				).and(
+					DLFileEntryTable.INSTANCE.name.eq(
+						CTSContentTable.INSTANCE.path)
+				)
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileVersionTable.INSTANCE.fileEntryId.eq(
+					DLFileEntryTable.INSTANCE.fileEntryId
+				).and(
+					DLFileVersionTable.INSTANCE.version.eq(
+						CTSContentTable.INSTANCE.version)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				CTSContentTable.INSTANCE
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.companyId.eq(
+					CTSContentTable.INSTANCE.companyId
+				).and(
+					DLFileEntryTable.INSTANCE.folderId.eq(
+						CTSContentTable.INSTANCE.repositoryId)
+				).and(
+					DLFileEntryTable.INSTANCE.name.eq(
+						CTSContentTable.INSTANCE.path)
+				)
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileVersionTable.INSTANCE.fileEntryId.eq(
+					DLFileEntryTable.INSTANCE.fileEntryId
+				).and(
+					DLFileVersionTable.INSTANCE.version.eq(
+						CTSContentTable.INSTANCE.version)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				DLContentTable.INSTANCE
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.companyId.eq(
+					DLContentTable.INSTANCE.companyId
+				).and(
+					DLFileEntryTable.INSTANCE.repositoryId.eq(
+						DLContentTable.INSTANCE.repositoryId)
+				).and(
+					DLFileEntryTable.INSTANCE.name.eq(
+						DLContentTable.INSTANCE.path)
+				)
+			).innerJoinON(
+				DLFileVersionTable.INSTANCE,
+				DLFileVersionTable.INSTANCE.fileEntryId.eq(
+					DLFileEntryTable.INSTANCE.fileEntryId
+				).and(
+					DLFileVersionTable.INSTANCE.version.eq(
+						DLContentTable.INSTANCE.version)
+				)
+			)
 		);
 	}
 

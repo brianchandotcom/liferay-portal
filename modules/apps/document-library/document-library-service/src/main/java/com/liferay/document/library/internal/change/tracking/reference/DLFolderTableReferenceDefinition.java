@@ -16,9 +16,10 @@ package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -39,32 +40,36 @@ public class DLFolderTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			DLFolderTable.INSTANCE
-		).nonreferenceColumns(
-			DLFolderTable.INSTANCE.createDate,
-			DLFolderTable.INSTANCE.defaultFileEntryTypeId,
-			DLFolderTable.INSTANCE.description, DLFolderTable.INSTANCE.hidden,
-			DLFolderTable.INSTANCE.lastPostDate,
-			DLFolderTable.INSTANCE.lastPublishDate,
-			DLFolderTable.INSTANCE.modifiedDate,
-			DLFolderTable.INSTANCE.mountPoint, DLFolderTable.INSTANCE.name,
-			DLFolderTable.INSTANCE.restrictionType,
-			DLFolderTable.INSTANCE.status,
-			DLFolderTable.INSTANCE.statusByUserId,
-			DLFolderTable.INSTANCE.statusByUserName,
-			DLFolderTable.INSTANCE.statusDate, DLFolderTable.INSTANCE.treePath,
-			DLFolderTable.INSTANCE.userName, DLFolderTable.INSTANCE.uuid
-		).singleColumnReference(
-			DLFolderTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DLFolderTable.INSTANCE.userId, UserTable.INSTANCE.userId
+		).nonreferenceColumn(
+			DLFolderTable.INSTANCE.uuid
 		).singleColumnReference(
 			DLFolderTable.INSTANCE.repositoryId,
 			RepositoryTable.INSTANCE.repositoryId
+		).nonreferenceColumn(
+			DLFolderTable.INSTANCE.mountPoint
 		).parentColumnReference(
 			DLFolderTable.INSTANCE.folderId,
 			DLFolderTable.INSTANCE.parentFolderId
+		).nonreferenceColumns(
+			DLFolderTable.INSTANCE.treePath, DLFolderTable.INSTANCE.name,
+			DLFolderTable.INSTANCE.description,
+			DLFolderTable.INSTANCE.lastPostDate
+		).singleColumnReference(
+			DLFolderTable.INSTANCE.defaultFileEntryTypeId,
+			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId
+		).nonreferenceColumns(
+			DLFolderTable.INSTANCE.hidden,
+			DLFolderTable.INSTANCE.restrictionType,
+			DLFolderTable.INSTANCE.lastPublishDate,
+			DLFolderTable.INSTANCE.status
+		).singleColumnReference(
+			DLFolderTable.INSTANCE.statusByUserId, UserTable.INSTANCE.userId
+		).nonreferenceColumn(
+			DLFolderTable.INSTANCE.statusDate
+		).assetEntryReference(
+			DLFolderTable.INSTANCE.folderId, DLFolder.class
 		).resourcePermissionReference(
-			DLFolderTable.INSTANCE.folderId, DLFolderTable.class
+			DLFolderTable.INSTANCE.folderId, DLFolder.class
 		);
 	}
 

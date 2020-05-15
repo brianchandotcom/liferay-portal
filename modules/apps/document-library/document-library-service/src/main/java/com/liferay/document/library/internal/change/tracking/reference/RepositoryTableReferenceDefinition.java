@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.reference.portal;
+package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFolderTable;
-import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.PortletTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
 
@@ -40,20 +39,15 @@ public class RepositoryTableReferenceDefinition
 		tableReferenceInfoBuilder.groupedModel(
 			RepositoryTable.INSTANCE
 		).nonreferenceColumns(
-			RepositoryTable.INSTANCE.classNameId,
-			RepositoryTable.INSTANCE.createDate,
-			RepositoryTable.INSTANCE.description,
-			RepositoryTable.INSTANCE.lastPublishDate,
-			RepositoryTable.INSTANCE.modifiedDate,
-			RepositoryTable.INSTANCE.name, RepositoryTable.INSTANCE.portletId,
-			RepositoryTable.INSTANCE.typeSettings,
-			RepositoryTable.INSTANCE.userName, RepositoryTable.INSTANCE.uuid
+			RepositoryTable.INSTANCE.uuid, RepositoryTable.INSTANCE.classNameId,
+			RepositoryTable.INSTANCE.name, RepositoryTable.INSTANCE.description,
+			RepositoryTable.INSTANCE.typeSettings
 		).singleColumnReference(
-			RepositoryTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			RepositoryTable.INSTANCE.userId, UserTable.INSTANCE.userId
+			RepositoryTable.INSTANCE.portletId, PortletTable.INSTANCE.portletId
 		).singleColumnReference(
 			RepositoryTable.INSTANCE.dlFolderId, DLFolderTable.INSTANCE.folderId
+		).nonreferenceColumn(
+			RepositoryTable.INSTANCE.lastPublishDate
 		);
 	}
 

@@ -36,15 +36,15 @@ public class CTSContentTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoBuilder<CTSContentTable> tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.nonreferenceColumns(
-			CTSContentTable.INSTANCE.data, CTSContentTable.INSTANCE.path,
-			CTSContentTable.INSTANCE.size, CTSContentTable.INSTANCE.storeType,
-			CTSContentTable.INSTANCE.version
-		).singleColumnReference(
+		tableReferenceInfoBuilder.singleColumnReference(
 			CTSContentTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			CTSContentTable.INSTANCE.repositoryId,
 			RepositoryTable.INSTANCE.repositoryId
+		).nonreferenceColumns(
+			CTSContentTable.INSTANCE.path, CTSContentTable.INSTANCE.version,
+			CTSContentTable.INSTANCE.data, CTSContentTable.INSTANCE.size,
+			CTSContentTable.INSTANCE.storeType
 		);
 	}
 

@@ -214,6 +214,10 @@ public class WorkspaceExtension {
 		return GradleUtil.toFile(_gradle.getRootProject(), _homeDir);
 	}
 
+	public String getProduct() {
+		return GradleUtil.toString(_product);
+	}
+
 	public Iterable<ProjectConfigurator> getProjectConfigurators() {
 		return Collections.unmodifiableSet(_projectConfigurators);
 	}
@@ -224,10 +228,6 @@ public class WorkspaceExtension {
 
 	public String getTargetPlatformVersion() {
 		return GradleUtil.toString(_targetPlatformVersion);
-	}
-
-	public String getProduct() {
-		return GradleUtil.toString(_product);
 	}
 
 	public boolean isBundleTokenDownload() {

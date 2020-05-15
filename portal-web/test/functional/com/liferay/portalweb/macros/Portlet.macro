@@ -205,7 +205,7 @@ definition {
 			locator1 = "TextInput#PORTLET_TITLE",
 			value1 = "${portletTitleName} Custom");
 
-		Click(locator1 = "Icon#OK");
+		Click.mouseDownMouseUp(locator1 = "Icon#OK");
 	}
 
 	macro configureCustomTitleViaLookandfeelPG {

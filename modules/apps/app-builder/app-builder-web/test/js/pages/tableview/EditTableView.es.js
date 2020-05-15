@@ -13,16 +13,16 @@
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
-import {Router} from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import {createMemoryHistory} from 'history';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
+import {Route, Router} from 'react-router-dom';
+
 import EditTableView from '../../../../src/main/resources/META-INF/resources/js/pages/table-view/EditTableView.es';
-import * as time from '../../../../src/main/resources/META-INF/resources/js/utils/time.es';
 import * as toast from '../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
+import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import {
 	fieldTypeResponse,
 	tableViewResponseOneItem,
@@ -33,13 +33,9 @@ import {
 describe('EditTableView', () => {
 	let spySuccessToast;
 	let spyErrorToast;
-	let spyFromNow;
 
 	beforeEach(() => {
 		jest.useFakeTimers();
-		spyFromNow = jest
-			.spyOn(time, 'fromNow')
-			.mockImplementation(() => 'months ago');
 		spySuccessToast = jest
 			.spyOn(toast, 'successToast')
 			.mockImplementation();
@@ -57,8 +53,9 @@ describe('EditTableView', () => {
 	});
 
 	it('renders', async () => {
-		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
-		fetch.mockResponseOnce(JSON.stringify(tableViewResponseOneItem));
+		fetch
+			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
+			.mockResponseOnce(JSON.stringify(tableViewResponseOneItem));
 
 		const {asFragment} = render(
 			<DndProvider backend={HTML5Backend}>
@@ -77,9 +74,10 @@ describe('EditTableView', () => {
 	});
 
 	it('renders with two fields in the sidebar and saves successfully', async () => {
-		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
-		fetch.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens));
-		fetch.mockResponseOnce();
+		fetch
+			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
+			.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens))
+			.mockResponseOnce();
 
 		const {queryAllByText, queryByPlaceholderText, queryByText} = render(
 			<DndProvider backend={HTML5Backend}>
@@ -135,13 +133,17 @@ describe('EditTableView', () => {
 	});
 
 	it('renders with two fields in the sidebar and does not save successfully', async () => {
-		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
-		fetch.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens));
-		fetch.mockRejectOnce(() =>
-			Promise.reject(
-				JSON.stringify({status: 'BAD_REQUEST', title: 'View is empty'})
-			)
-		);
+		fetch
+			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
+			.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens))
+			.mockRejectOnce(() =>
+				Promise.reject(
+					JSON.stringify({
+						status: 'BAD_REQUEST',
+						title: 'View is empty',
+					})
+				)
+			);
 
 		const {queryByPlaceholderText, queryByText} = render(
 			<DndProvider backend={HTML5Backend}>
@@ -178,8 +180,9 @@ describe('EditTableView', () => {
 	});
 
 	it('renders with two fields in the sidebar and make actions', async () => {
-		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
-		fetch.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens));
+		fetch
+			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
+			.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens));
 
 		const {
 			container,
@@ -232,52 +235,34 @@ describe('EditTableView', () => {
 	});
 
 	it('renders with one field already inside the table and saves', async () => {
-		fetch.mockResponseOnce(JSON.stringify(fieldTypeResponse));
-		fetch.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens));
-		fetch.mockResponseOnce(JSON.stringify(tableViewWithId));
+		fetch
+			.mockResponseOnce(JSON.stringify(fieldTypeResponse))
+			.mockResponseOnce(JSON.stringify(tableViewResponseTwoItens))
+			.mockResponseOnce(JSON.stringify(tableViewWithId))
+			.mockResponseOnce(JSON.stringify({}));
 
-		const history = createMemoryHistory();
-		//console.log(history);
-		history.push('/abc/ebc');
-
-		const {
-			debug,
-			queryByPlaceholderText,
-			queryByText,
-			queryAllByText,
-		} = render(
+		const {queryAllByText, queryByPlaceholderText, queryByText} = render(
 			<DndProvider backend={HTML5Backend}>
-				<EditTableView
-					location={{
-						match: {
-							params: {
-								dataDefinitionId: 1,
-							},
-							url: 'table-views',
-						},
-					}}
-				/>
+				<Router
+					history={createMemoryHistory({
+						initialEntries: [
+							`dataTableViewId/${tableViewWithId.id}`,
+						],
+					})}
+				>
+					<Route path={'dataTableViewId/:dataListViewId'}>
+						<EditTableView />
+					</Route>
+				</Router>
 			</DndProvider>,
 			{
-				wrapper: (props) => (
-					<Router history={history}>
-						<AppContextProviderWrapper
-							history={history}
-							{...props}
-						/>
-					</Router>
-				),
+				wrapper: AppContextProviderWrapper,
 			}
 		);
 
 		await act(async () => {
 			jest.runAllTimers();
 		});
-
-		//linhas para apagar depois que o mock do id estiver pegando ----------------
-		const [columnName] = queryAllByText('Name');
-		userEvent.dblClick(columnName);
-		// fim ----------------------------------------------------------------
 
 		expect(
 			queryByText('drag-columns-from-the-sidebar-and-drop-here')
@@ -287,13 +272,15 @@ describe('EditTableView', () => {
 		expect(queryAllByText('Options').length).toBe(1);
 
 		const tableName = queryByPlaceholderText('untitled-table-view');
-		//descomentar linha abaixo quando o mock do id estiver pegando
-		//expect(tableName.value).toBe('Name');
+		expect(tableName.value).toBe('Name');
 
-		fireEvent.change(tableName, {target: {value: 'My Edited Table View'}});
+		await act(async () => {
+			fireEvent.submit(tableName);
+		});
 
-		fireEvent.submit(tableName);
+		expect(fetch.mock.calls.length).toBe(4);
+		expect(spySuccessToast.mock.calls.length).toBe(1);
+	});
 
-		//debug();
 	});
 });

@@ -180,7 +180,15 @@ const Modal = ({
 		let eventHandler;
 
 		if (onSelect && selectEventName) {
-			eventHandler = Liferay.on(selectEventName, onSelect);
+			eventHandler = Liferay.on(selectEventName, (selectedItem) => {
+				onSelect(selectedItem);
+
+				setVisible(false);
+
+				if (onClose) {
+					onClose();
+				}
+			});
 		}
 
 		return () => {
@@ -188,7 +196,7 @@ const Modal = ({
 				eventHandler.detach();
 			}
 		};
-	}, [onSelect, selectEventName]);
+	}, [onClose, onSelect, selectEventName]);
 
 	return (
 		<>

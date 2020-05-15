@@ -21,6 +21,11 @@ import org.osgi.framework.Bundle;
  */
 public interface AppLicenseVerifier {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #verify(String, String, String, String[])}
+	 */
+	@Deprecated
 	public void verify(
 			Bundle bundle, String productId, String productType,
 			String productVersion)

@@ -16,14 +16,15 @@ package com.liferay.document.library.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.change.tracking.store.model.CTSContentTable;
+import com.liferay.document.library.content.model.DLContentTable;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.model.RepositoryTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,42 +44,73 @@ public class DLFileEntryTableReferenceDefinition
 		tableReferenceInfoBuilder.groupedModel(
 			DLFileEntryTable.INSTANCE
 		).nonreferenceColumns(
+			DLFileEntryTable.INSTANCE.uuid,
 			DLFileEntryTable.INSTANCE.classNameId,
-			DLFileEntryTable.INSTANCE.classPK,
-			DLFileEntryTable.INSTANCE.createDate,
-			DLFileEntryTable.INSTANCE.custom1ImageId,
-			DLFileEntryTable.INSTANCE.custom2ImageId,
-			DLFileEntryTable.INSTANCE.description,
-			DLFileEntryTable.INSTANCE.extension,
-			DLFileEntryTable.INSTANCE.extraSettings,
-			DLFileEntryTable.INSTANCE.fileEntryTypeId,
-			DLFileEntryTable.INSTANCE.fileName,
-			DLFileEntryTable.INSTANCE.largeImageId,
-			DLFileEntryTable.INSTANCE.lastPublishDate,
-			DLFileEntryTable.INSTANCE.manualCheckInRequired,
-			DLFileEntryTable.INSTANCE.mimeType,
-			DLFileEntryTable.INSTANCE.modifiedDate,
-			DLFileEntryTable.INSTANCE.name, DLFileEntryTable.INSTANCE.size,
-			DLFileEntryTable.INSTANCE.smallImageId,
-			DLFileEntryTable.INSTANCE.title, DLFileEntryTable.INSTANCE.treePath,
-			DLFileEntryTable.INSTANCE.userName, DLFileEntryTable.INSTANCE.uuid,
-			DLFileEntryTable.INSTANCE.version
-		).singleColumnReference(
-			DLFileEntryTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DLFileEntryTable.INSTANCE.userId, UserTable.INSTANCE.userId
+			DLFileEntryTable.INSTANCE.classPK
 		).singleColumnReference(
 			DLFileEntryTable.INSTANCE.repositoryId,
 			RepositoryTable.INSTANCE.repositoryId
 		).singleColumnReference(
 			DLFileEntryTable.INSTANCE.folderId, DLFolderTable.INSTANCE.folderId
+		).nonreferenceColumns(
+			DLFileEntryTable.INSTANCE.treePath, DLFileEntryTable.INSTANCE.name,
+			DLFileEntryTable.INSTANCE.fileName,
+			DLFileEntryTable.INSTANCE.extension,
+			DLFileEntryTable.INSTANCE.mimeType, DLFileEntryTable.INSTANCE.title,
+			DLFileEntryTable.INSTANCE.description,
+			DLFileEntryTable.INSTANCE.extraSettings
 		).singleColumnReference(
 			DLFileEntryTable.INSTANCE.fileEntryTypeId,
 			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId
+		).nonreferenceColumns(
+			DLFileEntryTable.INSTANCE.version, DLFileEntryTable.INSTANCE.size
+		).singleColumnReference(
+			DLFileEntryTable.INSTANCE.smallImageId, ImageTable.INSTANCE.imageId
+		).singleColumnReference(
+			DLFileEntryTable.INSTANCE.largeImageId, ImageTable.INSTANCE.imageId
+		).singleColumnReference(
+			DLFileEntryTable.INSTANCE.custom1ImageId,
+			ImageTable.INSTANCE.imageId
+		).singleColumnReference(
+			DLFileEntryTable.INSTANCE.custom2ImageId,
+			ImageTable.INSTANCE.imageId
+		).nonreferenceColumns(
+			DLFileEntryTable.INSTANCE.manualCheckInRequired,
+			DLFileEntryTable.INSTANCE.lastPublishDate
 		).assetEntryReference(
-			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntryTable.class
+			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
 		).resourcePermissionReference(
-			DLFileEntryTable.INSTANCE.fileEntryId, Group.class
+			DLFileEntryTable.INSTANCE.fileEntryId, DLFileEntry.class
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				CTSContentTable.INSTANCE
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.companyId.eq(
+					CTSContentTable.INSTANCE.companyId
+				).and(
+					DLFileEntryTable.INSTANCE.repositoryId.eq(
+						CTSContentTable.INSTANCE.repositoryId)
+				).and(
+					DLFileEntryTable.INSTANCE.name.eq(
+						CTSContentTable.INSTANCE.path)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				DLContentTable.INSTANCE
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.companyId.eq(
+					DLContentTable.INSTANCE.companyId
+				).and(
+					DLFileEntryTable.INSTANCE.repositoryId.eq(
+						DLContentTable.INSTANCE.repositoryId)
+				).and(
+					DLFileEntryTable.INSTANCE.name.eq(
+						DLContentTable.INSTANCE.path)
+				)
+			)
 		);
 	}
 

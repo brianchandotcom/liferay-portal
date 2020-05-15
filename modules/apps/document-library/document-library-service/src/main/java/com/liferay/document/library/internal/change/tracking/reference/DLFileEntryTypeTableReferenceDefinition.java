@@ -20,9 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
-import com.liferay.portal.kernel.model.ClassNameTable;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,38 +41,20 @@ public class DLFileEntryTypeTableReferenceDefinition
 		tableReferenceInfoBuilder.groupedModel(
 			DLFileEntryTypeTable.INSTANCE
 		).nonreferenceColumns(
-			DLFileEntryTypeTable.INSTANCE.createDate,
-			DLFileEntryTypeTable.INSTANCE.description,
-			DLFileEntryTypeTable.INSTANCE.fileEntryTypeKey,
-			DLFileEntryTypeTable.INSTANCE.lastPublishDate,
-			DLFileEntryTypeTable.INSTANCE.modifiedDate,
+			DLFileEntryTypeTable.INSTANCE.uuid,
 			DLFileEntryTypeTable.INSTANCE.name,
-			DLFileEntryTypeTable.INSTANCE.userName,
-			DLFileEntryTypeTable.INSTANCE.uuid
+			DLFileEntryTypeTable.INSTANCE.description
 		).singleColumnReference(
-			DLFileEntryTypeTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DLFileEntryTypeTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				DDMStructureLinkTable.INSTANCE
-			).innerJoinON(
-				DLFileEntryTypeTable.INSTANCE,
-				DLFileEntryTypeTable.INSTANCE.fileEntryTypeId.eq(
-					DDMStructureLinkTable.INSTANCE.classPK)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.value.eq(
-					DLFileEntryType.class.getName()
-				).and(
-					ClassNameTable.INSTANCE.classNameId.eq(
-						DDMStructureLinkTable.INSTANCE.classNameId)
-				)
-			)
-		).resourcePermissionReference(
+			DLFileEntryTypeTable.INSTANCE.dataDefinitionId,
+			DDMStructureTable.INSTANCE.structureId
+		).nonreferenceColumns(
+			DLFileEntryTypeTable.INSTANCE.fileEntryTypeKey,
+			DLFileEntryTypeTable.INSTANCE.lastPublishDate
+		).classNameReference(
 			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId,
-			DLFileEntryTypeTable.class
+			DDMStructureLinkTable.INSTANCE.classPK, DLFileEntryType.class
+		).resourcePermissionReference(
+			DLFileEntryTypeTable.INSTANCE.fileEntryTypeId, DLFileEntryType.class
 		);
 	}
 

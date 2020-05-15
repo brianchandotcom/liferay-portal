@@ -23,7 +23,6 @@ import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetada
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
-import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -47,22 +46,9 @@ public class DLFileEntryMetadataTableReferenceDefinition
 		).singleColumnReference(
 			DLFileEntryMetadataTable.INSTANCE.companyId,
 			CompanyTable.INSTANCE.companyId
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				DDMStorageLinkTable.INSTANCE
-			).innerJoinON(
-				DLFileEntryMetadataTable.INSTANCE,
-				DLFileEntryMetadataTable.INSTANCE.DDMStorageId.eq(
-					DDMStorageLinkTable.INSTANCE.classPK)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.value.eq(
-					DDMContent.class.getName()
-				).and(
-					ClassNameTable.INSTANCE.classNameId.eq(
-						DDMStorageLinkTable.INSTANCE.classNameId)
-				)
-			)
+		).classNameReference(
+			DLFileEntryMetadataTable.INSTANCE.DDMStorageId,
+			DDMStorageLinkTable.INSTANCE.classPK, DDMContent.class
 		).singleColumnReference(
 			DLFileEntryMetadataTable.INSTANCE.DDMStructureId,
 			DDMStructureTable.INSTANCE.structureId

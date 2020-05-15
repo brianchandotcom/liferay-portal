@@ -14,11 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
-import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Chema Balsas
@@ -33,13 +29,6 @@ public class ContainerFluidTag extends ContainerTag {
 		setSize("xl");
 
 		return super.doStartTag();
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	@Override

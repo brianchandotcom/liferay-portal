@@ -15,19 +15,11 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.util.IncludeTag;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Chema Balsas
@@ -58,6 +50,22 @@ public class ContainerTag extends BaseContainerTag {
 	}
 
 	@Override
+	protected String _getClassName(Set className) {
+		if (!_fluid) {
+			className.add("container");
+		}
+		else {
+			className.add("container-fluid");
+
+			if (Validator.isNotNull(_size)) {
+				className.add("container-fluid-max-" + _size);
+			}
+		}
+
+		return super._getClassName(className);
+	}
+
+	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
@@ -73,22 +81,6 @@ public class ContainerTag extends BaseContainerTag {
 	@Override
 	protected String getStartPage() {
 		return _START_PAGE;
-	}
-
-	@Override
-	protected String _getClassName(Set className) {
-		if (!_fluid) {
-			className.add("container");
-		}
-		else {
-			className.add("container-fluid");
-
-			if (Validator.isNotNull(_size)) {
-				className.add("container-fluid-max-" + _size);
-			}
-		}
-
-		return super._getClassName(className);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:container:";

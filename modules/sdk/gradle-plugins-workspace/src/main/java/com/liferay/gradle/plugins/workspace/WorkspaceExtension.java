@@ -312,8 +312,8 @@ public class WorkspaceExtension {
 		_targetPlatformVersion = targetPlatformVersion;
 	}
 
-	public void setWorkspaceProductKey(Object workspaceProductKey) {
-		_product = workspaceProductKey;
+	public void setProduct(Object product) {
+		_product = product;
 	}
 
 	private String _getDefaultAppServerVersion() {
@@ -362,13 +362,13 @@ public class WorkspaceExtension {
 		);
 	}
 
-	private ProductInfo _getProductInfo(String productKey) {
-		if (productKey == null) {
+	private ProductInfo _getProductInfo(String product) {
+		if (product == null) {
 			return null;
 		}
 
 		return _productInfos.computeIfAbsent(
-			productKey,
+			product,
 			key -> {
 				try {
 					DownloadCommand download = new DownloadCommand();
@@ -395,12 +395,12 @@ public class WorkspaceExtension {
 						Map<String, ProductInfo> productInfos = gson.fromJson(
 							reader, typeToken.getType());
 
-						return productInfos.get(productKey);
+						return productInfos.get(product);
 					}
 				}
 				catch (Exception exception) {
 					throw new GradleException(
-						"Unable to get product info for :" + productKey,
+						"Unable to get product info for :" + product,
 						exception);
 				}
 			});

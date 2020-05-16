@@ -1246,6 +1246,30 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public List<TestResult> getUniqueFailureTestResults() {
+		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
+
+		for (Build downstreamBuild : getDownstreamBuildFailures()) {
+			uniqueFailureTestResults.addAll(
+				downstreamBuild.getUniqueFailureTestResults());
+		}
+
+		return uniqueFailureTestResults;
+	}
+
+	@Override
+	public List<TestResult> getUpstreamJobFailureTestResults() {
+		List<TestResult> upstreamFailureTestResults = new ArrayList<>();
+
+		for (Build downstreamBuild : getDownstreamBuildFailures()) {
+			upstreamFailureTestResults.addAll(
+				downstreamBuild.getUpstreamJobFailureTestResults());
+		}
+
+		return upstreamFailureTestResults;
+	}
+
+	@Override
 	public boolean hasBuildURL(String buildURL) {
 		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);

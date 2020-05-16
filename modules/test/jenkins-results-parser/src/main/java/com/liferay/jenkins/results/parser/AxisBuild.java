@@ -412,6 +412,7 @@ public class AxisBuild extends BaseBuild {
 			this, testReportJSONObject.getJSONArray("suites"), testStatus);
 	}
 
+	@Override
 	public List<TestResult> getUniqueFailureTestResults() {
 		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
 
@@ -424,6 +425,7 @@ public class AxisBuild extends BaseBuild {
 		return uniqueFailureTestResults;
 	}
 
+	@Override
 	public List<TestResult> getUpstreamJobFailureTestResults() {
 		List<TestResult> upstreamFailureTestResults = new ArrayList<>();
 

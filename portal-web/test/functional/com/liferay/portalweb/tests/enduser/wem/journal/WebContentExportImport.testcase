@@ -444,47 +444,25 @@ definition {
 	test ImportLARWithTheSameTitle {
 		property testray.component.names = "Training";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name 1");
 
-		Site.addBlankCP(siteName = "Site Name 1");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Site Name 1",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-1");
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name 2");
 
-		Site.addBlankCP(siteName = "Site Name 2");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Site Name 2",
+			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		LAR.importPortlet(larFileName = "WebContent_portlet.lar");
 
@@ -507,11 +485,14 @@ definition {
 			siteName = "Site Name",
 			uploadFrom = "dependencies");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Web Content Display",
@@ -534,19 +515,17 @@ definition {
 	test MoveImportedWebContentArticlesToFolders {
 		property testray.component.names = "Training,Web Content Administration";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		JSONWebcontent.addFolder(
+			folderDescription = "News Folder Description",
+			folderName = "News",
+			groupName = "Test Site Name");
+
+		JSONWebcontent.addFolder(
+			folderDescription = "Events Folder Description",
+			folderName = "Events",
+			groupName = "Test Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentFolder.addCP(
-			folderDescription = "News Folder Description",
-			folderName = "News");
-
-		WebContentFolder.addCP(
-			folderDescription = "Events Folder Description",
-			folderName = "Events");
 
 		LAR.importPortlet(
 			larFileName = "space-web-content.lar",
@@ -638,11 +617,10 @@ definition {
 
 		LAR.importPortlet(larFileName = "WebContent_portlet2.lar");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

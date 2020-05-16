@@ -49,21 +49,6 @@ public class ContentColTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String _getClassName(Set className) {
-		className.add("autofit-col");
-
-		if (_expand) {
-			className.add("autofit-col-expand");
-		}
-
-		if (_gutters) {
-			className.add("autofit-col-gutters");
-		}
-
-		return super._getClassName(className);
-	}
-
-	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
@@ -79,6 +64,21 @@ public class ContentColTag extends BaseContainerTag {
 	@Override
 	protected String getStartPage() {
 		return _START_PAGE;
+	}
+
+	@Override
+	protected String processClassName(Set className) {
+		className.add("autofit-col");
+
+		if (_expand) {
+			className.add("autofit-col-expand");
+		}
+
+		if (_gutters) {
+			className.add("autofit-col-gutters");
+		}
+
+		return super.processClassName(className);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:content-col:";

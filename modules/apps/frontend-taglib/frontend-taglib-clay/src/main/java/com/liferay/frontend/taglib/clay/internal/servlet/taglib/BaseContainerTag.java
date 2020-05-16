@@ -64,18 +64,6 @@ public class BaseContainerTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	protected String _getClassName(Set className) {
-		if (className == null) {
-			className = new LinkedHashSet();
-		}
-
-		if (Validator.isNotNull(_className)) {
-			className.addAll(StringUtil.split(_className, CharPool.SPACE));
-		}
-
-		return StringUtil.merge(className, StringPool.SPACE);
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -88,6 +76,14 @@ public class BaseContainerTag extends IncludeTag {
 	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
+	}
+
+	protected String processClassName(Set className) {
+		if (Validator.isNotNull(_className)) {
+			className.addAll(StringUtil.split(_className, CharPool.SPACE));
+		}
+
+		return StringUtil.merge(className, StringPool.SPACE);
 	}
 
 	@Override
@@ -108,7 +104,7 @@ public class BaseContainerTag extends IncludeTag {
 		jspWriter.write("<");
 		jspWriter.write(_containerElement);
 		jspWriter.write(" class=\"");
-		jspWriter.write(String.valueOf(_getClassName(new LinkedHashSet())));
+		jspWriter.write(processClassName(new LinkedHashSet<>()));
 		jspWriter.write("\"");
 
 		if (Validator.isNotNull(_id)) {
@@ -124,8 +120,6 @@ public class BaseContainerTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
-
 	private void _writeDynamicAttributes(JspWriter jspWriter) throws Exception {
 		String dynamicAttributesString = InlineUtil.buildDynamicAttributes(
 			getDynamicAttributes());
@@ -134,6 +128,8 @@ public class BaseContainerTag extends IncludeTag {
 			jspWriter.write(dynamicAttributesString);
 		}
 	}
+
+	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private String _className;
 	private String _containerElement = "div";

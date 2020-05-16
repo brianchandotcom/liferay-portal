@@ -42,17 +42,6 @@ public class SheetTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String _getClassName(Set className) {
-		className.add("sheet");
-
-		if (Validator.isNotNull(_size)) {
-			className.add("sheet-" + _size);
-		}
-
-		return super._getClassName(className);
-	}
-
-	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
@@ -67,6 +56,17 @@ public class SheetTag extends BaseContainerTag {
 	@Override
 	protected String getStartPage() {
 		return _START_PAGE;
+	}
+
+	@Override
+	protected String processClassName(Set className) {
+		className.add("sheet");
+
+		if (Validator.isNotNull(_size)) {
+			className.add("sheet-" + _size);
+		}
+
+		return super.processClassName(className);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:sheet:";

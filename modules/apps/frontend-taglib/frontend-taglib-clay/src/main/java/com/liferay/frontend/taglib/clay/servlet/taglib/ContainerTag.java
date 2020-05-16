@@ -50,22 +50,6 @@ public class ContainerTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String _getClassName(Set className) {
-		if (!_fluid) {
-			className.add("container");
-		}
-		else {
-			className.add("container-fluid");
-
-			if (Validator.isNotNull(_size)) {
-				className.add("container-fluid-max-" + _size);
-			}
-		}
-
-		return super._getClassName(className);
-	}
-
-	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
@@ -81,6 +65,22 @@ public class ContainerTag extends BaseContainerTag {
 	@Override
 	protected String getStartPage() {
 		return _START_PAGE;
+	}
+
+	@Override
+	protected String processClassName(Set className) {
+		if (!_fluid) {
+			className.add("container");
+		}
+		else {
+			className.add("container-fluid");
+
+			if (Validator.isNotNull(_size)) {
+				className.add("container-fluid-max-" + _size);
+			}
+		}
+
+		return super.processClassName(className);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:container:";

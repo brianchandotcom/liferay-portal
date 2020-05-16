@@ -67,7 +67,27 @@ public class ContentRowTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String _getClassName(Set className) {
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_floatElements = null;
+		_noGutters = null;
+		_padded = false;
+		_verticalAlign = null;
+	}
+
+	@Override
+	protected String getEndPage() {
+		return _END_PAGE;
+	}
+
+	@Override
+	protected String getStartPage() {
+		return _START_PAGE;
+	}
+
+	@Override
+	protected String processClassName(Set className) {
 		className.add("autofit-row");
 
 		if (_floatElements != null) {
@@ -96,27 +116,7 @@ public class ContentRowTag extends BaseContainerTag {
 			className.add("autofit-row-" + _verticalAlign);
 		}
 
-		return super._getClassName(className);
-	}
-
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_floatElements = null;
-		_noGutters = null;
-		_padded = false;
-		_verticalAlign = null;
-	}
-
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
+		return super.processClassName(className);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:content-row:";

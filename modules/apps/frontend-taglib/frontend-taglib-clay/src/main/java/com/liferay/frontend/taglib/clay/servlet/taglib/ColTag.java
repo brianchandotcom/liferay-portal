@@ -74,7 +74,28 @@ public class ColTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String _getClassName(Set className) {
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_lg = null;
+		_md = null;
+		_size = null;
+		_sm = null;
+		_xl = null;
+	}
+
+	@Override
+	protected String getEndPage() {
+		return _END_PAGE;
+	}
+
+	@Override
+	protected String getStartPage() {
+		return _START_PAGE;
+	}
+
+	@Override
+	protected String processClassName(Set className) {
 		if (Validator.isNotNull(_size)) {
 			className.add("col-" + _size);
 		}
@@ -99,28 +120,7 @@ public class ColTag extends BaseContainerTag {
 			className.add("col");
 		}
 
-		return super._getClassName(className);
-	}
-
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_lg = null;
-		_md = null;
-		_size = null;
-		_sm = null;
-		_xl = null;
-	}
-
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
+		return super.processClassName(className);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:col:";

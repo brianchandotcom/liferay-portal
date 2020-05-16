@@ -33,13 +33,6 @@ public class SheetFooterTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String _getClassName(Set className) {
-		className.add("sheet-footer");
-
-		return super._getClassName(className);
-	}
-
-	@Override
 	protected String getEndPage() {
 		return _END_PAGE;
 	}
@@ -47,6 +40,13 @@ public class SheetFooterTag extends BaseContainerTag {
 	@Override
 	protected String getStartPage() {
 		return _START_PAGE;
+	}
+
+	@Override
+	protected String processClassName(Set className) {
+		className.add("sheet-footer");
+
+		return super.processClassName(className);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:sheet-footer:";

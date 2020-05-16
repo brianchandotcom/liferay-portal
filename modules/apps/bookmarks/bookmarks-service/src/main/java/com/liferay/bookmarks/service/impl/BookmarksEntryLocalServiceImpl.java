@@ -63,11 +63,11 @@ import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.exception.RestoreEntryException;
@@ -707,8 +707,8 @@ public class BookmarksEntryLocalServiceImpl
 			BookmarksEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
-		String layoutURL = LayoutURLUtil.getLayoutURL(
-			entry.getGroupId(), BookmarksPortletKeys.BOOKMARKS, serviceContext);
+		String layoutURL = PortalUtil.getLayoutFullURL(
+			entry.getGroupId(), BookmarksPortletKeys.BOOKMARKS);
 
 		if (Validator.isNotNull(layoutURL)) {
 			return StringBundler.concat(

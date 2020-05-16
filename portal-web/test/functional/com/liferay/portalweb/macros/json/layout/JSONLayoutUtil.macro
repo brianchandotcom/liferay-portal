@@ -128,6 +128,9 @@ definition {
 		else if ("${widgetName}" == "Web Content Display") {
 			var portletId = "com_liferay_journal_content_web_portlet_JournalContentPortlet";
 		}
+		else if ("${widgetName}" == "Web Content Search") {
+			var portletId = "com_liferay_journal_content_search_web_portlet_JournalContentSearchPortlet";
+		}
 		else if ("${widgetName}" == "Wiki") {
 			var portletId = "com_liferay_wiki_web_portlet_WikiPortlet";
 		}
@@ -137,7 +140,7 @@ definition {
 
 		var instanceId = StringUtil.randomString("12");
 
-		var nonRepeatableWidgets = "Blogs,Bookmarks,Knowledge Base Display,Language Selector,Message Boards,My Sites,Sign In,Wiki";
+		var nonRepeatableWidgets = "Blogs,Bookmarks,Knowledge Base Display,Language Selector,Message Boards,My Sites,Sign In,Web Content Search,Wiki";
 
 		if (contains("${nonRepeatableWidgets}", "${widgetName}")) {
 			var widget = "${portletId}";

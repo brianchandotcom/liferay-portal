@@ -339,6 +339,11 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
+	public boolean isUniqueFailure() {
+		return true;
+	}
+
+	@Override
 	public void setCompareToUpstream(boolean compareToUpstream) {
 		_compareToUpstream = compareToUpstream;
 	}

@@ -111,8 +111,9 @@ definition {
 		task ("Assert add second Row fragment to the same Section") {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_elementType = "Row",
+				key_position = "1",
 				locator1 = "PageEditor#SECTION_BUILDER_LAYOUT_ELEMENTS",
-				locator2 = "//div[contains(@class,'page-editor__row')]",
+				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
 			AssertElementPresent(

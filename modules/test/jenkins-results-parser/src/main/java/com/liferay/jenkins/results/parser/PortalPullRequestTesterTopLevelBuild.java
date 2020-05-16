@@ -90,6 +90,17 @@ public class PortalPullRequestTesterTopLevelBuild extends PortalTopLevelBuild {
 		return _stableJobResult;
 	}
 
+	@Override
+	public boolean isUniqueFailure() {
+		for (Build downstreamBuild : getDownstreamBuildFailures()) {
+			if (downstreamBuild.isUniqueFailure()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected Element getFailedStableJobSummaryElement() {
 		List<String> stableJobBatchNames = new ArrayList<>(
 			_stableJob.getBatchNames());

@@ -656,29 +656,10 @@ public class AutoCloseUtil {
 						continue;
 					}
 
-					List<TestResult> testResults = new ArrayList<>();
+					List<TestResult> uniqueFailureTestResults =
+						downstreamBuild.getUniqueFailureTestResults();
 
-					testResults.addAll(
-						downstreamBuild.getTestResults("FAILED"));
-					testResults.addAll(
-						downstreamBuild.getTestResults("REGRESSION"));
-
-					boolean containsUniqueTestFailure = false;
-
-					if (testResults.isEmpty()) {
-						containsUniqueTestFailure = true;
-					}
-					else {
-						for (TestResult testResult : testResults) {
-							if (testResult.isUniqueFailure()) {
-								containsUniqueTestFailure = true;
-
-								break;
-							}
-						}
-					}
-
-					if (!containsUniqueTestFailure) {
+					if (uniqueFailureTestResults.isEmpty()) {
 						failingInUpstreamJobDownstreamBuilds.add(
 							downstreamBuild);
 					}

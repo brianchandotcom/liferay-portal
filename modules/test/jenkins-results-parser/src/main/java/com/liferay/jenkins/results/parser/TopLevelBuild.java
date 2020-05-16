@@ -606,9 +606,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 			Element failureElement = entry.getValue();
 
 			if (failureElement != null) {
-				if (UpstreamFailureUtil.isBuildFailingInUpstreamJob(
-						failedDownstreamBuild)) {
-
+				if (!failedDownstreamBuild.isUniqueFailure()) {
 					upstreamBuildFailureElements.add(failureElement);
 
 					continue;

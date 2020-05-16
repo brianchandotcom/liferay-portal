@@ -58,13 +58,13 @@ import org.osgi.framework.ServiceRegistration;
  * @author Alberto Chaparro
  */
 @RunWith(Arquillian.class)
-public class DBPartitionDestinationInterceptorTest
+public class DBPartitionMessageBusInterceptorTest
 	extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			DBPartitionDestinationInterceptorTest.class);
+			DBPartitionMessageBusInterceptorTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 

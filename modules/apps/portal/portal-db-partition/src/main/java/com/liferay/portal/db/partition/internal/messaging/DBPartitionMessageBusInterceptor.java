@@ -44,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.db.partition.internal.configuration.DBPartitionConfiguration",
 	immediate = true, service = MessageBusInterceptor.class
 )
-public class DBPartitionDestinationInterceptor
-	implements MessageBusInterceptor {
+public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 
 	@Override
 	public boolean intercept(

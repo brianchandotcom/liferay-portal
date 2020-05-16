@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.util.InlineUtil;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -116,12 +117,23 @@ public class BaseContainerTag extends IncludeTag {
 			jspWriter.write("\"");
 		}
 
+		_writeDynamicAttributes(jspWriter);
+
 		jspWriter.write(">");
 
 		return EVAL_BODY_INCLUDE;
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
+
+	private void _writeDynamicAttributes(JspWriter jspWriter) throws Exception {
+		String dynamicAttributesString = InlineUtil.buildDynamicAttributes(
+			getDynamicAttributes());
+
+		if (!dynamicAttributesString.isEmpty()) {
+			jspWriter.write(dynamicAttributesString);
+		}
+	}
 
 	private String _className;
 	private String _containerElement = "div";

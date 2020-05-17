@@ -1196,6 +1196,7 @@ definition {
 
 	@priority = "3"
 	test WebContentAdministrationPaginatingRelatedAssets {
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Related Assets,Web Content Administration";
 
 		for (var i : list "1,2,3,4,5,6") {

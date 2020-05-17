@@ -26,6 +26,93 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-113731. It ensures that the asset library roles and permissions will be purged after membership is revoked."
+	@priority = "5"
+	test AccessALAfterRevokeMembership {
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Depot Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Depot Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+			roleTitle = "Depot Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.depot.model.DepotEntry",
+			roleTitle = "Depot Regrole Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Site.assignUserAsMemberCP(
+			depotName = "Test Depot Name",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Site.assignSiteRoleCP(
+			resourceName = "userfn userln",
+			roleTitle = "Asset Library Administrator");
+
+		Site.removeMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoMemberships();
+
+		AssertElementNotPresent(
+			key_depotName = "Test Depot Name",
+			locator1 = "UsersAndOrganizationsEditUser#DEPOT_TABLE_NAME",
+			value1 = "Test Depot Name");
+
+		UserNavigator.gotoRoles();
+
+		AssertElementNotPresent(
+			key_depotRoleName = "Asset Library Administrator",
+			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_TABLE_NAME",
+			value1 = "Asset Library Administrator");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ProductMenu.gotoPortlet(
+			category = "Asset Libraries",
+			panel = "Control Panel",
+			portlet = "Asset Libraries");
+
+		var key_card = "Test Depot Name";
+
+		AssertElementNotPresent(locator1 = "LexiconCard#CARD_ELLIPSIS");
+
+		Click(
+			locator1 = "LexiconCard#CARD_TITLE",
+			value1 = "Test Depot Name");
+
+		AssertVisible(locator1 = "LexiconCard#CARD");
+	}
+
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even after it is automatically assigned to a connected site member. This test also covers permissions and makes sure the library asset can be updated by the role."
 	@priority = "5"
 	test AddSiteMemberWithPermissionsAfterConnectingSite {

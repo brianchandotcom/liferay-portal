@@ -384,11 +384,14 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title Edit");
 
@@ -524,25 +527,19 @@ definition {
 	test MoveWebContentToFolderTraining {
 		property testray.component.names = "Training";
 
+		JSONWebcontent.addFolder(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name",
+			groupName = "Test Site Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToFolderCP(
 			folderName = "WC Folder Name",
@@ -572,11 +569,14 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Web Content Display Page");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page",
+				widgetName = "Web Content Display");
+
 			Navigator.gotoSitePage(
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Web Content Display");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 		}
@@ -627,11 +627,14 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Web Content Display Page");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page",
+				widgetName = "Web Content Display");
+
 			Navigator.gotoSitePage(
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Web Content Display");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 		}
@@ -697,11 +700,14 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Web Content Display Page");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page",
+				widgetName = "Web Content Display");
+
 			Navigator.gotoSitePage(
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Web Content Display");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 		}
@@ -836,9 +842,7 @@ definition {
 				roleTitle = "Web Content Administrator Role");
 		}
 
-		User.openUsersAdmin();
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -849,8 +853,6 @@ definition {
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
-
-		Role.openRolesAdmin();
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Web Content Administrator Role",
@@ -992,11 +994,14 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Web Content Display Page");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page",
+				widgetName = "Web Content Display");
+
 			Navigator.gotoSitePage(
 				pageName = "Web Content Display Page",
 				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Web Content Display");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 		}
@@ -1006,11 +1011,14 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Asset Publisher");
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetTitle = "WC WebContent Title",
@@ -1022,19 +1030,23 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Web Content Display and Asset Publisher Page");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display and Asset Publisher Page",
+				widgetName = "Web Content Display");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display and Asset Publisher Page",
+				widgetName = "Asset Publisher");
+
 			Navigator.gotoSitePage(
 				pageName = "Web Content Display and Asset Publisher Page",
 				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Web Content Display");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-			Navigator.gotoSitePage(
-				pageName = "Web Content Display and Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Asset Publisher");
+			IFrame.closeFrame();
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetTitle = "WC WebContent Title",
@@ -1046,17 +1058,19 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Unused Page");
 
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Unused Page",
+				widgetName = "Web Content Display");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Unused Page",
+				widgetName = "Asset Publisher");
+
 			Navigator.gotoSitePage(
 				pageName = "Unused Page",
 				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Web Content Display");
-
-			Navigator.gotoSitePage(
-				pageName = "Unused Page",
-				siteName = "Test Site Name");
-
-			Portlet.addPG(portletName = "Asset Publisher");
 		}
 
 		task ("View the usages of the Web Content article") {
@@ -1184,8 +1198,6 @@ definition {
 	test WebContentAdministrationPaginatingRelatedAssets {
 		property testray.component.names = "Related Assets,Web Content Administration";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		for (var i : list "1,2,3,4,5,6") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
@@ -1221,11 +1233,14 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Web Content Display Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent 3 Title");
 

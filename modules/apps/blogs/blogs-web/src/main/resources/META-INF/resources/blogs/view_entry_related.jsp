@@ -47,8 +47,12 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			</c:if>
 
 			<div class="card-body widget-topbar">
-				<div class="autofit-row card-title">
-					<div class="autofit-col autofit-col-expand">
+				<clay:content-row
+					className="card-title"
+				>
+					<clay:content-col
+						expand="true"
+					>
 						<portlet:renderURL var="blogsEntryURL">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
@@ -64,30 +68,38 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						<h3 class="title"><a class="title-link" href="<%= blogsEntryURL %>">
 							<%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, blogsEntry)) %></a>
 						</h3>
-					</div>
-				</div>
+					</clay:content-col>
+				</clay:content-row>
 
-				<div class="autofit-row widget-metadata">
-					<div class="autofit-col inline-item-before">
+				<clay:content-row
+					className="widget-metadata"
+				>
 
-						<%
-						User blogsEntryUser = UserLocalServiceUtil.fetchUser(blogsEntry.getUserId());
+					<%
+					User blogsEntryUser = UserLocalServiceUtil.fetchUser(blogsEntry.getUserId());
 
-						String blogsEntryUserURL = StringPool.BLANK;
+					String blogsEntryUserURL = StringPool.BLANK;
 
-						if ((blogsEntryUser != null) && !blogsEntryUser.isDefaultUser()) {
-							blogsEntryUserURL = blogsEntryUser.getDisplayURL(themeDisplay);
-						}
-						%>
+					if ((blogsEntryUser != null) && !blogsEntryUser.isDefaultUser()) {
+						blogsEntryUserURL = blogsEntryUser.getDisplayURL(themeDisplay);
+					}
+					%>
 
+					<clay:content-col
+						className="inline-item-before"
+					>
 						<liferay-ui:user-portrait
 							user="<%= blogsEntryUser %>"
 						/>
-					</div>
+					</clay:content-col>
 
-					<div class="autofit-col autofit-col-expand">
-						<div class="autofit-row">
-							<div class="autofit-col autofit-col-expand">
+					<clay:content-col
+						className="inline-item-before"
+					>
+						<clay:content-row>
+							<clay:content-col
+								className="inline-item-before"
+							>
 								<div class="text-truncate-inline">
 									<a class="text-truncate username" href="<%= blogsEntryUserURL %>"><%= HtmlUtil.escape(blogsEntry.getUserName()) %></a>
 								</div>
@@ -99,10 +111,10 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 										- <liferay-reading-time:reading-time displayStyle="descriptive" model="<%= blogsEntry %>" />
 									</c:if>
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+							</clay:content-col>
+						</clay:content-row>
+					</clay:content-col>
+				</clay:content-row>
 			</div>
 
 			<div class="card-footer">

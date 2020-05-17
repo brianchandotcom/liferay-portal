@@ -41,8 +41,12 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		</portlet:renderURL>
 
 		<div class="widget-mode-simple-entry">
-			<div class="autofit-row widget-topbar">
-				<div class="autofit-col autofit-col-expand">
+			<clay:content-row
+				className="widget-topbar"
+			>
+				<clay:content-col
+					expand="true"
+				>
 					<h3 class="title">
 						<aui:a cssClass="title-link" href="<%= viewEntryURL %>"><%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry)) %></aui:a>
 					</h3>
@@ -54,36 +58,46 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					<c:if test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) && Validator.isNotNull(subtitle) %>">
 						<h4 class="sub-title"><%= HtmlUtil.escape(subtitle) %></h4>
 					</c:if>
-				</div>
+				</clay:content-col>
 
-				<div class="autofit-col visible-interaction">
+				<clay:content-col
+					className="visible-interaction"
+				>
 					<div class="dropdown dropdown-action">
 						<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
 					</div>
-				</div>
-			</div>
+				</clay:content-col>
+			</clay:content-row>
 
-			<div class="autofit-row widget-metadata">
-				<div class="autofit-col inline-item-before">
+			<clay:content-row
+				className="widget-metadata"
+			>
 
-					<%
-					User entryUser = UserLocalServiceUtil.fetchUser(entry.getUserId());
+				<%
+				User entryUser = UserLocalServiceUtil.fetchUser(entry.getUserId());
 
-					String entryUserURL = StringPool.BLANK;
+				String entryUserURL = StringPool.BLANK;
 
-					if ((entryUser != null) && !entryUser.isDefaultUser()) {
-						entryUserURL = entryUser.getDisplayURL(themeDisplay);
-					}
-					%>
+				if ((entryUser != null) && !entryUser.isDefaultUser()) {
+					entryUserURL = entryUser.getDisplayURL(themeDisplay);
+				}
+				%>
 
+				<clay:content-col
+					className="inline-item-before"
+				>
 					<liferay-ui:user-portrait
 						user="<%= entryUser %>"
 					/>
-				</div>
+				</clay:content-col>
 
-				<div class="autofit-col autofit-col-expand">
-					<div class="autofit-row">
-						<div class="autofit-col autofit-col-expand">
+				<clay:content-col
+					expand="true"
+				>
+					<clay:content-row>
+						<clay:content-col
+							expand="true"
+						>
 							<div class="text-truncate-inline">
 								<a class="text-truncate username" href="<%= entryUserURL %>"><%= HtmlUtil.escape(entry.getUserName()) %></a>
 							</div>
@@ -104,10 +118,10 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 									- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= (assetEntry.getViewCount() == 1) ? "x-view" : "x-views" %>' />
 								</c:if>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+						</clay:content-col>
+					</clay:content-row>
+				</clay:content-col>
+			</clay:content-row>
 
 			<div class="widget-content" id="<portlet:namespace /><%= entry.getEntryId() %>">
 

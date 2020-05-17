@@ -12,11 +12,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
@@ -43,27 +38,31 @@ definition {
 			groupName = "Test Site Name",
 			titleMap = "en_US:WC Title,es_ES:WC Titulo,de_DE:WC Titel,fi_FI:WC Otsikko");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Web Content Display");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Language Selector");
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC Title");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Language Selector");
-
-		Refresh();
+		IFrame.closeFrame();
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "es_ES",
 			textIcon = "español-España");
 
-		Refresh();
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Contenido");
 
@@ -81,13 +80,13 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		Refresh();
-
 		LanguagePortlet.selectLanguagePG(
 			locale = "de-DE",
 			textIcon = "deutsch-Deutschland");
 
-		Refresh();
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Inhalt");
 
@@ -105,13 +104,13 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		Refresh();
-
 		LanguagePortlet.selectLanguagePG(
 			locale = "fi-FI",
 			textIcon = "suomi-Suomi");
 
-		Refresh();
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Pitoisuus");
 

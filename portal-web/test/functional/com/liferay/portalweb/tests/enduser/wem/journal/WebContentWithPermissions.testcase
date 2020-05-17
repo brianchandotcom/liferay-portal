@@ -155,9 +155,7 @@ definition {
 		Refresh();
 
 		for (var number : list "1,2") {
-			User.openUsersAdmin();
-
-			User.addCP(
+			JSONUser.addUser(
 				userEmailAddress = "user${number}@liferay.com",
 				userFirstName = "userfn${number}",
 				userLastName = "userln${number}",
@@ -169,19 +167,14 @@ definition {
 				userEmailAddress = "user${number}@liferay.com",
 				userScreenName = "usersn${number}");
 
-			Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
-
-			Site.assignUserAsMemberCP(
-				userFirstName = "userfn${number}",
-				userLastName = "userln${number}",
-				userScreenName = "usersn${number}");
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "user${number}@liferay.com");
 		}
 
-		User.openUsersAdmin();
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "Regular Role Name",
-			userScreenName = "usersn1");
+			userEmailAddress = "user1@liferay.com");
 
 		User.logoutPG();
 
@@ -295,15 +288,12 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -317,11 +307,14 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "WCD Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "WCD Page",
+			widgetName = "Web Content Display");
+
 		Navigator.gotoSitePage(
 			pageName = "WCD Page",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 

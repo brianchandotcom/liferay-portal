@@ -33,15 +33,10 @@ definition {
 		property test.name.skip.portal.instance = "LocalizationWithWebContentUI#AddLocalizedWebContentViaSourceEditor";
 		property testray.component.names = "Training,Web Content Administration";
 
-		JSONLayout.addPublicLayout(
+		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
+			layoutName = "Test Page Name",
+			widgetName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
@@ -86,11 +81,10 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Language Selector");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Language Selector");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
@@ -185,17 +179,15 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Web Content Display Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
 
-		Portlet.addPG(portletName = "Web Content Display");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Language Selector");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Language Selector");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

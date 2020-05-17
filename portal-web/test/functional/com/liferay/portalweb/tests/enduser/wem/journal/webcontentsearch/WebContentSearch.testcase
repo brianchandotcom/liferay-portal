@@ -13,16 +13,16 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Search Page");
 
-		SitePages.addPublicPage(pageName = "Web Content Search Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Search Page",
+			widgetName = "Web Content Search");
 
 		Navigator.gotoPage(pageName = "Web Content Search Page");
-
-		Portlet.addPG(portletName = "Web Content Search");
 	}
 
 	tearDown {
@@ -46,20 +46,25 @@ definition {
 	test SearchWebContent {
 		property testray.component.names = "Categories,Web Content Search";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page");
 
-		SitePages.addPublicPage(pageName = "Web Content Display Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		Portlet.addPG(portletName = "Web Content Display");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-		WebContent.addPGViaWCD(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		IFrame.closeFrame();
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
@@ -122,47 +127,37 @@ definition {
 	test SearchWebContentCategory {
 		property testray.component.names = "Categories,Web Content Search";
 
-		Navigator.openURL();
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			panel = "Site Administration",
-			portlet = "Categories");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page");
 
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
 
-		Category.addCP(
-			categoryName = "Category Name",
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Web Content Display Page");
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId}",
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		Portlet.addPG(portletName = "Web Content Display");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-		WebContent.addPGViaWCD(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		IFrame.closeFrame();
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		Navigator.gotoPage(pageName = "Web Content Display Page");
-
-		WebContentDisplayPortletNavigator.gotoEdit(
-			menuItem = "Edit Web Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.selectCategory(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		Button.clickPublish();
 
 		Navigator.gotoPage(pageName = "Web Content Search Page");
 
@@ -197,47 +192,33 @@ definition {
 	test SearchWebContentCategoryQuotes {
 		property testray.component.names = "Categories,Web Content Search";
 
-		Navigator.openURL();
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			panel = "Site Administration",
-			portlet = "Categories");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page");
 
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
 
-		Category.addCP(
-			categoryName = "Category Name",
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Web Content Display Page");
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId}",
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		Portlet.addPG(portletName = "Web Content Display");
-
-		WebContent.addPGViaWCD(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		Navigator.gotoPage(pageName = "Web Content Display Page");
-
-		WebContentDisplayPortletNavigator.gotoEdit(
-			menuItem = "Edit Web Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.selectCategory(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		Button.clickPublish();
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
 		Navigator.gotoPage(pageName = "Web Content Search Page");
 
@@ -272,20 +253,25 @@ definition {
 	test SearchWebContentQuotes {
 		property testray.component.names = "Web Content Search";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page");
 
-		SitePages.addPublicPage(pageName = "Web Content Display Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		Portlet.addPG(portletName = "Web Content Display");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-		WebContent.addPGViaWCD(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		IFrame.closeFrame();
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
@@ -366,30 +352,30 @@ definition {
 	test SearchWebContentTag {
 		property testray.component.names = "Tags,Training,Web Content Display";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page");
 
-		SitePages.addPublicPage(pageName = "Web Content Display Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
+
+		var serviceContext = '''{"assetTagNames": ["tag name"]}''';
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			serviceContext = "${serviceContext}",
+			title = "WC WebContent Title");
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		Portlet.addPG(portletName = "Web Content Display");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-		WebContent.addPGViaWCD(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		IFrame.closeFrame();
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		Navigator.gotoPage(pageName = "Web Content Display Page");
-
-		WebContentDisplayPortletNavigator.gotoEdit(
-			menuItem = "Edit Web Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.addTagPGViaWCD(tagName = "tag name");
 
 		Navigator.gotoPage(pageName = "Web Content Search Page");
 
@@ -424,30 +410,30 @@ definition {
 	test SearchWebContentTagQuotes {
 		property testray.component.names = "Web Content Search";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page");
 
-		SitePages.addPublicPage(pageName = "Web Content Display Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
+
+		var serviceContext = '''{"assetTagNames": ["tag name"]}''';
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			serviceContext = "${serviceContext}",
+			title = "WC WebContent Title");
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		Portlet.addPG(portletName = "Web Content Display");
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-		WebContent.addPGViaWCD(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		IFrame.closeFrame();
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		Navigator.gotoPage(pageName = "Web Content Display Page");
-
-		WebContentDisplayPortletNavigator.gotoEdit(
-			menuItem = "Edit Web Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.addTagPGViaWCD(tagName = "tag name");
 
 		Navigator.gotoPage(pageName = "Web Content Search Page");
 

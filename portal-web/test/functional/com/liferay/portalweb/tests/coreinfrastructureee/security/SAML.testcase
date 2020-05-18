@@ -6,8 +6,6 @@ definition {
 	property app.server.bundles.size = "1";
 	property databases.size = "1";
 	property dummy.socket.proxy.disabled = "true";
-	property osgi.app.includes = "saml";
-	property plugins.deployment.type = "osgi";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "SAML";
 

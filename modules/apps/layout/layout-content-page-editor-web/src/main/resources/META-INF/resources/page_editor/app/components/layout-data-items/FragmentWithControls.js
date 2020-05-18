@@ -14,6 +14,7 @@
 
 import React, {useCallback, useMemo} from 'react';
 
+import useSetRef from '../../../core/hooks/useSetRef';
 import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
@@ -39,6 +40,8 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+	const [setRef, itemElement] = useSetRef(ref);
 
 	const handleButtonClick = useCallback(
 		(id) => {
@@ -86,7 +89,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	]);
 
 	return (
-		<Topper item={item} itemRef={ref} layoutData={layoutData}>
+		<Topper item={item} itemElement={itemElement} layoutData={layoutData}>
 			<>
 				{canUpdateLayoutContent && (
 					<FloatingToolbar
@@ -100,7 +103,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 				<FragmentContent
 					fragmentEntryLinkId={fragmentEntryLink.fragmentEntryLinkId}
 					itemId={item.itemId}
-					ref={ref}
+					ref={setRef}
 				/>
 			</>
 		</Topper>

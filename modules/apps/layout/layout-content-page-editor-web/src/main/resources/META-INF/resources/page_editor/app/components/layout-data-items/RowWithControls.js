@@ -16,8 +16,9 @@ import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
+import useSetRef from '../../../core/hooks/useSetRef';
 import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
@@ -72,8 +73,9 @@ const RowWithControls = React.forwardRef(
 
 		const rowConfig = getResponsiveConfig(config, selectedViewportSize);
 
-		const rowRef = useRef(null);
-		const rowRect = getRect(rowRef.current);
+		const [setRef, itemElement] = useSetRef(ref);
+
+		const rowRect = getRect(itemElement);
 		const [highlightedColumn, setHighLightedColumn] = useState(null);
 		const [resizeFinished, setResizeFinished] = useState(false);
 		const [showOverlay, setShowOverlay] = useState(false);
@@ -115,7 +117,7 @@ const RowWithControls = React.forwardRef(
 		};
 
 		const onResizing = ({clientX}, columnInfo) => {
-			if (rowRef.current) {
+			if (itemElement) {
 				const index = getHighlightedColumnIndex(clientX);
 				setHighLightedColumn(index);
 
@@ -188,7 +190,11 @@ const RowWithControls = React.forwardRef(
 		const {verticalAlignment} = rowConfig;
 
 		return (
-			<Topper item={item} itemRef={ref} layoutData={layoutData}>
+			<Topper
+				item={item}
+				itemElement={itemElement}
+				layoutData={layoutData}
+			>
 				<Row
 					className={classNames('page-editor__row', {
 						'align-bottom': verticalAlignment === 'bottom',
@@ -196,15 +202,7 @@ const RowWithControls = React.forwardRef(
 					})}
 					item={item}
 					layoutData={layoutData}
-					ref={(node) => {
-						if (node) {
-							rowRef.current = node;
-
-							if (ref) {
-								ref.current = node;
-							}
-						}
-					}}
+					ref={setRef}
 				>
 					<FloatingToolbar
 						buttons={buttons}

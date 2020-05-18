@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import React, {useCallback, useState} from 'react';
 
+import useSetRef from '../../../core/hooks/useSetRef';
 import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
@@ -50,6 +51,8 @@ const ContainerWithControls = React.forwardRef(
 
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 		const selectItem = useSelectItem();
+
+		const [setRef, itemElement] = useSetRef(ref);
 
 		const handleButtonClick = useCallback(
 			(id) => {
@@ -89,13 +92,17 @@ const ContainerWithControls = React.forwardRef(
 		);
 
 		return (
-			<Topper item={item} itemRef={ref} layoutData={layoutData}>
+			<Topper
+				item={item}
+				itemElement={itemElement}
+				layoutData={layoutData}
+			>
 				<Container
 					className={classNames('page-editor__container', {
 						empty: !item.children.length,
 					})}
 					item={item}
-					ref={ref}
+					ref={setRef}
 				>
 					<FloatingToolbar
 						buttons={buttons}

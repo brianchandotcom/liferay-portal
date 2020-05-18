@@ -14,6 +14,7 @@
 
 import React, {useCallback} from 'react';
 
+import useSetRef from '../../../core/hooks/useSetRef';
 import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
@@ -32,6 +33,8 @@ const CollectionWithControls = React.forwardRef(
 		const dispatch = useDispatch();
 		const selectItem = useSelectItem();
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
+		const [setRef, itemElement] = useSetRef(ref);
 
 		const buttons = [];
 
@@ -58,9 +61,13 @@ const CollectionWithControls = React.forwardRef(
 		);
 
 		return (
-			<Topper item={item} itemRef={ref} layoutData={layoutData}>
+			<Topper
+				item={item}
+				itemElement={itemElement}
+				layoutData={layoutData}
+			>
 				<>
-					<Collection item={item} ref={ref}>
+					<Collection item={item} ref={setRef}>
 						{children}
 					</Collection>
 

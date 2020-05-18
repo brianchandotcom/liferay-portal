@@ -1039,8 +1039,22 @@ public class ResourceActionsImpl implements ResourceActions {
 			for (Element portletResourceElement :
 					rootElement.elements("portlet-resource")) {
 
-				String portletName = _readPortletResource(
-					servletContextName, portletResourceElement);
+				String portletName = _normalizePortletName(
+					servletContextName,
+					portletResourceElement.elementTextTrim("portlet-name"));
+
+				Portlet portlet = portletLocalService.getPortletById(
+					portletName);
+
+				Set<String> portletActions = _getPortletMimeTypeActions(
+					portletName, portlet);
+
+				if (!portletName.equals(PortletKeys.PORTAL)) {
+					_checkPortletActions(portlet, portletActions);
+				}
+
+				_readResource(
+					portletResourceElement, portletName, portletActions);
 
 				if (portletNames != null) {
 					portletNames.add(portletName);
@@ -1137,27 +1151,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		_readResource(
 			modelResourceElement, name,
 			Collections.singleton(ActionKeys.PERMISSIONS));
-
-		return name;
-	}
-
-	private String _readPortletResource(
-			String servletContextName, Element portletResourceElement)
-		throws Exception {
-
-		String name = _normalizePortletName(
-			servletContextName,
-			portletResourceElement.elementTextTrim("portlet-name"));
-
-		Portlet portlet = portletLocalService.getPortletById(name);
-
-		Set<String> portletActions = _getPortletMimeTypeActions(name, portlet);
-
-		if (!name.equals(PortletKeys.PORTAL)) {
-			_checkPortletActions(portlet, portletActions);
-		}
-
-		_readResource(portletResourceElement, name, portletActions);
 
 		return name;
 	}

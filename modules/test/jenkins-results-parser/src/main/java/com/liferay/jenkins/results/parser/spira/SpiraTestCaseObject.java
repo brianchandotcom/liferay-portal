@@ -207,7 +207,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	}
 
 	protected static List<SpiraTestCaseObject> getSpiraTestCases(
-		final SpiraProject spiraProject,
+		final SpiraProject spiraProject, final long numberOfRows,
 		final SearchQuery.SearchParameter... searchParameters) {
 
 		return getSpiraArtifacts(
@@ -217,7 +217,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				@Override
 				public List<JSONObject> get() {
 					return _requestSpiraTestCases(
-						spiraProject, searchParameters);
+						spiraProject, numberOfRows, searchParameters);
 				}
 
 			},
@@ -230,6 +230,13 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 			},
 			searchParameters);
+	}
+
+	protected static List<SpiraTestCaseObject> getSpiraTestCases(
+		final SpiraProject spiraProject,
+		final SearchQuery.SearchParameter... searchParameters) {
+
+		return getSpiraTestCases(spiraProject, 35000, searchParameters);
 	}
 
 	@Override
@@ -338,7 +345,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 	}
 
 	private static List<JSONObject> _requestSpiraTestCases(
-		SpiraProject spiraProject,
+		SpiraProject spiraProject, long numberOfRows,
 		SearchQuery.SearchParameter... searchParameters) {
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
@@ -348,7 +355,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 		Map<String, String> urlParameters = new HashMap<>();
 
-		urlParameters.put("number_of_rows", String.valueOf(30000));
+		urlParameters.put("number_of_rows", String.valueOf(numberOfRows));
 		urlParameters.put("starting_row", String.valueOf(1));
 
 		JSONArray requestJSONArray = new JSONArray();

@@ -48,12 +48,12 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 				_collectionJSONObject,
 				collectionLayoutStructureItem._collectionJSONObject) ||
 			!Objects.equals(
+				_listStyle, collectionLayoutStructureItem._listStyle) ||
+			!Objects.equals(
 				_numberOfColumns,
 				collectionLayoutStructureItem._numberOfColumns) ||
 			!Objects.equals(
-				_numberOfItems, collectionLayoutStructureItem._numberOfItems) ||
-			!Objects.equals(
-				_listStyle, collectionLayoutStructureItem._listStyle)) {
+				_numberOfItems, collectionLayoutStructureItem._numberOfItems)) {
 
 			return false;
 		}
@@ -138,16 +138,16 @@ public class CollectionLayoutStructureItem extends LayoutStructureItem {
 				itemConfigJSONObject.getJSONObject("collection"));
 		}
 
+		if (itemConfigJSONObject.has("listStyle")) {
+			setListStyle(itemConfigJSONObject.getString("listStyle"));
+		}
+
 		if (itemConfigJSONObject.has("numberOfColumns")) {
 			setNumberOfColumns(itemConfigJSONObject.getInt("numberOfColumns"));
 		}
 
 		if (itemConfigJSONObject.has("numberOfItems")) {
 			setNumberOfItems(itemConfigJSONObject.getInt("numberOfItems"));
-		}
-
-		if (itemConfigJSONObject.has("listStyle")) {
-			setListStyle(itemConfigJSONObject.getString("listStyle"));
 		}
 	}
 

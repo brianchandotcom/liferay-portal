@@ -549,6 +549,8 @@ definition {
 
 	@priority = "4"
 	test RateBookmarksWithLikeStyle {
+		property portal.release = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Bookmarks Page");

@@ -80,7 +80,7 @@ definition {
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
 
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__drop-zone')]");
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 
 			Click(
 				key_elementType = "Section",
@@ -190,7 +190,7 @@ definition {
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
 
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__drop-zone')]");
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 
 			PageEditor.editLayoutSection(
 				backgroundImage = "Manual Selection",

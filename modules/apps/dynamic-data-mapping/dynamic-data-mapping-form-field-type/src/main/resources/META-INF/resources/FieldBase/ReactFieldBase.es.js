@@ -12,6 +12,8 @@
  * details.
  */
 
+import './FieldBase.scss';
+
 import ClayButton from '@clayui/button';
 import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -153,12 +155,14 @@ function FieldBase({
 					{children}
 
 					{nestedFields && (
-						<PageRendererAdapter
-							context={context}
-							editable={editable}
-							rows={getDefaultRows(nestedFields)}
-							spritemap={spritemap}
-						/>
+						<div className="ddm-field-types-base__nested">
+							<PageRendererAdapter
+								context={context}
+								editable={editable}
+								rows={getDefaultRows(nestedFields)}
+								spritemap={spritemap}
+							/>
+						</div>
 					)}
 
 					{localizedValueArray.length > 0 &&

@@ -473,6 +473,20 @@ definition {
 		AssertElementPresent(locator1 = "Button#SAVE");
 	}
 
+	macro viewDMWorkflowPresent {
+		DMFolder.gotoEditCP(folderName = "${dmFolderName}");
+
+		if (IsElementNotPresent.isNotVisible(locator1 = "Radio#WORKFLOW_PARENT_FOLDER")) {
+			Click(locator1 = "DocumentsAndMediaEditFolder#WORKFLOW_DOCUMENT_TYPE_RESTRICTIONS_TOGGLE");
+		}
+
+		AssertVisible(locator1 = "Radio#WORKFLOW_PARENT_FOLDER");
+
+		AssertVisible(locator1 = "Radio#WORKFLOW_SPECIFIC_RESTRICTIONS");
+
+		AssertVisible(locator1 = "Radio#WORKFLOW_DEFAULT_WORKFLOW");
+	}
+
 	macro viewDocumentInFTP {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -588,6 +602,12 @@ definition {
 		AssertElementNotPresent(
 			key_dmDocumentName = "${dmDocumentTitle}",
 			locator1 = "Link#DOCUMENT_IN_FTP");
+	}
+
+	macro viewNoWorkflowResource {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No entries were found.");
 	}
 
 	macro viewSearchResult {

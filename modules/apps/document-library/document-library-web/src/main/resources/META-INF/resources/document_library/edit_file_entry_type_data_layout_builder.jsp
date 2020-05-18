@@ -27,32 +27,23 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.
 
 long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
-String ddmStructureKey = StringPool.BLANK;
-String fileEntryTypeUuid = StringPool.BLANK;
-
-if (ddmStructure == null) {
-	fileEntryTypeUuid = (fileEntryType != null) ? fileEntryType.getUuid() : PortalUUIDUtil.generate();
-
-	ddmStructureKey = DLUtil.getDDMStructureKey(fileEntryTypeUuid);
-}
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new-document-type") : fileEntryType.getName(locale));
 %>
 
-<portlet:actionURL name="/document_library/edit_file_entry_type" var="editFileEntryTypeURL">
-	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
+<portlet:actionURL name="/document_library/edit_file_entry_type_data_definition" var="editFileEntryTypeURL">
+	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type_data_definition" />
 </portlet:actionURL>
 
 <aui:form action="<%= editFileEntryTypeURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (fileEntryType == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
-	<aui:input name="fileEntryTypeUuid" type="hidden" value="<%= fileEntryTypeUuid %>" />
-	<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
-	<aui:input name="definition" type="hidden" />
+	<aui:input name="dataDefinitionId" type="hidden" value="<%= ddmStructureId %>" />
+	<aui:input name="dataDefinition" type="hidden" />
+	<aui:input name="dataLayout" type="hidden" />
 
 	<liferay-ui:error exception="<%= DuplicateFileEntryTypeException.class %>" message="please-enter-a-unique-document-type-name" />
 	<liferay-ui:error exception="<%= NoSuchMetadataSetException.class %>" message="please-enter-a-valid-metadata-set-or-enter-a-metadata-field" />
@@ -66,6 +57,9 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
 		<clay:container-fluid>
 			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand">
+					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()) %>" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled", "structure") %>' wrapperCssClass="article-content-title mb-0" />
+				</li>
 				<li class="tbar-item tbar-item-expand"></li>
 				<li class="tbar-item">
 					<div class="metadata-type-button-row tbar-section text-right">
@@ -100,46 +94,53 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />saveStructure() {
-		Liferay.componentReady(
-			'<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
-		).then(function (dataLayoutBuilder) {
-			var name =
-				document.<portlet:namespace />fm[
-					'<portlet:namespace />name_' + themeDisplay.getLanguageId()
-				].value;
-			var description =
-				document.<portlet:namespace />fm['<portlet:namespace />description']
-					.value;
+function <portlet:namespace />getInputLocalizedValues(field) {
+	var inputLocalized = Liferay.component('<portlet:namespace />' + field);
+	var localizedValues = {};
 
-			dataLayoutBuilder
-				.save({
-					dataDefinition: {
-						description: {
-							value: description,
-						},
-						name: {
-							value: name,
-						},
-						dataDefinitionKey: '<%= ddmStructureKey %>',
-					},
-					dataLayout: {
-						description: {
-							value: description,
-						},
-						name: {
-							value: name,
-						},
-					},
-				})
-				.then(function (dataLayout) {
-					document.<portlet:namespace />fm[
-						'<portlet:namespace />ddmStructureId'
-					].value = dataLayout.id;
-					submitForm(document.<portlet:namespace />fm);
-				});
+	if (inputLocalized) {
+		var translatedLanguages = inputLocalized
+			.get('translatedLanguages')
+			.values();
+
+		translatedLanguages.forEach(function (languageId) {
+			localizedValues[languageId] = inputLocalized.getValue(languageId);
 		});
 	}
+
+	return localizedValues;
+}
+
+function <portlet:namespace />saveStructure() {
+	Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
+		function (dataLayoutBuilder) {
+			var name = <portlet:namespace />getInputLocalizedValues('name');
+
+			var description = <portlet:namespace />getInputLocalizedValues(
+				'description'
+			);
+
+			var formData = dataLayoutBuilder.getFormData();
+
+			var dataDefinition = formData.definition;
+
+			dataDefinition.description = description;
+			dataDefinition.name = name;
+
+			var dataLayout = formData.layout;
+
+			dataLayout.description = description;
+			dataLayout.name = name;
+
+			Liferay.Util.postForm(document.<portlet:namespace />fm, {
+				data: {
+					dataDefinition: JSON.stringify(dataDefinition),
+					dataLayout: JSON.stringify(dataLayout),
+				},
+			});
+		}
+	);
+}
 </aui:script>
 
 <%

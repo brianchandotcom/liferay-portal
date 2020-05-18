@@ -296,6 +296,15 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCTModel("DDMStructureLink", "DDMTemplateLink"));
 
 		registry.register("3.4.0", "3.5.0", new UpgradeDDMFormInstanceReport());
+
+		registry.register(
+			"3.5.0", "3.6.0",
+			new UpgradeCTModel(
+				"DDMContent", "DDMDataProviderInstance",
+				"DDMDataProviderInstanceLink", "DDMFormInstance",
+				"DDMFormInstanceRecord", "DDMFormInstanceRecordVersion",
+				"DDMFormInstanceReport", "DDMFormInstanceVersion",
+				"DDMStorageLink", "DDMStructureLayout"));
 	}
 
 	@Activate

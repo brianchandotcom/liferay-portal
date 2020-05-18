@@ -7,7 +7,7 @@ Import-Package:\
 	!org.apache.poi.ss.usermodel.*,\
 	\
 	*
-Liferay-Require-SchemaVersion: 3.5.0
+Liferay-Require-SchemaVersion: 3.6.0
 Liferay-Service: true
 Provide-Capability:\
 	liferay.resource.bundle;\

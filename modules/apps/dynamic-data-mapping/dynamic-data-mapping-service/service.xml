@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
 
-<service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.dynamic.data.mapping">
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" change-tracking-enabled="true" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.dynamic.data.mapping">
 	<namespace>DDM</namespace>
 	<entity local-service="true" name="DDMContent" remote-service="false" uuid="true">
 
@@ -361,7 +361,7 @@
 		<!-- References -->
 
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="DDMStructure" remote-service="true" uuid="true">
+	<entity local-service="true" name="DDMStructure" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -505,7 +505,7 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="DDMStructureLink" remote-service="false">
+	<entity local-service="true" name="DDMStructureLink" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -539,7 +539,7 @@
 			<finder-column name="structureId" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="DDMStructureVersion" remote-service="true">
+	<entity local-service="true" name="DDMStructureVersion" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -585,7 +585,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="DDMTemplate" remote-service="true" uuid="true">
+	<entity local-service="true" name="DDMTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -689,7 +689,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="DDMTemplateLink" remote-service="false">
+	<entity local-service="true" name="DDMTemplateLink" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -718,7 +718,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="DDMTemplateVersion" remote-service="true">
+	<entity local-service="true" name="DDMTemplateVersion" remote-service="true">
 
 		<!-- PK fields -->
 

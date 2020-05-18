@@ -490,7 +490,12 @@ public class ConfigurationPersistenceManager
 		File configFile = null;
 
 		if (felixFileInstallFileName.startsWith("file:")) {
-			configFile = new File(URI.create(felixFileInstallFileName));
+			try {
+				configFile = new File(URI.create(felixFileInstallFileName));
+			}
+			catch (Exception exception) {
+				configFile = new File(felixFileInstallFileName);
+			}
 
 			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, configFile.getName());
 

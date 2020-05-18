@@ -23,12 +23,162 @@ import {Route, Router} from 'react-router-dom';
 import EditTableView from '../../../../src/main/resources/META-INF/resources/js/pages/table-view/EditTableView.es';
 import * as toast from '../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
-import {
-	fieldTypeResponse,
-	tableViewResponseOneItem,
-	tableViewResponseTwoItens,
-	tableViewWithId,
-} from '../../mock.es';
+
+const fieldTypes = [
+	{
+		icon: 'calendar',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/DatePicker/DatePicker.es',
+		name: 'date',
+	},
+	{
+		icon: 'list',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/Select/Select.es',
+		name: 'select',
+	},
+	{
+		icon: 'adjust',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/FieldSet/FieldSet.es',
+		name: 'fieldset',
+	},
+	{
+		icon: 'integer',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/Numeric/Numeric.es',
+		name: 'numeric',
+	},
+	{
+		icon: 'check-circle-full',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/CheckboxMultiple/CheckboxMultiple.es',
+		name: 'checkbox_multiple',
+	},
+	{
+		icon: 'radio-button',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/Radio/Radio.es',
+		name: 'radio',
+	},
+	{
+		icon: 'text',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/Text/Text.es',
+		name: 'text',
+	},
+	{
+		icon: 'upload',
+		javaScriptModule:
+			'dynamic-data-mapping-form-field-type@5.0.20/DocumentLibrary/DocumentLibrary.es',
+		name: 'document_library',
+	},
+];
+
+const fieldTypeResponse = fieldTypes.map((fieldType, index) => ({
+	...fieldType,
+	displayOrder: index,
+	group: 'basic',
+	label: fieldType.name.toUpperCase(),
+	scope: 'app-builder,forms',
+	system: false,
+}));
+
+const dataDefinitionField = {
+	customProperties: {
+		autocomplete: false,
+		dataSourceType: 'manual',
+		dataType: 'string',
+		ddmDataProviderInstanceId: '[]',
+		ddmDataProviderInstanceOutput: '[]',
+		displayStyle: 'singleline',
+		fieldNamespace: '',
+		options: {
+			en_US: [
+				{
+					label: 'Option',
+					value: 'Option',
+				},
+			],
+		},
+		placeholder: {
+			en_US: '',
+		},
+		tooltip: {
+			en_US: '',
+		},
+		visibilityExpression: '',
+	},
+	defaultValue: {
+		en_US: '',
+	},
+	description: {
+		en_US: 'Enter your name',
+	},
+	fieldType: 'text',
+	indexType: 'keyword',
+	indexable: true,
+	label: {
+		en_US: 'Name',
+	},
+	localizable: true,
+	name: 'Text',
+	nestedDataDefinitionFields: [],
+	readOnly: false,
+	repeatable: false,
+	required: false,
+	showLabel: true,
+	tip: {
+		en_US: '',
+	},
+};
+
+const tableViewResponseOneItem = {
+	availableLanguageIds: ['en_US'],
+	dataDefinitionFields: [dataDefinitionField],
+	dataDefinitionKey: '36601',
+	dateCreated: '2020-04-24T13:50:04Z',
+	dateModified: '2020-04-24T13:50:13Z',
+	defaultLanguageId: 'en_US',
+	description: {},
+	id: 36602,
+	name: {
+		en_US: 'My Custom Object',
+	},
+	siteId: 20125,
+	storageType: 'json',
+	userId: 20127,
+};
+
+const tableViewResponseTwoItens = {
+	...tableViewResponseOneItem,
+	dataDefinitionFields: [
+		dataDefinitionField,
+		{
+			...dataDefinitionField,
+			fieldType: 'select',
+			label: {
+				en_US: 'Options',
+			},
+			name: 'SelectFromList',
+		},
+	],
+};
+
+const tableViewWithId = {
+	appliedFilters: {},
+	dataDefinitionId: 36716,
+	dateCreated: '2020-05-12T18:49:56Z',
+	dateModified: '2020-05-12T18:49:56Z',
+	fieldNames: ['Text'],
+	id: 36516,
+	name: {
+		en_US: 'Name',
+	},
+	siteId: 20125,
+	sortField: '',
+	userId: 20127,
+};
 
 describe('EditTableView', () => {
 	let spySuccessToast;

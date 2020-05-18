@@ -43,6 +43,7 @@ import com.liferay.portal.vulcan.yaml.openapi.Post;
 import com.liferay.portal.vulcan.yaml.openapi.Put;
 import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Response;
+import com.liferay.portal.vulcan.yaml.openapi.ResponseCode;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
  * @author Peter Shin
@@ -347,7 +349,7 @@ public class ResourceOpenAPIParser {
 
 		batchOperation.setResponses(
 			HashMapBuilder.put(
-				200, response
+				new ResponseCode("200"), response
 			).build());
 
 		return batchOperation;
@@ -364,12 +366,12 @@ public class ResourceOpenAPIParser {
 			}
 		}
 
-		parameters.add(_getCallbarkURLParameter());
+		parameters.add(_getCallbackURLParameter());
 
 		return parameters;
 	}
 
-	private static Parameter _getCallbarkURLParameter() {
+	private static Parameter _getCallbackURLParameter() {
 		Parameter parameter = new Parameter();
 
 		parameter.setIn("query");
@@ -565,7 +567,7 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getMethodAnnotationProduces(Operation operation) {
-		Map<Integer, Response> responses = operation.getResponses();
+		Map<ResponseCode, Response> responses = operation.getResponses();
 
 		if ((responses == null) || responses.isEmpty()) {
 			return null;
@@ -806,23 +808,43 @@ public class ResourceOpenAPIParser {
 	private static String _getReturnType(
 		Map<String, String> javaDataTypeMap, Operation operation, String path) {
 
-		Map<Integer, Response> responses = operation.getResponses();
+		Map<ResponseCode, Response> responses = operation.getResponses();
 
 		if ((responses == null) || responses.isEmpty()) {
 			return void.class.getName();
 		}
 
 		Integer httpStatusCode = null;
-		Response response = null;
 
-		for (Map.Entry<Integer, Response> entry : responses.entrySet()) {
-			Integer curHttpStatusCode = entry.getKey();
+		Set<Map.Entry<ResponseCode, Response>> responseEntrySet =
+			responses.entrySet();
 
-			javax.ws.rs.core.Response.Status.Family family =
-				javax.ws.rs.core.Response.Status.Family.familyOf(
-					curHttpStatusCode);
+		Stream<Map.Entry<ResponseCode, Response>> responseEntryStream =
+			responseEntrySet.stream();
 
-			if (family != _FAMILY_SUCCESSFUL) {
+		Response response = responseEntryStream.filter(
+			responseEntry -> {
+				ResponseCode responseCode = responseEntry.getKey();
+
+				return responseCode.isDefaultResponse();
+			}
+		).findFirst(
+		).map(
+			Map.Entry::getValue
+		).orElse(
+			null
+		);
+
+		for (Map.Entry<ResponseCode, Response> entry : responses.entrySet()) {
+			ResponseCode responseCode = entry.getKey();
+
+			Integer curHttpStatusCode = responseCode.getHttpCode();
+
+			if (responseCode.isDefaultResponse() ||
+				(_FAMILY_SUCCESSFUL !=
+					javax.ws.rs.core.Response.Status.Family.familyOf(
+						curHttpStatusCode))) {
+
 				continue;
 			}
 

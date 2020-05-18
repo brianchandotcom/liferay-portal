@@ -47,6 +47,7 @@ import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.PathItem;
 import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Response;
+import com.liferay.portal.vulcan.yaml.openapi.ResponseCode;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.io.File;
@@ -1116,9 +1117,10 @@ public class RESTBuilder {
 						contents, index, yamlString);
 				}
 
-				Map<Integer, Response> responses = operation.getResponses();
+				Map<ResponseCode, Response> responses =
+					operation.getResponses();
 
-				for (Map.Entry<Integer, Response> entry2 :
+				for (Map.Entry<ResponseCode, Response> entry2 :
 						responses.entrySet()) {
 
 					Response response = entry2.getValue();

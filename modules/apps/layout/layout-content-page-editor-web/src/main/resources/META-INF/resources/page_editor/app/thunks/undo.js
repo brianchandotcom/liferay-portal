@@ -15,6 +15,8 @@
 import {UPDATE_UNDO_ACTIONS} from '../actions/types';
 import {undoAction} from '../components/undo/undoActions';
 
+let promise = Promise.resolve();
+
 export default function undo({store}) {
 	return (dispatch) => {
 		if (!store.undoHistory || store.undoHistory.length === 0) {
@@ -25,6 +27,8 @@ export default function undo({store}) {
 
 		dispatch({type: UPDATE_UNDO_ACTIONS, undoHistory: undos});
 
-		undoAction({action: lastUndo, store})(dispatch);
+		promise = promise.then(() =>
+			undoAction({action: lastUndo, store})(dispatch)
+		);
 	};
 }

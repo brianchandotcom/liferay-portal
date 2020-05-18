@@ -14,10 +14,11 @@
 
 package com.liferay.gradle.plugins.internal;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
+import com.liferay.gradle.plugins.util.PortalTools;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -28,7 +29,7 @@ import org.gradle.api.tasks.TaskContainer;
  * @author Andrea Di Giorgi
  */
 public class LangBuilderDefaultsPlugin
-	extends BasePortalToolDefaultsPlugin<LangBuilderPlugin> {
+	extends BaseDefaultsPlugin<LangBuilderPlugin> {
 
 	public static final Plugin<Project> INSTANCE =
 		new LangBuilderDefaultsPlugin();
@@ -37,7 +38,9 @@ public class LangBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, LangBuilderPlugin langBuilderPlugin) {
 
-		addPortalToolDependencies(project);
+		PortalTools.addPortalToolDependencies(
+			project, LangBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
+			_PORTAL_TOOL_NAME);
 
 		_configureTasksBuildLang(project);
 	}
@@ -45,16 +48,6 @@ public class LangBuilderDefaultsPlugin
 	@Override
 	protected Class<LangBuilderPlugin> getPluginClass() {
 		return LangBuilderPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return LangBuilderPlugin.CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private LangBuilderDefaultsPlugin() {

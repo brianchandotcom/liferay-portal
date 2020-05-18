@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
 
 import org.gradle.api.Action;
@@ -31,7 +32,7 @@ import org.gradle.api.tasks.TaskContainer;
  * @author Hugo Huijser
  */
 public class SourceFormatterDefaultsPlugin
-	extends BasePortalToolDefaultsPlugin<SourceFormatterPlugin> {
+	extends BaseDefaultsPlugin<SourceFormatterPlugin> {
 
 	public static final Plugin<Project> INSTANCE =
 		new SourceFormatterDefaultsPlugin();
@@ -40,7 +41,9 @@ public class SourceFormatterDefaultsPlugin
 	protected void applyPluginDefaults(
 		final Project project, SourceFormatterPlugin sourceFormatterPlugin) {
 
-		addPortalToolDependencies(project);
+		PortalTools.addPortalToolDependencies(
+			project, SourceFormatterPlugin.CONFIGURATION_NAME,
+			PortalTools.GROUP, _PORTAL_TOOL_NAME);
 
 		_configureTasksFormatSource(project);
 
@@ -65,16 +68,6 @@ public class SourceFormatterDefaultsPlugin
 	@Override
 	protected Class<SourceFormatterPlugin> getPluginClass() {
 		return SourceFormatterPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return SourceFormatterPlugin.CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private void _configureTaskForNodePlugin(

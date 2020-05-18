@@ -14,10 +14,11 @@
 
 package com.liferay.gradle.plugins.internal;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.rest.builder.BuildRESTTask;
 import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
+import com.liferay.gradle.plugins.util.PortalTools;
 
 import groovy.lang.Closure;
 
@@ -31,7 +32,7 @@ import org.gradle.api.tasks.Copy;
  * @author Peter Shin
  */
 public class RESTBuilderDefaultsPlugin
-	extends BasePortalToolDefaultsPlugin<RESTBuilderPlugin> {
+	extends BaseDefaultsPlugin<RESTBuilderPlugin> {
 
 	public static final Plugin<Project> INSTANCE =
 		new RESTBuilderDefaultsPlugin();
@@ -40,7 +41,9 @@ public class RESTBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		final Project project, RESTBuilderPlugin restBuilderPlugin) {
 
-		addPortalToolDependencies(project);
+		PortalTools.addPortalToolDependencies(
+			project, RESTBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
+			_PORTAL_TOOL_NAME);
 
 		BuildRESTTask buildRESTTask = (BuildRESTTask)GradleUtil.getTask(
 			project, RESTBuilderPlugin.BUILD_REST_TASK_NAME);
@@ -51,16 +54,6 @@ public class RESTBuilderDefaultsPlugin
 	@Override
 	protected Class<RESTBuilderPlugin> getPluginClass() {
 		return RESTBuilderPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return RESTBuilderPlugin.CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private RESTBuilderDefaultsPlugin() {

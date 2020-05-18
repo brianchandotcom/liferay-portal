@@ -14,10 +14,11 @@
 
 package com.liferay.gradle.plugins.internal;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -31,7 +32,7 @@ import org.gradle.api.tasks.TaskContainer;
  * @author Andrea Di Giorgi
  */
 public class CSSBuilderDefaultsPlugin
-	extends BasePortalToolDefaultsPlugin<CSSBuilderPlugin> {
+	extends BaseDefaultsPlugin<CSSBuilderPlugin> {
 
 	public static final Plugin<Project> INSTANCE =
 		new CSSBuilderDefaultsPlugin();
@@ -40,11 +41,13 @@ public class CSSBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, CSSBuilderPlugin cssBuilderPlugin) {
 
-		addPortalToolDependencies(project);
+		PortalTools.addPortalToolDependencies(
+			project, CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME,
+			PortalTools.GROUP, _PORTAL_TOOL_NAME);
 
-		addPortalToolDependencies(
+		PortalTools.addPortalToolDependencies(
 			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
-			_FRONTEND_COMMON_CSS_NAME);
+			PortalTools.GROUP, _FRONTEND_COMMON_CSS_NAME);
 
 		_configureTasksBuildCSS(project);
 	}
@@ -52,16 +55,6 @@ public class CSSBuilderDefaultsPlugin
 	@Override
 	protected Class<CSSBuilderPlugin> getPluginClass() {
 		return CSSBuilderPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private CSSBuilderDefaultsPlugin() {

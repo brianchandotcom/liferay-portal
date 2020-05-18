@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.defaults.internal;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.plugins.whip.WhipExtension;
@@ -31,17 +31,15 @@ import org.gradle.api.tasks.testing.Test;
 /**
  * @author Andrea Di Giorgi
  */
-public class WhipDefaultsPlugin
-	extends BasePortalToolDefaultsPlugin<WhipPlugin> {
+public class WhipDefaultsPlugin extends BaseDefaultsPlugin<WhipPlugin> {
 
 	public static final Plugin<Project> INSTANCE = new WhipDefaultsPlugin();
 
-	@Override
 	protected void addPortalToolDependencies(Project project) {
 		WhipExtension whipExtension = GradleUtil.getExtension(
 			project, WhipExtension.class);
 
-		String version = PortalTools.getVersion(project, getPortalToolName());
+		String version = PortalTools.getVersion(project, _PORTAL_TOOL_NAME);
 
 		if (Validator.isNotNull(version)) {
 			whipExtension.setVersion(version);
@@ -58,16 +56,6 @@ public class WhipDefaultsPlugin
 	@Override
 	protected Class<WhipPlugin> getPluginClass() {
 		return WhipPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return WhipPlugin.CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private WhipDefaultsPlugin() {

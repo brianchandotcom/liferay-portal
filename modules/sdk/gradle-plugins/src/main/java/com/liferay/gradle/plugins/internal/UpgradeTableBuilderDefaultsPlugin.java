@@ -14,10 +14,11 @@
 
 package com.liferay.gradle.plugins.internal;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
+import com.liferay.gradle.plugins.util.PortalTools;
 
 import java.io.File;
 
@@ -30,7 +31,7 @@ import org.gradle.api.tasks.TaskContainer;
  * @author Andrea Di Giorgi
  */
 public class UpgradeTableBuilderDefaultsPlugin
-	extends BasePortalToolDefaultsPlugin<UpgradeTableBuilderPlugin> {
+	extends BaseDefaultsPlugin<UpgradeTableBuilderPlugin> {
 
 	public static final Plugin<Project> INSTANCE =
 		new UpgradeTableBuilderDefaultsPlugin();
@@ -39,7 +40,9 @@ public class UpgradeTableBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, UpgradeTableBuilderPlugin upgradeTableBuilderPlugin) {
 
-		addPortalToolDependencies(project);
+		PortalTools.addPortalToolDependencies(
+			project, UpgradeTableBuilderPlugin.CONFIGURATION_NAME,
+			PortalTools.GROUP, _PORTAL_TOOL_NAME);
 
 		_configureTasksBuildUpgradeTable(project);
 	}
@@ -47,16 +50,6 @@ public class UpgradeTableBuilderDefaultsPlugin
 	@Override
 	protected Class<UpgradeTableBuilderPlugin> getPluginClass() {
 		return UpgradeTableBuilderPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return UpgradeTableBuilderPlugin.CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private UpgradeTableBuilderDefaultsPlugin() {

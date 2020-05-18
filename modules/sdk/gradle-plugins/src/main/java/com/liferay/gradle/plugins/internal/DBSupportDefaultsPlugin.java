@@ -14,12 +14,13 @@
 
 package com.liferay.gradle.plugins.internal;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.db.support.DBSupportPlugin;
 import com.liferay.gradle.plugins.db.support.tasks.BaseDBSupportTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -41,7 +42,7 @@ import org.gradle.api.tasks.TaskContainer;
  * @author Andrea Di Giorgi
  */
 public class DBSupportDefaultsPlugin
-	extends BasePortalToolDefaultsPlugin<DBSupportPlugin> {
+	extends BaseDefaultsPlugin<DBSupportPlugin> {
 
 	public static final Plugin<Project> INSTANCE =
 		new DBSupportDefaultsPlugin();
@@ -50,7 +51,9 @@ public class DBSupportDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, DBSupportPlugin plugin) {
 
-		addPortalToolDependencies(project);
+		PortalTools.addPortalToolDependencies(
+			project, DBSupportPlugin.TOOL_CONFIGURATION_NAME, PortalTools.GROUP,
+			_PORTAL_TOOL_NAME);
 
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
@@ -62,16 +65,6 @@ public class DBSupportDefaultsPlugin
 	@Override
 	protected Class<DBSupportPlugin> getPluginClass() {
 		return DBSupportPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return DBSupportPlugin.TOOL_CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private DBSupportDefaultsPlugin() {

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -50,11 +52,13 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -923,6 +927,25 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layout.getRobotsMap(), layoutType, layout.getTypeSettings(), true,
 			true, masterLayoutPlid, Collections.emptyMap(), serviceContext);
 
+		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||
+			(masterLayoutPlid > 0)) {
+
+			String defaultRegularThemeId =
+				ThemeFactoryUtil.getDefaultRegularThemeId(
+					layout.getCompanyId());
+
+			String colorSchemeId = _getColorSchemeId(
+				layout.getCompanyId(), defaultRegularThemeId, StringPool.BLANK);
+
+			draftLayout = layoutLocalService.updateLookAndFeel(
+				groupId, privateLayout, draftLayout.getLayoutId(),
+				defaultRegularThemeId, colorSchemeId, StringPool.BLANK);
+
+			layout = layoutLocalService.updateLookAndFeel(
+				groupId, privateLayout, layout.getLayoutId(),
+				defaultRegularThemeId, colorSchemeId, StringPool.BLANK);
+		}
+
 		if (status == WorkflowConstants.STATUS_DRAFT) {
 			layoutLocalService.updateStatus(
 				userId, draftLayout.getPlid(), status, serviceContext);
@@ -983,6 +1006,25 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 	}
 
+	private String _getColorSchemeId(
+		long companyId, String themeId, String colorSchemeId) {
+
+		Theme theme = _themeLocalService.getTheme(companyId, themeId);
+
+		if (!theme.hasColorSchemes()) {
+			colorSchemeId = StringPool.BLANK;
+		}
+
+		if (Validator.isNull(colorSchemeId)) {
+			ColorScheme colorScheme = _themeLocalService.getColorScheme(
+				companyId, themeId, colorSchemeId);
+
+			colorSchemeId = colorScheme.getColorSchemeId();
+		}
+
+		return colorSchemeId;
+	}
+
 	private String _getUniqueCopyName(
 		long groupId, String sourceName, int type, Locale locale) {
 
@@ -1032,5 +1074,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 }

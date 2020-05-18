@@ -74,7 +74,7 @@ const CollectionWithControls = React.forwardRef(
 					<FloatingToolbar
 						buttons={buttons}
 						item={item}
-						itemRef={ref}
+						itemElement={itemElement}
 						onButtonClick={handleButtonClick}
 					/>
 				</>

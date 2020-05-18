@@ -95,7 +95,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 					<FloatingToolbar
 						buttons={floatingToolbarButtons}
 						item={item}
-						itemRef={ref}
+						itemElement={itemElement}
 						onButtonClick={handleButtonClick}
 					/>
 				)}

@@ -17,6 +17,7 @@ package com.liferay.layout.type.controller.portlet.internal.layout.type.controll
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
@@ -96,7 +97,7 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			PortletLayoutDisplayContext.class.getName(),
 			new PortletLayoutDisplayContext(
 				httpServletRequest, _infoDisplayContributorTracker,
-				_layoutListRetrieverTracker,
+				_infoListRendererTracker, _layoutListRetrieverTracker,
 				_listObjectReferenceFactoryTracker));
 
 		RequestDispatcher requestDispatcher =
@@ -222,6 +223,9 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+	@Reference
+	private InfoListRendererTracker _infoListRendererTracker;
 
 	@Reference
 	private LayoutListRetrieverTracker _layoutListRetrieverTracker;

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -33,14 +34,13 @@ public class DDMFormInstanceServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMFormInstance
-			addFormInstance(
-				long groupId, long ddmStructureId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.dynamic.data.mapping.storage.DDMFormValues
-					settingsDDMFormValues,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public DDMFormInstance addFormInstance(
+			long groupId, long ddmStructureId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues
+				settingsDDMFormValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceService.addFormInstance(
@@ -49,16 +49,14 @@ public class DDMFormInstanceServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMFormInstance
-			addFormInstance(
-				long groupId, java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
-				com.liferay.dynamic.data.mapping.model.DDMFormLayout
-					ddmFormLayout,
-				com.liferay.dynamic.data.mapping.storage.DDMFormValues
-					settingsDDMFormValues,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public DDMFormInstance addFormInstance(
+			long groupId, java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+			com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues
+				settingsDDMFormValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceService.addFormInstance(
@@ -74,25 +72,22 @@ public class DDMFormInstanceServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMFormInstance
-			fetchFormInstance(long ddmFormInstanceId)
+	public DDMFormInstance fetchFormInstance(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceService.fetchFormInstance(ddmFormInstanceId);
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMFormInstance
-			getFormInstance(long ddmFormInstanceId)
+	public DDMFormInstance getFormInstance(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceService.getFormInstance(ddmFormInstanceId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMFormInstance>
-			getFormInstances(long companyId, long groupId, int start, int end) {
+	public java.util.List<DDMFormInstance> getFormInstances(
+		long companyId, long groupId, int start, int end) {
 
 		return _ddmFormInstanceService.getFormInstances(
 			companyId, groupId, start, end);
@@ -122,25 +117,21 @@ public class DDMFormInstanceServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
-			long companyId, long groupId, String keywords, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.dynamic.data.mapping.model.DDMFormInstance>
-					orderByComparator) {
+	public java.util.List<DDMFormInstance> search(
+		long companyId, long groupId, String keywords, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
+			orderByComparator) {
 
 		return _ddmFormInstanceService.search(
 			companyId, groupId, keywords, start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMFormInstance> search(
-			long companyId, long groupId, String[] names, String[] descriptions,
-			boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.dynamic.data.mapping.model.DDMFormInstance>
-					orderByComparator) {
+	public java.util.List<DDMFormInstance> search(
+		long companyId, long groupId, String[] names, String[] descriptions,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstance>
+			orderByComparator) {
 
 		return _ddmFormInstanceService.search(
 			companyId, groupId, names, descriptions, andOperator, start, end,
@@ -173,11 +164,10 @@ public class DDMFormInstanceServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMFormInstance
-			updateFormInstance(
-				long formInstanceId,
-				com.liferay.dynamic.data.mapping.storage.DDMFormValues
-					settingsDDMFormValues)
+	public DDMFormInstance updateFormInstance(
+			long formInstanceId,
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues
+				settingsDDMFormValues)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceService.updateFormInstance(
@@ -185,17 +175,15 @@ public class DDMFormInstanceServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMFormInstance
-			updateFormInstance(
-				long ddmFormInstanceId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
-				com.liferay.dynamic.data.mapping.model.DDMFormLayout
-					ddmFormLayout,
-				com.liferay.dynamic.data.mapping.storage.DDMFormValues
-					settingsDDMFormValues,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public DDMFormInstance updateFormInstance(
+			long ddmFormInstanceId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+			com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
+			com.liferay.dynamic.data.mapping.storage.DDMFormValues
+				settingsDDMFormValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceService.updateFormInstance(

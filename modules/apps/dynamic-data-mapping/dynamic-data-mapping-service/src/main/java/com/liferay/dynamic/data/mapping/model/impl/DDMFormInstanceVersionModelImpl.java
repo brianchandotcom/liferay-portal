@@ -81,15 +81,15 @@ public class DDMFormInstanceVersionModelImpl
 	public static final String TABLE_NAME = "DDMFormInstanceVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"formInstanceVersionId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"formInstanceId", Types.BIGINT},
-		{"structureVersionId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"settings_", Types.CLOB},
-		{"version", Types.VARCHAR}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"formInstanceVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"formInstanceId", Types.BIGINT}, {"structureVersionId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"settings_", Types.CLOB}, {"version", Types.VARCHAR},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,6 +97,7 @@ public class DDMFormInstanceVersionModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("formInstanceVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -116,7 +117,7 @@ public class DDMFormInstanceVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFormInstanceVersion (mvccVersion LONG default 0 not null,formInstanceVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,formInstanceId LONG,structureVersionId LONG,name STRING null,description STRING null,settings_ TEXT null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table DDMFormInstanceVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,formInstanceVersionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,formInstanceId LONG,structureVersionId LONG,name STRING null,description STRING null,settings_ TEXT null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (formInstanceVersionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMFormInstanceVersion";
@@ -165,6 +166,7 @@ public class DDMFormInstanceVersionModelImpl
 		DDMFormInstanceVersion model = new DDMFormInstanceVersionImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setFormInstanceVersionId(soapModel.getFormInstanceVersionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -347,6 +349,12 @@ public class DDMFormInstanceVersionModelImpl
 			(BiConsumer<DDMFormInstanceVersion, Long>)
 				DDMFormInstanceVersion::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", DDMFormInstanceVersion::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DDMFormInstanceVersion, Long>)
+				DDMFormInstanceVersion::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"formInstanceVersionId",
 			DDMFormInstanceVersion::getFormInstanceVersionId);
 		attributeSetterBiConsumers.put(
@@ -459,6 +467,17 @@ public class DDMFormInstanceVersionModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1119,6 +1138,7 @@ public class DDMFormInstanceVersionModelImpl
 			new DDMFormInstanceVersionImpl();
 
 		ddmFormInstanceVersionImpl.setMvccVersion(getMvccVersion());
+		ddmFormInstanceVersionImpl.setCtCollectionId(getCtCollectionId());
 		ddmFormInstanceVersionImpl.setFormInstanceVersionId(
 			getFormInstanceVersionId());
 		ddmFormInstanceVersionImpl.setGroupId(getGroupId());
@@ -1222,6 +1242,8 @@ public class DDMFormInstanceVersionModelImpl
 			new DDMFormInstanceVersionCacheModel();
 
 		ddmFormInstanceVersionCacheModel.mvccVersion = getMvccVersion();
+
+		ddmFormInstanceVersionCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmFormInstanceVersionCacheModel.formInstanceVersionId =
 			getFormInstanceVersionId();
@@ -1388,6 +1410,7 @@ public class DDMFormInstanceVersionModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _formInstanceVersionId;
 	private long _groupId;
 	private long _companyId;

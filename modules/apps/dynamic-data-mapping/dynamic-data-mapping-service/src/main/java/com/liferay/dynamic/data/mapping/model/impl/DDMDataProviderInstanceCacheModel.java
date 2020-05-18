@@ -78,10 +78,12 @@ public class DDMDataProviderInstanceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", dataProviderInstanceId=");
@@ -119,6 +121,7 @@ public class DDMDataProviderInstanceCacheModel
 			new DDMDataProviderInstanceImpl();
 
 		ddmDataProviderInstanceImpl.setMvccVersion(mvccVersion);
+		ddmDataProviderInstanceImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			ddmDataProviderInstanceImpl.setUuid("");
@@ -200,6 +203,8 @@ public class DDMDataProviderInstanceCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		dataProviderInstanceId = objectInput.readLong();
@@ -222,6 +227,8 @@ public class DDMDataProviderInstanceCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -280,6 +287,7 @@ public class DDMDataProviderInstanceCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long dataProviderInstanceId;
 	public long groupId;

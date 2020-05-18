@@ -82,12 +82,12 @@ public class DDMStructureLayoutModelImpl
 	public static final String TABLE_NAME = "DDMStructureLayout";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"structureLayoutId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"structureLayoutKey", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"structureLayoutId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"structureLayoutKey", Types.VARCHAR},
 		{"structureVersionId", Types.BIGINT}, {"name", Types.CLOB},
 		{"description", Types.CLOB}, {"definition", Types.CLOB}
 	};
@@ -97,6 +97,7 @@ public class DDMStructureLayoutModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("structureLayoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -114,7 +115,7 @@ public class DDMStructureLayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureLayout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,structureLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,structureLayoutKey VARCHAR(75) null,structureVersionId LONG,name TEXT null,description TEXT null,definition TEXT null)";
+		"create table DDMStructureLayout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,structureLayoutId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,structureLayoutKey VARCHAR(75) null,structureVersionId LONG,name TEXT null,description TEXT null,definition TEXT null,primary key (structureLayoutId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLayout";
 
@@ -166,6 +167,7 @@ public class DDMStructureLayoutModelImpl
 		DDMStructureLayout model = new DDMStructureLayoutImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setStructureLayoutId(soapModel.getStructureLayoutId());
 		model.setGroupId(soapModel.getGroupId());
@@ -343,6 +345,12 @@ public class DDMStructureLayoutModelImpl
 			"mvccVersion",
 			(BiConsumer<DDMStructureLayout, Long>)
 				DDMStructureLayout::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DDMStructureLayout::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DDMStructureLayout, Long>)
+				DDMStructureLayout::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DDMStructureLayout::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -439,6 +447,17 @@ public class DDMStructureLayoutModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1058,6 +1077,7 @@ public class DDMStructureLayoutModelImpl
 			new DDMStructureLayoutImpl();
 
 		ddmStructureLayoutImpl.setMvccVersion(getMvccVersion());
+		ddmStructureLayoutImpl.setCtCollectionId(getCtCollectionId());
 		ddmStructureLayoutImpl.setUuid(getUuid());
 		ddmStructureLayoutImpl.setStructureLayoutId(getStructureLayoutId());
 		ddmStructureLayoutImpl.setGroupId(getGroupId());
@@ -1173,6 +1193,8 @@ public class DDMStructureLayoutModelImpl
 			new DDMStructureLayoutCacheModel();
 
 		ddmStructureLayoutCacheModel.mvccVersion = getMvccVersion();
+
+		ddmStructureLayoutCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmStructureLayoutCacheModel.uuid = getUuid();
 
@@ -1336,6 +1358,7 @@ public class DDMStructureLayoutModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _structureLayoutId;

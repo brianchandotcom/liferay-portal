@@ -82,13 +82,14 @@ public class DDMDataProviderInstanceModelImpl
 	public static final String TABLE_NAME = "DDMDataProviderInstance";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"dataProviderInstanceId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"description", Types.CLOB}, {"definition", Types.CLOB},
-		{"type_", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"dataProviderInstanceId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"description", Types.CLOB},
+		{"definition", Types.CLOB}, {"type_", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -96,6 +97,7 @@ public class DDMDataProviderInstanceModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dataProviderInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -112,7 +114,7 @@ public class DDMDataProviderInstanceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMDataProviderInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,dataProviderInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,definition TEXT null,type_ VARCHAR(75) null,lastPublishDate DATE null)";
+		"create table DDMDataProviderInstance (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,dataProviderInstanceId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,definition TEXT null,type_ VARCHAR(75) null,lastPublishDate DATE null,primary key (dataProviderInstanceId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMDataProviderInstance";
@@ -161,6 +163,7 @@ public class DDMDataProviderInstanceModelImpl
 		DDMDataProviderInstance model = new DDMDataProviderInstanceImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setDataProviderInstanceId(soapModel.getDataProviderInstanceId());
 		model.setGroupId(soapModel.getGroupId());
@@ -340,6 +343,12 @@ public class DDMDataProviderInstanceModelImpl
 			"mvccVersion",
 			(BiConsumer<DDMDataProviderInstance, Long>)
 				DDMDataProviderInstance::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DDMDataProviderInstance::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DDMDataProviderInstance, Long>)
+				DDMDataProviderInstance::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DDMDataProviderInstance::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -432,6 +441,17 @@ public class DDMDataProviderInstanceModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -975,6 +995,7 @@ public class DDMDataProviderInstanceModelImpl
 			new DDMDataProviderInstanceImpl();
 
 		ddmDataProviderInstanceImpl.setMvccVersion(getMvccVersion());
+		ddmDataProviderInstanceImpl.setCtCollectionId(getCtCollectionId());
 		ddmDataProviderInstanceImpl.setUuid(getUuid());
 		ddmDataProviderInstanceImpl.setDataProviderInstanceId(
 			getDataProviderInstanceId());
@@ -1077,6 +1098,8 @@ public class DDMDataProviderInstanceModelImpl
 			new DDMDataProviderInstanceCacheModel();
 
 		ddmDataProviderInstanceCacheModel.mvccVersion = getMvccVersion();
+
+		ddmDataProviderInstanceCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmDataProviderInstanceCacheModel.uuid = getUuid();
 
@@ -1245,6 +1268,7 @@ public class DDMDataProviderInstanceModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _dataProviderInstanceId;

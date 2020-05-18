@@ -132,6 +132,8 @@ public class DDMDataProviderInstancePersistenceTest {
 
 		newDDMDataProviderInstance.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDDMDataProviderInstance.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDDMDataProviderInstance.setUuid(RandomTestUtil.randomString());
 
 		newDDMDataProviderInstance.setGroupId(RandomTestUtil.nextLong());
@@ -168,6 +170,9 @@ public class DDMDataProviderInstancePersistenceTest {
 		Assert.assertEquals(
 			existingDDMDataProviderInstance.getMvccVersion(),
 			newDDMDataProviderInstance.getMvccVersion());
+		Assert.assertEquals(
+			existingDDMDataProviderInstance.getCtCollectionId(),
+			newDDMDataProviderInstance.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDMDataProviderInstance.getUuid(),
 			newDDMDataProviderInstance.getUuid());
@@ -296,11 +301,11 @@ public class DDMDataProviderInstancePersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"DDMDataProviderInstance", "mvccVersion", true, "uuid", true,
-			"dataProviderInstanceId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "type", true, "lastPublishDate",
-			true);
+			"DDMDataProviderInstance", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "dataProviderInstanceId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "type", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -572,6 +577,8 @@ public class DDMDataProviderInstancePersistenceTest {
 			pk);
 
 		ddmDataProviderInstance.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddmDataProviderInstance.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmDataProviderInstance.setUuid(RandomTestUtil.randomString());
 

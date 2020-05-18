@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMFormInstanceRecordModel
-	extends BaseModel<DDMFormInstanceRecord>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends BaseModel<DDMFormInstanceRecord>, CTModel<DDMFormInstanceRecord>,
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +52,7 @@ public interface DDMFormInstanceRecordModel
 	 *
 	 * @return the primary key of this ddm form instance record
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +60,7 @@ public interface DDMFormInstanceRecordModel
 	 *
 	 * @param primaryKey the primary key of this ddm form instance record
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +78,22 @@ public interface DDMFormInstanceRecordModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this ddm form instance record.
+	 *
+	 * @return the ct collection ID of this ddm form instance record
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this ddm form instance record.
+	 *
+	 * @param ctCollectionId the ct collection ID of this ddm form instance record
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this ddm form instance record.

@@ -77,12 +77,13 @@ public class DDMContentModelImpl
 	public static final String TABLE_NAME = "DDMContent";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"contentId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"data_", Types.CLOB}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"contentId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"data_", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -90,6 +91,7 @@ public class DDMContentModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("contentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -104,7 +106,7 @@ public class DDMContentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMContent (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,contentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,data_ TEXT null)";
+		"create table DDMContent (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,contentId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,data_ TEXT null,primary key (contentId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMContent";
 
@@ -266,6 +268,11 @@ public class DDMContentModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<DDMContent, Long>)DDMContent::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DDMContent::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DDMContent, Long>)DDMContent::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DDMContent::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<DDMContent, String>)DDMContent::setUuid);
@@ -321,6 +328,16 @@ public class DDMContentModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -710,6 +727,7 @@ public class DDMContentModelImpl
 		DDMContentImpl ddmContentImpl = new DDMContentImpl();
 
 		ddmContentImpl.setMvccVersion(getMvccVersion());
+		ddmContentImpl.setCtCollectionId(getCtCollectionId());
 		ddmContentImpl.setUuid(getUuid());
 		ddmContentImpl.setContentId(getContentId());
 		ddmContentImpl.setGroupId(getGroupId());
@@ -803,6 +821,8 @@ public class DDMContentModelImpl
 		DDMContentCacheModel ddmContentCacheModel = new DDMContentCacheModel();
 
 		ddmContentCacheModel.mvccVersion = getMvccVersion();
+
+		ddmContentCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmContentCacheModel.uuid = getUuid();
 
@@ -947,6 +967,7 @@ public class DDMContentModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _contentId;

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 import com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMDataProviderInstanceLinkPersistence
-	extends BasePersistence<DDMDataProviderInstanceLink> {
+	extends BasePersistence<DDMDataProviderInstanceLink>,
+			CTPersistence<DDMDataProviderInstanceLink> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

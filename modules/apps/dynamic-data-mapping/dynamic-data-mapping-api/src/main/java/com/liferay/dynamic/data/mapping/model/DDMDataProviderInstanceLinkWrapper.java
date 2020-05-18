@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -45,6 +47,7 @@ public class DDMDataProviderInstanceLinkWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put(
 			"dataProviderInstanceLinkId", getDataProviderInstanceLinkId());
 		attributes.put("companyId", getCompanyId());
@@ -60,6 +63,12 @@ public class DDMDataProviderInstanceLinkWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long dataProviderInstanceLinkId = (Long)attributes.get(
@@ -97,6 +106,16 @@ public class DDMDataProviderInstanceLinkWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this ddm data provider instance link.
+	 *
+	 * @return the ct collection ID of this ddm data provider instance link
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -165,6 +184,16 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this ddm data provider instance link.
+	 *
+	 * @param ctCollectionId the ct collection ID of this ddm data provider instance link
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the data provider instance ID of this ddm data provider instance link.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID of this ddm data provider instance link
@@ -212,6 +241,20 @@ public class DDMDataProviderInstanceLinkWrapper
 	@Override
 	public void setStructureId(long structureId) {
 		model.setStructureId(structureId);
+	}
+
+	@Override
+	public Map<String, Function<DDMDataProviderInstanceLink, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<DDMDataProviderInstanceLink, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

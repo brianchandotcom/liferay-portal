@@ -75,10 +75,12 @@ public class DDMStorageLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", storageLinkId=");
@@ -103,6 +105,7 @@ public class DDMStorageLinkCacheModel
 		DDMStorageLinkImpl ddmStorageLinkImpl = new DDMStorageLinkImpl();
 
 		ddmStorageLinkImpl.setMvccVersion(mvccVersion);
+		ddmStorageLinkImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			ddmStorageLinkImpl.setUuid("");
@@ -126,6 +129,8 @@ public class DDMStorageLinkCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		storageLinkId = objectInput.readLong();
@@ -144,6 +149,8 @@ public class DDMStorageLinkCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -166,6 +173,7 @@ public class DDMStorageLinkCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long storageLinkId;
 	public long companyId;

@@ -35,6 +35,9 @@ public class DDMDataProviderInstanceLinkTable
 	public final Column<DDMDataProviderInstanceLinkTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DDMDataProviderInstanceLinkTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMDataProviderInstanceLinkTable, Long>
 		dataProviderInstanceLinkId = createColumn(
 			"dataProviderInstanceLinkId", Long.class, Types.BIGINT,

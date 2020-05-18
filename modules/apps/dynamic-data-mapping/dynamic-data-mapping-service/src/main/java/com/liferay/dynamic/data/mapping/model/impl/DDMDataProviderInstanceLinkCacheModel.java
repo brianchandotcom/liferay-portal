@@ -80,10 +80,12 @@ public class DDMDataProviderInstanceLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", dataProviderInstanceLinkId=");
 		sb.append(dataProviderInstanceLinkId);
 		sb.append(", companyId=");
@@ -103,6 +105,7 @@ public class DDMDataProviderInstanceLinkCacheModel
 			new DDMDataProviderInstanceLinkImpl();
 
 		ddmDataProviderInstanceLinkImpl.setMvccVersion(mvccVersion);
+		ddmDataProviderInstanceLinkImpl.setCtCollectionId(ctCollectionId);
 		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceLinkId(
 			dataProviderInstanceLinkId);
 		ddmDataProviderInstanceLinkImpl.setCompanyId(companyId);
@@ -119,6 +122,8 @@ public class DDMDataProviderInstanceLinkCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		dataProviderInstanceLinkId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -132,6 +137,8 @@ public class DDMDataProviderInstanceLinkCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(dataProviderInstanceLinkId);
 
 		objectOutput.writeLong(companyId);
@@ -142,6 +149,7 @@ public class DDMDataProviderInstanceLinkCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long dataProviderInstanceLinkId;
 	public long companyId;
 	public long dataProviderInstanceId;

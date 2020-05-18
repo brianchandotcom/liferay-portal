@@ -75,12 +75,13 @@ public class DDMFormInstanceRecordModelImpl
 	public static final String TABLE_NAME = "DDMFormInstanceRecord";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"formInstanceRecordId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"versionUserId", Types.BIGINT},
-		{"versionUserName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"formInstanceId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"formInstanceRecordId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"versionUserId", Types.BIGINT}, {"versionUserName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"formInstanceId", Types.BIGINT},
 		{"formInstanceVersion", Types.VARCHAR}, {"storageId", Types.BIGINT},
 		{"version", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
@@ -90,6 +91,7 @@ public class DDMFormInstanceRecordModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("formInstanceRecordId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -108,7 +110,7 @@ public class DDMFormInstanceRecordModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFormInstanceRecord (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,formInstanceRecordId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,formInstanceId LONG,formInstanceVersion VARCHAR(75) null,storageId LONG,version VARCHAR(75) null,lastPublishDate DATE null)";
+		"create table DDMFormInstanceRecord (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,formInstanceRecordId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,formInstanceId LONG,formInstanceVersion VARCHAR(75) null,storageId LONG,version VARCHAR(75) null,lastPublishDate DATE null,primary key (formInstanceRecordId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMFormInstanceRecord";
@@ -163,6 +165,7 @@ public class DDMFormInstanceRecordModelImpl
 		DDMFormInstanceRecord model = new DDMFormInstanceRecordImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setFormInstanceRecordId(soapModel.getFormInstanceRecordId());
 		model.setGroupId(soapModel.getGroupId());
@@ -343,6 +346,12 @@ public class DDMFormInstanceRecordModelImpl
 			"mvccVersion",
 			(BiConsumer<DDMFormInstanceRecord, Long>)
 				DDMFormInstanceRecord::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DDMFormInstanceRecord::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DDMFormInstanceRecord, Long>)
+				DDMFormInstanceRecord::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DDMFormInstanceRecord::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -450,6 +459,17 @@ public class DDMFormInstanceRecordModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -793,6 +813,7 @@ public class DDMFormInstanceRecordModelImpl
 			new DDMFormInstanceRecordImpl();
 
 		ddmFormInstanceRecordImpl.setMvccVersion(getMvccVersion());
+		ddmFormInstanceRecordImpl.setCtCollectionId(getCtCollectionId());
 		ddmFormInstanceRecordImpl.setUuid(getUuid());
 		ddmFormInstanceRecordImpl.setFormInstanceRecordId(
 			getFormInstanceRecordId());
@@ -910,6 +931,8 @@ public class DDMFormInstanceRecordModelImpl
 			new DDMFormInstanceRecordCacheModel();
 
 		ddmFormInstanceRecordCacheModel.mvccVersion = getMvccVersion();
+
+		ddmFormInstanceRecordCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmFormInstanceRecordCacheModel.uuid = getUuid();
 
@@ -1079,6 +1102,7 @@ public class DDMFormInstanceRecordModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _formInstanceRecordId;

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMFormInstanceRecordVersionModel
-	extends BaseModel<DDMFormInstanceRecordVersion>, MVCCModel, ShardedModel,
+	extends BaseModel<DDMFormInstanceRecordVersion>,
+			CTModel<DDMFormInstanceRecordVersion>, MVCCModel, ShardedModel,
 			WorkflowedModel {
 
 	/*
@@ -51,6 +53,7 @@ public interface DDMFormInstanceRecordVersionModel
 	 *
 	 * @return the primary key of this ddm form instance record version
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +61,7 @@ public interface DDMFormInstanceRecordVersionModel
 	 *
 	 * @param primaryKey the primary key of this ddm form instance record version
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +79,22 @@ public interface DDMFormInstanceRecordVersionModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this ddm form instance record version.
+	 *
+	 * @return the ct collection ID of this ddm form instance record version
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this ddm form instance record version.
+	 *
+	 * @param ctCollectionId the ct collection ID of this ddm form instance record version
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the form instance record version ID of this ddm form instance record version.

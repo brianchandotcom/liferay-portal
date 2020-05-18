@@ -34,6 +34,7 @@ public class DDMFormInstanceVersionSoap implements Serializable {
 		DDMFormInstanceVersionSoap soapModel = new DDMFormInstanceVersionSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setFormInstanceVersionId(model.getFormInstanceVersionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -118,6 +119,14 @@ public class DDMFormInstanceVersionSoap implements Serializable {
 
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	public long getFormInstanceVersionId() {
@@ -249,6 +258,7 @@ public class DDMFormInstanceVersionSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _formInstanceVersionId;
 	private long _groupId;
 	private long _companyId;

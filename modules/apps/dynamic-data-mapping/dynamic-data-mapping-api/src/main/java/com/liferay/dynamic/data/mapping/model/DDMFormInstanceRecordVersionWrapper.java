@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -46,6 +48,7 @@ public class DDMFormInstanceRecordVersionWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put(
 			"formInstanceRecordVersionId", getFormInstanceRecordVersionId());
 		attributes.put("groupId", getGroupId());
@@ -72,6 +75,12 @@ public class DDMFormInstanceRecordVersionWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long formInstanceRecordVersionId = (Long)attributes.get(
@@ -186,6 +195,16 @@ public class DDMFormInstanceRecordVersionWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this ddm form instance record version.
+	 *
+	 * @return the ct collection ID of this ddm form instance record version
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	@Override
@@ -493,6 +512,16 @@ public class DDMFormInstanceRecordVersionWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this ddm form instance record version.
+	 *
+	 * @param ctCollectionId the ct collection ID of this ddm form instance record version
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the form instance ID of this ddm form instance record version.
 	 *
 	 * @param formInstanceId the form instance ID of this ddm form instance record version
@@ -662,6 +691,20 @@ public class DDMFormInstanceRecordVersionWrapper
 	@Override
 	public void setVersion(String version) {
 		model.setVersion(version);
+	}
+
+	@Override
+	public Map<String, Function<DDMFormInstanceRecordVersion, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<DDMFormInstanceRecordVersion, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

@@ -36,6 +36,9 @@ public class DDMFormInstanceTable extends BaseTable<DDMFormInstanceTable> {
 
 	public final Column<DDMFormInstanceTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DDMFormInstanceTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DDMFormInstanceTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DDMFormInstanceTable, Long> formInstanceId =

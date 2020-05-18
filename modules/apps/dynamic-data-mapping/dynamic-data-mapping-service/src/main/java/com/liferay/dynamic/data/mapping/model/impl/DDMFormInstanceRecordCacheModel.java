@@ -78,10 +78,12 @@ public class DDMFormInstanceRecordCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", formInstanceRecordId=");
@@ -123,6 +125,7 @@ public class DDMFormInstanceRecordCacheModel
 			new DDMFormInstanceRecordImpl();
 
 		ddmFormInstanceRecordImpl.setMvccVersion(mvccVersion);
+		ddmFormInstanceRecordImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			ddmFormInstanceRecordImpl.setUuid("");
@@ -201,6 +204,8 @@ public class DDMFormInstanceRecordCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		formInstanceRecordId = objectInput.readLong();
@@ -228,6 +233,8 @@ public class DDMFormInstanceRecordCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -285,6 +292,7 @@ public class DDMFormInstanceRecordCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long formInstanceRecordId;
 	public long groupId;

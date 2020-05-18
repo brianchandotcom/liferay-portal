@@ -65,10 +65,11 @@ public class DDMStorageLinkModelImpl
 	public static final String TABLE_NAME = "DDMStorageLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"storageLinkId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"structureId", Types.BIGINT}, {"structureVersionId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"storageLinkId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"structureId", Types.BIGINT},
+		{"structureVersionId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -76,6 +77,7 @@ public class DDMStorageLinkModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("storageLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -86,7 +88,7 @@ public class DDMStorageLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStorageLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,storageLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,structureId LONG,structureVersionId LONG)";
+		"create table DDMStorageLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,storageLinkId LONG not null,companyId LONG,classNameId LONG,classPK LONG,structureId LONG,structureVersionId LONG,primary key (storageLinkId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStorageLink";
 
@@ -254,6 +256,12 @@ public class DDMStorageLinkModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<DDMStorageLink, Long>)DDMStorageLink::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DDMStorageLink::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DDMStorageLink, Long>)
+				DDMStorageLink::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DDMStorageLink::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -302,6 +310,16 @@ public class DDMStorageLinkModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -494,6 +512,7 @@ public class DDMStorageLinkModelImpl
 		DDMStorageLinkImpl ddmStorageLinkImpl = new DDMStorageLinkImpl();
 
 		ddmStorageLinkImpl.setMvccVersion(getMvccVersion());
+		ddmStorageLinkImpl.setCtCollectionId(getCtCollectionId());
 		ddmStorageLinkImpl.setUuid(getUuid());
 		ddmStorageLinkImpl.setStorageLinkId(getStorageLinkId());
 		ddmStorageLinkImpl.setCompanyId(getCompanyId());
@@ -595,6 +614,8 @@ public class DDMStorageLinkModelImpl
 
 		ddmStorageLinkCacheModel.mvccVersion = getMvccVersion();
 
+		ddmStorageLinkCacheModel.ctCollectionId = getCtCollectionId();
+
 		ddmStorageLinkCacheModel.uuid = getUuid();
 
 		String uuid = ddmStorageLinkCacheModel.uuid;
@@ -692,6 +713,7 @@ public class DDMStorageLinkModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _storageLinkId;

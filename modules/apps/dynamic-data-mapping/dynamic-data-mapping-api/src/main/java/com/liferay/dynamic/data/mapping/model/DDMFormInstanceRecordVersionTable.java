@@ -38,6 +38,9 @@ public class DDMFormInstanceRecordVersionTable
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<DDMFormInstanceRecordVersionTable, Long>
+		ctCollectionId = createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<DDMFormInstanceRecordVersionTable, Long>
 		formInstanceRecordVersionId = createColumn(
 			"formInstanceRecordVersionId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);

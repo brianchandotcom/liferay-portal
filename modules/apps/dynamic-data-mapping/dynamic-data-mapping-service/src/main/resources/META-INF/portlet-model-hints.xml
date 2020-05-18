@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMContent">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="contentId" type="long" />
 		<field name="groupId" type="long" />
@@ -23,6 +24,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="dataProviderInstanceId" type="long" />
 		<field name="groupId" type="long" />
@@ -45,6 +47,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="dataProviderInstanceLinkId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="dataProviderInstanceId" type="long" />
@@ -52,6 +55,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstance">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="formInstanceId" type="long" />
 		<field name="groupId" type="long" />
@@ -77,6 +81,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="formInstanceRecordId" type="long" />
 		<field name="groupId" type="long" />
@@ -95,6 +100,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="formInstanceRecordVersionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -113,6 +119,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="formInstanceReportId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -125,6 +132,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="formInstanceVersionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -150,6 +158,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStorageLink">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="storageLinkId" type="long" />
 		<field name="companyId" type="long" />
@@ -193,6 +202,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="structureLayoutId" type="long" />
 		<field name="groupId" type="long" />

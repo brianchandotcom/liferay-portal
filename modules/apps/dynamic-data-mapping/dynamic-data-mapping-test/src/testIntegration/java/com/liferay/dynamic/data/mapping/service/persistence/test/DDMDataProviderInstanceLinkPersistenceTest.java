@@ -131,6 +131,9 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 		newDDMDataProviderInstanceLink.setMvccVersion(
 			RandomTestUtil.nextLong());
 
+		newDDMDataProviderInstanceLink.setCtCollectionId(
+			RandomTestUtil.nextLong());
+
 		newDDMDataProviderInstanceLink.setCompanyId(RandomTestUtil.nextLong());
 
 		newDDMDataProviderInstanceLink.setDataProviderInstanceId(
@@ -149,6 +152,9 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 		Assert.assertEquals(
 			existingDDMDataProviderInstanceLink.getMvccVersion(),
 			newDDMDataProviderInstanceLink.getMvccVersion());
+		Assert.assertEquals(
+			existingDDMDataProviderInstanceLink.getCtCollectionId(),
+			newDDMDataProviderInstanceLink.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDMDataProviderInstanceLink.getDataProviderInstanceLinkId(),
 			newDDMDataProviderInstanceLink.getDataProviderInstanceLinkId());
@@ -217,8 +223,9 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 
 		return OrderByComparatorFactoryUtil.create(
 			"DDMDataProviderInstanceLink", "mvccVersion", true,
-			"dataProviderInstanceLinkId", true, "companyId", true,
-			"dataProviderInstanceId", true, "structureId", true);
+			"ctCollectionId", true, "dataProviderInstanceLinkId", true,
+			"companyId", true, "dataProviderInstanceId", true, "structureId",
+			true);
 	}
 
 	@Test
@@ -501,6 +508,9 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 			_persistence.create(pk);
 
 		ddmDataProviderInstanceLink.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddmDataProviderInstanceLink.setCtCollectionId(
+			RandomTestUtil.nextLong());
 
 		ddmDataProviderInstanceLink.setCompanyId(RandomTestUtil.nextLong());
 

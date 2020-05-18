@@ -131,6 +131,8 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 		newDDMFormInstanceRecord.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDDMFormInstanceRecord.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDDMFormInstanceRecord.setUuid(RandomTestUtil.randomString());
 
 		newDDMFormInstanceRecord.setGroupId(RandomTestUtil.nextLong());
@@ -171,6 +173,9 @@ public class DDMFormInstanceRecordPersistenceTest {
 		Assert.assertEquals(
 			existingDDMFormInstanceRecord.getMvccVersion(),
 			newDDMFormInstanceRecord.getMvccVersion());
+		Assert.assertEquals(
+			existingDDMFormInstanceRecord.getCtCollectionId(),
+			newDDMFormInstanceRecord.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDMFormInstanceRecord.getUuid(),
 			newDDMFormInstanceRecord.getUuid());
@@ -308,12 +313,12 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 	protected OrderByComparator<DDMFormInstanceRecord> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMFormInstanceRecord", "mvccVersion", true, "uuid", true,
-			"formInstanceRecordId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "versionUserId", true,
-			"versionUserName", true, "createDate", true, "modifiedDate", true,
-			"formInstanceId", true, "formInstanceVersion", true, "storageId",
-			true, "version", true, "lastPublishDate", true);
+			"DDMFormInstanceRecord", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "formInstanceRecordId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true,
+			"versionUserId", true, "versionUserName", true, "createDate", true,
+			"modifiedDate", true, "formInstanceId", true, "formInstanceVersion",
+			true, "storageId", true, "version", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -584,6 +589,8 @@ public class DDMFormInstanceRecordPersistenceTest {
 		DDMFormInstanceRecord ddmFormInstanceRecord = _persistence.create(pk);
 
 		ddmFormInstanceRecord.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddmFormInstanceRecord.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmFormInstanceRecord.setUuid(RandomTestUtil.randomString());
 

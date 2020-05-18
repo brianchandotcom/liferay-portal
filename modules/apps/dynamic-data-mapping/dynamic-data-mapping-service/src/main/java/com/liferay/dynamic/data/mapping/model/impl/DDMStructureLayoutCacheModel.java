@@ -78,10 +78,12 @@ public class DDMStructureLayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", structureLayoutId=");
@@ -121,6 +123,7 @@ public class DDMStructureLayoutCacheModel
 			new DDMStructureLayoutImpl();
 
 		ddmStructureLayoutImpl.setMvccVersion(mvccVersion);
+		ddmStructureLayoutImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			ddmStructureLayoutImpl.setUuid("");
@@ -199,6 +202,8 @@ public class DDMStructureLayoutCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		structureLayoutId = objectInput.readLong();
@@ -228,6 +233,8 @@ public class DDMStructureLayoutCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -290,6 +297,7 @@ public class DDMStructureLayoutCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long structureLayoutId;
 	public long groupId;

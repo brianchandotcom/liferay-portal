@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.TypedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -43,8 +44,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMStructureLayoutModel
-	extends BaseModel<DDMStructureLayout>, GroupedModel, LocalizedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel, TypedModel {
+	extends BaseModel<DDMStructureLayout>, CTModel<DDMStructureLayout>,
+			GroupedModel, LocalizedModel, MVCCModel, ShardedModel,
+			StagedAuditedModel, TypedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +59,7 @@ public interface DDMStructureLayoutModel
 	 *
 	 * @return the primary key of this ddm structure layout
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -64,6 +67,7 @@ public interface DDMStructureLayoutModel
 	 *
 	 * @param primaryKey the primary key of this ddm structure layout
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -81,6 +85,22 @@ public interface DDMStructureLayoutModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this ddm structure layout.
+	 *
+	 * @return the ct collection ID of this ddm structure layout
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this ddm structure layout.
+	 *
+	 * @param ctCollectionId the ct collection ID of this ddm structure layout
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this ddm structure layout.

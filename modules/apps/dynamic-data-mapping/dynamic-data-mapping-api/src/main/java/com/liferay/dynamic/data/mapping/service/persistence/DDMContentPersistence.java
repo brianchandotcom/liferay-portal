@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 import com.liferay.dynamic.data.mapping.exception.NoSuchContentException;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface DDMContentPersistence extends BasePersistence<DDMContent> {
+public interface DDMContentPersistence
+	extends BasePersistence<DDMContent>, CTPersistence<DDMContent> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

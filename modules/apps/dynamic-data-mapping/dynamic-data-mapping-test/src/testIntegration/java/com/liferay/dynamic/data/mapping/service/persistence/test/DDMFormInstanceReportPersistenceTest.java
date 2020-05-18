@@ -130,6 +130,8 @@ public class DDMFormInstanceReportPersistenceTest {
 
 		newDDMFormInstanceReport.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDDMFormInstanceReport.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDDMFormInstanceReport.setGroupId(RandomTestUtil.nextLong());
 
 		newDDMFormInstanceReport.setCompanyId(RandomTestUtil.nextLong());
@@ -152,6 +154,9 @@ public class DDMFormInstanceReportPersistenceTest {
 		Assert.assertEquals(
 			existingDDMFormInstanceReport.getMvccVersion(),
 			newDDMFormInstanceReport.getMvccVersion());
+		Assert.assertEquals(
+			existingDDMFormInstanceReport.getCtCollectionId(),
+			newDDMFormInstanceReport.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDMFormInstanceReport.getFormInstanceReportId(),
 			newDDMFormInstanceReport.getFormInstanceReportId());
@@ -212,9 +217,10 @@ public class DDMFormInstanceReportPersistenceTest {
 
 	protected OrderByComparator<DDMFormInstanceReport> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMFormInstanceReport", "mvccVersion", true,
-			"formInstanceReportId", true, "groupId", true, "companyId", true,
-			"createDate", true, "modifiedDate", true, "formInstanceId", true);
+			"DDMFormInstanceReport", "mvccVersion", true, "ctCollectionId",
+			true, "formInstanceReportId", true, "groupId", true, "companyId",
+			true, "createDate", true, "modifiedDate", true, "formInstanceId",
+			true);
 	}
 
 	@Test
@@ -479,6 +485,8 @@ public class DDMFormInstanceReportPersistenceTest {
 		DDMFormInstanceReport ddmFormInstanceReport = _persistence.create(pk);
 
 		ddmFormInstanceReport.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddmFormInstanceReport.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmFormInstanceReport.setGroupId(RandomTestUtil.nextLong());
 

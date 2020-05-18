@@ -110,8 +110,10 @@ const DestinationUrlInput = ({
 					<div
 						className="small"
 						dangerouslySetInnerHTML={{
-							__html: Liferay.Language.get(
-								'enter-an-absolute-url'
+							__html: Liferay.Util.sub(
+								Liferay.Language.get('enter-an-absolute-url'),
+								'<em>',
+								'</em>'
 							),
 						}}
 					/>

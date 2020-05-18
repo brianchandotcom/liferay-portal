@@ -63,26 +63,27 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 	}
 
 	private List<PortletPreferences> _getPortletPreferencesByPlid(long plid) {
-		if (!_portletPreferencesMap.containsKey(plid)) {
-			List<PortletPreferences> portletPreferencesList =
-				_portletPreferencesLocalService.getPortletPreferencesByPlid(
-					plid);
-
-			Stream<PortletPreferences> stream = portletPreferencesList.stream();
-
-			portletPreferencesList = stream.filter(
-				portletPreferences -> {
-					String portletId = portletPreferences.getPortletId();
-
-					return portletId.contains(_INSTANCE_SEPARATOR) &&
-						   portletId.contains(_SEGMENTS_EXPERIENCE_SEPARATOR);
-				}
-			).collect(
-				Collectors.toList()
-			);
-
-			_portletPreferencesMap.put(plid, portletPreferencesList);
+		if (_portletPreferencesMap.containsKey(plid)) {
+			return _portletPreferencesMap.get(plid);
 		}
+
+		List<PortletPreferences> portletPreferencesList =
+			_portletPreferencesLocalService.getPortletPreferencesByPlid(plid);
+
+		Stream<PortletPreferences> stream = portletPreferencesList.stream();
+
+		portletPreferencesList = stream.filter(
+			portletPreferences -> {
+				String portletId = portletPreferences.getPortletId();
+
+				return portletId.contains(_INSTANCE_SEPARATOR) &&
+					   portletId.contains(_SEGMENTS_EXPERIENCE_SEPARATOR);
+			}
+		).collect(
+			Collectors.toList()
+		);
+
+		_portletPreferencesMap.put(plid, portletPreferencesList);
 
 		return _portletPreferencesMap.get(plid);
 	}

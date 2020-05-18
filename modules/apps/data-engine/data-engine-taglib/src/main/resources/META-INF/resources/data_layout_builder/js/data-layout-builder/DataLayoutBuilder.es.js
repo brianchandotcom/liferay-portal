@@ -551,11 +551,13 @@ class DataLayoutBuilder extends React.Component {
 			...context,
 			pages: context.pages.map((page) => {
 				let {
-					description,
+					description = '',
 					localizedDescription,
 					localizedTitle,
-					title,
+					title = '',
 				} = page;
+				description = description === null ? '' : description;
+				title = title === null ? '' : title;
 
 				if (!core.isString(description)) {
 					description = description[defaultLanguageId];

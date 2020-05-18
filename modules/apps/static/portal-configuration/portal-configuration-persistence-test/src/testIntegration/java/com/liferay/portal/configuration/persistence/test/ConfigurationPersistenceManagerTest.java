@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.persistence.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -64,6 +65,14 @@ public class ConfigurationPersistenceManagerTest {
 	@Test
 	public void testGetConfiguration() throws Exception {
 		_assertConfiguration(false);
+	}
+
+	@Test
+	public void testWhiteSpacedFelixFileInstallFileName() throws Exception {
+		ReflectionTestUtil.invoke(
+			_persistenceManager, "_verifyDictionary",
+			new Class<?>[] {String.class, String.class}, "whitespace.pid",
+			"felix.fileinstall.filename=\"file:/whitespace path/file.config\"");
 	}
 
 	private void _assertConfiguration(boolean factory) throws Exception {

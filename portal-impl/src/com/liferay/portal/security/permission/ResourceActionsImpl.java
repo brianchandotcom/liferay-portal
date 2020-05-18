@@ -1134,13 +1134,9 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		_modelResourceWeights.put(name, weight);
 
-		ResourceActionsBag modelResourceActionsBag = _readResource(
-			modelResourceElement, name);
-
-		Set<String> modelResourceActions =
-			modelResourceActionsBag.getSupportsActions();
-
-		modelResourceActions.add(ActionKeys.PERMISSIONS);
+		_readResource(
+			modelResourceElement, name,
+			Collections.singleton(ActionKeys.PERMISSIONS));
 
 		return name;
 	}
@@ -1153,25 +1149,22 @@ public class ResourceActionsImpl implements ResourceActions {
 			servletContextName,
 			portletResourceElement.elementTextTrim("portlet-name"));
 
-		ResourceActionsBag portletResourceActionsBag = _readResource(
-			portletResourceElement, name);
-
-		Set<String> portletActions =
-			portletResourceActionsBag.getSupportsActions();
-
 		Portlet portlet = portletLocalService.getPortletById(name);
 
-		portletActions.addAll(_getPortletMimeTypeActions(name, portlet));
+		Set<String> portletActions = _getPortletMimeTypeActions(name, portlet);
 
 		if (!name.equals(PortletKeys.PORTAL)) {
 			_checkPortletActions(portlet, portletActions);
 		}
 
+		_readResource(portletResourceElement, name, portletActions);
+
 		return name;
 	}
 
-	private ResourceActionsBag _readResource(
-			Element resourceElement, String name)
+	private void _readResource(
+			Element resourceElement, String name,
+			Set<String> defaultResourceActions)
 		throws ResourceActionsException {
 
 		ResourceActionsBag resourceActionsBag = _getResourceActionsBag(name);
@@ -1182,6 +1175,8 @@ public class ResourceActionsImpl implements ResourceActions {
 			resourceElement, "supports");
 
 		_readActionKeys(resourceActions, supportsElement);
+
+		resourceActions.addAll(defaultResourceActions);
 
 		if (resourceActions.size() > 64) {
 			throw new ResourceActionsException(
@@ -1256,14 +1251,12 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (layoutManagerElement == null) {
 			layoutManagerActions.addAll(resourceActions);
 
-			return resourceActionsBag;
+			return;
 		}
 
 		layoutManagerActions.clear();
 
 		_readActionKeys(layoutManagerActions, layoutManagerElement);
-
-		return resourceActionsBag;
 	}
 
 	private static final String _ACTION_NAME_PREFIX = "action.";

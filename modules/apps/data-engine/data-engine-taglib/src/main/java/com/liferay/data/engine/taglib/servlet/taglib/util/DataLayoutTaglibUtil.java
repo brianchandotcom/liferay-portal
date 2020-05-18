@@ -841,9 +841,7 @@ public class DataLayoutTaglibUtil {
 			List<Map<String, Object>> nestedFieldsList = new ArrayList<>(
 				Arrays.asList(field));
 
-			if (_isFieldSet(field)) {
-				nestedFieldsList.addAll(_getNestedFields(field));
-			}
+			nestedFieldsList.addAll(_getNestedFields(field));
 
 			return nestedFieldsList.stream();
 		}

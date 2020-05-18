@@ -73,7 +73,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 		String portletName = _getPortletName(appId);
 
-		String controlPanelMenuLabel = portletName.concat("controlPanel");
+		String applicationsMenuLabel = portletName.concat("applications");
 		String siteMenuLabel = portletName.concat("site");
 
 		if (scopeJSONArray.length() == 2) {
@@ -81,11 +81,12 @@ public class ProductMenuAppDeployer implements AppDeployer {
 				appId,
 				key -> new ServiceRegistration<?>[] {
 					_deployPortlet(
-						appBuilderApp, appName, controlPanelMenuLabel),
+						appBuilderApp, appName, applicationsMenuLabel),
 					_deployPortlet(appBuilderApp, appName, siteMenuLabel),
 					_deployPanelApp(
 						appBuilderApp.getCompanyId(),
-						PanelCategoryKeys.CONTROL_PANEL, controlPanelMenuLabel,
+						PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS,
+						applicationsMenuLabel,
 						JSONUtil.toLongArray(
 							jsonObject.getJSONArray("siteIds"))),
 					_deployPanelApp(
@@ -100,8 +101,8 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			String scope = scopeJSONArray.getString(0);
 			String menuLabel;
 
-			if (PanelCategoryKeys.CONTROL_PANEL.equals(scope)) {
-				menuLabel = controlPanelMenuLabel;
+			if (PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS.equals(scope)) {
+				menuLabel = applicationsMenuLabel;
 			}
 			else {
 				menuLabel = siteMenuLabel;

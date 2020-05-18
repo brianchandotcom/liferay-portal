@@ -41,7 +41,7 @@ public class AppBuilderPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return AppBuilderPanelCategoryKeys.CONTROL_PANEL_APP_BUILDER;
+		return AppBuilderPanelCategoryKeys.GLOBAL_MENU_APPLICATIONS_APP_BUILDER;
 	}
 
 	@Override

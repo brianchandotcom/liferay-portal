@@ -94,7 +94,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				new AppDeployment() {
 					{
 						settings = HashMapBuilder.<String, Object>put(
-							"scope", new String[] {"control_panel"}
+							"scope", new String[] {"global_menu.applications"}
 						).build();
 						type = "productMenu";
 					}
@@ -223,7 +223,8 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 					new AppDeployment() {
 						{
 							settings = HashMapBuilder.<String, Object>put(
-								"scope", new String[] {"control_panel"}
+								"scope",
+								new String[] {"global_menu.applications"}
 							).build();
 							type = "productMenu";
 						}

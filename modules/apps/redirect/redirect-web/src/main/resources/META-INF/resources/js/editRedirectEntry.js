@@ -22,19 +22,19 @@ export default function ({
 }) {
 	const form = document[`${namespace}fm`];
 	form.addEventListener('submit', saveRedirectEntry);
-	const typeInfo = document.getElementById(`${namespace}typeInfo`);
+	const typeInfoAlert = document.getElementById(`${namespace}typeInfoAlert`);
 	const destinationURLInput = document.getElementById(
 		`${namespace}destinationURL`
 	);
 	const permanentSelect = document.getElementById(`${namespace}permanent`);
 
-	if (typeInfo && initialIsPermanent) {
+	if (typeInfoAlert && initialIsPermanent) {
 		destinationURLInput.addEventListener('input', showTypeInfoAlert);
 		permanentSelect.addEventListener('input', showTypeInfoAlert);
 	}
 
 	function showTypeInfoAlert() {
-		typeInfo.classList.toggle(
+		typeInfoAlert.classList.toggle(
 			'hide',
 			permanentSelect.value === 'true' &&
 				destinationURLInput.value === initialDestinationURL

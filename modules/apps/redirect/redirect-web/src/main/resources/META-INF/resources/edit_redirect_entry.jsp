@@ -112,7 +112,7 @@ String sourceURL = (redirectEntry != null) ? redirectEntry.getSourceURL() : Para
 		<c:if test="<%= redirectEntry != null %>">
 			<clay:alert
 				elementClasses="hide"
-				id='<%= renderResponse.getNamespace() + "typeInfo" %>'
+				id='<%= renderResponse.getNamespace() + "typeInfoAlert" %>'
 				message='<%= LanguageUtil.get(resourceBundle, "changes-to-this-redirect-might-not-be-immediately-seen-for-users-whose-browsers-have-cached-the-old-redirect-configuration") %>'
 				title='<%= LanguageUtil.get(request, "info") + ":" %>'
 			/>

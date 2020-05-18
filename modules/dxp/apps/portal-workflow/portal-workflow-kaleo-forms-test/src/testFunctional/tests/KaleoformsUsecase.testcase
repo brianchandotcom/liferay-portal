@@ -2153,6 +2153,7 @@ definition {
 
 	@priority = "5"
 	test CompleteProcessWithUploadedDefinition {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithUploadedDefinition";
 		property testray.component.names = "Training";

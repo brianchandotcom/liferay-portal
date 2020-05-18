@@ -61,6 +61,8 @@ definition {
 
 	@priority = "4"
 	test ViewInvalidSourceXMLNotRemainsAfterTabSwitch {
+		property portal.upstream = "quarantine";
+
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = "INVALID",
 			line = "6");

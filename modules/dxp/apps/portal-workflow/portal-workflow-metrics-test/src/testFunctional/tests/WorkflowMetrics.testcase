@@ -1071,6 +1071,7 @@ definition {
 
 	@description = "LRQA-53647 Automate LPS-86638: [Reports] See a list of reports available for all running processes"
 	test SeeListOfReports {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#SeeListOfReports";
 
 		var key_testSLADefinitionDays = "0";
@@ -1144,7 +1145,7 @@ definition {
 	@priority = "5"
 	test VerifyAllItemsFilterFromMetrics {
 		property portal.acceptance = "true";
-		property portal.upstream = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#VerifyAllItemsFilterFromMetrics";
 
 		var key_workflowInstanceName = "Blog Entry Title";
@@ -1393,6 +1394,7 @@ definition {
 
 	@description = "LRQA-53654 Automate LPS-88968: [Reports] View the summary of all pending items and what's their SLA status"
 	test ViewPendingItems {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPendingItems";
@@ -1646,6 +1648,7 @@ definition {
 	@description = "LRQA-53640 Automate LPS-100674: [Performance] View SLA breaches of top steps performance"
 	@priority = "5"
 	test ViewSLABreachesOfTopSteps {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewSLABreachesOfTopSteps";
 

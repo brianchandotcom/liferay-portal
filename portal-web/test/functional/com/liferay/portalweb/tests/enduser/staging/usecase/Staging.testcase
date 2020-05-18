@@ -40,7 +40,7 @@ definition {
 
 		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Spanish (Spain)");
 
-		User.logoutPG();
+		UserBar.signOut();
 
 		User.loginPG(
 			localization = "ES",

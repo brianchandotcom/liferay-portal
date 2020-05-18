@@ -159,11 +159,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEPOT_ROLES_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_depotRoleName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -89,8 +89,8 @@ definition {
 		UserNavigator.gotoRoles();
 
 		AssertElementNotPresent(
-			key_depotRoleName = "Asset Library Administrator",
-			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_TABLE_NAME",
+			key_roleTitle = "Asset Library Administrator",
+			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_TITLE",
 			value1 = "Asset Library Administrator");
 
 		User.logoutAndLoginPG(

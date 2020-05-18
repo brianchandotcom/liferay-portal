@@ -333,6 +333,19 @@ public class DDMFormDisplayContext {
 				getDDMForm()));
 
 		if (hasWorkflowEnabled(getFormInstance(), getThemeDisplay())) {
+			DDMFormInstanceRecord formInstanceRecord = getFormInstanceRecord();
+
+			if (formInstanceRecord != null) {
+				DDMFormInstanceRecordVersion latestFormInstanceRecordVersion =
+					formInstanceRecord.getLatestFormInstanceRecordVersion();
+
+				if (latestFormInstanceRecordVersion.getStatus() ==
+						WorkflowConstants.STATUS_PENDING) {
+
+					return LanguageUtil.get(resourceBundle, "save");
+				}
+			}
+
 			return LanguageUtil.get(resourceBundle, "submit-for-publication");
 		}
 

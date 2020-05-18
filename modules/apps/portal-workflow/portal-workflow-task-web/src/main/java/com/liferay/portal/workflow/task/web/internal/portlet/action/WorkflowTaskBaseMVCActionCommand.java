@@ -74,7 +74,11 @@ public abstract class WorkflowTaskBaseMVCActionCommand
 				closeRedirect);
 		}
 
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		redirect = PortalUtil.escapeRedirect(redirect);
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
 	}
 
 }

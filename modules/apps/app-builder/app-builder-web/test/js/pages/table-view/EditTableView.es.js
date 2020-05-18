@@ -28,7 +28,7 @@ import {
 	tableViewResponseOneItem,
 	tableViewResponseTwoItens,
 	tableViewWithId,
-} from '../../mock';
+} from '../../mock.es';
 
 describe('EditTableView', () => {
 	let spySuccessToast;

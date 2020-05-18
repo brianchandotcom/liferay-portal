@@ -58,6 +58,8 @@ public class CollectionLayoutStructureItemExporter
 					{
 						collectionConfig = _getCollectionConfig(
 							collectionLayoutStructureItem);
+						listStyle =
+							collectionLayoutStructureItem.getListStyle();
 						numberOfColumns =
 							collectionLayoutStructureItem.getNumberOfColumns();
 						numberOfItems =

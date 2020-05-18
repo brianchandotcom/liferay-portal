@@ -75,6 +75,8 @@ public class CollectionLayoutStructureItemImporter
 					_getCollectionConfigAsJSONObject(collectionConfig));
 			}
 
+			collectionLayoutStructureItem.setListStyle(
+				(String)definitionMap.get("listStyle"));
 			collectionLayoutStructureItem.setNumberOfColumns(
 				(Integer)definitionMap.get("numberOfColumns"));
 			collectionLayoutStructureItem.setNumberOfItems(

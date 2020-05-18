@@ -562,4 +562,50 @@ definition {
 		PortletEntry.submitForPublication();
 	}
 
+	@description = "This ensures that the workflow can be set in an asset library."
+	@priority = "5"
+	test Smoke {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Workflow");
+
+		AssertVisible(
+			key_rowEntry = "Web Content Article",
+			locator1 = "Button#EDIT_ROW",
+			value1 = "Edit");
+
+		AssertElementNotPresent(
+			key_rowEntry = "Blogs Entry",
+			locator1 = "Button#EDIT_ROW");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
+
+		Depot.viewDMWorkflowPresent(dmFolderName = "DM Folder Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Web Content",
+			status = "Disabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Workflow");
+
+		Depot.viewNoWorkflowResource();
+	}
+
 }

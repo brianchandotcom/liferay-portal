@@ -254,6 +254,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_DESCRIPTION</td>
+	<td>//label[contains(.,'Image Description')]/following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMAGE_ID</td>
 	<td>//input[contains(@id,'newUuid')]</td>
 	<td></td>

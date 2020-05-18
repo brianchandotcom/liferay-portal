@@ -89,16 +89,14 @@
 	border-top: 1px solid transparent;
 }
 
-.lfr-floating-container {
-	position: absolute;
-}
-
 .lfr-floating-trigger {
 	padding: 3px;
 	padding-right: 15px;
 }
 
 .lfr-floating-container {
+	position: absolute;
+
 	.col {
 		float: left;
 		margin-right: 10px;

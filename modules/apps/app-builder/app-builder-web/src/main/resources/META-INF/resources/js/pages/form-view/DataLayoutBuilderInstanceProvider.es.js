@@ -13,9 +13,11 @@
  */
 
 import {DataLayoutBuilderActions} from 'data-engine-taglib';
-import React, {useContext, useEffect} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 
+import {addItem} from '../../utils/client.es';
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
+import {errorToast, successToast} from '../../utils/toast.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';
@@ -23,13 +25,119 @@ import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
 export default ({children, dataLayoutBuilder}) => {
 	const [
-		{dataDefinition, editingLanguageId, focusedField},
+		{dataDefinition, editingLanguageId, fieldSets, focusedField},
 		dispatch,
 	] = useContext(FormViewContext);
 	const deleteDefinitionField = useDeleteDefinitionField({dataLayoutBuilder});
 	const onDeleteDefinitionField = useDeleteDefinitionFieldModal((event) => {
 		deleteDefinitionField(event);
 	});
+
+	const saveAsFieldSet = useCallback(
+		(fieldName) => {
+			const customProperties = {};
+			const {
+				customProperties: {rows},
+				label,
+				nestedDataDefinitionFields,
+			} = dataDefinition.dataDefinitionFields.find(
+				({name}) => fieldName === name
+			);
+
+			const dataDefinitionRows = JSON.parse(rows);
+
+			const fieldLabel = label[editingLanguageId];
+
+			const dataLayoutRows = dataDefinitionRows.map(({columns}) => {
+				const column = columns.map(
+					({fields: fieldNames, size: columnSize}) => ({
+						dataLayoutColumns: [{columnSize, fieldNames}],
+					})
+				);
+
+				return column[0];
+			});
+
+			const fieldSetDefinition = {
+				availableLanguageIds: ['en_US'],
+				dataDefinitionFields: nestedDataDefinitionFields,
+				name: {
+					[editingLanguageId]: fieldLabel,
+				},
+			};
+
+			const fieldSetDataLayout = {
+				dataLayoutPages: [
+					{
+						dataLayoutRows,
+						description: {
+							en_US: '',
+						},
+						title: {
+							en_US: '',
+						},
+					},
+				],
+				name: {
+					[editingLanguageId]: `${fieldLabel}Layout`,
+				},
+			};
+
+			addItem(
+				`/o/data-engine/v2.0/data-definitions/by-content-type/app-builder-fieldset`,
+				fieldSetDefinition
+			)
+				.then((dataDefinitionFieldSet) => {
+					const {id: ddmStructureId} = dataDefinitionFieldSet;
+					customProperties.ddmStructureId = ddmStructureId;
+
+					dispatch({
+						payload: {
+							fieldSets: [...fieldSets, dataDefinitionFieldSet],
+						},
+						type: DataLayoutBuilderActions.UPDATE_FIELDSETS,
+					});
+
+					return addItem(
+						`/o/data-engine/v2.0/data-definitions/${ddmStructureId}/data-layouts`,
+						fieldSetDataLayout
+					);
+				})
+				.then(({id: ddmStructureLayoutId}) => {
+					customProperties.ddmStructureLayoutId = ddmStructureLayoutId;
+					const dataDefinitionFields = dataDefinition.dataDefinitionFields.map(
+						(definitionField) => {
+							if (definitionField.name === fieldName) {
+								return {
+									...definitionField,
+									customProperties: {
+										...customProperties,
+										rows: '',
+									},
+									nestedDataDefinitionFields: [],
+								};
+							}
+
+							return dataDefinition;
+						}
+					);
+
+					dispatch({
+						payload: {
+							dataDefinition: {
+								...dataDefinition,
+								dataDefinitionFields,
+							},
+						},
+						type: DataLayoutBuilderActions.UPDATE_DATA_DEFINITION,
+					});
+
+					successToast(Liferay.Language.get('fieldset-saved'));
+				})
+				.catch((error) => errorToast(error.message));
+		},
+		[dataDefinition, dispatch, editingLanguageId, fieldSets]
+	);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
@@ -71,7 +179,12 @@ export default ({children, dataLayoutBuilder}) => {
 					dataLayoutBuilder.dispatch('fieldDeleted', event);
 				},
 				label: Liferay.Language.get('remove'),
+			},
+			{
+				action: (fieldName) => saveAsFieldSet(fieldName),
+				label: Liferay.Language.get('save-as-fieldset'),
 				separator: true,
+				showOnFieldSet: true,
 			},
 			{
 				action: (event) => {
@@ -83,7 +196,7 @@ export default ({children, dataLayoutBuilder}) => {
 		];
 
 		provider.props.shouldAutoGenerateName = () => false;
-	}, [dataLayoutBuilder, dispatch, onDeleteDefinitionField]);
+	}, [dataLayoutBuilder, dispatch, onDeleteDefinitionField, saveAsFieldSet]);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -111,9 +112,24 @@ public class JournalContentConfigurationAction
 
 		setPreference(actionRequest, "articleId", getArticleId(actionRequest));
 
+		String[] contentMetadataAssetAddonEntryKeys =
+			ParamUtil.getParameterValues(
+				actionRequest, "contentMetadataAssetAddonEntryKeys");
+
+		setPreference(
+			actionRequest, "contentMetadataAssetAddonEntryKeys",
+			StringUtil.merge(contentMetadataAssetAddonEntryKeys));
+
 		setPreference(
 			actionRequest, "groupId",
 			String.valueOf(getArticleGroupId(actionRequest)));
+
+		String[] userToolAssetAddonEntryKeys = ParamUtil.getParameterValues(
+			actionRequest, "userToolAssetAddonEntryKeys");
+
+		setPreference(
+			actionRequest, "userToolAssetAddonEntryKeys",
+			StringUtil.merge(userToolAssetAddonEntryKeys));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

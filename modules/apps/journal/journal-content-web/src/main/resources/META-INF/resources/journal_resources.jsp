@@ -56,13 +56,18 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<liferay-ui:message key="user-tools" />
 		</div>
 
-		<liferay-asset:asset-addon-entry-selector
-			assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
-			hiddenInput="preferences--userToolAssetAddonEntryKeys--"
-			id="userToolsAssetAddonEntriesSelector"
-			selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
-			title='<%= LanguageUtil.get(request, "select-user-tools") %>'
-		/>
+		<%
+		List<UserToolAssetAddonEntry> selectedUserToolAssetAddonEntries = journalContentDisplayContext.getSelectedUserToolAssetAddonEntries();
+
+		for (UserToolAssetAddonEntry userToolAssetAddonEntry : journalContentDisplayContext.getEnabledUserToolAssetAddonEntries()) {
+		%>
+
+			<aui:input checked="<%= selectedUserToolAssetAddonEntries.contains(userToolAssetAddonEntry) %>" label="<%= userToolAssetAddonEntry.getLabel(locale) %>" name="userToolAssetAddonEntryKeys" type="checkbox" value="<%= userToolAssetAddonEntry.getKey() %>" />
+
+		<%
+		}
+		%>
+
 	</div>
 
 	<div class="sheet-section">
@@ -70,13 +75,18 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<liferay-ui:message key="content-metadata" />
 		</div>
 
-		<liferay-asset:asset-addon-entry-selector
-			assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
-			hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
-			id="contentMetadataAssetAddonEntriesSelector"
-			selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
-			title='<%= LanguageUtil.get(request, "select-content-metadata") %>'
-		/>
+		<%
+		List<ContentMetadataAssetAddonEntry> selectedContentMetadataAssetAddonEntries = journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries();
+
+		for (ContentMetadataAssetAddonEntry contentMetadataAssetAddonEntry : journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries()) {
+		%>
+
+			<aui:input checked="<%= selectedContentMetadataAssetAddonEntries.contains(contentMetadataAssetAddonEntry) %>" label="<%= contentMetadataAssetAddonEntry.getLabel(locale) %>" name="contentMetadataAssetAddonEntryKeys" type="checkbox" value="<%= contentMetadataAssetAddonEntry.getKey() %>" />
+
+		<%
+		}
+		%>
+
 	</div>
 
 	<div class="sheet-section">

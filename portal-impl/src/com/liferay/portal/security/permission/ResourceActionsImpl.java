@@ -956,6 +956,20 @@ public class ResourceActionsImpl implements ResourceActions {
 		return types;
 	}
 
+	private String _normalizePortletName(
+		String servletContextName, String portletName) {
+
+		if (servletContextName != null) {
+			portletName = portletName.concat(
+				PortletConstants.WAR_SEPARATOR
+			).concat(
+				servletContextName
+			);
+		}
+
+		return JS.getSafeName(portletName);
+	}
+
 	private void _read(
 			String servletContextName, ClassLoader classLoader, String source,
 			Set<String> portletNames)
@@ -1088,17 +1102,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		for (Element portletNameElement :
 				portletRefElement.elements("portlet-name")) {
 
-			String portletName = portletNameElement.getTextTrim();
-
-			if (servletContextName != null) {
-				portletName = portletName.concat(
-					PortletConstants.WAR_SEPARATOR
-				).concat(
-					servletContextName
-				);
-			}
-
-			portletName = JS.getSafeName(portletName);
+			String portletName = _normalizePortletName(
+				servletContextName, portletNameElement.getTextTrim());
 
 			// Reference for a portlet to child models
 
@@ -1144,17 +1149,9 @@ public class ResourceActionsImpl implements ResourceActions {
 			String servletContextName, Element portletResourceElement)
 		throws Exception {
 
-		String name = portletResourceElement.elementTextTrim("portlet-name");
-
-		if (servletContextName != null) {
-			name = name.concat(
-				PortletConstants.WAR_SEPARATOR
-			).concat(
-				servletContextName
-			);
-		}
-
-		name = JS.getSafeName(name);
+		String name = _normalizePortletName(
+			servletContextName,
+			portletResourceElement.elementTextTrim("portlet-name"));
 
 		ResourceActionsBag portletResourceActionsBag = _readResource(
 			portletResourceElement, name);

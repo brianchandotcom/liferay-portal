@@ -204,7 +204,7 @@ if (forcePost && (portletURL != null)) {
 								<liferay-ui:icon
 									message="<%= String.valueOf(i) %>"
 									onClick='<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>'
-									url='<%= HtmlUtil.escapeJS(url + namespace + curParam + "=" + i + urlAnchor) %>'
+									url='<%= HtmlUtil.escapeJSLink(url + namespace + curParam + "=" + i + urlAnchor) %>'
 								/>
 
 							<%
@@ -245,7 +245,7 @@ if (forcePost && (portletURL != null)) {
 										<liferay-ui:icon
 											message="<%= String.valueOf(curDelta) %>"
 											onClick='<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>'
-											url="<%= HtmlUtil.escapeJS(curDeltaURL) %>"
+											url="<%= HtmlUtil.escapeJSLink(curDeltaURL) %>"
 										/>
 
 									<%

@@ -77,6 +77,7 @@ public class ProductMenuPanelApp extends BasePanelApp {
 		if ((_companyId == group.getCompanyId()) &&
 			super.isShow(permissionChecker, group) &&
 			(PanelCategoryKeys.CONTROL_PANEL.equals(_panelCategoryKey) ||
+			 PanelCategoryKeys.GLOBAL_MENU.equals(_panelCategoryKey) ||
 			 ArrayUtil.contains(_siteIds, AppBuilderAppConstants.SITE_ID_ALL) ||
 			 ArrayUtil.contains(_siteIds, group.getGroupId()))) {
 

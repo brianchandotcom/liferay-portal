@@ -68,6 +68,20 @@ public class PageCollectionDefinitionSerDes {
 				String.valueOf(pageCollectionDefinition.getCollectionConfig()));
 		}
 
+		if (pageCollectionDefinition.getListStyle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"listStyle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageCollectionDefinition.getListStyle()));
+
+			sb.append("\"");
+		}
+
 		if (pageCollectionDefinition.getNumberOfColumns() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -118,6 +132,15 @@ public class PageCollectionDefinitionSerDes {
 				String.valueOf(pageCollectionDefinition.getCollectionConfig()));
 		}
 
+		if (pageCollectionDefinition.getListStyle() == null) {
+			map.put("listStyle", null);
+		}
+		else {
+			map.put(
+				"listStyle",
+				String.valueOf(pageCollectionDefinition.getListStyle()));
+		}
+
 		if (pageCollectionDefinition.getNumberOfColumns() == null) {
 			map.put("numberOfColumns", null);
 		}
@@ -162,6 +185,12 @@ public class PageCollectionDefinitionSerDes {
 					pageCollectionDefinition.setCollectionConfig(
 						CollectionConfigSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "listStyle")) {
+				if (jsonParserFieldValue != null) {
+					pageCollectionDefinition.setListStyle(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "numberOfColumns")) {

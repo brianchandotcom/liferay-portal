@@ -54,6 +54,27 @@ public class PageCollectionDefinition implements Cloneable {
 
 	protected CollectionConfig collectionConfig;
 
+	public String getListStyle() {
+		return listStyle;
+	}
+
+	public void setListStyle(String listStyle) {
+		this.listStyle = listStyle;
+	}
+
+	public void setListStyle(
+		UnsafeSupplier<String, Exception> listStyleUnsafeSupplier) {
+
+		try {
+			listStyle = listStyleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String listStyle;
+
 	public Integer getNumberOfColumns() {
 		return numberOfColumns;
 	}

@@ -1129,10 +1129,8 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		_modelResourceWeights.put(name, weight);
 
-		ResourceActionsBag modelResourceActionsBag = _getResourceActionsBag(
-			name);
-
-		_readResource(modelResourceElement, name, modelResourceActionsBag);
+		ResourceActionsBag modelResourceActionsBag = _readResource(
+			modelResourceElement, name);
 
 		Set<String> modelResourceActions =
 			modelResourceActionsBag.getSupportsActions();
@@ -1158,10 +1156,8 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		name = JS.getSafeName(name);
 
-		ResourceActionsBag portletResourceActionsBag = _getResourceActionsBag(
-			name);
-
-		_readResource(portletResourceElement, name, portletResourceActionsBag);
+		ResourceActionsBag portletResourceActionsBag = _readResource(
+			portletResourceElement, name);
 
 		Set<String> portletActions =
 			portletResourceActionsBag.getSupportsActions();
@@ -1177,10 +1173,11 @@ public class ResourceActionsImpl implements ResourceActions {
 		return name;
 	}
 
-	private void _readResource(
-			Element resourceElement, String name,
-			ResourceActionsBag resourceActionsBag)
+	private ResourceActionsBag _readResource(
+			Element resourceElement, String name)
 		throws ResourceActionsException {
+
+		ResourceActionsBag resourceActionsBag = _getResourceActionsBag(name);
 
 		Set<String> resourceActions = resourceActionsBag.getSupportsActions();
 
@@ -1262,12 +1259,14 @@ public class ResourceActionsImpl implements ResourceActions {
 		if (layoutManagerElement == null) {
 			layoutManagerActions.addAll(resourceActions);
 
-			return;
+			return resourceActionsBag;
 		}
 
 		layoutManagerActions.clear();
 
 		_readActionKeys(layoutManagerActions, layoutManagerElement);
+
+		return resourceActionsBag;
 	}
 
 	private static final String _ACTION_NAME_PREFIX = "action.";

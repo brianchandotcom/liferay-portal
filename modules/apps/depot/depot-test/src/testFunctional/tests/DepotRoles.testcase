@@ -26,9 +26,9 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-113731. It ensures that the asset library roles and permissions will be purged after membership is revoked."
+	@description = "This test covers LPS-113731. It ensures that roles and permissions from a library are removed after membership is revoked."
 	@priority = "5"
-	test AccessALAfterRevokeMembership {
+	test AccessALAfterRevokingMembership {
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea@liferay.com",

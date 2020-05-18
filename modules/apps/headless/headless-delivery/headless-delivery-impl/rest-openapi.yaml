@@ -1857,6 +1857,8 @@ components:
                         - collectionReference
                         - collectionType
                     type: object
+                listStyle:
+                    type: string
                 numberOfColumns:
                     type: integer
                 numberOfItems:

@@ -160,14 +160,12 @@ function Topper({children, item, itemRef, layoutData}) {
 		if (itemRef && itemRef.current) {
 			const itemTop =
 				itemRef.current.getBoundingClientRect().top - TOPPER_BAR_HEIGHT;
-			const controlMenuHeight = document
-				.getElementById('ControlMenu')
-				.getBoundingClientRect().height;
-			const managementToolbarHeight = document
-				.querySelector('.page-editor__toolbar')
-				.getBoundingClientRect().height;
 
-			if (itemTop < controlMenuHeight + managementToolbarHeight) {
+			const controlMenuContainerHeight = document.querySelector(
+				'.control-menu-container'
+			).offsetHeight;
+
+			if (itemTop < controlMenuContainerHeight) {
 				setIsInset(true);
 			}
 			else {

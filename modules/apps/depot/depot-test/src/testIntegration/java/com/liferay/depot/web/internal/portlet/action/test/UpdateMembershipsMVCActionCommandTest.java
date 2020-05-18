@@ -15,17 +15,21 @@
 package com.liferay.depot.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -141,6 +145,14 @@ public class UpdateMembershipsMVCActionCommandTest {
 			null, _user.getUserGroupIds(),
 			ServiceContextTestUtil.getServiceContext());
 
+		Role role = _roleLocalService.getRole(
+			_depotEntry.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			_user.getUserId(), _depotEntry.getGroupId(),
+			new long[] {role.getRoleId()});
+
 		_mvcActionCommand.processAction(
 			new MockActionRequest(
 				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
@@ -155,6 +167,11 @@ public class UpdateMembershipsMVCActionCommandTest {
 
 		Assert.assertFalse(
 			longStream.anyMatch(value -> value == _depotEntry.getGroupId()));
+
+		Assert.assertEquals(
+			0,
+			_userGroupRoleLocalService.getUserGroupRolesCount(
+				_user.getUserId(), _depotEntry.getGroupId()));
 	}
 
 	@Test
@@ -195,8 +212,14 @@ public class UpdateMembershipsMVCActionCommandTest {
 	)
 	private MVCActionCommand _mvcActionCommand;
 
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

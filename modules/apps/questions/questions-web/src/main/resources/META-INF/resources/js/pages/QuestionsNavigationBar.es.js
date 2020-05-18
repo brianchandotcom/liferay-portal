@@ -86,7 +86,7 @@ export default withRouter(
 
 		return (
 			<div className="d-flex flex-column flex-lg-row justify-content-between">
-				<div className="d-flex">
+				<div className="d-flex flex-grow-1">
 					<ClayDropDown
 						active={active}
 						className="questions-navigation-dropdown"
@@ -156,7 +156,7 @@ export default withRouter(
 					)}
 				</div>
 
-				<div className="c-mt-3 c-mt-lg-0 d-flex flex-column flex-md-row">
+				<div className="c-mt-3 c-mt-lg-0 d-flex flex-column flex-md-row flex-grow-1">
 					<ClayInput.Group className="justify-content-lg-end">
 						<ClayInput.GroupItem shrink>
 							<label

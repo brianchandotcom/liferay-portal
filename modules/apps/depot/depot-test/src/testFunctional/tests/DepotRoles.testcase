@@ -102,9 +102,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Asset Libraries");
 
-		var key_card = "Test Depot Name";
-
-		AssertElementNotPresent(locator1 = "LexiconCard#CARD_ELLIPSIS");
+		AssertElementNotPresent(
+			key_card = "Test Depot Name",
+			locator1 = "LexiconCard#CARD_ELLIPSIS");
 
 		Click(
 			locator1 = "LexiconCard#CARD_TITLE",

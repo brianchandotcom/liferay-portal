@@ -333,13 +333,14 @@ public class DDMFormDisplayContext {
 				getDDMForm()));
 
 		if (hasWorkflowEnabled(getFormInstance(), getThemeDisplay())) {
-			DDMFormInstanceRecord formInstanceRecord = getFormInstanceRecord();
+			DDMFormInstanceRecord ddmFormInstanceRecord =
+				getFormInstanceRecord();
 
-			if (formInstanceRecord != null) {
-				DDMFormInstanceRecordVersion latestFormInstanceRecordVersion =
-					formInstanceRecord.getLatestFormInstanceRecordVersion();
+			if (ddmFormInstanceRecord != null) {
+				DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
+					ddmFormInstanceRecord.getLatestFormInstanceRecordVersion();
 
-				if (latestFormInstanceRecordVersion.getStatus() ==
+				if (ddmFormInstanceRecordVersion.getStatus() ==
 						WorkflowConstants.STATUS_PENDING) {
 
 					return LanguageUtil.get(resourceBundle, "save");

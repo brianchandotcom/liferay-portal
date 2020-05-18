@@ -15,3 +15,30 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<clay:container
+	className="main-content-body"
+>
+	<div class="sheet">
+		<h2 class="sheet-title">
+			<!-- Replace 0 from contents.lenght -->
+			<%= LanguageUtil.format(request, "content-x", 0, false) %>
+		</h2>
+
+		<c:choose>
+			<c:when test="<%= true %>">
+				<!-- Check if contents is empty -->
+				<div class="taglib-empty-result-message">
+					<div class="taglib-empty-result-message-header"></div>
+
+					<div class="sheet-text text-center">
+						<%= LanguageUtil.get(request, "there-are-no-contents") %>
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<!-- Show table with contents information -->
+			</c:otherwise>
+		</c:choose>
+	</div>
+</clay:container>

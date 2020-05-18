@@ -26,63 +26,42 @@ public class JournalArticleExportImportContentProcessorTest {
 
 	@Test
 	public void testMultipleLinesHTMLComment() {
-		JournalArticleExportImportContentProcessor
-			journalArticleExportImportContentProcessor =
-				new JournalArticleExportImportContentProcessor();
-
-		String content = "<p>Just <!-- with a\n HTML comment -->a test</p>";
-
-		String excludedHtmlCommentContent = ReflectionTestUtil.invoke(
-			journalArticleExportImportContentProcessor, "_excludeHTMLComments",
-			new Class<?>[] {String.class}, content);
-
-		Assert.assertEquals("<p>Just a test</p>", excludedHtmlCommentContent);
+		_testExcludeHTMLComments(
+			"<p>Just a test</p>",
+			"<p>Just <!-- with a\n HTML comment -->a test</p>");
 	}
 
 	@Test
 	public void testNestedHTMLComment() {
-		JournalArticleExportImportContentProcessor
-			journalArticleExportImportContentProcessor =
-				new JournalArticleExportImportContentProcessor();
-
-		String content =
-			"<p>Just <!-- with a <!-- inside --> HTML comment -->a test</p>";
-
-		String excludedHtmlCommentContent = ReflectionTestUtil.invoke(
-			journalArticleExportImportContentProcessor, "_excludeHTMLComments",
-			new Class<?>[] {String.class}, content);
-
-		Assert.assertEquals("<p>Just a test</p>", excludedHtmlCommentContent);
+		_testExcludeHTMLComments(
+			"<p>Just a test</p>",
+			"<p>Just <!-- with a <!-- inside --> HTML comment -->a test</p>");
 	}
 
 	@Test
 	public void testNoHTMLComment() {
-		JournalArticleExportImportContentProcessor
-			journalArticleExportImportContentProcessor =
-				new JournalArticleExportImportContentProcessor();
-
-		String content = "<p>Just a test</p>";
-
-		String excludedHtmlCommentContent = ReflectionTestUtil.invoke(
-			journalArticleExportImportContentProcessor, "_excludeHTMLComments",
-			new Class<?>[] {String.class}, content);
-
-		Assert.assertEquals(content, excludedHtmlCommentContent);
+		_testExcludeHTMLComments("<p>Just a test</p>", "<p>Just a test</p>");
 	}
 
 	@Test
 	public void testSingleLineHTMLComment() {
+		_testExcludeHTMLComments(
+			"<p>Just a test</p>",
+			"<p>Just <!-- with a HTML comment -->a test</p>");
+	}
+
+	private void _testExcludeHTMLComments(
+		String expectedContent, String content) {
+
 		JournalArticleExportImportContentProcessor
 			journalArticleExportImportContentProcessor =
 				new JournalArticleExportImportContentProcessor();
-
-		String content = "<p>Just <!-- with a HTML comment -->a test</p>";
 
 		String excludedHtmlCommentContent = ReflectionTestUtil.invoke(
 			journalArticleExportImportContentProcessor, "_excludeHTMLComments",
 			new Class<?>[] {String.class}, content);
 
-		Assert.assertEquals("<p>Just a test</p>", excludedHtmlCommentContent);
+		Assert.assertEquals(expectedContent, excludedHtmlCommentContent);
 	}
 
 }

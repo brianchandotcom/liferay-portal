@@ -44,25 +44,25 @@ renderResponse.setTitle(group.getDescriptiveName(locale));
 	<aui:input name="depotEntryId" type="hidden" value="<%= depotEntry.getDepotEntryId() %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-	<div class="sheet sheet-lg">
-		<div class="sheet-header">
+	<clay:sheet>
+		<clay:sheet-header>
 			<h2 class="sheet-title"><%= formLabel %></h2>
 
 			<c:if test="<%= Validator.isNotNull(formDescription) %>">
 				<p><%= formDescription %></p>
 			</c:if>
-		</div>
+		</clay:sheet-header>
 
-		<div class="sheet-section">
+		<clay:sheet-section>
 			<liferay-util:include page="<%= jspPath %>" servletContext="<%= application %>" />
-		</div>
+		</clay:sheet-section>
 
 		<c:if test="<%= (boolean)request.getAttribute(DepotAdminWebKeys.SHOW_CONTROLS) %>">
-			<div class="sheet-footer">
+			<clay:sheet-footer>
 				<aui:button primary="<%= true %>" type="submit" />
 
 				<aui:button href="<%= Validator.isNotNull(backURL) ? backURL : String.valueOf(renderResponse.createRenderURL()) %>" type="cancel" />
-			</div>
+			</clay:sheet-footer>
 		</c:if>
-	</div>
+	</clay:sheet>
 </aui:form>

@@ -22,13 +22,18 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 
 <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/depot/update_roles" />
 
-<h3 class="autofit-row sheet-subtitle">
-	<span class="autofit-col autofit-col-expand">
+<clay:content-row
+	className="sheet-subtitle"
+	containerElement="h3"
+>
+	<clay:content-col
+		expand="true"
+	>
 		<span class="heading-text"><%= depotAdminRolesDisplayContext.getLabel() %></span>
-	</span>
+	</clay:content-col>
 
 	<c:if test="<%= depotAdminRolesDisplayContext.isSelectable() %>">
-		<span class="autofit-col">
+		<clay:content-col>
 			<span class="heading-end">
 				<liferay-ui:icon
 					cssClass="modify-link"
@@ -39,10 +44,10 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 					method="get"
 					url="javascript:;"
 				/>
-			</span>
+			</clay:content-col>
 		</span>
 	</c:if>
-</h3>
+</clay:content-row>
 
 <liferay-util:buffer
 	var="removeDepotRoleIcon"

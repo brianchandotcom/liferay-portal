@@ -31,13 +31,18 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 
 <liferay-ui:membership-policy-error />
 
-<h3 class="autofit-row sheet-subtitle">
-	<span class="autofit-col autofit-col-expand">
+<clay:content-row
+	className="sheet-subtitle"
+	containerElement="h3"
+>
+	<clay:content-col
+		expand="true"
+	>
 		<span class="heading-text"><%= depotAdminMembershipsDisplayContext.getLabel() %></span>
-	</span>
+	</clay:content-col>
 
 	<c:if test="<%= depotAdminMembershipsDisplayContext.isSelectable() %>">
-		<span class="autofit-col">
+		<clay:content-col>
 			<span class="heading-end">
 				<liferay-ui:icon
 					cssClass="modify-link"
@@ -48,9 +53,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "asset-
 					url="javascript:;"
 				/>
 			</span>
-		</span>
+		</clay:content-col>
 	</c:if>
-</h3>
+</clay:content-row>
 
 <liferay-util:buffer
 	var="removeDepotGroupIcon"

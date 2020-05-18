@@ -22,12 +22,18 @@ DepotAdminSitesDisplayContext depotAdminSitesDisplayContext = new DepotAdminSite
 List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.getDepotEntryGroupRels();
 %>
 
-<div class="sheet-section">
-	<h3 class="autofit-row sheet-subtitle">
-		<span class="autofit-col autofit-col-expand">
+<clay:sheet-section>
+	<clay:content-row
+		className="sheet-subtitle"
+		containerElement="h3"
+	>
+		<clay:content-col
+			expand="true"
+		>
 			<span class="heading-text"><liferay-ui:message key="connected-sites" /></span>
-		</span>
-		<span class="autofit-col">
+		</clay:content-col>
+
+		<clay:content-col>
 			<span class="heading-end">
 				<clay:button
 					elementClasses="btn-secondary"
@@ -38,8 +44,8 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 					title='<%= LanguageUtil.get(request, "connect-to-a-site") %>'
 				/>
 			</span>
-		</span>
-	</h3>
+		</clay:content-col>
+	</clay:content-row>
 
 	<aui:input name="toGroupId" type="hidden" />
 
@@ -135,4 +141,4 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			);
 		});
 	</aui:script>
-</div>
+</clay:sheet-section>

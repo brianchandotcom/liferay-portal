@@ -18,7 +18,6 @@ import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
@@ -95,10 +94,8 @@ public class DepotPanelAppController {
 	private boolean _isAlwaysShow(String portletId) {
 		if (portletId.equals(DepotPortletKeys.DEPOT_ADMIN) ||
 			portletId.equals(DepotPortletKeys.DEPOT_SETTINGS) ||
-			_panelCategoryHelper.containsPortlet(
-				portletId, PanelCategoryKeys.CONTROL_PANEL)||
-			_panelCategoryHelper.containsPortlet(
-				portletId, PanelCategoryKeys.GLOBAL_MENU)) {
+			_panelCategoryHelper.isControlPanelApp(portletId) ||
+			_panelCategoryHelper.isGlobalMenuApp(portletId)) {
 
 			return true;
 		}

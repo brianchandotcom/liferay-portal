@@ -99,6 +99,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 			uri
 		);
 
-		location.href = uri;
+		Liferay.Util.navigate(uri);
 	}
 </aui:script>

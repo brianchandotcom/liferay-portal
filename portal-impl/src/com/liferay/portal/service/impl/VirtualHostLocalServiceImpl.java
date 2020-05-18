@@ -177,6 +177,10 @@ public class VirtualHostLocalServiceImpl
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
+			if (languageId == null) {
+				locale = LocaleUtil.getSiteDefault();
+			}
+
 			if (!availableLocales.contains(locale)) {
 				ReflectionUtil.throwException(
 					new AvailableLocaleException(languageId));

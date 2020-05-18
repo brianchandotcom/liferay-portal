@@ -82,6 +82,34 @@ public class PageCollectionDefinition {
 	protected CollectionConfig collectionConfig;
 
 	@Schema
+	public String getListStyle() {
+		return listStyle;
+	}
+
+	public void setListStyle(String listStyle) {
+		this.listStyle = listStyle;
+	}
+
+	@JsonIgnore
+	public void setListStyle(
+		UnsafeSupplier<String, Exception> listStyleUnsafeSupplier) {
+
+		try {
+			listStyle = listStyleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String listStyle;
+
+	@Schema
 	public Integer getNumberOfColumns() {
 		return numberOfColumns;
 	}
@@ -173,6 +201,20 @@ public class PageCollectionDefinition {
 			sb.append("\"collectionConfig\": ");
 
 			sb.append(String.valueOf(collectionConfig));
+		}
+
+		if (listStyle != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"listStyle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(listStyle));
+
+			sb.append("\"");
 		}
 
 		if (numberOfColumns != null) {

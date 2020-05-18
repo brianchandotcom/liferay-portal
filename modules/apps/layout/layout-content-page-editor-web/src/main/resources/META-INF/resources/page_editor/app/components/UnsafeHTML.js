@@ -116,15 +116,15 @@ export default class UnsafeHTML extends React.PureComponent {
 	 * are not linked to the document anymore.
 	 */
 	_updateRef = (nextRef) => {
+		if (typeof this.props.contentRef === 'function') {
+			this.props.contentRef(nextRef);
+		}
+		else if (this.props.contentRef) {
+			this.props.contentRef.current = nextRef;
+		}
+
 		this.setState(({ref: prevRef}) => {
 			if (prevRef !== nextRef) {
-				if (typeof this.props.contentRef === 'function') {
-					this.props.contentRef(nextRef);
-				}
-				else if (this.props.contentRef) {
-					this.props.contentRef.current = nextRef;
-				}
-
 				return {
 					portals: [],
 					ref: nextRef,

@@ -101,6 +101,8 @@ public class ArchiveUtil {
 
 				});
 
+			zipOutputStream.close();
+
 			Files.move(
 				Paths.get(tmpFile.getCanonicalPath()),
 				Paths.get(targetFile.getCanonicalPath()));

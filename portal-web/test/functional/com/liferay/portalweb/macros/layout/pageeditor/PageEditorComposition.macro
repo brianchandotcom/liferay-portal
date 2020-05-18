@@ -13,6 +13,12 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
+		if ("${saveMappingConfiguration}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Save Mapping Configuration",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
 		if (isSet(collectionName)) {
 			if (isSet(selectCollectionName)) {
 				AssertClick(

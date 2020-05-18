@@ -200,37 +200,39 @@ public class UpgradeDDMDataProviderInstance extends UpgradeProcess {
 					Map<String, String> ddmDataProviderOutputParameters =
 						_ddmDataProviderInstanceOutputParametersUUID.get(uuid);
 
-					String actionOutputs = arguments[2].substring(
+					String actionOutputsString = arguments[2].substring(
 						0, arguments[2].length() - 2);
 
-					String[] separetedActionOutputs = StringUtil.split(
-						actionOutputs, CharPool.SEMICOLON);
+					String[] actionOutputs = StringUtil.split(
+						actionOutputsString, CharPool.SEMICOLON);
 
-					String newActionOutputs = "";
+					String newActionOutputsString = "";
 
-					for (String actionOutput : separetedActionOutputs) {
+					for (String actionOutput : actionOutputs) {
 						String[] actionOutputParts = StringUtil.split(
 							actionOutput, CharPool.EQUAL);
 
-						newActionOutputs = StringBundler.concat(
-							newActionOutputs, actionOutputParts[0],
+						newActionOutputsString = StringBundler.concat(
+							newActionOutputsString, actionOutputParts[0],
 							CharPool.EQUAL,
 							ddmDataProviderOutputParameters.get(
 								actionOutputParts[1]),
 							CharPool.SEMICOLON);
 					}
 
-					if (newActionOutputs.length() > 0) {
-						newActionOutputs = newActionOutputs.substring(
-							0, newActionOutputs.length() - 1);
+					if (newActionOutputsString.length() > 0) {
+						newActionOutputsString =
+							newActionOutputsString.substring(
+								0, newActionOutputsString.length() - 1);
 					}
 
 					action = StringBundler.concat(
 						"call('", uuid, "', '", arguments[1], "', '",
-						newActionOutputs, "')");
+						newActionOutputsString, "')");
 
 					updated =
-						updated || !newActionOutputs.equals(actionOutputs);
+						updated ||
+						!newActionOutputsString.equals(actionOutputsString);
 				}
 
 				newActionsJSONArray.put(action);

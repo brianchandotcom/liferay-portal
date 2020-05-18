@@ -597,7 +597,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.assignAssetLibraryRole(
-			roleTitle = "Asset Library Administrator", 
+			roleTitle = "Asset Library Administrator",
 			userScreenName = "usersn");
 
 		User.logoutPG();

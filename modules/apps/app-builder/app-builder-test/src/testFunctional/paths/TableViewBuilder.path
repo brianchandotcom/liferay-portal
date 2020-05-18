@@ -44,7 +44,7 @@
 
 <tr>
 	<td>COLUMN_LABEL_AT_SIDEBAR</td>
-	<td>//div[contains(@class,'app-builder-sidebar')]//span[contains(text(),'${columnLabel}')]</td>
+	<td>//div[contains(@class,'app-builder-table-view__sidebar')]//span[contains(text(),'${columnLabel}')]</td>
 	<td></td>
 </tr>
 

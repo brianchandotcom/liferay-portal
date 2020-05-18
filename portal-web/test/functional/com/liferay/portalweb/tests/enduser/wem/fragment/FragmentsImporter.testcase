@@ -366,6 +366,114 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for LPS-110462. The value of editable field is reset in saved composition when unchecking Save Mapping Configuration."
+	@priority = "4"
+	test ExportImportFragmentCompositionWithoutCheckingSaveMappingConfiguration {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Add a Section to page") {
+			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		}
+
+		task ("Add the Heading fragment into Section") {
+			PageEditor.gotoTab(tabName = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+			Click(
+				key_elementType = "Section",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fragmentName = "Heading",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#SECTION_CONTAINER",
+				value1 = "");
+
+			AssertElementPresent(
+				key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Heading')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+		}
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WC WebContent Title",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		SelectFrame(value1 = "relative=top");
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
+
+		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
+
+		task ("Export the fragment collection") {
+			FragmentsAdmin.exportCollection(collectionName = "Saved Fragments");
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "New Site Name");
+		}
+
+		task ("Navigate to fragments admin in the new site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
+		}
+
+		task ("Import the fragment collection into the new site") {
+			FragmentsAdmin.importCollectionFromTempFolder();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "New Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "New Site Name");
+		}
+
+		PageEditor.addFragment(
+			collectionName = "Saved Fragments",
+			fragmentName = "New Fragment Name",
+			withSection = "true");
+
+		AssertTextEquals(
+			key_fragmentName = "heading",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "Heading Example");
+	}
+
 	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
 	@priority = "5"
 	test ExportImportSavedCompositionWithoutSaveInlineContent {

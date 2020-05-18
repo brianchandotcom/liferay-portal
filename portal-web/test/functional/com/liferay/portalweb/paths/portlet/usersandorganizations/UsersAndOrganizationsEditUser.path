@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEPOT_ROLES_SELECT_BUTTON</td>
+	<td>//button[contains(@data-rolename,'${roleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEPOT_ROLES_SELECT_LINK</td>
 	<td>//a[contains(@id,'selectDepotRoleLink')]/span</td>
 	<td></td>

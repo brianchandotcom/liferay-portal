@@ -35,17 +35,6 @@ public class WhipDefaultsPlugin extends BaseDefaultsPlugin<WhipPlugin> {
 
 	public static final Plugin<Project> INSTANCE = new WhipDefaultsPlugin();
 
-	private void _addPortalToolDependencies(Project project) {
-		WhipExtension whipExtension = GradleUtil.getExtension(
-			project, WhipExtension.class);
-
-		String version = PortalTools.getVersion(project, _PORTAL_TOOL_NAME);
-
-		if (Validator.isNotNull(version)) {
-			whipExtension.setVersion(version);
-		}
-	}
-
 	@Override
 	protected void applyPluginDefaults(Project project, WhipPlugin whipPlugin) {
 		_addPortalToolDependencies(project);
@@ -59,6 +48,17 @@ public class WhipDefaultsPlugin extends BaseDefaultsPlugin<WhipPlugin> {
 	}
 
 	private WhipDefaultsPlugin() {
+	}
+
+	private void _addPortalToolDependencies(Project project) {
+		WhipExtension whipExtension = GradleUtil.getExtension(
+			project, WhipExtension.class);
+
+		String version = PortalTools.getVersion(project, _PORTAL_TOOL_NAME);
+
+		if (Validator.isNotNull(version)) {
+			whipExtension.setVersion(version);
+		}
 	}
 
 	private void _configureTasksTest(Project project) {

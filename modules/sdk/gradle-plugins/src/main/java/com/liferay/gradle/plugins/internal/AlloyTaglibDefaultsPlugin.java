@@ -39,6 +39,23 @@ public class AlloyTaglibDefaultsPlugin
 
 	public static final String PORTAL_TOOL_NAME = "alloy-taglib";
 
+	@Override
+	protected void applyPluginDefaults(
+		Project project, AlloyTaglibPlugin alloyTaglibPlugin) {
+
+		_addPortalToolDependencies(project);
+
+		_configureTasksBuildTaglibs(project);
+	}
+
+	@Override
+	protected Class<AlloyTaglibPlugin> getPluginClass() {
+		return AlloyTaglibPlugin.class;
+	}
+
+	private AlloyTaglibDefaultsPlugin() {
+	}
+
 	private Configuration _addPortalToolConfiguration(final Project project) {
 		final Configuration configuration = GradleUtil.addConfiguration(
 			project, _PORTAL_TOOL_CONFIGURATION_NAME);
@@ -83,23 +100,6 @@ public class AlloyTaglibDefaultsPlugin
 		GradleUtil.addDependency(
 			project, _PORTAL_TOOL_CONFIGURATION_NAME, "org.freemarker",
 			"freemarker", "2.3.23");
-	}
-
-	@Override
-	protected void applyPluginDefaults(
-		Project project, AlloyTaglibPlugin alloyTaglibPlugin) {
-
-		_addPortalToolDependencies(project);
-
-		_configureTasksBuildTaglibs(project);
-	}
-
-	@Override
-	protected Class<AlloyTaglibPlugin> getPluginClass() {
-		return AlloyTaglibPlugin.class;
-	}
-
-	private AlloyTaglibDefaultsPlugin() {
 	}
 
 	private void _configureTaskBuildTaglibs(BuildTaglibsTask buildTaglibsTask) {

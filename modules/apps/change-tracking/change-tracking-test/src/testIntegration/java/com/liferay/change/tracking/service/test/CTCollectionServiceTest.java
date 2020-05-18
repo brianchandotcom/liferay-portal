@@ -88,9 +88,19 @@ public class CTCollectionServiceTest {
 	public void testPublishCTCollection() throws Exception {
 		UserTestUtil.setUser(_user);
 
+		Assert.assertEquals(
+			0,
+			_ctCollectionService.getCTCollectionsCount(
+				_user.getCompanyId(), WorkflowConstants.STATUS_ANY, ""));
+
 		_ctCollection = _ctCollectionService.addCTCollection(
 			_user.getCompanyId(), _user.getUserId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			1,
+			_ctCollectionService.getCTCollectionsCount(
+				_user.getCompanyId(), WorkflowConstants.STATUS_ANY, ""));
 
 		JournalFolder journalFolder = null;
 

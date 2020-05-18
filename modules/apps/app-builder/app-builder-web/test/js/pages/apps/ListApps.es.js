@@ -13,13 +13,24 @@
  */
 
 import {waitForElementToBeRemoved} from '@testing-library/dom';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import ListApps from '../../../../src/main/resources/META-INF/resources/js/pages/apps/ListApps.es';
 import * as time from '../../../../src/main/resources/META-INF/resources/js/utils/time.es';
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import {RESPONSES} from '../../constants.es';
+
+const DRODOWN_VALUES = {
+	items: [
+		{
+			id: 37568,
+			name: {
+				'en-US': 'test',
+			},
+		},
+	],
+};
 
 describe('ListApps', () => {
 	beforeEach(() => {
@@ -32,7 +43,8 @@ describe('ListApps', () => {
 	});
 
 	it('renders', async () => {
-		fetch.mockResponse(JSON.stringify(RESPONSES.ONE_ITEM));
+		fetch.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM));
+		fetch.mockResponse(JSON.stringify(DRODOWN_VALUES));
 
 		const {asFragment} = render(
 			<ListApps match={{params: {dataDefinitionId: ''}, url: '/'}} />,
@@ -47,7 +59,8 @@ describe('ListApps', () => {
 	});
 
 	it('renders with dataDefinitionId and 5 apps in the list', async () => {
-		fetch.mockResponse(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
+		fetch.mockResponseOnce(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
+		fetch.mockResponse(JSON.stringify(DRODOWN_VALUES));
 
 		const {container} = render(
 			<ListApps match={{params: {dataDefinitionId: '1'}, url: '/'}} />,
@@ -61,8 +74,9 @@ describe('ListApps', () => {
 		expect(container.querySelector('tbody').children.length).toEqual(5);
 	});
 
-	it('renders with no dataDefinitionId and 5 apps in the list', async () => {
-		fetch.mockResponse(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
+	it('renders with no dataDefinitionId, opens a new app popover and lists 5 apps', async () => {
+		fetch.mockResponseOnce(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
+		fetch.mockResponse(JSON.stringify(DRODOWN_VALUES));
 
 		const {container} = render(
 			<ListApps match={{params: {dataDefinitionId: ''}, url: '/'}} />,
@@ -74,10 +88,33 @@ describe('ListApps', () => {
 		);
 
 		expect(container.querySelector('tbody').children.length).toEqual(5);
+
+		const newAppButton = document.querySelector(
+			'.nav-btn.nav-btn-monospaced.btn.btn-monospaced.btn-primary'
+		);
+
+		fireEvent.click(newAppButton);
+
+		expect(
+			document.querySelector('.popover.apps-popover.mw-100')
+		).toBeTruthy();
+
+		fireEvent.click(newAppButton);
+
+		expect(document.querySelector('.popover.apps-popover.mw-100.hide'));
+
+		await fireEvent.click(newAppButton);
+
+		await fireEvent.click(
+			document.querySelector('.d-flex.justify-content-end').children[0]
+		);
+
+		expect(document.querySelector('.popover.apps-popover.mw-100.hide'));
 	});
 
 	it('renders with empty state', async () => {
-		fetch.mockResponse(JSON.stringify(RESPONSES.NO_ITEMS));
+		fetch.mockResponseOnce(JSON.stringify(RESPONSES.NO_ITEMS));
+		fetch.mockResponse(JSON.stringify(DRODOWN_VALUES));
 
 		const {container} = render(
 			<ListApps match={{params: {dataDefinitionId: ''}, url: '/'}} />,

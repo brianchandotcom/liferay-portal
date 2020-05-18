@@ -34,7 +34,6 @@ renderResponse.setTitle((accountEntryDisplay == null) ? LanguageUtil.get(request
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntryDisplay == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="accountEntryId" type="hidden" value='<%= (accountEntryDisplay == null) ? "0" : String.valueOf(accountEntryDisplay.getAccountEntryId()) %>' />
 
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">

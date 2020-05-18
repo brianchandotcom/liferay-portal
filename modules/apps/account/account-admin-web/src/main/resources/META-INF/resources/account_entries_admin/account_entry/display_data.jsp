@@ -29,11 +29,13 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 		<clay:col
 			md="6"
 		>
-			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-				<aui:input label="account-name" name="name" required="<%= true %>" type="text" value="<%= (accountEntryDisplay == null) ? StringPool.BLANK : accountEntryDisplay.getName() %>">
-					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "name") %></aui:validator>
-				</aui:input>
-			</aui:field-wrapper>
+			<aui:input label="account-name" name="name" required="<%= true %>" type="text" value="<%= (accountEntryDisplay == null) ? StringPool.BLANK : accountEntryDisplay.getName() %>">
+				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "name") %></aui:validator>
+			</aui:input>
+
+			<c:if test="<%= accountEntryDisplay != null %>">
+				<aui:input label="account-id" name="accountEntryId" readonly="true" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+			</c:if>
 		</clay:col>
 
 		<clay:col

@@ -134,6 +134,28 @@ public class FileInstallConfigTest {
 	}
 
 	@Test
+	public void testConfigurationEscapedSubstitution() throws Exception {
+		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
+			".testConfigurationEscapedSubstitution");
+
+		_configurationPath = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			configurationPid.concat(".config"));
+
+		String testKey = "testKey";
+
+		String testValue = "\"$\\{testValue\\}\"";
+
+		_configuration = _createConfiguration(
+			configurationPid,
+			StringBundler.concat(testKey, StringPool.EQUAL, testValue));
+
+		Dictionary<String, Object> dictionary = _configuration.getProperties();
+
+		Assert.assertEquals("${testValue}", dictionary.get(testKey));
+	}
+
+	@Test
 	public void testConfigurationValues() throws Exception {
 		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
 			".testConfigurationValues");

@@ -286,12 +286,13 @@ class Iframe extends React.Component {
 
 		const namespace = iframeURL.searchParams.get('p_p_id');
 
+		let bodyCssClass = 'dialog-iframe-popup';
+
 		if (props.iframeBodyCssClass) {
-			iframeURL.searchParams.set(
-				`_${namespace}_bodyCssClass`,
-				props.iframeBodyCssClass
-			);
+			bodyCssClass = `${bodyCssClass} ${props.iframeBodyCssClass}`;
 		}
+
+		iframeURL.searchParams.set(`_${namespace}_bodyCssClass`, bodyCssClass);
 
 		this.state = {loading: true, src: iframeURL.toString()};
 	}
@@ -312,9 +313,17 @@ class Iframe extends React.Component {
 			() => this.props.processClose()
 		);
 
+		iframe.contentWindow.document.body.classList.add('dialog-iframe-popup');
+
 		this.props.updateLoading(false);
 
 		this.setState({loading: false});
+
+		iframe.contentWindow.onunload = () => {
+			this.props.updateLoading(true);
+
+			this.setState({loading: true});
+		};
 
 		Liferay.fire('modalIframeLoaded', {src: this.state.src});
 	};

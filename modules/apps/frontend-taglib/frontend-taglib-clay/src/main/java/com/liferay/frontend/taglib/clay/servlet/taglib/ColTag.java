@@ -95,7 +95,7 @@ public class ColTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		if (Validator.isNotNull(_size)) {
 			className.add("col-" + _size);
 		}

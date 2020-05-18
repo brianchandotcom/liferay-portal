@@ -43,7 +43,7 @@ public class SheetSectionTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		className.add("sheet-section");
 
 		return super.processClassName(className);

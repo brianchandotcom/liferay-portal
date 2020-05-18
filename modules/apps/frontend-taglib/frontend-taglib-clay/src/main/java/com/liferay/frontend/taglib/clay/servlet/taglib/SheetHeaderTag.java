@@ -43,7 +43,7 @@ public class SheetHeaderTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		className.add("sheet-header");
 
 		return super.processClassName(className);

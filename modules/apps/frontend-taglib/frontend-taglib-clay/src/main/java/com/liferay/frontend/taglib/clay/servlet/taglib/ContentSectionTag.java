@@ -43,7 +43,7 @@ public class ContentSectionTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		className.add("autofit-section");
 
 		return super.processClassName(className);

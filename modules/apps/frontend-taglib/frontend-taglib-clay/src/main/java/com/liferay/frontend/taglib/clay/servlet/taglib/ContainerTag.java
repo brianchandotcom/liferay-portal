@@ -68,7 +68,7 @@ public class ContainerTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		if (!_fluid) {
 			className.add("container");
 		}

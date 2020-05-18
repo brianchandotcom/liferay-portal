@@ -67,7 +67,7 @@ public class ContentColTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		className.add("autofit-col");
 
 		if (_expand) {

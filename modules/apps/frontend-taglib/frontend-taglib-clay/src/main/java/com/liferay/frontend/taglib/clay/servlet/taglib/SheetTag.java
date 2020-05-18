@@ -59,7 +59,7 @@ public class SheetTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		className.add("sheet");
 
 		if (Validator.isNotNull(_size)) {

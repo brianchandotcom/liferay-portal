@@ -78,7 +78,7 @@ public class BaseContainerTag extends IncludeTag {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}
 
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		if (Validator.isNotNull(_className)) {
 			className.addAll(StringUtil.split(_className, CharPool.SPACE));
 		}

@@ -43,7 +43,7 @@ public class RowTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		className.add("row");
 
 		return super.processClassName(className);

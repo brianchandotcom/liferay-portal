@@ -87,7 +87,7 @@ public class ContentRowTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String processClassName(Set className) {
+	protected String processClassName(Set<String> className) {
 		className.add("autofit-row");
 
 		if (_floatElements != null) {

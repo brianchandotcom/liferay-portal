@@ -1,0 +1,32 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {
+							"config-property-1": "${CONFIG_PROPERTY_1}",
+							"config-property-2": "${CONFIG_PROPERTY_2}"
+						},
+						"widgetInstanceId": "",
+						"widgetName": "${WIDGET_NAME}",
+						"widgetPermissions": [
+							{
+								"actionKeys": [
+									"VIEW"
+								],
+								"roleKey": "${ROLE_KEY}"
+							}
+						]
+					}
+				},
+				"type": "Widget"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

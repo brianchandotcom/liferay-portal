@@ -42,20 +42,36 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -75,7 +91,14 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Stream;
 
+import javax.portlet.GenericPortlet;
+import javax.portlet.Portlet;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -84,7 +107,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Jürgen Kappler
@@ -103,9 +128,24 @@ public class LayoutPageTemplatesImporterTest {
 	public void setUp() throws Exception {
 		_bundle = FrameworkUtil.getBundle(getClass());
 
+		_bundleContext = _bundle.getBundleContext();
+
 		_group = GroupTestUtil.addGroup();
 
 		_user = TestPropsValues.getUser();
+
+		_testPortletName = "TEST_PORTLET_" + RandomTestUtil.randomString();
+	}
+
+	@After
+	public void tearDown() {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
 	}
 
 	@Test
@@ -205,6 +245,124 @@ public class LayoutPageTemplatesImporterTest {
 
 		Assert.assertEquals("test.jpg", jsonObject.get("title"));
 		Assert.assertEquals("test-image.jpg", jsonObject.get("url"));
+	}
+
+	@Test
+	public void testImportEmptyLayoutPageTemplateEntryWidget()
+		throws Exception {
+
+		_registerTestPortlet(_testPortletName);
+
+		String configProperty1 = RandomTestUtil.randomString();
+		String configProperty2 = RandomTestUtil.randomString();
+
+		Role role = _roleLocalService.getDefaultGroupRole(_group.getGroupId());
+
+		Map<String, String> valuesMap = HashMapBuilder.put(
+			"CONFIG_PROPERTY_1", configProperty1
+		).put(
+			"CONFIG_PROPERTY_2", configProperty2
+		).put(
+			"ROLE_KEY", role.getName()
+		).put(
+			"WIDGET_NAME", _testPortletName
+		).build();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getImportLayoutPageTemplateEntry("widget", valuesMap);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layoutPageTemplateEntry.getPlid());
+
+		Assert.assertNotNull(layoutPageTemplateStructure);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(0));
+
+		LayoutStructureItem layoutStructureItem =
+			_getMainChildLayoutStructureItem(layoutStructure);
+
+		Assert.assertTrue(
+			layoutStructureItem instanceof FragmentLayoutStructureItem);
+
+		FragmentLayoutStructureItem fragmentLayoutStructureItem =
+			(FragmentLayoutStructureItem)layoutStructureItem;
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentLayoutStructureItem.getFragmentEntryLinkId());
+
+		Assert.assertNotNull(fragmentEntryLink);
+
+		JSONObject editableValues = JSONFactoryUtil.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		String portletId = editableValues.getString("portletId");
+
+		Assert.assertEquals(_testPortletName, portletId);
+
+		String instanceId = editableValues.getString("instanceId");
+
+		Assert.assertNotNull(instanceId);
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				layoutPageTemplateEntry.getPlid(),
+				PortletIdCodec.encode(portletId, instanceId));
+
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferencesFactoryUtil.fromDefaultXML(
+				portletPreferences.getPreferences());
+
+		Assert.assertEquals(
+			configProperty1,
+			jxPortletPreferences.getValue("config-property-1", null));
+
+		Assert.assertEquals(
+			configProperty2,
+			jxPortletPreferences.getValue("config-property-2", null));
+
+		String resourcePrimKey = _portletPermission.getPrimaryKey(
+			layoutPageTemplateEntry.getPlid(),
+			PortletIdCodec.encode(portletId, instanceId));
+
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				layoutPageTemplateEntry.getCompanyId(), _testPortletName,
+				ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
+
+		Assert.assertEquals(
+			resourcePermissions.toString(), 1, resourcePermissions.size());
+
+		ResourcePermission resourcePermission = resourcePermissions.get(0);
+
+		Assert.assertEquals(role.getRoleId(), resourcePermission.getRoleId());
+
+		List<ResourceAction> resourceActions =
+			_resourceActionLocalService.getResourceActions(_testPortletName);
+
+		Stream<ResourceAction> stream = resourceActions.stream();
+
+		ResourceAction resourceAction = stream.filter(
+			resourceAction1 -> Objects.equals(
+				resourceAction1.getActionId(), "VIEW")
+		).findFirst(
+		).orElse(
+			null
+		);
+
+		Assert.assertNotNull(resourceAction);
+
+		long bitwiseValue = resourceAction.getBitwiseValue();
+
+		Assert.assertTrue(
+			(resourcePermission.getActionIds() & bitwiseValue) == bitwiseValue);
 	}
 
 	@Test
@@ -700,6 +858,19 @@ public class LayoutPageTemplatesImporterTest {
 		}
 	}
 
+	private void _registerTestPortlet(final String portletId) throws Exception {
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				Portlet.class,
+				new LayoutPageTemplatesImporterTest.TestPortlet(),
+				new HashMapDictionary<String, String>() {
+					{
+						put("com.liferay.portlet.instanceable", "true");
+						put("javax.portlet.name", portletId);
+					}
+				}));
+	}
+
 	private void _validateHTMLFragmentEntryLinkEditableValues(
 			String editableValues)
 		throws Exception {
@@ -865,6 +1036,7 @@ public class LayoutPageTemplatesImporterTest {
 	private static final String _ROOT_FOLDER = "page-templates";
 
 	private Bundle _bundle;
+	private BundleContext _bundleContext;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
@@ -895,6 +1067,27 @@ public class LayoutPageTemplatesImporterTest {
 	@Inject
 	private Portal _portal;
 
+	@Inject
+	private PortletPermission _portletPermission;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new CopyOnWriteArrayList<>();
+	private String _testPortletName;
 	private User _user;
+
+	private class TestPortlet extends GenericPortlet {
+	}
 
 }

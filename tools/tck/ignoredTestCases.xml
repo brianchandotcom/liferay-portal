@@ -132,4 +132,8 @@
 	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameters7"></entry>
 	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameters8"></entry>
 	<entry key="V2URLTests_ResourceURL_ApiRenderResurl_resourceURL5"></entry>
+
+	<!-- https://issues.liferay.com/browse/LPS-113845 -->
+
+	<entry key="V2AddlResponseTests_SPEC2_12_Resource_characterEncoding2"></entry>
 </properties>

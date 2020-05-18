@@ -18,6 +18,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.list.renderer.InfoListRenderer;
+import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
@@ -61,11 +63,13 @@ public class PortletLayoutDisplayContext {
 	public PortletLayoutDisplayContext(
 		HttpServletRequest httpServletRequest,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		InfoListRendererTracker infoListRendererTracker,
 		LayoutListRetrieverTracker layoutListRetrieverTracker,
 		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker) {
 
 		_httpServletRequest = httpServletRequest;
 		_infoDisplayContributorTracker = infoDisplayContributorTracker;
+		_infoListRendererTracker = infoListRendererTracker;
 		_layoutListRetrieverTracker = layoutListRetrieverTracker;
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
 	}
@@ -218,6 +222,17 @@ public class PortletLayoutDisplayContext {
 			className);
 	}
 
+	public InfoListRenderer getInfoListRenderer(
+		CollectionLayoutStructureItem collectionLayoutStructureItem) {
+
+		if (Validator.isNull(collectionLayoutStructureItem.getListStyle())) {
+			return null;
+		}
+
+		return _infoListRendererTracker.getInfoListRenderer(
+			collectionLayoutStructureItem.getListStyle());
+	}
+
 	public LayoutStructure getLayoutStructure() {
 		if (_layoutStructure != null) {
 			return _layoutStructure;
@@ -306,6 +321,7 @@ public class PortletLayoutDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private final InfoListRendererTracker _infoListRendererTracker;
 	private final LayoutListRetrieverTracker _layoutListRetrieverTracker;
 	private LayoutStructure _layoutStructure;
 	private final ListObjectReferenceFactoryTracker

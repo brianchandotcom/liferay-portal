@@ -29,6 +29,7 @@ page import="com.liferay.fragment.renderer.FragmentRendererController" %><%@
 page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><%@
 page import="com.liferay.info.constants.InfoDisplayWebKeys" %><%@
 page import="com.liferay.info.display.contributor.InfoDisplayContributor" %><%@
+page import="com.liferay.info.list.renderer.InfoListRenderer" %><%@
 page import="com.liferay.layout.responsive.ResponsiveLayoutStructureUtil" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext" %><%@

@@ -36,37 +36,50 @@ for (String childrenItemId : childrenItemIds) {
 			CollectionLayoutStructureItem collectionLayoutStructureItem = (CollectionLayoutStructureItem)layoutStructureItem;
 
 			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+
+			InfoListRenderer infoListRenderer = portletLayoutDisplayContext.getInfoListRenderer(collectionLayoutStructureItem);
 			%>
 
-			<clay:row>
+			<c:choose>
+				<c:when test="<%= infoListRenderer != null %>">
 
-				<%
-				InfoDisplayContributor currentInfoDisplayContributor = (InfoDisplayContributor)request.getAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
+					<%
+					infoListRenderer.render(portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem), request, response);
+					%>
 
-				try {
-					request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, portletLayoutDisplayContext.getCollectionInfoDisplayContributor(collectionLayoutStructureItem));
+				</c:when>
+				<c:otherwise>
+					<clay:row>
 
-					for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
-						request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);
-				%>
+						<%
+						InfoDisplayContributor currentInfoDisplayContributor = (InfoDisplayContributor)request.getAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
 
-						<clay:col
-							md="<%= String.valueOf(12 / collectionLayoutStructureItem.getNumberOfColumns()) %>"
-						>
-							<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-						</clay:col>
+						try {
+							request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, portletLayoutDisplayContext.getCollectionInfoDisplayContributor(collectionLayoutStructureItem));
 
-				<%
-					}
-				}
-				finally {
-					request.removeAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
+							for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
+								request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);
+						%>
 
-					request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, currentInfoDisplayContributor);
-				}
-				%>
+								<clay:col
+									md="<%= String.valueOf(12 / collectionLayoutStructureItem.getNumberOfColumns()) %>"
+								>
+									<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+								</clay:col>
 
-			</clay:row>
+						<%
+							}
+						}
+						finally {
+							request.removeAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
+
+							request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, currentInfoDisplayContributor);
+						}
+						%>
+
+					</clay:row>
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 

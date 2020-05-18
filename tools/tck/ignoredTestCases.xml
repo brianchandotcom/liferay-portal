@@ -112,4 +112,24 @@
 	<entry key="V3ResourceAsyncTests_SPEC_21_Async_onStartAsync"></entry>
 	<entry key="V3ResourceAsyncTests_SPEC_21_Async_start2"></entry>
 	<entry key="V3ResourceAsyncTests_SPEC_21_Async_start4"></entry>
+
+	<!-- https://issues.liferay.com/browse/LPS-108235 -->
+
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_actionURL20"></entry>
+	<entry key="V2AddlPortletTests_SPEC2_13_ResourceServing_resourceURLs8"></entry>
+	<entry key="V2AddlPortletTests_SPEC2_13_ResourceServing_resourceURLs9"></entry>
+	<entry key="V2PortletTagLibraryTests2_SPEC2_26_IncludeJSPRender_resourceURL4"></entry>
+	<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_actionURL20"></entry>
+	<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_renderURL20"></entry>
+	<entry key="V2PortletTagLibraryTests3_SPEC2_26_IncludeJSPResource_resourceURL4"></entry>
+	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameterB1"></entry>
+	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameterB2"></entry>
+	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameterB6"></entry>
+	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameters1"></entry>
+	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameters2"></entry>
+	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameters3"></entry>
+	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameters6"></entry>
+	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameters7"></entry>
+	<entry key="V2URLTests_BaseURL_ApiRenderRenurl_setParameters8"></entry>
+	<entry key="V2URLTests_ResourceURL_ApiRenderResurl_resourceURL5"></entry>
 </properties>

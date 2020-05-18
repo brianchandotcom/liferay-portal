@@ -39,7 +39,7 @@ public class AlloyTaglibDefaultsPlugin
 
 	public static final String PORTAL_TOOL_NAME = "alloy-taglib";
 
-	protected Configuration addPortalToolConfiguration(final Project project) {
+	private Configuration _addPortalToolConfiguration(final Project project) {
 		final Configuration configuration = GradleUtil.addConfiguration(
 			project, _PORTAL_TOOL_CONFIGURATION_NAME);
 
@@ -73,8 +73,8 @@ public class AlloyTaglibDefaultsPlugin
 		return configuration;
 	}
 
-	protected void addPortalToolDependencies(Project project) {
-		addPortalToolConfiguration(project);
+	private void _addPortalToolDependencies(Project project) {
+		_addPortalToolConfiguration(project);
 
 		PortalTools.addPortalToolDependencies(
 			project, _PORTAL_TOOL_CONFIGURATION_NAME, _PORTAL_TOOL_GROUP,
@@ -89,7 +89,7 @@ public class AlloyTaglibDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, AlloyTaglibPlugin alloyTaglibPlugin) {
 
-		addPortalToolDependencies(project);
+		_addPortalToolDependencies(project);
 
 		_configureTasksBuildTaglibs(project);
 	}

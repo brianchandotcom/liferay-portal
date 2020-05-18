@@ -17,14 +17,12 @@ import {UPDATE_FRAGMENT_ENTRY_LINK_CONTENT} from './types';
 export default function updateFragmentEntryLinkContent({
 	collectionItemIndex,
 	content,
-	editableValues,
 	fragmentEntryLinkId,
 	isUndo = false,
 }) {
 	return {
 		collectionItemIndex,
 		content,
-		editableValues,
 		fragmentEntryLinkId,
 		isUndo,
 		type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,

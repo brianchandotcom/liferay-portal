@@ -203,10 +203,6 @@ export default function fragmentEntryLinksReducer(
 					...fragmentEntryLinks[action.fragmentEntryLinkId],
 					collectionContent,
 					content: action.content,
-					editableValues:
-						action.editableValues ||
-						fragmentEntryLinks[action.fragmentEntryLinkId]
-							.editableValues,
 				},
 			};
 		}

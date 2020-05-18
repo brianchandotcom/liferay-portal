@@ -107,14 +107,12 @@ const FragmentContent = React.forwardRef(
 				dispatch(
 					updateFragmentEntryLinkContent({
 						...action,
-						editableValues,
 						fragmentEntryLinkId,
 					})
 				);
 			});
 		}, [
 			dispatch,
-			editableValues,
 			fragmentEntryLinkId,
 			renderFragmentContent,
 			segmentsExperienceId,

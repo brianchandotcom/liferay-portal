@@ -36,12 +36,23 @@ import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -53,11 +64,16 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.NotFoundException;
@@ -310,6 +326,28 @@ public class CommentResourceImpl
 		}
 	}
 
+	private SearchContext _createSearchContext(
+		BooleanClause<?> booleanClause, String keywords, Pagination pagination,
+		Sort[] sorts) {
+
+		SearchContext searchContext = new SearchContext();
+
+		if (pagination != null) {
+			searchContext.setStart(pagination.getStartPosition());
+			searchContext.setEnd(pagination.getEndPosition());
+		}
+
+		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
+		searchContext.setKeywords(keywords);
+		searchContext.setSorts(sorts);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setSelectedFieldNames(Field.ENTRY_CLASS_PK);
+
+		return searchContext;
+	}
+
 	private Function<String, ServiceContext> _createServiceContextFunction() {
 		return className -> {
 			ServiceContext serviceContext = new ServiceContext();
@@ -320,36 +358,78 @@ public class CommentResourceImpl
 		};
 	}
 
+	private BooleanClause<?> _getBooleanClause(Long commentId, Filter filter) {
+		BooleanQuery booleanQuery = new BooleanQueryImpl() {
+			{
+				add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+
+				BooleanFilter booleanFilter = new BooleanFilter();
+
+				if (filter != null) {
+					booleanFilter.add(filter, BooleanClauseOccur.MUST);
+				}
+
+				setPreBooleanFilter(booleanFilter);
+			}
+		};
+
+		BooleanFilter booleanFilter = booleanQuery.getPreBooleanFilter();
+
+		booleanFilter.add(
+			new TermFilter("parentMessageId", String.valueOf(commentId)),
+			BooleanClauseOccur.MUST);
+
+		return BooleanClauseFactoryUtil.create(
+			booleanQuery, BooleanClauseOccur.MUST.getName());
+	}
+
 	private Page<Comment> _getComments(
 			Map<String, Map<String, String>> actions, Long commentId,
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
-			actions,
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
+		actions = Optional.ofNullable(
+			actions
+		).orElse(
+			Collections.emptyMap()
+		);
 
-				booleanFilter.add(
-					new TermFilter(
-						"parentMessageId", String.valueOf(commentId)),
-					BooleanClauseOccur.MUST);
-			},
-			filter, MBMessage.class, search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute("discussion", Boolean.TRUE);
-				searchContext.setAttribute(
-					"searchPermissionContext", StringPool.BLANK);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> CommentUtil.toComment(
-				_commentManager.fetchComment(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				_commentManager, _portal));
+		sorts = Optional.ofNullable(
+			sorts
+		).orElse(
+			new Sort[] {new Sort(Field.ENTRY_CLASS_PK, Sort.LONG_TYPE, false)}
+		);
+
+		SearchContext searchContext = _createSearchContext(
+			_getBooleanClause(commentId, filter), search, pagination, sorts);
+
+		searchContext.setAttribute("discussion", Boolean.TRUE);
+		searchContext.setAttribute("searchPermissionContext", StringPool.BLANK);
+		searchContext.setCompanyId(contextCompany.getCompanyId());
+
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+
+		BooleanQuery booleanQuery = indexer.getFullQuery(searchContext);
+
+		Hits hits = IndexSearcherHelperUtil.search(searchContext, booleanQuery);
+
+		List<Comment> items = Stream.of(
+			transform(
+				Arrays.asList(hits.getDocs()),
+				document -> CommentUtil.toComment(
+					_commentManager.fetchComment(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+					_commentManager, _portal))
+		).flatMap(
+			List::stream
+		).filter(
+			Objects::nonNull
+		).collect(
+			Collectors.toList()
+		);
+
+		return Page.of(
+			actions, items, pagination, indexer.searchCount(searchContext));
 	}
 
 	private DiscussionPermission _getDiscussionPermission() {

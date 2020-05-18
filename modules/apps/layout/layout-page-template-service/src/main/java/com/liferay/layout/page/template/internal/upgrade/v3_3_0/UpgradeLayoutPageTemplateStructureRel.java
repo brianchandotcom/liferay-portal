@@ -156,7 +156,8 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 					fragmentLayoutStructureItem.getFragmentEntryLinkId(),
 					EditableValuesTransformerUtil.getEditableValues(
 						fragmentEntryLink.getEditableValues(),
-						segmentsExperienceId));
+						segmentsExperienceId),
+					false);
 
 				continue;
 			}

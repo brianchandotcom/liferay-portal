@@ -34,13 +34,13 @@ class NoRender extends React.Component {
 // calling the fields dynamically through soy.
 
 export const PageRendererAdapter = ({
-	activePage,
+	activePage = 0,
 	context,
 	editable,
 	onBlur,
 	onChange,
 	onFocus,
-	pageIndex,
+	pageIndex = 0,
 	rows = [],
 	spritemap,
 }) => {

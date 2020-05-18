@@ -233,7 +233,7 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 		expect(definition).toContain('<screen-name>test</screen-name>');
 	});
 
-	it('serialize <user-id>, <screen-name> and <email-address> elements if given.', () => {
+	it('serialize <email-address>, <screen-name> and <user-id> elements if given.', () => {
 		const jsonDefinition = {
 			nodes: [
 				{
@@ -260,9 +260,11 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 			jsonDefinition
 		);
 
-		expect(definition).toContain('<user-id>0</user-id>');
+		expect(definition).toContain(
+			'<email-address>test@liferay.com</email-address>'
+		);
 		expect(definition).toContain('<screen-name>test</screen-name>');
-		expect(definition).toContain('<email-address>test@liferay.com</email-address>');
+		expect(definition).toContain('<user-id>0</user-id>');
 	});
 
 	it('serializes <user> element even if empty.', () => {

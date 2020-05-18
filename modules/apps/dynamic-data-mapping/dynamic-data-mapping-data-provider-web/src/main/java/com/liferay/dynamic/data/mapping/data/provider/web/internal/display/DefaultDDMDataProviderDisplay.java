@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.web.internal.display;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.display.DDMDataProviderDisplay;
-import com.liferay.dynamic.data.mapping.data.provider.web.internal.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Lino Alves
  */
 @Component(
-	property = "javax.portlet.name=" + DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER,
+	property = "javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER,
 	service = DDMDataProviderDisplay.class
 )
 public class DefaultDDMDataProviderDisplay implements DDMDataProviderDisplay {
@@ -69,7 +69,7 @@ public class DefaultDDMDataProviderDisplay implements DDMDataProviderDisplay {
 
 	@Override
 	public String getPortletId() {
-		return DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER;
+		return DDMPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER;
 	}
 
 	@Override

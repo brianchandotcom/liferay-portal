@@ -22,6 +22,10 @@ public class DDMPortletKeys {
 	public static final String DYNAMIC_DATA_MAPPING =
 		"com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet";
 
+	public static final String DYNAMIC_DATA_MAPPING_DATA_PROVIDER =
+		"com_liferay_dynamic_data_mapping_data_provider_web_portlet_" +
+			"DDMDataProviderPortlet";
+
 	public static final String DYNAMIC_DATA_MAPPING_FORM =
 		"com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet";
 

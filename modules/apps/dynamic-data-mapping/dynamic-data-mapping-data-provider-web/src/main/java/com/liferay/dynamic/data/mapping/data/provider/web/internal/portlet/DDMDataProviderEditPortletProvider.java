@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.web.internal.portlet;
 
-import com.liferay.dynamic.data.mapping.data.provider.web.internal.constants.DDMDataProviderPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 
@@ -33,7 +33,7 @@ public class DDMDataProviderEditPortletProvider
 
 	@Override
 	public String getPortletName() {
-		return DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER;
+		return DDMPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER;
 	}
 
 }

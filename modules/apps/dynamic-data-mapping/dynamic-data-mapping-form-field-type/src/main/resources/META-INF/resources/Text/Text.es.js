@@ -258,7 +258,11 @@ const Main = ({
 	]);
 	const Component =
 		DISPLAY_STYLE[
-			autocomplete || autocompleteEnabled ? 'autocomplete' : displayStyle
+			autocomplete || autocompleteEnabled
+				? 'autocomplete'
+				: displayStyle
+				? displayStyle
+				: `singleline`
 		];
 
 	return (

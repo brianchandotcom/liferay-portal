@@ -75,7 +75,6 @@ import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -2358,7 +2357,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return StringPool.BLANK;
 		}
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
+		String layoutFullURL = _portal.getLayoutFullURL(
 			page.getGroupId(), WikiPortletKeys.WIKI);
 
 		if (Validator.isNotNull(layoutFullURL)) {

@@ -86,7 +86,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
@@ -1686,7 +1685,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
 		if (Validator.isNotNull(portletId)) {
-			String layoutURL = PortalUtil.getLayoutFullURL(
+			String layoutURL = _portal.getLayoutFullURL(
 				entry.getGroupId(), portletId);
 
 			if (Validator.isNotNull(layoutURL)) {

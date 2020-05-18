@@ -15,81 +15,13 @@
 import './FieldSet.scss';
 
 import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer';
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, {useMemo} from 'react';
 
+import {PageRendererAdapter} from '../FieldBase/PageRendererAdapter.es';
 import {FieldBaseProxy} from '../FieldBase/ReactFieldBase.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import {connectStore} from '../util/connectStore.es';
-import PageRendererRows from './PageRendererRows.es';
 import Panel from './Panel.es';
-
-class NoRender extends React.Component {
-	shouldComponentUpdate() {
-		return false;
-	}
-
-	render() {
-		const {forwardRef, ...otherProps} = this.props;
-
-		return <div ref={forwardRef} {...otherProps} />;
-	}
-}
-
-// This is a adapter to maintain compatibility with the previous FieldSet,
-// being able to call page renderer rows. This should probably be removed
-// by a more friendly implementation when we remove the implementation of
-// calling the fields dynamically through soy.
-
-const PageRendererAdapter = ({
-	activePage,
-	context,
-	editable,
-	onBlur,
-	onChange,
-	onFocus,
-	pageIndex,
-	rows = [],
-	spritemap,
-}) => {
-	const component = useRef(null);
-	const container = useRef(null);
-
-	useEffect(() => {
-		if (!component.current && container.current) {
-			component.current = new PageRendererRows(
-				{
-					activePage,
-					editable,
-					events: {
-						fieldBlurred: onBlur,
-						fieldEdited: onChange,
-						fieldFocused: onFocus,
-					},
-					pageIndex,
-					parentContext: context,
-					rows,
-					spritemap,
-				},
-				container.current
-			);
-		}
-
-		return () => {
-			if (component.current) {
-				component.current.dispose();
-			}
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
-		if (component.current) {
-			component.current.setState({rows});
-		}
-	}, [rows]);
-
-	return <NoRender forwardRef={container} />;
-};
 
 const FieldSet = ({
 	activePage,

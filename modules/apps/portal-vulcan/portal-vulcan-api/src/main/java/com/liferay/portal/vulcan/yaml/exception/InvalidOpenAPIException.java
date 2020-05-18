@@ -14,15 +14,13 @@
 
 package com.liferay.portal.vulcan.yaml.exception;
 
-import org.yaml.snakeyaml.error.MarkedYAMLException;
-
 /**
  * @author Javier de Arcos
  */
 public class InvalidOpenAPIException extends YAMLFileException {
 
-	public InvalidOpenAPIException(MarkedYAMLException markedYAMLException) {
-		super("Invalid OpenAPI YAML file", markedYAMLException);
+	public InvalidOpenAPIException(Exception exception) {
+		super("Invalid OpenAPI YAML file", exception);
 	}
 
 }

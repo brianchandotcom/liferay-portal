@@ -26,19 +26,17 @@ import org.yaml.snakeyaml.error.MarkedYAMLException;
  */
 public class YAMLFileException extends IllegalArgumentException {
 
-	protected YAMLFileException(
-		String cause, MarkedYAMLException markedYAMLException) {
-
-		super(
-			cause + " - " + _getProblem(markedYAMLException),
-			markedYAMLException);
+	protected YAMLFileException(String cause, Exception exception) {
+		super(cause + " - " + _getProblem(exception), exception);
 	}
 
-	private static String _getProblem(MarkedYAMLException markedYAMLException) {
-		if (markedYAMLException.getCause() instanceof MarkedYAMLException) {
-			return _getProblem(
-				(MarkedYAMLException)markedYAMLException.getCause());
+	private static String _getProblem(Throwable exception) {
+		if (exception.getCause() instanceof MarkedYAMLException) {
+			return _getProblem(exception.getCause());
 		}
+
+		MarkedYAMLException markedYAMLException =
+			(MarkedYAMLException)exception;
 
 		Optional<Mark> markOptional = Optional.ofNullable(
 			markedYAMLException.getProblemMark());

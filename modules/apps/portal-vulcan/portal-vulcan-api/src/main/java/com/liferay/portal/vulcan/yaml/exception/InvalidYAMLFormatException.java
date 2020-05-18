@@ -14,17 +14,13 @@
 
 package com.liferay.portal.vulcan.yaml.exception;
 
-import org.yaml.snakeyaml.error.MarkedYAMLException;
-
 /**
  * @author Javier de Arcos
  */
 public class InvalidYAMLFormatException extends YAMLFileException {
 
-	public InvalidYAMLFormatException(
-		MarkedYAMLException markedYAMLException) {
-
-		super("Invalid YAML file", markedYAMLException);
+	public InvalidYAMLFormatException(Exception exception) {
+		super("Invalid YAML file", exception);
 	}
 
 }

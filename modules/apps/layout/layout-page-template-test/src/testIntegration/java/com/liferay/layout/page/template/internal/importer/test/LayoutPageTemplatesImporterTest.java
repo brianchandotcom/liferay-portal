@@ -72,7 +72,9 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -109,7 +111,7 @@ public class LayoutPageTemplatesImporterTest {
 	@Test
 	public void testImportEmptyLayoutPageTemplateEntryRow() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getImportLayoutPageTemplateEntry("row");
+			_getImportLayoutPageTemplateEntry("row", new HashMap<>());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -163,7 +165,7 @@ public class LayoutPageTemplatesImporterTest {
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getImportLayoutPageTemplateEntry("section");
+			_getImportLayoutPageTemplateEntry("section", new HashMap<>());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -217,7 +219,7 @@ public class LayoutPageTemplatesImporterTest {
 		_createFragmentEntry("test-html-fragment", "Test HTML Fragment", html);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getImportLayoutPageTemplateEntry("html-fragment");
+			_getImportLayoutPageTemplateEntry("html-fragment", new HashMap<>());
 
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			layoutPageTemplateEntry);
@@ -238,7 +240,8 @@ public class LayoutPageTemplatesImporterTest {
 			"test-image-fragment", "Test Image Fragment", html);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getImportLayoutPageTemplateEntry("image-fragment");
+			_getImportLayoutPageTemplateEntry(
+				"image-fragment", new HashMap<>());
 
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			layoutPageTemplateEntry);
@@ -258,7 +261,7 @@ public class LayoutPageTemplatesImporterTest {
 		_createFragmentEntry("test-link-fragment", "Test Link Fragment", html);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getImportLayoutPageTemplateEntry("link-fragment");
+			_getImportLayoutPageTemplateEntry("link-fragment", new HashMap<>());
 
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			layoutPageTemplateEntry);
@@ -278,7 +281,7 @@ public class LayoutPageTemplatesImporterTest {
 		_createFragmentEntry("test-text-fragment", "Test Text Fragment", html);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getImportLayoutPageTemplateEntry("text-fragment");
+			_getImportLayoutPageTemplateEntry("text-fragment", new HashMap<>());
 
 		FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 			layoutPageTemplateEntry);
@@ -292,7 +295,7 @@ public class LayoutPageTemplatesImporterTest {
 		List<LayoutPageTemplatesImporterResultEntry>
 			layoutPageTemplatesImporterResultEntries =
 				_getLayoutPageTemplatesImporterResultEntries(
-					"layout-page-template-multiple");
+					"layout-page-template-multiple", new HashMap<>());
 
 		Assert.assertEquals(
 			layoutPageTemplatesImporterResultEntries.toString(), 2,
@@ -327,7 +330,8 @@ public class LayoutPageTemplatesImporterTest {
 		List<LayoutPageTemplatesImporterResultEntry>
 			layoutPageTemplatesImporterResultEntries =
 				_getLayoutPageTemplatesImporterResultEntries(
-					"layout-page-template-custom-look-and-feel");
+					"layout-page-template-custom-look-and-feel",
+					new HashMap<>());
 
 		Assert.assertEquals(
 			layoutPageTemplatesImporterResultEntries.toString(), 1,
@@ -382,7 +386,7 @@ public class LayoutPageTemplatesImporterTest {
 		List<LayoutPageTemplatesImporterResultEntry>
 			layoutPageTemplatesImporterResultEntries =
 				_getLayoutPageTemplatesImporterResultEntries(
-					"layout-page-template-master-page");
+					"layout-page-template-master-page", new HashMap<>());
 
 		Assert.assertEquals(
 			layoutPageTemplatesImporterResultEntries.toString(), 1,
@@ -405,7 +409,7 @@ public class LayoutPageTemplatesImporterTest {
 		List<LayoutPageTemplatesImporterResultEntry>
 			layoutPageTemplatesImporterResultEntries =
 				_getLayoutPageTemplatesImporterResultEntries(
-					"layout-page-template-thumbnail");
+					"layout-page-template-thumbnail", new HashMap<>());
 
 		Assert.assertEquals(
 			layoutPageTemplatesImporterResultEntries.toString(), 1,
@@ -422,7 +426,8 @@ public class LayoutPageTemplatesImporterTest {
 		Assert.assertNotNull(portletFileEntry);
 	}
 
-	private void _addZipWriterEntry(ZipWriter zipWriter, URL url)
+	private void _addZipWriterEntry(
+			ZipWriter zipWriter, URL url, Map<String, String> valuesMap)
 		throws IOException {
 
 		String entryPath = url.getPath();
@@ -430,7 +435,10 @@ public class LayoutPageTemplatesImporterTest {
 		String zipPath = StringUtil.removeSubstring(
 			entryPath, _LAYOUT_PATE_TEMPLATES_PATH);
 
-		zipWriter.addEntry(zipPath, url.openStream());
+		String content = StringUtil.read(url.openStream());
+
+		zipWriter.addEntry(
+			zipPath, StringUtil.replace(content, "${", "}", valuesMap));
 	}
 
 	private void _createFragmentEntry(String key, String name, String html)
@@ -452,7 +460,9 @@ public class LayoutPageTemplatesImporterTest {
 			serviceContext);
 	}
 
-	private File _generateZipFile(String type) throws Exception {
+	private File _generateZipFile(String type, Map<String, String> valuesMap)
+		throws Exception {
+
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		StringBuilder sb = new StringBuilder(3);
@@ -471,7 +481,7 @@ public class LayoutPageTemplatesImporterTest {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				_populateZipWriter(zipWriter, url);
+				_populateZipWriter(zipWriter, url, valuesMap);
 			}
 
 			zipWriter.finish();
@@ -520,10 +530,10 @@ public class LayoutPageTemplatesImporterTest {
 	}
 
 	private LayoutPageTemplateEntry _getImportLayoutPageTemplateEntry(
-			String type)
+			String type, Map<String, String> valuesMap)
 		throws Exception {
 
-		File file = _generateZipFile(type);
+		File file = _generateZipFile(type, valuesMap);
 
 		List<LayoutPageTemplatesImporterResultEntry>
 			layoutPageTemplatesImporterResultEntries = null;
@@ -599,10 +609,11 @@ public class LayoutPageTemplatesImporterTest {
 	}
 
 	private List<LayoutPageTemplatesImporterResultEntry>
-			_getLayoutPageTemplatesImporterResultEntries(String testCaseName)
+			_getLayoutPageTemplatesImporterResultEntries(
+				String testCaseName, Map<String, String> valuesMap)
 		throws Exception {
 
-		File file = _generateZipFile(testCaseName);
+		File file = _generateZipFile(testCaseName, valuesMap);
 
 		List<LayoutPageTemplatesImporterResultEntry>
 			layoutPageTemplatesImporterResultEntries = null;
@@ -643,7 +654,8 @@ public class LayoutPageTemplatesImporterTest {
 		return layoutStructure.getLayoutStructureItem(childItemId);
 	}
 
-	private void _populateZipWriter(ZipWriter zipWriter, URL url)
+	private void _populateZipWriter(
+			ZipWriter zipWriter, URL url, Map<String, String> valuesMap)
 		throws IOException {
 
 		String zipPath = StringUtil.removeSubstring(
@@ -661,7 +673,7 @@ public class LayoutPageTemplatesImporterTest {
 		while (enumeration.hasMoreElements()) {
 			URL elementUrl = enumeration.nextElement();
 
-			_addZipWriterEntry(zipWriter, elementUrl);
+			_addZipWriterEntry(zipWriter, elementUrl, valuesMap);
 		}
 
 		enumeration = _bundle.findEntries(
@@ -672,7 +684,7 @@ public class LayoutPageTemplatesImporterTest {
 		while (enumeration.hasMoreElements()) {
 			URL elementUrl = enumeration.nextElement();
 
-			_addZipWriterEntry(zipWriter, elementUrl);
+			_addZipWriterEntry(zipWriter, elementUrl, valuesMap);
 		}
 
 		enumeration = _bundle.findEntries(path, "thumbnail.png", true);
@@ -684,7 +696,7 @@ public class LayoutPageTemplatesImporterTest {
 		while (enumeration.hasMoreElements()) {
 			URL elementUrl = enumeration.nextElement();
 
-			_addZipWriterEntry(zipWriter, elementUrl);
+			_addZipWriterEntry(zipWriter, elementUrl, valuesMap);
 		}
 	}
 

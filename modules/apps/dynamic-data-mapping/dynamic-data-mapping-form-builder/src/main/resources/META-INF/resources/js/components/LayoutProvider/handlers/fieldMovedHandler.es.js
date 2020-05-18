@@ -14,6 +14,7 @@
 
 import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 
+import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
 import {getParentField} from '../../../util/fieldSupport.es';
 import {addField} from './fieldAddedHandler.es';
 import handleFieldDeleted from './fieldDeletedHandler.es';
@@ -39,7 +40,11 @@ export default (props, state, event) => {
 	let mergedState = {...deletedState};
 	let parentField = getParentField(state.pages, sourceFieldName);
 
-	if (parentField && parentField.nestedFields.length === 1) {
+	if (
+		parentField &&
+		parentField.type === FIELD_TYPE_FIELDSET &&
+		parentField.nestedFields.length === 1
+	) {
 		let parentFieldName = parentField ? parentField.fieldName : '';
 
 		do {
@@ -50,7 +55,7 @@ export default (props, state, event) => {
 			parentField = getParentField(state.pages, parentField.fieldName);
 		} while (
 			parentField &&
-			parentField.type === 'fieldset' &&
+			parentField.type === FIELD_TYPE_FIELDSET &&
 			parentField.fieldName !== targetParentFieldName &&
 			parentField.nestedFields.length === 1
 		);

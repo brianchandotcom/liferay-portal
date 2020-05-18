@@ -6303,7 +6303,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				Role role = rolePersistence.findByPrimaryKey(
 					userGroupRole.getRoleId());
 
-				if (role.getType() == RoleConstants.TYPE_SITE) {
+				if ((role.getType() == RoleConstants.TYPE_DEPOT) ||
+					(role.getType() == RoleConstants.TYPE_SITE)) {
+
 					userGroupRolePersistence.remove(userGroupRole);
 				}
 			}

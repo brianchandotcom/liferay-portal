@@ -769,15 +769,13 @@ definition {
 			Pause(locator1 = "3000");
 
 			Type(
-				key_fieldName = "imageDescription",
-				locator1 = "FormFields#TEXT_FIELD",
+				locator1 = "TextInput#IMAGE_DESCRIPTION",
 				value1 = "${imageDescription}");
 
 			Pause(locator1 = "3000");
 
-			AssertTextEquals(
-				key_fieldName = "imageDescription",
-				locator1 = "FormFields#TEXT_FIELD",
+			AssertTextEquals.assertValue(
+				locator1 = "TextInput#IMAGE_DESCRIPTION",
 				value1 = "${imageDescription}");
 
 			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");

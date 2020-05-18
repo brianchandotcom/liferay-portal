@@ -1065,8 +1065,69 @@ public class ResourceActionsImpl implements ResourceActions {
 		for (Element modelResourceElement :
 				rootElement.elements("model-resource")) {
 
-			String modelName = _readModelResource(
-				servletContextName, modelResourceElement);
+			String modelName = modelResourceElement.elementTextTrim(
+				"model-name");
+
+			if (Validator.isNull(modelName)) {
+				modelName = _getCompositeModelName(
+					modelResourceElement.element("composite-model-name"));
+			}
+
+			if (GetterUtil.getBoolean(
+					modelResourceElement.attributeValue("organization"))) {
+
+				_organizationModelResources.add(modelName);
+			}
+
+			if (GetterUtil.getBoolean(
+					modelResourceElement.attributeValue("portal"))) {
+
+				_portalModelResources.add(modelName);
+			}
+
+			Element portletRefElement = modelResourceElement.element(
+				"portlet-ref");
+
+			for (Element portletNameElement :
+					portletRefElement.elements("portlet-name")) {
+
+				String portletName = _normalizePortletName(
+					servletContextName, portletNameElement.getTextTrim());
+
+				// Reference for a portlet to child models
+
+				Set<String> modelResources =
+					_resourceReferences.computeIfAbsent(
+						portletName, key -> new HashSet<>());
+
+				modelResources.add(modelName);
+
+				// Reference for a model to parent portlets
+
+				Set<String> portletResources =
+					_resourceReferences.computeIfAbsent(
+						modelName, key -> new HashSet<>());
+
+				portletResources.add(portletName);
+
+				// Reference for a model to root portlets
+
+				boolean root = GetterUtil.getBoolean(
+					modelResourceElement.elementText("root"));
+
+				if (root) {
+					_portletRootModelResources.put(portletName, modelName);
+				}
+			}
+
+			double weight = GetterUtil.getDouble(
+				modelResourceElement.elementTextTrim("weight"), 100);
+
+			_modelResourceWeights.put(modelName, weight);
+
+			_readResource(
+				modelResourceElement, modelName,
+				Collections.singleton(ActionKeys.PERMISSIONS));
 
 			if (portletNames != null) {
 				portletNames.addAll(_resourceReferences.get(modelName));
@@ -1086,73 +1147,6 @@ public class ResourceActionsImpl implements ResourceActions {
 
 			actions.add(actionKey);
 		}
-	}
-
-	private String _readModelResource(
-			String servletContextName, Element modelResourceElement)
-		throws Exception {
-
-		String name = modelResourceElement.elementTextTrim("model-name");
-
-		if (Validator.isNull(name)) {
-			name = _getCompositeModelName(
-				modelResourceElement.element("composite-model-name"));
-		}
-
-		if (GetterUtil.getBoolean(
-				modelResourceElement.attributeValue("organization"))) {
-
-			_organizationModelResources.add(name);
-		}
-
-		if (GetterUtil.getBoolean(
-				modelResourceElement.attributeValue("portal"))) {
-
-			_portalModelResources.add(name);
-		}
-
-		Element portletRefElement = modelResourceElement.element("portlet-ref");
-
-		for (Element portletNameElement :
-				portletRefElement.elements("portlet-name")) {
-
-			String portletName = _normalizePortletName(
-				servletContextName, portletNameElement.getTextTrim());
-
-			// Reference for a portlet to child models
-
-			Set<String> modelResources = _resourceReferences.computeIfAbsent(
-				portletName, key -> new HashSet<>());
-
-			modelResources.add(name);
-
-			// Reference for a model to parent portlets
-
-			Set<String> portletResources = _resourceReferences.computeIfAbsent(
-				name, key -> new HashSet<>());
-
-			portletResources.add(portletName);
-
-			// Reference for a model to root portlets
-
-			boolean root = GetterUtil.getBoolean(
-				modelResourceElement.elementText("root"));
-
-			if (root) {
-				_portletRootModelResources.put(portletName, name);
-			}
-		}
-
-		double weight = GetterUtil.getDouble(
-			modelResourceElement.elementTextTrim("weight"), 100);
-
-		_modelResourceWeights.put(name, weight);
-
-		_readResource(
-			modelResourceElement, name,
-			Collections.singleton(ActionKeys.PERMISSIONS));
-
-		return name;
 	}
 
 	private void _readResource(

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.type.controller.portlet.internal.display.context;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -21,6 +22,7 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -34,6 +36,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,6 +49,7 @@ import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -156,6 +160,64 @@ public class PortletLayoutDisplayContext {
 			defaultLayoutListRetrieverContext);
 	}
 
+	public List<Object> getCollection(
+		CollectionLayoutStructureItem collectionLayoutStructureItem,
+		long[] segmentsExperienceIds) {
+
+		JSONObject collectionJSONObject =
+			collectionLayoutStructureItem.getCollectionJSONObject();
+
+		if (collectionJSONObject.length() <= 0) {
+			return Collections.emptyList();
+		}
+
+		ListObjectReference listObjectReference = _getListObjectReference(
+			collectionJSONObject);
+
+		if (listObjectReference == null) {
+			return Collections.emptyList();
+		}
+
+		LayoutListRetriever layoutListRetriever =
+			_layoutListRetrieverTracker.getLayoutListRetriever(
+				collectionJSONObject.getString("type"));
+
+		if (layoutListRetriever == null) {
+			return Collections.emptyList();
+		}
+
+		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
+			new DefaultLayoutListRetrieverContext();
+
+		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
+			segmentsExperienceIds);
+		defaultLayoutListRetrieverContext.setPagination(
+			Pagination.of(collectionLayoutStructureItem.getNumberOfItems(), 0));
+
+		return layoutListRetriever.getList(
+			listObjectReference, defaultLayoutListRetrieverContext);
+	}
+
+	public InfoDisplayContributor getCollectionInfoDisplayContributor(
+		CollectionLayoutStructureItem collectionLayoutStructureItem) {
+
+		ListObjectReference listObjectReference = _getListObjectReference(
+			collectionLayoutStructureItem.getCollectionJSONObject());
+
+		if (listObjectReference == null) {
+			return null;
+		}
+
+		String className = listObjectReference.getItemType();
+
+		if (Objects.equals(className, DLFileEntry.class.getName())) {
+			className = FileEntry.class.getName();
+		}
+
+		return _infoDisplayContributorTracker.getInfoDisplayContributor(
+			className);
+	}
+
 	public LayoutStructure getLayoutStructure() {
 		if (_layoutStructure != null) {
 			return _layoutStructure;
@@ -210,6 +272,29 @@ public class PortletLayoutDisplayContext {
 			rootLayoutStructureItem.getItemId(), 0);
 
 		return layoutStructure;
+	}
+
+	private ListObjectReference _getListObjectReference(
+		JSONObject collectionJSONObject) {
+
+		String type = collectionJSONObject.getString("type");
+
+		LayoutListRetriever layoutListRetriever =
+			_layoutListRetrieverTracker.getLayoutListRetriever(type);
+
+		if (layoutListRetriever == null) {
+			return null;
+		}
+
+		ListObjectReferenceFactory listObjectReferenceFactory =
+			_listObjectReferenceFactoryTracker.getListObjectReference(type);
+
+		if (listObjectReferenceFactory == null) {
+			return null;
+		}
+
+		return listObjectReferenceFactory.getListObjectReference(
+			collectionJSONObject);
 	}
 
 	private long[] _getSegmentsExperienceIds() {

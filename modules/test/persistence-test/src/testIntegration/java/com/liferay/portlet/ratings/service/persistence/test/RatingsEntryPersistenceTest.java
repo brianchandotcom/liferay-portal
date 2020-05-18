@@ -123,6 +123,8 @@ public class RatingsEntryPersistenceTest {
 
 		RatingsEntry newRatingsEntry = _persistence.create(pk);
 
+		newRatingsEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newRatingsEntry.setUuid(RandomTestUtil.randomString());
 
 		newRatingsEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -146,6 +148,9 @@ public class RatingsEntryPersistenceTest {
 		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(
 			newRatingsEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingRatingsEntry.getMvccVersion(),
+			newRatingsEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingRatingsEntry.getUuid(), newRatingsEntry.getUuid());
 		Assert.assertEquals(
@@ -248,10 +253,10 @@ public class RatingsEntryPersistenceTest {
 
 	protected OrderByComparator<RatingsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"RatingsEntry", "uuid", true, "entryId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true, "score",
-			true);
+			"RatingsEntry", "mvccVersion", true, "uuid", true, "entryId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"score", true);
 	}
 
 	@Test
@@ -491,6 +496,8 @@ public class RatingsEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		RatingsEntry ratingsEntry = _persistence.create(pk);
+
+		ratingsEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		ratingsEntry.setUuid(RandomTestUtil.randomString());
 

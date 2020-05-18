@@ -75,17 +75,19 @@ public class RatingsEntryModelImpl
 	public static final String TABLE_NAME = "RatingsEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"entryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"score", Types.DOUBLE}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"entryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"score", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -99,7 +101,7 @@ public class RatingsEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RatingsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE)";
+		"create table RatingsEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table RatingsEntry";
 
@@ -157,6 +159,7 @@ public class RatingsEntryModelImpl
 
 		RatingsEntry model = new RatingsEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setEntryId(soapModel.getEntryId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -323,6 +326,11 @@ public class RatingsEntryModelImpl
 		Map<String, BiConsumer<RatingsEntry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<RatingsEntry, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", RatingsEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<RatingsEntry, Long>)RatingsEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", RatingsEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<RatingsEntry, String>)RatingsEntry::setUuid);
@@ -367,6 +375,17 @@ public class RatingsEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -644,6 +663,7 @@ public class RatingsEntryModelImpl
 	public Object clone() {
 		RatingsEntryImpl ratingsEntryImpl = new RatingsEntryImpl();
 
+		ratingsEntryImpl.setMvccVersion(getMvccVersion());
 		ratingsEntryImpl.setUuid(getUuid());
 		ratingsEntryImpl.setEntryId(getEntryId());
 		ratingsEntryImpl.setCompanyId(getCompanyId());
@@ -749,6 +769,8 @@ public class RatingsEntryModelImpl
 	public CacheModel<RatingsEntry> toCacheModel() {
 		RatingsEntryCacheModel ratingsEntryCacheModel =
 			new RatingsEntryCacheModel();
+
+		ratingsEntryCacheModel.mvccVersion = getMvccVersion();
 
 		ratingsEntryCacheModel.uuid = getUuid();
 
@@ -869,6 +891,7 @@ public class RatingsEntryModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;

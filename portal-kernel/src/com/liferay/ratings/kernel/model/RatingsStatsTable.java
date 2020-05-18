@@ -32,6 +32,8 @@ public class RatingsStatsTable extends BaseTable<RatingsStatsTable> {
 
 	public static final RatingsStatsTable INSTANCE = new RatingsStatsTable();
 
+	public final Column<RatingsStatsTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<RatingsStatsTable, Long> statsId = createColumn(
 		"statsId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<RatingsStatsTable, Long> companyId = createColumn(

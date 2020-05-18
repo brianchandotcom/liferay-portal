@@ -31,6 +31,7 @@ public class RatingsStatsSoap implements Serializable {
 	public static RatingsStatsSoap toSoapModel(RatingsStats model) {
 		RatingsStatsSoap soapModel = new RatingsStatsSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setStatsId(model.getStatsId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -91,6 +92,14 @@ public class RatingsStatsSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setStatsId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getStatsId() {
@@ -165,6 +174,7 @@ public class RatingsStatsSoap implements Serializable {
 		_averageScore = averageScore;
 	}
 
+	private long _mvccVersion;
 	private long _statsId;
 	private long _companyId;
 	private Date _createDate;

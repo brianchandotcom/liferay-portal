@@ -66,17 +66,18 @@ public class RatingsStatsModelImpl
 	public static final String TABLE_NAME = "RatingsStats";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"statsId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"totalEntries", Types.INTEGER}, {"totalScore", Types.DOUBLE},
-		{"averageScore", Types.DOUBLE}
+		{"mvccVersion", Types.BIGINT}, {"statsId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"totalEntries", Types.INTEGER},
+		{"totalScore", Types.DOUBLE}, {"averageScore", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statsId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -89,7 +90,7 @@ public class RatingsStatsModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RatingsStats (statsId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
+		"create table RatingsStats (mvccVersion LONG default 0 not null,statsId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table RatingsStats";
 
@@ -257,6 +258,11 @@ public class RatingsStatsModelImpl
 		Map<String, BiConsumer<RatingsStats, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<RatingsStats, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", RatingsStats::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<RatingsStats, Long>)RatingsStats::setMvccVersion);
 		attributeGetterFunctions.put("statsId", RatingsStats::getStatsId);
 		attributeSetterBiConsumers.put(
 			"statsId",
@@ -302,6 +308,16 @@ public class RatingsStatsModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -480,6 +496,7 @@ public class RatingsStatsModelImpl
 	public Object clone() {
 		RatingsStatsImpl ratingsStatsImpl = new RatingsStatsImpl();
 
+		ratingsStatsImpl.setMvccVersion(getMvccVersion());
 		ratingsStatsImpl.setStatsId(getStatsId());
 		ratingsStatsImpl.setCompanyId(getCompanyId());
 		ratingsStatsImpl.setCreateDate(getCreateDate());
@@ -569,6 +586,8 @@ public class RatingsStatsModelImpl
 	public CacheModel<RatingsStats> toCacheModel() {
 		RatingsStatsCacheModel ratingsStatsCacheModel =
 			new RatingsStatsCacheModel();
+
+		ratingsStatsCacheModel.mvccVersion = getMvccVersion();
 
 		ratingsStatsCacheModel.statsId = getStatsId();
 
@@ -675,6 +694,7 @@ public class RatingsStatsModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _statsId;
 	private long _companyId;
 	private Date _createDate;

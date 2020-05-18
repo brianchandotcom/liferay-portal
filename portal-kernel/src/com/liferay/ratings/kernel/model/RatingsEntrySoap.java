@@ -31,6 +31,7 @@ public class RatingsEntrySoap implements Serializable {
 	public static RatingsEntrySoap toSoapModel(RatingsEntry model) {
 		RatingsEntrySoap soapModel = new RatingsEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setEntryId(model.getEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -92,6 +93,14 @@ public class RatingsEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -174,6 +183,7 @@ public class RatingsEntrySoap implements Serializable {
 		_score = score;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _entryId;
 	private long _companyId;

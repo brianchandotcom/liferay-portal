@@ -17,6 +17,7 @@ package com.liferay.portlet.ratings.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.ratings.kernel.model.RatingsStats;
 
 import java.io.Externalizable;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class RatingsStatsCacheModel
-	implements CacheModel<RatingsStats>, Externalizable {
+	implements CacheModel<RatingsStats>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class RatingsStatsCacheModel
 		RatingsStatsCacheModel ratingsStatsCacheModel =
 			(RatingsStatsCacheModel)obj;
 
-		if (statsId == ratingsStatsCacheModel.statsId) {
+		if ((statsId == ratingsStatsCacheModel.statsId) &&
+			(mvccVersion == ratingsStatsCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class RatingsStatsCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, statsId);
+		int hashCode = HashUtil.hash(0, statsId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{statsId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", statsId=");
 		sb.append(statsId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -91,6 +108,7 @@ public class RatingsStatsCacheModel
 	public RatingsStats toEntityModel() {
 		RatingsStatsImpl ratingsStatsImpl = new RatingsStatsImpl();
 
+		ratingsStatsImpl.setMvccVersion(mvccVersion);
 		ratingsStatsImpl.setStatsId(statsId);
 		ratingsStatsImpl.setCompanyId(companyId);
 
@@ -121,6 +139,8 @@ public class RatingsStatsCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		statsId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -140,6 +160,8 @@ public class RatingsStatsCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(statsId);
 
 		objectOutput.writeLong(companyId);
@@ -157,6 +179,7 @@ public class RatingsStatsCacheModel
 		objectOutput.writeDouble(averageScore);
 	}
 
+	public long mvccVersion;
 	public long statsId;
 	public long companyId;
 	public long createDate;

@@ -1630,6 +1630,7 @@
 		<field name="dueDate" type="Date" />
 	</model>
 	<model name="com.liferay.ratings.kernel.model.RatingsEntry">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="companyId" type="long" />
@@ -1642,6 +1643,7 @@
 		<field name="score" type="double" />
 	</model>
 	<model name="com.liferay.ratings.kernel.model.RatingsStats">
+		<field name="mvccVersion" type="long" />
 		<field name="statsId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />

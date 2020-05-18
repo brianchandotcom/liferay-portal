@@ -17,6 +17,7 @@ package com.liferay.ratings.kernel.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -37,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface RatingsEntryModel
-	extends AttachedModel, BaseModel<RatingsEntry>, ShardedModel,
+	extends AttachedModel, BaseModel<RatingsEntry>, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
 	/*
@@ -59,6 +60,22 @@ public interface RatingsEntryModel
 	 * @param primaryKey the primary key of this ratings entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ratings entry.
+	 *
+	 * @return the mvcc version of this ratings entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ratings entry.
+	 *
+	 * @param mvccVersion the mvcc version of this ratings entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this ratings entry.

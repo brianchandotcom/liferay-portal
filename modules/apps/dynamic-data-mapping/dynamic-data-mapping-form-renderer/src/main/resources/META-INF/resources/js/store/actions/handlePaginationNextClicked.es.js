@@ -57,7 +57,7 @@ export default (evaluatorContext, dispatch) => {
 			});
 		}
 		else {
-			dispatch('pageValidationFailed', activePage);
+			dispatch('pageValidationFailed', {pageIndex: activePage});
 		}
 	});
 };

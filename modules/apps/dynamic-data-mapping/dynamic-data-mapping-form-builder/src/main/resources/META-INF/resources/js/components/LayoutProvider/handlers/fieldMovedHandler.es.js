@@ -41,6 +41,7 @@ export default (props, state, event) => {
 
 	if (parentField && parentField.nestedFields.length === 1) {
 		let parentFieldName = parentField ? parentField.fieldName : '';
+
 		do {
 			if (parentField) {
 				parentFieldName = parentField.fieldName;

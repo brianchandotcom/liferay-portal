@@ -15,8 +15,8 @@
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
-import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
 import {createField} from '../../../util/fieldSupport.es';
+import {createFieldSet} from '../util/fieldset.es';
 import {updateField} from '../util/settingsContext.es';
 import handleFieldDeleted from './fieldDeletedHandler.es';
 
@@ -41,73 +41,6 @@ const addNestedField = ({field, indexes, nestedField, props}) => {
 		nestedFields,
 		rows,
 	};
-};
-
-const addNestedFields = ({field, indexes, nestedFields, props}) => {
-	let layout = [{rows: field.rows}];
-	const visitor = new PagesVisitor(layout);
-
-	visitor.mapFields((field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-		if (
-			!nestedFields.some(
-				(nestedField) => nestedField.fieldName === field.fieldName
-			)
-		) {
-			layout = FormSupport.removeFields(
-				layout,
-				pageIndex,
-				rowIndex,
-				columnIndex
-			);
-		}
-	});
-
-	[...nestedFields].reverse().forEach((nestedField) => {
-		layout = FormSupport.addFieldToColumn(
-			layout,
-			indexes.pageIndex,
-			indexes.rowIndex,
-			indexes.columnIndex,
-			nestedField.fieldName
-		);
-	});
-
-	field = updateField(props, field, 'nestedFields', nestedFields);
-
-	const {rows} = layout[indexes.pageIndex];
-
-	return {
-		...updateField(props, field, 'rows', rows),
-		nestedFields,
-		rows,
-	};
-};
-
-export const createFieldSet = (
-	props,
-	event,
-	nestedFields,
-	rows = [{columns: [{fields: [], size: 12}]}]
-) => {
-	const {fieldTypes} = props;
-	const fieldType = fieldTypes.find((fieldType) => {
-		return fieldType.name === FIELD_TYPE_FIELDSET;
-	});
-	const fieldSetField = createField(props, {...event, fieldType});
-
-	return addNestedFields({
-		field: {
-			...fieldSetField,
-			rows,
-		},
-		indexes: {
-			columnIndex: 0,
-			pageIndex: 0,
-			rowIndex: 0,
-		},
-		nestedFields,
-		props,
-	});
 };
 
 const handleSectionAdded = (props, state, event) => {

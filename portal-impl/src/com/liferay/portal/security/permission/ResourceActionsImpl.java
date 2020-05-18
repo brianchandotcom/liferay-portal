@@ -1060,84 +1060,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	private void _readGroupDefaultActions(
-		Element parentElement, Set<String> groupDefaultActions) {
-
-		Element groupDefaultsElement = _getPermissionsChildElement(
-			parentElement, "site-member-defaults");
-
-		if (groupDefaultsElement == null) {
-			groupDefaultsElement = _getPermissionsChildElement(
-				parentElement, "community-defaults");
-
-			if (_log.isWarnEnabled() && (groupDefaultsElement != null)) {
-				_log.warn(
-					"The community-defaults element is deprecated. Use the " +
-						"site-member-defaults element instead.");
-			}
-		}
-
-		if (groupDefaultsElement == null) {
-			return;
-		}
-
-		groupDefaultActions.clear();
-
-		_readActionKeys(groupDefaultActions, groupDefaultsElement);
-	}
-
-	private void _readGuestDefaultActions(
-		Element parentElement, Set<String> guestDefaultActions) {
-
-		Element guestDefaultsElement = _getPermissionsChildElement(
-			parentElement, "guest-defaults");
-
-		if (guestDefaultsElement == null) {
-			return;
-		}
-
-		guestDefaultActions.clear();
-
-		_readActionKeys(guestDefaultActions, guestDefaultsElement);
-	}
-
-	private void _readGuestUnsupportedActions(
-		Element parentElement, Set<String> guestUnsupportedActions,
-		Set<String> guestDefaultActions) {
-
-		Element guestUnsupportedElement = _getPermissionsChildElement(
-			parentElement, "guest-unsupported");
-
-		if (guestUnsupportedElement == null) {
-			return;
-		}
-
-		guestUnsupportedActions.clear();
-
-		_readActionKeys(guestUnsupportedActions, guestUnsupportedElement);
-
-		_checkGuestUnsupportedActions(
-			guestUnsupportedActions, guestDefaultActions);
-	}
-
-	private void _readLayoutManagerActions(
-		Element parentElement, Set<String> layoutManagerActions,
-		Set<String> supportsActions) {
-
-		Element layoutManagerElement = _getPermissionsChildElement(
-			parentElement, "layout-manager");
-
-		if (layoutManagerElement == null) {
-			layoutManagerActions.addAll(supportsActions);
-
-			return;
-		}
-
-		layoutManagerActions.clear();
-
-		_readActionKeys(layoutManagerActions, layoutManagerElement);
-	}
-
 	private String _readModelResource(
 			String servletContextName, Element modelResourceElement)
 		throws Exception {
@@ -1220,19 +1142,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		return name;
 	}
 
-	private void _readOwnerDefaultActions(
-		Element parentElement, Set<String> ownerDefaultActions) {
-
-		Element ownerDefaultsElement = _getPermissionsChildElement(
-			parentElement, "owner-defaults");
-
-		if (ownerDefaultsElement == null) {
-			return;
-		}
-
-		_readActionKeys(ownerDefaultActions, ownerDefaultsElement);
-	}
-
 	private String _readPortletResource(
 			String servletContextName, Element portletResourceElement)
 		throws Exception {
@@ -1275,42 +1184,90 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		Set<String> resourceActions = resourceActionsBag.getSupportsActions();
 
-		_readSupportsActions(resourceElement, resourceActions);
+		Element supportsElement = _getPermissionsChildElement(
+			resourceElement, "supports");
+
+		_readActionKeys(resourceActions, supportsElement);
 
 		if (resourceActions.size() > 64) {
 			throw new ResourceActionsException(
 				"There are more than 64 actions for resource " + name);
 		}
 
-		_readGroupDefaultActions(
-			resourceElement, resourceActionsBag.getGroupDefaultActions());
+		Set<String> groupDefaultActions =
+			resourceActionsBag.getGroupDefaultActions();
+
+		Element groupDefaultsElement = _getPermissionsChildElement(
+			resourceElement, "site-member-defaults");
+
+		if (groupDefaultsElement == null) {
+			groupDefaultsElement = _getPermissionsChildElement(
+				resourceElement, "community-defaults");
+
+			if (_log.isWarnEnabled() && (groupDefaultsElement != null)) {
+				_log.warn(
+					"The community-defaults element is deprecated. Use the " +
+						"site-member-defaults element instead.");
+			}
+		}
+
+		if (groupDefaultsElement != null) {
+			groupDefaultActions.clear();
+
+			_readActionKeys(groupDefaultActions, groupDefaultsElement);
+		}
 
 		Set<String> guestDefaultActions =
 			resourceActionsBag.getGuestDefaultActions();
 
-		_readGuestDefaultActions(resourceElement, guestDefaultActions);
+		Element guestDefaultsElement = _getPermissionsChildElement(
+			resourceElement, "guest-defaults");
 
-		_readGuestUnsupportedActions(
-			resourceElement, resourceActionsBag.getGuestUnsupportedActions(),
-			guestDefaultActions);
+		if (guestDefaultsElement != null) {
+			guestDefaultActions.clear();
 
-		_readOwnerDefaultActions(
-			resourceElement, resourceActionsBag.getOwnerDefaultActions());
+			_readActionKeys(guestDefaultActions, guestDefaultsElement);
+		}
 
-		_readLayoutManagerActions(
-			resourceElement, resourceActionsBag.getLayoutManagerActions(),
-			resourceActions);
-	}
+		Set<String> guestUnsupportedActions =
+			resourceActionsBag.getGuestUnsupportedActions();
 
-	private Set<String> _readSupportsActions(
-		Element parentElement, Set<String> supportsActions) {
+		Element guestUnsupportedElement = _getPermissionsChildElement(
+			resourceElement, "guest-unsupported");
 
-		Element supportsElement = _getPermissionsChildElement(
-			parentElement, "supports");
+		if (guestUnsupportedElement != null) {
+			guestUnsupportedActions.clear();
 
-		_readActionKeys(supportsActions, supportsElement);
+			_readActionKeys(guestUnsupportedActions, guestUnsupportedElement);
 
-		return supportsActions;
+			_checkGuestUnsupportedActions(
+				guestUnsupportedActions, guestDefaultActions);
+		}
+
+		Element ownerDefaultsElement = _getPermissionsChildElement(
+			resourceElement, "owner-defaults");
+
+		if (ownerDefaultsElement != null) {
+			_readActionKeys(
+				resourceActionsBag.getOwnerDefaultActions(),
+				ownerDefaultsElement);
+		}
+
+		Set<String> layoutManagerActions =
+			resourceActionsBag.getLayoutManagerActions();
+
+		Element layoutManagerElement = _getPermissionsChildElement(
+			resourceElement, "layout-manager");
+
+		if (layoutManagerElement == null) {
+			layoutManagerActions.addAll(resourceActions);
+
+			return;
+		}
+
+		layoutManagerActions.clear();
+
+		_readActionKeys(layoutManagerActions, layoutManagerElement);
 	}
 
 	private static final String _ACTION_NAME_PREFIX = "action.";

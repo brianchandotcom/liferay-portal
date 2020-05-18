@@ -16,14 +16,14 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDisplayContext;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,9 +34,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -64,7 +67,7 @@ public class EditFileEntryTypeDataDefinitionMVCRenderCommand
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
 		try {
@@ -99,7 +102,7 @@ public class EditFileEntryTypeDataDefinitionMVCRenderCommand
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
-				_getDDMStructure(dlFileEntryType));
+				_fetchDDMStructure(dlFileEntryType));
 
 			return "/document_library/edit_file_entry_type.jsp";
 		}
@@ -113,27 +116,21 @@ public class EditFileEntryTypeDataDefinitionMVCRenderCommand
 		}
 	}
 
-	private DDMStructure _getDDMStructure(DLFileEntryType dlFileEntryType) {
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			dlFileEntryType.getGroupId(),
-			_portal.getClassNameId(DLFileEntryMetadata.class),
-			DLUtil.getDDMStructureKey(dlFileEntryType));
+	private DDMStructure _fetchDDMStructure(DLFileEntryType dlFileEntryType)
+		throws PortalException {
 
-		if (ddmStructure == null) {
-			ddmStructure = _ddmStructureLocalService.fetchStructure(
-				dlFileEntryType.getGroupId(),
-				_portal.getClassNameId(DLFileEntryMetadata.class),
-				DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
+		List<DDMStructureLink> ddmStructureLinks =
+			_ddmStructureLinkLocalService.getStructureLinks(
+				_portal.getClassNameId(DLFileEntryType.class),
+				dlFileEntryType.getFileEntryTypeId());
+
+		if (ListUtil.isEmpty(ddmStructureLinks)) {
+			return null;
 		}
 
-		if (ddmStructure == null) {
-			ddmStructure = _ddmStructureLocalService.fetchStructure(
-				dlFileEntryType.getGroupId(),
-				_portal.getClassNameId(DLFileEntryMetadata.class),
-				dlFileEntryType.getFileEntryTypeKey());
-		}
+		DDMStructureLink ddmStructureLink = ddmStructureLinks.get(0);
 
-		return ddmStructure;
+		return ddmStructureLink.getStructure();
 	}
 
 	@Reference
@@ -141,6 +138,9 @@ public class EditFileEntryTypeDataDefinitionMVCRenderCommand
 
 	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+
+	@Reference
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

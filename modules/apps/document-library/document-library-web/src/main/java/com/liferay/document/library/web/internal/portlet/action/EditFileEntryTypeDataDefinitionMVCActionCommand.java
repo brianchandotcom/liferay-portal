@@ -14,6 +14,9 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryTypeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
@@ -22,43 +25,35 @@ import com.liferay.document.library.kernel.exception.RequiredFileEntryTypeExcept
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
-import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
-import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.kernel.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.kernel.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.kernel.StructureNameException;
-import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.io.IOException;
-
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,12 +76,15 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortalException {
+		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+			if (cmd.equals(Constants.ADD)) {
+				_addFileEntryType(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
 				_updateFileEntryType(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
@@ -137,23 +135,72 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 		}
 	}
 
+	private void _addFileEntryType(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DataDefinitionResource dataDefinitionResource =
+			DataDefinitionResource.builder(
+			).user(
+				themeDisplay.getUser()
+			).build();
+
+		DataDefinition dataDefinition = DataDefinition.toDTO(
+			ParamUtil.getString(actionRequest, "dataDefinition"));
+
+		dataDefinition.setDefaultDataLayout(
+			DataLayout.toDTO(ParamUtil.getString(actionRequest, "dataLayout")));
+
+		dataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				themeDisplay.getScopeGroupId(), "document-library",
+				dataDefinition);
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntryType.class.getName(), actionRequest);
+
+		_dlFileEntryTypeService.addFileEntryType(
+			themeDisplay.getScopeGroupId(), null, nameMap, descriptionMap,
+			new long[] {dataDefinition.getId()}, serviceContext);
+	}
+
 	private void _deleteFileEntryType(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
 
-		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
-	}
+		DataDefinitionResource dataDefinitionResource =
+			DataDefinitionResource.builder(
+			).user(
+				themeDisplay.getUser()
+			).build();
 
-	private long[] _getLongArray(PortletRequest portletRequest, String name) {
-		String value = portletRequest.getParameter(name);
+		List<DDMStructureLink> ddmStructureLinks =
+			_ddmStructureLinkLocalService.getStructureLinks(
+				_portal.getClassNameId(DLFileEntryType.class), fileEntryTypeId);
 
-		if (value == null) {
-			return null;
+		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
+			_ddmStructureLinkLocalService.deleteStructureLink(
+				_portal.getClassNameId(DLFileEntryType.class), fileEntryTypeId,
+				ddmStructureLink.getStructureId());
+
+			dataDefinitionResource.deleteDataDefinition(
+				ddmStructureLink.getStructureId());
 		}
 
-		return StringUtil.split(GetterUtil.getString(value), 0L);
+		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
 	}
 
 	private void _subscribeFileEntryType(ActionRequest actionRequest)
@@ -183,74 +230,52 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 	}
 
 	private void _updateFileEntryType(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
 
+		DataDefinitionResource dataDefinitionResource =
+			DataDefinitionResource.builder(
+			).user(
+				themeDisplay.getUser()
+			).build();
+
+		DataDefinition dataDefinition = DataDefinition.toDTO(
+			ParamUtil.getString(actionRequest, "dataDefinition"));
+
+		dataDefinition.setDefaultDataLayout(
+			DataLayout.toDTO(ParamUtil.getString(actionRequest, "dataLayout")));
+
+		dataDefinition = dataDefinitionResource.putDataDefinition(
+			ParamUtil.getLong(actionRequest, "dataDefinitionId"),
+			dataDefinition);
+
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
+
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-
-		long[] ddmStructureIds = _getLongArray(
-			actionRequest, "ddmStructuresSearchContainerPrimaryKeys");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntryType.class.getName(), actionRequest);
 
-		DDMForm ddmForm = _ddmBeanTranslator.translate(
-			_ddm.getDDMForm(actionRequest));
-
-		serviceContext.setAttribute("ddmForm", ddmForm);
-
-		serviceContext.setAttribute(
-			"useDataEngineEditor",
-			FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor());
-
-		if (fileEntryTypeId <= 0) {
-
-			// Add file entry type
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			long groupId = themeDisplay.getScopeGroupId();
-
-			Group scopeGroup = _groupLocalService.getGroup(groupId);
-
-			if (scopeGroup.isLayout()) {
-				groupId = scopeGroup.getParentGroupId();
-			}
-
-			_dlFileEntryTypeService.addFileEntryType(
-				groupId, null, nameMap, descriptionMap, ddmStructureIds,
-				serviceContext);
-		}
-		else {
-
-			// Update file entry type
-
-			_dlFileEntryTypeService.updateFileEntryType(
-				fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
-				serviceContext);
-		}
+		_dlFileEntryTypeService.updateFileEntryType(
+			fileEntryTypeId, nameMap, descriptionMap,
+			new long[] {dataDefinition.getId()}, serviceContext);
 	}
 
 	@Reference
-	private DDM _ddm;
-
-	@Reference
-	private DDMBeanTranslator _ddmBeanTranslator;
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

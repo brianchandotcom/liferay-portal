@@ -77,7 +77,6 @@ public class WorkspaceExtension {
 		_appServerTomcatVersion = GradleUtil.getProperty(
 			settings, "app.server.tomcat.version",
 			_getDefaultAppServerVersion());
-
 		_bundleCacheDir = _getProperty(
 			settings, "bundle.cache.dir", _BUNDLE_CACHE_DIR);
 		_bundleDistRootDirName = _getProperty(
@@ -94,14 +93,11 @@ public class WorkspaceExtension {
 		_bundleTokenPasswordFile = _getProperty(
 			settings, "bundle.token.password.file",
 			_BUNDLE_TOKEN_PASSWORD_FILE);
-
 		_bundleUrl = _getProperty(
 			settings, "bundle.url", _getDefaultProductBundleUrl());
-
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
-
 		_dockerContainerId = new Closure<Void>(_gradle) {
 
 			@SuppressWarnings("unused")
@@ -112,7 +108,6 @@ public class WorkspaceExtension {
 			}
 
 		};
-
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageId = new Closure<Void>(_gradle) {
 
@@ -138,18 +133,14 @@ public class WorkspaceExtension {
 			}
 
 		};
-
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _getDefaultDockerImage());
-
 		_environment = _getProperty(
 			settings, "environment",
 			BundleSupportConstants.DEFAULT_ENVIRONMENT);
-
 		_homeDir = _getProperty(
 			settings, "home.dir",
 			BundleSupportConstants.DEFAULT_LIFERAY_HOME_DIR_NAME);
-
 		_targetPlatformVersion = _getProperty(
 			settings, "target.platform.version",
 			_getDefaultTargetplatformVersion());

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -55,6 +56,7 @@ import java.util.stream.LongStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,123 +78,101 @@ public class UpdateMembershipsMVCActionCommandTest {
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		_group = GroupTestUtil.addGroup();
+	}
+
 	@Test
 	public void testProcessActionWithAddGroupDepotIds() throws Exception {
-		User user = UserTestUtil.addUser();
+		_mvcActionCommand.processAction(
+			new MockActionRequest(
+				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+				_groupLocalService.getGroup(TestPropsValues.getGroupId()),
+				_user, new long[] {_group.getGroupId()}, null),
+			null);
 
-		Group group = GroupTestUtil.addGroup();
+		long[] groupIds = _userLocalService.getGroupPrimaryKeys(
+			_user.getUserId());
 
-		try {
-			_mvcActionCommand.processAction(
-				new MockActionRequest(
-					_companyLocalService.getCompany(
-						TestPropsValues.getCompanyId()),
-					_groupLocalService.getGroup(TestPropsValues.getGroupId()),
-					user, new long[] {group.getGroupId()}, null),
-				null);
+		LongStream longStream = Arrays.stream(groupIds);
 
-			long[] groupIds = _userLocalService.getGroupPrimaryKeys(
-				user.getUserId());
-
-			LongStream longStream = Arrays.stream(groupIds);
-
-			Assert.assertTrue(
-				longStream.anyMatch(value -> value == group.getGroupId()));
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-
-			_groupLocalService.deleteGroup(group);
-		}
+		Assert.assertTrue(
+			longStream.anyMatch(value -> value == _group.getGroupId()));
 	}
 
 	@Test
 	public void testProcessActionWithDeleteGroupDepotIds() throws Exception {
-		User user = UserTestUtil.addUser();
+		Contact contact = _user.getContact();
 
-		Group group = GroupTestUtil.addGroup();
+		Set<Long> groupIds = new HashSet<>(
+			Collections.singleton(_user.getGroupId()));
 
-		try {
-			Contact contact = user.getContact();
+		groupIds.add(_group.getGroupId());
 
-			Set<Long> groupIds = new HashSet<>(
-				Collections.singleton(user.getGroupId()));
+		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
 
-			groupIds.add(group.getGroupId());
+		birthdayCal.setTime(_user.getBirthday());
 
-			Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		_userLocalService.updateUser(
+			_user.getUserId(), _user.getPassword(), null, null,
+			_user.isPasswordReset(), null, null, _user.getScreenName(),
+			_user.getEmailAddress(), _user.getFacebookId(), _user.getOpenId(),
+			true, null, _user.getLanguageId(), _user.getTimeZoneId(),
+			_user.getGreeting(), _user.getComments(), _user.getFirstName(),
+			_user.getMiddleName(), _user.getLastName(), contact.getPrefixId(),
+			contact.getSuffixId(), _user.isMale(),
+			birthdayCal.get(Calendar.MONTH), birthdayCal.get(Calendar.DATE),
+			birthdayCal.get(Calendar.YEAR), contact.getSmsSn(),
+			contact.getFacebookSn(), contact.getJabberSn(),
+			contact.getSkypeSn(), contact.getTwitterSn(), _user.getJobTitle(),
+			ArrayUtil.toLongArray(groupIds), _user.getOrganizationIds(), null,
+			null, _user.getUserGroupIds(),
+			ServiceContextTestUtil.getServiceContext());
 
-			birthdayCal.setTime(user.getBirthday());
+		_mvcActionCommand.processAction(
+			new MockActionRequest(
+				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+				_groupLocalService.getGroup(TestPropsValues.getGroupId()),
+				_user, null, new long[] {_group.getGroupId()}),
+			null);
 
-			_userLocalService.updateUser(
-				user.getUserId(), user.getPassword(), null, null,
-				user.isPasswordReset(), null, null, user.getScreenName(),
-				user.getEmailAddress(), user.getFacebookId(), user.getOpenId(),
-				true, null, user.getLanguageId(), user.getTimeZoneId(),
-				user.getGreeting(), user.getComments(), user.getFirstName(),
-				user.getMiddleName(), user.getLastName(), contact.getPrefixId(),
-				contact.getSuffixId(), user.isMale(),
-				birthdayCal.get(Calendar.MONTH), birthdayCal.get(Calendar.DATE),
-				birthdayCal.get(Calendar.YEAR), contact.getSmsSn(),
-				contact.getFacebookSn(), contact.getJabberSn(),
-				contact.getSkypeSn(), contact.getTwitterSn(),
-				user.getJobTitle(), ArrayUtil.toLongArray(groupIds),
-				user.getOrganizationIds(), null, null, user.getUserGroupIds(),
-				ServiceContextTestUtil.getServiceContext());
+		long[] finalGroupIds = _userLocalService.getGroupPrimaryKeys(
+			_user.getUserId());
 
-			_mvcActionCommand.processAction(
-				new MockActionRequest(
-					_companyLocalService.getCompany(
-						TestPropsValues.getCompanyId()),
-					_groupLocalService.getGroup(TestPropsValues.getGroupId()),
-					user, null, new long[] {group.getGroupId()}),
-				null);
+		LongStream longStream = Arrays.stream(finalGroupIds);
 
-			long[] finalGroupIds = _userLocalService.getGroupPrimaryKeys(
-				user.getUserId());
-
-			LongStream longStream = Arrays.stream(finalGroupIds);
-
-			Assert.assertFalse(
-				longStream.anyMatch(value -> value == group.getGroupId()));
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-
-			_groupLocalService.deleteGroup(group);
-		}
+		Assert.assertFalse(
+			longStream.anyMatch(value -> value == _group.getGroupId()));
 	}
 
 	@Test
 	public void testProcessActionWithNullParameters() throws Exception {
-		User user = UserTestUtil.addUser();
+		long[] initialGroupIds = _userLocalService.getGroupPrimaryKeys(
+			_user.getUserId());
 
-		try {
-			long[] initialGroupIds = _userLocalService.getGroupPrimaryKeys(
-				user.getUserId());
+		_mvcActionCommand.processAction(
+			new MockActionRequest(
+				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+				_groupLocalService.getGroup(TestPropsValues.getGroupId()),
+				_user, null, null),
+			null);
 
-			_mvcActionCommand.processAction(
-				new MockActionRequest(
-					_companyLocalService.getCompany(
-						TestPropsValues.getCompanyId()),
-					_groupLocalService.getGroup(TestPropsValues.getGroupId()),
-					user, null, null),
-				null);
+		long[] actualGroupIds = _userLocalService.getGroupPrimaryKeys(
+			_user.getUserId());
 
-			long[] actualGroupIds = _userLocalService.getGroupPrimaryKeys(
-				user.getUserId());
-
-			Assert.assertEquals(
-				Arrays.toString(actualGroupIds), initialGroupIds.length,
-				actualGroupIds.length);
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-		}
+		Assert.assertEquals(
+			Arrays.toString(actualGroupIds), initialGroupIds.length,
+			actualGroupIds.length);
 	}
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
@@ -202,6 +182,9 @@ public class UpdateMembershipsMVCActionCommandTest {
 		type = MVCActionCommand.class
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;

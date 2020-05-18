@@ -1161,9 +1161,6 @@ public class ResourceActionsImpl implements ResourceActions {
 			_portalModelResources.add(name);
 		}
 
-		ResourceActionsBag modelResourceActionsBag = _getResourceActionsBag(
-			name);
-
 		Element portletRefElement = modelResourceElement.element("portlet-ref");
 
 		for (Element portletNameElement :
@@ -1210,35 +1207,15 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		_modelResourceWeights.put(name, weight);
 
+		ResourceActionsBag modelResourceActionsBag = _getResourceActionsBag(
+			name);
+
+		_readResource(modelResourceElement, name, modelResourceActionsBag);
+
 		Set<String> modelResourceActions =
 			modelResourceActionsBag.getSupportsActions();
 
-		_readSupportsActions(modelResourceElement, modelResourceActions);
-
 		modelResourceActions.add(ActionKeys.PERMISSIONS);
-
-		if (modelResourceActions.size() > 64) {
-			throw new ResourceActionsException(
-				"There are more than 64 actions for resource " + name);
-		}
-
-		_readGroupDefaultActions(
-			modelResourceElement,
-			modelResourceActionsBag.getGroupDefaultActions());
-
-		Set<String> guestDefaultActions =
-			modelResourceActionsBag.getGuestDefaultActions();
-
-		_readGuestDefaultActions(modelResourceElement, guestDefaultActions);
-
-		_readGuestUnsupportedActions(
-			modelResourceElement,
-			modelResourceActionsBag.getGuestUnsupportedActions(),
-			guestDefaultActions);
-
-		_readOwnerDefaultActions(
-			modelResourceElement,
-			modelResourceActionsBag.getOwnerDefaultActions());
 
 		return name;
 	}
@@ -1275,10 +1252,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		ResourceActionsBag portletResourceActionsBag = _getResourceActionsBag(
 			name);
 
+		_readResource(portletResourceElement, name, portletResourceActionsBag);
+
 		Set<String> portletActions =
 			portletResourceActionsBag.getSupportsActions();
-
-		_readSupportsActions(portletResourceElement, portletActions);
 
 		Portlet portlet = portletLocalService.getPortletById(name);
 
@@ -1288,31 +1265,41 @@ public class ResourceActionsImpl implements ResourceActions {
 			_checkPortletActions(portlet, portletActions);
 		}
 
-		if (portletActions.size() > 64) {
+		return name;
+	}
+
+	private void _readResource(
+			Element resourceElement, String name,
+			ResourceActionsBag resourceActionsBag)
+		throws ResourceActionsException {
+
+		Set<String> resourceActions = resourceActionsBag.getSupportsActions();
+
+		_readSupportsActions(resourceElement, resourceActions);
+
+		if (resourceActions.size() > 64) {
 			throw new ResourceActionsException(
 				"There are more than 64 actions for resource " + name);
 		}
 
 		_readGroupDefaultActions(
-			portletResourceElement,
-			portletResourceActionsBag.getGroupDefaultActions());
+			resourceElement, resourceActionsBag.getGroupDefaultActions());
 
 		Set<String> guestDefaultActions =
-			portletResourceActionsBag.getGuestDefaultActions();
+			resourceActionsBag.getGuestDefaultActions();
 
-		_readGuestDefaultActions(portletResourceElement, guestDefaultActions);
+		_readGuestDefaultActions(resourceElement, guestDefaultActions);
 
 		_readGuestUnsupportedActions(
-			portletResourceElement,
-			portletResourceActionsBag.getGuestUnsupportedActions(),
+			resourceElement, resourceActionsBag.getGuestUnsupportedActions(),
 			guestDefaultActions);
 
-		_readLayoutManagerActions(
-			portletResourceElement,
-			portletResourceActionsBag.getLayoutManagerActions(),
-			portletActions);
+		_readOwnerDefaultActions(
+			resourceElement, resourceActionsBag.getOwnerDefaultActions());
 
-		return name;
+		_readLayoutManagerActions(
+			resourceElement, resourceActionsBag.getLayoutManagerActions(),
+			resourceActions);
 	}
 
 	private Set<String> _readSupportsActions(

@@ -41,22 +41,28 @@ for (String childrenItemId : childrenItemIds) {
 			<clay:row>
 
 				<%
-				for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
-					try {
-						request.setAttribute("render_layout_structure.jsp-collectionObject", collectionObject);
+				InfoDisplayContributor currentInfoDisplayContributor = (InfoDisplayContributor)request.getAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
+
+				try {
+					request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, portletLayoutDisplayContext.getCollectionInfoDisplayContributor(collectionLayoutStructureItem));
+
+					for (Object collectionObject : portletLayoutDisplayContext.getCollection(collectionLayoutStructureItem)) {
+						request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);
 				%>
 
 						<clay:col
 							md="<%= String.valueOf(12 / collectionLayoutStructureItem.getNumberOfColumns()) %>"
 						>
-							<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 						</clay:col>
 
 				<%
 					}
-					finally {
-						request.removeAttribute("render_layout_structure.jsp-collectionObject");
-					}
+				}
+				finally {
+					request.removeAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
+
+					request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, currentInfoDisplayContributor);
 				}
 				%>
 

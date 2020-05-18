@@ -199,7 +199,10 @@ export default (Component) => {
 				});
 
 				if (!validForm) {
-					this.dispatch('pageValidationFailed', this.activePage);
+					this.dispatch('pageValidationFailed', {
+						newPages: evaluatedPages,
+						pageIndex: this.activePage,
+					});
 				}
 
 				return Promise.resolve(validForm);
@@ -294,9 +297,12 @@ export default (Component) => {
 			}
 		}
 
-		_handlePageValidationFailed(pageIndex) {
-			const {pages} = this;
-			const visitor = new PagesVisitor(pages);
+		_handlePageValidationFailed({newPages, pageIndex}) {
+			if (!newPages) {
+				newPages = this.pages;
+			}
+
+			const visitor = new PagesVisitor(newPages);
 
 			this.setState({
 				pages: visitor.mapFields(

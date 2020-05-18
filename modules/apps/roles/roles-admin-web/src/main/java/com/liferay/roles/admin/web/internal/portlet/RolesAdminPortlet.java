@@ -741,8 +741,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 		String selResource = null;
 		String actionId = null;
 
-		if (panelCategoryHelper.containsPortlet(
-				portletId, PanelCategoryKeys.CONTROL_PANEL) &&
+		if ((panelCategoryHelper.containsPortlet(
+				portletId, PanelCategoryKeys.CONTROL_PANEL) ||
+			 panelCategoryHelper.containsPortlet(
+				 portletId, PanelCategoryKeys.GLOBAL_MENU)) &&
 			(role.getType() == RoleConstants.TYPE_REGULAR)) {
 
 			selResource = PortletKeys.PORTAL;

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Objects;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -76,8 +78,9 @@ public class ProductMenuPanelApp extends BasePanelApp {
 
 		if ((_companyId == group.getCompanyId()) &&
 			super.isShow(permissionChecker, group) &&
-			(PanelCategoryKeys.CONTROL_PANEL.equals(_panelCategoryKey) ||
-			 PanelCategoryKeys.GLOBAL_MENU.equals(_panelCategoryKey) ||
+			(Objects.equals(
+				PanelCategoryKeys.CONTROL_PANEL, _panelCategoryKey) ||
+			 Objects.equals(PanelCategoryKeys.GLOBAL_MENU, _panelCategoryKey) ||
 			 ArrayUtil.contains(_siteIds, AppBuilderAppConstants.SITE_ID_ALL) ||
 			 ArrayUtil.contains(_siteIds, group.getGroupId()))) {
 

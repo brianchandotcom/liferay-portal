@@ -12,8 +12,18 @@
  * details.
  */
 
-import {ADD_UNDO_ACTION, UPDATE_UNDO_ACTIONS} from '../actions/types';
+import {
+	setUsedWidgets,
+	switchLayoutData,
+} from '../../plugins/experience/reducers/utils';
+import {
+	ADD_UNDO_ACTION,
+	UPDATE_MULTIPLE_UNDO_STATE,
+	UPDATE_UNDO_ACTIONS,
+} from '../actions/types';
 import {getDerivedStateForUndo} from '../components/undo/undoActions';
+import {getWidgetPath} from '../utils/getWidgetPath';
+import {setWidgetUsage} from '../utils/setWidgetUsage';
 
 const MAX_UNDO_ACTIONS = 20;
 
@@ -31,6 +41,87 @@ export default function undoReducer(state, action) {
 					...nextUndoHistory.slice(0, MAX_UNDO_ACTIONS - 1),
 				],
 			};
+		}
+		case UPDATE_MULTIPLE_UNDO_STATE: {
+			const {
+				deletedFragmentEntryLinkIds,
+				fragmentEntryLinks,
+				languageId,
+				layoutData,
+				portletIds,
+				segmentsExperienceId,
+			} = action;
+
+			let nextState = {
+				...state,
+				fragmentEntryLinks,
+				languageId,
+				layoutData,
+				segmentsExperienceId,
+			};
+
+			if (state.segmentsExperienceId !== segmentsExperienceId) {
+				nextState = switchLayoutData(nextState, {
+					currentExperienceId: state.segmentsExperienceId,
+					targetExperienceId: segmentsExperienceId,
+				});
+			}
+
+			if (portletIds) {
+				nextState = setUsedWidgets(nextState, {portletIds});
+			}
+
+			if (deletedFragmentEntryLinkIds.length) {
+				const nextFragmentEntryLinks = {...fragmentEntryLinks};
+
+				deletedFragmentEntryLinkIds.forEach((fragmentEntryLinkId) => {
+					delete nextFragmentEntryLinks[fragmentEntryLinkId];
+				});
+
+				nextState = {
+					...nextState,
+					fragmentEntryLinks: nextFragmentEntryLinks,
+				};
+
+				const deletedWidgets = deletedFragmentEntryLinkIds
+					.map(
+						(fragmentEntryLinkId) =>
+							fragmentEntryLinks[fragmentEntryLinkId]
+					)
+					.filter(
+						(fragmentEntryLink) =>
+							fragmentEntryLink.editableValues.portletId
+					);
+
+				if (deletedWidgets.length) {
+					let nextWidgets = state.widgets;
+
+					deletedWidgets.forEach((fragmentEntryLink) => {
+						if (
+							fragmentEntryLink.editableValues &&
+							fragmentEntryLink.editableValues.portletId &&
+							!fragmentEntryLink.editableValues.instanceable
+						) {
+							const widgetPath = getWidgetPath(
+								nextWidgets,
+								fragmentEntryLink.editableValues.portletId
+							);
+
+							nextWidgets = setWidgetUsage(
+								nextWidgets,
+								widgetPath,
+								{
+									used: false,
+								}
+							);
+						}
+					});
+
+					nextState = {...nextState, widgets: nextWidgets};
+				}
+			}
+
+			return nextState;
 		}
 		case UPDATE_UNDO_ACTIONS: {
 			return {

@@ -152,10 +152,7 @@ public class LayoutStructureUtil {
 		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
 				deletedLayoutStructureItems) {
 
-			List<String> portletIds =
-				deletedLayoutStructureItem.getPortletIds();
-
-			if (portletIds.contains(portletId)) {
+			if (deletedLayoutStructureItem.contains(portletId)) {
 				return true;
 			}
 		}

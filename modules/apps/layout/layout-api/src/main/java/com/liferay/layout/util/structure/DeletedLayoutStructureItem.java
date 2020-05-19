@@ -42,6 +42,14 @@ public class DeletedLayoutStructureItem {
 		_portletIds = portletIds;
 	}
 
+	public boolean contains(String portletId) {
+		if (_portletIds.contains(portletId)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getItemId() {
 		return _itemId;
 	}

@@ -5766,6 +5766,26 @@ paths:
                         ""
             tags: ["MessageBoardThread"]
     "/navigation-menus/{navigationMenuId}":
+        delete:
+            # @review
+            description:
+                Deletes the navigation menu and returns a 204 if the operation succeeds
+            operationId: deleteNavigationMenu
+            parameters:
+                - in: path
+                  name: navigationMenuId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["NavigationMenu"]
         get:
             description:
                 ""

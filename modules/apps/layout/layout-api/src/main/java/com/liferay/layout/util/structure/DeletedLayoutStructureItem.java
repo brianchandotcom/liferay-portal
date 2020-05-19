@@ -14,14 +14,12 @@
 
 package com.liferay.layout.util.structure;
 
-import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Víctor Galán
@@ -44,37 +42,12 @@ public class DeletedLayoutStructureItem {
 		_portletIds = portletIds;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DeletedLayoutStructureItem)) {
-			return false;
-		}
-
-		DeletedLayoutStructureItem deletedLayoutStructureItem =
-			(DeletedLayoutStructureItem)obj;
-
-		if (Objects.equals(_itemId, deletedLayoutStructureItem._itemId)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public String getItemId() {
 		return _itemId;
 	}
 
 	public List<String> getPortletIds() {
 		return _portletIds;
-	}
-
-	@Override
-	public int hashCode() {
-		return HashUtil.hash(0, _itemId);
 	}
 
 	public JSONObject toJSONObject() {

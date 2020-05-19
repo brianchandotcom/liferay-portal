@@ -16,8 +16,8 @@ package com.liferay.portal.instances.service.internal.initializer;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.instances.initalizer.PortalInstanceInitializer;
-import com.liferay.portal.instances.initalizer.PortalInstanceInitializerRegistry;
+import com.liferay.portal.instances.initializer.PortalInstanceInitializer;
+import com.liferay.portal.instances.initializer.PortalInstanceInitializerRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;

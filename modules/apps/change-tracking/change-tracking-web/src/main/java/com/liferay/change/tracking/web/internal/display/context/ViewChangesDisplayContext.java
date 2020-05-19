@@ -533,6 +533,10 @@ public class ViewChangesDisplayContext {
 					rootDisplayMap.get(entry.getKey()));
 			}
 
+			if (childJSONObjects.isEmpty()) {
+				continue;
+			}
+
 			childJSONObjects.sort(SortJSONObjectsByTitleComparator.INSTANCE);
 
 			JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
@@ -543,9 +547,7 @@ public class ViewChangesDisplayContext {
 				deque.push(childJSONObject);
 			}
 
-			if (childrenJSONArray.length() > 0) {
-				jsonObject.put("children", childrenJSONArray);
-			}
+			jsonObject.put("children", childrenJSONArray);
 		}
 
 		for (Map.Entry<Long, List<JSONObject>> entry :

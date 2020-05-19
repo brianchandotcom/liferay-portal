@@ -30,6 +30,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
@@ -144,6 +145,42 @@ public class LayoutPageTemplatesImporterTest {
 		}
 
 		_serviceRegistrations.clear();
+	}
+
+	@Test
+	public void testImportEmptyLayoutPageTemplateEntryCollection()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getImportLayoutPageTemplateEntry("collection", new HashMap<>());
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layoutPageTemplateEntry.getPlid());
+
+		Assert.assertNotNull(layoutPageTemplateStructure);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(0));
+
+		LayoutStructureItem layoutStructureItem =
+			_getMainChildLayoutStructureItem(layoutStructure);
+
+		Assert.assertTrue(
+			layoutStructureItem instanceof CollectionLayoutStructureItem);
+
+		CollectionLayoutStructureItem collectionLayoutStructureItem =
+			(CollectionLayoutStructureItem)layoutStructureItem;
+
+		Assert.assertNotNull(collectionLayoutStructureItem);
+
+		Assert.assertEquals(
+			2, collectionLayoutStructureItem.getNumberOfColumns());
+		Assert.assertEquals(
+			4, collectionLayoutStructureItem.getNumberOfItems());
 	}
 
 	@Test

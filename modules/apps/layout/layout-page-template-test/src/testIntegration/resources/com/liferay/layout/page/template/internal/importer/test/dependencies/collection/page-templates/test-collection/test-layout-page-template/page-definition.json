@@ -1,0 +1,41 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"collectionConfig": {
+						"collectionReference": {
+							"className": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType",
+							"classPK": 0
+						},
+						"collectionType": "Collection"
+					},
+					"numberOfColumns": 2,
+					"numberOfItems": 4
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"collectionItemConfig": {
+							}
+						},
+						"type": "CollectionItem"
+					},
+					{
+						"definition": {
+							"collectionItemConfig": {
+							}
+						},
+						"type": "CollectionItem"
+					}
+				],
+				"type": "Collection"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

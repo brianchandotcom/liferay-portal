@@ -1714,30 +1714,10 @@ definition {
 
 		Navigator.openURL();
 
-		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
-
-		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
-
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		FormFields.viewSelectOption(
-			fieldName = "Default Display View",
-			selectOption = "Table");
-
-		FormFields.selectSelectOption(
-			fieldName = "Default Display View",
-			selectOption = "List");
-
-		FormFields.selectSelectOption(
-			fieldName = "Default Display View",
-			selectOption = "Table");
-
-		SystemSettings.saveConfiguration();
-
-		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
 
 		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
 
@@ -1751,7 +1731,39 @@ definition {
 			configurationName = "Forms",
 			configurationScope = "Site Scope");
 
+		FormFields.viewSelectOption(
+			fieldName = "Default Display View",
+			selectOption = "Table");
+
+		FormFields.selectSelectOption(
+			fieldName = "Default Display View",
+			selectOption = "List");
+
+		SystemSettings.saveConfiguration();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		LexiconEntry.viewActiveDisplayStyle(displayStyle = "list");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Forms",
+			configurationName = "Forms",
+			configurationScope = "Site Scope");
+
 		SystemSettings.resetConfiguration(configurationName = "Forms");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
 
 		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
 	}

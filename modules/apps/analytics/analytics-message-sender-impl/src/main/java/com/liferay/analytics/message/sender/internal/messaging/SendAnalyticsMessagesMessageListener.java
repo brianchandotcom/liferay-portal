@@ -161,7 +161,7 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 
 	private boolean _skipProcess(Message message) {
 		if (!_analyticsConfigurationTracker.isActive()) {
-			return false;
+			return true;
 		}
 
 		AnalyticsMessagesProcessorCommand analyticsMessagesProcessorCommand =
@@ -171,10 +171,10 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 			(analyticsMessagesProcessorCommand !=
 				AnalyticsMessagesProcessorCommand.SEND)) {
 
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private static final int _BATCH_SIZE = 100;

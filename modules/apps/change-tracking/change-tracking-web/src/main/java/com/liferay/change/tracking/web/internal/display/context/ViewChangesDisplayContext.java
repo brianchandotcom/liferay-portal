@@ -320,7 +320,28 @@ public class ViewChangesDisplayContext {
 				JSONFactoryUtil.createJSONArray();
 			ResourceURL renderURL = _renderResponse.createResourceURL();
 
-			if (ctEntry != null) {
+			if (ctEntry == null) {
+				dropdownItemsJSONArray.put(
+					JSONUtil.put(
+						"href",
+						_ctDisplayRendererRegistry.getViewURL(
+							liferayPortletRequest, liferayPortletResponse,
+							ctCollectionId, childClassNameId, childClassPK,
+							title)
+					).put(
+						"label", _language.get(_httpServletRequest, "view")
+					));
+
+				renderURL.setResourceID("/change_lists/render_ct_entry");
+
+				renderURL.setParameter(
+					"ctCollectionId", String.valueOf(ctCollectionId));
+				renderURL.setParameter(
+					"modelClassNameId", String.valueOf(childClassNameId));
+				renderURL.setParameter(
+					"modelClassPK", String.valueOf(childClassPK));
+			}
+			else {
 				childJSONObject.put(
 					"description",
 					_ctDisplayRendererRegistry.getEntryDescription(
@@ -352,27 +373,6 @@ public class ViewChangesDisplayContext {
 
 				renderURL.setParameter(
 					"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
-			}
-			else {
-				dropdownItemsJSONArray.put(
-					JSONUtil.put(
-						"href",
-						_ctDisplayRendererRegistry.getViewURL(
-							liferayPortletRequest, liferayPortletResponse,
-							ctCollectionId, childClassNameId, childClassPK,
-							title)
-					).put(
-						"label", _language.get(_httpServletRequest, "view")
-					));
-
-				renderURL.setResourceID("/change_lists/render_ct_entry");
-
-				renderURL.setParameter(
-					"ctCollectionId", String.valueOf(ctCollectionId));
-				renderURL.setParameter(
-					"modelClassNameId", String.valueOf(childClassNameId));
-				renderURL.setParameter(
-					"modelClassPK", String.valueOf(childClassPK));
 			}
 
 			childJSONObject.put(

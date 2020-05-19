@@ -46,6 +46,15 @@ public class AccountGroupLocalServiceWrapper
 		return _accountGroupLocalService.addAccountGroup(accountGroup);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountGroup addAccountGroup(
+			long userId, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupLocalService.addAccountGroup(
+			userId, name, description);
+	}
+
 	/**
 	 * Creates a new account group with the primary key. Does not add the account group to the database.
 	 *
@@ -316,6 +325,15 @@ public class AccountGroupLocalServiceWrapper
 		com.liferay.account.model.AccountGroup accountGroup) {
 
 		return _accountGroupLocalService.updateAccountGroup(accountGroup);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountGroup updateAccountGroup(
+			long accountGroupId, long userId, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupLocalService.updateAccountGroup(
+			accountGroupId, userId, name, description);
 	}
 
 	@Override

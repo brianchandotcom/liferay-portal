@@ -50,7 +50,7 @@ public class DeletedLayoutStructureItem {
 			return true;
 		}
 
-		if (!(obj instanceof CollectionLayoutStructureItem)) {
+		if (!(obj instanceof DeletedLayoutStructureItem)) {
 			return false;
 		}
 

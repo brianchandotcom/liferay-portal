@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_WITH_DROP_TARGET</td>
+	<td>xpath=(//div[contains(@class,'page-editor__root page-editor__topper')])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_DROP_TARGET</td>
 	<td>//div[contains(@class,'page-editor__drop-zone')]</td>
 	<td></td>

@@ -371,6 +371,32 @@ public class LayoutStructure {
 		return HashUtil.hash(0, getMainItemId());
 	}
 
+	public void markLayoutStructureItemForDeletion(
+		String itemId, Set<String> portletIds) {
+
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+			itemId);
+
+		if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
+			throw new UnsupportedOperationException(
+				"Removing the drop zone of a layout structure is not allowed");
+		}
+
+		if (Validator.isNotNull(layoutStructureItem.getParentItemId())) {
+			LayoutStructureItem parentLayoutStructureItem =
+				_layoutStructureItems.get(
+					layoutStructureItem.getParentItemId());
+
+			List<String> childrenItemIds =
+				parentLayoutStructureItem.getChildrenItemIds();
+
+			childrenItemIds.remove(itemId);
+		}
+
+		_itemsMarkedForDeletion.put(
+			itemId, new ItemMarkedForDeletion(itemId, portletIds));
+	}
+
 	public LayoutStructureItem moveLayoutStructureItem(
 		String itemId, String parentItemId, int position) {
 

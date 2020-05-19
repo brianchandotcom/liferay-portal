@@ -33,6 +33,11 @@
 		<finder name="CTCollectionId" return-type="Collection">
 			<finder-column name="ctCollectionId" />
 		</finder>
+		<finder name="C_MCNI_SMCPK" return-type="Collection">
+			<finder-column name="ctCollectionId" />
+			<finder-column name="modelClassNameId" />
+			<finder-column arrayable-operator="OR" name="sourceModelClassPK" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CTCollection" remote-service="true" trash-enabled="false" uuid="false">
 

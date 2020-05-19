@@ -294,20 +294,19 @@ public class ViewChangesDisplayContext {
 		List<JSONObject> childJSONObjects = new ArrayList<>();
 
 		for (Map.Entry<Long, List<Long>> entry : childPKsMap.entrySet()) {
-			long childClassNameId = entry.getKey();
-			List<Long> childClassPKs = entry.getValue();
+			long classNameId = entry.getKey();
+			List<Long> classPKs = entry.getValue();
 
 			Map<Serializable, ? extends BaseModel<?>> baseModelMap =
 				_basePersistenceRegistry.fetchBaseModelMap(
-					childClassNameId, childClassPKs);
+					classNameId, classPKs);
 
-			Map<Serializable, CTEntry> ctEntryMap = _getCTEntryMap(
-				childClassNameId);
+			Map<Serializable, CTEntry> ctEntryMap = _getCTEntryMap(classNameId);
 
-			for (long childClassPK : childClassPKs) {
+			for (long classPK : classPKs) {
 				long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 
-				CTEntry ctEntry = ctEntryMap.get(childClassPK);
+				CTEntry ctEntry = ctEntryMap.get(classPK);
 
 				if ((ctEntry != null) &&
 					(ctEntry.getChangeType() !=
@@ -317,17 +316,16 @@ public class ViewChangesDisplayContext {
 				}
 
 				String title = _getTitle(
-					baseModelMap, ctCollectionId, childClassNameId,
-					childClassPK);
+					baseModelMap, ctCollectionId, classNameId, classPK);
 
 				JSONObject childJSONObject = JSONUtil.put(
-					"modelClassNameId", childClassNameId
+					"modelClassNameId", classNameId
 				).put(
-					"modelClassPK", childClassPK
+					"modelClassPK", classPK
 				).put(
 					"title", title
 				).put(
-					"typeName", _getTypeName(childClassNameId)
+					"typeName", _getTypeName(classNameId)
 				);
 
 				JSONArray dropdownItemsJSONArray =
@@ -340,7 +338,7 @@ public class ViewChangesDisplayContext {
 							"href",
 							_ctDisplayRendererRegistry.getViewURL(
 								liferayPortletResponse, ctCollectionId,
-								childClassNameId, childClassPK, title)
+								classNameId, classPK, title)
 						).put(
 							"label", _language.get(_httpServletRequest, "view")
 						));
@@ -350,9 +348,9 @@ public class ViewChangesDisplayContext {
 					renderURL.setParameter(
 						"ctCollectionId", String.valueOf(ctCollectionId));
 					renderURL.setParameter(
-						"modelClassNameId", String.valueOf(childClassNameId));
+						"modelClassNameId", String.valueOf(classNameId));
 					renderURL.setParameter(
-						"modelClassPK", String.valueOf(childClassPK));
+						"modelClassPK", String.valueOf(classPK));
 				}
 				else {
 					childJSONObject.put(

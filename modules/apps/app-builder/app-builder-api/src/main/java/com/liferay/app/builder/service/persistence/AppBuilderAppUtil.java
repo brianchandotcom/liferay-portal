@@ -1125,6 +1125,274 @@ public class AppBuilderAppUtil {
 	}
 
 	/**
+	 * Returns all the app builder apps where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @return the matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByG_S(long groupId, String scope) {
+		return getPersistence().findByG_S(groupId, scope);
+	}
+
+	/**
+	 * Returns a range of all the app builder apps where groupId = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByG_S(
+		long groupId, String scope, int start, int end) {
+
+		return getPersistence().findByG_S(groupId, scope, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where groupId = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByG_S(
+		long groupId, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().findByG_S(
+			groupId, scope, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where groupId = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByG_S(
+		long groupId, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_S(
+			groupId, scope, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp findByG_S_First(
+			long groupId, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByG_S_First(
+			groupId, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp fetchByG_S_First(
+		long groupId, String scope,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().fetchByG_S_First(
+			groupId, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp findByG_S_Last(
+			long groupId, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByG_S_Last(
+			groupId, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp fetchByG_S_Last(
+		long groupId, String scope,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().fetchByG_S_Last(
+			groupId, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	public static AppBuilderApp[] findByG_S_PrevAndNext(
+			long appBuilderAppId, long groupId, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByG_S_PrevAndNext(
+			appBuilderAppId, groupId, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns all the app builder apps that the user has permission to view where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @return the matching app builder apps that the user has permission to view
+	 */
+	public static List<AppBuilderApp> filterFindByG_S(
+		long groupId, String scope) {
+
+		return getPersistence().filterFindByG_S(groupId, scope);
+	}
+
+	/**
+	 * Returns a range of all the app builder apps that the user has permission to view where groupId = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps that the user has permission to view
+	 */
+	public static List<AppBuilderApp> filterFindByG_S(
+		long groupId, String scope, int start, int end) {
+
+		return getPersistence().filterFindByG_S(groupId, scope, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps that the user has permissions to view where groupId = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps that the user has permission to view
+	 */
+	public static List<AppBuilderApp> filterFindByG_S(
+		long groupId, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().filterFindByG_S(
+			groupId, scope, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set of app builder apps that the user has permission to view where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	public static AppBuilderApp[] filterFindByG_S_PrevAndNext(
+			long appBuilderAppId, long groupId, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().filterFindByG_S_PrevAndNext(
+			appBuilderAppId, groupId, scope, orderByComparator);
+	}
+
+	/**
+	 * Removes all the app builder apps where groupId = &#63; and scope = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 */
+	public static void removeByG_S(long groupId, String scope) {
+		getPersistence().removeByG_S(groupId, scope);
+	}
+
+	/**
+	 * Returns the number of app builder apps where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @return the number of matching app builder apps
+	 */
+	public static int countByG_S(long groupId, String scope) {
+		return getPersistence().countByG_S(groupId, scope);
+	}
+
+	/**
+	 * Returns the number of app builder apps that the user has permission to view where groupId = &#63; and scope = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param scope the scope
+	 * @return the number of matching app builder apps that the user has permission to view
+	 */
+	public static int filterCountByG_S(long groupId, String scope) {
+		return getPersistence().filterCountByG_S(groupId, scope);
+	}
+
+	/**
 	 * Returns all the app builder apps where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1308,6 +1576,190 @@ public class AppBuilderAppUtil {
 	 */
 	public static int countByC_A(long companyId, boolean active) {
 		return getPersistence().countByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns all the app builder apps where companyId = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @return the matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByC_S(long companyId, String scope) {
+		return getPersistence().findByC_S(companyId, scope);
+	}
+
+	/**
+	 * Returns a range of all the app builder apps where companyId = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByC_S(
+		long companyId, String scope, int start, int end) {
+
+		return getPersistence().findByC_S(companyId, scope, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where companyId = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByC_S(
+		long companyId, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().findByC_S(
+			companyId, scope, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where companyId = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByC_S(
+		long companyId, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_S(
+			companyId, scope, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where companyId = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp findByC_S_First(
+			long companyId, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByC_S_First(
+			companyId, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where companyId = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp fetchByC_S_First(
+		long companyId, String scope,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().fetchByC_S_First(
+			companyId, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where companyId = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp findByC_S_Last(
+			long companyId, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByC_S_Last(
+			companyId, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where companyId = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp fetchByC_S_Last(
+		long companyId, String scope,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().fetchByC_S_Last(
+			companyId, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set where companyId = &#63; and scope = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	public static AppBuilderApp[] findByC_S_PrevAndNext(
+			long appBuilderAppId, long companyId, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByC_S_PrevAndNext(
+			appBuilderAppId, companyId, scope, orderByComparator);
+	}
+
+	/**
+	 * Removes all the app builder apps where companyId = &#63; and scope = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 */
+	public static void removeByC_S(long companyId, String scope) {
+		getPersistence().removeByC_S(companyId, scope);
+	}
+
+	/**
+	 * Returns the number of app builder apps where companyId = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param scope the scope
+	 * @return the number of matching app builder apps
+	 */
+	public static int countByC_S(long companyId, String scope) {
+		return getPersistence().countByC_S(companyId, scope);
 	}
 
 	/**
@@ -1610,6 +2062,209 @@ public class AppBuilderAppUtil {
 
 		return getPersistence().filterCountByG_C_D(
 			groupId, companyId, ddmStructureId);
+	}
+
+	/**
+	 * Returns all the app builder apps where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @return the matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByC_A_S(
+		long companyId, boolean active, String scope) {
+
+		return getPersistence().findByC_A_S(companyId, active, scope);
+	}
+
+	/**
+	 * Returns a range of all the app builder apps where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByC_A_S(
+		long companyId, boolean active, String scope, int start, int end) {
+
+		return getPersistence().findByC_A_S(
+			companyId, active, scope, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByC_A_S(
+		long companyId, boolean active, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().findByC_A_S(
+			companyId, active, scope, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByC_A_S(
+		long companyId, boolean active, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_A_S(
+			companyId, active, scope, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp findByC_A_S_First(
+			long companyId, boolean active, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByC_A_S_First(
+			companyId, active, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp fetchByC_A_S_First(
+		long companyId, boolean active, String scope,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().fetchByC_A_S_First(
+			companyId, active, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp findByC_A_S_Last(
+			long companyId, boolean active, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByC_A_S_Last(
+			companyId, active, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp fetchByC_A_S_Last(
+		long companyId, boolean active, String scope,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().fetchByC_A_S_Last(
+			companyId, active, scope, orderByComparator);
+	}
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	public static AppBuilderApp[] findByC_A_S_PrevAndNext(
+			long appBuilderAppId, long companyId, boolean active, String scope,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByC_A_S_PrevAndNext(
+			appBuilderAppId, companyId, active, scope, orderByComparator);
+	}
+
+	/**
+	 * Removes all the app builder apps where companyId = &#63; and active = &#63; and scope = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 */
+	public static void removeByC_A_S(
+		long companyId, boolean active, String scope) {
+
+		getPersistence().removeByC_A_S(companyId, active, scope);
+	}
+
+	/**
+	 * Returns the number of app builder apps where companyId = &#63; and active = &#63; and scope = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param scope the scope
+	 * @return the number of matching app builder apps
+	 */
+	public static int countByC_A_S(
+		long companyId, boolean active, String scope) {
+
+		return getPersistence().countByC_A_S(companyId, active, scope);
 	}
 
 	/**

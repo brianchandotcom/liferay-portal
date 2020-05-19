@@ -75,11 +75,23 @@ public interface AppBuilderAppLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AppBuilderApp addAppBuilderApp(AppBuilderApp appBuilderApp);
 
-	@Indexable(type = IndexableType.REINDEX)
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAppBuilderApp(long, long, long, boolean, long, long,
+	 long, Map, String)}
+	 */
+	@Deprecated
 	public AppBuilderApp addAppBuilderApp(
 			long groupId, long companyId, long userId, boolean active,
 			long ddmStructureId, long ddmStructureLayoutId,
 			long deDataListViewId, Map<Locale, String> nameMap)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AppBuilderApp addAppBuilderApp(
+			long groupId, long companyId, long userId, boolean active,
+			long ddmStructureId, long ddmStructureLayoutId,
+			long deDataListViewId, Map<Locale, String> nameMap, String scope)
 		throws PortalException;
 
 	/**
@@ -263,12 +275,21 @@ public interface AppBuilderAppLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AppBuilderApp> getAppBuilderApps(
+		long companyId, boolean active, String scope);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AppBuilderApp> getAppBuilderApps(
 		long groupId, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AppBuilderApp> getAppBuilderApps(
 		long groupId, long companyId, long ddmStructureId, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AppBuilderApp> getAppBuilderApps(
+		long groupId, String scope, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator);
 
 	/**
@@ -313,12 +334,23 @@ public interface AppBuilderAppLocalService
 		long groupId, long companyId, long ddmStructureId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAppBuilderAppsCount(long groupId, String scope);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AppBuilderApp> getCompanyAppBuilderApps(
 		long companyId, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AppBuilderApp> getCompanyAppBuilderApps(
+		long companyId, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyAppBuilderAppsCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyAppBuilderAppsCount(long companyId, String scope);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

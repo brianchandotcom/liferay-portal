@@ -154,6 +154,24 @@ exports[`ListApps renders 1`] = `
             </svg>
           </button>
         </li>
+        <li
+          class="nav-item"
+        >
+          <button
+            class="nav-btn nav-btn-monospaced btn btn-monospaced btn-primary"
+            data-title="new-app"
+            type="button"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-plus"
+              role="presentation"
+            >
+              <use
+                xlink:href="#plus"
+              />
+            </svg>
+          </button>
+        </li>
       </ul>
     </div>
   </nav>
@@ -277,6 +295,178 @@ exports[`ListApps renders 1`] = `
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+  <div
+    class="popover apps-popover mw-100 hide"
+  >
+    <div
+      class="arrow"
+    />
+    <div
+      class="border-0 popover-header"
+    >
+      <h4
+        class="mb-3"
+      >
+        new-app
+      </h4>
+      <span
+        class="font-weight-light text-secondary"
+      >
+        create-an-app-to-manage-the-data-of-an-object
+      </span>
+    </div>
+    <div
+      class="popover-body"
+    >
+      <label>
+        object
+      </label>
+      <div
+        class="dropdown"
+        label="select-object"
+      >
+        <button
+          class="dropdown-toggle clearfix w-100 btn btn-secondary"
+          style=""
+          type="button"
+        >
+          <span
+            class="float-left"
+          >
+            select-object
+          </span>
+          <svg
+            class="lexicon-icon lexicon-icon-caret-bottom float-right icon"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-bottom"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="popover undefined mw-100 hide"
+      >
+        <div
+          class="arrow"
+        />
+        <div
+          class="border-0 popover-header"
+        >
+          <h4
+            class="m-0"
+          >
+            new-custom-object
+          </h4>
+        </div>
+        <div
+          class="popover-body"
+        >
+          <form>
+            <div
+              class="form-group  mb-2"
+            >
+              <label
+                for="customObjectNameInput"
+              >
+                name
+                <span
+                  class="reference-mark"
+                >
+                  <svg
+                    class="lexicon-icon lexicon-icon-asterisk"
+                    role="presentation"
+                  >
+                    <use
+                      xlink:href="#asterisk"
+                    />
+                  </svg>
+                </span>
+              </label>
+              <input
+                class="form-control form-control"
+                id="customObjectNameInput"
+                type="text"
+              />
+            </div>
+            <div
+              class="custom-control custom-checkbox"
+            >
+              <label>
+                <input
+                  aria-label="continue-and-create-form-view"
+                  checked=""
+                  class="custom-control-input"
+                  type="checkbox"
+                />
+                <span
+                  class="custom-control-label"
+                >
+                  <span
+                    class="custom-control-label-text"
+                  >
+                    continue-and-create-form-view
+                  </span>
+                </span>
+              </label>
+            </div>
+          </form>
+        </div>
+        <div
+          class="popover-footer"
+        >
+          <div
+            class="border-top p-3"
+            style="width: 450px;"
+          >
+            <div
+              class="d-flex justify-content-end"
+            >
+              <button
+                class="mr-3 btn btn-sm btn-secondary"
+                type="button"
+              >
+                cancel
+              </button>
+              <button
+                class="btn btn-sm btn-primary"
+                type="button"
+              >
+                continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="popover-footer"
+    >
+      <div
+        class="border-top mt-3 p-3"
+        style="width: 450px;"
+      >
+        <div
+          class="d-flex justify-content-end"
+        >
+          <button
+            class="mr-3 btn btn-sm btn-secondary"
+            type="button"
+          >
+            cancel
+          </button>
+          <button
+            class="btn btn-sm btn-primary"
+            disabled=""
+            type="button"
+          >
+            continue
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -28,6 +28,7 @@
 		<column name="ddmStructureLayoutId" type="long" />
 		<column name="deDataListViewId" type="long" />
 		<column localized="true" name="name" type="String" />
+		<column name="scope" type="String" />
 
 		<!-- Finder methods -->
 

@@ -184,6 +184,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_PAGES_VARIATION_MENULIST_ACTIVE</td>
+	<td>//li[contains(@class,'active')]//a[contains(@class,'miller-columns-item-mask')][contains(.,'${key_sitePagesVariationName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -1448,6 +1448,14 @@ definition {
 		}
 	}
 
+	macro viewSitePagesVariationActiveCP {
+		var key_sitePagesVariationName = "${sitePagesVariationName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Staging#SITE_PAGES_VARIATION_MENULIST_ACTIVE",
+			value1 = "${sitePagesVariationName}");
+	}
+
 	macro viewSitePagesVariationPG {
 		var key_sitePagesVariationName = "${sitePagesVariationName}";
 

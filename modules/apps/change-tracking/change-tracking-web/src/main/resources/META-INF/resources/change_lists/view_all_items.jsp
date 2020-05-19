@@ -58,8 +58,7 @@ ViewChangesManagementToolbarDisplayContext viewChangesManagementToolbarDisplayCo
 				</div>
 
 				<div class="change-list-description">
-					<%= HtmlUtil.escape(ctDisplayRendererRegistry.getEntryDescription(
-						request, ctEntry)) %>
+					<%= HtmlUtil.escape(ctDisplayRendererRegistry.getEntryDescription(request, ctEntry)) %>
 				</div>
 			</liferay-ui:search-container-column-text>
 

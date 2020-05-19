@@ -6,6 +6,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "quarantine";
 	property testray.main.component.name = "A/B Test";
+	property analytics.cloud.enabled = "true";
 
 	// User has to be connected to Analytics Cloud
 

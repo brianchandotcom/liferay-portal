@@ -128,6 +128,36 @@ public class LayoutStructureUtil {
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 	}
 
+	public static boolean isPortletMarkedForDeletion(
+			long groupId, long plid, String portletId,
+			long segmentsExperienceId)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+					plid, true);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		List<ItemMarkedForDeletion> itemsMarkedForDeletion =
+			layoutStructure.getItemsMarkedForDeletion();
+
+		for (ItemMarkedForDeletion itemMarkedForDeletion :
+				itemsMarkedForDeletion) {
+
+			Set<String> portletIds = itemMarkedForDeletion.getPortletIds();
+
+			if (portletIds.contains(portletId)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static JSONObject updateLayoutPageTemplateData(
 			long groupId, long segmentsExperienceId, long plid,
 			UnsafeConsumer<LayoutStructure, PortalException> unsafeConsumer)

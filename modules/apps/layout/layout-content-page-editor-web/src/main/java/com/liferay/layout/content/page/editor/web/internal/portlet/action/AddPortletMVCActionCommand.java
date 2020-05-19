@@ -143,7 +143,8 @@ public class AddPortletMVCActionCommand
 		String namespace = StringUtil.randomId();
 
 		String instanceId = _getPortletInstanceId(
-			namespace, themeDisplay.getLayout(), portletId);
+			namespace, themeDisplay.getLayout(), portletId,
+			segmentsExperienceId);
 
 		JSONObject editableValueJSONObject =
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
@@ -181,8 +182,9 @@ public class AddPortletMVCActionCommand
 	}
 
 	private String _getPortletInstanceId(
-			String namespace, Layout layout, String portletId)
-		throws PortletIdException {
+			String namespace, Layout layout, String portletId,
+			long segmentsExperienceId)
+		throws Exception {
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
@@ -193,7 +195,11 @@ public class AddPortletMVCActionCommand
 		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId);
 
-		if (count > 0) {
+		if ((count > 0) &&
+			!LayoutStructureUtil.isPortletMarkedForDeletion(
+				layout.getGroupId(), layout.getPlid(), portletId,
+				segmentsExperienceId)) {
+
 			throw new PortletIdException(
 				"Unable to add uninstanceable portlet more than once");
 		}

@@ -14,18 +14,20 @@
 
 package com.liferay.social.activity.internal.manager;
 
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.social.SocialActivityManager;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.ServiceReferenceMapper;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Date;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Adolfo Pérez
@@ -99,6 +101,20 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 			userId, model, type, createDate);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext,
+			(Class<SocialActivityManager<T>>)(Class)SocialActivityManager.class,
+			"(model.class.name=*)",
+			new PropertyServiceReferenceMapper<>("model.class.name"));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	protected SocialActivityManager<T> getSocialActivityManager(
 		String className) {
 
@@ -113,26 +129,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 	}
 
 	private final SocialActivityManager<T> _defaultSocialActivityManager;
-
-	private final ServiceTrackerMap<String, SocialActivityManager<T>>
-		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			(Class<SocialActivityManager<T>>)
-				(Class<?>)SocialActivityManager.class,
-			"(model.class.name=*)",
-			new ServiceReferenceMapper<String, SocialActivityManager<T>>() {
-
-				@Override
-				public void map(
-					ServiceReference<SocialActivityManager<T>> serviceReference,
-					Emitter<String> emitter) {
-
-					String modelClassName =
-						(String)serviceReference.getProperty(
-							"model.class.name");
-
-					emitter.emit(modelClassName);
-				}
-
-			});
+	private ServiceTrackerMap<String, SocialActivityManager<T>>
+		_serviceTrackerMap;
 
 }

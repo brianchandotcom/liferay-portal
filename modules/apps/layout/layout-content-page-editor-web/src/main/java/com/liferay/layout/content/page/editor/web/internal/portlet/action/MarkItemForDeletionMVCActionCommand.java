@@ -1,0 +1,88 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.layout.content.page.editor.web.internal.portlet.action;
+
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+
+import java.util.Arrays;
+import java.util.Set;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Víctor Galán
+ */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+		"mvc.command.name=/content_layout/mark_item_for_deletion"
+	},
+	service = MVCActionCommand.class
+)
+public class MarkItemForDeletionMVCActionCommand
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
+
+	@Override
+	protected JSONObject doTransactionalCommand(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String itemId = ParamUtil.getString(actionRequest, "itemId");
+
+		String[] portletIds = ParamUtil.getStringValues(
+			actionRequest, "portletIds");
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId",
+			SegmentsExperienceConstants.ID_DEFAULT);
+
+		return markItemForDeletion(
+			themeDisplay.getScopeGroupId(), itemId, themeDisplay.getPlid(),
+			SetUtil.fromList(Arrays.asList(portletIds)), segmentsExperienceId);
+	}
+
+	protected JSONObject markItemForDeletion(
+			long groupId, String itemId, long plid, Set<String> portletIds,
+			long segmentsExperienceId)
+		throws PortalException {
+
+		JSONObject layoutDataJSONObject =
+			LayoutStructureUtil.updateLayoutPageTemplateData(
+				groupId, segmentsExperienceId, plid,
+				layoutStructure ->
+					layoutStructure.markLayoutStructureItemForDeletion(
+						itemId, portletIds));
+
+		return JSONUtil.put("layoutData", layoutDataJSONObject);
+	}
+
+}

@@ -146,7 +146,7 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 			TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(20), RandomTestUtil.randomString(20),
-			null, null, WorkflowConstants.STATUS_APPROVED,
+			null, null, null, WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

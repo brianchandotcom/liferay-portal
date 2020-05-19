@@ -113,7 +113,11 @@ public class WidgetInstanceDTOConverter {
 		String namespace = fragmentEntryLink.getNamespace();
 
 		if (instanceId.startsWith(namespace)) {
-			return instanceId.substring(namespace.length());
+			instanceId = instanceId.substring(namespace.length());
+		}
+
+		if (Validator.isNull(instanceId)) {
+			return null;
 		}
 
 		return instanceId;

@@ -23,7 +23,7 @@ import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
 export default ({children, dataLayoutBuilder}) => {
 	const [
-		{dataDefinition, dataLayout, editingLanguageId, focusedField},
+		{dataDefinition, editingLanguageId, focusedField},
 		dispatch,
 	] = useContext(FormViewContext);
 	const deleteDefinitionField = useDeleteDefinitionField({dataLayoutBuilder});
@@ -59,24 +59,24 @@ export default ({children, dataLayoutBuilder}) => {
 
 		provider.props.fieldActions = [
 			{
-				action: (fieldName) =>
-					dataLayoutBuilder.dispatch('fieldDuplicated', {fieldName}),
+				action: (event) =>
+					dataLayoutBuilder.dispatch('fieldDuplicated', event),
 				label: Liferay.Language.get('duplicate'),
 			},
 			{
-				action: (fieldName) => {
+				action: (event) => {
 					dispatch({
-						payload: {fieldName},
+						payload: {fieldName: event.fieldName},
 						type: DataLayoutBuilderActions.DELETE_DATA_LAYOUT_FIELD,
 					});
 
-					dataLayoutBuilder.dispatch('fieldDeleted', {fieldName});
+					dataLayoutBuilder.dispatch('fieldDeleted', event);
 				},
 				label: Liferay.Language.get('remove'),
 				separator: true,
 			},
 			{
-				action: (fieldName) => {
+				action: ({fieldName}) => {
 					onDeleteDefinitionField(fieldName);
 				},
 				label: Liferay.Language.get('delete-from-object'),
@@ -85,7 +85,7 @@ export default ({children, dataLayoutBuilder}) => {
 		];
 
 		provider.props.shouldAutoGenerateName = () => false;
-	}, [dataLayout, dataLayoutBuilder, dispatch, onDeleteDefinitionField]);
+	}, [dataLayoutBuilder, dispatch, onDeleteDefinitionField]);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();

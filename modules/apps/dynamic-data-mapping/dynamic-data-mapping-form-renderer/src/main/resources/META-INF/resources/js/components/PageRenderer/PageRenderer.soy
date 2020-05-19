@@ -162,7 +162,7 @@
 	{@param? hideHeader: bool }
 	{@param? page: ?}
 
-	<div class="active ddm-form-page lfr-ddm-form-page">
+	<div class="active ddm-form-page lfr-ddm-form-page" data-ddm-page="{$pageIndex}">
 		{let $headerRenderer: $page.headerRenderer ?: '' /}
 
 		{if $activePage == $pageIndex and not $hideHeader}

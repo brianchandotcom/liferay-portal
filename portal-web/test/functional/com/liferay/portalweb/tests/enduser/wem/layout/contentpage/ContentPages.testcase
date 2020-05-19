@@ -599,6 +599,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101258. Can create a fragment with a Drop Zone area."
+	@priority = "5"
+	test DropButtonFragmentToFrgamentWithOneDropZone {
+		JSONFragment.addFragmentCollection(
+			groupName = "Test Site Name",
+			name = "Collection Name 2");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name 2");
+
+		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+		FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone"></lfr-drop-zone>''');
+
+		Button.clickPublish();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name 2",
+			fragmentName = "Fragment Name");
+
+		AssertVisible(
+			key_content = "Place fragments here.",
+			key_fragmentClass = "content",
+			key_position = "1",
+			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
+
+		PageEditor.gotoTab(tabName = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fragmentName = "Button",
+			key_index = "2",
+			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
+			value1 = "");
+
+		AssertElementPresent(
+			key_fragmentName = "Button",
+			key_inFragmentName = "Fragment Name",
+			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+	}
+
 	@description = "This is a test for LPS-107285. Can duplicate the Row fragment in one Section fragment."
 	@priority = "5"
 	test DuplicateRowInSection {

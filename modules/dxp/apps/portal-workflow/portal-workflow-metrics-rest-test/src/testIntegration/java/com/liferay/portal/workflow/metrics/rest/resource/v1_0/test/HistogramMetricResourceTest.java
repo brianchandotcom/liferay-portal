@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Histogram;
@@ -51,6 +52,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Rafael Praxedes
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class HistogramMetricResourceTest
 	extends BaseHistogramMetricResourceTestCase {

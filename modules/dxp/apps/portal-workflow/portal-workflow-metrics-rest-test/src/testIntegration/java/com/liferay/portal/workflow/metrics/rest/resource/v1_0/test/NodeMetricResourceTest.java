@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -45,6 +46,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Rafael Praxedes
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class NodeMetricResourceTest extends BaseNodeMetricResourceTestCase {
 

@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -44,6 +45,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Rafael Praxedes
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class SLAResourceTest extends BaseSLAResourceTestCase {
 

@@ -155,8 +155,9 @@
 		color: $white;
 		content: attr(data-advice) ' ';
 		font-size: 10px;
-		height: 20px;
+		height: auto;
 		left: 16px;
+		max-width: calc(100% - 32px);
 		padding: 2px 6px;
 		position: absolute;
 		transform: translateY(4px);

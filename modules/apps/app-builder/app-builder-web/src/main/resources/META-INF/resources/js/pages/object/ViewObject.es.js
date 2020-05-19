@@ -13,7 +13,7 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch,} from 'react-router-dom';
 
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import NavigationBar from '../../components/navigation-bar/NavigationBar.es';
@@ -24,6 +24,11 @@ import EditFormView from '../form-view/EditFormView.es';
 import ListFormViews from '../form-view/ListFormViews.es';
 import EditTableView from '../table-view/EditTableView.es';
 import ListTableViews from '../table-view/ListTableViews.es';
+
+const URL = {
+	'custom-object': '/',
+	'native-object': '/native-objects'
+}
 
 export default ({
 	match: {
@@ -71,11 +76,7 @@ export default ({
 				render={() => (
 					<>
 						<ControlMenu
-							backURL={
-								objectType === 'custom-object'
-									? '/'
-									: `/${objectType}s`
-							}
+							backURL={URL[objectType]}
 							title={title}
 						/>
 						<NavigationBar

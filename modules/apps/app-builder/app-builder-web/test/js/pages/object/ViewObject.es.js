@@ -15,12 +15,12 @@
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import ViewCustomObject from '../../../../src/main/resources/META-INF/resources/js/pages/custom-object/ViewCustomObject.es';
+import ViewObject from '../../../../src/main/resources/META-INF/resources/js/pages/object/ViewObject.es';
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-describe('ViewCustomObject', () => {
+describe('ViewObject', () => {
 	const RESPONSE = {
 		name: {
 			en_US: 'Custom Object',
@@ -45,13 +45,13 @@ describe('ViewCustomObject', () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSE));
 
 		const {asFragment} = render(
-			<ViewCustomObject
+			<ViewObject
 				match={{
 					params: {
 						dataDefinitionId: 1,
 					},
 				}}
-			></ViewCustomObject>,
+			/>,
 			{wrapper: AppContextProviderWrapper}
 		);
 
@@ -66,13 +66,13 @@ describe('ViewCustomObject', () => {
 		fetch.mockResponse(JSON.stringify(RESPONSE));
 
 		const {queryByText} = render(
-			<ViewCustomObject
+			<ViewObject
 				match={{
 					params: {
 						dataDefinitionId: 1,
 					},
 				}}
-			></ViewCustomObject>,
+			/>,
 			{wrapper: AppContextProviderWrapper}
 		);
 

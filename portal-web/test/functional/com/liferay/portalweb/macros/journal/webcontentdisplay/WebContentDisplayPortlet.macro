@@ -18,7 +18,12 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {
 			var key_rowEntry = "${webContentTitle}";
@@ -412,7 +417,12 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {
 			var key_rowEntry = "${webContentTitle}";

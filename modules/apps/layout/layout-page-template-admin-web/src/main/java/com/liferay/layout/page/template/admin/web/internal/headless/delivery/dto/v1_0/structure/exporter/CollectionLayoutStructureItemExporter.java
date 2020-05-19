@@ -75,6 +75,10 @@ public class CollectionLayoutStructureItemExporter
 		JSONObject jsonObject =
 			collectionLayoutStructureItem.getCollectionJSONObject();
 
+		if (jsonObject == null) {
+			return null;
+		}
+
 		String type = jsonObject.getString("type");
 
 		if (Validator.isNull(type)) {

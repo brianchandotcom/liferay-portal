@@ -20,7 +20,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.social.BaseSocialActivityManager;
 import com.liferay.portal.kernel.social.SocialActivityManager;
+import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 import java.util.Date;
 
@@ -28,6 +30,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -35,12 +38,6 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = SocialActivityManager.class)
 public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 	implements SocialActivityManager<T> {
-
-	public SocialActivityManagerImpl(
-		SocialActivityManager<T> defaultSocialActivityManager) {
-
-		_defaultSocialActivityManager = defaultSocialActivityManager;
-	}
 
 	@Override
 	public void addActivity(
@@ -103,6 +100,17 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_defaultSocialActivityManager = new BaseSocialActivityManager<T>() {
+
+			@Override
+			protected SocialActivityLocalService
+				getSocialActivityLocalService() {
+
+				return _socialActivityLocalService;
+			}
+
+		};
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext,
 			(Class<SocialActivityManager<T>>)(Class)SocialActivityManager.class,
@@ -128,8 +136,11 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 		return _defaultSocialActivityManager;
 	}
 
-	private final SocialActivityManager<T> _defaultSocialActivityManager;
+	private SocialActivityManager<T> _defaultSocialActivityManager;
 	private ServiceTrackerMap<String, SocialActivityManager<T>>
 		_serviceTrackerMap;
+
+	@Reference
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

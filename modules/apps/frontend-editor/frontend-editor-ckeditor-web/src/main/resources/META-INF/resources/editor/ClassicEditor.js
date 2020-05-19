@@ -35,6 +35,7 @@ const ClassicEditor = ({
 	editorConfig = {},
 	initialToolbarSet,
 	name,
+	onChangeMethodName,
 }) => {
 	const editorRef = useRef();
 
@@ -47,31 +48,44 @@ const ClassicEditor = ({
 		};
 	}, [editorConfig, toolbarSet]);
 
+	const getHTML = () => {
+		let data = contents;
+
+		const editor = editorRef.current.editor;
+
+		if (editor && editor.instanceReady) {
+			data = editor.getData();
+
+			if (
+				CKEDITOR.env.gecko &&
+				CKEDITOR.tools.trim(data) === '<br />'
+			) {
+				data = '';
+			}
+		}
+
+		return data;
+	};
+
+	const onChangeCallback = () => {
+		const editor = editorRef.current.editor;
+
+		if (editor.checkDirty()) {
+			window[onChangeMethodName](
+				getHTML()
+			)
+
+			editor.resetDirty();
+		}
+	};
+
 	useEffect(() => {
 		setToolbarSet(getToolbarSet(initialToolbarSet));
 	}, [initialToolbarSet]);
 
 	useEffect(() => {
 		window[name] = {
-			getHTML() {
-				let data = contents;
-
-				const editor = editorRef.current.editor;
-
-				if (editor && editor.instanceReady) {
-					data = editor.getData();
-
-					if (
-						CKEDITOR.env.gecko &&
-						CKEDITOR.tools.trim(data) === '<br />'
-					) {
-						data = '';
-					}
-				}
-
-				return data;
-			},
-
+			getHTML,
 			getText() {
 				return contents;
 			},
@@ -101,6 +115,7 @@ const ClassicEditor = ({
 						editor.name = name;
 					});
 				}}
+				onChange={onChangeCallback}
 				ref={editorRef}
 			/>
 		</div>

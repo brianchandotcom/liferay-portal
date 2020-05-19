@@ -3298,34 +3298,45 @@ public class CalendarBookingLocalServiceTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
 
-			WorkflowTask workflowTask = _getWorkflowTask();
-
 			PermissionChecker userPermissionChecker =
 				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
 
 			PermissionThreadLocal.setPermissionChecker(userPermissionChecker);
 
-			_workflowTaskManager.assignWorkflowTaskToUser(
-				group.getCompanyId(), TestPropsValues.getUserId(),
-				workflowTask.getWorkflowTaskId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, null, null);
+			for (WorkflowTask workflowTask : _getWorkflowTasks()) {
+				workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
+					group.getCompanyId(), TestPropsValues.getUserId(),
+					workflowTask.getWorkflowTaskId(),
+					TestPropsValues.getUserId(), StringPool.BLANK, null, null);
 
-			_workflowTaskManager.completeWorkflowTask(
-				group.getCompanyId(), TestPropsValues.getUserId(),
-				workflowTask.getWorkflowTaskId(), Constants.APPROVE,
-				StringPool.BLANK, null);
+				Assert.assertEquals(
+					TestPropsValues.getUserId(),
+					workflowTask.getAssigneeUserId());
+
+				workflowTask = _workflowTaskManager.completeWorkflowTask(
+					group.getCompanyId(), TestPropsValues.getUserId(),
+					workflowTask.getWorkflowTaskId(), Constants.APPROVE,
+					StringPool.BLANK, null);
+
+				Assert.assertEquals(true, workflowTask.isCompleted());
+			}
 		}
 	}
 
-	private WorkflowTask _getWorkflowTask() throws Exception {
-		List<WorkflowTask> workflowTasks =
+	private List<WorkflowTask> _getWorkflowTasks() throws Exception {
+		List<WorkflowTask> workflowTasks = new ArrayList<>();
+
+		workflowTasks.addAll(
 			_workflowTaskManager.getWorkflowTasksByUserRoles(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
-		Assert.assertEquals(workflowTasks.toString(), 1, workflowTasks.size());
+		workflowTasks.addAll(
+			_workflowTaskManager.getWorkflowTasksByUser(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
-		return workflowTasks.get(0);
+		return workflowTasks;
 	}
 
 	private static final TimeZone _losAngelesTimeZone = TimeZone.getTimeZone(

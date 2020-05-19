@@ -9,13 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>SELECT_WEB_CONTENT_BUTTON</td>
-	<td>//button[contains(@id,'webContentSelector')]</td>
+	<td>ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX</td>
+	<td>//input[contains(@id,'enableViewCountIncrement')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX</td>
-	<td>//input[contains(@id,'enableViewCountIncrement')]</td>
+	<td>SELECT_WEB_CONTENT_BUTTON</td>
+	<td>//button[contains(@id,'webContentSelector')]</td>
 	<td></td>
 </tr>
 <tr>

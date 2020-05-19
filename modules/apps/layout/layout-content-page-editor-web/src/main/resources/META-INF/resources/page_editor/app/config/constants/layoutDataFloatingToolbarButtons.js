@@ -28,7 +28,7 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		icon: 'cog',
 		id: 'container_configuration',
 		panelId: 'container_configuration',
-		title: Liferay.Language.get('container-configuration'),
+		title: Liferay.Language.get('section-configuration'),
 		type: 'panel',
 	},
 

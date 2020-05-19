@@ -18,6 +18,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DEFINITION-->
+<tr>
+	<td>DEFINITION_TITLE</td>
+	<td>//input[(contains(@name,'KaleoDesignerPortlet_title')) and (contains(@type,'text'))]</td>
+	<td></td>
+</tr>
 <!--DEFINITION_TABLE-->
 <tr>
 	<td>DEFINITION_TABLE_TITLE</td>
@@ -48,17 +54,6 @@
 <tr>
 	<td>DIALOG_BOX_BODY</td>
 	<td>//div[contains(@class,'modal-body')]</td>
-	<td></td>
-</tr>
-<!--DUPLICATE_MODAL-->
-<tr>
-	<td>DUPLICATE_WORKFLOW_NEW_NAME</td>
-	<td>//input[@placeholder='Copy of ${key_duplicateName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DUPLICATE_BUTTON_MODAL</td>
-	<td>//button[contains(text(),'Duplicate')]</td>
 	<td></td>
 </tr>
 </tbody>

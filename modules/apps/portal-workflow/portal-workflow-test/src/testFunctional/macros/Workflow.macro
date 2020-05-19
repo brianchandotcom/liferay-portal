@@ -397,6 +397,32 @@ definition {
 		AssertElementNotPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE");
 	}
 
+	macro duplicateSingleApproverWorkflow {
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Process Builder");
+
+		Click(
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Duplicate");
+
+		Button.click(button = "Duplicate");
+
+		Type(
+			locator1 = "WorkflowDefinition#DEFINITION_TITLE",
+			value1 = "${workflowName}");
+
+		ScrollWebElementIntoView(
+			key_text = "Update",
+			locator1 = "Button#ANY");
+
+		Button.click(button = "Update");
+	}
+
 	macro gotoAssetViaTableTitle {
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 
@@ -686,6 +712,11 @@ definition {
 		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS")) {
 			Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
 
+			ProductMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Control Panel",
+				portlet = "Process Builder");
+
 			Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
 		}
 	}
@@ -703,26 +734,6 @@ definition {
 
 			Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
 		}
-	}
-
-	macro duplicateSingleApproverWorkflow {
-
-		ProductMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Control Panel",
-			portlet = "Process Builder");
-
-		Click(key_workflowDefinitionTitle = "Single Approver",
-			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Duplicate");
-
-		Type(
-			key_duplicateName = "Single Approver",
-			locator1 = "WorkflowDefinition#DUPLICATE_WORKFLOW_NEW_NAME",
-			value1 = "${key_workflowName}");
-
-		Click(locator1 = "WorkflowDefinition#DUPLICATE_BUTTON_MODAL");
 	}
 
 	macro unpublishWorkflowDefinition {

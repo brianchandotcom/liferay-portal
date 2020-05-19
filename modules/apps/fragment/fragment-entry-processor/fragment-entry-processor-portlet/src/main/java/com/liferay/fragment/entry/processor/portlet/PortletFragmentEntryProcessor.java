@@ -194,7 +194,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					fragmentEntryLink.getNamespace(), id);
 			}
 			else if (processedPortletIds.contains(portletName) ||
-					 _checkPortletUsed(fragmentEntryLink, portletName)) {
+					 _checkNoninstanceablePortletUsed(
+						 fragmentEntryLink, portletName)) {
 
 				throw new FragmentEntryContentException(
 					LanguageUtil.get(
@@ -246,10 +247,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		_validateFragmentEntryHTMLDocument(document);
 	}
 
-	private boolean _checkPortletUsed(
-			FragmentEntryLink currentFragmentEntryLink,
-			String currentPortletName)
-		throws PortalException {
+	private boolean _checkNoninstanceablePortletUsed(
+		FragmentEntryLink currentFragmentEntryLink, String currentPortletName) {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(

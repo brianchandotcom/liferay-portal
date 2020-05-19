@@ -77,62 +77,38 @@ definition {
 	macro configureSetupPG {
 		Pause(locator1 = "3000");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 		if (isSet(userToolNameList)) {
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
+			for (var userToolName : list "${userToolNameList}") {
+				Pause(locator1 = "3000");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Click(locator1 = "WCDConfiguration#USER_TOOLS_SELECT_BUTTON");
-
-			SelectFrameTop();
-
-			for (var key_toggleCardLabel : list "${userToolNameList}") {
-				if (IsNotChecked(locator1 = "WCDConfiguration#TOGGLE_CARD_CHECKBOX")) {
-					Click.clickNoWaitForVisible(locator1 = "WCDConfiguration#TOGGLE_CARD_CHECKBOX");
-				}
+				Check.checkToggleSwitch(
+					key_fieldName = "${userToolName}",
+					locator1 = "Portlet#CONFIGURATION_CHECKBOX");
 			}
-
-			Click(locator1 = "Button#DONE");
 		}
 
 		if (isSet(metadataNameList)) {
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
+			for (var metadataName : list "${metadataNameList}") {
+				Pause(locator1 = "3000");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			Click(locator1 = "WCDConfiguration#CONTENT_METADATA_SELECT");
-
-			for (var key_toggleCardLabel : list "${metadataNameList}") {
-				Pause(locator1 = "1000");
-
-				SelectFrameTop();
-
-				if (IsNotChecked(locator1 = "WCDConfiguration#TOGGLE_CARD_CHECKBOX")) {
-					Click.clickNoWaitForVisible(locator1 = "WCDConfiguration#TOGGLE_CARD_CHECKBOX");
-				}
+				Check.checkToggleSwitch(
+					key_fieldName = "${metadataName}",
+					locator1 = "Portlet#CONFIGURATION_CHECKBOX");
 			}
-
-			Click(locator1 = "Button#DONE");
 		}
 
 		if ("${enableViewCountIncrement}" == "true") {
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			Check.checkToggleSwitch(locator1 = "WCDConfiguration#ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX");
-
-			SelectFrame(value1 = "relative=top");
 		}
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro editTemplate {

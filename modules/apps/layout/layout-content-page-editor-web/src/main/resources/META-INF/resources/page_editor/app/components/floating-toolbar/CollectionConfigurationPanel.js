@@ -85,27 +85,16 @@ export const CollectionConfigurationPanel = ({item}) => {
 				className: collectionItemType,
 			})
 				.then((response) => {
-					setAvailableListRenderers(response);
+					setAvailableListRenderers([
+						...DEFAULT_LIST_STYLES,
+						...response,
+					]);
 				})
 				.catch(() => {
 					setAvailableListRenderers(DEFAULT_LIST_STYLES);
 				});
 		}
 	}, [collectionItemType]);
-
-	if (collectionConfig.collection) {
-		InfoItemService.getAvailableListRenderers({
-			className: collectionConfig.collection.itemType,
-		}).then((response) => {
-			setAvailableListRenderers([
-				{
-					label: Liferay.Language.get('grid'),
-					value: '',
-				},
-				...response,
-			]);
-		});
-	}
 
 	return (
 		<>

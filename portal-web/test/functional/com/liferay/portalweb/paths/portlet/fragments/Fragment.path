@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_BODY_IN_FRAGMENT</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]//preceding-sibling::div[contains(.,'${key_inFragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//*[contains(@data-lfr-editable-id,'${id}')]</td>
 	<td></td>

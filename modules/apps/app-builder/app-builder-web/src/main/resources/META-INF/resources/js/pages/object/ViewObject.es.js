@@ -13,7 +13,7 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {Route, Switch,} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import NavigationBar from '../../components/navigation-bar/NavigationBar.es';
@@ -27,8 +27,8 @@ import ListTableViews from '../table-view/ListTableViews.es';
 
 const URL = {
 	'custom-object': '/',
-	'native-object': '/native-objects'
-}
+	'native-object': '/native-objects',
+};
 
 export default ({
 	match: {
@@ -75,10 +75,7 @@ export default ({
 				path={path}
 				render={() => (
 					<>
-						<ControlMenu
-							backURL={URL[objectType]}
-							title={title}
-						/>
+						<ControlMenu backURL={URL[objectType]} title={title} />
 						<NavigationBar
 							tabs={[
 								{

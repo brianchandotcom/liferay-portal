@@ -7923,6 +7923,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<priority value="DEBUG" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.service.impl.ReleaseLocalServiceImpl">
 		<priority value="${release.local.service.impl.log.level}" />
 	</category>

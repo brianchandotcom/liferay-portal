@@ -126,11 +126,14 @@
 		}
 	}
 
+	&.not-droppable.page-editor__col > .page-editor__col__border {
+		border: 1px solid $danger;
+	}
+
 	&.not-droppable .page-editor__container > .container:before,
 	&.not-droppable .page-editor__container > .container-fluid:before,
 	&.not-droppable .page-editor__section > .container:before,
 	&.not-droppable .page-editor__section > .container-fluid:before,
-	&.not-droppable.page-editor__col:before,
 	&.not-droppable.page-editor__collection-item:before {
 		box-shadow: inset 0 0 0 1px $danger;
 		position: absolute;

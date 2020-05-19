@@ -1214,6 +1214,8 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private void _updateLayoutSettings(Layout layout, Settings settings) {
+		layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 

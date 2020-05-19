@@ -123,7 +123,7 @@ export default function TrafficSources({
 											}
 										>
 											<ClayButton
-												className="font-weight-semi-bold px-0 py-1 text-secondary"
+												className="font-weight-semi-bold px-0 py-1 text-primary"
 												displayType="link"
 												onClick={() =>
 													onTrafficSourceClick(

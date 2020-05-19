@@ -16,6 +16,13 @@ definition {
 			var parentOrganizationId = "0";
 		}
 
+		if (isSet(organizationType)) {
+			var organizationType = "${organizationType}";
+		}
+		else {
+			var organizationType = "organization";
+		}
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -23,7 +30,7 @@ definition {
 				-u test@liferay.com:test \
 				-d parentOrganizationId=${parentOrganizationId} \
 				-d name=${organizationNameEncoded} \
-				-d type=organization \
+				-d type=${organizationType} \
 				-d regionId=0 \
 				-d countryId=0 \
 				-d statusId=12017 \

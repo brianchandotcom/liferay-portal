@@ -12,6 +12,7 @@ definition {
 		JSONOrganizationAPI._addOrganization(
 			organizationName = "${organizationName}",
 			organizationSite = "${organizationSite}",
+			organizationType = "${organizationType}",
 			parentOrganizationId = "${parentOrganizationId}");
 	}
 

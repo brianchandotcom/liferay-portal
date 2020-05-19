@@ -14,7 +14,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -91,6 +94,10 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(draftLayout.getClassPK());
 
+		LayoutStructureUtil.deleteMarkedForDeletionItems(
+			draftLayout.getCompanyId(), _contentPageEditorListenerTracker,
+			draftLayout.getGroupId(), draftLayout.getPlid(), _portletRegistry);
+
 		_layoutCopyHelper.copyLayout(draftLayout, layout);
 
 		_layoutPageTemplateEntryService.updateStatus(
@@ -125,6 +132,9 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 	}
 
 	@Reference
+	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
+
+	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
@@ -139,5 +149,8 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 }

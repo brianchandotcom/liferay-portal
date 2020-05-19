@@ -33,6 +33,8 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "name") %></aui:validator>
 			</aui:input>
 
+			<aui:input helpMessage="tax-id-help" label="tax-id" name="taxId" type="text" value="<%= (accountEntryDisplay == null) ? StringPool.BLANK : accountEntryDisplay.getTaxId() %>" />
+
 			<c:if test="<%= accountEntryDisplay != null %>">
 				<aui:input cssClass="disabled" label="account-id" name="accountEntryId" readonly="true" type="text" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
 			</c:if>

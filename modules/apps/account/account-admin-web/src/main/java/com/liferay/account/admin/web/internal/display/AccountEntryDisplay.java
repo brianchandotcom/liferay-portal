@@ -89,6 +89,10 @@ public class AccountEntryDisplay {
 		return _statusLabelStyle;
 	}
 
+	public String getTaxId() {
+		return _taxId;
+	}
+
 	public boolean isActive() {
 		return _active;
 	}
@@ -103,6 +107,7 @@ public class AccountEntryDisplay {
 		_parentAccountEntryName = _getParentAccountEntryName(accountEntry);
 		_statusLabel = _getStatusLabel(accountEntry);
 		_statusLabelStyle = _getStatusLabelStyle(accountEntry);
+		_taxId = accountEntry.getTaxId();
 	}
 
 	private List<String> _getDomains(AccountEntry accountEntry) {
@@ -174,5 +179,6 @@ public class AccountEntryDisplay {
 	private final String _parentAccountEntryName;
 	private final String _statusLabel;
 	private final String _statusLabelStyle;
+	private final String _taxId;
 
 }

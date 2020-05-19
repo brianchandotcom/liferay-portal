@@ -25,9 +25,65 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 }
 
-task processDefaultSanitizerConfiguration(type: AntiSamyTask)
+task processDefaultSanitizerConfiguration(type: DefaultAntiSamyTask)
+task processKnowledgeBaseSanitizerConfiguration(type: AntiSamyTask)
 
-processDefaultSanitizerConfiguration{
+processKnowledgeBaseSanitizerConfiguration {
+	dependsOn processDefaultSanitizerConfiguration
+
+	sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/knowledge-base-sanitizer-configuration.xml")
+
+	filter {
+		String line ->
+
+		if (line.contains('<literal value="hr"/>')) {
+			line = """\
+				|	${line}
+				|	<literal value="iframe"/>""".stripMargin()
+		}
+		else if (line.contains('<tag name="iframe" action="remove"/>')) {
+			line = """\
+			|	<tag name="iframe" action="validate">
+			|		<attribute name="allow">
+			|			<regexp-list>
+			|				<regexp name="anything"/>
+			|			</regexp-list>
+			|		</attribute>
+			|		<attribute name="allowfullscreen">
+			|			<regexp-list>
+			|				<regexp name="boolean"/>
+			|			</regexp-list>
+			|		</attribute>
+			|		<attribute name="frameborder">
+			|			<regexp-list>
+			|				<regexp name="integer"/>
+			|			</regexp-list>
+			|		</attribute>
+			|		<attribute name="height"/>
+			|		<attribute name="mozallowfullscreen">
+			|			<regexp-list>
+			|				<regexp name="boolean"/>
+			|			</regexp-list>
+			|		</attribute>
+			|		<attribute name="src">
+			|			<regexp-list>
+			|				<regexp name="anything"/>
+			|			</regexp-list>
+			|		</attribute>
+			|		<attribute name="webkitallowfullscreen">
+			|			<regexp-list>
+			|				<regexp name="boolean"/>
+			|			</regexp-list>
+			|		</attribute>
+			|		<attribute name="width"/>
+			|	</tag>""".stripMargin()
+		}
+
+		return line
+	}
+}
+
+processDefaultSanitizerConfiguration {
 	filter {
 		String line ->
 
@@ -143,14 +199,26 @@ processDefaultSanitizerConfiguration{
 	}
 }
 
-class AntiSamyTask extends Copy {
+class AntiSamyTask extends DefaultAntiSamyTask{
+	AntiSamyTask(){
+
+		from('src/main/resources/META-INF/resources/')
+
+		into('src/main/resources/META-INF/resources/')
+
+		include('sanitizer-configuration.xml')
+
+	}
+}
+
+class DefaultAntiSamyTask extends Copy {
 	@Input
 	File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
 
 	@Input
 	String sanitizerConfigurationUrl = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/owaspantisamy/antisamy-ebay-1.4.4.xml"
 
-	AntiSamyTask() {
+	DefaultAntiSamyTask() {
 		ext {
 			autoClean = false
 		}
@@ -173,4 +241,5 @@ class AntiSamyTask extends Copy {
 
 processResources {
 	dependsOn processDefaultSanitizerConfiguration
+	dependsOn processKnowledgeBaseSanitizerConfiguration
 }

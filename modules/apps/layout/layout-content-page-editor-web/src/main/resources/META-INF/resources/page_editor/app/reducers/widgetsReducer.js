@@ -12,7 +12,12 @@
  * details.
  */
 
-import {ADD_FRAGMENT_ENTRY_LINKS, DELETE_WIDGETS} from '../actions/types';
+import {
+	ADD_FRAGMENT_ENTRY_LINKS,
+	ADD_USED_WIDGET,
+	DELETE_ITEM,
+	DELETE_WIDGETS,
+} from '../actions/types';
 import {getWidgetPath} from '../utils/getWidgetPath';
 import {setWidgetUsage} from '../utils/setWidgetUsage';
 
@@ -42,6 +47,21 @@ export default function widgetsReducer(widgets, action) {
 
 			return nextWidgets;
 		}
+		case ADD_USED_WIDGET: {
+			const portletIds = action.portletIds || [];
+			let nextWidgets = widgets;
+
+			portletIds.forEach((portletId) => {
+				const widgetPath = getWidgetPath(widgets, portletId);
+
+				nextWidgets = setWidgetUsage(nextWidgets, widgetPath, {
+					used: true,
+				});
+			});
+
+			return nextWidgets;
+		}
+
 		case DELETE_ITEM: {
 			const portletIds = action.portletIds || [];
 			let nextWidgets = widgets;

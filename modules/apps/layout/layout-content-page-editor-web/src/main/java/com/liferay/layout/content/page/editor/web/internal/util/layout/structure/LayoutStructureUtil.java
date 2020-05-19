@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -70,14 +69,20 @@ public class LayoutStructureUtil {
 			LayoutStructure layoutStructure = LayoutStructure.of(
 				layoutPageTemplateStructureRel.getData());
 
-			List<String> itemIdsMarkedForDeletion = ListUtil.toList(
-				layoutStructure.getDeletedLayoutStructureItems(),
-				DeletedLayoutStructureItem::getItemId);
+			for (DeletedLayoutStructureItem deletedLayoutStructureItem :
+					layoutStructure.getDeletedLayoutStructureItems()) {
 
-			for (String itemId : itemIdsMarkedForDeletion) {
-				_deleteItem(
-					companyId, contentPageEditorListenerTracker, itemId,
-					layoutStructure, plid, portletRegistry);
+				List<LayoutStructureItem> deletedLayoutStructureItems =
+					layoutStructure.deleteLayoutStructureItem(
+						deletedLayoutStructureItem.getItemId());
+
+				for (long fragmentEntryLinkId :
+						getFragmentEntryLinkIds(deletedLayoutStructureItems)) {
+
+					FragmentEntryLinkUtil.deleteFragmentEntryLink(
+						companyId, contentPageEditorListenerTracker,
+						fragmentEntryLinkId, plid, portletRegistry);
+				}
 			}
 
 			LayoutPageTemplateStructureLocalServiceUtil.
@@ -182,25 +187,6 @@ public class LayoutStructureUtil {
 				plid, segmentsExperienceId, dataJSONObject.toString());
 
 		return dataJSONObject;
-	}
-
-	private static void _deleteItem(
-			long companyId,
-			ContentPageEditorListenerTracker contentPageEditorListenerTracker,
-			String itemId, LayoutStructure layoutStructure, long plid,
-			PortletRegistry portletRegistry)
-		throws PortalException {
-
-		List<LayoutStructureItem> deletedLayoutStructureItems =
-			layoutStructure.deleteLayoutStructureItem(itemId);
-
-		for (long fragmentEntryLinkId :
-				getFragmentEntryLinkIds(deletedLayoutStructureItems)) {
-
-			FragmentEntryLinkUtil.deleteFragmentEntryLink(
-				companyId, contentPageEditorListenerTracker,
-				fragmentEntryLinkId, plid, portletRegistry);
-		}
 	}
 
 }

@@ -126,7 +126,9 @@
 		}
 	}
 
-	&.not-droppable.page-editor__col > .page-editor__col__border {
+	&.not-droppable.page-editor__col > .page-editor__col__border,
+	&.not-droppable.page-editor__collection-item
+		> .page-editor__collection-item__border {
 		border: 1px solid $danger;
 	}
 

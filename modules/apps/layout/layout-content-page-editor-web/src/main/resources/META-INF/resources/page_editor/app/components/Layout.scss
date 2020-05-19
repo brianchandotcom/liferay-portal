@@ -60,6 +60,12 @@
 		}
 	}
 
+	&__collection-item__border {
+		height: 100%;
+		position: absolute;
+		width: 100%;
+	}
+
 	&__col__border {
 		border: 1px solid $primary-l2;
 		height: 100%;

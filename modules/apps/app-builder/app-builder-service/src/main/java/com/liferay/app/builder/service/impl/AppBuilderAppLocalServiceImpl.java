@@ -14,6 +14,7 @@
 
 package com.liferay.app.builder.service.impl;
 
+import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalService;
@@ -43,12 +44,31 @@ import org.osgi.service.component.annotations.Reference;
 public class AppBuilderAppLocalServiceImpl
 	extends AppBuilderAppLocalServiceBaseImpl {
 
-	@Indexable(type = IndexableType.REINDEX)
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addAppBuilderApp(long, long, long, boolean, long, long,
+	 *             long, Map, String)}
+	 */
+	@Deprecated
 	@Override
 	public AppBuilderApp addAppBuilderApp(
 			long groupId, long companyId, long userId, boolean active,
 			long ddmStructureId, long ddmStructureLayoutId,
 			long deDataListViewId, Map<Locale, String> nameMap)
+		throws PortalException {
+
+		return addAppBuilderApp(
+			groupId, companyId, userId, active, ddmStructureId,
+			ddmStructureLayoutId, deDataListViewId, nameMap,
+			AppBuilderAppConstants.STANDARD_APP_SCOPE);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AppBuilderApp addAppBuilderApp(
+			long groupId, long companyId, long userId, boolean active,
+			long ddmStructureId, long ddmStructureLayoutId,
+			long deDataListViewId, Map<Locale, String> nameMap, String scope)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -67,6 +87,7 @@ public class AppBuilderAppLocalServiceImpl
 		appBuilderApp.setDdmStructureLayoutId(ddmStructureLayoutId);
 		appBuilderApp.setDeDataListViewId(deDataListViewId);
 		appBuilderApp.setNameMap(nameMap);
+		appBuilderApp.setScope(scope);
 
 		return appBuilderAppPersistence.update(appBuilderApp);
 	}

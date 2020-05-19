@@ -81,26 +81,31 @@ public class LayoutStructure {
 				}
 			}
 
-			JSONArray itemsMarkedForDeletionJSONArray = Optional.ofNullable(
-				layoutStructureJSONObject.getJSONArray("itemsMarkedForDeletion")
+			JSONArray deletedLayoutStructureItemJSONArray = Optional.ofNullable(
+				layoutStructureJSONObject.getJSONArray(
+					"deletedLayoutStructureItems")
 			).orElse(
 				JSONFactoryUtil.createJSONArray()
 			);
 
-			Map<String, ItemMarkedForDeletion> itemsMarkedForDeletion =
-				new HashMap<>(itemsMarkedForDeletionJSONArray.length());
+			Map<String, DeletedLayoutStructureItem>
+				deletedLayoutStructureItems = new HashMap<>(
+					deletedLayoutStructureItemJSONArray.length());
 
-			for (int i = 0; i < itemsMarkedForDeletionJSONArray.length(); i++) {
-				ItemMarkedForDeletion itemMarkedForDeletion =
-					ItemMarkedForDeletion.of(
-						itemsMarkedForDeletionJSONArray.getJSONObject(i));
+			for (int i = 0; i < deletedLayoutStructureItemJSONArray.length();
+				 i++) {
 
-				itemsMarkedForDeletion.put(
-					itemMarkedForDeletion.getItemId(), itemMarkedForDeletion);
+				DeletedLayoutStructureItem deletedLayoutStructureItem =
+					DeletedLayoutStructureItem.of(
+						deletedLayoutStructureItemJSONArray.getJSONObject(i));
+
+				deletedLayoutStructureItems.put(
+					deletedLayoutStructureItem.getItemId(),
+					deletedLayoutStructureItem);
 			}
 
 			return new LayoutStructure(
-				itemsMarkedForDeletion, fragmentLayoutStructureItems,
+				deletedLayoutStructureItems, fragmentLayoutStructureItems,
 				layoutStructureItems, rootItemsJSONObject.getString("main"));
 		}
 		catch (JSONException jsonException) {
@@ -114,7 +119,7 @@ public class LayoutStructure {
 
 	public LayoutStructure() {
 		_fragmentLayoutStructureItems = new HashMap<>();
-		_itemsMarkedForDeletion = new HashMap<>();
+		_deletedLayoutStructureItems = new HashMap<>();
 		_layoutStructureItems = new HashMap<>();
 		_mainItemId = StringPool.BLANK;
 	}
@@ -282,7 +287,7 @@ public class LayoutStructure {
 			}
 		}
 
-		_itemsMarkedForDeletion.remove(itemId);
+		_deletedLayoutStructureItems.remove(itemId);
 		_layoutStructureItems.remove(itemId);
 
 		return deletedLayoutStructureItems;
@@ -328,6 +333,10 @@ public class LayoutStructure {
 		return false;
 	}
 
+	public List<DeletedLayoutStructureItem> getDeletedLayoutStructureItems() {
+		return ListUtil.fromCollection(_deletedLayoutStructureItems.values());
+	}
+
 	public LayoutStructureItem getDropZoneLayoutStructureItem() {
 		for (LayoutStructureItem layoutStructureItem :
 				getLayoutStructureItems()) {
@@ -338,10 +347,6 @@ public class LayoutStructure {
 		}
 
 		return null;
-	}
-
-	public List<ItemMarkedForDeletion> getItemsMarkedForDeletion() {
-		return ListUtil.fromCollection(_itemsMarkedForDeletion.values());
 	}
 
 	public LayoutStructureItem getLayoutStructureItem(String itemId) {
@@ -393,8 +398,8 @@ public class LayoutStructure {
 			childrenItemIds.remove(itemId);
 		}
 
-		_itemsMarkedForDeletion.put(
-			itemId, new ItemMarkedForDeletion(itemId, portletIds));
+		_deletedLayoutStructureItems.put(
+			itemId, new DeletedLayoutStructureItem(itemId, portletIds));
 	}
 
 	public LayoutStructureItem moveLayoutStructureItem(
@@ -440,20 +445,20 @@ public class LayoutStructure {
 				entry.getKey(), layoutStructureItem.toJSONObject());
 		}
 
-		JSONArray itemsMarkedForDeletionJSONArray =
+		JSONArray deletedLayoutStructureItemsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		for (ItemMarkedForDeletion itemMarkedForDeletion :
-				_itemsMarkedForDeletion.values()) {
+		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
+				_deletedLayoutStructureItems.values()) {
 
-			itemsMarkedForDeletionJSONArray.put(
-				itemMarkedForDeletion.toJSONObject());
+			deletedLayoutStructureItemsJSONArray.put(
+				deletedLayoutStructureItem.toJSONObject());
 		}
 
 		return JSONUtil.put(
-			"items", layoutStructureItemsJSONObject
+			"deletedLayoutStructureItems", deletedLayoutStructureItemsJSONArray
 		).put(
-			"itemsMarkedForDeletion", itemsMarkedForDeletionJSONArray
+			"items", layoutStructureItemsJSONObject
 		).put(
 			"rootItems",
 			JSONUtil.put(
@@ -557,12 +562,12 @@ public class LayoutStructure {
 	}
 
 	private LayoutStructure(
-		Map<String, ItemMarkedForDeletion> itemsMarkedForDeletion,
+		Map<String, DeletedLayoutStructureItem> deletedLayoutStructureItems,
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems,
 		Map<String, LayoutStructureItem> layoutStructureItems,
 		String mainItemId) {
 
-		_itemsMarkedForDeletion = itemsMarkedForDeletion;
+		_deletedLayoutStructureItems = deletedLayoutStructureItems;
 		_fragmentLayoutStructureItems = fragmentLayoutStructureItems;
 		_layoutStructureItems = layoutStructureItems;
 		_mainItemId = mainItemId;
@@ -665,8 +670,9 @@ public class LayoutStructure {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStructure.class);
 
+	private final Map<String, DeletedLayoutStructureItem>
+		_deletedLayoutStructureItems;
 	private final Map<Long, LayoutStructureItem> _fragmentLayoutStructureItems;
-	private final Map<String, ItemMarkedForDeletion> _itemsMarkedForDeletion;
 	private final Map<String, LayoutStructureItem> _layoutStructureItems;
 	private String _mainItemId;
 

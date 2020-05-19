@@ -22,8 +22,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
+import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
-import com.liferay.layout.util.structure.ItemMarkedForDeletion;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -72,8 +72,8 @@ public class LayoutStructureUtil {
 				layoutPageTemplateStructureRel.getData());
 
 			List<String> itemIdsMarkedForDeletion = ListUtil.toList(
-				layoutStructure.getItemsMarkedForDeletion(),
-				ItemMarkedForDeletion::getItemId);
+				layoutStructure.getDeletedLayoutStructureItems(),
+				DeletedLayoutStructureItem::getItemId);
 
 			for (String itemId : itemIdsMarkedForDeletion) {
 				_deleteItem(
@@ -142,13 +142,13 @@ public class LayoutStructureUtil {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-		List<ItemMarkedForDeletion> itemsMarkedForDeletion =
-			layoutStructure.getItemsMarkedForDeletion();
+		List<DeletedLayoutStructureItem> deletedLayoutStructureItems =
+			layoutStructure.getDeletedLayoutStructureItems();
 
-		for (ItemMarkedForDeletion itemMarkedForDeletion :
-				itemsMarkedForDeletion) {
+		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
+				deletedLayoutStructureItems) {
 
-			Set<String> portletIds = itemMarkedForDeletion.getPortletIds();
+			Set<String> portletIds = deletedLayoutStructureItem.getPortletIds();
 
 			if (portletIds.contains(portletId)) {
 				return true;

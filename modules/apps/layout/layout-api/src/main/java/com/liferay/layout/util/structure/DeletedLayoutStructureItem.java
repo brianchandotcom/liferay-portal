@@ -26,20 +26,20 @@ import java.util.Set;
 /**
  * @author Víctor Galán
  */
-public class ItemMarkedForDeletion {
+public class DeletedLayoutStructureItem {
 
-	public static ItemMarkedForDeletion of(JSONObject jsonObject) {
+	public static DeletedLayoutStructureItem of(JSONObject jsonObject) {
 		if (jsonObject == null) {
-			return new ItemMarkedForDeletion(
+			return new DeletedLayoutStructureItem(
 				StringPool.BLANK, Collections.emptySet());
 		}
 
-		return new ItemMarkedForDeletion(
+		return new DeletedLayoutStructureItem(
 			jsonObject.getString("itemId"),
 			JSONUtil.toStringSet(jsonObject.getJSONArray("portletIds")));
 	}
 
-	public ItemMarkedForDeletion(String itemId, Set<String> portletIds) {
+	public DeletedLayoutStructureItem(String itemId, Set<String> portletIds) {
 		_itemId = itemId;
 		_portletIds = portletIds;
 	}
@@ -54,10 +54,10 @@ public class ItemMarkedForDeletion {
 			return false;
 		}
 
-		ItemMarkedForDeletion itemMarkedForDeletion =
-			(ItemMarkedForDeletion)obj;
+		DeletedLayoutStructureItem deletedLayoutStructureItem =
+			(DeletedLayoutStructureItem)obj;
 
-		if (Objects.equals(_itemId, itemMarkedForDeletion._itemId)) {
+		if (Objects.equals(_itemId, deletedLayoutStructureItem._itemId)) {
 			return true;
 		}
 

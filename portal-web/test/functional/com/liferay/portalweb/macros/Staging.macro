@@ -352,6 +352,16 @@ definition {
 			value1 = "${pageVariationNameMenulistName}");
 	}
 
+	macro changeSitePageVariationCP {
+		var key_sitePagesVariationName = "${sitePagesVariationName}";
+
+		Click(locator1 = "Staging#SITE_PAGES_VARIATION_MENULIST_NAME");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Staging#SITE_PAGES_VARIATION_MENULIST_ACTIVE",
+			value1 = "${sitePagesVariationName}");
+	}
+
 	macro changeSitePageVariationPG {
 		var key_sitePagesVariationName = "${sitePagesVariationName}";
 

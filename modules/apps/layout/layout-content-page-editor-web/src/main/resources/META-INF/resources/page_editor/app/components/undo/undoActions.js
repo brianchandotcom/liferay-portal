@@ -16,6 +16,7 @@ import {SELECT_SEGMENTS_EXPERIENCE} from '../../../plugins/experience/actions';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
+	DELETE_ITEM,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
 	UPDATE_COL_SIZE_START,
@@ -35,6 +36,7 @@ import * as undoUpdateLanguage from './undoUpdateLanguage';
 const UNDO_ACTIONS = {
 	[ADD_FRAGMENT_ENTRY_LINKS]: undoFragmentEntryLinks,
 	[ADD_ITEM]: undoLayoutDataAction,
+	[DELETE_ITEM]: undoLayoutDataAction,
 	[DUPLICATE_ITEM]: undoDuplicateItem,
 	[MOVE_ITEM]: undoLayoutDataAction,
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,

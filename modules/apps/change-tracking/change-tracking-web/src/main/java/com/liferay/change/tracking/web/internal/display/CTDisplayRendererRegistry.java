@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTDisplayRendererRegistry.class)
 public class CTDisplayRendererRegistry {
 
-	public <T extends CTModel<T>> CTModel<T> fetchCTModel(
+	public <T extends BaseModel<T>> T fetchCTModel(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
 		CTService<?> ctService = _ctServiceServiceTrackerMap.getService(
@@ -77,7 +77,7 @@ public class CTDisplayRendererRegistry {
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
-			return (CTModel<T>)ctService.updateWithUnsafeFunction(
+			return (T)ctService.updateWithUnsafeFunction(
 				ctPersistence -> ctPersistence.fetchByPrimaryKey(modelClassPK));
 		}
 	}
@@ -93,7 +93,7 @@ public class CTDisplayRendererRegistry {
 			return null;
 		}
 
-		T ctModel = (T)fetchCTModel(
+		T ctModel = fetchCTModel(
 			ctEntry.getCtCollectionId(), ctEntry.getModelClassNameId(),
 			ctEntry.getModelClassPK());
 
@@ -152,12 +152,17 @@ public class CTDisplayRendererRegistry {
 			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 		}
 
-		return getTitle(
-			locale,
-			(T)fetchCTModel(
-				ctCollectionId, ctEntry.getModelClassNameId(),
-				ctEntry.getModelClassPK()),
-			ctEntry.getModelClassNameId());
+		T model = fetchCTModel(
+			ctCollectionId, ctEntry.getModelClassNameId(),
+			ctEntry.getModelClassPK());
+
+		if (model == null) {
+			return StringBundler.concat(
+				getTypeName(locale, ctEntry.getModelClassNameId()),
+				StringPool.SPACE, model.getPrimaryKeyObj());
+		}
+
+		return getTitle(locale, model, ctEntry.getModelClassNameId());
 	}
 
 	public <T extends BaseModel<T>> String getTitle(
@@ -295,7 +300,7 @@ public class CTDisplayRendererRegistry {
 			CTEntry ctEntry)
 		throws Exception {
 
-		T model = (T)fetchCTModel(
+		T model = fetchCTModel(
 			ctCollectionId, ctEntry.getModelClassNameId(),
 			ctEntry.getModelClassPK());
 

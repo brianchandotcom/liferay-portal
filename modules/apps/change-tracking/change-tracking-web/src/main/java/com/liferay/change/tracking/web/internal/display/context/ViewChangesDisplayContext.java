@@ -299,7 +299,7 @@ public class ViewChangesDisplayContext {
 			T baseModel = baseModelMap.get(childClassPK);
 
 			if (baseModel == null) {
-				baseModel = (T)_ctDisplayRendererRegistry.fetchCTModel(
+				baseModel = _ctDisplayRendererRegistry.fetchCTModel(
 					ctCollectionId, childClassNameId, childClassPK);
 			}
 

@@ -49,7 +49,7 @@ public class ViewEntryDisplayContext {
 		long modelClassPK = ParamUtil.getLong(
 			httpServletRequest, "modelClassPK");
 
-		T model = (T)_ctDisplayRendererRegistry.fetchCTModel(
+		T model = _ctDisplayRendererRegistry.fetchCTModel(
 			ctCollectionId, modelClassNameId, modelClassPK);
 
 		if (model == null) {

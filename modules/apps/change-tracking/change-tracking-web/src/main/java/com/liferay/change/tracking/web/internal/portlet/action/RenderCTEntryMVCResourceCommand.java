@@ -62,7 +62,7 @@ public class RenderCTEntryMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, "modelClassNameId");
 		long modelClassPK = ParamUtil.getLong(resourceRequest, "modelClassPK");
 
-		T model = (T)_ctDisplayRendererRegistry.fetchCTModel(
+		T model = _ctDisplayRendererRegistry.fetchCTModel(
 			ctCollectionId, modelClassNameId, modelClassPK);
 
 		if (model == null) {

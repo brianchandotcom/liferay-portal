@@ -203,10 +203,6 @@ public class BaseTestResult implements TestResult {
 
 	@Override
 	public boolean isUniqueFailure() {
-		if (!isFailing()) {
-			return false;
-		}
-
 		return !UpstreamFailureUtil.isTestFailingInUpstreamJob(this);
 	}
 

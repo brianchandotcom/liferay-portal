@@ -465,10 +465,10 @@ public class BatchBuild extends BaseBuild {
 			successCount = getTestCountByStatus("SUCCESS");
 
 			if (isCompareToUpstream()) {
-				List<TestResult> uniqueFailureTestResults =
-					getUniqueFailureTestResults();
+				List<TestResult> upstreamJobFailureTestResults =
+					getUpstreamJobFailureTestResults();
 
-				upstreamFailCount = uniqueFailureTestResults.size();
+				upstreamFailCount = upstreamJobFailureTestResults.size();
 
 				if (showCommonFailuresCount) {
 					failCount = upstreamFailCount;

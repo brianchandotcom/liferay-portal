@@ -873,6 +873,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101258. Can save a composition containing a fragment that has a Drop Zone area as fragment."
+	@priority = "4"
+	test SaveFragmentCompositionWithDropZoneInFrgament {
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+		FragmentsAdmin.addFragment(fragmentName = "Fragment Name 2");
+
+		FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone"></lfr-drop-zone>''');
+
+		Button.clickPublish();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+
+		PageEditor.gotoTab(tabName = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "Collection Name");
+
+		Click(
+			key_elementType = "Section",
+			key_position = "1",
+			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fragmentName = "Fragment Name 2",
+			key_position = "1",
+			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+			locator2 = "PageEditor#SECTION_CONTAINER",
+			value1 = "");
+
+		AssertElementPresent(
+			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name 2')]//li[contains(@class,'title')]",
+			key_position = "1",
+			locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+
+		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
+
+		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name 2",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name 2",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "New Fragment Name",
+			withSection = "true");
+
+		AssertElementPresent(
+			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name 2')]//li[contains(@class,'title')]",
+			key_position = "1",
+			locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+	}
+
 	@description = "Fragments that are being used cannot be deleted."
 	@priority = "5"
 	test ViewCannotDeleteFragmentInUse {

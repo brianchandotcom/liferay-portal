@@ -139,11 +139,11 @@ public class DDMFormAssetRendererFactory
 		DDMFormInstanceRecordVersion formInstanceRecordVersion, int type) {
 
 		DDMFormAssetRenderer ddmFormAssetRenderer = new DDMFormAssetRenderer(
-			formInstanceRecord, formInstanceRecordVersion,
-			_ddmFormInstanceRecordLocalService,
-			_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
-			_ddmFormValuesFactory, _ddmFormValuesMerger,
-			_ddmFormInstanceRecordModelResourcePermission, _portal);
+			formInstanceRecord, _ddmFormInstanceRecordLocalService,
+			_ddmFormInstanceRecordModelResourcePermission,
+			formInstanceRecordVersion, _ddmFormInstanceVersionLocalService,
+			_ddmFormRenderer, _ddmFormValuesFactory, _ddmFormValuesMerger,
+			_portal);
 
 		ddmFormAssetRenderer.setAssetRendererType(type);
 		ddmFormAssetRenderer.setServletContext(_servletContext);

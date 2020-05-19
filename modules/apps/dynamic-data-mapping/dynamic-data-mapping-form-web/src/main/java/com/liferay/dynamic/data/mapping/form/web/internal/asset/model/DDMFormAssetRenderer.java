@@ -58,26 +58,25 @@ public class DDMFormAssetRenderer
 
 	public DDMFormAssetRenderer(
 		DDMFormInstanceRecord ddmFormInstanceRecord,
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
 		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
+		ModelResourcePermission<DDMFormInstanceRecord>
+			ddmFormInstanceRecordModelResourcePermission,
+		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
 		DDMFormInstanceVersionLocalService ddmFormInstanceVersionLocalService,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
-		DDMFormValuesMerger ddmFormValuesMerger,
-		ModelResourcePermission<DDMFormInstanceRecord>
-			ddmFormInstanceRecordModelResourcePermission,
-		Portal portal) {
+		DDMFormValuesMerger ddmFormValuesMerger, Portal portal) {
 
 		_ddmFormInstanceRecord = ddmFormInstanceRecord;
-		_ddmFormInstanceRecordVersion = ddmFormInstanceRecordVersion;
 		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
+		_ddmFormInstanceRecordModelResourcePermission =
+			ddmFormInstanceRecordModelResourcePermission;
+		_ddmFormInstanceRecordVersion = ddmFormInstanceRecordVersion;
 		_ddmFormInstanceVersionLocalService =
 			ddmFormInstanceVersionLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
-		_ddmFormInstanceRecordModelResourcePermission =
-			ddmFormInstanceRecordModelResourcePermission;
 		_portal = portal;
 
 		DDMFormInstance ddmFormInstance = null;

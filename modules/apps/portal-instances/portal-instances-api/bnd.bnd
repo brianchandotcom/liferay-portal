@@ -3,5 +3,5 @@ Bundle-SymbolicName: com.liferay.portal.instances.api
 Bundle-Version: 4.1.0
 Export-Package:\
 	com.liferay.portal.instances.exception,\
-	com.liferay.portal.instances.initalizer,\
+	com.liferay.portal.instances.initializer,\
 	com.liferay.portal.instances.service

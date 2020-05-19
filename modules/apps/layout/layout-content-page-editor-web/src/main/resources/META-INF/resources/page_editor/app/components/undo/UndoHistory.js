@@ -32,13 +32,13 @@ export default function UndoHistory() {
 
 	const [enableDiscard, setEnableDiscard] = useState(false);
 
-	const {layoutData, network} = store;
+	const {network} = store;
 
 	useEffect(() => {
 		const isConversionPage = config.pageType === PAGE_TYPES.conversion;
 
 		setEnableDiscard(network.lastFetch || config.draft || isConversionPage);
-	}, [layoutData, network.lastFetch]);
+	}, [network.lastFetch]);
 
 	const isSelectedAction = (index) => index === 0;
 

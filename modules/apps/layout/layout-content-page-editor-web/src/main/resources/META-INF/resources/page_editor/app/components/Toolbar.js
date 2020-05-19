@@ -47,7 +47,6 @@ function ToolbarBody() {
 	const store = useSelector((state) => state);
 
 	const {
-		layoutData,
 		network,
 		segmentsExperienceId,
 		segmentsExperimentStatus,
@@ -60,7 +59,7 @@ function ToolbarBody() {
 		const isConversionPage = config.pageType === PAGE_TYPES.conversion;
 
 		setEnableDiscard(network.lastFetch || config.draft || isConversionPage);
-	}, [layoutData, network.lastFetch]);
+	}, [network.lastFetch]);
 
 	const loading = useRef(() => {
 		Promise.all(

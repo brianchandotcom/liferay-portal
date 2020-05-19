@@ -14,14 +14,49 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
-import {request} from '../../utils/client.es';
+import {AppContext} from '../../AppContext.es';
+import isClickOutside from '../../utils/clickOutside.es';
+import {addItem, request} from '../../utils/client.es';
+import CustomObjectPopover from '../custom-object/CustomObjectPopover.es';
 import DropDownWithSearch from './DropDownWithSearch.es';
 
-export default ({onClickEmptyState, onSelect, selectedvalue}) => {
+export default ({onSelect, selectedvalue}) => {
+	const {basePortletURL} = useContext(AppContext);
 	const [fetchState, setFetchState] = useState({isLoading: true});
+	const [isPopoverVisible, setPopoverVisible] = useState(false);
 	const [items, setItems] = useState([]);
+
+	const popoverRef = useRef();
+
+	const selectRef = useRef();
+
+	const emptyStateOnClick = () => {
+		setPopoverVisible(!isPopoverVisible);
+	};
+	const handleOnSubmit = ({isAddFormView, name}) => {
+		const addURL = `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`;
+
+		addItem(addURL, {
+			availableLanguageIds: ['en_US'],
+			dataDefinitionFields: [],
+			name: {
+				value: name,
+			},
+		}).then(({id}) => {
+			if (isAddFormView) {
+				Liferay.Util.navigate(
+					Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
+						dataDefinitionId: id,
+						isAppsPortlet: true,
+						mvcRenderCommandName: '/edit_form_view',
+						newCustomObject: true,
+					})
+				);
+			}
+		});
+	};
 
 	const doFetch = () => {
 		const ENDPOINT_CUSTOM_OBJECTS =
@@ -79,7 +114,7 @@ export default ({onClickEmptyState, onSelect, selectedvalue}) => {
 				<ClayButton
 					className="emptyButton"
 					displayType="secondary"
-					onClick={onClickEmptyState}
+					onClick={emptyStateOnClick}
 				>
 					{Liferay.Language.get('new-custom-object')}
 				</ClayButton>
@@ -90,7 +125,7 @@ export default ({onClickEmptyState, onSelect, selectedvalue}) => {
 		},
 		errorProps: {
 			children: (
-				<ClayButton displayType="link" onClick={doFetch}>
+				<ClayButton displayType="link" onClick={doFetch} small>
 					{Liferay.Language.get('retry')}
 				</ClayButton>
 			),
@@ -101,25 +136,62 @@ export default ({onClickEmptyState, onSelect, selectedvalue}) => {
 		},
 	};
 
-	return (
-		<DropDownWithSearch
-			{...fetchState}
-			items={items}
-			label={Liferay.Language.get('select-object')}
-			onSelect={handleOnSelect}
-			stateProps={stateProps}
-			trigger={
-				<ClayButton className="clearfix w-100" displayType="secondary">
-					<span className="float-left">
-						{selectedvalue || Liferay.Language.get('select-object')}
-					</span>
+	useEffect(() => {
+		const handler = ({target}) => {
+			const isOutside = isClickOutside(
+				target,
+				selectRef.current,
+				popoverRef.current
+			);
 
-					<ClayIcon
-						className="float-right icon"
-						symbol="caret-bottom"
-					/>
-				</ClayButton>
+			if (isOutside) {
+				setPopoverVisible(false);
 			}
-		/>
+		};
+
+		window.addEventListener('click', handler);
+
+		return () => window.removeEventListener('click', handler);
+	}, [popoverRef]);
+
+	return (
+		<>
+			<DropDownWithSearch
+				{...fetchState}
+				items={items}
+				label={Liferay.Language.get('select-object')}
+				onSelect={handleOnSelect}
+				stateProps={stateProps}
+				trigger={
+					<ClayButton
+						className="clearfix w-100"
+						displayType="secondary"
+						ref={(element) => {
+							selectRef.current = element;
+						}}
+					>
+						<span className="float-left">
+							{selectedvalue ||
+								Liferay.Language.get('select-object')}
+						</span>
+
+						<ClayIcon
+							className="float-right icon"
+							symbol="caret-bottom"
+						/>
+					</ClayButton>
+				}
+			/>
+
+			<CustomObjectPopover
+				alignElement={selectRef.current}
+				onCancel={() => {
+					setPopoverVisible(false);
+				}}
+				onSubmit={handleOnSubmit}
+				ref={popoverRef}
+				visible={isPopoverVisible}
+			/>
+		</>
 	);
 };

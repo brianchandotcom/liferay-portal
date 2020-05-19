@@ -1976,9 +1976,6 @@ definition {
 		DMDocument.viewStagingDetailsPG();
 	}
 
-	// Ignored because of the ticket LPS-111590
-
-	@ignore = "true"
 	@priority = "5"
 	test StagingOnlyApprovedPublishToLive {
 		property portal.acceptance = "quarantine";

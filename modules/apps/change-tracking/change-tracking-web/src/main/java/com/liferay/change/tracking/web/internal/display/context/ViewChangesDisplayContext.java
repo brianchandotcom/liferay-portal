@@ -53,12 +53,13 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Stack;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -501,21 +502,22 @@ public class ViewChangesDisplayContext {
 
 		_nodeIdCounter = 1;
 
-		Stack<JSONObject> stack = new Stack<>();
+		Deque<JSONObject> deque = new LinkedList<>();
 
-		stack.push(everythingJSONObject);
+		deque.push(everythingJSONObject);
 
-		while (!stack.isEmpty()) {
+		JSONObject jsonObject = null;
+
+		while ((jsonObject = deque.poll()) != null) {
 			Map<Long, List<Long>> childPKsMap = null;
-			JSONObject stackJSONObject = stack.pop();
 
-			if (stackJSONObject.getInt("id") == 0) {
+			if (jsonObject.getInt("id") == 0) {
 				childPKsMap = ctClosure.getRootPKsMap();
 			}
 			else {
 				childPKsMap = ctClosure.getChildPKsMap(
-					stackJSONObject.getLong("modelClassNameId"),
-					stackJSONObject.getLong("modelClassPK"));
+					jsonObject.getLong("modelClassNameId"),
+					jsonObject.getLong("modelClassPK"));
 			}
 
 			if (childPKsMap.isEmpty()) {
@@ -538,11 +540,11 @@ public class ViewChangesDisplayContext {
 			for (JSONObject childJSONObject : childJSONObjects) {
 				childrenJSONArray.put(childJSONObject);
 
-				stack.push(childJSONObject);
+				deque.push(childJSONObject);
 			}
 
 			if (childrenJSONArray.length() > 0) {
-				stackJSONObject.put("children", childrenJSONArray);
+				jsonObject.put("children", childrenJSONArray);
 			}
 		}
 

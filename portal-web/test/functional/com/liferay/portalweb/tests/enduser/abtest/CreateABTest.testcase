@@ -8,14 +8,32 @@ definition {
 	property testray.main.component.name = "A/B Test";
 	property analytics.cloud.enabled = "true";
 
-	// User has to be connected to Analytics Cloud
-
 	setUp {
+
+		// Open Analytics Cloud, login and take the token to connect to DXP
+
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+		Navigator.openURL(baseURL = "${analyticsCloudURL}");
+
+		// Take token from Analytics Cloud
+
+		AnalyticsCloud.loginAnalyticsCloud(
+			emailAddress = "test@liferay.com",
+			password = "test");
+
+		AnalyticsCloud.takeTokenFromAnalyticsCloud();
+
+		// Go to DXP portal
+
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
 		Navigator.openURL();
+
+		// Connect and synchronyze with Analytics Cloud
+
+		AnalyticsCloud.syncAnalyticsCloud();
 
 		// Create content page
 
@@ -25,8 +43,6 @@ definition {
 
 		PageEditor.clickPublish();
 
-		AnalyticsCloud.syncAnalyticsCloud();
-
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/content-page");
 	}
 
@@ -34,6 +50,8 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		Click(locator1 = "ABTest#AB_TEST_BUTTON");
+
+		AnalyticsCloud.teardownAnalyticsCloud();
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -55,10 +73,11 @@ definition {
 
 		ABTest.checkAnalyticsCloudInfo();
 
-		AnalyticsCloud.loginAnalyticsCloud(
-			emailAddress = "test@liferay.com",
-			password = "test");
-
+		if (IsElementNotPresent(locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE")) {
+			AnalyticsCloud.loginAnalyticsCloud(
+				emailAddress = "test@liferay.com",
+				password = "test");
+		}
 		AssertTextEquals(
 			locator1 = "ABTest#AB_TEST_TITLE_AC_SIDE",
 			value1 = "Create A/B Test Title");

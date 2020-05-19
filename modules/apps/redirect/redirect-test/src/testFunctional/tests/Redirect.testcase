@@ -198,6 +198,100 @@ definition {
 			sourceURLVariation = "Duplicate");
 	}
 
+	@description = "This ensures that an entry can be added with checking update redirect."
+	@priority = "5"
+	test AddEntryWithCheckingUpdateRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		for (var i : list "1,2,3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page${i}");
+		}
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			siteName = "test-site-name",
+			sourceURL = "test-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page1",
+			redirectChain = "true",
+			siteName = "test-site-name",
+			sourceURL = "test-page3",
+			updateRedirect = "true");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page3");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page1");
+
+		AssertElementNotPresent(
+			key_destinationURL = "${portalURL}/web/test-site-name/test-page1",
+			locator1 = "ContentRow#ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page3");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page2");
+	}
+
+	@description = "This ensures that an entry can be added without checking update redirect."
+	@priority = "5"
+	test AddEntryWithoutCheckingUpdateRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		for (var i : list "1,2,3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page${i}");
+		}
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			siteName = "test-site-name",
+			sourceURL = "test-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page1",
+			noUpdateRedirect = "true",
+			noUpdateReferences = "true",
+			redirectChain = "true",
+			siteName = "test-site-name",
+			sourceURL = "test-page3",
+			updateRedirect = "true");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page1",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page3");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page1");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page3");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page2");
+	}
+
 	@description = "This ensures that an entry can be added without update references."
 	@priority = "5"
 	test AddEntryWithoutReferences {
@@ -1020,6 +1114,62 @@ definition {
 		AssertVisible(
 			key_pageName = "Pagina de prueba",
 			locator1 = "Home#PAGE_ACTIVE");
+	}
+
+	@description = "This ensures that an entry can be updated with checking update redirect."
+	@priority = "5"
+	test UpdateEntryWithCheckingUpdateRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		for (var i : list "1,2,3,4") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page${i}");
+		}
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			siteName = "test-site-name",
+			sourceURL = "test-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page4",
+			siteName = "test-site-name",
+			sourceURL = "test-page3");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.editEntry(
+			destinationURLEdit = "${portalURL}/web/test-site-name/test-page1",
+			redirectChain = "true",
+			sourceURL = "test-page3",
+			updateRedirect = "true");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page3");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page1");
+
+		for (var i : list "1,4") {
+			AssertElementNotPresent(
+				key_destinationURL = "${portalURL}/web/test-site-name/test-page${i}",
+				locator1 = "ContentRow#ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN");
+		}
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page3");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page2");
 	}
 
 	@description = "This ensures that the 404 URLs can be viewed after reactivating."

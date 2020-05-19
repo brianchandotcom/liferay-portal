@@ -176,7 +176,7 @@ public class ClassUtil {
 	public static URI getPathURIFromURL(URL url) {
 		String urlProtocol = url.getProtocol();
 
-		if (urlProtocol.equals("jar")) {
+		if (urlProtocol.equals("jar") || urlProtocol.equals("wsjar")) {
 			try {
 				url = new URL(url.getPath());
 			}

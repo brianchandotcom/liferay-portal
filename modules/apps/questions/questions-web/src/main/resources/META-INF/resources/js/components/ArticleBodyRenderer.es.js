@@ -37,7 +37,7 @@ export function getCKEditorConfig() {
 		autoGrow_onStartup: true,
 		codeSnippet_theme: 'monokai_sublime',
 		extraPlugins: 'autogrow,codesnippet',
-		readOnly:true,
+		readOnly: true,
 		removePlugins: 'elementspath',
 	};
 
@@ -46,10 +46,22 @@ export function getCKEditorConfig() {
 	return config;
 }
 
-export default ({articleBody, encodingFormat, id, signature}) => (
+export default ({
+	articleBody,
+	compactMode = false,
+	encodingFormat,
+	id,
+	signature,
+}) => (
 	<>
 		{encodingFormat === 'bbcode' && <p>{parser.toReact(articleBody)}</p>}
-		{encodingFormat !== 'bbcode' && (
+		{encodingFormat !== 'bbcode' && compactMode && (
+			<div
+				className={`questions-article-body-${id}`}
+				dangerouslySetInnerHTML={{__html: articleBody}}
+			/>
+		)}
+		{encodingFormat !== 'bbcode' && !compactMode && (
 			<div className={`cke_readonly questions-article-body-${id}`}>
 				<Editor
 					config={getCKEditorConfig()}

@@ -87,6 +87,7 @@ export default ({question}) => {
 				<ArticleBodyRenderer
 					{...question}
 					articleBody={stripHTML(question.articleBody)}
+					compactMode={true}
 				/>
 			</div>
 

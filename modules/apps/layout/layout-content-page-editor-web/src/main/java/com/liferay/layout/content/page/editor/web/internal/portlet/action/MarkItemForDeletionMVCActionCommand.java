@@ -22,12 +22,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Arrays;
-import java.util.Set;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -65,11 +64,11 @@ public class MarkItemForDeletionMVCActionCommand
 
 		return markItemForDeletion(
 			themeDisplay.getScopeGroupId(), itemId, themeDisplay.getPlid(),
-			SetUtil.fromList(Arrays.asList(portletIds)), segmentsExperienceId);
+			Arrays.asList(portletIds), segmentsExperienceId);
 	}
 
 	protected JSONObject markItemForDeletion(
-			long groupId, String itemId, long plid, Set<String> portletIds,
+			long groupId, String itemId, long plid, List<String> portletIds,
 			long segmentsExperienceId)
 		throws PortalException {
 

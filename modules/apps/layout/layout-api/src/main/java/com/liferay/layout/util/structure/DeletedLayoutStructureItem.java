@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Víctor Galán
@@ -31,15 +31,15 @@ public class DeletedLayoutStructureItem {
 	public static DeletedLayoutStructureItem of(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return new DeletedLayoutStructureItem(
-				StringPool.BLANK, Collections.emptySet());
+				StringPool.BLANK, Collections.emptyList());
 		}
 
 		return new DeletedLayoutStructureItem(
 			jsonObject.getString("itemId"),
-			JSONUtil.toStringSet(jsonObject.getJSONArray("portletIds")));
+			JSONUtil.toStringList(jsonObject.getJSONArray("portletIds")));
 	}
 
-	public DeletedLayoutStructureItem(String itemId, Set<String> portletIds) {
+	public DeletedLayoutStructureItem(String itemId, List<String> portletIds) {
 		_itemId = itemId;
 		_portletIds = portletIds;
 	}
@@ -68,7 +68,7 @@ public class DeletedLayoutStructureItem {
 		return _itemId;
 	}
 
-	public Set<String> getPortletIds() {
+	public List<String> getPortletIds() {
 		return _portletIds;
 	}
 
@@ -86,6 +86,6 @@ public class DeletedLayoutStructureItem {
 	}
 
 	private final String _itemId;
-	private final Set<String> _portletIds;
+	private final List<String> _portletIds;
 
 }

@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -375,7 +374,7 @@ public class LayoutStructure {
 	}
 
 	public void markLayoutStructureItemForDeletion(
-		String itemId, Set<String> portletIds) {
+		String itemId, List<String> portletIds) {
 
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);

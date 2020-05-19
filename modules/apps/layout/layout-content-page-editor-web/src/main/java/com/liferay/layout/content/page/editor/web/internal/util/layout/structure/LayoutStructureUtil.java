@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Víctor Galán
@@ -148,7 +147,8 @@ public class LayoutStructureUtil {
 		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
 				deletedLayoutStructureItems) {
 
-			Set<String> portletIds = deletedLayoutStructureItem.getPortletIds();
+			List<String> portletIds =
+				deletedLayoutStructureItem.getPortletIds();
 
 			if (portletIds.contains(portletId)) {
 				return true;

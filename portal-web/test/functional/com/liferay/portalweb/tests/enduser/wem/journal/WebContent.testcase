@@ -1249,6 +1249,8 @@ definition {
 
 		WebContentDisplayPortlet.saveConfiguration();
 
+		IFrame.closeFrame();
+
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");

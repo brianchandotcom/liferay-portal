@@ -833,6 +833,8 @@ definition {
 
 		WebContentDisplayPortlet.saveConfiguration();
 
+		IFrame.closeFrame();
+
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
@@ -896,6 +898,8 @@ definition {
 			userToolNameList = "Translations,Print");
 
 		WebContentDisplayPortlet.saveConfiguration();
+
+		IFrame.closeFrame();
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
@@ -1077,6 +1081,8 @@ definition {
 		WebContentDisplayPortlet.configureSetupPG(userToolNameList = "Translations");
 
 		WebContentDisplayPortlet.saveConfiguration();
+
+		IFrame.closeFrame();
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",

@@ -1,3 +1,5 @@
+$baseline: 24px;
+
 .ddm-form-builder {
 	transition: padding ease 0.5s;
 
@@ -16,6 +18,10 @@
 		padding: 0;
 	}
 
+	.ddm-empty-page {
+		margin: $baseline !important;
+		width: calc(100% - #{$baseline * 2}) !important;
+	}
 
 	.form-builder-layout {
 		padding: 0 !important;

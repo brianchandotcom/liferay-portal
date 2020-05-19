@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOGGLE_CARD_CHECKBOX</td>
-	<td>//label[contains(.,'${key_toggleCardLabel}')]//div[@class='card-body']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -37,23 +32,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--USER_TOOLS-->
-<tr>
-	<td>USER_TOOLS_SELECT_BUTTON</td>
-	<td>//button[contains(@id,'userTools') and normalize-space()='Select']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CONTENT_METADATA-->
-<tr>
-	<td>CONTENT_METADATA_SELECT</td>
-	<td>//button[contains(@id,'contentMetadata') and normalize-space()='Select']</td>
 	<td></td>
 </tr>
 </tbody>

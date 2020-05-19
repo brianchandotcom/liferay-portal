@@ -23,9 +23,8 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.model.LayoutClassedModelUsage;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -82,7 +81,7 @@ public class ContentUtil {
 		getLayoutMappedInfoDisplayObjectProviders(String layoutData) {
 
 		return _getLayoutMappedInfoDisplayObjectProviders(
-			layoutData, new HashSet<>());
+			LayoutStructure.of(layoutData), new HashSet<>());
 	}
 
 	public static Set<InfoDisplayObjectProvider>
@@ -387,27 +386,8 @@ public class ContentUtil {
 	}
 
 	private static Set<InfoDisplayObjectProvider>
-			_getLayoutMappedInfoDisplayObjectProviders(
-				long groupId, long plid, Set<Long> mappedClassPKs)
-		throws PortalException {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-					plid, false);
-
-		return _getLayoutMappedInfoDisplayObjectProviders(
-			layoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT),
-			mappedClassPKs);
-	}
-
-	private static Set<InfoDisplayObjectProvider>
 		_getLayoutMappedInfoDisplayObjectProviders(
-			String layoutData, Set<Long> mappedClassPKs) {
-
-		LayoutStructure layoutStructure = LayoutStructure.of(layoutData);
+			LayoutStructure layoutStructure, Set<Long> mappedClassPKs) {
 
 		Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
 			new HashSet<>();
@@ -439,6 +419,19 @@ public class ContentUtil {
 		}
 
 		return infoDisplayObjectProviders;
+	}
+
+	private static Set<InfoDisplayObjectProvider>
+			_getLayoutMappedInfoDisplayObjectProviders(
+				long groupId, long plid, Set<Long> mappedClassPKs)
+		throws PortalException {
+
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				groupId, plid, SegmentsExperienceConstants.ID_DEFAULT);
+
+		return _getLayoutMappedInfoDisplayObjectProviders(
+			layoutStructure, mappedClassPKs);
 	}
 
 	private static JSONObject _getPageContentJSONObject(

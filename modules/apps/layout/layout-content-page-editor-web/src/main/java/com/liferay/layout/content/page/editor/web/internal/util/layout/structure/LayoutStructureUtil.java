@@ -137,14 +137,8 @@ public class LayoutStructureUtil {
 			long segmentsExperienceId)
 		throws PortalException {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-					plid, true);
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+		LayoutStructure layoutStructure = getLayoutStructure(
+			groupId, plid, segmentsExperienceId);
 
 		List<DeletedLayoutStructureItem> deletedLayoutStructureItems =
 			layoutStructure.getDeletedLayoutStructureItems();
@@ -165,14 +159,8 @@ public class LayoutStructureUtil {
 			UnsafeConsumer<LayoutStructure, PortalException> unsafeConsumer)
 		throws PortalException {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-					plid, true);
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+		LayoutStructure layoutStructure = getLayoutStructure(
+			groupId, plid, segmentsExperienceId);
 
 		unsafeConsumer.accept(layoutStructure);
 

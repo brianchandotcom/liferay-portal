@@ -19,14 +19,11 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -83,14 +80,9 @@ public class DeleteItemMVCActionCommand
 			deletedFragmentEntryLinkIds.add(fragmentEntryLinkId);
 		}
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					groupId, _portal.getClassNameId(Layout.class.getName()),
-					plid, true);
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				groupId, plid, segmentsExperienceId);
 
 		return JSONUtil.put(
 			"deletedFragmentEntryLinkIds", deletedFragmentEntryLinkIds.toArray()
@@ -119,10 +111,6 @@ public class DeleteItemMVCActionCommand
 
 	@Reference
 	private ContentPageEditorListenerTracker _contentPageEditorListenerTracker;
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private Portal _portal;

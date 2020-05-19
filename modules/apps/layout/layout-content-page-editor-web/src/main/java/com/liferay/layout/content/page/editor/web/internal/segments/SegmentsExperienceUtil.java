@@ -18,7 +18,7 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -75,16 +75,14 @@ public class SegmentsExperienceUtil {
 			long userId)
 		throws PortalException {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					groupId, classNameId, classPK, true);
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				groupId, classPK, sourceSegmentsExperienceId);
 
 		JSONObject dataJSONObject = _updateLayoutDataJSONObject(
-			classNameId, classPK, commentManager,
-			layoutPageTemplateStructure.getData(sourceSegmentsExperienceId),
-			groupId, portletRegistry, sourceSegmentsExperienceId,
-			serviceContextFunction, targetSegmentsExperienceId, userId);
+			classNameId, classPK, commentManager, layoutStructure, groupId,
+			portletRegistry, sourceSegmentsExperienceId, serviceContextFunction,
+			targetSegmentsExperienceId, userId);
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructure(
@@ -198,13 +196,11 @@ public class SegmentsExperienceUtil {
 
 	private static JSONObject _updateLayoutDataJSONObject(
 			long classNameId, long classPK, CommentManager commentManager,
-			String data, long groupId, PortletRegistry portletRegistry,
-			long sourceSegmentsExperienceId,
+			LayoutStructure layoutStructure, long groupId,
+			PortletRegistry portletRegistry, long sourceSegmentsExperienceId,
 			Function<String, ServiceContext> serviceContextFunction,
 			long targetSegmentsExperienceId, long userId)
 		throws PortalException {
-
-		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.

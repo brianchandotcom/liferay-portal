@@ -56,11 +56,10 @@ import com.liferay.layout.content.page.editor.web.internal.constants.ContentPage
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutConverterTypeConstants;
@@ -406,7 +405,12 @@ public class ContentPageEditorDisplayContext {
 				"languageId",
 				LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 			).put(
-				"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
+				"layoutData",
+				() -> {
+					LayoutStructure layoutStructure = _getLayoutStructure();
+
+					return layoutStructure.toJSONObject();
+				}
 			).put(
 				"mappedInfoItems", _getMappedInfoItems()
 			).put(
@@ -1388,22 +1392,16 @@ public class ContentPageEditorDisplayContext {
 		return languageDirection;
 	}
 
-	private String _getLayoutData() throws Exception {
-		if (_layoutData != null) {
-			return _layoutData;
+	private LayoutStructure _getLayoutStructure() throws Exception {
+		if (_layoutStructure != null) {
+			return _layoutStructure;
 		}
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(),
-					PortalUtil.getClassNameId(Layout.class.getName()),
-					themeDisplay.getPlid(), true);
-
-		_layoutData = layoutPageTemplateStructure.getData(
+		_layoutStructure = LayoutStructureUtil.getLayoutStructure(
+			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 			getSegmentsExperienceId());
 
-		return _layoutData;
+		return _layoutStructure;
 	}
 
 	private Set<Map<String, Object>> _getMappedInfoItems() throws Exception {
@@ -1451,17 +1449,9 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		try {
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				LayoutPageTemplateStructureLocalServiceUtil.
-					fetchLayoutPageTemplateStructure(
-						getGroupId(),
-						PortalUtil.getClassNameId(Layout.class.getName()),
-						masterLayoutPageTemplateEntry.getPlid(), true);
-
-			String masterLayoutData = layoutPageTemplateStructure.getData(
+			_masterLayoutStructure = LayoutStructureUtil.getLayoutStructure(
+				getGroupId(), masterLayoutPageTemplateEntry.getPlid(),
 				SegmentsExperienceConstants.ID_DEFAULT);
-
-			_masterLayoutStructure = LayoutStructure.of(masterLayoutData);
 
 			return _masterLayoutStructure;
 		}
@@ -1877,7 +1867,7 @@ public class ContentPageEditorDisplayContext {
 	private Long _groupId;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
-	private String _layoutData;
+	private LayoutStructure _layoutStructure;
 	private LayoutStructure _masterLayoutStructure;
 	private Integer _pageType;
 	private final PortletRequest _portletRequest;

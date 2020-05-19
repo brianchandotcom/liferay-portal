@@ -29,8 +29,6 @@ import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -190,16 +188,10 @@ public class AddFragmentEntryLinkMVCActionCommand
 			contentPageEditorListener.onAddFragmentEntryLink(fragmentEntryLink);
 		}
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					themeDisplay.getPlid(), true);
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(
-				fragmentEntryLink.getSegmentsExperienceId()));
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				fragmentEntryLink.getSegmentsExperienceId());
 
 		return jsonObject.put("layoutData", layoutStructure.toJSONObject());
 	}
@@ -245,10 +237,6 @@ public class AddFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private Portal _portal;

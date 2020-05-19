@@ -474,8 +474,7 @@ public class DDMFormAdminDisplayContext {
 			formAdminRequestHelper.getRequest();
 
 		return LanguageUtil.get(
-			httpServletRequest,
-			"click-on-the-plus-button-to-add-the-first-one");
+			httpServletRequest, "create-forms-to-start-collecting-data");
 	}
 
 	public String getEmptyResultsMessage() {

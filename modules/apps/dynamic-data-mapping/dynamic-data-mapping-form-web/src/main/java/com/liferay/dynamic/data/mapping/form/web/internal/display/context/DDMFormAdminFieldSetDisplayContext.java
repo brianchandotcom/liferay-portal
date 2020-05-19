@@ -50,6 +50,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -182,6 +183,20 @@ public class DDMFormAdminFieldSetDisplayContext
 		return DropdownItemListBuilder.add(
 			getAddElementSetDropdownItem()
 		).build();
+	}
+
+	@Override
+	public String getEmptyResultMessageDescription() {
+		if (isSearch()) {
+			return StringPool.BLANK;
+		}
+
+		HttpServletRequest httpServletRequest =
+			formAdminRequestHelper.getRequest();
+
+		return LanguageUtil.get(
+			httpServletRequest,
+			"click-on-the-plus-button-to-add-the-first-one");
 	}
 
 	@Override

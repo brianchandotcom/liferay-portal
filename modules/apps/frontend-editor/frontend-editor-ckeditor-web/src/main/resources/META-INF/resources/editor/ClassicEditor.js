@@ -14,7 +14,7 @@
 
 import {useEventListener} from 'frontend-js-react-web';
 import {isPhone, isTablet} from 'frontend-js-web';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {Editor} from './Editor';
 
@@ -48,7 +48,7 @@ const ClassicEditor = ({
 		};
 	}, [editorConfig, toolbarSet]);
 
-	const getHTML = () => {
+	const getHTML = useCallback(() => {
 		let data = contents;
 
 		const editor = editorRef.current.editor;
@@ -56,24 +56,19 @@ const ClassicEditor = ({
 		if (editor && editor.instanceReady) {
 			data = editor.getData();
 
-			if (
-				CKEDITOR.env.gecko &&
-				CKEDITOR.tools.trim(data) === '<br />'
-			) {
+			if (CKEDITOR.env.gecko && CKEDITOR.tools.trim(data) === '<br />') {
 				data = '';
 			}
 		}
 
 		return data;
-	};
+	}, [contents]);
 
 	const onChangeCallback = () => {
 		const editor = editorRef.current.editor;
 
 		if (editor.checkDirty()) {
-			window[onChangeMethodName](
-				getHTML()
-			)
+			window[onChangeMethodName](getHTML());
 
 			editor.resetDirty();
 		}
@@ -90,7 +85,7 @@ const ClassicEditor = ({
 				return contents;
 			},
 		};
-	}, [contents, name]);
+	}, [contents, getHTML, name]);
 
 	useEventListener(
 		'resize',

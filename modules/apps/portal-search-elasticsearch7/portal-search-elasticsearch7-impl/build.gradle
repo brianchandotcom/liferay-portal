@@ -3,7 +3,7 @@ import com.liferay.gradle.util.StringUtil
 
 task cleanSidecar
 task deploySidecar(type: Copy)
-task deployTestSidecar(type: Copy)
+task deployTestSidecar
 task deployTestSidecarDependencies
 
 String elasticsearchVersion = "7.3.0"
@@ -14,7 +14,6 @@ String elasticsearchDownloadURL = "https://artifacts.elastic.co/downloads/elasti
 File elasticsearchDistributionFile = file("${buildDir}/${elasticsearchDownloadURL.drop(elasticsearchDownloadURL.lastIndexOf('/') + 1)}")
 
 File sidecarDeployDir = file("${project.'liferay.home'}/elasticsearch" + elasticsearchVersion.substring(0, 1))
-File sidecarTestDir = file("tmp/sidecar-elasticsearch")
 
 List<String> sidecarPluginURLs = [
 	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${elasticsearchVersion}.zip",
@@ -214,42 +213,15 @@ deploySidecar {
 }
 
 deployTestSidecar {
-	dependsOn cleanSidecar
-
-	description = "Assembles the Elasticsearch sidecar and deploys it to build test directory."
-	group = "build"
-
-	destinationDir = sidecarTestDir
-
-	enabled = !destinationDir.exists()
-
-	ext {
-		autoClean = false
-	}
-
-	from {
-		file("${buildDir}/elasticsearch-" + elasticsearchVersion)
-	}
-
-	doFirst {
-		FileUtil.get(project, elasticsearchDownloadURL, elasticsearchDistributionFile, false, true)
-
-		project.copy {
-			fileMode = 0777
-			includeEmptyDirs = false
-
-			exclude "elasticsearch-${elasticsearchVersion}/modules/ingest-geoip/**"
-			include "elasticsearch-${elasticsearchVersion}/lib/**"
-			include "elasticsearch-${elasticsearchVersion}/modules/**"
-
-			into buildDir
-			from tarTree(elasticsearchDistributionFile)
+	dependsOn {
+		deploySidecar {
+			destinationDir = file("tmp/sidecar-elasticsearch")
+			enabled = true
 		}
 	}
 
-	doLast {
-		logger.lifecycle "Deployed Elasticsearch Sidecar: {}", destinationDir
-	}
+	description = "Assembles the Elasticsearch sidecar and deploys it to build test directory."
+	group = "build"
 }
 
 deployTestSidecarDependencies {
@@ -318,8 +290,6 @@ private void _createPluginTasks(String elasticsearchVersion, List<String> sideca
 		}
 
 		deploySidecar.dependsOn installPluginTask
-
-		deployTestSidecar.dependsOn installPluginTask
 
 		installPluginTask.mustRunAfter cleanSidecar
 	}

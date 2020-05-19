@@ -3,7 +3,6 @@ import com.liferay.gradle.util.StringUtil
 
 task cleanSidecar
 task deploySidecar(type: Copy)
-task deployTestSidecar
 
 String elasticsearchVersion = "7.3.0"
 String luceneVersion = "8.1.0"
@@ -211,7 +210,13 @@ deploySidecar {
 	}
 }
 
-deployTestSidecar {
+processResources {
+	into("plugins") {
+		from configurations.elasticsearchPlugins
+	}
+}
+
+test {
 	dependsOn {
 		configurations.compileOnly
 
@@ -221,8 +226,7 @@ deployTestSidecar {
 		}
 	}
 
-	description = "Assembles the Elasticsearch sidecar and deploys it to build test directory."
-	group = "build"
+	forkEvery = 0
 
 	doFirst {
 		File libProcessExecutorDir = file("tmp/lib-process-executor")
@@ -242,18 +246,6 @@ deployTestSidecar {
 			from configurations.compileOnly
 		}
 	}
-}
-
-processResources {
-	into("plugins") {
-		from configurations.elasticsearchPlugins
-	}
-}
-
-test {
-	dependsOn deployTestSidecar
-
-	forkEvery = 0
 }
 
 _createPluginTasks(elasticsearchVersion, sidecarPluginURLs)

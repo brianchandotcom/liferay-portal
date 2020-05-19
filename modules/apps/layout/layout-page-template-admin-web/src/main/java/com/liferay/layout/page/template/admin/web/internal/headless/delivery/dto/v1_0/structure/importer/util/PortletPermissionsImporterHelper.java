@@ -16,11 +16,14 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -94,6 +97,17 @@ public class PortletPermissionsImporterHelper {
 				continue;
 			}
 
+			Group group = _groupLocalService.getGroup(layout.getGroupId());
+
+			if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) &&
+				!group.isOrganization()) {
+
+				warningMessages.add(
+					_getWarningMessage(layout.getGroupId(), roleKey));
+
+				continue;
+			}
+
 			List<ResourceAction> resourceActions =
 				_resourceActionLocalService.getResourceActions(portletName);
 
@@ -158,6 +172,9 @@ public class PortletPermissionsImporterHelper {
 			"role-with-key-x-was-ignored-because-it-does-not-exist",
 			new String[] {roleKey});
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

@@ -11,8 +11,6 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 	}
 
 	tearDown {
@@ -34,9 +32,11 @@ definition {
 	test AddPageFromExistingPage {
 		property testray.component.names = "Training";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page");
 
-		SitePages.addPublicPage(pageName = "Site Page");
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		SitePages.addPublicPage(
 			pageName = "Site Page Name",
@@ -138,6 +138,8 @@ definition {
 				parentLayoutName = "Site Page");
 		}
 
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
 		for (var childPageName : list "Site Child Page 1,Site Child Page 2,Site Child Page 3") {
 			Page.view(
 				depth = "2",
@@ -236,38 +238,23 @@ definition {
 			pageName = "Site Page Name",
 			siteName = "Test Site Name");
 
-		Portlet.addPG(portletName = "Web Content Display");
-
 		Page.viewPageLayout(pageLayout = "2 Column (30/70)");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Site Page Name",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Test Site Name");
-
-		Page.viewPageLayout(pageLayout = "1 Column");
-
-		for (var columnName : list "1-2-1 Columns (50/50),1-2-1 Columns (70/30),2 Columns (50/50),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),2-2 Columns,1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,3-2-3 Columns") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			SitePages.configurePage(
-				columnName = "${columnName}",
-				pageName = "Site Page Name",
-				privacy = "Public Pages",
-				sitePageType = "Widget Page");
+		for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,2-2 Columns,3-2-3 Columns") {
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name",
+				layoutTemplate = "${layoutTemplate}");
 
 			Navigator.gotoSitePage(
 				pageName = "Site Page Name",
 				siteName = "Test Site Name");
 
-			Portlet.viewPG(portletName = "Web Content Display");
+			Pause(locator1 = "3000");
+
+			Navigator.gotoEditPageViaControlMenu(pageName = "Site Page Name");
+
+			Page.viewSelectedLayoutColumn(columnName = "${layoutTemplate}");
 		}
 	}
 
@@ -309,17 +296,14 @@ definition {
 			pageName = "Site Page Edit",
 			privacy = "Public Pages");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
 
-		SitePages.addPublicPage(
-			pageName = "Test Page",
-			sitePageType = "Widget Page");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Test Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			layoutTemplate = "1 Column");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -390,21 +374,13 @@ definition {
 	test ViewNoInfoMessageWhenChangingSiteTemplateAsUser {
 		property testray.component.names = "Site and Page Templates,Site Pages Administration";
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -417,17 +393,9 @@ definition {
 
 		Site.addCommunityCP(siteName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
 
 		User.firstLoginPG(
 			password = "test",
@@ -445,11 +413,10 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(
-			pageName = "Home",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Home",
+			widgetName = "Blogs");
 
 		User.firstLoginPG(
 			password = "test",

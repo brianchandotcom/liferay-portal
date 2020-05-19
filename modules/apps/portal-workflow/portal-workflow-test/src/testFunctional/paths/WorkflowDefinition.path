@@ -50,6 +50,17 @@
 	<td>//div[contains(@class,'modal-body')]</td>
 	<td></td>
 </tr>
+<!--DUPLICATE_MODAL-->
+<tr>
+	<td>DUPLICATE_WORKFLOW_NEW_NAME</td>
+	<td>//input[@placeholder='Copy of ${key_duplicateName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DUPLICATE_BUTTON_MODAL</td>
+	<td>//button[contains(text(),'Duplicate')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

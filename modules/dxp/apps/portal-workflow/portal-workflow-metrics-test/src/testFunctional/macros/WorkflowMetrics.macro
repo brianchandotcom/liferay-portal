@@ -443,6 +443,154 @@ definition {
 		}
 	}
 
+	macro assertBulkCount {
+		Click(
+			key_rowNumber = "1",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ROW");
+
+		AssertTextEquals(
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECTED_TEXT",
+			value1 = "1 of 3 Selected");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+	}
+
+	macro assertBulkModalTable {
+		echo("Checking table");
+
+		AssertTextEquals(
+			key_columnName = "ID",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "ID");
+
+		AssertElementPresent(
+			key_columnName = "Item Subject",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK");
+
+		AssertElementPresent(
+			key_columnName = "Process Step",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK");
+
+		AssertElementPresent(
+			key_columnName = "Current Assignee",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK");
+	}
+
+	macro bulkReassignExceptionsSetup {
+		Workflow.duplicateSingleApproverWorkflow(key_workflowName = "Single Approver Alternative");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver Alternative",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.createAlternativeInstances(
+			numberOfBlogInstances = "3",
+			numberOfUsers = "3");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 3",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+	}
+
+	macro bulkReassignSetup {
+
+		WorkflowMetrics.createUsersAndInstancesWithGroovy(
+			numberOfBlogInstances = "3",
+			numberOfUsers = "3");
+	}
+
+	macro checkWorkflowTaskCrossover {
+		AssertElementNotPresent(
+			key_itemName = "Blogs Alternative",
+			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
+	}
+
+	macro createAlternativeInstances {
+		var iterator = "1";
+		var numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "1");
+
+		while ("${iterator}" != "${numberOfBlogInstances}") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Alternative Entry ${iterator} Content",
+				entryTitle = "Blogs Alternative Title ${iterator}");
+
+			var iterator = MathUtil.sum("${iterator}", "1");
+		}
+	}
+
+	macro createUsersAndInstancesWithGroovy {
+		var iterator = "1";
+		var numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "1");
+
+		WorkflowMetrics.createUsersGroovy(numberOfUsers = "${numberOfUsers}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		while ("${iterator}" != "${numberOfBlogInstances}") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${iterator} Content",
+				entryTitle = "Blogs Entry Title ${iterator}");
+
+			var iterator = MathUtil.sum("${iterator}", "1");
+		}
+	}
+
+	macro goToBulkReassignSelectNewAssignee {
+		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
+		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
+	}
+
+	macro goToBulkReassignSelectTasks {
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+		Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
+	}
+
+	macro goToWorkflowAllItems {
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+	}
+
+	macro selectNewAssigneeBulkTask {
+		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
+		Click(locator1 = "WorkflowReassignModal#BULK_NEW_ASSIGNEE");
+		Click(
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
+			key_nameOfAssignee = "${nameOfAssignee}");
+		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
+	}
+
 	macro selectWorkloadByAssigneeCardFilterValueProcessStep {
 		var key_workflowStep = "${workflowStep}";
 

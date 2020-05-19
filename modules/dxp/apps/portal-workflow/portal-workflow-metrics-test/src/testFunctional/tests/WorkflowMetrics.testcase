@@ -40,6 +40,8 @@ definition {
 
 		WorkflowMetrics.tearDown();
 
+		Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Single Approver Alternative");
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -994,6 +996,7 @@ definition {
 	}
 
 	@description = "LRQA-55450 [Performance] Search assignees in the performance of all assignees screen"
+	@priority = "5"
 	test SearchPerformanceOfAllAssignees {
 		property portal.upstream = "true";
 
@@ -1070,6 +1073,7 @@ definition {
 	}
 
 	@description = "LRQA-53647 Automate LPS-86638: [Reports] See a list of reports available for all running processes"
+	@priority = "5"
 	test SeeListOfReports {
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#SeeListOfReports";
@@ -1303,6 +1307,7 @@ definition {
 	}
 
 	@description = "LRQA-53639 - Automate LPS-100675"
+	@priority = "5"
 	test VerifyFilterTopStepPerformance {
 
 		var key_testSLADefinitionDays = "0";
@@ -1393,6 +1398,7 @@ definition {
 	}
 
 	@description = "LRQA-53654 Automate LPS-88968: [Reports] View the summary of all pending items and what's their SLA status"
+	@priority = "5"
 	test ViewPendingItems {
 		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
@@ -1611,6 +1617,7 @@ definition {
 	}
 
 	@description = "LRQA-53659 Automate LPS-86652 [Reports] View all items for a certain process"
+	@priority = "5"
 	test ViewReports {
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewReports";
 
@@ -1735,6 +1742,7 @@ definition {
 	}
 
 	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"
+	@priority = "5"
 	test ViewTopAsigneePerformance {
 		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
@@ -1962,6 +1970,78 @@ definition {
 			isNotPresent = "1user user1,2user user2",
 			isPresent = "Blogs Entry Title 3",
 			taskName = "Review");
+	}
+
+	@description = "Automate LPS-102664: [Dashboard] Bulk reassign workflow instances"
+	@priority = "4"
+	test BulkReassignWorkflowInstances {
+		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowInstances";
+
+		WorkflowMetrics.bulkReassignSetup();
+
+		WorkflowMetrics.goToWorkflowAllItems();
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
+		WorkflowMetrics.assertBulkModalTable();
+		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
+		WorkflowMetrics.assertBulkModalTable();
+		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
+		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+		WorkflowMetrics.selectNewAssigneeBulkTask(nameOfAssignee = "Test Test");
+		WorkflowMetrics.goToWorkflowAllItems();
+
+		AssertElementPresent(
+			key_workflowInstanceAssignee = "Test Test",
+			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 1",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		AssertElementPresent(
+			key_workflowInstanceAssignee = "Test Test",
+			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 2",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		AssertElementPresent(
+			key_workflowInstanceAssignee = "Test Test",
+			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 3",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 1",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 2",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 3",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+	}
+
+	@description = "LRQA-55451 Exceptions Check"
+	@priority = "4"
+	test BulkReassignWorkflowModalExceptions {
+		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowModalExceptions";
+
+		WorkflowMetrics.bulkReassignSetup();
+		WorkflowMetrics.bulkReassignExceptionsSetup();
+		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.assertBulkCount();
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.checkWorkflowTaskCrossover();
+		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
+		Click(
+			key_itemName = "Blogs Entry: Blogs Entry Title 1",
+			locator1 = "WorkflowReassignModal#NEW_ASSIGNEE");
+		AssertElementNotPresent(
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
+			key_nameOfAssignee = "Test Test");
+		Type(
+			key_itemName = "Blogs Entry: Blogs Entry Title 1",
+			locator1 = "WorkflowReassignModal#NEW_ASSIGNEE",
+			value1 = "Test");
+		AssertElementPresent(
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
+			key_nameOfAssignee = "No results found.");
 	}
 
 }

@@ -9,6 +9,31 @@
 </thead>
 <tbody>
 <tr>
+	<td>WORKFLOW_ALL_ITEMS_SELECT_ALL</td>
+	<td>//li[@class='nav-item ml-2']//label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEBAB_DROPDOWN</td>
+	<td>xpath=(//button[contains(@class, 'dropdown-toggle component-action btn btn-monospaced btn-unstyled')])[${task}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REASSIGN_TASK_DROPDOWN</td>
+	<td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Reassign Task')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_SELECT_ROW</td>
+	<td>//tr['${key_rowNumber}']//label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_SELECTED_TEXT</td>
+	<td>//span[@class='ml-0 mr-0 navbar-text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAIL_PAGE_ASSET_TITLE</td>
 	<td>//div[contains(@class,'modal-body')]/p[@class='row'][contains(.,'Asset Title')]/span[2]</td>
 	<td></td>

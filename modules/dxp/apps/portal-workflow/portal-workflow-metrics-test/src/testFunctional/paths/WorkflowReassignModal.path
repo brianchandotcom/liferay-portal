@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>WorkflowReassignModal</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowReassignModal</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>BULK_REASSIGN_MODAL</td>
+	<td>//div[@data-testid="bulkReassignModal"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ALL</td>
+	<td>xpath=(//div[@data-testid="bulkReassignModal"]//label)</td>
+	<td></td>
+</tr>S
+<tr>
+	<td>NEXT_BUTTON</td>
+	<td>//button[@data-testid="nextButton"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_BUTTON_DISABLED</td>
+	<td>//button[@data-testid="nextButton" and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEM_SUBJECT_CHECK</td>
+	<td>//div[@class='modal-body']//td[contains(text(),"${key_itemName}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_ASSIGNEE</td>
+	<td>//div[@class='modal-body']//td[contains(text(),'${key_itemName}')]/following-sibling::td[3]/div/div/div/div/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLUMN_CHECK</td>
+	<td>xpath=(//th[contains(text(), "${key_columnName}")] | //td[contains(text(), "${key_columnName}")])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ASSIGNEE</td>
+	<td>//input[@placeholder='Search for an Assignee']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BULK_NEW_ASSIGNEE</td>
+	<td>//input[contains(@placeholder,'Search for an Assignee')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN</td>
+	<td>//div[contains(@class,'show')]/ul/li/span[contains(text(),'${key_nameOfAssignee}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_TOOLTIP</td>
+	<td>//td[contains(text(),'New Assignee')]//*[local-name()='svg']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

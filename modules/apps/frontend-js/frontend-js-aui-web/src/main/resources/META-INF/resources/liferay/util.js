@@ -1522,20 +1522,19 @@
 					var assetGroupId = item.attr('data-groupid');
 
 					if (assetGroupId) {
-						assetEntryId =  assetGroupId + '-' + assetEntryId;
-					}	
+						assetEntryId = assetGroupId + '-' + assetEntryId;
+					}
 
-					var assetEntryIndex = selectedData.indexOf(
-						assetEntryId
-					);
+					var assetEntryIndex = selectedData.indexOf(assetEntryId);
 
 					if (assetEntryIndex > -1) {
 						item.attr('data-prevent-selection', true);
 						item.attr('disabled', true);
-					} else {
+					}
+					else {
 						item.removeAttribute('data-prevent-selection');
-						item.removeAttribute('disabled'); 
-						item.removeClass('disabled')
+						item.removeAttribute('disabled');
+						item.removeClass('disabled');
 					}
 				});
 			};
@@ -1572,10 +1571,7 @@
 							['destroy', 'visibleChange'],
 							detachSelectionOnHideFn
 						),
-						dialogWindow.iframe.after(
-							['load'],
-							syncAssets
-						)
+						dialogWindow.iframe.after(['load'], syncAssets)
 					);
 
 					Liferay.on('destroyPortlet', destroyDialog);

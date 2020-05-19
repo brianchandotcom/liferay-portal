@@ -85,14 +85,9 @@ public class URLSiteNavigationMenuItemType
 			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale()));
 
 		String defaultTitle = typeSettingsUnicodeProperties.getProperty(
-			"name", getLabel(locale));
-
-		defaultTitle = typeSettingsUnicodeProperties.getProperty(
-			"name_" + LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-			defaultTitle);
-
-		defaultTitle = typeSettingsUnicodeProperties.getProperty(
-			"name_" + defaultLanguageId, defaultTitle);
+			"name_" + defaultLanguageId,
+			typeSettingsUnicodeProperties.getProperty(
+				"name", getLabel(locale)));
 
 		return typeSettingsUnicodeProperties.getProperty(
 			"name_" + LocaleUtil.toLanguageId(locale), defaultTitle);

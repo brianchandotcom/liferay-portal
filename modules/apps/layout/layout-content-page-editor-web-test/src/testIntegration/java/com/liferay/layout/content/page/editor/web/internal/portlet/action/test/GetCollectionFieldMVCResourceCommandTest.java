@@ -25,6 +25,7 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -56,6 +57,9 @@ import com.liferay.registry.ServiceRegistration;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,6 +67,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Víctor Galán
@@ -120,8 +127,13 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
-			new Class<?>[] {String.class, Locale.class, long.class, int.class},
-			layoutObjectReferenceJSONObject.toString(), LocaleUtil.US, 0, 1);
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class,
+				String.class, String.class, Locale.class, long.class, int.class
+			},
+			new MockHttpServletRequest(), new MockHttpServletResponse(),
+			layoutObjectReferenceJSONObject.toString(), StringPool.BLANK,
+			LocaleUtil.US, 0, 1);
 
 		Assert.assertEquals(1, jsonObject.getInt("length"));
 
@@ -159,8 +171,13 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
-			new Class<?>[] {String.class, Locale.class, long.class, int.class},
-			layoutObjectReferenceJSONObject.toString(), LocaleUtil.US, 0, 2);
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class,
+				String.class, String.class, Locale.class, long.class, int.class
+			},
+			new MockHttpServletRequest(), new MockHttpServletResponse(),
+			layoutObjectReferenceJSONObject.toString(), StringPool.BLANK,
+			LocaleUtil.US, 0, 2);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 
@@ -204,8 +221,13 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
-			new Class<?>[] {String.class, Locale.class, long.class, int.class},
-			layoutObjectReferenceJSONObject.toString(), LocaleUtil.US, 0, 1);
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class,
+				String.class, String.class, Locale.class, long.class, int.class
+			},
+			new MockHttpServletRequest(), new MockHttpServletResponse(),
+			layoutObjectReferenceJSONObject.toString(), StringPool.BLANK,
+			LocaleUtil.US, 0, 1);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 

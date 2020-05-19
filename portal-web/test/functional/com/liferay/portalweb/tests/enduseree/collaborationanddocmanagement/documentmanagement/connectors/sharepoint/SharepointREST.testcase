@@ -3,6 +3,7 @@ definition {
 
 	property osgi.app.includes = "sharepoint-rest";
 	property portal.ssl.enabled = "true";
+	property portal.release = "false";
 	property portal.upstream = "false";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Documents Management";

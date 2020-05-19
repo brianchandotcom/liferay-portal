@@ -57,7 +57,7 @@ public class CompanyModelListenerTest {
 
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			_defaultUser.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), null, null,
+			RandomTestUtil.randomString(50), null, null, null,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 	}

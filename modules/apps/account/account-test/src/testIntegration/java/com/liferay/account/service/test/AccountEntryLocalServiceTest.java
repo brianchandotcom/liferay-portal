@@ -102,7 +102,7 @@ public class AccountEntryLocalServiceTest {
 			TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			null, null, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		_accountEntries.add(accountEntry);
 
@@ -606,7 +606,7 @@ public class AccountEntryLocalServiceTest {
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), parentAccountEntryId,
 			RandomTestUtil.randomString(50), RandomTestUtil.randomString(50),
-			null, null, WorkflowConstants.STATUS_APPROVED,
+			null, null, null, WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 
 		_accountEntries.add(accountEntry);

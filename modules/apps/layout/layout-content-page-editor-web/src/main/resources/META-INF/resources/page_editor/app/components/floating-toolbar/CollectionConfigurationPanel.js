@@ -38,10 +38,12 @@ function collectionIsMapped(collectionConfig) {
 	return collectionConfig.collection;
 }
 
+const LIST_STYLE_GRID = '';
+
 const DEFAULT_LIST_STYLES = [
 	{
 		label: Liferay.Language.get('grid'),
-		value: '',
+		value: LIST_STYLE_GRID,
 	},
 ];
 
@@ -140,7 +142,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 						</ClayForm.Group>
 					)}
 
-					{item.config.listStyle === '' && (
+					{item.config.listStyle === LIST_STYLE_GRID && (
 						<ClayForm.Group small>
 							<label htmlFor={collectionLayoutId}>
 								{Liferay.Language.get('layout')}

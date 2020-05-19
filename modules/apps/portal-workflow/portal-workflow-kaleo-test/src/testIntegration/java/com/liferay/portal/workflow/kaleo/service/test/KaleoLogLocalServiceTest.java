@@ -17,9 +17,10 @@ package com.liferay.portal.workflow.kaleo.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
@@ -44,6 +45,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Rafael Praxedes
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 
@@ -68,7 +70,8 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 				TestPropsValues.getCompanyId(),
 				kaleoInstance.getKaleoInstanceId(), null, 0, 10,
 				KaleoLogOrderByComparator.getOrderByComparator(
-					WorkflowComparatorFactoryUtil.getLogCreateDateComparator(),
+					_workflowComparatorFactory.getLogCreateDateComparator(
+						false),
 					_kaleoWorkflowModelConverter));
 
 		Assert.assertEquals(kaleoLogs.toString(), 2, kaleoLogs.size());
@@ -84,7 +87,7 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 			},
 			0, 10,
 			KaleoLogOrderByComparator.getOrderByComparator(
-				WorkflowComparatorFactoryUtil.getLogCreateDateComparator(),
+				_workflowComparatorFactory.getLogCreateDateComparator(false),
 				_kaleoWorkflowModelConverter));
 
 		Assert.assertEquals(kaleoLogs.toString(), 1, kaleoLogs.size());
@@ -145,7 +148,8 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(), null, 0,
 				10,
 				KaleoLogOrderByComparator.getOrderByComparator(
-					WorkflowComparatorFactoryUtil.getLogCreateDateComparator(),
+					_workflowComparatorFactory.getLogCreateDateComparator(
+						false),
 					_kaleoWorkflowModelConverter));
 
 		Assert.assertEquals(kaleoLogs.toString(), 2, kaleoLogs.size());
@@ -161,7 +165,7 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 			},
 			0, 10,
 			KaleoLogOrderByComparator.getOrderByComparator(
-				WorkflowComparatorFactoryUtil.getLogCreateDateComparator(),
+				_workflowComparatorFactory.getLogCreateDateComparator(false),
 				_kaleoWorkflowModelConverter));
 
 		Assert.assertEquals(kaleoLogs.toString(), 1, kaleoLogs.size());
@@ -201,5 +205,8 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 
 	@Inject(type = KaleoWorkflowModelConverter.class)
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
+
+	@Inject
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 }

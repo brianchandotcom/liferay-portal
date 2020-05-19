@@ -16,11 +16,13 @@ package com.liferay.portal.workflow.kaleo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -31,6 +33,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Inácio Nery
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class KaleoDefinitionLocalServiceTest
 	extends BaseKaleoLocalServiceTestCase {
@@ -71,7 +74,7 @@ public class KaleoDefinitionLocalServiceTest
 
 		deleteKaleoDefinition(kaleoDefinition);
 
-		KaleoDefinitionLocalServiceUtil.getKaleoDefinition(
+		_kaleoDefinitionLocalService.getKaleoDefinition(
 			kaleoDefinition.getKaleoDefinitionId());
 	}
 
@@ -85,5 +88,8 @@ public class KaleoDefinitionLocalServiceTest
 
 		Assert.assertEquals(2, kaleoDefinition.getVersion());
 	}
+
+	@Inject
+	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
 }

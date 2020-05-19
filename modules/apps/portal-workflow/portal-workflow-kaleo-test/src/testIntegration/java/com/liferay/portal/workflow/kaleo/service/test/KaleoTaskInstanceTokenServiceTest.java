@@ -16,11 +16,13 @@ package com.liferay.portal.workflow.kaleo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -32,6 +34,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Jorge Díaz
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class KaleoTaskInstanceTokenServiceTest
 	extends BaseKaleoLocalServiceTestCase {
@@ -48,7 +51,7 @@ public class KaleoTaskInstanceTokenServiceTest
 		try {
 			user = UserTestUtil.addUser();
 
-			RoleLocalServiceUtil.clearUserRoles(user.getUserId());
+			_roleLocalService.clearUserRoles(user.getUserId());
 
 			int count = kaleoTaskInstanceTokenLocalService.searchCount(
 				RandomTestUtil.randomString(), RandomTestUtil.randomStrings(10),
@@ -57,8 +60,14 @@ public class KaleoTaskInstanceTokenServiceTest
 			Assert.assertEquals(0, count);
 		}
 		finally {
-			UserLocalServiceUtil.deleteUser(user);
+			_userLocalService.deleteUser(user);
 		}
 	}
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

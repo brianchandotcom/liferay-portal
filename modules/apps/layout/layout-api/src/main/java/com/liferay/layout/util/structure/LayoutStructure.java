@@ -91,17 +91,16 @@ public class LayoutStructure {
 				deletedLayoutStructureItems = new HashMap<>(
 					deletedLayoutStructureItemJSONArray.length());
 
-			for (int i = 0; i < deletedLayoutStructureItemJSONArray.length();
-				 i++) {
+			deletedLayoutStructureItemJSONArray.forEach(
+				deletedLayoutStructureItemJSONObject -> {
+					DeletedLayoutStructureItem deletedLayoutStructureItem =
+						DeletedLayoutStructureItem.of(
+							(JSONObject)deletedLayoutStructureItemJSONObject);
 
-				DeletedLayoutStructureItem deletedLayoutStructureItem =
-					DeletedLayoutStructureItem.of(
-						deletedLayoutStructureItemJSONArray.getJSONObject(i));
-
-				deletedLayoutStructureItems.put(
-					deletedLayoutStructureItem.getItemId(),
-					deletedLayoutStructureItem);
-			}
+					deletedLayoutStructureItems.put(
+						deletedLayoutStructureItem.getItemId(),
+						deletedLayoutStructureItem);
+				});
 
 			return new LayoutStructure(
 				deletedLayoutStructureItems, fragmentLayoutStructureItems,

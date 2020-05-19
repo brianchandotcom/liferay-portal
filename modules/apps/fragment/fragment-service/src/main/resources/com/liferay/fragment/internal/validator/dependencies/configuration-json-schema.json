@@ -177,22 +177,39 @@
 		"fieldColorPalette": {
 			"properties": {
 				"defaultValue": {
-					"additionalProperties": false,
-					"properties": {
-						"cssClass": {
-							"title": "The CssClass Schema",
-							"type": "string"
+					"anyOf": [
+						{
+							"additionalProperties": false,
+							"properties": {
+								"color": {
+									"title": "The Color Schema",
+									"type": "string"
+								}
+							},
+							"required": [
+								"color"
+							],
+							"title": "The DefaultValue Schema"
 						},
-						"rgbValue": {
-							"title": "The CssClass Schema",
-							"type": "string"
+						{
+							"additionalProperties": false,
+							"properties": {
+								"cssClass": {
+									"title": "The CssClass Schema",
+									"type": "string"
+								},
+								"rgbValue": {
+									"title": "The RgbValue Schema",
+									"type": "string"
+								}
+							},
+							"required": [
+								"cssClass",
+								"rgbValue"
+							],
+							"title": "The DefaultValue Schema"
 						}
-					},
-					"required": [
-						"cssClass",
-						"rgbValue"
-					],
-					"title": "The DefaultValue Schema"
+					]
 				}
 			}
 		},

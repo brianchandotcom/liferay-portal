@@ -49,9 +49,9 @@ public class FileEntryBasicListInfoListRenderer
 
 		InfoListBasicListTag infoListBasicListTag = new InfoListBasicListTag();
 
+		infoListBasicListTag.setInfoListObjects(fileEntries);
 		infoListBasicListTag.setItemRendererKey(
 			FileEntryTitleInfoItemRenderer.class.getName());
-		infoListBasicListTag.setInfoListObjects(fileEntries);
 
 		try {
 			infoListBasicListTag.doTag(httpServletRequest, httpServletResponse);

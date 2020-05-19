@@ -49,9 +49,9 @@ public class JournalArticleBasicListInfoListRenderer
 
 		InfoListBasicListTag infoListBasicListTag = new InfoListBasicListTag();
 
+		infoListBasicListTag.setInfoListObjects(articles);
 		infoListBasicListTag.setItemRendererKey(
 			JournalArticleAbstractInfoItemRenderer.class.getName());
-		infoListBasicListTag.setInfoListObjects(articles);
 
 		try {
 			infoListBasicListTag.doTag(httpServletRequest, httpServletResponse);

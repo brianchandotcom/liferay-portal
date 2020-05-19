@@ -49,9 +49,9 @@ public class BlogsEntryBasicListInfoListRenderer
 
 		InfoListBasicListTag infoListBasicListTag = new InfoListBasicListTag();
 
+		infoListBasicListTag.setInfoListObjects(blogsEntries);
 		infoListBasicListTag.setItemRendererKey(
 			BlogsEntryAbstractInfoItemRenderer.class.getName());
-		infoListBasicListTag.setInfoListObjects(blogsEntries);
 
 		try {
 			infoListBasicListTag.doTag(httpServletRequest, httpServletResponse);

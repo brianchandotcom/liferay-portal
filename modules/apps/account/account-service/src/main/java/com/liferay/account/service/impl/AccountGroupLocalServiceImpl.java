@@ -14,8 +14,11 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,10 +42,56 @@ import org.osgi.service.component.annotations.Component;
 public class AccountGroupLocalServiceImpl
 	extends AccountGroupLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.account.service.AccountGroupLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountGroupLocalServiceUtil</code>.
-	 */
+	@Override
+	public AccountGroup addAccountGroup(
+			long userId, String name, String description)
+		throws PortalException {
+
+		long accountGroupId = counterLocalService.increment();
+
+		AccountGroup accountGroup = accountGroupPersistence.create(
+			accountGroupId);
+
+		User user = userLocalService.getUser(userId);
+
+		accountGroup.setCompanyId(user.getCompanyId());
+		accountGroup.setUserId(user.getUserId());
+		accountGroup.setUserName(user.getFullName());
+
+		accountGroup.setName(name);
+		accountGroup.setDescription(description);
+
+		return accountGroupPersistence.update(accountGroup);
+	}
+
+	@Override
+	public AccountGroup deleteAccountGroup(AccountGroup accountGroup) {
+		return super.deleteAccountGroup(accountGroup);
+	}
+
+	@Override
+	public AccountGroup deleteAccountGroup(long accountGroupId)
+		throws PortalException {
+
+		return deleteAccountGroup(getAccountGroup(accountGroupId));
+	}
+
+	@Override
+	public AccountGroup updateAccountGroup(
+			long accountGroupId, long userId, String name, String description)
+		throws PortalException {
+
+		AccountGroup accountGroup = accountGroupPersistence.fetchByPrimaryKey(
+			accountGroupId);
+
+		User user = userLocalService.getUser(userId);
+
+		accountGroup.setCompanyId(user.getCompanyId());
+
+		accountGroup.setName(name);
+		accountGroup.setDescription(description);
+
+		return accountGroupPersistence.update(accountGroup);
+	}
 
 }

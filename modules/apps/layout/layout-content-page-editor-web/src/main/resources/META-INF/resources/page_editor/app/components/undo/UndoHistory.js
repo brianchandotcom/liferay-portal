@@ -12,10 +12,13 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {PAGE_TYPES} from '../../config/constants/pageTypes';
+import {config} from '../../config/index';
 import {useDispatch, useSelector} from '../../store/index';
 import multipleUndo from '../../thunks/multipleUndo';
 import {ACTION_TYPE_LABELS} from './actionTypeLabels';
@@ -27,7 +30,36 @@ export default function UndoHistory() {
 
 	const [items, setItems] = useState([]);
 
+	const [enableDiscard, setEnableDiscard] = useState(false);
+
+	const {layoutData, network} = store;
+
+	useEffect(() => {
+		const isConversionPage = config.pageType === PAGE_TYPES.conversion;
+
+		setEnableDiscard(network.lastFetch || config.draft || isConversionPage);
+	}, [layoutData, network.lastFetch]);
+
 	const isSelectedAction = (index) => index === 0;
+
+	const handleDiscardDraft = (event) => {
+		if (
+			!confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+				)
+			)
+		) {
+			event.preventDefault();
+		}
+		else {
+			fetch(config.discardDraftURL, {
+				method: 'POST',
+			}).then(() => {
+				window.location = config.discardDraftRedirectURL;
+			});
+		}
+	};
 
 	useEffect(() => {
 		if (undoHistory) {
@@ -58,13 +90,26 @@ export default function UndoHistory() {
 			<ClayDropDownWithItems
 				alignmentPosition={Align.BottomRight}
 				className="mr-3"
+				footerContent={
+					<ClayButton
+						aria-label={Liferay.Language.get('original')}
+						className="dropdown-item"
+						displayType="unstyled"
+						onClick={handleDiscardDraft}
+					>
+						{Liferay.Language.get('original')}
+					</ClayButton>
+				}
 				items={items}
 				searchable={false}
 				trigger={
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('undo-history')}
 						className="btn-monospaced"
-						disabled={!undoHistory || !undoHistory.length}
+						disabled={
+							!enableDiscard &&
+							(!undoHistory || !undoHistory.length)
+						}
 						displayType="secondary"
 						small
 						symbol="time"

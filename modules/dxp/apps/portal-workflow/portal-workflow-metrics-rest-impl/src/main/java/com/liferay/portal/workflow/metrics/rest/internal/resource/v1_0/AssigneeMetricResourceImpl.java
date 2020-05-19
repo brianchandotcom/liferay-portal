@@ -450,7 +450,13 @@ public class AssigneeMetricResourceImpl
 				filterAggregationResult.getChildAggregationResult(
 					"durationTaskAvg");
 
-		return GetterUtil.getLong(avgAggregationResult.getValue());
+		double value = avgAggregationResult.getValue();
+
+		if (Double.isInfinite(value)) {
+			return 0L;
+		}
+
+		return GetterUtil.getLong(value);
 	}
 
 	private long _getTaskCount(Bucket bucket) {

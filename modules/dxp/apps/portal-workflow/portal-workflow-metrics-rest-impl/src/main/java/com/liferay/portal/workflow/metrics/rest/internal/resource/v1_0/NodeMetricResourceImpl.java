@@ -626,8 +626,13 @@ public class NodeMetricResourceImpl
 				filterAggregationResult.getChildAggregationResult(
 					"durationAvg");
 
-		nodeMetric.setDurationAvg(
-			GetterUtil.getLong(avgAggregationResult.getValue()));
+		double value = avgAggregationResult.getValue();
+
+		if (Double.isInfinite(value)) {
+			return;
+		}
+
+		nodeMetric.setDurationAvg(GetterUtil.getLong(value));
 	}
 
 	private void _setInstanceCount(Bucket bucket, NodeMetric nodeMetric) {

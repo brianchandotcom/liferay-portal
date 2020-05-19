@@ -14,7 +14,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANALYTICS_CLOUD_BUTTON</td>
+	<td>ANALYTICS_CLOUD_ADD_DATA_SOURCE_BUTTON</td>
+	<td>//*[contains(@class, 'button-root btn btn-primary nav-btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANALYTICS_CLOUD_DXP_BUTTON</td>
 	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-liferay-ac user-icon-sm')]</td>
 	<td></td>
 </tr>
@@ -34,8 +39,43 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANALYTICS_CLOUD_SETTINGS_BUTTON</td>
+	<td>//*[contains(@class, 'icon-root lexicon-icon lexicon-icon-cog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANALYTICS_CLOUD_TOKEN_INPUT</td>
+	<td>//input[contains(@class, 'input-root form-control text-truncate input-group-inset input-group-inset-after')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANALYTICS_CLOUD_CONNECT_WITH_TOKEN_BUTTON</td>
+	<td>//*[contains(@class, 'button-root btn btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECT_ANALYTICS_CLOUD_BUTTON</td>
+	<td>//button[contains(@id, '_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_tokenButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCONNECT_ANALYTICS_CLOUD_BUTTON</td>
+	<td>//button[contains(@id, '_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_tokenButton')] | //*[contains(@class, 'btn  btn-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DONE_BUTTON</td>
 	<td>//*[contains(@id, '_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_add-channel-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DXP_TOKEN_INPUT</td>
+	<td>//input[contains(@id, '_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_token')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FARO_WORKSPACE_BUTTON</td>
+	<td>//*[contains(@class, 'button-root btn btn-unstyled workspace-link border-button')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,8 +89,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INTRODUCING_PROPERTIES_NEXT_BUTTON</td>
+	<td>//*[contains(@class, 'wide btn btn-primary') and text()='Next']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIFERAY_DXP_COMBINED_PROPERTY</td>
 	<td>//*[contains(@class, 'table-cell-expand table-cell-content lfr-available-properties-column')]//span[@title='Liferay DXP Combined Property']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIFERAY_DXP_SOURCE</td>
+	<td>//*[contains(@class, 'icon-root lexicon-icon lexicon-icon-liferay-logo icon-size-xxxl')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,6 +111,11 @@
 <tr>
 	<td>NEW_PROPERTY_CANCEL_BUTTON</td>
 	<td>//*[contains(@class, 'lfr-btn-label') and text()='Cancel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKIP_FOR_NOW_BUTTON</td>
+	<td>//*[contains(@class, 'btn btn-secondary') and text()='Skip for Now']</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,8 +25,6 @@ definition {
 	}
 
 	test AssertCannotAddDuplicateQueriesAndAliases {
-		property test.name.skip.portal.instance = "SearchTuningES7#AssertCannotAddDuplicateQueriesAndAliases";
-
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
@@ -87,8 +85,6 @@ definition {
 	}
 
 	test AssertDeletedResultRanking {
-		property test.name.skip.portal.instance = "SearchTuningES7#AssertDeletedResultRanking";
-
 		var content = "Article Article Article";
 
 		for (var title : list "Article 1,Article 2,Article 3") {
@@ -143,8 +139,6 @@ definition {
 
 	test AssertResultRankingsMiscUI {
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SearchTuningES7#AssertResultRankingsMiscUI";
-
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
@@ -224,8 +218,6 @@ definition {
 	test AssertResultRankingsWithSynonyms {
 		property portal.suite.search.engine = "disable";
 		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "SearchTuningES7#AssertResultRankingsWithSynonyms";
-
 		JSONWebcontent.addWebContent(
 			content = "Article Article Article Article",
 			groupName = "Guest",
@@ -483,8 +475,6 @@ definition {
 	}
 
 	test EnableAndDisableResultRankings {
-		property test.name.skip.portal.instance = "SearchTuningES7#EnableAndDisableResultRankings";
-
 		var content = "Article Article Article Article";
 
 		for (var count : list "1,2,3,4") {
@@ -632,8 +622,6 @@ definition {
 
 	test PinAndHideResultsWithAliases {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SearchTuningES7#PinAndHideResultsWithAliases";
-
 		JSONWebcontent.addWebContent(
 			content = "WC WC",
 			groupName = "Guest",
@@ -752,8 +740,6 @@ definition {
 	}
 
 	test ReorderAddedResultsFromOtherSites {
-		property test.name.skip.portal.instance = "SearchTuningES7#ReorderAddedResultsFromOtherSites";
-
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

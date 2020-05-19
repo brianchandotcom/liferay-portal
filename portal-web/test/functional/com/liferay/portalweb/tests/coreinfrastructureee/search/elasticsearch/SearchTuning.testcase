@@ -22,8 +22,6 @@ definition {
 	}
 
 	test AssertCannotAddDuplicateQueriesAndAliases {
-		property test.name.skip.portal.instance = "SearchTuning#AssertCannotAddDuplicateQueriesAndAliases";
-
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
@@ -84,8 +82,6 @@ definition {
 	}
 
 	test AssertDeletedResultRanking {
-		property test.name.skip.portal.instance = "SearchTuning#AssertDeletedResultRanking";
-
 		var content = "Article Article Article";
 
 		for (var title : list "Article 1,Article 2,Article 3") {
@@ -139,8 +135,6 @@ definition {
 	}
 
 	test AssertResultRankingsMiscUI {
-		property test.name.skip.portal.instance = "SearchTuning#AssertResultRankingsMiscUI";
-
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
@@ -218,8 +212,6 @@ definition {
 	}
 
 	test AssertResultRankingsWithSynonyms {
-		property test.name.skip.portal.instance = "SearchTuning#AssertResultRankingsWithSynonyms";
-
 		JSONWebcontent.addWebContent(
 			content = "Article Article Article Article",
 			groupName = "Guest",
@@ -477,8 +469,6 @@ definition {
 	}
 
 	test EnableAndDisableResultRankings {
-		property test.name.skip.portal.instance = "SearchTuning#EnableAndDisableResultRankings";
-
 		var content = "Article Article Article Article";
 
 		for (var count : list "1,2,3,4") {
@@ -626,8 +616,6 @@ definition {
 
 	test PinAndHideResultsWithAliases {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SearchTuning#PinAndHideResultsWithAliases";
-
 		JSONWebcontent.addWebContent(
 			content = "WC WC",
 			groupName = "Guest",
@@ -746,8 +734,6 @@ definition {
 	}
 
 	test ReorderAddedResultsFromOtherSites {
-		property test.name.skip.portal.instance = "SearchTuning#ReorderAddedResultsFromOtherSites";
-
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

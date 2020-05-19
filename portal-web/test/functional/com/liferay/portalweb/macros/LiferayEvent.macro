@@ -49,13 +49,10 @@ let __LFR_TRACKED_EVENTS__ = {};
 Liferay.on(TRACKED_EVENTS, function(event){
 	{
 		const eventLog = __LFR_TRACKED_EVENTS__[event.type]
-			? [...__LFR_TRACKED_EVENTS__[event.type], event]
+			? __LFR_TRACKED_EVENTS__[event.type].concat(event)
 			: [event];
 
-		__LFR_TRACKED_EVENTS__ = {
-			...__LFR_TRACKED_EVENTS__,
-			[event.type]: eventLog,
-		};
+		__LFR_TRACKED_EVENTS__[event.type] = eventLog
 	};
 });
 

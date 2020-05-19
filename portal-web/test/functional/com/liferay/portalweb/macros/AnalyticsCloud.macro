@@ -1,8 +1,6 @@
 definition {
 
 	macro loginAnalyticsCloud {
-		SelectWindow(locator1 = "title=Analytics Cloud");
-
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_USER_LOGIN_FIELD");
 
 		Type(
@@ -24,7 +22,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Instance Settings");
 
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_BUTTON");
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#DXP_TOKEN_INPUT");
+
+		Paste(locator1 = "AnalyticsCloudConnection#DXP_TOKEN_INPUT");
+
+		Click(locator1 = "AnalyticsCloudConnection#CONNECT_ANALYTICS_CLOUD_BUTTON");
 
 		Click(locator1 = "AnalyticsCloudConnection#SYNCED_SITES_BUTTON");
 
@@ -33,6 +37,37 @@ definition {
 		Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
 
 		Click(locator1 = "AnalyticsCloudConnection#DONE_BUTTON");
+	}
+
+	macro takeTokenFromAnalyticsCloud {
+		Click(locator1 = "AnalyticsCloudConnection#FARO_WORKSPACE_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#SKIP_FOR_NOW_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_SETTINGS_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_ADD_DATA_SOURCE_BUTTON");
+
+		Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_SOURCE");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECT_WITH_TOKEN_BUTTON");
+
+		Copy(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
+	}
+
+	macro teardownAnalyticsCloud {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
+
+		ClickNoError(locator1 = "AnalyticsCloudConnection#DISCONNECT_ANALYTICS_CLOUD_BUTTON");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to disconnect your Analytics Cloud workspace from this DXP instance?");
 	}
 
 }

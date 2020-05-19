@@ -113,24 +113,22 @@ export const CollectionConfigurationPanel = ({item}) => {
 			</ClayForm.Group>
 			{collectionIsMapped(item.config) && (
 				<>
-					{availableListStyles.length > 0 && (
-						<ClayForm.Group small>
-							<label htmlFor={listStyleId}>
-								{Liferay.Language.get('list-style')}
-							</label>
-							<ClaySelectWithOption
-								aria-label={Liferay.Language.get('list-style')}
-								id={listStyleId}
-								onChange={({target: {value}}) =>
-									handleConfigurationChanged({
-										listStyle: value,
-									})
-								}
-								options={setAvailableListStyles}
-								value={item.config.listStyle}
-							/>
-						</ClayForm.Group>
-					)}
+					<ClayForm.Group small>
+						<label htmlFor={listStyleId}>
+							{Liferay.Language.get('list-style')}
+						</label>
+						<ClaySelectWithOption
+							aria-label={Liferay.Language.get('list-style')}
+							id={listStyleId}
+							onChange={({target: {value}}) =>
+								handleConfigurationChanged({
+									listStyle: value,
+								})
+							}
+							options={availableListStyles}
+							value={item.config.listStyle}
+						/>
+					</ClayForm.Group>
 
 					{item.config.listStyle === LIST_STYLE_GRID && (
 						<ClayForm.Group small>

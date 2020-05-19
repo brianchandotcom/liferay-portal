@@ -25,20 +25,17 @@ import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.search.OpenSearchRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearchUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -157,12 +154,12 @@ public class SearchUtil {
 			PortletURL viewContentURL = renderResponse.createRenderURL();
 
 			viewContentURL.setParameter("mvcPath", "/view_content.jsp");
-			viewContentURL.setParameter("redirect", currentURL);
 			viewContentURL.setPortletMode(PortletMode.VIEW);
 			viewContentURL.setWindowState(WindowState.MAXIMIZED);
 
 			if (Validator.isNull(className) || (classPK <= 0)) {
-				return viewContentURL.toString();
+				return HttpUtil.setParameter(
+					viewContentURL.toString(), "p_l_back_url", currentURL);
 			}
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
@@ -173,7 +170,8 @@ public class SearchUtil {
 					getAssetRendererFactoryByClassName(className);
 
 			if (assetRendererFactory == null) {
-				return viewContentURL.toString();
+				return HttpUtil.setParameter(
+					viewContentURL.toString(), "p_l_back_url", currentURL);
 			}
 
 			viewContentURL.setParameter(
@@ -181,7 +179,8 @@ public class SearchUtil {
 			viewContentURL.setParameter("type", assetRendererFactory.getType());
 
 			if (!viewInContext) {
-				return viewContentURL.toString();
+				return HttpUtil.setParameter(
+					viewContentURL.toString(), "p_l_back_url", currentURL);
 			}
 
 			AssetRenderer<?> assetRenderer =
@@ -193,27 +192,10 @@ public class SearchUtil {
 				viewContentURL.toString());
 
 			if (Validator.isNull(viewURL)) {
-				return viewContentURL.toString();
+				viewURL = viewContentURL.toString();
 			}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			viewURL = HttpUtil.setParameter(
-				viewURL, "inheritRedirect", viewInContext);
-
-			Layout layout = themeDisplay.getLayout();
-
-			String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
-
-			if (Validator.isNotNull(assetEntryLayoutUuid) &&
-				!assetEntryLayoutUuid.equals(layout.getUuid())) {
-
-				viewURL = HttpUtil.setParameter(
-					viewURL, "redirect", currentURL);
-			}
-
-			return viewURL;
+			return HttpUtil.setParameter(viewURL, "p_l_back_url", currentURL);
 		}
 		catch (Exception exception) {
 			_log.error(

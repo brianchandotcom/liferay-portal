@@ -70,6 +70,34 @@ export default {
 	},
 
 	/**
+	 * Marks an item for deletion
+	 * @param {object} options
+	 * @param {object} options.itemConfig Updated item config
+	 * @param {string} options.itemId id of the item to be updated
+	 * @param {string} options.segmentsExperienceId Segments experience id
+	 * @param {function} options.onNetworkStatus
+	 * @return {Promise<void>}
+	 */
+	markItemForDeletion({
+		itemId,
+		onNetworkStatus,
+		portletIds,
+		segmentsExperienceId,
+	}) {
+		return layoutServiceFetch(
+			config.markItemForDeletionURL,
+			{
+				body: {
+					itemId,
+					portletIds,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	/**
 	 * Move an item inside layoutData
 	 * @param {object} options
 	 * @param {object} options.itemId id of the item to be moved

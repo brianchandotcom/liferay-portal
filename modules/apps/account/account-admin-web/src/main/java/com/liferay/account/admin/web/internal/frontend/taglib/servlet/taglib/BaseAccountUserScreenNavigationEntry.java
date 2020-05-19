@@ -21,6 +21,10 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -60,6 +64,22 @@ public abstract class BaseAccountUserScreenNavigationEntry
 	public String getScreenNavigationKey() {
 		return AccountScreenNavigationEntryConstants.
 			SCREEN_NAVIGATION_KEY_ACCOUNT_USER;
+	}
+
+	@Override
+	public boolean isVisible(User user, User selUser) {
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		if (UserPermissionUtil.contains(
+				permissionChecker, selUser.getUserId(), ActionKeys.VIEW) &&
+			UserPermissionUtil.contains(
+				permissionChecker, selUser.getUserId(), ActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

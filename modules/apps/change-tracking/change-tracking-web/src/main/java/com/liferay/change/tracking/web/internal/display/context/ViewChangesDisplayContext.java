@@ -426,12 +426,10 @@ public class ViewChangesDisplayContext {
 	}
 
 	private CTClosure _getCTClosure() {
-		if (_ctClosure != null) {
-			return _ctClosure;
+		if (_ctClosure == null) {
+			_ctClosure = _ctClosureFactory.create(
+				_ctCollection.getCtCollectionId());
 		}
-
-		_ctClosure = _ctClosureFactory.create(
-			_ctCollection.getCtCollectionId());
 
 		return _ctClosure;
 	}

@@ -62,7 +62,7 @@ export default function UndoHistory() {
 	};
 
 	useEffect(() => {
-		if (undoHistory) {
+		if (undoHistory && undoHistory.length) {
 			setItems(
 				undoHistory.map((undoHistoryItem, index) => {
 					return {

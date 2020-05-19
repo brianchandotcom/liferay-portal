@@ -15,11 +15,11 @@
 import selectExperience from '../../../plugins/experience/thunks/selectExperience';
 
 function undoAction({action}) {
-	return selectExperience({id: action.segmentExperienceId, isUndo: true});
+	return selectExperience({id: action.segmentsExperienceId, isUndo: true});
 }
 
 function getDerivedStateForUndo({state}) {
-	return {segmentExperienceId: state.segmentsExperienceId};
+	return {segmentsExperienceId: state.segmentsExperienceId};
 }
 
 export {undoAction, getDerivedStateForUndo};

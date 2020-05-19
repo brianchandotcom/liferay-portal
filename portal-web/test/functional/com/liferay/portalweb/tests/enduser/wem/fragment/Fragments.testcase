@@ -73,6 +73,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101258. Can create a fragment with multiple Drop Zone areas."
+	@priority = "4"
+	test AddFragmentWithTwoDropZones {
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+		FragmentsAdmin.addFragment(fragmentName = "Fragment Name 2");
+
+		FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone1"></lfr-drop-zone>
+	<lfr-drop-zone id="drop-zone2"></lfr-drop-zone>''');
+
+		Button.clickPublish();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Fragment Name 2");
+
+		AssertVisible(
+			key_content = "Place fragments here.",
+			key_fragmentClass = "content",
+			key_position = "1",
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+		AssertVisible(
+			key_content = "Place fragments here.",
+			key_fragmentClass = "content",
+			key_position = "2",
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+	}
+
 	@description = "This is a test for LPS-108339. Can add a Row fragment to Section. Can add several Row fragments to Section."
 	@priority = "5"
 	test AddRowToSection {

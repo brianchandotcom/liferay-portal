@@ -117,6 +117,29 @@
 		<reference entity="AccountEntry" package-path="com.liferay.account" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity external-reference-code="true" local-service="true" name="AccountGroup" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="accountGroupId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
 	<entity local-service="true" name="AccountRole">
 
 		<!-- PK fields -->

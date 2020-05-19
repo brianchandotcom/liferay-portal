@@ -339,9 +339,8 @@ public class ViewChangesDisplayContext {
 						JSONUtil.put(
 							"href",
 							_ctDisplayRendererRegistry.getViewURL(
-								liferayPortletRequest, liferayPortletResponse,
-								ctCollectionId, childClassNameId, childClassPK,
-								title)
+								liferayPortletResponse, ctCollectionId,
+								childClassNameId, childClassPK, title)
 						).put(
 							"label", _language.get(_httpServletRequest, "view")
 						));

@@ -231,7 +231,7 @@ public class CTDisplayRendererRegistry {
 		return name;
 	}
 
-	public <T extends CTModel<T>> String getViewURL(
+	public String getViewURL(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, CTEntry ctEntry,
 		boolean viewDiff) {
@@ -241,9 +241,9 @@ public class CTDisplayRendererRegistry {
 
 		if (!viewDiff) {
 			return getViewURL(
-				liferayPortletRequest, liferayPortletResponse,
-				ctEntry.getCtCollectionId(), ctEntry.getModelClassNameId(),
-				ctEntry.getModelClassPK(), title);
+				liferayPortletResponse, ctEntry.getCtCollectionId(),
+				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK(),
+				title);
 		}
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
@@ -266,8 +266,7 @@ public class CTDisplayRendererRegistry {
 			portletURL.toString(), "'});");
 	}
 
-	public <T extends BaseModel<T>> String getViewURL(
-		LiferayPortletRequest liferayPortletRequest,
+	public String getViewURL(
 		LiferayPortletResponse liferayPortletResponse, long ctCollectionId,
 		long modelClassNameId, long modelClassPK, String title) {
 

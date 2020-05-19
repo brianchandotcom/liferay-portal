@@ -28,20 +28,9 @@ export default function addParams(params, baseUrl) {
 		throw new TypeError('Parameter baseUrl must be a string');
 	}
 
-	// LPS-113848
-
-	// Branches the URL initialization. Safari 13.1 will throw a TypeError error
-	// when calling the `new URL(url, base)` constructor with `undefined` as the
-	// `base` parameter
-
-	let url;
-
-	if (baseUrl.startsWith('/')) {
-		url = new URL(baseUrl, location.href);
-	}
-	else {
-		url = new URL(baseUrl);
-	}
+	const url = baseUrl.startsWith('/')
+		? new URL(baseUrl, location.href)
+		: new URL(baseUrl);
 
 	if (typeof params === 'object') {
 		Object.entries(params).forEach(([key, value]) => {

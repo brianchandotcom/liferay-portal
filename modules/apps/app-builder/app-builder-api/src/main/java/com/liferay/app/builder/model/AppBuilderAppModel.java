@@ -370,6 +370,21 @@ public interface AppBuilderAppModel
 	 */
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
+	/**
+	 * Returns the scope of this app builder app.
+	 *
+	 * @return the scope of this app builder app
+	 */
+	@AutoEscape
+	public String getScope();
+
+	/**
+	 * Sets the scope of this app builder app.
+	 *
+	 * @param scope the scope of this app builder app
+	 */
+	public void setScope(String scope);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

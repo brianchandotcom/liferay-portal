@@ -15,6 +15,7 @@
 		<field name="ddmStructureLayoutId" type="long" />
 		<field name="deDataListViewId" type="long" />
 		<field localized="true" name="name" type="String" />
+		<field name="scope" type="String" />
 	</model>
 	<model name="com.liferay.app.builder.model.AppBuilderAppDeployment">
 		<field name="appBuilderAppDeploymentId" type="long" />

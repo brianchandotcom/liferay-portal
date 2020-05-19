@@ -140,12 +140,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleTitle = "Roles Regrole Name");
+		JSONRole.addRegularRole(
+			roleKey = "Roles Regrole Name",
+			roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -171,12 +168,9 @@ definition {
 
 	@priority = "4"
 	test AssignNewSegmentToRegularRole {
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleTitle = "Roles Regrole Name");
+		JSONRole.addRegularRole(
+			roleKey = "Roles Regrole Name",
+			roleTitle = "Roles Regrole Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -323,12 +317,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleTitle = "Remove Regrole Assignee");
+		JSONRole.addRegularRole(
+			roleKey = "Remove Regrole Assignee",
+			roleTitle = "Remove Regrole Assignee");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

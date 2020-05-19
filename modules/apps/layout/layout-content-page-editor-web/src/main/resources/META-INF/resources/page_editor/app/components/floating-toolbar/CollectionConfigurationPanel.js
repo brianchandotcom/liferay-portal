@@ -38,6 +38,13 @@ function collectionIsMapped(collectionConfig) {
 	return collectionConfig.collection;
 }
 
+const DEFAULT_LIST_STYLES = [
+	{
+		label: Liferay.Language.get('grid'),
+		value: '',
+	},
+];
+
 export const CollectionConfigurationPanel = ({item}) => {
 	const collectionLayoutId = useId();
 	const collectionNumberOfItemsId = useId();
@@ -62,12 +69,9 @@ export const CollectionConfigurationPanel = ({item}) => {
 		);
 	};
 
-	const [availableListRenderers, setAvailableListRenderers] = useState([
-		{
-			label: Liferay.Language.get('grid'),
-			value: '',
-		},
-	]);
+	const [availableListRenderers, setAvailableListRenderers] = useState(
+		DEFAULT_LIST_STYLES
+	);
 
 	const collectionItemType = collectionConfig.collection
 		? collectionConfig.collection.itemType
@@ -82,7 +86,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 					setAvailableListRenderers(response);
 				})
 				.catch(() => {
-					setAvailableListRenderers([]);
+					setAvailableListRenderers(DEFAULT_LIST_STYLES);
 				});
 		}
 	}, [collectionItemType]);

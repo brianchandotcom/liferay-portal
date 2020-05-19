@@ -531,7 +531,7 @@ public class ViewChangesDisplayContext {
 					rootDisplayMap.get(entry.getKey()));
 			}
 
-			childJSONObjects.sort(new SortJSONObjectsByTitleComparator());
+			childJSONObjects.sort(SortJSONObjectsByTitleComparator.INSTANCE);
 
 			JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -553,7 +553,7 @@ public class ViewChangesDisplayContext {
 
 			List<JSONObject> roodDisplayNodes = entry.getValue();
 
-			roodDisplayNodes.sort(new SortJSONObjectsByTitleComparator());
+			roodDisplayNodes.sort(SortJSONObjectsByTitleComparator.INSTANCE);
 
 			for (JSONObject rootDisplayNode : roodDisplayNodes) {
 				nodeIds.add(rootDisplayNode.getInt("id"));
@@ -593,6 +593,9 @@ public class ViewChangesDisplayContext {
 
 	private static class SortJSONObjectsByTitleComparator
 		implements Comparator<JSONObject> {
+
+		public static final Comparator<JSONObject> INSTANCE =
+			new SortJSONObjectsByTitleComparator();
 
 		@Override
 		public int compare(JSONObject o1, JSONObject o2) {

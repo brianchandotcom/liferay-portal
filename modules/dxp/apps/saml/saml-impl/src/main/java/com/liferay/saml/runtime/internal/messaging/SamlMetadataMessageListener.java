@@ -84,7 +84,7 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
+	protected void doReceive(Message message) {
 		List<Company> companies = _companyLocalService.getCompanies(false);
 
 		for (Company company : companies) {
@@ -97,7 +97,7 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 	}
 
 	@Override
-	protected void doReceive(Message message, long companyId) throws Exception {
+	protected void doReceive(Message message, long companyId) {
 		_updateMetadata(companyId);
 	}
 

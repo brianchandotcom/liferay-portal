@@ -107,7 +107,7 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 	}
 
 	@Override
-	protected void doReceive(Message message, long companyId) throws Exception {
+	protected void doReceive(Message message, long companyId) {
 		if (_searchEngineAdapter == null) {
 			return;
 		}

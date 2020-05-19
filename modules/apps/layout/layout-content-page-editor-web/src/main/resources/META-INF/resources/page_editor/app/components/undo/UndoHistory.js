@@ -14,19 +14,36 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useSelector} from '../../store/index';
+import {ACTION_TYPE_LABELS} from './actionTypeLabels';
 
 export default function UndoHistory() {
+	const store = useSelector((state) => state);
 	const undoHistory = useSelector((state) => state.undoHistory);
+
+	const [items, setItems] = useState([]);
+
+	useEffect(() => {
+		if (undoHistory) {
+			setItems(
+				undoHistory.map((undoHistoryItem) => {
+					return {
+						label: ACTION_TYPE_LABELS[undoHistoryItem.type],
+					};
+				})
+			);
+		}
+	}, [store, undoHistory]);
 
 	return (
 		<>
 			<ClayDropDownWithItems
 				alignmentPosition={Align.BottomRight}
 				className="mr-3"
-				items={[]}
+				items={items}
+				searchable={false}
 				trigger={
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('undo-history')}

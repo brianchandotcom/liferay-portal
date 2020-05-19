@@ -42,9 +42,11 @@ definition {
 	macro takeTokenFromAnalyticsCloud {
 		Click(locator1 = "AnalyticsCloudConnection#FARO_WORKSPACE_BUTTON");
 
-		Click(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON");
+		if (IsElementPresent(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON")) {
+			Click(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON");
 
-		Click(locator1 = "AnalyticsCloudConnection#SKIP_FOR_NOW_BUTTON");
+			Click(locator1 = "AnalyticsCloudConnection#SKIP_FOR_NOW_BUTTON");
+		}
 
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_SETTINGS_BUTTON");
 

@@ -64,7 +64,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #addAccountEntry(long, long, String, String, String[],
-	 *             byte[], int, ServiceContext)}
+	 *             byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -75,9 +75,15 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 		return addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			status, null);
+			null, status, null);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addAccountEntry(long, long, String, String, String[],
+	 *             byte[], String, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
@@ -85,12 +91,24 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, logoBytes,
+			null, status, serviceContext);
+	}
+
+	@Override
+	public AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes,
+			String taxId, int status, ServiceContext serviceContext)
+		throws PortalException {
+
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, AccountActionKeys.ADD_ACCOUNT_ENTRY);
 
 		return accountEntryLocalService.addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			status, serviceContext);
+			taxId, status, serviceContext);
 	}
 
 	@Override

@@ -100,7 +100,7 @@ public class AccountEntryLocalServiceImpl
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #addAccountEntry(long, long, String, String, String[],
-	 *             byte[], int, ServiceContext)}
+	 *             byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -111,14 +111,32 @@ public class AccountEntryLocalServiceImpl
 
 		return addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			status, null);
+			null, status, null);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addAccountEntry(long, long, String, String, String[],
+	 *             byte[], String, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes, int status,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, logoBytes,
+			null, status, serviceContext);
+	}
+
+	@Override
+	public AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes,
+			String taxId, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Account entry
@@ -157,6 +175,7 @@ public class AccountEntryLocalServiceImpl
 			_userFileUploadsSettings.getImageMaxHeight(),
 			_userFileUploadsSettings.getImageMaxWidth());
 
+		accountEntry.setTaxId(taxId);
 		accountEntry.setStatus(status);
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
@@ -316,7 +335,7 @@ public class AccountEntryLocalServiceImpl
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #updateAccountEntry(Long, long, String, String, boolean,
-	 *             String[], byte[], int, ServiceContext)}
+	 *             String[], byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -328,14 +347,33 @@ public class AccountEntryLocalServiceImpl
 
 		return updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
-			domains, logoBytes, status, null);
+			domains, logoBytes, null, status, null);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateAccountEntry(Long, long, String, String, boolean,
+	 *             String[], byte[], String, int, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public AccountEntry updateAccountEntry(
+			Long accountEntryId, long parentAccountEntryId, String name,
+			String description, boolean deleteLogo, String[] domains,
+			byte[] logoBytes, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateAccountEntry(
+			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
+			domains, logoBytes, null, status, serviceContext);
 	}
 
 	@Override
 	public AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
-			byte[] logoBytes, int status, ServiceContext serviceContext)
+			byte[] logoBytes, String taxId, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		AccountEntry accountEntry = accountEntryPersistence.fetchByPrimaryKey(
@@ -359,6 +397,7 @@ public class AccountEntryLocalServiceImpl
 			_userFileUploadsSettings.getImageMaxHeight(),
 			_userFileUploadsSettings.getImageMaxWidth());
 
+		accountEntry.setTaxId(taxId);
 		accountEntry.setStatus(status);
 
 		// Asset

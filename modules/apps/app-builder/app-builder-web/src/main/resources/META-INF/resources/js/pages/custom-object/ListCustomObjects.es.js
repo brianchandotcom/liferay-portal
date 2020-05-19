@@ -14,14 +14,12 @@
 
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
-import {AppNavigationBar} from '../../App.es';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
-import ControlMenu from '../../components/control-menu/ControlMenu.es';
-import ListObjects from '../../components/list-objects/ListObjects.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import {addItem, confirmDelete} from '../../utils/client.es';
+import ListObjects from '../object/ListObjects.es';
 import CustomObjectPopover from './CustomObjectPopover.es';
 
 export default ({history}) => {
@@ -33,14 +31,6 @@ export default ({history}) => {
 
 	const [alignElement, setAlignElement] = useState(addButtonRef.current);
 	const [isPopoverVisible, setPopoverVisible] = useState(false);
-
-	const [
-		customObjectPermissionsModalState,
-		setCustomObjectPermissionsModalState,
-	] = useState({
-		dataDefinitionId: null,
-		endpoint: null,
-	});
 
 	const onClickAddButton = ({currentTarget}) => {
 		setAlignElement(currentTarget);
@@ -105,95 +95,51 @@ export default ({history}) => {
 		}
 	}, 27);
 
-	const listViewProps = {
-		actions: [
-			{
-				action: ({id}) =>
-					Promise.resolve(
-						history.push(`/custom-object/${id}/form-views`)
-					),
-				name: Liferay.Language.get('form-views'),
-			},
-			{
-				action: ({id}) =>
-					Promise.resolve(
-						history.push(`/custom-object/${id}/table-views`)
-					),
-				name: Liferay.Language.get('table-views'),
-			},
-			{
-				action: ({id}) =>
-					Promise.resolve(history.push(`/custom-object/${id}/apps`)),
-				name: Liferay.Language.get('apps'),
-			},
-			{
-				name: 'divider',
-			},
-			{
-				action: ({id}) =>
-					Promise.resolve(
-						setCustomObjectPermissionsModalState((prevState) => ({
-							...prevState,
-							dataDefinitionId: id,
-						}))
-					),
-				name: Liferay.Language.get('app-permissions'),
-			},
-			{
-				name: 'divider',
-			},
-			{
-				action: confirmDelete('/o/data-engine/v2.0/data-definitions/'),
-				name: Liferay.Language.get('delete'),
-			},
-		],
-		addButton: () => (
-			<div ref={addButtonRef}>
-				<Button
-					className="nav-btn nav-btn-monospaced"
-					onClick={onClickAddButton}
-					symbol="plus"
-					tooltip={Liferay.Language.get('new-custom-object')}
-				/>
-			</div>
-		),
-		emptyState: {
-			button: () => (
-				<Button
-					displayType="secondary"
-					onClick={onClickAddButton}
-					ref={emptyStateButtonRef}
-				>
-					{Liferay.Language.get('new-custom-object')}
-				</Button>
-			),
-			description: Liferay.Language.get(
-				'custom-objects-define-the-types-of-data-your-business-application-needs'
-			),
-			title: Liferay.Language.get('there-are-no-custom-objects-yet'),
-		},
-		endpoint: `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`,
-	};
-
 	return (
 		<>
-			<ControlMenu
-				title={Liferay.Language.get(
-					'javax.portlet.title.com_liferay_app_builder_web_internal_portlet_ObjectsPortlet'
-				)}
-			/>
-
-			<AppNavigationBar />
-
 			<ListObjects
-				customObjectPermissionsModalState={
-					customObjectPermissionsModalState
-				}
-				listViewProps={listViewProps}
+				history={history}
+				listViewProps={{
+					actions: [
+						{
+							action: confirmDelete(
+								'/o/data-engine/v2.0/data-definitions/'
+							),
+							name: Liferay.Language.get('delete'),
+						},
+					],
+					addButton: () => (
+						<div ref={addButtonRef}>
+							<Button
+								className="nav-btn nav-btn-monospaced"
+								onClick={onClickAddButton}
+								symbol="plus"
+								tooltip={Liferay.Language.get(
+									'new-custom-object'
+								)}
+							/>
+						</div>
+					),
+					emptyState: {
+						button: () => (
+							<Button
+								displayType="secondary"
+								onClick={onClickAddButton}
+								ref={emptyStateButtonRef}
+							>
+								{Liferay.Language.get('new-custom-object')}
+							</Button>
+						),
+						description: Liferay.Language.get(
+							'custom-objects-define-the-types-of-data-your-business-application-needs'
+						),
+						title: Liferay.Language.get(
+							'there-are-no-custom-objects-yet'
+						),
+					},
+					endpoint: `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`,
+				}}
 				objectType="custom-object"
-				setCustomObjectPermissionsModalState={
-					setCustomObjectPermissionsModalState
-				}
 			/>
 
 			<CustomObjectPopover

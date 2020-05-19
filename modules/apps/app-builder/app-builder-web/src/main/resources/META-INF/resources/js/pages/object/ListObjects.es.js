@@ -12,9 +12,11 @@
  * details.
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
+import {AppNavigationBar} from '../../App.es';
+import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import ListView from '../../components/list-view/ListView.es';
 import PermissionsModal from '../../components/permissions/PermissionsModal.es';
 import {ACTIONS} from '../../pages/entry/PermissionsContext.es';
@@ -40,13 +42,54 @@ const COLUMNS = [
 	},
 ];
 
-export default ({
-	customObjectPermissionsModalState,
-	listViewProps,
-	objectType,
-	setCustomObjectPermissionsModalState,
-}) => {
+export default ({history, listViewProps = {}, objectType}) => {
+	const [
+		objectPermissionsModalState,
+		setObjectPermissionsModalState,
+	] = useState({
+		dataDefinitionId: null,
+		endpoint: null,
+	});
+
 	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
+	const {actions = []} = listViewProps;
+
+	listViewProps.actions = [
+		{
+			action: ({id}) =>
+				Promise.resolve(
+					history.push(`/${objectType}/${id}/form-views`)
+				),
+			name: Liferay.Language.get('form-views'),
+		},
+		{
+			action: ({id}) =>
+				Promise.resolve(
+					history.push(`/${objectType}/${id}/table-views`)
+				),
+			name: Liferay.Language.get('table-views'),
+		},
+		{
+			action: ({id}) =>
+				Promise.resolve(history.push(`/${objectType}/${id}/apps`)),
+			name: Liferay.Language.get('apps'),
+		},
+		{
+			name: 'divider',
+		},
+		{
+			action: ({id}) =>
+				Promise.resolve(
+					setObjectPermissionsModalState((prevState) => ({
+						...prevState,
+						dataDefinitionId: id,
+					}))
+				),
+			name: Liferay.Language.get('app-permissions'),
+		},
+		...actions,
+	];
 
 	const rolesFilter = ({name, roleType}) =>
 		name !== 'Administrator' &&
@@ -55,7 +98,7 @@ export default ({
 		roleType !== 'organization' &&
 		roleType !== 'site';
 
-	const {dataDefinitionId} = customObjectPermissionsModalState;
+	const {dataDefinitionId} = objectPermissionsModalState;
 
 	useEffect(() => {
 		if (!dataDefinitionId) {
@@ -65,15 +108,23 @@ export default ({
 		getItem(
 			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-record-collection`
 		).then(({id: dataRecordCollectionId}) => {
-			setCustomObjectPermissionsModalState((prevState) => ({
+			setObjectPermissionsModalState((prevState) => ({
 				...prevState,
 				endpoint: `/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/permissions`,
 			}));
 		});
-	}, [dataDefinitionId, setCustomObjectPermissionsModalState]);
+	}, [dataDefinitionId, setObjectPermissionsModalState]);
 
 	return (
 		<>
+			<ControlMenu
+				title={Liferay.Language.get(
+					'javax.portlet.title.com_liferay_app_builder_web_internal_portlet_ObjectsPortlet'
+				)}
+			/>
+
+			<AppNavigationBar />
+
 			<ListView columns={COLUMNS} {...listViewProps}>
 				{(item) => ({
 					...item,
@@ -110,10 +161,10 @@ export default ({
 						value: Liferay.Language.get('view-entries'),
 					},
 				]}
-				endpoint={customObjectPermissionsModalState.endpoint}
+				endpoint={objectPermissionsModalState.endpoint}
 				isOpen={dataDefinitionId !== null}
 				onClose={() =>
-					setCustomObjectPermissionsModalState({
+					setObjectPermissionsModalState({
 						dataDefinitionId: null,
 						endpoint: null,
 					})

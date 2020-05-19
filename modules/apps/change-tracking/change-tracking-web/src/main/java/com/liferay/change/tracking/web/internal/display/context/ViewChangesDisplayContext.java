@@ -370,14 +370,16 @@ public class ViewChangesDisplayContext {
 
 			childJSONObjects.add(childJSONObject);
 
-			if (rootDisplayNodes != null) {
-				_addRootDisplayNode(childJSONObject, rootDisplayNodes);
-			}
+			_addRootDisplayNode(childJSONObject, rootDisplayNodes);
 		}
 	}
 
 	private void _addRootDisplayNode(
 		JSONObject node, List<JSONObject> rootDisplayNodes) {
+
+		if (rootDisplayNodes == null) {
+			return;
+		}
 
 		for (JSONObject rootDisplayNode : rootDisplayNodes) {
 			if ((rootDisplayNode.getLong("modelClassNameId") == node.getLong(

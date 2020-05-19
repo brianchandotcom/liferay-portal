@@ -264,116 +264,6 @@ public class ViewChangesDisplayContext {
 		return false;
 	}
 
-	private void _addChildClassJSONObjects(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long childClassNameId,
-		List<Long> childClassPKs, List<JSONObject> childJSONObjects,
-		List<JSONObject> rootDisplayNodes) {
-
-		Map<Serializable, ? extends BaseModel<?>> baseModelMap =
-			_basePersistenceRegistry.fetchBaseModelMap(
-				childClassNameId, childClassPKs);
-		Map<Serializable, CTEntry> ctEntryMap = _getCTEntryMap(
-			childClassNameId);
-
-		for (long childClassPK : childClassPKs) {
-			long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-
-			CTEntry ctEntry = ctEntryMap.get(childClassPK);
-
-			if ((ctEntry != null) &&
-				(ctEntry.getChangeType() !=
-					CTConstants.CT_CHANGE_TYPE_DELETION)) {
-
-				ctCollectionId = _ctCollection.getCtCollectionId();
-			}
-
-			String title = _getTitle(
-				baseModelMap, ctCollectionId, childClassNameId, childClassPK);
-
-			JSONObject childJSONObject = JSONUtil.put(
-				"modelClassNameId", childClassNameId
-			).put(
-				"modelClassPK", childClassPK
-			).put(
-				"title", title
-			).put(
-				"typeName", _getTypeName(childClassNameId)
-			);
-
-			JSONArray dropdownItemsJSONArray =
-				JSONFactoryUtil.createJSONArray();
-			ResourceURL renderURL = _renderResponse.createResourceURL();
-
-			if (ctEntry == null) {
-				dropdownItemsJSONArray.put(
-					JSONUtil.put(
-						"href",
-						_ctDisplayRendererRegistry.getViewURL(
-							liferayPortletRequest, liferayPortletResponse,
-							ctCollectionId, childClassNameId, childClassPK,
-							title)
-					).put(
-						"label", _language.get(_httpServletRequest, "view")
-					));
-
-				renderURL.setResourceID("/change_lists/render_ct_entry");
-
-				renderURL.setParameter(
-					"ctCollectionId", String.valueOf(ctCollectionId));
-				renderURL.setParameter(
-					"modelClassNameId", String.valueOf(childClassNameId));
-				renderURL.setParameter(
-					"modelClassPK", String.valueOf(childClassPK));
-			}
-			else {
-				childJSONObject.put(
-					"description",
-					_ctDisplayRendererRegistry.getEntryDescription(
-						_httpServletRequest, ctEntry));
-
-				String editURL = _ctDisplayRendererRegistry.getEditURL(
-					_httpServletRequest, ctEntry);
-
-				if (Validator.isNotNull(editURL)) {
-					dropdownItemsJSONArray.put(
-						JSONUtil.put(
-							"href", editURL
-						).put(
-							"label", _language.get(_httpServletRequest, "edit")
-						));
-				}
-
-				dropdownItemsJSONArray.put(
-					JSONUtil.put(
-						"href",
-						_ctDisplayRendererRegistry.getViewURL(
-							liferayPortletRequest, liferayPortletResponse,
-							ctEntry, true)
-					).put(
-						"label", _language.get(_httpServletRequest, "view-diff")
-					));
-
-				renderURL.setResourceID("/change_lists/render_diff");
-
-				renderURL.setParameter(
-					"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
-			}
-
-			childJSONObject.put(
-				"dropdownItems", dropdownItemsJSONArray
-			).put(
-				"id", _nodeIdCounter++
-			).put(
-				"renderURL", renderURL.toString()
-			);
-
-			childJSONObjects.add(childJSONObject);
-
-			_addRootDisplayNode(childJSONObject, rootDisplayNodes);
-		}
-	}
-
 	private void _addRootDisplayNode(
 		JSONObject node, List<JSONObject> rootDisplayNodes) {
 
@@ -403,10 +293,116 @@ public class ViewChangesDisplayContext {
 		List<JSONObject> childJSONObjects = new ArrayList<>();
 
 		for (Map.Entry<Long, List<Long>> entry : childPKsMap.entrySet()) {
-			_addChildClassJSONObjects(
-				liferayPortletRequest, liferayPortletResponse, entry.getKey(),
-				entry.getValue(), childJSONObjects,
-				rootDisplayMap.get(entry.getKey()));
+			long childClassNameId = entry.getKey();
+			List<Long> childClassPKs = entry.getValue();
+
+			Map<Serializable, ? extends BaseModel<?>> baseModelMap =
+				_basePersistenceRegistry.fetchBaseModelMap(
+					childClassNameId, childClassPKs);
+
+			Map<Serializable, CTEntry> ctEntryMap = _getCTEntryMap(
+				childClassNameId);
+
+			for (long childClassPK : childClassPKs) {
+				long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+
+				CTEntry ctEntry = ctEntryMap.get(childClassPK);
+
+				if ((ctEntry != null) &&
+					(ctEntry.getChangeType() !=
+						CTConstants.CT_CHANGE_TYPE_DELETION)) {
+
+					ctCollectionId = _ctCollection.getCtCollectionId();
+				}
+
+				String title = _getTitle(
+					baseModelMap, ctCollectionId, childClassNameId,
+					childClassPK);
+
+				JSONObject childJSONObject = JSONUtil.put(
+					"modelClassNameId", childClassNameId
+				).put(
+					"modelClassPK", childClassPK
+				).put(
+					"title", title
+				).put(
+					"typeName", _getTypeName(childClassNameId)
+				);
+
+				JSONArray dropdownItemsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+				ResourceURL renderURL = _renderResponse.createResourceURL();
+
+				if (ctEntry == null) {
+					dropdownItemsJSONArray.put(
+						JSONUtil.put(
+							"href",
+							_ctDisplayRendererRegistry.getViewURL(
+								liferayPortletRequest, liferayPortletResponse,
+								ctCollectionId, childClassNameId, childClassPK,
+								title)
+						).put(
+							"label", _language.get(_httpServletRequest, "view")
+						));
+
+					renderURL.setResourceID("/change_lists/render_ct_entry");
+
+					renderURL.setParameter(
+						"ctCollectionId", String.valueOf(ctCollectionId));
+					renderURL.setParameter(
+						"modelClassNameId", String.valueOf(childClassNameId));
+					renderURL.setParameter(
+						"modelClassPK", String.valueOf(childClassPK));
+				}
+				else {
+					childJSONObject.put(
+						"description",
+						_ctDisplayRendererRegistry.getEntryDescription(
+							_httpServletRequest, ctEntry));
+
+					String editURL = _ctDisplayRendererRegistry.getEditURL(
+						_httpServletRequest, ctEntry);
+
+					if (Validator.isNotNull(editURL)) {
+						dropdownItemsJSONArray.put(
+							JSONUtil.put(
+								"href", editURL
+							).put(
+								"label",
+								_language.get(_httpServletRequest, "edit")
+							));
+					}
+
+					dropdownItemsJSONArray.put(
+						JSONUtil.put(
+							"href",
+							_ctDisplayRendererRegistry.getViewURL(
+								liferayPortletRequest, liferayPortletResponse,
+								ctEntry, true)
+						).put(
+							"label",
+							_language.get(_httpServletRequest, "view-diff")
+						));
+
+					renderURL.setResourceID("/change_lists/render_diff");
+
+					renderURL.setParameter(
+						"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+				}
+
+				childJSONObject.put(
+					"dropdownItems", dropdownItemsJSONArray
+				).put(
+					"id", _nodeIdCounter++
+				).put(
+					"renderURL", renderURL.toString()
+				);
+
+				childJSONObjects.add(childJSONObject);
+
+				_addRootDisplayNode(
+					childJSONObject, rootDisplayMap.get(entry.getKey()));
+			}
 		}
 
 		return childJSONObjects;

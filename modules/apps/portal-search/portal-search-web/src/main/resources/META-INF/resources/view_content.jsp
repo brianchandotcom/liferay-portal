@@ -34,6 +34,8 @@ page import="com.liferay.portal.search.web.internal.result.display.context.Searc
 <portlet:defineObjects />
 
 <%
+portletDisplay.setShowBackIcon(false);
+
 SearchResultContentDisplayBuilder searchResultContentDisplayBuilder = new SearchResultContentDisplayBuilder();
 
 searchResultContentDisplayBuilder.setAssetEntryId(ParamUtil.getLong(request, "assetEntryId"));

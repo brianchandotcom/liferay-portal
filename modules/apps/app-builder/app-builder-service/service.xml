@@ -41,14 +41,27 @@
 		<finder name="DDMStructureId" return-type="Collection">
 			<finder-column name="ddmStructureId" />
 		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="scope" />
+		</finder>
 		<finder name="C_A" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="active" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="scope" />
 		</finder>
 		<finder name="G_C_D" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="ddmStructureId" />
+		</finder>
+		<finder name="C_A_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column name="scope" />
 		</finder>
 
 		<!-- References -->

@@ -120,6 +120,13 @@ public class AppBuilderAppLocalServiceImpl
 
 	@Override
 	public List<AppBuilderApp> getAppBuilderApps(
+		long companyId, boolean active, String scope) {
+
+		return appBuilderAppPersistence.findByC_A_S(companyId, active, scope);
+	}
+
+	@Override
+	public List<AppBuilderApp> getAppBuilderApps(
 		long groupId, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator) {
 
@@ -137,6 +144,15 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
+	public List<AppBuilderApp> getAppBuilderApps(
+		long groupId, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return appBuilderAppPersistence.findByG_S(
+			groupId, scope, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getAppBuilderAppsCount(long groupId) {
 		return appBuilderAppPersistence.countByGroupId(groupId);
 	}
@@ -150,6 +166,11 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
+	public int getAppBuilderAppsCount(long groupId, String scope) {
+		return appBuilderAppPersistence.countByG_S(groupId, scope);
+	}
+
+	@Override
 	public List<AppBuilderApp> getCompanyAppBuilderApps(
 		long companyId, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator) {
@@ -159,8 +180,22 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
+	public List<AppBuilderApp> getCompanyAppBuilderApps(
+		long companyId, String scope, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return appBuilderAppPersistence.findByC_S(
+			companyId, scope, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getCompanyAppBuilderAppsCount(long companyId) {
 		return appBuilderAppPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public int getCompanyAppBuilderAppsCount(long companyId, String scope) {
+		return appBuilderAppPersistence.countByC_S(companyId, scope);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

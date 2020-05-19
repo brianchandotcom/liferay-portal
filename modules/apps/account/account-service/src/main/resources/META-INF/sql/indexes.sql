@@ -6,6 +6,8 @@ create index IX_2FA4FA69 on AccountEntryOrganizationRel (organizationId);
 create index IX_ED720A80 on AccountEntryUserRel (accountEntryId, accountUserId);
 create index IX_4EA60AB4 on AccountEntryUserRel (accountUserId);
 
+create index IX_F7BFA1CD on AccountGroup (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+
 create index IX_3A47CDD on AccountRole (accountEntryId);
 create index IX_76E515F on AccountRole (companyId);
 create index IX_714A358E on AccountRole (roleId);

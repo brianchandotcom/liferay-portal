@@ -39,6 +39,18 @@
 		<field name="accountEntryId" type="long" />
 		<field name="accountUserId" type="long" />
 	</model>
+	<model name="com.liferay.account.model.AccountGroup">
+		<field name="mvccVersion" type="long" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="accountGroupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+	</model>
 	<model name="com.liferay.account.model.AccountRole">
 		<field name="mvccVersion" type="long" />
 		<field name="accountRoleId" type="long" />

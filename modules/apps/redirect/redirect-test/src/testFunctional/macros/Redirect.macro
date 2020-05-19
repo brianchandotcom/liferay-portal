@@ -60,7 +60,10 @@ definition {
 		}
 
 		else if ("${redirectChain}" == "true") {
-			Redirect.configureRedirectChain(noUpdateReferences = "${noUpdateReferences}");
+			Redirect.configureRedirectChain(
+				noUpdateRedirect = "${noUpdateRedirect}",
+				noUpdateReferences = "${noUpdateReferences}",
+				updateRedirect = "${updateRedirect}");
 
 			Alert.viewSuccessMessage();
 		}
@@ -134,17 +137,35 @@ definition {
 	}
 
 	macro configureRedirectChain {
-		AssertChecked.assertCheckedNotVisible(
-			checkboxName = "Update References",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
+		if (isSet(updateRedirect)) {
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Update Redirect",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else {
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Update References",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
 		if ("${noUpdateReferences}" == "true") {
-			FormFields.disableCheckbox(fieldName = "Update References");
+			if (isSet(noUpdateRedirect)) {
+				FormFields.disableCheckbox(fieldName = "Update Redirect");
+			}
+			else {
+				FormFields.disableCheckbox(fieldName = "Update References");
+			}
 		}
 
-		AssertClick(
-			locator1 = "Button#MODAL_ITEM_SUBMIT",
-			value1 = "Create");
+		if (isSet(destinationURLEdit)) {
+			AssertClick(
+				locator1 = "Button#MODAL_ITEM_SUBMIT",
+				value1 = "Save");
+		}
+		else {
+			AssertClick(
+				locator1 = "Button#MODAL_ITEM_SUBMIT",
+				value1 = "Create");
+		}
 	}
 
 	macro deleteEntry {
@@ -191,6 +212,16 @@ definition {
 		}
 
 		Button.clickSave();
+
+		if (isSet(redirectChain)) {
+			Redirect.configureRedirectChain(
+				destinationURLEdit = "${destinationURLEdit}",
+				noUpdateRedirect = "${noUpdateRedirect}",
+				noUpdateReferences = "${noUpdateReferences}",
+				updateRedirect = "${updateRedirect}");
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro gotoEntryMenuItem {

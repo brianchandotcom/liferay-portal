@@ -135,6 +135,11 @@ public class RESTBuilder {
 		try (InputStream is = new FileInputStream(configFile)) {
 			_configYAML = YAMLUtil.loadConfigYAML(StringUtil.read(is));
 		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Error in file \"rest-config.yaml\": " +
+					exception.getMessage());
+		}
 	}
 
 	public RESTBuilder(RESTBuilderArgs restBuilderArgs) throws Exception {
@@ -173,7 +178,15 @@ public class RESTBuilder {
 		File[] files = FileUtil.getFiles(_configDir, "rest-openapi", ".yaml");
 
 		for (File file : files) {
-			_checkOpenAPIYAMLFile(freeMarkerTool, file);
+			try {
+				_checkOpenAPIYAMLFile(freeMarkerTool, file);
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(
+					StringBundler.concat(
+						"Error in file \"", file.getName(), "\": ",
+						exception.getMessage()));
+			}
 
 			OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(FileUtil.read(file));
 

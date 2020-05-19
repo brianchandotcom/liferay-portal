@@ -62,7 +62,6 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 
 	return (
 		<div
-			{...data}
 			className={classNames(
 				className,
 				`pb-${paddingBottom} pt-${paddingTop}`,
@@ -84,6 +83,7 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 			}
 		>
 			<div
+				{...data}
 				className={classNames({
 					container: type === 'fixed',
 					'container-fluid': type === 'fluid',

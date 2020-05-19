@@ -54,6 +54,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -269,7 +271,16 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				_portletRegistry.getFragmentEntryLinkPortletIds(
 					fragmentEntryLink);
 
-			if (portletIds.contains(currentPortletName)) {
+			Stream<String> stream = portletIds.stream();
+
+			List<String> portletNames = stream.map(
+				portletId -> PortletIdCodec.decodePortletName(portletId)
+			).distinct(
+			).collect(
+				Collectors.toList()
+			);
+
+			if (portletNames.contains(currentPortletName)) {
 				return true;
 			}
 		}

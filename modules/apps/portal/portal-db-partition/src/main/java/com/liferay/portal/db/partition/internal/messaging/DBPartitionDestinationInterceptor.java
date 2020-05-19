@@ -16,7 +16,6 @@ package com.liferay.portal.db.partition.internal.messaging;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionConfiguration;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
@@ -54,7 +53,6 @@ public class DBPartitionDestinationInterceptor
 
 		if (_databasePartitionEnabled &&
 			(message.getLong("companyId") == CompanyConstants.SYSTEM) &&
-			!destinationName.equals(DestinationNames.SCHEDULER_ENGINE) &&
 			!_excludedMessageBusDestinationNames.contains(destinationName) &&
 			!_excludedSchedulerJobNames.contains(
 				message.getString(SchedulerEngine.JOB_NAME))) {

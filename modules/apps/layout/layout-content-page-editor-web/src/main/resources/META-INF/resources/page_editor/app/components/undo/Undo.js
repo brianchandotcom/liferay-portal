@@ -20,6 +20,7 @@ import React from 'react';
 
 import {Z_KEYCODE} from '../../config/constants/keycodes';
 import {useSelector} from '../../store/index';
+import UndoHistory from './UndoHistory';
 
 const isTextElement = (element) => {
 	return (
@@ -66,28 +67,31 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 	const undoHistory = useSelector((state) => state.undoHistory);
 
 	return (
-		<ClayButton.Group className="d-block d-none mr-3">
-			<ClayButtonWithIcon
-				aria-label={Liferay.Language.get('undo')}
-				className="btn-monospaced"
-				disabled={!undoHistory || !undoHistory.length}
-				displayType="secondary"
-				onClick={onUndo}
-				small
-				symbol="undo"
-				title={Liferay.Language.get('undo')}
-			/>
-			<ClayButtonWithIcon
-				aria-label={Liferay.Language.get('redo')}
-				className="btn-monospaced"
-				disabled
-				displayType="secondary"
-				onClick={onRedo}
-				small
-				symbol="redo"
-				title={Liferay.Language.get('redo')}
-			/>
-		</ClayButton.Group>
+		<>
+			<ClayButton.Group className="d-block d-none mr-2">
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('undo')}
+					className="btn-monospaced"
+					disabled={!undoHistory || !undoHistory.length}
+					displayType="secondary"
+					onClick={onUndo}
+					small
+					symbol="undo"
+					title={Liferay.Language.get('undo')}
+				/>
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('redo')}
+					className="btn-monospaced"
+					disabled
+					displayType="secondary"
+					onClick={onRedo}
+					small
+					symbol="redo"
+					title={Liferay.Language.get('redo')}
+				/>
+			</ClayButton.Group>
+			<UndoHistory />
+		</>
 	);
 }
 

@@ -16,26 +16,42 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import React, {useEffect, useState} from 'react';
 
-import {useSelector} from '../../store/index';
+import {useDispatch, useSelector} from '../../store/index';
+import multipleUndo from '../../thunks/multipleUndo';
 import {ACTION_TYPE_LABELS} from './actionTypeLabels';
 
 export default function UndoHistory() {
+	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
 	const undoHistory = useSelector((state) => state.undoHistory);
 
 	const [items, setItems] = useState([]);
 
+	const isSelectedAction = (index) => index === 0;
+
 	useEffect(() => {
 		if (undoHistory) {
 			setItems(
-				undoHistory.map((undoHistoryItem) => {
+				undoHistory.map((undoHistoryItem, index) => {
 					return {
+						disabled: isSelectedAction(index),
 						label: ACTION_TYPE_LABELS[undoHistoryItem.type],
+						onClick: (event) => {
+							event.preventDefault();
+
+							dispatch(
+								multipleUndo({
+									numberOfActions: index,
+									store,
+								})
+							);
+						},
+						symbolRight: isSelectedAction(index) ? 'check' : '',
 					};
 				})
 			);
 		}
-	}, [store, undoHistory]);
+	}, [dispatch, store, undoHistory]);
 
 	return (
 		<>

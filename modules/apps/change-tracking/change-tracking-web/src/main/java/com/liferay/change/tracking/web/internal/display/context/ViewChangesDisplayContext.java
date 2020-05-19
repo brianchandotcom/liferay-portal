@@ -60,6 +60,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -287,7 +288,7 @@ public class ViewChangesDisplayContext {
 	private List<JSONObject> _getChildJSONObjects(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		Map<Long, List<JSONObject>> rootDisplayMap,
+		AtomicInteger nodeIdCounter, Map<Long, List<JSONObject>> rootDisplayMap,
 		Map<Long, List<Long>> childPKsMap) {
 
 		List<JSONObject> childJSONObjects = new ArrayList<>();
@@ -393,7 +394,7 @@ public class ViewChangesDisplayContext {
 				childJSONObject.put(
 					"dropdownItems", dropdownItemsJSONArray
 				).put(
-					"id", _nodeIdCounter++
+					"id", nodeIdCounter.getAndIncrement()
 				).put(
 					"renderURL", renderURL.toString()
 				);
@@ -514,7 +515,7 @@ public class ViewChangesDisplayContext {
 			}
 		}
 
-		_nodeIdCounter = 1;
+		AtomicInteger nodeIdCounter = new AtomicInteger(1);
 
 		Deque<JSONObject> deque = new LinkedList<>();
 
@@ -539,8 +540,8 @@ public class ViewChangesDisplayContext {
 			}
 
 			List<JSONObject> childJSONObjects = _getChildJSONObjects(
-				liferayPortletRequest, liferayPortletResponse, rootDisplayMap,
-				childPKsMap);
+				liferayPortletRequest, liferayPortletResponse, nodeIdCounter,
+				rootDisplayMap, childPKsMap);
 
 			if (childJSONObjects.isEmpty()) {
 				continue;
@@ -597,7 +598,6 @@ public class ViewChangesDisplayContext {
 	private final boolean _hasChanges;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
-	private int _nodeIdCounter;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

@@ -202,22 +202,16 @@ definition {
 
 		Button.clickSave();
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
 
-		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
+		RoleNavigator.gotoAssignees(roleTitle = "Roles Regrole Name");
 
-		Search.searchCP(searchTerm = "New RoleSegment Test");
+		RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
 
-		var key_assigneeName = "New RoleSegment Test";
-
-		Check(locator1 = "RolesAssignMembers#ADD_ASSIGNEE_TABLE_CHECKBOX");
-
-		SelectFrameTop(value1 = "relative=top");
-
-		Button.clickAdd();
+		Role.addAssignees(assigneeName = "New RoleSegment Test");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

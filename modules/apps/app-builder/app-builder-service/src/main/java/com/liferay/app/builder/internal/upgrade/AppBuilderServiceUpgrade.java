@@ -14,7 +14,6 @@
 
 package com.liferay.app.builder.internal.upgrade;
 
-import com.liferay.app.builder.internal.upgrade.v2_0_0.UpgradeAppBuilderApp;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,7 +25,15 @@ import org.osgi.service.component.annotations.Component;
 public class AppBuilderServiceUpgrade implements UpgradeStepRegistrator {
 
 	public void register(Registry registry) {
-		registry.register("1.0.0", "2.0.0", new UpgradeAppBuilderApp());
+		registry.register(
+			"1.0.0", "2.0.0",
+			new com.liferay.app.builder.internal.upgrade.v2_0_0.
+				UpgradeAppBuilderApp());
+
+		registry.register(
+			"2.0.0", "2.1.0",
+			new com.liferay.app.builder.internal.upgrade.v2_1_0.
+				UpgradeAppBuilderApp());
 	}
 
 }

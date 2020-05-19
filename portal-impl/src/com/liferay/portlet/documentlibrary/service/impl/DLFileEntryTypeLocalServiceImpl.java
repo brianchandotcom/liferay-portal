@@ -123,18 +123,12 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		long fileEntryTypeId = counterLocalService.increment();
 
-		long ddmStructureId = GetterUtil.getLong(
-			serviceContext.getAttribute("ddmStructureId"));
-		boolean useDataEngineEditor = GetterUtil.getBoolean(
-			serviceContext.getAttribute("useDataEngineEditor"));
+		if (!GetterUtil.getBoolean(
+				serviceContext.getAttribute("useDataEngineEditor"))) {
 
-		if ((ddmStructureId == 0) || !useDataEngineEditor) {
 			ddmStructureIds = _updateDDMStructure(
 				userId, fileEntryTypeUuid, fileEntryTypeId, groupId, nameMap,
 				descriptionMap, ddmStructureIds, serviceContext);
-		}
-		else {
-			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
 		}
 
 		validate(fileEntryTypeId, groupId, fileEntryTypeKey, ddmStructureIds);

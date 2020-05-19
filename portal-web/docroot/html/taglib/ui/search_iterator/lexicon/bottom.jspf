@@ -93,51 +93,64 @@
 		).render();
 
 		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
-			var contentBox = searchContainer.get('contentBox');
+			var inModal = window !== Liferay.Util.getOpener();
 
-			var fixedHeader = document.getElementById('<%= namespace + id %>fixedHeader');
+			var initFixedHeaderSync = function() {
+				var contentBox = searchContainer.get('contentBox');
 
-			if (contentBox) {
-				var mainContent = contentBox.ancestor('#main-content');
-				var horizontalScrollingContainer = document.querySelector('.lfr-search-container-fixed-first-column .table-responsive');
-				var fixedHeaderScrollingContainer = document.querySelector('.lfr-search-iterator-fixed-header-inner-wrapper');
+				var fixedHeader = document.getElementById('<%= namespace + id %>fixedHeader');
 
-				if (mainContent && horizontalScrollingContainer && fixedHeaderScrollingContainer) {
-					var verticalScrollingContainer = window === Liferay.Util.getOpener() ? window : mainContent._node;
+				if (contentBox) {
+					var mainContent = contentBox.ancestor('#main-content');
+					var horizontalScrollingContainer = document.querySelector('.lfr-search-container-fixed-first-column .table-responsive');
+					var fixedHeaderScrollingContainer = document.querySelector('.lfr-search-iterator-fixed-header-inner-wrapper');
 
-					var table = fixedHeader.parentElement.parentElement;
-					var trDomRect = fixedHeader.previousElementSibling.getBoundingClientRect();
+					if (mainContent && horizontalScrollingContainer && fixedHeaderScrollingContainer) {
+						var verticalScrollingContainer = inModal ? mainContent._node : window;
 
-					var syncScrollingContainers = function(event) {
-						fixedHeaderScrollingContainer.scrollLeft = horizontalScrollingContainer.scrollLeft;
+						var table = fixedHeader.parentElement.parentElement;
+						var trDomRect = fixedHeader.previousElementSibling.getBoundingClientRect();
+
+						var syncScrollingContainers = function(event) {
+							fixedHeaderScrollingContainer.scrollLeft = horizontalScrollingContainer.scrollLeft;
+						}
+
+						var fixedHeaderEventHandler = function(event) {
+							var scrollTop = verticalScrollingContainer.scrollTop;
+							var trDomRecTop = trDomRect.top;
+
+							if (fixedHeader.classList.contains('hide') && (scrollTop >= trDomRecTop)) {
+								fixedHeader.classList.remove('hide');
+
+								syncScrollingContainers();
+							}
+							else if (verticalScrollingContainer.scrollTop < trDomRecTop) {
+								fixedHeader.classList.add('hide');
+							}
+						};
+
+						verticalScrollingContainer.addEventListener('scroll', fixedHeaderEventHandler);
+
+						horizontalScrollingContainer.addEventListener('scroll', syncScrollingContainers);
+
+						Liferay.on(
+							'destroyPortlet',
+							function() {
+								verticalScrollingContainer.removeEventListener('scroll', fixedHeaderEventHandler);
+								horizontalScrollingContainer.removeEventListener('scroll', syncScrollingContainers);
+							}
+						);
 					}
-
-					var fixedHeaderEventHandler = function(event) {
-						var scrollTop = verticalScrollingContainer.scrollTop;
-						var trDomRecTop = trDomRect.top;
-
-						if (fixedHeader.classList.contains('hide') && (scrollTop >= trDomRecTop)) {
-							fixedHeader.classList.remove('hide');
-
-							syncScrollingContainers();
-						}
-						else if (verticalScrollingContainer.scrollTop < trDomRecTop) {
-							fixedHeader.classList.add('hide');
-						}
-					};
-
-					verticalScrollingContainer.addEventListener('scroll', fixedHeaderEventHandler);
-
-					horizontalScrollingContainer.addEventListener('scroll', syncScrollingContainers);
-
-					Liferay.on(
-						'destroyPortlet',
-						function() {
-							verticalScrollingContainer.removeEventListener('scroll', fixedHeaderEventHandler);
-							horizontalScrollingContainer.removeEventListener('scroll', syncScrollingContainers);
-						}
-					);
 				}
+			}
+
+			if (inModal) {
+				Liferay.Util.getOpener().Liferay.on('modalIframeLoaded', function() {
+					initFixedHeaderSync();
+				});
+			}
+			else {
+				initFixedHeaderSync();
 			}
 		</c:if>
 

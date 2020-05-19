@@ -407,6 +407,24 @@ public class ViewChangesDisplayContext {
 		rootDisplayNodes.add(node);
 	}
 
+	private List<JSONObject> _getChildJSONObjects(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		Map<Long, List<JSONObject>> rootDisplayMap,
+		Map<Long, List<Long>> childPKsMap) {
+
+		List<JSONObject> childJSONObjects = new ArrayList<>();
+
+		for (Map.Entry<Long, List<Long>> entry : childPKsMap.entrySet()) {
+			_addChildClassJSONObjects(
+				liferayPortletRequest, liferayPortletResponse, entry.getKey(),
+				entry.getValue(), childJSONObjects,
+				rootDisplayMap.get(entry.getKey()));
+		}
+
+		return childJSONObjects;
+	}
+
 	private CTClosure _getCTClosure() {
 		if (_ctClosure != null) {
 			return _ctClosure;
@@ -524,14 +542,9 @@ public class ViewChangesDisplayContext {
 				continue;
 			}
 
-			List<JSONObject> childJSONObjects = new ArrayList<>();
-
-			for (Map.Entry<Long, List<Long>> entry : childPKsMap.entrySet()) {
-				_addChildClassJSONObjects(
-					liferayPortletRequest, liferayPortletResponse,
-					entry.getKey(), entry.getValue(), childJSONObjects,
-					rootDisplayMap.get(entry.getKey()));
-			}
+			List<JSONObject> childJSONObjects = _getChildJSONObjects(
+				liferayPortletRequest, liferayPortletResponse, rootDisplayMap,
+				childPKsMap);
 
 			if (childJSONObjects.isEmpty()) {
 				continue;

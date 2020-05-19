@@ -224,6 +224,10 @@ const FriendlyURLHistoryModal = ({
 												<ClayList.ItemField>
 													<ClayList.QuickActionMenu>
 														<ClayList.QuickActionMenu.Item
+															className="lfr-portal-tooltip"
+															data-title={Liferay.Language.get(
+																'restore-url'
+															)}
 															symbol="reload"
 														/>
 														<ClayList.QuickActionMenu.Item

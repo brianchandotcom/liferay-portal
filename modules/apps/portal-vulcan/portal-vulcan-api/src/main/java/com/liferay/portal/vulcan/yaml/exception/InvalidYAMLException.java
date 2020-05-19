@@ -24,10 +24,10 @@ import org.yaml.snakeyaml.error.MarkedYAMLException;
 /**
  * @author Javier de Arcos
  */
-public class YAMLFileException extends IllegalArgumentException {
+public class InvalidYAMLException extends IllegalArgumentException {
 
-	protected YAMLFileException(String cause, Exception exception) {
-		super(cause + " - " + _getProblem(exception), exception);
+	public InvalidYAMLException(Exception exception) {
+		super(_getProblem(exception), exception);
 	}
 
 	private static String _getProblem(Throwable exception) {
@@ -42,7 +42,7 @@ public class YAMLFileException extends IllegalArgumentException {
 			markedYAMLException.getProblemMark());
 
 		return StringBundler.concat(
-			"Error",
+			"Invalid YAML",
 			markOptional.map(
 				Mark::toString
 			).orElse(

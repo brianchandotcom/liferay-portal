@@ -16,8 +16,7 @@ package com.liferay.portal.vulcan.yaml;
 
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.config.Security;
-import com.liferay.portal.vulcan.yaml.exception.InvalidOpenAPIException;
-import com.liferay.portal.vulcan.yaml.exception.InvalidYAMLFormatException;
+import com.liferay.portal.vulcan.yaml.exception.InvalidYAMLException;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
@@ -32,9 +31,8 @@ import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.constructor.ConstructorException;
+import org.yaml.snakeyaml.error.MarkedYAMLException;
 import org.yaml.snakeyaml.introspector.PropertyUtils;
-import org.yaml.snakeyaml.parser.ParserException;
 import org.yaml.snakeyaml.representer.Representer;
 
 /**
@@ -46,11 +44,8 @@ public class YAMLUtil {
 		try {
 			return _YAML_CONFIG.loadAs(yamlString, ConfigYAML.class);
 		}
-		catch (ParserException parserException) {
-			throw new InvalidYAMLFormatException(parserException);
-		}
-		catch (ConstructorException constructorException) {
-			throw new InvalidOpenAPIException(constructorException);
+		catch (MarkedYAMLException markedYAMLException) {
+			throw new InvalidYAMLException(markedYAMLException);
 		}
 	}
 
@@ -58,11 +53,8 @@ public class YAMLUtil {
 		try {
 			return _YAML_OPEN_API.loadAs(yamlString, OpenAPIYAML.class);
 		}
-		catch (ParserException parserException) {
-			throw new InvalidYAMLFormatException(parserException);
-		}
-		catch (ConstructorException constructorException) {
-			throw new InvalidOpenAPIException(constructorException);
+		catch (MarkedYAMLException markedYAMLException) {
+			throw new InvalidYAMLException(markedYAMLException);
 		}
 	}
 

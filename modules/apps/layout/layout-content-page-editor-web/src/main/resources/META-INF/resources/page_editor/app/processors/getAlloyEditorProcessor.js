@@ -137,13 +137,13 @@ export default function getAlloyEditorProcessor(
 						if (_callbacks.changeCallback) {
 							_callbacks.changeCallback(nativeEditor.getData());
 						}
-					}
 
-					requestAnimationFrame(() => {
-						if (_callbacks.destroyCallback) {
-							_callbacks.destroyCallback();
-						}
-					});
+						requestAnimationFrame(() => {
+							if (_callbacks.destroyCallback) {
+								_callbacks.destroyCallback();
+							}
+						});
+					}
 				}),
 
 				nativeEditor.on('instanceReady', () => {

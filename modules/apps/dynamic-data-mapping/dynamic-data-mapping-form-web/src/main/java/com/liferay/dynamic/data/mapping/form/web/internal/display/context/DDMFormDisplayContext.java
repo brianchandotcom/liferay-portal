@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -538,7 +539,9 @@ public class DDMFormDisplayContext {
 	}
 
 	public boolean isShowSuccessPage() throws PortalException {
-		if (SessionMessages.isEmpty(_renderRequest)) {
+		if (!SessionErrors.isEmpty(_renderRequest) ||
+			SessionMessages.isEmpty(_renderRequest)) {
+
 			return false;
 		}
 

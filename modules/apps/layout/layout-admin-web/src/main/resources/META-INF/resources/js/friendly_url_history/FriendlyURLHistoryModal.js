@@ -224,7 +224,6 @@ const FriendlyURLHistoryModal = ({
 												<ClayList.ItemField>
 													<ClayList.QuickActionMenu>
 														<ClayList.QuickActionMenu.Item
-															className="d-none"
 															symbol="reload"
 														/>
 														<ClayList.QuickActionMenu.Item

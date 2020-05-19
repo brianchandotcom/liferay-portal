@@ -417,6 +417,10 @@ public class AxisBuild extends BaseBuild {
 		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
 
 		for (TestResult testResult : getTestResults(null)) {
+			if (!testResult.isFailing()) {
+				continue;
+			}
+
 			if (testResult.isUniqueFailure()) {
 				uniqueFailureTestResults.add(testResult);
 			}
@@ -430,6 +434,10 @@ public class AxisBuild extends BaseBuild {
 		List<TestResult> upstreamFailureTestResults = new ArrayList<>();
 
 		for (TestResult testResult : getTestResults(null)) {
+			if (!testResult.isFailing()) {
+				continue;
+			}
+
 			if (!testResult.isUniqueFailure()) {
 				upstreamFailureTestResults.add(testResult);
 			}

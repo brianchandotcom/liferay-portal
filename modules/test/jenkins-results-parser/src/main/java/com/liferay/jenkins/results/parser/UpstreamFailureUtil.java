@@ -50,12 +50,10 @@ public class UpstreamFailureUtil {
 			String jobVariant = failedBatchJSONObject.getString("jobVariant");
 
 			if (type.equals("build")) {
-				if (failedTestsJSONArray.length() == 0) {
-					upstreamFailures.add(
-						JenkinsResultsParserUtil.combine(
-							jobVariant, ",",
-							failedBatchJSONObject.getString("result")));
-				}
+				upstreamFailures.add(
+					JenkinsResultsParserUtil.combine(
+						jobVariant, ",",
+						failedBatchJSONObject.getString("result")));
 			}
 			else if (type.equals("test")) {
 				for (int j = 0; j < failedTestsJSONArray.length(); j++) {

@@ -50,6 +50,13 @@ public class AccountGroupLocalServiceUtil {
 		return getService().addAccountGroup(accountGroup);
 	}
 
+	public static com.liferay.account.model.AccountGroup addAccountGroup(
+			long userId, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAccountGroup(userId, name, description);
+	}
+
 	/**
 	 * Creates a new account group with the primary key. Does not add the account group to the database.
 	 *
@@ -303,6 +310,14 @@ public class AccountGroupLocalServiceUtil {
 		com.liferay.account.model.AccountGroup accountGroup) {
 
 		return getService().updateAccountGroup(accountGroup);
+	}
+
+	public static com.liferay.account.model.AccountGroup updateAccountGroup(
+			long accountGroupId, long userId, String name, String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateAccountGroup(
+			accountGroupId, userId, name, description);
 	}
 
 	public static AccountGroupLocalService getService() {

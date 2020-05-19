@@ -71,6 +71,10 @@ public interface AccountGroupLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountGroup addAccountGroup(AccountGroup accountGroup);
 
+	public AccountGroup addAccountGroup(
+			long userId, String name, String description)
+		throws PortalException;
+
 	/**
 	 * Creates a new account group with the primary key. Does not add the account group to the database.
 	 *
@@ -258,5 +262,9 @@ public interface AccountGroupLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountGroup updateAccountGroup(AccountGroup accountGroup);
+
+	public AccountGroup updateAccountGroup(
+			long accountGroupId, long userId, String name, String description)
+		throws PortalException;
 
 }

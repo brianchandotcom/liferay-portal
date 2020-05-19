@@ -42,6 +42,20 @@ export default function widgetsReducer(widgets, action) {
 
 			return nextWidgets;
 		}
+		case DELETE_ITEM: {
+			const portletIds = action.portletIds || [];
+			let nextWidgets = widgets;
+
+			portletIds.forEach((portletId) => {
+				const widgetPath = getWidgetPath(widgets, portletId);
+
+				nextWidgets = setWidgetUsage(nextWidgets, widgetPath, {
+					used: false,
+				});
+			});
+
+			return nextWidgets;
+		}
 
 		case DELETE_WIDGETS: {
 			let nextWidgets = widgets;

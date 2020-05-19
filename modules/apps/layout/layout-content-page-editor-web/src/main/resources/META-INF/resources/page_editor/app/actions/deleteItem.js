@@ -14,11 +14,17 @@
 
 import {DELETE_ITEM} from './types';
 
-export default function deleteItem({isUndo, itemId, layoutData}) {
+export default function deleteItem({
+	isUndo,
+	itemId,
+	layoutData,
+	portletIds = [],
+}) {
 	return {
 		isUndo,
 		itemId,
 		layoutData,
+		portletIds,
 		type: DELETE_ITEM,
 	};
 }

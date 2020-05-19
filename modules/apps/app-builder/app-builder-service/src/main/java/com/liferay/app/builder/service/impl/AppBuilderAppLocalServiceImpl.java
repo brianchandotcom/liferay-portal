@@ -48,7 +48,7 @@ public class AppBuilderAppLocalServiceImpl
 	public AppBuilderApp addAppBuilderApp(
 			long groupId, long companyId, long userId, boolean active,
 			long ddmStructureId, long ddmStructureLayoutId,
-			long deDataListViewId, Map<Locale, String> nameMap)
+			long deDataListViewId, Map<Locale, String> nameMap, String scope)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -67,6 +67,7 @@ public class AppBuilderAppLocalServiceImpl
 		appBuilderApp.setDdmStructureLayoutId(ddmStructureLayoutId);
 		appBuilderApp.setDeDataListViewId(deDataListViewId);
 		appBuilderApp.setNameMap(nameMap);
+		appBuilderApp.setScope(scope);
 
 		return appBuilderAppPersistence.update(appBuilderApp);
 	}

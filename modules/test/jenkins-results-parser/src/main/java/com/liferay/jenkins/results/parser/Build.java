@@ -43,6 +43,8 @@ public interface Build {
 
 	public String getBaseGitRepositorySHA(String gitRepositoryName);
 
+	public BranchInformation getBranchInformation(String repositoryType);
+
 	public String getBranchName();
 
 	public String getBrowser();
@@ -192,5 +194,23 @@ public interface Build {
 	public void takeSlaveOffline(SlaveOfflineRule slaveOfflineRule);
 
 	public void update();
+
+	public interface BranchInformation {
+
+		public String getReceiverUsername();
+
+		public String getRepositoryName();
+
+		public String getSenderBranchName();
+
+		public String getSenderBranchSHA();
+
+		public String getSenderUsername();
+
+		public String getUpstreamBranchName();
+
+		public String getUpstreamBranchSHA();
+
+	}
 
 }

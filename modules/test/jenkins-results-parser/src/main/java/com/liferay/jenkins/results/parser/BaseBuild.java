@@ -287,6 +287,27 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public BranchInformation getBranchInformation(String repositoryType) {
+		BranchInformation branchInformation = _branchInformationMap.get(
+			repositoryType);
+
+		if (branchInformation == null) {
+			branchInformation = new DefaultBranchInformation(
+				this, repositoryType);
+
+			String repositoryName = branchInformation.getRepositoryName();
+
+			if (repositoryName == null) {
+				return null;
+			}
+
+			_branchInformationMap.put(repositoryType, branchInformation);
+		}
+
+		return _branchInformationMap.get(repositoryType);
+	}
+
+	@Override
 	public String getBranchName() {
 		return branchName;
 	}
@@ -1597,6 +1618,140 @@ public abstract class BaseBuild implements Build {
 
 			return displayName1.compareTo(displayName2);
 		}
+
+	}
+
+	public static class DefaultBranchInformation implements BranchInformation {
+
+		@Override
+		public String getReceiverUsername() {
+			String branchInformationString = _getBranchInformationString();
+
+			String regex = "[\\S\\s]*github.receiver.username=(.+)\\n[\\S\\s]*";
+
+			if (branchInformationString.matches(regex)) {
+				return branchInformationString.replaceAll(regex, "$1");
+			}
+
+			return null;
+		}
+
+		@Override
+		public String getRepositoryName() {
+			String branchInformationString = _getBranchInformationString();
+
+			String regex = "[\\S\\s]*prepare.repositories.([^\\(]+)[\\S\\s]*";
+
+			if (branchInformationString.matches(regex)) {
+				return branchInformationString.replaceAll(regex, "$1");
+			}
+
+			return null;
+		}
+
+		@Override
+		public String getSenderBranchName() {
+			String branchInformationString = _getBranchInformationString();
+
+			String regex =
+				"[\\S\\s]*github.sender.branch.name=(.+)\\n[\\S\\s]*";
+
+			if (branchInformationString.matches(regex)) {
+				return branchInformationString.replaceAll(regex, "$1");
+			}
+
+			return null;
+		}
+
+		@Override
+		public String getSenderBranchSHA() {
+			String branchInformationString = _getBranchInformationString();
+
+			String regex = "[\\S\\s]*github.sender.branch.sha=(.+)\\n[\\S\\s]*";
+
+			if (branchInformationString.matches(regex)) {
+				return branchInformationString.replaceAll(regex, "$1");
+			}
+
+			return null;
+		}
+
+		@Override
+		public String getSenderUsername() {
+			String branchInformationString = _getBranchInformationString();
+
+			String regex = "[\\S\\s]*github.sender.username=(.+)\\n[\\S\\s]*";
+
+			if (branchInformationString.matches(regex)) {
+				return branchInformationString.replaceAll(regex, "$1");
+			}
+
+			return null;
+		}
+
+		@Override
+		public String getUpstreamBranchName() {
+			String branchInformationString = _getBranchInformationString();
+
+			String regex =
+				"[\\S\\s]*github.upstream.branch.name=(.+)\\n[\\S\\s]*";
+
+			if (branchInformationString.matches(regex)) {
+				return branchInformationString.replaceAll(regex, "$1");
+			}
+
+			return null;
+		}
+
+		@Override
+		public String getUpstreamBranchSHA() {
+			String branchInformationString = _getBranchInformationString();
+
+			String regex =
+				"[\\S\\s]*github.upstream.branch.sha=(.+)\\n[\\S\\s]*";
+
+			if (branchInformationString.matches(regex)) {
+				return branchInformationString.replaceAll(regex, "$1");
+			}
+
+			return null;
+		}
+
+		protected DefaultBranchInformation(Build build, String repositoryType) {
+			_build = build;
+			_repositoryType = repositoryType;
+		}
+
+		private String _getBranchInformationString() {
+			if (_branchInformationString != null) {
+				return _branchInformationString;
+			}
+
+			String consoleText = _build.getConsoleText();
+
+			int x = consoleText.indexOf(
+				"## git." + _repositoryType + ".properties");
+
+			if (x == -1) {
+				return "";
+			}
+
+			int y = consoleText.indexOf("prepare.repositories.", x);
+
+			y = consoleText.indexOf("\n", y);
+
+			if (y == -1) {
+				return "";
+			}
+
+			_branchInformationString = consoleText.substring(x, y);
+
+			return _branchInformationString;
+		}
+
+		private String _branchInformationString;
+		private final Build _build;
+		private final String _repositoryType;
 
 	}
 
@@ -3489,6 +3644,8 @@ public abstract class BaseBuild implements Build {
 			"jenkins.report.time.zone");
 	}
 
+	private final Map<String, BranchInformation> _branchInformationMap =
+		new HashMap<>();
 	private String _buildDescription;
 	private int _buildNumber = -1;
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;

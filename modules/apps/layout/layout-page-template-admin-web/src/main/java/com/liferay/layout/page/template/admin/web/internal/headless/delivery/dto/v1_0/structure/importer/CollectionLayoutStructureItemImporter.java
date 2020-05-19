@@ -77,7 +77,7 @@ public class CollectionLayoutStructureItemImporter
 
 			collectionLayoutStructureItem.setNumberOfColumns(
 				(Integer)definitionMap.get("numberOfColumns"));
-			collectionLayoutStructureItem.setNumberOfColumns(
+			collectionLayoutStructureItem.setNumberOfItems(
 				(Integer)definitionMap.get("numberOfItems"));
 		}
 

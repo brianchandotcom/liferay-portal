@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -83,13 +84,19 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 	protected JSONObject processException(
 		ActionRequest actionRequest, Exception exception) {
 
+		String errorMessage = "an-unexpected-error-occurred";
+
+		if (exception instanceof PortletIdException) {
+			errorMessage =
+				"noninstanceable-widgets-can-be-embedded-only-once-on-the-" +
+					"same-page";
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return JSONUtil.put(
-			"error",
-			LanguageUtil.get(
-				themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+			"error", LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

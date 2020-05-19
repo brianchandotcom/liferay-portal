@@ -294,6 +294,8 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
+		Pause(locator1 = "3000");
+
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Blogs");

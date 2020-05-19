@@ -71,7 +71,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 		);
 	};
 
-	const [availableListRenderers, setAvailableListRenderers] = useState(
+	const [availableListStyles, setAvailableListStyles] = useState(
 		DEFAULT_LIST_STYLES
 	);
 
@@ -85,13 +85,13 @@ export const CollectionConfigurationPanel = ({item}) => {
 				className: collectionItemType,
 			})
 				.then((response) => {
-					setAvailableListRenderers([
+					setAvailableListStyles([
 						...DEFAULT_LIST_STYLES,
 						...response,
 					]);
 				})
 				.catch(() => {
-					setAvailableListRenderers(DEFAULT_LIST_STYLES);
+					setAvailableListStyles(DEFAULT_LIST_STYLES);
 				});
 		}
 	}, [collectionItemType]);
@@ -113,7 +113,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 			</ClayForm.Group>
 			{collectionIsMapped(item.config) && (
 				<>
-					{availableListRenderers.length > 0 && (
+					{availableListStyles.length > 0 && (
 						<ClayForm.Group small>
 							<label htmlFor={listStyleId}>
 								{Liferay.Language.get('list-style')}
@@ -126,7 +126,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 										listStyle: value,
 									})
 								}
-								options={availableListRenderers}
+								options={setAvailableListStyles}
 								value={item.config.listStyle}
 							/>
 						</ClayForm.Group>

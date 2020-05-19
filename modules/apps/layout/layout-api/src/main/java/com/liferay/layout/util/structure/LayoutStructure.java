@@ -82,8 +82,7 @@ public class LayoutStructure {
 			}
 
 			JSONArray deletedLayoutStructureItemJSONArray = Optional.ofNullable(
-				layoutStructureJSONObject.getJSONArray(
-					"deletedLayoutStructureItems")
+				layoutStructureJSONObject.getJSONArray("deletedItems")
 			).orElse(
 				JSONFactoryUtil.createJSONArray()
 			);
@@ -456,7 +455,7 @@ public class LayoutStructure {
 		}
 
 		return JSONUtil.put(
-			"deletedLayoutStructureItems", deletedLayoutStructureItemsJSONArray
+			"deletedItems", deletedLayoutStructureItemsJSONArray
 		).put(
 			"items", layoutStructureItemsJSONObject
 		).put(

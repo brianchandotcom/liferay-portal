@@ -68,18 +68,21 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		for (Result result : results) {
 			JSONObject requestJSONObject = new JSONObject();
 
-			SpiraTestCaseObject spiraTestCase = result.getSpiraTestCase();
+			SpiraTestCaseObject spiraTestCaseObject =
+				result.getSpiraTestCaseObject();
 
 			requestJSONObject.put(
-				SpiraTestCaseObject.ID_KEY, spiraTestCase.getID());
+				SpiraTestCaseObject.ID_KEY, spiraTestCaseObject.getID());
 
 			requestJSONObject.put(
 				"CustomProperties", result.getCustomPropertyValuesJSONArray());
 			requestJSONObject.put("ExecutionStatusId", result.getStatusID());
-			requestJSONObject.put("RunnerMessage", spiraTestCase.getName());
+			requestJSONObject.put(
+				"RunnerMessage", spiraTestCaseObject.getName());
 			requestJSONObject.put("RunnerName", "Liferay CI");
 			requestJSONObject.put("RunnerStackTrace", result.getDescription());
-			requestJSONObject.put("RunnerTestName", spiraTestCase.getName());
+			requestJSONObject.put(
+				"RunnerTestName", spiraTestCaseObject.getName());
 			requestJSONObject.put(
 				"StartDate", PathSpiraArtifact.toDateString(calendar));
 			requestJSONObject.put(
@@ -97,7 +100,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 				requestJSONObject.put(SpiraTestSet.ID_KEY, testSetID);
 
 				SpiraTestSet.SpiraTestSetTestCase spiraTestSetTestCase =
-					spiraTestSet.assignSpiraTestCase(spiraTestCase);
+					spiraTestSet.assignSpiraTestCaseObject(spiraTestCaseObject);
 
 				requestJSONObject.put(
 					SpiraTestSet.SpiraTestSetTestCase.ID_KEY,
@@ -190,7 +193,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 						print("Starting at " + startString);
 
 						for (Result result : resultGroup) {
-							result.initSpiraTestCase();
+							result.initSpiraTestCaseObject();
 						}
 
 						List<SpiraTestCaseRun> spiraTestCaseRuns =
@@ -253,11 +256,11 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 	public static class Result {
 
 		public Result(
-			SpiraTestCaseObject spiraTestCase, RunnerFormat runnerFormat,
+			SpiraTestCaseObject spiraTestCaseObject, RunnerFormat runnerFormat,
 			String runnerStackTrace, Status status,
 			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
 
-			_spiraTestCase = spiraTestCase;
+			_spiraTestCaseObject = spiraTestCaseObject;
 			_runnerFormat = runnerFormat;
 			_description = runnerStackTrace;
 			_status = status;
@@ -265,11 +268,11 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		}
 
 		public Result(
-			Supplier<SpiraTestCaseObject> testCaseSupplier,
+			Supplier<SpiraTestCaseObject> spiraTestCaseObjectSupplier,
 			RunnerFormat runnerFormat, String runnerStackTrace, Status status,
 			List<SpiraCustomProperty.Value> spiraCustomPropertyValues) {
 
-			_spiraTestCaseSupplier = testCaseSupplier;
+			_spiraTestCaseObjectSupplier = spiraTestCaseObjectSupplier;
 			_runnerFormat = runnerFormat;
 			_description = runnerStackTrace;
 			_status = status;
@@ -383,39 +386,39 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		}
 
 		public SpiraProject getSpiraProject() {
-			SpiraTestCaseObject spiraTestCase = getSpiraTestCase();
+			SpiraTestCaseObject spiraTestCaseObject = getSpiraTestCaseObject();
 
-			return spiraTestCase.getSpiraProject();
+			return spiraTestCaseObject.getSpiraProject();
 		}
 
-		public SpiraTestCaseObject getSpiraTestCase() {
-			initSpiraTestCase();
+		public SpiraTestCaseObject getSpiraTestCaseObject() {
+			initSpiraTestCaseObject();
 
-			return _spiraTestCase;
+			return _spiraTestCaseObject;
 		}
 
 		public Integer getStatusID() {
 			return _status.getID();
 		}
 
-		public void initSpiraTestCase() {
-			if (_spiraTestCase != null) {
+		public void initSpiraTestCaseObject() {
+			if (_spiraTestCaseObject != null) {
 				return;
 			}
 
-			if (_spiraTestCaseSupplier == null) {
+			if (_spiraTestCaseObjectSupplier == null) {
 				return;
 			}
 
-			_spiraTestCase = _spiraTestCaseSupplier.get();
+			_spiraTestCaseObject = _spiraTestCaseObjectSupplier.get();
 		}
 
 		private final String _description;
 		private final RunnerFormat _runnerFormat;
 		private final List<SpiraCustomProperty.Value>
 			_spiraCustomPropertyValues;
-		private SpiraTestCaseObject _spiraTestCase;
-		private Supplier<SpiraTestCaseObject> _spiraTestCaseSupplier;
+		private SpiraTestCaseObject _spiraTestCaseObject;
+		private Supplier<SpiraTestCaseObject> _spiraTestCaseObjectSupplier;
 		private final Status _status;
 
 	}

@@ -172,11 +172,11 @@ public class SpiraTestSet extends PathSpiraArtifact {
 			searchParameters);
 	}
 
-	protected SpiraTestSetTestCase assignSpiraTestCase(
-		SpiraTestCaseObject spiraTestCase) {
+	protected SpiraTestSetTestCase assignSpiraTestCaseObject(
+		SpiraTestCaseObject spiraTestCaseObject) {
 
-		if (_spiraTestSetTestCases.containsKey(spiraTestCase.getID())) {
-			return _spiraTestSetTestCases.get(spiraTestCase.getID());
+		if (_spiraTestSetTestCases.containsKey(spiraTestCaseObject.getID())) {
+			return _spiraTestSetTestCases.get(spiraTestCaseObject.getID());
 		}
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
@@ -187,7 +187,7 @@ public class SpiraTestSet extends PathSpiraArtifact {
 			"project_id", String.valueOf(spiraProject.getID()));
 
 		urlPathReplacements.put(
-			"test_case_id", String.valueOf(spiraTestCase.getID()));
+			"test_case_id", String.valueOf(spiraTestCaseObject.getID()));
 
 		urlPathReplacements.put("test_set_id", String.valueOf(getID()));
 
@@ -231,15 +231,15 @@ public class SpiraTestSet extends PathSpiraArtifact {
 
 		@Override
 		public String getURL() {
-			SpiraTestCaseObject spiraTestCase = getSpiraTestCase();
+			SpiraTestCaseObject spiraTestCaseObject = getSpiraTestCaseObject();
 
-			return spiraTestCase.getURL();
+			return spiraTestCaseObject.getURL();
 		}
 
-		protected SpiraTestCaseObject getSpiraTestCase() {
+		protected SpiraTestCaseObject getSpiraTestCaseObject() {
 			SpiraProject spiraProject = getSpiraProject();
 
-			return spiraProject.getSpiraTestCaseByID(getTestCaseID());
+			return spiraProject.getSpiraTestCaseObjectByID(getTestCaseID());
 		}
 
 		protected Integer getTestCaseID() {

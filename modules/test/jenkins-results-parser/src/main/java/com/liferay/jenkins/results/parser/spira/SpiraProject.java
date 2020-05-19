@@ -171,41 +171,6 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraReleases;
 	}
 
-	public SpiraTestCaseObject getSpiraTestCaseByID(int testCaseID) {
-		List<SpiraTestCaseObject> spiraTestCases =
-			SpiraTestCaseObject.getSpiraTestCases(
-				this,
-				new SearchQuery.SearchParameter(
-					SpiraTestCaseObject.ID_KEY, testCaseID));
-
-		if (spiraTestCases.size() > 1) {
-			throw new RuntimeException("Duplicate test case ID " + testCaseID);
-		}
-
-		if (spiraTestCases.isEmpty()) {
-			throw new RuntimeException("Missing test case ID " + testCaseID);
-		}
-
-		return spiraTestCases.get(0);
-	}
-
-	public SpiraTestCaseObject getSpiraTestCaseByPath(String testCasePath) {
-		List<SpiraTestCaseObject> spiraTestCases = getSpiraTestCasesByPath(
-			testCasePath);
-
-		if (spiraTestCases.size() > 1) {
-			throw new RuntimeException(
-				"Duplicate test case path " + testCasePath);
-		}
-
-		if (spiraTestCases.isEmpty()) {
-			throw new RuntimeException(
-				"Missing test case path " + testCasePath);
-		}
-
-		return spiraTestCases.get(0);
-	}
-
 	public SpiraTestCaseFolder getSpiraTestCaseFolderByID(
 		int testCaseFolderID) {
 
@@ -280,41 +245,82 @@ public class SpiraProject extends BaseSpiraArtifact {
 		return spiraTestCaseFolders;
 	}
 
-	public List<SpiraTestCaseObject> getSpiraTestCases() {
-		return SpiraTestCaseObject.getSpiraTestCases(this);
+	public SpiraTestCaseObject getSpiraTestCaseObjectByID(int testCaseID) {
+		List<SpiraTestCaseObject> spiraTestCaseObjects =
+			SpiraTestCaseObject.getSpiraTestCaseObjects(
+				this,
+				new SearchQuery.SearchParameter(
+					SpiraTestCaseObject.ID_KEY, testCaseID));
+
+		if (spiraTestCaseObjects.size() > 1) {
+			throw new RuntimeException("Duplicate test case ID " + testCaseID);
+		}
+
+		if (spiraTestCaseObjects.isEmpty()) {
+			throw new RuntimeException("Missing test case ID " + testCaseID);
+		}
+
+		return spiraTestCaseObjects.get(0);
 	}
 
-	public List<SpiraTestCaseObject> getSpiraTestCases(long numberOfRows) {
-		return SpiraTestCaseObject.getSpiraTestCases(this, numberOfRows);
-	}
-
-	public List<SpiraTestCaseObject> getSpiraTestCasesByPath(
+	public SpiraTestCaseObject getSpiraTestCaseObjectByPath(
 		String testCasePath) {
 
-		List<SpiraTestCaseObject> spiraTestCases =
-			SpiraTestCaseObject.getSpiraTestCases(
+		List<SpiraTestCaseObject> spiraTestCaseObjects =
+			getSpiraTestCaseObjectsByPath(testCasePath);
+
+		if (spiraTestCaseObjects.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test case path " + testCasePath);
+		}
+
+		if (spiraTestCaseObjects.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test case path " + testCasePath);
+		}
+
+		return spiraTestCaseObjects.get(0);
+	}
+
+	public List<SpiraTestCaseObject> getSpiraTestCaseObjects() {
+		return SpiraTestCaseObject.getSpiraTestCaseObjects(this);
+	}
+
+	public List<SpiraTestCaseObject> getSpiraTestCaseObjects(
+		long numberOfRows) {
+
+		return SpiraTestCaseObject.getSpiraTestCaseObjects(this, numberOfRows);
+	}
+
+	public List<SpiraTestCaseObject> getSpiraTestCaseObjectsByPath(
+		String testCasePath) {
+
+		List<SpiraTestCaseObject> spiraTestCaseObjects =
+			SpiraTestCaseObject.getSpiraTestCaseObjects(
 				this, new SearchQuery.SearchParameter("Path", testCasePath));
 
-		if (!spiraTestCases.isEmpty()) {
-			return spiraTestCases;
+		if (!spiraTestCaseObjects.isEmpty()) {
+			return spiraTestCaseObjects;
 		}
 
 		String testCaseName = StringEscapeUtils.unescapeJava(
 			PathSpiraArtifact.getPathName(testCasePath));
 
-		List<SpiraTestCaseObject> spiraTestCasesByName =
-			SpiraTestCaseObject.getSpiraTestCases(
+		List<SpiraTestCaseObject> spiraTestCaseObjectsByName =
+			SpiraTestCaseObject.getSpiraTestCaseObjects(
 				this, new SearchQuery.SearchParameter("Name", testCaseName));
 
-		for (SpiraTestCaseObject spiraTestCase : spiraTestCasesByName) {
-			if (!testCasePath.equals(spiraTestCase.getPath())) {
+		for (SpiraTestCaseObject spiraTestCaseObject :
+				spiraTestCaseObjectsByName) {
+
+			if (!testCasePath.equals(spiraTestCaseObject.getPath())) {
 				continue;
 			}
 
-			spiraTestCases.add(spiraTestCase);
+			spiraTestCaseObjects.add(spiraTestCaseObject);
 		}
 
-		return spiraTestCases;
+		return spiraTestCaseObjects;
 	}
 
 	public SpiraTestCaseType getSpiraTestCaseTypeByID(int testCaseTypeID) {

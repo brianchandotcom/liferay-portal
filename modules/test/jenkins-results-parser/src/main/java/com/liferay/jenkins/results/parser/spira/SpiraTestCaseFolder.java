@@ -163,13 +163,13 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 		}
 	}
 
-	public List<SpiraTestCaseObject> getChildSpiraTestCases() {
-		if (_childSpiraTestCases != null) {
-			return _childSpiraTestCases;
+	public List<SpiraTestCaseObject> getChildSpiraTestCaseObjects() {
+		if (_childSpiraTestCaseObjects != null) {
+			return _childSpiraTestCaseObjects;
 		}
 
-		_childSpiraTestCases = new ArrayList<>(
-			SpiraTestCaseObject.getSpiraTestCases(
+		_childSpiraTestCaseObjects = new ArrayList<>(
+			SpiraTestCaseObject.getSpiraTestCaseObjects(
 				getSpiraProject(),
 				new SearchQuery.SearchParameter("TestCaseFolderId", getID())));
 
@@ -180,11 +180,11 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 					"ParentTestCaseFolderId", getID()));
 
 		for (SpiraTestCaseFolder spiraTestCaseFolder : spiraTestCaseFolders) {
-			_childSpiraTestCases.addAll(
-				spiraTestCaseFolder.getChildSpiraTestCases());
+			_childSpiraTestCaseObjects.addAll(
+				spiraTestCaseFolder.getChildSpiraTestCaseObjects());
 		}
 
-		return _childSpiraTestCases;
+		return _childSpiraTestCaseObjects;
 	}
 
 	public SpiraTestCaseFolder getParentSpiraTestCaseFolder() {
@@ -291,7 +291,7 @@ public class SpiraTestCaseFolder extends PathSpiraArtifact {
 		cacheSpiraArtifact(SpiraTestCaseFolder.class, this);
 	}
 
-	private List<SpiraTestCaseObject> _childSpiraTestCases;
+	private List<SpiraTestCaseObject> _childSpiraTestCaseObjects;
 	private SpiraTestCaseFolder _parentSpiraTestCaseFolder;
 
 }

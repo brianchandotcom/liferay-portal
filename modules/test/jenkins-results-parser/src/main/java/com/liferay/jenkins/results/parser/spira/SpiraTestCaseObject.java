@@ -36,40 +36,40 @@ import org.json.JSONObject;
  */
 public class SpiraTestCaseObject extends PathSpiraArtifact {
 
-	public static SpiraTestCaseObject createSpiraTestCase(
+	public static SpiraTestCaseObject createSpiraTestCaseObject(
 		SpiraProject spiraProject, String testCaseName, String testCaseFilePath,
 		SpiraTestCaseType spiraTestCaseType) {
 
-		return _createSpiraTestCase(
+		return _createSpiraTestCaseObject(
 			spiraProject, testCaseName, testCaseFilePath, spiraTestCaseType,
 			null, true);
 	}
 
-	public static SpiraTestCaseObject createSpiraTestCase(
+	public static SpiraTestCaseObject createSpiraTestCaseObject(
 		SpiraProject spiraProject, String testCaseName, String testCaseFilePath,
 		SpiraTestCaseType spiraTestCaseType, Integer parentTestCaseFolderID) {
 
-		return _createSpiraTestCase(
+		return _createSpiraTestCaseObject(
 			spiraProject, testCaseName, testCaseFilePath, spiraTestCaseType,
 			parentTestCaseFolderID, true);
 	}
 
-	public static SpiraTestCaseObject createSpiraTestCaseByPath(
+	public static SpiraTestCaseObject createSpiraTestCaseObjectByPath(
 		SpiraProject spiraProject, String testCasePath, String testCaseFilePath,
 		SpiraTestCaseType spiraTestCaseType) {
 
-		List<SpiraTestCaseObject> spiraTestCases =
-			spiraProject.getSpiraTestCasesByPath(testCasePath);
+		List<SpiraTestCaseObject> spiraTestCaseObjects =
+			spiraProject.getSpiraTestCaseObjectsByPath(testCasePath);
 
-		if (!spiraTestCases.isEmpty()) {
-			return spiraTestCases.get(0);
+		if (!spiraTestCaseObjects.isEmpty()) {
+			return spiraTestCaseObjects.get(0);
 		}
 
 		String testCaseName = getPathName(testCasePath);
 		String parentTestCaseFolderPath = getParentPath(testCasePath);
 
 		if (parentTestCaseFolderPath.isEmpty()) {
-			return createSpiraTestCase(
+			return createSpiraTestCaseObject(
 				spiraProject, testCaseName, testCaseFilePath,
 				spiraTestCaseType);
 		}
@@ -78,18 +78,20 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			SpiraTestCaseFolder.createSpiraTestCaseFolderByPath(
 				spiraProject, parentTestCaseFolderPath);
 
-		return _createSpiraTestCase(
+		return _createSpiraTestCaseObject(
 			spiraProject, testCaseName, testCaseFilePath, spiraTestCaseType,
 			parentSpiraTestCaseFolder.getID(), false);
 	}
 
-	public static void deleteSpiraTestCaseByID(
+	public static void deleteSpiraTestCaseObjectByID(
 		SpiraProject spiraProject, int testCaseID) {
 
-		List<SpiraTestCaseObject> spiraTestCases = getSpiraTestCases(
-			spiraProject, new SearchQuery.SearchParameter(ID_KEY, testCaseID));
+		List<SpiraTestCaseObject> spiraTestCaseObjects =
+			getSpiraTestCaseObjects(
+				spiraProject,
+				new SearchQuery.SearchParameter(ID_KEY, testCaseID));
 
-		if (spiraTestCases.isEmpty()) {
+		if (spiraTestCaseObjects.isEmpty()) {
 			return;
 		}
 
@@ -108,17 +110,19 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			throw new RuntimeException(ioException);
 		}
 
-		removeCachedSpiraArtifacts(SpiraTestCaseObject.class, spiraTestCases);
+		removeCachedSpiraArtifacts(
+			SpiraTestCaseObject.class, spiraTestCaseObjects);
 	}
 
-	public static void deleteSpiraTestCasesByPath(
+	public static void deleteSpiraTestCaseObjectsByPath(
 		SpiraProject spiraProject, String testCasePath) {
 
-		List<SpiraTestCaseObject> spiraTestCases =
-			spiraProject.getSpiraTestCasesByPath(testCasePath);
+		List<SpiraTestCaseObject> spiraTestCaseObjects =
+			spiraProject.getSpiraTestCaseObjectsByPath(testCasePath);
 
-		for (SpiraTestCaseObject spiraTestCase : spiraTestCases) {
-			deleteSpiraTestCaseByID(spiraProject, spiraTestCase.getID());
+		for (SpiraTestCaseObject spiraTestCaseObject : spiraTestCaseObjects) {
+			deleteSpiraTestCaseObjectByID(
+				spiraProject, spiraTestCaseObject.getID());
 		}
 	}
 
@@ -206,7 +210,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	}
 
-	protected static List<SpiraTestCaseObject> getSpiraTestCases(
+	protected static List<SpiraTestCaseObject> getSpiraTestCaseObjects(
 		final SpiraProject spiraProject, final long numberOfRows,
 		final SearchQuery.SearchParameter... searchParameters) {
 
@@ -232,11 +236,11 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 			searchParameters);
 	}
 
-	protected static List<SpiraTestCaseObject> getSpiraTestCases(
+	protected static List<SpiraTestCaseObject> getSpiraTestCaseObjects(
 		final SpiraProject spiraProject,
 		final SearchQuery.SearchParameter... searchParameters) {
 
-		return getSpiraTestCases(spiraProject, 35000, searchParameters);
+		return getSpiraTestCaseObjects(spiraProject, 35000, searchParameters);
 	}
 
 	@Override
@@ -250,7 +254,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 
 	protected static final String ID_KEY = "TestCaseId";
 
-	private static SpiraTestCaseObject _createSpiraTestCase(
+	private static SpiraTestCaseObject _createSpiraTestCaseObject(
 		SpiraProject spiraProject, String testCaseName, String testCaseFilePath,
 		SpiraTestCaseType spiraTestCaseType, Integer parentTestCaseFolderID,
 		boolean checkCache) {
@@ -284,13 +288,14 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 					new SearchQuery.SearchParameter(spiraCustomValue));
 			}
 
-			List<SpiraTestCaseObject> spiraTestCases = getSpiraTestCases(
-				spiraProject,
-				searchParameterList.toArray(
-					new SearchQuery.SearchParameter[0]));
+			List<SpiraTestCaseObject> spiraTestCaseObjects =
+				getSpiraTestCaseObjects(
+					spiraProject,
+					searchParameterList.toArray(
+						new SearchQuery.SearchParameter[0]));
 
-			if (!spiraTestCases.isEmpty()) {
-				return spiraTestCases.get(0);
+			if (!spiraTestCaseObjects.isEmpty()) {
+				return spiraTestCaseObjects.get(0);
 			}
 		}
 
@@ -336,7 +341,7 @@ public class SpiraTestCaseObject extends PathSpiraArtifact {
 				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
 				requestJSONObject.toString());
 
-			return spiraProject.getSpiraTestCaseByID(
+			return spiraProject.getSpiraTestCaseObjectByID(
 				responseJSONObject.getInt(ID_KEY));
 		}
 		catch (IOException ioException) {

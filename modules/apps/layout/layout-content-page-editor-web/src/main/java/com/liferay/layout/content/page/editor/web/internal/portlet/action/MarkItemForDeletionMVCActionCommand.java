@@ -56,14 +56,12 @@ public class MarkItemForDeletionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
-
-		String[] portletIds = ParamUtil.getStringValues(
-			actionRequest, "portletIds");
-
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
+		String itemId = ParamUtil.getString(actionRequest, "itemId");
+		String[] portletIds = ParamUtil.getStringValues(
+			actionRequest, "portletIds");
 
 		return markItemForDeletion(
 			themeDisplay.getScopeGroupId(), itemId, themeDisplay.getPlid(),

@@ -4,7 +4,6 @@ import com.liferay.gradle.util.StringUtil
 task cleanSidecar
 task deploySidecar(type: Copy)
 task deployTestSidecar
-task deployTestSidecarDependencies
 
 String elasticsearchVersion = "7.3.0"
 String luceneVersion = "8.1.0"
@@ -214,6 +213,8 @@ deploySidecar {
 
 deployTestSidecar {
 	dependsOn {
+		configurations.compileOnly
+
 		deploySidecar {
 			destinationDir = file("tmp/sidecar-elasticsearch")
 			enabled = true
@@ -222,12 +223,8 @@ deployTestSidecar {
 
 	description = "Assembles the Elasticsearch sidecar and deploys it to build test directory."
 	group = "build"
-}
 
-deployTestSidecarDependencies {
-	dependsOn configurations.compileOnly
-
-	doLast {
+	doFirst {
 		File libProcessExecutorDir = file("tmp/lib-process-executor")
 
 		if (!libProcessExecutorDir.exists()) {
@@ -255,8 +252,6 @@ processResources {
 
 test {
 	dependsOn deployTestSidecar
-
-	dependsOn deployTestSidecarDependencies
 
 	forkEvery = 0
 }

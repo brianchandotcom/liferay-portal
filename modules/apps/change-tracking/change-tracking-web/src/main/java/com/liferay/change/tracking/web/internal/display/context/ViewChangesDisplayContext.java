@@ -272,13 +272,13 @@ public class ViewChangesDisplayContext {
 		return false;
 	}
 
-	private <T extends BaseModel<T>> void _addChildClassJSONObjects(
+	private void _addChildClassJSONObjects(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, long childClassNameId,
 		List<Long> childClassPKs, List<JSONObject> childJSONObjects,
 		List<JSONObject> rootDisplayNodes) {
 
-		Map<Serializable, T> baseModelMap =
+		Map<Serializable, ? extends BaseModel<?>> baseModelMap =
 			_basePersistenceRegistry.fetchBaseModelMap(
 				childClassNameId, childClassPKs);
 		Map<Serializable, CTEntry> ctEntryMap = _getCTEntryMap(
@@ -296,15 +296,8 @@ public class ViewChangesDisplayContext {
 				ctCollectionId = _ctCollection.getCtCollectionId();
 			}
 
-			T baseModel = baseModelMap.get(childClassPK);
-
-			if (baseModel == null) {
-				baseModel = _ctDisplayRendererRegistry.fetchCTModel(
-					ctCollectionId, childClassNameId, childClassPK);
-			}
-
-			String title = _ctDisplayRendererRegistry.getTitle(
-				_renderRequest.getLocale(), baseModel, childClassNameId);
+			String title = _getTitle(
+				baseModelMap, ctCollectionId, childClassNameId, childClassPK);
 
 			JSONObject childJSONObject = JSONUtil.put(
 				"modelClassNameId", childClassNameId
@@ -457,6 +450,21 @@ public class ViewChangesDisplayContext {
 		return ParamUtil.getString(
 			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
 			"desc");
+	}
+
+	private <T extends BaseModel<T>> String _getTitle(
+		Map<Serializable, ? extends BaseModel<?>> baseModelMap,
+		long ctCollectionId, long classNameId, long classPK) {
+
+		T baseModel = (T)baseModelMap.get(classPK);
+
+		if (baseModel == null) {
+			baseModel = _ctDisplayRendererRegistry.fetchCTModel(
+				ctCollectionId, classNameId, classPK);
+		}
+
+		return _ctDisplayRendererRegistry.getTitle(
+			_renderRequest.getLocale(), baseModel, classNameId);
 	}
 
 	private JSONObject _getTreeJsonObject() {

@@ -288,8 +288,7 @@ public class ViewChangesDisplayContext {
 	private List<JSONObject> _getChildJSONObjects(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		AtomicInteger nodeIdCounter, Map<Long, List<JSONObject>> rootDisplayMap,
-		Map<Long, List<Long>> childPKsMap) {
+		AtomicInteger nodeIdCounter, Map<Long, List<Long>> childPKsMap) {
 
 		List<JSONObject> childJSONObjects = new ArrayList<>();
 
@@ -397,9 +396,6 @@ public class ViewChangesDisplayContext {
 				);
 
 				childJSONObjects.add(childJSONObject);
-
-				_addRootDisplayNode(
-					childJSONObject, rootDisplayMap.get(entry.getKey()));
 			}
 		}
 
@@ -538,10 +534,17 @@ public class ViewChangesDisplayContext {
 
 			List<JSONObject> childJSONObjects = _getChildJSONObjects(
 				liferayPortletRequest, liferayPortletResponse, nodeIdCounter,
-				rootDisplayMap, childPKsMap);
+				childPKsMap);
 
 			if (childJSONObjects.isEmpty()) {
 				continue;
+			}
+
+			for (JSONObject childJSONObject : childJSONObjects) {
+				_addRootDisplayNode(
+					childJSONObject,
+					rootDisplayMap.get(
+						childJSONObject.getLong("modelClassNameId")));
 			}
 
 			childJSONObjects.sort(SortJSONObjectsByTitleComparator.INSTANCE);

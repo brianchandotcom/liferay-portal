@@ -43,6 +43,7 @@ const FriendlyURLHistoryModal = ({
 	initialLanguageId,
 	observer,
 	portletNamespace,
+	restoreFriendlyURLEntryLocalizationURL,
 }) => {
 	const [languageId, setLanguageId] = useState();
 	const [loading, setLoading] = useState(true);
@@ -158,6 +159,37 @@ const FriendlyURLHistoryModal = ({
 			});
 	};
 
+	const handleRestoreFriendlyUrl = (restoreFriendlyUrlEntryId) => {
+		const formData = new FormData();
+
+		formData.append(
+			`${portletNamespace}friendlyURLEntryId`,
+			restoreFriendlyUrlEntryId
+		);
+
+		formData.append(`${portletNamespace}languageId`, languageId);
+
+		fetch(restoreFriendlyURLEntryLocalizationURL, {
+			body: formData,
+			method: 'POST',
+		})
+			.then((response) => response.json())
+			.then((response) => {
+				if (response.success) {
+					console.log("Restore OK para " + restoreFriendlyUrlEntryId)
+				}
+				else {
+					showToastError();
+				}
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+				showToastError();
+			});
+	};
+
 	return (
 		<ClayModal
 			className="portlet-layouts-admin-url-history-modal"
@@ -228,6 +260,11 @@ const FriendlyURLHistoryModal = ({
 															data-title={Liferay.Language.get(
 																'restore-url'
 															)}
+															onClick={() => {
+																handleRestoreFriendlyUrl(
+																	friendlyURLEntryId
+																);
+															}}
 															symbol="reload"
 														/>
 														<ClayList.QuickActionMenu.Item
@@ -263,6 +300,7 @@ FriendlyURLHistoryModal.propTypes = {
 	friendlyURLEntryLocalizationsURL: PropTypes.string.isRequired,
 	observer: PropTypes.object.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
+	restoreFriendlyURLEntryLocalizationURL: PropTypes.string.isRequired,
 };
 
 export default FriendlyURLHistoryModal;

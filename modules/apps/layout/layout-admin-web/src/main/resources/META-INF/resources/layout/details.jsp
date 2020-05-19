@@ -97,6 +97,10 @@ String friendlyURLBase = StringPool.BLANK;
 					<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
 				</portlet:actionURL>
 
+				<portlet:actionURL name="/layout/restore_friendly_url_entry_localization" var="restoreFriendlyURLEntryLocalizationURL">
+					<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+				</portlet:actionURL>
+
 				<c:if test="<%= FFViewFriendlyURLHistoryConfigurationUtil.enabled() %>">
 					<div class="btn-url-history-wrapper">
 						<react:component
@@ -110,6 +114,9 @@ String friendlyURLBase = StringPool.BLANK;
 								).put(
 									"friendlyURLEntryLocalizationsURL",
 									friendlyURLEntryLocalizationsURL
+								).put(
+									"restoreFriendlyURLEntryLocalizationURL",
+									restoreFriendlyURLEntryLocalizationURL
 								).build() %>'
 							module="js/friendly_url_history/FriendlyURLHistory"
 						/>

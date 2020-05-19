@@ -89,10 +89,12 @@ public class UserImportMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		long time = _getLastImportTime();
+
 		List<Company> companies = _companyLocalService.getCompanies(false);
 
 		for (Company company : companies) {
-			_importUsers(company.getCompanyId(), _getLastImportTime());
+			_importUsers(company.getCompanyId(), time);
 		}
 	}
 

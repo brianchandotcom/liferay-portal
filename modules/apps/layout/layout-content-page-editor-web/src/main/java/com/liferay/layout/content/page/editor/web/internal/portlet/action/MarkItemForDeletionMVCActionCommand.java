@@ -16,7 +16,6 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Arrays;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,24 +60,14 @@ public class MarkItemForDeletionMVCActionCommand
 		String[] portletIds = ParamUtil.getStringValues(
 			actionRequest, "portletIds");
 
-		return markItemForDeletion(
-			themeDisplay.getScopeGroupId(), itemId, themeDisplay.getPlid(),
-			Arrays.asList(portletIds), segmentsExperienceId);
-	}
-
-	protected JSONObject markItemForDeletion(
-			long groupId, String itemId, long plid, List<String> portletIds,
-			long segmentsExperienceId)
-		throws PortalException {
-
-		JSONObject layoutDataJSONObject =
+		return JSONUtil.put(
+			"layoutData",
 			LayoutStructureUtil.updateLayoutPageTemplateData(
-				groupId, segmentsExperienceId, plid,
+				themeDisplay.getScopeGroupId(), segmentsExperienceId,
+				themeDisplay.getPlid(),
 				layoutStructure ->
 					layoutStructure.markLayoutStructureItemForDeletion(
-						itemId, portletIds));
-
-		return JSONUtil.put("layoutData", layoutDataJSONObject);
+						itemId, Arrays.asList(portletIds))));
 	}
 
 }

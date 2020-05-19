@@ -24,6 +24,8 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -125,29 +127,44 @@ public class FragmentLayoutStructureItemImporter
 		FragmentEntry fragmentEntry = _getFragmentEntry(
 			fragmentKey, layout.getGroupId());
 
-		if (fragmentEntry == null) {
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererTracker.getFragmentRenderer(fragmentKey);
+
+		if ((fragmentEntry == null) && (fragmentRenderer == null)) {
 			warningMessages.add(
 				_getWarningMessage(layout.getGroupId(), fragmentKey));
 
 			return null;
 		}
 
-		long fragmentEntryId = fragmentEntry.getFragmentEntryId();
-		String html = fragmentEntry.getHtml();
-		String js = fragmentEntry.getJs();
-		String css = fragmentEntry.getCss();
-		String configuration = fragmentEntry.getConfiguration();
-
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionService.fetchFragmentCollection(
-				fragmentEntry.getFragmentCollectionId());
+		long fragmentEntryId = 0;
+		String html = StringPool.BLANK;
+		String js = StringPool.BLANK;
+		String css = StringPool.BLANK;
+		String configuration = StringPool.BLANK;
 
 		JSONObject defaultEditableValuesJSONObject =
-			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				_getProcessedHTML(
-					fragmentEntry.getCompanyId(), configuration,
-					fragmentCollection, html),
-				configuration);
+			JSONFactoryUtil.createJSONObject();
+
+		if (fragmentEntry != null) {
+			fragmentEntryId = fragmentEntry.getFragmentEntryId();
+			html = fragmentEntry.getHtml();
+			js = fragmentEntry.getJs();
+			css = fragmentEntry.getCss();
+			configuration = fragmentEntry.getConfiguration();
+
+			FragmentCollection fragmentCollection =
+				_fragmentCollectionService.fetchFragmentCollection(
+					fragmentEntry.getFragmentCollectionId());
+
+			defaultEditableValuesJSONObject =
+				_fragmentEntryProcessorRegistry.
+					getDefaultEditableValuesJSONObject(
+						_getProcessedHTML(
+							fragmentEntry.getCompanyId(), configuration,
+							fragmentCollection, html),
+						configuration);
+		}
 
 		Map<String, String> editableTypes =
 			EditableFragmentEntryProcessorUtil.getEditableTypes(html);
@@ -749,6 +766,9 @@ public class FragmentLayoutStructureItemImporter
 
 	@Reference
 	private FragmentEntryValidator _fragmentEntryValidator;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
 
 	@Reference
 	private Language _language;

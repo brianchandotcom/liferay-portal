@@ -134,14 +134,6 @@ public class ViewChangesDisplayContext {
 		return ParamUtil.getString(_renderRequest, "displayStyle", "all-items");
 	}
 
-	public long getModelClassNameId() {
-		return ParamUtil.getLong(_renderRequest, "modelClassNameId");
-	}
-
-	public long getModelClassPK() {
-		return ParamUtil.getLong(_renderRequest, "modelClassPK");
-	}
-
 	public Map<String, Object> getReactData() {
 		return HashMapBuilder.<String, Object>put(
 			"displayTitles",

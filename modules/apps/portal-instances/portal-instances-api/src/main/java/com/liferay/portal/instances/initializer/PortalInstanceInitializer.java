@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.instances.initalizer;
+package com.liferay.portal.instances.initializer;
 
-import java.util.List;
+import com.liferay.portal.instances.exception.InitializationException;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -22,13 +22,13 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Ivica Cardic
  */
 @ProviderType
-public interface PortalInstanceInitializerRegistry {
+public interface PortalInstanceInitializer {
 
-	public PortalInstanceInitializer getPortalInstanceInitializer(String key);
+	public String getKey();
 
-	public List<PortalInstanceInitializer> getPortalInstanceInitializers();
+	public void initialize(String webId, String virtualHostname, String mx)
+		throws InitializationException;
 
-	public List<PortalInstanceInitializer> getPortalInstanceInitializers(
-		boolean activeOnly);
+	public boolean isActive();
 
 }

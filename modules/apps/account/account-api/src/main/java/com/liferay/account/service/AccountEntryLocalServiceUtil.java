@@ -71,7 +71,7 @@ public class AccountEntryLocalServiceUtil {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], int, ServiceContext)}
+	 byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
@@ -84,6 +84,12 @@ public class AccountEntryLocalServiceUtil {
 			status);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAccountEntry(long, long, String, String, String[],
+	 byte[], String, int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes, int status,
@@ -93,6 +99,18 @@ public class AccountEntryLocalServiceUtil {
 		return getService().addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
 			status, serviceContext);
+	}
+
+	public static com.liferay.account.model.AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes,
+			String taxId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, logoBytes,
+			taxId, status, serviceContext);
 	}
 
 	/**
@@ -393,7 +411,7 @@ public class AccountEntryLocalServiceUtil {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #updateAccountEntry(Long, long, String, String, boolean,
-	 String[], byte[], int, ServiceContext)}
+	 String[], byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.account.model.AccountEntry updateAccountEntry(
@@ -407,6 +425,12 @@ public class AccountEntryLocalServiceUtil {
 			domains, logoBytes, status);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateAccountEntry(Long, long, String, String, boolean,
+	 String[], byte[], String, int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.account.model.AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
@@ -417,6 +441,18 @@ public class AccountEntryLocalServiceUtil {
 		return getService().updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
 			domains, logoBytes, status, serviceContext);
+	}
+
+	public static com.liferay.account.model.AccountEntry updateAccountEntry(
+			Long accountEntryId, long parentAccountEntryId, String name,
+			String description, boolean deleteLogo, String[] domains,
+			byte[] logoBytes, String taxId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateAccountEntry(
+			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
+			domains, logoBytes, taxId, status, serviceContext);
 	}
 
 	public static com.liferay.account.model.AccountEntry updateStatus(

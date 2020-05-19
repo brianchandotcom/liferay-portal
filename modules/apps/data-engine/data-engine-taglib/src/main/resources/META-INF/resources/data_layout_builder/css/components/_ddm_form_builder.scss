@@ -5,3 +5,32 @@
 		padding-right: $sidebarMainWidth + $sidebarMiniWidth;
 	}
 }
+
+.data-engine-form-builder {
+	> .sheet {
+		margin: $baseline 0 0;
+		padding: 0;
+	}
+
+	.container.ddm-form-builder {
+		padding: 0;
+	}
+
+
+	.form-builder-layout {
+		padding: 0 !important;
+
+		.ddm-form-page > .row {
+			margin: 0;
+		}
+	}
+
+	.lfr-ddm-form-container > .horizontal-line {
+		display: none;
+	}
+
+	.lfr-initial-col {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+}

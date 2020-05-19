@@ -201,8 +201,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				throw new FragmentEntryContentException(
 					LanguageUtil.get(
 						_resourceBundle,
-						"noninstanceable-widget-can-be-embedded-only-once-on-" +
-							"the-same-page"));
+						"noninstanceable-widgets-can-be-embedded-only-once-" +
+							"on-the-same-page"));
 			}
 
 			String defaultPreferences = StringPool.BLANK;

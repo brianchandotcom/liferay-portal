@@ -54,12 +54,12 @@ public class AppBuilderAppLocalServiceUtil {
 			long groupId, long companyId, long userId, boolean active,
 			long ddmStructureId, long ddmStructureLayoutId,
 			long deDataListViewId,
-			java.util.Map<java.util.Locale, String> nameMap)
+			java.util.Map<java.util.Locale, String> nameMap, String scope)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAppBuilderApp(
 			groupId, companyId, userId, active, ddmStructureId,
-			ddmStructureLayoutId, deDataListViewId, nameMap);
+			ddmStructureLayoutId, deDataListViewId, nameMap, scope);
 	}
 
 	/**
@@ -309,6 +309,12 @@ public class AppBuilderAppLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderApps(long companyId, boolean active, String scope) {
+
+		return getService().getAppBuilderApps(companyId, active, scope);
+	}
+
+	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
 		getAppBuilderApps(
 			long groupId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
@@ -329,6 +335,17 @@ public class AppBuilderAppLocalServiceUtil {
 
 		return getService().getAppBuilderApps(
 			groupId, companyId, ddmStructureId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderApps(
+			long groupId, String scope, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.app.builder.model.AppBuilderApp>
+					orderByComparator) {
+
+		return getService().getAppBuilderApps(
+			groupId, scope, start, end, orderByComparator);
 	}
 
 	/**
@@ -386,6 +403,10 @@ public class AppBuilderAppLocalServiceUtil {
 			groupId, companyId, ddmStructureId);
 	}
 
+	public static int getAppBuilderAppsCount(long groupId, String scope) {
+		return getService().getAppBuilderAppsCount(groupId, scope);
+	}
+
 	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
 		getCompanyAppBuilderApps(
 			long companyId, int start, int end,
@@ -397,8 +418,25 @@ public class AppBuilderAppLocalServiceUtil {
 			companyId, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getCompanyAppBuilderApps(
+			long companyId, String scope, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.app.builder.model.AppBuilderApp>
+					orderByComparator) {
+
+		return getService().getCompanyAppBuilderApps(
+			companyId, scope, start, end, orderByComparator);
+	}
+
 	public static int getCompanyAppBuilderAppsCount(long companyId) {
 		return getService().getCompanyAppBuilderAppsCount(companyId);
+	}
+
+	public static int getCompanyAppBuilderAppsCount(
+		long companyId, String scope) {
+
+		return getService().getCompanyAppBuilderAppsCount(companyId, scope);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

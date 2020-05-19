@@ -56,6 +56,7 @@ public class AppBuilderAppWrapper
 		attributes.put("ddmStructureLayoutId", getDdmStructureLayoutId());
 		attributes.put("deDataListViewId", getDeDataListViewId());
 		attributes.put("name", getName());
+		attributes.put("scope", getScope());
 
 		return attributes;
 	}
@@ -139,6 +140,12 @@ public class AppBuilderAppWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String scope = (String)attributes.get("scope");
+
+		if (scope != null) {
+			setScope(scope);
 		}
 	}
 
@@ -326,6 +333,16 @@ public class AppBuilderAppWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the scope of this app builder app.
+	 *
+	 * @return the scope of this app builder app
+	 */
+	@Override
+	public String getScope() {
+		return model.getScope();
 	}
 
 	/**
@@ -559,6 +576,16 @@ public class AppBuilderAppWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the scope of this app builder app.
+	 *
+	 * @param scope the scope of this app builder app
+	 */
+	@Override
+	public void setScope(String scope) {
+		model.setScope(scope);
 	}
 
 	/**

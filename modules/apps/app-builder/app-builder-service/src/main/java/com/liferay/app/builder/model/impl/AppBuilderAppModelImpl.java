@@ -83,7 +83,8 @@ public class AppBuilderAppModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"active_", Types.BOOLEAN}, {"ddmStructureId", Types.BIGINT},
 		{"ddmStructureLayoutId", Types.BIGINT},
-		{"deDataListViewId", Types.BIGINT}, {"name", Types.VARCHAR}
+		{"deDataListViewId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"scope", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -103,10 +104,11 @@ public class AppBuilderAppModelImpl
 		TABLE_COLUMNS_MAP.put("ddmStructureLayoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("deDataListViewId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("scope", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null)";
+		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null,scope VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AppBuilderApp";
 
@@ -130,9 +132,11 @@ public class AppBuilderAppModelImpl
 
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long SCOPE_COLUMN_BITMASK = 16L;
 
-	public static final long APPBUILDERAPPID_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+
+	public static final long APPBUILDERAPPID_COLUMN_BITMASK = 64L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -327,6 +331,10 @@ public class AppBuilderAppModelImpl
 		attributeGetterFunctions.put("name", AppBuilderApp::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<AppBuilderApp, String>)AppBuilderApp::setName);
+		attributeGetterFunctions.put("scope", AppBuilderApp::getScope);
+		attributeSetterBiConsumers.put(
+			"scope",
+			(BiConsumer<AppBuilderApp, String>)AppBuilderApp::setScope);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -652,6 +660,31 @@ public class AppBuilderAppModelImpl
 	}
 
 	@Override
+	public String getScope() {
+		if (_scope == null) {
+			return "";
+		}
+		else {
+			return _scope;
+		}
+	}
+
+	@Override
+	public void setScope(String scope) {
+		_columnBitmask |= SCOPE_COLUMN_BITMASK;
+
+		if (_originalScope == null) {
+			_originalScope = _scope;
+		}
+
+		_scope = scope;
+	}
+
+	public String getOriginalScope() {
+		return GetterUtil.getString(_originalScope);
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(AppBuilderApp.class.getName()));
@@ -772,6 +805,7 @@ public class AppBuilderAppModelImpl
 		appBuilderAppImpl.setDdmStructureLayoutId(getDdmStructureLayoutId());
 		appBuilderAppImpl.setDeDataListViewId(getDeDataListViewId());
 		appBuilderAppImpl.setName(getName());
+		appBuilderAppImpl.setScope(getScope());
 
 		appBuilderAppImpl.resetOriginalValues();
 
@@ -857,6 +891,8 @@ public class AppBuilderAppModelImpl
 
 		appBuilderAppModelImpl._setOriginalDdmStructureId = false;
 
+		appBuilderAppModelImpl._originalScope = appBuilderAppModelImpl._scope;
+
 		appBuilderAppModelImpl._columnBitmask = 0;
 	}
 
@@ -922,6 +958,14 @@ public class AppBuilderAppModelImpl
 
 		if ((name != null) && (name.length() == 0)) {
 			appBuilderAppCacheModel.name = null;
+		}
+
+		appBuilderAppCacheModel.scope = getScope();
+
+		String scope = appBuilderAppCacheModel.scope;
+
+		if ((scope != null) && (scope.length() == 0)) {
+			appBuilderAppCacheModel.scope = null;
 		}
 
 		return appBuilderAppCacheModel;
@@ -1024,6 +1068,8 @@ public class AppBuilderAppModelImpl
 	private long _deDataListViewId;
 	private String _name;
 	private String _nameCurrentLanguageId;
+	private String _scope;
+	private String _originalScope;
 	private long _columnBitmask;
 	private AppBuilderApp _escapedModel;
 

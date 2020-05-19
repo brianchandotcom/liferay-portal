@@ -1,4 +1,4 @@
-create index IX_FC5D3CFE on CTAutoResolutionInfo (ctCollectionId);
+create index IX_F925260 on CTAutoResolutionInfo (ctCollectionId, modelClassNameId, sourceModelClassPK);
 
 create index IX_8D52E6F9 on CTCollection (companyId, status);
 

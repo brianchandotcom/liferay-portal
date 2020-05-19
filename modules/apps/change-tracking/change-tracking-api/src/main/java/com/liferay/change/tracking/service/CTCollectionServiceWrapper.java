@@ -55,6 +55,15 @@ public class CTCollectionServiceWrapper
 	}
 
 	@Override
+	public void discardCTEntry(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ctCollectionService.discardCTEntry(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTCollection>
 		getCTCollections(
 			long companyId, int status, int start, int end,

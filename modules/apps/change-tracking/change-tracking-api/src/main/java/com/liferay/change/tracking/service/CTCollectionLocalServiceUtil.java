@@ -322,6 +322,13 @@ public class CTCollectionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static boolean isCTEntryEnclosed(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		return getService().isCTEntryEnclosed(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
 	public static com.liferay.change.tracking.model.CTCollection
 			undoCTCollection(
 				long ctCollectionId, long userId, String name,

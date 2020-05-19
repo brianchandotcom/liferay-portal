@@ -261,6 +261,10 @@ public interface CTCollectionLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isCTEntryEnclosed(
+		long ctCollectionId, long modelClassNameId, long modelClassPK);
+
 	public CTCollection undoCTCollection(
 			long ctCollectionId, long userId, String name, String description)
 		throws PortalException;

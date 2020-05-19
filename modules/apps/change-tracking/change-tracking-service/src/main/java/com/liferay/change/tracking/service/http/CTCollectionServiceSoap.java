@@ -116,6 +116,21 @@ public class CTCollectionServiceSoap {
 		}
 	}
 
+	public static void discardCTEntry(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws RemoteException {
+
+		try {
+			CTCollectionServiceUtil.discardCTEntry(
+				ctCollectionId, modelClassNameId, modelClassPK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.change.tracking.model.CTCollectionSoap[]
 			getCTCollections(
 				long companyId, int status, int start, int end,

@@ -108,7 +108,11 @@ public class CTAutoResolutionInfoModelImpl
 
 	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 1L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static final long MODELCLASSNAMEID_COLUMN_BITMASK = 2L;
+
+	public static final long SOURCEMODELCLASSPK_COLUMN_BITMASK = 4L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -382,7 +386,19 @@ public class CTAutoResolutionInfoModelImpl
 
 	@Override
 	public void setModelClassNameId(long modelClassNameId) {
+		_columnBitmask |= MODELCLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalModelClassNameId) {
+			_setOriginalModelClassNameId = true;
+
+			_originalModelClassNameId = _modelClassNameId;
+		}
+
 		_modelClassNameId = modelClassNameId;
+	}
+
+	public long getOriginalModelClassNameId() {
+		return _originalModelClassNameId;
 	}
 
 	@Override
@@ -392,7 +408,19 @@ public class CTAutoResolutionInfoModelImpl
 
 	@Override
 	public void setSourceModelClassPK(long sourceModelClassPK) {
+		_columnBitmask |= SOURCEMODELCLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalSourceModelClassPK) {
+			_setOriginalSourceModelClassPK = true;
+
+			_originalSourceModelClassPK = _sourceModelClassPK;
+		}
+
 		_sourceModelClassPK = sourceModelClassPK;
+	}
+
+	public long getOriginalSourceModelClassPK() {
+		return _originalSourceModelClassPK;
 	}
 
 	@Override
@@ -534,6 +562,16 @@ public class CTAutoResolutionInfoModelImpl
 
 		ctAutoResolutionInfoModelImpl._setOriginalCtCollectionId = false;
 
+		ctAutoResolutionInfoModelImpl._originalModelClassNameId =
+			ctAutoResolutionInfoModelImpl._modelClassNameId;
+
+		ctAutoResolutionInfoModelImpl._setOriginalModelClassNameId = false;
+
+		ctAutoResolutionInfoModelImpl._originalSourceModelClassPK =
+			ctAutoResolutionInfoModelImpl._sourceModelClassPK;
+
+		ctAutoResolutionInfoModelImpl._setOriginalSourceModelClassPK = false;
+
 		ctAutoResolutionInfoModelImpl._columnBitmask = 0;
 	}
 
@@ -666,7 +704,11 @@ public class CTAutoResolutionInfoModelImpl
 	private long _originalCtCollectionId;
 	private boolean _setOriginalCtCollectionId;
 	private long _modelClassNameId;
+	private long _originalModelClassNameId;
+	private boolean _setOriginalModelClassNameId;
 	private long _sourceModelClassPK;
+	private long _originalSourceModelClassPK;
+	private boolean _setOriginalSourceModelClassPK;
 	private long _targetModelClassPK;
 	private String _conflictIdentifier;
 	private long _columnBitmask;

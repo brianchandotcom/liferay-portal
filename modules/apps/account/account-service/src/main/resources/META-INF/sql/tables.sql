@@ -11,6 +11,7 @@ create table AccountEntry (
 	description STRING null,
 	domains STRING null,
 	logoId LONG,
+	taxId VARCHAR(75) null,
 	status INTEGER
 );
 

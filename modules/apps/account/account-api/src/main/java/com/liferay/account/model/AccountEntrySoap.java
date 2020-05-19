@@ -43,6 +43,7 @@ public class AccountEntrySoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDomains(model.getDomains());
 		soapModel.setLogoId(model.getLogoId());
+		soapModel.setTaxId(model.getTaxId());
 		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
@@ -193,6 +194,14 @@ public class AccountEntrySoap implements Serializable {
 		_logoId = logoId;
 	}
 
+	public String getTaxId() {
+		return _taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		_taxId = taxId;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -213,6 +222,7 @@ public class AccountEntrySoap implements Serializable {
 	private String _description;
 	private String _domains;
 	private long _logoId;
+	private String _taxId;
 	private int _status;
 
 }

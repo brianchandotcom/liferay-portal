@@ -33,7 +33,7 @@ public class AccountEntryServiceWrapper
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], int, ServiceContext)}
+	 byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -47,6 +47,12 @@ public class AccountEntryServiceWrapper
 			status);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAccountEntry(long, long, String, String, String[],
+	 byte[], String, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
@@ -57,6 +63,19 @@ public class AccountEntryServiceWrapper
 		return _accountEntryService.addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
 			status, serviceContext);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes,
+			String taxId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, logoBytes,
+			taxId, status, serviceContext);
 	}
 
 	@Override

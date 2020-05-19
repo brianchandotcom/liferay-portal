@@ -59,7 +59,7 @@ public interface AccountEntryService extends BaseService {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], int, ServiceContext)}
+	 byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
 	public AccountEntry addAccountEntry(
@@ -67,10 +67,22 @@ public interface AccountEntryService extends BaseService {
 			String description, String[] domains, byte[] logoBytes, int status)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAccountEntry(long, long, String, String, String[],
+	 byte[], String, int, ServiceContext)}
+	 */
+	@Deprecated
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes, int status,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes,
+			String taxId, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

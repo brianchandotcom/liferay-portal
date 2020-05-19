@@ -260,6 +260,21 @@ public interface AccountEntryModel
 	public void setLogoId(long logoId);
 
 	/**
+	 * Returns the tax ID of this account entry.
+	 *
+	 * @return the tax ID of this account entry
+	 */
+	@AutoEscape
+	public String getTaxId();
+
+	/**
+	 * Sets the tax ID of this account entry.
+	 *
+	 * @param taxId the tax ID of this account entry
+	 */
+	public void setTaxId(String taxId);
+
+	/**
 	 * Returns the status of this account entry.
 	 *
 	 * @return the status of this account entry

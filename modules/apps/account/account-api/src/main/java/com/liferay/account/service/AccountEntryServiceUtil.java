@@ -41,7 +41,7 @@ public class AccountEntryServiceUtil {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], int, ServiceContext)}
+	 byte[], String, int, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
@@ -54,6 +54,12 @@ public class AccountEntryServiceUtil {
 			status);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addAccountEntry(long, long, String, String, String[],
+	 byte[], String, int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes, int status,
@@ -63,6 +69,18 @@ public class AccountEntryServiceUtil {
 		return getService().addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
 			status, serviceContext);
+	}
+
+	public static com.liferay.account.model.AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, byte[] logoBytes,
+			String taxId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, logoBytes,
+			taxId, status, serviceContext);
 	}
 
 	public static java.util.List<com.liferay.account.model.AccountEntry>

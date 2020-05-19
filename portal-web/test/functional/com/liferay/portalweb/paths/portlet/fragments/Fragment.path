@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_EDITOR_NO_FRAGMENTS_MESSAGE</td>
+	<td>xpath=(//*[contains(@class,'fragment-${key_fragmentClass}')]//lfr-drop-zone//div[contains(@class,'no-fragments-message__title') and contains(.,'${key_content}')])[${key_position}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_BODY</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]</td>
 	<td></td>

@@ -13,7 +13,7 @@ definition {
 		User.firstLoginPG();
 
 		Navigator.openURL();
-		
+
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
 		ContentPages.addPage(pageName = "Questions Page");
@@ -21,7 +21,6 @@ definition {
 		PageEditor.addWidget(portletName = "Questions");
 
 		PageEditor.clickPublish();
-
 	}
 
 	tearDown {
@@ -59,9 +58,9 @@ definition {
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
 		Questions.askQuestionFillingTheMandatoryFields(
-			titleField = "Title AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
-			kbArticleContent = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
-		
+			kbArticleContent = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
+			titleField = "Title AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
+
 		Questions.addTags(tagLocator = "Tag1");
 		Questions.addTags(tagLocator = "Tag2");
 		Questions.addTags(tagLocator = "Tag3");
@@ -89,9 +88,9 @@ definition {
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
 		Questions.askQuestionFillingTheMandatoryFields(
-			titleField = "Title AddQuestionWithTheMaximumTags",
-			kbArticleContent = "Body AddQuestionWithTheMaximumTags");
-		
+			kbArticleContent = "Body AddQuestionWithTheMaximumTags",
+			titleField = "Title AddQuestionWithTheMaximumTags");
+
 		Questions.addTags(tagLocator = "Tag1");
 		Questions.addTags(tagLocator = "Tag2");
 		Questions.addTags(tagLocator = "Tag3");
@@ -101,9 +100,8 @@ definition {
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		AssertElementPresent(
-			key_titleField = "Title AddQuestionWithTheMaximumTags"
+			key_titleField = "Title AddQuestionWithTheMaximumTags",
 			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
-
 	}
 
 	@description = "Validate if the My Activity tab appears"

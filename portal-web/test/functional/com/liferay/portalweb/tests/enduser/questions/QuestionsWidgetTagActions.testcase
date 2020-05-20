@@ -13,7 +13,7 @@ definition {
 		User.firstLoginPG();
 
 		Navigator.openURL();
-		
+
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
 		ContentPages.addPage(pageName = "Questions Page");
@@ -21,7 +21,6 @@ definition {
 		PageEditor.addWidget(portletName = "Questions");
 
 		PageEditor.clickPublish();
-
 	}
 
 	tearDown {
@@ -59,13 +58,13 @@ definition {
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
 		Questions.askQuestionFillingTheMandatoryFields(
-			titleField = "Title ListOfTagsAppearsInTheTagsTab",
-			kbArticleContent = "Body ListOfTagsAppearsInTheTagsTab");
-		
+			kbArticleContent = "Body ListOfTagsAppearsInTheTagsTab",
+			titleField = "Title ListOfTagsAppearsInTheTagsTab");
+
 		Questions.addTags(tagLocator = "tag1");
 
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
-		
+
 		Pause(locator = "3000");
 
 		Click(
@@ -75,7 +74,6 @@ definition {
 		AssertElementPresent(
 			key_tagName = "tag1",
 			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
-
 	}
 
 	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"
@@ -85,7 +83,7 @@ definition {
 			categoryDescription = "Description",
 			categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
 			userEmailAddress = "test@liferay.com");
-		
+
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Click(
@@ -93,15 +91,15 @@ definition {
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
 		Questions.askQuestionFillingTheMandatoryFields(
-			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-			kbArticleContent = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
-		
+			kbArticleContent = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
+
 		Questions.addTags(tagLocator = "tag1");
 
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		Pause(locator = "3000");
-		
+
 		Click(
 			key_questionTabField = "Tags",
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
@@ -113,7 +111,6 @@ definition {
 		AssertElementPresent(
 			key_titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
 			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
-
 	}
 
 	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
@@ -123,7 +120,7 @@ definition {
 			categoryDescription = "Description",
 			categoryName = "Question ValidateTagsOccurrences",
 			userEmailAddress = "test@liferay.com");
-		
+
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Click(
@@ -131,32 +128,31 @@ definition {
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
 		Questions.askQuestionFillingTheMandatoryFields(
-			titleField = "1- Title ValidateTagsOccurrences",
-			kbArticleContent = "1- Body ValidateTagsOccurrences");
-		
+			kbArticleContent = "1- Body ValidateTagsOccurrences",
+			titleField = "1- Title ValidateTagsOccurrences");
+
 		Questions.addTags(tagLocator = "tag1");
 
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		Questions.askQuestionFillingTheMandatoryFields(
-			titleField = "2- Title ValidateTagsOccurrences",
-			kbArticleContent = "2- Body ValidateTagsOccurrences");
-		
+			kbArticleContent = "2- Body ValidateTagsOccurrences",
+			titleField = "2- Title ValidateTagsOccurrences");
+
 		Questions.addTags(tagLocator = "tag1");
 
 		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		Pause(locator = "5000");
-		
+
 		Click(
 			key_questionTabField = "Tags",
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 
 		AssertElementPresent(
-			key_tagName = "tag1",
 			key_amountOfUsedTimes = "2",
+			key_tagName = "tag1",
 			locator1 = "Questions#TAGS_LIST_TAB_USED_TIMES");
-
 	}
 
 }

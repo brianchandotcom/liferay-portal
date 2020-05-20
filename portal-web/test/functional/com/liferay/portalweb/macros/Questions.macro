@@ -16,12 +16,11 @@ definition {
 		KeyPress(
 			locator1 = "Questions#ASK_QUESTION_TAG_FIELD",
 			value1 = "\RETURN");
-
 	}
 
 	macro askQuestionFillingTheMandatoryFields {
 		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
-		
+
 		Type(
 			locator1 = "Questions#ASK_QUESTION_TITLE_FIELD",
 			value1 = "${titleField}");

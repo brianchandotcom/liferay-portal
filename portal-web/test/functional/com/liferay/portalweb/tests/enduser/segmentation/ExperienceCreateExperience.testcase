@@ -56,6 +56,8 @@ definition {
 	@description = "Validate if the user can create a Experience"
 	@priority = "5"
 	test AddDefaultExperienceWithBannerCenter {
+		property portal.acceptance = "true";
+		
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
 		ContentPages.clickPencil();

@@ -47,7 +47,6 @@ import javax.mail.internet.InternetAddress;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -108,9 +107,6 @@ public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
 		try {
 			Template template = createTemplate(actionRequest);
 
@@ -122,7 +118,8 @@ public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 			JSONObject jsonObject = JSONUtil.put(
 				"successMessage",
 				LanguageUtil.get(
-					httpServletRequest, "your-request-completed-successfully"));
+					_portal.getHttpServletRequest(actionRequest),
+					"your-request-completed-successfully"));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -138,7 +135,8 @@ public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 			JSONObject jsonObject = JSONUtil.put(
 				"errorMessage",
 				LanguageUtil.get(
-					httpServletRequest, "your-request-failed-to-complete"));
+					_portal.getHttpServletRequest(actionRequest),
+					"your-request-failed-to-complete"));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

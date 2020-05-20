@@ -15,20 +15,17 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -72,34 +69,27 @@ public class EmailAddressesMVCResourceCommand extends BaseMVCResourceCommand {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		JSONArray usersJSONArray = JSONFactoryUtil.createJSONArray();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			List<User> users = getUsers(httpServletRequest, themeDisplay);
-
-			usersJSONArray = getUsersJSONArray(themeDisplay, users);
+		if (!themeDisplay.isSignedIn()) {
+			throw new PrincipalException.MustBeAuthenticated(
+				themeDisplay.getUserId());
 		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
+
+		JSONArray usersJSONArray = _getUsersJSONArray(httpServletRequest);
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(resourceResponse);
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		ServletResponseUtil.write(
-			httpServletResponse, usersJSONArray.toJSONString());
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse, usersJSONArray);
 	}
 
-	protected List<User> getUsers(
+	private List<User> _getUsers(
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
 		String query = ParamUtil.getString(httpServletRequest, "query");
@@ -125,18 +115,16 @@ public class EmailAddressesMVCResourceCommand extends BaseMVCResourceCommand {
 			new UserScreenNameComparator());
 	}
 
-	protected JSONArray getUsersJSONArray(
-			ThemeDisplay themeDisplay, List<User> users)
-		throws PortalException {
-
-		if (!themeDisplay.isSignedIn()) {
-			throw new PrincipalException.MustBeAuthenticated(
-				themeDisplay.getUserId());
-		}
+	private JSONArray _getUsersJSONArray(
+		HttpServletRequest httpServletRequest) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (User user : users) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		for (User user : _getUsers(httpServletRequest, themeDisplay)) {
 			if (user.isDefaultUser() ||
 				(themeDisplay.getUserId() == user.getUserId())) {
 
@@ -151,9 +139,6 @@ public class EmailAddressesMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return jsonArray;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EmailAddressesMVCResourceCommand.class);
 
 	@Reference
 	private Portal _portal;

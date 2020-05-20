@@ -16,7 +16,7 @@ import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -122,17 +122,11 @@ const FriendlyURLHistoryModal = ({
 	}, [friendlyURLEntryLocalizations, loading, languageId]);
 
 	const handleDeleteFriendlyUrl = (deleteFriendlyURLEntryId) => {
-		const formData = new FormData();
-
-		formData.append(
-			`${portletNamespace}friendlyURLEntryId`,
-			deleteFriendlyURLEntryId
-		);
-
-		formData.append(`${portletNamespace}languageId`, languageId);
-
 		fetch(deleteFriendlyURLEntryLocalizationURL, {
-			body: formData,
+			body: objectToFormData({
+				[`${portletNamespace}friendlyURLEntryId`]: deleteFriendlyURLEntryId,
+				[`${portletNamespace}languageId`]: languageId,
+			}),
 			method: 'POST',
 		})
 			.then((response) => response.json())

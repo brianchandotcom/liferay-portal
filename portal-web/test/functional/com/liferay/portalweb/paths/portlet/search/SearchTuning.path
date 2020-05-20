@@ -84,6 +84,11 @@
 	<td>//div[contains(@class,'active')]//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]//div[contains(@class,'result-pin-icon-display')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RESULT_RANKINGS_VIEW_CONTENT_TITLE</td>
+	<td>//div[contains(@class,'result-rankings-view-content')]//div[contains(@class,'sheet-title') and contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
 <!--SYNONYMS-->
 <tr>
 	<td>SYNONYMS_ENTRY</td>

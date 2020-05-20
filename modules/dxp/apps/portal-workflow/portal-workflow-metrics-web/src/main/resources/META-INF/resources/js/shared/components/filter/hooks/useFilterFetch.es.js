@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useCallback, useContext, useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 
 import {AppContext} from '../../../../components/AppContext.es';
 import {FilterContext} from '../FilterContext.es';
@@ -39,45 +39,36 @@ const useFilterFetch = ({
 		withoutRouteParams
 	);
 
-	const fetchCallback = useCallback(
-		({data = {}}) => {
-			const mergedItems = mergeItemsArray(staticItems, data.items);
-			const mappedItems = buildFilterItems({
-				items: mergedItems,
-				propertyKey,
-				selectedKeys,
-			});
+	const parseResponse = ({data = {}}) => {
+		const mergedItems = mergeItemsArray(staticItems, data.items);
+		const mappedItems = buildFilterItems({
+			items: mergedItems,
+			propertyKey,
+			selectedKeys,
+		});
 
-			setItems(mappedItems);
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[selectedKeys, staticItems]
-	);
+		setItems(mappedItems);
+	};
 
 	useEffect(
 		() => {
 			dispatchFilterError(filterKey, true);
 
 			if (staticData) {
-				fetchCallback({data: {items: staticData}});
+				parseResponse({data: {items: staticData}});
 			}
 			else {
 				client
 					.request({data, method, params, url})
-					.then(fetchCallback)
-					.catch(() => {
-						dispatchFilterError(filterKey);
-					});
+					.then(parseResponse)
+					.catch(() => dispatchFilterError(filterKey));
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 
-	return {
-		items,
-		selectedItems,
-	};
+	return {items, selectedItems};
 };
 
 export {useFilterFetch};

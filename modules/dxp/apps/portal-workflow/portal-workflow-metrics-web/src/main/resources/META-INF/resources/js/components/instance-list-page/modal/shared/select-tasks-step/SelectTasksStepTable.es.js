@@ -11,7 +11,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 
 import {ModalContext} from '../../ModalProvider.es';
 
@@ -28,29 +28,18 @@ const Item = ({totalCount, ...task}) => {
 		workflowInstanceId,
 	} = task;
 
-	const [checked, setChecked] = useState(false);
+	const checked = !!tasks.find((item) => item.id === id);
 
-	useEffect(() => {
-		setChecked(!!tasks.find((item) => item.id === id));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [tasks]);
+	const handleCheck = ({target}) => {
+		const updatedItems = target.checked
+			? [...tasks, task]
+			: tasks.filter((task) => task.id !== id);
 
-	const handleCheck = useCallback(
-		({target}) => {
-			setChecked(target.checked);
-
-			const updatedItems = target.checked
-				? [...tasks, task]
-				: tasks.filter((task) => task.id !== id);
-
-			setSelectTasks({
-				selectAll: totalCount > 0 && totalCount === updatedItems.length,
-				tasks: updatedItems,
-			});
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[tasks]
-	);
+		setSelectTasks({
+			selectAll: totalCount > 0 && totalCount === updatedItems.length,
+			tasks: updatedItems,
+		});
+	};
 
 	return (
 		<ClayTable.Row className={checked ? 'table-active' : ''}>

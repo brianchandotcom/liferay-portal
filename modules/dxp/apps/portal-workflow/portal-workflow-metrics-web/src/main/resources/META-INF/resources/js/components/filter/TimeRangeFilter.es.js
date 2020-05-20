@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 
 import Filter from '../../shared/components/filter/Filter.es';
 import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.es';
@@ -38,15 +38,14 @@ const TimeRangeFilter = ({
 	options = {},
 	prefixKey = '',
 }) => {
-	const defaultOptions = {
+	options = {
 		hideControl: true,
 		multiple: false,
 		position: 'left',
 		withSelectionTitle: true,
 		withoutRouteParams: false,
+		...options,
 	};
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
 
 	const {isAmPm} = useContext(AppContext);
 	const {filters} = useRouterParams();
@@ -54,7 +53,7 @@ const TimeRangeFilter = ({
 
 	const [storedTimeRanges = {}] = useSessionStorage('timeRanges');
 
-	const {dispatch, filterState} = useFilter(options);
+	const {dispatch} = useFilter(options);
 
 	const dateEndKey = getCapitalizedFilterKey(prefixKey, 'dateEnd');
 	const dateStartKey = getCapitalizedFilterKey(prefixKey, 'dateStart');
@@ -63,9 +62,6 @@ const TimeRangeFilter = ({
 
 	const dateEnd = filters[dateEndKey];
 	const dateStart = filters[dateStartKey];
-	const {items: timeRanges} = useMemo(() => storedTimeRanges, [
-		storedTimeRanges,
-	]);
 
 	const customRange = useMemo(() => getCustomTimeRange(dateEnd, dateStart), [
 		dateEnd,
@@ -74,8 +70,10 @@ const TimeRangeFilter = ({
 
 	const staticItems = useMemo(
 		() =>
-			parseDateItems(isAmPm)(mergeItemsArray([customRange], timeRanges)),
-		[customRange, timeRanges, isAmPm]
+			parseDateItems(isAmPm)(
+				mergeItemsArray([customRange], storedTimeRanges.items)
+			),
+		[customRange, storedTimeRanges.items, isAmPm]
 	);
 
 	const {items, selectedItems} = useFilterStatic({
@@ -102,28 +100,24 @@ const TimeRangeFilter = ({
 		options.withSelectionTitle
 	);
 
-	const handleSelectFilter = useCallback(
-		(filter) => {
-			const filterValue = {[prefixedFilterKey]: [filter.key]};
-			const query = parse(routerProps.location.search);
+	const handleSelectFilter = (filter) => {
+		const filterValue = {[prefixedFilterKey]: [filter.key]};
+		const query = parse(routerProps.location.search);
 
-			if (!options.withoutRouteParams) {
-				query.filters = {
-					...query.filters,
-					[dateEndKey]: filter.dateEnd,
-					[dateStartKey]: filter.dateStart,
-					...filterValue,
-				};
+		if (!options.withoutRouteParams) {
+			query.filters = {
+				...query.filters,
+				[dateEndKey]: filter.dateEnd,
+				[dateStartKey]: filter.dateStart,
+				...filterValue,
+			};
 
-				replaceHistory(stringify(query), routerProps);
-			}
-			else {
-				dispatch({...filterState, ...filterValue});
-			}
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[filterState, routerProps]
-	);
+			replaceHistory(stringify(query), routerProps);
+		}
+		else {
+			dispatch(filterValue);
+		}
+	};
 
 	return (
 		<Filter

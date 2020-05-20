@@ -30,29 +30,23 @@ const ProcessStepFilter = ({
 	prefixKey = '',
 	processId,
 }) => {
-	const defaultOptions = {
+	options = {
 		hideControl: false,
 		multiple: true,
 		position: 'left',
+		requestUrl: `/processes/${processId}/tasks?page=0&pageSize=0`,
 		withAllSteps: false,
 		withSelectionTitle: false,
 		withoutRouteParams: false,
+		...options,
 	};
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
-
-	const staticItems = useMemo(
-		() => (options.withAllSteps ? [allStepsItem] : []),
-		[options.withAllSteps]
-	);
 
 	const {items, selectedItems} = useFilterFetch({
 		filterKey,
 		prefixKey,
 		propertyKey: 'name',
-		requestUrl: `/processes/${processId}/tasks?page=0&pageSize=0`,
-		staticItems,
-		withoutRouteParams: options.withoutRouteParams,
+		staticItems: options.withAllSteps ? [allStepsItem] : [],
+		...options,
 	});
 
 	const defaultItem = useMemo(() => items[0], [items]);
@@ -63,10 +57,10 @@ const ProcessStepFilter = ({
 
 	const filterName = useFilterNameWithLabel({
 		labelPropertyName: 'label',
-		multiple: options.multiple,
 		selectedItems,
 		title: Liferay.Language.get('process-step'),
 		withSelectionTitle: options.withSelectionTitle,
+		...options,
 	});
 
 	return (

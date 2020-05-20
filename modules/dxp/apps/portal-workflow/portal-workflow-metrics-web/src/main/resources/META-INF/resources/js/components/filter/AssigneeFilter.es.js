@@ -24,31 +24,15 @@ const AssigneeFilter = ({
 	processId,
 	staticData,
 }) => {
-	const defaultOptions = {
+	options = {
 		hideControl: false,
 		multiple: true,
 		position: 'left',
 		withSelectionTitle: false,
 		withoutRouteParams: false,
 		withoutUnassigned: false,
+		...options,
 	};
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
-
-	const unassigned = useMemo(
-		() => ({
-			dividerAfter: true,
-			id: -1,
-			key: '-1',
-			name: Liferay.Language.get('unassigned'),
-		}),
-		[]
-	);
-
-	const staticItems = useMemo(
-		() => (!options.withoutUnassigned ? [unassigned] : []),
-		[options.withoutUnassigned, unassigned]
-	);
 
 	const {items, selectedItems} = useFilterFetch({
 		filterKey,
@@ -57,7 +41,7 @@ const AssigneeFilter = ({
 		requestMethod: 'post',
 		requestUrl: `/processes/${processId}/assignees`,
 		staticData,
-		staticItems,
+		staticItems: !options.withoutUnassigned ? [unassigned] : [],
 		withoutRouteParams: options.withoutRouteParams,
 	});
 
@@ -82,6 +66,13 @@ const AssigneeFilter = ({
 			{...options}
 		/>
 	);
+};
+
+const unassigned = {
+	dividerAfter: true,
+	id: -1,
+	key: '-1',
+	name: Liferay.Language.get('unassigned'),
 };
 
 export default AssigneeFilter;

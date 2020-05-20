@@ -22,21 +22,20 @@ const SLAStatusFilter = ({
 	options = {},
 	prefixKey = '',
 }) => {
-	const defaultOptions = {
+	options = {
 		hideControl: false,
 		multiple: true,
 		position: 'left',
 		withSelectionTitle: true,
 		withoutRouteParams: false,
+		...options,
 	};
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
 
 	const {items, selectedItems} = useFilterStatic({
 		filterKey,
 		prefixKey,
 		staticItems: slaStatuses,
-		withoutRouteParams: options.withoutRouteParams,
+		...options,
 	});
 
 	const defaultItem = useMemo(() => (items ? items[0] : undefined), [items]);

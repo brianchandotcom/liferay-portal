@@ -10,7 +10,7 @@
  */
 
 import ClayModal from '@clayui/modal';
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import ContentView from '../../../../../shared/components/content-view/ContentView.es';
 import RetryButton from '../../../../../shared/components/list/RetryButton.es';
@@ -18,28 +18,23 @@ import PaginationBar from '../../../../../shared/components/pagination-bar/Pagin
 import {Table} from './SelectTasksStepTable.es';
 
 const Body = ({filtered, items, pagination, setRetry, totalCount}) => {
-	const statesProps = useMemo(
-		() => ({
-			emptyProps: {
-				className: 'py-4',
-				filtered,
-				messageClassName: 'small',
-			},
-			errorProps: {
-				actionButton: (
-					<RetryButton
-						onClick={() => setRetry((retry) => retry + 1)}
-					/>
-				),
-				className: 'mt-5 py-8',
-				hideAnimation: true,
-				message: Liferay.Language.get('unable-to-retrieve-data'),
-				messageClassName: 'small',
-			},
-			loadingProps: {className: 'mt-5 py-8'},
-		}),
-		[filtered, setRetry]
-	);
+	const statesProps = {
+		emptyProps: {
+			className: 'py-4',
+			filtered,
+			messageClassName: 'small',
+		},
+		errorProps: {
+			actionButton: (
+				<RetryButton onClick={() => setRetry((retry) => retry + 1)} />
+			),
+			className: 'mt-5 py-8',
+			hideAnimation: true,
+			message: Liferay.Language.get('unable-to-retrieve-data'),
+			messageClassName: 'small',
+		},
+		loadingProps: {className: 'mt-5 py-8'},
+	};
 
 	return (
 		<ClayModal.Body>

@@ -11,7 +11,7 @@
 
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {usePrevious} from 'frontend-js-react-web';
-import React, {useCallback, useContext, useEffect, useMemo} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import ResultsBar from '../../../../../shared/components/results-bar/ResultsBar.es';
 import ToolbarWithSelection from '../../../../../shared/components/toolbar-with-selection/ToolbarWithSelection.es';
@@ -39,9 +39,8 @@ const Header = ({items = [], totalCount, withoutUnassigned}) => {
 		withoutRouteParams: true,
 	});
 
-	const selectedOnPage = useMemo(
-		() => tasks.filter((item) => items.find(({id}) => id === item.id)),
-		[items, tasks]
+	const selectedOnPage = tasks.filter((item) =>
+		items.find(({id}) => id === item.id)
 	);
 
 	const allPageSelected =
@@ -53,10 +52,11 @@ const Header = ({items = [], totalCount, withoutUnassigned}) => {
 			selectedOnPage.length > 0 && !allPageSelected && !selectAll,
 	};
 
-	const remainingItems = useMemo(() => {
-		return items.filter((item) => !tasks.find(({id}) => item.id === id));
-	}, [items, tasks]);
-	const toolbarActive = useMemo(() => tasks.length > 0, [tasks]);
+	const remainingItems = items.filter(
+		(item) => !tasks.find(({id}) => item.id === id)
+	);
+
+	const toolbarActive = tasks.length > 0;
 
 	useEffect(() => {
 		if (
@@ -81,20 +81,16 @@ const Header = ({items = [], totalCount, withoutUnassigned}) => {
 		setSelectTasks({selectAll: false, tasks: []});
 	};
 
-	const handleCheck = useCallback(
-		(checked) => () => {
-			const updatedItems = checked
-				? [...tasks, ...remainingItems]
-				: tasks.filter((item) => !items.find(({id}) => item.id === id));
+	const handleCheck = (checked) => () => {
+		const updatedItems = checked
+			? [...tasks, ...remainingItems]
+			: tasks.filter((item) => !items.find(({id}) => id === item.id));
 
-			setSelectTasks({
-				selectAll: totalCount > 0 && totalCount === updatedItems.length,
-				tasks: updatedItems,
-			});
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[items, tasks]
-	);
+		setSelectTasks({
+			selectAll: totalCount > 0 && totalCount === updatedItems.length,
+			tasks: updatedItems,
+		});
+	};
 
 	return (
 		<>

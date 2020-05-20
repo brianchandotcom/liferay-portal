@@ -12,7 +12,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useCallback, useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 
 import {Autocomplete} from '../../../../../../shared/components/autocomplete/Autocomplete.es';
 import {ModalContext} from '../../../ModalProvider.es';
@@ -28,51 +28,31 @@ const Item = ({
 	const {bulkReassign, setBulkReassign} = useContext(ModalContext);
 	const {reassignedTasks, reassigning, useSameAssignee} = bulkReassign;
 
-	const {assigneeId} = useMemo(
-		() => reassignedTasks.find((task) => task.workflowTaskId === id) || {},
-		[id, reassignedTasks]
-	);
+	const {assigneeId} =
+		reassignedTasks.find(({workflowTaskId}) => workflowTaskId === id) || {};
 
-	const assignees = useMemo(() => {
-		const {workflowTaskAssignableUsers: users} = data || {};
+	const {workflowTaskAssignableUsers: users = []} = data;
+	const {assignableUsers = []} =
+		users.find(({workflowTaskId}) => workflowTaskId === id) || {};
 
-		if (users && users.length) {
-			const {assignableUsers = []} =
-				users.find((item) => item.workflowTaskId === id) || {};
+	const {name: assigneeName} =
+		assignableUsers.find((assignee) => assignee.id === assigneeId) || {};
 
-			return assignableUsers;
+	const handleSelect = (newAssignee) => {
+		const filteredTasks = reassignedTasks.filter((task) => task.id !== id);
+
+		if (newAssignee) {
+			filteredTasks.push({
+				assigneeId: newAssignee.id,
+				id,
+			});
 		}
 
-		return [];
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [id, data]);
-
-	const {name: assigneeName} = useMemo(
-		() => assignees.find((assignee) => assignee.id === assigneeId) || {},
-		[assigneeId, assignees]
-	);
-
-	const handleSelect = useCallback(
-		(newAssignee) => {
-			const filteredTasks = reassignedTasks.filter(
-				(task) => task.workflowTaskId !== id
-			);
-
-			if (newAssignee) {
-				filteredTasks.push({
-					assigneeId: newAssignee.id,
-					workflowTaskId: id,
-				});
-			}
-
-			setBulkReassign({
-				...bulkReassign,
-				reassignedTasks: filteredTasks,
-			});
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[reassignedTasks]
-	);
+		setBulkReassign((prevBulkReassign) => ({
+			...prevBulkReassign,
+			reassignedTasks: filteredTasks,
+		}));
+	};
 
 	return (
 		<ClayTable.Row>
@@ -94,7 +74,7 @@ const Item = ({
 				<Autocomplete
 					defaultValue={assigneeName}
 					disabled={reassigning || useSameAssignee}
-					items={assignees}
+					items={assignableUsers}
 					onSelect={handleSelect}
 				/>
 			</ClayTable.Cell>

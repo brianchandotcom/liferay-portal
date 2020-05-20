@@ -12,7 +12,7 @@
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
 import moment from '../../shared/util/moment.es';
@@ -53,8 +53,6 @@ const Item = ({totalCount, ...instance}) => {
 	} = useContext(InstanceListContext);
 	const {setVisibleModal} = useContext(ModalContext);
 
-	const [checked, setChecked] = useState(false);
-
 	const {
 		assetTitle,
 		assetType,
@@ -67,10 +65,7 @@ const Item = ({totalCount, ...instance}) => {
 		taskNames = [Liferay.Language.get('not-available')],
 	} = instance;
 
-	useEffect(() => {
-		setChecked(!!selectedItems.find((item) => item.id === id));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedItems]);
+	const checked = !!selectedItems.find((item) => item.id === id);
 
 	const assignedToUser = !!assignees.find(({id}) => id === Number(userId));
 	const assigneeNames = assignees.map((user) => user.name).join(', ');
@@ -88,8 +83,6 @@ const Item = ({totalCount, ...instance}) => {
 		: Liferay.Language.get('completed');
 
 	const handleCheck = ({target}) => {
-		setChecked(target.checked);
-
 		const updatedItems = target.checked
 			? [...selectedItems, instance]
 			: selectedItems.filter((item) => item.id !== id);

@@ -72,6 +72,7 @@ definition {
 	test CreateRemoveUpdateDeleteEntriesOfProductMenuApp {
 		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfProductMenuApp";
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";

@@ -106,7 +106,9 @@ portletDisplay.setURLBack(backURL);
 					/>
 
 					<liferay-ui:search-container-column-text>
-						<a class="modify-link" data-rowId="<%= accountEntryDisplay.getAccountEntryId() %>" href="javascript:;"><%= removeAccountEntryIcon %></a>
+						<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.MANAGE_USERS) %>">
+							<a class="modify-link" data-rowId="<%= accountEntryDisplay.getAccountEntryId() %>" href="javascript:;"><%= removeAccountEntryIcon %></a>
+						</c:if>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 

@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,7 +95,7 @@ public class ModerationPortlet extends MVCPortlet {
 			MBMessage mbMessage = _mbMessageLocalService.updateStatus(
 				themeDisplay.getUserId(), mbMessageId,
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
-				new HashMap<String, Serializable>());
+				new HashMap<>());
 
 			if (_akismetServiceConfiguration.messageBoardsEnabled()) {
 				_akismetClient.submitHam(mbMessage);

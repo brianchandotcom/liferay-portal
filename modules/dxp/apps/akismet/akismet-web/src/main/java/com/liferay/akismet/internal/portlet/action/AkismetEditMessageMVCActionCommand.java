@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,7 +131,7 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 			MBMessage message = _mbMessageLocalService.updateStatus(
 				themeDisplay.getUserId(), messageId,
 				WorkflowConstants.STATUS_DENIED, serviceContext,
-				new HashMap<String, Serializable>());
+				new HashMap<>());
 
 			List<MBMessage> threadMessages =
 				_mbMessageLocalService.getThreadMessages(
@@ -154,7 +152,7 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 			MBMessage message = _mbMessageLocalService.updateStatus(
 				themeDisplay.getUserId(), messageId,
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
-				new HashMap<String, Serializable>());
+				new HashMap<>());
 
 			if (_akismetServiceConfiguration.messageBoardsEnabled()) {
 				_akismetClient.submitHam(message);

@@ -16,12 +16,14 @@ import parser from 'bbcode-to-react';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React from 'react';
 
-export function getCKEditorConfig() {
+export function getCKEditorConfig(bodyClass) {
 	const config = {
 		allowedContent: true,
 		autoGrow_minHeight: 200,
 		autoGrow_onStartup: true,
+		bodyClass: 'cke_' + bodyClass,
 		codeSnippet_theme: 'monokai_sublime',
+		contentsCss: '/o/questions-web/css/main.css',
 		extraPlugins: 'autogrow,codesnippet',
 		readOnly: true,
 		removePlugins: 'elementspath',
@@ -34,6 +36,7 @@ export function getCKEditorConfig() {
 
 export default ({
 	articleBody,
+	bodyClass = 'question', 
 	compactMode = false,
 	encodingFormat,
 	id,
@@ -50,7 +53,7 @@ export default ({
 		{encodingFormat !== 'bbcode' && !compactMode && (
 			<div className={`cke_readonly questions-article-body-${id}`}>
 				<Editor
-					config={getCKEditorConfig()}
+					config={getCKEditorConfig(bodyClass)}
 					data={articleBody}
 					required
 				/>

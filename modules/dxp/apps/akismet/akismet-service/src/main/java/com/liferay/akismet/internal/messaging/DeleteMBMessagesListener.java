@@ -148,23 +148,6 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 		}
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-		_triggerFactory = triggerFactory;
-	}
-
 	private static final String _DEFAULT_CRON_EXPRESSION = "0 0 0 * * ?";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -176,8 +159,15 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
 	private SchedulerEntryImpl _schedulerEntryImpl;
+
+	@Reference
 	private TriggerFactory _triggerFactory;
 
 }

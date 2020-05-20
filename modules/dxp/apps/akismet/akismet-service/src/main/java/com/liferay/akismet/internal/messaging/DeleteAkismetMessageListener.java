@@ -114,23 +114,6 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 			new Date(System.currentTimeMillis() - (reportableTime * Time.DAY)));
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-		_triggerFactory = triggerFactory;
-	}
-
 	private static final String _DEFAULT_CRON_EXPRESSION = "0 0 0 * * ?";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -141,8 +124,16 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 
 	private volatile AkismetServiceConfiguration _akismetServiceConfiguration;
 	private volatile boolean _initialized;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
 	private SchedulerEntryImpl _schedulerEntryImpl;
+
+	@Reference
 	private TriggerFactory _triggerFactory;
 
 }

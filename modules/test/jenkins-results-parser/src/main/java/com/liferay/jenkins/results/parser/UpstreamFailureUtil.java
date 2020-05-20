@@ -38,7 +38,11 @@ public class UpstreamFailureUtil {
 			getUpstreamJobFailuresJSONObject(topLevelBuild);
 
 		JSONArray failedBatchesJSONArray =
-			upstreamJobFailuresJSONObject.getJSONArray("failedBatches");
+			upstreamJobFailuresJSONObject.optJSONArray("failedBatches");
+
+		if (failedBatchesJSONArray == null) {
+			return upstreamFailures;
+		}
 
 		for (int i = 0; i < failedBatchesJSONArray.length(); i++) {
 			JSONObject failedBatchJSONObject =

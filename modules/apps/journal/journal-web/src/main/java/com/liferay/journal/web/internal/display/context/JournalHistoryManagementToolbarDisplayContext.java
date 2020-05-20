@@ -85,7 +85,7 @@ public class JournalHistoryManagementToolbarDisplayContext
 								dropdownItem.putData(
 									"deleteArticlesURL",
 									deleteArticlesURL.toString());
-								dropdownItem.setIcon("trash");
+								dropdownItem.setIcon("times-circle");
 								dropdownItem.setLabel(
 									LanguageUtil.get(request, "delete"));
 								dropdownItem.setQuickAction(true);

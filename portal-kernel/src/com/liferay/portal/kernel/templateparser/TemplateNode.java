@@ -22,8 +22,10 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -186,7 +188,34 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			return StringPool.BLANK;
 		}
 
+		long layoutGroupId = getLayoutGroupId();
+		long layoutId = getLayoutId();
 		String layoutType = getLayoutType();
+
+		String data = (String)get("data");
+
+		if (JSONUtil.isValid(data)) {
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
+
+				layoutGroupId = jsonObject.getLong("groupId");
+				layoutId = jsonObject.getLong("layoutId");
+
+				if (jsonObject.getBoolean("privateLayout")) {
+					layoutType = _LAYOUT_TYPE_PRIVATE_GROUP;
+				}
+				else {
+					layoutType = _LAYOUT_TYPE_PUBLIC;
+				}
+			}
+			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to parse JSON from data: " + data);
+				}
+
+				return StringPool.BLANK;
+			}
+		}
 
 		if (Validator.isNull(layoutType)) {
 			return StringPool.BLANK;
@@ -210,7 +239,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		sb.append(StringPool.SLASH);
 
 		try {
-			Group group = GroupLocalServiceUtil.getGroup(getLayoutGroupId());
+			Group group = GroupLocalServiceUtil.getGroup(layoutGroupId);
 
 			String name = group.getFriendlyURL();
 
@@ -223,7 +252,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		sb.append(StringPool.SLASH);
-		sb.append(getLayoutId());
+		sb.append(layoutId);
 
 		return sb.toString();
 	}

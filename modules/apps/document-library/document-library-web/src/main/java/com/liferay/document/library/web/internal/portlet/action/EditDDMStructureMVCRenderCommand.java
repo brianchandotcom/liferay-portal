@@ -70,7 +70,7 @@ public class EditDDMStructureMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
-				_getDDMStructure(renderRequest));
+				_fetchDDMStructure(renderRequest));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -81,7 +81,7 @@ public class EditDDMStructureMVCRenderCommand implements MVCRenderCommand {
 		return "/document_library/ddm/edit_ddm_structure.jsp";
 	}
 
-	private DDMStructure _getDDMStructure(RenderRequest renderRequest)
+	private DDMStructure _fetchDDMStructure(RenderRequest renderRequest)
 		throws PortalException {
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(

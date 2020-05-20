@@ -42,6 +42,15 @@
 							'class="cke_toolbar cke_toolbar_last cke_toolbar__a11yhelpbtn"'
 						);
 
+					if (CKEDITOR.env.mac) {
+						toolbarText = toolbarText
+							.replace(/\bAlt\+0\b/g, 'Option+0')
+							.replace(
+								'class="cke_button_label cke_button__a11ybtn_label"',
+								'class="cke_button_label cke_button__a11ybtn_label mac"'
+							);
+					}
+
 					event.data.html =
 						toolbarHTML.substr(0, a11ToolbarIndex) + toolbarText;
 				}

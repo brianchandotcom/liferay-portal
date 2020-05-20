@@ -226,4 +226,28 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102544. Can search for a page in sidebar."
+	@priority = "4"
+	test SearchPageAndViewViaSidebar {
+		task ("Navigate to Test site Name") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+		}
+
+		task ("Type search term in pages finder") {
+			PagesFinder.goToFindAPage();
+
+			PagesFinder.inputPageSearch(keyword = '''"Test Portlet Page"''');
+		}
+
+		task ("View 1 result via sidebar") {
+			AssertVisible(
+				key_pageName = "Test Portlet Page",
+				locator1 = "PagesFinder#PAGE_SEARCH_RESULT");
+
+			AssertElementNotPresent(
+				key_pageName = "Test Content Page",
+				locator1 = "PagesFinder#PAGE_SEARCH_RESULT");
+		}
+	}
+
 }

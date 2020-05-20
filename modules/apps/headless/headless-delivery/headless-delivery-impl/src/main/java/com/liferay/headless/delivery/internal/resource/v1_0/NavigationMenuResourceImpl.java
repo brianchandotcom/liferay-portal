@@ -109,6 +109,29 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		return _toNavigationMenu(siteNavigationMenu);
 	}
 
+	@Override
+	public NavigationMenu putNavigationMenu(
+			Long navigationMenuId, NavigationMenu navigationMenu)
+		throws Exception {
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuService.fetchSiteNavigationMenu(
+				navigationMenuId);
+
+		_siteNavigationMenuItemService.deleteSiteNavigationMenuItems(
+			navigationMenuId);
+
+		_createNavigationMenuItems(
+			Arrays.asList(navigationMenu.getNavigationMenuItems()), 0,
+			siteNavigationMenu.getGroupId(), navigationMenuId);
+
+		return _toNavigationMenu(
+			_siteNavigationMenuService.updateSiteNavigationMenu(
+				navigationMenuId, navigationMenu.getName(),
+				ServiceContextUtil.createServiceContext(
+					siteNavigationMenu.getGroupId(), null)));
+	}
+
 	private void _createNavigationMenuItems(
 		List<NavigationMenuItem> navigationMenuItems,
 		long parentNavigationMenuId, long siteId, long siteNavigationMenuId) {

@@ -16,8 +16,9 @@ package com.liferay.fragment.entry.processor.drop.zone.listener;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
-import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -132,9 +133,13 @@ public class DropZoneContentPageEditorListener
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		String processedHTML = _fragmentRendererController.render(
-			defaultFragmentRendererContext, serviceContext.getRequest(),
-			serviceContext.getResponse());
+		String processedHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink,
+				new DefaultFragmentEntryProcessorContext(
+					serviceContext.getRequest(), serviceContext.getResponse(),
+					FragmentEntryLinkConstants.EDIT,
+					serviceContext.getLocale()));
 
 		Document document = _getDocument(processedHTML);
 
@@ -184,7 +189,7 @@ public class DropZoneContentPageEditorListener
 		DropZoneContentPageEditorListener.class);
 
 	@Reference
-	private FragmentRendererController _fragmentRendererController;
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

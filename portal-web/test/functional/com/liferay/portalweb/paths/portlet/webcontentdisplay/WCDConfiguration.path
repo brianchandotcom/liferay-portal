@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_WEB_CONTENT_DIALOG</td>
+	<td>//div[contains(@id,'selectedItem') and contains(@class,'dialog-iframe-modal')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

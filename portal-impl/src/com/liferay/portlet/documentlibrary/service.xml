@@ -232,6 +232,7 @@
 
 		<!-- Other fields -->
 
+		<column name="dataDefinitionId" type="long" />
 		<column name="fileEntryTypeKey" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />

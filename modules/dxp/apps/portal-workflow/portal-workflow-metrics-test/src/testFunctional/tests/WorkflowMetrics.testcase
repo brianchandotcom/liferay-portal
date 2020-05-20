@@ -69,6 +69,75 @@ definition {
 		}
 	}
 
+	test ReassignWorkflowInstance {
+		property portal.acceptance = "false";
+
+		WorkflowMetrics.bulkReassignSetup();
+
+		WorkflowMetrics.goToWorkflowAllItems();
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
+		WorkflowMetrics.assertBulkModalTable();
+		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
+		WorkflowMetrics.assertBulkModalTable();
+		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
+		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+		WorkflowMetrics.selectNewAssigneeBulkTask();
+		WorkflowMetrics.goToWorkflowAllItems();
+
+		AssertElementPresent(
+			key_workflowInstanceAssignee = "Test Test",
+			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 1",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		echo("Checked Bulk");
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 1",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 2",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 3",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+	}
+
+
+	test BulkReassignWorkflowInstances {
+		property portal.acceptance = "false";
+
+		WorkflowMetrics.bulkReassignSetup();
+
+		WorkflowMetrics.goToWorkflowAllItems();
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
+		WorkflowMetrics.assertBulkModalTable();
+		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
+		WorkflowMetrics.assertBulkModalTable();
+		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
+		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+		WorkflowMetrics.selectNewAssigneeBulkTask();
+		WorkflowMetrics.goToWorkflowAllItems();
+
+		AssertElementPresent(
+			key_workflowInstanceAssignee = "Test Test",
+			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 1",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		echo("Checked Bulk");
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 1",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 2",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 3",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+	}
+
 	@description = "LRQA-53648 Automate LPS-89014: [SLA] Create new SLA for total process resolution"
 	@priority = "5"
 	test AddSLAForTotalProcessResolution {

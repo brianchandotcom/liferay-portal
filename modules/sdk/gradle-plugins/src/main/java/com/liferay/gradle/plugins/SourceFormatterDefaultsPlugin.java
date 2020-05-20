@@ -26,6 +26,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskProvider;
 
 /**
  * @author Andrea Di Giorgi
@@ -73,18 +74,17 @@ public class SourceFormatterDefaultsPlugin
 	private void _configureTaskForNodePlugin(
 		Project project, String taskName, String nodeTaskName) {
 
-		TaskContainer taskContainer = project.getTasks();
+		final TaskProvider<Task> taskProvider = GradleUtil.fetchTaskProvider(
+			project, nodeTaskName);
 
-		Task nodeTask = taskContainer.findByName(nodeTaskName);
-
-		if (nodeTask != null) {
+		if (taskProvider != null) {
 			Task task = GradleUtil.getTask(project, taskName);
 
 			String skipNodeTask = GradleUtil.getTaskPrefixedProperty(
 				task, "skip.node.task");
 
 			if (!Boolean.parseBoolean(skipNodeTask)) {
-				task.dependsOn(nodeTask);
+				task.dependsOn(taskProvider);
 			}
 		}
 	}

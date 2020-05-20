@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -64,12 +63,12 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "parentAccountEntryId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		String domains = ParamUtil.getString(actionRequest, "domains");
+		String[] domains = ParamUtil.getStringValues(actionRequest, "domains");
 		String taxId = ParamUtil.getString(actionRequest, "taxId");
 
 		return _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,
-			StringUtil.split(domains), _getLogoBytes(actionRequest), taxId,
+			domains, _getLogoBytes(actionRequest), taxId,
 			_getStatus(actionRequest),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
@@ -130,12 +129,12 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-		String domains = ParamUtil.getString(actionRequest, "domains");
+		String[] domains = ParamUtil.getStringValues(actionRequest, "domains");
 		String taxId = ParamUtil.getString(actionRequest, "taxId");
 
 		_accountEntryLocalService.updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
-			StringUtil.split(domains), _getLogoBytes(actionRequest), taxId,
+			domains, _getLogoBytes(actionRequest), taxId,
 			_getStatus(actionRequest),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));

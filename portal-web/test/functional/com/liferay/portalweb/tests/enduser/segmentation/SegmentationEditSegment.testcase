@@ -138,7 +138,7 @@ definition {
 	@priority = "5"
 	test EditSegmentUserBySessionURL {
 		property portal.acceptance = "true";
-		
+
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation.editSegment();
 		}

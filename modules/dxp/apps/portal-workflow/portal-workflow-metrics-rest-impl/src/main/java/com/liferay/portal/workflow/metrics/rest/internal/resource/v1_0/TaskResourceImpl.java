@@ -572,7 +572,10 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
-			"taskId", "taskId");
+			"instanceIdTaskId", null);
+
+		termsAggregation.setScript(
+			_scripts.script("doc['instanceId'].value + doc['taskId'].value"));
 
 		FilterAggregation indexFilterAggregation = _aggregations.filter(
 			"index",
@@ -615,7 +618,8 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 			SearchSearchResponse::getAggregationResultsMap
 		).map(
 			aggregationResultsMap ->
-				(TermsAggregationResult)aggregationResultsMap.get("taskId")
+				(TermsAggregationResult)aggregationResultsMap.get(
+					"instanceIdTaskId")
 		).map(
 			TermsAggregationResult::getBuckets
 		).flatMap(

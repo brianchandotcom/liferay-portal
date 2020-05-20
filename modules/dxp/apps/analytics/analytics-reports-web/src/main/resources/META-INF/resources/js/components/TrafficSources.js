@@ -12,10 +12,10 @@
 import ClayButton from '@clayui/button';
 import className from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Cell, Pie, PieChart, Tooltip} from 'recharts';
 
-import {useWarning} from '../context/store';
+import {StoreContext, useWarning} from '../context/store';
 import {numberFormat} from '../utils/numberFormat';
 import EmptyPieChart from './EmptyPieChart';
 import Hint from './Hint';
@@ -48,6 +48,8 @@ export default function TrafficSources({
 	const [highlighted, setHighlighted] = useState(null);
 
 	const [, addWarning] = useWarning();
+
+	const [{publishedToday}] = useContext(StoreContext);
 
 	const fullPieChart = trafficSources.some((source) => !!source.value);
 
@@ -142,7 +144,8 @@ export default function TrafficSources({
 											/>
 										</td>
 										<td className="font-weight-bold">
-											{entry.value !== undefined
+											{entry.value !== undefined &&
+											!publishedToday
 												? numberFormat(
 														languageTag,
 														entry.value

@@ -23,6 +23,8 @@ definition {
 			attributeValue = "dialog-iframe-popup",
 			eventName = "modalIframeLoaded");
 
+		WaitForElementPresent(locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_DIALOG");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {
@@ -421,6 +423,8 @@ definition {
 			attributeName = "src",
 			attributeValue = "dialog-iframe-popup",
 			eventName = "modalIframeLoaded");
+
+		WaitForElementPresent(locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_DIALOG");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

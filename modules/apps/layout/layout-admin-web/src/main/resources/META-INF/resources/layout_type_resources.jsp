@@ -55,7 +55,7 @@ if (selLayout != null) {
 <c:choose>
 	<c:when test='<%= Objects.equals(id, "portlet") %>'>
 		<div class="layout-type">
-			<p class="small text-muted">
+			<p class="small text-secondary">
 				<liferay-ui:message key="empty-page-description" />
 			</p>
 

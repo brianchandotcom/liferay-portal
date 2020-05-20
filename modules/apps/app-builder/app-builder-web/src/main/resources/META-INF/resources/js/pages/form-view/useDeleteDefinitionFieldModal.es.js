@@ -27,17 +27,17 @@ export default (callback) => {
 	);
 	const [{onClose}, dispatchModal] = useContext(ClayModalContext);
 
-	return (fieldName) => {
+	return (event) => {
 		const {fieldType, label} = DataDefinitionUtils.getDataDefinitionField(
 			dataDefinition,
-			fieldName
+			event.fieldName
 		);
 		const {label: fieldTypeLabel} = fieldTypes.find(({name}) => {
 			return name === fieldType;
 		});
 
 		return getItem(
-			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-definition-field-links?fieldName=${fieldName}`
+			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-definition-field-links?fieldName=${event.fieldName}`
 		).then(({dataLayouts, dataListViews}) => {
 			dispatchModal({
 				payload: {
@@ -53,7 +53,7 @@ export default (callback) => {
 										<label>
 											{Liferay.Language.get('name')}:
 										</label>
-										<span>{fieldName}</span>
+										<span>{event.fieldName}</span>
 									</div>
 									<div>
 										<label>
@@ -148,7 +148,7 @@ export default (callback) => {
 							<ClayButton
 								key={2}
 								onClick={() => {
-									callback(fieldName);
+									callback(event);
 
 									onClose();
 								}}

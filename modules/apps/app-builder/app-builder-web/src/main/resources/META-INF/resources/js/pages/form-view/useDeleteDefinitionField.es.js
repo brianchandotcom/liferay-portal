@@ -21,15 +21,15 @@ import {deleteDefinitionField} from './actions.es';
 export default ({dataLayoutBuilder}) => {
 	const [, dispatch] = useContext(FormViewContext);
 
-	return (fieldName) => {
+	return (event) => {
 		const {pages} = dataLayoutBuilder.getStore();
 		const visitor = new PagesVisitor(pages);
 
-		if (visitor.containsField(fieldName, true)) {
-			dataLayoutBuilder.dispatch('fieldDeleted', {fieldName});
+		if (visitor.containsField(event.fieldName, true)) {
+			dataLayoutBuilder.dispatch('fieldDeleted', event);
 		}
 		else {
-			dispatch(deleteDefinitionField(fieldName));
+			dispatch(deleteDefinitionField(event.fieldName));
 		}
 	};
 };

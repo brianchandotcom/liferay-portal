@@ -27,11 +27,9 @@ export default ({children, dataLayoutBuilder}) => {
 		dispatch,
 	] = useContext(FormViewContext);
 	const deleteDefinitionField = useDeleteDefinitionField({dataLayoutBuilder});
-	const onDeleteDefinitionField = useDeleteDefinitionFieldModal(
-		(fieldName) => {
-			deleteDefinitionField(fieldName);
-		}
-	);
+	const onDeleteDefinitionField = useDeleteDefinitionFieldModal((event) => {
+		deleteDefinitionField(event);
+	});
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
@@ -76,8 +74,8 @@ export default ({children, dataLayoutBuilder}) => {
 				separator: true,
 			},
 			{
-				action: ({fieldName}) => {
-					onDeleteDefinitionField(fieldName);
+				action: (event) => {
+					onDeleteDefinitionField(event);
 				},
 				label: Liferay.Language.get('delete-from-object'),
 				style: 'danger',

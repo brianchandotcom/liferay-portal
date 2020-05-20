@@ -116,8 +116,8 @@ export default ({keywords}) => {
 
 	const deleteField = useDeleteDefinitionField({dataLayoutBuilder});
 
-	const onDeleteDefinitionField = useDeleteDefinitionFieldModal((fieldName) =>
-		deleteField(fieldName)
+	const onDeleteDefinitionField = useDeleteDefinitionFieldModal((event) =>
+		deleteField(event)
 	);
 
 	return (
@@ -126,7 +126,9 @@ export default ({keywords}) => {
 			fieldTypes={fieldTypes}
 			keywords={keywords}
 			onClick={handleOnClick}
-			onDelete={onDeleteDefinitionField}
+			onDelete={(fieldName) =>
+				onDeleteDefinitionField({activePage: 0, fieldName})
+			}
 			onDoubleClick={handleOnDoubleClick}
 		/>
 	);

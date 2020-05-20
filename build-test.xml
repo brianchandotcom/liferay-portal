@@ -6699,7 +6699,12 @@ go</echo>
 								</if>
 
 								<if>
-									<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
+									<and>
+										<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
+										<not>
+											<equals arg1="${osgi.app.name}" arg2="commerce" />
+										</not>
+									</and>
 									<then>
 										<echo>Copying ${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg.</echo>
 

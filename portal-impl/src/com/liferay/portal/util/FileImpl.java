@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileComparator;
@@ -405,19 +406,24 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 			tika.setMaxStringLength(maxStringLength);
 
-			boolean forkProcess = false;
-
 			TikaInputStream tikaInputStream = TikaInputStream.get(is);
 
-			if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED) {
-				String mimeType = tika.detect(tikaInputStream);
+			String mimeType = tika.detect(tikaInputStream);
 
-				if (ArrayUtil.contains(
-						PropsValues.TEXT_EXTRACTION_FORK_PROCESS_MIME_TYPES,
-						mimeType)) {
+			// See LPS-112649
 
-					forkProcess = true;
-				}
+			if (mimeType.equals(ContentTypes.APPLICATION_ZIP)) {
+				return StringPool.BLANK;
+			}
+
+			boolean forkProcess = false;
+
+			if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED &&
+				ArrayUtil.contains(
+					PropsValues.TEXT_EXTRACTION_FORK_PROCESS_MIME_TYPES,
+					mimeType)) {
+
+				forkProcess = true;
 			}
 
 			if (forkProcess) {

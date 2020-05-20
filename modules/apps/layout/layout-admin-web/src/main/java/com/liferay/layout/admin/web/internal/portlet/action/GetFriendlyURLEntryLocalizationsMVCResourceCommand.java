@@ -98,15 +98,16 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 
 		for (String languageId : layout.getAvailableLanguageIds()) {
 			FriendlyURLEntryLocalization mainFriendlyURLEntryLocalization =
-				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
+				_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
 					mainFriendlyURLEntry.getFriendlyURLEntryId(), languageId);
 
 			friendlyURLEntryLocalizationsJSONObject.put(
 				languageId,
 				JSONUtil.put(
 					"current",
-					_serializeFriendlyURLEntryLocalization(
-						mainFriendlyURLEntryLocalization)
+					mainFriendlyURLEntryLocalization != null ?
+						_serializeFriendlyURLEntryLocalization(
+							mainFriendlyURLEntryLocalization) : null
 				).put(
 					"history",
 					_getJSONJArray(

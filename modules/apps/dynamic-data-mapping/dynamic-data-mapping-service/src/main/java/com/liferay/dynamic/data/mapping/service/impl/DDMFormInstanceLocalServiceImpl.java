@@ -39,6 +39,8 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.mail.kernel.model.MailMessage;
+import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,10 +56,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.mail.internet.InternetAddress;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -329,6 +334,29 @@ public class DDMFormInstanceLocalServiceImpl
 
 		return ddmFormInstanceFinder.countByC_G_N_D(
 			companyId, groupId, names, descriptions, andOperator);
+	}
+
+	@Override
+	public void sendShareFormInstanceEmail(
+			long userId, String message, String subject,
+			String[] toEmailAddresses)
+		throws Exception {
+
+		User user = userLocalService.getUser(userId);
+
+		MailMessage mailMessage = new MailMessage(
+			new InternetAddress(user.getEmailAddress(), user.getFullName()),
+			subject, message, false);
+
+		List<InternetAddress> internetAddresses = new ArrayList<>();
+
+		for (String toEmailAddress : toEmailAddresses) {
+			internetAddresses.add(new InternetAddress(toEmailAddress));
+		}
+
+		mailMessage.setTo(internetAddresses.toArray(new InternetAddress[0]));
+
+		_mailService.sendEmail(mailMessage);
 	}
 
 	@Override
@@ -692,5 +720,8 @@ public class DDMFormInstanceLocalServiceImpl
 
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
+
+	@Reference
+	private MailService _mailService;
 
 }

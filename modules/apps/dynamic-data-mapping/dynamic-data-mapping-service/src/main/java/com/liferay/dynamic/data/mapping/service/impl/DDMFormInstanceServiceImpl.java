@@ -186,6 +186,19 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 			companyId, groupId, names, descriptions, andOperator);
 	}
 
+	@Override
+	public void sendShareFormInstanceEmail(
+			long formInstanceId, String message, String subject,
+			String[] toEmailAddresses)
+		throws Exception {
+
+		_ddmFormInstanceModelResourcePermission.check(
+			getPermissionChecker(), formInstanceId, ActionKeys.UPDATE);
+
+		ddmFormInstanceLocalService.sendShareFormInstanceEmail(
+			getUserId(), message, subject, toEmailAddresses);
+	}
+
 	/**
 	 * Updates the the record set's settings.
 	 *

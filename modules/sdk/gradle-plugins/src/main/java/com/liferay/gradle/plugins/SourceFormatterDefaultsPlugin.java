@@ -101,7 +101,7 @@ public class SourceFormatterDefaultsPlugin
 						public void execute(
 							FormatSourceTask checkSourceFormattingTask) {
 
-							checkSourceFormattingTask.dependsOn(
+							checkSourceFormattingTask.finalizedBy(
 								packageRunCheckFormatTaskProvider);
 						}
 
@@ -123,7 +123,7 @@ public class SourceFormatterDefaultsPlugin
 
 						@Override
 						public void execute(FormatSourceTask formatSourceTask) {
-							formatSourceTask.dependsOn(
+							formatSourceTask.finalizedBy(
 								packageRunFormatTaskProvider);
 						}
 

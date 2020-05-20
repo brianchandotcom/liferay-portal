@@ -89,6 +89,24 @@ public class DDMTemplateTableReferenceDefinition
 						ResourcePermissionTable.INSTANCE.primKeyId)
 				)
 			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				ResourcePermissionTable.INSTANCE
+			).innerJoinON(
+				DDMTemplateTable.INSTANCE,
+				DDMTemplateTable.INSTANCE.companyId.eq(
+					ResourcePermissionTable.INSTANCE.companyId
+				).and(
+					ResourcePermissionTable.INSTANCE.name.like(
+						DDMTemplate.class.getName() + "%")
+				).and(
+					ResourcePermissionTable.INSTANCE.scope.eq(
+						ResourceConstants.SCOPE_INDIVIDUAL)
+				).and(
+					DDMTemplateTable.INSTANCE.templateId.eq(
+						ResourcePermissionTable.INSTANCE.primKeyId)
+				)
+			)
 		);
 	}
 

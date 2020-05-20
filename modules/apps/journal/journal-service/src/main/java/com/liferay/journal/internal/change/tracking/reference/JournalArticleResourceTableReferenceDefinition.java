@@ -16,9 +16,9 @@ package com.liferay.journal.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResourceTable;
 import com.liferay.journal.model.JournalArticleTable;
+import com.liferay.journal.model.JournalFolderTable;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.GroupTable;
@@ -59,12 +59,18 @@ public class JournalArticleResourceTableReferenceDefinition
 						JournalArticleResourceTable.INSTANCE.articleId)
 				)
 			)
-		).assetEntryReference(
-			JournalArticleResourceTable.INSTANCE.resourcePrimKey,
-			JournalArticle.class
-		).resourcePermissionReference(
-			JournalArticleResourceTable.INSTANCE.resourcePrimKey,
-			JournalArticle.class
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				JournalFolderTable.INSTANCE
+			).innerJoinON(
+				JournalArticleTable.INSTANCE,
+				JournalArticleTable.INSTANCE.folderId.eq(
+					JournalFolderTable.INSTANCE.folderId)
+			).innerJoinON(
+				JournalArticleResourceTable.INSTANCE,
+				JournalArticleResourceTable.INSTANCE.resourcePrimKey.eq(
+					JournalArticleTable.INSTANCE.resourcePrimKey)
+			)
 		);
 	}
 

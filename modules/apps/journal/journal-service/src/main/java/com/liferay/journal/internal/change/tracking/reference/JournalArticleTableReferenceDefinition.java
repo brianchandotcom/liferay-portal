@@ -16,6 +16,7 @@ package com.liferay.journal.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
@@ -183,6 +184,22 @@ public class JournalArticleTableReferenceDefinition
 			JournalArticleTable.INSTANCE.statusDate
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
+				DDMStorageLinkTable.INSTANCE
+			).innerJoinON(
+				JournalArticleTable.INSTANCE,
+				JournalArticleTable.INSTANCE.id.eq(
+					DDMStorageLinkTable.INSTANCE.classPK)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.value.eq(
+					JournalArticle.class.getName()
+				).and(
+					ClassNameTable.INSTANCE.classNameId.eq(
+						DDMStorageLinkTable.INSTANCE.classNameId)
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
 				DDMStructureLinkTable.INSTANCE
 			).innerJoinON(
 				JournalArticleTable.INSTANCE,
@@ -213,6 +230,10 @@ public class JournalArticleTableReferenceDefinition
 						DDMTemplateLinkTable.INSTANCE.classNameId)
 				)
 			)
+		).assetEntryReference(
+			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
+		).resourcePermissionReference(
+			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
 		);
 	}
 

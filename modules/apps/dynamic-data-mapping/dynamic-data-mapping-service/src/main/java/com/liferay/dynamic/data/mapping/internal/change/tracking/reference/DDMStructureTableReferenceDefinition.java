@@ -77,6 +77,24 @@ public class DDMStructureTableReferenceDefinition
 						ResourcePermissionTable.INSTANCE.primKeyId)
 				)
 			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				ResourcePermissionTable.INSTANCE
+			).innerJoinON(
+				DDMStructureTable.INSTANCE,
+				DDMStructureTable.INSTANCE.companyId.eq(
+					ResourcePermissionTable.INSTANCE.companyId
+				).and(
+					ResourcePermissionTable.INSTANCE.name.like(
+						DDMStructure.class.getName() + "%")
+				).and(
+					ResourcePermissionTable.INSTANCE.scope.eq(
+						ResourceConstants.SCOPE_INDIVIDUAL)
+				).and(
+					DDMStructureTable.INSTANCE.structureId.eq(
+						ResourcePermissionTable.INSTANCE.primKeyId)
+				)
+			)
 		);
 	}
 

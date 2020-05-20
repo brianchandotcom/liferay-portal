@@ -61,7 +61,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -308,7 +307,6 @@ public class AssetVocabularyServiceTest {
 		Assert.assertEquals(vocabularies.toString(), 1, vocabularies.size());
 	}
 
-	@Ignore
 	@Test
 	public void testLocalizedSiteAddDefaultVocabulary() throws Exception {
 		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.SPAIN);

@@ -16,23 +16,8 @@ import parser from 'bbcode-to-react';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React from 'react';
 
-export function getCKEditorConfig(bodyClass) {
-	const config = {
-		allowedContent: true,
-		autoGrow_minHeight: 200,
-		autoGrow_onStartup: true,
-		bodyClass: 'cke_readonly_body cke_' + bodyClass,
-		codeSnippet_theme: 'monokai_sublime',
-		contentsCss: '/o/questions-web/css/main.css',
-		extraPlugins: 'autogrow,codesnippet',
-		readOnly: true,
-		removePlugins: 'elementspath',
-	};
+import {getCKEditorReadOnlyConfig} from '../utils/utils.es';
 
-	config.toolbar = [];
-
-	return config;
-}
 
 export default ({
 	articleBody,
@@ -53,7 +38,7 @@ export default ({
 		{encodingFormat !== 'bbcode' && !compactMode && (
 			<div className={`cke_readonly questions-article-body-${id}`}>
 				<Editor
-					config={getCKEditorConfig(bodyClass)}
+					config={getCKEditorReadOnlyConfig(bodyClass)}
 					data={articleBody}
 					required
 				/>

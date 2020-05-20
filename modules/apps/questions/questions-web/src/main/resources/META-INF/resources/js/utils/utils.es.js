@@ -40,6 +40,25 @@ export function getCKEditorConfig() {
 	return config;
 }
 
+export function getCKEditorReadOnlyConfig(bodyClass) {
+	const config = {
+		allowedContent: true,
+		autoGrow_minHeight: 200,
+		autoGrow_onStartup: true,
+		bodyClass: 'cke_readonly_body cke_' + bodyClass,
+		codeSnippet_theme: 'monokai_sublime',
+		contentsCss: '/o/questions-web/css/main.css',
+		extraPlugins: 'autogrow,codesnippet',
+		readOnly: true,
+		removePlugins: 'elementspath',
+	};
+
+	config.toolbar = [];
+
+	return config;
+}
+
+
 export function onBeforeLoadCKEditor(CKEditor, url) {
 	if (CKEditor) {
 		CKEditor.disableAutoInline = true;

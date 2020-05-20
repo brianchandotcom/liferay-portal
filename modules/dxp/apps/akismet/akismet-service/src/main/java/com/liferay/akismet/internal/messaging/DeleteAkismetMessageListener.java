@@ -14,8 +14,9 @@
 
 package com.liferay.akismet.internal.messaging;
 
-import com.liferay.akismet.client.util.AkismetServiceConfigurationUtil;
+import com.liferay.akismet.configuration.AkismetServiceConfiguration;
 import com.liferay.akismet.service.AkismetEntryLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -30,12 +31,14 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -44,7 +47,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jamie Sammons
  */
 @Component(
-	immediate = true, property = "cron.expression=0 0 0 * * ?",
+	configurationPid = "com.liferay.akismet.configuration.AkismetServiceConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	property = "cron.expression=0 0 0 * * ?",
 	service = DeleteAkismetMessageListener.class
 )
 public class DeleteAkismetMessageListener extends BaseMessageListener {
@@ -53,6 +58,9 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 	@Modified
 	protected void activate(Map<String, Object> properties)
 		throws SchedulerException {
+
+		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
+			AkismetServiceConfiguration.class, properties);
 
 		String cronExpression = GetterUtil.getString(
 			properties.get("cron.expression"), _DEFAULT_CRON_EXPRESSION);
@@ -99,8 +107,11 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 	}
 
 	protected void deleteAkismetData(long companyId) {
+		int reportableTime =
+			_akismetServiceConfiguration.akismetReportableTime();
+
 		_akismetEntryLocalService.deleteAkismetEntry(
-			AkismetServiceConfigurationUtil.getReportableTime(companyId));
+			new Date(System.currentTimeMillis() - (reportableTime * Time.DAY)));
 	}
 
 	@Override
@@ -137,6 +148,7 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 	@Reference
 	private AkismetEntryLocalService _akismetEntryLocalService;
 
+	private volatile AkismetServiceConfiguration _akismetServiceConfiguration;
 	private volatile boolean _initialized;
 
 	@Reference

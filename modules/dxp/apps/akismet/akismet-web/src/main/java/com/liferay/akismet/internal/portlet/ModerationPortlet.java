@@ -15,13 +15,14 @@
 package com.liferay.akismet.internal.portlet;
 
 import com.liferay.akismet.client.AkismetClient;
-import com.liferay.akismet.client.util.AkismetServiceConfigurationUtil;
+import com.liferay.akismet.configuration.AkismetServiceConfiguration;
 import com.liferay.akismet.internal.constants.ModerationPortletKeys;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -34,19 +35,24 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jamie
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.akismet.configuration.AkismetServiceConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
@@ -93,10 +99,17 @@ public class ModerationPortlet extends MVCPortlet {
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
 				new HashMap<String, Serializable>());
 
-			if (AkismetServiceConfigurationUtil.isMessageBoardsEnabled()) {
+			if (_akismetServiceConfiguration.messageBoardsEnabled()) {
 				_akismetClient.submitHam(mbMessage);
 			}
 		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
+			AkismetServiceConfiguration.class, properties);
 	}
 
 	@Override
@@ -113,6 +126,8 @@ public class ModerationPortlet extends MVCPortlet {
 
 	@Reference
 	private AkismetClient _akismetClient;
+
+	private volatile AkismetServiceConfiguration _akismetServiceConfiguration;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

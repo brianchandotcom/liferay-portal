@@ -14,10 +14,11 @@
 
 package com.liferay.akismet.internal.messaging;
 
-import com.liferay.akismet.client.util.AkismetServiceConfigurationUtil;
+import com.liferay.akismet.configuration.AkismetServiceConfiguration;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -46,6 +48,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -54,7 +57,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jamie Sammons
  */
 @Component(
-	immediate = true, property = "cron.expression=0 0 0 * * ?",
+	configurationPid = "com.liferay.akismet.configuration.AkismetServiceConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	property = "cron.expression=0 0 0 * * ?",
 	service = DeleteMBMessagesListener.class
 )
 public class DeleteMBMessagesListener extends BaseMessageListener {
@@ -63,6 +68,9 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 	@Modified
 	protected void activate(Map<String, Object> properties)
 		throws SchedulerException {
+
+		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
+			AkismetServiceConfiguration.class, properties);
 
 		String cronExpression = GetterUtil.getString(
 			properties.get("cron.expression"), _DEFAULT_CRON_EXPRESSION);
@@ -118,9 +126,12 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 
 		Property statusDateProperty = PropertyFactoryUtil.forName("statusDate");
 
+		long retainSpamTime =
+			_akismetServiceConfiguration.akismetRetainSpamTime() * Time.DAY;
+
 		dynamicQuery.add(
 			statusDateProperty.lt(
-				AkismetServiceConfigurationUtil.getRetainSpamTime()));
+				new Date(System.currentTimeMillis() - retainSpamTime)));
 
 		List<MBMessage> mbMessages = _mbMessageLocalService.dynamicQuery(
 			dynamicQuery);
@@ -169,6 +180,7 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteMBMessagesListener.class);
 
+	private volatile AkismetServiceConfiguration _akismetServiceConfiguration;
 	private volatile boolean _initialized;
 
 	@Reference

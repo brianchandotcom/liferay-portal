@@ -15,10 +15,11 @@
 package com.liferay.akismet.internal.portlet.action;
 
 import com.liferay.akismet.client.AkismetClient;
-import com.liferay.akismet.client.util.AkismetServiceConfigurationUtil;
+import com.liferay.akismet.configuration.AkismetServiceConfiguration;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -40,17 +41,23 @@ import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jamie Sammons
  */
 @Component(
+	configurationPid = "com.liferay.akismet.configuration.AkismetServiceConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = {
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"mvc.command.name=/message_boards/edit_message",
@@ -59,6 +66,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
+			AkismetServiceConfiguration.class, properties);
+	}
 
 	protected void checkPermission(long scopeGroupId) throws PortalException {
 		PermissionChecker permissionChecker =
@@ -132,7 +146,7 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			if (AkismetServiceConfigurationUtil.isMessageBoardsEnabled()) {
+			if (_akismetServiceConfiguration.messageBoardsEnabled()) {
 				_akismetClient.submitSpam(message);
 			}
 		}
@@ -142,7 +156,7 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
 				new HashMap<String, Serializable>());
 
-			if (AkismetServiceConfigurationUtil.isMessageBoardsEnabled()) {
+			if (_akismetServiceConfiguration.messageBoardsEnabled()) {
 				_akismetClient.submitHam(message);
 			}
 		}
@@ -155,6 +169,8 @@ public class AkismetEditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AkismetClient _akismetClient;
+
+	private volatile AkismetServiceConfiguration _akismetServiceConfiguration;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

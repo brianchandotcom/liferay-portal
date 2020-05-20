@@ -12,14 +12,14 @@
  * details.
  */
 
-import {CheckboxField} from '../../components/floating-toolbar/CheckboxField';
-import {CollectionSelectorField} from '../../components/floating-toolbar/CollectionSelectorField';
-import {ColorPaletteField} from '../../components/floating-toolbar/ColorPaletteField';
-import {ItemSelectorField} from '../../components/floating-toolbar/ItemSelectorField';
-import {SelectField} from '../../components/floating-toolbar/SelectField';
-import {TextField} from '../../components/floating-toolbar/TextField';
+import {CheckboxField} from './CheckboxField';
+import {CollectionSelectorField} from './CollectionSelectorField';
+import {ColorPaletteField} from './ColorPaletteField';
+import {ItemSelectorField} from './ItemSelectorField';
+import {SelectField} from './SelectField';
+import {TextField} from './TextField';
 
-export const FRAGMENT_CONFIGURATION_FIELD_TYPES = {
+export const FRAGMENT_CONFIGURATION_FIELDS = {
 	checkbox: CheckboxField,
 	collectionSelector: CollectionSelectorField,
 	colorPalette: ColorPaletteField,

@@ -17,7 +17,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import {TextField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/TextField';
+import {TextField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-configuration-fields/TextField';
 
 const INPUT_NAME = 'test';
 

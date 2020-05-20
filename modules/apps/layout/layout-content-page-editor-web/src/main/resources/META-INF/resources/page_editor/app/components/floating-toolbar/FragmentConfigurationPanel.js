@@ -21,11 +21,11 @@ import {
 	ConfigurationFieldPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../../config/constants/fragmentConfigurationFieldTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateFragmentConfiguration from '../../thunks/updateFragmentConfiguration';
+import {FRAGMENT_CONFIGURATION_FIELDS} from '../fragment-configuration-fields';
 
 const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
 	return (
@@ -34,8 +34,7 @@ const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
 
 			{fields.map((field, index) => {
 				const FieldComponent =
-					field.type &&
-					FRAGMENT_CONFIGURATION_FIELD_TYPES[field.type];
+					field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
 
 				const fieldValue = configurationValues[field.name];
 

@@ -55,17 +55,16 @@ public class UpstreamFailureUtil {
 
 			if (type.equals("build")) {
 				upstreamFailures.add(
-					JenkinsResultsParserUtil.combine(
-						jobVariant, ",",
-						failedBatchJSONObject.getString("result")));
+					_formatUpstreamBuildFailure(
+						jobVariant, failedBatchJSONObject.getString("result")));
 			}
 			else if (type.equals("test")) {
 				for (int j = 0; j < failedTestsJSONArray.length(); j++) {
 					Object object = failedTestsJSONArray.get(j);
 
 					upstreamFailures.add(
-						JenkinsResultsParserUtil.combine(
-							object.toString(), ",", jobVariant));
+						_formatUpstreamTestFailure(
+							jobVariant, object.toString()));
 				}
 			}
 		}
@@ -155,8 +154,9 @@ public class UpstreamFailureUtil {
 			for (String failure :
 					getUpstreamJobFailures("test", topLevelBuild)) {
 
-				if (failure.contains(jobVariant) &&
-					failure.contains(testResult.getDisplayName())) {
+				if (failure.equals(
+						_formatUpstreamTestFailure(
+							jobVariant, testResult.getDisplayName()))) {
 
 					return true;
 				}
@@ -237,6 +237,18 @@ public class UpstreamFailureUtil {
 		}
 	}
 
+	private static String _formatUpstreamBuildFailure(
+		String jobVariant, String testResult) {
+
+		return JenkinsResultsParserUtil.combine(jobVariant, ",", testResult);
+	}
+
+	private static String _formatUpstreamTestFailure(
+		String jobVariant, String testName) {
+
+		return JenkinsResultsParserUtil.combine(testName, ",", jobVariant);
+	}
+
 	private static boolean _isBuildFailingInUpstreamJob(Build build) {
 		String jobVariant = build.getJobVariant();
 
@@ -261,8 +273,8 @@ public class UpstreamFailureUtil {
 		for (String upstreamJobFailure :
 				getUpstreamJobFailures("build", topLevelBuild)) {
 
-			if (upstreamJobFailure.contains(jobVariant) &&
-				upstreamJobFailure.contains(result)) {
+			if (upstreamJobFailure.equals(
+					_formatUpstreamBuildFailure(jobVariant, result))) {
 
 				return true;
 			}

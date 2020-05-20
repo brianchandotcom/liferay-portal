@@ -24,6 +24,24 @@ $zIndexContent: 0;
 		width: $sidebarButtonWidth;
 		z-index: $zIndexButtons;
 
+		&.light {
+			background-color: $gray-200;
+			padding: 16px 5px;
+			width: 42px;
+
+			button {
+				color: $secondary;
+
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					background-color: $light-d1;
+					color: $secondary-d2;
+				}
+			}
+		}
+
 		a {
 			align-items: center;
 			border-radius: 0.25rem;

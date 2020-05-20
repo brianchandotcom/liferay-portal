@@ -186,7 +186,9 @@ export default function Sidebar() {
 		<ClayTooltipProvider>
 			<div className="page-editor__sidebar" ref={dropClearRef}>
 				<div
-					className="page-editor__sidebar__buttons"
+					className={classNames('page-editor__sidebar__buttons', {
+						light: config.fragmentPanelEnabled,
+					})}
 					onClick={deselectItem}
 				>
 					{panels.reduce((elements, group, groupIndex) => {

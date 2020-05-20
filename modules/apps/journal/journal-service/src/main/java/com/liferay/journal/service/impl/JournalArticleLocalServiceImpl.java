@@ -8109,14 +8109,11 @@ public class JournalArticleLocalServiceImpl
 
 		if (folder != null) {
 			folderName = folder.getName();
+		}
+		else if (article.getFolderId() ==
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			if ((folder.getFolderId() ==
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-				Validator.isNull(folderName)) {
-
-				folderName = LanguageUtil.get(
-					LocaleUtil.getSiteDefault(), "home");
-			}
+			folderName = LanguageUtil.get(LocaleUtil.getSiteDefault(), "home");
 		}
 
 		String articleStatus = LanguageUtil.get(

@@ -84,6 +84,10 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.contains("portal")) {
+			return new PortalTopLevelBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		return topLevelBuild;
 	}
 

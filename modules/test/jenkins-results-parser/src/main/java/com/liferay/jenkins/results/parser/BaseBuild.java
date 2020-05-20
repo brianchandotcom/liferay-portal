@@ -287,27 +287,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public BranchInformation getBranchInformation(String repositoryType) {
-		BranchInformation branchInformation = _branchInformationMap.get(
-			repositoryType);
-
-		if (branchInformation == null) {
-			branchInformation = new DefaultBranchInformation(
-				this, repositoryType);
-
-			String repositoryName = branchInformation.getRepositoryName();
-
-			if (repositoryName == null) {
-				return null;
-			}
-
-			_branchInformationMap.put(repositoryType, branchInformation);
-		}
-
-		return _branchInformationMap.get(repositoryType);
-	}
-
-	@Override
 	public String getBranchName() {
 		return branchName;
 	}
@@ -2328,6 +2307,26 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return "jenkins";
+	}
+
+	protected BranchInformation getBranchInformation(String repositoryType) {
+		BranchInformation branchInformation = _branchInformationMap.get(
+			repositoryType);
+
+		if (branchInformation == null) {
+			branchInformation = new DefaultBranchInformation(
+				this, repositoryType);
+
+			String repositoryName = branchInformation.getRepositoryName();
+
+			if (repositoryName == null) {
+				return null;
+			}
+
+			_branchInformationMap.put(repositoryType, branchInformation);
+		}
+
+		return _branchInformationMap.get(repositoryType);
 	}
 
 	protected JSONObject getBuildJSONObject(String tree) {

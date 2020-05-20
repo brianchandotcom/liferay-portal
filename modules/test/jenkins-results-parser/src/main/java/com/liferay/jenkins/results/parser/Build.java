@@ -43,8 +43,6 @@ public interface Build {
 
 	public String getBaseGitRepositorySHA(String gitRepositoryName);
 
-	public BranchInformation getBranchInformation(String repositoryType);
-
 	public String getBranchName();
 
 	public String getBrowser();

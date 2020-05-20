@@ -23,7 +23,7 @@ import org.dom4j.Element;
 /**
  * @author Peter Yoo
  */
-public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
+public class PortalPullRequestTesterTopLevelBuild extends PortalTopLevelBuild {
 
 	public PortalPullRequestTesterTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {

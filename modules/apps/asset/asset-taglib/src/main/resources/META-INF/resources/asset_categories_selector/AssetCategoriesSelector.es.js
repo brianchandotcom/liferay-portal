@@ -31,7 +31,7 @@ function AssetCategoriesSelector({
 		<div id={id}>
 			{vocabularies.map((vocabulary, index) => {
 				const label = vocabulary.group
-					? `${vocabulary.title} ${vocabulary.group}`
+					? `${vocabulary.title} (${vocabulary.group})`
 					: vocabulary.title;
 
 				return (

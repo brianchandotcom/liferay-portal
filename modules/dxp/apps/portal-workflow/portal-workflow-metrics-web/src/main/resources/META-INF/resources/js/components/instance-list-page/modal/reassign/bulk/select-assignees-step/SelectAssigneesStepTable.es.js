@@ -18,12 +18,13 @@ import {Autocomplete} from '../../../../../../shared/components/autocomplete/Aut
 import {ModalContext} from '../../../ModalProvider.es';
 
 const Item = ({
-	assigneePerson,
-	data,
+	assetTitle,
+	assetType,
+	assignee,
+	data = {},
 	id,
+	instanceId,
 	label,
-	objectReviewed: {assetTitle, assetType},
-	workflowInstanceId,
 }) => {
 	const {bulkReassign, setBulkReassign} = useContext(ModalContext);
 	const {reassignedTasks, reassigning, useSameAssignee} = bulkReassign;
@@ -57,7 +58,7 @@ const Item = ({
 	return (
 		<ClayTable.Row>
 			<ClayTable.Cell className="font-weight-bold">
-				{workflowInstanceId}
+				{instanceId}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>{`${assetType}: ${assetTitle}`} </ClayTable.Cell>
@@ -65,9 +66,7 @@ const Item = ({
 			<ClayTable.Cell>{label}</ClayTable.Cell>
 
 			<ClayTable.Cell>
-				{assigneePerson
-					? assigneePerson.name
-					: Liferay.Language.get('unassigned')}
+				{assignee ? assignee.name : Liferay.Language.get('unassigned')}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>

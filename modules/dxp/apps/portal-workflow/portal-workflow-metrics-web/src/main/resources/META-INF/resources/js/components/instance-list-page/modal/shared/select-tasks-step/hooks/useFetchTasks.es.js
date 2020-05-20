@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useCallback, useContext, useMemo} from 'react';
+import {useContext} from 'react';
 
 import {useFilter} from '../../../../../../shared/hooks/useFilter.es';
 import {usePost} from '../../../../../../shared/hooks/usePost.es';
@@ -17,74 +17,75 @@ import {AppContext} from '../../../../../AppContext.es';
 import {InstanceListContext} from '../../../../InstanceListPageProvider.es';
 import {ModalContext} from '../../../ModalProvider.es';
 
-const useFetchTasks = (options = {}) => {
-	const defaultOptions = {page: 1, pageSize: -1, withoutUnassigned: false};
+const useFetchTasks = ({
+	page = 1,
+	pageSize = 10000,
+	withoutUnassigned,
+} = {}) => {
+	const {
+		filterValues: {
+			assigneeIds: userIds = [],
+			slaStatuses,
+			taskNames: instanceTasks,
+		},
+	} = useFilter({});
 
-	const {page, pageSize, withoutUnassigned} = useMemo(
-		() => ({...defaultOptions, ...options}),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[options]
-	);
-	const {userId} = useContext(AppContext);
 	const {
 		dispatch,
-		filterState,
-		filterValues: {
-			bulkAssigneeIds: userIds = [],
-			bulkTaskNames: workflowTaskNames,
-		},
+		filterValues: {bulkAssigneeIds = [], bulkTaskNames = []},
 	} = useFilter({withoutRouteParams: true});
-	const {selectAll, selectedItems} = useContext(InstanceListContext);
+
 	const {processId} = useContext(ModalContext);
+	const {userId} = useContext(AppContext);
+	const {selectAll, selectedItems = []} = useContext(InstanceListContext);
 
-	const clearFilters = useCallback(() => {
-		dispatch({
-			...filterState,
-			bulkAssigneeIds: [],
-			bulkTaskNames: [],
-		});
-	}, [dispatch, filterState]);
+	const assignees = bulkAssigneeIds.length ? bulkAssigneeIds : userIds;
+	const availableUsers = withoutUnassigned ? [userId] : [userId, '-1'];
+	const assigneeIds = assignees.filter((id) => availableUsers.includes(id));
+	const instanceIds = !selectAll
+		? selectedItems.map(({id}) => id)
+		: undefined;
+	const taskNames = bulkTaskNames.length ? bulkTaskNames : instanceTasks;
 
-	const body = useMemo(() => {
-		const unassigned = userIds.includes('-1');
-		const searchByRoles =
-			(!withoutUnassigned && userIds.length === 0) || unassigned;
-
-		const assignees = !unassigned ? [userId] : [];
-		const assigneeIds = userIds.length
-			? userIds.filter((id) => id !== '-1')
-			: assignees;
-
-		const body = {
-			assigneeIds,
-			completed: false,
-			searchByRoles,
-			workflowTaskNames,
-		};
-
-		if (selectAll) {
-			body.workflowDefinitionId = processId;
-		}
-		else {
-			body.workflowInstanceIds = selectedItems.map(({id}) => id);
-		}
-
-		return body;
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedItems, userIds, workflowTaskNames]);
-
-	const {data, postData: fetchTasks} = usePost({
-		admin: true,
-		body,
+	let {data, postData: fetchTasks} = usePost({
+		body: {
+			assigneeIds: withoutUnassigned ? availableUsers : assigneeIds,
+			instanceIds,
+			processId,
+			slaStatuses,
+			taskNames,
+		},
 		params: {
 			page,
 			pageSize,
-			sort: 'workflowInstanceId:asc',
+			sort: 'instanceId:asc',
 		},
-		url: '/workflow-tasks',
+		url: '/tasks',
 	});
 
-	return {clearFilters, data, fetchTasks};
+	const clearFilters = () => {
+		dispatch({
+			bulkAssigneeIds: [],
+			bulkTaskNames: [],
+		});
+	};
+
+	const noResultsFetch = () => {
+		data = {
+			items: [],
+			page,
+			pageSize,
+			totalCount: 0,
+		};
+
+		return Promise.resolve(data);
+	};
+
+	if (withoutUnassigned && assignees.length && !assignees.includes(userId)) {
+		fetchTasks = noResultsFetch;
+	}
+
+	return {clearFilters, data, fetchTasks, instanceIds};
 };
 
 export {useFetchTasks};

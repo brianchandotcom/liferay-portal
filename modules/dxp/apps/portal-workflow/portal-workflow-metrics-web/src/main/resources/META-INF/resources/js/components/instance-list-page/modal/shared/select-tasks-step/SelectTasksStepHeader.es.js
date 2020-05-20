@@ -21,7 +21,7 @@ import AssigneeFilter from '../../../../filter/AssigneeFilter.es';
 import ProcessStepFilter from '../../../../filter/ProcessStepFilter.es';
 import {ModalContext} from '../../ModalProvider.es';
 
-const Header = ({items = [], totalCount, withoutUnassigned}) => {
+const Header = ({items = [], instanceIds, totalCount, withoutUnassigned}) => {
 	const {userId, userName} = useContext(AppContext);
 	const filterKeys = ['processStep', 'assignee'];
 	const prefixKey = 'bulk';
@@ -38,6 +38,30 @@ const Header = ({items = [], totalCount, withoutUnassigned}) => {
 		prefixKeys,
 		withoutRouteParams: true,
 	});
+
+	const {
+		filterValues: {assigneeIds: userIds = [], slaStatuses, taskNames},
+	} = useFilter({});
+
+	const availableUsers = withoutUnassigned ? [userId] : [userId, '-1'];
+	const assigneeIds = userIds.filter((id) => availableUsers.includes(id));
+	const currentAndUnassigned = [userId, '-1'].every((user) =>
+		userIds.includes(user)
+	);
+	const hideAssigneeFilter = !currentAndUnassigned && userIds.length;
+
+	const stepFilterOptions = {
+		requestBody: {
+			assigneeIds: withoutUnassigned ? availableUsers : assigneeIds,
+			instanceIds,
+			processId,
+			slaStatuses,
+			taskNames,
+		},
+		requestMethod: 'post',
+		requestUrl: '/tasks?page=0&pageSize=0',
+		withoutRouteParams: true,
+	};
 
 	const selectedOnPage = tasks.filter((item) =>
 		items.find(({id}) => id === item.id)
@@ -120,11 +144,12 @@ const Header = ({items = [], totalCount, withoutUnassigned}) => {
 						</ClayManagementToolbar.Item>
 
 						<ProcessStepFilter
-							options={{withoutRouteParams: true}}
+							options={stepFilterOptions}
 							prefixKey={prefixKey}
 							processId={processId}
 						/>
-						{!withoutUnassigned && (
+
+						{!withoutUnassigned && !hideAssigneeFilter && (
 							<AssigneeFilter
 								options={{withoutRouteParams: true}}
 								prefixKey={prefixKey}

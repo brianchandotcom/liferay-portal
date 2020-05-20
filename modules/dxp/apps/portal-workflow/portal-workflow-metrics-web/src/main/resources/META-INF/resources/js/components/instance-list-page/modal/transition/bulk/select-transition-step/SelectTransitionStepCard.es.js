@@ -101,11 +101,7 @@ const Card = ({cardIndex, nextTransitions = [], tasks}) => {
 							</ClayList.Item>
 
 							{tasks.map(
-								({
-									id,
-									objectReviewed: {assetTitle, assetType},
-									workflowInstanceId,
-								}) => (
+								({assetTitle, assetType, id, instanceId}) => (
 									<ClayList.Item
 										className="list-item-no-border"
 										flex
@@ -115,7 +111,7 @@ const Card = ({cardIndex, nextTransitions = [], tasks}) => {
 											style={{width: '20%'}}
 										>
 											<ClayList.ItemTitle>
-												{workflowInstanceId}
+												{instanceId}
 											</ClayList.ItemTitle>
 										</ClayList.ItemField>
 

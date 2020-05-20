@@ -1171,7 +1171,7 @@ public class Properties extends AbstractMap<String, String> {
 
 		// blank lines are also treated as comment lines
 
-		if ((string.length() < 1) || (string.indexOf(_COMMENT_CHARS) == 0)) {
+		if ((string.length() < 1) || (_COMMENT_CHARS.indexOf(string.charAt(0)) >= 0)) {
 			return true;
 		}
 

@@ -1,0 +1,13 @@
+diff --git a/org/apache/felix/utils/properties/Properties.java b/org/apache/felix/utils/properties/Properties.java
+index cb57129f586c..4b1be94f940e 100644
+--- a/org/apache/felix/utils/properties/Properties.java
++++ b/org/apache/felix/utils/properties/Properties.java
+@@ -1171,7 +1171,7 @@ public class Properties extends AbstractMap<String, String> {
+ 
+ 		// blank lines are also treated as comment lines
+ 
+-		if ((string.length() < 1) || (string.indexOf(_COMMENT_CHARS) == 0)) {
++		if ((string.length() < 1) || (_COMMENT_CHARS.indexOf(string.charAt(0)) >= 0)) {
+ 			return true;
+ 		}
+ 

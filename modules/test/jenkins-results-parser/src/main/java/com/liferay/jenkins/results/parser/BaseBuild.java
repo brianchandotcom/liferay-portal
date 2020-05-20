@@ -1104,23 +1104,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public JSONObject getTestReportJSONObject(boolean cache) {
+	public JSONObject getTestReportJSONObject(boolean checkCache) {
 		try {
-			JSONObject testReportJSONObject =
-				JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(
-						getBuildURL() + "testReport/api/json"),
-					false);
-
-			if (cache) {
-				if (_testReportJSONObject == null) {
-					_testReportJSONObject = testReportJSONObject;
-				}
-
-				return _testReportJSONObject;
-			}
-
-			return testReportJSONObject;
+			return JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(
+					getBuildURL() + "testReport/api/json"),
+				checkCache);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -3722,6 +3711,5 @@ public abstract class BaseBuild implements Build {
 	private String _previousStatus;
 	private String _result;
 	private String _status;
-	private JSONObject _testReportJSONObject;
 
 }

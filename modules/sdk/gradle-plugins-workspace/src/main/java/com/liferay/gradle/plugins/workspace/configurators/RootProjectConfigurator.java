@@ -72,6 +72,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
@@ -79,6 +80,7 @@ import org.gradle.api.file.RelativePath;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.provider.Property;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskOutputs;
@@ -92,7 +94,6 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
  * @author Andrea Di Giorgi
  * @author David Truong
  */
-@SuppressWarnings("deprecation")
 public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String BUILD_DOCKER_IMAGE_TASK_NAME =
@@ -197,8 +198,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, distBundleTask,
 			workspaceExtension);
 
+		Property<String> archiveExtension =
+			distBundleTarTask.getArchiveExtension();
+
+		archiveExtension.set("tar.gz");
+
 		distBundleTarTask.setCompression(Compression.GZIP);
-		distBundleTarTask.setExtension("tar.gz");
 
 		_addTaskDistBundle(
 			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, distBundleTask,
@@ -671,9 +676,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
-		task.setBaseName(project.getName());
+		Property<String> archiveBaseName = task.getArchiveBaseName();
+
+		archiveBaseName.set(project.getName());
+
 		task.setDescription("Assembles the Liferay bundle and zips it up.");
-		task.setDestinationDir(project.getBuildDir());
+
+		DirectoryProperty destinationDirectory = task.getDestinationDirectory();
+
+		destinationDirectory.set(project.getBuildDir());
+
 		task.setGroup(BUNDLE_GROUP);
 
 		return task;

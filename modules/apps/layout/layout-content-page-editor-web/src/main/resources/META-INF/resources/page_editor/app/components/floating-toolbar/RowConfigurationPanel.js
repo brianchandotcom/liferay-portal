@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -27,8 +28,6 @@ import updateItemConfig from '../../thunks/updateItemConfig';
 import updateRowColumns from '../../thunks/updateRowColumns';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {useId} from '../../utils/useId';
-import {RowConfigurationCheckboxField} from './RowConfigurationCheckboxField';
-import {RowConfigurationSelectField} from './RowConfigurationSelectField';
 
 const MODULES_PER_ROW_OPTIONS = [
 	[1],
@@ -58,9 +57,6 @@ const ROW_CONFIGURATION_IDENTIFIERS = {
 export const RowConfigurationPanel = ({item}) => {
 	const {availableViewportSizes} = config;
 	const dispatch = useDispatch();
-	const rowModulesPerRowId = useId();
-	const rowNumberOfColumnsId = useId();
-	const rowVerticalAlignmentId = useId();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
@@ -127,34 +123,32 @@ export const RowConfigurationPanel = ({item}) => {
 		selectedViewportSize
 	);
 
-	const {
-		gutters,
-		modulesPerRow,
-		numberOfColumns,
-		reverseOrder,
-		verticalAlignment,
-	} = rowConfig;
+	const viewportSize = availableViewportSizes[selectedViewportSize];
 
 	return (
 		<>
-			<RowConfigurationSelectField
-				fieldValue={numberOfColumns}
-				id={rowNumberOfColumnsId}
-				identifier={ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns}
+			<Select
+				configurationKey="numberOfColumns"
+				handleChange={handleConfigurationValueChanged}
 				label={Liferay.Language.get('number-of-columns')}
-				onValueChange={handleConfigurationValueChanged}
 				options={NUMBER_OF_COLUMNS_OPTIONS.map((option) => ({
 					label: option,
 				}))}
+				value={rowConfig.numberOfColumns}
 			/>
-			{numberOfColumns > 1 && (
-				<RowConfigurationCheckboxField
-					fieldValue={gutters}
-					identifier={ROW_CONFIGURATION_IDENTIFIERS.gutters}
-					label={Liferay.Language.get('show-gutter')}
-					onValueChange={handleConfigurationValueChanged}
-				/>
+
+			{rowConfig.numberOfColumns > 1 && (
+				<>
+					<ClayCheckbox
+						checked={rowConfig.gutters}
+						label={Liferay.Language.get('show-gutter')}
+						onChange={({target: {checked}}) =>
+							handleConfigurationValueChanged('gutters', checked)
+						}
+					/>
+				</>
 			)}
+
 			{config.responsiveEnabled && (
 				<>
 					<div className="align-items-center d-flex justify-content-between page-editor__floating-toolbar__label pt-3">
@@ -162,26 +156,18 @@ export const RowConfigurationPanel = ({item}) => {
 							{Liferay.Language.get('styles')}
 						</p>
 						<p>
-							{Liferay.Language.get(
-								availableViewportSizes[selectedViewportSize]
-									.label
-							)}
+							{viewportSize.label}
 							<ClayIcon
 								className="ml-1"
-								symbol={
-									availableViewportSizes[selectedViewportSize]
-										.icon
-								}
+								symbol={viewportSize.icon}
 							/>
 						</p>
 					</div>
-					<RowConfigurationSelectField
-						fieldValue={modulesPerRow}
-						getOptionLabel={getModulesPerRowOptionLabel}
-						id={rowModulesPerRowId}
-						identifier={ROW_CONFIGURATION_IDENTIFIERS.modulesPerRow}
+
+					<Select
+						configurationKey="modulesPerRow"
+						handleChange={handleConfigurationValueChanged}
 						label={Liferay.Language.get('layout')}
-						onValueChange={handleConfigurationValueChanged}
 						options={MODULES_PER_ROW_OPTIONS[
 							rowConfig.numberOfColumns - 1
 						].map((option) => ({
@@ -191,26 +177,29 @@ export const RowConfigurationPanel = ({item}) => {
 							),
 							value: option,
 						}))}
+						value={rowConfig.modulesPerRow}
 					/>
-					{numberOfColumns === 2 && modulesPerRow === 1 && (
-						<RowConfigurationCheckboxField
-							fieldValue={reverseOrder}
-							identifier={
-								ROW_CONFIGURATION_IDENTIFIERS.reverseOrder
-							}
-							label={Liferay.Language.get('inverse-order')}
-							onValueChange={handleConfigurationValueChanged}
-						/>
-					)}
-					<RowConfigurationSelectField
-						fieldValue={verticalAlignment}
-						id={rowVerticalAlignmentId}
-						identifier={
-							ROW_CONFIGURATION_IDENTIFIERS.verticalAlignment
-						}
+
+					{rowConfig.numberOfColumns === 2 &&
+						rowConfig.modulesPerRow === 1 && (
+							<ClayCheckbox
+								checked={rowConfig.reverseOrder}
+								label={Liferay.Language.get('inverse-order')}
+								onChange={({target: {checked}}) =>
+									handleConfigurationValueChanged(
+										'reverseOrder',
+										checked
+									)
+								}
+							/>
+						)}
+
+					<Select
+						configurationKey="verticalAlignment"
+						handleChange={handleConfigurationValueChanged}
 						label={Liferay.Language.get('vertical-alignment')}
-						onValueChange={handleConfigurationValueChanged}
 						options={VERTICAL_ALIGNMENT_OPTIONS}
+						value={rowConfig.verticalAlignment}
 					/>
 				</>
 			)}
@@ -222,4 +211,46 @@ RowConfigurationPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({numberOfColumns: PropTypes.number}),
 	}),
+};
+
+const Select = ({configurationKey, handleChange, label, options, value}) => {
+	const inputId = useId();
+
+	return (
+		<ClayForm.Group small>
+			<label htmlFor={inputId}>{label}</label>
+
+			<ClaySelectWithOption
+				id={inputId}
+				onChange={(event) => {
+					const nextValue = event.target.value;
+
+					handleChange(
+						configurationKey,
+						typeof value === 'string'
+							? String(nextValue)
+							: Number(nextValue)
+					);
+				}}
+				options={options}
+				value={String(value)}
+			/>
+		</ClayForm.Group>
+	);
+};
+
+Select.propTypes = {
+	configurationKey: PropTypes.string.isRequired,
+	handleChange: PropTypes.func.isRequired,
+	label: PropTypes.string.isRequired,
+	options: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string.isRequired,
+			value: PropTypes.oneOfType([
+				PropTypes.string.isRequired,
+				PropTypes.number.isRequired,
+			]),
+		})
+	),
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };

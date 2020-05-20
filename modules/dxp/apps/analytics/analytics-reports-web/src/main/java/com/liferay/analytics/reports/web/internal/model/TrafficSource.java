@@ -17,11 +17,15 @@ package com.liferay.analytics.reports.web.internal.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * @author David Arques
@@ -109,7 +113,7 @@ public class TrafficSource {
 		return JSONUtil.put(
 			"helpMessage", helpMessage
 		).put(
-			"keywords", keywordsJSONArray
+			"keywords", _getSearchKeywordsJSONArray()
 		).put(
 			"name", getName()
 		).put(
@@ -119,6 +123,29 @@ public class TrafficSource {
 		).put(
 			"value", getTrafficAmount()
 		);
+	}
+
+	private JSONArray _getSearchKeywordsJSONArray() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		if (ListUtil.isEmpty(_searchKeywords)) {
+			return jsonArray;
+		}
+
+		Stream<SearchKeyword> stream = _searchKeywords.stream();
+
+		Comparator<SearchKeyword> comparator = Comparator.comparingInt(
+			SearchKeyword::getTraffic);
+
+		stream.sorted(
+			comparator.reversed()
+		).limit(
+			5
+		).forEachOrdered(
+			searchKeyword -> jsonArray.put(searchKeyword.toJSONObject())
+		);
+
+		return jsonArray;
 	}
 
 	private String _name;

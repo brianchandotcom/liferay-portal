@@ -14,6 +14,9 @@
 
 package com.liferay.analytics.reports.web.internal.model;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+
 import java.util.Objects;
 
 /**
@@ -91,6 +94,18 @@ public class SearchKeyword {
 
 	public void setTraffic(int traffic) {
 		_traffic = traffic;
+	}
+
+	public JSONObject toJSONObject() {
+		return JSONUtil.put(
+			"keyword", getKeyword()
+		).put(
+			"position", getPosition()
+		).put(
+			"searchVolume", getSearchVolume()
+		).put(
+			"traffic", getTraffic()
+		);
 	}
 
 	private String _keyword;

@@ -8,13 +8,24 @@ definition {
 		}
 	}
 
+	macro addTags {
+		Type(
+			locator1 = "Questions#ASK_QUESTION_TAG_FIELD",
+			value1 = "${tagLocator}");
+
+		KeyPress(
+			locator1 = "Questions#ASK_QUESTION_TAG_FIELD",
+			value1 = "\RETURN");
+
+	}
+
 	macro changeDisplayStyle {
 		Click(locator1 = "Questions#CREATE_QUESTIONS_DISPLAY_STYLE_SELECTOR");
 
 		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
 	}
 
-	macro createQuestion {
+	macro createSomethingInMessageBoards {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "${menuItem}");
@@ -24,6 +35,16 @@ definition {
 		Questions.changeDisplayStyle(displayStyle = "${displayStyleOption}");
 
 		Button.clickSave();
+	}
+
+	macro askQuestionFillingTheMandatoryFields {
+		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
+		
+		Type(
+			locator1 = "Questions#ASK_QUESTION_TITLE_FIELD",
+			value1 = "${titleField}");
+
+		CKEditor.addContent(content = "${kbArticleContent}");
 	}
 
 	macro fillName {

@@ -1,6 +1,8 @@
 @component-name = "portal-questions"
 definition {
 
+	property osgi.module.configuration.file.names = "com.liferay.questions.web.internal.portlet.QuestionsPortlet.config";
+	property osgi.module.configurations = "com.liferay.portlet.display-category=category.collaboration";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Questions";
@@ -11,6 +13,20 @@ definition {
 		User.firstLoginPG();
 
 		Navigator.openURL();
+		
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Questions Page");
+
+		PageEditor.addWidget(portletName = "Questions");
+
+		PageEditor.clickPublish();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
 	}
 
 	tearDown {
@@ -36,23 +52,7 @@ definition {
 	@description = "Validate if the My Activity tab appears"
 	@priority = "4"
 	test ValidateIfTheMyActivityAppears {
-		property osgi.module.configuration.file.names = "com.liferay.questions.web.internal.portlet.QuestionsPortlet.config";
-		property osgi.module.configurations = "com.liferay.portlet.display-category=category.collaboration";
-
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		ContentPages.addPage(pageName = "Questions Page");
-
-		PageEditor.addWidget(portletName = "Questions");
-
-		PageEditor.clickPublish();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
-
-		Questions.createQuestion(
+		Questions.createSomethingInMessageBoards(
 			displayStyleOption = "Question",
 			menuItem = "Category",
 			nameField = "question ValidateIfTheMyActivityAppears");
@@ -66,6 +66,73 @@ definition {
 		AssertElementPresent(
 			key_questionTabField = "My Activity",
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+	}
+
+	@description = "Validate if the user can create a question with the maximum of 5 tags with unexisting tag"
+	@priority = "3"
+	test AddQuestionWithTheMaximumTags {
+		Questions.createSomethingInMessageBoards(
+			displayStyleOption = "Question",
+			menuItem = "Category",
+			nameField = "Question AddQuestionWithTheMaximumTags");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Question AddQuestionWithTheMaximumTags",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			titleField = "Title AddQuestionWithTheMaximumTags",
+			kbArticleContent = "Body AddQuestionWithTheMaximumTags");
+		
+		Questions.addTags(tagLocator = "Tag1");
+		Questions.addTags(tagLocator = "Tag2");
+		Questions.addTags(tagLocator = "Tag3");
+		Questions.addTags(tagLocator = "Tag4");
+		Questions.addTags(tagLocator = "Tag5");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		AssertElementPresent(
+			key_titleField = "Title AddQuestionWithTheMaximumTags"
+			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
+
+	}
+
+	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
+	@priority = "2"
+	test AddQuestionWithMoreThanTheMaximumTagsIsNotPossible {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		Questions.createSomethingInMessageBoards(
+			displayStyleOption = "Question",
+			menuItem = "Category",
+			nameField = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			titleField = "Title AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
+			kbArticleContent = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
+		
+		Questions.addTags(tagLocator = "Tag1");
+		Questions.addTags(tagLocator = "Tag2");
+		Questions.addTags(tagLocator = "Tag3");
+		Questions.addTags(tagLocator = "Tag4");
+		Questions.addTags(tagLocator = "Tag5");
+		Questions.addTags(tagLocator = "Tag6");
+
+		AssertElementPresent(
+			key_errorMessage = "This is an invalid tag.",
+			locator1 = "Questions#ASK_QUESTION_ERROR_MESSAGE");
 	}
 
 }

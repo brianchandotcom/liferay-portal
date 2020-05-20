@@ -9,6 +9,36 @@
 </thead>
 <tbody>
 <tr>
+	<td>ASK_QUESTION_BUTTON</td>
+	<td>//div[contains(@class,'input-group-item')]/button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASK_QUESTION_ERROR_MESSAGE</td>
+	<td>//div[text()='${key_errorMessage}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASK_QUESTION_POST_YOUR_QUESTION_BUTTON</td>
+	<td>//button[contains(@class,'btn-primary') and contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASK_QUESTION_SEARCH_QUESTION</td>
+	<td>//h2[text()='${key_titleField}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASK_QUESTION_TAG_FIELD</td>
+	<td>//div[contains(@class,'input-group-item')]/input[contains(@class,'form-control-inset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASK_QUESTION_TITLE_FIELD</td>
+	<td>//div[contains(@class,'form-group')]/input[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CREATE_QUESTIONS_NAME_FIELD</td>
 	<td>//input[@id='_com_liferay_message_boards_web_portlet_MBAdminPortlet_name']</td>
 	<td></td>

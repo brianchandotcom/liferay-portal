@@ -1,3 +1,7 @@
+.cke_answer-success {
+    background-color: $success-l2;
+}
+
 .cke_readonly .cke .cke_inner .cke_bottom,
 .cke_readonly .cke .cke_inner .cke_top {
 	display: none;
@@ -7,6 +11,8 @@
 	border: none;
 }
 
-.cke_answer-success {
-    background-color: $success-l2;
+.cke_readonly_body {
+    color: $body-color;
+    font-family: $font-family-base;
+    font-size: $font-size-base;    
 }

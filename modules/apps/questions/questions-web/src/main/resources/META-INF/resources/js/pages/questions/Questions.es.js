@@ -142,6 +142,7 @@ export default withRouter(
 										<QuestionRow
 											key={question.id}
 											question={question}
+											showSectionLabel={false}
 										/>
 									)}
 								</PaginatedList>

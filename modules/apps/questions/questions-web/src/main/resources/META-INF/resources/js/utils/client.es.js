@@ -208,6 +208,7 @@ export const getThread = (friendlyUrlPath, siteKey) =>
 				id
 				keywords
                 messageBoardSection {
+                	numberOfMessageBoardSections
                 	title
                 }
                 myRating {

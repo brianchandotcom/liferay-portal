@@ -154,27 +154,30 @@ export default withRouter(
 									</ClayForm.FeedbackGroup>
 								</ClayForm.Group>
 
-								<ClayForm.Group className="c-mt-4">
-									<label htmlFor="basicInput">
-										{Liferay.Language.get('topic')}
-									</label>
-									<ClaySelect
-										onChange={(event) =>
-											setSectionId(event.target.value)
-										}
-									>
-										{sections.map(({id, title}) => (
-											<ClaySelect.Option
-												key={id}
-												label={title}
-												selected={
-													section && section.id === id
-												}
-												value={id}
-											/>
-										))}
-									</ClaySelect>
-								</ClayForm.Group>
+								{sections.length > 1 && (
+									<ClayForm.Group className="c-mt-4">
+										<label htmlFor="basicInput">
+											{Liferay.Language.get('topic')}
+										</label>
+										<ClaySelect
+											onChange={(event) =>
+												setSectionId(event.target.value)
+											}
+										>
+											{sections.map(({id, title}) => (
+												<ClaySelect.Option
+													key={id}
+													label={title}
+													selected={
+														section &&
+														section.id === id
+													}
+													value={id}
+												/>
+											))}
+										</ClaySelect>
+									</ClayForm.Group>
+								)}
 
 								<TagSelector
 									className="c-mt-3"

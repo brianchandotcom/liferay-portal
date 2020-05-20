@@ -27,7 +27,7 @@ import SectionLabel from './SectionLabel.es';
 import TagList from './TagList.es';
 import UserIcon from './UserIcon.es';
 
-export default ({question}) => {
+export default ({question, showSectionLabel}) => {
 	const context = useContext(AppContext);
 
 	const sectionTitle = context.section;
@@ -35,7 +35,11 @@ export default ({question}) => {
 	return (
 		<div className="c-mt-4 c-p-3 position-relative question-row text-secondary">
 			<div className="align-items-center d-flex flex-wrap justify-content-between">
-				<SectionLabel section={question.messageBoardSection} />
+				<span>
+					{showSectionLabel && (
+						<SectionLabel section={question.messageBoardSection} />
+					)}
+				</span>
 
 				<ul className="c-mb-0 d-flex flex-wrap list-unstyled stretched-link-layer">
 					<li>

@@ -87,72 +87,96 @@ export default withRouter(
 		return (
 			<div className="d-flex flex-column flex-lg-row justify-content-between">
 				<div className="d-flex flex-grow-1">
-					<ClayDropDown
-						active={active}
-						className="questions-navigation-dropdown"
-						onActiveChange={setActive}
-						trigger={
-							<div className="align-items-center d-flex h-100">
-								{section.parentSection && (
-									<ClayInput.Group>
-										<ClayInput.GroupItem className="align-items-center">
-											<div className="questions-navigation-parent-section-title text-truncate">
-												{section.parentSection.title}
-												{':'}
-											</div>
-										</ClayInput.GroupItem>
+					{!!getParentSubSections().length && (
+						<>
+							<ClayDropDown
+								active={active}
+								className="questions-navigation-dropdown"
+								onActiveChange={setActive}
+								trigger={
+									<div className="align-items-center d-flex h-100">
+										{section.parentSection && (
+											<ClayInput.Group>
+												<ClayInput.GroupItem className="align-items-center">
+													<div className="questions-navigation-parent-section-title text-truncate">
+														{
+															section
+																.parentSection
+																.title
+														}
+														{':'}
+													</div>
+												</ClayInput.GroupItem>
 
-										<ClayInput.GroupItem
-											className="questions-navigation-section-title text-truncate"
-											shrink
-										>
-											{section.title ===
-											section.parentSection.title
-												? Liferay.Language.get('all')
-												: section.title}
-										</ClayInput.GroupItem>
+												<ClayInput.GroupItem
+													className="questions-navigation-section-title text-truncate"
+													shrink
+												>
+													{section.title ===
+													section.parentSection.title
+														? Liferay.Language.get(
+																'all'
+														  )
+														: section.title}
+												</ClayInput.GroupItem>
 
-										<ClayInput.GroupItem
-											className="align-items-center"
-											shrink
-										>
-											<ClayIcon symbol="caret-bottom" />
-										</ClayInput.GroupItem>
-									</ClayInput.Group>
+												<ClayInput.GroupItem
+													className="align-items-center"
+													shrink
+												>
+													<ClayIcon symbol="caret-bottom" />
+												</ClayInput.GroupItem>
+											</ClayInput.Group>
+										)}
+									</div>
+								}
+							>
+								<Link
+									to={`/questions/${
+										(section &&
+											section.parentSection &&
+											section.parentSection.title) ||
+										sectionTitle
+									}`}
+								>
+									<ClayDropDown.Help>
+										{Liferay.Language.get('all')}
+									</ClayDropDown.Help>
+								</Link>
+
+								<ClayDropDown.ItemList>
+									<ClayDropDown.Group>
+										{getParentSubSections().map(
+											(item, i) => (
+												<ClayDropDown.Item
+													href={item.href}
+													key={i}
+												>
+													<Link
+														to={
+															'/questions/' +
+															item.title
+														}
+													>
+														{item.title}
+													</Link>
+												</ClayDropDown.Item>
+											)
+										)}
+									</ClayDropDown.Group>
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+
+							{section &&
+								section.actions &&
+								section.actions.subscribe && (
+									<div className="c-ml-3">
+										<SectionSubscription
+											section={section}
+										/>
+									</div>
 								)}
-							</div>
-						}
-					>
-						<Link
-							to={`/questions/${
-								(section &&
-									section.parentSection &&
-									section.parentSection.title) ||
-								sectionTitle
-							}`}
-						>
-							<ClayDropDown.Help>
-								{Liferay.Language.get('all')}
-							</ClayDropDown.Help>
-						</Link>
-
-						<ClayDropDown.ItemList>
-							<ClayDropDown.Group>
-								{getParentSubSections().map((item, i) => (
-									<ClayDropDown.Item href={item.href} key={i}>
-										<Link to={'/questions/' + item.title}>
-											{item.title}
-										</Link>
-									</ClayDropDown.Item>
-								))}
-							</ClayDropDown.Group>
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
-
-					{section && section.actions && section.actions.subscribe && (
-						<div className="c-ml-3">
-							<SectionSubscription section={section} />
-						</div>
+						</>
 					)}
 				</div>
 

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,7 +65,16 @@ public class RestoreFriendlyURLEntryLocalizationMVCActionCommand extends
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("success", true);
+		try {
+			FriendlyURLEntry friendlyURLEntry = _friendlyURLEntryLocalService.getFriendlyURLEntry(ParamUtil.getLong(actionRequest, "friendlyURLEntryId"));
+
+			_friendlyURLEntryLocalService.setMainFriendlyURLEntry(friendlyURLEntry);
+
+			jsonObject.put("success", true);
+		}
+		catch (Exception e) {
+			jsonObject.put("success", false);
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

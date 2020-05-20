@@ -137,6 +137,55 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Article 3");
 	}
 
+	test AssertResultRankingsAssetDetails {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "banana, red apple, blueberry!",
+			threadSubject = "MB Thread Message Subject Apple");
+
+		JSONWebcontent.addWebContent(
+			content = "red apple, citrus-orange",
+			groupName = "Guest",
+			title = "Web Content Article Apple");
+
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		SearchTuning.addResultRanking(searchQuery = "Apple");
+
+		Click(
+			key_assetTitle = "MB Thread Message Subject Apple",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_TITLE");
+
+		SelectWindow(locator1 = "title=Result Rankings - Liferay DXP");
+
+		AssertVisible(
+			key_assetTitle = "MB Thread Message Subject Apple",
+			locator1 = "SearchTuning#RESULT_RANKINGS_VIEW_CONTENT_TITLE");
+
+		AssertVisible(
+			key_threadBody = "banana, red apple, blueberry!",
+			locator1 = "MessageBoardsThread#THREAD_BODY");
+
+		Close.closeAndSelectWindow(locator1 = "title=Customize Results - Liferay DXP");
+
+		Click(
+			key_assetTitle = "Web Content Article Apple",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_TITLE");
+
+		SelectWindow(locator1 = "title=Result Rankings - Liferay DXP");
+
+		AssertVisible(
+			key_assetTitle = "Web Content Article Apple",
+			locator1 = "SearchTuning#RESULT_RANKINGS_VIEW_CONTENT_TITLE");
+
+		AssertTextEquals(
+			locator1 = "WCD#WEB_CONTENT_CONTENT",
+			value1 = "red apple, citrus-orange");
+	}
+
 	test AssertResultRankingsMiscUI {
 		property portal.upstream = "quarantine";
 		ProductMenu.gotoPortlet(

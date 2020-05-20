@@ -11,9 +11,14 @@ definition {
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		AssertClick(
-			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "URL");
+		if (isSet(wikiAdmin)) {
+			AssertElementNotPresent(locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB");
+		}
+		else {
+			AssertClick(
+				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+				value1 = "URL");
+		}
 
 		AssertElementPresent(locator1 = "ItemSelector#URL_LABEL");
 		AssertElementNotPresent(locator1 = "ItemSelector#URL_IMAGE_PREVIEW");

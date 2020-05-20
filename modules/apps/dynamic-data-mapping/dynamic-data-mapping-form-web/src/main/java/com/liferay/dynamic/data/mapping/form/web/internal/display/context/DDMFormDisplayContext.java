@@ -551,15 +551,17 @@ public class DDMFormDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String url = themeDisplay.getPathMain() + "/portal/captcha/get_image";
+		String captchaResourceURL =
+			themeDisplay.getPathMain() + "/portal/captcha/get_image";
 
 		String portletId = PortalUtil.getPortletId(_renderRequest);
 
 		if (Validator.isNotNull(portletId)) {
-			url += "?portletId=" + portletId;
+			captchaResourceURL = captchaResourceURL.concat(
+				"?portletId=" + portletId);
 		}
 
-		return url;
+		return captchaResourceURL;
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(

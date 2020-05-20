@@ -22,6 +22,12 @@ import React, {useEffect, useState} from 'react';
 
 import LanguageSelector from './LanguageSelector';
 
+function logError(error) {
+	if (process.env.NODE_ENV === 'development' && error) {
+		console.error(error);
+	}
+};
+
 const showToastError = () => {
 	openToast({
 		message: Liferay.Language.get('an-unexpected-error-occurred'),
@@ -69,10 +75,7 @@ const FriendlyURLHistoryModal = ({
 				}
 			})
 			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-
+				logError(error);
 				showToastError();
 			});
 	}, [friendlyURLEntryLocalizationsURL, isMounted]);
@@ -156,9 +159,7 @@ const FriendlyURLHistoryModal = ({
 				}
 			})
 			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
+				logError(error);
 				showToastError();
 			});
 	};

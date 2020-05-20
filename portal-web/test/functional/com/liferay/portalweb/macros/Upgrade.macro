@@ -1015,13 +1015,21 @@ definition {
 
 		Navigator.openURL();
 
-		User.acceptEndUserLicenseAgreement();
+		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
+			User.loginPG(
+				password = "test",
+				resetPassword = "test2",
+				userEmailAddress = "test@liferay.com");
+		}
+		else {
+			User.acceptEndUserLicenseAgreement();
 
-		User.resetPassword(setupWizardEnabled = "true");
+			User.resetPassword(setupWizardEnabled = "true");
 
-		User.answerPasswordReminder();
+			User.answerPasswordReminder();
 
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		}
 
 		User.logoutPG();
 

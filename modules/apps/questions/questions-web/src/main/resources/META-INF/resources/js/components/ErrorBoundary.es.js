@@ -29,6 +29,10 @@ export class ErrorBoundary extends React.Component {
 
 	render() {
 		if (this.state.hasError) {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(this.state.error);
+			}
+
 			return (
 				<>
 					<ClayAlert

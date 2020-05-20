@@ -69,8 +69,8 @@ function getLastEventDetails(eventName){
 };
 
 window.LFR_JS_EVENTS_LOG = {
-	getLastEvent,
-	getLastEventDetails,
+	getLastEvent:getLastEvent,
+	getLastEventDetails:getLastEventDetails,
 };
 		''';
 

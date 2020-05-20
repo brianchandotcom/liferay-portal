@@ -12,10 +12,11 @@
  *
  */
 
-package com.liferay.akismet.client;
+package com.liferay.akismet.internal.client;
 
-import com.liferay.akismet.client.constants.AkismetConstants;
+import com.liferay.akismet.client.AkismetClient;
 import com.liferay.akismet.configuration.AkismetServiceConfiguration;
+import com.liferay.akismet.internal.client.constants.AkismetConstants;
 import com.liferay.akismet.model.AkismetEntry;
 import com.liferay.akismet.service.AkismetEntryLocalService;
 import com.liferay.message.boards.model.MBMessage;

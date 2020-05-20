@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.akismet.client.constants;
+package com.liferay.akismet.internal.client.constants;
 
 /**
  * @author Jamie Sammonss

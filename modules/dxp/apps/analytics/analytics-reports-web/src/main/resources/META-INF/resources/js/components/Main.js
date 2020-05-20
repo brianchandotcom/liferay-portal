@@ -44,9 +44,7 @@ export default function Main({
 			/>
 
 			<h5 className="mt-4 sheet-subtitle text-secondary">
-				{readsEnabled
-					? Liferay.Language.get('views-and-reads')
-					: Liferay.Language.get('views-metric')}
+				{Liferay.Language.get('engagement')}
 			</h5>
 
 			<TotalCount

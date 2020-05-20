@@ -236,6 +236,7 @@
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="dataDefinitionId" type="long" />
 
 		<!-- Relationships -->
 

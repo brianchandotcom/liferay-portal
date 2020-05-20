@@ -101,13 +101,17 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 				_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
 					mainFriendlyURLEntry.getFriendlyURLEntryId(), languageId);
 
+			JSONObject currentFriendlyURL = null;
+
+			if (mainFriendlyURLEntryLocalization != null) {
+				currentFriendlyURL = _serializeFriendlyURLEntryLocalization(
+					mainFriendlyURLEntryLocalization);
+			}
+
 			friendlyURLEntryLocalizationsJSONObject.put(
 				languageId,
 				JSONUtil.put(
-					"current",
-					mainFriendlyURLEntryLocalization != null ?
-						_serializeFriendlyURLEntryLocalization(
-							mainFriendlyURLEntryLocalization) : null
+					"current", currentFriendlyURL
 				).put(
 					"history",
 					_getJSONJArray(

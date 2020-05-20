@@ -22,11 +22,6 @@ definition {
 
 		PageEditor.clickPublish();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
-
 	}
 
 	tearDown {
@@ -49,32 +44,43 @@ definition {
 		}
 	}
 
-	@description = "Validate if the My Activity tab appears"
-	@priority = "4"
-	test ValidateIfTheMyActivityAppears {
-		Questions.createSomethingInMessageBoards(
-			displayStyleOption = "Question",
-			menuItem = "Category",
-			nameField = "question ValidateIfTheMyActivityAppears");
+	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
+	@priority = "2"
+	test AddQuestionWithMoreThanTheMaximumTagsIsNotPossible {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Click(
-			key_questionNameField = "question ValidateIfTheMyActivityAppears",
+			key_questionNameField = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
+		Questions.askQuestionFillingTheMandatoryFields(
+			titleField = "Title AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
+			kbArticleContent = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
+		
+		Questions.addTags(tagLocator = "Tag1");
+		Questions.addTags(tagLocator = "Tag2");
+		Questions.addTags(tagLocator = "Tag3");
+		Questions.addTags(tagLocator = "Tag4");
+		Questions.addTags(tagLocator = "Tag5");
+		Questions.addTags(tagLocator = "Tag6");
+
 		AssertElementPresent(
-			key_questionTabField = "My Activity",
-			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+			key_errorMessage = "This is an invalid tag.",
+			locator1 = "Questions#ASK_QUESTION_ERROR_MESSAGE");
 	}
 
 	@description = "Validate if the user can create a question with the maximum of 5 tags with unexisting tag"
 	@priority = "3"
 	test AddQuestionWithTheMaximumTags {
-		Questions.createSomethingInMessageBoards(
-			displayStyleOption = "Question",
-			menuItem = "Category",
-			nameField = "Question AddQuestionWithTheMaximumTags");
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Question AddQuestionWithTheMaximumTags",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -100,39 +106,23 @@ definition {
 
 	}
 
-	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
-	@priority = "2"
-	test AddQuestionWithMoreThanTheMaximumTagsIsNotPossible {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
-
-		Questions.createSomethingInMessageBoards(
-			displayStyleOption = "Question",
-			menuItem = "Category",
-			nameField = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
+	@description = "Validate if the My Activity tab appears"
+	@priority = "4"
+	test ValidateIfTheMyActivityAppears {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Question ValidateIfTheMyActivityAppears",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Click(
-			key_questionNameField = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
+			key_questionNameField = "Question ValidateIfTheMyActivityAppears",
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			titleField = "Title AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
-			kbArticleContent = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
-		
-		Questions.addTags(tagLocator = "Tag1");
-		Questions.addTags(tagLocator = "Tag2");
-		Questions.addTags(tagLocator = "Tag3");
-		Questions.addTags(tagLocator = "Tag4");
-		Questions.addTags(tagLocator = "Tag5");
-		Questions.addTags(tagLocator = "Tag6");
-
 		AssertElementPresent(
-			key_errorMessage = "This is an invalid tag.",
-			locator1 = "Questions#ASK_QUESTION_ERROR_MESSAGE");
+			key_questionTabField = "My Activity",
+			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 	}
 
 }

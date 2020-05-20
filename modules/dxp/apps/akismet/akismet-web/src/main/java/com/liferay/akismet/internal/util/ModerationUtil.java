@@ -16,6 +16,7 @@ package com.liferay.akismet.internal.util;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -56,8 +58,13 @@ public class ModerationUtil {
 			long scopeGroupId, boolean discussion)
 		throws PortalException {
 
+		MBMessageLocalService mbMessageLocalService =
+			MBMessageLocalServiceUtil.getService();
+
+		Class<?> clazz = mbMessageLocalService.getClass();
+
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBMessage.class);
+			MBMessage.class, clazz.getClassLoader());
 
 		Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
@@ -91,7 +98,7 @@ public class ModerationUtil {
 
 	protected static Long[] getChildScopeGroupIds(long parentGroupId) {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Group.class);
+			Group.class, PortalClassLoaderUtil.getClassLoader());
 
 		Property parentGroupIdProperty = PropertyFactoryUtil.forName(
 			"parentGroupId");

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -114,8 +113,10 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		Class<?> clazz = _mbMessageLocalService.getClass();
+
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			MBMessage.class, PortalClassLoaderUtil.getClassLoader());
+			MBMessage.class, clazz.getClassLoader());
 
 		Property statusProperty = PropertyFactoryUtil.forName("status");
 

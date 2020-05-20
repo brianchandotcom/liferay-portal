@@ -54,8 +54,9 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = AkismetClient.class
 )
-public class AkismetClient {
+public class AkismetClientImpl implements AkismetClient {
 
+	@Override
 	public boolean hasRequiredInfo(String userIP, Map<String, String> headers) {
 		if (headers == null) {
 			return false;
@@ -75,6 +76,7 @@ public class AkismetClient {
 		return true;
 	}
 
+	@Override
 	public boolean isSpam(
 			long userId, String content, AkismetEntry akismetEntry)
 		throws PortalException {
@@ -117,6 +119,7 @@ public class AkismetClient {
 		return false;
 	}
 
+	@Override
 	public void submitHam(
 			long companyId, String ipAddress, String userAgent, String referrer,
 			String permalink, String commentType, String userName,
@@ -146,6 +149,7 @@ public class AkismetClient {
 		}
 	}
 
+	@Override
 	public void submitHam(MBMessage mbMessage) throws PortalException {
 		AkismetEntry akismetEntry = _akismetEntryLocalService.fetchAkismetEntry(
 			MBMessage.class.getName(), mbMessage.getMessageId());
@@ -165,6 +169,7 @@ public class AkismetClient {
 			user.getFullName(), user.getEmailAddress(), content);
 	}
 
+	@Override
 	public void submitSpam(
 			long companyId, String ipAddress, String userAgent, String referrer,
 			String permalink, String commentType, String userName,
@@ -197,6 +202,7 @@ public class AkismetClient {
 		}
 	}
 
+	@Override
 	public void submitSpam(MBMessage mbMessage) throws PortalException {
 		AkismetEntry akismetData = _akismetEntryLocalService.fetchAkismetEntry(
 			MBMessage.class.getName(), mbMessage.getMessageId());
@@ -216,6 +222,7 @@ public class AkismetClient {
 			user.getFullName(), user.getEmailAddress(), content);
 	}
 
+	@Override
 	public boolean verifyApiKey(long companyId, String apiKey)
 		throws PortalException {
 
@@ -300,7 +307,8 @@ public class AkismetClient {
 		return StringPool.BLANK;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(AkismetClient.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AkismetClientImpl.class);
 
 	@Reference
 	private AkismetEntryLocalService _akismetEntryLocalService;

@@ -2,6 +2,7 @@ Bundle-Name: Liferay Akismet API
 Bundle-SymbolicName: com.liferay.akismet.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.akismet.client,\
 	com.liferay.akismet.configuration,\
 	com.liferay.akismet.exception,\
 	com.liferay.akismet.model,\

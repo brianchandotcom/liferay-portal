@@ -129,11 +129,20 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		WebContentTemplates.addCP(
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Web Content",
 			templateName = "WC Template Name");
+
+		var templateWebConetntScript = selenium.getAttribute("//span[contains(@class,'palette-item') and contains(.,'Web Content')]@data-content");
+		var templateScript = '''${templateWebConetntScript} <a>${webContentData.title}</a>''';
+
+		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+
+		DDLDataDefinition.save();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

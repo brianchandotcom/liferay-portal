@@ -15,8 +15,9 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
+import {StoreContext} from '../context/store';
 import {numberFormat} from '../utils/numberFormat';
 import Hint from './Hint';
 
@@ -34,6 +35,8 @@ export default function Keywords({currentPage, languageTag}) {
 			return keywordValueType.name === 'traffic';
 		})
 	);
+
+	const [{publishedToday}] = useContext(StoreContext);
 
 	return (
 		<ClayList className="list-group-keywords-list">
@@ -102,39 +105,54 @@ export default function Keywords({currentPage, languageTag}) {
 					</ClayDropDown>
 				</ClayList.ItemField>
 			</ClayList.Item>
-			{currentPage.data.keywords.map((keyword) => {
-				return (
-					<ClayList.Item flex key={keyword.title}>
-						<ClayList.ItemField expand>
-							<ClayList.ItemText>
-								<ClayTooltipProvider>
-									<span
-										className="text-truncate-inline"
-										data-tooltip-align="top"
-										title={keyword.title}
-									>
-										<span className="text-truncate">
-											{keyword.title}
+			{!publishedToday &&
+				currentPage.data.keywords.length > 0 &&
+				currentPage.data.keywords.map((k) => {
+					return (
+						<ClayList.Item flex key={k.keyword}>
+							<ClayList.ItemField expand>
+								<ClayList.ItemText>
+									<ClayTooltipProvider>
+										<span
+											className="text-truncate-inline"
+											data-tooltip-align="top"
+											title={k.keyword}
+										>
+											<span className="text-truncate">
+												{k.keyword}
+											</span>
 										</span>
-									</span>
-								</ClayTooltipProvider>
-							</ClayList.ItemText>
-						</ClayList.ItemField>
-						<ClayList.ItemField expand>
-							<span className="align-self-end">
-								{numberFormat(
-									languageTag,
-									keywordValueType.name === 'traffic'
-										? keyword.value
-										: keywordValueType.name === 'volume'
-										? keyword.volume
-										: keyword.position
+									</ClayTooltipProvider>
+								</ClayList.ItemText>
+							</ClayList.ItemField>
+							<ClayList.ItemField expand>
+								<span className="align-self-end">
+									{numberFormat(
+										languageTag,
+										keywordValueType.name === 'traffic'
+											? k.traffic
+											: keywordValueType.name === 'volume'
+											? k.searchVolume
+											: k.position
+									)}
+								</span>
+							</ClayList.ItemField>
+						</ClayList.Item>
+					);
+				})}
+			{(publishedToday || currentPage.data.keywords.length === 0) && (
+				<ClayList.Item flex>
+					<ClayList.ItemField expand>
+						<ClayList.ItemText>
+							<span className="text-secondary">
+								{Liferay.Language.get(
+									'there-are-no-best-keywords-yet'
 								)}
 							</span>
-						</ClayList.ItemField>
-					</ClayList.Item>
-				);
-			})}
+						</ClayList.ItemText>
+					</ClayList.ItemField>
+				</ClayList.Item>
+			)}
 		</ClayList>
 	);
 }

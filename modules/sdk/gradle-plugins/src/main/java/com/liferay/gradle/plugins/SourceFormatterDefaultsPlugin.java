@@ -57,7 +57,18 @@ public class SourceFormatterDefaultsPlugin
 				project, SourceFormatterPlugin.FORMAT_SOURCE_TASK_NAME,
 				FormatSourceTask.class);
 
-		_configureTasksFormatSource(project);
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			FormatSourceTask.class,
+			new Action<FormatSourceTask>() {
+
+				@Override
+				public void execute(FormatSourceTask formatSourceTask) {
+					_configureTasksFormatSource(formatSourceTask);
+				}
+
+			});
 
 		PluginContainer pluginContainer = project.getPlugins();
 
@@ -190,21 +201,6 @@ public class SourceFormatterDefaultsPlugin
 			formatSourceTask.setShowStatusUpdates(
 				Boolean.parseBoolean(showStatusUpdates));
 		}
-	}
-
-	private void _configureTasksFormatSource(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			FormatSourceTask.class,
-			new Action<FormatSourceTask>() {
-
-				@Override
-				public void execute(FormatSourceTask formatSourceTask) {
-					_configureTasksFormatSource(formatSourceTask);
-				}
-
-			});
 	}
 
 	private static final String _PORTAL_TOOL_NAME =

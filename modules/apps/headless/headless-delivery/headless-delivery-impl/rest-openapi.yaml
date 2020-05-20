@@ -5809,6 +5809,39 @@ paths:
                     description:
                         ""
             tags: ["NavigationMenu"]
+        put:
+            # @review
+            description:
+                Replaces the navigation menu with the information sent in the request body.
+                Any missing fields are deleted, unless they are required.
+            operationId: putNavigationMenu
+            parameters:
+                - in: path
+                  name: navigationMenuId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/NavigationMenu"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/NavigationMenu"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
+                    description:
+                        ""
+            tags: ["NavigationMenu"]
     "/sites/{siteId}/blog-posting-images":
         get:
             description:

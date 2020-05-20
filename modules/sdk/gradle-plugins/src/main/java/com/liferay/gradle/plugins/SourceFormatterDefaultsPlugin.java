@@ -65,7 +65,7 @@ public class SourceFormatterDefaultsPlugin
 
 				@Override
 				public void execute(FormatSourceTask formatSourceTask) {
-					_configureTasksFormatSource(formatSourceTask);
+					_configureTaskFormatSource(formatSourceTask);
 				}
 
 			});
@@ -78,7 +78,7 @@ public class SourceFormatterDefaultsPlugin
 
 				@Override
 				public void execute(NodePlugin nodePlugin) {
-					_configureTaskForNodePlugin(
+					_configurePluginNode(
 						project, checkSourceFormattingTaskProvider,
 						formatSourceTaskProvider);
 				}
@@ -91,7 +91,7 @@ public class SourceFormatterDefaultsPlugin
 		return SourceFormatterPlugin.class;
 	}
 
-	private void _configureTaskForNodePlugin(
+	private void _configurePluginNode(
 		Project project,
 		TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider,
 		TaskProvider<FormatSourceTask> formatSourceTaskProvider) {
@@ -143,9 +143,7 @@ public class SourceFormatterDefaultsPlugin
 		}
 	}
 
-	private void _configureTasksFormatSource(
-		FormatSourceTask formatSourceTask) {
-
+	private void _configureTaskFormatSource(FormatSourceTask formatSourceTask) {
 		Project project = formatSourceTask.getProject();
 
 		String gitWorkingBranchName = GradleUtil.getProperty(

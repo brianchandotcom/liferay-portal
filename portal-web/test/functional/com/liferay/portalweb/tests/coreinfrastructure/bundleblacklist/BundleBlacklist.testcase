@@ -138,7 +138,7 @@ definition {
 
 		Page.viewCurrentTheme(
 			page = "Public Pages",
-			pageName = "Home",
+			pageName = "Search",
 			themeName = "Classic Theme");
 
 		ProductMenu.gotoPortlet(
@@ -164,7 +164,7 @@ definition {
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
-			pageName = "Home");
+			pageName = "Search");
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 

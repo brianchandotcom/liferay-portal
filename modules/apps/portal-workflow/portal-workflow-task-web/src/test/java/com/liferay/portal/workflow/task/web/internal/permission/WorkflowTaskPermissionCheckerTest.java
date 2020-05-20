@@ -53,6 +53,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -129,6 +130,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false, false, false)));
 	}
 
+	@Ignore
 	@Test
 	public void testNotAssigneeHasNoPermission() {
 		long assigneeUserId = RandomTestUtil.randomLong();
@@ -141,6 +143,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					RandomTestUtil.randomLong())));
 	}
 
+	@Ignore
 	@Test
 	public void testNotAssigneeRoleHasNoPermission() {
 		long assigneeRoleId = RandomTestUtil.randomLong();
@@ -153,6 +156,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					RandomTestUtil.randomLong())));
 	}
 
+	@Ignore
 	@Test
 	public void testNotContentReviewerHasNoPermission() {
 		Assert.assertFalse(

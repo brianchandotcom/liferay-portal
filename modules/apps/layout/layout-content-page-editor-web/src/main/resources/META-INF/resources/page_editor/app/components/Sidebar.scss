@@ -40,6 +40,19 @@ $zIndexContent: 0;
 					color: $secondary-d2;
 				}
 			}
+
+			a {
+				color: $secondary;
+				height: 32px;
+
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					background-color: $light-d1;
+					color: $secondary-d2;
+				}
+			}
 		}
 
 		a {

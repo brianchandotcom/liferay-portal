@@ -15,48 +15,57 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {useSelectItem} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/store/index';
-import addWidget from '../../../app/thunks/addWidget';
+import addFragment from '../../../app/thunks/addFragment';
 import {useDragSymbol} from '../../../app/utils/useDragAndDrop';
 import FragmentCard from './FragmentCard';
 
-export default function Widget({instanceable, portletId, title, used}) {
+export default function Fragment({
+	fragmentEntryKey,
+	groupId,
+	icon,
+	imagePreviewURL,
+	name,
+	type,
+}) {
 	const dispatch = useDispatch();
-	const disabled = used && !instanceable;
 	const store = useSelector((state) => state);
+	const selectItem = useSelectItem();
 
 	const {sourceRef} = useDragSymbol(
 		{
-			label: title,
+			label: name,
 			type: LAYOUT_DATA_ITEM_TYPES.fragment,
 		},
 		(parentId, position) => {
 			dispatch(
-				addWidget({
+				addFragment({
+					fragmentEntryKey,
+					groupId,
 					parentItemId: parentId,
-					portletId,
 					position,
+					selectItem,
 					store,
+					type,
 				})
 			);
 		}
 	);
 
 	return (
-		!disabled && (
-			<FragmentCard
-				icon={instanceable ? 'grid' : 'live'}
-				name={title}
-				sourceRef={disabled ? () => {} : sourceRef}
-			/>
-		)
+		<FragmentCard
+			icon={icon}
+			imagePreviewURL={imagePreviewURL}
+			name={name}
+			sourceRef={sourceRef}
+		/>
 	);
 }
 
-Widget.propTypes = {
-	instanceable: PropTypes.bool.isRequired,
-	portletId: PropTypes.string.isRequired,
-	title: PropTypes.string.isRequired,
-	used: PropTypes.bool.isRequired,
+Fragment.propTypes = {
+	imagePreviewURL: PropTypes.string,
+	name: PropTypes.string.isRequired,
+	type: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };

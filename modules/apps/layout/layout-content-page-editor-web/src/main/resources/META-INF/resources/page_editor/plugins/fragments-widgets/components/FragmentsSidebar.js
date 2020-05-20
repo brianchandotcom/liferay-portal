@@ -21,7 +21,7 @@ import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import CollectionDisplay, {CollectionDisplayCard} from './CollectionDisplay';
-import FragmentCard from './FragmentCard';
+import Fragment from './Fragment';
 import LayoutElements from './LayoutElements';
 import SearchResultsPanel from './SearchResultsPanel';
 import Widget from './Widget';
@@ -31,9 +31,10 @@ const CONTENT_DISPLAY_COLLECTION_ID = 'content-display';
 export const FragmentPanel = ({collection}) => (
 	<>
 		{collection.fragmentEntries.map((fragmentEntry) => (
-			<FragmentCard
+			<Fragment
 				fragmentEntryKey={fragmentEntry.fragmentEntryKey}
 				groupId={fragmentEntry.groupId}
+				icon={fragmentEntry.icon}
 				imagePreviewURL={fragmentEntry.imagePreviewURL}
 				key={fragmentEntry.fragmentEntryKey}
 				name={fragmentEntry.name}

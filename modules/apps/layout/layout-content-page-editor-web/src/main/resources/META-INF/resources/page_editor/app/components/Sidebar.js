@@ -236,6 +236,7 @@ export default function Sidebar() {
 									onClick={() => handleClick(panel)}
 									onFocus={prefetch}
 									onMouseEnter={prefetch}
+									small={config.fragmentPanelEnabled}
 									symbol={icon}
 									title={label}
 								/>

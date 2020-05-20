@@ -2,34 +2,52 @@
 
 @import '../../../app/components/variables';
 
-.page-editor__fragments__fragment-card {
-	box-shadow: 0 0 0 1px $secondary-l3;
-	margin-bottom: $pageEditorSpacing * 2;
-	width: calc(50% - #{$pageEditorSpacing});
+.page-editor__fragments-widgets__fragment-card {
+	height: 32px;
+	margin-bottom: 4px;
+	display: flex;
+	align-items: center;
 
-	&-preview img {
-		width: 100%;
+	&:hover {
+		background-color: $gray-100;
 	}
 
-	&-no-preview {
-		background-color: $secondary-l2;
-		color: $secondary-l1;
-		font-size: 24px;
-		line-height: 80px;
+	&-body {
+		align-items: center;
+		display: flex;
+		padding: 7px $pageEditorSpacing * 2;
 		text-align: center;
-	}
+		width: calc(100% - 24px);
 
-	.card-body {
-		padding: $pageEditorSpacing;
-		text-align: center;
-
-		.card-title {
-			color: $secondary;
+		.title {
+			color: $secondary-d2;
 			font-size: 12px;
+			font-weight: 600;
+		}
+	}
+
+	&-preview {
+		position: relative;
+
+		.lexicon-icon {
+			fill: $secondary;
 		}
 
-		.card-row {
-			min-height: 32px;
+		.popover {
+			border-radius: 4px;
+			bottom: 32px;
+			left: unset;
+			right: -8px;
+			top: unset;
+			width: 208px;
+
+			.arrow {
+				display: none;
+			}
+
+			img {
+				width: 100%;
+			}
 		}
 	}
 }

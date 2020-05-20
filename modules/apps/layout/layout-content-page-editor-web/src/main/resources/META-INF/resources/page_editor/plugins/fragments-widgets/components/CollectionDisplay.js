@@ -18,10 +18,12 @@ import React from 'react';
 
 import {useSelectItem} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import addItem from '../../../app/thunks/addItem';
 import {useDragSymbol} from '../../../app/utils/useDragAndDrop';
 import Collapse from '../../../common/components/Collapse';
+import FragmentCard from './FragmentCard';
 
 export const CollectionDisplayCard = () => {
 	const dispatch = useDispatch();
@@ -46,7 +48,13 @@ export const CollectionDisplayCard = () => {
 		}
 	);
 
-	return (
+	return config.fragmentPanelEnabled ? (
+		<FragmentCard
+			icon="list"
+			name={Liferay.Language.get('collection-display')}
+			sourceRef={sourceRef}
+		/>
+	) : (
 		<div
 			className={classNames(
 				'page-editor__fragments__fragment-card',

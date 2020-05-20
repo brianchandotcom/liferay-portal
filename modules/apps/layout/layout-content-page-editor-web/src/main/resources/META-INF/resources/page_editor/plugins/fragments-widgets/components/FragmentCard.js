@@ -13,90 +13,57 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
+import ClayPopover from '@clayui/popover';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
-import {useSelectItem} from '../../../app/components/Controls';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {useDispatch, useSelector} from '../../../app/store/index';
-import addFragment from '../../../app/thunks/addFragment';
-import {useDragSymbol} from '../../../app/utils/useDragAndDrop';
+const ImagePreview = ({imagePreviewURL}) => (
+	<ClayPopover>
+		<img alt="thumbnail" src={imagePreviewURL} />
+	</ClayPopover>
+);
 
-const ImagePreview = ({imagePreviewURL}) => {
-	if (imagePreviewURL) {
-		return (
-			<div className="page-editor__fragments__fragment-card-preview">
-				<img alt="thumbnail" src={imagePreviewURL} />
-			</div>
-		);
-	}
-
-	return (
-		<div className="page-editor__fragments__fragment-card-no-preview">
-			<ClayIcon symbol="picture" />
-		</div>
-	);
-};
-
-export default function FragmentCard({
-	fragmentEntryKey,
-	groupId,
-	imagePreviewURL,
-	name,
-	type,
-}) {
-	const dispatch = useDispatch();
-	const store = useSelector((state) => state);
-	const selectItem = useSelectItem();
-
-	const {sourceRef} = useDragSymbol(
-		{
-			label: name,
-			type: LAYOUT_DATA_ITEM_TYPES.fragment,
-		},
-		(parentId, position) => {
-			dispatch(
-				addFragment({
-					fragmentEntryKey,
-					groupId,
-					parentItemId: parentId,
-					position,
-					selectItem,
-					store,
-					type,
-				})
-			);
-		}
-	);
+export default function FragmentCard({icon, imagePreviewURL, name, sourceRef}) {
+	const [focusedItem, setFocusedItem] = useState(false);
+	const [hoveredItem, setHoveredItem] = useState(false);
+	const [showPreview, setShowPreview] = useState(false);
 
 	return (
 		<div
-			className={classNames(
-				'page-editor__fragments__fragment-card',
-				'card',
-				'card-interactive',
-				'card-interactive-secondary',
-				'selector-button',
-				'overflow-hidden'
-			)}
+			className="page-editor__fragments-widgets__fragment-card"
+			onFocus={() => setFocusedItem(true)}
+			onMouseLeave={() => setHoveredItem(false)}
+			onMouseOver={() => setHoveredItem(true)}
 			ref={sourceRef}
+			tabIndex="0"
 		>
-			<ImagePreview imagePreviewURL={imagePreviewURL} />
-
-			<div className="card-body">
-				<div className="card-row">
-					<div className="autofit-col autofit-col-expand autofit-row-center">
-						<div className="card-title text-truncate">{name}</div>
-					</div>
-				</div>
+			<div className="page-editor__fragments-widgets__fragment-card-body">
+				<ClayIcon className="mr-3" symbol={icon} />
+				<div className="text-truncate title">{name}</div>
 			</div>
+
+			{imagePreviewURL && (hoveredItem || focusedItem) && (
+				<div
+					className="page-editor__fragments-widgets__fragment-card-preview"
+					onBlur={() => setShowPreview(false)}
+					onFocus={() => setShowPreview(true)}
+					onMouseLeave={() => setShowPreview(false)}
+					onMouseOver={() => setShowPreview(true)}
+					tabIndex="0"
+				>
+					<ClayIcon symbol="info-circle-open" />
+					{showPreview && (
+						<ImagePreview imagePreviewURL={imagePreviewURL} />
+					)}
+				</div>
+			)}
 		</div>
 	);
 }
 
 FragmentCard.propTypes = {
+	icon: PropTypes.string,
 	imagePreviewURL: PropTypes.string,
 	name: PropTypes.string.isRequired,
-	type: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	sourceRef: PropTypes.func,
 };

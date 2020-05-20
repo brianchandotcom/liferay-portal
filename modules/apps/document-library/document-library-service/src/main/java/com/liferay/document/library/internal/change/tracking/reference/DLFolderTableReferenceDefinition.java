@@ -64,7 +64,8 @@ public class DLFolderTableReferenceDefinition
 			DLFolderTable.INSTANCE.status
 		).singleColumnReference(
 			DLFolderTable.INSTANCE.statusByUserId, UserTable.INSTANCE.userId
-		).nonreferenceColumn(
+		).nonreferenceColumns(
+			DLFolderTable.INSTANCE.statusByUserName,
 			DLFolderTable.INSTANCE.statusDate
 		).assetEntryReference(
 			DLFolderTable.INSTANCE.folderId, DLFolder.class

@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULT_RANKINGS_RESULT_TITLE</td>
+	<td>//div[contains(@class,'active')]//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_RESULT_DRAG_HANDLE</td>
 	<td>//li[contains(@class,'result-ranking-item-pinned') and contains(.,'${key_assetTitle}')]//span[@draggable]</td>
 	<td></td>

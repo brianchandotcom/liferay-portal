@@ -129,7 +129,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 		Element replaceableElement = elements.get(0);
 
-		if (value.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+		if (JSONUtil.isValid(value)) {
 			try {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
 

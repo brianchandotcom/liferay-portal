@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -160,7 +161,7 @@ public class BackgroundImageFragmentEntryProcessor
 			}
 
 			if (Validator.isNotNull(value)) {
-				if (value.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+				if (JSONUtil.isValid(value)) {
 					JSONObject valueJSONObject =
 						JSONFactoryUtil.createJSONObject(value);
 

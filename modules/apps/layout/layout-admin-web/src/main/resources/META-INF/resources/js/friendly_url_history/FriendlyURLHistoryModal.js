@@ -26,7 +26,7 @@ function logError(error) {
 	if (process.env.NODE_ENV === 'development' && error) {
 		console.error(error);
 	}
-};
+}
 
 const showToastError = () => {
 	openToast({
@@ -139,19 +139,19 @@ const FriendlyURLHistoryModal = ({
 			.then((response) => {
 				if (response.success) {
 					setFriendlyURLEntryLocalizations(
-						(friendlyURLEntryLocalizations) => {
-							friendlyURLEntryLocalizations[
-								languageId
-							].history = friendlyURLEntryLocalizations[
-								languageId
-							].history.filter(
-								({friendlyURLEntryId}) =>
-									friendlyURLEntryId !=
-									deleteFriendlyURLEntryId
-							);
-
-							return {...friendlyURLEntryLocalizations};
-						}
+						(friendlyURLEntryLocalizations) => ({
+							...friendlyURLEntryLocalizations,
+							[languageId]: {
+								...friendlyURLEntryLocalizations[languageId],
+								history: friendlyURLEntryLocalizations[
+									languageId
+								].history.filter(
+									({friendlyURLEntryId}) =>
+										friendlyURLEntryId !=
+										deleteFriendlyURLEntryId
+								),
+							},
+						})
 					);
 				}
 				else {

@@ -50,6 +50,15 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 				keyProperty="userId"
 				modelVar="accountUserDisplay"
 			>
+
+				<%
+					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+							"actions", StringUtil.merge(accountUsersAdminManagementToolbarDisplayContext.getAvailableActions(accountUserDisplay))
+					).build();
+
+					row.setData(rowData);
+				%>
+
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="p_u_i_d" value="<%= String.valueOf(accountUserDisplay.getUserId()) %>" />
 					<portlet:param name="mvcPath" value="/account_users_admin/edit_account_user.jsp" />

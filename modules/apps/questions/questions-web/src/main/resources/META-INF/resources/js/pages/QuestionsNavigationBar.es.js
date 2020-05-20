@@ -40,11 +40,11 @@ function getFilterOptions() {
 			value: 'latest-edited',
 		},
 		{
-			label: Liferay.Language.get('week'),
+			label: Liferay.Language.get('voted-in-the-last-week'),
 			value: 'week',
 		},
 		{
-			label: Liferay.Language.get('month'),
+			label: Liferay.Language.get('voted-in-the-last-month'),
 			value: 'month',
 		},
 	];

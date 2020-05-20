@@ -20,8 +20,6 @@
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
-
-DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 %>
 
 <p>
@@ -40,21 +38,14 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayConte
 	<b><liferay-ui:message key="description" /></b>: <%= HtmlUtil.escape(fileVersion.getDescription()) %>
 </p>
 
-<b><liferay-ui:message key="content" /></b>:
+<p>
 
-<liferay-util:html-top
-	outputKey="document_library_preview_css"
->
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/document_library/css/document_library_preview.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
-<div class="view">
-	<div class="body-row">
-		<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
-
-		<%
-		dlViewFileVersionDisplayContext.renderPreview(request, response);
-		%>
-
-	</div>
-</div>
+	<clay:link
+		buttonStyle="primary"
+		elementClasses="btn-sm"
+		href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, true, true) %>"
+		icon="download"
+		label='<%= LanguageUtil.get(resourceBundle, "download") %>'
+		title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'
+	/>
+</p>

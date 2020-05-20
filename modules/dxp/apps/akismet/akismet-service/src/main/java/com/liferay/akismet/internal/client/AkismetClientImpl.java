@@ -177,6 +177,10 @@ public class AkismetClientImpl implements AkismetClient {
 			String emailAddress, String content)
 		throws PortalException {
 
+		if (!_akismetServiceConfiguration.messageBoardsEnabled()) {
+			return;
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Submitting message as spam: " + permalink);
 		}

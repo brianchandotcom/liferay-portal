@@ -21,7 +21,7 @@ import {PAGE_TYPES} from '../../config/constants/pageTypes';
 import {config} from '../../config/index';
 import {useDispatch, useSelector} from '../../store/index';
 import multipleUndo from '../../thunks/multipleUndo';
-import {ACTION_TYPE_LABELS} from './actionTypeLabels';
+import {getActionLabel} from './getActionLabel';
 
 export default function UndoHistory() {
 	const dispatch = useDispatch();
@@ -67,7 +67,7 @@ export default function UndoHistory() {
 				undoHistory.map((undoHistoryItem, index) => {
 					return {
 						disabled: isSelectedAction(index),
-						label: ACTION_TYPE_LABELS[undoHistoryItem.type],
+						label: getActionLabel(undoHistoryItem),
 						onClick: (event) => {
 							event.preventDefault();
 

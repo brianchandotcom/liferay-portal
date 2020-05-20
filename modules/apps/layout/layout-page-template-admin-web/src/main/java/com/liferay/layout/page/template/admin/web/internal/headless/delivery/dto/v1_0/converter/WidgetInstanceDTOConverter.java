@@ -28,14 +28,17 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -190,11 +193,23 @@ public class WidgetInstanceDTOConverter {
 				}
 			}
 
+			String roleName = role.getName();
+
+			if (role.getClassNameId() == _portal.getClassNameId(Team.class)) {
+				Team team = _teamLocalService.fetchTeam(role.getClassPK());
+
+				if (team != null) {
+					roleName = team.getName();
+				}
+			}
+
+			String finalRoleName = roleName;
+
 			widgetPermissions.add(
 				new WidgetPermission() {
 					{
 						actionKeys = actionIdsSet.toArray(new String[0]);
-						roleKey = role.getName();
+						roleKey = finalRoleName;
 					}
 				});
 		}
@@ -207,6 +222,9 @@ public class WidgetInstanceDTOConverter {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletConfigurationExporterTracker
@@ -230,5 +248,8 @@ public class WidgetInstanceDTOConverter {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.retriever.AccountUserRetriever;
@@ -28,9 +29,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -89,9 +93,19 @@ public class AccountUserDisplaySearchContainerFactory {
 			emptyResultsMessage = "no-users-were-found";
 		}
 
-		return _create(
+		SearchContainer<AccountUserDisplay> searchContainer = _create(
 			new long[] {accountEntryId}, emptyResultsMessage,
 			liferayPortletRequest, liferayPortletResponse);
+
+		if (!AccountEntryPermission.contains(
+				PermissionCheckerFactoryUtil.create(
+					PortalUtil.getUser(liferayPortletRequest)),
+				accountEntryId, ActionKeys.MANAGE_USERS)) {
+
+			searchContainer.setRowChecker(null);
+		}
+
+		return searchContainer;
 	}
 
 	public static SearchContainer<AccountUserDisplay> create(

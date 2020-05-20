@@ -70,9 +70,11 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 					value="<%= accountUser.getAccountRoleNames(accountEntryDisplay.getAccountEntryId(), locale) %>"
 				/>
 
-				<liferay-ui:search-container-column-jsp
-					path="/account_entries_admin/account_user_action.jsp"
-				/>
+				<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.MANAGE_USERS) %>">
+					<liferay-ui:search-container-column-jsp
+						path="/account_entries_admin/account_user_action.jsp"
+					/>
+				</c:if>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator

@@ -96,7 +96,7 @@ describe('DropDownWithSearch', () => {
 
 		render(
 			<DropDownWithSearch
-				hasError={false}
+				error={false}
 				isLoading={true}
 				onSelect={onSelect}
 				stateProps={{
@@ -131,7 +131,7 @@ describe('DropDownWithSearch', () => {
 
 		render(
 			<DropDownWithSearch
-				hasError={true}
+				error={true}
 				isLoading={false}
 				onSelect={onSelect}
 				stateProps={{

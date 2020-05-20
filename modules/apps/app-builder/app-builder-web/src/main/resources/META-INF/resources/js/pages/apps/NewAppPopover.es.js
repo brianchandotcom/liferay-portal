@@ -28,7 +28,7 @@ const NewAppPopover = (
 	});
 	const {id: customObjectId, name: customObjectName} = selectedValue;
 
-	const onContinue = () => {
+	const onClick = (customObjectId) => {
 		history.push(`/standard/deploy/${customObjectId}`);
 	};
 
@@ -67,7 +67,7 @@ const NewAppPopover = (
 							<ClayButton
 								disabled={!customObjectId}
 								onClick={() => {
-									onContinue(customObjectId);
+									onClick(customObjectId);
 								}}
 								small
 							>

@@ -43,11 +43,11 @@ const FormViewControlMenu = ({backURL, dataLayoutId}) => {
 
 const EditFormView = (props) => {
 	const {
+		appsPortlet,
 		customObjectSidebarElementId,
 		dataDefinitionId,
 		dataLayoutBuilder,
 		dataLayoutId,
-		isAppsPortlet,
 		newCustomObject,
 	} = parseProps(props);
 	const {basePortletURL} = useContext(AppContext);
@@ -71,7 +71,7 @@ const EditFormView = (props) => {
 				/>
 
 				<FormViewUpperToolbar
-					isAppsPortlet={isAppsPortlet}
+					appsPortlet={appsPortlet}
 					newCustomObject={newCustomObject}
 				/>
 

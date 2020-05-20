@@ -18,7 +18,7 @@ import React, {createContext, useContext, useState} from 'react';
 export const DropDownContext = createContext();
 
 const DropDownWithSearch = ({
-	hasError,
+	error,
 	items = [],
 	isLoading,
 	namePropertyKey = 'name',
@@ -54,14 +54,14 @@ const DropDownWithSearch = ({
 
 				{isLoading && <LoadingState {...loadingProps} />}
 
-				{hasError && (
+				{error && (
 					<EmptyState
 						className="error-state-dropdown-menu"
 						{...errorProps}
 					/>
 				)}
 
-				{!isLoading && !hasError && items.length === 0 && (
+				{!isLoading && !error && items.length === 0 && (
 					<EmptyState
 						className="empty-state-dropdown-menu"
 						{...emptyProps}

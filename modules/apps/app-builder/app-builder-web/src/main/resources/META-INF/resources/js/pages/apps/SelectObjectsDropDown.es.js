@@ -18,13 +18,16 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import isClickOutside from '../../utils/clickOutside.es';
-import {addItem, request} from '../../utils/client.es';
+import {addItem, getItem} from '../../utils/client.es';
 import CustomObjectPopover from '../custom-object/CustomObjectPopover.es';
 import DropDownWithSearch from './DropDownWithSearch.es';
 
-export default ({onSelect, selectedvalue}) => {
+export default ({onSelect, selectedValue}) => {
 	const {basePortletURL} = useContext(AppContext);
-	const [fetchState, setFetchState] = useState({isLoading: true});
+	const [state, setState] = useState({
+		error: null,
+		isLoading: true,
+	});
 	const [isPopoverVisible, setPopoverVisible] = useState(false);
 	const [items, setItems] = useState([]);
 
@@ -32,10 +35,10 @@ export default ({onSelect, selectedvalue}) => {
 
 	const selectRef = useRef();
 
-	const emptyStateOnClick = () => {
+	const onClick = () => {
 		setPopoverVisible(!isPopoverVisible);
 	};
-	const handleOnSubmit = ({isAddFormView, name}) => {
+	const onSubmit = ({isAddFormView, name}) => {
 		const addURL = `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`;
 
 		addItem(addURL, {
@@ -48,8 +51,8 @@ export default ({onSelect, selectedvalue}) => {
 			if (isAddFormView) {
 				Liferay.Util.navigate(
 					Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
+						appsPortlet: true,
 						dataDefinitionId: id,
-						isAppsPortlet: true,
 						mvcRenderCommandName: '/edit_form_view',
 						newCustomObject: true,
 					})
@@ -59,38 +62,37 @@ export default ({onSelect, selectedvalue}) => {
 	};
 
 	const doFetch = () => {
-		const ENDPOINT_CUSTOM_OBJECTS =
-			'/o/data-engine/v2.0/data-definitions/by-content-type/app-builder';
-		const ENDPOINT_NATIVE_OBJECTS =
-			'/o/data-engine/v2.0/data-definitions/by-content-type/native-object';
-
 		const params = {keywords: '', page: -1, pageSize: -1, sort: ''};
 
-		const fetchCustomObjects = () =>
-			request({endpoint: ENDPOINT_CUSTOM_OBJECTS, params});
-		const fetchNativeObjects = () =>
-			request({endpoint: ENDPOINT_NATIVE_OBJECTS, params});
-
-		setFetchState({
-			hasError: null,
+		setState({
+			error: null,
 			isLoading: true,
 		});
 
-		return Promise.all([fetchCustomObjects(), fetchNativeObjects()])
+		return Promise.all([
+			getItem(
+				'/o/data-engine/v2.0/data-definitions/by-content-type/app-builder',
+				params
+			),
+			getItem(
+				'/o/data-engine/v2.0/data-definitions/by-content-type/native-object',
+				params
+			),
+		])
 			.then(([customObjects, nativeObjects]) => {
 				setItems(
 					[...customObjects.items, ...nativeObjects.items].sort(
 						(a, b) => a - b
 					)
 				);
-				setFetchState({
-					hasError: null,
+				setState({
+					error: null,
 					isLoading: false,
 				});
 			})
-			.catch((hasError) => {
-				setFetchState({
-					hasError,
+			.catch((error) => {
+				setState({
+					error,
 					isLoading: false,
 				});
 			});
@@ -114,7 +116,7 @@ export default ({onSelect, selectedvalue}) => {
 				<ClayButton
 					className="emptyButton"
 					displayType="secondary"
-					onClick={emptyStateOnClick}
+					onClick={onClick}
 				>
 					{Liferay.Language.get('new-custom-object')}
 				</ClayButton>
@@ -157,7 +159,7 @@ export default ({onSelect, selectedvalue}) => {
 	return (
 		<>
 			<DropDownWithSearch
-				{...fetchState}
+				{...state}
 				items={items}
 				label={Liferay.Language.get('select-object')}
 				onSelect={handleOnSelect}
@@ -171,7 +173,7 @@ export default ({onSelect, selectedvalue}) => {
 						}}
 					>
 						<span className="float-left">
-							{selectedvalue ||
+							{selectedValue ||
 								Liferay.Language.get('select-object')}
 						</span>
 
@@ -188,7 +190,7 @@ export default ({onSelect, selectedvalue}) => {
 				onCancel={() => {
 					setPopoverVisible(false);
 				}}
-				onSubmit={handleOnSubmit}
+				onSubmit={onSubmit}
 				ref={popoverRef}
 				visible={isPopoverVisible}
 			/>

@@ -22,9 +22,9 @@ String customObjectSidebarElementId = renderResponse.getNamespace() + "-app-buil
 String dataLayoutBuilderElementId = renderResponse.getNamespace() + "-app-builder-data-layout-builder";
 String editFormViewRootElementId = renderResponse.getNamespace() + "-app-builder-edit-form-view";
 
+boolean appsPortlet = ParamUtil.getBoolean(request, "appsPortlet");
 long dataDefinitionId = ParamUtil.getLong(request, "dataDefinitionId");
 long dataLayoutId = ParamUtil.getLong(request, "dataLayoutId");
-boolean isAppsPortlet = ParamUtil.getBoolean(request, "isAppsPortlet");
 boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 %>
 
@@ -39,6 +39,8 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 
 			<%
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"appsPortlet", appsPortlet
+			).put(
 				"basePortletURL", basePortletURL.toString()
 			).put(
 				"customObjectSidebarElementId", customObjectSidebarElementId
@@ -50,8 +52,6 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 				"dataLayoutBuilderId", componentId
 			).put(
 				"dataLayoutId", dataLayoutId
-			).put(
-				"isAppsPortlet", isAppsPortlet
 			).put(
 				"newCustomObject", newCustomObject
 			).build();

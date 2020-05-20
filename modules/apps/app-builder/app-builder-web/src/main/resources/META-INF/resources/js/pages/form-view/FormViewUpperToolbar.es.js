@@ -22,7 +22,7 @@ import {errorToast, successToast} from '../../utils/toast.es';
 import FormViewContext from './FormViewContext.es';
 import saveFormView from './saveFormView.es';
 
-export default ({isAppsPortlet, newCustomObject}) => {
+export default ({appsPortlet, newCustomObject}) => {
 	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 	const [state, dispatch] = useContext(FormViewContext);
@@ -35,7 +35,7 @@ export default ({isAppsPortlet, newCustomObject}) => {
 	const {basePortletURL} = useContext(AppContext);
 	let listUrl = basePortletURL;
 
-	if (!isAppsPortlet) {
+	if (!appsPortlet) {
 		listUrl = `${basePortletURL}/#/custom-object/${dataDefinitionId}/form-views`;
 	}
 

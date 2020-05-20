@@ -22,7 +22,9 @@ import '@testing-library/jest-dom/extend-expect';
 
 const tasks = (range) =>
 	new Array(range).fill({}).map((_, id) => ({
-		assigneePerson: {
+		assetTitle: `title${id + 1}`,
+		assetType: 'Blogs Entry',
+		assignee: {
 			additionalName: '',
 			contentType: 'UserAccount',
 			familyName: 'Test',
@@ -32,22 +34,15 @@ const tasks = (range) =>
 			profileURL: '/web/test',
 		},
 		assigneeRoles: [],
+		classPK: id + 1,
 		completed: false,
 		dateCreated: '2020-03-03T12:04:46Z',
 		description: '',
 		id: id + 1,
+		instanceId: id + 1,
 		label: 'Review',
 		name: 'review',
-		objectReviewed: {
-			assetTitle: `title${id + 1}`,
-			assetType: 'Blogs Entry',
-			id: id + 1,
-			resourceType: 'BlogPosting',
-		},
-		workflowDefinitionId: id + 1,
-		workflowDefinitionName: 'Single Approver',
-		workflowDefinitionVersion: '1',
-		workflowInstanceId: id + 1,
+		processId: id + 1,
 	}));
 
 const {data, items, processSteps} = {
@@ -509,7 +504,7 @@ describe('The BulkTransitionModal component should', () => {
 		);
 	});
 
-	test('Check all tasks and step foward to "Select Transition" step and show loading view', async () => {
+	test('Check all tasks and step forward to "Select Transition" step and show loading view', async () => {
 		cleanup();
 		const {getByTestId} = render(<BulkTransitionModal />, {
 			wrapper: ContainerMockSecondary,

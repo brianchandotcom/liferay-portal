@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -47,6 +48,7 @@ public class AccountPortletResourcePermissionRegistrar {
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
 				AccountConstants.RESOURCE_NAME,
+				new AccountPortletPermissionLogic(_organizationLocalService),
 				new StagedPortletPermissionLogic(
 					_stagingPermission,
 					AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN)),
@@ -57,6 +59,9 @@ public class AccountPortletResourcePermissionRegistrar {
 	protected void deactivate() {
 		_serviceRegistration.unregister();
 	}
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	private ServiceRegistration<PortletResourcePermission> _serviceRegistration;
 

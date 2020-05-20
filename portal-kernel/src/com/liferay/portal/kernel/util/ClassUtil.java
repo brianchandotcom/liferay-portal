@@ -111,7 +111,7 @@ public class ClassUtil {
 					classes.add(st.sval.substring(lastIndex + 1));
 				}
 
-				if ((firstIndex < 0) && (lastIndex < 0)) {
+				if (firstIndex < 0) {
 					classes.add(st.sval);
 				}
 			}

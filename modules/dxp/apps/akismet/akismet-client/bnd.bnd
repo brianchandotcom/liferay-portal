@@ -1,6 +1,4 @@
 Bundle-Name: Liferay Akismet Client
 Bundle-SymbolicName: com.liferay.akismet.client
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.akismet.client,\
-	com.liferay.akismet.client.util
+Export-Package: com.liferay.akismet.client

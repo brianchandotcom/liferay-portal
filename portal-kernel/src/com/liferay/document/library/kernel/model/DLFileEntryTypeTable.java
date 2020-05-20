@@ -68,6 +68,9 @@ public class DLFileEntryTypeTable extends BaseTable<DLFileEntryTypeTable> {
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
+	public final Column<DLFileEntryTypeTable, Long> dataDefinitionId =
+		createColumn(
+			"dataDefinitionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
 	private DLFileEntryTypeTable() {
 		super("DLFileEntryType", DLFileEntryTypeTable::new);

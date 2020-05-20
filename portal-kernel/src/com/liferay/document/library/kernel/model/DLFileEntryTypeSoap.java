@@ -45,6 +45,7 @@ public class DLFileEntryTypeSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setDataDefinitionId(model.getDataDefinitionId());
 
 		return soapModel;
 	}
@@ -216,6 +217,14 @@ public class DLFileEntryTypeSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getDataDefinitionId() {
+		return _dataDefinitionId;
+	}
+
+	public void setDataDefinitionId(long dataDefinitionId) {
+		_dataDefinitionId = dataDefinitionId;
+	}
+
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
@@ -230,5 +239,6 @@ public class DLFileEntryTypeSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private Date _lastPublishDate;
+	private long _dataDefinitionId;
 
 }

@@ -55,9 +55,7 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties)
-		throws SchedulerException {
-
+	protected void activate(Map<String, Object> properties) {
 		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
 			AkismetServiceConfiguration.class, properties);
 
@@ -106,7 +104,7 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
+	protected void doReceive(Message message) {
 		int reportableTime =
 			_akismetServiceConfiguration.akismetReportableTime();
 

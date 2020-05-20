@@ -64,9 +64,7 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties)
-		throws SchedulerException {
-
+	protected void activate(Map<String, Object> properties) {
 		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
 			AkismetServiceConfiguration.class, properties);
 

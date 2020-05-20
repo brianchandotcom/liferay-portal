@@ -164,8 +164,7 @@ public class AkismetMBMessageLocalServiceWrapper
 	}
 
 	private boolean _isCheckSpamEnabled(
-			long userId, long groupId, ServiceContext serviceContext)
-		throws PortalException {
+		long userId, long groupId, ServiceContext serviceContext) {
 
 		if (!_akismetServiceConfiguration.messageBoardsEnabled()) {
 			return false;

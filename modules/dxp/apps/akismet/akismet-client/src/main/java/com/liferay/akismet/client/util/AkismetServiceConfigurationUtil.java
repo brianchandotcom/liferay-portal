@@ -14,7 +14,7 @@
 
 package com.liferay.akismet.client.util;
 
-import com.liferay.akismet.client.configuration.AkismetServiceConfiguration;
+import com.liferay.akismet.configuration.AkismetServiceConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Jamie Sammons
  */
 @Component(
-	configurationPid = "com.liferay.akismet.client.configuration.AkismetServiceConfiguration",
+	configurationPid = "com.liferay.akismet.configuration.AkismetServiceConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = {}
 )

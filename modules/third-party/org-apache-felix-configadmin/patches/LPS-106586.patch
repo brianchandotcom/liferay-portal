@@ -1,0 +1,28 @@
+diff --git a/org/apache/felix/cm/file/ConfigurationHandler.java b/org/apache/felix/cm/file/ConfigurationHandler.java
+index 62a40c7..a70973b 100644
+--- a/org/apache/felix/cm/file/ConfigurationHandler.java
++++ b/org/apache/felix/cm/file/ConfigurationHandler.java
+@@ -69,6 +69,8 @@ public class ConfigurationHandler
+     protected static final int TOKEN_EQ = '=';
+     protected static final int TOKEN_ARR_OPEN = '[';
+     protected static final int TOKEN_ARR_CLOS = ']';
++    protected static final int TOKEN_BRACE_OPEN = '{';
++    protected static final int TOKEN_BRACE_CLOS = '}';
+     protected static final int TOKEN_VEC_OPEN = '(';
+     protected static final int TOKEN_VEC_CLOS = ')';
+     protected static final int TOKEN_COMMA = ',';
+@@ -821,6 +823,8 @@ public class ConfigurationHandler
+                 case TOKEN_VAL_CLOS:
+                 case ' ':
+                 case TOKEN_EQ:
++                case TOKEN_BRACE_CLOS:
++                case TOKEN_BRACE_OPEN:
+                     out.write( '\\' );
+                     out.write( c );
+                     break;
+@@ -857,3 +861,4 @@ public class ConfigurationHandler
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

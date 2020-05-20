@@ -12,10 +12,12 @@
  * details.
  */
 
-/**
- * Container types
- */
-export const CONTAINER_TYPES = {
-	fixed: 'fixed',
-	fluid: 'fluid',
-};
+import React from 'react';
+
+export default function FormRow({children}) {
+	return <div className="page-editor__form-row">{children}</div>;
+}
+
+FormRow.Column = ({children}) => (
+	<div className="page-editor__form-row__column">{children}</div>
+);

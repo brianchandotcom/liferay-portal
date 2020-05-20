@@ -12,7 +12,6 @@
  * details.
  */
 
-import {CONTAINER_TYPES} from './containerTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from './layoutDataItemTypes';
 
 export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
@@ -32,7 +31,7 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 		paddingBottom: 3,
 		paddingHorizontal: 3,
 		paddingTop: 3,
-		type: CONTAINER_TYPES.fixed,
+		type: 'fluid',
 	},
 
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: {
@@ -49,5 +48,14 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 		numberOfColumns: 3,
 		reverseOrder: false,
 		verticalAlignment: 'top',
+	},
+
+	[LAYOUT_DATA_ITEM_TYPES.section]: {
+		backgroundColorCssClass: '',
+		backgroundImage: {},
+		paddingBottom: 3,
+		paddingHorizontal: 3,
+		paddingTop: 3,
+		type: 'fluid',
 	},
 };

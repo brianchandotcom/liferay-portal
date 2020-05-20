@@ -22,13 +22,12 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
-import {ContainerConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerConfigurationPanel';
-import {CONTAINER_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/containerTypes';
-import {config} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
-import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
+import {ContainerConfigurationPanel} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerConfigurationPanel';
+import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
+import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
 	() => ({
 		getAvailableAssetMappingFields: jest.fn(() =>
 			Promise.resolve([
@@ -40,7 +39,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
 			paddingOptions: [
@@ -86,7 +85,7 @@ const getComponent = ({dispatch = () => {}, config = {}} = {}) => (
 		<ContainerConfigurationPanel
 			item={{
 				children: [],
-				config: {...config, type: CONTAINER_TYPES.fluid},
+				config: {...config, type: 'fluid'},
 				itemId: '',
 				parentId: '',
 				type: '',
@@ -99,7 +98,7 @@ const renderComponent = ({dispatch = () => {}, config = {}} = {}) =>
 	render(getComponent({config, dispatch}), {baseElement: document.body});
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => (...args) => args
 );
 

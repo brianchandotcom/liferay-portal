@@ -1,0 +1,17 @@
+.page-editor__form-row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	&__column {
+		width: calc(50% - 4px);
+
+		&:nth-child(odd):not(:first-child) {
+			margin-top: 8px;
+		}
+
+		&:nth-child(odd):last-child {
+			width: 100%;
+		}
+	}
+}

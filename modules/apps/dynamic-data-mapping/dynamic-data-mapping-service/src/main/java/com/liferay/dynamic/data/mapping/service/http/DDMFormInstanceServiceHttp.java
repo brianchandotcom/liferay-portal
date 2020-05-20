@@ -525,6 +525,40 @@ public class DDMFormInstanceServiceHttp {
 		}
 	}
 
+	public static void sendShareFormInstanceEmail(
+			HttpPrincipal httpPrincipal, long formInstanceId, String message,
+			String subject, String[] toEmailAddresses)
+		throws Exception {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DDMFormInstanceServiceUtil.class, "sendShareFormInstanceEmail",
+				_sendShareFormInstanceEmailParameterTypes12);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, formInstanceId, message, subject, toEmailAddresses);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof Exception) {
+					throw (Exception)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstance
 			updateFormInstance(
 				HttpPrincipal httpPrincipal, long formInstanceId,
@@ -535,7 +569,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "updateFormInstance",
-				_updateFormInstanceParameterTypes12);
+				_updateFormInstanceParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, formInstanceId, settingsDDMFormValues);
@@ -585,7 +619,7 @@ public class DDMFormInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DDMFormInstanceServiceUtil.class, "updateFormInstance",
-				_updateFormInstanceParameterTypes13);
+				_updateFormInstanceParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, ddmFormInstanceId, nameMap, descriptionMap, ddmForm,
@@ -664,12 +698,16 @@ public class DDMFormInstanceServiceHttp {
 	private static final Class<?>[] _searchCountParameterTypes11 = new Class[] {
 		long.class, long.class, String[].class, String[].class, boolean.class
 	};
-	private static final Class<?>[] _updateFormInstanceParameterTypes12 =
+	private static final Class<?>[]
+		_sendShareFormInstanceEmailParameterTypes12 = new Class[] {
+			long.class, String.class, String.class, String[].class
+		};
+	private static final Class<?>[] _updateFormInstanceParameterTypes13 =
 		new Class[] {
 			long.class,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class
 		};
-	private static final Class<?>[] _updateFormInstanceParameterTypes13 =
+	private static final Class<?>[] _updateFormInstanceParameterTypes14 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			com.liferay.dynamic.data.mapping.model.DDMForm.class,

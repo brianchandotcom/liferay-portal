@@ -400,6 +400,11 @@ public interface DDMFormInstanceLocalService
 		long companyId, long groupId, String[] names, String[] descriptions,
 		boolean andOperator);
 
+	public void sendShareFormInstanceEmail(
+			long userId, String message, String subject,
+			String[] toEmailAddresses)
+		throws Exception;
+
 	/**
 	 * Updates the ddm form instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

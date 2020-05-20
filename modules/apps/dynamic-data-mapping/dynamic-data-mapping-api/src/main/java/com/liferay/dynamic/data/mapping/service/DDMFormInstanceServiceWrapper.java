@@ -153,6 +153,16 @@ public class DDMFormInstanceServiceWrapper
 			companyId, groupId, names, descriptions, andOperator);
 	}
 
+	@Override
+	public void sendShareFormInstanceEmail(
+			long formInstanceId, String message, String subject,
+			String[] toEmailAddresses)
+		throws Exception {
+
+		_ddmFormInstanceService.sendShareFormInstanceEmail(
+			formInstanceId, message, subject, toEmailAddresses);
+	}
+
 	/**
 	 * Updates the the record set's settings.
 	 *

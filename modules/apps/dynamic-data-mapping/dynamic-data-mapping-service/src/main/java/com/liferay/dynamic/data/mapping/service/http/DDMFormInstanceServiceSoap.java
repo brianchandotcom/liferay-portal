@@ -319,6 +319,22 @@ public class DDMFormInstanceServiceSoap {
 		}
 	}
 
+	public static void sendShareFormInstanceEmail(
+			long formInstanceId, String message, String subject,
+			String[] toEmailAddresses)
+		throws RemoteException {
+
+		try {
+			DDMFormInstanceServiceUtil.sendShareFormInstanceEmail(
+				formInstanceId, message, subject, toEmailAddresses);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * Updates the the record set's settings.
 	 *

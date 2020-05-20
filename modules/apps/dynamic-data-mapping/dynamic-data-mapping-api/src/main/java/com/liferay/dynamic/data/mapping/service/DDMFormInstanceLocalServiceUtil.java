@@ -537,6 +537,15 @@ public class DDMFormInstanceLocalServiceUtil {
 			companyId, groupId, names, descriptions, andOperator);
 	}
 
+	public static void sendShareFormInstanceEmail(
+			long userId, String message, String subject,
+			String[] toEmailAddresses)
+		throws Exception {
+
+		getService().sendShareFormInstanceEmail(
+			userId, message, subject, toEmailAddresses);
+	}
+
 	/**
 	 * Updates the ddm form instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

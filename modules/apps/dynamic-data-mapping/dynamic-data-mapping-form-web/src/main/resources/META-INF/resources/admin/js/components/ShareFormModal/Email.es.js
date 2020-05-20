@@ -109,8 +109,9 @@ class Email extends Component {
 	_emailContentValueFn() {
 		return {
 			addresses: [],
-			message: Liferay.Language.get(
-				'could-you-take-a-moment-to-fill-in-this-form'
+			message: Liferay.Util.sub(
+				Liferay.Language.get('please-fill-out-this-form-x'),
+				this.props.url
 			),
 			subject: this.props.localizedName[themeDisplay.getLanguageId()],
 		};

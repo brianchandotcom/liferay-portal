@@ -947,6 +947,12 @@ public class DDMFormAdminDisplayContext {
 		shareFormInstanceURL.setParameter(
 			ActionRequest.ACTION_NAME, "/admin/share_form_instance");
 
+		if (_ddmFormInstance != null) {
+			shareFormInstanceURL.setParameter(
+				"formInstanceId",
+				String.valueOf(_ddmFormInstance.getFormInstanceId()));
+		}
+
 		return shareFormInstanceURL.toString();
 	}
 

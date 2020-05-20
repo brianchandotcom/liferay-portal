@@ -15,34 +15,17 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.mail.kernel.model.MailMessage;
-import com.liferay.mail.kernel.service.MailService;
-import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.URLTemplateResource;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.Writer;
-
-import java.net.URL;
-
-import javax.mail.internet.InternetAddress;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -64,56 +47,17 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 
-	protected MailMessage createMailMessage(
-			ActionRequest actionRequest, Template template)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		User user = themeDisplay.getUser();
-
-		InternetAddress fromInternetAddress = new InternetAddress(
-			user.getEmailAddress(), user.getFullName());
-
-		MailMessage mailMessage = new MailMessage(
-			fromInternetAddress, ParamUtil.getString(actionRequest, "subject"),
-			render(template), true);
-
-		String addresses = ParamUtil.getString(actionRequest, "addresses");
-
-		InternetAddress[] toAddresses = InternetAddress.parse(addresses);
-
-		mailMessage.setTo(toAddresses);
-
-		return mailMessage;
-	}
-
-	protected Template createTemplate(ActionRequest actionRequest)
-		throws Exception {
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY,
-			getTemplateResource(_TEMPLATE_PATH), false);
-
-		template.put("message", ParamUtil.getString(actionRequest, "message"));
-		template.put("url", ParamUtil.getString(actionRequest, "url"));
-
-		return template;
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
-			Template template = createTemplate(actionRequest);
-
-			MailMessage mailMessage = createMailMessage(
-				actionRequest, template);
-
-			_mailService.sendEmail(mailMessage);
+			_ddmFormInstanceService.sendShareFormInstanceEmail(
+				ParamUtil.getLong(actionRequest, "formInstanceId"),
+				ParamUtil.getString(actionRequest, "message"),
+				ParamUtil.getString(actionRequest, "subject"),
+				ParamUtil.getStringValues(actionRequest, "addresses"));
 
 			JSONObject jsonObject = JSONUtil.put(
 				"successMessage",
@@ -143,36 +87,11 @@ public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected TemplateResource getTemplateResource(String templatePath) {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		URL templateURL = classLoader.getResource(templatePath);
-
-		return new URLTemplateResource(templateURL.getPath(), templateURL);
-	}
-
-	protected String render(Template template) throws TemplateException {
-		Writer writer = new UnsyncStringWriter();
-
-		template.put(TemplateConstants.NAMESPACE, _NAMESPACE);
-
-		template.processTemplate(writer);
-
-		return writer.toString();
-	}
-
-	private static final String _NAMESPACE = "form.share_link";
-
-	private static final String _TEMPLATE_PATH =
-		"/META-INF/resources/email/share_form_link.soy";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ShareFormInstanceMVCActionCommand.class);
 
 	@Reference
-	private MailService _mailService;
+	private DDMFormInstanceService _ddmFormInstanceService;
 
 	@Reference
 	private Portal _portal;

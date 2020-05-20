@@ -181,7 +181,10 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 			new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL}
 		).put(
 			AccountPortletKeys.ACCOUNT_USERS_ADMIN,
-			new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL}
+			new String[] {
+				AccountActionKeys.ASSIGN_ACCOUNTS,
+				ActionKeys.ACCESS_IN_CONTROL_PANEL
+			}
 		).put(
 			Organization.class.getName(),
 			new String[] {AccountActionKeys.MANAGE_ACCOUNTS}

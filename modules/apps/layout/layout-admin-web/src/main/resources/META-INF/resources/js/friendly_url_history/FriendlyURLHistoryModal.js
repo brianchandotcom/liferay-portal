@@ -44,7 +44,19 @@ const FriendlyURLHistoryModal = ({
 			.then((response) => response.json())
 			.then((response) => {
 				if (isMounted()) {
-					setAvailableLanguages(Object.keys(response));
+					setAvailableLanguages(
+						Object.entries(response).reduce(
+							(acc, [language, {current}]) => {
+								if (current && current.urlTitle) {
+									acc.push(language);
+								}
+
+								return acc;
+							},
+							[]
+						)
+					);
+
 					setFriendlyURLEntryLocalizations(response);
 				}
 			})
@@ -59,10 +71,20 @@ const FriendlyURLHistoryModal = ({
 		if (loading) {
 			let selectedLanguageId;
 
-			if (friendlyURLEntryLocalizations[initialLanguageId]) {
+			if (
+				friendlyURLEntryLocalizations[initialLanguageId] &&
+				friendlyURLEntryLocalizations[initialLanguageId].current &&
+				friendlyURLEntryLocalizations[initialLanguageId].current
+					.urlTitle
+			) {
 				selectedLanguageId = initialLanguageId;
 			}
-			else if (friendlyURLEntryLocalizations[defaultLanguageId]) {
+			else if (
+				friendlyURLEntryLocalizations[defaultLanguageId] &&
+				friendlyURLEntryLocalizations[defaultLanguageId].current &&
+				friendlyURLEntryLocalizations[defaultLanguageId].current
+					.urlTitle
+			) {
 				selectedLanguageId = defaultLanguageId;
 			}
 			else {

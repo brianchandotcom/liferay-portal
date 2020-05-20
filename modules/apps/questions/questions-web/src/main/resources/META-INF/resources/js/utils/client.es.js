@@ -61,7 +61,6 @@ export const request = (query, params = {}) =>
 
 export const getURL = (params) => {
 	params = {
-		['p_auth']: Liferay.authToken,
 		t: Date.now(),
 		...params,
 	};
@@ -152,10 +151,10 @@ export const deleteMessageBoardThread = (messageBoardThreadId) =>
 		}
 	`);
 
-export const getTags = (page = 1, siteKey, search = '') =>
+export const getTags = (page = 1, pageSize = 20, siteKey, search = '') =>
 	request(gql`
         query {
-            keywordsRanked(page: ${page}, pageSize: 20, siteKey: ${siteKey}, search: ${search}){
+            keywordsRanked(page: ${page}, pageSize: ${pageSize}, siteKey: ${siteKey}, search: ${search}){
                 items {
                     dateCreated
                     id
@@ -169,16 +168,6 @@ export const getTags = (page = 1, siteKey, search = '') =>
             }
         }`);
 
-export const getAllTags = (siteKey) =>
-	request(gql`
-	query {
-		keywords(siteKey:${siteKey}) {
-		  items{
-			name
-		  }
-		}
-	  }`);
-
 export const getMessage = (friendlyUrlPath, siteKey) =>
 	request(gql`
         query {
@@ -189,12 +178,7 @@ export const getMessage = (friendlyUrlPath, siteKey) =>
             }
         }`);
 
-export const getThread = (
-	friendlyUrlPath,
-	siteKey,
-	page = 1,
-	sort = 'showAsAnswer:desc,dateModified:desc'
-) =>
+export const getThread = (friendlyUrlPath, siteKey) =>
 	request(
 		gql`
         query {
@@ -223,49 +207,6 @@ export const getThread = (
                 headline
 				id
 				keywords
-                messageBoardMessages(page: ${page}, pageSize: 20, sort: ${sort}) {
-                    items {
-                    	actions
-                        aggregateRating {
-                            ratingAverage
-                            ratingCount
-                            ratingValue
-                        }
-                        articleBody
-                        creator {
-                            id
-                            name
-                        }
-                        creatorStatistics {
-                        	joinDate
-                        	lastPostDate
-                        	postsNumber
-                        	rank
-                        }
-                        encodingFormat
-                        friendlyUrlPath
-                        id
-                        messageBoardMessages {
-                            items {
-                            	actions
-                                articleBody
-                                creator {
-                                    id
-                                    name
-                                }
-                                encodingFormat
-                                id
-                                showAsAnswer
-                            }
-                        }
-                        myRating {
-                            ratingValue
-                        }
-                        showAsAnswer
-                    }
-                    pageSize
-                    totalCount
-                }
                 messageBoardSection {
                 	title
                 }
@@ -279,18 +220,39 @@ export const getThread = (
 		{nestedFields: 'lastPostDate'}
 	);
 
+export const getThreadContent = (friendlyUrlPath, siteKey) =>
+	request(gql`
+        query {
+            messageBoardThreadByFriendlyUrlPath(friendlyUrlPath: ${friendlyUrlPath}, siteKey: ${siteKey}){
+                articleBody
+                headline
+                id
+				keywords
+            }
+        }`);
+
 export const getMessages = (
 	parentMessageBoardMessageId,
-	sort = '',
 	page = 1,
-	pageSize = 20
-) =>
-	request(
+	pageSize = 20,
+	sort
+) => {
+	if (sort === 'votes') {
+		sort = 'dateModified:desc';
+		page = 1;
+		pageSize = 100;
+	}
+	else if (sort === 'active') {
+		sort = 'showAsAnswer:desc,dateModified:desc';
+	}
+	else {
+		sort = 'showAsAnswer:desc,dateCreated:desc';
+	}
+
+	return request(
 		gql`
         query {
-              messageBoardThreadMessageBoardMessages(messageBoardThreadId: ${parentMessageBoardMessageId}, page: ${page}, pageSize: ${pageSize}, sort: ${
-			'showAsAnswer:desc,' + sort
-		}){
+              messageBoardThreadMessageBoardMessages(messageBoardThreadId: ${parentMessageBoardMessageId}, page: ${page}, pageSize: ${pageSize}, sort: ${sort}){
                 items {
                 	actions
                     aggregateRating {
@@ -335,18 +297,35 @@ export const getMessages = (
             }
         }`,
 		{nestedFields: 'lastPostDate'}
-	).then((x) => x.items);
+	).then((answers) => {
+		if (pageSize !== 100) {
+			return answers;
+		}
 
-export const getThreadContent = (friendlyUrlPath, siteKey) =>
-	request(gql`
-        query {
-            messageBoardThreadByFriendlyUrlPath(friendlyUrlPath: ${friendlyUrlPath}, siteKey: ${siteKey}){
-                articleBody
-                headline
-                id
-				keywords
-            }
-        }`);
+		return {
+			...answers,
+			items: answers.items.sort((answer1, answer2) => {
+				if (answer2.showAsAnswer) {
+					return 1;
+				}
+				if (answer1.showAsAnswer) {
+					return -1;
+				}
+
+				const ratingValue1 =
+					(answer1.aggregateRating &&
+						answer1.aggregateRating.ratingValue) ||
+					0;
+				const ratingValue2 =
+					(answer2.aggregateRating &&
+						answer2.aggregateRating.ratingValue) ||
+					0;
+
+				return ratingValue2 - ratingValue1;
+			}),
+		};
+	});
+};
 
 export const hasListPermissions = (permission, siteKey) =>
 	request(gql`
@@ -356,7 +335,54 @@ export const hasListPermissions = (permission, siteKey) =>
 				}
 			}`).then((data) => Boolean(data.actions[permission]));
 
-export const getThreads = ({
+export const getQuestionThreads = (
+	creatorId = '',
+	filter,
+	keywords = '',
+	page = 1,
+	pageSize = 30,
+	search = '',
+	section,
+	siteKey
+) => {
+	if (filter === 'latest-edited') {
+		return getThreads(
+			creatorId,
+			keywords,
+			page,
+			pageSize,
+			search,
+			section,
+			siteKey,
+			'dateModified:desc'
+		);
+	}
+	else if (filter === 'week') {
+		const date = new Date();
+		date.setDate(date.getDate() - 7);
+
+		return getRankedThreads(date, page, pageSize, section);
+	}
+	else if (filter === 'month') {
+		const date = new Date();
+		date.setDate(date.getDate() - 31);
+
+		return getRankedThreads(date, page, pageSize, section);
+	}
+
+	return getThreads(
+		creatorId,
+		keywords,
+		page,
+		pageSize,
+		search,
+		section,
+		siteKey,
+		'dateCreated:desc'
+	);
+};
+
+export const getThreads = (
 	creatorId = '',
 	keywords = '',
 	page = 1,
@@ -364,8 +390,8 @@ export const getThreads = ({
 	search = '',
 	section,
 	siteKey,
-	sort = 'dateCreated:desc',
-}) => {
+	sort = 'dateCreated:desc'
+) => {
 	let filter = `(messageBoardSectionId eq ${section.id} `;
 
 	for (let i = 0; i < section.messageBoardSections.items.length; i++) {
@@ -528,12 +554,7 @@ export const getSections = (siteKey) =>
 		}
 `);
 
-export const getUserActivity = ({
-	page = 1,
-	pageSize = 30,
-	siteKey,
-	userId = '',
-}) => {
+export const getUserActivity = (page = 1, pageSize, siteKey, userId = '') => {
 	const filter = `creatorId eq ${userId}`;
 
 	return request(gql`

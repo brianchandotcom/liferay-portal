@@ -15,12 +15,12 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard, {ClayCardWithNavigation} from '@clayui/card';
 import {ClayInput} from '@clayui/form';
-import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Link from '../../components/Link.es';
+import PaginatedList from '../../components/PaginatedList.es';
 import {getTags} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
@@ -37,15 +37,18 @@ export default withRouter(
 		const context = useContext(AppContext);
 
 		const [page, setPage] = useState(1);
+		const [pageSize, setPageSize] = useState();
 		const [tags, setTags] = useState({});
 
 		useEffect(() => {
-			getTags(page, context.siteKey).then((data) => setTags(data || []));
-		}, [page, context.siteKey]);
+			getTags(page, pageSize, context.siteKey).then((data) =>
+				setTags(data)
+			);
+		}, [page, context.siteKey, pageSize]);
 
 		const [debounceCallback] = useDebounceCallback((search) => {
-			getTags(page, context.siteKey, search).then((data) =>
-				setTags(data || [])
+			getTags(page, pageSize, context.siteKey, search).then((data) =>
+				setTags(data)
 			);
 		}, 500);
 
@@ -82,9 +85,16 @@ export default withRouter(
 							</ClayInput.Group>
 						</div>
 					</div>
+
 					<div className="c-mt-3 row">
-						{tags.items &&
-							tags.items.map((tag) => (
+						<PaginatedList
+							activeDelta={pageSize}
+							activePage={page}
+							changeDelta={setPageSize}
+							changePage={setPage}
+							data={tags}
+						>
+							{(tag) => (
 								<div
 									className="col-md-3 question-tags"
 									key={tag.id}
@@ -121,17 +131,10 @@ export default withRouter(
 										</ClayCardWithNavigation>
 									</Link>
 								</div>
-							))}
+							)}
+						</PaginatedList>
 					</div>
 				</div>
-				{tags.lastPage > 1 && (
-					<ClayPaginationWithBasicItems
-						activePage={page}
-						ellipsisBuffer={2}
-						onPageChange={setPage}
-						totalPages={Math.ceil(tags.totalCount / tags.pageSize)}
-					/>
-				)}
 			</>
 		);
 	}

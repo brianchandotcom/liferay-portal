@@ -156,7 +156,7 @@ export default withRouter(
 					)}
 				</div>
 
-				<div className="c-mt-3 c-mt-lg-0 d-flex flex-column flex-md-row flex-grow-1">
+				<div className="c-mt-3 c-mt-lg-0 d-flex flex-column flex-grow-1 flex-md-row">
 					<ClayInput.Group className="justify-content-lg-end">
 						<ClayInput.GroupItem shrink>
 							<label

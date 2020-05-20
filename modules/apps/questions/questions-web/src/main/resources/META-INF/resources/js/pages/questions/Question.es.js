@@ -17,7 +17,6 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -28,6 +27,7 @@ import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import CreatorRow from '../../components/CreatorRow.es';
 import Link from '../../components/Link.es';
 import Modal from '../../components/Modal.es';
+import PaginatedList from '../../components/PaginatedList.es';
 import Rating from '../../components/Rating.es';
 import RelatedQuestions from '../../components/RelatedQuestions.es';
 import SectionLabel from '../../components/SectionLabel.es';
@@ -58,45 +58,57 @@ export default withRouter(
 	}) => {
 		const context = useContext(AppContext);
 
-		const [answers, setAnswers] = useState([]);
+		const [answers, setAnswers] = useState({});
 		const [articleBody, setArticleBody] = useState();
 		const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 		const [page, setPage] = useState(1);
+		const [pageSize, setPageSize] = useState(20);
 		const [question, setQuestion] = useState();
 		const [sectionTitle, setSectionTitle] = useState('');
-		const [filter, setFilter] = useState('active');
+		const [sort, setSort] = useState('active');
 
 		useEffect(() => {
-			loadThread();
-		}, [key, loadThread]);
+			getThread(questionId, context.siteKey).then((data) => {
+				setQuestion(data);
+				setSectionTitle(data.messageBoardSection.title);
 
-		const loadThread = useCallback(
-			() =>
-				getThread(questionId, context.siteKey, page).then((data) => {
-					setQuestion(data);
-					setAnswers(data.messageBoardMessages.items);
-					setSectionTitle(data.messageBoardSection.title);
-				}),
-			[context.siteKey, page, questionId]
-		);
+				return data;
+			});
+		}, [key, context.siteKey, questionId]);
+
+		useEffect(() => {
+			if (question) {
+				getMessages(question.id, page, pageSize, sort).then((data) => {
+					setAnswers(data);
+				});
+			}
+		}, [question, page, pageSize, sort]);
 
 		const postAnswer = () => {
-			createAnswer(articleBody, question.id).then(() => {
-				setArticleBody('');
+			createAnswer(articleBody, question.id)
+				.then(() => {
+					setArticleBody('');
 
-				return loadThread();
-			});
+					return getMessages(question.id, page, pageSize, sort);
+				})
+				.then((data) => {
+					setAnswers(data);
+				});
 		};
 
 		const updateMarkAsAnswer = useCallback(
 			(answerId) => {
-				setAnswers([
-					...answers.map((otherAnswer) => {
-						otherAnswer.showAsAnswer = otherAnswer.id === answerId;
+				setAnswers({
+					...answers,
+					items: [
+						...answers.items.map((otherAnswer) => {
+							otherAnswer.showAsAnswer =
+								otherAnswer.id === answerId;
 
-						return otherAnswer;
-					}),
-				]);
+							return otherAnswer;
+						}),
+					],
+				});
 			},
 			[answers]
 		);
@@ -107,18 +119,21 @@ export default withRouter(
 
 		const deleteAnswer = useCallback(
 			(answer) => {
-				setAnswers([
-					...answers.filter(
-						(otherAnswer) => answer.id !== otherAnswer.id
-					),
-				]);
+				setAnswers({
+					...answers,
+					items: [
+						...answers.items.filter(
+							(otherAnswer) => answer.id !== otherAnswer.id
+						),
+					],
+				});
 			},
 			[answers]
 		);
 
 		const answerChange = useCallback(
 			(answerId) => {
-				const answer = answers.find(
+				const answer = answers.items.find(
 					(answer) => answer.showAsAnswer && answer.id !== answerId
 				);
 
@@ -135,49 +150,6 @@ export default withRouter(
 			},
 			[answers, updateMarkAsAnswer]
 		);
-
-		const filterBy = (filterBy) => {
-			let promise;
-			if (filterBy === 'votes') {
-				promise = getMessages(
-					question.id,
-					'dateModified:desc',
-					1,
-					100
-				).then((answers) =>
-					answers.sort((answer1, answer2) => {
-						if (answer2.showAsAnswer) {
-							return 1;
-						}
-						if (answer1.showAsAnswer) {
-							return -1;
-						}
-
-						const ratingValue1 =
-							(answer1.aggregateRating &&
-								answer1.aggregateRating.ratingValue) ||
-							0;
-						const ratingValue2 =
-							(answer2.aggregateRating &&
-								answer2.aggregateRating.ratingValue) ||
-							0;
-
-						return ratingValue2 - ratingValue1;
-					})
-				);
-			}
-			else if (filterBy === 'active') {
-				promise = getMessages(question.id, 'dateModified:desc');
-			}
-			else {
-				promise = getMessages(question.id, 'dateModified:asc');
-			}
-
-			promise.then((x) => {
-				setFilter(filterBy);
-				setAnswers(x);
-			});
-		};
 
 		return (
 			<section className="c-mt-5 questions-section questions-section-single">
@@ -314,21 +286,21 @@ export default withRouter(
 								</div>
 
 								<h3 className="c-mt-4 text-secondary">
-									{answers.length}{' '}
+									{answers.totalCount}{' '}
 									{Liferay.Language.get('answers')}
 								</h3>
 
-								{!!answers.length && (
+								{!!answers.totalCount && (
 									<div className="border-bottom c-mt-3">
 										<ClayNavigationBar triggerLabel="Active">
 											<ClayNavigationBar.Item
-												active={filter === 'active'}
+												active={sort === 'active'}
 											>
 												<ClayLink
 													className="nav-link"
 													displayType="unstyled"
 													onClick={() =>
-														filterBy('active')
+														setSort('active')
 													}
 												>
 													{Liferay.Language.get(
@@ -338,13 +310,13 @@ export default withRouter(
 											</ClayNavigationBar.Item>
 
 											<ClayNavigationBar.Item
-												active={filter === 'oldest'}
+												active={sort === 'oldest'}
 											>
 												<ClayLink
 													className="nav-link"
 													displayType="unstyled"
 													onClick={() =>
-														filterBy('oldest')
+														setSort('oldest')
 													}
 												>
 													{Liferay.Language.get(
@@ -354,13 +326,13 @@ export default withRouter(
 											</ClayNavigationBar.Item>
 
 											<ClayNavigationBar.Item
-												active={filter === 'votes'}
+												active={sort === 'votes'}
 											>
 												<ClayLink
 													className="nav-link"
 													displayType="unstyled"
 													onClick={() =>
-														filterBy('votes')
+														setSort('votes')
 													}
 												>
 													{Liferay.Language.get(
@@ -373,28 +345,23 @@ export default withRouter(
 								)}
 
 								<div className="c-mt-3">
-									{answers.map((answer) => (
-										<Answer
-											answer={answer}
-											answerChange={answerChange}
-											deleteAnswer={deleteAnswer}
-											key={answer.id}
-										/>
-									))}
+									<PaginatedList
+										activeDelta={pageSize}
+										activePage={page}
+										changeDelta={setPageSize}
+										changePage={setPage}
+										data={answers}
+									>
+										{(answer) => (
+											<Answer
+												answer={answer}
+												answerChange={answerChange}
+												deleteAnswer={deleteAnswer}
+												key={answer.id}
+											/>
+										)}
+									</PaginatedList>
 								</div>
-
-								{!!answers.totalCount &&
-									answers.totalCount > answers.pageSize && (
-										<ClayPaginationWithBasicItems
-											activePage={page}
-											ellipsisBuffer={2}
-											onPageChange={setPage}
-											totalPages={Math.ceil(
-												answers.totalCount /
-													answers.pageSize
-											)}
-										/>
-									)}
 
 								{question &&
 									question.actions &&

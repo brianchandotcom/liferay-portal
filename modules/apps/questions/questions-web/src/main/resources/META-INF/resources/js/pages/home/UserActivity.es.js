@@ -14,11 +14,11 @@
 
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import UserIcon from '../../components/UserIcon.es';
 import useQuery from '../../hooks/useQuery.es';
@@ -44,6 +44,7 @@ export default withRouter(
 		const [creatorInfo, setCreatorInfo] = useState({});
 		const [loading, setLoading] = useState(true);
 		const [page, setPage] = useState(1);
+		const [pageSize, setPageSize] = useState(20);
 		const [questions, setQuestions] = useState([]);
 
 		useEffect(() => {
@@ -52,7 +53,7 @@ export default withRouter(
 		}, [queryParams]);
 
 		useEffect(() => {
-			getUserActivity({page, siteKey, userId: creatorId})
+			getUserActivity(page, pageSize, siteKey, creatorId)
 				.then((questions) => {
 					const creatorBasicInfo = questions.items[0].creator;
 					const creatorStatistics =
@@ -72,7 +73,7 @@ export default withRouter(
 					setLoading(false);
 					setCreatorInfo(getCreatorDefaultInfo(creatorId));
 				});
-		}, [creatorId, getCreatorDefaultInfo, page, siteKey]);
+		}, [creatorId, getCreatorDefaultInfo, page, pageSize, siteKey]);
 
 		const getCreatorDefaultInfo = useCallback(
 			(creatorId) => ({
@@ -156,26 +157,21 @@ export default withRouter(
 					{loading ? (
 						<ClayLoadingIndicator />
 					) : (
-						questions.items &&
-						questions.items.map((question) => (
-							<QuestionRow
-								key={question.id}
-								question={question}
-							/>
-						))
+						<PaginatedList
+							activeDelta={pageSize}
+							activePage={page}
+							changeDelta={setPageSize}
+							changePage={changePage}
+							data={questions}
+						>
+							{(question) => (
+								<QuestionRow
+									key={question.id}
+									question={question}
+								/>
+							)}
+						</PaginatedList>
 					)}
-
-					{!!questions.totalCount &&
-						questions.totalCount > questions.pageSize && (
-							<ClayPaginationWithBasicItems
-								activePage={page}
-								ellipsisBuffer={2}
-								onPageChange={changePage}
-								totalPages={Math.ceil(
-									questions.totalCount / questions.pageSize
-								)}
-							/>
-						)}
 				</div>
 			);
 		}

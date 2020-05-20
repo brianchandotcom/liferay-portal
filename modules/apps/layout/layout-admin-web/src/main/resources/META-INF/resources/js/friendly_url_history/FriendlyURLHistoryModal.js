@@ -73,17 +73,13 @@ const FriendlyURLHistoryModal = ({
 
 			if (
 				friendlyURLEntryLocalizations[initialLanguageId] &&
-				friendlyURLEntryLocalizations[initialLanguageId].current &&
-				friendlyURLEntryLocalizations[initialLanguageId].current
-					.urlTitle
+				availableLanguages.includes(initialLanguageId)
 			) {
 				selectedLanguageId = initialLanguageId;
 			}
 			else if (
 				friendlyURLEntryLocalizations[defaultLanguageId] &&
-				friendlyURLEntryLocalizations[defaultLanguageId].current &&
-				friendlyURLEntryLocalizations[defaultLanguageId].current
-					.urlTitle
+				availableLanguages.includes(defaultLanguageId)
 			) {
 				selectedLanguageId = defaultLanguageId;
 			}

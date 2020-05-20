@@ -15,7 +15,6 @@
 package com.liferay.fragment.internal.renderer;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -92,22 +90,6 @@ public class FragmentRendererControllerImpl
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		try {
-			if (Validator.isNotNull(fragmentEntryLink.getConfiguration())) {
-				_fragmentEntryValidator.validateConfiguration(
-					fragmentEntryLink.getConfiguration());
-			}
-		}
-		catch (FragmentEntryConfigurationException
-					fragmentEntryConfigurationException) {
-
-			SessionErrors.add(
-				httpServletRequest, "fragmentEntryContentInvalid");
-
-			return _getFragmentEntryConfigurationExceptionMessage(
-				httpServletRequest, fragmentEntryConfigurationException);
-		}
-
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		FragmentRenderer fragmentRenderer = _getFragmentRenderer(
@@ -144,41 +126,6 @@ public class FragmentRendererControllerImpl
 		}
 
 		return unsyncStringWriter.toString();
-	}
-
-	private String _getFragmentEntryConfigurationExceptionMessage(
-		HttpServletRequest httpServletRequest,
-		FragmentEntryConfigurationException
-			fragmentEntryConfigurationException) {
-
-		StringBundler divSB = new StringBundler(3);
-
-		divSB.append("<div class=\"alert alert-danger m-2\">");
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			themeDisplay.getLocale(), FragmentRendererControllerImpl.class);
-
-		StringBundler detailedErrorMessageSB = new StringBundler(4);
-
-		detailedErrorMessageSB.append(
-			LanguageUtil.get(
-				resourceBundle, "fragment-configuration-is-invalid"));
-		detailedErrorMessageSB.append(StringPool.NEW_LINE);
-		detailedErrorMessageSB.append(StringPool.NEW_LINE);
-		detailedErrorMessageSB.append(
-			fragmentEntryConfigurationException.getLocalizedMessage());
-
-		String detailedErrorMessage = detailedErrorMessageSB.toString();
-
-		divSB.append(detailedErrorMessage.replaceAll("\\n", "<br>"));
-
-		divSB.append("</div>");
-
-		return divSB.toString();
 	}
 
 	private String _getFragmentEntryContentExceptionMessage(

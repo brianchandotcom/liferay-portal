@@ -382,7 +382,28 @@ function computeHover({
 
 	// Drop inside target
 
-	if (!siblingItem && targetPositionWithMiddle === TARGET_POSITION.MIDDLE) {
+	const validDropInsideTarget = (
+		targetPositionWithMiddle,
+		layoutData,
+		targetItem
+	) => {
+		const targetIsFragment =
+			targetItem.type == LAYOUT_DATA_ITEM_TYPES.fragment;
+
+		const targetIsEmpty =
+			layoutData.items[targetItem.itemId].children.length === 0;
+
+		return (
+			targetPositionWithMiddle === TARGET_POSITION.MIDDLE &&
+			targetIsEmpty &&
+			!targetIsFragment
+		);
+	};
+
+	if (
+		!siblingItem &&
+		validDropInsideTarget(targetPositionWithMiddle, layoutData, targetItem)
+	) {
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,

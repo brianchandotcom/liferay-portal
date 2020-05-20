@@ -5,5 +5,5 @@
 	"contentType": {
 		"className": "com.liferay.journal.model.JournalArticle"
 	},
-	"name": "Display Page Template One"
+	"name": "${DISPLAY_PAGE_TEMPLATE_NAME}"
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.account.admin.web.internal.dao.search;
 
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.retriever.AccountOrganizationRetriever;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -24,7 +26,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Objects;
 
@@ -75,8 +79,14 @@ public class AccountOrganizationSearchContainerFactory {
 
 		searchContainer.setOrderByType(orderByType);
 
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
+		if (AccountEntryPermission.contains(
+				PermissionCheckerFactoryUtil.create(
+					PortalUtil.getUser(liferayPortletRequest)),
+				accountEntryId, AccountActionKeys.MANAGE_ORGANIZATIONS)) {
+
+			searchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(liferayPortletResponse));
+		}
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);

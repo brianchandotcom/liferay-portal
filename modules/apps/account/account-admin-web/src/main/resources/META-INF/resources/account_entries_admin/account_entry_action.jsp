@@ -60,7 +60,7 @@ long accountEntryId = accountEntryDisplay.getAccountEntryId();
 		/>
 	</c:if>
 
-	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.UPDATE) %>">
+	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, AccountActionKeys.MANAGE_ORGANIZATIONS) %>">
 		<portlet:renderURL var="manageOrganizationsURL">
 			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />

@@ -14,6 +14,8 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
@@ -24,12 +26,17 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -57,6 +64,10 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
+		if (!_hasManageOrganizationsPermission()) {
+			return null;
+		}
+
 		return DropdownItemList.of(
 			() -> {
 				DropdownItem dropdownItem = new DropdownItem();
@@ -173,6 +184,16 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isSelectable() {
+		return _hasManageOrganizationsPermission();
+	}
+
+	@Override
+	public Boolean isShowCreationMenu() {
+		return _hasManageOrganizationsPermission();
+	}
+
+	@Override
 	protected String getOrderByCol() {
 		return ParamUtil.getString(
 			liferayPortletRequest, getOrderByColParam(), "name");
@@ -182,5 +203,33 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name"};
 	}
+
+	private long _getAccountEntryId() {
+		return ParamUtil.getLong(liferayPortletRequest, "accountEntryId");
+	}
+
+	private boolean _hasManageOrganizationsPermission() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (AccountEntryPermission.contains(
+					themeDisplay.getPermissionChecker(), _getAccountEntryId(),
+					AccountActionKeys.MANAGE_ORGANIZATIONS)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewAccountOrganizationsManagementToolbarDisplayContext.class);
 
 }

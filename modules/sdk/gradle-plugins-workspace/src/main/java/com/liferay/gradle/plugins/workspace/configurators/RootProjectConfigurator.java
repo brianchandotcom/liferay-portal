@@ -599,10 +599,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerfile;
 	}
 
-	/**
-	 * @deprecated The token is no longer being used
-	 */
-	@Deprecated
+	@SuppressWarnings("deprecation")
 	private CreateTokenTask _addTaskCreateToken(Project project) {
 		CreateTokenTask createTokenTask = GradleUtil.addTask(
 			project, CREATE_TOKEN_TASK_NAME, CreateTokenTask.class);
@@ -801,12 +798,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					Logger logger = download.getLogger();
 					Project project = download.getProject();
 
-					if (workspaceExtension.isBundleTokenDownload()) {
-						logger.warn(
-							"The token is no longer being used, you can " +
-								"remove all the related properties.");
-					}
-
 					for (Object src : _getSrcList(download)) {
 						File file = null;
 
@@ -851,10 +842,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					if (workspaceExtension.isBundleTokenDownload()) {
-						download.dependsOn();
-					}
-
 					File destinationDir =
 						workspaceExtension.getBundleCacheDir();
 

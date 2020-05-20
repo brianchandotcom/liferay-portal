@@ -14,26 +14,15 @@
 
 package com.liferay.gradle.plugins.workspace.tasks;
 
-import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
-
-import groovy.lang.Closure;
 
 import java.io.File;
 
 import java.net.URL;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.gradle.api.AntBuilder;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.Project;
-import org.gradle.api.Task;
-import org.gradle.api.specs.Spec;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
@@ -42,33 +31,16 @@ import org.gradle.api.tasks.TaskAction;
 /**
  * @author Andrea Di Giorgi
  * @author Gregory Amerson
- * @deprecated The token is no longer being used
+ * @deprecated The token is no longer in use.
  */
 @Deprecated
 public class CreateTokenTask extends DefaultTask {
 
-	public CreateTokenTask() {
-		onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					CreateTokenTask createTokenTask = (CreateTokenTask)task;
-
-					File tokenFile = createTokenTask.getTokenFile();
-
-					if (createTokenTask.isForce() || !tokenFile.exists()) {
-						return true;
-					}
-
-					return false;
-				}
-
-			});
-	}
-
 	@TaskAction
 	public void createToken() throws Exception {
+		Logger logger = getLogger();
+
+		logger.warn("The CreateTokenTask is deprecated and no longer in use.");
 	}
 
 	@Input
@@ -127,71 +99,6 @@ public class CreateTokenTask extends DefaultTask {
 
 	public void setURL(Object tokenUrl) {
 		_tokenUrl = tokenUrl;
-	}
-
-	@SuppressWarnings("serial")
-	private String _readInput(
-		final AntBuilder antBuilder, String message, String propertySuffix,
-		final boolean secure) {
-
-		String propertyName = getName() + "." + propertySuffix;
-
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("addproperty", propertyName);
-		args.put("message", message);
-
-		Closure<Void> closure = new Closure<Void>(antBuilder) {
-
-			@SuppressWarnings("unused")
-			public void doCall() {
-				if (secure) {
-					antBuilder.invokeMethod(
-						"handler", Collections.singletonMap("type", "secure"));
-				}
-			}
-
-		};
-
-		antBuilder.invokeMethod("input", new Object[] {args, closure});
-
-		return (String)antBuilder.getProperty(propertyName);
-	}
-
-	@SuppressWarnings("unused")
-	private void _setCredentials() {
-		String emailAddress = getEmailAddress();
-		String password = getPassword();
-		File passwordFile = getPasswordFile();
-
-		if (Validator.isNotNull(emailAddress) &&
-			(Validator.isNotNull(password) || (passwordFile != null))) {
-
-			return;
-		}
-
-		Project project = getProject();
-
-		AntBuilder antBuilder = project.createAntBuilder();
-
-		while (Validator.isNull(emailAddress)) {
-			emailAddress = _readInput(
-				antBuilder, "Email Address:", "email.address", false);
-		}
-
-		setEmailAddress(emailAddress);
-
-		if (passwordFile != null) {
-			password = FileUtil.read(passwordFile);
-		}
-		else {
-			while (Validator.isNull(password)) {
-				password = _readInput(
-					antBuilder, "Password:", "password", true);
-			}
-		}
-
-		setPassword(password);
 	}
 
 	private Object _emailAddress;

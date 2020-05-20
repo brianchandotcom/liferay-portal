@@ -17,6 +17,7 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from './AppContext.es';
 import {ErrorBoundary} from './components/ErrorBoundary.es';
+import ProtectedRoute from './components/ProtectedRoute.es';
 import NavigationBar from './pages/NavigationBar.es';
 import EditAnswer from './pages/answers/EditAnswer.es';
 import Home from './pages/home/Home';
@@ -47,7 +48,7 @@ export default (props) => (
 								<NavigationBar />
 
 								<Switch>
-									<Route
+									<ProtectedRoute
 										component={EditAnswer}
 										exact
 										path={`${path}/:questionId/answers/:answerId/edit`}
@@ -62,7 +63,7 @@ export default (props) => (
 										exact
 										path={`${path}/tag/:tag`}
 									/>
-									<Route
+									<ProtectedRoute
 										component={NewQuestion}
 										exact
 										path={`${path}/new`}
@@ -77,7 +78,7 @@ export default (props) => (
 										exact
 										path={`${path}/:questionId`}
 									/>
-									<Route
+									<ProtectedRoute
 										component={EditQuestion}
 										exact
 										path={`${path}/:questionId/edit`}

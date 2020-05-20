@@ -145,11 +145,7 @@ public class UpstreamFailureUtil {
 		try {
 			String jobVariant = build.getJobVariant();
 
-			if (jobVariant.contains("/")) {
-				int index = jobVariant.lastIndexOf("/");
-
-				jobVariant = jobVariant.substring(0, index);
-			}
+			jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
 
 			for (String failure :
 					getUpstreamJobFailures("test", topLevelBuild)) {
@@ -262,11 +258,7 @@ public class UpstreamFailureUtil {
 			return false;
 		}
 
-		if (jobVariant.contains("/")) {
-			int index = jobVariant.lastIndexOf("/");
-
-			jobVariant = jobVariant.substring(0, index);
-		}
+		jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
 
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 

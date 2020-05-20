@@ -16,15 +16,15 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import ItemSelector from '../../../common/components/ItemSelector';
-import {addMappedInfoItem} from '../../actions/index';
-import {COMPATIBLE_TYPES} from '../../config/constants/compatibleTypes';
-import {PAGE_TYPES} from '../../config/constants/pageTypes';
-import {config} from '../../config/index';
-import InfoItemService from '../../services/InfoItemService';
-import {useDispatch, useSelector} from '../../store/index';
-import {useId} from '../../utils/useId';
-import {useCollectionFields} from '../CollectionItemContext';
+import {addMappedInfoItem} from '../../app/actions/index';
+import {useCollectionFields} from '../../app/components/CollectionItemContext';
+import {COMPATIBLE_TYPES} from '../../app/config/constants/compatibleTypes';
+import {PAGE_TYPES} from '../../app/config/constants/pageTypes';
+import {config} from '../../app/config/index';
+import InfoItemService from '../../app/services/InfoItemService';
+import {useDispatch, useSelector} from '../../app/store/index';
+import {useId} from '../../app/utils/useId';
+import ItemSelector from './ItemSelector';
 
 const MAPPING_SOURCE_TYPE_IDS = {
 	content: 'content',

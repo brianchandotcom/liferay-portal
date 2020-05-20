@@ -16,6 +16,7 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import MappingSelector from '../../../common/components/MappingSelector';
 import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
@@ -25,7 +26,6 @@ import updateEditableValues from '../../thunks/updateEditableValues';
 import {useId} from '../../utils/useId';
 import {useGetFieldValue} from '../CollectionItemContext';
 import isMapped from '../fragment-content/isMapped';
-import MappingSelector from './MappingSelector';
 
 const SOURCE_TYPES = {
 	fromContentField: 'fromContentField',

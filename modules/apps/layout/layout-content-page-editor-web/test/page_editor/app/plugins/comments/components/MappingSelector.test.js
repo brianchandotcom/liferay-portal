@@ -24,12 +24,12 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 
-import {useCollectionFields} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/CollectionItemContext';
-import MappingSelector from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/MappingSelector';
-import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
-import {PAGE_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/pageTypes';
-import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import {useCollectionFields} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/CollectionItemContext';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {PAGE_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/pageTypes';
+import {config} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
+import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import MappingSelector from '../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/MappingSelector';
 
 const infoItem = {
 	className: 'infoItemClassName',
@@ -39,7 +39,7 @@ const infoItem = {
 };
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
 			pageType: '0',
@@ -58,12 +58,12 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
 	() => jest.fn(() => Promise.resolve())
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
 	() => ({
 		getAvailableAssetMappingFields: jest.fn(() =>
 			Promise.resolve([
@@ -84,7 +84,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/components/CollectionItemContext',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/CollectionItemContext',
 	() => ({
 		useCollectionFields: jest.fn(),
 	})

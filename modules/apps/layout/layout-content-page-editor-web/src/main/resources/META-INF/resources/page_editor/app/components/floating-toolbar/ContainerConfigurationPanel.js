@@ -19,6 +19,7 @@ import React, {useState} from 'react';
 import ColorPalette from '../../../common/components/ColorPalette';
 import FormRow from '../../../common/components/FormRow';
 import {ImageSelector} from '../../../common/components/ImageSelector';
+import MappingSelector from '../../../common/components/MappingSelector';
 import {
 	BackgroundImagePropTypes,
 	getLayoutDataItemPropTypes,
@@ -31,7 +32,6 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import {useId} from '../../utils/useId';
-import MappingSelector from './MappingSelector';
 
 const CONTAINER_PADDING_LABELS = {
 	paddingBottom: Liferay.Language.get('padding-bottom'),

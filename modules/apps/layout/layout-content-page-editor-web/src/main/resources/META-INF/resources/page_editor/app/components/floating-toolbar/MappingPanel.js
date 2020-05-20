@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import MappingSelector from '../../../common/components/MappingSelector';
 import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
@@ -22,7 +23,6 @@ import selectEditableValue from '../../selectors/selectEditableValue';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import isMapped from '../fragment-content/isMapped';
-import MappingSelector from './MappingSelector';
 
 export function MappingPanel({item}) {
 	const {editableId, editableType, fragmentEntryLinkId} = item;

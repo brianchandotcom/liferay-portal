@@ -293,6 +293,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
+		<field name="dataDefinitionId" type="long" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileShortcut">
 		<field name="mvccVersion" type="long" />

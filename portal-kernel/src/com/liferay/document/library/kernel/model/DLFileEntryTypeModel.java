@@ -474,6 +474,20 @@ public interface DLFileEntryTypeModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the data definition ID of this document library file entry type.
+	 *
+	 * @return the data definition ID of this document library file entry type
+	 */
+	public long getDataDefinitionId();
+
+	/**
+	 * Sets the data definition ID of this document library file entry type.
+	 *
+	 * @param dataDefinitionId the data definition ID of this document library file entry type
+	 */
+	public void setDataDefinitionId(long dataDefinitionId);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

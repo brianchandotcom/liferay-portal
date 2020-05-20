@@ -87,7 +87,8 @@ public class DLFileEntryTypeModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"fileEntryTypeKey", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
+		{"dataDefinitionId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -108,10 +109,11 @@ public class DLFileEntryTypeModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("dataDefinitionId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileEntryType (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null,lastPublishDate DATE null,primary key (fileEntryTypeId, ctCollectionId))";
+		"create table DLFileEntryType (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null,lastPublishDate DATE null,dataDefinitionId LONG,primary key (fileEntryTypeId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryType";
 
@@ -179,6 +181,7 @@ public class DLFileEntryTypeModelImpl
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setDataDefinitionId(soapModel.getDataDefinitionId());
 
 		return model;
 	}
@@ -428,6 +431,12 @@ public class DLFileEntryTypeModelImpl
 			"lastPublishDate",
 			(BiConsumer<DLFileEntryType, Date>)
 				DLFileEntryType::setLastPublishDate);
+		attributeGetterFunctions.put(
+			"dataDefinitionId", DLFileEntryType::getDataDefinitionId);
+		attributeSetterBiConsumers.put(
+			"dataDefinitionId",
+			(BiConsumer<DLFileEntryType, Long>)
+				DLFileEntryType::setDataDefinitionId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -859,6 +868,17 @@ public class DLFileEntryTypeModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON
+	@Override
+	public long getDataDefinitionId() {
+		return _dataDefinitionId;
+	}
+
+	@Override
+	public void setDataDefinitionId(long dataDefinitionId) {
+		_dataDefinitionId = dataDefinitionId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1003,6 +1023,7 @@ public class DLFileEntryTypeModelImpl
 		dlFileEntryTypeImpl.setName(getName());
 		dlFileEntryTypeImpl.setDescription(getDescription());
 		dlFileEntryTypeImpl.setLastPublishDate(getLastPublishDate());
+		dlFileEntryTypeImpl.setDataDefinitionId(getDataDefinitionId());
 
 		dlFileEntryTypeImpl.resetOriginalValues();
 
@@ -1170,6 +1191,8 @@ public class DLFileEntryTypeModelImpl
 			dlFileEntryTypeCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		dlFileEntryTypeCacheModel.dataDefinitionId = getDataDefinitionId();
+
 		return dlFileEntryTypeCacheModel;
 	}
 
@@ -1266,6 +1289,7 @@ public class DLFileEntryTypeModelImpl
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private Date _lastPublishDate;
+	private long _dataDefinitionId;
 	private long _columnBitmask;
 	private DLFileEntryType _escapedModel;
 

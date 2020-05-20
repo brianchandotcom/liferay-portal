@@ -4486,6 +4486,7 @@ public class DLFileEntryTypePersistenceImpl
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
 		ctStrictColumnNames.add("lastPublishDate");
+		ctStrictColumnNames.add("dataDefinitionId");
 		ctStrictColumnNames.add("folders");
 
 		_ctColumnNamesMap.put(

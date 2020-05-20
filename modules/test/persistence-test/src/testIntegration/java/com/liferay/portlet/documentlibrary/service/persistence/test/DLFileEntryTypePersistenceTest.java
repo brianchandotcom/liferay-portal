@@ -149,6 +149,8 @@ public class DLFileEntryTypePersistenceTest {
 
 		newDLFileEntryType.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newDLFileEntryType.setDataDefinitionId(RandomTestUtil.nextLong());
+
 		_dlFileEntryTypes.add(_persistence.update(newDLFileEntryType));
 
 		DLFileEntryType existingDLFileEntryType = _persistence.findByPrimaryKey(
@@ -195,6 +197,9 @@ public class DLFileEntryTypePersistenceTest {
 			Time.getShortTimestamp(
 				existingDLFileEntryType.getLastPublishDate()),
 			Time.getShortTimestamp(newDLFileEntryType.getLastPublishDate()));
+		Assert.assertEquals(
+			existingDLFileEntryType.getDataDefinitionId(),
+			newDLFileEntryType.getDataDefinitionId());
 	}
 
 	@Test
@@ -280,7 +285,8 @@ public class DLFileEntryTypePersistenceTest {
 			"uuid", true, "fileEntryTypeId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fileEntryTypeKey", true, "name", true,
-			"description", true, "lastPublishDate", true);
+			"description", true, "lastPublishDate", true, "dataDefinitionId",
+			true);
 	}
 
 	@Test
@@ -561,6 +567,8 @@ public class DLFileEntryTypePersistenceTest {
 		dlFileEntryType.setDescription(RandomTestUtil.randomString());
 
 		dlFileEntryType.setLastPublishDate(RandomTestUtil.nextDate());
+
+		dlFileEntryType.setDataDefinitionId(RandomTestUtil.nextLong());
 
 		_dlFileEntryTypes.add(_persistence.update(dlFileEntryType));
 

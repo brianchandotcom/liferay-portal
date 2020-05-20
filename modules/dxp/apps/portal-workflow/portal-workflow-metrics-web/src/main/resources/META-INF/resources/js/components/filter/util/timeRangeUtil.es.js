@@ -61,8 +61,8 @@ const formatTimeRange = (timeRange, isAmPm) => {
 const getCustomTimeRange = (dateEnd, dateStart) => {
 	const customTimeRange = {
 		active: false,
-		dateEnd: decodeURIComponent(dateEnd),
-		dateStart: decodeURIComponent(dateStart),
+		dateEnd: dateEnd ? decodeURIComponent(dateEnd) : undefined,
+		dateStart: dateStart ? decodeURIComponent(dateStart) : undefined,
 		dividerAfter: true,
 		id: 'custom',
 		name: Liferay.Language.get('custom-range'),

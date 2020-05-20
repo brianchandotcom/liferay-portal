@@ -25,6 +25,12 @@
 		margin-left: auto;
 	}
 
+	// LPS-113239
+
+	.modal-md {
+		max-width: $modal-md;
+	}
+
 	// LPS-97981
 
 	@include media-breakpoint-up(sm) {

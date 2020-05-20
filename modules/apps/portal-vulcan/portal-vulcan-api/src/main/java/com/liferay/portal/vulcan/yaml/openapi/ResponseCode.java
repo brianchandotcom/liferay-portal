@@ -41,6 +41,15 @@ public class ResponseCode {
 		return _defaultResponse;
 	}
 
+	@Override
+	public String toString() {
+		if (_defaultResponse) {
+			return "default";
+		}
+
+		return _httpCode.toString();
+	}
+
 	private final boolean _defaultResponse;
 	private final Integer _httpCode;
 

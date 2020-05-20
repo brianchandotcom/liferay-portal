@@ -1072,11 +1072,7 @@ public class RESTBuilder {
 		int startIndex =
 			s.lastIndexOf("\n", s.indexOf("application/json", index)) + 1;
 
-		int endIndex = s.indexOf("\n", startIndex);
-
-		if (endIndex < 0) {
-			endIndex = s.length();
-		}
+		int endIndex = _getLineEndIndex(s, startIndex);
 
 		String line = s.substring(startIndex, endIndex);
 
@@ -1088,12 +1084,18 @@ public class RESTBuilder {
 
 			startIndex = endIndex + 1;
 
+			endIndex = _getLineEndIndex(s, startIndex);
+
 			line = s.substring(Math.min(startIndex, endIndex), endIndex);
 		}
 
+		sb.setLength(sb.length() - 1);
+
 		String oldSub = sb.toString();
 
-		String replacement = StringUtil.replace(
+		String replacement = "\n";
+
+		replacement += StringUtil.replace(
 			oldSub, "application/json", "application/xml");
 
 		return StringUtil.replaceFirst(s, oldSub, oldSub + replacement, index);
@@ -1776,6 +1778,16 @@ public class RESTBuilder {
 		catch (Exception exception) {
 			return Optional.empty();
 		}
+	}
+
+	private int _getLineEndIndex(String s, int startIndex) {
+		int endIndex = s.indexOf("\n", startIndex);
+
+		if (endIndex < 0) {
+			endIndex = s.length();
+		}
+
+		return endIndex;
 	}
 
 	private Set<String> _getRelatedSchemaNames(

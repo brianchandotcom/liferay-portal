@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -106,21 +105,13 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 		_initialized = false;
 	}
 
-	protected void deleteAkismetData(long companyId) {
+	@Override
+	protected void doReceive(Message message) throws Exception {
 		int reportableTime =
 			_akismetServiceConfiguration.akismetReportableTime();
 
 		_akismetEntryLocalService.deleteAkismetEntry(
 			new Date(System.currentTimeMillis() - (reportableTime * Time.DAY)));
-	}
-
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		long[] companyIds = _portal.getCompanyIds();
-
-		for (long companyId : companyIds) {
-			deleteAkismetData(companyId);
-		}
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -150,10 +141,6 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 
 	private volatile AkismetServiceConfiguration _akismetServiceConfiguration;
 	private volatile boolean _initialized;
-
-	@Reference
-	private Portal _portal;
-
 	private SchedulerEngineHelper _schedulerEngineHelper;
 	private SchedulerEntryImpl _schedulerEntryImpl;
 	private TriggerFactory _triggerFactory;

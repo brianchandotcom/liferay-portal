@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -116,7 +114,8 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 		_initialized = false;
 	}
 
-	protected void deleteSpam(long companyId) throws PortalException {
+	@Override
+	protected void doReceive(Message message) throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			MBMessage.class, PortalClassLoaderUtil.getClassLoader());
 
@@ -149,15 +148,6 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 		}
 	}
 
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		long[] companyIds = _portal.getCompanyIds();
-
-		for (long companyId : companyIds) {
-			deleteSpam(companyId);
-		}
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -185,9 +175,6 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
 	private SchedulerEntryImpl _schedulerEntryImpl;

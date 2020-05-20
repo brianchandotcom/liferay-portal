@@ -21,7 +21,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 
 AccountEntry parentAccountEntry = null;
 
-if (accountEntryDisplay != null) {
+if (accountEntryDisplay.getAccountEntryId() > 0) {
 	AccountEntry accountEntry = AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntryDisplay.getAccountEntryId());
 
 	parentAccountEntry = AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntry.getParentAccountEntryId());
@@ -149,7 +149,7 @@ if (accountEntryDisplay != null) {
 					id:
 						'<%= liferayPortletResponse.getNamespace() + "selectParentAccountEntry" %>',
 					selectedData: [
-						'<%= (accountEntryDisplay != null) ? accountEntryDisplay.getAccountEntryId() : "" %>',
+						'<%= (accountEntryDisplay.getAccountEntryId() > 0) ? accountEntryDisplay.getAccountEntryId() : "" %>',
 						parentAccountEntryInput.value,
 					],
 					title: '<liferay-ui:message key="assign-parent-account" />',

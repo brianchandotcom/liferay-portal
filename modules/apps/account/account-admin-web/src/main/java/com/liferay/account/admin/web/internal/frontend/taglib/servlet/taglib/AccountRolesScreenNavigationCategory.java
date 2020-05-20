@@ -63,7 +63,7 @@ public class AccountRolesScreenNavigationCategory
 	public boolean isVisible(
 		User user, AccountEntryDisplay accountEntryDisplay) {
 
-		if (accountEntryDisplay != null) {
+		if (accountEntryDisplay.getAccountEntryId() > 0) {
 			return true;
 		}
 

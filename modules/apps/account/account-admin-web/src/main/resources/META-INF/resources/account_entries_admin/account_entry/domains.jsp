@@ -19,11 +19,7 @@
 <%
 AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
-List<String> domains = Collections.emptyList();
-
-if (accountEntryDisplay != null) {
-	domains = accountEntryDisplay.getDomains();
-}
+List<String> domains = accountEntryDisplay.getDomains();
 %>
 
 <liferay-ui:error exception="<%= AccountEntryDomainsException.class %>" message="please-enter-a-valid-mail-domain" />

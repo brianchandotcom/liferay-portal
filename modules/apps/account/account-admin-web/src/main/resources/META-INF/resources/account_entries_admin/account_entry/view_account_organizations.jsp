@@ -26,7 +26,7 @@ ViewAccountOrganizationsManagementToolbarDisplayContext viewAccountOrganizations
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
 
-renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay.getName());
+renderResponse.setTitle(accountEntryDisplay.getName());
 %>
 
 <clay:management-toolbar

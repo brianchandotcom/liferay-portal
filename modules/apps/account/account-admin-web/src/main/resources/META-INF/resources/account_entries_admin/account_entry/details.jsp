@@ -24,7 +24,7 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle((accountEntryDisplay == null) ? LanguageUtil.get(request, "add-account") : LanguageUtil.format(request, "edit-x", accountEntryDisplay.getName(), false));
+renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? LanguageUtil.get(request, "add-account") : LanguageUtil.format(request, "edit-x", accountEntryDisplay.getName(), false));
 %>
 
 <portlet:actionURL name="/account_admin/edit_account_entry" var="editAccountURL" />
@@ -32,7 +32,7 @@ renderResponse.setTitle((accountEntryDisplay == null) ? LanguageUtil.get(request
 <liferay-frontend:edit-form
 	action="<%= editAccountURL %>"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntryDisplay == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntryDisplay.getAccountEntryId() == 0) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-frontend:edit-form-body>

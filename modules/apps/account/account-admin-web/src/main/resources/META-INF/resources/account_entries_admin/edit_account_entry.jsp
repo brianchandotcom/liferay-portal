@@ -21,10 +21,8 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-if (accountEntryDisplay != null) {
-	portletURL.setParameter("mvcRenderCommandName", "/account_admin/edit_account_entry");
-	portletURL.setParameter("accountEntryId", String.valueOf(accountEntryDisplay.getAccountEntryId()));
-}
+portletURL.setParameter("mvcRenderCommandName", "/account_admin/edit_account_entry");
+portletURL.setParameter("accountEntryId", String.valueOf(accountEntryDisplay.getAccountEntryId()));
 %>
 
 <liferay-frontend:screen-navigation

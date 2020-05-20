@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selUser = PortalUtil.getSelectedUser(request);
+User selUser = PortalUtil.getSelectedUser(request, false);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

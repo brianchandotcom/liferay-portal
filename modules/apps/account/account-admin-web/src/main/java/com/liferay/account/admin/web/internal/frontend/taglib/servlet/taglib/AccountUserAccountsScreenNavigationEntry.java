@@ -15,10 +15,17 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountPermission;
+import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 
 import java.io.IOException;
 
@@ -64,6 +71,23 @@ public class AccountUserAccountsScreenNavigationEntry
 	public String getScreenNavigationKey() {
 		return AccountScreenNavigationEntryConstants.
 			SCREEN_NAVIGATION_KEY_ACCOUNT_USER;
+	}
+
+	@Override
+	public boolean isVisible(User user, User selUser) {
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		if (AccountPermission.contains(
+				permissionChecker, AccountPortletKeys.ACCOUNT_USERS_ADMIN,
+				AccountActionKeys.ASSIGN_ACCOUNTS) ||
+			UserPermissionUtil.contains(
+				permissionChecker, selUser.getUserId(), ActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

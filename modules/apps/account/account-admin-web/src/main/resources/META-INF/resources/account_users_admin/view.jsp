@@ -55,6 +55,12 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 					<portlet:param name="mvcPath" value="/account_users_admin/edit_account_user.jsp" />
 				</portlet:renderURL>
 
+				<%
+					if (!UserPermissionUtil.contains(permissionChecker, accountUserDisplay.getUserId(), ActionKeys.UPDATE) && !AccountPermission.contains(permissionChecker, AccountPortletKeys.ACCOUNT_USERS_ADMIN, AccountActionKeys.ASSIGN_ACCOUNTS)) {
+						rowURL = null;
+					}
+				%>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"

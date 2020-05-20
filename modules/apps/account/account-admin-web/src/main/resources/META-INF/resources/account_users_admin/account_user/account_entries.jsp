@@ -19,7 +19,7 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
-User selUser = PortalUtil.getSelectedUser(request);
+User selUser = PortalUtil.getSelectedUser(request, false);
 
 SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(selUser.getUserId(), liferayPortletRequest, liferayPortletResponse);
 

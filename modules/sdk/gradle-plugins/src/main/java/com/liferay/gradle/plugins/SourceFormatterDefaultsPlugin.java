@@ -43,9 +43,13 @@ public class SourceFormatterDefaultsPlugin
 	protected void applyPluginDefaults(
 		final Project project, SourceFormatterPlugin sourceFormatterPlugin) {
 
+		// Dependencies
+
 		PortalTools.addPortalToolDependencies(
 			project, SourceFormatterPlugin.CONFIGURATION_NAME,
 			PortalTools.GROUP, _PORTAL_TOOL_NAME);
+
+		// Tasks
 
 		final TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider =
 			GradleUtil.fetchTaskProvider(
@@ -56,6 +60,8 @@ public class SourceFormatterDefaultsPlugin
 			GradleUtil.fetchTaskProvider(
 				project, SourceFormatterPlugin.FORMAT_SOURCE_TASK_NAME,
 				FormatSourceTask.class);
+
+		// Other
 
 		TaskContainer taskContainer = project.getTasks();
 

@@ -11,79 +11,6 @@
 
 import {fetch} from 'frontend-js-web';
 
-const MOCK_TRAFFIC_SOURCES_DETAILS = {
-	organic: {
-		keywords: [
-			{
-				position: 1,
-				title: 'commerce',
-				value: 90000,
-				volume: 12300,
-			},
-			{
-				position: 2,
-				title: 'e-commerce',
-				value: 14800,
-				volume: 9800,
-			},
-			{
-				position: 3,
-				title: 'what is commerce',
-				value: 14000,
-				volume: 9500,
-			},
-			{
-				position: 4,
-				title: 'what is e-commerce',
-				value: 12100,
-				volume: 8700,
-			},
-			{
-				position: 5,
-				title: 'commerce definition for new business strategy',
-				value: 10100,
-				volume: 7100,
-			},
-		],
-		title: 'Organic Traffic',
-	},
-	paid: {
-		keywords: [
-			{
-				position: 1,
-				title: 'commerce',
-				value: 90000,
-				volume: 12300,
-			},
-			{
-				position: 2,
-				title: 'e-commerce',
-				value: 14800,
-				volume: 9800,
-			},
-			{
-				position: 3,
-				title: 'what is commerce',
-				value: 14000,
-				volume: 9500,
-			},
-			{
-				position: 4,
-				title: 'what is e-commerce',
-				value: 12100,
-				volume: 8700,
-			},
-			{
-				position: 5,
-				title: 'commerce definition for new business strategy',
-				value: 10100,
-				volume: 7100,
-			},
-		],
-		title: 'Paid Traffic',
-	},
-};
-
 function APIService({endpoints, namespace, page}) {
 	const {
 		getAnalyticsReportsHistoricalReadsURL,
@@ -133,23 +60,11 @@ function APIService({endpoints, namespace, page}) {
 		});
 	}
 
-	function getTrafficSourceDetails(name) {
-
-		// TODO remove frontend mock
-
-		return new Promise((resolve) =>
-			setTimeout(() => {
-				resolve(MOCK_TRAFFIC_SOURCES_DETAILS[name]);
-			}, 900)
-		);
-	}
-
 	return {
 		getHistoricalReads,
 		getHistoricalViews,
 		getTotalReads,
 		getTotalViews,
-		getTrafficSourceDetails,
 	};
 }
 

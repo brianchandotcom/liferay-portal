@@ -72,21 +72,18 @@ export default function Navigation({
 		return Promise.resolve(trafficSource?.share ?? '-');
 	}, [trafficSourceName, trafficSources]);
 
-	const handleTrafficSourceClick = useCallback(
-		(trafficSourceName) => {
-			setTrafficSourceName(trafficSourceName);
+	const handleTrafficSourceClick = (trafficSourceName) => {
+		setTrafficSourceName(trafficSourceName);
 
-			api.getTrafficSourceDetails(trafficSourceName).then(
-				(trafficSourceData) => {
-					setCurrentPage({
-						data: trafficSourceData,
-						view: 'traffic-source-detail',
-					});
-				}
-			);
-		},
-		[api]
-	);
+		const trafficSource = trafficSources.find((trafficSource) => {
+			return trafficSource['name'] === trafficSourceName;
+		});
+
+		setCurrentPage({
+			data: trafficSource,
+			view: 'traffic-source-detail',
+		});
+	};
 
 	const handleTrafficSourceName = useCallback((trafficSourceName) => {
 		setTrafficSourceName(trafficSourceName);

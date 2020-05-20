@@ -64,6 +64,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	@Override
+	public void deleteNavigationMenu(Long navigationMenuId) throws Exception {
+		_siteNavigationMenuService.deleteSiteNavigationMenu(navigationMenuId);
+	}
+
+	@Override
 	public NavigationMenu getNavigationMenu(Long navigationMenuId)
 		throws Exception {
 

@@ -24,10 +24,10 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.akismet.internal.util.ModerationUtil" %><%@
+<%@ page import="com.liferay.akismet.internal.util.MBUserRankUtil" %><%@
+page import="com.liferay.akismet.internal.util.ModerationUtil" %><%@
 page import="com.liferay.message.boards.exception.NoSuchMessageException" %><%@
 page import="com.liferay.message.boards.exception.RequiredMessageException" %><%@
-page import="com.liferay.message.boards.internal.util.MBUserRankUtil" %><%@
 page import="com.liferay.message.boards.model.MBMessage" %><%@
 page import="com.liferay.message.boards.model.MBStatsUser" %><%@
 page import="com.liferay.message.boards.service.MBMessageLocalServiceUtil" %><%@

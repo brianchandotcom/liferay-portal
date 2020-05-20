@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Change Tracking Test Utilities
+Bundle-SymbolicName: com.liferay.change.tracking.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.change.tracking.test.util

@@ -15,10 +15,11 @@
 package com.liferay.analytics.reports.web.internal.model;
 
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -39,28 +40,17 @@ public class TrafficSourceTest {
 	@Test
 	public void testToJSONObject() {
 		TrafficSource trafficSource = new TrafficSource(
-			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomInt(),
 			RandomTestUtil.randomDouble());
 
 		String helpMessage = RandomTestUtil.randomString();
-		JSONArray keywordsJSONArray = JSONUtil.putAll(
-			JSONUtil.put(
-				"position", 1
-			).put(
-				"title", "commerce"
-			).put(
-				"value", 900
-			).put(
-				"volume", 12300
-			));
-
 		String title = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			JSONUtil.put(
 				"helpMessage", helpMessage
 			).put(
-				"keywords", keywordsJSONArray
+				"keywords", JSONFactoryUtil.createJSONArray()
 			).put(
 				"name", trafficSource.getName()
 			).put(
@@ -72,7 +62,137 @@ public class TrafficSourceTest {
 			).toString(),
 			String.valueOf(
 				trafficSource.toJSONObject(
-					helpMessage, keywordsJSONArray, title)));
+					helpMessage, JSONFactoryUtil.createJSONArray(), title)));
+	}
+
+	@Test
+	public void testToJSONObjectWithSearchKeywords() {
+		TrafficSource trafficSource = new TrafficSource(
+			RandomTestUtil.randomString(),
+			Arrays.asList(
+				new SearchKeyword("liferay", 1, 3600, 2882),
+				new SearchKeyword("liferay portal", 1, 556, 850),
+				new SearchKeyword("liferay inc", 1, 755, 855),
+				new SearchKeyword("what is liferay", 1, 390, 312),
+				new SearchKeyword("liferay development services", 1, 390, 310),
+				new SearchKeyword("com liferay portal", 1, 50, 40),
+				new SearchKeyword("liferay portal server", 1, 50, 40),
+				new SearchKeyword("liferay india", 1, 390, 312)),
+			RandomTestUtil.randomInt(), RandomTestUtil.randomDouble());
+
+		String helpMessage = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"helpMessage", helpMessage
+			).put(
+				"keywords",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"keyword", "liferay"
+					).put(
+						"position", 1
+					).put(
+						"searchVolume", 3600
+					).put(
+						"traffic", 2882
+					),
+					JSONUtil.put(
+						"keyword", "liferay inc"
+					).put(
+						"position", 1
+					).put(
+						"searchVolume", 755
+					).put(
+						"traffic", 855
+					),
+					JSONUtil.put(
+						"keyword", "liferay portal"
+					).put(
+						"position", 1
+					).put(
+						"searchVolume", 556
+					).put(
+						"traffic", 850
+					),
+					JSONUtil.put(
+						"keyword", "what is liferay"
+					).put(
+						"position", 1
+					).put(
+						"searchVolume", 390
+					).put(
+						"traffic", 312
+					),
+					JSONUtil.put(
+						"keyword", "liferay india"
+					).put(
+						"position", 1
+					).put(
+						"searchVolume", 390
+					).put(
+						"traffic", 312
+					))
+			).put(
+				"name", trafficSource.getName()
+			).put(
+				"share", trafficSource.getTrafficShare()
+			).put(
+				"title", title
+			).put(
+				"value", trafficSource.getTrafficAmount()
+			).toString(),
+			String.valueOf(
+				trafficSource.toJSONObject(
+					helpMessage,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"keyword", "liferay"
+						).put(
+							"position", 1
+						).put(
+							"searchVolume", 3600
+						).put(
+							"traffic", 2882
+						),
+						JSONUtil.put(
+							"keyword", "liferay inc"
+						).put(
+							"position", 1
+						).put(
+							"searchVolume", 755
+						).put(
+							"traffic", 855
+						),
+						JSONUtil.put(
+							"keyword", "liferay portal"
+						).put(
+							"position", 1
+						).put(
+							"searchVolume", 556
+						).put(
+							"traffic", 850
+						),
+						JSONUtil.put(
+							"keyword", "what is liferay"
+						).put(
+							"position", 1
+						).put(
+							"searchVolume", 390
+						).put(
+							"traffic", 312
+						),
+						JSONUtil.put(
+							"keyword", "liferay india"
+						).put(
+							"position", 1
+						).put(
+							"searchVolume", 390
+						).put(
+							"traffic", 312
+						)),
+					title)));
 	}
 
 }

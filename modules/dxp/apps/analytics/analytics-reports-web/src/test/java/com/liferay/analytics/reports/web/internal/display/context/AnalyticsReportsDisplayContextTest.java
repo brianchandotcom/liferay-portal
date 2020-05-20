@@ -17,6 +17,7 @@ package com.liferay.analytics.reports.web.internal.display.context;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.web.internal.configuration.AnalyticsReportsConfiguration;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
+import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -86,7 +87,8 @@ public class AnalyticsReportsDisplayContextTest {
 			new AnalyticsReportsDisplayContext(
 				_getAnalyticsReportsConfiguration(true, false),
 				_getAnalyticsReportsDataProvider(
-					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+					null, RandomTestUtil.randomInt(),
+					RandomTestUtil.randomDouble(), null,
 					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
 					false),
 				_getAnalyticsReportsItem(), null, null, new PortalImpl(),
@@ -118,7 +120,8 @@ public class AnalyticsReportsDisplayContextTest {
 			new AnalyticsReportsDisplayContext(
 				_getAnalyticsReportsConfiguration(false, false),
 				_getAnalyticsReportsDataProvider(
-					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+					null, RandomTestUtil.randomInt(),
+					RandomTestUtil.randomDouble(), null,
 					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
 					false),
 				_getAnalyticsReportsItem(), null, null, new PortalImpl(),
@@ -142,8 +145,8 @@ public class AnalyticsReportsDisplayContextTest {
 
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			_getAnalyticsReportsDataProvider(
-				organicTrafficAmount, organicTrafficShare, paidTrafficAmount,
-				paidTrafficShare, false);
+				null, organicTrafficAmount, organicTrafficShare, null,
+				paidTrafficAmount, paidTrafficShare, false);
 
 		AnalyticsReportsInfoItem analyticsReportsInfoItem =
 			_getAnalyticsReportsItem();
@@ -204,8 +207,8 @@ public class AnalyticsReportsDisplayContextTest {
 
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			_getAnalyticsReportsDataProvider(
-				organicTrafficAmount, organicTrafficShare, paidTrafficAmount,
-				paidTrafficShare, false);
+				null, organicTrafficAmount, organicTrafficShare, null,
+				paidTrafficAmount, paidTrafficShare, false);
 
 		AnalyticsReportsInfoItem analyticsReportsInfoItem =
 			_getAnalyticsReportsItem();
@@ -237,9 +240,19 @@ public class AnalyticsReportsDisplayContextTest {
 		int paidTrafficAmount = RandomTestUtil.randomInt();
 		double paidTrafficShare = RandomTestUtil.randomDouble();
 
+		SearchKeyword organicSearchKeyword = new SearchKeyword(
+			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomInt(), RandomTestUtil.randomInt());
+
+		SearchKeyword paidSearchKeyword = new SearchKeyword(
+			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomInt(), RandomTestUtil.randomInt());
+
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			_getAnalyticsReportsDataProvider(
-				organicTrafficAmount, organicTrafficShare, paidTrafficAmount,
+				Collections.singletonList(organicSearchKeyword),
+				organicTrafficAmount, organicTrafficShare,
+				Collections.singletonList(paidSearchKeyword), paidTrafficAmount,
 				paidTrafficShare, true);
 
 		AnalyticsReportsInfoItem analyticsReportsInfoItem =
@@ -276,6 +289,18 @@ public class AnalyticsReportsDisplayContextTest {
 				JSONUtil.put(
 					"helpMessage", _titles.get(_MESSAGE_KEY_HELP_PAID)
 				).put(
+					"keywords",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"keyword", paidSearchKeyword.getKeyword()
+						).put(
+							"position", paidSearchKeyword.getPosition()
+						).put(
+							"searchVolume", paidSearchKeyword.getSearchVolume()
+						).put(
+							"traffic", paidSearchKeyword.getTraffic()
+						))
+				).put(
 					"keywords", _getKeywordsJSONArray()
 				).put(
 					"name", _TITLE_KEY_PAID
@@ -288,6 +313,19 @@ public class AnalyticsReportsDisplayContextTest {
 				),
 				JSONUtil.put(
 					"helpMessage", _titles.get(_MESSAGE_KEY_HELP_ORGANIC)
+				).put(
+					"keywords",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"keyword", organicSearchKeyword.getKeyword()
+						).put(
+							"position", organicSearchKeyword.getPosition()
+						).put(
+							"searchVolume",
+							organicSearchKeyword.getSearchVolume()
+						).put(
+							"traffic", organicSearchKeyword.getTraffic()
+						))
 				).put(
 					"keywords", _getKeywordsJSONArray()
 				).put(
@@ -322,7 +360,8 @@ public class AnalyticsReportsDisplayContextTest {
 	}
 
 	private AnalyticsReportsDataProvider _getAnalyticsReportsDataProvider(
-		int organicTrafficAmount, double organicTrafficShare,
+		List<SearchKeyword> organicSearchKeywords, int organicTrafficAmount,
+		double organicTrafficShare, List<SearchKeyword> paidSearchKeywords,
 		int paidTrafficAmount, double paidTrafficShare,
 		boolean validAnalyticsConnection) {
 
@@ -334,10 +373,11 @@ public class AnalyticsReportsDisplayContextTest {
 
 				return Arrays.asList(
 					new TrafficSource(
-						_TITLE_KEY_ORGANIC, organicTrafficAmount,
-						organicTrafficShare),
+						_TITLE_KEY_ORGANIC, organicSearchKeywords,
+						organicTrafficAmount, organicTrafficShare),
 					new TrafficSource(
-						_TITLE_KEY_PAID, paidTrafficAmount, paidTrafficShare));
+						_TITLE_KEY_PAID, paidSearchKeywords, paidTrafficAmount,
+						paidTrafficShare));
 			}
 
 			@Override

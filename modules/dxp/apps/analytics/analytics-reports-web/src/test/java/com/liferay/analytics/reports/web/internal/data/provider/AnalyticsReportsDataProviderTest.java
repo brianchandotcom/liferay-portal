@@ -16,6 +16,7 @@ package com.liferay.analytics.reports.web.internal.data.provider;
 
 import com.liferay.analytics.reports.web.internal.model.HistogramMetric;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
+import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
@@ -40,6 +41,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -212,7 +214,7 @@ public class AnalyticsReportsDataProviderTest {
 						"/traffic-sources",
 						JSONUtil.putAll(
 							JSONUtil.put(
-								"name", "search"
+								"name", "organic"
 							).put(
 								"trafficAmount", 3849
 							).put(
@@ -234,9 +236,10 @@ public class AnalyticsReportsDataProviderTest {
 		Assert.assertEquals(
 			trafficSources.toString(), 2, trafficSources.size());
 		Assert.assertEquals(
-			new TrafficSource("search", 3849, 94.25D), trafficSources.get(0));
+			new TrafficSource("organic", null, 3849, 94.25D),
+			trafficSources.get(0));
 		Assert.assertEquals(
-			new TrafficSource("paid", 235, 5.75D), trafficSources.get(1));
+			new TrafficSource("paid", null, 235, 5.75D), trafficSources.get(1));
 	}
 
 	@Test(expected = PortalException.class)
@@ -248,6 +251,86 @@ public class AnalyticsReportsDataProviderTest {
 
 		analyticsReportsDataProvider.getTrafficSources(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testGetTrafficSourcesWithSearchKeywords() throws Exception {
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			new AnalyticsReportsDataProvider(
+				_getHttp(
+					Collections.singletonMap(
+						"/traffic-sources",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"keywords",
+								JSONUtil.putAll(
+									JSONUtil.put(
+										"keyword", "liferay"
+									).put(
+										"position", 1
+									).put(
+										"searchVolume", 3600
+									).put(
+										"traffic", 2880
+									),
+									JSONUtil.put(
+										"keyword", "liferay portal"
+									).put(
+										"position", 1
+									).put(
+										"searchVolume", 390
+									).put(
+										"traffic", 312
+									))
+							).put(
+								"name", "organic"
+							).put(
+								"trafficAmount", 3192
+							).put(
+								"trafficShare", 93.93D
+							),
+							JSONUtil.put(
+								"keywords",
+								JSONUtil.putAll(
+									JSONUtil.put(
+										"keyword", "dxp enterprises"
+									).put(
+										"position", 1
+									).put(
+										"searchVolume", 4400
+									).put(
+										"traffic", 206
+									))
+							).put(
+								"name", "paid"
+							).put(
+								"trafficAmount", 206
+							).put(
+								"trafficShare", 6.07D
+							)
+						).toString())));
+
+		List<TrafficSource> trafficSources =
+			analyticsReportsDataProvider.getTrafficSources(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			trafficSources.toString(), 2, trafficSources.size());
+		Assert.assertEquals(
+			new TrafficSource(
+				"organic",
+				Arrays.asList(
+					new SearchKeyword("liferay", 1, 3600, 2880),
+					new SearchKeyword("liferay portal", 1, 390, 312)),
+				3192, 93.93D),
+			trafficSources.get(0));
+		Assert.assertEquals(
+			new TrafficSource(
+				"paid",
+				Collections.singletonList(
+					new SearchKeyword("dxp enterprises", 1, 4400, 206)),
+				206, 6.07D),
+			trafficSources.get(1));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

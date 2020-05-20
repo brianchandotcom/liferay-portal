@@ -1,0 +1,162 @@
+@component-name = "portal-questions"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.questions.web.internal.portlet.QuestionsPortlet.config";
+	property osgi.module.configurations = "com.liferay.portlet.display-category=category.collaboration";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Questions";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+		
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Questions Page");
+
+		PageEditor.addWidget(portletName = "Questions");
+
+		PageEditor.clickPublish();
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				panel = "Site Administration",
+				portlet = "Message Boards");
+
+			if (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
+				Questions.tearDown();
+			}
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Validate if Question portlet have one tab with all tags used in the questions"
+	@priority = "3"
+	test ListOfTagsAppearsInTheTagsTab {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Question ListOfTagsAppearsInTheTagsTab",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			titleField = "Title ListOfTagsAppearsInTheTagsTab",
+			kbArticleContent = "Body ListOfTagsAppearsInTheTagsTab");
+		
+		Questions.addTags(tagLocator = "tag1");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+		
+		Pause(locator = "3000");
+
+		Click(
+			key_questionTabField = "Tags",
+			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+
+		AssertElementPresent(
+			key_tagName = "tag1",
+			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+
+	}
+
+	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"
+	@priority = "3"
+	test TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			userEmailAddress = "test@liferay.com");
+		
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			kbArticleContent = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
+		
+		Questions.addTags(tagLocator = "tag1");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		Pause(locator = "3000");
+		
+		Click(
+			key_questionTabField = "Tags",
+			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+
+		Click(
+			key_tagName = "tag1",
+			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+
+		AssertElementPresent(
+			key_titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
+
+	}
+
+	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
+	@priority = "4"
+	test ValidateTagsOccurrences {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Question ValidateTagsOccurrences",
+			userEmailAddress = "test@liferay.com");
+		
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Question ValidateTagsOccurrences",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			titleField = "1- Title ValidateTagsOccurrences",
+			kbArticleContent = "1- Body ValidateTagsOccurrences");
+		
+		Questions.addTags(tagLocator = "tag1");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			titleField = "2- Title ValidateTagsOccurrences",
+			kbArticleContent = "2- Body ValidateTagsOccurrences");
+		
+		Questions.addTags(tagLocator = "tag1");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		Pause(locator = "5000");
+		
+		Click(
+			key_questionTabField = "Tags",
+			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+
+		AssertElementPresent(
+			key_tagName = "tag1",
+			key_amountOfUsedTimes = "2",
+			locator1 = "Questions#TAGS_LIST_TAB_USED_TIMES");
+
+	}
+
+}

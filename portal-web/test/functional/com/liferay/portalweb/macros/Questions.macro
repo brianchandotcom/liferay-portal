@@ -19,6 +19,16 @@ definition {
 
 	}
 
+	macro askQuestionFillingTheMandatoryFields {
+		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
+		
+		Type(
+			locator1 = "Questions#ASK_QUESTION_TITLE_FIELD",
+			value1 = "${titleField}");
+
+		CKEditor.addContent(content = "${kbArticleContent}");
+	}
+
 	macro changeDisplayStyle {
 		Click(locator1 = "Questions#CREATE_QUESTIONS_DISPLAY_STYLE_SELECTOR");
 
@@ -35,16 +45,6 @@ definition {
 		Questions.changeDisplayStyle(displayStyle = "${displayStyleOption}");
 
 		Button.clickSave();
-	}
-
-	macro askQuestionFillingTheMandatoryFields {
-		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
-		
-		Type(
-			locator1 = "Questions#ASK_QUESTION_TITLE_FIELD",
-			value1 = "${titleField}");
-
-		CKEditor.addContent(content = "${kbArticleContent}");
 	}
 
 	macro fillName {

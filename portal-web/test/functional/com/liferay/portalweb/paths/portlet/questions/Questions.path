@@ -63,6 +63,16 @@
 	<td>//p[@title='${key_questionNameField}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TAGS_LIST_TAB_NAMES</td>
+	<td>//a[contains(@href, '${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_LIST_TAB_USED_TIMES</td>
+	<td>//a[contains(@href, '${key_tagName}')]//*[contains(@class, 'card-body')]//p[contains(.,'${key_amountOfUsedTimes} Times')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

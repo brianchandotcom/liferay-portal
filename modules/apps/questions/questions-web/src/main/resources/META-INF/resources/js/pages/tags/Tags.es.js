@@ -37,7 +37,7 @@ export default withRouter(
 		const context = useContext(AppContext);
 
 		const [page, setPage] = useState(1);
-		const [pageSize, setPageSize] = useState();
+		const [pageSize, setPageSize] = useState(20);
 		const [tags, setTags] = useState({});
 
 		useEffect(() => {

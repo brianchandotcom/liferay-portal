@@ -25,6 +25,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
 
@@ -46,21 +47,29 @@ public class SourceFormatterDefaultsPlugin
 			project, SourceFormatterPlugin.CONFIGURATION_NAME,
 			PortalTools.GROUP, _PORTAL_TOOL_NAME);
 
+		final TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider =
+			GradleUtil.fetchTaskProvider(
+				project,
+				SourceFormatterPlugin.CHECK_SOURCE_FORMATTING_TASK_NAME,
+				FormatSourceTask.class);
+		final TaskProvider<FormatSourceTask> formatSourceTaskProvider =
+			GradleUtil.fetchTaskProvider(
+				project, SourceFormatterPlugin.FORMAT_SOURCE_TASK_NAME,
+				FormatSourceTask.class);
+
 		_configureTasksFormatSource(project);
 
-		GradleUtil.withPlugin(
-			project, NodePlugin.class,
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			NodePlugin.class,
 			new Action<NodePlugin>() {
 
 				@Override
 				public void execute(NodePlugin nodePlugin) {
 					_configureTaskForNodePlugin(
-						project,
-						SourceFormatterPlugin.CHECK_SOURCE_FORMATTING_TASK_NAME,
-						"packageRunCheckFormat");
-					_configureTaskForNodePlugin(
-						project, SourceFormatterPlugin.FORMAT_SOURCE_TASK_NAME,
-						"packageRunFormat");
+						project, checkSourceFormattingTaskProvider,
+						formatSourceTaskProvider);
 				}
 
 			});
@@ -72,19 +81,53 @@ public class SourceFormatterDefaultsPlugin
 	}
 
 	private void _configureTaskForNodePlugin(
-		Project project, String taskName, String nodeTaskName) {
+		Project project,
+		TaskProvider<FormatSourceTask> checkSourceFormattingTaskProvider,
+		TaskProvider<FormatSourceTask> formatSourceTaskProvider) {
 
-		final TaskProvider<Task> taskProvider = GradleUtil.fetchTaskProvider(
-			project, nodeTaskName);
+		final TaskProvider<Task> packageRunCheckFormatTaskProvider =
+			GradleUtil.fetchTaskProvider(project, "packageRunCheckFormat");
 
-		if (taskProvider != null) {
-			Task task = GradleUtil.getTask(project, taskName);
-
+		if (packageRunCheckFormatTaskProvider != null) {
 			String skipNodeTask = GradleUtil.getTaskPrefixedProperty(
-				task, "skip.node.task");
+				project.getPath(), checkSourceFormattingTaskProvider.getName(),
+				"skip.node.task");
 
 			if (!Boolean.parseBoolean(skipNodeTask)) {
-				task.dependsOn(taskProvider);
+				checkSourceFormattingTaskProvider.configure(
+					new Action<FormatSourceTask>() {
+
+						@Override
+						public void execute(
+							FormatSourceTask checkSourceFormattingTask) {
+
+							checkSourceFormattingTask.dependsOn(
+								packageRunCheckFormatTaskProvider);
+						}
+
+					});
+			}
+		}
+
+		final TaskProvider<Task> packageRunFormatTaskProvider =
+			GradleUtil.fetchTaskProvider(project, "packageRunFormat");
+
+		if (packageRunFormatTaskProvider != null) {
+			String skipNodeTask = GradleUtil.getTaskPrefixedProperty(
+				project.getPath(), formatSourceTaskProvider.getName(),
+				"skip.node.task");
+
+			if (!Boolean.parseBoolean(skipNodeTask)) {
+				formatSourceTaskProvider.configure(
+					new Action<FormatSourceTask>() {
+
+						@Override
+						public void execute(FormatSourceTask formatSourceTask) {
+							formatSourceTask.dependsOn(
+								packageRunFormatTaskProvider);
+						}
+
+					});
 			}
 		}
 	}

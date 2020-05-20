@@ -197,6 +197,8 @@ public interface Build {
 
 	public interface BranchInformation {
 
+		public RemoteGitRef getCachedRemoteGitRef();
+
 		public String getReceiverUsername();
 
 		public String getRepositoryName();
@@ -204,6 +206,8 @@ public interface Build {
 		public String getSenderBranchName();
 
 		public String getSenderBranchSHA();
+
+		public RemoteGitRef getSenderRemoteGitRef();
 
 		public String getSenderUsername();
 

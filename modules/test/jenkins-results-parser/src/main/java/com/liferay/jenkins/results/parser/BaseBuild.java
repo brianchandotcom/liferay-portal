@@ -1624,6 +1624,20 @@ public abstract class BaseBuild implements Build {
 	public static class DefaultBranchInformation implements BranchInformation {
 
 		@Override
+		public RemoteGitRef getCachedRemoteGitRef() {
+			String cachedBranchName = JenkinsResultsParserUtil.combine(
+				"cache-", getReceiverUsername(), "-", getUpstreamBranchSHA(),
+				"-", getSenderUsername(), "-", getSenderBranchSHA());
+
+			String remoteURL = JenkinsResultsParserUtil.combine(
+				"git@github-dev.liferay.com:liferay/", getRepositoryName(),
+				".git");
+
+			return GitUtil.getRemoteGitRef(
+				cachedBranchName, new File("."), remoteURL);
+		}
+
+		@Override
 		public String getReceiverUsername() {
 			String branchInformationString = _getBranchInformationString();
 
@@ -1674,6 +1688,16 @@ public abstract class BaseBuild implements Build {
 			}
 
 			return null;
+		}
+
+		@Override
+		public RemoteGitRef getSenderRemoteGitRef() {
+			String remoteURL = JenkinsResultsParserUtil.combine(
+				"git@github.com:", getSenderUsername(), "/",
+				getRepositoryName(), ".git");
+
+			return GitUtil.getRemoteGitRef(
+				getSenderBranchName(), new File("."), remoteURL);
 		}
 
 		@Override

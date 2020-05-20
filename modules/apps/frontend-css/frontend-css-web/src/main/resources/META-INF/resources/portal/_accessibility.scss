@@ -49,10 +49,8 @@ td.stretch {
 					padding: 3px;
 				}
 
-				&.mac {
-					&:after {
-						content: 'Option+0';
-					}
+				&.mac:after {
+					content: 'Option+0';
 				}
 			}
 		}

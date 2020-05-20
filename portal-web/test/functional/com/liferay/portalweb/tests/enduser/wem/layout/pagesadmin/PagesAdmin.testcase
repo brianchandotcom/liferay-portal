@@ -98,21 +98,18 @@ definition {
 	test CheckAndViewCountViaManagementToolbar {
 		property testray.component.names = "Site Pages Administration";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Widget Page");
 
-		ContentPages.addPage(pageName = "Test Content Page Name 1");
-
-		PageEditor.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name 2");
-
-		PageEditor.clickPublish();
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page",
+			type = "content");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		SitePages.checkPage(pageName = "Test Content Page Name 1");
+		SitePages.checkPage(pageName = "Test Widget Page");
 
 		AssertTextEquals(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
@@ -122,9 +119,9 @@ definition {
 
 		ManagementBar.clickSelectAllCheckbox();
 
-		SitePages.viewCheckboxChecked(pageName = "Test Content Page Name 1");
+		SitePages.viewCheckboxChecked(pageName = "Test Widget Page");
 
-		SitePages.viewCheckboxChecked(pageName = "Test Content Page Name 2");
+		SitePages.viewCheckboxChecked(pageName = "Test Content Page");
 	}
 
 	@description = "This is for LPS-110108. The hovered item shows Add Page quick action and a Kebab menu with the actions available for that item. Clicking on item title navigates to the content."
@@ -132,23 +129,28 @@ definition {
 	test MouseOverNonRootPageAndViewPage {
 		property testray.component.names = "Site Pages Administration";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		for (var n : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name ${n}",
+				type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name 1");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name ${n}",
+				siteName = "Test Site Name");
 
-		PageEditor.clickPublish();
+			PageEditor.clickPublish();
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Child Content Page Name 1",
+			parentLayoutName = "Test Content Page Name 1",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name 2");
-
-		PageEditor.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addChildPage(
-			childPageName = "Child Content Page Name 1",
-			parentPageName = "Test Content Page Name 1");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Child Content Page Name 1",
+			siteName = "Test Site Name");
 
 		PageEditor.clickPublish();
 
@@ -190,33 +192,28 @@ definition {
 	test MoveChildPageToParentLevel {
 		property testray.component.names = "Site Pages Administration";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Parent Page Name");
 
-		ContentPages.addPage(pageName = "Parent Content Page Name");
-
-		PageEditor.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addChildPage(
-			childPageName = "Child Content Page Name",
-			parentPageName = "Parent Content Page Name");
-
-		PageEditor.clickPublish();
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Child Page Name",
+			parentLayoutName = "Parent Page Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		Page.view(
 			depth = "2",
-			pageName = "Child Content Page Name",
+			pageName = "Child Page Name",
 			privacy = "Public Pages");
 
 		ContentPages.movePageToPageUp(
-			pageName = "Child Content Page Name",
-			pageNameTo = "Parent Content Page Name");
+			pageName = "Child Page Name",
+			pageNameTo = "Parent Page Name");
 
 		Page.view(
-			pageName = "Child Content Page Name",
+			pageName = "Child Page Name",
 			privacy = "Public Pages");
 	}
 
@@ -246,8 +243,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -291,11 +286,15 @@ definition {
 
 		PageEditor.clickPublish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Child Content Page Name 1",
+			parentLayoutName = "Test Content Page Name 1",
+			type = "content");
 
-		ContentPages.addChildPage(
-			childPageName = "Child Content Page Name 1",
-			parentPageName = "Test Content Page Name 1");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Child Content Page Name 1",
+			siteName = "Test Site Name");
 
 		PageEditor.clickPublish();
 
@@ -404,17 +403,26 @@ definition {
 	test SelectNonRootPageAndViewPage {
 		property testray.component.names = "Site Pages Administration";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.clickPublish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Child Content Page Name",
+			parentLayoutName = "Test Content Page Name",
+			type = "content");
 
-		ContentPages.addChildPage(
-			childPageName = "Child Content Page Name",
-			parentPageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Child Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.clickPublish();
 

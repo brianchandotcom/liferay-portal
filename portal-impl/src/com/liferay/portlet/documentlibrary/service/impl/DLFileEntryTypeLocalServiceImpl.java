@@ -625,6 +625,27 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	@Override
+	public DLFileEntryType updateFileEntryType(
+			long fileEntryTypeId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap)
+		throws PortalException {
+
+		DLFileEntryType dlFileEntryType =
+			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
+
+		_validateFileEntryType(
+			fileEntryTypeId, dlFileEntryType.getGroupId(),
+			dlFileEntryType.getFileEntryTypeKey());
+
+		_validateDDMStructure(dlFileEntryType.getDataDefinitionId());
+
+		dlFileEntryType.setNameMap(nameMap);
+		dlFileEntryType.setDescriptionMap(descriptionMap);
+
+		return dlFileEntryTypePersistence.update(dlFileEntryType);
+	}
+
+	@Override
 	public void updateFolderFileEntryTypes(
 		DLFolder dlFolder, List<Long> fileEntryTypeIds,
 		long defaultFileEntryTypeId, ServiceContext serviceContext) {
@@ -857,15 +878,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			long[] ddmStructureIds)
 		throws PortalException {
 
-		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.fetchByG_F(
-			groupId, fileEntryTypeKey);
-
-		if ((dlFileEntryType != null) &&
-			(dlFileEntryType.getFileEntryTypeId() != fileEntryTypeId)) {
-
-			throw new DuplicateFileEntryTypeException(
-				"A file entry type already exists for key " + fileEntryTypeKey);
-		}
+		_validateFileEntryType(fileEntryTypeId, groupId, fileEntryTypeKey);
 
 		if (ddmStructureIds.length == 0) {
 			throw new NoSuchMetadataSetException(

@@ -14,7 +14,7 @@
 
 package com.liferay.akismet.internal.messaging;
 
-import com.liferay.akismet.configuration.AkismetServiceConfiguration;
+import com.liferay.akismet.internal.configuration.AkismetServiceConfiguration;
 import com.liferay.akismet.service.AkismetEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jamie Sammons
  */
 @Component(
-	configurationPid = "com.liferay.akismet.configuration.AkismetServiceConfiguration",
+	configurationPid = "com.liferay.akismet.internal.configuration.AkismetServiceConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = "cron.expression=0 0 0 * * ?",
 	service = DeleteAkismetMessageListener.class

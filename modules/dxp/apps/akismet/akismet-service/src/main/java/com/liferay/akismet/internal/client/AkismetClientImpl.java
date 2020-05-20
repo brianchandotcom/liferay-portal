@@ -15,8 +15,8 @@
 package com.liferay.akismet.internal.client;
 
 import com.liferay.akismet.client.AkismetClient;
-import com.liferay.akismet.configuration.AkismetServiceConfiguration;
 import com.liferay.akismet.internal.client.constants.AkismetConstants;
+import com.liferay.akismet.internal.configuration.AkismetServiceConfiguration;
 import com.liferay.akismet.model.AkismetEntry;
 import com.liferay.akismet.service.AkismetEntryLocalService;
 import com.liferay.message.boards.model.MBMessage;
@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jamie Sammons
  */
 @Component(
-	configurationPid = "com.liferay.akismet.configuration.AkismetServiceConfiguration",
+	configurationPid = "com.liferay.akismet.internal.configuration.AkismetServiceConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = AkismetClient.class
 )

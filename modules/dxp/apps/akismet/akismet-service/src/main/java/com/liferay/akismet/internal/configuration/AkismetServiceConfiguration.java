@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.akismet.configuration;
+package com.liferay.akismet.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "community-tools")
 @Meta.OCD(
-	id = "com.liferay.akismet.configuration.AkismetServiceConfiguration",
+	id = "com.liferay.akismet.internal.configuration.AkismetServiceConfiguration",
 	localization = "content/Language", name = "akismet-configuration-name"
 )
 public interface AkismetServiceConfiguration {

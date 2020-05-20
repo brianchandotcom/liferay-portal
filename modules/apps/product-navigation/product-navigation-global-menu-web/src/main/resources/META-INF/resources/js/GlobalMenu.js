@@ -13,188 +13,208 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayModal, {useModal} from '@clayui/modal';
+import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
+import classNames from 'classnames';
+import {useEventListener} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
-const Column = ({panelApps}) => {
-	return (
-		<ul className="list-unstyled mt-4" role="list">
-			{panelApps.map(({label, portletId, url}) => (
-				<li className="mb-2" key={portletId}>
-					<a className="text-secondary" href={url}>
-						{label}
-					</a>
-				</li>
-			))}
-		</ul>
-	);
-};
-
-const Content = ({
-	childCategories,
+const AppsPanel = ({
+	categories = [],
 	portletNamespace,
 	recentSites,
 	viewAllURL,
 }) => {
+	const [activeTab, setActiveTab] = useState(0);
+
 	return (
-		<div className="row">
-			{childCategories.map(({key, label, panelApps}) => (
-				<div className="col p-4" key={key}>
-					<h2 className="h5 text-secondary text-uppercase">
-						{label}
-					</h2>
-
-					<Column panelApps={panelApps} />
-				</div>
-			))}
-
-			<div className="bg-lighter col p-4 rounded-sm" key="sites">
-				<h2 className="h5 mb-5 text-secondary text-uppercase">
-					{Liferay.Language.get('sites')}
-				</h2>
-
-				<p className="h6 mb-0 text-secondary text-uppercase">
-					{Liferay.Language.get('recently-visited')}
-				</p>
-
-				<ul className="list-unstyled mt-3" role="list">
-					{recentSites.map(({key, label, logoURL, url}) => (
-						<li className="mb-2" key={key}>
-							<div className="autofit-row autofit-row-center">
-								<div className="autofit-col mr-2">
-									<div className="sticker sticker-secondary">
-										<img
-											className="sticker-img"
-											src={logoURL}
-										/>
-									</div>
-								</div>
-
-								<div className="autofit-col autofit-col-expand">
-									<a className="text-secondary" href={url}>
-										{label}
-									</a>
-								</div>
-							</div>
-						</li>
+		<>
+			<div className="c-px-md-3 row">
+				<ClayTabs modern>
+					{categories.map(({key, label}, index) => (
+						<ClayTabs.Item
+							active={activeTab === index}
+							id={`${portletNamespace}tab_${index}`}
+							key={key}
+							onClick={() => setActiveTab(index)}
+						>
+							{label}
+						</ClayTabs.Item>
 					))}
-				</ul>
-
-				<ClayButton
-					displayType="link"
-					onClick={() => {
-						Liferay.Util.selectEntity(
-							{
-								dialog: {
-									constrain: true,
-									destroyOnHide: true,
-									modal: true,
-								},
-								eventName: `${portletNamespace}selectSite`,
-								id: `${portletNamespace}selectSite`,
-								title: Liferay.Language.get(
-									'select-site-or-asset-library'
-								),
-								uri: viewAllURL,
-							},
-							(event) => {
-								location.href = event.url;
-							}
-						);
-					}}
-				>
-					{Liferay.Language.get('view-all')}
-				</ClayButton>
+				</ClayTabs>
 			</div>
-		</div>
+
+			<ClayTabs.Content activeIndex={activeTab}>
+				{categories.map(({childCategories}, index) => (
+					<ClayTabs.TabPane
+						aria-labelledby={`${portletNamespace}tab_${index}`}
+						key={`tabPane-${index}`}
+					>
+						<div className="c-p-md-3 row">
+							{childCategories.map(({key, label, panelApps}) => (
+								<div className="col-md" key={key}>
+									<ul className="list-unstyled">
+										<li className="dropdown-subheader">
+											{label}
+										</li>
+
+										{panelApps.map(
+											({label, portletId, url}) => (
+												<li key={portletId}>
+													<a
+														className="dropdown-item"
+														href={url}
+													>
+														{label}
+													</a>
+												</li>
+											)
+										)}
+									</ul>
+								</div>
+							))}
+
+							<div className="col-md">
+								<ul className="bg-light list-unstyled rounded">
+									<li className="dropdown-subheader">
+										{Liferay.Language.get('sites')}
+									</li>
+
+									<li className="dropdown-subheader">
+										{Liferay.Language.get(
+											'recently-visited'
+										)}
+									</li>
+
+									{recentSites.map(
+										({key, label, logoURL, url}) => (
+											<li key={key}>
+												<a
+													className="dropdown-item"
+													href={url}
+												>
+													<ClaySticker
+														inline={true}
+														size="sm"
+													>
+														<img
+															className="sticker-img"
+															src={logoURL}
+														/>
+													</ClaySticker>
+
+													{label}
+												</a>
+											</li>
+										)
+									)}
+
+									<li>
+										<ClayButton
+											displayType="link"
+											onClick={() => {
+												Liferay.Util.selectEntity(
+													{
+														dialog: {
+															constrain: true,
+															destroyOnHide: true,
+															modal: true,
+														},
+														eventName: `${portletNamespace}selectSite`,
+														id: `${portletNamespace}selectSite`,
+														title: Liferay.Language.get(
+															'select-site-or-asset-library'
+														),
+														uri: viewAllURL,
+													},
+													(event) => {
+														location.href =
+															event.url;
+													}
+												);
+											}}
+										>
+											{Liferay.Language.get('view-all')}
+										</ClayButton>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</ClayTabs.TabPane>
+				))}
+			</ClayTabs.Content>
+		</>
 	);
 };
 
-function GlobalMenu({panelAppsURL}) {
-	const [visible, setVisible] = useState(false);
-	const {observer} = useModal({
-		onClose: () => setVisible(false),
-	});
+const GlobalMenu = ({panelAppsURL}) => {
+	const [appsPanelData, setAppsPanelData] = useState({});
+	const [panelVisible, setPanelVisible] = useState(false);
 
-	const [activeTab, setActiveTab] = useState(0);
-	const [context, setContext] = useState({});
+	const elementRef = useRef();
+	const fetchCategoriesPromiseRef = useRef();
 
-	const preloadPromise = useRef();
+	const handleButtonOnClick = () => {
+		fetchCategories();
+		setPanelVisible(!panelVisible);
+	};
 
-	const {items = [], portletNamespace, recentSites, viewAllURL} = context;
+	useEventListener(
+		'click',
+		(event) => {
+			if (!elementRef.current?.contains(event.target)) {
+				setPanelVisible(false);
+			}
+		},
+		true,
+		window
+	);
 
-	function preloadItems() {
-		if (!preloadPromise.current) {
-			preloadPromise.current = fetch(panelAppsURL)
+	const fetchCategories = () => {
+		if (!fetchCategoriesPromiseRef.current) {
+			fetchCategoriesPromiseRef.current = fetch(panelAppsURL)
 				.then((response) => response.json())
 				.then(({items, portletNamespace, recentSites, viewAllURL}) => {
-					setContext({
-						items,
+					setAppsPanelData({
+						categories: items,
 						portletNamespace,
 						recentSites,
 						viewAllURL,
 					});
+				})
+				.catch(() => {
+					fetchCategoriesPromiseRef.current = null;
 				});
 		}
-	}
+	};
 
 	return (
-		<>
-			{visible && (
-				<ClayModal observer={observer} size="full-screen" status="info">
-					<ClayModal.Body>
-						<ClayTabs modern>
-							{items.map(({key, label}, index) => (
-								<ClayTabs.Item
-									active={activeTab === index}
-									id={`${portletNamespace}tab_${index}`}
-									key={key}
-									onClick={() => setActiveTab(index)}
-								>
-									{label}
-								</ClayTabs.Item>
-							))}
-						</ClayTabs>
-
-						<div className="mt-4">
-							<ClayTabs.Content activeIndex={activeTab}>
-								{items.map(({childCategories}, index) => (
-									<ClayTabs.TabPane
-										aria-labelledby={`${portletNamespace}tab_${index}`}
-										key={`tabPane-${index}`}
-									>
-										<Content
-											childCategories={childCategories}
-											portletNamespace={portletNamespace}
-											recentSites={recentSites}
-											viewAllURL={viewAllURL}
-										/>
-									</ClayTabs.TabPane>
-								))}
-							</ClayTabs.Content>
-						</div>
-					</ClayModal.Body>
-				</ClayModal>
-			)}
-
+		<div
+			className="dropdown dropdown-full dropdown-global-app nav-item"
+			ref={elementRef}
+		>
 			<ClayButtonWithIcon
-				className={'lfr-portal-tooltip'}
+				className="dropdown-toggle lfr-portal-tooltip"
 				displayType="unstyled"
-				onClick={() => {
-					preloadItems();
-
-					setVisible(true);
-				}}
-				onFocus={preloadItems}
+				onClick={handleButtonOnClick}
+				onFocus={fetchCategories}
+				onHover={fetchCategories}
 				symbol="grid"
 				title={Liferay.Language.get('global-menu')}
 			/>
-		</>
+
+			<ul
+				className={classNames('dropdown-menu', {
+					show: panelVisible,
+				})}
+			>
+				<AppsPanel {...appsPanelData} />
+			</ul>
+		</div>
 	);
-}
+};
 
 GlobalMenu.propTypes = {
 	panelAppsURL: PropTypes.string,

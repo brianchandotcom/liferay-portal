@@ -20,7 +20,7 @@
 GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext(request);
 %>
 
-<div>
+<li class="control-menu-nav-item">
 	<clay:button
 		elementClasses="lfr-portal-tooltip"
 		icon="grid"
@@ -33,4 +33,4 @@ GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext
 		data="<%= globalMenuDisplayContext.getGlobalMenuComponentData() %>"
 		module="js/GlobalMenu"
 	/>
-</div>
+</li>

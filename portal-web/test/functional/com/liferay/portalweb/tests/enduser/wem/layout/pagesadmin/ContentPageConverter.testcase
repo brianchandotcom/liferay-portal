@@ -877,28 +877,20 @@ definition {
 			userLastName = "Userln1",
 			userScreenName = "usersn1");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea1@liferay.com",
 			userScreenName = "usersn1");
 
-		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea1@liferay.com");
 
-		Site.assignUserAsMemberCP(
-			userFirstName = "Userfn1",
-			userLastName = "Userln1",
-			userScreenName = "usersn1");
-
-		User.openUsersAdmin();
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn1");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea1@liferay.com");
 
 		User.logoutPG();
 
@@ -929,10 +921,6 @@ definition {
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",

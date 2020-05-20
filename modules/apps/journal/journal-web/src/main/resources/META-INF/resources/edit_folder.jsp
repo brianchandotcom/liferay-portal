@@ -393,21 +393,11 @@ renderResponse.setTitle(title);
 
 	if (selectDDMStructureButton) {
 		selectDDMStructureButton.addEventListener('click', function (event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true,
-					},
-					eventName: '<portlet:namespace />selectDDMStructure',
-					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-					uri:
-						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
-				},
-				function (event) {
+			Liferay.Util.openModal({
+				onSelect: function (selectedItem) {
 					var ddmStructureLink =
 						'<a class="modify-link" data-rowId="' +
-						event.ddmstructureid +
+						selectedItem.ddmstructureid +
 						'" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
 
 					<c:choose>
@@ -417,25 +407,29 @@ renderResponse.setTitle(title);
 
 							workflowDefinitions = workflowDefinitions.replace(
 								/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g,
-								'workflowDefinition' + event.ddmstructureid
+								'workflowDefinition' + selectedItem.ddmstructureid
 							);
 
 							searchContainer.addRow(
-								[event.name, workflowDefinitions, ddmStructureLink],
-								event.ddmstructureid
+								[selectedItem.name, workflowDefinitions, ddmStructureLink],
+								selectedItem.ddmstructureid
 							);
 						</c:when>
 						<c:otherwise>
 							searchContainer.addRow(
-								[event.name, ddmStructureLink],
-								event.ddmstructureid
+								[selectedItem.name, ddmStructureLink],
+								selectedItem.ddmstructureid
 							);
 						</c:otherwise>
 					</c:choose>
 
 					searchContainer.updateDataStore();
-				}
-			);
+				},
+				selectEventName: '<portlet:namespace />selectDDMStructure',
+				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+				url:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
+			});
 		});
 	}
 

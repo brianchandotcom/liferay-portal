@@ -341,22 +341,12 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 <aui:script>
 	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true,
-				},
-				eventName: '<portlet:namespace />selectDDMStructure',
-				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-				uri:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
-			},
-			function (event) {
+		Liferay.Util.openModal({
+			onSelect: function (selectedItem) {
 				if (
 					document.<portlet:namespace />fm
 						.<portlet:namespace />ddmStructureKey.value !=
-					event.ddmstructurekey
+					selectedItem.ddmstructurekey
 				) {
 					if (
 						confirm(
@@ -364,7 +354,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 						)
 					) {
 						document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value =
-							event.ddmstructurekey;
+							selectedItem.ddmstructurekey;
 						document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
 							'';
 						document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =
@@ -380,8 +370,12 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 						);
 					}
 				}
-			}
-		);
+			},
+			selectEventName: '<portlet:namespace />selectDDMStructure',
+			title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+			url:
+				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
+		});
 	}
 
 	function <portlet:namespace />removeDDMStructure() {

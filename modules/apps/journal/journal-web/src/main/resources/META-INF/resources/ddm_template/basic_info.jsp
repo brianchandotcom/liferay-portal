@@ -91,30 +91,24 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 		if (selectDDMStructure) {
 			selectDDMStructure.addEventListener('click', function (event) {
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							modal: true,
-						},
-						eventName: '<portlet:namespace />selectDDMStructure',
-						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-						uri:
-							'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
-					},
-					function (event) {
+				Liferay.Util.openModal({
+					onSelect: function (selectedItem) {
 						if (
 							document.<portlet:namespace />fm
 								.<portlet:namespace />classPK.value !=
-							event.ddmstructureid
+							selectedItem.ddmstructureid
 						) {
 							document.<portlet:namespace />fm.<portlet:namespace />classPK.value =
-								event.ddmstructureid;
+								selectedItem.ddmstructureid;
 
 							Liferay.fire('<portlet:namespace />refreshEditor');
 						}
-					}
-				);
+					},
+					selectEventName: '<portlet:namespace />selectDDMStructure',
+					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
+					url:
+						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
+				});
 			});
 		}
 	</aui:script>

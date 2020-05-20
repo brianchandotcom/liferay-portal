@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler, addParams} from 'frontend-js-web';
+import {DefaultEventHandler, addParams, openModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
@@ -108,28 +108,21 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	openDDMStructuresSelector() {
-		const namespace = this.namespace;
-		const uri = this.viewDDMStructureArticlesURL;
-
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true,
-				},
-				eventName: this.ns('selectDDMStructure'),
-				title: Liferay.Language.get('structures'),
-				uri: this.selectEntityURL,
-			},
-			(event) => {
+		openModal({
+			onSelect: (selectedItem) => {
 				Liferay.Util.navigate(
 					addParams(
-						namespace + 'ddmStructureKey=' + event.ddmstructurekey,
-						uri
+						this.namespace +
+							'ddmStructureKey=' +
+							selectedItem.ddmstructurekey,
+						this.viewDDMStructureArticlesURL
 					)
 				);
-			}
-		);
+			},
+			selectEventName: this.ns('selectDDMStructure'),
+			title: Liferay.Language.get('structures'),
+			url: this.selectEntityURL,
+		});
 	}
 }
 

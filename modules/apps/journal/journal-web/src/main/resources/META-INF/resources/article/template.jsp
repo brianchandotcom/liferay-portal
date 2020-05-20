@@ -80,7 +80,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 		if (previewWithTemplate) {
 			previewWithTemplate.addEventListener('click', function (event) {
-				var uri = '<%= previewArticleContentTemplateURL %>';
+				var url = '<%= previewArticleContentTemplateURL %>';
 
 				<%
 				long ddmTemplateId = 0;
@@ -106,9 +106,9 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 							.<portlet:namespace />ddmTemplateId.value;
 				}
 
-				uri = Liferay.Util.addParams(
+				url = Liferay.Util.addParams(
 					'<portlet:namespace />ddmTemplateId=' + ddmTemplateId,
-					uri
+					url
 				);
 
 				var languageId = '<%= themeDisplay.getLanguageId() %>';
@@ -121,25 +121,19 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 					languageId = inputComponent.getSelectedLanguageId();
 				}
 
-				uri = Liferay.Util.addParams(
+				url = Liferay.Util.addParams(
 					'<portlet:namespace />languageId=' + languageId,
-					uri
+					url
 				);
 
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							destroyOnHide: true,
-						},
-						eventName: '<portlet:namespace />preview',
-						id: '<portlet:namespace />preview',
-						title: '<liferay-ui:message key="preview" />',
-						uri: uri,
+				Liferay.Util.openModal({
+					onSelect: function (selectedItem) {
+						changeDDMTemplate(selectedItem.ddmtemplateid);
 					},
-					function (event) {
-						changeDDMTemplate(event.ddmtemplateid);
-					}
-				);
+					selectEventName: '<portlet:namespace />preview',
+					title: '<liferay-ui:message key="preview" />',
+					url: url,
+				});
 			});
 		}
 	</c:if>
@@ -193,23 +187,15 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 
 	if (selectDDMTemplateButton) {
 		selectDDMTemplateButton.addEventListener('click', function (event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					eventName: '<portlet:namespace />selectDDMTemplate',
-					id: '<portlet:namespace />selectDDMTemplate',
-					title: '<%= UnicodeLanguageUtil.get(request, "templates") %>',
-					uri:
-						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_template.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>',
+			Liferay.Util.openModal({
+				onSelect: function (selectedItem) {
+					changeDDMTemplate(selectedItem.ddmtemplateid);
 				},
-				function (event) {
-					changeDDMTemplate(event.ddmtemplateid);
-				}
-			);
+				selectEventName: '<portlet:namespace />selectDDMTemplate',
+				title: '<%= UnicodeLanguageUtil.get(request, "templates") %>',
+				url:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_template.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>',
+			});
 		});
 	}
 

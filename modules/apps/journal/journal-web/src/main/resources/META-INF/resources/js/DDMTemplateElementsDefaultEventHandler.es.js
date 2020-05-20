@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, openModal} from 'frontend-js-web';
 
 class DDMTemplateElementsDefaultEventHandler extends DefaultEventHandler {
 	deleteDDMTemplate(itemData) {
@@ -26,16 +26,9 @@ class DDMTemplateElementsDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	permissionsDDMTemplate(itemData) {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				modal: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
+		openModal({
 			title: Liferay.Language.get('permissions'),
-			uri: itemData.permissionsDDMTemplateURL,
+			url: itemData.permissionsDDMTemplateURL,
 		});
 	}
 }

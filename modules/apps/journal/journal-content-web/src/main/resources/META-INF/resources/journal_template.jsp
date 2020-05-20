@@ -104,22 +104,12 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 				alert.destroy();
 			}
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					eventName:
-						'<%= PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate" %>',
-					id:
-						'<%= PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate" %>',
-					title: '<liferay-ui:message key="templates" />',
-					uri: '<%= selectDDMTemplateURL %>',
-				},
-				function (event) {
-					templateKeyInput.setAttribute('value', event.ddmtemplatekey);
+			Liferay.Util.openModal({
+				onSelect: function (selectedItem) {
+					templateKeyInput.setAttribute(
+						'value',
+						selectedItem.ddmtemplatekey
+					);
 
 					templatePreview.html('<div class="loading-animation"></div>');
 
@@ -127,7 +117,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 						Liferay.Util.ns(
 							'<%= PortalUtil.getPortletNamespace(JournalContentPortletKeys.JOURNAL_CONTENT) %>',
 							{
-								ddmTemplateKey: event.ddmtemplatekey,
+								ddmTemplateKey: selectedItem.ddmtemplatekey,
 							}
 						)
 					);
@@ -169,8 +159,12 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 					}).render(form);
 
 					instance._alert = alert;
-				}
-			);
+				},
+				selectEventName:
+					'<%= PortalUtil.getPortletNamespace(portletId) + "selectDDMTemplate" %>',
+				title: '<liferay-ui:message key="templates" />',
+				url: '<%= selectDDMTemplateURL %>',
+			});
 		}
 	);
 

@@ -33,17 +33,10 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 	if (viewResourcesButton) {
 		viewResourcesButton.addEventListener('click', function (event) {
-			Liferay.Util.openWindow({
-				dialog: {
-					destroyOnHide: true,
-					modal: true,
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer',
-				},
+			Liferay.Util.openModal({
 				title:
 					'<%= HtmlUtil.escapeJS(HtmlUtil.escape(article.getTitle(themeDisplay.getLocale()))) %>',
-				uri:
+				url:
 					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/configuration/icon/view_source.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" /><portlet:param name="articleId" value="<%= article.getArticleId() %>" /><portlet:param name="status" value="<%= String.valueOf(article.getStatus()) %>" /></portlet:renderURL>',
 			});
 		});

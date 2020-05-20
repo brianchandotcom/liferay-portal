@@ -29,7 +29,7 @@ import Widget from './Widget';
 const CONTENT_DISPLAY_COLLECTION_ID = 'content-display';
 
 export const FragmentPanel = ({collection}) => (
-	<div className="align-items-start d-flex flex-wrap justify-content-between">
+	<>
 		{collection.fragmentEntries.map((fragmentEntry) => (
 			<FragmentCard
 				fragmentEntryKey={fragmentEntry.fragmentEntryKey}
@@ -44,7 +44,7 @@ export const FragmentPanel = ({collection}) => (
 		{collection.fragmentCollectionId === CONTENT_DISPLAY_COLLECTION_ID && (
 			<CollectionDisplayCard />
 		)}
-	</div>
+	</>
 );
 
 export const WidgetPanel = ({category}) =>
@@ -137,7 +137,7 @@ export default function FragmentsSidebar() {
 				{Liferay.Language.get('fragments-and-widgets')}
 			</SidebarPanelHeader>
 
-			<SidebarPanelContent className="page-editor__sidebar__fragments-panel">
+			<SidebarPanelContent className="page-editor__sidebar__fragments-widgets-panel">
 				<SearchForm onChange={setSearchValue} value={searchValue} />
 				{!searchValue.length ? (
 					<>

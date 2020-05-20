@@ -5,4 +5,9 @@
 	font-weight: bold;
 	margin-bottom: $pageEditorSpacing * 4;
 	margin-top: $pageEditorSpacing * 2;
+
+	&.light {
+		font-size: 14px;
+		margin-bottom: $pageEditorSpacing * 3;
+	}
 }

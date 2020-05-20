@@ -227,9 +227,14 @@ definition {
 	@priority = "4"
 	test ToggleControlsNotAffectPortletsOnContentPage {
 		task ("Create a new Content Page") {
-			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.clickPublish();
 		}

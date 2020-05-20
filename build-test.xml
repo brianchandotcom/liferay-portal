@@ -6671,7 +6671,12 @@ go</echo>
 						<local name="app.dir.includes" />
 
 						<condition else="apps/${osgi.app.name},apps/archived/${osgi.app.name}" property="app.dir.includes" value="apps/${osgi.app.name},apps/archived/${osgi.app.name},dxp/apps/${osgi.app.name}">
-							<equals arg1="${build.profile}" arg2="dxp" />
+							<and>
+								<equals arg1="${build.profile}" arg2="dxp" />
+								<not>
+									<equals arg1="${osgi.app.name}" arg2="commerce" />
+								</not>
+							</and>
 						</condition>
 
 						<for param="app.dir">
@@ -6764,6 +6769,20 @@ go</echo>
 											<arg value="-Dbuild.profile=${build.profile}" />
 										</gradle-execute>
 
+										<if>
+											<and>
+												<equals arg1="${osgi.app.name}" arg2="commerce" />
+												<not>
+													<contains string="@{app.dir}" substring="dxp" />
+												</not>
+											</and>
+											<then>
+												<gradle-execute dir="${project.dir}/modules/dxp/apps/${osgi.app.name}" task="deploy">
+													<arg value="clean" />
+													<arg value="-Dbuild.profile=${build.profile}" />
+												</gradle-execute>
+											</then>
+										</if>
 
 										<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
 											<property name="app.name" value="${osgi.app.name}" />
